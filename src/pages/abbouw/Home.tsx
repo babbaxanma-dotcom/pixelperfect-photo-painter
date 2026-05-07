@@ -82,7 +82,7 @@ const HTML = (i: Record<string, string>) => `
     <div class="lf-hero-mini" data-hero-anim>
       <span class="lf-hero-eyebrow" data-hero-line>
         <span class="lf-hero-eyebrow-dot"></span>
-        Uw aannemer in Vlaanderen — sinds 2009
+        Uw aannemer in Vlaanderen
       </span>
       <div class="lf-hero-actions" data-hero-line data-hero-delay="1">
         <a href="#contact-form" class="lf-cta-pill" data-smooth>
@@ -90,6 +90,10 @@ const HTML = (i: Record<string, string>) => `
           <span class="lf-cta-pill-arrow">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </span>
+        </a>
+        <a href="/realisaties" class="lf-hero-ghost">
+          <span>Bekijk realisaties</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
     </div>
