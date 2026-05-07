@@ -981,10 +981,10 @@ const EXTRA_STYLE = `
 @media (max-width: 900px) { .lf-partners-row { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
 
 /* Marquee logos */
-.lf-marquee { overflow: hidden; position: relative; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-.lf-marquee-track { display: flex; width: max-content; animation: lf-marquee-scroll 32s linear infinite; }
-.lf-marquee-set { display: flex; align-items: center; gap: 88px; padding: 0 44px; flex-shrink: 0; }
-.lf-marquee-set img { height: 44px; width: auto; max-width: 180px; object-fit: contain; filter: grayscale(1) opacity(0.55); transition: filter 0.3s var(--ease); }
+.lf-marquee { overflow: hidden; position: relative; mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
+.lf-marquee-track { display: flex; width: max-content; animation: lf-marquee-scroll 46s linear infinite; }
+.lf-marquee-set { display: flex; align-items: center; gap: 44px; padding: 0 44px; flex-shrink: 0; }
+.lf-marquee-set img { height: 64px; width: 240px; object-fit: contain; flex: 0 0 240px; filter: grayscale(1) opacity(0.55); transition: filter 0.3s var(--ease); }
 .lf-marquee-set img:hover { filter: grayscale(0) opacity(1); }
 .lf-marquee:hover .lf-marquee-track { animation-play-state: paused; }
 @keyframes lf-marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
