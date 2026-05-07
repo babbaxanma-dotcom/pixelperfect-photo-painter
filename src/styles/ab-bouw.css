@@ -6214,9 +6214,6 @@ body.page-hero-dark .footer {
 }
 html, body { margin: 0 !important; padding: 0 !important; }
 body.ab-bouw-page { margin: 0 !important; padding: 0 !important; }
-@supports (height: 100svh) {
-  .lf-hero { min-height: 100svh !important; height: 100svh; }
-}
 .lf-hero-mini,
 .lf-hero-reviews,
 .lf-hero-scroll {
