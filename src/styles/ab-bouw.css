@@ -5838,12 +5838,12 @@ body.page-hero-dark .footer {
   .lf-testi-track { animation: none !important; width: max-content; transform: none !important; }
   /* Padding equals the side-peek so the active card centers */
   .lf-testi-set { gap: 16px; padding: 0 8px; }
-  .lf-testi-set:first-child { padding-left: calc((100vw - min(74vw, 300px)) / 2); }
-  .lf-testi-set:last-child { padding-right: calc((100vw - min(74vw, 300px)) / 2); }
+  .lf-testi-set:first-child { padding-left: calc((100vw - min(calc(100vw - 48px), 342px)) / 2); }
+  .lf-testi-set:last-child { padding-right: calc((100vw - min(calc(100vw - 48px), 342px)) / 2); }
   .lf-testi {
     box-sizing: border-box;
-    flex: 0 0 min(74vw, 300px);
-    width: min(74vw, 300px);
+    flex: 0 0 min(calc(100vw - 48px), 342px);
+    width: min(calc(100vw - 48px), 342px);
     min-width: 0;
     min-height: 320px;
     scroll-snap-align: center;
@@ -5854,6 +5854,7 @@ body.page-hero-dark .footer {
     opacity: .35;
     transition: transform .45s cubic-bezier(.2,.7,.2,1), opacity .45s ease, box-shadow .45s ease;
   }
+  .lf-testi * { max-width: 100%; min-width: 0; }
   .lf-testi.is-focus {
     transform: scale(1) !important;
     opacity: 1 !important;
