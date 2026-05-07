@@ -93,12 +93,20 @@ export function useAbBouwInteractions() {
       if (window.scrollY > 30) nav?.classList.add('scrolled');
       else nav?.classList.remove('scrolled');
       if (heroStage && hero) {
-        const stageScrollable = Math.max(1, heroStage.offsetHeight - window.innerHeight);
+        const vh = window.innerHeight;
+        const stageScrollable = Math.max(1, heroStage.offsetHeight - vh);
         const p = Math.max(0, Math.min(1, window.scrollY / stageScrollable));
         hero.style.setProperty('--hp', p.toString());
-        // Keep only the logo over the fullscreen cinematic; reveal navbar as the hero gives way.
-        if (p >= 0.82) nav?.classList.remove('hero-mode');
-        else nav?.classList.add('hero-mode');
+        heroStage.classList.toggle('is-collapsed', p >= 0.999);
+        // Reveal navbar ONLY when hero is fully out of view (no overlap)
+        const heroOut = p >= 1;
+        if (heroOut) {
+          nav?.classList.remove('hero-mode');
+          document.body.classList.add('nav-revealed');
+        } else {
+          nav?.classList.add('hero-mode');
+          document.body.classList.remove('nav-revealed');
+        }
       }
       const sp = document.getElementById('scrollProgress');
       if (sp) {
