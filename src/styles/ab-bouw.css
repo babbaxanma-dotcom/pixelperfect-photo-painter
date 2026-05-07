@@ -5823,38 +5823,58 @@ body.page-hero-dark .footer {
   .lf-testi-marquee {
     overflow-x: auto;
     overflow-y: visible;
-    padding: 28px 0 54px;
+    padding: 32px 0 48px;
     -webkit-mask-image: none !important;
             mask-image: none !important;
     scroll-snap-type: x mandatory;
-    scroll-padding-inline: 20px;
     -webkit-overflow-scrolling: touch;
   }
   .lf-testi-shift { transform: none !important; transition: none !important; }
   .lf-testi-track { animation: none !important; width: max-content; transform: none !important; }
-  .lf-testi-set { gap: 16px; padding: 0 20px; }
+  /* Padding equals the side-peek so the active card centers */
+  .lf-testi-set { gap: 16px; padding: 0 calc((100vw - min(82vw, 340px)) / 2); }
   .lf-testi-set[aria-hidden="true"] { display: none !important; }
   .lf-testi {
-    flex: 0 0 min(86vw, 340px);
-    width: min(86vw, 340px);
+    flex: 0 0 min(82vw, 340px);
+    width: min(82vw, 340px);
     min-width: 0;
-    min-height: 330px;
-    transform: none !important;
-    opacity: 1 !important;
+    min-height: 320px;
     scroll-snap-align: center;
     padding: 22px 20px 18px;
+    overflow: hidden;
+    /* Inactive: smaller + faded so they read as background context */
+    transform: scale(.9);
+    opacity: .35;
+    transition: transform .45s cubic-bezier(.2,.7,.2,1), opacity .45s ease, box-shadow .45s ease;
+  }
+  .lf-testi.is-focus {
+    transform: scale(1) !important;
+    opacity: 1 !important;
+    box-shadow: 0 2px 4px rgba(15,17,21,.06), 0 24px 48px -20px rgba(15,17,21,.2);
+  }
+  .lf-testi.is-near {
+    transform: scale(.92) !important;
+    opacity: .5 !important;
   }
   .lf-testi p {
     width: 100%;
     min-width: 0;
+    max-width: 100%;
     display: block !important;
     -webkit-line-clamp: initial !important;
     -webkit-box-orient: initial !important;
-    overflow: visible !important;
+    overflow: hidden;
     white-space: normal !important;
-    overflow-wrap: anywhere;
-    word-break: normal;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
     color: #1c1f24 !important;
+  }
+  .lf-testi .lf-hl-word {
+    white-space: normal;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
   .lf-testi .lf-hl-word::before { transform: scaleX(1) !important; transition-delay: 0s !important; }
 }
