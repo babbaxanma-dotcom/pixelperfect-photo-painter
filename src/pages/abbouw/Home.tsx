@@ -118,7 +118,7 @@ const HTML = (i: Record<string, string>) => `
       <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><polygon points="12,2 15,9 22,9.3 17,14 18.5,21 12,17.5 5.5,21 7,14 2,9.3 9,9"/></svg>
       <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><polygon points="12,2 15,9 22,9.3 17,14 18.5,21 12,17.5 5.5,21 7,14 2,9.3 9,9"/></svg>
     </span>
-    <span class="lf-hero-reviews-text">5,0 · Beoordeeld op Google</span>
+    <span class="lf-hero-reviews-text">4.9 · Beoordeeld op Google</span>
   </a>
 </section>
 
