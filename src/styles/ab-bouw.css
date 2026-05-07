@@ -5836,13 +5836,26 @@ body.page-hero-dark .footer {
   .lf-testi-set[aria-hidden="true"] { display: none !important; }
   .lf-testi {
     flex: 0 0 min(86vw, 340px);
+    width: min(86vw, 340px);
+    min-width: 0;
     min-height: 330px;
     transform: none !important;
     opacity: 1 !important;
     scroll-snap-align: center;
     padding: 22px 20px 18px;
   }
-  .lf-testi p { -webkit-line-clamp: unset; display: block; overflow: visible !important; color: #1c1f24 !important; }
+  .lf-testi p {
+    width: 100%;
+    min-width: 0;
+    display: block !important;
+    -webkit-line-clamp: initial !important;
+    -webkit-box-orient: initial !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    color: #1c1f24 !important;
+  }
   .lf-testi .lf-hl-word::before { transform: scaleX(1) !important; transition-delay: 0s !important; }
 }
 /* Reviews section header — refined */
