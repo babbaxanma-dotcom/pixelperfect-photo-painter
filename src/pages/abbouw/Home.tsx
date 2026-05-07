@@ -329,14 +329,14 @@ const HTML = (i: Record<string, string>) => `
       <div class="lf-marquee-track">
         ${Array.from({ length: 2 }).map(() => `
           <div class="lf-marquee-set">
-            <img src="/assets/logos/dorken.svg" alt="Dörken" loading="lazy" />
-            <img src="/assets/logos/eternit.svg" alt="Eternit" loading="lazy" />
-            <img src="/assets/logos/isoproc.svg" alt="Isoproc" loading="lazy" />
-            <img src="/assets/logos/isover.svg" alt="Isover" loading="lazy" />
-            <img src="/assets/logos/knauf.svg" alt="Knauf" loading="lazy" />
-            <img src="/assets/logos/koramic.svg" alt="Koramic" loading="lazy" />
-            <img src="/assets/logos/mato.svg" alt="Mato" loading="lazy" />
-            <img src="/assets/logos/rectic.svg" alt="Rectic" loading="lazy" />
+            <img src="/assets/logos/dorken.png" alt="Dörken" loading="lazy" />
+            <img src="/assets/logos/eternit.png" alt="Eternit" loading="lazy" />
+            <img src="/assets/logos/isoproc.png" alt="Isoproc" loading="lazy" />
+            <img src="/assets/logos/isover.png" alt="Isover" loading="lazy" />
+            <img src="/assets/logos/knauf.png" alt="Knauf" loading="lazy" />
+            <img src="/assets/logos/koramic.webp" alt="Koramic" loading="lazy" />
+            <img src="/assets/logos/mato.png" alt="Mato" loading="lazy" />
+            <img src="/assets/logos/rectic.png" alt="Recticel" loading="lazy" />
           </div>`).join('')}
       </div>
     </div>
