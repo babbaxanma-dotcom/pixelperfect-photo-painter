@@ -5828,6 +5828,11 @@ body.page-hero-dark .footer {
             mask-image: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%) !important;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    opacity: 0;
+  }
+  .lf-testi-marquee.is-ready {
+    opacity: 1;
+    transition: opacity .18s ease;
   }
   .lf-testi-shift { transform: none !important; transition: none !important; }
   .lf-testi-track { animation: none !important; width: max-content; transform: none !important; }
