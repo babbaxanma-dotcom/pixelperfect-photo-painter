@@ -311,6 +311,8 @@ export function useAbBouwInteractions() {
       pinIo?.disconnect();
       if (heroSlideTimer) window.clearInterval(heroSlideTimer);
       if (testiRaf) cancelAnimationFrame(testiRaf);
+      testiPrev?.removeEventListener('click', onPrev);
+      testiNext?.removeEventListener('click', onNext);
     };
   }, [location.pathname, navigate]);
 }
