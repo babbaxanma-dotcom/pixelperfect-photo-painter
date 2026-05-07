@@ -140,11 +140,26 @@ const HTML = (i: Record<string, string>) => `
               { name: 'Annelies Claes', role: 'Interieur · Mechelen', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&h=120&q=80&fit=crop', text: 'Maatwerk in keuken en dressing perfect uitgevoerd. Plinten, plafonds, alles tot op de millimeter. Heldere communicatie van begin tot einde.', highlights: ['perfect uitgevoerd', 'tot op de millimeter', 'Heldere communicatie'] },
             ];
             const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const wrapWords = (phrase: string, baseI: number) => {
+              const words = phrase.split(/(\s+)/);
+              let wi = 0;
+              return words.map((w) => {
+                if (/^\s+$/.test(w)) return w;
+                const idx = baseI + wi;
+                wi += 1;
+                return `<span class="lf-hl-word" style="--hl-i:${idx}">${w}</span>`;
+              }).join('');
+            };
             const highlight = (text: string, terms: string[]) => {
               let out = text;
-              terms.forEach((term, i) => {
+              let wordOffset = 0;
+              terms.forEach((term) => {
                 const re = new RegExp(escapeRe(term), 'i');
-                out = out.replace(re, (m) => `<mark class="lf-hl" style="--hl-i:${i}">${m}</mark>`);
+                out = out.replace(re, (m) => {
+                  const wrapped = `<mark class="lf-hl">${wrapWords(m, wordOffset)}</mark>`;
+                  wordOffset += m.trim().split(/\s+/).length;
+                  return wrapped;
+                });
               });
               return out;
             };
