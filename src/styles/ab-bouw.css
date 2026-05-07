@@ -5956,13 +5956,21 @@ body.page-hero-dark .footer {
   to   { transform: scaleX(1); }
 }
 
-/* Hero mini eyebrow + CTA (replaces big white card) */
+/* Hero mini eyebrow + CTA — centered at bottom of hero */
 .lf-hero-mini {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(96px, 14vh, 150px);
+  transform: translateX(-50%);
+  z-index: 4;
   display: inline-flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 22px;
   margin: 0 !important;
+  text-align: center;
+  width: max-content;
+  max-width: calc(100% - 40px);
 }
 .lf-hero-eyebrow {
   display: inline-flex;
@@ -5987,8 +5995,9 @@ body.page-hero-dark .footer {
   background: #F5C518;
   box-shadow: 0 0 0 4px rgba(245,197,24,0.18);
 }
-.lf-hero-mini .lf-hero-actions { margin: 0; padding: 0; }
+.lf-hero-mini .lf-hero-actions { margin: 0; padding: 0; justify-content: center; }
 @media (max-width: 768px) {
+  .lf-hero-mini { bottom: clamp(80px, 12vh, 110px); gap: 16px; }
   .lf-hero-eyebrow { font-size: 12px; padding: 8px 14px 8px 12px; }
 }
 
