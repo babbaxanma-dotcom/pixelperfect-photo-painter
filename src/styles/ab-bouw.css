@@ -5913,7 +5913,7 @@ body.page-hero-dark .footer {
 .lf-hero-arrow:active { transform: translateY(-50%) scale(.95); }
 .lf-hero-arrow--prev { left: clamp(16px, 3vw, 36px); }
 .lf-hero-arrow--next { right: clamp(16px, 3vw, 36px); }
-@media (max-width: 760px) { .lf-hero-arrow { width: 42px; height: 42px; } }
+@media (max-width: 760px) { .lf-hero-arrow { display: none !important; } }
 
 .lf-hero-dots {
   position: absolute;
@@ -6145,9 +6145,8 @@ body.page-hero-dark .footer {
 .lf-hero-reviews-text { letter-spacing: 0.01em; }
 
 @media (max-width: 768px) {
-  .lf-hero-scroll { bottom: 28px; font-size: 10px; }
-  .lf-hero-scroll i { height: 28px; }
-  .lf-hero-reviews { right: 50%; transform: translateX(50%); bottom: 92px; font-size: 12px; padding: 8px 12px; }
+  .lf-hero-scroll { display: none; }
+  .lf-hero-reviews { right: 50%; transform: translateX(50%); bottom: 24px; font-size: 13px; padding: 10px 16px; background: rgba(10,15,28,0.72); border-color: rgba(255,255,255,0.4); white-space: nowrap; }
   .lf-hero-reviews:hover { transform: translateX(50%) translateY(-1px); }
 }
 
