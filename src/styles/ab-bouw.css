@@ -5956,15 +5956,27 @@ body.page-hero-dark .footer {
   to   { transform: scaleX(1); }
 }
 
-/* Hero mini eyebrow + CTA — perfectly centered in hero */
-.lf-hero-wrap { display: flex !important; align-items: center; justify-content: center; min-height: 100%; padding-top: 120px !important; padding-bottom: 120px !important; }
+/* Hero mini eyebrow + CTA — centered, bottom of hero, ABOVE cinematic overlay */
+.lf-hero-wrap {
+  position: relative;
+  z-index: 5 !important; /* above .lf-hero-bg--slides::after (z:3) */
+  display: flex !important;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 100%;
+  padding-top: 120px !important;
+  padding-bottom: clamp(80px, 12vh, 130px) !important;
+  pointer-events: none; /* let arrows/dots stay clickable */
+}
 .lf-hero-mini {
   position: relative;
+  z-index: 5;
+  pointer-events: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 22px;
   margin: 0 auto !important;
   text-align: center;
   width: max-content;
@@ -5985,7 +5997,6 @@ body.page-hero-dark .footer {
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.02em;
-  text-transform: none;
   box-shadow: 0 8px 28px -12px rgba(0,0,0,0.4);
   white-space: nowrap;
 }
@@ -5999,34 +6010,47 @@ body.page-hero-dark .footer {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 18px;
   margin: 0;
   padding: 0;
   flex-wrap: wrap;
 }
-@media (max-width: 768px) {
-  .lf-hero-mini { gap: 18px; }
-  .lf-hero-eyebrow { font-size: 12px; padding: 8px 14px 8px 12px; }
-  .lf-hero-mini .lf-hero-actions { flex-direction: column; gap: 10px; width: 100%; }
-  .lf-hero-mini .lf-hero-actions > a { width: 100%; justify-content: center; }
-}
 
-/* Hero secondary ghost button */
-.lf-hero-mini .lf-hero-actions { display: inline-flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+/* Bekijk realisaties — subtle text link with arrow, sits next to primary CTA */
 .lf-hero-ghost {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 13px 20px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.30);
-  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 4px;
+  background: transparent;
+  border: 0;
+  color: rgba(255,255,255,0.92);
   font-family: var(--font-display);
-  font-size: 14px; font-weight: 500;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   text-decoration: none;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+  position: relative;
+  transition: color 0.25s ease;
 }
-.lf-hero-ghost:hover { background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.55); transform: translateY(-1px); }
+.lf-hero-ghost::after {
+  content: '';
+  position: absolute;
+  left: 4px; right: 22px; bottom: 2px;
+  height: 1px;
+  background: rgba(255,255,255,0.45);
+  transform-origin: left center;
+  transform: scaleX(0.6);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), background 0.25s ease;
+}
+.lf-hero-ghost:hover { color: #fff; }
+.lf-hero-ghost:hover::after { transform: scaleX(1); background: rgba(255,255,255,0.85); }
 .lf-hero-ghost svg { transition: transform 0.25s ease; }
 .lf-hero-ghost:hover svg { transform: translateX(3px); }
+
+@media (max-width: 768px) {
+  .lf-hero-wrap { padding-bottom: clamp(70px, 10vh, 100px) !important; }
+  .lf-hero-mini { gap: 16px; }
+  .lf-hero-eyebrow { font-size: 12px; padding: 8px 14px 8px 12px; }
+  .lf-hero-mini .lf-hero-actions { flex-direction: column; gap: 12px; }
+}
