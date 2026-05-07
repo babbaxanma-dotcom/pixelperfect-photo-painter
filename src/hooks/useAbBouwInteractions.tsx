@@ -164,19 +164,50 @@ export function useAbBouwInteractions() {
     };
     window.addEventListener('scroll', onParallax, { passive: true });
 
-    // ── Hero slideshow: crossfade between images every ~7s
+    // ── Hero slideshow: crossfade with arrows + dots
     const heroSlides = Array.from(
       document.querySelectorAll<HTMLImageElement>('[data-hero-slides] img'),
     );
+    const heroDots = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-hero-dot]'),
+    );
+    const heroPrevBtn = document.querySelector<HTMLElement>('[data-hero-prev]');
+    const heroNextBtn = document.querySelector<HTMLElement>('[data-hero-next]');
     let heroSlideIdx = 0;
     let heroSlideTimer: number | undefined;
-    if (heroSlides.length > 1) {
-      heroSlideTimer = window.setInterval(() => {
-        heroSlides[heroSlideIdx].classList.remove('is-active');
-        heroSlideIdx = (heroSlideIdx + 1) % heroSlides.length;
-        heroSlides[heroSlideIdx].classList.add('is-active');
-      }, 7000);
-    }
+    const HERO_INTERVAL = 7000;
+    const goToHeroSlide = (next: number) => {
+      if (heroSlides.length < 2) return;
+      const n = ((next % heroSlides.length) + heroSlides.length) % heroSlides.length;
+      heroSlides[heroSlideIdx].classList.remove('is-active');
+      heroDots[heroSlideIdx]?.classList.remove('is-active');
+      heroSlideIdx = n;
+      heroSlides[heroSlideIdx].classList.add('is-active');
+      heroDots[heroSlideIdx]?.classList.add('is-active');
+      // Restart dot fill animation by reflowing the span
+      const span = heroDots[heroSlideIdx]?.querySelector<HTMLElement>('span');
+      if (span) {
+        span.style.animation = 'none';
+        // force reflow
+        void span.offsetWidth;
+        span.style.animation = '';
+      }
+    };
+    const startHeroTimer = () => {
+      if (heroSlideTimer) window.clearInterval(heroSlideTimer);
+      heroSlideTimer = window.setInterval(() => goToHeroSlide(heroSlideIdx + 1), HERO_INTERVAL);
+    };
+    if (heroSlides.length > 1) startHeroTimer();
+    const onHeroPrev = () => { goToHeroSlide(heroSlideIdx - 1); startHeroTimer(); };
+    const onHeroNext = () => { goToHeroSlide(heroSlideIdx + 1); startHeroTimer(); };
+    heroPrevBtn?.addEventListener('click', onHeroPrev);
+    heroNextBtn?.addEventListener('click', onHeroNext);
+    const heroDotHandlers: Array<[HTMLElement, () => void]> = [];
+    heroDots.forEach((dot, idx) => {
+      const h = () => { goToHeroSlide(idx); startHeroTimer(); };
+      dot.addEventListener('click', h);
+      heroDotHandlers.push([dot, h]);
+    });
 
     // ── Testimonials focus states only; auto-scroll itself uses the same CSS marquee as partners
     const testiMarquee = document.querySelector<HTMLElement>('[data-testi-marquee]');
