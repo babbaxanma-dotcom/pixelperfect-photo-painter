@@ -106,7 +106,6 @@ const HTML = (i: Record<string, string>) => `
           <span class="lf-reviews-count">184+ tevreden klanten</span>
         </div>
       </div>
-      <h2 class="lf-h2 lf-reviews-title">Vakwerk dat klanten<br/>blijven aanbevelen.</h2>
     </div>
     <div class="lf-testi-marquee" data-testi-marquee>
       <div class="lf-testi-track" data-testi-track>
