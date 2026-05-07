@@ -80,7 +80,13 @@ const HTML = (i: Record<string, string>) => `
   </div>
   <div class="wrap lf-hero-wrap">
     <div class="lf-hero-mini" data-hero-anim>
-      <div class="lf-hero-actions" data-hero-line data-hero-delay="1">
+      <h1 class="lf-hero-headline" data-hero-line>
+        Vakmanschap in bouw, dakwerken<br/>en renovatie in heel Vlaanderen
+      </h1>
+      <p class="lf-hero-sub" data-hero-line data-hero-delay="1">
+        AB Bouw Group realiseert duurzame projecten op maat — van ruwbouw en daken<br/>tot gevels en interieur, met aandacht voor detail en afwerking.
+      </p>
+      <div class="lf-hero-actions" data-hero-line data-hero-delay="2">
         <a href="#contact-form" class="lf-cta-pill" data-smooth>
           <span>Plan een kennismaking</span>
           <span class="lf-cta-pill-arrow">
@@ -94,6 +100,20 @@ const HTML = (i: Record<string, string>) => `
       </div>
     </div>
   </div>
+  <a href="#testimonials" class="lf-hero-scroll" data-smooth aria-label="Scroll naar beneden">
+    <span>SCROLL</span>
+    <i></i>
+  </a>
+  <a href="https://www.google.com/search?q=AB+Bouw+Group+reviews" target="_blank" rel="noopener" class="lf-hero-reviews" aria-label="Google reviews">
+    <span class="lf-hero-reviews-stars" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><polygon points="12,2 15,9 22,9.3 17,14 18.5,21 12,17.5 5.5,21 7,14 2,9.3 9,9"/></svg>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><polygon points="12,2 15,9 22,9.3 17,14 18.5,21 12,17.5 5.5,21 7,14 2,9.3 9,9"/></svg>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><polygon points="12,2 15,9 22,9.3 17,14 18.5,21 12,17.5 5.5,21 7,14 2,9.3 9,9"/></svg>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><polygon points="12,2 15,9 22,9.3 17,14 18.5,21 12,17.5 5.5,21 7,14 2,9.3 9,9"/></svg>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><polygon points="12,2 15,9 22,9.3 17,14 18.5,21 12,17.5 5.5,21 7,14 2,9.3 9,9"/></svg>
+    </span>
+    <span class="lf-hero-reviews-text">5,0 · Beoordeeld op Google</span>
+  </a>
 </section>
 
 
