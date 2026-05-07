@@ -341,6 +341,9 @@ export function useAbBouwInteractions() {
       cio.disconnect();
       pinIo?.disconnect();
       if (heroSlideTimer) window.clearInterval(heroSlideTimer);
+      heroPrevBtn?.removeEventListener('click', onHeroPrev);
+      heroNextBtn?.removeEventListener('click', onHeroNext);
+      heroDotHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
       if (testiRaf) cancelAnimationFrame(testiRaf);
       testiPrev?.removeEventListener('click', onPrev);
       testiNext?.removeEventListener('click', onNext);
