@@ -6219,3 +6219,41 @@ body.page-hero-dark .footer {
 @media (max-width: 768px) {
   .lf-hero-reviews { transform: translateX(50%) translateY(calc((1 - var(--hp)) * 14px)); }
 }
+
+/* ── Hero mode: hide pill nav, show only floating brand logo ── */
+.lf-nav.hero-mode .lf-nav-inner {
+  background: transparent !important;
+  box-shadow: none !important;
+  pointer-events: none;
+  padding: 0 20px !important;
+  max-width: 100% !important;
+  justify-content: flex-start;
+}
+.lf-nav.hero-mode .lf-menu,
+.lf-nav.hero-mode .lf-nav-phone,
+.lf-nav.hero-mode .lf-mobile-toggle {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.lf-nav.hero-mode .lf-brand {
+  pointer-events: auto;
+  filter: drop-shadow(0 4px 14px rgba(0,0,0,0.35));
+}
+.lf-nav.hero-mode .lf-brand-logo {
+  filter: brightness(0) invert(1);
+  transition: filter 0.4s ease;
+}
+/* Smooth transition back to pill nav */
+.lf-nav .lf-nav-inner {
+  transition: background 0.5s ease, box-shadow 0.5s ease, padding 0.5s ease, max-width 0.5s ease;
+}
+.lf-nav .lf-menu,
+.lf-nav .lf-nav-phone,
+.lf-nav .lf-mobile-toggle {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.lf-nav .lf-brand-logo {
+  transition: filter 0.5s ease;
+}
