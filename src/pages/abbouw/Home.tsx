@@ -99,7 +99,7 @@ const HTML = (i: Record<string, string>) => `
       </a>
     </div>
     <div class="lf-testi-marquee" data-testi-marquee>
-      <div class="lf-testi-track">
+      <div class="lf-testi-track" data-testi-track>
         ${(() => {
           const reviews = [
             { name: 'Marc Van den Broeck', role: 'Dakrenovatie · Mechelen', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&q=80&fit=crop', text: 'Van offerte tot oplevering volledig correct. Geen meerwerken, binnen het budget, en de projectleider belde elke vrijdag met een update. Het dak ligt er strak bij.' },
@@ -110,9 +110,9 @@ const HTML = (i: Record<string, string>) => `
             { name: 'Dirk Maes', role: 'Plat dak · Antwerpen', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&q=80&fit=crop', text: 'Lekkend dak op vrijdag gemeld, maandagochtend stond de ploeg op het dak. Probleem opgelost, factuur exact zoals afgesproken. Top service.' },
             { name: 'Annelies Claes', role: 'Interieur · Mechelen', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&h=120&q=80&fit=crop', text: 'Maatwerk in keuken en dressing perfect uitgevoerd. Plinten, plafonds, alles tot op de millimeter. Heldere communicatie van begin tot einde.' },
           ];
-          // duplicate set for seamless infinite marquee
-          return [...reviews, ...reviews].map(t => `
-            <article class="lf-testi">
+          // three sets keep the marquee seamless while visitors drag/scroll both directions
+          return [...reviews, ...reviews, ...reviews].map((t, idx) => `
+            <article class="lf-testi"${idx >= reviews.length ? ' aria-hidden="true"' : ''}>
               <div class="lf-testi-stars">★★★★★</div>
               <p>${t.text}</p>
               <div class="lf-testi-divider"></div>
