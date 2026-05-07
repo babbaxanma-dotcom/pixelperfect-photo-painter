@@ -6216,34 +6216,20 @@ body.page-hero-dark .footer {
   .lf-hero-reviews { transform: translateX(50%); }
 }
 
-/* ── Nav: slides down + fades in once hero text is gone ── */
+/* ── Nav: scroll-driven horizontal sweep reveal ── */
+:root { --nav-sweep: 0; }
 .lf-nav {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
-  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-              visibility 0s linear 0s;
 }
 .lf-nav.hero-mode {
-  opacity: 0 !important;
-  transform: translateY(-24px);
   pointer-events: none !important;
-  visibility: hidden !important;
-  transition: opacity 0.35s ease,
-              transform 0.35s ease,
-              visibility 0s linear 0.35s;
 }
 .lf-nav .lf-nav-inner {
-  transform-origin: top center;
-}
-.lf-nav.hero-mode .lf-nav-inner {
-  clip-path: inset(0 50% 0 50% round 999px);
-  transition: clip-path 0.4s ease;
-}
-.lf-nav:not(.hero-mode) .lf-nav-inner {
-  clip-path: inset(0 0 0 0 round 999px);
-  transition: clip-path 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.05s;
+  clip-path: inset(0 calc((1 - var(--nav-sweep, 0)) * 50%) 0 calc((1 - var(--nav-sweep, 0)) * 50%) round 999px);
+  opacity: var(--nav-sweep, 0);
+  transition: opacity 0.15s linear;
 }
 /* Floating brand-only logo while hero is in view */
 .lf-hero-logo {
