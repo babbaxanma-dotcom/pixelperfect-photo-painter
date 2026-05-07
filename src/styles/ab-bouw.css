@@ -5956,49 +5956,59 @@ body.page-hero-dark .footer {
   to   { transform: scaleX(1); }
 }
 
-/* Hero mini eyebrow + CTA — centered at bottom of hero */
+/* Hero mini eyebrow + CTA — perfectly centered in hero */
+.lf-hero-wrap { display: flex !important; align-items: center; justify-content: center; min-height: 100%; padding-top: 120px !important; padding-bottom: 120px !important; }
 .lf-hero-mini {
-  position: absolute;
-  left: 50%;
-  bottom: clamp(96px, 14vh, 150px);
-  transform: translateX(-50%);
-  z-index: 4;
-  display: inline-flex;
+  position: relative;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 22px;
-  margin: 0 !important;
+  justify-content: center;
+  gap: 24px;
+  margin: 0 auto !important;
   text-align: center;
   width: max-content;
-  max-width: calc(100% - 40px);
+  max-width: calc(100% - 32px);
 }
 .lf-hero-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 9px 16px 9px 14px;
+  padding: 10px 18px 10px 16px;
   background: rgba(255,255,255,0.10);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border: 1px solid rgba(255,255,255,0.22);
+  border: 1px solid rgba(255,255,255,0.24);
   border-radius: 999px;
   color: #fff;
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
   text-transform: none;
-  box-shadow: 0 8px 28px -12px rgba(0,0,0,0.35);
+  box-shadow: 0 8px 28px -12px rgba(0,0,0,0.4);
+  white-space: nowrap;
 }
 .lf-hero-eyebrow-dot {
   width: 7px; height: 7px; border-radius: 50%;
   background: #F5C518;
   box-shadow: 0 0 0 4px rgba(245,197,24,0.18);
 }
-.lf-hero-mini .lf-hero-actions { margin: 0; padding: 0; justify-content: center; }
+.lf-hero-mini .lf-hero-actions {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
 @media (max-width: 768px) {
-  .lf-hero-mini { bottom: clamp(80px, 12vh, 110px); gap: 16px; }
+  .lf-hero-mini { gap: 18px; }
   .lf-hero-eyebrow { font-size: 12px; padding: 8px 14px 8px 12px; }
+  .lf-hero-mini .lf-hero-actions { flex-direction: column; gap: 10px; width: 100%; }
+  .lf-hero-mini .lf-hero-actions > a { width: 100%; justify-content: center; }
 }
 
 /* Hero secondary ghost button */
