@@ -30,7 +30,7 @@ import logo from '@/assets/home/logo.png';
 import logoHero from '@/assets/home/logo-hero.png';
 
 const HTML = (i: Record<string, string>) => `
-<div class="scroll-progress" id="scrollProgress"></div>
+
 
 <!-- NAV (floating white pill over hero) -->
 <nav class="lf-nav hero-mode" id="nav">
