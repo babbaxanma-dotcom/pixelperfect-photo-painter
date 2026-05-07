@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 
 import hero from '@/assets/home/hero.jpg';
+import hero2 from '@/assets/home/hero-2.jpg';
+import hero3 from '@/assets/home/hero-3.jpg';
 import about from '@/assets/home/about.jpg';
 import skills from '@/assets/home/skills.jpg';
 import why from '@/assets/home/why.jpg';
@@ -64,8 +66,19 @@ const HTML = (i: Record<string, string>) => `
 <section class="lf-hero">
   <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
     <img src="${i.hero}" alt="AB Bouw Group" class="is-active" />
-    <img src="${i.proj1}" alt="" loading="lazy" />
-    <img src="${i.proj3}" alt="" loading="lazy" />
+    <img src="${i.hero2}" alt="" loading="lazy" />
+    <img src="${i.hero3}" alt="" loading="lazy" />
+  </div>
+  <button type="button" class="lf-hero-arrow lf-hero-arrow--prev" data-hero-prev aria-label="Vorige foto">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button type="button" class="lf-hero-arrow lf-hero-arrow--next" data-hero-next aria-label="Volgende foto">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <div class="lf-hero-dots" data-hero-dots>
+    <button type="button" class="lf-hero-dot is-active" data-hero-dot="0" aria-label="Foto 1"><span></span></button>
+    <button type="button" class="lf-hero-dot" data-hero-dot="1" aria-label="Foto 2"><span></span></button>
+    <button type="button" class="lf-hero-dot" data-hero-dot="2" aria-label="Foto 3"><span></span></button>
   </div>
   <div class="wrap lf-hero-wrap">
     <div class="lf-hero-card lf-hero-card--center" data-hero-anim>
@@ -1147,7 +1160,7 @@ export default function Home() {
   useAbBouwInteractions();
 
   const html = HTML({
-    hero, about, skills, why,
+    hero, hero2, hero3, about, skills, why,
     svcConstruct, svcEco, svcInterieur, svcDak, svcBad, svcGevel,
     proj1, proj2, proj3, proj4,
     team1, team2, team3, ctaMan,
