@@ -5882,17 +5882,17 @@ body.page-hero-dark .footer {
   .lf-testi * { max-width: 100%; min-width: 0; }
   .lf-testi p {
     width: 100%;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 6 !important;
-    -webkit-box-orient: vertical !important;
+    display: block !important;
+    max-height: calc(1.58em * 7);
     overflow: hidden !important;
     white-space: normal !important;
+    text-wrap: pretty;
     overflow-wrap: break-word !important;
     word-break: normal !important;
     hyphens: auto;
     color: #1c1f24 !important;
     font-size: 14.5px;
-    line-height: 1.6;
+    line-height: 1.58;
   }
   .lf-testi-foot { align-items: center; gap: 10px; }
   .lf-testi-meta strong,
@@ -5901,11 +5901,18 @@ body.page-hero-dark .footer {
     overflow-wrap: anywhere;
     line-height: 1.35;
   }
+  .lf-testi .lf-hl {
+    display: inline !important;
+    white-space: normal !important;
+  }
   .lf-testi .lf-hl-word {
+    display: inline !important;
     white-space: normal;
     max-width: 100%;
     overflow-wrap: break-word;
-    word-break: break-word;
+    word-break: normal;
+    -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
   }
   .lf-testi .lf-hl-word::before { transform: scaleX(1) !important; transition-delay: 0s !important; }
 }
