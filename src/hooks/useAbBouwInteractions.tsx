@@ -179,16 +179,24 @@ export function useAbBouwInteractions() {
     const goToHeroSlide = (next: number) => {
       if (heroSlides.length < 2) return;
       const n = ((next % heroSlides.length) + heroSlides.length) % heroSlides.length;
-      heroSlides[heroSlideIdx].classList.remove('is-active');
+      if (n === heroSlideIdx) return;
+      const prev = heroSlides[heroSlideIdx];
+      heroSlides.forEach((s) => s.classList.remove('is-prev'));
+      prev.classList.remove('is-active');
+      prev.classList.add('is-prev');
       heroDots[heroSlideIdx]?.classList.remove('is-active');
       heroSlideIdx = n;
-      heroSlides[heroSlideIdx].classList.add('is-active');
+      const incoming = heroSlides[heroSlideIdx];
+      // Restart kenburns by reflowing
+      incoming.style.animation = 'none';
+      void incoming.offsetWidth;
+      incoming.style.animation = '';
+      incoming.classList.add('is-active');
       heroDots[heroSlideIdx]?.classList.add('is-active');
       // Restart dot fill animation by reflowing the span
       const span = heroDots[heroSlideIdx]?.querySelector<HTMLElement>('span');
       if (span) {
         span.style.animation = 'none';
-        // force reflow
         void span.offsetWidth;
         span.style.animation = '';
       }
