@@ -6075,3 +6075,78 @@ body.page-hero-dark .footer {
   .lf-hero-eyebrow { font-size: 12px; padding: 8px 14px 8px 12px; }
   .lf-hero-mini .lf-hero-actions { flex-direction: column; gap: 12px; }
 }
+
+/* Hero — SCROLL indicator (Visualized-style) */
+.lf-hero-scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 56px;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,255,255,0.78);
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.25s ease;
+}
+.lf-hero-scroll:hover { color: #fff; }
+.lf-hero-scroll i {
+  display: block;
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0));
+  position: relative;
+  overflow: hidden;
+}
+.lf-hero-scroll i::after {
+  content: '';
+  position: absolute;
+  left: 0; top: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), #fff);
+  animation: lf-hero-scroll-line 2.2s ease-in-out infinite;
+}
+@keyframes lf-hero-scroll-line {
+  0%   { top: -100%; }
+  60%  { top: 100%; }
+  100% { top: 100%; }
+}
+
+/* Hero — Google reviews badge bottom-right */
+.lf-hero-reviews {
+  position: absolute;
+  right: clamp(20px, 3vw, 40px);
+  bottom: 48px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: rgba(10,15,28,0.32);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+.lf-hero-reviews:hover { background: rgba(10,15,28,0.5); border-color: rgba(255,255,255,0.35); transform: translateY(-1px); }
+.lf-hero-reviews-stars { display: inline-flex; align-items: center; gap: 2px; }
+.lf-hero-reviews-text { letter-spacing: 0.01em; }
+
+@media (max-width: 768px) {
+  .lf-hero-scroll { bottom: 28px; font-size: 10px; }
+  .lf-hero-scroll i { height: 28px; }
+  .lf-hero-reviews { right: 50%; transform: translateX(50%); bottom: 92px; font-size: 12px; padding: 8px 12px; }
+  .lf-hero-reviews:hover { transform: translateX(50%) translateY(-1px); }
+}
