@@ -5822,7 +5822,9 @@ body.page-hero-dark .footer {
 .lf-testi-google { flex-shrink: 0; opacity: .9; }
 
 @media (max-width: 760px) {
-  .lf-testi { flex: 0 0 84vw; }
+  .lf-testi { flex: 0 0 84vw; transform: none !important; opacity: 1 !important; }
+  .lf-testi p { -webkit-line-clamp: unset; display: block; color: #1c1f24 !important; }
+  .lf-testi .lf-hl-word::before { transform: scaleX(1) !important; transition-delay: 0s !important; }
 }
 /* Reviews section header — refined */
 .lf-reviews-head { display: flex; flex-direction: column; align-items: center; gap: 18px; }
