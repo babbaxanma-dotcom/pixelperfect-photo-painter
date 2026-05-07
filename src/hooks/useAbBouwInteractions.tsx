@@ -178,12 +178,31 @@ export function useAbBouwInteractions() {
       }, 7000);
     }
 
-    // ── Testimonials marquee: scale the card closest to viewport center
+    // ── Testimonials marquee: real RAF-driven auto-scroll + mouse/touch drag
     const testiMarquee = document.querySelector<HTMLElement>('[data-testi-marquee]');
+    const testiTrack = testiMarquee?.querySelector<HTMLElement>('[data-testi-track]') ?? null;
     const testiCards = testiMarquee
       ? Array.from(testiMarquee.querySelectorAll<HTMLElement>('.lf-testi'))
       : [];
     let testiRaf = 0;
+    let testiLast = 0;
+    let testiOffset = 0;
+    let testiSetWidth = 0;
+    let testiDragging = false;
+    let testiPointerId: number | null = null;
+    let testiStartX = 0;
+    let testiStartOffset = 0;
+    let testiPausedUntil = 0;
+    const testiReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const normalizeTesti = () => {
+      if (!testiSetWidth) return;
+      testiOffset = ((testiOffset % testiSetWidth) + testiSetWidth) % testiSetWidth;
+    };
+    const measureTesti = () => {
+      if (!testiTrack) return;
+      testiSetWidth = testiTrack.scrollWidth / 3;
+      normalizeTesti();
+    };
     const updateTestiFocus = () => {
       if (!testiMarquee || testiCards.length === 0) return;
       const mRect = testiMarquee.getBoundingClientRect();
@@ -204,11 +223,64 @@ export function useAbBouwInteractions() {
         card.classList.toggle('is-near', i !== bestIdx && dists[i] < cardW * 1.2);
       });
     };
-    const tickTesti = () => {
+    const applyTesti = () => {
+      if (!testiTrack) return;
+      testiTrack.style.setProperty('--testi-x', `${-testiOffset}px`);
       updateTestiFocus();
+    };
+    const tickTesti = () => {
+      const now = performance.now();
+      const dt = testiLast ? Math.min(48, now - testiLast) : 16;
+      testiLast = now;
+      if (testiTrack && testiSetWidth) {
+        if (!testiReduced && !testiDragging && now > testiPausedUntil) testiOffset += dt * 0.035;
+        normalizeTesti();
+        applyTesti();
+      }
       testiRaf = requestAnimationFrame(tickTesti);
     };
-    if (testiMarquee && testiCards.length) testiRaf = requestAnimationFrame(tickTesti);
+    const onTestiPointerDown = (e: PointerEvent) => {
+      if (!testiMarquee || e.button > 0) return;
+      testiDragging = true;
+      testiPointerId = e.pointerId;
+      testiStartX = e.clientX;
+      testiStartOffset = testiOffset;
+      testiPausedUntil = performance.now() + 900;
+      testiMarquee.classList.add('is-dragging');
+      testiMarquee.setPointerCapture(e.pointerId);
+    };
+    const onTestiPointerMove = (e: PointerEvent) => {
+      if (!testiDragging || e.pointerId !== testiPointerId) return;
+      testiOffset = testiStartOffset - (e.clientX - testiStartX);
+      normalizeTesti();
+      applyTesti();
+    };
+    const onTestiPointerUp = (e: PointerEvent) => {
+      if (!testiMarquee || e.pointerId !== testiPointerId) return;
+      testiDragging = false;
+      testiPointerId = null;
+      testiPausedUntil = performance.now() + 1200;
+      testiMarquee.classList.remove('is-dragging');
+    };
+    const onTestiWheel = (e: WheelEvent) => {
+      if (!testiTrack || !testiSetWidth || Math.abs(e.deltaX) + Math.abs(e.deltaY) < 2) return;
+      e.preventDefault();
+      testiOffset += Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      testiPausedUntil = performance.now() + 900;
+      normalizeTesti();
+      applyTesti();
+    };
+    if (testiMarquee && testiTrack && testiCards.length) {
+      measureTesti();
+      applyTesti();
+      testiRaf = requestAnimationFrame(tickTesti);
+      testiMarquee.addEventListener('pointerdown', onTestiPointerDown);
+      testiMarquee.addEventListener('pointermove', onTestiPointerMove);
+      testiMarquee.addEventListener('pointerup', onTestiPointerUp);
+      testiMarquee.addEventListener('pointercancel', onTestiPointerUp);
+      testiMarquee.addEventListener('wheel', onTestiWheel, { passive: false });
+      window.addEventListener('resize', measureTesti);
+    }
 
     // ── Mobile horizontal "pin" rail: vertical page scroll → horizontal rail scroll
     // Uses scroll-snap rail; we drive scrollLeft from window.scrollY while the
@@ -284,6 +356,12 @@ export function useAbBouwInteractions() {
       faqHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
       tabHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
       svcCards.forEach((c) => c.removeEventListener('mousemove', svcMove));
+      testiMarquee?.removeEventListener('pointerdown', onTestiPointerDown);
+      testiMarquee?.removeEventListener('pointermove', onTestiPointerMove);
+      testiMarquee?.removeEventListener('pointerup', onTestiPointerUp);
+      testiMarquee?.removeEventListener('pointercancel', onTestiPointerUp);
+      testiMarquee?.removeEventListener('wheel', onTestiWheel);
+      window.removeEventListener('resize', measureTesti);
       io.disconnect();
       cio.disconnect();
       pinIo?.disconnect();

@@ -5699,23 +5699,25 @@ body.page-hero-dark .footer {
 .lf-testi-marquee {
   position: relative;
   width: 100%;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: grab;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x pan-y;
+  scrollbar-width: none;
   /* Generous vertical padding so card shadow + scale never touch the edge */
   padding: 56px 0 64px;
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
           mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
 }
+.lf-testi-marquee::-webkit-scrollbar { display: none; }
+.lf-testi-marquee.is-dragging { cursor: grabbing; }
 .lf-testi-track {
   display: flex;
   gap: 24px;
   width: max-content;
-  animation: lf-testi-scroll 45s linear infinite;
+  transform: translate3d(var(--testi-x, 0px), 0, 0);
   will-change: transform;
-}
-.lf-testi-marquee:hover .lf-testi-track { animation-play-state: paused; }
-@keyframes lf-testi-scroll {
-  0%   { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(-50%, 0, 0); }
 }
 .lf-testi {
   flex: 0 0 360px;
@@ -5759,9 +5761,7 @@ body.page-hero-dark .footer {
 
 @media (max-width: 760px) {
   .lf-testi { flex: 0 0 84vw; }
-  .lf-testi-track { animation-duration: 50s; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .lf-testi-track { animation: none; }
   .lf-testi { transform: none; opacity: 1; }
 }
