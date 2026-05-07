@@ -25,6 +25,7 @@ import blog1 from '@/assets/home/blog1.jpg';
 import blog2 from '@/assets/home/blog2.jpg';
 import blog3 from '@/assets/home/blog3.jpg';
 import logo from '@/assets/home/logo.png';
+import logoHero from '@/assets/home/logo-hero.png';
 
 const HTML = (i: Record<string, string>) => `
 <div class="scroll-progress" id="scrollProgress"></div>
@@ -63,7 +64,7 @@ const HTML = (i: Record<string, string>) => `
 </div>
 
 <!-- HERO -->
-<a href="/" class="lf-hero-logo" aria-label="AB Bouw Groep"><img src="${i.logo}" alt="AB Bouw Groep" /></a>
+<a href="/" class="lf-hero-logo" aria-label="AB Bouw Groep"><img src="${i.logoHero}" alt="AB Bouw Groep" /></a>
 
 <section class="lf-hero">
   <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
@@ -1201,7 +1202,7 @@ export default function Home() {
     svcConstruct, svcEco, svcInterieur, svcDak, svcBad, svcGevel,
     proj1, proj2, proj3, proj4,
     team1, team2, team3, ctaMan,
-    blog1, blog2, blog3, logo,
+    blog1, blog2, blog3, logo, logoHero,
   });
 
   return <div dangerouslySetInnerHTML={{ __html: html }} />;
