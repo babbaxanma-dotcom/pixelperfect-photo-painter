@@ -5746,9 +5746,7 @@ body.page-hero-dark .footer {
 .lf-testi-arrow--prev { left: 14px; }
 .lf-testi-arrow--next { right: 14px; }
 @media (max-width: 760px) {
-  .lf-testi-arrow { width: 40px; height: 40px; }
-  .lf-testi-arrow--prev { left: 6px; }
-  .lf-testi-arrow--next { right: 6px; }
+  .lf-testi-arrow { display: none !important; }
 }
 
 /* AB Bouw yellow keyword highlight — sweeps in word-by-word when card is focused */
@@ -5822,8 +5820,42 @@ body.page-hero-dark .footer {
 .lf-testi-google { flex-shrink: 0; opacity: .9; }
 
 @media (max-width: 760px) {
-  .lf-testi { flex: 0 0 84vw; transform: none !important; opacity: 1 !important; }
-  .lf-testi p { -webkit-line-clamp: unset; display: block; color: #1c1f24 !important; }
+  .lf-testi-marquee {
+    overflow-x: auto;
+    overflow-y: visible;
+    padding: 28px 0 54px;
+    -webkit-mask-image: none !important;
+            mask-image: none !important;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 20px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .lf-testi-shift { transform: none !important; transition: none !important; }
+  .lf-testi-track { animation: none !important; width: max-content; transform: none !important; }
+  .lf-testi-set { gap: 16px; padding: 0 20px; }
+  .lf-testi-set[aria-hidden="true"] { display: none !important; }
+  .lf-testi {
+    flex: 0 0 min(86vw, 340px);
+    width: min(86vw, 340px);
+    min-width: 0;
+    min-height: 330px;
+    transform: none !important;
+    opacity: 1 !important;
+    scroll-snap-align: center;
+    padding: 22px 20px 18px;
+  }
+  .lf-testi p {
+    width: 100%;
+    min-width: 0;
+    display: block !important;
+    -webkit-line-clamp: initial !important;
+    -webkit-box-orient: initial !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    color: #1c1f24 !important;
+  }
   .lf-testi .lf-hl-word::before { transform: scaleX(1) !important; transition-delay: 0s !important; }
 }
 /* Reviews section header — refined */
