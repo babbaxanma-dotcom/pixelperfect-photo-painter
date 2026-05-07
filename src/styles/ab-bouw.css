@@ -5699,22 +5699,25 @@ body.page-hero-dark .footer {
 .lf-testi-marquee {
   position: relative;
   width: 100%;
-  overflow: hidden;
-  padding: 32px 0;
-  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
-          mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+  /* Clip horizontally so the track loops invisibly, but let card shadows
+     breathe vertically — prevents the hard cut at the section edge. */
+  overflow-x: clip;
+  overflow-y: visible;
+  padding: 40px 0 48px;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
 }
 .lf-testi-track {
   display: flex;
   gap: 24px;
   width: max-content;
-  animation: lf-testi-scroll 70s linear infinite;
+  animation: lf-testi-scroll 45s linear infinite;
   will-change: transform;
 }
 .lf-testi-marquee:hover .lf-testi-track { animation-play-state: paused; }
 @keyframes lf-testi-scroll {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-50%, 0, 0); }
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
 }
 .lf-testi {
   flex: 0 0 360px;
