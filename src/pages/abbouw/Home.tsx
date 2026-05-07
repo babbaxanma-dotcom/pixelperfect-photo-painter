@@ -137,30 +137,7 @@ const HTML = (i: Record<string, string>) => `
   </div>
 </section>
 
-<!-- PARTNER LOGOS -->
-<section class="lf-partners">
-  <div class="wrap">
-    <div class="lf-partners-head">
-      <span class="lf-partners-eyebrow">Onze partners</span>
-      <p>Wij verwerken enkel materialen van fabrikanten die voldoen aan de strengste Belgische bouwnormen.</p>
-    </div>
-    <div class="lf-marquee">
-      <div class="lf-marquee-track">
-        ${Array.from({ length: 2 }).map(() => `
-          <div class="lf-marquee-set">
-            <img src="/assets/logos/dorken.svg" alt="Dörken" loading="lazy" />
-            <img src="/assets/logos/eternit.svg" alt="Eternit" loading="lazy" />
-            <img src="/assets/logos/isoproc.svg" alt="Isoproc" loading="lazy" />
-            <img src="/assets/logos/isover.svg" alt="Isover" loading="lazy" />
-            <img src="/assets/logos/knauf.svg" alt="Knauf" loading="lazy" />
-            <img src="/assets/logos/koramic.svg" alt="Koramic" loading="lazy" />
-            <img src="/assets/logos/mato.svg" alt="Mato" loading="lazy" />
-            <img src="/assets/logos/rectic.svg" alt="Rectic" loading="lazy" />
-          </div>`).join('')}
-      </div>
-    </div>
-  </div>
-</section>
+
 
 <!-- ABOUT + FORM -->
 <section class="lf-section">
