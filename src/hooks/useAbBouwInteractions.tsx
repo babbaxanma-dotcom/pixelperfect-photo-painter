@@ -279,6 +279,7 @@ export function useAbBouwInteractions() {
       const tRect = target.getBoundingClientRect();
       const left = testiMarquee.scrollLeft + (tRect.left - mRect.left) - (mRect.width - tRect.width) / 2;
       testiMarquee.scrollTo({ left, behavior });
+      testiMarquee.classList.add('is-ready');
     };
     const keepMobileTestiInMiddleLoop = () => {
       if (!testiMarquee || !testiTrack || !isTestiMobile()) return;
@@ -295,6 +296,7 @@ export function useAbBouwInteractions() {
       testiRaf = requestAnimationFrame(tickTesti);
     };
     if (testiMarquee && testiCards.length) {
+      if (!isTestiMobile()) testiMarquee.classList.add('is-ready');
       requestAnimationFrame(() => centerMobileTesti('auto'));
       updateTestiFocus();
       testiRaf = requestAnimationFrame(tickTesti);
