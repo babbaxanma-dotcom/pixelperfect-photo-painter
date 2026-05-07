@@ -86,15 +86,18 @@ export function useAbBouwInteractions() {
 
     // ── Nav scroll state ────────────────────────────────
     const nav = document.getElementById('nav');
-    const hasHero = !!document.querySelector('.lf-hero');
-    if (hasHero) nav?.classList.add('hero-mode');
+    const heroStage = document.querySelector<HTMLElement>('.lf-hero-stage');
+    const hero = document.querySelector<HTMLElement>('.lf-hero');
+    if (heroStage) nav?.classList.add('hero-mode');
     const onScroll = () => {
       if (window.scrollY > 30) nav?.classList.add('scrolled');
       else nav?.classList.remove('scrolled');
-      if (hasHero) {
-        const heroH = (document.querySelector('.lf-hero') as HTMLElement)?.offsetHeight || window.innerHeight;
-        // Reveal full navbar once user is ~70% through hero
-        if (window.scrollY > heroH * 0.7) nav?.classList.remove('hero-mode');
+      if (heroStage && hero) {
+        const stageScrollable = Math.max(1, heroStage.offsetHeight - window.innerHeight);
+        const p = Math.max(0, Math.min(1, window.scrollY / stageScrollable));
+        hero.style.setProperty('--hp', p.toString());
+        // Keep only the logo over the fullscreen cinematic; reveal navbar as the hero gives way.
+        if (p >= 0.82) nav?.classList.remove('hero-mode');
         else nav?.classList.add('hero-mode');
       }
       const sp = document.getElementById('scrollProgress');
@@ -170,11 +173,6 @@ export function useAbBouwInteractions() {
       if (heroBg) {
         const y = Math.min(window.scrollY, 600);
         heroBg.style.transform = `scale(1.04) translate3d(0, ${y * 0.18}px, 0)`;
-      }
-      if (heroEl) {
-        const h = heroEl.offsetHeight || window.innerHeight;
-        const p = Math.max(0, Math.min(1, window.scrollY / (h * 0.85)));
-        heroEl.style.setProperty('--hp', p.toString());
       }
     };
     window.addEventListener('scroll', onParallax, { passive: true });
