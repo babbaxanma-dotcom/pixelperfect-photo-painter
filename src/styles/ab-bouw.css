@@ -6285,7 +6285,7 @@ body.ab-bouw-page { margin: 0 !important; padding: 0 !important; }
   .lf-hero-reviews { transform: translateX(50%); }
 }
 
-/* ── Nav: scroll-driven horizontal sweep reveal ── */
+/* ── Nav: clean scroll-driven reveal ── */
 :root { --nav-sweep: 0; }
 .lf-nav {
   opacity: 1;
@@ -6296,28 +6296,32 @@ body.ab-bouw-page { margin: 0 !important; padding: 0 !important; }
   pointer-events: none !important;
 }
 .lf-nav .lf-nav-inner {
-  clip-path: inset(0 calc((1 - var(--nav-sweep, 0)) * 50%) 0 calc((1 - var(--nav-sweep, 0)) * 50%) round 999px);
   opacity: var(--nav-sweep, 0);
-  transition: opacity 0.15s linear;
+  transform: translateY(calc((1 - var(--nav-sweep, 0)) * -14px));
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
 }
-/* Floating brand-only logo while hero is in view */
-.lf-hero-logo {
-  position: fixed;
-  top: 22px;
-  left: clamp(20px, 4vw, 48px);
-  z-index: 60;
-  opacity: var(--hf, 1);
-  pointer-events: auto;
-  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.5));
-  transition: opacity 0.25s ease;
+.lf-nav.scrolled .lf-nav-inner {
+  box-shadow: 0 12px 40px -12px rgba(0,0,0,0.18), 0 2px 8px -2px rgba(0,0,0,0.08);
+  backdrop-filter: saturate(1.4) blur(14px);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
 }
-.lf-hero-logo img {
-  height: clamp(52px, 6vw, 76px);
-  width: auto;
-  display: block;
+
+/* ── Form attention pulse when scrolled into view ── */
+@keyframes lf-form-attention {
+  0%   { box-shadow: 0 20px 50px -20px rgba(0,0,0,0.18), 0 0 0 0 hsl(var(--primary) / 0.45); transform: translateY(0) scale(1); }
+  35%  { box-shadow: 0 28px 70px -20px rgba(0,0,0,0.22), 0 0 0 14px hsl(var(--primary) / 0); transform: translateY(-4px) scale(1.012); }
+  100% { box-shadow: 0 20px 50px -20px rgba(0,0,0,0.18), 0 0 0 0 hsl(var(--primary) / 0); transform: translateY(0) scale(1); }
 }
-body.nav-revealed .lf-hero-logo {
-  opacity: 0 !important;
-  pointer-events: none;
+@keyframes lf-eyebrow-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+.lf-form.is-attention {
+  animation: lf-form-attention 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.lf-form.is-attention .lf-form-eyebrow {
+  animation: lf-eyebrow-pop 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
 }
 
