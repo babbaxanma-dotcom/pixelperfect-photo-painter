@@ -6195,100 +6195,49 @@ body.page-hero-dark .footer {
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Cinematic fullscreen hero stage with scroll-driven shrink ── */
-.lf-hero-stage {
+/* ── Fullscreen hero — scrolls out normally, only inner content fades ── */
+:root { --hf: 1; }
+.lf-hero {
   position: relative;
-  height: 200vh; /* 1× pin + 1× release */
-  width: 100%;
-  background: var(--ink-deep);
-}
-.lf-hero-stage .lf-hero {
-  position: sticky;
-  top: 0;
   height: 100vh;
   min-height: 100vh !important;
   width: 100%;
   overflow: hidden;
   margin-top: 0 !important;
-  transform: scale(calc(1 - var(--hp) * 0.08));
-  transform-origin: 50% 50%;
-  opacity: calc(1 - var(--hp) * 1.25);
-  visibility: visible;
-  transition: none;
-  will-change: transform, opacity;
+  --hp: 0;
 }
-.lf-hero-stage.is-collapsed .lf-hero {
-  visibility: hidden;
-  opacity: 0;
-}
-@media (max-width: 760px) {
-  .lf-hero-stage { height: 180vh; }
-}
-
-:root { --hp: 0; }
-.lf-hero { --hp: 0; }
-.lf-hero-mini {
-  transform-origin: 50% 50%;
-  transform: scale(calc(1 - var(--hp) * 0.25)) translateY(calc(var(--hp) * -40px));
-  opacity: calc(1 - var(--hp) * 1.6);
-  transition: none;
-}
-
-/* First content section directly under the hero — bold statement on dark, full viewport */
-.lf-statement {
-  background: var(--ink-deep);
-  color: #fff;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding: clamp(80px, 12vw, 160px) 0;
-  position: relative;
-  z-index: 2;
-}
-.lf-statement-text {
-  font-family: var(--font-display);
-  font-size: clamp(28px, 3.6vw, 54px);
-  line-height: 1.18;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: #fff;
-  max-width: 1100px;
-}
-.lf-statement-text em { font-style: normal; color: var(--accent); }
-
-/* Reviews + scroll hint fade out as user scrolls */
+.lf-hero-mini,
 .lf-hero-reviews,
 .lf-hero-scroll {
-  opacity: calc(1 - var(--hp) * 1.6);
-  transition: none;
+  opacity: var(--hf, 1);
+  transition: opacity 0.15s linear;
 }
 @media (max-width: 768px) {
   .lf-hero-reviews { transform: translateX(50%); }
 }
 
-/* ── Hero mode: nav fully hidden over the cinematic ── */
+/* ── Nav: hidden until hero is fully out of view ── */
 .lf-nav {
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.3s ease, visibility 0s linear 0s;
+  transition: opacity 0.4s ease, visibility 0s linear 0s;
 }
 .lf-nav.hero-mode {
   opacity: 0 !important;
   pointer-events: none !important;
   visibility: hidden !important;
-  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+  transition: opacity 0.4s ease, visibility 0s linear 0.4s;
 }
-/* Floating brand-only logo over the cinematic */
+/* Floating brand-only logo while hero is in view */
 .lf-hero-logo {
   position: fixed;
   top: 24px;
   left: clamp(20px, 4vw, 48px);
   z-index: 60;
-  opacity: calc(1 - var(--hp, 0) * 1.6);
-  transform: translateY(calc(var(--hp, 0) * -10px));
+  opacity: var(--hf, 1);
   pointer-events: auto;
   filter: drop-shadow(0 4px 14px rgba(0,0,0,0.45));
-  transition: none;
+  transition: opacity 0.2s linear;
 }
 .lf-hero-logo img {
   height: clamp(48px, 6vw, 72px);
