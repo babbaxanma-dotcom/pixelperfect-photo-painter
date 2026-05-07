@@ -6307,21 +6307,36 @@ body.ab-bouw-page { margin: 0 !important; padding: 0 !important; }
   -webkit-backdrop-filter: saturate(1.4) blur(14px);
 }
 
-/* ── Form attention pulse when scrolled into view ── */
-@keyframes lf-form-attention {
-  0%   { box-shadow: 0 20px 50px -20px rgba(0,0,0,0.18), 0 0 0 0 hsl(var(--primary) / 0.45); transform: translateY(0) scale(1); }
-  35%  { box-shadow: 0 28px 70px -20px rgba(0,0,0,0.22), 0 0 0 14px hsl(var(--primary) / 0); transform: translateY(-4px) scale(1.012); }
-  100% { box-shadow: 0 20px 50px -20px rgba(0,0,0,0.18), 0 0 0 0 hsl(var(--primary) / 0); transform: translateY(0) scale(1); }
+/* ── Form attention: continuous calm pulse until interacted with ── */
+@keyframes lf-form-pulse {
+  0%, 100% {
+    box-shadow:
+      0 20px 50px -20px rgba(0,0,0,0.18),
+      0 0 0 0 hsl(var(--primary) / 0.55),
+      0 0 0 0 hsl(var(--primary) / 0.35);
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    box-shadow:
+      0 28px 70px -20px rgba(0,0,0,0.22),
+      0 0 0 12px hsl(var(--primary) / 0),
+      0 0 0 28px hsl(var(--primary) / 0);
+    transform: translateY(-3px) scale(1.008);
+  }
 }
-@keyframes lf-eyebrow-pop {
-  0%   { transform: scale(1); }
-  40%  { transform: scale(1.08); }
-  100% { transform: scale(1); }
+@keyframes lf-eyebrow-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.95; }
+  50%      { transform: scale(1.06); opacity: 1; }
 }
 .lf-form.is-attention {
-  animation: lf-form-attention 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: lf-form-pulse 2.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 .lf-form.is-attention .lf-form-eyebrow {
-  animation: lf-eyebrow-pop 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+  animation: lf-eyebrow-breathe 2.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.lf-form.is-attention.is-engaged,
+.lf-form.is-attention.is-engaged .lf-form-eyebrow {
+  animation: none !important;
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
 }
 

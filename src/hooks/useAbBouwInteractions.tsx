@@ -139,15 +139,13 @@ export function useAbBouwInteractions() {
     );
     reveals.forEach((el) => io.observe(el));
 
-    // ── Offerte form: attention pulse when scrolled into view ──
+    // ── Offerte form: continuous calm pulse until user engages ──
     const formEl = document.querySelector<HTMLElement>('.lf-form#contact-form');
     if (formEl) {
       const fio = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
             if (e.isIntersecting && e.intersectionRatio > 0.3) {
-              formEl.classList.remove('is-attention');
-              void formEl.offsetWidth;
               formEl.classList.add('is-attention');
               fio.unobserve(formEl);
             }
@@ -156,6 +154,9 @@ export function useAbBouwInteractions() {
         { threshold: [0.3, 0.5] },
       );
       fio.observe(formEl);
+      const stop = () => formEl.classList.add('is-engaged');
+      formEl.addEventListener('pointerdown', stop, { once: true });
+      formEl.addEventListener('focusin', stop, { once: true });
     }
 
     // ── Count-up ────────────────────────────────────────
