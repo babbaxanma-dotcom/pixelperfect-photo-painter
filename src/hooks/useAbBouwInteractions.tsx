@@ -97,8 +97,8 @@ export function useAbBouwInteractions() {
         const stageScrollable = Math.max(1, heroStage.offsetHeight - vh);
         const p = Math.max(0, Math.min(1, window.scrollY / stageScrollable));
         hero.style.setProperty('--hp', p.toString());
+        document.documentElement.style.setProperty('--hp', p.toString());
         heroStage.classList.toggle('is-collapsed', p >= 0.999);
-        // Reveal navbar ONLY when hero is fully out of view (no overlap)
         const heroOut = p >= 1;
         if (heroOut) {
           nav?.classList.remove('hero-mode');
