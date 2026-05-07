@@ -95,9 +95,9 @@ export function useAbBouwInteractions() {
         const heroH = hero.offsetHeight;
         const fade = Math.max(0, Math.min(1, 1 - window.scrollY / (heroH * 0.45)));
         document.documentElement.style.setProperty('--hf', fade.toString());
-        // Navbar sweep tied to scroll: starts at 75% of hero, fully open at 100%
-        const navStart = heroH * 0.75;
-        const navEnd = heroH * 1.0;
+        // Navbar sweep: starts at 55% of hero, fully open at 75%
+        const navStart = heroH * 0.55;
+        const navEnd = heroH * 0.75;
         const navP = Math.max(0, Math.min(1, (window.scrollY - navStart) / (navEnd - navStart)));
         document.documentElement.style.setProperty('--nav-sweep', navP.toString());
         if (navP > 0.02) {
