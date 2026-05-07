@@ -66,8 +66,6 @@ const HTML = (i: Record<string, string>) => `
 </div>
 
 <!-- HERO -->
-<a href="/" class="lf-hero-logo" aria-label="AB Bouw Groep"><img src="${i.logoHero}" alt="AB Bouw Groep" /></a>
-
 <section class="lf-hero">
   <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
     <img src="${i.hero2}" alt="AB Bouw Group" class="is-active" />
