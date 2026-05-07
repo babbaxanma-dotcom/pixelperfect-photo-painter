@@ -180,6 +180,7 @@ export function useAbBouwInteractions() {
 
     // ── Testimonials focus states only; auto-scroll itself uses the same CSS marquee as partners
     const testiMarquee = document.querySelector<HTMLElement>('[data-testi-marquee]');
+    const testiShift = document.querySelector<HTMLElement>('[data-testi-shift]');
     const testiCards = testiMarquee
       ? Array.from(testiMarquee.querySelectorAll<HTMLElement>('.lf-testi'))
       : [];
@@ -212,6 +213,24 @@ export function useAbBouwInteractions() {
       updateTestiFocus();
       testiRaf = requestAnimationFrame(tickTesti);
     }
+
+    // ── Arrows: nudge the marquee by one card via --testi-shift offset
+    const testiPrev = document.querySelector<HTMLElement>('[data-testi-prev]');
+    const testiNext = document.querySelector<HTMLElement>('[data-testi-next]');
+    let testiShiftValue = 0;
+    const applyShift = () => {
+      if (testiShift) testiShift.style.setProperty('--testi-shift', `${testiShiftValue}px`);
+    };
+    const stepShift = (dir: 1 | -1) => {
+      if (!testiCards.length) return;
+      const cardW = testiCards[0].getBoundingClientRect().width + 24; // gap
+      testiShiftValue += -dir * cardW;
+      applyShift();
+    };
+    const onPrev = () => stepShift(-1);
+    const onNext = () => stepShift(1);
+    testiPrev?.addEventListener('click', onPrev);
+    testiNext?.addEventListener('click', onNext);
 
     // ── Mobile horizontal "pin" rail: vertical page scroll → horizontal rail scroll
     // Uses scroll-snap rail; we drive scrollLeft from window.scrollY while the
