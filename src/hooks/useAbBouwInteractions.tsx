@@ -280,6 +280,18 @@ export function useAbBouwInteractions() {
       const left = testiMarquee.scrollLeft + (tRect.left - mRect.left) - (mRect.width - tRect.width) / 2;
       testiMarquee.scrollTo({ left, behavior });
     };
+    const keepMobileTestiInMiddleLoop = () => {
+      if (!testiMarquee || !testiTrack || !isTestiMobile()) return;
+      const sets = Array.from(testiTrack.querySelectorAll<HTMLElement>('.lf-testi-set'));
+      if (sets.length < 3) return;
+      const first = sets[0].getBoundingClientRect();
+      const middle = sets[1].getBoundingClientRect();
+      const setW = middle.width;
+      const x = testiMarquee.scrollLeft + (middle.left - testiMarquee.getBoundingClientRect().left);
+      if (x < setW * 0.5) testiMarquee.scrollLeft += setW;
+      if (x > setW * 1.5) testiMarquee.scrollLeft -= setW;
+      void first;
+    };
     const tickTesti = () => {
       updateTestiFocus();
       testiRaf = requestAnimationFrame(tickTesti);
@@ -312,6 +324,7 @@ export function useAbBouwInteractions() {
     const onNext = () => stepShift(1);
     testiPrev?.addEventListener('click', onPrev);
     testiNext?.addEventListener('click', onNext);
+    testiMarquee?.addEventListener('scroll', keepMobileTestiInMiddleLoop, { passive: true });
 
     // ── Mobile horizontal "pin" rail: vertical page scroll → horizontal rail scroll
     // Uses scroll-snap rail; we drive scrollLeft from window.scrollY while the
@@ -397,6 +410,7 @@ export function useAbBouwInteractions() {
       if (testiRaf) cancelAnimationFrame(testiRaf);
       testiPrev?.removeEventListener('click', onPrev);
       testiNext?.removeEventListener('click', onNext);
+      testiMarquee?.removeEventListener('scroll', keepMobileTestiInMiddleLoop);
     };
   }, [location.pathname, navigate]);
 }
