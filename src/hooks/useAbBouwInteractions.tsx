@@ -157,12 +157,20 @@ export function useAbBouwInteractions() {
 
     // ── Subtle parallax on hero bg (single hero image only)
     const heroBg = document.querySelector<HTMLElement>('.lf-hero-bg:not(.lf-hero-bg--slides) img');
+    const heroEl = document.querySelector<HTMLElement>('.lf-hero');
     const onParallax = () => {
-      if (!heroBg) return;
-      const y = Math.min(window.scrollY, 600);
-      heroBg.style.transform = `scale(1.04) translate3d(0, ${y * 0.18}px, 0)`;
+      if (heroBg) {
+        const y = Math.min(window.scrollY, 600);
+        heroBg.style.transform = `scale(1.04) translate3d(0, ${y * 0.18}px, 0)`;
+      }
+      if (heroEl) {
+        const h = heroEl.offsetHeight || window.innerHeight;
+        const p = Math.max(0, Math.min(1, window.scrollY / (h * 0.85)));
+        heroEl.style.setProperty('--hp', p.toString());
+      }
     };
     window.addEventListener('scroll', onParallax, { passive: true });
+    onParallax();
 
     // ── Hero slideshow: crossfade with arrows + dots
     const heroSlides = Array.from(

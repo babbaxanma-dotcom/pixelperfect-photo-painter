@@ -80,13 +80,16 @@ const HTML = (i: Record<string, string>) => `
   </div>
   <div class="wrap lf-hero-wrap">
     <div class="lf-hero-mini" data-hero-anim>
-      <h1 class="lf-hero-headline" data-hero-line>
-        Vakmanschap in bouw, dakwerken<br/>en renovatie in heel Vlaanderen
+      <h1 class="lf-hero-headline">
+        <span class="lf-hw" style="--i:0">Vakmanschap</span>
+        <span class="lf-hw" style="--i:1">in</span>
+        <span class="lf-hw" style="--i:2">heel</span>
+        <span class="lf-hw" style="--i:3">Vlaanderen</span>
       </h1>
-      <p class="lf-hero-sub" data-hero-line data-hero-delay="1">
+      <p class="lf-hero-sub" style="--i:5">
         AB Bouw Group realiseert duurzame projecten op maat — van ruwbouw en daken<br/>tot gevels en interieur, met aandacht voor detail en afwerking.
       </p>
-      <div class="lf-hero-actions" data-hero-line data-hero-delay="2">
+      <div class="lf-hero-actions" style="--i:7">
         <a href="#contact-form" class="lf-cta-pill" data-smooth>
           <span>Plan een kennismaking</span>
           <span class="lf-cta-pill-arrow">
