@@ -5849,68 +5849,52 @@ body.page-hero-dark .footer {
 
 @media (max-width: 760px) {
   .lf-testi-marquee {
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 24px 0 42px;
-    -webkit-mask-image: none !important;
-            mask-image: none !important;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    opacity: 0;
-  }
-  .lf-testi-marquee.is-ready {
+    overflow: hidden;
+    padding: 20px 0 32px;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
     opacity: 1;
-    transition: opacity .18s ease;
   }
   .lf-testi-shift { transform: none !important; transition: none !important; }
-  .lf-testi-track { animation: none !important; width: max-content; transform: none !important; }
-  .lf-testi-set { gap: 14px; padding: 0 0; }
-  .lf-testi-set:first-child { padding-left: 0; }
-  .lf-testi-set:last-child { padding-right: 0; }
+  .lf-testi-track {
+    animation: lf-marquee-scroll 70s linear infinite !important;
+    width: max-content;
+  }
+  .lf-testi-marquee:hover .lf-testi-track,
+  .lf-testi-marquee:active .lf-testi-track { animation-play-state: paused; }
+  .lf-testi-set { gap: 14px; padding: 0 7px; }
   .lf-testi {
     box-sizing: border-box;
-    flex: 0 0 min(calc(100vw - 48px), 342px);
-    width: min(calc(100vw - 48px), 342px);
+    flex: 0 0 min(calc(100vw - 56px), 320px);
+    width: min(calc(100vw - 56px), 320px);
     min-width: 0;
-    min-height: 0;
-    scroll-snap-align: center;
     padding: 22px 18px 20px;
     overflow: hidden;
-    transform: scale(.9);
-    opacity: .35;
-    transition: transform .45s cubic-bezier(.2,.7,.2,1), opacity .45s ease, box-shadow .45s ease;
+    transform: none;
+    opacity: 1;
+    box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 12px 28px -16px rgba(15,17,21,.14);
+  }
+  .lf-testi.is-focus,
+  .lf-testi.is-near {
+    transform: none !important;
+    opacity: 1 !important;
   }
   .lf-testi * { max-width: 100%; min-width: 0; }
-  .lf-testi.is-focus {
-    transform: scale(1) !important;
-    opacity: 1 !important;
-    box-shadow: 0 2px 4px rgba(15,17,21,.06), 0 24px 48px -20px rgba(15,17,21,.2);
-  }
-  .lf-testi.is-near {
-    transform: scale(.92) !important;
-    opacity: .5 !important;
-  }
   .lf-testi p {
     width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    display: block !important;
-    -webkit-line-clamp: initial !important;
-    -webkit-box-orient: initial !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 6 !important;
+    -webkit-box-orient: vertical !important;
     overflow: hidden !important;
     white-space: normal !important;
     overflow-wrap: break-word !important;
-    word-wrap: break-word !important;
     word-break: normal !important;
     hyphens: auto;
     color: #1c1f24 !important;
     font-size: 14.5px;
-    line-height: 1.62;
+    line-height: 1.6;
   }
-  .lf-testi-foot {
-    align-items: flex-start;
-    gap: 10px;
-  }
+  .lf-testi-foot { align-items: center; gap: 10px; }
   .lf-testi-meta strong,
   .lf-testi-meta span {
     white-space: normal;
