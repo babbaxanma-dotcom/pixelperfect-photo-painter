@@ -187,10 +187,6 @@ export function useAbBouwInteractions() {
       heroDots[heroSlideIdx]?.classList.remove('is-active');
       heroSlideIdx = n;
       const incoming = heroSlides[heroSlideIdx];
-      // Restart kenburns by reflowing
-      incoming.style.animation = 'none';
-      void incoming.offsetWidth;
-      incoming.style.animation = '';
       incoming.classList.add('is-active');
       heroDots[heroSlideIdx]?.classList.add('is-active');
       // Restart dot fill animation by reflowing the span

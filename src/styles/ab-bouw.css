@@ -5861,38 +5861,36 @@ body.page-hero-dark .footer {
   width: 100%; height: 100%;
   object-fit: cover;
   opacity: 0;
-  transform: scale(1.06);
+  transform: scale(1.05);
   transform-origin: center center;
-  transition: opacity 2.2s cubic-bezier(0.4, 0.0, 0.2, 1), filter 2.2s cubic-bezier(0.4,0,0.2,1);
-  filter: blur(6px);
-  will-change: opacity, transform, filter;
+  /* long, gentle dissolve — no blur, no scale snap */
+  transition: opacity 2.4s cubic-bezier(0.45, 0, 0.25, 1);
+  will-change: opacity, transform;
   z-index: 0;
+  /* Ken Burns runs continuously on every image so motion never resets mid-fade */
+  animation: lf-hero-kenburns 14s ease-in-out infinite alternate;
+  animation-play-state: paused;
 }
 .lf-hero-bg--slides img.is-active {
   opacity: 1;
-  filter: blur(0);
-  z-index: 1;
-  animation: lf-hero-kenburns 9s ease-out forwards;
+  z-index: 2;
+  animation-play-state: running;
 }
 .lf-hero-bg--slides img.is-prev {
   opacity: 0;
-  filter: blur(6px);
-  z-index: 0;
-  animation: lf-hero-kenburns-out 2.4s cubic-bezier(0.4,0,0.2,1) forwards;
+  z-index: 1;
+  /* keep drifting while it fades out — no jump back */
+  animation-play-state: running;
 }
 @keyframes lf-hero-kenburns {
-  0%   { transform: scale(1.08) translate3d(0, 0, 0); }
-  100% { transform: scale(1.0)  translate3d(-1.2%, -0.8%, 0); }
-}
-@keyframes lf-hero-kenburns-out {
-  0%   { transform: scale(1.0)  translate3d(-1.2%, -0.8%, 0); }
-  100% { transform: scale(1.14) translate3d(-2.2%, -1.4%, 0); }
+  0%   { transform: scale(1.05) translate3d(0, 0, 0); }
+  100% { transform: scale(1.12) translate3d(-1.6%, -1.0%, 0); }
 }
 .lf-hero-bg--slides::after {
   content: '';
   position: absolute; inset: 0;
   background: radial-gradient(ellipse at center, rgba(10,15,28,0.40) 0%, rgba(10,15,28,0.78) 80%);
-  z-index: 1;
+  z-index: 3;
 }
 
 .lf-hero-arrow {
