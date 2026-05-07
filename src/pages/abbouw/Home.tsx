@@ -300,8 +300,8 @@ const HTML = (i: Record<string, string>) => `
         { img: i.svcDak, n: '04', title: 'AB Dakwerken', desc: 'Hellende en platte daken, dakisolatie en zinkwerk. Door eigen dakdekkers geplaatst.', href: '/dakwerken' },
         { img: i.svcBad, n: '05', title: 'AB Bad &amp; Wellness', desc: 'Sleutel-op-de-deur badkamers met premium tegels en sanitair. Klaar in vier weken.', href: '/bad' },
         { img: i.svcGevel, n: '06', title: 'AB Gevelbekleding', desc: 'Witte of grijze crepi, sierpleister of steenstrips. Tijdloos én onderhoudsarm.', href: '/gevel' },
-      ].map(s => `
-        <a class="lf-svc-card" href="${s.href}" data-reveal>
+      ].map((s, idx) => `
+        <a class="lf-svc-card" href="${s.href}" data-reveal style="transition-delay:${idx * 70}ms">
           <div class="lf-svc-img"><img src="${s.img}" alt="${s.title}" loading="lazy" /><span class="lf-svc-num">${s.n}</span></div>
           <div class="lf-svc-body">
             <h4>${s.title}</h4>
