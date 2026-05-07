@@ -79,19 +79,18 @@ const HTML = (i: Record<string, string>) => `
     <button type="button" class="lf-hero-dot" data-hero-dot="1" aria-label="Foto 2"><span></span></button>
   </div>
   <div class="wrap lf-hero-wrap">
-    <div class="lf-hero-card lf-hero-card--center" data-hero-anim>
-      <h1 data-hero-line><span class="lf-hero-line-inner">Sterk gebouwd.</span></h1>
-      <h1 data-hero-line data-hero-delay="1"><span class="lf-hero-line-inner">Strak afgewerkt.</span></h1>
-      <h1 data-hero-line data-hero-delay="2"><span class="lf-hero-line-inner">Op uw woord.</span></h1>
-      <p data-hero-line data-hero-delay="3">Eén projectleider, eigen vakmensen en een vaste prijs op papier. Zo bouwen en renoveren we al 15 jaar in Vlaanderen, zonder onaangename rekening achteraf.</p>
-      <div class="lf-hero-actions" data-hero-line data-hero-delay="4">
+    <div class="lf-hero-mini" data-hero-anim>
+      <span class="lf-hero-eyebrow" data-hero-line>
+        <span class="lf-hero-eyebrow-dot"></span>
+        Uw aannemer in Vlaanderen — sinds 2009
+      </span>
+      <div class="lf-hero-actions" data-hero-line data-hero-delay="1">
         <a href="#contact-form" class="lf-cta-pill" data-smooth>
           <span>Plan een kennismaking</span>
           <span class="lf-cta-pill-arrow">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </span>
         </a>
-        <a href="/realisaties" class="lf-hero-link">Bekijk ons werk →</a>
       </div>
     </div>
   </div>
