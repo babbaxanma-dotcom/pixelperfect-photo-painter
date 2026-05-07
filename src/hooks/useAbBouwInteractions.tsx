@@ -86,8 +86,16 @@ export function useAbBouwInteractions() {
 
     // ── Nav scroll state ────────────────────────────────
     const nav = document.getElementById('nav');
-    const hero = document.querySelector<HTMLElement>('.lf-hero');
-    if (hero) nav?.classList.add('hero-mode');
+    const isHome = location.pathname === '/';
+    const hero = isHome ? document.querySelector<HTMLElement>('.lf-hero') : null;
+    if (hero) {
+      nav?.classList.add('hero-mode');
+    } else {
+      // Non-home pages: navbar always visible, no sweep
+      nav?.classList.remove('hero-mode');
+      document.documentElement.style.setProperty('--nav-sweep', '1');
+      document.body.classList.add('nav-revealed');
+    }
     const onScroll = () => {
       if (window.scrollY > 30) nav?.classList.add('scrolled');
       else nav?.classList.remove('scrolled');
@@ -95,7 +103,6 @@ export function useAbBouwInteractions() {
         const heroH = hero.offsetHeight;
         const fade = Math.max(0, Math.min(1, 1 - window.scrollY / (heroH * 0.45)));
         document.documentElement.style.setProperty('--hf', fade.toString());
-        // Navbar sweep: starts at 55% of hero, fully open at 75%
         const navStart = heroH * 0.55;
         const navEnd = heroH * 0.75;
         const navP = Math.max(0, Math.min(1, (window.scrollY - navStart) / (navEnd - navStart)));
