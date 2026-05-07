@@ -5882,16 +5882,15 @@ body.page-hero-dark .footer {
   }
   .lf-testi.is-focus,
   .lf-testi.is-near {
-    transform: translate3d(-50%, 10px, 0) scale(.98) !important;
-    opacity: 0 !important;
+    transform: translate3d(-50%, 10px, 0) scale(.98);
   }
   .lf-testi:nth-child(1) { animation-delay: 0s; }
-  .lf-testi:nth-child(2) { animation-delay: 7s; }
-  .lf-testi:nth-child(3) { animation-delay: 14s; }
-  .lf-testi:nth-child(4) { animation-delay: 21s; }
-  .lf-testi:nth-child(5) { animation-delay: 28s; }
-  .lf-testi:nth-child(6) { animation-delay: 35s; }
-  .lf-testi:nth-child(7) { animation-delay: 42s; }
+  .lf-testi:nth-child(2) { animation-delay: -42s; }
+  .lf-testi:nth-child(3) { animation-delay: -35s; }
+  .lf-testi:nth-child(4) { animation-delay: -28s; }
+  .lf-testi:nth-child(5) { animation-delay: -21s; }
+  .lf-testi:nth-child(6) { animation-delay: -14s; }
+  .lf-testi:nth-child(7) { animation-delay: -7s; }
   .lf-testi * { max-width: 100%; min-width: 0; }
   .lf-testi p {
     width: 100%;
@@ -5931,9 +5930,9 @@ body.page-hero-dark .footer {
 }
 
 @keyframes lf-mobile-review-fade {
-  0%, 12% { opacity: 0; transform: translate3d(-50%, 10px, 0) scale(.98); }
-  16%, 28% { opacity: 1; transform: translate3d(-50%, 0, 0) scale(1); }
-  32%, 100% { opacity: 0; transform: translate3d(-50%, -10px, 0) scale(.98); }
+  0%, 10% { opacity: 1; transform: translate3d(-50%, 0, 0) scale(1); }
+  14%, 96% { opacity: 0; transform: translate3d(-50%, -10px, 0) scale(.98); }
+  100% { opacity: 0; transform: translate3d(-50%, 10px, 0) scale(.98); }
 }
 /* Reviews section header — refined */
 .lf-reviews-head { display: flex; flex-direction: column; align-items: center; gap: 18px; }
