@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 
 import hero from '@/assets/home/hero.jpg';
+import hero2 from '@/assets/home/hero-2.jpg';
+import hero3 from '@/assets/home/hero-3.jpg';
 import about from '@/assets/home/about.jpg';
 import skills from '@/assets/home/skills.jpg';
 import why from '@/assets/home/why.jpg';
