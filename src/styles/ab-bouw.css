@@ -6140,7 +6140,10 @@ body.page-hero-dark .footer {
 .lf-hero-ghost:hover svg { transform: translateX(3px); }
 
 @media (max-width: 768px) {
-  .lf-hero-wrap { padding-bottom: clamp(70px, 10vh, 100px) !important; }
+  .lf-hero-wrap {
+    align-items: flex-end !important;
+    padding-bottom: clamp(80px, 14vh, 140px) !important;
+  }
   .lf-hero-mini { gap: 16px; }
   .lf-hero-eyebrow { font-size: 12px; padding: 8px 14px 8px 12px; }
   .lf-hero-mini .lf-hero-actions { flex-direction: column; gap: 12px; }
