@@ -65,8 +65,7 @@ const HTML = (i: Record<string, string>) => `
 <!-- HERO -->
 <section class="lf-hero">
   <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
-    <img src="${i.hero}" alt="AB Bouw Group" class="is-active" />
-    <img src="${i.hero2}" alt="" loading="lazy" />
+    <img src="${i.hero2}" alt="AB Bouw Group" class="is-active" />
     <img src="${i.hero3}" alt="" loading="lazy" />
   </div>
   <button type="button" class="lf-hero-arrow lf-hero-arrow--prev" data-hero-prev aria-label="Vorige foto">
@@ -78,7 +77,6 @@ const HTML = (i: Record<string, string>) => `
   <div class="lf-hero-dots" data-hero-dots>
     <button type="button" class="lf-hero-dot is-active" data-hero-dot="0" aria-label="Foto 1"><span></span></button>
     <button type="button" class="lf-hero-dot" data-hero-dot="1" aria-label="Foto 2"><span></span></button>
-    <button type="button" class="lf-hero-dot" data-hero-dot="2" aria-label="Foto 3"><span></span></button>
   </div>
   <div class="wrap lf-hero-wrap">
     <div class="lf-hero-card lf-hero-card--center" data-hero-anim>
