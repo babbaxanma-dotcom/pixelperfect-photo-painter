@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<title>Werkwijze — AB Bouw Group</title>
+<meta name="description" content="Onze werkwijze in 8 transparante fases — van eerste contact tot 15 jaar nazorg.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=DM+Sans:opsz,wght@9..40,300..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+<nav class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="nav-brand" href="index.html"><span class="nav-brand-mark">AB</span><span>Bouw <em>Group</em></span></a>
+    <ul class="nav-menu"><li><a href="index.html">Home</a></li><li>
+        <a href="diensten.html">
+          Diensten <svg class="dd-arr" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="nav-dropdown">
+          <a class="nav-dd-item" href="construct.html"><div class="nav-dd-icon" style="--dd-color: #c89648">01</div><div class="nav-dd-text"><strong>AB Construct</strong><span>Algemene aanneming</span></div></a>
+          <a class="nav-dd-item" href="ecologisch.html"><div class="nav-dd-icon" style="--dd-color: #6b8e4e">02</div><div class="nav-dd-text"><strong>AB Ecologisch</strong><span>Duurzaam bouwen</span></div></a>
+          <a class="nav-dd-item" href="interieur.html"><div class="nav-dd-icon" style="--dd-color: #b85a35">03</div><div class="nav-dd-text"><strong>AB Interieurwerken</strong><span>Afwerking</span></div></a>
+          <a class="nav-dd-item" href="dakwerken.html"><div class="nav-dd-icon" style="--dd-color: #9b3a3a">04</div><div class="nav-dd-text"><strong>AB Dakwerken</strong><span>Dak &amp; isolatie</span></div></a>
+          <a class="nav-dd-item" href="bad.html"><div class="nav-dd-icon" style="--dd-color: #4a9090">05</div><div class="nav-dd-text"><strong>AB Bad &amp; Wellness</strong><span>Sanitair</span></div></a>
+          <a class="nav-dd-item" href="gevel.html"><div class="nav-dd-icon" style="--dd-color: #5a544e">06</div><div class="nav-dd-text"><strong>AB Gevelbekleding</strong><span>Gevelwerken</span></div></a>
+        </div>
+      </li><li><a href="realisaties.html">Realisaties</a></li><li><a href="werkwijze.html" class="active">Werkwijze</a></li><li><a href="over.html">Over ons</a></li><li><a href="contact.html">Contact</a></li></ul>
+    <div class="nav-cta">
+      <a href="tel:+32000000000" class="nav-phone">
+        <span class="nav-phone-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <span>+32 XXX XX XX XX</span>
+      </a>
+      <a href="contact.html" class="btn btn-primary btn-sm"><span>Offerte aanvragen</span><span class="arr">→</span></a>
+      <button class="mobile-toggle" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-section">
+    <div class="mm-label">Navigatie</div>
+    <a href="index.html"><span class="mm-dot"></span>Home</a>
+    <a href="diensten.html"><span class="mm-dot"></span>Diensten</a>
+    <a href="realisaties.html"><span class="mm-dot"></span>Realisaties</a>
+    <a href="werkwijze.html"><span class="mm-dot"></span>Werkwijze</a>
+    <a href="over.html"><span class="mm-dot"></span>Over ons</a>
+    <a href="contact.html"><span class="mm-dot"></span>Contact</a>
+  </div>
+  <div class="mm-section">
+    <div class="mm-label">Divisies</div>
+    <a href="construct.html"><span class="mm-dot" style="--d: #c89648"></span>AB Construct</a>
+    <a href="ecologisch.html"><span class="mm-dot" style="--d: #6b8e4e"></span>AB Ecologisch</a>
+    <a href="interieur.html"><span class="mm-dot" style="--d: #b85a35"></span>AB Interieurwerken</a>
+    <a href="dakwerken.html"><span class="mm-dot" style="--d: #9b3a3a"></span>AB Dakwerken</a>
+    <a href="bad.html"><span class="mm-dot" style="--d: #4a9090"></span>AB Bad &amp; Wellness</a>
+    <a href="gevel.html"><span class="mm-dot" style="--d: #5a544e"></span>AB Gevelbekleding</a>
+  </div>
+  <div class="mm-footer">
+    <a href="tel:+32000000000">📞 +32 XXX XX XX XX</a>
+    <a href="mailto:info@abbouwgroup.be">✉ info@abbouwgroup.be</a>
+    <a href="contact.html" class="btn btn-primary btn-sm"><span>Offerte aanvragen</span></a>
+  </div>
+</div>
+
+<section class="page-hero" style="padding-bottom: 80px; min-height: 0;">
+  <div class="wrap">
+    <div style="max-width: 800px; position: relative;">
+      <div class="breadcrumb" data-reveal>
+        <a href="index.html">Home</a><span class="sep">/</span><span class="current">Werkwijze</span>
+      </div>
+      <div class="page-hero-badge" data-reveal data-reveal-delay="1"><span>Acht fases, één projectleider</span></div>
+      <h1 data-reveal data-reveal-delay="2">Een transparant proces, <span class="accent">van A tot Z</span>.</h1>
+      <p class="page-hero-lede" data-reveal data-reveal-delay="3">Hieronder leest u stap voor stap hoe een project bij ons verloopt — van eerste telefoongesprek tot vrijblijvende inspectie één jaar na oplevering. Geen verrassingen, geen verborgen kosten.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS v13 ═══ -->
+<section class="stats-v13" data-reveal>
+  <div class="wrap">
+    <div class="stats-v13-grid">
+      <div class="stats-v13-item">
+        <div class="stats-v13-num" data-count="500" data-suffix="+">0</div>
+        <div class="stats-v13-label">Gerealiseerde projecten</div>
+      </div>
+      <div class="stats-v13-item">
+        <div class="stats-v13-num" data-count="150" data-suffix="+">0</div>
+        <div class="stats-v13-label">Tevreden klanten</div>
+      </div>
+      <div class="stats-v13-item">
+        <div class="stats-v13-num" data-count="15" data-suffix=" jr">0</div>
+        <div class="stats-v13-label">Garantie op uitvoering</div>
+      </div>
+      <div class="stats-v13-item">
+        <div class="stats-v13-num" data-count="6" data-suffix="">0</div>
+        <div class="stats-v13-label">Gespecialiseerde divisies</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="wrap">
+    <div class="timeline-block">
+      <div class="tl-step" data-reveal>
+        <div class="tl-step-circle">01</div>
+        <div class="tl-step-time">Binnen 24 uur</div>
+        <h3>Eerste contact</h3>
+        <p>Na uw aanvraag (telefoon, mail of formulier) reageren we binnen één werkdag. Tijdens dit eerste gesprek begrijpen we wat u wil bereiken, welke timing u in gedachten heeft en welke eerste vragen u heeft. Geen verkooppraatje — gewoon luisteren.</p>
+        <ul class="tl-step-bullets"><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Telefonisch of via e-mail</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Globale haalbaarheid en planning</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Afspraak voor plaatsbezoek</li></ul>
+      </div>
+      <div class="tl-step" data-reveal>
+        <div class="tl-step-circle">02</div>
+        <div class="tl-step-time">60 tot 90 minuten</div>
+        <h3>Plaatsbezoek</h3>
+        <p>De projectleider komt bij u langs voor een grondige opname. We meten op, bekijken de bestaande situatie, bespreken uw wensen in detail en signaleren potentiële uitdagingen.</p>
+        <ul class="tl-step-bullets"><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Volledige opmeting van de ruimtes</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Bespreking van technische uitdagingen</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Eerste budgetinschatting</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Bespreking premiemogelijkheden</li></ul>
+      </div>
+      <div class="tl-step" data-reveal>
+        <div class="tl-step-circle">03</div>
+        <div class="tl-step-time">5 tot 10 werkdagen</div>
+        <h3>Conceptplan</h3>
+        <p>We werken een eerste concept uit op basis van wat u tijdens het plaatsbezoek heeft gedeeld. Voor grotere projecten leveren we een 3D-visualisatie. Aanpassingen in deze fase zijn altijd mogelijk en gratis.</p>
+        <ul class="tl-step-bullets"><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Plattegrond en detailtekeningen</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>3D-visualisatie waar relevant</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Materiaalvoorstellen met stalen</li></ul>
+      </div>
+      <div class="tl-step" data-reveal>
+        <div class="tl-step-circle">04</div>
+        <div class="tl-step-time">Binnen één week</div>
+        <h3>Gedetailleerde offerte</h3>
+        <p>Na akkoord op het concept maken we een gedetailleerde offerte op met vaste prijs. Geen prijs per uur, geen open posten — wat op papier staat, staat ook op de factuur.</p>
+        <ul class="tl-step-bullets"><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Vaste totaalprijs</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Detailbestek per post</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Geplande start- en einddatum</li></ul>
+      </div>
+      <div class="tl-step" data-reveal>
+        <div class="tl-step-circle">05</div>
+        <div class="tl-step-time">2 tot 8 weken vooraf</div>
+        <h3>Voorbereiding</h3>
+        <p>Na ondertekening starten we met de voorbereiding. Vergunningsaanvragen worden ingediend, materialen worden besteld, premies worden geactiveerd en de werfplanning wordt vastgelegd.</p>
+        <ul class="tl-step-bullets"><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Vergunningen indienen</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Materialen reserveren</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Toegang tot werfdossier-app</li></ul>
+      </div>
+      <div class="tl-step" data-reveal>
+        <div class="tl-step-circle">06</div>
+        <div class="tl-step-time">Variabel per project</div>
+        <h3>Uitvoering</h3>
+        <p>De werken zelf — uitgevoerd door onze eigen vaste ploegen. Elke week ontvangt u een foto-update van de voortgang en heeft u contact met de projectleider.</p>
+        <ul class="tl-step-bullets"><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Eigen ploegen op de werf</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Wekelijkse foto-updates</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Wijzigingen altijd schriftelijk</li></ul>
+      </div>
+      <div class="tl-step" data-reveal>
+        <div class="tl-step-circle">07</div>
+        <div class="tl-step-time">Op afspraak</div>
+        <h3>Oplevering</h3>
+        <p>Bij voltooiing nemen we samen alles door — punt per punt, ruimte per ruimte. Eventuele opmerkingen worden vastgelegd in een opleveringsrapport en binnen twee weken weggewerkt.</p>
+        <ul class="tl-step-bullets"><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Gezamenlijke ronde</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Schriftelijk opleveringsverslag</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Overhandiging documentatie</li></ul>
+      </div>
+      <div class="tl-step" data-reveal>
+        <div class="tl-step-circle">08</div>
+        <div class="tl-step-time">15 jaar garantie</div>
+        <h3>Nazorg &amp; garantie</h3>
+        <p>Eén jaar na oplevering komen we vrijblijvend langs voor een inspectie. Daarna geldt onze 15 jaar garantie op alle uitvoeringswerken.</p>
+        <ul class="tl-step-bullets"><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Vrijblijvende inspectie na 1 jaar</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>15 jaar garantie op uitvoering</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Snelle interventie bij problemen</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="cta-banner" data-reveal>
+      <div class="cta-banner-text">
+        <h2>Klaar voor stap <span class="accent">één</span>?</h2>
+        <p>Plan een gratis plaatsbezoek. Wij komen langs, luisteren naar uw plannen en zetten samen de eerste stap.</p>
+        <div class="cta-banner-actions">
+          <a href="contact.html" class="btn btn-primary btn-lg"><span>Plaatsbezoek aanvragen</span><span class="arr">→</span></a>
+          <a href="realisaties.html" class="btn btn-outline-light btn-lg"><span>Bekijk realisaties</span></a>
+        </div>
+      </div>
+      <div class="cta-banner-image">
+        <img src="https://source.unsplash.com/900x630/?roof,construction,worker" alt="Vakman aan het werk">
+      </div>
+      <a href="tel:+32000000000" class="cta-banner-phone-pill">
+        <span class="cta-banner-phone-pill-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 1px;">
+          <span style="font-size: 10px; font-weight: 700; color: var(--ink-mute); letter-spacing: 0.1em; text-transform: uppercase;">Bel direct</span>
+          <span>+32 XXX XX XX XX</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="nav-brand" href="index.html"><span class="nav-brand-mark">AB</span><span>Bouw <em>Group</em></span></a>
+        <p>Vlaams renovatiebedrijf met zes gespecialiseerde ploegen. Actief in heel Vlaanderen en Brussel sinds 2010.</p>
+        <div class="footer-social">
+          <a aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></svg></a>
+          <a href="https://www.facebook.com/Abconstruct.be/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://www.linkedin.com/in/bardh-ibishi-521b671b8/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Divisies</h5><ul>
+        <li><a href="construct.html">AB Construct</a></li>
+        <li><a href="ecologisch.html">AB Ecologisch</a></li>
+        <li><a href="interieur.html">AB Interieurwerken</a></li>
+        <li><a href="dakwerken.html">AB Dakwerken</a></li>
+        <li><a href="bad.html">AB Bad &amp; Wellness</a></li>
+        <li><a href="gevel.html">AB Gevelbekleding</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Bedrijf</h5><ul>
+        <li><a href="over.html">Over ons</a></li>
+        <li><a href="werkwijze.html">Werkwijze</a></li>
+        <li><a href="realisaties.html">Realisaties</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Contact</h5><ul>
+        <li><a href="tel:+32000000000">+32 XXX XX XX XX</a></li>
+        <li><a href="mailto:info@abbouwgroup.be">info@abbouwgroup.be</a></li>
+        <li><a>Vlaanderen &amp; Brussel</a></li>
+        <li><a>Ma – Vr · 8u – 18u</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 AB Bouw Group · BTW BE 0XXX.XXX.XXX</div>
+      <div class="footer-bottom-links">
+        <a href="privacy.html">Privacy</a><a href="voorwaarden.html">Algemene voorwaarden</a><a href="cookies.html">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

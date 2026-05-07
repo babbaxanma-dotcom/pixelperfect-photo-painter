@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<title>AB Gevelbekleding — Gevelwerken · AB Bouw Group</title>
+<meta name="description" content="AB Gevelbekleding is de divisie van AB Bouw Group voor Gevelwerken. De gevel is de eerste lijn tegen weer en wind én het visitekaartje van uw woning. AB Gevelbekleding levert isolerende én esthetisc">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=DM+Sans:opsz,wght@9..40,300..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  :root { --div-color: #5a544e; --div-soft: var(--d6-soft); --ph-glow: rgba(90,84,78,0.22); }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<nav class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="nav-brand" href="index.html"><span class="nav-brand-mark">AB</span><span>Bouw <em>Group</em></span></a>
+    <ul class="nav-menu"><li><a href="index.html">Home</a></li><li>
+        <a href="diensten.html" class="active">
+          Diensten <svg class="dd-arr" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="nav-dropdown">
+          <a class="nav-dd-item" href="construct.html"><div class="nav-dd-icon" style="--dd-color: #c89648">01</div><div class="nav-dd-text"><strong>AB Construct</strong><span>Algemene aanneming</span></div></a>
+          <a class="nav-dd-item" href="ecologisch.html"><div class="nav-dd-icon" style="--dd-color: #6b8e4e">02</div><div class="nav-dd-text"><strong>AB Ecologisch</strong><span>Duurzaam bouwen</span></div></a>
+          <a class="nav-dd-item" href="interieur.html"><div class="nav-dd-icon" style="--dd-color: #b85a35">03</div><div class="nav-dd-text"><strong>AB Interieurwerken</strong><span>Afwerking</span></div></a>
+          <a class="nav-dd-item" href="dakwerken.html"><div class="nav-dd-icon" style="--dd-color: #9b3a3a">04</div><div class="nav-dd-text"><strong>AB Dakwerken</strong><span>Dak &amp; isolatie</span></div></a>
+          <a class="nav-dd-item" href="bad.html"><div class="nav-dd-icon" style="--dd-color: #4a9090">05</div><div class="nav-dd-text"><strong>AB Bad &amp; Wellness</strong><span>Sanitair</span></div></a>
+          <a class="nav-dd-item" href="gevel.html"><div class="nav-dd-icon" style="--dd-color: #5a544e">06</div><div class="nav-dd-text"><strong>AB Gevelbekleding</strong><span>Gevelwerken</span></div></a>
+        </div>
+      </li><li><a href="realisaties.html">Realisaties</a></li><li><a href="werkwijze.html">Werkwijze</a></li><li><a href="over.html">Over ons</a></li><li><a href="contact.html">Contact</a></li></ul>
+    <div class="nav-cta">
+      <a href="tel:+32000000000" class="nav-phone">
+        <span class="nav-phone-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <span>+32 XXX XX XX XX</span>
+      </a>
+      <a href="contact.html" class="btn btn-primary btn-sm"><span>Offerte aanvragen</span><span class="arr">→</span></a>
+      <button class="mobile-toggle" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-section">
+    <div class="mm-label">Navigatie</div>
+    <a href="index.html"><span class="mm-dot"></span>Home</a>
+    <a href="diensten.html"><span class="mm-dot"></span>Diensten</a>
+    <a href="realisaties.html"><span class="mm-dot"></span>Realisaties</a>
+    <a href="werkwijze.html"><span class="mm-dot"></span>Werkwijze</a>
+    <a href="over.html"><span class="mm-dot"></span>Over ons</a>
+    <a href="contact.html"><span class="mm-dot"></span>Contact</a>
+  </div>
+  <div class="mm-section">
+    <div class="mm-label">Divisies</div>
+    <a href="construct.html"><span class="mm-dot" style="--d: #c89648"></span>AB Construct</a>
+    <a href="ecologisch.html"><span class="mm-dot" style="--d: #6b8e4e"></span>AB Ecologisch</a>
+    <a href="interieur.html"><span class="mm-dot" style="--d: #b85a35"></span>AB Interieurwerken</a>
+    <a href="dakwerken.html"><span class="mm-dot" style="--d: #9b3a3a"></span>AB Dakwerken</a>
+    <a href="bad.html"><span class="mm-dot" style="--d: #4a9090"></span>AB Bad &amp; Wellness</a>
+    <a href="gevel.html"><span class="mm-dot" style="--d: #5a544e"></span>AB Gevelbekleding</a>
+  </div>
+  <div class="mm-footer">
+    <a href="tel:+32000000000">📞 +32 XXX XX XX XX</a>
+    <a href="mailto:info@abbouwgroup.be">✉ info@abbouwgroup.be</a>
+    <a href="contact.html" class="btn btn-primary btn-sm"><span>Offerte aanvragen</span></a>
+  </div>
+</div>
+
+<!-- ═══ PAGE HERO ═══ -->
+<section class="page-hero">
+  <div class="wrap">
+    <div class="page-hero-grid">
+      <div class="page-hero-text">
+        <div class="breadcrumb" data-reveal>
+          <a href="index.html">Home</a><span class="sep">/</span>
+          <a href="diensten.html">Diensten</a><span class="sep">/</span>
+          <span class="current">AB Gevelbekleding</span>
+        </div>
+        <div class="page-hero-badge" data-reveal data-reveal-delay="1">
+          <span class="page-hero-badge-num">06</span>
+          <span>Gevelwerken</span>
+        </div>
+        <h1 data-reveal data-reveal-delay="2">Een gevel die <span class="accent">werkt</span>.</h1>
+        <p class="page-hero-lede" data-reveal data-reveal-delay="3">De gevel is de eerste lijn tegen weer en wind én het visitekaartje van uw woning. AB Gevelbekleding levert isolerende én esthetische oplossingen — van baksteenstrip tot houten gevelbekleding.</p>
+        <div class="page-hero-actions" data-reveal data-reveal-delay="4">
+          <a href="contact.html" class="btn btn-primary btn-lg"><span>Plan gevel-advies</span><span class="arr">→</span></a>
+          <a href="#features" class="btn btn-outline-light btn-lg"><span>Wat we doen</span></a>
+        </div>
+      </div>
+      <div class="ph-visual" data-reveal data-reveal-delay="2">
+        <div class="ph-visual-img">
+          <img src="https://source.unsplash.com/1200x720/?facade,brick,architecture" alt="AB Gevelbekleding">
+        </div>
+        <div class="ph-visual-floating">
+          <div class="ph-visual-floating-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg></div>
+          <div class="ph-visual-floating-text">15 jaar garantie<br>op uitvoering</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS v13 ═══ -->
+<section class="stats-v13" data-reveal>
+  <div class="wrap">
+    <div class="stats-v13-grid">
+      <div class="stats-v13-item">
+        <div class="stats-v13-num" data-count="500" data-suffix="+">0</div>
+        <div class="stats-v13-label">Gerealiseerde projecten</div>
+      </div>
+      <div class="stats-v13-item">
+        <div class="stats-v13-num" data-count="150" data-suffix="+">0</div>
+        <div class="stats-v13-label">Tevreden klanten</div>
+      </div>
+      <div class="stats-v13-item">
+        <div class="stats-v13-num" data-count="15" data-suffix=" jr">0</div>
+        <div class="stats-v13-label">Garantie op uitvoering</div>
+      </div>
+      <div class="stats-v13-item">
+        <div class="stats-v13-num" data-count="6" data-suffix="">0</div>
+        <div class="stats-v13-label">Gespecialiseerde divisies</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ MAIN met sticky sidebar ═══ -->
+<section class="section">
+  <div class="wrap">
+    <div class="div-layout">
+      <aside class="quick-nav">
+  <div class="quick-nav-label">In deze sectie</div>
+  <ul><li><a href="#intro" class="active"><span class="quick-nav-num">01</span>Over deze dienst</a></li><li><a href="#features" class=""><span class="quick-nav-num">02</span>Wat we doen</a></li><li><a href="#compare" class=""><span class="quick-nav-num">03</span>Twee aanpakken</a></li><li><a href="#process" class=""><span class="quick-nav-num">04</span>Onze werkwijze</a></li><li><a href="#faq" class=""><span class="quick-nav-num">05</span>Veelgestelde vragen</a></li></ul>
+</aside>
+
+      <div>
+        <!-- INTRO -->
+        <div id="intro">
+          <div class="sec-label"><strong>01</strong> · Over deze dienst</div>
+          <h2 class="display-sm" style="margin-bottom: 40px;">Wat AB Gevelbekleding <span class="accent serif">voor u betekent</span>.</h2>
+          <div class="intro-with-image">
+            <div class="intro-with-image-text">
+              <p>Een goed uitgevoerde <strong>buitengevelisolatie</strong> verlaagt uw energieverbruik met tot dertig procent en beschermt het metselwerk eronder voor decennia. Het is een van de meest rendabele renovatie-ingrepen.</p><p>De afwerking is minstens zo belangrijk als de isolatie. Een goedkope sierpleister toont binnen vijf jaar scheuren; een kwalitatieve uitvoering houdt minstens twintig jaar zonder onderhoud.</p><p>We werken met alle gangbare afwerkingen: baksteenstrips voor een traditionele look, sierpleisters in alle RAL-kleuren, houten of composiet gevelbekleding, en natuursteenpanelen voor premium projecten.</p>
+              <div class="pull-quote">Premie tot 30 euro per vierkante meter — wij berekenen vooraf wat u recupereert.</div>
+            </div>
+            <div class="intro-image-stack">
+              <img src="https://source.unsplash.com/1000x700/?bathroom,modern" alt="">
+              <div class="intro-image-stack-tag"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Verlaagd energieverlies</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FEATURES -->
+        <div id="features" style="margin-top: 96px;">
+          <div class="sec-label"><strong>02</strong> · Wat we doen</div>
+          <h2 class="display-sm" style="margin-bottom: 40px;">Zes specialisaties onder <span class="accent serif">één dak</span>.</h2>
+          <div class="feature-grid">
+      <div class="feature-grid-item" data-reveal>
+        <div class="feature-grid-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
+        <div class="feature-grid-content">
+          <h4>Buitenisolatie</h4>
+          <p>EPS, minerale wol of houtvezel met sierpleister als afwerking — premie-geschikt.</p>
+        </div>
+      </div>
+      <div class="feature-grid-item" data-reveal>
+        <div class="feature-grid-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18"/><path d="M2 9h20M2 15h20M8 3v6M14 9v6M8 15v6M16 3v6M6 9v6M16 15v6"/></svg></div>
+        <div class="feature-grid-content">
+          <h4>Baksteenstrips</h4>
+          <p>Echte baksteen in dunne slices, gelijmd op geïsoleerde gevel.</p>
+        </div>
+      </div>
+      <div class="feature-grid-item" data-reveal>
+        <div class="feature-grid-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 11h2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-7v-7"/><path d="M14 7V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V11"/><circle cx="9" cy="18" r="3"/></svg></div>
+        <div class="feature-grid-content">
+          <h4>Sierpleisters</h4>
+          <p>Mineraal of silicaat, in alle RAL-kleuren en met verschillende structuren.</p>
+        </div>
+      </div>
+      <div class="feature-grid-item" data-reveal>
+        <div class="feature-grid-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-3 4-3 7 0 9s3-5 0-9z"/><path d="M12 22V11"/><path d="M8 22h8"/></svg></div>
+        <div class="feature-grid-content">
+          <h4>Houten gevels</h4>
+          <p>Ceder, thermisch behandeld dennen of larix — geschaafd, ruw of gerookt.</p>
+        </div>
+      </div>
+      <div class="feature-grid-item" data-reveal>
+        <div class="feature-grid-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18"/><path d="M9 3v18M15 3v18"/></svg></div>
+        <div class="feature-grid-content">
+          <h4>Composiet panelen</h4>
+          <p>HPL en vezelcement in grote formaten, onderhoudsarm en kleurvast.</p>
+        </div>
+      </div>
+      <div class="feature-grid-item" data-reveal>
+        <div class="feature-grid-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <div class="feature-grid-content">
+          <h4>Metselwerk renovatie</h4>
+          <p>Voegwerk hernieuwen, scheurherstel en reiniging van oude gevels.</p>
+        </div>
+      </div>
+          </div>
+        </div>
+
+        <!-- COMPARE -->
+        <div id="compare" style="margin-top: 96px;">
+          <div class="sec-label"><strong>03</strong> · Twee aanpakken</div>
+          <h2 class="display-sm" style="margin-bottom: 40px;">Welke past bij <span class="accent serif">uw project</span>?</h2>
+          <div class="compare-row">
+            <div class="compare-card light" data-reveal>
+              <div class="compare-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18"/><path d="M2 9h20M2 15h20M8 3v6M14 9v6M8 15v6M16 3v6M6 9v6M16 15v6"/></svg></div>
+              <h3>Klassieke baksteen</h3>
+              <p>Buitenisolatie met baksteenstrips of klassieke gevelsteen. Voor wie de traditionele uitstraling wil behouden of versterken.</p>
+              <ul class="compare-list"><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Authentieke uitstraling</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>50+ jaar levensduur</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Geen onderhoud nodig</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Combineerbaar met natuursteen</li></ul>
+            </div>
+            <div class="compare-card dark" data-reveal data-reveal-delay="1">
+              <div class="compare-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18"/><path d="M9 3v18M15 3v18"/></svg></div>
+              <h3>Modern hout of composiet</h3>
+              <p>Houten of composiet gevelbekleding op een geïsoleerde structuur. Strak, modern en uitstekende warmteprestatie.</p>
+              <ul class="compare-list"><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Strakke moderne look</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Snelle plaatsing</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Onderhoudsarm composiet</li><li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>Houten kleur of grijs verouderend</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROCESS -->
+        <div id="process" style="margin-top: 96px;">
+          <div class="sec-label"><strong>04</strong> · Onze werkwijze</div>
+          <h2 class="display-sm" style="margin-bottom: 40px;">Van eerste contact tot <span class="accent serif">oplevering</span>.</h2>
+          <div class="process-bands">
+      <a class="pb-row" href="contact.html" data-reveal>
+        <div class="pb-num">01</div>
+        <div class="pb-content">
+          <h4>Inspectie</h4>
+          <p>Opmeting van de gevel en check van de huidige isolatie en metselwerk.</p>
+        </div>
+        <div class="pb-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></div>
+      </a>
+      <a class="pb-row featured" href="contact.html" data-reveal data-reveal-delay="1">
+        <div class="pb-num">02</div>
+        <div class="pb-content">
+          <h4>Materiaalkeuze</h4>
+          <p>Voorstel van afwerking met premie-berekening en stalen-presentatie.</p>
+        </div>
+        <div class="pb-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></div>
+      </a>
+      <a class="pb-row" href="contact.html" data-reveal data-reveal-delay="2">
+        <div class="pb-num">03</div>
+        <div class="pb-content">
+          <h4>Uitvoering</h4>
+          <p>Stelling, isolatie aanbrengen en afwerking — meestal 3-4 weken werk.</p>
+        </div>
+        <div class="pb-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></div>
+      </a>
+      <a class="pb-row" href="contact.html" data-reveal data-reveal-delay="3">
+        <div class="pb-num">04</div>
+        <div class="pb-content">
+          <h4>Premies</h4>
+          <p>Aanvraag premies via Mijn VerbouwPremie en Fluvius. Oplevering met garantie.</p>
+        </div>
+        <div class="pb-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></div>
+      </a>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" style="margin-top: 96px;">
+          <div class="sec-label"><strong>05</strong> · Veelgestelde vragen</div>
+          <h2 class="display-sm" style="margin-bottom: 40px;">Wat klanten vaak <span class="accent serif">vragen</span>.</h2>
+          <div class="faq-list">
+        <div class="faq-item open">
+          <button class="faq-q"><span>Kan ik mijn bestaande baksteengevel behouden?</span><span class="faq-plus"></span></button>
+          <div class="faq-a"><p>Bij baksteen in goede staat kan u kiezen voor inblaasisolatie van de spouw. Bij massief metselwerk is binnen- of buitenisolatie de optie.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Hoelang gaat een houten gevel mee?</span><span class="faq-plus"></span></button>
+          <div class="faq-a"><p>Thermisch behandeld hout gaat 30 tot 50 jaar mee zonder onderhoud — het wordt wel zilvergrijs.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Kunnen jullie de premie regelen?</span><span class="faq-plus"></span></button>
+          <div class="faq-a"><p>Ja. De premie voor buitenmuurisolatie bedraagt gemiddeld 30 euro per vierkante meter. Wij berekenen vooraf wat u recupereert.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Hoeveel maakt buitenisolatie qua warmtevoordeel?</span><span class="faq-plus"></span></button>
+          <div class="faq-a"><p>Een ongeïsoleerde muur verliest tot 25% van uw warmte. Met buitenisolatie reduceert u dat tot enkele procenten.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Wat is het verschil tussen pleister en baksteenstrip?</span><span class="faq-plus"></span></button>
+          <div class="faq-a"><p>Pleister is goedkoper maar minder onderhoudsvrij. Baksteenstrips zijn duurder maar geven 50+ jaar onderhoudsvrij genot.</p></div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="cta-banner" data-reveal>
+      <div class="cta-banner-text">
+        <h2>Klaar voor <span class="accent">gevelbekleding</span>?</h2>
+        <p>Plan een gevel-advies. Wij komen langs, luisteren naar uw plannen en maken een realistische inschatting — binnen één week ontvangt u een gedetailleerde offerte.</p>
+        <div class="cta-banner-actions">
+          <a href="contact.html" class="btn btn-primary btn-lg"><span>Plan gevel-advies</span><span class="arr">→</span></a>
+          <a href="realisaties.html" class="btn btn-outline-light btn-lg"><span>Bekijk realisaties</span></a>
+        </div>
+      </div>
+      <div class="cta-banner-image">
+        <img src="https://source.unsplash.com/900x630/?roof,construction,worker" alt="Vakman aan het werk">
+      </div>
+      <a href="tel:+32000000000" class="cta-banner-phone-pill">
+        <span class="cta-banner-phone-pill-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 1px;">
+          <span style="font-size: 10px; font-weight: 700; color: var(--ink-mute); letter-spacing: 0.1em; text-transform: uppercase;">Bel direct</span>
+          <span>+32 XXX XX XX XX</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ SERVICES TABS v13 ═══ -->
+<section class="svc-tabs-v13">
+  <div class="wrap">
+    <div class="svc-tabs-v13-head">
+      <span class="svc-tabs-v13-eyebrow">Onze divisies</span>
+      <h2 class="svc-tabs-v13-title">Ontdek onze andere divisies</h2>
+      <p class="svc-tabs-v13-sub">Werkt u liever met één partner voor uw volledige project? Onze andere divisies sluiten naadloos aan.</p>
+    </div>
+    <div class="svc-tabs-v13-grid">
+      <div class="svc-tabs-v13-list" role="tablist">
+        <button class="svc-tab-btn active" role="tab" data-tab="tab-01" type="button">
+          <span class="svc-tab-btn-num">01</span>
+          <span class="svc-tab-btn-text">
+            <span class="svc-tab-btn-title">AB Construct</span>
+            <span class="svc-tab-btn-meta">Algemene aanneming</span>
+          </span>
+          <svg class="svc-tab-btn-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <button class="svc-tab-btn" role="tab" data-tab="tab-02" type="button">
+          <span class="svc-tab-btn-num">02</span>
+          <span class="svc-tab-btn-text">
+            <span class="svc-tab-btn-title">AB Ecologisch</span>
+            <span class="svc-tab-btn-meta">Duurzaam &amp; energiezuinig</span>
+          </span>
+          <svg class="svc-tab-btn-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <button class="svc-tab-btn" role="tab" data-tab="tab-03" type="button">
+          <span class="svc-tab-btn-num">03</span>
+          <span class="svc-tab-btn-text">
+            <span class="svc-tab-btn-title">AB Interieurwerken</span>
+            <span class="svc-tab-btn-meta">Maatwerk afwerking</span>
+          </span>
+          <svg class="svc-tab-btn-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <button class="svc-tab-btn" role="tab" data-tab="tab-04" type="button">
+          <span class="svc-tab-btn-num">04</span>
+          <span class="svc-tab-btn-text">
+            <span class="svc-tab-btn-title">AB Dakwerken</span>
+            <span class="svc-tab-btn-meta">Dakrenovatie &amp; nieuwbouw</span>
+          </span>
+          <svg class="svc-tab-btn-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <button class="svc-tab-btn" role="tab" data-tab="tab-05" type="button">
+          <span class="svc-tab-btn-num">05</span>
+          <span class="svc-tab-btn-text">
+            <span class="svc-tab-btn-title">AB Bad &amp; Wellness</span>
+            <span class="svc-tab-btn-meta">Sleutel-op-de-deur badkamers</span>
+          </span>
+          <svg class="svc-tab-btn-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+      <div class="svc-tabs-v13-panels">
+      <div class="svc-tab-panel active" data-panel="tab-01" role="tabpanel">
+        <div class="svc-tab-panel-img"><img src="assets/project1.jpeg" alt="AB Construct" loading="lazy"></div>
+        <div class="svc-tab-panel-body">
+          <h3 class="svc-tab-panel-title">AB Construct — Algemene aanneming</h3>
+          <p class="svc-tab-panel-desc">Volledige coördinatie van uw bouw- of verbouwingsproject — van eerste schets tot finale oplevering, uitgevoerd door eigen vakploegen.</p>
+          <ul class="svc-tab-panel-list">
+          <li>Eén vaste projectleider</li>
+          <li>Eigen bouwvakkers</li>
+          <li>Vaste planning &amp; budget</li>
+          <li>Volledige administratie</li>
+          <li>15 jaar garantie</li>
+          <li>Werfopvolging dagelijks</li>
+          </ul>
+          <a href="construct.html" class="svc-tab-panel-cta">Meer over AB Construct
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="svc-tab-panel" data-panel="tab-02" role="tabpanel">
+        <div class="svc-tab-panel-img"><img src="assets/project5.jpeg" alt="AB Ecologisch" loading="lazy"></div>
+        <div class="svc-tab-panel-body">
+          <h3 class="svc-tab-panel-title">AB Ecologisch — Duurzaam &amp; energiezuinig</h3>
+          <p class="svc-tab-panel-desc">Duurzaam bouwen en renoveren met natuurlijke materialen, hoge isolatiewaarden en oog voor energieprestaties.</p>
+          <ul class="svc-tab-panel-list">
+          <li>Natuurlijke isolatie</li>
+          <li>Lage E-peil resultaten</li>
+          <li>Houtskeletbouw</li>
+          <li>Warmtepompen &amp; PV</li>
+          <li>FSC-gecertificeerd hout</li>
+          <li>EPB-conform</li>
+          </ul>
+          <a href="ecologisch.html" class="svc-tab-panel-cta">Meer over AB Ecologisch
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="svc-tab-panel" data-panel="tab-03" role="tabpanel">
+        <div class="svc-tab-panel-img"><img src="assets/project7.jpeg" alt="AB Interieurwerken" loading="lazy"></div>
+        <div class="svc-tab-panel-body">
+          <h3 class="svc-tab-panel-title">AB Interieurwerken — Maatwerk afwerking</h3>
+          <p class="svc-tab-panel-desc">Vakkundige binnenafwerking: gyproc, vloeren, plafonds, schrijnwerk en maatwerkkasten — strak afgewerkt tot in elk detail.</p>
+          <ul class="svc-tab-panel-list">
+          <li>Pleister- &amp; gyprocwerk</li>
+          <li>Houten &amp; tegelvloeren</li>
+          <li>Maatwerk schrijnwerk</li>
+          <li>Verlaagde plafonds</li>
+          <li>Schilderwerken</li>
+          <li>Akoestische oplossingen</li>
+          </ul>
+          <a href="interieur.html" class="svc-tab-panel-cta">Meer over AB Interieurwerken
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="svc-tab-panel" data-panel="tab-04" role="tabpanel">
+        <div class="svc-tab-panel-img"><img src="assets/project9.jpeg" alt="AB Dakwerken" loading="lazy"></div>
+        <div class="svc-tab-panel-body">
+          <h3 class="svc-tab-panel-title">AB Dakwerken — Dakrenovatie &amp; nieuwbouw</h3>
+          <p class="svc-tab-panel-desc">Hellende en platte daken, dakisolatie, dakbedekking en zinkwerk — werk van gecertificeerde dakdekkers.</p>
+          <ul class="svc-tab-panel-list">
+          <li>Pannen &amp; leien</li>
+          <li>Platte daken EPDM/bitumen</li>
+          <li>Dakisolatie Sarking</li>
+          <li>Zink- &amp; koperwerk</li>
+          <li>Dakgoten</li>
+          <li>Dakvensters Velux</li>
+          </ul>
+          <a href="dakwerken.html" class="svc-tab-panel-cta">Meer over AB Dakwerken
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="svc-tab-panel" data-panel="tab-05" role="tabpanel">
+        <div class="svc-tab-panel-img"><img src="assets/project3.jpeg" alt="AB Bad &amp; Wellness" loading="lazy"></div>
+        <div class="svc-tab-panel-body">
+          <h3 class="svc-tab-panel-title">AB Bad &amp; Wellness — Sleutel-op-de-deur badkamers</h3>
+          <p class="svc-tab-panel-desc">Volledige badkamerrenovatie van A tot Z: sanitair, tegels, verlichting en wellness-elementen — één aanspreekpunt.</p>
+          <ul class="svc-tab-panel-list">
+          <li>3D-ontwerp vooraf</li>
+          <li>Sanitair &amp; kranen</li>
+          <li>Tegelwerk premium</li>
+          <li>Inloopdouches</li>
+          <li>Stoomcabines</li>
+          <li>Vloerverwarming</li>
+          </ul>
+          <a href="bad.html" class="svc-tab-panel-cta">Meer over AB Bad &amp; Wellness
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="nav-brand" href="index.html"><span class="nav-brand-mark">AB</span><span>Bouw <em>Group</em></span></a>
+        <p>Vlaams renovatiebedrijf met zes gespecialiseerde ploegen. Actief in heel Vlaanderen en Brussel sinds 2010.</p>
+        <div class="footer-social">
+          <a aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></svg></a>
+          <a href="https://www.facebook.com/Abconstruct.be/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://www.linkedin.com/in/bardh-ibishi-521b671b8/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Divisies</h5><ul>
+        <li><a href="construct.html">AB Construct</a></li>
+        <li><a href="ecologisch.html">AB Ecologisch</a></li>
+        <li><a href="interieur.html">AB Interieurwerken</a></li>
+        <li><a href="dakwerken.html">AB Dakwerken</a></li>
+        <li><a href="bad.html">AB Bad &amp; Wellness</a></li>
+        <li><a href="gevel.html">AB Gevelbekleding</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Bedrijf</h5><ul>
+        <li><a href="over.html">Over ons</a></li>
+        <li><a href="werkwijze.html">Werkwijze</a></li>
+        <li><a href="realisaties.html">Realisaties</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Contact</h5><ul>
+        <li><a href="tel:+32000000000">+32 XXX XX XX XX</a></li>
+        <li><a href="mailto:info@abbouwgroup.be">info@abbouwgroup.be</a></li>
+        <li><a>Vlaanderen &amp; Brussel</a></li>
+        <li><a>Ma – Vr · 8u – 18u</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 AB Bouw Group · BTW BE 0XXX.XXX.XXX</div>
+      <div class="footer-bottom-links">
+        <a href="privacy.html">Privacy</a><a href="voorwaarden.html">Algemene voorwaarden</a><a href="cookies.html">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
