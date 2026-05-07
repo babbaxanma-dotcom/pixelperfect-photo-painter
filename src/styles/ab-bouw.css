@@ -5699,11 +5699,9 @@ body.page-hero-dark .footer {
 .lf-testi-marquee {
   position: relative;
   width: 100%;
-  overflow-x: auto;
+  overflow: hidden;
   overflow-y: hidden;
-  cursor: grab;
   overscroll-behavior-x: contain;
-  touch-action: pan-x pan-y;
   scrollbar-width: none;
   /* Generous vertical padding so card shadow + scale never touch the edge */
   padding: 56px 0 64px;
@@ -5711,14 +5709,14 @@ body.page-hero-dark .footer {
           mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
 }
 .lf-testi-marquee::-webkit-scrollbar { display: none; }
-.lf-testi-marquee.is-dragging { cursor: grabbing; }
 .lf-testi-track {
   display: flex;
-  gap: 24px;
   width: max-content;
-  transform: translate3d(var(--testi-x, 0px), 0, 0);
+  animation: lf-marquee-scroll 58s linear infinite;
   will-change: transform;
 }
+.lf-testi-marquee:hover .lf-testi-track { animation-play-state: paused; }
+.lf-testi-set { display: flex; align-items: stretch; gap: 24px; padding: 0 12px; flex-shrink: 0; }
 .lf-testi {
   flex: 0 0 360px;
   background: #fff;
@@ -5763,6 +5761,7 @@ body.page-hero-dark .footer {
   .lf-testi { flex: 0 0 84vw; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .lf-testi-track { animation: none; }
   .lf-testi { transform: none; opacity: 1; }
 }
 
