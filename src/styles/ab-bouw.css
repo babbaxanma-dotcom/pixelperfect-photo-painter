@@ -5930,8 +5930,23 @@ body.page-hero-dark .footer {
   line-height: 1.15;
 }
 @media (max-width: 640px) {
-  .lf-reviews-rating { padding: 12px 18px; gap: 14px; }
-  .lf-reviews-score { font-size: 32px; }
+  .lf-section.lf-tone-soft { padding: 44px 0 52px !important; }
+  .lf-section.lf-tone-soft .wrap { padding: 0 16px; overflow: hidden; }
+  .lf-reviews-head { gap: 14px; margin-bottom: 18px !important; }
+  .lf-reviews-rating {
+    width: 100%;
+    max-width: 360px;
+    padding: 16px 18px;
+    gap: 10px;
+    border-radius: 18px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .lf-reviews-score { font-size: 34px; }
+  .lf-reviews-divider { width: 42px; height: 1px; }
+  .lf-reviews-meta { align-items: center; gap: 6px; }
+  .lf-reviews-count { white-space: normal; line-height: 1.35; }
 }
 
 /* ── Hero slideshow — cinematic crossfade + Ken Burns + arrows + dots ── */
