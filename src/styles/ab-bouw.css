@@ -5692,3 +5692,75 @@ body.page-hero-dark .footer {
   .fig-testi-quote-mark { display: none; }
   .fig-testi-title { font-size: 30px; }
 }
+
+/* ───────────────────────────────────────────────
+   Testimonials marquee — clean auto-scroll
+   ─────────────────────────────────────────────── */
+.lf-testi-marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 32px 0;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+}
+.lf-testi-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: lf-testi-scroll 70s linear infinite;
+  will-change: transform;
+}
+.lf-testi-marquee:hover .lf-testi-track { animation-play-state: paused; }
+@keyframes lf-testi-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.lf-testi {
+  flex: 0 0 360px;
+  background: #fff;
+  border: 1px solid rgba(15, 17, 21, 0.06);
+  border-radius: 18px;
+  padding: 24px 24px 20px;
+  box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 8px 24px -12px rgba(15,17,21,.08);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform .6s cubic-bezier(.2,.7,.2,1), box-shadow .6s cubic-bezier(.2,.7,.2,1), opacity .6s ease;
+  transform: scale(.92);
+  opacity: .55;
+}
+/* Center card grows; neighbors fade — driven by scroll-driven IntersectionObserver below */
+.lf-testi.is-focus {
+  transform: scale(1.04);
+  opacity: 1;
+  box-shadow: 0 2px 4px rgba(15,17,21,.05), 0 24px 48px -20px rgba(15,17,21,.18);
+}
+.lf-testi.is-near { transform: scale(.98); opacity: .85; }
+.lf-testi-stars { color: #f5a623; font-size: 14px; letter-spacing: 2px; }
+.lf-testi p {
+  margin: 0;
+  color: #1c1f24;
+  font-size: 15px;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.lf-testi-divider { height: 1px; background: rgba(15,17,21,.08); }
+.lf-testi-foot { display: flex; align-items: center; gap: 12px; }
+.lf-testi-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.lf-testi-meta { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.lf-testi-meta strong { font-size: 14px; color: #0f1115; font-weight: 600; }
+.lf-testi-meta span { font-size: 12px; color: #6b7280; }
+.lf-testi-google { flex-shrink: 0; opacity: .9; }
+
+@media (max-width: 760px) {
+  .lf-testi { flex: 0 0 84vw; }
+  .lf-testi-track { animation-duration: 50s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lf-testi-track { animation: none; }
+  .lf-testi { transform: none; opacity: 1; }
+}

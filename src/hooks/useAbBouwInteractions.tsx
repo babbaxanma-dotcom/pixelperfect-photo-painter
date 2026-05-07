@@ -178,6 +178,38 @@ export function useAbBouwInteractions() {
       }, 7000);
     }
 
+    // ── Testimonials marquee: scale the card closest to viewport center
+    const testiMarquee = document.querySelector<HTMLElement>('[data-testi-marquee]');
+    const testiCards = testiMarquee
+      ? Array.from(testiMarquee.querySelectorAll<HTMLElement>('.lf-testi'))
+      : [];
+    let testiRaf = 0;
+    const updateTestiFocus = () => {
+      if (!testiMarquee || testiCards.length === 0) return;
+      const mRect = testiMarquee.getBoundingClientRect();
+      const center = mRect.left + mRect.width / 2;
+      let bestIdx = -1;
+      let bestDist = Infinity;
+      const dists: number[] = [];
+      testiCards.forEach((card, i) => {
+        const r = card.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const d = Math.abs(cx - center);
+        dists[i] = d;
+        if (d < bestDist) { bestDist = d; bestIdx = i; }
+      });
+      const cardW = testiCards[0].getBoundingClientRect().width;
+      testiCards.forEach((card, i) => {
+        card.classList.toggle('is-focus', i === bestIdx);
+        card.classList.toggle('is-near', i !== bestIdx && dists[i] < cardW * 1.2);
+      });
+    };
+    const tickTesti = () => {
+      updateTestiFocus();
+      testiRaf = requestAnimationFrame(tickTesti);
+    };
+    if (testiMarquee && testiCards.length) testiRaf = requestAnimationFrame(tickTesti);
+
     // ── Mobile horizontal "pin" rail: vertical page scroll → horizontal rail scroll
     // Uses scroll-snap rail; we drive scrollLeft from window.scrollY while the
     // section is in the viewport. Also marks active card with `.in-view`.
@@ -256,6 +288,7 @@ export function useAbBouwInteractions() {
       cio.disconnect();
       pinIo?.disconnect();
       if (heroSlideTimer) window.clearInterval(heroSlideTimer);
+      if (testiRaf) cancelAnimationFrame(testiRaf);
     };
   }, [location.pathname, navigate]);
 }
