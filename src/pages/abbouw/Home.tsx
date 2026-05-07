@@ -101,10 +101,6 @@ const HTML = (i: Record<string, string>) => `
       </div>
     </div>
   </div>
-  <a href="#testimonials" class="lf-hero-scroll" data-smooth aria-label="Scroll naar beneden">
-    <span>SCROLL</span>
-    <i></i>
-  </a>
 </section>
 
 
