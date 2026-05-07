@@ -5760,11 +5760,6 @@ body.page-hero-dark .footer {
 @media (max-width: 760px) {
   .lf-testi { flex: 0 0 84vw; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .lf-testi-track { animation: none; }
-  .lf-testi { transform: none; opacity: 1; }
-}
-
 /* Reviews section header — refined */
 .lf-reviews-head { display: flex; flex-direction: column; align-items: center; gap: 18px; }
 .lf-reviews-rating {
