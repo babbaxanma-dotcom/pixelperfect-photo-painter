@@ -5838,8 +5838,8 @@ body.page-hero-dark .footer {
   .lf-testi-track { animation: none !important; width: max-content; transform: none !important; }
   /* Padding equals the side-peek so the active card centers */
   .lf-testi-set { gap: 16px; padding: 0 8px; }
-  .lf-testi-set:first-child { padding-left: calc((100vw - min(82vw, 340px)) / 2); }
-  .lf-testi-set:last-child { padding-right: calc((100vw - min(82vw, 340px)) / 2); }
+  .lf-testi-set:first-child { padding-left: calc((100vw - min(74vw, 300px)) / 2); }
+  .lf-testi-set:last-child { padding-right: calc((100vw - min(74vw, 300px)) / 2); }
   .lf-testi {
     box-sizing: border-box;
     flex: 0 0 min(74vw, 300px);
