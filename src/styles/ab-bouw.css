@@ -5850,49 +5850,61 @@ body.page-hero-dark .footer {
 @media (max-width: 760px) {
   .lf-testi-marquee {
     overflow: hidden;
-    padding: 20px 0 32px;
-    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
-            mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+    height: 334px;
+    padding: 0 0 28px;
+    -webkit-mask-image: none;
+            mask-image: none;
     opacity: 1;
   }
-  .lf-testi-shift { transform: none !important; transition: none !important; }
+  .lf-testi-shift { width: 100%; height: 100%; transform: none !important; transition: none !important; }
   .lf-testi-track {
-    animation: lf-marquee-scroll 70s linear infinite !important;
-    width: max-content;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    animation: none !important;
   }
-  .lf-testi-marquee:hover .lf-testi-track,
-  .lf-testi-marquee:active .lf-testi-track { animation-play-state: paused; }
-  .lf-testi-set { gap: 14px; padding: 0 7px; }
+  .lf-testi-set { position: absolute; inset: 0; display: block; padding: 0; }
+  .lf-testi-set[aria-hidden="true"] { display: none; }
   .lf-testi {
     box-sizing: border-box;
-    flex: 0 0 min(calc(100vw - 56px), 320px);
+    position: absolute;
+    top: 0;
+    left: 50%;
     width: min(calc(100vw - 56px), 320px);
     min-width: 0;
+    min-height: 304px;
     padding: 22px 18px 20px;
     overflow: hidden;
-    transform: none;
-    opacity: 1;
+    transform: translate3d(-50%, 10px, 0) scale(.98);
+    opacity: 0;
+    animation: lf-mobile-review-fade 49s ease-in-out infinite;
     box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 12px 28px -16px rgba(15,17,21,.14);
   }
   .lf-testi.is-focus,
   .lf-testi.is-near {
-    transform: none !important;
-    opacity: 1 !important;
+    transform: translate3d(-50%, 10px, 0) scale(.98);
   }
+  .lf-testi:nth-child(1) { animation-delay: 0s; }
+  .lf-testi:nth-child(2) { animation-delay: -42s; }
+  .lf-testi:nth-child(3) { animation-delay: -35s; }
+  .lf-testi:nth-child(4) { animation-delay: -28s; }
+  .lf-testi:nth-child(5) { animation-delay: -21s; }
+  .lf-testi:nth-child(6) { animation-delay: -14s; }
+  .lf-testi:nth-child(7) { animation-delay: -7s; }
   .lf-testi * { max-width: 100%; min-width: 0; }
   .lf-testi p {
     width: 100%;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 6 !important;
-    -webkit-box-orient: vertical !important;
+    display: block !important;
+    max-height: calc(1.58em * 7);
     overflow: hidden !important;
     white-space: normal !important;
+    text-wrap: pretty;
     overflow-wrap: break-word !important;
     word-break: normal !important;
     hyphens: auto;
     color: #1c1f24 !important;
     font-size: 14.5px;
-    line-height: 1.6;
+    line-height: 1.58;
   }
   .lf-testi-foot { align-items: center; gap: 10px; }
   .lf-testi-meta strong,
@@ -5901,13 +5913,26 @@ body.page-hero-dark .footer {
     overflow-wrap: anywhere;
     line-height: 1.35;
   }
+  .lf-testi .lf-hl {
+    display: inline !important;
+    white-space: normal !important;
+  }
   .lf-testi .lf-hl-word {
+    display: inline !important;
     white-space: normal;
     max-width: 100%;
     overflow-wrap: break-word;
-    word-break: break-word;
+    word-break: normal;
+    -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
   }
   .lf-testi .lf-hl-word::before { transform: scaleX(1) !important; transition-delay: 0s !important; }
+}
+
+@keyframes lf-mobile-review-fade {
+  0%, 10% { opacity: 1; transform: translate3d(-50%, 0, 0) scale(1); }
+  14%, 96% { opacity: 0; transform: translate3d(-50%, -10px, 0) scale(.98); }
+  100% { opacity: 0; transform: translate3d(-50%, 10px, 0) scale(.98); }
 }
 /* Reviews section header — refined */
 .lf-reviews-head { display: flex; flex-direction: column; align-items: center; gap: 18px; }
