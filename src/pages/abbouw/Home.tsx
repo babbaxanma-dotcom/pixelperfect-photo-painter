@@ -1149,7 +1149,7 @@ export default function Home() {
   useAbBouwInteractions();
 
   const html = HTML({
-    hero, about, skills, why,
+    hero, hero2, hero3, about, skills, why,
     svcConstruct, svcEco, svcInterieur, svcDak, svcBad, svcGevel,
     proj1, proj2, proj3, proj4,
     team1, team2, team3, ctaMan,
