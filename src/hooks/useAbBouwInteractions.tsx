@@ -356,6 +356,12 @@ export function useAbBouwInteractions() {
       faqHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
       tabHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
       svcCards.forEach((c) => c.removeEventListener('mousemove', svcMove));
+      testiMarquee?.removeEventListener('pointerdown', onTestiPointerDown);
+      testiMarquee?.removeEventListener('pointermove', onTestiPointerMove);
+      testiMarquee?.removeEventListener('pointerup', onTestiPointerUp);
+      testiMarquee?.removeEventListener('pointercancel', onTestiPointerUp);
+      testiMarquee?.removeEventListener('wheel', onTestiWheel);
+      window.removeEventListener('resize', measureTesti);
       io.disconnect();
       cio.disconnect();
       pinIo?.disconnect();
