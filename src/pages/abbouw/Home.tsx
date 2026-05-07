@@ -71,6 +71,7 @@ const HTML = (i: Record<string, string>) => `
   <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
     <img src="${i.hero2}" alt="AB Bouw Group" class="is-active" />
     <img src="${i.hero3}" alt="" loading="lazy" />
+    <img src="${i.hero4}" alt="" loading="lazy" />
   </div>
   <button type="button" class="lf-hero-arrow lf-hero-arrow--prev" data-hero-prev aria-label="Vorige foto">
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -81,6 +82,7 @@ const HTML = (i: Record<string, string>) => `
   <div class="lf-hero-dots" data-hero-dots>
     <button type="button" class="lf-hero-dot is-active" data-hero-dot="0" aria-label="Foto 1"><span></span></button>
     <button type="button" class="lf-hero-dot" data-hero-dot="1" aria-label="Foto 2"><span></span></button>
+    <button type="button" class="lf-hero-dot" data-hero-dot="2" aria-label="Foto 3"><span></span></button>
   </div>
   <div class="wrap lf-hero-wrap">
     <div class="lf-hero-mini" data-hero-anim>
