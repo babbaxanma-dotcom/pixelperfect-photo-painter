@@ -80,10 +80,6 @@ const HTML = (i: Record<string, string>) => `
   </div>
   <div class="wrap lf-hero-wrap">
     <div class="lf-hero-mini" data-hero-anim>
-      <span class="lf-hero-eyebrow" data-hero-line>
-        <span class="lf-hero-eyebrow-dot"></span>
-        Uw aannemer in Vlaanderen
-      </span>
       <div class="lf-hero-actions" data-hero-line data-hero-delay="1">
         <a href="#contact-form" class="lf-cta-pill" data-smooth>
           <span>Plan een kennismaking</span>
