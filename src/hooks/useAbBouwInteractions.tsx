@@ -242,13 +242,15 @@ export function useAbBouwInteractions() {
       heroDotHandlers.push([dot, h]);
     });
 
-    // ── Testimonials focus states only; auto-scroll itself uses the same CSS marquee as partners
+    // ── Testimonials carousel: mobile starts from the center loop copy and keeps the active card centered
     const testiMarquee = document.querySelector<HTMLElement>('[data-testi-marquee]');
     const testiShift = document.querySelector<HTMLElement>('[data-testi-shift]');
+    const testiTrack = document.querySelector<HTMLElement>('[data-testi-track]');
     const testiCards = testiMarquee
       ? Array.from(testiMarquee.querySelectorAll<HTMLElement>('.lf-testi'))
       : [];
     let testiRaf = 0;
+    const isTestiMobile = () => window.matchMedia('(max-width: 760px)').matches;
     const updateTestiFocus = () => {
       if (!testiMarquee || testiCards.length === 0) return;
       const mRect = testiMarquee.getBoundingClientRect();
@@ -269,11 +271,21 @@ export function useAbBouwInteractions() {
         card.classList.toggle('is-near', i !== bestIdx && dists[i] < cardW * 1.2);
       });
     };
+    const centerMobileTesti = (behavior: ScrollBehavior = 'auto') => {
+      if (!testiMarquee || !testiTrack || !isTestiMobile()) return;
+      const target = testiTrack.querySelector<HTMLElement>('[data-testi-set="0"] .lf-testi');
+      if (!target) return;
+      const mRect = testiMarquee.getBoundingClientRect();
+      const tRect = target.getBoundingClientRect();
+      const left = testiMarquee.scrollLeft + (tRect.left - mRect.left) - (mRect.width - tRect.width) / 2;
+      testiMarquee.scrollTo({ left, behavior });
+    };
     const tickTesti = () => {
       updateTestiFocus();
       testiRaf = requestAnimationFrame(tickTesti);
     };
     if (testiMarquee && testiCards.length) {
+      requestAnimationFrame(() => centerMobileTesti('auto'));
       updateTestiFocus();
       testiRaf = requestAnimationFrame(tickTesti);
     }
@@ -287,7 +299,12 @@ export function useAbBouwInteractions() {
     };
     const stepShift = (dir: 1 | -1) => {
       if (!testiCards.length) return;
-      const cardW = testiCards[0].getBoundingClientRect().width + 24; // gap
+      const gap = isTestiMobile() ? 16 : 24;
+      const cardW = testiCards[0].getBoundingClientRect().width + gap;
+      if (testiMarquee && isTestiMobile()) {
+        testiMarquee.scrollBy({ left: dir * cardW, behavior: 'smooth' });
+        return;
+      }
       testiShiftValue += -dir * cardW;
       applyShift();
     };
