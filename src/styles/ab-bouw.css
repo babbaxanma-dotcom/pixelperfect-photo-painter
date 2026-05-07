@@ -5849,3 +5849,94 @@ body.page-hero-dark .footer {
   .lf-reviews-rating { padding: 12px 18px; gap: 14px; }
   .lf-reviews-score { font-size: 32px; }
 }
+
+/* ── Hero slideshow — cinematic crossfade + Ken Burns + arrows + dots ── */
+.lf-hero-bg--slides { position: absolute; inset: 0; overflow: hidden; }
+.lf-hero-bg--slides img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.12);
+  transform-origin: center center;
+  transition: opacity 1.8s cubic-bezier(0.22,1,0.36,1);
+  will-change: opacity, transform;
+  z-index: 0;
+}
+.lf-hero-bg--slides img.is-active {
+  opacity: 1;
+  animation: lf-hero-kenburns 9s ease-out forwards;
+}
+@keyframes lf-hero-kenburns {
+  0%   { transform: scale(1.12) translate3d(0, 0, 0); }
+  100% { transform: scale(1.0)  translate3d(-1.5%, -1%, 0); }
+}
+.lf-hero-bg--slides::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(10,15,28,0.40) 0%, rgba(10,15,28,0.78) 80%);
+  z-index: 1;
+}
+
+.lf-hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  width: 52px; height: 52px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.14);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.28);
+  color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background .25s ease, transform .25s ease, border-color .25s ease;
+}
+.lf-hero-arrow:hover { background: rgba(255,255,255,0.26); border-color: rgba(255,255,255,0.5); transform: translateY(-50%) scale(1.06); }
+.lf-hero-arrow:active { transform: translateY(-50%) scale(.95); }
+.lf-hero-arrow--prev { left: clamp(16px, 3vw, 36px); }
+.lf-hero-arrow--next { right: clamp(16px, 3vw, 36px); }
+@media (max-width: 760px) { .lf-hero-arrow { width: 42px; height: 42px; } }
+
+.lf-hero-dots {
+  position: absolute;
+  left: 50%; bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(10,15,28,0.28);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+.lf-hero-dot {
+  appearance: none; background: transparent; border: 0; padding: 0;
+  cursor: pointer;
+  width: 28px; height: 4px;
+  border-radius: 999px;
+  position: relative; overflow: hidden;
+  display: inline-block;
+  transition: width .35s ease;
+}
+.lf-hero-dot::before {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(255,255,255,0.35);
+  border-radius: inherit;
+}
+.lf-hero-dot span {
+  position: absolute; inset: 0;
+  background: #fff;
+  border-radius: inherit;
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.lf-hero-dot.is-active { width: 56px; }
+.lf-hero-dot.is-active span { animation: lf-hero-dot-fill 7s linear forwards; }
+@keyframes lf-hero-dot-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
