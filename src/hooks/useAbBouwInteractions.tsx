@@ -86,9 +86,17 @@ export function useAbBouwInteractions() {
 
     // ── Nav scroll state ────────────────────────────────
     const nav = document.getElementById('nav');
+    const hasHero = !!document.querySelector('.lf-hero');
+    if (hasHero) nav?.classList.add('hero-mode');
     const onScroll = () => {
       if (window.scrollY > 30) nav?.classList.add('scrolled');
       else nav?.classList.remove('scrolled');
+      if (hasHero) {
+        const heroH = (document.querySelector('.lf-hero') as HTMLElement)?.offsetHeight || window.innerHeight;
+        // Reveal full navbar once user is ~70% through hero
+        if (window.scrollY > heroH * 0.7) nav?.classList.remove('hero-mode');
+        else nav?.classList.add('hero-mode');
+      }
       const sp = document.getElementById('scrollProgress');
       if (sp) {
         const h = document.documentElement.scrollHeight - window.innerHeight;
