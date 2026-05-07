@@ -129,10 +129,10 @@ const HTML = (i: Record<string, string>) => `
     <div class="lf-section-head centered lf-reviews-head" data-reveal style="margin-bottom: 36px;">
       <span class="lf-eyebrow">Wat klanten zeggen</span>
       <div class="lf-reviews-rating">
-        <span class="lf-reviews-score">4,9</span>
+        <span class="lf-reviews-score">4.9</span>
         <span class="lf-reviews-divider" aria-hidden="true"></span>
         <div class="lf-reviews-meta">
-          <div class="lf-reviews-stars" aria-label="4,9 van 5 sterren">
+          <div class="lf-reviews-stars" aria-label="4.9 van 5 sterren">
             <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
             <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
             <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
