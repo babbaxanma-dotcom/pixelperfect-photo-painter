@@ -30,7 +30,7 @@ const HTML = (i: Record<string, string>) => `
 <div class="scroll-progress" id="scrollProgress"></div>
 
 <!-- NAV (floating white pill over hero) -->
-<nav class="lf-nav" id="nav">
+<nav class="lf-nav hero-mode" id="nav">
   <div class="wrap lf-nav-inner">
     <a class="lf-brand" href="/">
       <img src="${i.logo}" alt="AB Bouw Groep" class="lf-brand-logo" />
@@ -63,6 +63,7 @@ const HTML = (i: Record<string, string>) => `
 </div>
 
 <!-- HERO -->
+<div class="lf-hero-stage">
 <section class="lf-hero">
   <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
     <img src="${i.hero2}" alt="AB Bouw Group" class="is-active" />
@@ -118,6 +119,7 @@ const HTML = (i: Record<string, string>) => `
     <span class="lf-hero-reviews-text">5,0 · Beoordeeld op Google</span>
   </a>
 </section>
+</div>
 
 
 <!-- TESTIMONIALS — direct onder hero, eerste sociale proof -->
