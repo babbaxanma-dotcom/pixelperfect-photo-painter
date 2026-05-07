@@ -121,6 +121,14 @@ const HTML = (i: Record<string, string>) => `
 </section>
 </div>
 
+<!-- STATEMENT — eerste content-sectie onder hero -->
+<section class="lf-statement">
+  <div class="wrap">
+    <p class="lf-statement-text">
+      Van eerste idee tot eindresultaat, wij vertalen uw verhaal naar <em>doordachte bouwprojecten</em> die mensen samenbrengen om echte impact te maken.
+    </p>
+  </div>
+</section>
 
 <!-- TESTIMONIALS — direct onder hero, eerste sociale proof -->
 <section class="lf-section lf-tone-soft" style="padding: 56px 0;">
