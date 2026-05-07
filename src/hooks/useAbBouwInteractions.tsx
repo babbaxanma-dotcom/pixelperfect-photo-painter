@@ -288,6 +288,7 @@ export function useAbBouwInteractions() {
       cio.disconnect();
       pinIo?.disconnect();
       if (heroSlideTimer) window.clearInterval(heroSlideTimer);
+      if (testiRaf) cancelAnimationFrame(testiRaf);
     };
   }, [location.pathname, navigate]);
 }
