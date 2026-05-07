@@ -284,13 +284,11 @@ export function useAbBouwInteractions() {
       if (!testiMarquee || !testiTrack || !isTestiMobile()) return;
       const sets = Array.from(testiTrack.querySelectorAll<HTMLElement>('.lf-testi-set'));
       if (sets.length < 3) return;
-      const first = sets[0].getBoundingClientRect();
       const middle = sets[1].getBoundingClientRect();
       const setW = middle.width;
-      const x = testiMarquee.scrollLeft + (middle.left - testiMarquee.getBoundingClientRect().left);
-      if (x < setW * 0.5) testiMarquee.scrollLeft += setW;
-      if (x > setW * 1.5) testiMarquee.scrollLeft -= setW;
-      void first;
+      const middleStart = sets[1].offsetLeft;
+      if (testiMarquee.scrollLeft < middleStart - setW * 0.5) testiMarquee.scrollLeft += setW;
+      if (testiMarquee.scrollLeft > middleStart + setW * 1.5) testiMarquee.scrollLeft -= setW;
     };
     const tickTesti = () => {
       updateTestiFocus();
