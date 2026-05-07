@@ -5958,14 +5958,15 @@ body.page-hero-dark .footer {
 
 /* Hero — Visualized-style centered headline + actions */
 .lf-hero-wrap {
-  position: relative;
+  position: absolute !important;
+  inset: 0 !important;
   z-index: 5 !important;
   display: flex !important;
-  align-items: center;
-  justify-content: center;
-  min-height: 100%;
-  padding-top: 120px !important;
-  padding-bottom: 140px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 24px !important;
+  margin: 0 !important;
+  max-width: none !important;
   pointer-events: none;
 }
 .lf-hero-mini {
@@ -5981,7 +5982,6 @@ body.page-hero-dark .footer {
   text-align: center;
   max-width: 980px;
   width: 100%;
-  padding: 0 24px;
 }
 .lf-hero-headline {
   font-family: var(--font-display);

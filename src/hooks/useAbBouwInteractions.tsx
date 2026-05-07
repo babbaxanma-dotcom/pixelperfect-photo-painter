@@ -95,7 +95,7 @@ export function useAbBouwInteractions() {
         const heroH = hero.offsetHeight;
         const fade = Math.max(0, 1 - window.scrollY / (heroH * 0.5));
         document.documentElement.style.setProperty('--hf', fade.toString());
-        if (window.scrollY >= heroH) {
+        if (window.scrollY >= heroH * 0.5) {
           nav?.classList.remove('hero-mode');
           document.body.classList.add('nav-revealed');
         } else {
