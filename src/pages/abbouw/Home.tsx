@@ -189,10 +189,11 @@ const HTML = (i: Record<string, string>) => `
               });
               return out;
             };
-            return Array.from({ length: 2 }).map((_, setIdx) => `
-              <div class="lf-testi-set"${setIdx > 0 ? ' aria-hidden="true"' : ''}>
-                ${reviews.map((t) => `
-                  <article class="lf-testi">
+            const loopedSets = [-1, 0, 1];
+            return loopedSets.map((setIdx) => `
+              <div class="lf-testi-set" data-testi-set="${setIdx}"${setIdx !== 0 ? ' aria-hidden="true"' : ''}>
+                ${reviews.map((t, reviewIdx) => `
+                  <article class="lf-testi" data-review-index="${reviewIdx}">
                     <div class="lf-testi-stars">★★★★★</div>
                     <p>${highlight(t.text, t.highlights)}</p>
                     <div class="lf-testi-divider"></div>
