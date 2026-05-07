@@ -93,9 +93,11 @@ export function useAbBouwInteractions() {
       else nav?.classList.remove('scrolled');
       if (hero) {
         const heroH = hero.offsetHeight;
-        const fade = Math.max(0, 1 - window.scrollY / (heroH * 0.5));
+        // Text fades out between 0% and 45% of hero height
+        const fade = Math.max(0, Math.min(1, 1 - window.scrollY / (heroH * 0.45)));
         document.documentElement.style.setProperty('--hf', fade.toString());
-        if (window.scrollY >= heroH * 0.5) {
+        // Navbar reveals once text is mostly gone (~40%)
+        if (window.scrollY >= heroH * 0.4) {
           nav?.classList.remove('hero-mode');
           document.body.classList.add('nav-revealed');
         } else {
