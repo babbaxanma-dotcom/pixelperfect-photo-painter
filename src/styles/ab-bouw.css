@@ -5957,7 +5957,7 @@ body.page-hero-dark .footer {
 }
 
 /* Hero mini eyebrow + CTA — perfectly centered in hero */
-.lf-hero-wrap { display: flex !important; align-items: center; justify-content: center; min-height: 100%; }
+.lf-hero-wrap { display: flex !important; align-items: center; justify-content: center; min-height: 100%; padding-top: 120px !important; padding-bottom: 120px !important; }
 .lf-hero-mini {
   position: relative;
   display: flex;
