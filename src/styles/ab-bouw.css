@@ -5822,18 +5822,19 @@ body.page-hero-dark .footer {
 @media (max-width: 760px) {
   .lf-testi-marquee {
     overflow-x: auto;
-    overflow-y: visible;
+    overflow-y: hidden;
     padding: 32px 0 48px;
-    -webkit-mask-image: none !important;
-            mask-image: none !important;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%) !important;
+            mask-image: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%) !important;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
   }
   .lf-testi-shift { transform: none !important; transition: none !important; }
   .lf-testi-track { animation: none !important; width: max-content; transform: none !important; }
   /* Padding equals the side-peek so the active card centers */
-  .lf-testi-set { gap: 16px; padding: 0 calc((100vw - min(82vw, 340px)) / 2); }
-  .lf-testi-set[aria-hidden="true"] { display: none !important; }
+  .lf-testi-set { gap: 16px; padding: 0 8px; }
+  .lf-testi-set:first-child { padding-left: calc((100vw - min(82vw, 340px)) / 2); }
+  .lf-testi-set:last-child { padding-right: calc((100vw - min(82vw, 340px)) / 2); }
   .lf-testi {
     flex: 0 0 min(82vw, 340px);
     width: min(82vw, 340px);
