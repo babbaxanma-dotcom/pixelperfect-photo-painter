@@ -5765,3 +5765,33 @@ body.page-hero-dark .footer {
 @media (prefers-reduced-motion: reduce) {
   .lf-testi { transform: none; opacity: 1; }
 }
+
+/* Reviews section header — refined */
+.lf-reviews-head { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.lf-reviews-rating {
+  display: inline-flex; align-items: center; gap: 18px;
+  padding: 14px 22px;
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: 999px;
+  box-shadow: 0 8px 28px -18px rgba(15, 23, 42, 0.25);
+}
+.lf-reviews-score {
+  font-family: var(--font-display, inherit);
+  font-size: 38px; font-weight: 600; line-height: 1;
+  color: #0f172a; letter-spacing: -0.02em;
+}
+.lf-reviews-divider { width: 1px; height: 32px; background: rgba(15,23,42,0.1); }
+.lf-reviews-meta { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+.lf-reviews-stars { display: inline-flex; gap: 2px; color: #f5a623; }
+.lf-reviews-count { font-size: 13px; color: #64748b; letter-spacing: 0.01em; }
+.lf-reviews-title {
+  font-size: clamp(28px, 3vw, 40px);
+  margin: 6px 0 0;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+@media (max-width: 640px) {
+  .lf-reviews-rating { padding: 12px 18px; gap: 14px; }
+  .lf-reviews-score { font-size: 32px; }
+}
