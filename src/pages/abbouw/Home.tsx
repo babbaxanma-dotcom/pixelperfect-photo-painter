@@ -92,9 +92,6 @@ const HTML = (i: Record<string, string>) => `
         <span class="lf-hw" style="--i:2">heel</span>
         <span class="lf-hw" style="--i:3">Vlaanderen</span>
       </h1>
-      <p class="lf-hero-sub" style="--i:5">
-        AB Bouw Group realiseert duurzame projecten op maat — van ruwbouw en daken<br/>tot gevels en interieur, met aandacht voor detail en afwerking.
-      </p>
       <div class="lf-hero-actions" style="--i:7">
         <a href="#contact-form" class="lf-cta-pill" data-smooth>
           <span>Plan een kennismaking</span>
