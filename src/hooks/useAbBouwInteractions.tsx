@@ -86,21 +86,16 @@ export function useAbBouwInteractions() {
 
     // ── Nav scroll state ────────────────────────────────
     const nav = document.getElementById('nav');
-    const heroStage = document.querySelector<HTMLElement>('.lf-hero-stage');
     const hero = document.querySelector<HTMLElement>('.lf-hero');
-    if (heroStage) nav?.classList.add('hero-mode');
+    if (hero) nav?.classList.add('hero-mode');
     const onScroll = () => {
       if (window.scrollY > 30) nav?.classList.add('scrolled');
       else nav?.classList.remove('scrolled');
-      if (heroStage && hero) {
-        const vh = window.innerHeight;
-        const stageScrollable = Math.max(1, heroStage.offsetHeight - vh);
-        const p = Math.max(0, Math.min(1, window.scrollY / stageScrollable));
-        hero.style.setProperty('--hp', p.toString());
-        document.documentElement.style.setProperty('--hp', p.toString());
-        heroStage.classList.toggle('is-collapsed', p >= 0.999);
-        const heroOut = p >= 1;
-        if (heroOut) {
+      if (hero) {
+        const heroH = hero.offsetHeight;
+        const fade = Math.max(0, 1 - window.scrollY / (heroH * 0.5));
+        document.documentElement.style.setProperty('--hf', fade.toString());
+        if (window.scrollY >= heroH) {
           nav?.classList.remove('hero-mode');
           document.body.classList.add('nav-revealed');
         } else {
