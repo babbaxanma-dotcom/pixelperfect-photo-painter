@@ -64,7 +64,7 @@ const HTML = (i: Record<string, string>) => `
 
 <!-- HERO -->
 <a href="/" class="lf-hero-logo" aria-label="AB Bouw Groep"><img src="${i.logo}" alt="AB Bouw Groep" /></a>
-<div class="lf-hero-stage">
+
 <section class="lf-hero">
   <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
     <img src="${i.hero2}" alt="AB Bouw Group" class="is-active" />
@@ -120,16 +120,7 @@ const HTML = (i: Record<string, string>) => `
     <span class="lf-hero-reviews-text">5,0 · Beoordeeld op Google</span>
   </a>
 </section>
-</div>
 
-<!-- STATEMENT — eerste content-sectie onder hero -->
-<section class="lf-statement">
-  <div class="wrap">
-    <p class="lf-statement-text">
-      Van eerste idee tot eindresultaat, wij vertalen uw verhaal naar <em>doordachte bouwprojecten</em> die mensen samenbrengen om echte impact te maken.
-    </p>
-  </div>
-</section>
 
 <!-- TESTIMONIALS — direct onder hero, eerste sociale proof -->
 <section class="lf-section lf-tone-soft" style="padding: 56px 0;">
