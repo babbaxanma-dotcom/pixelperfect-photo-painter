@@ -971,6 +971,7 @@ const EXTRA_STYLE = `
   /* Disable scroll-stack on small screens — back to a normal stacked column */
   .lf-why-collage.lf-why-stack { display: block; }
   .lf-why-stack .lf-why-stack-left { display: grid; gap: 16px; }
+  .lf-why-stack .lf-why-slot { height: auto; display: block; }
   .lf-why-stack .lf-why-tile { position: static; transform: none !important; margin: 0; box-shadow: none; }
   .lf-why-stack .lf-why-photo { position: static; height: 240px; min-height: 0; margin-top: 16px; }
   .lf-proj-collage { grid-template-columns: 1fr; grid-template-rows: repeat(4, 220px); }
