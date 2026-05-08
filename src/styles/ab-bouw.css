@@ -5849,29 +5849,64 @@ body.page-hero-dark .footer {
 
 @media (max-width: 760px) {
   .lf-testi-marquee {
-    overflow: hidden;
-    padding: 28px 0 32px;
-    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
-            mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+    overflow: visible;
+    height: 430svh;
+    min-height: 2550px;
+    padding: 0;
+    overscroll-behavior: auto;
+    -webkit-mask-image: none;
+            mask-image: none;
   }
-  .lf-testi-shift { transform: none !important; transition: none !important; }
+  .lf-testi-shift {
+    position: sticky;
+    top: 96px;
+    min-height: min(58svh, 410px);
+    display: grid;
+    place-items: center;
+    transform: none !important;
+    transition: none !important;
+    z-index: 1;
+  }
   .lf-testi-track {
-    animation: lf-marquee-scroll 60s linear infinite !important;
+    position: relative;
+    width: min(100%, 340px);
+    height: 286px;
+    display: block;
+    animation: none !important;
+    overflow: visible;
   }
-  .lf-testi-set { gap: 14px; padding: 0 7px; }
+  .lf-testi-set:not([data-testi-set="0"]) { display: none !important; }
+  .lf-testi-set[data-testi-set="0"] {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+  }
   .lf-testi {
-    flex: 0 0 270px;
-    width: 270px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    flex: none;
+    width: min(100%, 320px);
+    height: auto;
+    min-height: 232px;
     min-width: 0;
     padding: 18px 16px 16px;
     border-radius: 16px;
-    transform: none;
-    opacity: 1;
+    transform: translate3d(-50%, calc(-50% + var(--mobile-review-y, 42px)), 0) scale(var(--mobile-review-scale, .95));
+    opacity: var(--mobile-review-opacity, 0);
+    z-index: var(--mobile-review-z, 1);
+    pointer-events: none;
     gap: 10px;
+    will-change: transform, opacity;
+    transition: box-shadow .28s ease;
     box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 10px 24px -16px rgba(15,17,21,.14);
   }
-  .lf-testi.is-focus,
-  .lf-testi.is-near { transform: none; opacity: 1; }
+  .lf-testi.is-mobile-active {
+    pointer-events: auto;
+    box-shadow: 0 2px 4px rgba(15,17,21,.05), 0 22px 42px -24px rgba(15,17,21,.26);
+  }
   .lf-testi * { max-width: 100%; min-width: 0; }
   .lf-testi p {
     width: 100%;
