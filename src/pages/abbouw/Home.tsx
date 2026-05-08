@@ -105,7 +105,7 @@ const HTML = (i: Record<string, string>) => `
 
 
 <!-- TESTIMONIALS — direct onder hero, eerste sociale proof -->
-<section class="lf-section lf-tone-soft" style="padding: 56px 0;">
+<section class="lf-section lf-tone-soft lf-reviews-section" style="padding: 56px 0;">
   <div class="wrap">
     <div class="lf-section-head centered lf-reviews-head" data-reveal style="margin-bottom: 36px;">
       <span class="lf-eyebrow">Wat klanten zeggen</span>
