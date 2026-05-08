@@ -272,7 +272,7 @@ const HTML = (i: Record<string, string>) => `
       <span class="lf-eyebrow">Onze diensten</span>
       <h2 class="lf-h2">Zes specialisaties.<br>Eén bouwpartner.</h2>
     </div>
-    <div class="lf-svc-grid">
+    <div class="lf-svc-grid" data-svc-stack>
       ${[
         { img: i.svcConstruct, n: '01', title: 'AB Construct', desc: 'Nieuwbouw en totaalrenovatie sleutel-op-de-deur. Eén contract, één planning, één resultaat.', href: '/construct' },
         { img: i.svcEco, n: '02', title: 'AB Ecologisch', desc: 'Duurzaam bouwen met natuurlijke materialen. Lager E-peil, lagere energiefactuur.', href: '/ecologisch' },
@@ -280,8 +280,8 @@ const HTML = (i: Record<string, string>) => `
         { img: i.svcDak, n: '04', title: 'AB Dakwerken', desc: 'Hellende en platte daken, dakisolatie en zinkwerk. Door eigen dakdekkers geplaatst.', href: '/dakwerken' },
         { img: i.svcBad, n: '05', title: 'AB Bad &amp; Wellness', desc: 'Sleutel-op-de-deur badkamers met premium tegels en sanitair. Klaar in vier weken.', href: '/bad' },
         { img: i.svcGevel, n: '06', title: 'AB Gevelbekleding', desc: 'Witte of grijze crepi, sierpleister of steenstrips. Tijdloos én onderhoudsarm.', href: '/gevel' },
-      ].map((s, idx) => `
-        <a class="lf-svc-card" href="${s.href}" data-reveal style="transition-delay:${idx * 70}ms">
+      ].map((s, idx, arr) => `
+        <a class="lf-svc-card" href="${s.href}" data-reveal data-svc-card style="--svc-i:${idx};--svc-total:${arr.length};transition-delay:${idx * 70}ms">
           <div class="lf-svc-img"><img src="${s.img}" alt="${s.title}" loading="lazy" /><span class="lf-svc-num">${s.n}</span></div>
           <div class="lf-svc-body">
             <h4>${s.title}</h4>
