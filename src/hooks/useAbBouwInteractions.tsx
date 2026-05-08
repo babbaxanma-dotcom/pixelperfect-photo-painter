@@ -611,6 +611,9 @@ export function useAbBouwInteractions() {
       window.removeEventListener('scroll', onParallax);
       window.removeEventListener('scroll', onPinScroll);
       window.removeEventListener('scroll', onWhyScroll);
+      window.removeEventListener('scroll', onWhyStackScroll);
+      window.removeEventListener('resize', onWhyStackScroll);
+      window.removeEventListener('scroll', onTrustScroll);
       window.removeEventListener('scroll', onSvcStackScroll);
       window.removeEventListener('resize', onSvcStackScroll);
       pinRail?.removeEventListener('touchstart', onPinTouch);
