@@ -476,6 +476,35 @@ export function useAbBouwInteractions() {
     window.addEventListener('scroll', onWhyScroll, { passive: true });
     onWhyScroll();
 
+    // ── Stacking-card scroll animation for services grid (mobile only)
+    const svcStack = document.querySelector<HTMLElement>('[data-svc-stack]');
+    const svcStackCards = svcStack
+      ? Array.from(svcStack.querySelectorAll<HTMLElement>('[data-svc-card]'))
+      : [];
+    const isSvcMobile = () => window.matchMedia('(max-width: 760px)').matches;
+    const onSvcStackScroll = () => {
+      if (!svcStack || svcStackCards.length === 0) return;
+      if (!isSvcMobile()) {
+        svcStackCards.forEach((c) => c.style.removeProperty('--svc-scale'));
+        return;
+      }
+      const total = svcStackCards.length;
+      const rect = svcStack.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      const span = Math.max(1, rect.height - vh);
+      const p = Math.max(0, Math.min(1, -rect.top / span));
+      svcStackCards.forEach((card, i) => {
+        const start = i / total;
+        const local = Math.max(0, Math.min(1, (p - start) / Math.max(0.0001, 1 - start)));
+        const targetScale = 1 - (total - i) * 0.04;
+        const scale = 1 + (targetScale - 1) * local;
+        card.style.setProperty('--svc-scale', scale.toFixed(4));
+      });
+    };
+    window.addEventListener('scroll', onSvcStackScroll, { passive: true });
+    window.addEventListener('resize', onSvcStackScroll);
+    onSvcStackScroll();
+
     // In-view active state for cards (smooth fade/scale of off-center cards)
     let pinIo: IntersectionObserver | null = null;
     if (pinRail) {
