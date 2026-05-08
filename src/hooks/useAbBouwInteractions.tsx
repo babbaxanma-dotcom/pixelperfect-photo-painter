@@ -262,7 +262,7 @@ export function useAbBouwInteractions() {
       heroDotHandlers.push([dot, h]);
     });
 
-    // ── Testimonials carousel: mobile starts from the center loop copy and keeps the active card centered
+    // ── Testimonials carousel (desktop) + sticky scroll stack (mobile)
     const testiMarquee = document.querySelector<HTMLElement>('[data-testi-marquee]');
     const testiShift = document.querySelector<HTMLElement>('[data-testi-shift]');
     const testiTrack = document.querySelector<HTMLElement>('[data-testi-track]');
@@ -275,14 +275,88 @@ export function useAbBouwInteractions() {
     let testiRaf = 0;
     const isTestiMobile = () => window.matchMedia('(max-width: 760px)').matches;
     const updateMobileTestiStack = () => {
-      if (!testiMarquee || mobileTestiCards.length === 0 || !isTestiMobile()) return;
-      // Pure-CSS sticky stack on mobile — clear any inline styles/classes from previous JS-driven layout
-      mobileTestiCards.forEach((card) => {
-        card.style.removeProperty('--mobile-review-opacity');
-        card.style.removeProperty('--mobile-review-y');
-        card.style.removeProperty('--mobile-review-scale');
-        card.style.removeProperty('--mobile-review-z');
-        card.classList.remove('is-mobile-active', 'is-focus', 'is-near');
+      if (!testiMarquee || mobileTestiCards.length === 0) return;
+      if (!isTestiMobile()) {
+        mobileTestiCards.forEach((card) => {
+          card.style.removeProperty('--mobile-review-opacity');
+          card.style.removeProperty('--mobile-review-y');
+          card.style.removeProperty('--mobile-review-scale');
+          card.style.removeProperty('--mobile-review-z');
+          card.style.removeProperty('--mobile-review-blur');
+          card.classList.remove('is-mobile-active');
+        });
+        return;
+      }
+
+      const rect = testiMarquee.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight || 1;
+      const start = vh * 0.84;
+      const span = Math.max(1, rect.height + vh * 0.2);
+      const progress = Math.max(0, Math.min(1, (start - rect.top) / span));
+      const count = mobileTestiCards.length;
+      const raw = progress * (count - 1);
+      const base = Math.max(0, Math.min(count - 1, Math.floor(raw)));
+      const blend = Math.max(0, Math.min(1, raw - base));
+
+      testiMarquee.style.setProperty('--mobile-testi-count', String(count));
+
+      let activeIdx = 0;
+      let bestOpacity = -1;
+
+      mobileTestiCards.forEach((card, i) => {
+        let opacity = 0;
+        let y = 44;
+        let scale = 0.95;
+        let z = 1;
+        let blur = 1.2;
+
+        if (i < base) {
+          opacity = Math.max(0, 0.35 - (base - i) * 0.22);
+          y = -22 - (base - i) * 6;
+          scale = 0.97;
+          z = 5 + i;
+          blur = 0.6;
+        }
+
+        if (i === base) {
+          opacity = 1 - blend * 0.58;
+          y = -blend * 24;
+          scale = 1 - blend * 0.03;
+          z = 22;
+          blur = 0;
+        }
+
+        if (i === base + 1) {
+          opacity = Math.min(1, blend * 1.18);
+          y = 34 - blend * 34;
+          scale = 0.95 + blend * 0.05;
+          z = 24;
+          blur = Math.max(0, (1 - blend) * 0.8);
+        }
+
+        if (i > base + 1) {
+          opacity = 0;
+          y = 48;
+          scale = 0.94;
+          z = 1;
+          blur = 1.2;
+        }
+
+        if (opacity > bestOpacity) {
+          bestOpacity = opacity;
+          activeIdx = i;
+        }
+
+        card.style.setProperty('--mobile-review-opacity', opacity.toFixed(3));
+        card.style.setProperty('--mobile-review-y', `${y.toFixed(2)}px`);
+        card.style.setProperty('--mobile-review-scale', scale.toFixed(3));
+        card.style.setProperty('--mobile-review-z', `${z}`);
+        card.style.setProperty('--mobile-review-blur', `${blur.toFixed(2)}px`);
+      });
+
+      mobileTestiCards.forEach((card, i) => {
+        card.classList.toggle('is-mobile-active', i === activeIdx);
+        card.classList.remove('is-focus', 'is-near');
       });
     };
     const updateTestiFocus = () => {
@@ -311,23 +385,13 @@ export function useAbBouwInteractions() {
     };
     const centerMobileTesti = (behavior: ScrollBehavior = 'auto') => {
       if (!testiMarquee || !testiTrack || !isTestiMobile()) return;
-      const target = testiTrack.querySelector<HTMLElement>('[data-testi-set="0"] .lf-testi');
-      if (!target) return;
-      const mRect = testiMarquee.getBoundingClientRect();
-      const tRect = target.getBoundingClientRect();
-      const left = testiMarquee.scrollLeft + (tRect.left - mRect.left) - (mRect.width - tRect.width) / 2;
-      testiMarquee.scrollTo({ left, behavior });
+      // Mobile now uses vertical sticky-scroll stack, not horizontal centering.
+      void behavior;
       testiMarquee.classList.add('is-ready');
     };
     const keepMobileTestiInMiddleLoop = () => {
-      if (!testiMarquee || !testiTrack || !isTestiMobile()) return;
-      const sets = Array.from(testiTrack.querySelectorAll<HTMLElement>('.lf-testi-set'));
-      if (sets.length < 3) return;
-      const middle = sets[1].getBoundingClientRect();
-      const setW = middle.width;
-      const middleStart = sets[1].offsetLeft;
-      if (testiMarquee.scrollLeft < middleStart - setW * 0.5) testiMarquee.scrollLeft += setW;
-      if (testiMarquee.scrollLeft > middleStart + setW * 1.5) testiMarquee.scrollLeft -= setW;
+      // Mobile now uses vertical sticky-scroll stack, not horizontal loop scrolling.
+      return;
     };
     const tickTesti = () => {
       updateTestiFocus();
