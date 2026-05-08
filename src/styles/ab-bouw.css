@@ -5850,8 +5850,8 @@ body.page-hero-dark .footer {
 @media (max-width: 760px) {
   .lf-testi-marquee {
     overflow: visible;
-    height: 430svh;
-    min-height: 2550px;
+    height: 340svh;
+    min-height: 2100px;
     padding: 0;
     overscroll-behavior: auto;
     -webkit-mask-image: none;
@@ -5906,6 +5906,11 @@ body.page-hero-dark .footer {
   .lf-testi.is-mobile-active {
     pointer-events: auto;
     box-shadow: 0 2px 4px rgba(15,17,21,.05), 0 22px 42px -24px rgba(15,17,21,.26);
+  }
+  .lf-testi.is-focus,
+  .lf-testi.is-near {
+    transform: translate3d(-50%, calc(-50% + var(--mobile-review-y, 42px)), 0) scale(var(--mobile-review-scale, .95)) !important;
+    opacity: var(--mobile-review-opacity, 0) !important;
   }
   .lf-testi * { max-width: 100%; min-width: 0; }
   .lf-testi p {
