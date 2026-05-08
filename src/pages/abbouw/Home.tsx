@@ -762,23 +762,24 @@ const EXTRA_STYLE = `
 .lf-services .lf-svc-grid[data-svc-stack] {
   display: block;
   position: relative;
-  padding-bottom: 50vh;
+  padding-bottom: 30vh;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
   position: sticky;
-  top: calc(110px + var(--svc-i, 0) * 28px);
+  top: calc(110px + var(--svc-i, 0) * 24px);
   display: block;
   width: 100%;
   max-width: 880px;
-  margin: 0 auto 36px;
+  margin: 0 auto 24px;
   border-radius: 18px;
   background: #fff;
   border: 1px solid var(--ink-line-soft);
   box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 40px 80px -32px rgba(15,17,21,.32);
   transform-origin: 50% 0%;
   transform: scale(var(--svc-scale, 1));
-  transition: transform .5s cubic-bezier(.22,.78,.27,1), box-shadow .5s ease;
+  transition: box-shadow .4s ease;
   will-change: transform;
+  backface-visibility: hidden;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover { transform: scale(var(--svc-scale, 1)); }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 21/9; }
