@@ -272,7 +272,7 @@ const HTML = (i: Record<string, string>) => `
       <span class="lf-eyebrow">Onze diensten</span>
       <h2 class="lf-h2">Zes specialisaties.<br>Eén bouwpartner.</h2>
     </div>
-    <div class="lf-svc-grid">
+    <div class="lf-svc-grid" data-svc-stack>
       ${[
         { img: i.svcConstruct, n: '01', title: 'AB Construct', desc: 'Nieuwbouw en totaalrenovatie sleutel-op-de-deur. Eén contract, één planning, één resultaat.', href: '/construct' },
         { img: i.svcEco, n: '02', title: 'AB Ecologisch', desc: 'Duurzaam bouwen met natuurlijke materialen. Lager E-peil, lagere energiefactuur.', href: '/ecologisch' },
@@ -280,8 +280,8 @@ const HTML = (i: Record<string, string>) => `
         { img: i.svcDak, n: '04', title: 'AB Dakwerken', desc: 'Hellende en platte daken, dakisolatie en zinkwerk. Door eigen dakdekkers geplaatst.', href: '/dakwerken' },
         { img: i.svcBad, n: '05', title: 'AB Bad &amp; Wellness', desc: 'Sleutel-op-de-deur badkamers met premium tegels en sanitair. Klaar in vier weken.', href: '/bad' },
         { img: i.svcGevel, n: '06', title: 'AB Gevelbekleding', desc: 'Witte of grijze crepi, sierpleister of steenstrips. Tijdloos én onderhoudsarm.', href: '/gevel' },
-      ].map((s, idx) => `
-        <a class="lf-svc-card" href="${s.href}" data-reveal style="transition-delay:${idx * 70}ms">
+      ].map((s, idx, arr) => `
+        <a class="lf-svc-card" href="${s.href}" data-reveal data-svc-card style="--svc-i:${idx};--svc-total:${arr.length};transition-delay:${idx * 70}ms">
           <div class="lf-svc-img"><img src="${s.img}" alt="${s.title}" loading="lazy" /><span class="lf-svc-num">${s.n}</span></div>
           <div class="lf-svc-body">
             <h4>${s.title}</h4>
@@ -1068,11 +1068,33 @@ const EXTRA_STYLE = `
   .lf-form { padding: 24px 20px; border-radius: 14px; }
   .lf-form-header h3 { font-size: 20px; }
 
-  /* Services + Support + Blog: keep 1-col but tighter */
-  .lf-svc-grid, .lf-blog-grid { gap: 16px; }
+  /* Services: stacking-card scroll animation (à la Olivier Larose) */
+  .lf-services .lf-svc-grid[data-svc-stack] {
+    display: block;
+    position: relative;
+    padding-bottom: 40vh;
+  }
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
+    position: sticky;
+    top: calc(90px + var(--svc-i, 0) * 16px);
+    display: block;
+    margin: 0 auto 24px;
+    width: 100%;
+    max-width: 460px;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 30px 60px -28px rgba(15,17,21,.28);
+    transform-origin: 50% 0%;
+    transform: scale(var(--svc-scale, 1));
+    transition: transform .45s cubic-bezier(.22,.78,.27,1), box-shadow .45s ease;
+    will-change: transform;
+  }
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover { transform: scale(var(--svc-scale, 1)); }
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 16/10; }
   .lf-svc-body { padding: 18px; }
   .lf-svc-body h4 { font-size: 16px; }
   .lf-blog-body { padding: 18px; }
+  .lf-blog-grid { gap: 16px; }
 
   /* Support: 2x2 */
   .lf-support-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
