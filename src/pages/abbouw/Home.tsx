@@ -1127,28 +1127,9 @@ const EXTRA_STYLE = `
   .lf-form { padding: 24px 20px; border-radius: 14px; }
   .lf-form-header h3 { font-size: 20px; }
 
-  /* Services: stacking-card scroll animation (à la Olivier Larose) */
-  .lf-services .lf-svc-grid[data-svc-stack] {
-    display: block;
-    position: relative;
-    padding-bottom: 40vh;
-  }
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
-    position: sticky;
-    top: calc(90px + var(--svc-i, 0) * 16px);
-    display: block;
-    margin: 0 auto 24px;
-    width: 100%;
-    max-width: 460px;
-    border-radius: 18px;
-    background: #fff;
-    box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 30px 60px -28px rgba(15,17,21,.28);
-    transform-origin: 50% 0%;
-    transform: scale(var(--svc-scale, 1));
-    transition: transform .45s cubic-bezier(.22,.78,.27,1), box-shadow .45s ease;
-    will-change: transform;
-  }
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover { transform: scale(var(--svc-scale, 1)); }
+  /* Services stack on mobile: shorter slot so it doesn't feel sluggish on phones */
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot { height: 90vh; }
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card { max-width: 460px; border-radius: 16px; box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 30px 60px -28px rgba(15,17,21,.28); }
   .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 16/10; }
   .lf-svc-body { padding: 18px; }
   .lf-svc-body h4 { font-size: 16px; }
