@@ -5850,29 +5850,25 @@ body.page-hero-dark .footer {
 @media (max-width: 760px) {
   .lf-testi-marquee {
     overflow: visible;
-    height: 340svh;
-    min-height: 2100px;
-    padding: 0;
+    height: auto;
+    min-height: 0;
+    padding: 0 16px;
     overscroll-behavior: auto;
     -webkit-mask-image: none;
             mask-image: none;
   }
   .lf-testi-shift {
-    position: sticky;
-    top: 92px;
-    min-height: min(48svh, 340px);
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 18px;
+    position: static;
+    display: block;
+    min-height: 0;
+    padding: 0;
     transform: none !important;
     transition: none !important;
-    z-index: 1;
   }
   .lf-testi-track {
     position: relative;
-    width: min(100%, 340px);
-    height: 252px;
+    width: 100%;
+    height: auto;
     display: block;
     animation: none !important;
     overflow: visible;
@@ -5882,37 +5878,40 @@ body.page-hero-dark .footer {
     position: relative;
     display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
     padding: 0;
+    gap: 0;
   }
   .lf-testi {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    position: sticky;
+    top: 96px;
     flex: none;
-    width: min(100%, 320px);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto 70vh;
     height: auto;
-    min-height: 232px;
+    min-height: 0;
     min-width: 0;
-    padding: 18px 16px 16px;
-    border-radius: 16px;
-    transform: translate3d(-50%, calc(-50% + var(--mobile-review-y, 42px)), 0) scale(var(--mobile-review-scale, .95));
-    opacity: var(--mobile-review-opacity, 0);
-    z-index: var(--mobile-review-z, 1);
-    pointer-events: none;
-    gap: 10px;
-    will-change: transform, opacity;
-    transition: box-shadow .28s ease;
-    box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 10px 24px -16px rgba(15,17,21,.14);
-  }
-  .lf-testi.is-mobile-active {
+    padding: 20px 18px 18px;
+    border-radius: 18px;
+    background: #ffffff;
+    transform: none !important;
+    opacity: 1 !important;
+    z-index: auto;
     pointer-events: auto;
-    box-shadow: 0 2px 4px rgba(15,17,21,.05), 0 22px 42px -24px rgba(15,17,21,.26);
+    gap: 12px;
+    will-change: transform;
+    transition: none;
+    box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 24px 50px -28px rgba(15,17,21,.28);
   }
+  .lf-testi-set[data-testi-set="0"] .lf-testi:last-child { margin-bottom: 24px; }
   .lf-testi.is-focus,
-  .lf-testi.is-near {
-    transform: translate3d(-50%, calc(-50% + var(--mobile-review-y, 42px)), 0) scale(var(--mobile-review-scale, .95)) !important;
-    opacity: var(--mobile-review-opacity, 0) !important;
+  .lf-testi.is-near,
+  .lf-testi.is-mobile-active {
+    transform: none !important;
+    opacity: 1 !important;
   }
   .lf-testi * { max-width: 100%; min-width: 0; }
   .lf-testi p {
