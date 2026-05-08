@@ -496,13 +496,9 @@ export function useAbBouwInteractions() {
     const svcStackCards = svcStack
       ? Array.from(svcStack.querySelectorAll<HTMLElement>('[data-svc-card]'))
       : [];
-    const isSvcMobile = () => window.matchMedia('(max-width: 760px)').matches;
     const onSvcStackScroll = () => {
       if (!svcStack || svcStackCards.length === 0) return;
-      if (!isSvcMobile()) {
-        svcStackCards.forEach((c) => c.style.removeProperty('--svc-scale'));
-        return;
-      }
+
       const total = svcStackCards.length;
       const rect = svcStack.getBoundingClientRect();
       const vh = window.innerHeight || 1;
