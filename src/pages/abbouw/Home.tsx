@@ -770,26 +770,29 @@ const EXTRA_STYLE = `
 .lf-svc-card { display:flex; flex-direction:column; background:#fff; border-radius: 14px; overflow:hidden; border: 1px solid var(--ink-line-soft); transition: all 0.3s var(--ease); color: var(--ink); }
 .lf-svc-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -20px rgba(10,22,40,0.18); border-color: var(--accent); }
 
-/* Stacking-card scroll animation (Olivier Larose pattern: each card has its own h-screen sticky slot) */
+/* Stacking-card scroll animation (Olivier Larose pattern: each slot is sticky at top:0,
+   so cards pile on top of each other instead of leaving the viewport between slots) */
 .lf-services .lf-svc-grid[data-svc-stack] {
   display: block;
   position: relative;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot {
-  position: relative;
+  position: sticky;
+  top: 0;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  perspective: 1000px;
+  padding: 0 16px;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
-  position: sticky;
-  top: calc(50vh - var(--svc-card-h, 280px) / 2);
+  position: relative;
   display: block;
   width: 100%;
   max-width: 880px;
   margin: 0 auto;
+  /* tiny per-card vertical offset so the stack is visible */
+  top: calc(var(--svc-i, 0) * 22px);
   border-radius: 18px;
   background: #fff;
   border: 1px solid var(--ink-line-soft);
@@ -836,8 +839,8 @@ const EXTRA_STYLE = `
 /* ── Why-us as scroll-stack: cards on the left (sticky, straight), photo sticky on right */
 .lf-why-collage.lf-why-stack { display:grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: start; max-width: 1180px; margin: 0 auto; }
 .lf-why-stack .lf-why-stack-left { display:block; }
-.lf-why-stack .lf-why-slot { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; }
-.lf-why-stack .lf-why-tile { position: sticky; top: calc(50vh - var(--why-card-h, 200px) / 2); width: 100%; padding: 30px 32px; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 30px 60px -32px rgba(15,17,21,.22); transform-origin: 50% 0%; transform: scale(var(--why-scale, 1)); will-change: transform; backface-visibility: hidden; }
+.lf-why-stack .lf-why-slot { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center; }
+.lf-why-stack .lf-why-tile { position: relative; top: calc(var(--why-i, 0) * 18px); width: 100%; padding: 30px 32px; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 30px 60px -32px rgba(15,17,21,.22); transform-origin: 50% 0%; transform: scale(var(--why-scale, 1)); will-change: transform; backface-visibility: hidden; }
 .lf-why-stack .lf-why-photo { position: sticky; top: 110px; height: calc(100vh - 160px); min-height: 480px; grid-row: auto; grid-column: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -36px rgba(15,17,21,.32); }
 .lf-why-stack .lf-why-photo img { width:100%; height:100%; object-fit: cover; }
 
