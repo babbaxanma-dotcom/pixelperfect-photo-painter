@@ -276,25 +276,13 @@ export function useAbBouwInteractions() {
     const isTestiMobile = () => window.matchMedia('(max-width: 760px)').matches;
     const updateMobileTestiStack = () => {
       if (!testiMarquee || mobileTestiCards.length === 0 || !isTestiMobile()) return;
-      const rect = testiMarquee.getBoundingClientRect();
-      const travel = Math.max(1, rect.height - window.innerHeight);
-      const raw = Math.max(0, Math.min(1, -rect.top / travel));
-      const activeFloat = raw * (mobileTestiCards.length - 1);
-      const activeIdx = Math.round(activeFloat);
-
-      mobileTestiCards.forEach((card, idx) => {
-        const dist = idx - activeFloat;
-        const abs = Math.abs(dist);
-        const opacity = Math.max(0, 1 - abs * 1.15);
-        const y = dist * 58;
-        const scale = Math.max(0.9, 1 - abs * 0.045);
-        card.style.setProperty('--mobile-review-opacity', opacity.toFixed(3));
-        card.style.setProperty('--mobile-review-y', `${y.toFixed(1)}px`);
-        card.style.setProperty('--mobile-review-scale', scale.toFixed(3));
-        card.style.setProperty('--mobile-review-z', `${100 - Math.round(abs * 10)}`);
-        card.classList.toggle('is-mobile-active', idx === activeIdx);
-        card.classList.toggle('is-focus', idx === activeIdx);
-        card.classList.toggle('is-near', abs > 0.05 && abs < 1.35);
+      // Pure-CSS sticky stack on mobile — clear any inline styles/classes from previous JS-driven layout
+      mobileTestiCards.forEach((card) => {
+        card.style.removeProperty('--mobile-review-opacity');
+        card.style.removeProperty('--mobile-review-y');
+        card.style.removeProperty('--mobile-review-scale');
+        card.style.removeProperty('--mobile-review-z');
+        card.classList.remove('is-mobile-active', 'is-focus', 'is-near');
       });
     };
     const updateTestiFocus = () => {
