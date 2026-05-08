@@ -952,6 +952,11 @@ const EXTRA_STYLE = `
   .lf-why-photo { grid-row: 2; grid-column: 1 / 3; height: 220px; }
   .lf-why-tl { grid-area: 1 / 1; } .lf-why-tr { grid-area: 1 / 2; }
   .lf-why-bl { grid-area: 3 / 1; } .lf-why-br { grid-area: 3 / 2; }
+  /* Disable scroll-stack on small screens — back to a normal stacked column */
+  .lf-why-collage.lf-why-stack { display: block; }
+  .lf-why-stack .lf-why-stack-left { display: grid; gap: 16px; }
+  .lf-why-stack .lf-why-tile { position: static; transform: none !important; margin: 0; box-shadow: none; }
+  .lf-why-stack .lf-why-photo { position: static; height: 240px; min-height: 0; margin-top: 16px; }
   .lf-proj-collage { grid-template-columns: 1fr; grid-template-rows: repeat(4, 220px); }
   .lf-proj-logo { display:none; }
   .lf-skills-collage { height: 360px; }
