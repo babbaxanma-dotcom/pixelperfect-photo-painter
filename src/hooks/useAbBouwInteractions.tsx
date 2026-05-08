@@ -491,6 +491,65 @@ export function useAbBouwInteractions() {
     window.addEventListener('scroll', onWhyScroll, { passive: true });
     onWhyScroll();
 
+    // ── Why-stack: scroll-linked scale on stacked cards (desktop)
+    const whyStack = document.querySelector<HTMLElement>('[data-why-stack]');
+    const whyStackCards = whyStack
+      ? Array.from(whyStack.querySelectorAll<HTMLElement>('[data-why-card]'))
+      : [];
+    const isWhyStackDesktop = () => window.matchMedia('(min-width: 901px)').matches;
+    let whyRaf = 0;
+    const computeWhyStack = () => {
+      whyRaf = 0;
+      if (!whyStack || whyStackCards.length === 0) return;
+      if (!isWhyStackDesktop()) {
+        whyStackCards.forEach((c) => c.style.removeProperty('--why-scale'));
+        return;
+      }
+      const total = whyStackCards.length;
+      for (let i = 0; i < total; i++) {
+        const card = whyStackCards[i];
+        const next = whyStackCards[i + 1];
+        const stickyTop = parseFloat(getComputedStyle(card).top) || 0;
+        const cardTop = card.getBoundingClientRect().top;
+        const targetScale = 1 - (total - i) * 0.035;
+        let local = 0;
+        if (next) {
+          const nextTop = next.getBoundingClientRect().top;
+          const distance = nextTop - cardTop;
+          const cardH = card.offsetHeight || 1;
+          local = 1 - Math.max(0, Math.min(1, (distance - cardH) / Math.max(1, window.innerHeight - stickyTop)));
+        }
+        if (cardTop > stickyTop + 1) local = 0;
+        const scale = 1 + (targetScale - 1) * local;
+        card.style.setProperty('--why-scale', scale.toFixed(4));
+      }
+    };
+    const onWhyStackScroll = () => {
+      if (whyRaf) return;
+      whyRaf = requestAnimationFrame(computeWhyStack);
+    };
+    window.addEventListener('scroll', onWhyStackScroll, { passive: true });
+    window.addEventListener('resize', onWhyStackScroll);
+    computeWhyStack();
+
+    // ── Trust-strip: cascade-mark items as the strip enters the viewport
+    const trustStrip = document.querySelector<HTMLElement>('[data-trust-strip]');
+    const trustItems = trustStrip
+      ? Array.from(trustStrip.querySelectorAll<HTMLElement>('.lf-trust-item'))
+      : [];
+    const onTrustScroll = () => {
+      if (!trustStrip || trustItems.length === 0) return;
+      const rect = trustStrip.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      const enter = vh * 0.95;
+      const center = vh * 0.55;
+      const p = Math.max(0, Math.min(1, (enter - rect.top) / Math.max(1, enter - center)));
+      const upTo = Math.floor(p * (trustItems.length + 0.5));
+      trustItems.forEach((it, idx) => it.classList.toggle('is-marked', idx < upTo));
+    };
+    window.addEventListener('scroll', onTrustScroll, { passive: true });
+    onTrustScroll();
+
     // ── Stacking-card scroll animation for services grid (mobile only)
     const svcStack = document.querySelector<HTMLElement>('[data-svc-stack]');
     const svcStackCards = svcStack
