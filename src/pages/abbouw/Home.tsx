@@ -281,16 +281,18 @@ const HTML = (i: Record<string, string>) => `
         { img: i.svcBad, n: '05', title: 'AB Bad &amp; Wellness', desc: 'Sleutel-op-de-deur badkamers met premium tegels en sanitair. Klaar in vier weken.', href: '/bad' },
         { img: i.svcGevel, n: '06', title: 'AB Gevelbekleding', desc: 'Witte of grijze crepi, sierpleister of steenstrips. Tijdloos én onderhoudsarm.', href: '/gevel' },
       ].map((s, idx, arr) => `
-        <a class="lf-svc-card" href="${s.href}" data-reveal data-svc-card style="--svc-i:${idx};--svc-total:${arr.length};transition-delay:${idx * 70}ms">
-          <div class="lf-svc-img"><img src="${s.img}" alt="${s.title}" loading="lazy" /><span class="lf-svc-num">${s.n}</span></div>
-          <div class="lf-svc-body">
-            <h4>${s.title}</h4>
-            <p>${s.desc}</p>
-            <span class="lf-svc-link">Lees meer
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </span>
-          </div>
-        </a>
+        <div class="lf-svc-slot" data-svc-slot style="--svc-i:${idx};--svc-total:${arr.length}">
+          <a class="lf-svc-card" href="${s.href}" data-svc-card style="--svc-i:${idx};--svc-total:${arr.length}">
+            <div class="lf-svc-img"><img src="${s.img}" alt="${s.title}" loading="lazy" /><span class="lf-svc-num">${s.n}</span></div>
+            <div class="lf-svc-body">
+              <h4>${s.title}</h4>
+              <p>${s.desc}</p>
+              <span class="lf-svc-link">Lees meer
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
+            </div>
+          </a>
+        </div>
       `).join('')}
     </div>
   </div>
