@@ -817,6 +817,24 @@ const EXTRA_STYLE = `
 .lf-why-bl { grid-area: 2 / 1; }
 .lf-why-br { grid-area: 2 / 3; }
 
+/* ── Why-us as scroll-stack: cards on the left (sticky, straight), photo sticky on right */
+.lf-why-collage.lf-why-stack { display:grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: start; max-width: 1180px; margin: 0 auto; }
+.lf-why-stack .lf-why-stack-left { display:block; }
+.lf-why-stack .lf-why-tile { position: sticky; top: calc(110px + var(--why-i, 0) * 22px); margin: 0 0 55vh; padding: 30px 32px; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 30px 60px -32px rgba(15,17,21,.22); transform-origin: 50% 0%; transform: scale(var(--why-scale, 1)); will-change: transform; backface-visibility: hidden; }
+.lf-why-stack .lf-why-stack-left > .lf-why-tile:last-child { margin-bottom: 0; }
+.lf-why-stack .lf-why-photo { position: sticky; top: 110px; height: calc(100vh - 160px); min-height: 480px; grid-row: auto; grid-column: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -36px rgba(15,17,21,.32); }
+.lf-why-stack .lf-why-photo img { width:100%; height:100%; object-fit: cover; }
+
+/* Trust-strip: highlight items in cascade as the strip enters viewport */
+.lf-trust-strip[data-trust-strip] { position: relative; }
+.lf-trust-strip[data-trust-strip] .lf-trust-item { position: relative; z-index: 1; transition: transform .5s cubic-bezier(.22,.78,.27,1); }
+.lf-trust-strip[data-trust-strip] .lf-trust-item::before { content:""; position:absolute; inset: -10px -14px; border-radius: 10px; background: hsl(40 92% 52% / 0.10); opacity: 0; transform: scale(.94); transition: opacity .55s ease, transform .55s cubic-bezier(.22,.78,.27,1); z-index: -1; }
+.lf-trust-strip[data-trust-strip] .lf-trust-item strong { transition: color .45s ease; }
+.lf-trust-strip[data-trust-strip] .lf-trust-item.is-marked::before { opacity: 1; transform: scale(1); }
+.lf-trust-strip[data-trust-strip] .lf-trust-item.is-marked strong { color: var(--accent); }
+.lf-trust-strip[data-trust-strip] .lf-trust-item.is-marked { transform: translateY(-2px); }
+
+
 /* Skills */
 .lf-skills-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items:center; }
 .lf-bars { margin-bottom: 28px; }
