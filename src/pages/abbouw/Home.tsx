@@ -281,16 +281,18 @@ const HTML = (i: Record<string, string>) => `
         { img: i.svcBad, n: '05', title: 'AB Bad &amp; Wellness', desc: 'Sleutel-op-de-deur badkamers met premium tegels en sanitair. Klaar in vier weken.', href: '/bad' },
         { img: i.svcGevel, n: '06', title: 'AB Gevelbekleding', desc: 'Witte of grijze crepi, sierpleister of steenstrips. Tijdloos én onderhoudsarm.', href: '/gevel' },
       ].map((s, idx, arr) => `
-        <a class="lf-svc-card" href="${s.href}" data-reveal data-svc-card style="--svc-i:${idx};--svc-total:${arr.length};transition-delay:${idx * 70}ms">
-          <div class="lf-svc-img"><img src="${s.img}" alt="${s.title}" loading="lazy" /><span class="lf-svc-num">${s.n}</span></div>
-          <div class="lf-svc-body">
-            <h4>${s.title}</h4>
-            <p>${s.desc}</p>
-            <span class="lf-svc-link">Lees meer
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </span>
-          </div>
-        </a>
+        <div class="lf-svc-slot" data-svc-slot style="--svc-i:${idx};--svc-total:${arr.length}">
+          <a class="lf-svc-card" href="${s.href}" data-svc-card style="--svc-i:${idx};--svc-total:${arr.length}">
+            <div class="lf-svc-img"><img src="${s.img}" alt="${s.title}" loading="lazy" /><span class="lf-svc-num">${s.n}</span></div>
+            <div class="lf-svc-body">
+              <h4>${s.title}</h4>
+              <p>${s.desc}</p>
+              <span class="lf-svc-link">Lees meer
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
+            </div>
+          </a>
+        </div>
       `).join('')}
     </div>
   </div>
@@ -371,25 +373,33 @@ const HTML = (i: Record<string, string>) => `
     </div>
     <div class="lf-why-collage lf-why-stack" data-why-seq data-why-stack>
       <div class="lf-why-stack-left">
-        <div class="lf-why-tile" data-why-step="0" data-why-card style="--why-i:0;--why-total:4">
-          <div class="lf-why-meta"><span class="lf-why-num">01</span><span class="lf-why-label">Ontzorging</span></div>
-          <h5>Wij regelen ook de papierwinkel</h5>
-          <p>Stedenbouwkundige vergunning, EPB-verslag, premieaanvraag Mijn VerbouwPremie en oplevering bij de architect. U tekent, wij regelen.</p>
+        <div class="lf-why-slot" data-why-slot>
+          <div class="lf-why-tile" data-why-step="0" data-why-card style="--why-i:0;--why-total:4">
+            <div class="lf-why-meta"><span class="lf-why-num">01</span><span class="lf-why-label">Ontzorging</span></div>
+            <h5>Wij regelen ook de papierwinkel</h5>
+            <p>Stedenbouwkundige vergunning, EPB-verslag, premieaanvraag Mijn VerbouwPremie en oplevering bij de architect. U tekent, wij regelen.</p>
+          </div>
         </div>
-        <div class="lf-why-tile" data-why-step="1" data-why-card style="--why-i:1;--why-total:4">
-          <div class="lf-why-meta"><span class="lf-why-num">02</span><span class="lf-why-label">Planning</span></div>
-          <h5>Wekelijks werfrapport in uw mailbox</h5>
-          <p>Elke vrijdag een korte update met foto's, voortgang en planning voor de week erop. Vertraging? U weet het meteen, niet pas op de opleveringsdag.</p>
+        <div class="lf-why-slot" data-why-slot>
+          <div class="lf-why-tile" data-why-step="1" data-why-card style="--why-i:1;--why-total:4">
+            <div class="lf-why-meta"><span class="lf-why-num">02</span><span class="lf-why-label">Planning</span></div>
+            <h5>Wekelijks werfrapport in uw mailbox</h5>
+            <p>Elke vrijdag een korte update met foto's, voortgang en planning voor de week erop. Vertraging? U weet het meteen, niet pas op de opleveringsdag.</p>
+          </div>
         </div>
-        <div class="lf-why-tile" data-why-step="2" data-why-card style="--why-i:2;--why-total:4">
-          <div class="lf-why-meta"><span class="lf-why-num">03</span><span class="lf-why-label">Garantie</span></div>
-          <h5>10-jarige aansprakelijkheid, wettelijk verzekerd</h5>
-          <p>VCA*-gecertificeerd, aangesloten bij Bouwunie. Polis stabiliteit en waterdichtheid via Federale Verzekering.</p>
+        <div class="lf-why-slot" data-why-slot>
+          <div class="lf-why-tile" data-why-step="2" data-why-card style="--why-i:2;--why-total:4">
+            <div class="lf-why-meta"><span class="lf-why-num">03</span><span class="lf-why-label">Garantie</span></div>
+            <h5>10-jarige aansprakelijkheid, wettelijk verzekerd</h5>
+            <p>VCA*-gecertificeerd, aangesloten bij Bouwunie. Polis stabiliteit en waterdichtheid via Federale Verzekering.</p>
+          </div>
         </div>
-        <div class="lf-why-tile" data-why-step="3" data-why-card style="--why-i:3;--why-total:4">
-          <div class="lf-why-meta"><span class="lf-why-num">04</span><span class="lf-why-label">Vaste ploeg</span></div>
-          <h5>Eigen ploegen op uw werf</h5>
-          <p>23 mensen in vaste dienst, metselaars, dakdekkers, tegelzetters, schrijnwerkers. Eén verantwoordelijkheid, één kwaliteitsstandaard.</p>
+        <div class="lf-why-slot" data-why-slot>
+          <div class="lf-why-tile" data-why-step="3" data-why-card style="--why-i:3;--why-total:4">
+            <div class="lf-why-meta"><span class="lf-why-num">04</span><span class="lf-why-label">Vaste ploeg</span></div>
+            <h5>Eigen ploegen op uw werf</h5>
+            <p>23 mensen in vaste dienst, metselaars, dakdekkers, tegelzetters, schrijnwerkers. Eén verantwoordelijkheid, één kwaliteitsstandaard.</p>
+          </div>
         </div>
       </div>
       <div class="lf-why-photo" data-reveal><img src="${i.why}" alt="" loading="lazy"/></div>
@@ -760,26 +770,32 @@ const EXTRA_STYLE = `
 .lf-svc-card { display:flex; flex-direction:column; background:#fff; border-radius: 14px; overflow:hidden; border: 1px solid var(--ink-line-soft); transition: all 0.3s var(--ease); color: var(--ink); }
 .lf-svc-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -20px rgba(10,22,40,0.18); border-color: var(--accent); }
 
-/* Stacking-card scroll animation (desktop + tablet, à la Olivier Larose) */
+/* Stacking-card scroll animation (Olivier Larose pattern: each card has its own h-screen sticky slot) */
 .lf-services .lf-svc-grid[data-svc-stack] {
   display: block;
   position: relative;
-  padding-bottom: 30vh;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
   position: sticky;
-  top: calc(110px + var(--svc-i, 0) * 24px);
+  top: calc(50vh - var(--svc-card-h, 280px) / 2);
   display: block;
   width: 100%;
   max-width: 880px;
-  margin: 0 auto 24px;
+  margin: 0 auto;
   border-radius: 18px;
   background: #fff;
   border: 1px solid var(--ink-line-soft);
   box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 40px 80px -32px rgba(15,17,21,.32);
   transform-origin: 50% 0%;
   transform: scale(var(--svc-scale, 1));
-  transition: box-shadow .4s ease;
   will-change: transform;
   backface-visibility: hidden;
 }
@@ -820,8 +836,8 @@ const EXTRA_STYLE = `
 /* ── Why-us as scroll-stack: cards on the left (sticky, straight), photo sticky on right */
 .lf-why-collage.lf-why-stack { display:grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: start; max-width: 1180px; margin: 0 auto; }
 .lf-why-stack .lf-why-stack-left { display:block; }
-.lf-why-stack .lf-why-tile { position: sticky; top: calc(110px + var(--why-i, 0) * 22px); margin: 0 0 55vh; padding: 30px 32px; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 30px 60px -32px rgba(15,17,21,.22); transform-origin: 50% 0%; transform: scale(var(--why-scale, 1)); will-change: transform; backface-visibility: hidden; }
-.lf-why-stack .lf-why-stack-left > .lf-why-tile:last-child { margin-bottom: 0; }
+.lf-why-stack .lf-why-slot { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; }
+.lf-why-stack .lf-why-tile { position: sticky; top: calc(50vh - var(--why-card-h, 200px) / 2); width: 100%; padding: 30px 32px; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 30px 60px -32px rgba(15,17,21,.22); transform-origin: 50% 0%; transform: scale(var(--why-scale, 1)); will-change: transform; backface-visibility: hidden; }
 .lf-why-stack .lf-why-photo { position: sticky; top: 110px; height: calc(100vh - 160px); min-height: 480px; grid-row: auto; grid-column: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -36px rgba(15,17,21,.32); }
 .lf-why-stack .lf-why-photo img { width:100%; height:100%; object-fit: cover; }
 
@@ -955,6 +971,7 @@ const EXTRA_STYLE = `
   /* Disable scroll-stack on small screens — back to a normal stacked column */
   .lf-why-collage.lf-why-stack { display: block; }
   .lf-why-stack .lf-why-stack-left { display: grid; gap: 16px; }
+  .lf-why-stack .lf-why-slot { height: auto; display: block; }
   .lf-why-stack .lf-why-tile { position: static; transform: none !important; margin: 0; box-shadow: none; }
   .lf-why-stack .lf-why-photo { position: static; height: 240px; min-height: 0; margin-top: 16px; }
   .lf-proj-collage { grid-template-columns: 1fr; grid-template-rows: repeat(4, 220px); }
@@ -1119,28 +1136,9 @@ const EXTRA_STYLE = `
   .lf-form { padding: 24px 20px; border-radius: 14px; }
   .lf-form-header h3 { font-size: 20px; }
 
-  /* Services: stacking-card scroll animation (à la Olivier Larose) */
-  .lf-services .lf-svc-grid[data-svc-stack] {
-    display: block;
-    position: relative;
-    padding-bottom: 40vh;
-  }
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
-    position: sticky;
-    top: calc(90px + var(--svc-i, 0) * 16px);
-    display: block;
-    margin: 0 auto 24px;
-    width: 100%;
-    max-width: 460px;
-    border-radius: 18px;
-    background: #fff;
-    box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 30px 60px -28px rgba(15,17,21,.28);
-    transform-origin: 50% 0%;
-    transform: scale(var(--svc-scale, 1));
-    transition: transform .45s cubic-bezier(.22,.78,.27,1), box-shadow .45s ease;
-    will-change: transform;
-  }
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover { transform: scale(var(--svc-scale, 1)); }
+  /* Services stack on mobile: shorter slot so it doesn't feel sluggish on phones */
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot { height: 90vh; }
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card { max-width: 460px; border-radius: 16px; box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 30px 60px -28px rgba(15,17,21,.28); }
   .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 16/10; }
   .lf-svc-body { padding: 18px; }
   .lf-svc-body h4 { font-size: 16px; }
