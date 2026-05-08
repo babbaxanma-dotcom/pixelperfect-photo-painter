@@ -491,8 +491,11 @@ export function useAbBouwInteractions() {
     window.addEventListener('scroll', onWhyScroll, { passive: true });
     onWhyScroll();
 
-    // ── Why-stack: scroll-linked scale on stacked cards (desktop)
+    // ── Why-stack: scroll-linked scale on stacked cards (desktop), Olivier Larose pattern
     const whyStack = document.querySelector<HTMLElement>('[data-why-stack]');
+    const whyStackSlots = whyStack
+      ? Array.from(whyStack.querySelectorAll<HTMLElement>('[data-why-slot]'))
+      : [];
     const whyStackCards = whyStack
       ? Array.from(whyStack.querySelectorAll<HTMLElement>('[data-why-card]'))
       : [];
@@ -502,26 +505,24 @@ export function useAbBouwInteractions() {
       whyRaf = 0;
       if (!whyStack || whyStackCards.length === 0) return;
       if (!isWhyStackDesktop()) {
-        whyStackCards.forEach((c) => c.style.removeProperty('--why-scale'));
+        whyStackCards.forEach((c) => {
+          c.style.removeProperty('--why-scale');
+          c.style.removeProperty('--why-card-h');
+        });
         return;
       }
       const total = whyStackCards.length;
       for (let i = 0; i < total; i++) {
+        const slot = whyStackSlots[i];
         const card = whyStackCards[i];
-        const next = whyStackCards[i + 1];
-        const stickyTop = parseFloat(getComputedStyle(card).top) || 0;
-        const cardTop = card.getBoundingClientRect().top;
-        const targetScale = 1 - (total - i) * 0.035;
-        let local = 0;
-        if (next) {
-          const nextTop = next.getBoundingClientRect().top;
-          const distance = nextTop - cardTop;
-          const cardH = card.offsetHeight || 1;
-          local = 1 - Math.max(0, Math.min(1, (distance - cardH) / Math.max(1, window.innerHeight - stickyTop)));
-        }
-        if (cardTop > stickyTop + 1) local = 0;
-        const scale = 1 + (targetScale - 1) * local;
+        if (!slot || !card) continue;
+        const slotRect = slot.getBoundingClientRect();
+        const slotH = slot.offsetHeight || 1;
+        const p = Math.max(0, Math.min(1, -slotRect.top / slotH));
+        const targetScale = 1 - (total - 1 - i) * 0.05;
+        const scale = 1 + (targetScale - 1) * p;
         card.style.setProperty('--why-scale', scale.toFixed(4));
+        card.style.setProperty('--why-card-h', `${card.offsetHeight}px`);
       }
     };
     const onWhyStackScroll = () => {
