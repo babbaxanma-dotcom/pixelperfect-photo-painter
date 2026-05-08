@@ -5851,8 +5851,8 @@ body.page-hero-dark .footer {
   .lf-testi-marquee {
     position: relative;
     overflow: visible;
-    height: 100vh;
-    min-height: 100vh;
+    height: max(100svh, calc(var(--mobile-testi-count, 7) * 68svh));
+    min-height: max(100svh, calc(var(--mobile-testi-count, 7) * 68svh));
     padding: 0 16px;
     overscroll-behavior: auto;
     -webkit-mask-image: none;
