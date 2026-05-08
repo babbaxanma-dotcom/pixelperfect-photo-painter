@@ -5980,8 +5980,8 @@ body.page-hero-dark .footer {
   line-height: 1.15;
 }
 @media (max-width: 640px) {
-  .lf-section.lf-tone-soft { padding: 44px 0 52px !important; }
-  .lf-section.lf-tone-soft .wrap { padding: 0 16px; overflow: hidden; }
+  .lf-reviews-section.lf-tone-soft { padding: 44px 0 52px !important; }
+  .lf-reviews-section.lf-tone-soft .wrap { padding: 0 16px; overflow: visible; }
   .lf-reviews-head { gap: 14px; margin-bottom: 18px !important; }
   .lf-reviews-rating {
     width: 100%;
