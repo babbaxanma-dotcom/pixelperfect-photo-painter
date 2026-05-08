@@ -5859,10 +5859,12 @@ body.page-hero-dark .footer {
   }
   .lf-testi-shift {
     position: sticky;
-    top: 96px;
-    min-height: min(58svh, 410px);
-    display: grid;
-    place-items: center;
+    top: 92px;
+    min-height: min(48svh, 340px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 18px;
     transform: none !important;
     transition: none !important;
     z-index: 1;
@@ -5870,7 +5872,7 @@ body.page-hero-dark .footer {
   .lf-testi-track {
     position: relative;
     width: min(100%, 340px);
-    height: 286px;
+    height: 252px;
     display: block;
     animation: none !important;
     overflow: visible;
