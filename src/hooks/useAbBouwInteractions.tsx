@@ -279,6 +279,7 @@ export function useAbBouwInteractions() {
       if (!isTestiMobile()) {
         mobileTestiCards.forEach((card) => {
           card.style.removeProperty('--mobile-review-opacity');
+          card.style.removeProperty('--mobile-review-x');
           card.style.removeProperty('--mobile-review-y');
           card.style.removeProperty('--mobile-review-scale');
           card.style.removeProperty('--mobile-review-z');
@@ -300,46 +301,59 @@ export function useAbBouwInteractions() {
 
       testiMarquee.style.setProperty('--mobile-testi-count', String(count));
 
+      // Side peek: neighbors are translated horizontally so a thin sliver peeks.
+      // Active card sits centered (X=0). Prev sits at -PEEK, next at +PEEK.
+      // PEEK is expressed as % of card width (translated via translateX(...%)).
+      const PEEK = 96; // % of own width — leaves ~4% sliver visible at edge
+
       let activeIdx = 0;
       let bestOpacity = -1;
 
       mobileTestiCards.forEach((card, i) => {
         let opacity = 0;
-        let y = 44;
-        let scale = 0.95;
+        let x = 0;       // % of own width
+        let y = 0;
+        let scale = 0.9;
         let z = 1;
-        let blur = 1.2;
+        let blur = 0;
 
-        if (i < base) {
-          opacity = Math.max(0, 0.35 - (base - i) * 0.22);
-          y = -22 - (base - i) * 6;
-          scale = 0.97;
-          z = 5 + i;
-          blur = 0.6;
-        }
-
-        if (i === base) {
-          opacity = 1 - blend * 0.58;
-          y = -blend * 24;
-          scale = 1 - blend * 0.03;
-          z = 22;
-          blur = 0;
-        }
-
-        if (i === base + 1) {
-          opacity = Math.min(1, blend * 1.18);
-          y = 34 - blend * 34;
-          scale = 0.95 + blend * 0.05;
-          z = 24;
-          blur = Math.max(0, (1 - blend) * 0.8);
-        }
-
-        if (i > base + 1) {
+        if (i < base - 1) {
+          // far left, hidden
           opacity = 0;
-          y = 48;
-          scale = 0.94;
+          x = -PEEK - 10;
+          scale = 0.88;
           z = 1;
-          blur = 1.2;
+        } else if (i === base - 1) {
+          // outgoing-left sliver, fades further out as blend grows
+          opacity = 0.35 * (1 - blend);
+          x = -PEEK - blend * 8;
+          scale = 0.9;
+          z = 5;
+        } else if (i === base) {
+          // current → moves out to the left as blend → 1
+          opacity = 1 - blend * 0.85;
+          x = -PEEK * blend;
+          scale = 1 - blend * 0.08;
+          z = 22;
+          blur = blend * 0.6;
+        } else if (i === base + 1) {
+          // incoming → starts at +PEEK sliver, slides to center
+          opacity = 0.45 + blend * 0.55;
+          x = PEEK * (1 - blend);
+          scale = 0.92 + blend * 0.08;
+          z = 24;
+          blur = (1 - blend) * 0.4;
+        } else if (i === base + 2) {
+          // next-up sliver on the right
+          opacity = 0.35 * blend;
+          x = PEEK + (1 - blend) * 8;
+          scale = 0.9;
+          z = 5;
+        } else {
+          opacity = 0;
+          x = PEEK + 10;
+          scale = 0.88;
+          z = 1;
         }
 
         if (opacity > bestOpacity) {
@@ -348,6 +362,7 @@ export function useAbBouwInteractions() {
         }
 
         card.style.setProperty('--mobile-review-opacity', opacity.toFixed(3));
+        card.style.setProperty('--mobile-review-x', `${x.toFixed(2)}%`);
         card.style.setProperty('--mobile-review-y', `${y.toFixed(2)}px`);
         card.style.setProperty('--mobile-review-scale', scale.toFixed(3));
         card.style.setProperty('--mobile-review-z', `${z}`);
