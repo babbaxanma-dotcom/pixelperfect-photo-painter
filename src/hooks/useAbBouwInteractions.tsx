@@ -496,25 +496,41 @@ export function useAbBouwInteractions() {
     const svcStackCards = svcStack
       ? Array.from(svcStack.querySelectorAll<HTMLElement>('[data-svc-card]'))
       : [];
-    const onSvcStackScroll = () => {
+    let svcRaf = 0;
+    const computeSvcStack = () => {
+      svcRaf = 0;
       if (!svcStack || svcStackCards.length === 0) return;
-
       const total = svcStackCards.length;
-      const rect = svcStack.getBoundingClientRect();
-      const vh = window.innerHeight || 1;
-      const span = Math.max(1, rect.height - vh);
-      const p = Math.max(0, Math.min(1, -rect.top / span));
-      svcStackCards.forEach((card, i) => {
-        const start = i / total;
-        const local = Math.max(0, Math.min(1, (p - start) / Math.max(0.0001, 1 - start)));
+      // Use the next card's top vs this card's sticky top to drive the scale —
+      // identical to the Olivier Larose pattern, fully scroll-linked & seamless.
+      for (let i = 0; i < total; i++) {
+        const card = svcStackCards[i];
+        const next = svcStackCards[i + 1];
+        const stickyTop = parseFloat(getComputedStyle(card).top) || 0;
+        const cardTop = card.getBoundingClientRect().top;
         const targetScale = 1 - (total - i) * 0.04;
+        let local = 0;
+        if (next) {
+          const nextTop = next.getBoundingClientRect().top;
+          const distance = nextTop - cardTop; // shrinks toward card height as next slides up
+          const cardH = card.offsetHeight || 1;
+          // progress goes 0→1 as next card travels from below viewport up to overlap this card's top
+          local = 1 - Math.max(0, Math.min(1, (distance - cardH * 0.0) / (window.innerHeight - stickyTop)));
+        }
+        // Only start scaling once this card is actually pinned
+        if (cardTop > stickyTop + 1) local = 0;
         const scale = 1 + (targetScale - 1) * local;
         card.style.setProperty('--svc-scale', scale.toFixed(4));
-      });
+      }
+    };
+    const onSvcStackScroll = () => {
+      if (svcRaf) return;
+      svcRaf = requestAnimationFrame(computeSvcStack);
     };
     window.addEventListener('scroll', onSvcStackScroll, { passive: true });
     window.addEventListener('resize', onSvcStackScroll);
-    onSvcStackScroll();
+    computeSvcStack();
+
 
     // In-view active state for cards (smooth fade/scale of off-center cards)
     let pinIo: IntersectionObserver | null = null;
