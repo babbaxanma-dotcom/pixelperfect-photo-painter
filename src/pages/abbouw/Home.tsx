@@ -757,6 +757,31 @@ const EXTRA_STYLE = `
 .lf-svc-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
 .lf-svc-card { display:flex; flex-direction:column; background:#fff; border-radius: 14px; overflow:hidden; border: 1px solid var(--ink-line-soft); transition: all 0.3s var(--ease); color: var(--ink); }
 .lf-svc-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -20px rgba(10,22,40,0.18); border-color: var(--accent); }
+
+/* Stacking-card scroll animation (desktop + tablet, à la Olivier Larose) */
+.lf-services .lf-svc-grid[data-svc-stack] {
+  display: block;
+  position: relative;
+  padding-bottom: 50vh;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
+  position: sticky;
+  top: calc(110px + var(--svc-i, 0) * 28px);
+  display: block;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto 36px;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid var(--ink-line-soft);
+  box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 40px 80px -32px rgba(15,17,21,.32);
+  transform-origin: 50% 0%;
+  transform: scale(var(--svc-scale, 1));
+  transition: transform .5s cubic-bezier(.22,.78,.27,1), box-shadow .5s ease;
+  will-change: transform;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover { transform: scale(var(--svc-scale, 1)); }
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 21/9; }
 .lf-svc-img { position:relative; aspect-ratio: 4/3; overflow:hidden; }
 .lf-svc-img img { width:100%; height:100%; object-fit:cover; transition: transform 0.6s var(--ease); }
 .lf-svc-card:hover .lf-svc-img img { transform: scale(1.05); }
