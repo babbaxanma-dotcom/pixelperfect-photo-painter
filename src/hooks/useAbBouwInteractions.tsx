@@ -555,31 +555,32 @@ export function useAbBouwInteractions() {
     const svcStackCards = svcStack
       ? Array.from(svcStack.querySelectorAll<HTMLElement>('[data-svc-card]'))
       : [];
+    const svcStackSlots = svcStack
+      ? Array.from(svcStack.querySelectorAll<HTMLElement>('[data-svc-slot]'))
+      : [];
     let svcRaf = 0;
     const computeSvcStack = () => {
       svcRaf = 0;
       if (!svcStack || svcStackCards.length === 0) return;
       const total = svcStackCards.length;
-      // Use the next card's top vs this card's sticky top to drive the scale —
-      // identical to the Olivier Larose pattern, fully scroll-linked & seamless.
+      // Olivier Larose pattern: each card is sticky inside its own h-screen slot.
+      // Per-card progress = how far the slot's top has scrolled past the viewport top,
+      // normalised against the slot height. While progress<0 the card hasn't pinned yet (scale 1).
+      // While progress goes 0→1 (the slot scrolls past), we lerp scale toward targetScale,
+      // which makes the card shrink as the next card slides over it.
       for (let i = 0; i < total; i++) {
+        const slot = svcStackSlots[i];
         const card = svcStackCards[i];
-        const next = svcStackCards[i + 1];
-        const stickyTop = parseFloat(getComputedStyle(card).top) || 0;
-        const cardTop = card.getBoundingClientRect().top;
-        const targetScale = 1 - (total - i) * 0.04;
-        let local = 0;
-        if (next) {
-          const nextTop = next.getBoundingClientRect().top;
-          const distance = nextTop - cardTop; // shrinks toward card height as next slides up
-          const cardH = card.offsetHeight || 1;
-          // progress goes 0→1 as next card travels from below viewport up to overlap this card's top
-          local = 1 - Math.max(0, Math.min(1, (distance - cardH * 0.0) / (window.innerHeight - stickyTop)));
-        }
-        // Only start scaling once this card is actually pinned
-        if (cardTop > stickyTop + 1) local = 0;
-        const scale = 1 + (targetScale - 1) * local;
+        if (!slot || !card) continue;
+        const slotRect = slot.getBoundingClientRect();
+        const slotH = slot.offsetHeight || 1;
+        // p: 0 when slot.top hits viewport top, 1 when slot.bottom hits viewport top
+        const p = Math.max(0, Math.min(1, -slotRect.top / slotH));
+        const targetScale = 1 - (total - 1 - i) * 0.05;
+        const scale = 1 + (targetScale - 1) * p;
         card.style.setProperty('--svc-scale', scale.toFixed(4));
+        // Cache height for sticky centering
+        card.style.setProperty('--svc-card-h', `${card.offsetHeight}px`);
       }
     };
     const onSvcStackScroll = () => {
