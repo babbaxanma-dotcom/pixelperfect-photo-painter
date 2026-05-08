@@ -369,36 +369,38 @@ const HTML = (i: Record<string, string>) => `
       <span class="lf-eyebrow">Waarom AB Bouw Group</span>
       <h2 class="lf-h2">De bouwpartner waar u<br>écht op kan rekenen.</h2>
     </div>
-    <div class="lf-why-collage" data-why-seq>
-      <div class="lf-why-tile lf-why-tl" data-why-step="0">
-        <div class="lf-why-meta"><span class="lf-why-num">01</span><span class="lf-why-label">Ontzorging</span></div>
-        <h5>Wij regelen ook de papierwinkel</h5>
-        <p>Stedenbouwkundige vergunning, EPB-verslag, premieaanvraag Mijn VerbouwPremie en oplevering bij de architect. U tekent, wij regelen.</p>
-      </div>
-      <div class="lf-why-tile lf-why-tr" data-why-step="1">
-        <div class="lf-why-meta"><span class="lf-why-num">02</span><span class="lf-why-label">Planning</span></div>
-        <h5>Wekelijks werfrapport in uw mailbox</h5>
-        <p>Elke vrijdag een korte update met foto's, voortgang en planning voor de week erop. Vertraging? U weet het meteen, niet pas op de opleveringsdag.</p>
+    <div class="lf-why-collage lf-why-stack" data-why-seq data-why-stack>
+      <div class="lf-why-stack-left">
+        <div class="lf-why-tile" data-why-step="0" data-why-card style="--why-i:0;--why-total:4">
+          <div class="lf-why-meta"><span class="lf-why-num">01</span><span class="lf-why-label">Ontzorging</span></div>
+          <h5>Wij regelen ook de papierwinkel</h5>
+          <p>Stedenbouwkundige vergunning, EPB-verslag, premieaanvraag Mijn VerbouwPremie en oplevering bij de architect. U tekent, wij regelen.</p>
+        </div>
+        <div class="lf-why-tile" data-why-step="1" data-why-card style="--why-i:1;--why-total:4">
+          <div class="lf-why-meta"><span class="lf-why-num">02</span><span class="lf-why-label">Planning</span></div>
+          <h5>Wekelijks werfrapport in uw mailbox</h5>
+          <p>Elke vrijdag een korte update met foto's, voortgang en planning voor de week erop. Vertraging? U weet het meteen, niet pas op de opleveringsdag.</p>
+        </div>
+        <div class="lf-why-tile" data-why-step="2" data-why-card style="--why-i:2;--why-total:4">
+          <div class="lf-why-meta"><span class="lf-why-num">03</span><span class="lf-why-label">Garantie</span></div>
+          <h5>10-jarige aansprakelijkheid, wettelijk verzekerd</h5>
+          <p>VCA*-gecertificeerd, aangesloten bij Bouwunie. Polis stabiliteit en waterdichtheid via Federale Verzekering.</p>
+        </div>
+        <div class="lf-why-tile" data-why-step="3" data-why-card style="--why-i:3;--why-total:4">
+          <div class="lf-why-meta"><span class="lf-why-num">04</span><span class="lf-why-label">Vaste ploeg</span></div>
+          <h5>Eigen ploegen op uw werf</h5>
+          <p>23 mensen in vaste dienst, metselaars, dakdekkers, tegelzetters, schrijnwerkers. Eén verantwoordelijkheid, één kwaliteitsstandaard.</p>
+        </div>
       </div>
       <div class="lf-why-photo" data-reveal><img src="${i.why}" alt="" loading="lazy"/></div>
-      <div class="lf-why-tile lf-why-bl" data-why-step="2">
-        <div class="lf-why-meta"><span class="lf-why-num">03</span><span class="lf-why-label">Garantie</span></div>
-        <h5>10-jarige aansprakelijkheid, wettelijk verzekerd</h5>
-        <p>VCA*-gecertificeerd, aangesloten bij Bouwunie. Polis stabiliteit en waterdichtheid via Federale Verzekering.</p>
-      </div>
-      <div class="lf-why-tile lf-why-br" data-why-step="3">
-        <div class="lf-why-meta"><span class="lf-why-num">04</span><span class="lf-why-label">Vaste ploeg</span></div>
-        <h5>Eigen ploegen op uw werf</h5>
-        <p>23 mensen in vaste dienst, metselaars, dakdekkers, tegelzetters, schrijnwerkers. Eén verantwoordelijkheid, één kwaliteitsstandaard.</p>
-      </div>
     </div>
 
-    <div class="lf-trust-strip" data-reveal>
-      <div class="lf-trust-item"><strong>VCA*-gecertificeerd</strong><span>Veiligheid op de werf</span></div>
+    <div class="lf-trust-strip" data-reveal data-trust-strip>
+      <div class="lf-trust-item" data-trust-i="0"><strong>VCA*-gecertificeerd</strong><span>Veiligheid op de werf</span></div>
       <div class="lf-trust-divider"></div>
-      <div class="lf-trust-item"><strong>Lid Bouwunie</strong><span>Vlaamse Confederatie Bouw</span></div>
+      <div class="lf-trust-item" data-trust-i="1"><strong>Lid Bouwunie</strong><span>Vlaamse Confederatie Bouw</span></div>
       <div class="lf-trust-divider"></div>
-      <div class="lf-trust-item"><strong>BE 0712.443.881</strong><span>Federale Verzekering · polis 24/0089</span></div>
+      <div class="lf-trust-item" data-trust-i="2"><strong>BE 0712.443.881</strong><span>Federale Verzekering · polis 24/0089</span></div>
     </div>
   </div>
 </section>
@@ -815,6 +817,24 @@ const EXTRA_STYLE = `
 .lf-why-bl { grid-area: 2 / 1; }
 .lf-why-br { grid-area: 2 / 3; }
 
+/* ── Why-us as scroll-stack: cards on the left (sticky, straight), photo sticky on right */
+.lf-why-collage.lf-why-stack { display:grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: start; max-width: 1180px; margin: 0 auto; }
+.lf-why-stack .lf-why-stack-left { display:block; }
+.lf-why-stack .lf-why-tile { position: sticky; top: calc(110px + var(--why-i, 0) * 22px); margin: 0 0 55vh; padding: 30px 32px; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 30px 60px -32px rgba(15,17,21,.22); transform-origin: 50% 0%; transform: scale(var(--why-scale, 1)); will-change: transform; backface-visibility: hidden; }
+.lf-why-stack .lf-why-stack-left > .lf-why-tile:last-child { margin-bottom: 0; }
+.lf-why-stack .lf-why-photo { position: sticky; top: 110px; height: calc(100vh - 160px); min-height: 480px; grid-row: auto; grid-column: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -36px rgba(15,17,21,.32); }
+.lf-why-stack .lf-why-photo img { width:100%; height:100%; object-fit: cover; }
+
+/* Trust-strip: highlight items in cascade as the strip enters viewport */
+.lf-trust-strip[data-trust-strip] { position: relative; }
+.lf-trust-strip[data-trust-strip] .lf-trust-item { position: relative; z-index: 1; transition: transform .5s cubic-bezier(.22,.78,.27,1); }
+.lf-trust-strip[data-trust-strip] .lf-trust-item::before { content:""; position:absolute; inset: -10px -14px; border-radius: 10px; background: hsl(40 92% 52% / 0.10); opacity: 0; transform: scale(.94); transition: opacity .55s ease, transform .55s cubic-bezier(.22,.78,.27,1); z-index: -1; }
+.lf-trust-strip[data-trust-strip] .lf-trust-item strong { transition: color .45s ease; }
+.lf-trust-strip[data-trust-strip] .lf-trust-item.is-marked::before { opacity: 1; transform: scale(1); }
+.lf-trust-strip[data-trust-strip] .lf-trust-item.is-marked strong { color: var(--accent); }
+.lf-trust-strip[data-trust-strip] .lf-trust-item.is-marked { transform: translateY(-2px); }
+
+
 /* Skills */
 .lf-skills-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items:center; }
 .lf-bars { margin-bottom: 28px; }
@@ -932,6 +952,11 @@ const EXTRA_STYLE = `
   .lf-why-photo { grid-row: 2; grid-column: 1 / 3; height: 220px; }
   .lf-why-tl { grid-area: 1 / 1; } .lf-why-tr { grid-area: 1 / 2; }
   .lf-why-bl { grid-area: 3 / 1; } .lf-why-br { grid-area: 3 / 2; }
+  /* Disable scroll-stack on small screens — back to a normal stacked column */
+  .lf-why-collage.lf-why-stack { display: block; }
+  .lf-why-stack .lf-why-stack-left { display: grid; gap: 16px; }
+  .lf-why-stack .lf-why-tile { position: static; transform: none !important; margin: 0; box-shadow: none; }
+  .lf-why-stack .lf-why-photo { position: static; height: 240px; min-height: 0; margin-top: 16px; }
   .lf-proj-collage { grid-template-columns: 1fr; grid-template-rows: repeat(4, 220px); }
   .lf-proj-logo { display:none; }
   .lf-skills-collage { height: 360px; }
