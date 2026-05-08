@@ -525,6 +525,8 @@ export function useAbBouwInteractions() {
       window.removeEventListener('scroll', onParallax);
       window.removeEventListener('scroll', onPinScroll);
       window.removeEventListener('scroll', onWhyScroll);
+      window.removeEventListener('scroll', onSvcStackScroll);
+      window.removeEventListener('resize', onSvcStackScroll);
       pinRail?.removeEventListener('touchstart', onPinTouch);
       pinRail?.removeEventListener('touchend', onPinTouchEnd);
       mmLinks.forEach((a) => a.removeEventListener('click', mmClose));
