@@ -373,25 +373,33 @@ const HTML = (i: Record<string, string>) => `
     </div>
     <div class="lf-why-collage lf-why-stack" data-why-seq data-why-stack>
       <div class="lf-why-stack-left">
-        <div class="lf-why-tile" data-why-step="0" data-why-card style="--why-i:0;--why-total:4">
-          <div class="lf-why-meta"><span class="lf-why-num">01</span><span class="lf-why-label">Ontzorging</span></div>
-          <h5>Wij regelen ook de papierwinkel</h5>
-          <p>Stedenbouwkundige vergunning, EPB-verslag, premieaanvraag Mijn VerbouwPremie en oplevering bij de architect. U tekent, wij regelen.</p>
+        <div class="lf-why-slot" data-why-slot>
+          <div class="lf-why-tile" data-why-step="0" data-why-card style="--why-i:0;--why-total:4">
+            <div class="lf-why-meta"><span class="lf-why-num">01</span><span class="lf-why-label">Ontzorging</span></div>
+            <h5>Wij regelen ook de papierwinkel</h5>
+            <p>Stedenbouwkundige vergunning, EPB-verslag, premieaanvraag Mijn VerbouwPremie en oplevering bij de architect. U tekent, wij regelen.</p>
+          </div>
         </div>
-        <div class="lf-why-tile" data-why-step="1" data-why-card style="--why-i:1;--why-total:4">
-          <div class="lf-why-meta"><span class="lf-why-num">02</span><span class="lf-why-label">Planning</span></div>
-          <h5>Wekelijks werfrapport in uw mailbox</h5>
-          <p>Elke vrijdag een korte update met foto's, voortgang en planning voor de week erop. Vertraging? U weet het meteen, niet pas op de opleveringsdag.</p>
+        <div class="lf-why-slot" data-why-slot>
+          <div class="lf-why-tile" data-why-step="1" data-why-card style="--why-i:1;--why-total:4">
+            <div class="lf-why-meta"><span class="lf-why-num">02</span><span class="lf-why-label">Planning</span></div>
+            <h5>Wekelijks werfrapport in uw mailbox</h5>
+            <p>Elke vrijdag een korte update met foto's, voortgang en planning voor de week erop. Vertraging? U weet het meteen, niet pas op de opleveringsdag.</p>
+          </div>
         </div>
-        <div class="lf-why-tile" data-why-step="2" data-why-card style="--why-i:2;--why-total:4">
-          <div class="lf-why-meta"><span class="lf-why-num">03</span><span class="lf-why-label">Garantie</span></div>
-          <h5>10-jarige aansprakelijkheid, wettelijk verzekerd</h5>
-          <p>VCA*-gecertificeerd, aangesloten bij Bouwunie. Polis stabiliteit en waterdichtheid via Federale Verzekering.</p>
+        <div class="lf-why-slot" data-why-slot>
+          <div class="lf-why-tile" data-why-step="2" data-why-card style="--why-i:2;--why-total:4">
+            <div class="lf-why-meta"><span class="lf-why-num">03</span><span class="lf-why-label">Garantie</span></div>
+            <h5>10-jarige aansprakelijkheid, wettelijk verzekerd</h5>
+            <p>VCA*-gecertificeerd, aangesloten bij Bouwunie. Polis stabiliteit en waterdichtheid via Federale Verzekering.</p>
+          </div>
         </div>
-        <div class="lf-why-tile" data-why-step="3" data-why-card style="--why-i:3;--why-total:4">
-          <div class="lf-why-meta"><span class="lf-why-num">04</span><span class="lf-why-label">Vaste ploeg</span></div>
-          <h5>Eigen ploegen op uw werf</h5>
-          <p>23 mensen in vaste dienst, metselaars, dakdekkers, tegelzetters, schrijnwerkers. Eén verantwoordelijkheid, één kwaliteitsstandaard.</p>
+        <div class="lf-why-slot" data-why-slot>
+          <div class="lf-why-tile" data-why-step="3" data-why-card style="--why-i:3;--why-total:4">
+            <div class="lf-why-meta"><span class="lf-why-num">04</span><span class="lf-why-label">Vaste ploeg</span></div>
+            <h5>Eigen ploegen op uw werf</h5>
+            <p>23 mensen in vaste dienst, metselaars, dakdekkers, tegelzetters, schrijnwerkers. Eén verantwoordelijkheid, één kwaliteitsstandaard.</p>
+          </div>
         </div>
       </div>
       <div class="lf-why-photo" data-reveal><img src="${i.why}" alt="" loading="lazy"/></div>
