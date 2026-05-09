@@ -630,6 +630,8 @@ export function useAbBouwInteractions() {
       window.removeEventListener('scroll', onParallax);
       window.removeEventListener('scroll', onPinScroll);
       window.removeEventListener('scroll', onSupportScroll);
+      window.removeEventListener('scroll', onTocScroll);
+      tocLinks.forEach((a) => a.removeEventListener('click', onTocClick as EventListener));
       window.removeEventListener('scroll', onWhyScroll);
       window.removeEventListener('scroll', onWhyStackScroll);
       window.removeEventListener('resize', onWhyStackScroll);
