@@ -432,8 +432,8 @@ const HTML = (i: Record<string, string>) => `
       <a href="/over" class="lf-btn-pri lf-btn-sm"><span>Lees meer</span></a>
     </div>
     <div class="lf-skills-collage" data-reveal data-reveal-delay="1">
-      <img class="lf-skills-img1" src="${i.skills}" alt="" loading="lazy"/>
-      <img class="lf-skills-img2" src="${i.about}" alt="" loading="lazy"/>
+      <img class="lf-skills-img1" src="${i.vakmanDak}" alt="Dakwerker plaatst Koramic dakpannen" loading="lazy"/>
+      <img class="lf-skills-img2" src="${i.vakmanInterieur}" alt="Schrijnwerker plaatst maatkast in eik" loading="lazy"/>
     </div>
   </div>
 </section>
@@ -1391,7 +1391,7 @@ export default function Home() {
   useAbBouwInteractions();
 
   const html = HTML({
-    hero, hero2, hero3, hero4, hero5, about, skills, why,
+    hero, hero2, hero3, hero4, hero5, about, skills, why, vakmanDak, vakmanInterieur,
     svcConstruct, svcEco, svcInterieur, svcDak, svcBad, svcGevel,
     proj1, proj2, proj3, proj4,
     team1, team2, team3, ctaMan,
