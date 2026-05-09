@@ -1051,8 +1051,7 @@ const EXTRA_STYLE = `
   }
   .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 16/10; }
 
-  .lf-proj-collage { grid-template-columns: 1fr; grid-template-rows: repeat(4, 220px); }
-  .lf-proj-logo { display:none; }
+  .lf-proj-collage { grid-template-columns: 1fr; gap: 14px; }
   .lf-skills-collage { height: 360px; }
   .lf-cta { padding: 40px 28px; grid-template-columns: 1fr; }
   .lf-cta-img { display:none; }
