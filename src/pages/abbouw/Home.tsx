@@ -813,6 +813,34 @@ const EXTRA_STYLE = `
   .lf-mini-bullet { padding: 14px 16px; }
 }
 
+/* Services Nav (pill bar above the stacking cards) */
+.lf-svc-nav {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+  max-width: 880px; margin: 0 auto 32px; padding: 8px;
+  background: #fff; border: 1px solid var(--ink-line-soft);
+  border-radius: 999px;
+  box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 18px 40px -28px rgba(15,17,21,.18);
+  position: sticky; top: 88px; z-index: 5;
+  backdrop-filter: saturate(140%) blur(8px);
+}
+.lf-svc-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px; border: none; background: transparent;
+  border-radius: 999px; cursor: pointer; color: var(--ink-soft);
+  font: 600 13px/1 inherit; letter-spacing: .01em;
+  transition: background .25s var(--ease), color .25s var(--ease), transform .25s var(--ease);
+}
+.lf-svc-pill:hover { color: var(--navy); background: rgba(15,17,21,.04); }
+.lf-svc-pill.is-active { background: var(--navy); color: #fff; }
+.lf-svc-pill.is-active .lf-svc-pill-num { color: var(--accent); }
+.lf-svc-pill-num { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: .04em; }
+.lf-svc-pill-label { white-space: nowrap; }
+@media (max-width: 720px) {
+  .lf-svc-nav { border-radius: 16px; padding: 6px; gap: 4px; }
+  .lf-svc-pill { padding: 8px 12px; font-size: 12px; }
+  .lf-svc-pill-num { display: none; }
+}
+
 /* Services Grid */
 .lf-svc-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
 .lf-svc-card { display:flex; flex-direction:column; background:#fff; border-radius: 14px; overflow:hidden; border: 1px solid var(--ink-line-soft); transition: all 0.3s var(--ease); color: var(--ink); }
