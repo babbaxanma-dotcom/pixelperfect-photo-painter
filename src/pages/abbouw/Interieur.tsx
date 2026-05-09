@@ -200,34 +200,14 @@ ${buildHero({
   </div>
 </section>
 
-<!-- SAMEN UW DROOM -->
-<section class="lf-section lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-split">
-      <div data-reveal>
-        <span class="lf-eyebrow">Samen uw droom</span>
-        <h2 class="lf-h2">Uw woning,<br/>uw stijl, uw <span style="color:var(--accent)">handtekening</span>.</h2>
-        <p class="lf-lede">Een interieur is geen catalogus. Het is uw thuis, uw smaak, uw manier van leven. Daarom beginnen we niet met materialen, maar met een gesprek. We luisteren naar hoe u woont, wat u mooi vindt en wat absoluut niet, en vertalen dat in een ontwerp dat helemaal van u is.</p>
-        <ul class="ab-checks" style="margin-top:18px;">
-          <li>Persoonlijk moodboard met materialen, kleuren en sfeer</li>
-          <li>3D-visualisatie zodat u uw interieur écht ziet vóór we starten</li>
-          <li>Materialen die u zelf in handen kan nemen, geen schermkleurtjes</li>
-          <li>Vrijheid om te kiezen, advies waar u het wenst</li>
-        </ul>
-      </div>
-      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgDroom}" alt="Materialenkeuze met de klant aan tafel" loading="lazy"/></div>
-    </div>
-  </div>
-</section>
-
 <!-- TOC -->
-<section class="lf-section" style="padding: 0 0 12px;">
+<section class="lf-section" style="padding: 12px 0 12px;">
   <div class="wrap">
+    <div class="ab-toc-head" data-reveal>
+      <h3 class="ab-toc-title">Spring direct naar een type interieurwerk</h3>
+      <p class="ab-toc-sub">Klik op een onderwerp om er meteen naartoe te scrollen.</p>
+    </div>
     <div class="ab-toc-wrap">
-      <span class="ab-toc-label">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
-        Spring naar
-      </span>
       <nav class="ab-toc" aria-label="Type interieurwerken">
         ${types.map(t => `<a href="#${t.id}">${t.title.replace('&amp;', '&')}</a>`).join('')}
       </nav>
@@ -259,6 +239,26 @@ ${buildHero({
           </div>
         </article>
       `).join('')}
+    </div>
+  </div>
+</section>
+
+<!-- SAMEN UW DROOM -->
+<section class="lf-section">
+  <div class="wrap">
+    <div class="lf-split">
+      <div data-reveal>
+        <span class="lf-eyebrow">Samen uw droom</span>
+        <h2 class="lf-h2">Uw woning,<br/>uw stijl, uw <span style="color:var(--accent)">handtekening</span>.</h2>
+        <p class="lf-lede">Een interieur is geen catalogus. Het is uw thuis, uw smaak, uw manier van leven. Daarom beginnen we niet met materialen, maar met een gesprek. We luisteren naar hoe u woont, wat u mooi vindt en wat absoluut niet, en vertalen dat in een ontwerp dat helemaal van u is.</p>
+        <ul class="ab-checks" style="margin-top:18px;">
+          <li>Persoonlijk moodboard met materialen, kleuren en sfeer</li>
+          <li>3D-visualisatie zodat u uw interieur écht ziet vóór we starten</li>
+          <li>Materialen die u zelf in handen kan nemen, geen schermkleurtjes</li>
+          <li>Vrijheid om te kiezen, advies waar u het wenst</li>
+        </ul>
+      </div>
+      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgDroom}" alt="Afgewerkte woonkamer met eikenfineer kasten en haard" loading="lazy"/></div>
     </div>
   </div>
 </section>

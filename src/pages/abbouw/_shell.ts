@@ -458,14 +458,13 @@ export const SHELL_STYLE = `
 .ab-sub-head { max-width: 760px; margin-bottom: 40px; }
 .ab-sub-head .lf-h2 { font-size: clamp(24px, 2.6vw, 34px); }
 
-.ab-toc-wrap { padding: 0 0 8px; display:flex; align-items:center; gap: 14px; flex-wrap: wrap; }
-.ab-toc-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); display:inline-flex; align-items:center; gap:8px; }
-.ab-toc-label svg { color: var(--accent); }
-.ab-toc { display:inline-flex; gap: 4px; flex-wrap:wrap; padding: 6px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 999px; box-shadow: 0 12px 30px -18px rgba(10,22,40,0.14); }
-.ab-toc a { display:inline-flex; align-items:center; gap:6px; padding: 9px 14px 9px 16px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--ink-soft); text-decoration: none; transition: all 0.2s; white-space: nowrap; border: 1px solid transparent; }
-.ab-toc a::after { content: '↓'; font-size: 12px; opacity: 0.55; transition: transform 0.25s var(--ease), opacity 0.2s; }
-.ab-toc a:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
-.ab-toc a:hover::after { opacity: 1; transform: translateY(2px); }
+.ab-toc-head { text-align: center; max-width: 640px; margin: 0 auto 22px; }
+.ab-toc-title { font-family: var(--font-display); font-size: clamp(20px, 2vw, 24px); font-weight: 600; color: var(--navy); letter-spacing: -0.01em; margin-bottom: 6px; }
+.ab-toc-sub { font-size: 14px; color: var(--ink-soft); margin: 0; }
+.ab-toc-wrap { padding: 0 0 8px; display:flex; justify-content:center; }
+.ab-toc { display:inline-flex; gap: 6px; flex-wrap:wrap; justify-content:center; padding: 8px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; box-shadow: 0 12px 30px -18px rgba(10,22,40,0.14); max-width: 100%; }
+.ab-toc a { padding: 10px 18px; border-radius: 999px; font-size: 13.5px; font-weight: 600; color: var(--ink-soft); text-decoration: none; transition: all 0.2s; white-space: nowrap; border: 1px solid var(--ink-line-soft); background: var(--bg-tint); }
+.ab-toc a:hover { background: var(--accent); color: #fff; border-color: var(--accent); transform: translateY(-1px); }
 
 .ab-deep { display:grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
 .ab-deep.reverse .ab-deep-img { order: -1; }
