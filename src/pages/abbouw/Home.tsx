@@ -1162,14 +1162,18 @@ const EXTRA_STYLE = `
 
 /* Support tiles */
 .lf-support-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.lf-support-card { background:#fff; padding: 28px 24px; border-radius: 12px; border: 1px solid var(--ink-line-soft); transition: all 0.25s var(--ease); }
+.lf-support-card { background:#fff; padding: 28px 24px; border-radius: 14px; border: 1px solid var(--ink-line-soft); transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.5s var(--ease), background 0.5s var(--ease); position:relative; }
 .lf-support-card:hover { transform: translateY(-3px); box-shadow: 0 18px 36px -20px rgba(10,22,40,0.18); border-color: var(--accent); }
+.lf-support-card.is-active { transform: translateY(-6px) scale(1.03); border-color: var(--accent); box-shadow: 0 30px 60px -25px rgba(212,165,76,0.45); background: linear-gradient(180deg,#fff 0%, #fffaf0 100%); }
+.lf-support-card.is-active .lf-support-meta span { color: var(--accent); transform: scale(1.15); }
+.lf-support-meta span { display:inline-block; transition: transform 0.5s var(--ease), color 0.5s var(--ease); }
 .lf-support-meta { display:flex; align-items:center; gap: 10px; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--ink-line-soft); }
 .lf-support-meta span { font-family: var(--font-display); font-size: 14px; color: var(--accent); letter-spacing: 0.04em; }
 .lf-support-card h5 { font-size: 16px; color: var(--navy); margin-bottom: 8px; line-height: 1.3; }
 .lf-support-card p { font-size: 13.5px; line-height: 1.65; color: var(--ink-soft); margin: 0; }
 @media (max-width: 900px) { .lf-support-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 600px) { .lf-support-grid { grid-template-columns: 1fr; } }
+html, body { overflow-x: hidden; max-width: 100%; }
 
 /* Process / werkwijze */
 .lf-process { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; margin-top: 20px; }
