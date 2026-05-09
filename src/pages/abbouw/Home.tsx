@@ -898,12 +898,12 @@ const EXTRA_STYLE = `
 .lf-bar-track { position:relative; height: 4px; background: var(--ink-line-soft); border-radius: 999px; overflow: visible; }
 .lf-bar-track i { display:block; height:100%; background: linear-gradient(90deg, var(--accent), #F5C518); border-radius:999px; position:relative; }
 .lf-bar-knob { position:absolute; right: -6px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid var(--accent); box-shadow: 0 4px 10px -2px rgba(217,140,3,0.55); }
-.lf-skills-collage { display:grid; grid-template-columns: 1fr 1fr; gap: 0; padding: 24px 8px; position: relative; }
-.lf-skills-img1, .lf-skills-img2 { width:100%; height: 420px; object-fit:cover; display:block; filter: drop-shadow(0 24px 30px rgba(15,17,21,0.28)) drop-shadow(0 6px 12px rgba(15,17,21,0.18)); transition: transform 0.5s var(--ease); }
-/* Left photo: bottom-right corner clipped diagonally */
-.lf-skills-img1 { transform: rotate(-4deg) translate(8px, 14px); transform-origin: center center; clip-path: polygon(0 0, 100% 0, 100% 78%, 78% 100%, 0 100%); position: relative; z-index: 1; }
-/* Right photo: top-left corner clipped diagonally, overlaps left */
-.lf-skills-img2 { transform: rotate(4deg) translate(-12px, -18px); transform-origin: center center; clip-path: polygon(22% 0, 100% 0, 100% 100%, 0 100%, 0 22%); position: relative; z-index: 2; }
+.lf-skills-collage { display:grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 12px 0; position: relative; }
+.lf-skills-img1, .lf-skills-img2 { width:100%; height: 420px; object-fit:cover; display:block; filter: drop-shadow(0 24px 30px rgba(15,17,21,0.28)) drop-shadow(0 6px 12px rgba(15,17,21,0.18)); }
+/* Left photo: bottom-right corner clipped diagonally (point on the right side) */
+.lf-skills-img1 { clip-path: polygon(0 0, 100% 0, 100% 78%, 78% 100%, 0 100%); }
+/* Right photo: bottom-left corner clipped diagonally (point on the bottom) */
+.lf-skills-img2 { clip-path: polygon(0 0, 100% 0, 100% 100%, 22% 100%, 0 78%); }
 /* hover animation removed */
 
 /* Team */
