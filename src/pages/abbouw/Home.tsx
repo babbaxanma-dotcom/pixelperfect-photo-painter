@@ -8,6 +8,8 @@ import hero4 from '@/assets/home/hero4.jpg';
 import hero5 from '@/assets/home/hero5.jpg';
 import about from '@/assets/home/about.jpg';
 import skills from '@/assets/home/skills.jpg';
+import vakmanDak from '@/assets/home/vakman-dak.jpg';
+import vakmanInterieur from '@/assets/home/vakman-interieur.jpg';
 import why from '@/assets/home/why.jpg';
 import svcConstruct from '@/assets/home/svc-construct.jpg';
 import svcEco from '@/assets/home/svc-eco.jpg';
