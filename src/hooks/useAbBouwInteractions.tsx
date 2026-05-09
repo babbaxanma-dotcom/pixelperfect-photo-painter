@@ -460,35 +460,16 @@ export function useAbBouwInteractions() {
     const isSvcStackDesktop = () => window.matchMedia('(min-width: 901px)').matches;
     const computeSvcStack = () => {
       svcRaf = 0;
-      if (!svcStack || svcStackCards.length === 0) return;
-      if (!isSvcStackDesktop()) {
-        // Mobile: horizontal swipe carousel — clear any inline transforms
-        svcStackCards.forEach((c) => {
-          c.style.removeProperty('--svc-scale');
-          c.style.removeProperty('--svc-card-h');
-        });
-        return;
-      }
-      const total = svcStackCards.length;
-      for (let i = 0; i < total; i++) {
-        const slot = svcStackSlots[i];
-        const card = svcStackCards[i];
-        if (!slot || !card) continue;
-        const slotRect = slot.getBoundingClientRect();
-        const slotH = slot.offsetHeight || 1;
-        const p = Math.max(0, Math.min(1, -slotRect.top / slotH));
-        const targetScale = 1 - (total - 1 - i) * 0.05;
-        const scale = 1 + (targetScale - 1) * p;
-        card.style.setProperty('--svc-scale', scale.toFixed(4));
-        card.style.setProperty('--svc-card-h', `${card.offsetHeight}px`);
-      }
+      // Pure CSS sticky — strip any inline transform/scale.
+      svcStackCards.forEach((c) => {
+        c.style.removeProperty('--svc-scale');
+        c.style.removeProperty('--svc-card-h');
+      });
     };
     const onSvcStackScroll = () => {
       if (svcRaf) return;
       svcRaf = requestAnimationFrame(computeSvcStack);
     };
-    window.addEventListener('scroll', onSvcStackScroll, { passive: true });
-    window.addEventListener('resize', onSvcStackScroll);
     computeSvcStack();
 
 
