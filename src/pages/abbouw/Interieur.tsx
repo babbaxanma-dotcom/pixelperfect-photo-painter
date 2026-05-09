@@ -244,18 +244,18 @@ ${buildHero({
 </section>
 
 <!-- SAMEN UW DROOM -->
-<section class="lf-section">
+<section class="lf-section ab-droom">
   <div class="wrap">
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">Samen uw droom</span>
-        <h2 class="lf-h2">Uw woning,<br/>uw stijl, uw <span style="color:var(--accent)">handtekening</span>.</h2>
-        <p class="lf-lede">Een interieur is geen catalogus. Het is uw thuis, uw smaak, uw manier van leven. Daarom beginnen we niet met materialen, maar met een gesprek. We luisteren naar hoe u woont, wat u mooi vindt en wat absoluut niet, en vertalen dat in een ontwerp dat helemaal van u is.</p>
-        <ul class="ab-checks" style="margin-top:18px;">
-          <li>Persoonlijk moodboard met materialen, kleuren en sfeer</li>
-          <li>3D-visualisatie zodat u uw interieur écht ziet vóór we starten</li>
-          <li>Materialen die u zelf in handen kan nemen, geen schermkleurtjes</li>
-          <li>Vrijheid om te kiezen, advies waar u het wenst</li>
+        <h2 class="lf-h2">Uw woning,<br/>uw stijl, uw <span class="ab-mark">handtekening</span>.</h2>
+        <p class="lf-lede">Een interieur is geen catalogus. Het is <span class="ab-hl" data-hl-delay="0">uw thuis, uw smaak, uw manier van leven</span>. Daarom beginnen we niet met materialen, maar <span class="ab-hl" data-hl-delay="1">met een gesprek</span>. We luisteren naar hoe u woont, wat u mooi vindt en wat absoluut niet, en vertalen dat in <span class="ab-hl" data-hl-delay="2">een ontwerp dat helemaal van u is</span>.</p>
+        <ul class="ab-droom-list">
+          <li><span class="ab-droom-num">01</span><div><strong>Persoonlijk moodboard</strong><span>Materialen, kleuren en sfeer, samengesteld op uw smaak.</span></div></li>
+          <li><span class="ab-droom-num">02</span><div><strong>3D-visualisatie vooraf</strong><span>U ziet uw interieur écht voordat de eerste plank wordt gezaagd.</span></div></li>
+          <li><span class="ab-droom-num">03</span><div><strong>Echte materialen in de hand</strong><span>Geen schermkleurtjes, maar stalen die u kan voelen en vergelijken.</span></div></li>
+          <li><span class="ab-droom-num">04</span><div><strong>Vrijheid &amp; advies</strong><span>U kiest wat u wil, wij adviseren waar u het wenst.</span></div></li>
         </ul>
       </div>
       <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgDroom}" alt="Afgewerkte woonkamer met eikenfineer kasten en haard" loading="lazy"/></div>
@@ -381,6 +381,29 @@ ${FOOTER}
   .dak-card-img { min-height: 240px; }
   .dak-card-body { padding: 28px 24px; }
 }
+.ab-mark { position: relative; display: inline-block; color: var(--navy); white-space: nowrap; }
+.ab-mark::after { content: ''; position: absolute; left: -2%; right: -2%; bottom: 4%; height: 38%; background: var(--accent); opacity: 0.28; border-radius: 3px; transform-origin: left center; transform: scaleX(0); transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s; z-index: -1; }
+[data-reveal].revealed .ab-mark::after { transform: scaleX(1); }
+
+/* Highlighter sweep on key phrases */
+.ab-hl { position: relative; display: inline; background-image: linear-gradient(120deg, rgba(217,140,3,0.22) 0%, rgba(217,140,3,0.22) 100%); background-repeat: no-repeat; background-size: 0% 60%; background-position: 0 88%; padding: 0 2px; transition: background-size 0.9s cubic-bezier(0.22, 1, 0.36, 1); transition-delay: calc(0.5s + var(--hl-i, 0) * 0.35s); color: var(--navy); font-weight: 500; }
+[data-reveal].revealed .ab-hl { background-size: 100% 60%; }
+.ab-hl[data-hl-delay="0"] { --hl-i: 0; }
+.ab-hl[data-hl-delay="1"] { --hl-i: 1; }
+.ab-hl[data-hl-delay="2"] { --hl-i: 2; }
+
+/* Numbered scannable list for fast readers */
+.ab-droom-list { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 14px; }
+.ab-droom-list li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; padding: 14px 16px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 12px; opacity: 0; transform: translateY(10px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), border-color 0.25s, box-shadow 0.25s; }
+[data-reveal].revealed .ab-droom-list li { opacity: 1; transform: translateY(0); }
+[data-reveal].revealed .ab-droom-list li:nth-child(1) { transition-delay: 0.15s; }
+[data-reveal].revealed .ab-droom-list li:nth-child(2) { transition-delay: 0.3s; }
+[data-reveal].revealed .ab-droom-list li:nth-child(3) { transition-delay: 0.45s; }
+[data-reveal].revealed .ab-droom-list li:nth-child(4) { transition-delay: 0.6s; }
+.ab-droom-list li:hover { border-color: var(--accent); box-shadow: 0 12px 30px -18px rgba(217,140,3,0.45); }
+.ab-droom-num { display:inline-flex; align-items:center; justify-content:center; width: 38px; height: 38px; border-radius: 10px; background: var(--accent); color:#fff; font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.04em; }
+.ab-droom-list strong { display:block; font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 2px; letter-spacing: -0.005em; }
+.ab-droom-list li > div > span { display:block; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
 </style>
 `;
 
