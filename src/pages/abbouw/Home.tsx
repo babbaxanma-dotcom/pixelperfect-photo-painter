@@ -1431,7 +1431,42 @@ export default function Home() {
     };
     const ddCleanup = ddSetup();
 
-    return () => { document.body.className = prevClass; styleEl.remove(); ddCleanup(); };
+    // Services nav: scroll to card on click + active state on scroll
+    const svcNavSetup = () => {
+      const nav = document.querySelector<HTMLElement>('[data-svc-nav]');
+      const slots = Array.from(document.querySelectorAll<HTMLElement>('[data-svc-slot]'));
+      if (!nav || !slots.length) return () => {};
+      const pills = Array.from(nav.querySelectorAll<HTMLButtonElement>('[data-svc-pill]'));
+      const setActive = (i: number) => pills.forEach((p, k) => p.classList.toggle('is-active', k === i));
+      const handlers: Array<[HTMLButtonElement, () => void]> = [];
+      pills.forEach((pill, idx) => {
+        const h = () => {
+          const target = slots[idx];
+          if (!target) return;
+          const navH = nav.getBoundingClientRect().height;
+          const y = target.getBoundingClientRect().top + window.scrollY - (navH + 110);
+          window.scrollTo({ top: y, behavior: 'smooth' });
+          setActive(idx);
+        };
+        pill.addEventListener('click', h);
+        handlers.push([pill, h]);
+      });
+      const io = new IntersectionObserver((entries) => {
+        const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) {
+          const idx = Number((visible.target as HTMLElement).dataset.svcIndex);
+          if (!Number.isNaN(idx)) setActive(idx);
+        }
+      }, { rootMargin: '-40% 0px -40% 0px', threshold: [0, .25, .5, .75, 1] });
+      slots.forEach(s => io.observe(s));
+      return () => {
+        handlers.forEach(([el, h]) => el.removeEventListener('click', h));
+        io.disconnect();
+      };
+    };
+    const svcNavCleanup = svcNavSetup();
+
+    return () => { document.body.className = prevClass; styleEl.remove(); ddCleanup(); svcNavCleanup(); };
   }, []);
 
   useAbBouwInteractions();
