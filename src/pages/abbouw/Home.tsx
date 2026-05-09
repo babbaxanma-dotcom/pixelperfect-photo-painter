@@ -268,7 +268,7 @@ const HTML = (i: Record<string, string>) => `
 </section>
 
 <!-- SERVICES GRID -->
-<section class="lf-section lf-services">
+<section class="lf-section lf-services lf-section-compact-stack">
   <div class="wrap">
     <div class="lf-section-head" data-reveal>
       <span class="lf-eyebrow">Onze diensten</span>
@@ -367,7 +367,7 @@ const HTML = (i: Record<string, string>) => `
 </section>
 
 <!-- WHY US, collage -->
-<section class="lf-section lf-tone-soft">
+<section class="lf-section lf-tone-soft lf-section-compact-stack">
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Waarom AB Bouw Group</span>
@@ -727,6 +727,9 @@ const EXTRA_STYLE = `
 .lf-eyebrow { display:inline-block; padding: 6px 14px; background: var(--accent); color:#fff; border-radius: 4px; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform: uppercase; margin-bottom: 18px; }
 .lf-h2 { font-family: var(--font-display); font-size: clamp(28px, 3.4vw, 44px); line-height:1.15; font-weight:600; letter-spacing:-0.02em; color: var(--navy); margin-bottom: 18px; }
 .lf-section { padding: 90px 0; }
+.lf-section.lf-section-compact-stack { padding-bottom: 56px; }
+.lf-section.lf-section-compact-stack .lf-section-head { margin-bottom: 38px; }
+.lf-section.lf-section-compact-stack .lf-section-head.centered { margin-bottom: 38px; }
 .lf-tone-soft { background: var(--bg-tint); }
 .lf-section-head { max-width: 720px; margin-bottom: 56px; }
 .lf-section-head.centered { margin: 0 auto 56px; text-align:center; }
@@ -809,7 +812,7 @@ const EXTRA_STYLE = `
 .lf-services .lf-svc-grid[data-svc-stack] {
   display: block;
   position: relative;
-  padding: 0 16px 12vh;
+  padding: 0 16px 32px;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot {
   display: contents;
@@ -820,7 +823,7 @@ const EXTRA_STYLE = `
   display: block;
   width: 100%;
   max-width: 880px;
-  margin: 0 auto 18vh;
+  margin: 0 auto 30px;
   border-radius: 18px;
   background: #fff;
   border: 1px solid var(--ink-line-soft);
@@ -864,11 +867,11 @@ const EXTRA_STYLE = `
 .lf-why-br { grid-area: 2 / 3; }
 
 /* ── Why-us as scroll-stack: all tiles sticky in the SAME left column → real pile-up */
-.lf-why-collage.lf-why-stack { display:grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: start; max-width: 1180px; margin: 0 auto; padding-bottom: 8vh; }
+.lf-why-collage.lf-why-stack { display:grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: start; max-width: 1180px; margin: 0 auto; padding-bottom: 24px; }
 .lf-why-stack .lf-why-stack-left { display:block; }
 /* Unwrap slots so all tiles share the same sticky parent (.lf-why-stack-left) */
 .lf-why-stack .lf-why-slot { display: contents; }
-.lf-why-stack .lf-why-tile { position: sticky; top: calc(120px + var(--why-i, 0) * 12px); width: 100%; padding: 30px 32px; margin: 0 0 14vh; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 30px 60px -32px rgba(15,17,21,.22); transition: transform 0.5s var(--ease); }
+.lf-why-stack .lf-why-tile { position: sticky; top: calc(120px + var(--why-i, 0) * 12px); width: 100%; padding: 30px 32px; margin: 0 0 26px; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 30px 60px -32px rgba(15,17,21,.22); transition: transform 0.5s var(--ease); }
 .lf-why-stack .lf-why-stack-left > .lf-why-slot:last-child .lf-why-tile { margin-bottom: 0; }
 .lf-why-stack .lf-why-photo { position: sticky; top: 120px; height: min(58vh, 520px); grid-row: auto; grid-column: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -36px rgba(15,17,21,.32); align-self: start; transition: opacity 0.45s ease, transform 0.5s cubic-bezier(.22,.78,.27,1); }
 .lf-why-stack.is-trust-near .lf-why-photo { opacity: 0; transform: translateY(-24px) scale(0.97); pointer-events: none; }
