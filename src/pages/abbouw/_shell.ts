@@ -2,7 +2,7 @@
 // reused across every AB Bouw subpage so the look is identical to the Home page.
 import logo from '@/assets/home/logo.png';
 
-type NavKey = 'home' | 'over' | 'diensten' | 'werkwijze' | 'realisaties' | 'contact';
+type NavKey = 'home' | 'over' | 'diensten' | 'werkwijze' | 'realisaties' | 'blog' | 'contact';
 
 const isActive = (k: NavKey, active: NavKey) => (k === active ? ' class="active"' : '');
 
@@ -20,6 +20,7 @@ export const buildNav = (active: NavKey) => `
       <li><a href="/diensten"${isActive('diensten', active)}>Diensten</a></li>
       <li><a href="/werkwijze"${isActive('werkwijze', active)}>Werkwijze</a></li>
       <li><a href="/realisaties"${isActive('realisaties', active)}>Realisaties</a></li>
+      <li><a href="/blog"${isActive('blog', active)}>Blog</a></li>
       <li><a href="/contact"${isActive('contact', active)}>Contact</a></li>
     </ul>
     <a href="tel:+32470634413" class="lf-nav-phone">
@@ -36,7 +37,7 @@ export const buildNav = (active: NavKey) => `
   </button>
   <div class="mm-section">
     <a href="/">Home</a><a href="/over">Over ons</a><a href="/diensten">Diensten</a>
-    <a href="/werkwijze">Werkwijze</a><a href="/realisaties">Realisaties</a><a href="/contact">Contact</a>
+    <a href="/werkwijze">Werkwijze</a><a href="/realisaties">Realisaties</a><a href="/blog">Blog</a><a href="/contact">Contact</a>
   </div>
   <div class="mm-section">
     <a href="/construct">AB Construct</a><a href="/ecologisch">AB Ecologisch</a>
@@ -121,6 +122,7 @@ export const FOOTER = `
         <li><a href="/over">Over ons</a></li>
         <li><a href="/werkwijze">Werkwijze</a></li>
         <li><a href="/realisaties">Realisaties</a></li>
+        <li><a href="/blog">Blog</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul></div>
       <div class="footer-col"><h5>Contact</h5><ul>

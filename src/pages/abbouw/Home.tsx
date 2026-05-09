@@ -25,9 +25,7 @@ import team1 from '@/assets/home/team1.jpg';
 import team2 from '@/assets/home/team2.jpg';
 import team3 from '@/assets/home/team3.jpg';
 import ctaMan from '@/assets/home/cta-man.jpg';
-import blog1 from '@/assets/home/blog1.jpg';
-import blog2 from '@/assets/home/blog2.jpg';
-import blog3 from '@/assets/home/blog3.jpg';
+import { BLOGS } from '@/data/blogs';
 import logo from '@/assets/home/logo.png';
 import logoHero from '@/assets/home/logo-hero.png';
 
@@ -46,6 +44,7 @@ const HTML = (i: Record<string, string>) => `
       <li><a href="/diensten">Diensten</a></li>
       <li><a href="/werkwijze">Werkwijze</a></li>
       <li><a href="/realisaties">Realisaties</a></li>
+      <li><a href="/blog">Blog</a></li>
       <li><a href="/contact">Contact</a></li>
     </ul>
     <a href="tel:+32470634413" class="lf-nav-phone">
@@ -62,7 +61,7 @@ const HTML = (i: Record<string, string>) => `
   </button>
   <div class="mm-section">
     <a href="/">Home</a><a href="/over">Over ons</a><a href="/diensten">Diensten</a>
-    <a href="/werkwijze">Werkwijze</a><a href="/realisaties">Realisaties</a><a href="/contact">Contact</a>
+    <a href="/werkwijze">Werkwijze</a><a href="/realisaties">Realisaties</a><a href="/blog">Blog</a><a href="/contact">Contact</a>
   </div>
   <div class="mm-footer">
     <a href="tel:+32470634413">📞 +32 470 63 44 13</a>
@@ -541,37 +540,37 @@ const HTML = (i: Record<string, string>) => `
       <h2 class="lf-h2">Inzichten uit de praktijk<br>op de werf van vandaag.</h2>
       <p class="lf-lede" style="margin: 0 auto;">Tips, trends en technieken, geschreven door onze eigen experts. Zo maakt u onderbouwde keuzes voor uw woning.</p>
     </div>
-    <div class="lf-blog-grid">
-      ${[
-        { img: i.blog1, tag: 'Trends 2026', day: '12', month: 'mrt', date: '12 maart 2026', author: 'Door Tom V.', title: 'Bouwen in 2026: zo verandert de Vlaamse woningmarkt', excerpt: 'Strengere EPC-eisen, circulair bouwen en nieuwe premies. Waarom 2026 hét moment is voor een toekomstgerichte renovatie.', href: '#' },
-        { img: i.blog2, tag: 'Energie', day: '05', month: 'mrt', date: '5 maart 2026', author: 'Door Bart D.', title: 'Warmtepomp en zonnepanelen: de slimme combinatie', excerpt: 'Hoe een hybride energiesysteem uw maandfactuur tot 70% verlaagt, en welke premies u in 2026 niet mag missen.', href: '#' },
-        { img: i.blog3, tag: 'Interieur', day: '28', month: 'feb', date: '28 februari 2026', author: 'Door Lisa M.', title: '5 badkamertrends die uw woning meer waard maken', excerpt: 'Walk-in douches, natuurlijke materialen en slim sanitair. Onze interieurarchitect deelt de must-haves voor 2026.', href: '#' },
-      ].map(b => `
-        <article class="lf-blog-card" data-reveal>
-          <div class="lf-blog-img">
-            <img src="${b.img}" alt="${b.title}" loading="lazy"/>
-            <span class="lf-blog-tag">${b.tag}</span>
-            <span class="lf-blog-date-badge"><strong>${b.day}</strong><em>${b.month}</em></span>
-          </div>
-          <div class="lf-blog-body">
-            <h4><a href="${b.href}">${b.title}</a></h4>
-            <p>${b.excerpt}</p>
-            <div class="lf-blog-foot">
-              <a href="${b.href}" class="lf-blog-btn">Lees meer
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </a>
-              <span class="lf-blog-author">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                ${b.author}
-              </span>
+    <div class="lf-blog-scroller" data-blog-scroller>
+      <div class="lf-blog-track" data-blog-track>
+        ${BLOGS.map(b => `
+          <article class="lf-blog-card" data-blog-card>
+            <div class="lf-blog-img">
+              <img src="${b.img}" alt="${b.title}" loading="lazy"/>
+              <span class="lf-blog-tag">${b.tag}</span>
+              <span class="lf-blog-date-badge"><strong>${b.day}</strong><em>${b.month}</em></span>
             </div>
-          </div>
-        </article>
-      `).join('')}
+            <div class="lf-blog-body">
+              <h4><a href="/blog/${b.slug}">${b.title}</a></h4>
+              <p>${b.excerpt}</p>
+              <div class="lf-blog-foot">
+                <a href="/blog/${b.slug}" class="lf-blog-btn">Lees meer
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+                <span class="lf-blog-author">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  ${b.author}
+                </span>
+              </div>
+            </div>
+          </article>
+        `).join('')}
+      </div>
     </div>
-    <div class="lf-blog-more">
-      <span class="lf-blog-dots"><i></i><i class="active"></i><i></i></span>
-      <p>Meer praktijkverhalen en bouwadvies. <a href="#">Bekijk alle artikels.</a></p>
+    <div class="lf-blog-indicator">
+      <div class="lf-blog-dots" data-blog-dots>
+        ${BLOGS.map((_, idx) => `<button type="button" class="lf-blog-dot${idx === 0 ? ' is-active' : ''}" data-blog-dot="${idx}" aria-label="Ga naar artikel ${idx + 1}"></button>`).join('')}
+      </div>
+      <p class="lf-blog-more-text">Meer praktijkverhalen en bouwadvies. <a href="/blog">Bekijk alle artikels →</a></p>
     </div>
   </div>
 </section>
@@ -675,6 +674,7 @@ const HTML = (i: Record<string, string>) => `
         <li><a href="/over">Over ons</a></li>
         <li><a href="/werkwijze">Werkwijze</a></li>
         <li><a href="/realisaties">Realisaties</a></li>
+        <li><a href="/blog">Blog</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul></div>
       <div class="footer-col"><h5>Contact</h5><ul>
@@ -1036,12 +1036,26 @@ const EXTRA_STYLE = `
 .lf-blog-author { display:inline-flex; align-items:center; gap:6px; font-size:13px; color: var(--ink-soft); font-weight:500; }
 .lf-blog-author svg { color: var(--accent); }
 .lf-blog-more { margin-top: 36px; display:flex; flex-direction:column; align-items:center; gap:14px; }
-.lf-blog-dots { display:inline-flex; gap:8px; }
-.lf-blog-dots i { width:9px; height:9px; border-radius:50%; background: var(--ink-line); display:inline-block; }
-.lf-blog-dots i.active { background: var(--accent); width: 26px; border-radius:5px; }
-.lf-blog-more p { font-size: 13.5px; color: var(--ink-soft); }
-.lf-blog-more p a { color: var(--accent); font-weight:700; }
-@media (max-width: 900px) { .lf-blog-grid { grid-template-columns: 1fr; } }
+.lf-blog-indicator { margin-top: 32px; display:flex; flex-direction:column; align-items:center; gap:14px; }
+.lf-blog-dots { display:inline-flex; gap:8px; align-items:center; }
+.lf-blog-dot { width:9px; height:9px; padding:0; border:0; border-radius:50%; background: var(--ink-line); cursor: pointer; transition: all 0.3s var(--ease); }
+.lf-blog-dot:hover { background: var(--ink-mute); }
+.lf-blog-dot.is-active { background: var(--accent); width: 26px; border-radius: 5px; }
+.lf-blog-more-text { font-size: 13.5px; color: var(--ink-soft); margin: 0; }
+.lf-blog-more-text a { color: var(--accent); font-weight: 700; }
+
+/* Horizontal scroll carousel */
+.lf-blog-scroller { position: relative; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.lf-blog-scroller::-webkit-scrollbar { display: none; }
+.lf-blog-track { display: flex; gap: 28px; padding: 6px 0 24px; }
+.lf-blog-track .lf-blog-card { flex: 0 0 calc((100% - 56px) / 3); min-width: 0; scroll-snap-align: start; }
+@media (max-width: 900px) {
+  .lf-blog-track .lf-blog-card { flex: 0 0 82%; }
+  .lf-blog-scroller { padding: 0 24px; }
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  .lf-blog-track .lf-blog-card { flex: 0 0 calc((100% - 28px) / 2); }
+}
 
 @media (max-width: 900px) {
   .lf-section { padding: 60px 0; }
@@ -1454,7 +1468,45 @@ export default function Home() {
     };
     const svcNavCleanup = svcNavSetup();
 
-    return () => { document.body.className = prevClass; styleEl.remove(); ddCleanup(); svcNavCleanup(); };
+    // Blog horizontal carousel: dots <-> scroll sync
+    const blogCarouselSetup = () => {
+      const scroller = document.querySelector<HTMLElement>('[data-blog-scroller]');
+      const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-blog-dot]'));
+      const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-blog-card]'));
+      if (!scroller || !dots.length || !cards.length) return () => {};
+      const setActive = (i: number) => dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
+      const onScroll = () => {
+        const sr = scroller.getBoundingClientRect();
+        let bestIdx = 0;
+        let bestDist = Infinity;
+        cards.forEach((c, idx) => {
+          const cr = c.getBoundingClientRect();
+          const dist = Math.abs(cr.left - sr.left);
+          if (dist < bestDist) { bestDist = dist; bestIdx = idx; }
+        });
+        setActive(bestIdx);
+      };
+      scroller.addEventListener('scroll', onScroll, { passive: true });
+      const dotHandlers: Array<[HTMLButtonElement, () => void]> = [];
+      dots.forEach((dot, idx) => {
+        const h = () => {
+          const target = cards[idx];
+          if (!target) return;
+          const sr = scroller.getBoundingClientRect();
+          const cr = target.getBoundingClientRect();
+          scroller.scrollBy({ left: cr.left - sr.left, behavior: 'smooth' });
+        };
+        dot.addEventListener('click', h);
+        dotHandlers.push([dot, h]);
+      });
+      return () => {
+        scroller.removeEventListener('scroll', onScroll);
+        dotHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
+      };
+    };
+    const blogCleanup = blogCarouselSetup();
+
+    return () => { document.body.className = prevClass; styleEl.remove(); ddCleanup(); svcNavCleanup(); blogCleanup(); };
   }, []);
 
   useAbBouwInteractions();
@@ -1464,7 +1516,7 @@ export default function Home() {
     svcConstruct, svcEco, svcInterieur, svcDak, svcBad, svcGevel,
     proj1, proj2, proj3, proj4,
     team1, team2, team3, ctaMan,
-    blog1, blog2, blog3, logo, logoHero,
+    logo, logoHero,
   });
 
   return <div dangerouslySetInnerHTML={{ __html: html }} />;

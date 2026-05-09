@@ -20,6 +20,8 @@ import Gevel from "./pages/abbouw/Gevel";
 import Privacy from "./pages/abbouw/Privacy";
 import Voorwaarden from "./pages/abbouw/Voorwaarden";
 import Cookies from "./pages/abbouw/Cookies";
+import Blog from "./pages/abbouw/Blog";
+import BlogPost from "./pages/abbouw/BlogPost";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -46,6 +48,8 @@ const App = () => (
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/voorwaarden" element={<Voorwaarden />} />
           <Route path="/cookies" element={<Cookies />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
