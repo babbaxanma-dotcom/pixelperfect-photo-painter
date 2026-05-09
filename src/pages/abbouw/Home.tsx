@@ -570,20 +570,20 @@ const HTML = (i: Record<string, string>) => `
       <h2 class="lf-h2">Wij nemen u álles uit handen,<br>ook wat niet zichtbaar is.</h2>
     </div>
     <div class="lf-support-grid">
-      <div class="lf-support-card" data-reveal>
+      <div class="lf-support-card" data-reveal data-support-card>
         <div class="lf-support-meta"><span>01</span> Vergunningen</div>
-        <h5>Stedenbouwkundige vergunning</h5>
-        <p>Wij stellen het dossier op, dienen in via Omgevingsloket en volgen op tot goedkeuring. Gemiddeld 12 weken doorlooptijd.</p>
+        <h5>Vergunning geregeld</h5>
+        <p>Dossier, indiening en opvolging via Omgevingsloket — wij regelen alles.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="1">
+      <div class="lf-support-card" data-reveal data-reveal-delay="1" data-support-card>
         <div class="lf-support-meta"><span>02</span> Premies</div>
-        <h5>Mijn VerbouwPremie &amp; Fluvius</h5>
-        <p>Wij berekenen vooraf op welke premies u recht heeft, leveren de bewijsstukken en dienen de aanvraag in. Gemiddeld 4.200 euro terug.</p>
+        <h5>Tot €4.200 terug</h5>
+        <p>Mijn VerbouwPremie en Fluvius — berekend, aangevraagd en opgevolgd.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="2">
+      <div class="lf-support-card" data-reveal data-reveal-delay="2" data-support-card>
         <div class="lf-support-meta"><span>03</span> Nazorg</div>
         <h5>Service na oplevering</h5>
-        <p>Eén jaar na oplevering komen we gratis langs voor een nacontrole. Klacht binnen de garantieperiode? Reactie binnen 48 uur.</p>
+        <p>Gratis nacontrole na 1 jaar. Reactie binnen 48 uur in garantie.</p>
       </div>
     </div>
   </div>
