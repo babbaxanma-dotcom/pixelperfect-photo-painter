@@ -560,27 +560,29 @@ export function useAbBouwInteractions() {
       ? Array.from(svcStack.querySelectorAll<HTMLElement>('[data-svc-slot]'))
       : [];
     let svcRaf = 0;
+    const isSvcStackDesktop = () => window.matchMedia('(min-width: 901px)').matches;
     const computeSvcStack = () => {
       svcRaf = 0;
       if (!svcStack || svcStackCards.length === 0) return;
+      if (!isSvcStackDesktop()) {
+        // Mobile: horizontal swipe carousel — clear any inline transforms
+        svcStackCards.forEach((c) => {
+          c.style.removeProperty('--svc-scale');
+          c.style.removeProperty('--svc-card-h');
+        });
+        return;
+      }
       const total = svcStackCards.length;
-      // Olivier Larose pattern: each card is sticky inside its own h-screen slot.
-      // Per-card progress = how far the slot's top has scrolled past the viewport top,
-      // normalised against the slot height. While progress<0 the card hasn't pinned yet (scale 1).
-      // While progress goes 0→1 (the slot scrolls past), we lerp scale toward targetScale,
-      // which makes the card shrink as the next card slides over it.
       for (let i = 0; i < total; i++) {
         const slot = svcStackSlots[i];
         const card = svcStackCards[i];
         if (!slot || !card) continue;
         const slotRect = slot.getBoundingClientRect();
         const slotH = slot.offsetHeight || 1;
-        // p: 0 when slot.top hits viewport top, 1 when slot.bottom hits viewport top
         const p = Math.max(0, Math.min(1, -slotRect.top / slotH));
         const targetScale = 1 - (total - 1 - i) * 0.05;
         const scale = 1 + (targetScale - 1) * p;
         card.style.setProperty('--svc-scale', scale.toFixed(4));
-        // Cache height for sticky centering
         card.style.setProperty('--svc-card-h', `${card.offsetHeight}px`);
       }
     };
