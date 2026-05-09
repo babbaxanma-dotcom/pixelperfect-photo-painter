@@ -1168,30 +1168,27 @@ const EXTRA_STYLE = `
   .lf-fab-call {
     position: fixed;
     right: 16px;
-    bottom: calc(18px + env(safe-area-inset-bottom));
+    bottom: calc(20px + env(safe-area-inset-bottom));
     z-index: 60;
     display: inline-flex;
     align-items: center;
-    gap: 9px;
-    padding: 13px 18px 13px 15px;
-    background: var(--accent);
+    gap: 10px;
+    padding: 15px 22px 15px 18px;
+    background: #0a1628;
     color: #fff !important;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 15px;
+    letter-spacing: 0.01em;
     text-decoration: none;
     border-radius: 999px;
-    box-shadow: 0 14px 32px -10px rgba(217,140,3,0.55), 0 4px 12px rgba(10,22,40,0.18);
-    opacity: 0;
-    transform: translateY(20px) scale(0.9);
-    pointer-events: none;
-    transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1);
-  }
-  body.nav-revealed .lf-fab-call {
+    border: 2px solid #fff;
+    box-shadow: 0 18px 40px -10px rgba(10,22,40,0.55), 0 6px 16px rgba(10,22,40,0.25);
     opacity: 1;
     transform: translateY(0) scale(1);
     pointer-events: auto;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
-  .lf-fab-call:active { transform: translateY(0) scale(0.96); }
+  .lf-fab-call:active { transform: scale(0.95); }
 }
 
 /* ─── Mobile-specific polish (≤760px) ─── */
