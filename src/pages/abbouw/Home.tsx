@@ -1307,7 +1307,7 @@ const EXTRA_STYLE = `
   .lf-proj-tabs-wrap { margin-bottom: 28px; }
   .lf-proj-tabs { padding: 4px; gap: 2px; }
   .lf-proj-chip { padding: 8px 14px; font-size: 12px; }
-  .lf-proj-collage { grid-template-rows: repeat(4, 180px); }
+  .lf-proj-cap strong { font-size: 15px; }
 
   /* Testimonials, horizontal swipe */
   .lf-testi-grid { display: flex; grid-template-columns: none; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 18px 12px; margin: 0 -18px; -webkit-overflow-scrolling: touch; }
