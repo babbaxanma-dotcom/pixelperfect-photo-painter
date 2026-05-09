@@ -1027,25 +1027,33 @@ const EXTRA_STYLE = `
   .lf-hero-card { padding: 32px 24px; }
   .lf-blog-foot { flex-direction: column; align-items: flex-start; }
 
-  /* Mobile swipe hint pill — shown above swipeable carousels */
+  /* Mobile swipe hint — animated arrow pill, like big carousel sites */
   .lf-services .lf-section-head::after,
   .lf-reviews-section .lf-reviews-head::after {
-    content: '← swipe →';
+    content: 'Swipe \\2192';
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin: 14px auto 0;
-    padding: 6px 14px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
+    margin: 16px auto 0;
+    padding: 8px 18px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--ink-mute, #6b7280);
-    background: rgba(15, 23, 42, 0.04);
+    color: #fff;
+    background: var(--accent);
     border-radius: 999px;
     width: fit-content;
+    box-shadow: 0 8px 22px -8px rgba(217,140,3,0.55);
+    animation: lf-swipe-nudge 1.6s cubic-bezier(.22,.78,.27,1) infinite;
+  }
+  @keyframes lf-swipe-nudge {
+    0%, 100% { transform: translateX(0); }
+    45%      { transform: translateX(10px); }
+    70%      { transform: translateX(-2px); }
   }
   .lf-services .lf-section-head { text-align: center; }
+  .lf-reviews-section .lf-reviews-head { text-align: center; }
 }
 
 /* Footer, clean white with black text (matches site) */
