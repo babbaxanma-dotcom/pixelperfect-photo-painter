@@ -19,12 +19,31 @@ export function useAbBouwInteractions() {
       if (!target) return;
       const href = target.getAttribute('href');
       if (!href) return;
-      // Smooth in-page anchors (e.g. CTA → contact form)
+      // Smooth in-page anchors (e.g. CTA → contact form, TOC → section)
       if (href.startsWith('#') && href.length > 1) {
-        const el = document.querySelector(href);
+        const el = document.querySelector(href) as HTMLElement | null;
         if (el) {
           e.preventDefault();
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          const navEl = document.getElementById('nav');
+          const navH = navEl ? navEl.getBoundingClientRect().height : 0;
+          const offset = navH + 24;
+          const startY = window.scrollY;
+          const targetY = Math.max(0, el.getBoundingClientRect().top + startY - offset);
+          const distance = targetY - startY;
+          const absDist = Math.abs(distance);
+          if (absDist < 4) return;
+          // Duration scales with distance, clamped for a calm feel
+          const duration = Math.min(1400, Math.max(650, absDist * 0.55));
+          const startT = performance.now();
+          // easeInOutCubic
+          const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+          const step = (now: number) => {
+            const p = Math.min(1, (now - startT) / duration);
+            window.scrollTo(0, startY + distance * ease(p));
+            if (p < 1) requestAnimationFrame(step);
+            else history.replaceState(null, '', href);
+          };
+          requestAnimationFrame(step);
         }
         return;
       }
