@@ -915,17 +915,18 @@ const EXTRA_STYLE = `
 .lf-proj-chip.active { background: var(--navy); color:#fff; box-shadow: 0 6px 16px -6px rgba(10,31,68,0.45); }
 .lf-chip-dot { width:6px; height:6px; border-radius:50%; background: var(--accent); display:inline-block; }
 .lf-proj-chip:not(.active) .lf-chip-dot { background: var(--ink-line); }
-.lf-proj-collage { position: relative; display:grid; grid-template-columns: 1fr 1fr; grid-template-rows: 320px 320px; gap: 0; --notch: 90px; }
-.lf-proj-cell { overflow: hidden; position:relative; }
-.lf-proj-cell img { width:100%; height:100%; object-fit:cover; transition: transform 0.5s var(--ease); display:block; }
-.lf-proj-cell:hover img { transform: scale(1.05); }
-/* Concave inner corner at the centre intersection, creates a circular hole for the logo */
-.lf-proj-tl { border-top-left-radius: 18px; -webkit-mask: radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000 100%); mask: radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000 100%); }
-.lf-proj-tr { border-top-right-radius: 18px; -webkit-mask: radial-gradient(circle var(--notch) at 0% 100%, transparent 98%, #000 100%); mask: radial-gradient(circle var(--notch) at 0% 100%, transparent 98%, #000 100%); }
-.lf-proj-bl { border-bottom-left-radius: 18px; -webkit-mask: radial-gradient(circle var(--notch) at 100% 0%, transparent 98%, #000 100%); mask: radial-gradient(circle var(--notch) at 100% 0%, transparent 98%, #000 100%); }
-.lf-proj-br { border-bottom-right-radius: 18px; -webkit-mask: radial-gradient(circle var(--notch) at 0% 0%, transparent 98%, #000 100%); mask: radial-gradient(circle var(--notch) at 0% 0%, transparent 98%, #000 100%); }
-.lf-proj-logo { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width: 140px; height: 140px; display:flex; align-items:center; justify-content:center; z-index:5; background: transparent; box-shadow: none; padding: 0; }
-.lf-proj-logo img { width: 100%; height: 100%; object-fit: contain; }
+.lf-proj-collage { display:grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.lf-proj-cell { position:relative; display:flex; flex-direction:column; background:#fff; border:1px solid var(--ink-line-soft); border-radius: 16px; overflow:hidden; text-decoration:none; color:var(--ink); transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease); }
+.lf-proj-cell:hover { transform: translateY(-4px); box-shadow: 0 22px 44px -22px rgba(10,22,40,0.22); border-color: var(--accent); }
+.lf-proj-cell.is-hidden { display: none; }
+.lf-proj-img { position:relative; aspect-ratio: 4/3; overflow:hidden; }
+.lf-proj-img img { width:100%; height:100%; object-fit:cover; transition: transform 0.5s var(--ease); display:block; }
+.lf-proj-cell:hover .lf-proj-img img { transform: scale(1.06); }
+.lf-proj-cap { display:flex; align-items:center; justify-content:space-between; gap:12px; padding: 16px 18px; }
+.lf-proj-cap-cat { display:block; font-size: 11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color: var(--accent); margin-bottom: 4px; }
+.lf-proj-cap strong { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--navy); letter-spacing:-0.01em; line-height:1.2; display:block; }
+.lf-proj-cap svg { color: var(--navy); flex-shrink: 0; transition: transform .3s var(--ease); }
+.lf-proj-cell:hover .lf-proj-cap svg { transform: translateX(4px); color: var(--accent); }
 
 /* Custom clean dropdown */
 .lf-dd { position: relative; margin-bottom: 12px; }
