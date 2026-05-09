@@ -550,6 +550,8 @@ export function useAbBouwInteractions() {
       pinRail?.removeEventListener('touchstart', onPinTouch);
       pinRail?.removeEventListener('touchend', onPinTouchEnd);
       mmLinks.forEach((a) => a.removeEventListener('click', mmClose));
+      mmCloseBtn?.removeEventListener('click', mmClose);
+      trustNearIo?.disconnect();
       faqHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
       tabHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
       svcCards.forEach((c) => c.removeEventListener('mousemove', svcMove));
