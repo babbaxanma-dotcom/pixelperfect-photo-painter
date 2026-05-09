@@ -432,8 +432,8 @@ const HTML = (i: Record<string, string>) => `
       <a href="/over" class="lf-btn-pri lf-btn-sm"><span>Lees meer</span></a>
     </div>
     <div class="lf-skills-collage" data-reveal data-reveal-delay="1">
-      <img class="lf-skills-img1" src="${i.vakmanDak}" alt="Dakwerker plaatst Koramic dakpannen" loading="lazy"/>
-      <img class="lf-skills-img2" src="${i.vakmanInterieur}" alt="Schrijnwerker plaatst maatkast in eik" loading="lazy"/>
+      <img class="lf-skills-img1" src="${i.vakmanInterieur}" alt="Schrijnwerker plaatst maatkast in eik" loading="lazy"/>
+      <img class="lf-skills-img2" src="${i.vakmanDak}" alt="Dakwerker plaatst Koramic dakpannen" loading="lazy"/>
     </div>
   </div>
 </section>
@@ -904,8 +904,7 @@ const EXTRA_STYLE = `
 .lf-skills-img1 { transform: rotate(-4deg) translate(8px, 14px); transform-origin: center center; clip-path: polygon(0 0, 100% 0, 100% 78%, 78% 100%, 0 100%); position: relative; z-index: 1; }
 /* Right photo: top-left corner clipped diagonally, overlaps left */
 .lf-skills-img2 { transform: rotate(4deg) translate(-12px, -18px); transform-origin: center center; clip-path: polygon(22% 0, 100% 0, 100% 100%, 0 100%, 0 22%); position: relative; z-index: 2; }
-.lf-skills-collage:hover .lf-skills-img1 { transform: rotate(-2deg) translate(4px, 8px); }
-.lf-skills-collage:hover .lf-skills-img2 { transform: rotate(2deg) translate(-6px, -10px); }
+/* hover animation removed */
 
 /* Team */
 .lf-team-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 900px; margin: 0 auto; }
