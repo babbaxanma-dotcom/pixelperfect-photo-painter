@@ -286,10 +286,10 @@ const HTML = (i: Record<string, string>) => `
       return `
       <nav class="lf-svc-nav" data-svc-nav data-reveal aria-label="Specialisaties">
         ${services.map((s, idx) => `
-          <button type="button" class="lf-svc-pill${idx === 0 ? ' is-active' : ''}" data-svc-pill="${idx}">
+          <a class="lf-svc-pill${idx === 0 ? ' is-active' : ''}" data-svc-pill="${idx}" href="${s.href}">
             <span class="lf-svc-pill-num">${s.n}</span>
             <span class="lf-svc-pill-label">${s.short}</span>
-          </button>
+          </a>
         `).join('')}
       </nav>
       <div class="lf-svc-grid" data-svc-stack>
