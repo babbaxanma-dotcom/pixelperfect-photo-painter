@@ -496,12 +496,24 @@ const HTML = (i: Record<string, string>) => `
         <button class="lf-proj-chip">Interieur</button>
       </div>
     </div>
-    <div class="lf-proj-collage" data-reveal>
-      <div class="lf-proj-cell lf-proj-tl"><img src="${i.proj1}" alt="" loading="lazy"/></div>
-      <div class="lf-proj-cell lf-proj-tr"><img src="${i.proj2}" alt="" loading="lazy"/></div>
-      <div class="lf-proj-cell lf-proj-bl"><img src="${i.proj3}" alt="" loading="lazy"/></div>
-      <div class="lf-proj-cell lf-proj-br"><img src="${i.proj4}" alt="" loading="lazy"/></div>
-      <div class="lf-proj-logo"><img src="${i.logo}" alt="AB Bouw Groep" /></div>
+    <div class="lf-proj-collage" data-reveal data-proj-collage>
+      ${[
+        { img: 'proj1', cat: 'nieuwbouw', title: 'Nieuwbouw', place: 'Antwerpen' },
+        { img: 'proj2', cat: 'renovatie', title: 'Renovatie', place: 'Mechelen' },
+        { img: 'proj3', cat: 'interieur', title: 'Interieur', place: 'Brussel' },
+        { img: 'proj4', cat: 'dakwerken', title: 'Dakwerken', place: 'Lier' },
+      ].map(p => `
+        <a href="/realisaties" class="lf-proj-cell" data-proj-cat="${p.cat}">
+          <div class="lf-proj-img"><img src="${(i as any)[p.img]}" alt="${p.title} ${p.place}" loading="lazy"/></div>
+          <div class="lf-proj-cap">
+            <div>
+              <span class="lf-proj-cap-cat">${p.title}</span>
+              <strong>${p.place}</strong>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+        </a>
+      `).join('')}
     </div>
   </div>
 </section>
