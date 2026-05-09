@@ -836,14 +836,15 @@ const EXTRA_STYLE = `
 .lf-why-bl { grid-area: 2 / 1; }
 .lf-why-br { grid-area: 2 / 3; }
 
-/* ── Why-us as scroll-stack: cards on the left (sticky, straight), photo sticky on right */
+/* ── Why-us as scroll-stack: tight CSS-only sticky stack (Olivier Larose pattern) */
 .lf-why-collage.lf-why-stack { display:grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: start; max-width: 1180px; margin: 0 auto; }
-/* Stack column: 4 slots of 70vh + 70vh trailing space so the last card also gets sticky time
-   AND the photo + last card release at the exact same scroll position. */
-.lf-why-stack .lf-why-stack-left { display:block; padding-bottom: 70vh; }
-.lf-why-stack .lf-why-slot { position: sticky; top: 110px; height: 70vh; display: flex; align-items: center; justify-content: center; }
-.lf-why-stack .lf-why-tile { position: relative; top: calc(var(--why-i, 0) * 18px); width: 100%; padding: 30px 32px; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 30px 60px -32px rgba(15,17,21,.22); transform-origin: 50% 0%; transform: scale(var(--why-scale, 1)); will-change: transform; backface-visibility: hidden; }
-.lf-why-stack .lf-why-photo { position: sticky; top: 110px; height: 70vh; min-height: 460px; grid-row: auto; grid-column: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -36px rgba(15,17,21,.32); align-self: start; }
+.lf-why-stack .lf-why-stack-left { display:block; }
+/* Each slot is short (just enough to scroll one card on top of the next).
+   The tile itself is sticky with an increasing top offset → cards pile up cleanly. */
+.lf-why-stack .lf-why-slot { height: 48vh; min-height: 320px; display: block; }
+.lf-why-stack .lf-why-slot:last-child { height: 56vh; min-height: 360px; }
+.lf-why-stack .lf-why-tile { position: sticky; top: calc(120px + var(--why-i, 0) * 10px); width: 100%; padding: 30px 32px; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 30px 60px -32px rgba(15,17,21,.22); }
+.lf-why-stack .lf-why-photo { position: sticky; top: 120px; height: min(72vh, 560px); grid-row: auto; grid-column: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -36px rgba(15,17,21,.32); align-self: start; }
 .lf-why-stack .lf-why-photo img { width:100%; height:100%; object-fit: cover; }
 
 
