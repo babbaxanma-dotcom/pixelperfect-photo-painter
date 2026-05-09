@@ -551,6 +551,7 @@ export function useAbBouwInteractions() {
 
     return () => {
       document.removeEventListener('click', onClick);
+      projTabs?.removeEventListener('click', onProjFilter);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('scroll', onParallax);
       window.removeEventListener('scroll', onPinScroll);
