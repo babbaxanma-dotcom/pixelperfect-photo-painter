@@ -570,20 +570,20 @@ const HTML = (i: Record<string, string>) => `
       <h2 class="lf-h2">Wij nemen u álles uit handen,<br>ook wat niet zichtbaar is.</h2>
     </div>
     <div class="lf-support-grid">
-      <div class="lf-support-card" data-reveal>
+      <div class="lf-support-card" data-reveal data-support-card>
         <div class="lf-support-meta"><span>01</span> Vergunningen</div>
-        <h5>Stedenbouwkundige vergunning</h5>
-        <p>Wij stellen het dossier op, dienen in via Omgevingsloket en volgen op tot goedkeuring. Gemiddeld 12 weken doorlooptijd.</p>
+        <h5>Vergunning geregeld</h5>
+        <p>Dossier, indiening en opvolging via Omgevingsloket — wij regelen alles.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="1">
+      <div class="lf-support-card" data-reveal data-reveal-delay="1" data-support-card>
         <div class="lf-support-meta"><span>02</span> Premies</div>
-        <h5>Mijn VerbouwPremie &amp; Fluvius</h5>
-        <p>Wij berekenen vooraf op welke premies u recht heeft, leveren de bewijsstukken en dienen de aanvraag in. Gemiddeld 4.200 euro terug.</p>
+        <h5>Tot €4.200 terug</h5>
+        <p>Mijn VerbouwPremie en Fluvius — berekend, aangevraagd en opgevolgd.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="2">
+      <div class="lf-support-card" data-reveal data-reveal-delay="2" data-support-card>
         <div class="lf-support-meta"><span>03</span> Nazorg</div>
         <h5>Service na oplevering</h5>
-        <p>Eén jaar na oplevering komen we gratis langs voor een nacontrole. Klacht binnen de garantieperiode? Reactie binnen 48 uur.</p>
+        <p>Gratis nacontrole na 1 jaar. Reactie binnen 48 uur in garantie.</p>
       </div>
     </div>
   </div>
@@ -1162,14 +1162,18 @@ const EXTRA_STYLE = `
 
 /* Support tiles */
 .lf-support-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.lf-support-card { background:#fff; padding: 28px 24px; border-radius: 12px; border: 1px solid var(--ink-line-soft); transition: all 0.25s var(--ease); }
+.lf-support-card { background:#fff; padding: 28px 24px; border-radius: 14px; border: 1px solid var(--ink-line-soft); transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.5s var(--ease), background 0.5s var(--ease); position:relative; }
 .lf-support-card:hover { transform: translateY(-3px); box-shadow: 0 18px 36px -20px rgba(10,22,40,0.18); border-color: var(--accent); }
+.lf-support-card.is-active { transform: translateY(-6px) scale(1.03); border-color: var(--accent); box-shadow: 0 30px 60px -25px rgba(212,165,76,0.45); background: linear-gradient(180deg,#fff 0%, #fffaf0 100%); }
+.lf-support-card.is-active .lf-support-meta span { color: var(--accent); transform: scale(1.15); }
+.lf-support-meta span { display:inline-block; transition: transform 0.5s var(--ease), color 0.5s var(--ease); }
 .lf-support-meta { display:flex; align-items:center; gap: 10px; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--ink-line-soft); }
 .lf-support-meta span { font-family: var(--font-display); font-size: 14px; color: var(--accent); letter-spacing: 0.04em; }
 .lf-support-card h5 { font-size: 16px; color: var(--navy); margin-bottom: 8px; line-height: 1.3; }
 .lf-support-card p { font-size: 13.5px; line-height: 1.65; color: var(--ink-soft); margin: 0; }
 @media (max-width: 900px) { .lf-support-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 600px) { .lf-support-grid { grid-template-columns: 1fr; } }
+html, body { overflow-x: hidden; max-width: 100%; }
 
 /* Process / werkwijze */
 .lf-process { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; margin-top: 20px; }

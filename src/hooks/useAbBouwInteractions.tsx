@@ -549,12 +549,31 @@ export function useAbBouwInteractions() {
       pinRail.querySelectorAll('.lf-stat-card').forEach((c) => pinIo!.observe(c));
     }
 
+    // ── Support cards: scroll-driven sequential highlight ──
+    const supportCards = Array.from(document.querySelectorAll<HTMLElement>('[data-support-card]'));
+    const onSupportScroll = () => {
+      if (!supportCards.length) return;
+      const center = window.innerHeight / 2;
+      let bestIdx = -1;
+      let bestDist = Infinity;
+      supportCards.forEach((card, i) => {
+        const r = card.getBoundingClientRect();
+        if (r.bottom < 60 || r.top > window.innerHeight - 60) return;
+        const d = Math.abs((r.top + r.bottom) / 2 - center);
+        if (d < bestDist) { bestDist = d; bestIdx = i; }
+      });
+      supportCards.forEach((c, i) => c.classList.toggle('is-active', i === bestIdx));
+    };
+    window.addEventListener('scroll', onSupportScroll, { passive: true });
+    onSupportScroll();
+
     return () => {
       document.removeEventListener('click', onClick);
       projTabs?.removeEventListener('click', onProjFilter);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('scroll', onParallax);
       window.removeEventListener('scroll', onPinScroll);
+      window.removeEventListener('scroll', onSupportScroll);
       window.removeEventListener('scroll', onWhyScroll);
       window.removeEventListener('scroll', onWhyStackScroll);
       window.removeEventListener('resize', onWhyStackScroll);
