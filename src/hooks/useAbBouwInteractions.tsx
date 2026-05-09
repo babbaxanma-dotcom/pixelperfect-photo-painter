@@ -573,6 +573,7 @@ export function useAbBouwInteractions() {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('scroll', onParallax);
       window.removeEventListener('scroll', onPinScroll);
+      window.removeEventListener('scroll', onSupportScroll);
       window.removeEventListener('scroll', onWhyScroll);
       window.removeEventListener('scroll', onWhyStackScroll);
       window.removeEventListener('resize', onWhyStackScroll);
