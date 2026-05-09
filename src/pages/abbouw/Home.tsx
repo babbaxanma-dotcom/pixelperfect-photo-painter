@@ -1157,15 +1157,36 @@ const EXTRA_STYLE = `
 .lf-faq-list .faq-a p { padding: 0 24px 22px; font-size: 14px; line-height: 1.7; color: var(--ink-soft); margin: 0; }
 @media (max-width: 900px) { .lf-faq-grid { grid-template-columns: 1fr; gap: 36px; } }
 
-/* ─── Mobile bottom bar (visible on small screens only) ─── */
-.lf-mobile-bar { display: none; }
+/* ─── Floating mobile call button (FAB) ─── */
+.lf-fab-call { display: none; }
 @media (max-width: 760px) {
-  .lf-mobile-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 60; display: grid; grid-template-columns: 1fr 1.3fr; gap: 8px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(255,255,255,0.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--ink-line-soft); box-shadow: 0 -8px 24px -12px rgba(10,22,40,0.18); opacity: 0; transform: translateY(100%); pointer-events: none; transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.22,1,0.36,1); }
-  body.nav-revealed .lf-mobile-bar { opacity: 1; transform: translateY(0); pointer-events: auto; }
-  .lf-mobile-bar-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding: 13px 14px; border-radius: 999px; font-weight: 700; font-size: 14px; text-decoration: none; }
-  .lf-mobile-bar-call { background: #fff; color: var(--navy) !important; border: 1.5px solid var(--ink-line); }
-  .lf-mobile-bar-cta { background: var(--accent); color: #fff !important; }
-  body.nav-revealed { padding-bottom: 72px; }
+  .lf-fab-call {
+    position: fixed;
+    right: 16px;
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    z-index: 60;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 13px 18px 13px 15px;
+    background: var(--accent);
+    color: #fff !important;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 999px;
+    box-shadow: 0 14px 32px -10px rgba(217,140,3,0.55), 0 4px 12px rgba(10,22,40,0.18);
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1);
+  }
+  body.nav-revealed .lf-fab-call {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  .lf-fab-call:active { transform: translateY(0) scale(0.96); }
 }
 
 /* ─── Mobile-specific polish (≤760px) ─── */
