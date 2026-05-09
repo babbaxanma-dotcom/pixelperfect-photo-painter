@@ -742,7 +742,7 @@ const EXTRA_STYLE = `
 .lf-hero-card p { font-size: 15px; color: var(--ink-soft); line-height:1.7; margin-bottom: 28px; }
 
 /* Pill CTA — yellow square, no arrow */
-.lf-cta-pill { display:inline-flex; align-items:center; justify-content:center; gap:0; padding: 14px 26px; background: #d98c03 !important; color: #fff !important; border-radius: 4px; font-weight: 600; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; border:none; cursor:pointer; transition: transform 0.08s var(--ease), background 0.15s var(--ease); text-decoration:none; line-height:1; box-shadow: none; -webkit-tap-highlight-color: transparent; }
+.lf-cta-pill { display:inline-flex; align-items:center; justify-content:center; gap:0; padding: 14px 26px; background: #d98c03 !important; color: #fff !important; border-radius: 999px; font-weight: 600; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; border:none; cursor:pointer; transition: transform 0.08s var(--ease), background 0.15s var(--ease); text-decoration:none; line-height:1; box-shadow: none; -webkit-tap-highlight-color: transparent; }
 .lf-cta-pill:hover, .lf-cta-pill:focus, .lf-cta-pill:focus-visible { background: #c47e02 !important; color: #fff !important; outline: none; }
 .lf-cta-pill:active { background: #a86b01 !important; transform: scale(0.96); }
 .lf-cta-pill-arrow { display: none !important; }
@@ -982,7 +982,7 @@ const EXTRA_STYLE = `
 .lf-blog-body h4 a:hover { color: var(--accent); }
 .lf-blog-body p { font-size: 14px; line-height:1.65; color: var(--ink-soft); margin-bottom: 6px; }
 .lf-blog-foot { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--ink-line-soft); }
-.lf-blog-btn { display:inline-flex; align-items:center; gap:8px; padding: 9px 16px; background: var(--accent); color:#fff !important; border-radius: 4px; font-size: 12.5px; font-weight: 700; letter-spacing:0.04em; text-transform:uppercase; transition: background 0.2s; }
+.lf-blog-btn { display:inline-flex; align-items:center; gap:8px; padding: 9px 16px; background: var(--accent); color:#fff !important; border-radius: 999px; font-size: 12.5px; font-weight: 700; letter-spacing:0.04em; text-transform:uppercase; transition: background 0.2s; }
 .lf-blog-btn:hover { background: var(--accent-hover); }
 .lf-blog-author { display:inline-flex; align-items:center; gap:6px; font-size:13px; color: var(--ink-soft); font-weight:500; }
 .lf-blog-author svg { color: var(--accent); }
