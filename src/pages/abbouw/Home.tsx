@@ -830,10 +830,11 @@ const EXTRA_STYLE = `
 .lf-why-stack .lf-why-stack-left { display:block; }
 /* Each slot is short (just enough to scroll one card on top of the next).
    The tile itself is sticky with an increasing top offset → cards pile up cleanly. */
-.lf-why-stack .lf-why-slot { height: 48vh; min-height: 320px; display: block; }
-.lf-why-stack .lf-why-slot:last-child { height: 56vh; min-height: 360px; }
+.lf-why-stack .lf-why-slot { height: 38vh; min-height: 280px; display: block; }
+.lf-why-stack .lf-why-slot:last-child { height: 40vh; min-height: 300px; }
 .lf-why-stack .lf-why-tile { position: sticky; top: calc(120px + var(--why-i, 0) * 10px); width: 100%; padding: 30px 32px; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 30px 60px -32px rgba(15,17,21,.22); }
-.lf-why-stack .lf-why-photo { position: sticky; top: 120px; height: min(72vh, 560px); grid-row: auto; grid-column: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -36px rgba(15,17,21,.32); align-self: start; }
+.lf-why-stack .lf-why-photo { position: sticky; top: 120px; height: min(58vh, 520px); grid-row: auto; grid-column: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -36px rgba(15,17,21,.32); align-self: start; transition: opacity 0.45s ease, transform 0.5s cubic-bezier(.22,.78,.27,1); }
+.lf-why-stack.is-trust-near .lf-why-photo { opacity: 0; transform: translateY(-24px) scale(0.97); pointer-events: none; }
 .lf-why-stack .lf-why-photo img { width:100%; height:100%; object-fit: cover; }
 
 
