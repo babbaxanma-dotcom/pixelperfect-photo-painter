@@ -54,6 +54,24 @@ export function useAbBouwInteractions() {
       document.body.classList.remove('menu-open');
     };
     mmLinks.forEach((a) => a.addEventListener('click', mmClose));
+    const mmCloseBtn = document.getElementById('mobileMenuClose');
+    mmCloseBtn?.addEventListener('click', mmClose);
+
+    // ── Why-stack: hide photo when trust strip approaches viewport
+    const whyStackEl = document.querySelector<HTMLElement>('.lf-why-stack');
+    const trustStripEl = document.querySelector<HTMLElement>('.lf-trust-strip');
+    let trustNearIo: IntersectionObserver | null = null;
+    if (whyStackEl && trustStripEl) {
+      trustNearIo = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((en) => {
+            whyStackEl.classList.toggle('is-trust-near', en.isIntersecting);
+          });
+        },
+        { rootMargin: '0px 0px -20% 0px', threshold: 0 },
+      );
+      trustNearIo.observe(trustStripEl);
+    }
 
     // ── FAQ accordion ───────────────────────────────────
     const faqItems = document.querySelectorAll<HTMLElement>('.faq-item');
@@ -532,6 +550,8 @@ export function useAbBouwInteractions() {
       pinRail?.removeEventListener('touchstart', onPinTouch);
       pinRail?.removeEventListener('touchend', onPinTouchEnd);
       mmLinks.forEach((a) => a.removeEventListener('click', mmClose));
+      mmCloseBtn?.removeEventListener('click', mmClose);
+      trustNearIo?.disconnect();
       faqHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
       tabHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
       svcCards.forEach((c) => c.removeEventListener('mousemove', svcMove));
