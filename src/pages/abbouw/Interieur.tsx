@@ -186,7 +186,7 @@ ${buildHero({
       <div data-reveal>
         <span class="lf-eyebrow">AB Interieurwerken</span>
         <h2 class="lf-h2">Een ruwbouw kan<br/>iedereen leveren.</h2>
-        <p class="lf-lede">Een woning die klopt tot in elke hoek vraagt vakmensen die wéken aan dezelfde werf staan en oog hebben voor het detail dat niemand opmerkt — behalve uzelf, elke dag.</p>
+        <p class="lf-lede">Een woning die klopt tot in elke hoek vraagt vakmensen die wéken aan dezelfde werf staan en oog hebben voor het detail dat niemand opmerkt, behalve uzelf, elke dag.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen schrijnwerker met eigen atelier in Mol</li>
           <li>Eén vaste interieurploeg, geen wisselende onderaannemers</li>
@@ -319,7 +319,7 @@ ${buildHero({
     </div>
     <div class="ab-faq">
       <details data-reveal><summary>Hoe lang duurt een volledige interieurrenovatie?</summary><div class="ab-faq-body"><p>Een woonkamer doen we in 2 tot 3 weken, een volledig appartement in 6 tot 10 weken, een woning casco-tot-sleutel in 12 tot 20 weken. We bezorgen vooraf een dag-per-dag planning.</p></div></details>
-      <details data-reveal><summary>Doen jullie ook keukens en badkamers?</summary><div class="ab-faq-body"><p>Ja. Maatwerkkeukens komen uit ons eigen atelier of via onze vaste keukenpartner. Voor badkamers werken we samen met AB Bad &amp; Wellness — één contactpersoon voor de hele werf.</p></div></details>
+      <details data-reveal><summary>Doen jullie ook keukens en badkamers?</summary><div class="ab-faq-body"><p>Ja. Maatwerkkeukens komen uit ons eigen atelier of via onze vaste keukenpartner. Voor badkamers werken we samen met AB Bad &amp; Wellness, met één contactpersoon voor de hele werf.</p></div></details>
       <details data-reveal><summary>Kan ik blijven wonen tijdens de werken?</summary><div class="ab-faq-body"><p>Bij de meeste renovaties wel. We werken zone per zone met stofschotten, dagelijkse opkuis en plastic loopzones. Water of stroom wordt steeds 24u vooraf aangekondigd.</p></div></details>
       <details data-reveal><summary>Welke vloer past bij vloerverwarming?</summary><div class="ab-faq-body"><p>Microcement (Beal Mortex), tegels en gietvloer geven het hoogste rendement. Parket kan, mits meerlaagse uitvoering met lage thermische weerstand (Rλ &lt; 0,15). We bespreken het bij plaatsbezoek.</p></div></details>
       <details data-reveal><summary>Wat is V3- of V4-afwerking bij gyproc?</summary><div class="ab-faq-body"><p>Dat zijn de Belgische normen voor afwerkingsgraad. V2 is standaard (klaar voor verf), V3 is extra geschuurd en geplamuurd voor satijnverf, V4 is volledig vlak gepleisterd voor strijklicht en hoogglans.</p></div></details>
