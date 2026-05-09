@@ -1045,7 +1045,7 @@ const EXTRA_STYLE = `
 .lf-blog-more-text a { color: var(--accent); font-weight: 700; }
 
 /* Horizontal scroll carousel */
-.lf-blog-scroller { position: relative; margin: 0 calc(50% - 50vw); padding: 0 max(24px, calc(50vw - 600px)); overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.lf-blog-scroller { position: relative; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 .lf-blog-scroller::-webkit-scrollbar { display: none; }
 .lf-blog-track { display: flex; gap: 28px; padding: 6px 0 24px; }
 .lf-blog-track .lf-blog-card { flex: 0 0 calc((100% - 56px) / 3); min-width: 0; scroll-snap-align: start; }
