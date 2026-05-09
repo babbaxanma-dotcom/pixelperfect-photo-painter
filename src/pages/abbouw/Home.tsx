@@ -803,33 +803,32 @@ const EXTRA_STYLE = `
 .lf-svc-card { display:flex; flex-direction:column; background:#fff; border-radius: 14px; overflow:hidden; border: 1px solid var(--ink-line-soft); transition: all 0.3s var(--ease); color: var(--ink); }
 .lf-svc-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -20px rgba(10,22,40,0.18); border-color: var(--accent); }
 
-/* Stacking-card scroll animation (Olivier Larose pattern: each slot is sticky at top:0,
-   so cards pile on top of each other instead of leaving the viewport between slots) */
+/* Stacking-card scroll animation: ALL cards share the same sticky parent so they
+   physically pile on top of each other (Olivier Larose pattern). The slot wrappers
+   are unwrapped via display:contents — each card is sticky against the grid itself. */
 .lf-services .lf-svc-grid[data-svc-stack] {
   display: block;
   position: relative;
+  padding: 0 16px 12vh;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot {
-  position: relative;
-  height: 56vh;
-  min-height: 380px;
-  display: block;
-  padding: 0 16px;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:last-child {
-  height: 70vh;
+  display: contents;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
   position: sticky;
-  top: calc(110px + var(--svc-i, 0) * 12px);
+  top: calc(110px + var(--svc-i, 0) * 14px);
   display: block;
   width: 100%;
   max-width: 880px;
-  margin: 0 auto;
+  margin: 0 auto 18vh;
   border-radius: 18px;
   background: #fff;
   border: 1px solid var(--ink-line-soft);
   box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 40px 80px -32px rgba(15,17,21,.32);
+  transition: transform 0.5s var(--ease);
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:last-child .lf-svc-card {
+  margin-bottom: 0;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 21/9; }
 .lf-svc-img { position:relative; aspect-ratio: 4/3; overflow:hidden; }
@@ -864,14 +863,13 @@ const EXTRA_STYLE = `
 .lf-why-bl { grid-area: 2 / 1; }
 .lf-why-br { grid-area: 2 / 3; }
 
-/* ── Why-us as scroll-stack: tight CSS-only sticky stack (Olivier Larose pattern) */
-.lf-why-collage.lf-why-stack { display:grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: start; max-width: 1180px; margin: 0 auto; }
+/* ── Why-us as scroll-stack: all tiles sticky in the SAME left column → real pile-up */
+.lf-why-collage.lf-why-stack { display:grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: start; max-width: 1180px; margin: 0 auto; padding-bottom: 8vh; }
 .lf-why-stack .lf-why-stack-left { display:block; }
-/* Each slot is short (just enough to scroll one card on top of the next).
-   The tile itself is sticky with an increasing top offset → cards pile up cleanly. */
-.lf-why-stack .lf-why-slot { height: 38vh; min-height: 280px; display: block; }
-.lf-why-stack .lf-why-slot:last-child { height: 40vh; min-height: 300px; }
-.lf-why-stack .lf-why-tile { position: sticky; top: calc(120px + var(--why-i, 0) * 10px); width: 100%; padding: 30px 32px; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 30px 60px -32px rgba(15,17,21,.22); }
+/* Unwrap slots so all tiles share the same sticky parent (.lf-why-stack-left) */
+.lf-why-stack .lf-why-slot { display: contents; }
+.lf-why-stack .lf-why-tile { position: sticky; top: calc(120px + var(--why-i, 0) * 12px); width: 100%; padding: 30px 32px; margin: 0 0 14vh; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 30px 60px -32px rgba(15,17,21,.22); transition: transform 0.5s var(--ease); }
+.lf-why-stack .lf-why-stack-left > .lf-why-slot:last-child .lf-why-tile { margin-bottom: 0; }
 .lf-why-stack .lf-why-photo { position: sticky; top: 120px; height: min(58vh, 520px); grid-row: auto; grid-column: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -36px rgba(15,17,21,.32); align-self: start; transition: opacity 0.45s ease, transform 0.5s cubic-bezier(.22,.78,.27,1); }
 .lf-why-stack.is-trust-near .lf-why-photo { opacity: 0; transform: translateY(-24px) scale(0.97); pointer-events: none; }
 .lf-why-stack .lf-why-photo img { width:100%; height:100%; object-fit: cover; }
