@@ -381,6 +381,29 @@ ${FOOTER}
   .dak-card-img { min-height: 240px; }
   .dak-card-body { padding: 28px 24px; }
 }
+.ab-mark { position: relative; display: inline-block; color: var(--navy); white-space: nowrap; }
+.ab-mark::after { content: ''; position: absolute; left: -2%; right: -2%; bottom: 4%; height: 38%; background: var(--accent); opacity: 0.28; border-radius: 3px; transform-origin: left center; transform: scaleX(0); transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s; z-index: -1; }
+[data-reveal].revealed .ab-mark::after { transform: scaleX(1); }
+
+/* Highlighter sweep on key phrases */
+.ab-hl { position: relative; display: inline; background-image: linear-gradient(120deg, rgba(217,140,3,0.22) 0%, rgba(217,140,3,0.22) 100%); background-repeat: no-repeat; background-size: 0% 60%; background-position: 0 88%; padding: 0 2px; transition: background-size 0.9s cubic-bezier(0.22, 1, 0.36, 1); transition-delay: calc(0.5s + var(--hl-i, 0) * 0.35s); color: var(--navy); font-weight: 500; }
+[data-reveal].revealed .ab-hl { background-size: 100% 60%; }
+.ab-hl[data-hl-delay="0"] { --hl-i: 0; }
+.ab-hl[data-hl-delay="1"] { --hl-i: 1; }
+.ab-hl[data-hl-delay="2"] { --hl-i: 2; }
+
+/* Numbered scannable list for fast readers */
+.ab-droom-list { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 14px; }
+.ab-droom-list li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; padding: 14px 16px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 12px; opacity: 0; transform: translateY(10px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), border-color 0.25s, box-shadow 0.25s; }
+[data-reveal].revealed .ab-droom-list li { opacity: 1; transform: translateY(0); }
+[data-reveal].revealed .ab-droom-list li:nth-child(1) { transition-delay: 0.15s; }
+[data-reveal].revealed .ab-droom-list li:nth-child(2) { transition-delay: 0.3s; }
+[data-reveal].revealed .ab-droom-list li:nth-child(3) { transition-delay: 0.45s; }
+[data-reveal].revealed .ab-droom-list li:nth-child(4) { transition-delay: 0.6s; }
+.ab-droom-list li:hover { border-color: var(--accent); box-shadow: 0 12px 30px -18px rgba(217,140,3,0.45); }
+.ab-droom-num { display:inline-flex; align-items:center; justify-content:center; width: 38px; height: 38px; border-radius: 10px; background: var(--accent); color:#fff; font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.04em; }
+.ab-droom-list strong { display:block; font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 2px; letter-spacing: -0.005em; }
+.ab-droom-list li > div > span { display:block; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
 </style>
 `;
 
