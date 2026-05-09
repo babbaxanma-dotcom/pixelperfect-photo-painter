@@ -488,12 +488,12 @@ const HTML = (i: Record<string, string>) => `
       <h2 class="lf-h2">Projecten die de tand<br>des tijds doorstaan.</h2>
     </div>
     <div class="lf-proj-tabs-wrap" data-reveal>
-      <div class="lf-proj-tabs">
-        <button class="lf-proj-chip active"><span class="lf-chip-dot"></span>Alle projecten</button>
-        <button class="lf-proj-chip">Dakwerken</button>
-        <button class="lf-proj-chip">Renovatie</button>
-        <button class="lf-proj-chip">Nieuwbouw</button>
-        <button class="lf-proj-chip">Interieur</button>
+      <div class="lf-proj-tabs" data-proj-tabs>
+        <button class="lf-proj-chip active" data-proj-filter="all"><span class="lf-chip-dot"></span>Alle projecten</button>
+        <button class="lf-proj-chip" data-proj-filter="dakwerken">Dakwerken</button>
+        <button class="lf-proj-chip" data-proj-filter="renovatie">Renovatie</button>
+        <button class="lf-proj-chip" data-proj-filter="nieuwbouw">Nieuwbouw</button>
+        <button class="lf-proj-chip" data-proj-filter="interieur">Interieur</button>
       </div>
     </div>
     <div class="lf-proj-collage" data-reveal data-proj-collage>
