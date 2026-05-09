@@ -777,32 +777,27 @@ const EXTRA_STYLE = `
   position: relative;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot {
-  position: sticky;
-  top: 0;
-  height: 72vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  height: 56vh;
+  min-height: 380px;
+  display: block;
   padding: 0 16px;
 }
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:last-child {
+  height: 70vh;
+}
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
-  position: relative;
+  position: sticky;
+  top: calc(110px + var(--svc-i, 0) * 12px);
   display: block;
   width: 100%;
   max-width: 880px;
   margin: 0 auto;
-  /* tiny per-card vertical offset so the stack is visible */
-  top: calc(var(--svc-i, 0) * 14px);
   border-radius: 18px;
   background: #fff;
   border: 1px solid var(--ink-line-soft);
   box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 40px 80px -32px rgba(15,17,21,.32);
-  transform-origin: 50% 0%;
-  transform: scale(var(--svc-scale, 1));
-  will-change: transform;
-  backface-visibility: hidden;
 }
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover { transform: scale(var(--svc-scale, 1)); }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 21/9; }
 .lf-svc-img { position:relative; aspect-ratio: 4/3; overflow:hidden; }
 .lf-svc-img img { width:100%; height:100%; object-fit:cover; transition: transform 0.6s var(--ease); }
