@@ -540,37 +540,37 @@ const HTML = (i: Record<string, string>) => `
       <h2 class="lf-h2">Inzichten uit de praktijk<br>op de werf van vandaag.</h2>
       <p class="lf-lede" style="margin: 0 auto;">Tips, trends en technieken, geschreven door onze eigen experts. Zo maakt u onderbouwde keuzes voor uw woning.</p>
     </div>
-    <div class="lf-blog-grid">
-      ${[
-        { img: i.blog1, tag: 'Trends 2026', day: '12', month: 'mrt', date: '12 maart 2026', author: 'Door Tom V.', title: 'Bouwen in 2026: zo verandert de Vlaamse woningmarkt', excerpt: 'Strengere EPC-eisen, circulair bouwen en nieuwe premies. Waarom 2026 hét moment is voor een toekomstgerichte renovatie.', href: '#' },
-        { img: i.blog2, tag: 'Energie', day: '05', month: 'mrt', date: '5 maart 2026', author: 'Door Bart D.', title: 'Warmtepomp en zonnepanelen: de slimme combinatie', excerpt: 'Hoe een hybride energiesysteem uw maandfactuur tot 70% verlaagt, en welke premies u in 2026 niet mag missen.', href: '#' },
-        { img: i.blog3, tag: 'Interieur', day: '28', month: 'feb', date: '28 februari 2026', author: 'Door Lisa M.', title: '5 badkamertrends die uw woning meer waard maken', excerpt: 'Walk-in douches, natuurlijke materialen en slim sanitair. Onze interieurarchitect deelt de must-haves voor 2026.', href: '#' },
-      ].map(b => `
-        <article class="lf-blog-card" data-reveal>
-          <div class="lf-blog-img">
-            <img src="${b.img}" alt="${b.title}" loading="lazy"/>
-            <span class="lf-blog-tag">${b.tag}</span>
-            <span class="lf-blog-date-badge"><strong>${b.day}</strong><em>${b.month}</em></span>
-          </div>
-          <div class="lf-blog-body">
-            <h4><a href="${b.href}">${b.title}</a></h4>
-            <p>${b.excerpt}</p>
-            <div class="lf-blog-foot">
-              <a href="${b.href}" class="lf-blog-btn">Lees meer
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </a>
-              <span class="lf-blog-author">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                ${b.author}
-              </span>
+    <div class="lf-blog-scroller" data-blog-scroller>
+      <div class="lf-blog-track" data-blog-track>
+        ${BLOGS.map(b => `
+          <article class="lf-blog-card" data-blog-card>
+            <div class="lf-blog-img">
+              <img src="${b.img}" alt="${b.title}" loading="lazy"/>
+              <span class="lf-blog-tag">${b.tag}</span>
+              <span class="lf-blog-date-badge"><strong>${b.day}</strong><em>${b.month}</em></span>
             </div>
-          </div>
-        </article>
-      `).join('')}
+            <div class="lf-blog-body">
+              <h4><a href="/blog/${b.slug}">${b.title}</a></h4>
+              <p>${b.excerpt}</p>
+              <div class="lf-blog-foot">
+                <a href="/blog/${b.slug}" class="lf-blog-btn">Lees meer
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+                <span class="lf-blog-author">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  ${b.author}
+                </span>
+              </div>
+            </div>
+          </article>
+        `).join('')}
+      </div>
     </div>
-    <div class="lf-blog-more">
-      <span class="lf-blog-dots"><i></i><i class="active"></i><i></i></span>
-      <p>Meer praktijkverhalen en bouwadvies. <a href="#">Bekijk alle artikels.</a></p>
+    <div class="lf-blog-indicator">
+      <div class="lf-blog-dots" data-blog-dots>
+        ${BLOGS.map((_, idx) => `<button type="button" class="lf-blog-dot${idx === 0 ? ' is-active' : ''}" data-blog-dot="${idx}" aria-label="Ga naar artikel ${idx + 1}"></button>`).join('')}
+      </div>
+      <p class="lf-blog-more-text">Meer praktijkverhalen en bouwadvies. <a href="/blog">Bekijk alle artikels →</a></p>
     </div>
   </div>
 </section>
