@@ -982,8 +982,8 @@ const EXTRA_STYLE = `
 .lf-blog-body h4 a:hover { color: var(--accent); }
 .lf-blog-body p { font-size: 14px; line-height:1.65; color: var(--ink-soft); margin-bottom: 6px; }
 .lf-blog-foot { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--ink-line-soft); }
-.lf-blog-btn { display:inline-flex; align-items:center; gap:8px; padding: 9px 16px; background: var(--accent); color:#fff !important; border-radius: 999px; font-size: 12.5px; font-weight: 700; letter-spacing:0.04em; text-transform:uppercase; transition: background 0.2s; }
-.lf-blog-btn:hover { background: var(--accent-hover); }
+.lf-blog-btn { display:inline-flex; align-items:center; gap:8px; padding: 10px 18px; background: #d98c03; color:#fff !important; border-radius: 999px; font-size: 12.5px; font-weight: 700; letter-spacing:0.04em; text-transform:uppercase; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; box-shadow: 0 6px 16px -4px rgba(217,140,3,0.45); }
+.lf-blog-btn:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 10px 22px -6px rgba(217,140,3,0.55); }
 .lf-blog-author { display:inline-flex; align-items:center; gap:6px; font-size:13px; color: var(--ink-soft); font-weight:500; }
 .lf-blog-author svg { color: var(--accent); }
 .lf-blog-more { margin-top: 36px; display:flex; flex-direction:column; align-items:center; gap:14px; }
