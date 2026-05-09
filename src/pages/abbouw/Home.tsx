@@ -286,10 +286,10 @@ const HTML = (i: Record<string, string>) => `
       return `
       <nav class="lf-svc-nav" data-svc-nav data-reveal aria-label="Specialisaties">
         ${services.map((s, idx) => `
-          <button type="button" class="lf-svc-pill${idx === 0 ? ' is-active' : ''}" data-svc-pill="${idx}">
+          <a class="lf-svc-pill${idx === 0 ? ' is-active' : ''}" data-svc-pill="${idx}" href="${s.href}">
             <span class="lf-svc-pill-num">${s.n}</span>
             <span class="lf-svc-pill-label">${s.short}</span>
-          </button>
+          </a>
         `).join('')}
       </nav>
       <div class="lf-svc-grid" data-svc-stack>
@@ -1436,21 +1436,9 @@ export default function Home() {
       const nav = document.querySelector<HTMLElement>('[data-svc-nav]');
       const slots = Array.from(document.querySelectorAll<HTMLElement>('[data-svc-slot]'));
       if (!nav || !slots.length) return () => {};
-      const pills = Array.from(nav.querySelectorAll<HTMLButtonElement>('[data-svc-pill]'));
+      const pills = Array.from(nav.querySelectorAll<HTMLAnchorElement>('[data-svc-pill]'));
       const setActive = (i: number) => pills.forEach((p, k) => p.classList.toggle('is-active', k === i));
-      const handlers: Array<[HTMLButtonElement, () => void]> = [];
-      pills.forEach((pill, idx) => {
-        const h = () => {
-          const target = slots[idx];
-          if (!target) return;
-          const navH = nav.getBoundingClientRect().height;
-          const y = target.getBoundingClientRect().top + window.scrollY - (navH + 110);
-          window.scrollTo({ top: y, behavior: 'smooth' });
-          setActive(idx);
-        };
-        pill.addEventListener('click', h);
-        handlers.push([pill, h]);
-      });
+      const handlers: Array<[HTMLAnchorElement, (e: Event) => void]> = [];
       const io = new IntersectionObserver((entries) => {
         const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (visible) {
