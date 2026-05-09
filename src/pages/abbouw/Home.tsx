@@ -791,6 +791,7 @@ const EXTRA_STYLE = `
   .lf-offerte-section { padding: 56px 0 48px; }
   .lf-form-compact { padding: 22px 18px 20px; border-radius: 14px; }
   .lf-form-compact .lf-form-row { grid-template-columns: 1fr; }
+  .lf-form-compact .lf-dd-list { max-height: min(240px, 45vh); }
   .lf-mini-bullets { grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
   .lf-mini-bullet { padding: 14px 16px; }
 }
