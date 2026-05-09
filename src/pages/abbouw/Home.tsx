@@ -676,6 +676,7 @@ const HTML = (i: Record<string, string>) => `
         <li><a href="/over">Over ons</a></li>
         <li><a href="/werkwijze">Werkwijze</a></li>
         <li><a href="/realisaties">Realisaties</a></li>
+        <li><a href="/blog">Blog</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul></div>
       <div class="footer-col"><h5>Contact</h5><ul>
