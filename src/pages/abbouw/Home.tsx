@@ -897,9 +897,8 @@ const EXTRA_STYLE = `
 .lf-bar-track { position:relative; height: 4px; background: var(--ink-line-soft); border-radius: 999px; overflow: visible; }
 .lf-bar-track i { display:block; height:100%; background: linear-gradient(90deg, var(--accent), #F5C518); border-radius:999px; position:relative; }
 .lf-bar-knob { position:absolute; right: -6px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid var(--accent); box-shadow: 0 4px 10px -2px rgba(217,140,3,0.55); }
-.lf-skills-collage { position:relative; height: 480px; }
-.lf-skills-img1 { position:absolute; right:0; top:0; width:75%; height: 320px; object-fit:cover; border-radius: 14px; transform: rotate(2deg); }
-.lf-skills-img2 { position:absolute; left:0; bottom:0; width:60%; height: 240px; object-fit:cover; border-radius: 14px; transform: rotate(-3deg); border: 6px solid #fff; box-shadow: 0 20px 40px -20px rgba(10,22,40,0.3); }
+.lf-skills-collage { display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.lf-skills-img1, .lf-skills-img2 { width:100%; height: 420px; object-fit:cover; border-radius: 6px; display:block; }
 
 /* Team */
 .lf-team-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 900px; margin: 0 auto; }
@@ -1056,7 +1055,7 @@ const EXTRA_STYLE = `
   .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 16/10; }
 
   .lf-proj-collage { grid-template-columns: 1fr; gap: 14px; }
-  .lf-skills-collage { height: 360px; }
+  .lf-skills-img1, .lf-skills-img2 { height: 320px; }
   .lf-cta { padding: 40px 28px; grid-template-columns: 1fr; }
   .lf-cta-img { display:none; }
   .lf-hero-card { padding: 32px 24px; }
@@ -1305,7 +1304,8 @@ html, body { overflow-x: hidden; max-width: 100%; }
 
   /* Skills */
   .lf-skills-grid { gap: 32px; }
-  .lf-skills-collage { height: 280px; }
+  .lf-skills-collage { grid-template-columns: 1fr; gap: 12px; }
+  .lf-skills-img1, .lf-skills-img2 { height: 240px; }
 
   /* Process: vertical timeline with line on left */
   .lf-process { grid-template-columns: 1fr; gap: 0; padding-left: 8px; }
