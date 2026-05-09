@@ -204,45 +204,25 @@ const HTML = (i: Record<string, string>) => `
 
 
 
-<!-- ABOUT + FORM -->
-<section class="lf-section">
-  <div class="wrap lf-about-grid">
-    <div class="lf-about-text" data-reveal>
-      <span class="lf-eyebrow">Over ons</span>
-      <h2 class="lf-h2">Vakmanschap dat staat.<br>Vertrouwen dat blijft.</h2>
-      <p class="lf-lede">Sinds 2010 begeleidden we 184 bouw- en renovatieprojecten in de regio Antwerpen, Mechelen en Brussel. U krijgt één projectleider die uw werf van A tot Z opvolgt.</p>
-
-      <div class="lf-feature">
-        <div class="lf-feature-num">01</div>
-        <div>
-          <h4>Eigen vakmensen op de werf</h4>
-          <p>23 vaste medewerkers in eigen dienst. Uw metselaar van vandaag is dezelfde als die van volgende week.</p>
-        </div>
-      </div>
-      <div class="lf-feature">
-        <div class="lf-feature-num">02</div>
-        <div>
-          <h4>Vaste prijs, schriftelijk vastgelegd</h4>
-          <p>Onze offerte is bindend. Geen meerwerk tenzij u zelf wijzigingen vraagt, en dan eerst goedgekeurd, nooit verrast op de eindfactuur.</p>
-        </div>
-      </div>
-
-      <a href="/over" class="lf-btn-pri lf-btn-sm"><span>Leer ons kennen</span></a>
+<!-- OFFERTE FORM + TRUST BULLETS -->
+<section class="lf-section lf-offerte-section">
+  <div class="wrap">
+    <div class="lf-offerte-head" data-reveal>
+      <span class="lf-eyebrow">100% vrijblijvend</span>
+      <h2 class="lf-h2">Gratis offerte of<br/>plaatsbezoek aanvragen.</h2>
+      <p class="lf-lede">Binnen 24u contact met een vakmens, geen verkoper. Eerlijk advies, vaste prijs.</p>
     </div>
 
-    <aside class="lf-form" id="contact-form" data-reveal data-reveal-delay="1">
-      <div class="lf-form-header">
-        <span class="lf-form-eyebrow">Vrijblijvend & snel</span>
-        <h3>Neem contact met ons op</h3>
-        <p>Vul het formulier in. Wij bellen u binnen 24 uur terug.</p>
-      </div>
+    <aside class="lf-form lf-form-compact" id="contact-form" data-reveal data-reveal-delay="1">
       <form onsubmit="event.preventDefault(); alert('Bedankt, we nemen binnen 24u contact op.');">
         <div class="lf-form-row">
           <input type="text" placeholder="Voornaam" required />
           <input type="text" placeholder="Achternaam" required />
         </div>
-        <input type="email" placeholder="E-mailadres" required />
-        <input type="tel" placeholder="Telefoonnummer" required />
+        <div class="lf-form-row">
+          <input type="email" placeholder="E-mailadres" required />
+          <input type="tel" placeholder="Telefoonnummer" required />
+        </div>
         <div class="lf-dd" data-dd>
           <button type="button" class="lf-dd-toggle" data-dd-toggle aria-haspopup="listbox" aria-expanded="false">
             <span class="lf-dd-label" data-dd-label>Welke dienst interesseert u?</span>
@@ -258,13 +238,30 @@ const HTML = (i: Record<string, string>) => `
           </ul>
           <input type="hidden" name="dienst" data-dd-input required />
         </div>
-        <textarea placeholder="Korte omschrijving van uw project (optioneel)" rows="3"></textarea>
         <button type="submit" class="lf-cta-pill lf-cta-pill-block">
-          <span>Verstuur aanvraag</span>
+          <span>Vraag mijn gratis offerte aan</span>
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </button>
+        <p class="lf-form-foot">Of bel direct <a href="tel:+32470634413">+32 470 63 44 13</a></p>
       </form>
     </aside>
+
+    <div class="lf-mini-bullets" data-reveal data-reveal-delay="2">
+      <div class="lf-mini-bullet">
+        <div class="lf-mini-bullet-num">01</div>
+        <div>
+          <h4>Eigen vakmensen</h4>
+          <p>23 vaste medewerkers in eigen dienst. Geen onderaannemers.</p>
+        </div>
+      </div>
+      <div class="lf-mini-bullet">
+        <div class="lf-mini-bullet-num">02</div>
+        <div>
+          <h4>Vaste prijs, schriftelijk</h4>
+          <p>Bindende offerte. Geen verrassingen op de eindfactuur.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -761,6 +758,30 @@ const EXTRA_STYLE = `
 .lf-select-wrap select { appearance:none; -webkit-appearance:none; -moz-appearance:none; padding-right: 40px; cursor:pointer; background-image:none; }
 .lf-select-caret { position:absolute; right:16px; top:16px; color: var(--ink-soft); pointer-events:none; }
 .lf-form button { margin-top: 10px; }
+
+/* Compact offerte section: heading top, form middle, two bullets below */
+.lf-offerte-section { padding: 80px 0 64px; }
+.lf-offerte-head { text-align: center; max-width: 640px; margin: 0 auto 32px; }
+.lf-offerte-head .lf-h2 { margin-bottom: 14px; }
+.lf-offerte-head .lf-lede { margin: 0 auto; }
+.lf-form-compact { max-width: 640px; margin: 0 auto; padding: 28px 28px 24px; border-radius: 16px; }
+.lf-form-compact .lf-form-row { gap: 10px; }
+.lf-form-compact input, .lf-form-compact textarea, .lf-form-compact .lf-dd-toggle { padding: 12px 14px; font-size: 14px; margin-bottom: 10px; }
+.lf-form-foot { text-align: center; margin: 14px 0 0; font-size: 13px; color: var(--ink-soft); }
+.lf-form-foot a { color: var(--navy); font-weight: 700; text-decoration: none; border-bottom: 1.5px solid var(--accent); }
+.lf-mini-bullets { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 640px; margin: 28px auto 0; }
+.lf-mini-bullet { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 14px; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.lf-mini-bullet:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -16px rgba(10,22,40,0.18); border-color: var(--accent); }
+.lf-mini-bullet-num { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--accent); line-height: 1; flex-shrink: 0; }
+.lf-mini-bullet h4 { font-size: 14px; color: var(--navy); margin: 0 0 4px; font-weight: 700; letter-spacing: -0.005em; }
+.lf-mini-bullet p { font-size: 12.5px; color: var(--ink-soft); margin: 0; line-height: 1.45; }
+@media (max-width: 760px) {
+  .lf-offerte-section { padding: 56px 0 48px; }
+  .lf-form-compact { padding: 22px 18px 20px; border-radius: 14px; }
+  .lf-form-compact .lf-form-row { grid-template-columns: 1fr; }
+  .lf-mini-bullets { grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+  .lf-mini-bullet { padding: 14px 16px; }
+}
 
 /* Services Grid */
 .lf-svc-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
