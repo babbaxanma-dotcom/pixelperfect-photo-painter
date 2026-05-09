@@ -276,101 +276,16 @@ export function useAbBouwInteractions() {
     const isTestiMobile = () => window.matchMedia('(max-width: 760px)').matches;
     const updateMobileTestiStack = () => {
       if (!testiMarquee || mobileTestiCards.length === 0) return;
-      if (!isTestiMobile()) {
-        mobileTestiCards.forEach((card) => {
-          card.style.removeProperty('--mobile-review-opacity');
-          card.style.removeProperty('--mobile-review-x');
-          card.style.removeProperty('--mobile-review-y');
-          card.style.removeProperty('--mobile-review-scale');
-          card.style.removeProperty('--mobile-review-z');
-          card.style.removeProperty('--mobile-review-blur');
-          card.classList.remove('is-mobile-active');
-        });
-        return;
-      }
-
-      const rect = testiMarquee.getBoundingClientRect();
-      const vh = window.innerHeight || document.documentElement.clientHeight || 1;
-      const start = vh * 0.84;
-      const span = Math.max(1, rect.height + vh * 0.2);
-      const progress = Math.max(0, Math.min(1, (start - rect.top) / span));
-      const count = mobileTestiCards.length;
-      const raw = progress * (count - 1);
-      const base = Math.max(0, Math.min(count - 1, Math.floor(raw)));
-      const blend = Math.max(0, Math.min(1, raw - base));
-
-      testiMarquee.style.setProperty('--mobile-testi-count', String(count));
-
-      // Side peek: neighbors are translated horizontally so a thin sliver peeks.
-      // Active card sits centered (X=0). Prev sits at -PEEK, next at +PEEK.
-      // PEEK is expressed as % of card width (translated via translateX(...%)).
-      const PEEK = 96; // % of own width — leaves ~4% sliver visible at edge
-
-      let activeIdx = 0;
-      let bestOpacity = -1;
-
-      mobileTestiCards.forEach((card, i) => {
-        let opacity = 0;
-        let x = 0;       // % of own width
-        let y = 0;
-        let scale = 0.9;
-        let z = 1;
-        let blur = 0;
-
-        if (i < base - 1) {
-          // far left, hidden
-          opacity = 0;
-          x = -PEEK - 10;
-          scale = 0.88;
-          z = 1;
-        } else if (i === base - 1) {
-          // outgoing-left sliver, fades further out as blend grows
-          opacity = 0.35 * (1 - blend);
-          x = -PEEK - blend * 8;
-          scale = 0.9;
-          z = 5;
-        } else if (i === base) {
-          // current → moves out to the left as blend → 1
-          opacity = 1 - blend * 0.85;
-          x = -PEEK * blend;
-          scale = 1 - blend * 0.08;
-          z = 22;
-          blur = blend * 0.6;
-        } else if (i === base + 1) {
-          // incoming → starts at +PEEK sliver, slides to center
-          opacity = 0.45 + blend * 0.55;
-          x = PEEK * (1 - blend);
-          scale = 0.92 + blend * 0.08;
-          z = 24;
-          blur = (1 - blend) * 0.4;
-        } else if (i === base + 2) {
-          // next-up sliver on the right
-          opacity = 0.35 * blend;
-          x = PEEK + (1 - blend) * 8;
-          scale = 0.9;
-          z = 5;
-        } else {
-          opacity = 0;
-          x = PEEK + 10;
-          scale = 0.88;
-          z = 1;
-        }
-
-        if (opacity > bestOpacity) {
-          bestOpacity = opacity;
-          activeIdx = i;
-        }
-
-        card.style.setProperty('--mobile-review-opacity', opacity.toFixed(3));
-        card.style.setProperty('--mobile-review-x', `${x.toFixed(2)}%`);
-        card.style.setProperty('--mobile-review-y', `${y.toFixed(2)}px`);
-        card.style.setProperty('--mobile-review-scale', scale.toFixed(3));
-        card.style.setProperty('--mobile-review-z', `${z}`);
-        card.style.setProperty('--mobile-review-blur', `${blur.toFixed(2)}px`);
-      });
-
-      mobileTestiCards.forEach((card, i) => {
-        card.classList.toggle('is-mobile-active', i === activeIdx);
+      // Mobile is now a native horizontal scroll-snap carousel — clear any
+      // legacy inline transforms/opacity vars and let CSS take over.
+      mobileTestiCards.forEach((card) => {
+        card.style.removeProperty('--mobile-review-opacity');
+        card.style.removeProperty('--mobile-review-x');
+        card.style.removeProperty('--mobile-review-y');
+        card.style.removeProperty('--mobile-review-scale');
+        card.style.removeProperty('--mobile-review-z');
+        card.style.removeProperty('--mobile-review-blur');
+        card.classList.remove('is-mobile-active');
         card.classList.remove('is-focus', 'is-near');
       });
     };
