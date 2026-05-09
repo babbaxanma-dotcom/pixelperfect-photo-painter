@@ -11,6 +11,7 @@ import imgTrap from '@/assets/interieur/trap.jpg';
 import imgDeuren from '@/assets/interieur/binnendeuren.jpg';
 import imgPlafonds from '@/assets/interieur/plafonds.jpg';
 import imgIntro from '@/assets/interieur/intro-overview.jpg';
+import imgDroom from '@/assets/interieur/droom.jpg';
 
 const types = [
   {
@@ -186,7 +187,7 @@ ${buildHero({
       <div data-reveal>
         <span class="lf-eyebrow">AB Interieurwerken</span>
         <h2 class="lf-h2">Een ruwbouw kan<br/>iedereen leveren.</h2>
-        <p class="lf-lede">Een woning die klopt tot in elke hoek vraagt vakmensen die wéken aan dezelfde werf staan en oog hebben voor het detail dat niemand opmerkt — behalve uzelf, elke dag.</p>
+        <p class="lf-lede">Een woning die klopt tot in elke hoek vraagt vakmensen die wéken aan dezelfde werf staan en oog hebben voor het detail dat niemand opmerkt, behalve uzelf, elke dag.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen schrijnwerker met eigen atelier in Mol</li>
           <li>Eén vaste interieurploeg, geen wisselende onderaannemers</li>
@@ -199,10 +200,34 @@ ${buildHero({
   </div>
 </section>
 
+<!-- SAMEN UW DROOM -->
+<section class="lf-section lf-tone-soft">
+  <div class="wrap">
+    <div class="lf-split">
+      <div data-reveal>
+        <span class="lf-eyebrow">Samen uw droom</span>
+        <h2 class="lf-h2">Uw woning,<br/>uw stijl, uw <span style="color:var(--accent)">handtekening</span>.</h2>
+        <p class="lf-lede">Een interieur is geen catalogus. Het is uw thuis, uw smaak, uw manier van leven. Daarom beginnen we niet met materialen, maar met een gesprek. We luisteren naar hoe u woont, wat u mooi vindt en wat absoluut niet, en vertalen dat in een ontwerp dat helemaal van u is.</p>
+        <ul class="ab-checks" style="margin-top:18px;">
+          <li>Persoonlijk moodboard met materialen, kleuren en sfeer</li>
+          <li>3D-visualisatie zodat u uw interieur écht ziet vóór we starten</li>
+          <li>Materialen die u zelf in handen kan nemen, geen schermkleurtjes</li>
+          <li>Vrijheid om te kiezen, advies waar u het wenst</li>
+        </ul>
+      </div>
+      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgDroom}" alt="Materialenkeuze met de klant aan tafel" loading="lazy"/></div>
+    </div>
+  </div>
+</section>
+
 <!-- TOC -->
 <section class="lf-section" style="padding: 0 0 12px;">
   <div class="wrap">
     <div class="ab-toc-wrap">
+      <span class="ab-toc-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+        Spring naar
+      </span>
       <nav class="ab-toc" aria-label="Type interieurwerken">
         ${types.map(t => `<a href="#${t.id}">${t.title.replace('&amp;', '&')}</a>`).join('')}
       </nav>
@@ -319,7 +344,7 @@ ${buildHero({
     </div>
     <div class="ab-faq">
       <details data-reveal><summary>Hoe lang duurt een volledige interieurrenovatie?</summary><div class="ab-faq-body"><p>Een woonkamer doen we in 2 tot 3 weken, een volledig appartement in 6 tot 10 weken, een woning casco-tot-sleutel in 12 tot 20 weken. We bezorgen vooraf een dag-per-dag planning.</p></div></details>
-      <details data-reveal><summary>Doen jullie ook keukens en badkamers?</summary><div class="ab-faq-body"><p>Ja. Maatwerkkeukens komen uit ons eigen atelier of via onze vaste keukenpartner. Voor badkamers werken we samen met AB Bad &amp; Wellness — één contactpersoon voor de hele werf.</p></div></details>
+      <details data-reveal><summary>Doen jullie ook keukens en badkamers?</summary><div class="ab-faq-body"><p>Ja. Maatwerkkeukens komen uit ons eigen atelier of via onze vaste keukenpartner. Voor badkamers werken we samen met AB Bad &amp; Wellness, met één contactpersoon voor de hele werf.</p></div></details>
       <details data-reveal><summary>Kan ik blijven wonen tijdens de werken?</summary><div class="ab-faq-body"><p>Bij de meeste renovaties wel. We werken zone per zone met stofschotten, dagelijkse opkuis en plastic loopzones. Water of stroom wordt steeds 24u vooraf aangekondigd.</p></div></details>
       <details data-reveal><summary>Welke vloer past bij vloerverwarming?</summary><div class="ab-faq-body"><p>Microcement (Beal Mortex), tegels en gietvloer geven het hoogste rendement. Parket kan, mits meerlaagse uitvoering met lage thermische weerstand (Rλ &lt; 0,15). We bespreken het bij plaatsbezoek.</p></div></details>
       <details data-reveal><summary>Wat is V3- of V4-afwerking bij gyproc?</summary><div class="ab-faq-body"><p>Dat zijn de Belgische normen voor afwerkingsgraad. V2 is standaard (klaar voor verf), V3 is extra geschuurd en geplamuurd voor satijnverf, V4 is volledig vlak gepleisterd voor strijklicht en hoogglans.</p></div></details>

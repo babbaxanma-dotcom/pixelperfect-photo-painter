@@ -136,6 +136,9 @@ export function useAbBouwInteractions() {
     const onScroll = () => {
       if (window.scrollY > 30) nav?.classList.add('scrolled');
       else nav?.classList.remove('scrolled');
+      // Reveal sticky mobile bar only after user has scrolled past the hero CTA area
+      if (window.scrollY > 360) document.body.classList.add('past-hero');
+      else document.body.classList.remove('past-hero');
       if (hero) {
         const heroH = hero.offsetHeight;
         const fadeStart = heroH * 0.55;
