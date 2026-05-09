@@ -268,7 +268,7 @@ const HTML = (i: Record<string, string>) => `
 </section>
 
 <!-- SERVICES GRID -->
-<section class="lf-section lf-services">
+<section class="lf-section lf-services lf-section-compact-stack">
   <div class="wrap">
     <div class="lf-section-head" data-reveal>
       <span class="lf-eyebrow">Onze diensten</span>
@@ -367,7 +367,7 @@ const HTML = (i: Record<string, string>) => `
 </section>
 
 <!-- WHY US, collage -->
-<section class="lf-section lf-tone-soft">
+<section class="lf-section lf-tone-soft lf-section-compact-stack">
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Waarom AB Bouw Group</span>
