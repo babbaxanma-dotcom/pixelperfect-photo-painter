@@ -759,6 +759,30 @@ const EXTRA_STYLE = `
 .lf-select-caret { position:absolute; right:16px; top:16px; color: var(--ink-soft); pointer-events:none; }
 .lf-form button { margin-top: 10px; }
 
+/* Compact offerte section: heading top, form middle, two bullets below */
+.lf-offerte-section { padding: 80px 0 64px; }
+.lf-offerte-head { text-align: center; max-width: 640px; margin: 0 auto 32px; }
+.lf-offerte-head .lf-h2 { margin-bottom: 14px; }
+.lf-offerte-head .lf-lede { margin: 0 auto; }
+.lf-form-compact { max-width: 640px; margin: 0 auto; padding: 28px 28px 24px; border-radius: 16px; }
+.lf-form-compact .lf-form-row { gap: 10px; }
+.lf-form-compact input, .lf-form-compact textarea, .lf-form-compact .lf-dd-toggle { padding: 12px 14px; font-size: 14px; margin-bottom: 10px; }
+.lf-form-foot { text-align: center; margin: 14px 0 0; font-size: 13px; color: var(--ink-soft); }
+.lf-form-foot a { color: var(--navy); font-weight: 700; text-decoration: none; border-bottom: 1.5px solid var(--accent); }
+.lf-mini-bullets { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 640px; margin: 28px auto 0; }
+.lf-mini-bullet { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 14px; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.lf-mini-bullet:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -16px rgba(10,22,40,0.18); border-color: var(--accent); }
+.lf-mini-bullet-num { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--accent); line-height: 1; flex-shrink: 0; }
+.lf-mini-bullet h4 { font-size: 14px; color: var(--navy); margin: 0 0 4px; font-weight: 700; letter-spacing: -0.005em; }
+.lf-mini-bullet p { font-size: 12.5px; color: var(--ink-soft); margin: 0; line-height: 1.45; }
+@media (max-width: 760px) {
+  .lf-offerte-section { padding: 56px 0 48px; }
+  .lf-form-compact { padding: 22px 18px 20px; border-radius: 14px; }
+  .lf-form-compact .lf-form-row { grid-template-columns: 1fr; }
+  .lf-mini-bullets { grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+  .lf-mini-bullet { padding: 14px 16px; }
+}
+
 /* Services Grid */
 .lf-svc-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
 .lf-svc-card { display:flex; flex-direction:column; background:#fff; border-radius: 14px; overflow:hidden; border: 1px solid var(--ink-line-soft); transition: all 0.3s var(--ease); color: var(--ink); }
