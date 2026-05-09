@@ -244,18 +244,18 @@ ${buildHero({
 </section>
 
 <!-- SAMEN UW DROOM -->
-<section class="lf-section">
+<section class="lf-section ab-droom">
   <div class="wrap">
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">Samen uw droom</span>
-        <h2 class="lf-h2">Uw woning,<br/>uw stijl, uw <span style="color:var(--accent)">handtekening</span>.</h2>
-        <p class="lf-lede">Een interieur is geen catalogus. Het is uw thuis, uw smaak, uw manier van leven. Daarom beginnen we niet met materialen, maar met een gesprek. We luisteren naar hoe u woont, wat u mooi vindt en wat absoluut niet, en vertalen dat in een ontwerp dat helemaal van u is.</p>
-        <ul class="ab-checks" style="margin-top:18px;">
-          <li>Persoonlijk moodboard met materialen, kleuren en sfeer</li>
-          <li>3D-visualisatie zodat u uw interieur écht ziet vóór we starten</li>
-          <li>Materialen die u zelf in handen kan nemen, geen schermkleurtjes</li>
-          <li>Vrijheid om te kiezen, advies waar u het wenst</li>
+        <h2 class="lf-h2">Uw woning,<br/>uw stijl, uw <span class="ab-mark">handtekening</span>.</h2>
+        <p class="lf-lede">Een interieur is geen catalogus. Het is <span class="ab-hl" data-hl-delay="0">uw thuis, uw smaak, uw manier van leven</span>. Daarom beginnen we niet met materialen, maar <span class="ab-hl" data-hl-delay="1">met een gesprek</span>. We luisteren naar hoe u woont, wat u mooi vindt en wat absoluut niet, en vertalen dat in <span class="ab-hl" data-hl-delay="2">een ontwerp dat helemaal van u is</span>.</p>
+        <ul class="ab-droom-list">
+          <li><span class="ab-droom-num">01</span><div><strong>Persoonlijk moodboard</strong><span>Materialen, kleuren en sfeer, samengesteld op uw smaak.</span></div></li>
+          <li><span class="ab-droom-num">02</span><div><strong>3D-visualisatie vooraf</strong><span>U ziet uw interieur écht voordat de eerste plank wordt gezaagd.</span></div></li>
+          <li><span class="ab-droom-num">03</span><div><strong>Echte materialen in de hand</strong><span>Geen schermkleurtjes, maar stalen die u kan voelen en vergelijken.</span></div></li>
+          <li><span class="ab-droom-num">04</span><div><strong>Vrijheid &amp; advies</strong><span>U kiest wat u wil, wij adviseren waar u het wenst.</span></div></li>
         </ul>
       </div>
       <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgDroom}" alt="Afgewerkte woonkamer met eikenfineer kasten en haard" loading="lazy"/></div>
