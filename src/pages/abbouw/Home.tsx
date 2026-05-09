@@ -46,6 +46,7 @@ const HTML = (i: Record<string, string>) => `
       <li><a href="/diensten">Diensten</a></li>
       <li><a href="/werkwijze">Werkwijze</a></li>
       <li><a href="/realisaties">Realisaties</a></li>
+      <li><a href="/blog">Blog</a></li>
       <li><a href="/contact">Contact</a></li>
     </ul>
     <a href="tel:+32470634413" class="lf-nav-phone">
@@ -62,7 +63,7 @@ const HTML = (i: Record<string, string>) => `
   </button>
   <div class="mm-section">
     <a href="/">Home</a><a href="/over">Over ons</a><a href="/diensten">Diensten</a>
-    <a href="/werkwijze">Werkwijze</a><a href="/realisaties">Realisaties</a><a href="/contact">Contact</a>
+    <a href="/werkwijze">Werkwijze</a><a href="/realisaties">Realisaties</a><a href="/blog">Blog</a><a href="/contact">Contact</a>
   </div>
   <div class="mm-footer">
     <a href="tel:+32470634413">📞 +32 470 63 44 13</a>
