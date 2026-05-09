@@ -68,7 +68,7 @@ const services = [
   },
   {
     id: 'bad', img: svcBad, n: '05', title: 'AB Bad & Wellness',
-    tag: 'Badkamer turnkey',
+    tag: 'Sleutel-op-de-deur badkamer',
     intro: 'Sleutel-op-de-deur badkamers. Sloop, leidingwerk, vloerverwarming, tegels, sanitair en verlichting, door één coördinator, klaar in vier tot zes weken.',
     deep: 'De badkamer is het meest gebruikte luxe-element van de woning. Een goed ontworpen badkamer maakt elke ochtend prettiger; een slecht ontworpen badkamer ergert u tien jaar lang. Wij beginnen met een 3D-ontwerp waarin u de afmetingen, materialen en lichtval kunt zien voor er één tegel besteld wordt.',
     bullets: [
