@@ -1204,10 +1204,15 @@ const EXTRA_STYLE = `
     border-radius: 999px;
     border: 2px solid #fff;
     box-shadow: 0 18px 40px -10px rgba(10,22,40,0.55), 0 6px 16px rgba(10,22,40,0.25);
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1);
+  }
+  body.nav-revealed .lf-fab-call {
     opacity: 1;
     transform: translateY(0) scale(1);
     pointer-events: auto;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
   .lf-fab-call:active { transform: scale(0.95); }
 }
