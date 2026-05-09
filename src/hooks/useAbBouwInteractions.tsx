@@ -119,7 +119,9 @@ export function useAbBouwInteractions() {
       else nav?.classList.remove('scrolled');
       if (hero) {
         const heroH = hero.offsetHeight;
-        const fade = Math.max(0, Math.min(1, 1 - window.scrollY / (heroH * 0.45)));
+        const fadeStart = heroH * 0.55;
+        const fadeEnd = heroH * 0.95;
+        const fade = Math.max(0, Math.min(1, 1 - (window.scrollY - fadeStart) / (fadeEnd - fadeStart)));
         document.documentElement.style.setProperty('--hf', fade.toString());
         const navStart = heroH * 0.55;
         const navEnd = heroH * 0.75;
