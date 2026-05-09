@@ -1036,12 +1036,26 @@ const EXTRA_STYLE = `
 .lf-blog-author { display:inline-flex; align-items:center; gap:6px; font-size:13px; color: var(--ink-soft); font-weight:500; }
 .lf-blog-author svg { color: var(--accent); }
 .lf-blog-more { margin-top: 36px; display:flex; flex-direction:column; align-items:center; gap:14px; }
-.lf-blog-dots { display:inline-flex; gap:8px; }
-.lf-blog-dots i { width:9px; height:9px; border-radius:50%; background: var(--ink-line); display:inline-block; }
-.lf-blog-dots i.active { background: var(--accent); width: 26px; border-radius:5px; }
-.lf-blog-more p { font-size: 13.5px; color: var(--ink-soft); }
-.lf-blog-more p a { color: var(--accent); font-weight:700; }
-@media (max-width: 900px) { .lf-blog-grid { grid-template-columns: 1fr; } }
+.lf-blog-indicator { margin-top: 32px; display:flex; flex-direction:column; align-items:center; gap:14px; }
+.lf-blog-dots { display:inline-flex; gap:8px; align-items:center; }
+.lf-blog-dot { width:9px; height:9px; padding:0; border:0; border-radius:50%; background: var(--ink-line); cursor: pointer; transition: all 0.3s var(--ease); }
+.lf-blog-dot:hover { background: var(--ink-mute); }
+.lf-blog-dot.is-active { background: var(--accent); width: 26px; border-radius: 5px; }
+.lf-blog-more-text { font-size: 13.5px; color: var(--ink-soft); margin: 0; }
+.lf-blog-more-text a { color: var(--accent); font-weight: 700; }
+
+/* Horizontal scroll carousel */
+.lf-blog-scroller { position: relative; margin: 0 calc(50% - 50vw); padding: 0 max(24px, calc(50vw - 600px)); overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.lf-blog-scroller::-webkit-scrollbar { display: none; }
+.lf-blog-track { display: flex; gap: 28px; padding: 6px 0 24px; }
+.lf-blog-track .lf-blog-card { flex: 0 0 calc((100% - 56px) / 3); min-width: 0; scroll-snap-align: start; }
+@media (max-width: 900px) {
+  .lf-blog-track .lf-blog-card { flex: 0 0 82%; }
+  .lf-blog-scroller { padding: 0 24px; }
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  .lf-blog-track .lf-blog-card { flex: 0 0 calc((100% - 28px) / 2); }
+}
 
 @media (max-width: 900px) {
   .lf-section { padding: 60px 0; }
