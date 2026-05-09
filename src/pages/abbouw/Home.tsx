@@ -1468,7 +1468,45 @@ export default function Home() {
     };
     const svcNavCleanup = svcNavSetup();
 
-    return () => { document.body.className = prevClass; styleEl.remove(); ddCleanup(); svcNavCleanup(); };
+    // Blog horizontal carousel: dots <-> scroll sync
+    const blogCarouselSetup = () => {
+      const scroller = document.querySelector<HTMLElement>('[data-blog-scroller]');
+      const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-blog-dot]'));
+      const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-blog-card]'));
+      if (!scroller || !dots.length || !cards.length) return () => {};
+      const setActive = (i: number) => dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
+      const onScroll = () => {
+        const sr = scroller.getBoundingClientRect();
+        let bestIdx = 0;
+        let bestDist = Infinity;
+        cards.forEach((c, idx) => {
+          const cr = c.getBoundingClientRect();
+          const dist = Math.abs(cr.left - sr.left);
+          if (dist < bestDist) { bestDist = dist; bestIdx = idx; }
+        });
+        setActive(bestIdx);
+      };
+      scroller.addEventListener('scroll', onScroll, { passive: true });
+      const dotHandlers: Array<[HTMLButtonElement, () => void]> = [];
+      dots.forEach((dot, idx) => {
+        const h = () => {
+          const target = cards[idx];
+          if (!target) return;
+          const sr = scroller.getBoundingClientRect();
+          const cr = target.getBoundingClientRect();
+          scroller.scrollBy({ left: cr.left - sr.left, behavior: 'smooth' });
+        };
+        dot.addEventListener('click', h);
+        dotHandlers.push([dot, h]);
+      });
+      return () => {
+        scroller.removeEventListener('scroll', onScroll);
+        dotHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
+      };
+    };
+    const blogCleanup = blogCarouselSetup();
+
+    return () => { document.body.className = prevClass; styleEl.remove(); ddCleanup(); svcNavCleanup(); blogCleanup(); };
   }, []);
 
   useAbBouwInteractions();
