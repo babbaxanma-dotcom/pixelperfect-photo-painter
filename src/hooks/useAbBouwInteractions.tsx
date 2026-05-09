@@ -418,34 +418,16 @@ export function useAbBouwInteractions() {
     let whyRaf = 0;
     const computeWhyStack = () => {
       whyRaf = 0;
-      if (!whyStack || whyStackCards.length === 0) return;
-      if (!isWhyStackDesktop()) {
-        whyStackCards.forEach((c) => {
-          c.style.removeProperty('--why-scale');
-          c.style.removeProperty('--why-card-h');
-        });
-        return;
-      }
-      const total = whyStackCards.length;
-      for (let i = 0; i < total; i++) {
-        const slot = whyStackSlots[i];
-        const card = whyStackCards[i];
-        if (!slot || !card) continue;
-        const slotRect = slot.getBoundingClientRect();
-        const slotH = slot.offsetHeight || 1;
-        const p = Math.max(0, Math.min(1, -slotRect.top / slotH));
-        const targetScale = 1 - (total - 1 - i) * 0.05;
-        const scale = 1 + (targetScale - 1) * p;
-        card.style.setProperty('--why-scale', scale.toFixed(4));
-        card.style.setProperty('--why-card-h', `${card.offsetHeight}px`);
-      }
+      // Pure CSS sticky stack — clear any legacy inline transforms.
+      whyStackCards.forEach((c) => {
+        c.style.removeProperty('--why-scale');
+        c.style.removeProperty('--why-card-h');
+      });
     };
     const onWhyStackScroll = () => {
       if (whyRaf) return;
       whyRaf = requestAnimationFrame(computeWhyStack);
     };
-    window.addEventListener('scroll', onWhyStackScroll, { passive: true });
-    window.addEventListener('resize', onWhyStackScroll);
     computeWhyStack();
 
     // ── Trust-strip: cascade-mark items as the strip enters the viewport
@@ -478,36 +460,46 @@ export function useAbBouwInteractions() {
     const isSvcStackDesktop = () => window.matchMedia('(min-width: 901px)').matches;
     const computeSvcStack = () => {
       svcRaf = 0;
-      if (!svcStack || svcStackCards.length === 0) return;
-      if (!isSvcStackDesktop()) {
-        // Mobile: horizontal swipe carousel — clear any inline transforms
-        svcStackCards.forEach((c) => {
-          c.style.removeProperty('--svc-scale');
-          c.style.removeProperty('--svc-card-h');
-        });
-        return;
-      }
-      const total = svcStackCards.length;
-      for (let i = 0; i < total; i++) {
-        const slot = svcStackSlots[i];
-        const card = svcStackCards[i];
-        if (!slot || !card) continue;
-        const slotRect = slot.getBoundingClientRect();
-        const slotH = slot.offsetHeight || 1;
-        const p = Math.max(0, Math.min(1, -slotRect.top / slotH));
-        const targetScale = 1 - (total - 1 - i) * 0.05;
-        const scale = 1 + (targetScale - 1) * p;
-        card.style.setProperty('--svc-scale', scale.toFixed(4));
-        card.style.setProperty('--svc-card-h', `${card.offsetHeight}px`);
-      }
+      // Pure CSS sticky — strip any inline transform/scale.
+      svcStackCards.forEach((c) => {
+        c.style.removeProperty('--svc-scale');
+        c.style.removeProperty('--svc-card-h');
+      });
     };
     const onSvcStackScroll = () => {
       if (svcRaf) return;
       svcRaf = requestAnimationFrame(computeSvcStack);
     };
-    window.addEventListener('scroll', onSvcStackScroll, { passive: true });
-    window.addEventListener('resize', onSvcStackScroll);
     computeSvcStack();
+
+    // ── Mobile services carousel: mark snapped (centered) slot for scale-up effect
+    const svcCarousel = svcStack as HTMLElement | null;
+    let svcSnapRaf = 0;
+    const updateSvcSnapped = () => {
+      svcSnapRaf = 0;
+      if (!svcCarousel || svcStackSlots.length === 0) return;
+      if (window.matchMedia('(min-width: 901px)').matches) {
+        svcStackSlots.forEach((s) => s.classList.remove('is-snapped'));
+        return;
+      }
+      const railRect = svcCarousel.getBoundingClientRect();
+      const center = railRect.left + railRect.width / 2;
+      let bestIdx = 0;
+      let bestDist = Infinity;
+      svcStackSlots.forEach((s, i) => {
+        const r = s.getBoundingClientRect();
+        const d = Math.abs(r.left + r.width / 2 - center);
+        if (d < bestDist) { bestDist = d; bestIdx = i; }
+      });
+      svcStackSlots.forEach((s, i) => s.classList.toggle('is-snapped', i === bestIdx));
+    };
+    const onSvcSnapScroll = () => {
+      if (svcSnapRaf) return;
+      svcSnapRaf = requestAnimationFrame(updateSvcSnapped);
+    };
+    svcCarousel?.addEventListener('scroll', onSvcSnapScroll, { passive: true });
+    window.addEventListener('resize', onSvcSnapScroll);
+    updateSvcSnapped();
 
 
     // In-view active state for cards (smooth fade/scale of off-center cards)
@@ -535,6 +527,8 @@ export function useAbBouwInteractions() {
       window.removeEventListener('scroll', onTrustScroll);
       window.removeEventListener('scroll', onSvcStackScroll);
       window.removeEventListener('resize', onSvcStackScroll);
+      svcCarousel?.removeEventListener('scroll', onSvcSnapScroll);
+      window.removeEventListener('resize', onSvcSnapScroll);
       pinRail?.removeEventListener('touchstart', onPinTouch);
       pinRail?.removeEventListener('touchend', onPinTouchEnd);
       mmLinks.forEach((a) => a.removeEventListener('click', mmClose));

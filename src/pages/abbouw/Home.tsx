@@ -667,17 +667,11 @@ const HTML = (i: Record<string, string>) => `
   </div>
 </footer>
 
-<!-- Sticky mobile bottom bar -->
-<div class="lf-mobile-bar">
-  <a href="tel:+32470634413" class="lf-mobile-bar-btn lf-mobile-bar-call">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-    Bel ons
-  </a>
-  <a href="/contact" class="lf-mobile-bar-btn lf-mobile-bar-cta">
-    Vraag offerte
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-  </a>
-</div>
+<!-- Floating mobile call button -->
+<a href="tel:+32470634413" class="lf-fab-call" aria-label="Bel ons">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  <span>Bel ons</span>
+</a>
 `;
 
 const EXTRA_STYLE = `
@@ -777,32 +771,27 @@ const EXTRA_STYLE = `
   position: relative;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot {
-  position: sticky;
-  top: 0;
-  height: 72vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  height: 56vh;
+  min-height: 380px;
+  display: block;
   padding: 0 16px;
 }
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:last-child {
+  height: 70vh;
+}
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
-  position: relative;
+  position: sticky;
+  top: calc(110px + var(--svc-i, 0) * 12px);
   display: block;
   width: 100%;
   max-width: 880px;
   margin: 0 auto;
-  /* tiny per-card vertical offset so the stack is visible */
-  top: calc(var(--svc-i, 0) * 14px);
   border-radius: 18px;
   background: #fff;
   border: 1px solid var(--ink-line-soft);
   box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 40px 80px -32px rgba(15,17,21,.32);
-  transform-origin: 50% 0%;
-  transform: scale(var(--svc-scale, 1));
-  will-change: transform;
-  backface-visibility: hidden;
 }
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover { transform: scale(var(--svc-scale, 1)); }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 21/9; }
 .lf-svc-img { position:relative; aspect-ratio: 4/3; overflow:hidden; }
 .lf-svc-img img { width:100%; height:100%; object-fit:cover; transition: transform 0.6s var(--ease); }
@@ -836,14 +825,15 @@ const EXTRA_STYLE = `
 .lf-why-bl { grid-area: 2 / 1; }
 .lf-why-br { grid-area: 2 / 3; }
 
-/* ── Why-us as scroll-stack: cards on the left (sticky, straight), photo sticky on right */
+/* ── Why-us as scroll-stack: tight CSS-only sticky stack (Olivier Larose pattern) */
 .lf-why-collage.lf-why-stack { display:grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: start; max-width: 1180px; margin: 0 auto; }
-/* Stack column: 4 slots of 70vh + 70vh trailing space so the last card also gets sticky time
-   AND the photo + last card release at the exact same scroll position. */
-.lf-why-stack .lf-why-stack-left { display:block; padding-bottom: 70vh; }
-.lf-why-stack .lf-why-slot { position: sticky; top: 110px; height: 70vh; display: flex; align-items: center; justify-content: center; }
-.lf-why-stack .lf-why-tile { position: relative; top: calc(var(--why-i, 0) * 18px); width: 100%; padding: 30px 32px; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 30px 60px -32px rgba(15,17,21,.22); transform-origin: 50% 0%; transform: scale(var(--why-scale, 1)); will-change: transform; backface-visibility: hidden; }
-.lf-why-stack .lf-why-photo { position: sticky; top: 110px; height: 70vh; min-height: 460px; grid-row: auto; grid-column: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -36px rgba(15,17,21,.32); align-self: start; }
+.lf-why-stack .lf-why-stack-left { display:block; }
+/* Each slot is short (just enough to scroll one card on top of the next).
+   The tile itself is sticky with an increasing top offset → cards pile up cleanly. */
+.lf-why-stack .lf-why-slot { height: 48vh; min-height: 320px; display: block; }
+.lf-why-stack .lf-why-slot:last-child { height: 56vh; min-height: 360px; }
+.lf-why-stack .lf-why-tile { position: sticky; top: calc(120px + var(--why-i, 0) * 10px); width: 100%; padding: 30px 32px; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 30px 60px -32px rgba(15,17,21,.22); }
+.lf-why-stack .lf-why-photo { position: sticky; top: 120px; height: min(72vh, 560px); grid-row: auto; grid-column: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -36px rgba(15,17,21,.32); align-self: start; }
 .lf-why-stack .lf-why-photo img { width:100%; height:100%; object-fit: cover; }
 
 
@@ -1010,10 +1000,16 @@ const EXTRA_STYLE = `
     position: static !important;
     top: 0 !important;
     margin: 0;
-    transform: none !important;
-    box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 18px 40px -22px rgba(15,17,21,.22);
+    transform: scale(0.92);
+    transform-origin: 50% 50%;
+    transition: transform 0.45s cubic-bezier(.22,.78,.27,1), box-shadow 0.45s ease;
+    box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 12px 28px -18px rgba(15,17,21,.18);
     width: 100%;
     max-width: none;
+  }
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot.is-snapped .lf-svc-card {
+    transform: scale(1);
+    box-shadow: 0 1px 2px rgba(15,17,21,.06), 0 28px 60px -22px rgba(15,17,21,.32);
   }
   .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 16/10; }
 
@@ -1025,25 +1021,33 @@ const EXTRA_STYLE = `
   .lf-hero-card { padding: 32px 24px; }
   .lf-blog-foot { flex-direction: column; align-items: flex-start; }
 
-  /* Mobile swipe hint pill — shown above swipeable carousels */
+  /* Mobile swipe hint — animated arrow pill, like big carousel sites */
   .lf-services .lf-section-head::after,
   .lf-reviews-section .lf-reviews-head::after {
-    content: '← swipe →';
+    content: 'Swipe \\2192';
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin: 14px auto 0;
-    padding: 6px 14px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
+    margin: 16px auto 0;
+    padding: 8px 18px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--ink-mute, #6b7280);
-    background: rgba(15, 23, 42, 0.04);
+    color: #fff;
+    background: var(--accent);
     border-radius: 999px;
     width: fit-content;
+    box-shadow: 0 8px 22px -8px rgba(217,140,3,0.55);
+    animation: lf-swipe-nudge 1.6s cubic-bezier(.22,.78,.27,1) infinite;
+  }
+  @keyframes lf-swipe-nudge {
+    0%, 100% { transform: translateX(0); }
+    45%      { transform: translateX(10px); }
+    70%      { transform: translateX(-2px); }
   }
   .lf-services .lf-section-head { text-align: center; }
+  .lf-reviews-section .lf-reviews-head { text-align: center; }
 }
 
 /* Footer, clean white with black text (matches site) */
@@ -1153,15 +1157,36 @@ const EXTRA_STYLE = `
 .lf-faq-list .faq-a p { padding: 0 24px 22px; font-size: 14px; line-height: 1.7; color: var(--ink-soft); margin: 0; }
 @media (max-width: 900px) { .lf-faq-grid { grid-template-columns: 1fr; gap: 36px; } }
 
-/* ─── Mobile bottom bar (visible on small screens only) ─── */
-.lf-mobile-bar { display: none; }
+/* ─── Floating mobile call button (FAB) ─── */
+.lf-fab-call { display: none; }
 @media (max-width: 760px) {
-  .lf-mobile-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 60; display: grid; grid-template-columns: 1fr 1.3fr; gap: 8px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(255,255,255,0.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--ink-line-soft); box-shadow: 0 -8px 24px -12px rgba(10,22,40,0.18); opacity: 0; transform: translateY(100%); pointer-events: none; transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.22,1,0.36,1); }
-  body.nav-revealed .lf-mobile-bar { opacity: 1; transform: translateY(0); pointer-events: auto; }
-  .lf-mobile-bar-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding: 13px 14px; border-radius: 999px; font-weight: 700; font-size: 14px; text-decoration: none; }
-  .lf-mobile-bar-call { background: #fff; color: var(--navy) !important; border: 1.5px solid var(--ink-line); }
-  .lf-mobile-bar-cta { background: var(--accent); color: #fff !important; }
-  body.nav-revealed { padding-bottom: 72px; }
+  .lf-fab-call {
+    position: fixed;
+    right: 16px;
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    z-index: 60;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 13px 18px 13px 15px;
+    background: var(--accent);
+    color: #fff !important;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 999px;
+    box-shadow: 0 14px 32px -10px rgba(217,140,3,0.55), 0 4px 12px rgba(10,22,40,0.18);
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1);
+  }
+  body.nav-revealed .lf-fab-call {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  .lf-fab-call:active { transform: translateY(0) scale(0.96); }
 }
 
 /* ─── Mobile-specific polish (≤760px) ─── */
