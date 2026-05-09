@@ -11,6 +11,7 @@ import imgTrap from '@/assets/interieur/trap.jpg';
 import imgDeuren from '@/assets/interieur/binnendeuren.jpg';
 import imgPlafonds from '@/assets/interieur/plafonds.jpg';
 import imgIntro from '@/assets/interieur/intro-overview.jpg';
+import imgDroom from '@/assets/interieur/droom.jpg';
 
 const types = [
   {
