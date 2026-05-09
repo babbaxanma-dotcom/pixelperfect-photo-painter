@@ -1464,7 +1464,7 @@ export default function Home() {
     svcConstruct, svcEco, svcInterieur, svcDak, svcBad, svcGevel,
     proj1, proj2, proj3, proj4,
     team1, team2, team3, ctaMan,
-    blog1, blog2, blog3, logo, logoHero,
+    logo, logoHero,
   });
 
   return <div dangerouslySetInnerHTML={{ __html: html }} />;
