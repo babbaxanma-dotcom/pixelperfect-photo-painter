@@ -204,45 +204,25 @@ const HTML = (i: Record<string, string>) => `
 
 
 
-<!-- ABOUT + FORM -->
-<section class="lf-section">
-  <div class="wrap lf-about-grid">
-    <div class="lf-about-text" data-reveal>
-      <span class="lf-eyebrow">Over ons</span>
-      <h2 class="lf-h2">Vakmanschap dat staat.<br>Vertrouwen dat blijft.</h2>
-      <p class="lf-lede">Sinds 2010 begeleidden we 184 bouw- en renovatieprojecten in de regio Antwerpen, Mechelen en Brussel. U krijgt één projectleider die uw werf van A tot Z opvolgt.</p>
-
-      <div class="lf-feature">
-        <div class="lf-feature-num">01</div>
-        <div>
-          <h4>Eigen vakmensen op de werf</h4>
-          <p>23 vaste medewerkers in eigen dienst. Uw metselaar van vandaag is dezelfde als die van volgende week.</p>
-        </div>
-      </div>
-      <div class="lf-feature">
-        <div class="lf-feature-num">02</div>
-        <div>
-          <h4>Vaste prijs, schriftelijk vastgelegd</h4>
-          <p>Onze offerte is bindend. Geen meerwerk tenzij u zelf wijzigingen vraagt, en dan eerst goedgekeurd, nooit verrast op de eindfactuur.</p>
-        </div>
-      </div>
-
-      <a href="/over" class="lf-btn-pri lf-btn-sm"><span>Leer ons kennen</span></a>
+<!-- OFFERTE FORM + TRUST BULLETS -->
+<section class="lf-section lf-offerte-section">
+  <div class="wrap">
+    <div class="lf-offerte-head" data-reveal>
+      <span class="lf-eyebrow">100% vrijblijvend</span>
+      <h2 class="lf-h2">Gratis offerte of<br/>plaatsbezoek aanvragen.</h2>
+      <p class="lf-lede">Binnen 24u contact met een vakmens, geen verkoper. Eerlijk advies, vaste prijs.</p>
     </div>
 
-    <aside class="lf-form" id="contact-form" data-reveal data-reveal-delay="1">
-      <div class="lf-form-header">
-        <span class="lf-form-eyebrow">Vrijblijvend & snel</span>
-        <h3>Neem contact met ons op</h3>
-        <p>Vul het formulier in. Wij bellen u binnen 24 uur terug.</p>
-      </div>
+    <aside class="lf-form lf-form-compact" id="contact-form" data-reveal data-reveal-delay="1">
       <form onsubmit="event.preventDefault(); alert('Bedankt, we nemen binnen 24u contact op.');">
         <div class="lf-form-row">
           <input type="text" placeholder="Voornaam" required />
           <input type="text" placeholder="Achternaam" required />
         </div>
-        <input type="email" placeholder="E-mailadres" required />
-        <input type="tel" placeholder="Telefoonnummer" required />
+        <div class="lf-form-row">
+          <input type="email" placeholder="E-mailadres" required />
+          <input type="tel" placeholder="Telefoonnummer" required />
+        </div>
         <div class="lf-dd" data-dd>
           <button type="button" class="lf-dd-toggle" data-dd-toggle aria-haspopup="listbox" aria-expanded="false">
             <span class="lf-dd-label" data-dd-label>Welke dienst interesseert u?</span>
@@ -258,13 +238,30 @@ const HTML = (i: Record<string, string>) => `
           </ul>
           <input type="hidden" name="dienst" data-dd-input required />
         </div>
-        <textarea placeholder="Korte omschrijving van uw project (optioneel)" rows="3"></textarea>
         <button type="submit" class="lf-cta-pill lf-cta-pill-block">
-          <span>Verstuur aanvraag</span>
+          <span>Vraag mijn gratis offerte aan</span>
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </button>
+        <p class="lf-form-foot">Of bel direct <a href="tel:+32470634413">+32 470 63 44 13</a></p>
       </form>
     </aside>
+
+    <div class="lf-mini-bullets" data-reveal data-reveal-delay="2">
+      <div class="lf-mini-bullet">
+        <div class="lf-mini-bullet-num">01</div>
+        <div>
+          <h4>Eigen vakmensen</h4>
+          <p>23 vaste medewerkers in eigen dienst. Geen onderaannemers.</p>
+        </div>
+      </div>
+      <div class="lf-mini-bullet">
+        <div class="lf-mini-bullet-num">02</div>
+        <div>
+          <h4>Vaste prijs, schriftelijk</h4>
+          <p>Bindende offerte. Geen verrassingen op de eindfactuur.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
