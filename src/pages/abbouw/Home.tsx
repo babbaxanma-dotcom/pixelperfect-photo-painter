@@ -967,7 +967,7 @@ const EXTRA_STYLE = `
 @media (max-width: 900px) {
   .lf-section { padding: 60px 0; }
   .lf-about-grid, .lf-skills-grid { grid-template-columns: 1fr; gap: 40px; }
-  .lf-svc-grid, .lf-team-grid, .lf-testi-grid { grid-template-columns: 1fr; }
+  .lf-team-grid, .lf-testi-grid { grid-template-columns: 1fr; }
   .lf-why-collage { grid-template-columns: 1fr 1fr; }
   .lf-why-photo { grid-row: 2; grid-column: 1 / 3; height: 220px; }
   .lf-why-tl { grid-area: 1 / 1; } .lf-why-tr { grid-area: 1 / 2; }
@@ -975,9 +975,46 @@ const EXTRA_STYLE = `
   /* Disable scroll-stack on small screens — back to a normal stacked column */
   .lf-why-collage.lf-why-stack { display: block; }
   .lf-why-stack .lf-why-stack-left { display: grid; gap: 16px; }
-  .lf-why-stack .lf-why-slot { height: auto; display: block; }
-  .lf-why-stack .lf-why-tile { position: static; transform: none !important; margin: 0; box-shadow: none; }
+  .lf-why-stack .lf-why-slot { height: auto; display: block; position: static; }
+  .lf-why-stack .lf-why-tile { position: static; transform: none !important; margin: 0; box-shadow: none; top: 0 !important; }
   .lf-why-stack .lf-why-photo { position: static; height: 240px; min-height: 0; margin-top: 16px; }
+
+  /* Services: clean horizontal swipe carousel on mobile (overrides desktop sticky stack) */
+  .lf-services .lf-svc-grid,
+  .lf-services .lf-svc-grid[data-svc-stack] {
+    display: flex !important;
+    flex-wrap: nowrap;
+    gap: 14px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    padding: 4px 16px 22px;
+    margin: 0 -16px;
+    scrollbar-width: none;
+  }
+  .lf-services .lf-svc-grid::-webkit-scrollbar { display: none; }
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot {
+    position: static !important;
+    height: auto !important;
+    display: block;
+    padding: 0;
+    flex: 0 0 82%;
+    max-width: 320px;
+    scroll-snap-align: center;
+  }
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
+    position: static !important;
+    top: 0 !important;
+    margin: 0;
+    transform: none !important;
+    box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 18px 40px -22px rgba(15,17,21,.22);
+    width: 100%;
+    max-width: none;
+  }
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 16/10; }
+
   .lf-proj-collage { grid-template-columns: 1fr; grid-template-rows: repeat(4, 220px); }
   .lf-proj-logo { display:none; }
   .lf-skills-collage { height: 360px; }
