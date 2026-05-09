@@ -55,6 +55,9 @@ const HTML = (i: Record<string, string>) => `
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
+  <button class="mm-close" id="mobileMenuClose" type="button" aria-label="Sluit menu">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
   <div class="mm-section">
     <a href="/">Home</a><a href="/over">Over ons</a><a href="/diensten">Diensten</a>
     <a href="/werkwijze">Werkwijze</a><a href="/realisaties">Realisaties</a><a href="/contact">Contact</a>
