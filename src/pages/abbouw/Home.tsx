@@ -488,20 +488,32 @@ const HTML = (i: Record<string, string>) => `
       <h2 class="lf-h2">Projecten die de tand<br>des tijds doorstaan.</h2>
     </div>
     <div class="lf-proj-tabs-wrap" data-reveal>
-      <div class="lf-proj-tabs">
-        <button class="lf-proj-chip active"><span class="lf-chip-dot"></span>Alle projecten</button>
-        <button class="lf-proj-chip">Dakwerken</button>
-        <button class="lf-proj-chip">Renovatie</button>
-        <button class="lf-proj-chip">Nieuwbouw</button>
-        <button class="lf-proj-chip">Interieur</button>
+      <div class="lf-proj-tabs" data-proj-tabs>
+        <button class="lf-proj-chip active" data-proj-filter="all"><span class="lf-chip-dot"></span>Alle projecten</button>
+        <button class="lf-proj-chip" data-proj-filter="dakwerken">Dakwerken</button>
+        <button class="lf-proj-chip" data-proj-filter="renovatie">Renovatie</button>
+        <button class="lf-proj-chip" data-proj-filter="nieuwbouw">Nieuwbouw</button>
+        <button class="lf-proj-chip" data-proj-filter="interieur">Interieur</button>
       </div>
     </div>
-    <div class="lf-proj-collage" data-reveal>
-      <div class="lf-proj-cell lf-proj-tl"><img src="${i.proj1}" alt="" loading="lazy"/></div>
-      <div class="lf-proj-cell lf-proj-tr"><img src="${i.proj2}" alt="" loading="lazy"/></div>
-      <div class="lf-proj-cell lf-proj-bl"><img src="${i.proj3}" alt="" loading="lazy"/></div>
-      <div class="lf-proj-cell lf-proj-br"><img src="${i.proj4}" alt="" loading="lazy"/></div>
-      <div class="lf-proj-logo"><img src="${i.logo}" alt="AB Bouw Groep" /></div>
+    <div class="lf-proj-collage" data-reveal data-proj-collage>
+      ${[
+        { img: 'proj1', cat: 'nieuwbouw', title: 'Nieuwbouw', place: 'Antwerpen' },
+        { img: 'proj2', cat: 'renovatie', title: 'Renovatie', place: 'Mechelen' },
+        { img: 'proj3', cat: 'interieur', title: 'Interieur', place: 'Brussel' },
+        { img: 'proj4', cat: 'dakwerken', title: 'Dakwerken', place: 'Lier' },
+      ].map(p => `
+        <a href="/realisaties" class="lf-proj-cell" data-proj-cat="${p.cat}">
+          <div class="lf-proj-img"><img src="${(i as any)[p.img]}" alt="${p.title} ${p.place}" loading="lazy"/></div>
+          <div class="lf-proj-cap">
+            <div>
+              <span class="lf-proj-cap-cat">${p.title}</span>
+              <strong>${p.place}</strong>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+        </a>
+      `).join('')}
     </div>
   </div>
 </section>
@@ -903,17 +915,18 @@ const EXTRA_STYLE = `
 .lf-proj-chip.active { background: var(--navy); color:#fff; box-shadow: 0 6px 16px -6px rgba(10,31,68,0.45); }
 .lf-chip-dot { width:6px; height:6px; border-radius:50%; background: var(--accent); display:inline-block; }
 .lf-proj-chip:not(.active) .lf-chip-dot { background: var(--ink-line); }
-.lf-proj-collage { position: relative; display:grid; grid-template-columns: 1fr 1fr; grid-template-rows: 320px 320px; gap: 0; --notch: 90px; }
-.lf-proj-cell { overflow: hidden; position:relative; }
-.lf-proj-cell img { width:100%; height:100%; object-fit:cover; transition: transform 0.5s var(--ease); display:block; }
-.lf-proj-cell:hover img { transform: scale(1.05); }
-/* Concave inner corner at the centre intersection, creates a circular hole for the logo */
-.lf-proj-tl { border-top-left-radius: 18px; -webkit-mask: radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000 100%); mask: radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000 100%); }
-.lf-proj-tr { border-top-right-radius: 18px; -webkit-mask: radial-gradient(circle var(--notch) at 0% 100%, transparent 98%, #000 100%); mask: radial-gradient(circle var(--notch) at 0% 100%, transparent 98%, #000 100%); }
-.lf-proj-bl { border-bottom-left-radius: 18px; -webkit-mask: radial-gradient(circle var(--notch) at 100% 0%, transparent 98%, #000 100%); mask: radial-gradient(circle var(--notch) at 100% 0%, transparent 98%, #000 100%); }
-.lf-proj-br { border-bottom-right-radius: 18px; -webkit-mask: radial-gradient(circle var(--notch) at 0% 0%, transparent 98%, #000 100%); mask: radial-gradient(circle var(--notch) at 0% 0%, transparent 98%, #000 100%); }
-.lf-proj-logo { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width: 140px; height: 140px; display:flex; align-items:center; justify-content:center; z-index:5; background: transparent; box-shadow: none; padding: 0; }
-.lf-proj-logo img { width: 100%; height: 100%; object-fit: contain; }
+.lf-proj-collage { display:grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.lf-proj-cell { position:relative; display:flex; flex-direction:column; background:#fff; border:1px solid var(--ink-line-soft); border-radius: 16px; overflow:hidden; text-decoration:none; color:var(--ink); transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease); }
+.lf-proj-cell:hover { transform: translateY(-4px); box-shadow: 0 22px 44px -22px rgba(10,22,40,0.22); border-color: var(--accent); }
+.lf-proj-cell.is-hidden { display: none; }
+.lf-proj-img { position:relative; aspect-ratio: 4/3; overflow:hidden; }
+.lf-proj-img img { width:100%; height:100%; object-fit:cover; transition: transform 0.5s var(--ease); display:block; }
+.lf-proj-cell:hover .lf-proj-img img { transform: scale(1.06); }
+.lf-proj-cap { display:flex; align-items:center; justify-content:space-between; gap:12px; padding: 16px 18px; }
+.lf-proj-cap-cat { display:block; font-size: 11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color: var(--accent); margin-bottom: 4px; }
+.lf-proj-cap strong { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--navy); letter-spacing:-0.01em; line-height:1.2; display:block; }
+.lf-proj-cap svg { color: var(--navy); flex-shrink: 0; transition: transform .3s var(--ease); }
+.lf-proj-cell:hover .lf-proj-cap svg { transform: translateX(4px); color: var(--accent); }
 
 /* Custom clean dropdown */
 .lf-dd { position: relative; margin-bottom: 12px; }
@@ -1038,8 +1051,7 @@ const EXTRA_STYLE = `
   }
   .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 16/10; }
 
-  .lf-proj-collage { grid-template-columns: 1fr; grid-template-rows: repeat(4, 220px); }
-  .lf-proj-logo { display:none; }
+  .lf-proj-collage { grid-template-columns: 1fr; gap: 14px; }
   .lf-skills-collage { height: 360px; }
   .lf-cta { padding: 40px 28px; grid-template-columns: 1fr; }
   .lf-cta-img { display:none; }
@@ -1204,10 +1216,15 @@ const EXTRA_STYLE = `
     border-radius: 999px;
     border: 2px solid #fff;
     box-shadow: 0 18px 40px -10px rgba(10,22,40,0.55), 0 6px 16px rgba(10,22,40,0.25);
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1);
+  }
+  body.nav-revealed .lf-fab-call {
     opacity: 1;
     transform: translateY(0) scale(1);
     pointer-events: auto;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
   .lf-fab-call:active { transform: scale(0.95); }
 }
@@ -1257,10 +1274,13 @@ const EXTRA_STYLE = `
   .lf-blog-grid { gap: 16px; }
 
   /* Support: 2x2 */
-  .lf-support-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .lf-support-card { padding: 20px 16px; }
-  .lf-support-card h5 { font-size: 14px; }
-  .lf-support-card p { font-size: 12.5px; }
+  .lf-support-grid { grid-template-columns: 1fr; gap: 12px; }
+  .lf-support-card { padding: 18px 18px; display: flex; gap: 14px; align-items: flex-start; }
+  .lf-support-card > div:first-child { flex-shrink: 0; padding: 0; margin: 0; border: none; flex-direction: column; align-items: center; min-width: 44px; }
+  .lf-support-card .lf-support-meta { padding: 0; margin: 0; border: none; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 56px; }
+  .lf-support-card .lf-support-meta span { font-size: 22px; color: var(--accent); }
+  .lf-support-card h5 { font-size: 14.5px; margin-bottom: 4px; }
+  .lf-support-card p { font-size: 12.5px; line-height: 1.55; }
 
   /* Why-us: stacked but compact 2-col grid where possible */
   .lf-why-collage { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto auto; gap: 12px; }
@@ -1290,7 +1310,7 @@ const EXTRA_STYLE = `
   .lf-proj-tabs-wrap { margin-bottom: 28px; }
   .lf-proj-tabs { padding: 4px; gap: 2px; }
   .lf-proj-chip { padding: 8px 14px; font-size: 12px; }
-  .lf-proj-collage { grid-template-rows: repeat(4, 180px); }
+  .lf-proj-cap strong { font-size: 15px; }
 
   /* Testimonials, horizontal swipe */
   .lf-testi-grid { display: flex; grid-template-columns: none; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 18px 12px; margin: 0 -18px; -webkit-overflow-scrolling: touch; }

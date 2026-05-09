@@ -142,6 +142,21 @@ export function useAbBouwInteractions() {
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
+    // ── Project filter chips ────────────────────────────
+    const projTabs = document.querySelector<HTMLElement>('[data-proj-tabs]');
+    const projCells = Array.from(document.querySelectorAll<HTMLElement>('[data-proj-cat]'));
+    const onProjFilter = (e: Event) => {
+      const btn = (e.target as HTMLElement)?.closest<HTMLButtonElement>('[data-proj-filter]');
+      if (!btn || !projTabs) return;
+      const filter = btn.dataset.projFilter || 'all';
+      projTabs.querySelectorAll('[data-proj-filter]').forEach(b => b.classList.toggle('active', b === btn));
+      projCells.forEach(c => {
+        const match = filter === 'all' || c.dataset.projCat === filter;
+        c.classList.toggle('is-hidden', !match);
+      });
+    };
+    projTabs?.addEventListener('click', onProjFilter);
+
     // ── Reveal on scroll ────────────────────────────────
     const reveals = document.querySelectorAll('[data-reveal]');
     const io = new IntersectionObserver(
@@ -536,6 +551,7 @@ export function useAbBouwInteractions() {
 
     return () => {
       document.removeEventListener('click', onClick);
+      projTabs?.removeEventListener('click', onProjFilter);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('scroll', onParallax);
       window.removeEventListener('scroll', onPinScroll);
