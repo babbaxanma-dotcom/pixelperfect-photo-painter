@@ -1274,10 +1274,13 @@ const EXTRA_STYLE = `
   .lf-blog-grid { gap: 16px; }
 
   /* Support: 2x2 */
-  .lf-support-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .lf-support-card { padding: 20px 16px; }
-  .lf-support-card h5 { font-size: 14px; }
-  .lf-support-card p { font-size: 12.5px; }
+  .lf-support-grid { grid-template-columns: 1fr; gap: 12px; }
+  .lf-support-card { padding: 18px 18px; display: flex; gap: 14px; align-items: flex-start; }
+  .lf-support-card > div:first-child { flex-shrink: 0; padding: 0; margin: 0; border: none; flex-direction: column; align-items: center; min-width: 44px; }
+  .lf-support-card .lf-support-meta { padding: 0; margin: 0; border: none; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 56px; }
+  .lf-support-card .lf-support-meta span { font-size: 22px; color: var(--accent); }
+  .lf-support-card h5 { font-size: 14.5px; margin-bottom: 4px; }
+  .lf-support-card p { font-size: 12.5px; line-height: 1.55; }
 
   /* Why-us: stacked but compact 2-col grid where possible */
   .lf-why-collage { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto auto; gap: 12px; }
