@@ -1055,7 +1055,7 @@ const EXTRA_STYLE = `
   .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 16/10; }
 
   .lf-proj-collage { grid-template-columns: 1fr; gap: 14px; }
-  .lf-skills-collage { height: 360px; }
+  .lf-skills-img1, .lf-skills-img2 { height: 320px; }
   .lf-cta { padding: 40px 28px; grid-template-columns: 1fr; }
   .lf-cta-img { display:none; }
   .lf-hero-card { padding: 32px 24px; }
@@ -1304,7 +1304,8 @@ html, body { overflow-x: hidden; max-width: 100%; }
 
   /* Skills */
   .lf-skills-grid { gap: 32px; }
-  .lf-skills-collage { height: 280px; }
+  .lf-skills-collage { grid-template-columns: 1fr; gap: 12px; }
+  .lf-skills-img1, .lf-skills-img2 { height: 240px; }
 
   /* Process: vertical timeline with line on left */
   .lf-process { grid-template-columns: 1fr; gap: 0; padding-left: 8px; }
