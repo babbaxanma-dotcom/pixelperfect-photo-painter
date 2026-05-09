@@ -779,7 +779,7 @@ const EXTRA_STYLE = `
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot {
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 72vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -792,7 +792,7 @@ const EXTRA_STYLE = `
   max-width: 880px;
   margin: 0 auto;
   /* tiny per-card vertical offset so the stack is visible */
-  top: calc(var(--svc-i, 0) * 22px);
+  top: calc(var(--svc-i, 0) * 14px);
   border-radius: 18px;
   background: #fff;
   border: 1px solid var(--ink-line-soft);
