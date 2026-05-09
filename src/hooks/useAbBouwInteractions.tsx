@@ -591,6 +591,38 @@ export function useAbBouwInteractions() {
     window.addEventListener('scroll', onSupportScroll, { passive: true });
     onSupportScroll();
 
+    // ===== ab-toc: smooth scroll on click + scroll-spy active state =====
+    const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.ab-toc a[href^="#"]'));
+    const tocTargets: { link: HTMLAnchorElement; el: HTMLElement }[] = [];
+    tocLinks.forEach((a) => {
+      const id = a.getAttribute('href')?.slice(1);
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (el) tocTargets.push({ link: a, el });
+    });
+    const onTocClick = (e: MouseEvent) => {
+      const a = e.currentTarget as HTMLAnchorElement;
+      const id = a.getAttribute('href')?.slice(1);
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      tocLinks.forEach((l) => l.classList.toggle('is-active', l === a));
+      const top = el.getBoundingClientRect().top + window.scrollY - 110;
+      window.scrollTo({ top, behavior: 'smooth' });
+      history.replaceState(null, '', `#${id}`);
+    };
+    tocLinks.forEach((a) => a.addEventListener('click', onTocClick as EventListener));
+    const onTocScroll = () => {
+      if (!tocTargets.length) return;
+      const probe = window.scrollY + 180;
+      let activeIdx = 0;
+      tocTargets.forEach((t, i) => { if (t.el.offsetTop <= probe) activeIdx = i; });
+      tocTargets.forEach((t, i) => t.link.classList.toggle('is-active', i === activeIdx));
+    };
+    window.addEventListener('scroll', onTocScroll, { passive: true });
+    onTocScroll();
+
     return () => {
       document.removeEventListener('click', onClick);
       projTabs?.removeEventListener('click', onProjFilter);
@@ -598,6 +630,8 @@ export function useAbBouwInteractions() {
       window.removeEventListener('scroll', onParallax);
       window.removeEventListener('scroll', onPinScroll);
       window.removeEventListener('scroll', onSupportScroll);
+      window.removeEventListener('scroll', onTocScroll);
+      tocLinks.forEach((a) => a.removeEventListener('click', onTocClick as EventListener));
       window.removeEventListener('scroll', onWhyScroll);
       window.removeEventListener('scroll', onWhyStackScroll);
       window.removeEventListener('resize', onWhyStackScroll);

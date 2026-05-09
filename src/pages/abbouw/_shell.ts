@@ -461,10 +461,12 @@ export const SHELL_STYLE = `
 .ab-toc-head { text-align: center; max-width: 640px; margin: 0 auto 22px; }
 .ab-toc-title { font-family: var(--font-display); font-size: clamp(20px, 2vw, 24px); font-weight: 600; color: var(--navy); letter-spacing: -0.01em; margin-bottom: 6px; }
 .ab-toc-sub { font-size: 14px; color: var(--ink-soft); margin: 0; }
+html { scroll-behavior: smooth; }
 .ab-toc-wrap { padding: 0 0 8px; display:flex; justify-content:center; }
-.ab-toc { display:inline-flex; gap: 6px; flex-wrap:wrap; justify-content:center; padding: 8px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; box-shadow: 0 12px 30px -18px rgba(10,22,40,0.14); max-width: 100%; }
-.ab-toc a { padding: 10px 18px; border-radius: 999px; font-size: 13.5px; font-weight: 600; color: var(--ink-soft); text-decoration: none; transition: all 0.2s; white-space: nowrap; border: 1px solid var(--ink-line-soft); background: var(--bg-tint); }
-.ab-toc a:hover { background: var(--accent); color: #fff; border-color: var(--accent); transform: translateY(-1px); }
+.ab-toc { display:inline-flex; gap: 4px; flex-wrap:wrap; justify-content:center; padding: 6px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 999px; box-shadow: 0 8px 24px -16px rgba(10,22,40,0.18); max-width: 100%; }
+.ab-toc a { display:inline-flex; align-items:center; gap:8px; padding: 10px 20px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--ink-soft); text-decoration: none; transition: color 0.35s var(--ease), background-color 0.35s var(--ease), box-shadow 0.35s var(--ease), transform 0.35s var(--ease); white-space: nowrap; border: none; background: transparent; letter-spacing: -0.005em; cursor: pointer; }
+.ab-toc a:hover { color: var(--navy); background: var(--bg-tint); }
+.ab-toc a.is-active { background: var(--navy); color: #fff; box-shadow: 0 6px 16px -6px rgba(10,31,68,0.45); transform: translateY(-1px); }
 
 .ab-deep { display:grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
 .ab-deep.reverse .ab-deep-img { order: -1; }
