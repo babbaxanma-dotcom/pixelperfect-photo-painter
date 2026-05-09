@@ -210,7 +210,7 @@ const HTML = (i: Record<string, string>) => `
     <div class="lf-offerte-head" data-reveal>
       <span class="lf-eyebrow">100% vrijblijvend</span>
       <h2 class="lf-h2">Gratis offerte of<br/>plaatsbezoek aanvragen.</h2>
-      <p class="lf-lede">Binnen 24u contact met een vakmens, geen verkoper. Eerlijk advies, vaste prijs.</p>
+      <p class="lf-lede">Binnen 24u persoonlijk contact met een ervaren vakman. Eerlijk advies en een vaste, transparante prijs.</p>
     </div>
 
     <aside class="lf-form lf-form-compact" id="contact-form" data-reveal data-reveal-delay="1">
