@@ -936,7 +936,7 @@ const EXTRA_STYLE = `
 .lf-dd-label.has-value { color: var(--ink); font-weight:500; }
 .lf-dd-caret { color: var(--ink-soft); transition: transform 0.2s var(--ease); flex-shrink:0; }
 .lf-dd.open .lf-dd-caret { transform: rotate(180deg); }
-.lf-dd-list { position:absolute; top: calc(100% + 6px); left:0; right:0; background:#fff; border:1px solid var(--ink-line-soft); border-radius: 12px; box-shadow: 0 18px 40px -18px rgba(10,22,40,0.22); list-style:none; margin:0; padding:6px; z-index: 30; max-height: 280px; overflow:auto; opacity:0; transform: translateY(-6px); pointer-events:none; transition: all 0.18s var(--ease); }
+.lf-dd-list { position:absolute; top: calc(100% + 6px); left:0; right:0; background:#fff; border:1px solid var(--ink-line-soft); border-radius: 12px; box-shadow: 0 18px 40px -18px rgba(10,22,40,0.22); list-style:none; margin:0; padding:6px; z-index: 30; max-height: 320px; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; touch-action: pan-y; opacity:0; transform: translateY(-6px); pointer-events:none; transition: all 0.18s var(--ease); }
 .lf-dd.open .lf-dd-list { opacity:1; transform: translateY(0); pointer-events:auto; }
 .lf-dd-list li { padding: 11px 14px; font-size: 14px; color: var(--ink); border-radius: 8px; cursor:pointer; transition: background 0.15s; }
 .lf-dd-list li:hover { background: var(--bg-tint); }
