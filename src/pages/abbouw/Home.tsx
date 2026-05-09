@@ -274,29 +274,41 @@ const HTML = (i: Record<string, string>) => `
       <span class="lf-eyebrow">Onze diensten</span>
       <h2 class="lf-h2">Zes specialisaties.<br>Eén bouwpartner.</h2>
     </div>
-    <div class="lf-svc-grid" data-svc-stack>
-      ${[
-        { img: i.svcConstruct, n: '01', title: 'AB Construct', desc: 'Nieuwbouw en totaalrenovatie sleutel-op-de-deur. Eén contract, één planning, één resultaat.', href: '/construct' },
-        { img: i.svcEco, n: '02', title: 'AB Ecologisch', desc: 'Duurzaam bouwen met natuurlijke materialen. Lager E-peil, lagere energiefactuur.', href: '/ecologisch' },
-        { img: i.svcInterieur, n: '03', title: 'AB Interieurwerken', desc: 'Maatwerk in gyproc, vloeren, schrijnwerk en plafonds. Strak afgewerkt tot in de plint.', href: '/interieur' },
-        { img: i.svcDak, n: '04', title: 'AB Dakwerken', desc: 'Hellende en platte daken, dakisolatie en zinkwerk. Door eigen dakdekkers geplaatst.', href: '/dakwerken' },
-        { img: i.svcBad, n: '05', title: 'AB Bad &amp; Wellness', desc: 'Sleutel-op-de-deur badkamers met premium tegels en sanitair. Klaar in vier weken.', href: '/bad' },
-        { img: i.svcGevel, n: '06', title: 'AB Gevelbekleding', desc: 'Witte of grijze crepi, sierpleister of steenstrips. Tijdloos én onderhoudsarm.', href: '/gevel' },
-      ].map((s, idx, arr) => `
-        <div class="lf-svc-slot" data-svc-slot style="--svc-i:${idx};--svc-total:${arr.length}">
-          <a class="lf-svc-card" href="${s.href}" data-svc-card style="--svc-i:${idx};--svc-total:${arr.length}">
-            <div class="lf-svc-img"><img src="${s.img}" alt="${s.title}" loading="lazy" /><span class="lf-svc-num">${s.n}</span></div>
-            <div class="lf-svc-body">
-              <h4>${s.title}</h4>
-              <p>${s.desc}</p>
-              <span class="lf-svc-link">Lees meer
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </span>
-            </div>
-          </a>
-        </div>
-      `).join('')}
-    </div>
+    ${(() => {
+      const services = [
+        { img: i.svcConstruct, n: '01', title: 'AB Construct', short: 'Construct', desc: 'Nieuwbouw en totaalrenovatie sleutel-op-de-deur. Eén contract, één planning, één resultaat.', href: '/construct' },
+        { img: i.svcEco, n: '02', title: 'AB Ecologisch', short: 'Ecologisch', desc: 'Duurzaam bouwen met natuurlijke materialen. Lager E-peil, lagere energiefactuur.', href: '/ecologisch' },
+        { img: i.svcInterieur, n: '03', title: 'AB Interieurwerken', short: 'Interieur', desc: 'Maatwerk in gyproc, vloeren, schrijnwerk en plafonds. Strak afgewerkt tot in de plint.', href: '/interieur' },
+        { img: i.svcDak, n: '04', title: 'AB Dakwerken', short: 'Dakwerken', desc: 'Hellende en platte daken, dakisolatie en zinkwerk. Door eigen dakdekkers geplaatst.', href: '/dakwerken' },
+        { img: i.svcBad, n: '05', title: 'AB Bad &amp; Wellness', short: 'Bad &amp; Wellness', desc: 'Sleutel-op-de-deur badkamers met premium tegels en sanitair. Klaar in vier weken.', href: '/bad' },
+        { img: i.svcGevel, n: '06', title: 'AB Gevelbekleding', short: 'Gevel', desc: 'Witte of grijze crepi, sierpleister of steenstrips. Tijdloos én onderhoudsarm.', href: '/gevel' },
+      ];
+      return `
+      <nav class="lf-svc-nav" data-svc-nav data-reveal aria-label="Specialisaties">
+        ${services.map((s, idx) => `
+          <button type="button" class="lf-svc-pill${idx === 0 ? ' is-active' : ''}" data-svc-pill="${idx}">
+            <span class="lf-svc-pill-num">${s.n}</span>
+            <span class="lf-svc-pill-label">${s.short}</span>
+          </button>
+        `).join('')}
+      </nav>
+      <div class="lf-svc-grid" data-svc-stack>
+        ${services.map((s, idx, arr) => `
+          <div class="lf-svc-slot" id="svc-${idx}" data-svc-slot data-svc-index="${idx}" style="--svc-i:${idx};--svc-total:${arr.length}">
+            <a class="lf-svc-card" href="${s.href}" data-svc-card style="--svc-i:${idx};--svc-total:${arr.length}">
+              <div class="lf-svc-img"><img src="${s.img}" alt="${s.title}" loading="lazy" /><span class="lf-svc-num">${s.n}</span></div>
+              <div class="lf-svc-body">
+                <h4>${s.title}</h4>
+                <p>${s.desc}</p>
+                <span class="lf-svc-link">Lees meer
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </span>
+              </div>
+            </a>
+          </div>
+        `).join('')}
+      </div>`;
+    })()}
   </div>
 </section>
 
