@@ -472,6 +472,35 @@ export function useAbBouwInteractions() {
     };
     computeSvcStack();
 
+    // ── Mobile services carousel: mark snapped (centered) slot for scale-up effect
+    const svcCarousel = svcStack as HTMLElement | null;
+    let svcSnapRaf = 0;
+    const updateSvcSnapped = () => {
+      svcSnapRaf = 0;
+      if (!svcCarousel || svcStackSlots.length === 0) return;
+      if (window.matchMedia('(min-width: 901px)').matches) {
+        svcStackSlots.forEach((s) => s.classList.remove('is-snapped'));
+        return;
+      }
+      const railRect = svcCarousel.getBoundingClientRect();
+      const center = railRect.left + railRect.width / 2;
+      let bestIdx = 0;
+      let bestDist = Infinity;
+      svcStackSlots.forEach((s, i) => {
+        const r = s.getBoundingClientRect();
+        const d = Math.abs(r.left + r.width / 2 - center);
+        if (d < bestDist) { bestDist = d; bestIdx = i; }
+      });
+      svcStackSlots.forEach((s, i) => s.classList.toggle('is-snapped', i === bestIdx));
+    };
+    const onSvcSnapScroll = () => {
+      if (svcSnapRaf) return;
+      svcSnapRaf = requestAnimationFrame(updateSvcSnapped);
+    };
+    svcCarousel?.addEventListener('scroll', onSvcSnapScroll, { passive: true });
+    window.addEventListener('resize', onSvcSnapScroll);
+    updateSvcSnapped();
+
 
     // In-view active state for cards (smooth fade/scale of off-center cards)
     let pinIo: IntersectionObserver | null = null;
