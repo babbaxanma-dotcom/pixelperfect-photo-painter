@@ -1022,6 +1022,26 @@ const EXTRA_STYLE = `
   .lf-cta-img { display:none; }
   .lf-hero-card { padding: 32px 24px; }
   .lf-blog-foot { flex-direction: column; align-items: flex-start; }
+
+  /* Mobile swipe hint pill — shown above swipeable carousels */
+  .lf-services .lf-section-head::after,
+  .lf-reviews-section .lf-reviews-head::after {
+    content: '← swipe →';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 14px auto 0;
+    padding: 6px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-mute, #6b7280);
+    background: rgba(15, 23, 42, 0.04);
+    border-radius: 999px;
+    width: fit-content;
+  }
+  .lf-services .lf-section-head { text-align: center; }
 }
 
 /* Footer, clean white with black text (matches site) */
