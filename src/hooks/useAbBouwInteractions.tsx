@@ -418,34 +418,16 @@ export function useAbBouwInteractions() {
     let whyRaf = 0;
     const computeWhyStack = () => {
       whyRaf = 0;
-      if (!whyStack || whyStackCards.length === 0) return;
-      if (!isWhyStackDesktop()) {
-        whyStackCards.forEach((c) => {
-          c.style.removeProperty('--why-scale');
-          c.style.removeProperty('--why-card-h');
-        });
-        return;
-      }
-      const total = whyStackCards.length;
-      for (let i = 0; i < total; i++) {
-        const slot = whyStackSlots[i];
-        const card = whyStackCards[i];
-        if (!slot || !card) continue;
-        const slotRect = slot.getBoundingClientRect();
-        const slotH = slot.offsetHeight || 1;
-        const p = Math.max(0, Math.min(1, -slotRect.top / slotH));
-        const targetScale = 1 - (total - 1 - i) * 0.05;
-        const scale = 1 + (targetScale - 1) * p;
-        card.style.setProperty('--why-scale', scale.toFixed(4));
-        card.style.setProperty('--why-card-h', `${card.offsetHeight}px`);
-      }
+      // Pure CSS sticky stack — clear any legacy inline transforms.
+      whyStackCards.forEach((c) => {
+        c.style.removeProperty('--why-scale');
+        c.style.removeProperty('--why-card-h');
+      });
     };
     const onWhyStackScroll = () => {
       if (whyRaf) return;
       whyRaf = requestAnimationFrame(computeWhyStack);
     };
-    window.addEventListener('scroll', onWhyStackScroll, { passive: true });
-    window.addEventListener('resize', onWhyStackScroll);
     computeWhyStack();
 
     // ── Trust-strip: cascade-mark items as the strip enters the viewport
