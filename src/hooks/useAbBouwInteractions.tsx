@@ -151,8 +151,8 @@ export function useAbBouwInteractions() {
           document.documentElement.style.setProperty('--nav-sweep-y', `${((1 - navP) * -18).toFixed(2)}px`);
           document.documentElement.style.setProperty('--nav-shine-x', `${(-115 + navP * 230).toFixed(2)}%`);
           document.documentElement.style.setProperty('--nav-shine-opacity', navP > 0.08 && navP < 0.98 ? '1' : '0');
-          document.body.classList.toggle('past-hero', navP > 0.02);
-          document.body.classList.toggle('nav-revealed', navP > 0.98);
+          document.body.classList.toggle('past-hero', navP > 0.02 || sy > heroH * 0.6);
+          document.body.classList.toggle('nav-revealed', navP > 0.6 || sy > heroH * 0.7);
           const fadeStart = heroH * 0.55;
           const fadeEnd = heroH * 0.95;
           const fade = Math.max(0, Math.min(1, 1 - (sy - fadeStart) / (fadeEnd - fadeStart)));
