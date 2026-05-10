@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { buildNav, buildHero, buildCta, FOOTER, SHELL_STYLE } from './_shell';
-import hero from '@/assets/home/hero.jpg';
+import hero from '@/assets/home/hero-diensten.jpg';
 import svcConstruct from '@/assets/home/svc-construct.jpg';
 import svcEco from '@/assets/home/svc-eco.jpg';
 import svcInterieur from '@/assets/home/svc-interieur.jpg';
