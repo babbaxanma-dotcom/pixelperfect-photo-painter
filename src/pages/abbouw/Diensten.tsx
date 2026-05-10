@@ -123,9 +123,6 @@ ${buildHero({
 <!-- DEEP SERVICE BLOCKS -->
 <section class="lf-section ab-svc-section" style="padding-top: 24px;">
   <div class="wrap">
-    <div class="ab-svc-nums" id="abSvcDots" role="tablist" aria-label="Spring naar dienst">
-      ${services.map((s, i) => `<button type="button" class="ab-svc-dot ab-svc-num${i === 0 ? ' is-active' : ''}" data-i="${i}" aria-label="${s.title}"><span>${s.n}</span></button>`).join('')}
-    </div>
     <div class="ab-svc-track" id="abSvcTrack">
       ${services.map((s, i) => `
         <div class="ab-sub ab-svc-slide" id="${s.id}">
@@ -166,11 +163,13 @@ ${buildHero({
     flex-direction: row;
     overflow-x: auto;
     overflow-y: hidden;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    gap: 10px;
-    padding: 2px 16px 6px;
+    touch-action: pan-x pan-y;
+    overscroll-behavior-x: contain;
+    gap: 12px;
+    padding: 2px 16px 14px;
     scrollbar-width: none;
   }
   .ab-svc-track::-webkit-scrollbar { display: none; }
@@ -178,7 +177,6 @@ ${buildHero({
     flex: 0 0 calc(100vw - 32px);
     max-width: calc(100vw - 32px);
     scroll-snap-align: center;
-    scroll-snap-stop: always;
     margin: 0 !important;
     padding: 0 !important;
   }
@@ -206,29 +204,6 @@ ${buildHero({
   .ab-svc-track .ab-more p, .ab-svc-track .ab-checks li { font-size: 12.5px !important; }
   .ab-svc-track .lf-cta-pill { font-size: 13px !important; padding: 9px 14px !important; }
   .ab-svc-track [data-reveal] { transform: none !important; opacity: 1 !important; }
-  .ab-svc-nums {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    padding: 0 16px 14px;
-    flex-wrap: wrap;
-  }
-  .ab-svc-num {
-    width: 38px; height: 38px; border-radius: 999px;
-    background: #fff;
-    border: 1px solid var(--ink-line-soft);
-    color: var(--ink-soft);
-    font-family: var(--font-display);
-    font-size: 13px; font-weight: 600;
-    display: inline-flex; align-items: center; justify-content: center;
-    cursor: pointer; padding: 0;
-    transition: background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.2s var(--ease);
-  }
-  .ab-svc-num:active { transform: scale(0.94); }
-  .ab-svc-num.is-active { background: var(--navy); color: #fff; border-color: var(--navy); }
-}
-@media (min-width: 769px) {
-  .ab-svc-nums { display: none; }
 }
 </style>
 
