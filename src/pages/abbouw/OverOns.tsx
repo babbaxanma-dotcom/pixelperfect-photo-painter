@@ -68,7 +68,7 @@ ${buildHero({
         <div class="ab-pillar-body">
           <span class="ab-pillar-num">03</span>
           <h3>Eén aanspreekpunt</h3>
-          <p>U krijgt één werfleider die uw dossier kent — van het plaatsbezoek tot de oplevering. Geen rondgestuurde mails, geen drie nummers om te bellen. Eén gezicht, eén mens.</p>
+          <p>U krijgt één werfleider die uw dossier kent, van het plaatsbezoek tot de oplevering. Geen rondgestuurde mails, geen drie nummers om te bellen. Eén gezicht, eén mens.</p>
         </div>
       </article>
     </div>
