@@ -181,9 +181,7 @@ export const SHELL_STYLE = `
   .lf-menu { display:none; }
   .lf-nav-phone { display:none; }
   .lf-mobile-toggle { display:inline-flex; margin-left:auto; font-size:22px; padding:4px 6px; color: var(--navy); }
-  .lf-nav { top: 10px; }
-  .lf-nav-inner { max-width: calc(100% - 32px); padding: 8px 14px 8px 12px; gap: 14px; }
-  .lf-brand-logo { height: 36px; }
+  .lf-nav-inner { max-width: calc(100% - 32px); }
 }
 
 /* Buttons */
