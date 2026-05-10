@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { buildNav, buildHero, FOOTER, SHELL_STYLE } from './_shell';
-import hero from '@/assets/home/hero.jpg';
+import hero from '@/assets/home/hero-contact.jpg';
 
 const HTML = `
 ${buildNav('contact')}

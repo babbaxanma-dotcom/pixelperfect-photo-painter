@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { buildNav, buildHero, buildCta, FOOTER, SHELL_STYLE } from './_shell';
-import hero from '@/assets/home/hero.jpg';
+import hero from '@/assets/home/hero-werkwijze.jpg';
 import s1 from '@/assets/werkwijze/01-contact.jpg';
 import s2 from '@/assets/werkwijze/02-plaatsbezoek.jpg';
 import s3 from '@/assets/werkwijze/03-offerte.jpg';

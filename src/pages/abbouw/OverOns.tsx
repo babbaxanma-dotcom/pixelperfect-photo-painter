@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { buildNav, buildHero, buildCta, FOOTER, SHELL_STYLE } from './_shell';
-import hero from '@/assets/home/hero.jpg';
+import hero from '@/assets/home/hero-over.jpg';
 import about from '@/assets/home/about.jpg';
 import why from '@/assets/home/why.jpg';
 import skills from '@/assets/home/skills.jpg';
