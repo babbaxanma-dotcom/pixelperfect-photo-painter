@@ -1002,7 +1002,7 @@ body.menu-open { overflow: hidden; }
 
 /* ===== Page transitions (clean fade + slight lift) ===== */
 .page-transition {
-  will-change: opacity, transform;
+  will-change: opacity;
   transition: opacity 280ms cubic-bezier(0.22, 0.61, 0.36, 1),
               transform 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
@@ -1012,7 +1012,7 @@ body.menu-open { overflow: hidden; }
 }
 .page-transition--in {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .page-transition,
