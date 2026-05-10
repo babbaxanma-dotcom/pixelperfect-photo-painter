@@ -109,37 +109,6 @@ ${buildHero({
   </div>
 </section>
 
-<!-- TEAM -->
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
-      <span class="lf-eyebrow">Het team</span>
-      <h2 class="lf-h2">De mensen achter<br/>elke werf.</h2>
-      <p class="lf-lede" style="margin: 0 auto;">Een kleine groep vaste gezichten die uw project van A tot Z aanstuurt. Wie u op het kennismakingsgesprek ontmoet, ziet u op de werf terug.</p>
-    </div>
-    <div class="ab-team">
-      <article class="ab-team-card" data-reveal>
-        <div class="ab-team-photo"><img src="${team1}" alt="Portret zaakvoerder AB Bouw Group" loading="lazy"/></div>
-        <h4>Anthony Beerens</h4>
-        <span class="ab-team-role">Zaakvoerder &amp; werfopvolging</span>
-        <p>Stichter en zaakvoerder. Bouwt al 15 jaar in en rond Willebroek en blijft elke werf zelf opvolgen.</p>
-      </article>
-      <article class="ab-team-card" data-reveal data-reveal-delay="1">
-        <div class="ab-team-photo"><img src="${team2}" alt="Portret werfleider AB Bouw Group" loading="lazy"/></div>
-        <h4>Tom Verhaegen</h4>
-        <span class="ab-team-role">Werfleider ruwbouw &amp; dakwerken</span>
-        <p>Stuurt de ruwbouw- en dakploegen aan. Uw eerste aanspreekpunt zodra de schop in de grond gaat.</p>
-      </article>
-      <article class="ab-team-card" data-reveal data-reveal-delay="2">
-        <div class="ab-team-photo"><img src="${team3}" alt="Portret projectleider afwerking AB Bouw Group" loading="lazy"/></div>
-        <h4>Sarah Van den Broeck</h4>
-        <span class="ab-team-role">Projectleider afwerking &amp; interieur</span>
-        <p>Coördineert tegelzetters, schrijnwerkers en sanitair. Bewaakt timing, materiaalkeuzes en oplevering.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
 <!-- HOE WIJ WERKEN -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
