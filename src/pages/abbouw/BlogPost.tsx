@@ -45,7 +45,7 @@ ${buildNav('home' as any)}
     <img src="${post.img}" alt="${post.title}" />
     <div class="ab-article-hero-overlay"></div>
     <div class="wrap ab-article-hero-inner">
-      <a href="/blog" class="ab-article-back">← Terug naar blog</a>
+      <a href="/blog" class="ab-article-back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg><span>Terug naar blog</span></a>
       <span class="lf-blog-tag" style="position:static; display:inline-block;">${post.tag}</span>
       <h1>${post.title}</h1>
       <div class="ab-article-meta">
