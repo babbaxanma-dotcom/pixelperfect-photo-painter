@@ -163,7 +163,7 @@ ${buildHero({
     flex-direction: row;
     overflow-x: auto;
     overflow-y: hidden;
-    scroll-snap-type: x proximity;
+    scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-x pan-y;
