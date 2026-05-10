@@ -166,12 +166,10 @@ ${buildHero({
     flex-direction: row;
     overflow-x: auto;
     overflow-y: hidden;
-    scroll-snap-type: x proximity;
+    scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x pan-y;
-    overscroll-behavior-x: contain;
-    gap: 12px;
+    gap: 10px;
     padding: 2px 16px 6px;
     scrollbar-width: none;
   }
@@ -180,6 +178,7 @@ ${buildHero({
     flex: 0 0 calc(100vw - 32px);
     max-width: calc(100vw - 32px);
     scroll-snap-align: center;
+    scroll-snap-stop: always;
     margin: 0 !important;
     padding: 0 !important;
   }
@@ -207,22 +206,29 @@ ${buildHero({
   .ab-svc-track .ab-more p, .ab-svc-track .ab-checks li { font-size: 12.5px !important; }
   .ab-svc-track .lf-cta-pill { font-size: 13px !important; padding: 9px 14px !important; }
   .ab-svc-track [data-reveal] { transform: none !important; opacity: 1 !important; }
-  .ab-svc-dots {
+  .ab-svc-nums {
     display: flex;
     justify-content: center;
     gap: 8px;
-    padding: 14px 0 4px;
+    padding: 0 16px 14px;
+    flex-wrap: wrap;
   }
-  .ab-svc-dot {
-    width: 18px; height: 3px; border-radius: 2px;
-    background: rgba(10,22,40,0.18);
-    border: 0; padding: 0; cursor: pointer;
-    transition: background 0.3s var(--ease), width 0.3s var(--ease);
+  .ab-svc-num {
+    width: 38px; height: 38px; border-radius: 999px;
+    background: #fff;
+    border: 1px solid var(--ink-line-soft);
+    color: var(--ink-soft);
+    font-family: var(--font-display);
+    font-size: 13px; font-weight: 600;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; padding: 0;
+    transition: background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.2s var(--ease);
   }
-  .ab-svc-dot.is-active { background: var(--navy); width: 36px; }
+  .ab-svc-num:active { transform: scale(0.94); }
+  .ab-svc-num.is-active { background: var(--navy); color: #fff; border-color: var(--navy); }
 }
 @media (min-width: 769px) {
-  .ab-svc-dots { display: none; }
+  .ab-svc-nums { display: none; }
 }
 </style>
 
