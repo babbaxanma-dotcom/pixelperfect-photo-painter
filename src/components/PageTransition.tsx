@@ -24,11 +24,11 @@ const PageTransition = ({ children }: { children: ReactNode }) => {
       // jump to top before the new page paints in
       window.scrollTo({ top: 0, left: 0, behavior: "auto" });
       setDisplayKey(pendingKey.current);
-      // next frame -> fade in
+      // double rAF -> ensures starting opacity is committed before fade-in
       requestAnimationFrame(() => {
         requestAnimationFrame(() => setStage("in"));
       });
-    }, 180);
+    }, 220);
     return () => window.clearTimeout(t);
   }, [pathname, displayKey]);
 
