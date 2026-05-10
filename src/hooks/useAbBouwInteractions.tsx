@@ -148,7 +148,7 @@ export function useAbBouwInteractions() {
         if (sy > 30) nav?.classList.add('scrolled');
         else nav?.classList.remove('scrolled');
         if (sy > 360) { document.body.classList.add('past-hero'); triggerSweep(); }
-        else document.body.classList.remove('past-hero');
+        else { document.body.classList.remove('past-hero'); sweepDone = false; nav?.classList.remove('nav-sweep-once'); }
         if (hero) {
           const heroH = hero.offsetHeight;
           const fadeStart = heroH * 0.55;
