@@ -133,35 +133,40 @@ export function useAbBouwInteractions() {
       document.documentElement.style.setProperty('--nav-sweep', '1');
       document.body.classList.add('nav-revealed');
     }
+    let navRaf = 0;
     const onScroll = () => {
-      if (window.scrollY > 30) nav?.classList.add('scrolled');
-      else nav?.classList.remove('scrolled');
-      // Reveal sticky mobile bar only after user has scrolled past the hero CTA area
-      if (window.scrollY > 360) document.body.classList.add('past-hero');
-      else document.body.classList.remove('past-hero');
-      if (hero) {
-        const heroH = hero.offsetHeight;
-        const fadeStart = heroH * 0.55;
-        const fadeEnd = heroH * 0.95;
-        const fade = Math.max(0, Math.min(1, 1 - (window.scrollY - fadeStart) / (fadeEnd - fadeStart)));
-        document.documentElement.style.setProperty('--hf', fade.toString());
-        const navStart = heroH * 0.55;
-        const navEnd = heroH * 0.75;
-        const navP = Math.max(0, Math.min(1, (window.scrollY - navStart) / (navEnd - navStart)));
-        document.documentElement.style.setProperty('--nav-sweep', navP.toString());
-        if (navP > 0.02) {
-          nav?.classList.remove('hero-mode');
-          document.body.classList.add('nav-revealed');
-        } else {
-          nav?.classList.add('hero-mode');
-          document.body.classList.remove('nav-revealed');
+      if (navRaf) return;
+      navRaf = requestAnimationFrame(() => {
+        navRaf = 0;
+        const sy = window.scrollY;
+        if (sy > 30) nav?.classList.add('scrolled');
+        else nav?.classList.remove('scrolled');
+        if (sy > 360) document.body.classList.add('past-hero');
+        else document.body.classList.remove('past-hero');
+        if (hero) {
+          const heroH = hero.offsetHeight;
+          const fadeStart = heroH * 0.55;
+          const fadeEnd = heroH * 0.95;
+          const fade = Math.max(0, Math.min(1, 1 - (sy - fadeStart) / (fadeEnd - fadeStart)));
+          document.documentElement.style.setProperty('--hf', fade.toString());
+          const navStart = heroH * 0.55;
+          const navEnd = heroH * 0.75;
+          const navP = Math.max(0, Math.min(1, (sy - navStart) / (navEnd - navStart)));
+          document.documentElement.style.setProperty('--nav-sweep', navP.toString());
+          if (navP > 0.02) {
+            nav?.classList.remove('hero-mode');
+            document.body.classList.add('nav-revealed');
+          } else {
+            nav?.classList.add('hero-mode');
+            document.body.classList.remove('nav-revealed');
+          }
         }
-      }
-      const sp = document.getElementById('scrollProgress');
-      if (sp) {
-        const h = document.documentElement.scrollHeight - window.innerHeight;
-        sp.style.width = `${(window.scrollY / h) * 100}%`;
-      }
+        const sp = document.getElementById('scrollProgress');
+        if (sp) {
+          const h = document.documentElement.scrollHeight - window.innerHeight;
+          sp.style.width = `${(sy / h) * 100}%`;
+        }
+      });
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
