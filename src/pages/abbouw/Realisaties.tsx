@@ -157,7 +157,12 @@ const ecologisch: Card[] = [
 const filters: Filter[] = [
   { key: 'alle', label: 'Alle projecten',
     imgs: [projReno, dakPannen, svcInterieur, svcBad],
-    cards: [renovatie[0], nieuwbouw[0], dakwerken[0], interieur[0], badkamer[0], gevel[0], ecologisch[0], renovatie[1]],
+    cards: [
+      renovatie[0], nieuwbouw[0], dakwerken[0], interieur[0],
+      badkamer[0], gevel[0], ecologisch[0], renovatie[1],
+      dakwerken[2], interieur[1], nieuwbouw[1], badkamer[2],
+      gevel[1], ecologisch[1], renovatie[3], interieur[3],
+    ],
   },
   { key: 'dakwerken', label: 'Dakwerken',
     imgs: [dakPannen, dakEpdm, dakLeien, dakZink], cards: dakwerken },
