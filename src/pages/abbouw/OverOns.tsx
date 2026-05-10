@@ -278,9 +278,13 @@ ${FOOTER}
 .ab-cert strong { display:block; font-family: var(--font-display); font-size: 14.5px; color: var(--navy); margin-bottom: 4px; }
 .ab-cert span { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
 
+@media (max-width: 1100px) {
+  .ab-rules { grid-template-columns: repeat(2, 1fr); }
+}
 @media (max-width: 960px) {
   .ab-pillars { grid-template-columns: 1fr; }
   .ab-team { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; }
+  .ab-timeline { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 760px) {
   .ab-mv-grid { grid-template-columns: 1fr; }
@@ -289,6 +293,8 @@ ${FOOTER}
   .ab-fact { padding: 24px 14px; }
   .ab-fact-num { font-size: 32px; }
   .ab-certs { grid-template-columns: 1fr; }
+  .ab-rules { grid-template-columns: 1fr; }
+  .ab-timeline { grid-template-columns: 1fr; }
 }
 </style>
 `;
