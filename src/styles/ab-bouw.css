@@ -6517,7 +6517,6 @@ body.nav-revealed .lf-nav {
 }
 
 @media (max-width: 760px) {
-  body:not(.past-hero) .lf-nav,
   body.past-hero .lf-nav,
   body.nav-revealed .lf-nav {
     opacity: 1 !important;
@@ -6525,17 +6524,23 @@ body.nav-revealed .lf-nav {
     transform: translateY(0) !important;
     pointer-events: none !important;
   }
-  body:not(.past-hero) .lf-nav .lf-nav-inner,
   body.past-hero .lf-nav .lf-nav-inner,
   body.nav-revealed .lf-nav .lf-nav-inner {
     clip-path: inset(0 0 0 0 round 999px) !important;
     transform: scale(1) !important;
   }
-  .lf-fab-call {
+  body.nav-revealed .lf-fab-call {
     display: inline-flex !important;
     opacity: 1 !important;
     transform: translateY(0) scale(1) !important;
     pointer-events: auto !important;
+  }
+  body.ab-home-page:not(.past-hero) .lf-nav,
+  body.ab-home-page:not(.nav-revealed) .lf-fab-call {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(-18px) !important;
+    pointer-events: none !important;
   }
 }
 
