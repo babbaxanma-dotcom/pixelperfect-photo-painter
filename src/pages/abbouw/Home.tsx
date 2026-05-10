@@ -765,7 +765,7 @@ const EXTRA_STYLE = `
 .lf-eyebrow { display:inline-block; padding: 6px 14px; background: var(--accent); color:#fff; border-radius: 4px; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform: uppercase; margin-bottom: 18px; }
 .lf-h2 { font-family: var(--font-display); font-size: clamp(28px, 3.4vw, 44px); line-height:1.15; font-weight:600; letter-spacing:-0.02em; color: var(--navy); margin-bottom: 18px; }
 .lf-section { padding: 90px 0; }
-.lf-section.lf-section-compact-stack { padding-bottom: 56px; }
+.lf-section.lf-section-compact-stack { padding-bottom: 32px; }
 .lf-section.lf-section-compact-stack .lf-section-head { margin-bottom: 38px; }
 .lf-section.lf-section-compact-stack .lf-section-head.centered { margin-bottom: 38px; }
 .lf-tone-soft { background: var(--bg-tint); }
