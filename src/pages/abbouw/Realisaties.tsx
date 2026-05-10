@@ -210,6 +210,7 @@ ${buildHero({
   </div>
 </section>
 
+<section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow" id="rzCardsEyebrow">Recent werk</span>
