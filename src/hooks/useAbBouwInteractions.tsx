@@ -200,7 +200,7 @@ export function useAbBouwInteractions() {
           }
         });
       },
-      { threshold: 0.12 },
+      { threshold: 0.08, rootMargin: '0px 0px -8% 0px' },
     );
     reveals.forEach((el) => io.observe(el));
 

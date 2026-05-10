@@ -1002,17 +1002,19 @@ body.menu-open { overflow: hidden; }
 
 /* ===== Page transitions (clean fade + slight lift) ===== */
 .page-transition {
-  will-change: opacity;
-  transition: opacity 280ms cubic-bezier(0.22, 0.61, 0.36, 1),
-              transform 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+  transition: opacity 360ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 460ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .page-transition--out {
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(6px) translateZ(0);
 }
 .page-transition--in {
   opacity: 1;
-  transform: none;
+  transform: translateZ(0);
 }
 @media (prefers-reduced-motion: reduce) {
   .page-transition,
@@ -1021,6 +1023,82 @@ body.menu-open { overflow: hidden; }
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+}
+
+/* =====================================================================
+   GLOBAL SMOOTHNESS LAYER — site-brede micro-animaties & gpu hints
+   ===================================================================== */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-anchor: auto;
+}
+/* Stop iOS rubber-banding from feeling like jank inside fixed nav */
+html, body { overscroll-behavior-y: none; }
+
+/* Subtle smoothed defaults op interactieve elementen — voelt overal "soepel" */
+a, button, [role="button"], summary, label[for], .lf-svc-card, .rz-proj-card,
+.lf-proj-chip, .lf-feature, .lf-why-tile, .lf-testi, .lf-stat-card,
+.lf-btn-pri, .lf-btn-light, .lf-nav-phone, .lf-nav-link, .footer-col a {
+  transition:
+    color .25s cubic-bezier(.22,.61,.36,1),
+    background-color .25s cubic-bezier(.22,.61,.36,1),
+    border-color .25s cubic-bezier(.22,.61,.36,1),
+    box-shadow .35s cubic-bezier(.22,.61,.36,1),
+    transform .35s cubic-bezier(.22,.61,.36,1),
+    opacity .25s cubic-bezier(.22,.61,.36,1);
+}
+
+/* Iets stevigere "press" feedback bij klikken (alle knoppen + linkjes) */
+a:active, button:active, [role="button"]:active,
+.lf-btn-pri:active, .lf-btn-light:active, .lf-nav-phone:active,
+.lf-svc-card:active, .rz-proj-card:active, .lf-proj-chip:active {
+  transform: translateY(1px) scale(.997);
+  transition-duration: .08s;
+}
+
+/* Beelden zacht infaden ipv hard pop wanneer ze klaar zijn met laden */
+img { transition: opacity .45s ease, filter .45s ease; }
+img[loading="lazy"] { content-visibility: auto; }
+img:not([src]), img[src=""] { opacity: 0; }
+
+/* GPU-promotie op zware/animerende elementen — minder paint-jank bij scroll */
+.lf-nav, .lf-nav-inner, .page-transition,
+.lf-svc-card, .rz-proj-card, .lf-testi,
+.lf-hero, .lf-hero-bg, .lf-proj-collage img {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Kleine veerkracht op hover van klikbare cards (geen wilde scale) */
+@media (hover: hover) {
+  .lf-svc-card:hover, .rz-proj-card:hover, .lf-feature:hover, .lf-why-tile:hover {
+    transform: translateY(-3px);
+  }
+}
+
+/* Smooth scrollen ook bij anchor-jumps, met offset voor de fixed nav */
+:target { scroll-margin-top: 110px; }
+
+/* Scrollbar wat rustiger op desktop */
+@media (hover: hover) and (pointer: fine) {
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: rgba(15,23,42,.18); border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(15,23,42,.28); }
+  ::-webkit-scrollbar-track { background: transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
   }
 }
 
