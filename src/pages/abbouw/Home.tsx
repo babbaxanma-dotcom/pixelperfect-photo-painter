@@ -1497,40 +1497,62 @@ export default function Home() {
     };
     const svcNavCleanup = svcNavSetup();
 
-    // Blog horizontal carousel: dots <-> scroll sync
+    // Blog horizontal carousel: dots <-> scroll sync + arrows + current-card scaling
     const blogCarouselSetup = () => {
       const scroller = document.querySelector<HTMLElement>('[data-blog-scroller]');
       const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-blog-dot]'));
       const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-blog-card]'));
+      const prevBtn = document.querySelector<HTMLButtonElement>('[data-blog-prev]');
+      const nextBtn = document.querySelector<HTMLButtonElement>('[data-blog-next]');
       if (!scroller || !dots.length || !cards.length) return () => {};
-      const setActive = (i: number) => dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
-      const onScroll = () => {
+      let currentIdx = 0;
+      const setActive = (i: number) => {
+        currentIdx = i;
+        dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
+        cards.forEach((c, k) => c.classList.toggle('is-current', k === i));
+        if (prevBtn) prevBtn.disabled = i === 0;
+        if (nextBtn) nextBtn.disabled = i === cards.length - 1;
+      };
+      const computeCenterIdx = () => {
         const sr = scroller.getBoundingClientRect();
+        const center = sr.left + sr.width / 2;
         let bestIdx = 0;
         let bestDist = Infinity;
         cards.forEach((c, idx) => {
           const cr = c.getBoundingClientRect();
-          const dist = Math.abs(cr.left - sr.left);
+          const cardCenter = cr.left + cr.width / 2;
+          const dist = Math.abs(cardCenter - center);
           if (dist < bestDist) { bestDist = dist; bestIdx = idx; }
         });
-        setActive(bestIdx);
+        return bestIdx;
       };
+      const onScroll = () => setActive(computeCenterIdx());
       scroller.addEventListener('scroll', onScroll, { passive: true });
+      const scrollTo = (idx: number) => {
+        const target = cards[idx];
+        if (!target) return;
+        const sr = scroller.getBoundingClientRect();
+        const cr = target.getBoundingClientRect();
+        const delta = (cr.left + cr.width / 2) - (sr.left + sr.width / 2);
+        scroller.scrollBy({ left: delta, behavior: 'smooth' });
+      };
       const dotHandlers: Array<[HTMLButtonElement, () => void]> = [];
       dots.forEach((dot, idx) => {
-        const h = () => {
-          const target = cards[idx];
-          if (!target) return;
-          const sr = scroller.getBoundingClientRect();
-          const cr = target.getBoundingClientRect();
-          scroller.scrollBy({ left: cr.left - sr.left, behavior: 'smooth' });
-        };
+        const h = () => scrollTo(idx);
         dot.addEventListener('click', h);
         dotHandlers.push([dot, h]);
       });
+      const prevH = () => scrollTo(Math.max(0, currentIdx - 1));
+      const nextH = () => scrollTo(Math.min(cards.length - 1, currentIdx + 1));
+      prevBtn?.addEventListener('click', prevH);
+      nextBtn?.addEventListener('click', nextH);
+      // initial
+      setActive(computeCenterIdx());
       return () => {
         scroller.removeEventListener('scroll', onScroll);
         dotHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
+        prevBtn?.removeEventListener('click', prevH);
+        nextBtn?.removeEventListener('click', nextH);
       };
     };
     const blogCleanup = blogCarouselSetup();
