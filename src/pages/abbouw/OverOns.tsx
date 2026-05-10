@@ -110,22 +110,53 @@ ${buildHero({
 </section>
 
 <!-- HOE WIJ WERKEN -->
-<section class="lf-section lf-tone-soft">
+<section class="lf-section lf-tone-soft ab-rules-section">
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Hoe wij werken</span>
       <h2 class="lf-h2">Acht afspraken die wij<br/>met onszelf maken.</h2>
-      <p class="lf-lede" style="margin: 0 auto;">Geen loze beloftes. Onderstaande punten staan zwart op wit in elke offerte en zijn de meetlat waaraan u ons mag afrekenen.</p>
+      <p class="lf-lede" style="margin: 0 auto;">Geen loze beloftes. Klik door de acht punten die in elke offerte staan.</p>
     </div>
-    <div class="ab-rules">
-      <div class="ab-rule" data-reveal><span class="ab-rule-num">01</span><h5>Plaatsbezoek binnen 5 werkdagen</h5><p>U belt of mailt, wij komen binnen de week ter plaatse. Geen tussenpersonen, gewoon de werfleider die uw project zal opvolgen.</p></div>
-      <div class="ab-rule" data-reveal data-reveal-delay="1"><span class="ab-rule-num">02</span><h5>Offerte in 7 werkdagen</h5><p>Een gedetailleerde meetstaat, geen ronde forfaits. U weet exact wat materiaal kost, wat uurloon kost en wat de marge is.</p></div>
-      <div class="ab-rule" data-reveal data-reveal-delay="2"><span class="ab-rule-num">03</span><h5>Vaste startdatum op contract</h5><p>Bij ondertekening krijgt u een planning met start- én opleveringsdatum. Verschuift het, dan hoort u dat minstens twee weken vooraf.</p></div>
-      <div class="ab-rule" data-reveal data-reveal-delay="3"><span class="ab-rule-num">04</span><h5>Wekelijks werfrapport</h5><p>Elke vrijdag krijgt u een korte mail met foto's, gewerkte uren en de planning voor de volgende week. U weet altijd waar we staan.</p></div>
-      <div class="ab-rule" data-reveal data-reveal-delay="4"><span class="ab-rule-num">05</span><h5>Eén factuur per fase</h5><p>Geen losse rekeningen van metselaar, dakwerker en tegelzetter. Eén schijf per fase, telkens nadat u die fase samen met ons heeft opgeleverd.</p></div>
-      <div class="ab-rule" data-reveal data-reveal-delay="5"><span class="ab-rule-num">06</span><h5>Werf opgeruimd op vrijdag</h5><p>Standaard inbegrepen. Vloeren afgedekt, materiaal gestapeld, container leeg. U gebruikt uw woning gewoon door tijdens de werken.</p></div>
-      <div class="ab-rule" data-reveal data-reveal-delay="6"><span class="ab-rule-num">07</span><h5>Premiedossier door ons</h5><p>Mijn VerbouwPremie en Fluvius worden door onze EPB-verslaggever ingediend. Gemiddeld goed voor €4.200 retour per renovatieproject.</p></div>
-      <div class="ab-rule" data-reveal data-reveal-delay="7"><span class="ab-rule-num">08</span><h5>Nacontrole na 1 jaar</h5><p>Krimpscheuren, deuren bijregelen, voegen nakijken. Eén jaar na oplevering komen we gratis langs voor een eindcontrole.</p></div>
+
+    <div class="ab-promise" data-promise>
+      <div class="ab-promise-tabs" data-promise-tabs>
+        ${[
+          ['01','Plaatsbezoek binnen 5 werkdagen'],
+          ['02','Offerte in 7 werkdagen'],
+          ['03','Vaste startdatum op contract'],
+          ['04','Wekelijks werfrapport'],
+          ['05','Eén factuur per fase'],
+          ['06','Werf opgeruimd op vrijdag'],
+          ['07','Premiedossier door ons'],
+          ['08','Nacontrole na 1 jaar'],
+        ].map(([n,t], i) => `<button type="button" class="ab-promise-tab${i===0?' is-active':''}" data-promise-tab="${i}"><span class="ab-promise-tab-num">${n}</span><span class="ab-promise-tab-title">${t}</span></button>`).join('')}
+      </div>
+
+      <div class="ab-promise-stage" data-promise-stage>
+        ${[
+          ['01','Plaatsbezoek binnen 5 werkdagen','U belt of mailt, wij komen binnen de week ter plaatse. Geen tussenpersonen, gewoon de werfleider die uw project zal opvolgen.','Reactie binnen 24 u·Werfleider zelf ter plaatse·Vrijblijvend & gratis'],
+          ['02','Offerte in 7 werkdagen','Een gedetailleerde meetstaat, geen ronde forfaits. U weet exact wat materiaal kost, wat uurloon kost en wat de marge is.','Post per post uitgesplitst·Bindende prijs·Mondeling toegelicht'],
+          ['03','Vaste startdatum op contract','Bij ondertekening krijgt u een planning met start- én opleveringsdatum. Verschuift het, dan hoort u dat minstens twee weken vooraf.','Start- & einddatum zwart op wit·Boeteclausule bij vertraging·Geen open einde'],
+          ['04','Wekelijks werfrapport','Elke vrijdag krijgt u een korte mail met foto\\u2019s, gewerkte uren en de planning voor de volgende week. U weet altijd waar we staan.','Foto\\u2019s van de week·Gewerkte uren per fase·Planning vooruit'],
+          ['05','Eén factuur per fase','Geen losse rekeningen van metselaar, dakwerker en tegelzetter. Eén schijf per fase, telkens nadat u die fase samen met ons heeft opgeleverd.','Eén aanspreekpunt voor facturatie·Schijf na oplevering fase·Geen voorschotten zonder werk'],
+          ['06','Werf opgeruimd op vrijdag','Standaard inbegrepen. Vloeren afgedekt, materiaal gestapeld, container leeg. U gebruikt uw woning gewoon door tijdens de werken.','Stof­schotten & vloerbescherming·Container wekelijks geleegd·Sanitair blijft bruikbaar'],
+          ['07','Premiedossier door ons','Mijn VerbouwPremie en Fluvius worden door onze EPB-verslaggever ingediend. Gemiddeld goed voor \\u20ac4.200 retour per renovatieproject.','EPB-verslaggever in huis·Mijn VerbouwPremie + Fluvius·Gemiddeld \\u20ac4.200 retour'],
+          ['08','Nacontrole na 1 jaar','Krimpscheuren, deuren bijregelen, voegen nakijken. Eén jaar na oplevering komen we gratis langs voor een eindcontrole.','Gratis nacontrole·Bijregelen inbegrepen·10 jaar aansprakelijkheid'],
+        ].map(([n,t,d,b], i) => `
+          <article class="ab-promise-panel${i===0?' is-active':''}" data-promise-panel="${i}">
+            <div class="ab-promise-bignum">${n}</div>
+            <div class="ab-promise-body">
+              <span class="ab-promise-eyebrow">Afspraak ${n}</span>
+              <h3>${t}</h3>
+              <p>${d}</p>
+              <ul class="ab-promise-bullets">
+                ${(b as string).split('·').map(x => `<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>${x.trim()}</span></li>`).join('')}
+              </ul>
+            </div>
+          </article>
+        `).join('')}
+        <div class="ab-promise-progress" data-promise-progress><i></i></div>
+      </div>
     </div>
   </div>
 </section>
