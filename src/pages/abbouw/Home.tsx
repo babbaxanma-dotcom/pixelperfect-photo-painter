@@ -334,6 +334,7 @@ const HTML = (i: Record<string, string>) => `
             <img src="/assets/logos/koramic.png" alt="Koramic" loading="lazy" />
             <img src="/assets/logos/mato.png" alt="Mato" loading="lazy" />
             <img src="/assets/logos/rectic.png" alt="Recticel" loading="lazy" />
+            <img src="/assets/logos/caparol.png" alt="Caparol" loading="lazy" />
           </div>`).join('')}
       </div>
     </div>
