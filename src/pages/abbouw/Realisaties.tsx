@@ -202,12 +202,23 @@ ${buildHero({
           </button>`).join('')}
       </div>
     </div>
-    <div class="lf-proj-collage" data-reveal id="rzCollage">
-      <div class="lf-proj-cell lf-proj-tl"><img id="rzImg0" src="${filters[0].imgs[0]}" alt="" loading="lazy"/></div>
-      <div class="lf-proj-cell lf-proj-tr"><img id="rzImg1" src="${filters[0].imgs[1]}" alt="" loading="lazy"/></div>
-      <div class="lf-proj-cell lf-proj-bl"><img id="rzImg2" src="${filters[0].imgs[2]}" alt="" loading="lazy"/></div>
-      <div class="lf-proj-cell lf-proj-br"><img id="rzImg3" src="${filters[0].imgs[3]}" alt="" loading="lazy"/></div>
-      <div class="lf-proj-logo"><img src="${logo}" alt="AB Bouw Groep" /></div>
+    <div class="rz-grid rz-grid--preview" data-reveal id="rzCollage">
+      ${[0,1,2,3].map(i => {
+        const p = filters[0].cards[i] || filters[0].cards[0];
+        return `
+        <a class="rz-proj-card" href="/contact" aria-label="${p.t}" data-rz-preview="${i}">
+          <div class="rz-proj-img"><img id="rzImg${i}" src="${p.img}" alt="${p.t}" loading="lazy"/></div>
+          <div class="rz-proj-foot">
+            <div class="rz-proj-meta">
+              <span class="rz-proj-tag" id="rzTag${i}">${p.tag}</span>
+              <span class="rz-proj-loc" id="rzLoc${i}">${p.t}</span>
+            </div>
+            <span class="rz-proj-arrow" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+            </span>
+          </div>
+        </a>`;
+      }).join('')}
     </div>
   </div>
 </section>
@@ -296,8 +307,9 @@ export default function Realisaties() {
     document.body.className = "";
     const styleEl = document.createElement('style');
     styleEl.textContent = SHELL_STYLE + `
-      .lf-proj-cell img { transition: opacity .35s ease; }
-      .lf-proj-cell.swap img { opacity: 0; }
+      .rz-proj-card img { transition: opacity .35s ease; }
+      .rz-proj-card.swap img { opacity: 0; }
+      .rz-grid--preview { margin-top: 8px; }
 
       /* Project cards — locatie + pijl stijl */
       .rz-grid {
@@ -420,7 +432,11 @@ export default function Realisaties() {
     document.head.appendChild(styleEl);
 
     const chips = document.querySelectorAll<HTMLButtonElement>('#rzFilters .lf-proj-chip');
-    const cells = [0, 1, 2, 3].map(i => document.getElementById('rzImg' + i) as HTMLImageElement | null);
+    const previewCards = [0, 1, 2, 3].map(i => document.querySelector<HTMLElement>(`[data-rz-preview="${i}"]`));
+    const previewImgs = [0, 1, 2, 3].map(i => document.getElementById('rzImg' + i) as HTMLImageElement | null);
+    const previewTags = [0, 1, 2, 3].map(i => document.getElementById('rzTag' + i));
+    const previewLocs = [0, 1, 2, 3].map(i => document.getElementById('rzLoc' + i));
+    const FILTER_CARDS = filters.reduce<Record<string, typeof filters[0]['cards']>>((acc, f) => { acc[f.key] = f.cards; return acc; }, {});
     const panels = document.querySelectorAll<HTMLElement>('.rz-panel');
     const handlers: Array<[HTMLButtonElement, () => void]> = [];
 
@@ -428,7 +444,8 @@ export default function Realisaties() {
       const h = () => {
         const key = chip.getAttribute('data-rz') || 'alle';
         const data = FILTER_DATA[key];
-        if (!data) return;
+        const cardData = FILTER_CARDS[key];
+        if (!data || !cardData) return;
         chips.forEach(c => {
           c.classList.toggle('active', c === chip);
           const isActive = c === chip;
@@ -441,10 +458,15 @@ export default function Realisaties() {
             hasDot.remove();
           }
         });
-        cells.forEach(c => c?.parentElement?.classList.add('swap'));
+        previewCards.forEach(c => c?.classList.add('swap'));
         window.setTimeout(() => {
-          cells.forEach((img, i) => { if (img) img.src = data.imgs[i]; });
-          cells.forEach(c => c?.parentElement?.classList.remove('swap'));
+          [0, 1, 2, 3].forEach(i => {
+            const p = cardData[i] || cardData[0];
+            if (previewImgs[i] && p) { previewImgs[i]!.src = p.img; previewImgs[i]!.alt = p.t; }
+            if (previewTags[i] && p) previewTags[i]!.textContent = p.tag;
+            if (previewLocs[i] && p) previewLocs[i]!.textContent = p.t;
+          });
+          previewCards.forEach(c => c?.classList.remove('swap'));
         }, 280);
         panels.forEach(p => {
           const match = p.getAttribute('data-rz-panel') === key;
