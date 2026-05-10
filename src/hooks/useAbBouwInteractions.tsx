@@ -177,6 +177,18 @@ export function useAbBouwInteractions() {
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+    let homeHeroIo: IntersectionObserver | null = null;
+    if (hero && document.body.classList.contains('ab-home-page')) {
+      homeHeroIo = new IntersectionObserver(
+        ([entry]) => {
+          const showNav = !entry.isIntersecting || entry.intersectionRatio < 0.35;
+          document.body.classList.toggle('past-hero', showNav);
+          document.body.classList.toggle('nav-revealed', showNav);
+        },
+        { threshold: [0, 0.35, 1] },
+      );
+      homeHeroIo.observe(hero);
+    }
 
     // ── Project filter chips ────────────────────────────
     const projTabs = document.querySelector<HTMLElement>('[data-proj-tabs]');
@@ -662,6 +674,7 @@ export function useAbBouwInteractions() {
       document.removeEventListener('click', onClick);
       projTabs?.removeEventListener('click', onProjFilter);
       window.removeEventListener('scroll', onScroll);
+      homeHeroIo?.disconnect();
       window.removeEventListener('scroll', onParallax);
       window.removeEventListener('scroll', onPinScroll);
       window.removeEventListener('scroll', onSupportScroll);
