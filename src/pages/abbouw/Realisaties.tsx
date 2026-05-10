@@ -78,32 +78,35 @@ const dakwerken: Card[] = [
 
 const renovatie: Card[] = [
   { img: projReno, tag: 'Totaalrenovatie', t: 'Rijwoning Mechelen', d: 'Strip & rebuild, nieuwe technieken, isolatie, dak, gevel en interieur. 18 weken.' },
-  { img: cTotaal, tag: 'Energetische renovatie', t: 'Hoekwoning Antwerpen', d: 'Naisolatie, nieuw schrijnwerk, warmtepomp en zonnepanelen. EPC C → A.' },
+  { img: rzRenoHoek, tag: 'Energetische renovatie', t: 'Hoekwoning Antwerpen', d: 'Naisolatie, nieuw schrijnwerk, warmtepomp en zonnepanelen. EPC C → A.' },
   { img: cAanbouw, tag: 'Aanbouw', t: 'Achterbouw Bonheiden', d: 'Aanbouw met plat dak, openslaande deuren en gietvloer. 10 weken.' },
   { img: cAfwerking, tag: 'Renovatie', t: 'Stadswoning Brussel', d: 'Volledige binnenrenovatie met behoud van originele cement-tegels.' },
-  { img: cRuwbouw, tag: 'Ruwbouw-renovatie', t: 'Casco-renovatie Lier', d: 'Casco-strip, nieuwe binnendragende muren en stalen lateien.' },
+  { img: rzRenoHoek, tag: 'Gevelrestauratie', t: 'Burgerwoning Mechelen', d: 'Originele gevel gereinigd en hervoegd, nieuwe ramen met dunne profielen.' },
   { img: about, tag: 'Gevelrenovatie', t: 'Halfopen Boom', d: 'Reiniging, nieuw voegwerk en geïsoleerde steenstrips. 4 weken.' },
   { img: projUtil, tag: 'Bedrijfspand', t: 'Kantoorrenovatie Willebroek', d: 'Volledige interieurrenovatie met nieuwe technieken en glaswanden. 12 weken.' },
   { img: cVilla, tag: 'Villarenovatie', t: 'Villa Bonheiden', d: 'Behoud authentieke gevel, volledig nieuwe binneninrichting en buitenisolatie.' },
   { img: cVilla, tag: 'Karakterwoning', t: 'Herenhuis Antwerpen', d: 'Restauratie originele lambrisering en pleisterprofielen, modern comfort.' },
   { img: projReno, tag: 'Stadsrenovatie', t: 'Burgerwoning Antwerpen', d: 'Volledige binnenrenovatie met behoud authentieke voorgevel. 16 weken.' },
   { img: cAanbouw, tag: 'Uitbreiding', t: 'Keukenuitbouw Mechelen', d: 'Aanbouw met grote schuifpui, gietvloer en doorzonkeuken. 8 weken.' },
-  { img: cTotaal, tag: 'Energierenovatie', t: 'Fermette Bonheiden', d: 'Na-isolatie, nieuw schrijnwerk en warmtepomp. EPC F → B.' },
+  { img: rzRenoHoek, tag: 'Energierenovatie', t: 'Fermette Bonheiden', d: 'Na-isolatie, nieuw schrijnwerk en warmtepomp. EPC F → B.' },
   { img: projUtil, tag: 'Bedrijfspand', t: 'Loods-renovatie Boom', d: 'Strip & rebuild loods naar kantoorruimte met dakisolatie en ramen.' },
   { img: cAfwerking, tag: 'Renovatie', t: 'Rijwoning Brussel', d: 'Open keuken-leefruimte gecreëerd door dragende muur weg te halen.' },
+  { img: rzGevelStrips, tag: 'Gevel + interieur', t: 'Hoekhuis Lier', d: 'Nieuwe steenstrips-gevel gecombineerd met volledige binnenrenovatie.' },
 ];
 
 const nieuwbouw: Card[] = [
   { img: cVilla, tag: 'Vrijstaand', t: 'Open bebouwing Bonheiden', d: 'Sleutel-op-de-deur, E-peil 30, klassiek met gevelsteen. 11 maanden.' },
   { img: cHalfopen, tag: 'Halfopen', t: 'HOB Willebroek', d: 'Ruwbouw winddicht in 14 weken, oplevering casco+. Eigen ploegen op alle loten.' },
-  { img: cNieuw, tag: 'Nieuwbouw', t: 'Vrijstaand Mechelen', d: 'Moderne nieuwbouw met witte crepi en grijs aluminium schrijnwerk.' },
+  { img: rzNbVrij, tag: 'Vrijstaand modern', t: 'Vrijstaand Mechelen', d: 'Moderne nieuwbouw met witte crepi en lariks-accent rond de inkom.' },
   { img: projVilla, tag: 'BEN-bouw', t: 'BEN-villa Lier', d: 'Bijna-energieneutraal met warmtepomp, ventilatie D en 24 PV-panelen.' },
   { img: cRuwbouw, tag: 'Ruwbouw', t: 'Ruwbouw Boom', d: 'Ruwbouw winddicht met houtskeletwanden op betonnen plint. 16 weken.' },
-  { img: cAanbouw, tag: 'Stadswoning', t: 'Nieuwbouw Antwerpen', d: 'Smalle stadskavel, drie bouwlagen met dakterras en patio.' },
-  { img: cTotaal, tag: 'Vrijstaand', t: 'Villa Mechelen', d: 'Hedendaagse villa met crepi en houten gevelaccenten, BEN-norm.' },
+  { img: rzGevelCrepi, tag: 'Stadswoning', t: 'Nieuwbouw Antwerpen', d: 'Smalle stadskavel, drie bouwlagen met dakterras en patio.' },
+  { img: rzNbVrij, tag: 'Vrijstaand', t: 'Villa Mechelen', d: 'Hedendaagse villa met crepi en houten gevelaccenten, BEN-norm.' },
   { img: cAfwerking, tag: 'Sleutel-op-de-deur', t: 'SOD-woning Boom', d: 'Volledige sleutel-op-de-deur met afwerking en keuken inbegrepen.' },
   { img: projVilla, tag: 'BEN-bouw', t: 'BEN-villa Bonheiden', d: 'Bijna-energieneutrale villa met geothermische warmtepomp.' },
   { img: cVilla, tag: 'Klassiek', t: 'Klassieke villa Lier', d: 'Klassieke vrijstaande woning in gevelsteen met zadeldak en dakkapel.' },
+  { img: rzGevelCrepi, tag: 'Halfopen', t: 'HOB Mechelen', d: 'Halfopen nieuwbouw in antraciet crepi met zwart aluminium schrijnwerk.' },
+  { img: cHalfopen, tag: 'Halfopen', t: 'HOB Boom', d: 'Halfopen bebouwing met klassieke gevelsteen en hellend pannendak.' },
 ];
 
 const interieur: Card[] = [
@@ -112,40 +115,44 @@ const interieur: Card[] = [
   { img: intWoonkamer, tag: 'Vloeren', t: 'Visgraat eik Mechelen', d: 'Massief eik visgraat geolied, met vloerverwarming en ingebouwde bibliotheek.' },
   { img: intTrap, tag: 'Trappen', t: 'Stalen trap Mechelen', d: 'Maatwerktrap in zwart staal met massieve eiken treden.' },
   { img: eKalk, tag: 'Kalkpleister', t: 'Cottage Bonheiden', d: 'Natuurlijke kalkpleister in alle leefruimtes, ademend en mat.' },
-  { img: cVilla, tag: 'Schrijnwerk', t: 'Maatkasten Lier', d: 'Inbouw-dressing en TV-meubel in gerookte eik.' },
+  { img: rzIntDressing, tag: 'Maatkasten', t: 'Maatkasten Lier', d: 'Inbouw-dressing met geïntegreerde verlichting in licht eikenfineer.' },
   { img: intWoonkamer, tag: 'Loft-afwerking', t: 'Stadsappartement Brussel', d: 'Open-plan met lichtkoven, eiken vloer en mat-witte gepleisterde wanden.' },
   { img: intKeuken, tag: 'Open keuken', t: 'Open keuken Lier', d: 'Kookeiland in noten met zicht op tuin via grote schuifpui.' },
   { img: intTrap, tag: 'Trappenhal', t: 'Trappenhal Brussel', d: 'Open trappenhal met zwart staal, eiken treden en glazen leuning.' },
   { img: svcInterieur, tag: 'Bibliotheek', t: 'Maatbibliotheek Bonheiden', d: 'Vloer-tot-plafond bibliotheek in eik met geïntegreerde verlichting.' },
   { img: intWoonkamer, tag: 'Living', t: 'Living Antwerpen', d: 'Strakke living met gepleisterde lichtkoof en visgraat eiken vloer.' },
   { img: eKalk, tag: 'Pleisterwerk', t: 'Pleisterwerk Mechelen', d: 'Velours-pleisterwerk in alle leefruimtes met fijne profielen.' },
+  { img: rzIntDressing, tag: 'TV-wand', t: 'TV-wand Antwerpen', d: 'Inbouw TV-wand in licht eikenfineer met indirecte LED en boekenvitrine.' },
 ];
 
 const badkamer: Card[] = [
   { img: svcBad, tag: 'Wellness', t: 'Wellnesssuite Leuven', d: 'Walk-in douche, hammam, dubbele wastafel en maatkast, 4 weken.' },
   { img: dakRaam, tag: 'Zolderbadkamer', t: 'Zolder Mechelen', d: 'Inbouw onder dakkapel met dakraam, microcement en zwevend toilet.' },
   { img: cAfwerking, tag: 'Familiebadkamer', t: 'Familiebadkamer Lier', d: 'Bad + inloopdouche, tegelwerk grootformaat, regendouche. 3 weken.' },
-  { img: cAanbouw, tag: 'Compact', t: 'Gastenbadkamer Boom', d: 'Volledige strip & rebuild op 4 m² met zwevend meubel. 10 dagen.' },
+  { img: rzBadGast, tag: 'Compact', t: 'Gastenbadkamer Boom', d: 'Volledige strip & rebuild op 4 m² met zwevend meubel. 10 dagen.' },
   { img: svcBad, tag: 'Master', t: 'Master ensuite Bonheiden', d: 'Vrijstaand bad, dubbele inloopdouche en walk-in dressing. 5 weken.' },
   { img: eKalk, tag: 'Microcement', t: 'Microcementbadkamer Antwerpen', d: 'Naadloze microcement-afwerking op wanden en vloer, mat en warm.' },
   { img: svcBad, tag: 'Inloopdouche', t: 'Inloopdouche Mechelen', d: 'XL-inloopdouche met grootformaat tegels en zwart matte kraanwerk.' },
   { img: cAfwerking, tag: 'Renovatie', t: 'Badkamerrenovatie Boom', d: 'Strip & rebuild bestaande badkamer in 2,5 weken, inclusief leidingwerk.' },
   { img: dakRaam, tag: 'Dakbadkamer', t: 'Badkamer onder dak Lier', d: 'Volledig nieuwe badkamer onder hellend dak met twee VELUX-ramen.' },
-  { img: cAanbouw, tag: 'Gastentoilet', t: 'Gastentoilet Antwerpen', d: 'Compact gastentoilet met fineer-meubel en mat zwart sanitair.' },
+  { img: rzBadGast, tag: 'Gastentoilet', t: 'Gastentoilet Antwerpen', d: 'Compact gastentoilet met fineer-meubel en mat zwart sanitair.' },
   { img: svcBad, tag: 'Wellness', t: 'Sauna-suite Bonheiden', d: 'Master ensuite met inbouwsauna en vrijstaand bad in microcement.' },
+  { img: rzBadGast, tag: 'Microcement', t: 'Powderroom Mechelen', d: 'Microcementwanden in greige met fineer-meubel en mat zwart sanitair.' },
 ];
 
 const gevel: Card[] = [
   { img: svcGevel, tag: 'Witte crepi', t: 'HOB Boom', d: 'Geïsoleerde gevel met witte siliconen-crepi. 4 weken.' },
-  { img: cTotaal, tag: 'Grijze crepi', t: 'Nieuwbouw Mechelen', d: 'Antraciet crepi met zwart aluminium schrijnwerk.' },
+  { img: rzGevelCrepi, tag: 'Grijze crepi', t: 'Nieuwbouw Mechelen', d: 'Antraciet siliconen-crepi met zwart aluminium schrijnwerk en magnolia voortuin.' },
   { img: dakIso, tag: 'Buitenisolatie', t: 'ETICS Antwerpen', d: 'Volledige na-isolatie met EPS + minerale crepi. EPC sprong van D → B.' },
-  { img: cNieuw, tag: 'Steenstrips', t: 'Steenstrips Lier', d: 'Geïsoleerde steenstrips Wienerberger met crepi-accent.' },
+  { img: rzGevelStrips, tag: 'Steenstrips', t: 'Steenstrips Lier', d: 'Geïsoleerde steenstrips Wienerberger met crepi-accent boven de inkom.' },
   { img: about, tag: 'Houten gevel', t: 'Lariks Bonheiden', d: 'Ventileerde gevelbekleding in onbehandeld lariks, vergrijst natuurlijk.' },
   { img: svcGevel, tag: 'Composiet', t: 'Trespa Willebroek', d: 'Composiet gevelplaten Trespa Meteon op aluminium onderconstructie.' },
-  { img: cTotaal, tag: 'Renovatie', t: 'Gevelrenovatie Mechelen', d: 'Reiniging, hervoegen en accent in steenstrips boven inkom.' },
-  { img: cNieuw, tag: 'Strip & crepi', t: 'Naïsolatie Antwerpen', d: 'Volledige na-isolatie met EPS en mat-witte siliconen-crepi.' },
+  { img: rzGevelStrips, tag: 'Renovatie', t: 'Gevelrenovatie Mechelen', d: 'Reiniging, hervoegen en accent in steenstrips boven inkom.' },
+  { img: rzGevelCrepi, tag: 'Strip & crepi', t: 'Naïsolatie Antwerpen', d: 'Volledige na-isolatie met EPS en mat-grijze siliconen-crepi.' },
   { img: dakIso, tag: 'ETICS', t: 'ETICS-systeem Boom', d: 'Geïsoleerd gevelsysteem met versterkingsweefsel en minerale eindlaag.' },
   { img: about, tag: 'Lariks', t: 'Lariks-aanbouw Lier', d: 'Verticale lariks-bekleding op aanbouw, ventileerd op aluminium rails.' },
+  { img: rzGevelCrepi, tag: 'Antraciet crepi', t: 'Halfopen Bonheiden', d: 'Antraciet siliconen-crepi met diepe raamomkadering en plat dak.' },
+  { img: rzGevelStrips, tag: 'Steenstrips', t: 'Steenstrips Antwerpen', d: 'Handvorm-steenstrips in warm rood-bruin, met witte crepi rond de inkom.' },
 ];
 
 const ecologisch: Card[] = [
@@ -159,6 +166,7 @@ const ecologisch: Card[] = [
   { img: eHout, tag: 'Houtbouw', t: 'Houtskelet Boom', d: 'Houtskeletbouw met houtvezelisolatie en gevel in lariks.' },
   { img: eWarmte, tag: 'Geothermie', t: 'Bodemwarmtepomp Lier', d: 'Verticale boringen met geothermische warmtepomp en vloerverwarming.' },
   { img: eIso, tag: 'Bio-isolatie', t: 'Hennepisolatie Mechelen', d: 'Hennep- en houtvezelplaten in dakvlak van karakterwoning.' },
+  { img: rzRenoHoek, tag: 'Energierenovatie', t: 'EPC-sprong Antwerpen', d: 'Volledige energetische upgrade: isolatie, schrijnwerk, warmtepomp en PV.' },
 ];
 
 const filters: Filter[] = [
