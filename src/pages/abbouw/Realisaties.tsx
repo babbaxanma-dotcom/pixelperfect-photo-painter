@@ -431,7 +431,11 @@ export default function Realisaties() {
     document.head.appendChild(styleEl);
 
     const chips = document.querySelectorAll<HTMLButtonElement>('#rzFilters .lf-proj-chip');
-    const cells = [0, 1, 2, 3].map(i => document.getElementById('rzImg' + i) as HTMLImageElement | null);
+    const previewCards = [0, 1, 2, 3].map(i => document.querySelector<HTMLElement>(`[data-rz-preview="${i}"]`));
+    const previewImgs = [0, 1, 2, 3].map(i => document.getElementById('rzImg' + i) as HTMLImageElement | null);
+    const previewTags = [0, 1, 2, 3].map(i => document.getElementById('rzTag' + i));
+    const previewLocs = [0, 1, 2, 3].map(i => document.getElementById('rzLoc' + i));
+    const FILTER_CARDS = filters.reduce<Record<string, typeof filters[0]['cards']>>((acc, f) => { acc[f.key] = f.cards; return acc; }, {});
     const panels = document.querySelectorAll<HTMLElement>('.rz-panel');
     const handlers: Array<[HTMLButtonElement, () => void]> = [];
 
@@ -439,7 +443,8 @@ export default function Realisaties() {
       const h = () => {
         const key = chip.getAttribute('data-rz') || 'alle';
         const data = FILTER_DATA[key];
-        if (!data) return;
+        const cardData = FILTER_CARDS[key];
+        if (!data || !cardData) return;
         chips.forEach(c => {
           c.classList.toggle('active', c === chip);
           const isActive = c === chip;
@@ -452,10 +457,15 @@ export default function Realisaties() {
             hasDot.remove();
           }
         });
-        cells.forEach(c => c?.parentElement?.classList.add('swap'));
+        previewCards.forEach(c => c?.classList.add('swap'));
         window.setTimeout(() => {
-          cells.forEach((img, i) => { if (img) img.src = data.imgs[i]; });
-          cells.forEach(c => c?.parentElement?.classList.remove('swap'));
+          [0, 1, 2, 3].forEach(i => {
+            const p = cardData[i] || cardData[0];
+            if (previewImgs[i] && p) { previewImgs[i]!.src = p.img; previewImgs[i]!.alt = p.t; }
+            if (previewTags[i] && p) previewTags[i]!.textContent = p.tag;
+            if (previewLocs[i] && p) previewLocs[i]!.textContent = p.t;
+          });
+          previewCards.forEach(c => c?.classList.remove('swap'));
         }, 280);
         panels.forEach(p => {
           const match = p.getAttribute('data-rz-panel') === key;
