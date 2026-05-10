@@ -562,7 +562,8 @@ ul.ab-checks li::before { content: '✓'; color: var(--accent); font-weight: 800
 .ab-coverage-cols span { font-size: 14px; color: var(--ink-soft); padding: 6px 0; border-bottom: 1px dashed var(--ink-line-soft); }
 .ab-map { background: var(--navy); border-radius: 14px; min-height: 320px; padding: 32px; color:#fff; display:flex; flex-direction:column; justify-content:flex-end; }
 .ab-map h4 { font-family: var(--font-display); font-size: 20px; margin-bottom: 6px; color:#fff; }
-.ab-map p { font-size: 13.5px; color: rgba(255,255,255,0.75); margin: 0; }
+.ab-map p { font-size: 13.5px; color: rgba(255,255,255,0.85); margin: 0; }
+.ab-map--photo { background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 360px; }
 
 @media (max-width: 900px) {
   .ab-deep, .ab-deep.reverse { grid-template-columns: 1fr; gap: 28px; }

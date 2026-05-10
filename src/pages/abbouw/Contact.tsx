@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { buildNav, buildHero, FOOTER, SHELL_STYLE } from './_shell';
 import hero from '@/assets/home/hero-contact.jpg';
+import regionImg from '@/assets/home/region-coverage.jpg';
 
 const HTML = `
 ${buildNav('contact')}
@@ -97,9 +98,9 @@ ${buildHero({
           <span>Gent (op aanvraag)</span><span>Hasselt (op aanvraag)</span>
         </div>
       </div>
-      <div class="ab-map" data-reveal data-reveal-delay="1">
-        <h4>Kantoor in Willebroek</h4>
-        <p>Industrieweg 14 · 2830 Willebroek<br/>Vlot bereikbaar via A12 (afrit Willebroek-Zuid) en N16. Parking voor de deur.</p>
+      <div class="ab-map ab-map--photo" data-reveal data-reveal-delay="1" style="background-image: linear-gradient(180deg, rgba(11,18,32,0) 35%, rgba(11,18,32,0.85) 100%), url('${regionImg}');">
+        <h4>Onze regio in beeld</h4>
+        <p>Vlaamse rooftops, velden en kanalen — van Antwerpen en Mechelen tot Brussel en Gent. Hier rijden onze ploegen wekelijks rond.</p>
       </div>
     </div>
   </div>
