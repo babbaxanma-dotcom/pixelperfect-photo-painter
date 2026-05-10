@@ -6401,17 +6401,17 @@ body.ab-bouw-page { margin: 0 !important; padding: 0 !important; }
   transform: none !important;
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.4s var(--ease), transform 0.5s var(--ease), top 0.3s var(--ease);
+  transition: top 0.3s var(--ease);
 }
-/* Hidden while in the hero, revealed once we scroll past it */
+/* Hidden while in the hero */
 body:not(.past-hero) .lf-nav {
   opacity: 0 !important;
   visibility: hidden !important;
-  transform: translateY(-14px) !important;
   pointer-events: none !important;
 }
 .lf-nav .lf-nav-inner {
-  opacity: 1;
+  position: relative;
+  overflow: hidden;
   transition: box-shadow 0.3s ease;
 }
 .lf-nav.scrolled { top: 10px !important; }
@@ -6421,36 +6421,44 @@ body:not(.past-hero) .lf-nav {
   -webkit-backdrop-filter: saturate(1.4) blur(14px);
 }
 
-/* One-shot sweep when nav transitions out of the hero */
-.lf-nav .lf-nav-inner { position: relative; overflow: hidden; }
+/* ── Sweep reveal: nav wipes in from left, with a glossy highlight ── */
+@keyframes lf-nav-reveal {
+  0%   { clip-path: inset(0 100% 0 0); transform: translateY(-10px); opacity: 0; }
+  20%  { opacity: 1; }
+  100% { clip-path: inset(0 0 0 0);    transform: translateY(0);     opacity: 1; }
+}
+@keyframes lf-nav-shine {
+  0%   { transform: translateX(-120%); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateX(120%);  opacity: 0; }
+}
 .lf-nav .lf-nav-inner::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
+  border-radius: inherit;
   background: linear-gradient(
     100deg,
     transparent 0%,
-    transparent 30%,
-    hsl(var(--primary) / 0.18) 45%,
-    hsl(var(--accent) / 0.28) 55%,
-    transparent 70%,
+    transparent 35%,
+    hsl(var(--primary) / 0.22) 48%,
+    hsl(var(--accent) / 0.32) 55%,
+    transparent 72%,
     transparent 100%
   );
-  transform: translateX(-110%);
+  transform: translateX(-120%);
   opacity: 0;
-  border-radius: inherit;
 }
-@keyframes lf-nav-sweep {
-  0%   { transform: translateX(-110%); opacity: 0; }
-  15%  { opacity: 1; }
-  85%  { opacity: 1; }
-  100% { transform: translateX(110%); opacity: 0; }
+.lf-nav.nav-sweep-once {
+  animation: lf-nav-reveal 850ms cubic-bezier(.22,.61,.36,1) both;
 }
 .lf-nav.nav-sweep-once .lf-nav-inner::after {
-  animation: lf-nav-sweep 1100ms cubic-bezier(.22,.61,.36,1) 1 both;
+  animation: lf-nav-shine 1100ms cubic-bezier(.22,.61,.36,1) 120ms both;
 }
 @media (prefers-reduced-motion: reduce) {
+  .lf-nav.nav-sweep-once,
   .lf-nav.nav-sweep-once .lf-nav-inner::after { animation: none; }
 }
 
