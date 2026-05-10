@@ -31,15 +31,15 @@ import logoHero from '@/assets/home/logo-hero.png';
 import revMarc from '@/assets/reviews/marc.jpg';
 import revEllen from '@/assets/reviews/ellen.jpg';
 import revKatrien from '@/assets/reviews/katrien.jpg';
-import revPieter from '@/assets/reviews/pieter.jpg';
+import revMehmet from '@/assets/reviews/mehmet.jpg';
 import revSofie from '@/assets/reviews/sofie.jpg';
 import revDirk from '@/assets/reviews/dirk.jpg';
-import revAnnelies from '@/assets/reviews/annelies.jpg';
+import revAna from '@/assets/reviews/ana.jpg';
 import revTim from '@/assets/reviews/tim.jpg';
 import revNathalie from '@/assets/reviews/nathalie.jpg';
 import revFilip from '@/assets/reviews/filip.jpg';
 import revInge from '@/assets/reviews/inge.jpg';
-import revJeroen from '@/assets/reviews/jeroen.jpg';
+import revKarim from '@/assets/reviews/karim.jpg';
 import revHilde from '@/assets/reviews/hilde.jpg';
 
 const HTML = (i: Record<string, string>) => `
@@ -155,15 +155,15 @@ const HTML = (i: Record<string, string>) => `
               { name: 'Marc Van den Broeck', role: 'Dakrenovatie · Mechelen', img: revMarc, text: 'Van offerte tot oplevering volledig correct. Geen meerwerken, binnen het budget, en de projectleider belde elke vrijdag met een update. Het dak ligt er strak bij.', highlights: ['volledig correct', 'binnen het budget', 'strak'] },
               { name: 'Ellen De Smet', role: 'Totaalrenovatie · Leuven', img: revEllen, text: 'We hebben drie aannemers vergeleken. AB Bouw was de enige die alle vragen grondig beantwoordde en ook de premieaanvraag voor ons regelde. Resultaat: 3.500 euro terug.', highlights: ['grondig beantwoordde', 'premieaanvraag', '3.500 euro terug'] },
               { name: 'Katrien Peeters', role: 'Badkamer · Antwerpen', img: revKatrien, text: 'Eigen badkamerploeg, eigen tegelzetter, eigen loodgieter. Alles door dezelfde mensen. Dat zie je in het eindresultaat: vakwerk tot in de laatste voeg.', highlights: ['dezelfde mensen', 'vakwerk tot in de laatste voeg'] },
-              { name: 'Pieter Janssens', role: 'Nieuwbouw · Bornem', img: revPieter, text: 'Eerlijk, snel en correct. We kregen wekelijks een rapport en konden altijd Tom bereiken. Sleutel ontvangen op exact de afgesproken datum, dat is in deze sector zeldzaam.', highlights: ['Eerlijk, snel en correct', 'wekelijks een rapport', 'op exact de afgesproken datum'] },
+              { name: 'Mehmet Yıldız', role: 'Nieuwbouw · Bornem', img: revMehmet, text: 'Eerlijk, snel en correct. We kregen wekelijks een rapport en konden altijd Tom bereiken. Sleutel ontvangen op exact de afgesproken datum, dat is in deze sector zeldzaam.', highlights: ['Eerlijk, snel en correct', 'wekelijks een rapport', 'op exact de afgesproken datum'] },
               { name: 'Sofie Vermeulen', role: 'Gevelrenovatie · Sint-Niklaas', img: revSofie, text: 'De gevel ligt er strak bij, alle buren komen vragen wie het werk gedaan heeft. Aanrader voor wie kwaliteit en stiptheid belangrijk vindt.', highlights: ['strak', 'kwaliteit en stiptheid'] },
               { name: 'Dirk Maes', role: 'Plat dak · Antwerpen', img: revDirk, text: 'Lekkend dak op vrijdag gemeld, maandagochtend stond de ploeg op het dak. Probleem opgelost, factuur exact zoals afgesproken. Top service.', highlights: ['maandagochtend stond de ploeg op het dak', 'exact zoals afgesproken', 'Top service'] },
-              { name: 'Annelies Claes', role: 'Interieur · Mechelen', img: revAnnelies, text: 'Maatwerk in keuken en dressing perfect uitgevoerd. Plinten, plafonds, alles tot op de millimeter. Heldere communicatie van begin tot einde.', highlights: ['perfect uitgevoerd', 'tot op de millimeter', 'Heldere communicatie'] },
+              { name: 'Ana Popescu', role: 'Interieur · Mechelen', img: revAna, text: 'Maatwerk in keuken en dressing perfect uitgevoerd. Plinten, plafonds, alles tot op de millimeter. Heldere communicatie van begin tot einde.', highlights: ['perfect uitgevoerd', 'tot op de millimeter', 'Heldere communicatie'] },
               { name: 'Tim Verbeeck', role: 'Carport & oprit · Lier', img: revTim, text: 'Carport in hout met aansluitende klinkeroprit. Drie weken werk, geen dag uitloop. De ploeg ruimde elke vrijdag de werf op, dat scheelt enorm met kleine kinderen.', highlights: ['geen dag uitloop', 'ruimde elke vrijdag de werf op'] },
               { name: 'Nathalie Aerts', role: 'Energetische renovatie · Bonheiden', img: revNathalie, text: 'Spouwmuur, dak en glas in één traject. EPC gegaan van F naar C. Ze regelden alle premies, ik moest niets opzoeken. Heel ontzorgd voelt dat.', highlights: ['EPC gegaan van F naar C', 'alle premies', 'ontzorgd'] },
               { name: 'Filip Wouters', role: 'Hellend dak · Puurs', img: revFilip, text: 'Pannen vernieuwd, isolatie tussen de kepers, alles afgewerkt met zinken bakgoten. Werfleider was elke ochtend ter plaatse om de dag te overlopen. Klasse.', highlights: ['elke ochtend ter plaatse', 'Klasse'] },
               { name: 'Inge Vermeiren', role: 'Badkamer & toilet · Kontich', img: revInge, text: 'Vier weken stof, en dan een prachtige badkamer. Inloopdouche, zwevend meubel, vloerverwarming. De tegelzetter heeft hier echt zijn handtekening gezet.', highlights: ['prachtige badkamer', 'echt zijn handtekening gezet'] },
-              { name: 'Jeroen De Backer', role: 'Aanbouw · Willebroek', img: revJeroen, text: 'Aanbouw van 32m² met grote raampartij. Architect, EPB en uitvoering door één partij, dat scheelt zoveel mailverkeer. Alles correct opgeleverd.', highlights: ['één partij', 'correct opgeleverd'] },
+              { name: 'Karim El Amrani', role: 'Aanbouw · Willebroek', img: revKarim, text: 'Aanbouw van 32m² met grote raampartij. Architect, EPB en uitvoering door één partij, dat scheelt zoveel mailverkeer. Alles correct opgeleverd.', highlights: ['één partij', 'correct opgeleverd'] },
               { name: 'Hilde Goossens', role: 'Gevelisolatie · Boom', img: revHilde, text: 'Witte crepi op buitenisolatie. Onze stookkost is bijna gehalveerd deze winter. Net en proper gewerkt, ook bij de buren bedankjes achtergelaten.', highlights: ['bijna gehalveerd', 'Net en proper'] },
             ];
             const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
