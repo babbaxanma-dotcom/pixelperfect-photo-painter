@@ -612,12 +612,12 @@ const HTML = (i: Record<string, string>) => `
       <div class="lf-support-card" data-reveal data-support-card>
         <div class="lf-support-meta"><span>01</span> Vergunningen</div>
         <h5>Vergunning geregeld</h5>
-        <p>Dossier, indiening en opvolging via Omgevingsloket — wij regelen alles.</p>
+        <p>Dossier, indiening en opvolging via Omgevingsloket. Wij regelen alles.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="1" data-support-card>
-        <div class="lf-support-meta"><span>02</span> Premies</div>
-        <h5>Tot €4.200 terug</h5>
-        <p>Mijn VerbouwPremie en Fluvius — berekend, aangevraagd en opgevolgd.</p>
+      <div class="lf-included" data-reveal data-reveal-delay="1">
+        <div class="lf-included-num">02</div>
+        <h4>Premies</h4>
+        <p>Mijn VerbouwPremie en Fluvius, berekend, aangevraagd en opgevolgd.</p>
       </div>
       <div class="lf-support-card" data-reveal data-reveal-delay="2" data-support-card>
         <div class="lf-support-meta"><span>03</span> Nazorg</div>
