@@ -60,7 +60,7 @@ ${buildHero({
         <div class="ab-pillar-body">
           <span class="ab-pillar-num">02</span>
           <h3>Eén prijs, geen verrassingen</h3>
-          <p>Onze offertes zijn gedetailleerd en bindend. Materialen, uurloon en planning, alles uitgesplitst. Wat we afspreken, dat bouwen we — voor de prijs die op papier staat.</p>
+          <p>Onze offertes zijn gedetailleerd en bindend. Materialen, uurloon en planning, alles uitgesplitst. Wat we afspreken, dat bouwen we, voor de prijs die op papier staat.</p>
         </div>
       </article>
       <article class="ab-pillar" data-reveal data-reveal-delay="2">
