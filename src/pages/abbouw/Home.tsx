@@ -1521,6 +1521,7 @@ export default function Home() {
       let currentIdx = 0;
       let startX = 0;
       let pointerDown = false;
+      const getVisible = () => (window.innerWidth <= 1100 ? 2 : 3);
       const sizeCarousel = () => {
         if (isMobile()) {
           scroller.style.removeProperty('--blog-card-width');
@@ -1529,22 +1530,25 @@ export default function Home() {
           return;
         }
         const gap = 28;
-        const visible = window.innerWidth <= 1100 ? 2 : 3;
+        const visible = getVisible();
         const cardWidth = Math.max(0, (scroller.clientWidth - gap * (visible - 1)) / visible);
-        const sidePad = Math.max(0, (scroller.clientWidth - cardWidth) / 2);
         scroller.style.setProperty('--blog-gap', `${gap}px`);
         scroller.style.setProperty('--blog-card-width', `${cardWidth}px`);
-        scroller.style.setProperty('--blog-side-pad', `${sidePad}px`);
+        scroller.style.setProperty('--blog-side-pad', `0px`);
       };
       const setActive = (i: number) => {
-        currentIdx = Math.max(0, Math.min(cards.length - 1, i));
+        const visible = getVisible();
+        const maxIdx = Math.max(0, cards.length - (isMobile() ? 1 : visible));
+        currentIdx = Math.max(0, Math.min(maxIdx, i));
         if (!isMobile()) {
-          scroller.style.setProperty('--blog-offset', `${currentIdx * (cards[0].offsetWidth + parseFloat(getComputedStyle(track).gap || '0'))}px`);
+          const step = cards[0].offsetWidth + parseFloat(getComputedStyle(track).gap || '0');
+          scroller.style.setProperty('--blog-offset', `${currentIdx * step}px`);
         }
-        dots.forEach((d, k) => d.classList.toggle('is-active', k === currentIdx));
-        cards.forEach((c, k) => c.classList.toggle('is-current', k === currentIdx));
+        const activeVisualIdx = isMobile() ? currentIdx : currentIdx;
+        dots.forEach((d, k) => d.classList.toggle('is-active', k === activeVisualIdx));
+        cards.forEach((c, k) => c.classList.toggle('is-current', isMobile() ? k === currentIdx : (k >= currentIdx && k < currentIdx + visible)));
         if (prevBtn) prevBtn.disabled = currentIdx === 0;
-        if (nextBtn) nextBtn.disabled = currentIdx === cards.length - 1;
+        if (nextBtn) nextBtn.disabled = currentIdx >= maxIdx;
       };
       const scrollTo = (idx: number) => {
         const clamped = Math.max(0, Math.min(cards.length - 1, idx));
