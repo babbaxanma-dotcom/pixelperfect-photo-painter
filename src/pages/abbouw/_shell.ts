@@ -286,15 +286,15 @@ export const SHELL_STYLE = `
 .lf-proj-chip.active { background: var(--navy); color:#fff; box-shadow: 0 6px 16px -6px rgba(10,31,68,0.45); }
 .lf-chip-dot { width:6px; height:6px; border-radius:50%; background: var(--accent); display:inline-block; }
 .lf-proj-chip:not(.active) .lf-chip-dot { background: var(--ink-line); }
-.lf-proj-collage { position: relative; display:grid; grid-template-columns: 1fr 1fr; grid-template-rows: 320px 320px; gap: 0; --notch: 90px; }
-.lf-proj-cell { overflow: hidden; position:relative; }
+.lf-proj-collage { position: relative; display:grid; grid-template-columns: 1fr 1fr; grid-template-rows: 320px 320px; gap: 4px; }
+.lf-proj-cell { overflow: hidden; position:relative; background: var(--bg-tint); }
 .lf-proj-cell img { width:100%; height:100%; object-fit:cover; transition: transform 0.5s var(--ease); display:block; }
 .lf-proj-cell:hover img { transform: scale(1.05); }
-.lf-proj-tl { border-top-left-radius: 18px; -webkit-mask: radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000 100%); mask: radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000 100%); }
-.lf-proj-tr { border-top-right-radius: 18px; -webkit-mask: radial-gradient(circle var(--notch) at 0% 100%, transparent 98%, #000 100%); mask: radial-gradient(circle var(--notch) at 0% 100%, transparent 98%, #000 100%); }
-.lf-proj-bl { border-bottom-left-radius: 18px; -webkit-mask: radial-gradient(circle var(--notch) at 100% 0%, transparent 98%, #000 100%); mask: radial-gradient(circle var(--notch) at 100% 0%, transparent 98%, #000 100%); }
-.lf-proj-br { border-bottom-right-radius: 18px; -webkit-mask: radial-gradient(circle var(--notch) at 0% 0%, transparent 98%, #000 100%); mask: radial-gradient(circle var(--notch) at 0% 0%, transparent 98%, #000 100%); }
-.lf-proj-logo { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width: 140px; height: 140px; display:flex; align-items:center; justify-content:center; z-index:5; }
+.lf-proj-tl { border-top-left-radius: 18px; }
+.lf-proj-tr { border-top-right-radius: 18px; }
+.lf-proj-bl { border-bottom-left-radius: 18px; }
+.lf-proj-br { border-bottom-right-radius: 18px; }
+.lf-proj-logo { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width: 168px; height: 168px; display:flex; align-items:center; justify-content:center; z-index:5; background:#fff; border-radius: 28px; box-shadow: 0 18px 42px -18px rgba(10,22,40,0.28), 0 2px 8px -2px rgba(10,22,40,0.08); border: 1px solid rgba(10,22,40,0.06); padding: 22px; }
 .lf-proj-logo img { width: 100%; height: 100%; object-fit: contain; }
 
 /* Testimonials */
