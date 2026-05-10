@@ -964,7 +964,7 @@ const EXTRA_STYLE = `
 .lf-bar-pct { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--navy); display:inline-flex; align-items: baseline; gap:1px; }
 .lf-bar-pct em { font-style:normal; font-size: 12px; color: var(--accent); font-weight: 700; margin-left: 2px; }
 .lf-bar-track { position:relative; height: 10px; background: var(--ink-line-soft); border-radius: 999px; overflow: hidden; }
-.lf-bar-track i { display:block; height:100%; background: linear-gradient(90deg, var(--accent), #F5C518); border-radius:999px; position:relative; box-shadow: 0 2px 8px -2px rgba(217,140,3,0.45); }
+.lf-bar-track i { display:block; height:100%; background: var(--navy); border-radius:999px; position:relative; box-shadow: 0 2px 8px -2px rgba(10,22,40,0.35); }
 .lf-bar-knob { display:none; }
 .lf-skills-collage { display:grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 12px 0; position: relative; }
 .lf-skills-img1, .lf-skills-img2 { width:100%; height: 420px; object-fit:cover; display:block; filter: drop-shadow(0 24px 30px rgba(15,17,21,0.28)) drop-shadow(0 6px 12px rgba(15,17,21,0.18)); }
