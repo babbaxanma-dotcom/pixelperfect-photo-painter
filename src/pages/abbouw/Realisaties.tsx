@@ -51,6 +51,7 @@ import rzNbVrij from '@/assets/realisaties/nieuwbouw-vrijstaand.jpg';
 import rzRenoHoek from '@/assets/realisaties/reno-hoekwoning.jpg';
 import rzBadGast from '@/assets/realisaties/bad-gastentoilet.jpg';
 import rzIntDressing from '@/assets/realisaties/int-dressing-eik.jpg';
+import rzStadswoningBrussel from '@/assets/realisaties/stadswoning-brussel.jpg';
 
 type Card = { img: string; tag: string; t: string; d: string };
 type Filter = { key: string; label: string; imgs: [string, string, string, string]; cards: Card[] };
@@ -80,7 +81,7 @@ const renovatie: Card[] = [
   { img: projReno, tag: 'Totaalrenovatie', t: 'Rijwoning Mechelen', d: 'Strip & rebuild, nieuwe technieken, isolatie, dak, gevel en interieur. 18 weken.' },
   { img: rzRenoHoek, tag: 'Energetische renovatie', t: 'Hoekwoning Antwerpen', d: 'Naisolatie, nieuw schrijnwerk, warmtepomp en zonnepanelen. EPC C → A.' },
   { img: cAanbouw, tag: 'Aanbouw', t: 'Achterbouw Bonheiden', d: 'Aanbouw met plat dak, openslaande deuren en gietvloer. 10 weken.' },
-  { img: cAfwerking, tag: 'Renovatie', t: 'Stadswoning Brussel', d: 'Volledige binnenrenovatie met behoud van originele cement-tegels.' },
+  { img: rzStadswoningBrussel, tag: 'Renovatie', t: 'Stadswoning Brussel', d: 'Volledige binnenrenovatie met behoud van originele cement-tegels.' },
   { img: rzRenoHoek, tag: 'Gevelrestauratie', t: 'Burgerwoning Mechelen', d: 'Originele gevel gereinigd en hervoegd, nieuwe ramen met dunne profielen.' },
   { img: about, tag: 'Gevelrenovatie', t: 'Halfopen Boom', d: 'Reiniging, nieuw voegwerk en geïsoleerde steenstrips. 4 weken.' },
   { img: projUtil, tag: 'Bedrijfspand', t: 'Kantoorrenovatie Willebroek', d: 'Volledige interieurrenovatie met nieuwe technieken en glaswanden. 12 weken.' },
