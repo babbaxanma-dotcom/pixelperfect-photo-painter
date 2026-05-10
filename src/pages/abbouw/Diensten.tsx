@@ -170,15 +170,17 @@ ${buildHero({
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     gap: 10px;
-    padding: 2px 14px 6px;
+    padding: 2px 18px 6px;
     scrollbar-width: none;
   }
   .ab-svc-track::-webkit-scrollbar { display: none; }
   .ab-svc-track > .ab-svc-slide {
-    flex: 0 0 78%;
+    flex: 0 0 calc(100vw - 36px);
+    max-width: calc(100vw - 36px);
     scroll-snap-align: center;
     scroll-snap-stop: always;
     margin: 0 !important;
+    padding: 0 !important;
   }
   .ab-svc-track .ab-deep {
     display: flex !important;
@@ -189,6 +191,7 @@ ${buildHero({
     padding: 12px;
     box-shadow: 0 8px 24px -16px rgba(10,22,40,0.18);
     height: 100%;
+    min-width: 0;
   }
   .ab-svc-track .ab-deep.reverse { flex-direction: column !important; }
   .ab-svc-track .ab-deep-img { order: -1; }
