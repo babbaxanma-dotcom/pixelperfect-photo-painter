@@ -334,7 +334,52 @@ export default function OverOns() {
     const styleEl = document.createElement('style');
     styleEl.textContent = SHELL_STYLE;
     document.head.appendChild(styleEl);
-    return () => { document.body.className = prev; styleEl.remove(); };
+
+    const promise = document.querySelector<HTMLElement>('[data-promise]');
+    let cleanupPromise = () => {};
+    if (promise) {
+      const tabs = Array.from(promise.querySelectorAll<HTMLButtonElement>('[data-promise-tab]'));
+      const panels = Array.from(promise.querySelectorAll<HTMLElement>('[data-promise-panel]'));
+      const progress = promise.querySelector<HTMLElement>('[data-promise-progress] i');
+      let active = 0;
+      let raf = 0;
+      let start = performance.now();
+      let paused = false;
+      const DURATION = 5000;
+      const setActive = (i: number, resetTimer = true) => {
+        active = (i + panels.length) % panels.length;
+        tabs.forEach((t, k) => t.classList.toggle('is-active', k === active));
+        panels.forEach((p, k) => p.classList.toggle('is-active', k === active));
+        if (resetTimer) start = performance.now();
+      };
+      const tick = (now: number) => {
+        if (!paused) {
+          const pct = Math.min(1, (now - start) / DURATION);
+          if (progress) progress.style.width = `${pct * 100}%`;
+          if (pct >= 1) setActive(active + 1);
+        }
+        raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+      const handlers: Array<[HTMLButtonElement, () => void]> = [];
+      tabs.forEach((tab, i) => {
+        const h = () => setActive(i);
+        tab.addEventListener('click', h);
+        handlers.push([tab, h]);
+      });
+      const onEnter = () => { paused = true; };
+      const onLeave = () => { paused = false; start = performance.now(); };
+      promise.addEventListener('mouseenter', onEnter);
+      promise.addEventListener('mouseleave', onLeave);
+      cleanupPromise = () => {
+        cancelAnimationFrame(raf);
+        handlers.forEach(([el, h]) => el.removeEventListener('click', h));
+        promise.removeEventListener('mouseenter', onEnter);
+        promise.removeEventListener('mouseleave', onLeave);
+      };
+    }
+
+    return () => { document.body.className = prev; styleEl.remove(); cleanupPromise(); };
   }, []);
   useAbBouwInteractions();
   return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
