@@ -736,7 +736,7 @@ html { scroll-behavior: smooth; }
   font-size: clamp(28px, 4.4vw, 56px);
   line-height: 1.08;
   color: #fff;
-  text-shadow: 0 2px 30px rgba(0,0,0,0.35);
+  text-shadow: none;
   margin: 0 0 4px;
 }
 .lf-hero-card.lf-hero-card--center h1 + h1 { margin-top: 2px; }
@@ -942,7 +942,7 @@ html { scroll-behavior: smooth; }
   letter-spacing: -0.035em;
   line-height: 1.02;
   color: #fff;
-  text-shadow: 0 2px 30px rgba(0,0,0,0.35);
+  text-shadow: none;
   text-wrap: balance;
 }
 .lf-hero-card.lf-hero-card--center p {

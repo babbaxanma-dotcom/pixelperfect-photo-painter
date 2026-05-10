@@ -6156,7 +6156,7 @@ body.page-hero-dark .footer {
   font-weight: 600;
   letter-spacing: -0.02em;
   margin: 0;
-  text-shadow: 0 4px 30px rgba(0,0,0,0.35);
+  text-shadow: none;
 }
 .lf-hero-sub {
   font-family: var(--font-display);
@@ -6166,7 +6166,7 @@ body.page-hero-dark .footer {
   font-weight: 400;
   margin: 0;
   max-width: 720px;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  text-shadow: none;
 }
 .lf-hero-eyebrow {
   display: inline-flex;
