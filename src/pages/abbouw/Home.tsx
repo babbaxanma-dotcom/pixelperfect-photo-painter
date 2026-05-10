@@ -1085,10 +1085,11 @@ const EXTRA_STYLE = `
 .lf-blog-arrow-next { right: -22px; }
 @media (max-width: 900px) {
   .lf-blog-arrow { display: none; }
-  .lf-blog-scroller { --blog-gap: 18px; }
-  .lf-blog-track .lf-blog-card { transform: scale(0.94); }
-  .lf-blog-track .lf-blog-card.is-current { transform: scale(1); }
-  .lf-blog-scroller { padding: 16px 0; }
+  .lf-blog-scroller { --blog-gap: 14px; padding: 16px 0; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; touch-action: pan-x pan-y; scrollbar-width: none; }
+  .lf-blog-scroller::-webkit-scrollbar { display: none; }
+  .lf-blog-track { width: max-content; transform: none !important; transition: none; padding: 8px 16px 28px; }
+  .lf-blog-track .lf-blog-card { flex: 0 0 82%; max-width: 340px; transform: none; opacity: 1; scroll-snap-align: center; }
+  .lf-blog-track .lf-blog-card.is-current { transform: none; box-shadow: 0 20px 40px -20px rgba(10,22,40,0.18); }
 }
 
 @media (max-width: 900px) {
