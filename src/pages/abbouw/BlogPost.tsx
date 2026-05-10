@@ -45,7 +45,7 @@ ${buildNav('home' as any)}
     <img src="${post.img}" alt="${post.title}" />
     <div class="ab-article-hero-overlay"></div>
     <div class="wrap ab-article-hero-inner">
-      <a href="/blog" class="ab-article-back">← Terug naar blog</a>
+      <a href="/blog" class="ab-article-back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg><span>Terug naar blog</span></a>
       <span class="lf-blog-tag" style="position:static; display:inline-block;">${post.tag}</span>
       <h1>${post.title}</h1>
       <div class="ab-article-meta">
@@ -105,8 +105,10 @@ ${FOOTER}
 .ab-article-hero-overlay { position:absolute; inset:0; background: linear-gradient(180deg, rgba(10,22,40,0.35) 0%, rgba(10,22,40,0.85) 100%); }
 .ab-article-hero-inner { position: relative; z-index: 2; height: 100%; display:flex; flex-direction:column; justify-content:flex-end; padding-bottom: 56px; color:#fff; }
 .ab-article-hero-inner h1 { font-family: var(--font-display); font-size: clamp(28px, 4vw, 48px); line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; color: #fff; margin: 16px 0 16px; max-width: 880px; }
-.ab-article-back { display:inline-block; color: rgba(255,255,255,0.85); font-size: 13px; margin-bottom: 18px; text-decoration: none; }
+.ab-article-back { display:inline-flex; align-items:center; gap:8px; color: rgba(255,255,255,0.85); font-size: 13px; margin-bottom: 18px; text-decoration: none; transition: color 0.2s, transform 0.2s; }
+.ab-article-back svg { transition: transform 0.2s; }
 .ab-article-back:hover { color: var(--accent); }
+.ab-article-back:hover svg { transform: translateX(-3px); }
 .ab-article-meta { display:flex; gap:8px; flex-wrap:wrap; font-size: 13px; color: rgba(255,255,255,0.85); letter-spacing: 0.02em; }
 .ab-article-body { max-width: 720px; margin: 0 auto; }
 .ab-article-body p, .ab-article-body li { font-size: 16px; line-height: 1.8; color: var(--ink-soft); margin-bottom: 18px; }
