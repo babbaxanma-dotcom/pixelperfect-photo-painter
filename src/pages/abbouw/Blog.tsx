@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { buildNav, FOOTER, SHELL_STYLE } from './_shell';
 import { BLOGS } from '@/data/blogs';
+import heroBlog from '@/assets/home/hero-blog.jpg';
 
 const HTML = `
 ${buildNav('home' as any)}
 
 <section class="lf-hero" style="min-height: 460px;">
-  <div class="lf-hero-bg" style="background:#0b1220;"></div>
+  <div class="lf-hero-bg" style="background-image: url('${heroBlog}'); background-size: cover; background-position: center;"></div>
+  <div class="lf-hero-bg" style="background: linear-gradient(180deg, rgba(11,18,32,0.55) 0%, rgba(11,18,32,0.35) 60%, rgba(11,18,32,0.6) 100%);"></div>
   <div class="wrap lf-hero-wrap">
     <div class="lf-hero-card" data-reveal>
       <span class="lf-eyebrow">Bouwblog</span>
