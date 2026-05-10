@@ -266,11 +266,15 @@ export function useAbBouwInteractions() {
     // ── Subtle parallax on hero bg (single hero image only)
     const heroBg = document.querySelector<HTMLElement>('.lf-hero-bg:not(.lf-hero-bg--slides) img');
     const heroEl = document.querySelector<HTMLElement>('.lf-hero');
+    let parallaxRaf = 0;
     const onParallax = () => {
-      if (heroBg) {
+      if (!heroBg) return;
+      if (parallaxRaf) return;
+      parallaxRaf = requestAnimationFrame(() => {
+        parallaxRaf = 0;
         const y = Math.min(window.scrollY, 600);
         heroBg.style.transform = `scale(1.04) translate3d(0, ${y * 0.18}px, 0)`;
-      }
+      });
     };
     window.addEventListener('scroll', onParallax, { passive: true });
     onParallax();
