@@ -6391,20 +6391,20 @@ body.ab-bouw-page { margin: 0 !important; padding: 0 !important; }
 }
 
 /* ── Nav: clean scroll-driven reveal ── */
-:root { --nav-sweep: 0; }
+:root { --nav-sweep: 1; }
 .lf-nav {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 .lf-nav.hero-mode {
-  pointer-events: none !important;
+  pointer-events: auto !important;
 }
 .lf-nav .lf-nav-inner {
-  opacity: var(--nav-sweep, 0);
-  transform: translateY(calc((1 - var(--nav-sweep, 0)) * -14px));
-  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
+  opacity: 1;
+  transform: none;
+  transition: box-shadow 0.3s ease;
+  will-change: auto;
 }
 .lf-nav.scrolled .lf-nav-inner {
   box-shadow: 0 12px 40px -12px rgba(0,0,0,0.18), 0 2px 8px -2px rgba(0,0,0,0.08);
