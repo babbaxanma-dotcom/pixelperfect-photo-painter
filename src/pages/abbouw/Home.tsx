@@ -1043,10 +1043,10 @@ const EXTRA_STYLE = `
 .lf-blog-author svg { color: var(--accent); }
 .lf-blog-more { margin-top: 36px; display:flex; flex-direction:column; align-items:center; gap:14px; }
 .lf-blog-indicator { margin-top: 32px; display:flex; flex-direction:column; align-items:center; gap:14px; }
-.lf-blog-dots { display:inline-flex; gap:8px; align-items:center; }
-.lf-blog-dot { width:9px; height:9px; padding:0; border:0; border-radius:50%; background: var(--ink-line); cursor: pointer; transition: all 0.3s var(--ease); }
-.lf-blog-dot:hover { background: var(--ink-mute); }
-.lf-blog-dot.is-active { background: var(--accent); width: 26px; border-radius: 5px; }
+.lf-blog-dots { display:inline-flex; gap:10px; align-items:center; }
+.lf-blog-dot { width:18px; height:3px; padding:0; border:0; border-radius:2px; background: rgba(10,22,40,0.18); cursor: pointer; transition: all 0.3s var(--ease); }
+.lf-blog-dot:hover { background: rgba(10,22,40,0.4); }
+.lf-blog-dot.is-active { background: var(--navy); width: 36px; }
 .lf-blog-more-text { font-size: 13.5px; color: var(--ink-soft); margin: 0; }
 .lf-blog-more-text a { color: var(--accent); font-weight: 700; }
 
