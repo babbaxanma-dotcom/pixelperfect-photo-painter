@@ -6407,8 +6407,9 @@ body.ab-bouw-page { margin: 0 !important; padding: 0 !important; }
   transform: translateY(var(--nav-sweep-y)) !important;
   opacity: var(--nav-sweep);
   visibility: visible;
-  transition: top 0.3s var(--ease), opacity 0.08s linear, transform 0.08s linear;
+  transition: top 0.4s var(--ease), opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
+  will-change: opacity, transform;
 }
 /* Hidden while in the hero — only on the home page */
 body:not(.is-subpage):not(.past-hero) .lf-nav {
