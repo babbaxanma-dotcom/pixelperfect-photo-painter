@@ -123,16 +123,10 @@ export function useAbBouwInteractions() {
 
     // ── Nav scroll state ────────────────────────────────
     const nav = document.getElementById('nav');
-    const isHome = location.pathname === '/';
-    const hero = isHome ? document.querySelector<HTMLElement>('.lf-hero') : null;
-    if (hero) {
-      nav?.classList.add('hero-mode');
-    } else {
-      // Non-home pages: navbar always visible, no sweep
-      nav?.classList.remove('hero-mode');
-      document.documentElement.style.setProperty('--nav-sweep', '1');
-      document.body.classList.add('nav-revealed');
-    }
+    const hero = document.querySelector<HTMLElement>('.lf-hero');
+    nav?.classList.remove('hero-mode');
+    document.documentElement.style.setProperty('--nav-sweep', '1');
+    document.body.classList.add('nav-revealed');
     let navRaf = 0;
     const onScroll = () => {
       if (navRaf) return;
@@ -149,17 +143,6 @@ export function useAbBouwInteractions() {
           const fadeEnd = heroH * 0.95;
           const fade = Math.max(0, Math.min(1, 1 - (sy - fadeStart) / (fadeEnd - fadeStart)));
           document.documentElement.style.setProperty('--hf', fade.toString());
-          const navStart = heroH * 0.55;
-          const navEnd = heroH * 0.75;
-          const navP = Math.max(0, Math.min(1, (sy - navStart) / (navEnd - navStart)));
-          document.documentElement.style.setProperty('--nav-sweep', navP.toString());
-          if (navP > 0.02) {
-            nav?.classList.remove('hero-mode');
-            document.body.classList.add('nav-revealed');
-          } else {
-            nav?.classList.add('hero-mode');
-            document.body.classList.remove('nav-revealed');
-          }
         }
         const sp = document.getElementById('scrollProgress');
         if (sp) {

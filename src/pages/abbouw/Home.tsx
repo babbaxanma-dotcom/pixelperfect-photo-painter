@@ -46,7 +46,7 @@ const HTML = (i: Record<string, string>) => `
 
 
 <!-- NAV (floating white pill over hero) -->
-<nav class="lf-nav hero-mode" id="nav">
+<nav class="lf-nav" id="nav">
   <div class="wrap lf-nav-inner">
     <a class="lf-brand" href="/">
       <img src="${i.logo}" alt="AB Bouw Groep" class="lf-brand-logo" />
