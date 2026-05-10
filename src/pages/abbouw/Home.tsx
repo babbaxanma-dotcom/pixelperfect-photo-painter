@@ -1094,6 +1094,9 @@ const EXTRA_STYLE = `
 
 @media (max-width: 900px) {
   .lf-section { padding: 60px 0; }
+  .lf-section.lf-section-compact-stack { padding-bottom: 18px; }
+  .lf-section.lf-section-compact-stack .lf-section-head,
+  .lf-section.lf-section-compact-stack .lf-section-head.centered { margin-bottom: 24px; }
   .lf-about-grid, .lf-skills-grid { grid-template-columns: 1fr; gap: 40px; }
   .lf-team-grid, .lf-testi-grid { grid-template-columns: 1fr; }
   .lf-why-collage { grid-template-columns: 1fr 1fr; }
@@ -1105,7 +1108,7 @@ const EXTRA_STYLE = `
   .lf-why-stack .lf-why-stack-left { display: grid; gap: 16px; }
   .lf-why-stack .lf-why-slot { height: auto; display: block; position: static; }
   .lf-why-stack .lf-why-tile { position: static; transform: none !important; margin: 0; box-shadow: none; top: 0 !important; }
-  .lf-why-stack .lf-why-photo { position: static; height: 240px; min-height: 0; margin-top: 16px; }
+  .lf-why-stack .lf-why-photo { position: static; height: 220px; min-height: 0; margin-top: 14px; }
 
   /* Services: clean horizontal swipe carousel on mobile (overrides desktop sticky stack) */
   .lf-services .lf-svc-grid,
@@ -1400,7 +1403,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
   .lf-why-meta { gap: 10px; padding-bottom: 10px; }
 
   /* Trust strip stays 1-col but tighter */
-  .lf-trust-strip { padding: 20px 18px; gap: 14px; margin-top: 28px; }
+  .lf-trust-strip { padding: 18px 18px; gap: 12px; margin-top: 14px; }
 
   /* Skills */
   .lf-skills-grid { gap: 32px; }
