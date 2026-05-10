@@ -1497,45 +1497,50 @@ export default function Home() {
     };
     const svcNavCleanup = svcNavSetup();
 
-    // Blog horizontal carousel: dots <-> scroll sync + arrows + current-card scaling
+    // Blog carousel: controlled transform, no browser scroll-snap jumps
     const blogCarouselSetup = () => {
       const scroller = document.querySelector<HTMLElement>('[data-blog-scroller]');
+      const track = document.querySelector<HTMLElement>('[data-blog-track]');
       const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-blog-dot]'));
       const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-blog-card]'));
       const prevBtn = document.querySelector<HTMLButtonElement>('[data-blog-prev]');
       const nextBtn = document.querySelector<HTMLButtonElement>('[data-blog-next]');
-      if (!scroller || !dots.length || !cards.length) return () => {};
+      if (!scroller || !track || !dots.length || !cards.length) return () => {};
       let currentIdx = 0;
+      let startX = 0;
+      let pointerDown = false;
+      const sizeCarousel = () => {
+        const gap = window.innerWidth <= 900 ? 18 : 28;
+        const visible = window.innerWidth <= 900 ? 1 : (window.innerWidth <= 1100 ? 2 : 3);
+        const cardWidth = Math.max(0, (scroller.clientWidth - gap * (visible - 1)) / visible);
+        const sidePad = Math.max(0, (scroller.clientWidth - cardWidth) / 2);
+        scroller.style.setProperty('--blog-gap', `${gap}px`);
+        scroller.style.setProperty('--blog-card-width', `${cardWidth}px`);
+        scroller.style.setProperty('--blog-side-pad', `${sidePad}px`);
+      };
       const setActive = (i: number) => {
-        currentIdx = i;
+        currentIdx = Math.max(0, Math.min(cards.length - 1, i));
+        scroller.style.setProperty('--blog-offset', `${currentIdx * (cards[0].offsetWidth + parseFloat(getComputedStyle(track).gap || '0'))}px`);
         dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
         cards.forEach((c, k) => c.classList.toggle('is-current', k === i));
-        if (prevBtn) prevBtn.disabled = i === 0;
-        if (nextBtn) nextBtn.disabled = i === cards.length - 1;
+        if (prevBtn) prevBtn.disabled = currentIdx === 0;
+        if (nextBtn) nextBtn.disabled = currentIdx === cards.length - 1;
       };
-      const computeCenterIdx = () => {
-        const sr = scroller.getBoundingClientRect();
-        const center = sr.left + sr.width / 2;
-        let bestIdx = 0;
-        let bestDist = Infinity;
-        cards.forEach((c, idx) => {
-          const cr = c.getBoundingClientRect();
-          const cardCenter = cr.left + cr.width / 2;
-          const dist = Math.abs(cardCenter - center);
-          if (dist < bestDist) { bestDist = dist; bestIdx = idx; }
-        });
-        return bestIdx;
-      };
-      const onScroll = () => setActive(computeCenterIdx());
-      scroller.addEventListener('scroll', onScroll, { passive: true });
       const scrollTo = (idx: number) => {
-        const target = cards[idx];
-        if (!target) return;
-        const left = target.offsetLeft - (scroller.clientWidth - target.offsetWidth) / 2;
-        const max = scroller.scrollWidth - scroller.clientWidth;
-        scroller.scrollTo({ left: Math.max(0, Math.min(max, left)), behavior: 'smooth' });
         setActive(idx);
       };
+      const onResize = () => { sizeCarousel(); setActive(currentIdx); };
+      const onPointerDown = (e: PointerEvent) => { pointerDown = true; startX = e.clientX; };
+      const onPointerUp = (e: PointerEvent) => {
+        if (!pointerDown) return;
+        pointerDown = false;
+        const delta = e.clientX - startX;
+        if (Math.abs(delta) > 45) scrollTo(currentIdx + (delta < 0 ? 1 : -1));
+      };
+      window.addEventListener('resize', onResize);
+      scroller.addEventListener('pointerdown', onPointerDown, { passive: true });
+      scroller.addEventListener('pointerup', onPointerUp, { passive: true });
+      scroller.addEventListener('pointercancel', () => { pointerDown = false; }, { passive: true });
       const dotHandlers: Array<[HTMLButtonElement, () => void]> = [];
       dots.forEach((dot, idx) => {
         const h = () => scrollTo(idx);
@@ -1547,9 +1552,12 @@ export default function Home() {
       prevBtn?.addEventListener('click', prevH);
       nextBtn?.addEventListener('click', nextH);
       // initial
-      setActive(computeCenterIdx());
+      sizeCarousel();
+      setActive(0);
       return () => {
-        scroller.removeEventListener('scroll', onScroll);
+        window.removeEventListener('resize', onResize);
+        scroller.removeEventListener('pointerdown', onPointerDown);
+        scroller.removeEventListener('pointerup', onPointerUp);
         dotHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
         prevBtn?.removeEventListener('click', prevH);
         nextBtn?.removeEventListener('click', nextH);
