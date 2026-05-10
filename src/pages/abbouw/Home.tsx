@@ -546,31 +546,39 @@ const HTML = (i: Record<string, string>) => `
       <h2 class="lf-h2">Inzichten uit de praktijk<br>op de werf van vandaag.</h2>
       <p class="lf-lede" style="margin: 0 auto;">Tips, trends en technieken, geschreven door onze eigen experts. Zo maakt u onderbouwde keuzes voor uw woning.</p>
     </div>
-    <div class="lf-blog-scroller" data-blog-scroller>
-      <div class="lf-blog-track" data-blog-track>
-        ${BLOGS.map(b => `
-          <article class="lf-blog-card" data-blog-card>
-            <div class="lf-blog-img">
-              <img src="${b.img}" alt="${b.title}" loading="lazy"/>
-              <span class="lf-blog-tag">${b.tag}</span>
-              <span class="lf-blog-date-badge"><strong>${b.day}</strong><em>${b.month}</em></span>
-            </div>
-            <div class="lf-blog-body">
-              <h4><a href="/blog/${b.slug}">${b.title}</a></h4>
-              <p>${b.excerpt}</p>
-              <div class="lf-blog-foot">
-                <a href="/blog/${b.slug}" class="lf-blog-btn">Lees meer
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                </a>
-                <span class="lf-blog-author">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  ${b.author}
-                </span>
+    <div class="lf-blog-carousel">
+      <button type="button" class="lf-blog-arrow lf-blog-arrow-prev" data-blog-prev aria-label="Vorig artikel">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="lf-blog-scroller" data-blog-scroller>
+        <div class="lf-blog-track" data-blog-track>
+          ${BLOGS.map(b => `
+            <article class="lf-blog-card" data-blog-card>
+              <div class="lf-blog-img">
+                <img src="${b.img}" alt="${b.title}" loading="lazy"/>
+                <span class="lf-blog-tag">${b.tag}</span>
+                <span class="lf-blog-date-badge"><strong>${b.day}</strong><em>${b.month}</em></span>
               </div>
-            </div>
-          </article>
-        `).join('')}
+              <div class="lf-blog-body">
+                <h4><a href="/blog/${b.slug}">${b.title}</a></h4>
+                <p>${b.excerpt}</p>
+                <div class="lf-blog-foot">
+                  <a href="/blog/${b.slug}" class="lf-blog-btn">Lees meer
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </a>
+                  <span class="lf-blog-author">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    ${b.author}
+                  </span>
+                </div>
+              </div>
+            </article>
+          `).join('')}
+        </div>
       </div>
+      <button type="button" class="lf-blog-arrow lf-blog-arrow-next" data-blog-next aria-label="Volgend artikel">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
     </div>
     <div class="lf-blog-indicator">
       <div class="lf-blog-dots" data-blog-dots>
