@@ -100,7 +100,7 @@ ${buildHero({
       </div>
       <div class="ab-map ab-map--photo" data-reveal data-reveal-delay="1" style="background-image: linear-gradient(180deg, rgba(11,18,32,0) 35%, rgba(11,18,32,0.85) 100%), url('${regionImg}');">
         <h4>Onze regio in beeld</h4>
-        <p>Vlaamse rooftops, velden en kanalen — van Antwerpen en Mechelen tot Brussel en Gent. Hier rijden onze ploegen wekelijks rond.</p>
+        <p>Vlaamse rooftops, velden en kanalen, van Antwerpen en Mechelen tot Brussel en Gent. Hier rijden onze ploegen wekelijks rond.</p>
       </div>
     </div>
   </div>
