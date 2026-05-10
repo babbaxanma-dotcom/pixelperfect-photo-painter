@@ -1072,12 +1072,13 @@ const EXTRA_STYLE = `
 .lf-blog-arrow-next { right: -22px; }
 @media (max-width: 900px) {
   .lf-blog-arrow { display: none; }
-  .lf-blog-track { gap: 18px; padding: 6px 0 16px; }
+  .lf-blog-track { gap: 18px; padding: 6px 9% 16px; }
   .lf-blog-track .lf-blog-card { flex: 0 0 82%; transform: scale(0.92); }
   .lf-blog-track .lf-blog-card.is-current { transform: scale(1); }
-  .lf-blog-scroller { padding: 16px 24px; }
+  .lf-blog-scroller { padding: 16px 0; }
 }
 @media (min-width: 901px) and (max-width: 1100px) {
+  .lf-blog-track { padding: 6px calc(25% + 7px) 24px; }
   .lf-blog-track .lf-blog-card { flex: 0 0 calc((100% - 28px) / 2); }
 }
 
