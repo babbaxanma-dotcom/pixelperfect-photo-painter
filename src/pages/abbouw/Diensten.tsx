@@ -123,6 +123,9 @@ ${buildHero({
 <!-- DEEP SERVICE BLOCKS -->
 <section class="lf-section ab-svc-section" style="padding-top: 24px;">
   <div class="wrap">
+    <div class="ab-svc-nums" id="abSvcDots" role="tablist" aria-label="Spring naar dienst">
+      ${services.map((s, i) => `<button type="button" class="ab-svc-dot ab-svc-num${i === 0 ? ' is-active' : ''}" data-i="${i}" aria-label="${s.title}"><span>${s.n}</span></button>`).join('')}
+    </div>
     <div class="ab-svc-track" id="abSvcTrack">
       ${services.map((s, i) => `
         <div class="ab-sub ab-svc-slide" id="${s.id}">
@@ -149,9 +152,6 @@ ${buildHero({
           </div>
         </div>
       `).join('')}
-    </div>
-    <div class="ab-svc-dots" id="abSvcDots" aria-hidden="true">
-      ${services.map((_, i) => `<button type="button" class="ab-svc-dot${i === 0 ? ' is-active' : ''}" data-i="${i}" aria-label="Dienst ${i + 1}"></button>`).join('')}
     </div>
   </div>
 </section>
