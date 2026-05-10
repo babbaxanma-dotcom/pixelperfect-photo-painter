@@ -919,7 +919,7 @@ const EXTRA_STYLE = `
 .lf-why-label { font-size: 10.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-mute); line-height: 1; }
 
 /* Trust strip, certifications & legal */
-.lf-trust-strip { margin-top: 48px; padding: 26px 36px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 12px; display:grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items:center; gap: 28px; }
+.lf-trust-strip { margin-top: 28px; padding: 26px 36px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 12px; display:grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items:center; gap: 28px; }
 .lf-trust-item { display:flex; flex-direction:column; gap: 4px; min-width: 0; }
 .lf-trust-item strong { font-size: 13.5px; color: var(--navy); font-weight: 700; letter-spacing: -0.005em; display:block; margin-bottom: 2px; }
 .lf-trust-item span { font-size: 11.5px; color: var(--ink-mute); letter-spacing: 0.01em; display:block; }
