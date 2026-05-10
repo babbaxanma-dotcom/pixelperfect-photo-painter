@@ -1063,7 +1063,10 @@ html { scroll-behavior: smooth; }
 }
 
 /* Blog cards (used on /blog and /blog/:slug as well as homepage) */
-.lf-blog-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.lf-blog-grid { display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; grid-auto-rows: 1fr; }
+.lf-blog-grid .lf-blog-card { height: 100%; }
+.lf-blog-grid .lf-blog-img { aspect-ratio: 16 / 10; }
+.lf-blog-grid .lf-blog-img img { width: 100%; height: 100%; object-fit: cover; }
 .lf-blog-card { display:flex; flex-direction:column; background:#fff; border-radius: 14px; overflow:hidden; border: 1px solid var(--ink-line-soft); transition: all 0.3s var(--ease); color: var(--ink); text-decoration: none; }
 .lf-blog-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -20px rgba(10,22,40,0.18); border-color: var(--accent); }
 .lf-blog-img { position:relative; aspect-ratio: 16/10; overflow:hidden; }
