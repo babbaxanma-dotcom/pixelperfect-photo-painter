@@ -294,7 +294,13 @@ ${FOOTER}
 .ab-cert span { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
 
 @media (max-width: 1100px) {
-  .ab-rules { grid-template-columns: repeat(2, 1fr); }
+  .ab-promise { grid-template-columns: 1fr; }
+  .ab-promise-tabs { flex-direction: row; overflow-x: auto; gap: 8px; padding-bottom: 4px; scrollbar-width: none; }
+  .ab-promise-tabs::-webkit-scrollbar { display: none; }
+  .ab-promise-tab { flex: 0 0 auto; border-left: none; border-bottom: 3px solid transparent; padding: 10px 14px; }
+  .ab-promise-tab.is-active { border-left-color: transparent; border-bottom-color: var(--accent); }
+  .ab-promise-tab-title { display: none; }
+  .ab-promise-tab-num { font-size: 14px; }
 }
 @media (max-width: 960px) {
   .ab-pillars { grid-template-columns: 1fr; }
@@ -308,8 +314,11 @@ ${FOOTER}
   .ab-fact { padding: 24px 14px; }
   .ab-fact-num { font-size: 32px; }
   .ab-certs { grid-template-columns: 1fr; }
-  .ab-rules { grid-template-columns: 1fr; }
   .ab-timeline { grid-template-columns: 1fr; }
+  .ab-promise-stage { padding: 28px 22px 40px; min-height: 420px; }
+  .ab-promise-panel { inset: 28px 22px 40px; grid-template-columns: 1fr; gap: 6px; }
+  .ab-promise-bignum { font-size: 72px; }
+  .ab-promise-body h3 { font-size: 21px; }
 }
 </style>
 `;
