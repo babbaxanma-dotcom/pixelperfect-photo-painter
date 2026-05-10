@@ -598,8 +598,14 @@ export function useAbBouwInteractions() {
       const id = a.getAttribute('href')?.slice(1);
       if (!id) return;
       const el = document.getElementById(id);
-      if (el) tocTargets.push({ link: a, el });
+      if (el) {
+        tocTargets.push({ link: a, el });
+        // Ensure native + JS anchor jumps respect the sticky nav height
+        el.style.scrollMarginTop = '96px';
+      }
     });
+    const navEl = document.getElementById('nav');
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const onTocClick = (e: MouseEvent) => {
       const a = e.currentTarget as HTMLAnchorElement;
       const id = a.getAttribute('href')?.slice(1);
@@ -608,17 +614,30 @@ export function useAbBouwInteractions() {
       if (!el) return;
       e.preventDefault();
       tocLinks.forEach((l) => l.classList.toggle('is-active', l === a));
-      const top = el.getBoundingClientRect().top + window.scrollY - 110;
-      window.scrollTo({ top, behavior: 'smooth' });
+      // Blur to prevent the horizontal pill bar from auto-scrolling its focused child on mobile
+      try { (a as HTMLElement).blur(); } catch {}
+      const navH = navEl?.offsetHeight ?? 88;
+      const top = el.getBoundingClientRect().top + window.scrollY - (navH + 16);
+      // Temporarily disable CSS smooth so it doesn't fight the JS scroll on iOS Safari
+      const htmlEl = document.documentElement;
+      const prevBehavior = htmlEl.style.scrollBehavior;
+      htmlEl.style.scrollBehavior = 'auto';
+      window.scrollTo({ top, behavior: prefersReduced ? 'auto' : 'smooth' });
+      requestAnimationFrame(() => { htmlEl.style.scrollBehavior = prevBehavior; });
       history.replaceState(null, '', `#${id}`);
     };
     tocLinks.forEach((a) => a.addEventListener('click', onTocClick as EventListener));
+    let tocRaf = 0;
     const onTocScroll = () => {
-      if (!tocTargets.length) return;
-      const probe = window.scrollY + 180;
-      let activeIdx = 0;
-      tocTargets.forEach((t, i) => { if (t.el.offsetTop <= probe) activeIdx = i; });
-      tocTargets.forEach((t, i) => t.link.classList.toggle('is-active', i === activeIdx));
+      if (tocRaf) return;
+      tocRaf = requestAnimationFrame(() => {
+        tocRaf = 0;
+        if (!tocTargets.length) return;
+        const probe = window.scrollY + 180;
+        let activeIdx = 0;
+        tocTargets.forEach((t, i) => { if (t.el.offsetTop <= probe) activeIdx = i; });
+        tocTargets.forEach((t, i) => t.link.classList.toggle('is-active', i === activeIdx));
+      });
     };
     window.addEventListener('scroll', onTocScroll, { passive: true });
     onTocScroll();
