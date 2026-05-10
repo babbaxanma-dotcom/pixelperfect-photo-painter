@@ -1536,10 +1536,10 @@ export default function Home() {
       const scrollTo = (idx: number) => {
         const target = cards[idx];
         if (!target) return;
-        const sr = scroller.getBoundingClientRect();
-        const cr = target.getBoundingClientRect();
-        const delta = (cr.left + cr.width / 2) - (sr.left + sr.width / 2);
-        scroller.scrollBy({ left: delta, behavior: 'smooth' });
+        const left = target.offsetLeft - (scroller.clientWidth - target.offsetWidth) / 2;
+        const max = scroller.scrollWidth - scroller.clientWidth;
+        scroller.scrollTo({ left: Math.max(0, Math.min(max, left)), behavior: 'smooth' });
+        setActive(idx);
       };
       const dotHandlers: Array<[HTMLButtonElement, () => void]> = [];
       dots.forEach((dot, idx) => {
