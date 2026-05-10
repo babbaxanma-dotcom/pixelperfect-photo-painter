@@ -6427,41 +6427,7 @@ body.is-subpage .lf-nav .lf-nav-inner {
   transform: none !important;
 }
 
-/* Mobile subpages: nav becomes a static full-width bar (no floating pill over content) */
-@media (max-width: 768px) {
-  body.is-subpage .lf-nav {
-    position: sticky !important;
-    top: 0 !important;
-    transform: none !important;
-    padding: 0 !important;
-  }
-  body.is-subpage .lf-nav.scrolled { top: 0 !important; }
-  body.is-subpage .lf-nav .lf-nav-inner {
-    max-width: 100% !important;
-    width: 100% !important;
-    margin: 0 !important;
-    border-radius: 0 !important;
-    padding: 10px 16px !important;
-    box-shadow: 0 1px 0 rgba(10,22,40,0.08), 0 8px 24px -16px rgba(10,22,40,0.18) !important;
-    background: #fff !important;
-    overflow: visible !important;
-  }
-  body.is-subpage .lf-nav .lf-nav-inner::after { display: none !important; }
-  /* Home page: same treatment once past hero so nav doesn't float over cards */
-  body:not(.is-subpage).past-hero .lf-nav {
-    position: fixed !important;
-    top: 0 !important;
-  }
-  body:not(.is-subpage).past-hero .lf-nav .lf-nav-inner {
-    max-width: 100% !important;
-    width: 100% !important;
-    margin: 0 !important;
-    border-radius: 0 !important;
-    padding: 10px 16px !important;
-    box-shadow: 0 1px 0 rgba(10,22,40,0.08), 0 8px 24px -16px rgba(10,22,40,0.18) !important;
-    background: #fff !important;
-  }
-}
+/* Mobile: keep the floating pill nav (subpages always visible, home toggles via .past-hero) */
 .lf-nav .lf-nav-inner {
   position: relative;
   pointer-events: auto;
