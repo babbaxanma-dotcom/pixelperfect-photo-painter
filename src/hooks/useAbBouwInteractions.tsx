@@ -133,35 +133,40 @@ export function useAbBouwInteractions() {
       document.documentElement.style.setProperty('--nav-sweep', '1');
       document.body.classList.add('nav-revealed');
     }
+    let navRaf = 0;
     const onScroll = () => {
-      if (window.scrollY > 30) nav?.classList.add('scrolled');
-      else nav?.classList.remove('scrolled');
-      // Reveal sticky mobile bar only after user has scrolled past the hero CTA area
-      if (window.scrollY > 360) document.body.classList.add('past-hero');
-      else document.body.classList.remove('past-hero');
-      if (hero) {
-        const heroH = hero.offsetHeight;
-        const fadeStart = heroH * 0.55;
-        const fadeEnd = heroH * 0.95;
-        const fade = Math.max(0, Math.min(1, 1 - (window.scrollY - fadeStart) / (fadeEnd - fadeStart)));
-        document.documentElement.style.setProperty('--hf', fade.toString());
-        const navStart = heroH * 0.55;
-        const navEnd = heroH * 0.75;
-        const navP = Math.max(0, Math.min(1, (window.scrollY - navStart) / (navEnd - navStart)));
-        document.documentElement.style.setProperty('--nav-sweep', navP.toString());
-        if (navP > 0.02) {
-          nav?.classList.remove('hero-mode');
-          document.body.classList.add('nav-revealed');
-        } else {
-          nav?.classList.add('hero-mode');
-          document.body.classList.remove('nav-revealed');
+      if (navRaf) return;
+      navRaf = requestAnimationFrame(() => {
+        navRaf = 0;
+        const sy = window.scrollY;
+        if (sy > 30) nav?.classList.add('scrolled');
+        else nav?.classList.remove('scrolled');
+        if (sy > 360) document.body.classList.add('past-hero');
+        else document.body.classList.remove('past-hero');
+        if (hero) {
+          const heroH = hero.offsetHeight;
+          const fadeStart = heroH * 0.55;
+          const fadeEnd = heroH * 0.95;
+          const fade = Math.max(0, Math.min(1, 1 - (sy - fadeStart) / (fadeEnd - fadeStart)));
+          document.documentElement.style.setProperty('--hf', fade.toString());
+          const navStart = heroH * 0.55;
+          const navEnd = heroH * 0.75;
+          const navP = Math.max(0, Math.min(1, (sy - navStart) / (navEnd - navStart)));
+          document.documentElement.style.setProperty('--nav-sweep', navP.toString());
+          if (navP > 0.02) {
+            nav?.classList.remove('hero-mode');
+            document.body.classList.add('nav-revealed');
+          } else {
+            nav?.classList.add('hero-mode');
+            document.body.classList.remove('nav-revealed');
+          }
         }
-      }
-      const sp = document.getElementById('scrollProgress');
-      if (sp) {
-        const h = document.documentElement.scrollHeight - window.innerHeight;
-        sp.style.width = `${(window.scrollY / h) * 100}%`;
-      }
+        const sp = document.getElementById('scrollProgress');
+        if (sp) {
+          const h = document.documentElement.scrollHeight - window.innerHeight;
+          sp.style.width = `${(sy / h) * 100}%`;
+        }
+      });
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
@@ -261,11 +266,15 @@ export function useAbBouwInteractions() {
     // ── Subtle parallax on hero bg (single hero image only)
     const heroBg = document.querySelector<HTMLElement>('.lf-hero-bg:not(.lf-hero-bg--slides) img');
     const heroEl = document.querySelector<HTMLElement>('.lf-hero');
+    let parallaxRaf = 0;
     const onParallax = () => {
-      if (heroBg) {
+      if (!heroBg) return;
+      if (parallaxRaf) return;
+      parallaxRaf = requestAnimationFrame(() => {
+        parallaxRaf = 0;
         const y = Math.min(window.scrollY, 600);
         heroBg.style.transform = `scale(1.04) translate3d(0, ${y * 0.18}px, 0)`;
-      }
+      });
     };
     window.addEventListener('scroll', onParallax, { passive: true });
     onParallax();
@@ -598,8 +607,14 @@ export function useAbBouwInteractions() {
       const id = a.getAttribute('href')?.slice(1);
       if (!id) return;
       const el = document.getElementById(id);
-      if (el) tocTargets.push({ link: a, el });
+      if (el) {
+        tocTargets.push({ link: a, el });
+        // Ensure native + JS anchor jumps respect the sticky nav height
+        el.style.scrollMarginTop = '96px';
+      }
     });
+    const navEl = document.getElementById('nav');
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const onTocClick = (e: MouseEvent) => {
       const a = e.currentTarget as HTMLAnchorElement;
       const id = a.getAttribute('href')?.slice(1);
@@ -608,17 +623,30 @@ export function useAbBouwInteractions() {
       if (!el) return;
       e.preventDefault();
       tocLinks.forEach((l) => l.classList.toggle('is-active', l === a));
-      const top = el.getBoundingClientRect().top + window.scrollY - 110;
-      window.scrollTo({ top, behavior: 'smooth' });
+      // Blur to prevent the horizontal pill bar from auto-scrolling its focused child on mobile
+      try { (a as HTMLElement).blur(); } catch {}
+      const navH = navEl?.offsetHeight ?? 88;
+      const top = el.getBoundingClientRect().top + window.scrollY - (navH + 16);
+      // Temporarily disable CSS smooth so it doesn't fight the JS scroll on iOS Safari
+      const htmlEl = document.documentElement;
+      const prevBehavior = htmlEl.style.scrollBehavior;
+      htmlEl.style.scrollBehavior = 'auto';
+      window.scrollTo({ top, behavior: prefersReduced ? 'auto' : 'smooth' });
+      requestAnimationFrame(() => { htmlEl.style.scrollBehavior = prevBehavior; });
       history.replaceState(null, '', `#${id}`);
     };
     tocLinks.forEach((a) => a.addEventListener('click', onTocClick as EventListener));
+    let tocRaf = 0;
     const onTocScroll = () => {
-      if (!tocTargets.length) return;
-      const probe = window.scrollY + 180;
-      let activeIdx = 0;
-      tocTargets.forEach((t, i) => { if (t.el.offsetTop <= probe) activeIdx = i; });
-      tocTargets.forEach((t, i) => t.link.classList.toggle('is-active', i === activeIdx));
+      if (tocRaf) return;
+      tocRaf = requestAnimationFrame(() => {
+        tocRaf = 0;
+        if (!tocTargets.length) return;
+        const probe = window.scrollY + 180;
+        let activeIdx = 0;
+        tocTargets.forEach((t, i) => { if (t.el.offsetTop <= probe) activeIdx = i; });
+        tocTargets.forEach((t, i) => t.link.classList.toggle('is-active', i === activeIdx));
+      });
     };
     window.addEventListener('scroll', onTocScroll, { passive: true });
     onTocScroll();
