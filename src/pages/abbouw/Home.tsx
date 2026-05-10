@@ -937,7 +937,7 @@ const EXTRA_STYLE = `
 .lf-why-stack .lf-why-stack-left { display:flex; flex-direction: column; gap: 18px; }
 .lf-why-stack .lf-why-slot { display: block; }
 .lf-why-stack .lf-why-tile { position: static; width: 100%; padding: 26px 28px; margin: 0; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 18px 40px -28px rgba(15,17,21,.18); }
-.lf-why-stack .lf-why-photo { position: sticky; top: 120px; height: min(60vh, 540px); grid-row: auto; grid-column: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -36px rgba(15,17,21,.32); align-self: start; }
+.lf-why-stack .lf-why-photo { position: sticky; top: 120px; height: auto; align-self: stretch; max-height: none; min-height: 0; grid-row: auto; grid-column: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -36px rgba(15,17,21,.32); }
 .lf-why-stack .lf-why-photo img { width:100%; height:100%; object-fit: cover; }
 
 .lf-svc-nav-cta { display:flex; justify-content:center; margin: 0 0 36px; }
