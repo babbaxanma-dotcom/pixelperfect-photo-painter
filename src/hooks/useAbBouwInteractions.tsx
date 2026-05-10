@@ -137,26 +137,22 @@ export function useAbBouwInteractions() {
       navRaf = requestAnimationFrame(() => {
         navRaf = 0;
         const sy = window.scrollY;
-        const isHomePage = document.body.classList.contains('ab-home-page');
         if (sy > 30) nav?.classList.add('scrolled');
         else nav?.classList.remove('scrolled');
-        if (hero && isHomePage) {
+        if (hero) {
           const heroH = hero.offsetHeight;
-          const isPhone = window.matchMedia('(max-width: 760px)').matches;
-          const revealAt = isPhone ? Math.min(heroH * 0.45, window.innerHeight * 0.38) : heroH * 0.65;
-          const navStart = isPhone ? heroH * 0.72 : heroH * 0.42;
-          const navEnd = isPhone ? heroH * 0.92 : heroH * 0.78;
+          const navStart = heroH * 0.42;
+          const navEnd = heroH * 0.88;
           const raw = Math.max(0, Math.min(1, (sy - navStart) / (navEnd - navStart)));
           // easeInOutCubic — verzacht begin en einde van de sweep
-          let navP = raw < 0.5 ? 4 * raw * raw * raw : 1 - Math.pow(-2 * raw + 2, 3) / 2;
-          if (sy > revealAt) navP = 1;
+          const navP = raw < 0.5 ? 4 * raw * raw * raw : 1 - Math.pow(-2 * raw + 2, 3) / 2;
           document.documentElement.style.setProperty('--nav-sweep', navP.toFixed(3));
           document.documentElement.style.setProperty('--nav-sweep-clip', `${((1 - navP) * 50).toFixed(2)}%`);
           document.documentElement.style.setProperty('--nav-sweep-y', `${((1 - navP) * -18).toFixed(2)}px`);
           document.documentElement.style.setProperty('--nav-shine-x', `${(-115 + navP * 230).toFixed(2)}%`);
           document.documentElement.style.setProperty('--nav-shine-opacity', navP > 0.08 && navP < 0.98 ? '1' : '0');
-          document.body.classList.toggle('past-hero', isPhone ? sy > revealAt : navP > 0.02 || sy > heroH * 0.5);
-          document.body.classList.toggle('nav-revealed', navP > 0.95 || sy > revealAt);
+          document.body.classList.toggle('past-hero', navP > 0.02);
+          document.body.classList.toggle('nav-revealed', navP > 0.98);
           const fadeStart = heroH * 0.55;
           const fadeEnd = heroH * 0.95;
           const fade = Math.max(0, Math.min(1, 1 - (sy - fadeStart) / (fadeEnd - fadeStart)));
@@ -204,7 +200,7 @@ export function useAbBouwInteractions() {
           }
         });
       },
-      { threshold: 0.08, rootMargin: '0px 0px -8% 0px' },
+      { threshold: 0.12 },
     );
     reveals.forEach((el) => io.observe(el));
 

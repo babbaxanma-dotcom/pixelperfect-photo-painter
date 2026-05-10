@@ -1443,7 +1443,7 @@ export default function Home() {
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', "AB Bouw Group: Vlaams familiebedrijf voor bouw en renovatie sinds 2010. Eigen vakmensen, vaste projectleider, vaste prijs.");
     const prevClass = document.body.className;
-    document.body.className = "ab-home-page";
+    document.body.className = "";
     const styleEl = document.createElement('style');
     styleEl.textContent = EXTRA_STYLE;
     document.head.appendChild(styleEl);
