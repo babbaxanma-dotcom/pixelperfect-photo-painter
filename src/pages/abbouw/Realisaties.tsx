@@ -307,8 +307,9 @@ export default function Realisaties() {
     document.body.className = "";
     const styleEl = document.createElement('style');
     styleEl.textContent = SHELL_STYLE + `
-      .lf-proj-cell img { transition: opacity .35s ease; }
-      .lf-proj-cell.swap img { opacity: 0; }
+      .rz-proj-card img { transition: opacity .35s ease; }
+      .rz-proj-card.swap img { opacity: 0; }
+      .rz-grid--preview { margin-top: 8px; }
 
       /* Project cards — locatie + pijl stijl */
       .rz-grid {
