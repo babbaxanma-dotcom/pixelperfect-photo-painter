@@ -18,7 +18,7 @@ ${buildHero({
   bg: hero,
   eyebrow: '15 jaar ervaring',
   title: 'Bouwen aan vertrouwen,<br/>steen voor <span style="color:var(--accent)">steen</span>.',
-  lede: 'Wat begon als een eenmanszaak in Willebroek groeide uit tot een Vlaamse bouwgroep met zes specialisaties en 23 vakmensen in vaste dienst — zonder ooit de menselijke aanpak te verliezen.',
+  lede: 'Wat begon als een eenmanszaak in Willebroek groeide uit tot een Vlaamse bouwgroep met zes specialisaties en 23 vakmensen in vaste dienst, zonder ooit de menselijke aanpak te verliezen.',
   primary: { label: 'Plan een kennismaking', href: '/contact' },
   secondary: { label: 'Bekijk ons werk →', href: '/realisaties' },
 })}
