@@ -1517,12 +1517,19 @@ export default function Home() {
       const prevBtn = document.querySelector<HTMLButtonElement>('[data-blog-prev]');
       const nextBtn = document.querySelector<HTMLButtonElement>('[data-blog-next]');
       if (!scroller || !track || !dots.length || !cards.length) return () => {};
+      const isMobile = () => window.innerWidth <= 900;
       let currentIdx = 0;
       let startX = 0;
       let pointerDown = false;
       const sizeCarousel = () => {
-        const gap = window.innerWidth <= 900 ? 18 : 28;
-        const visible = window.innerWidth <= 900 ? 1 : (window.innerWidth <= 1100 ? 2 : 3);
+        if (isMobile()) {
+          scroller.style.removeProperty('--blog-card-width');
+          scroller.style.removeProperty('--blog-side-pad');
+          scroller.style.removeProperty('--blog-offset');
+          return;
+        }
+        const gap = 28;
+        const visible = window.innerWidth <= 1100 ? 2 : 3;
         const cardWidth = Math.max(0, (scroller.clientWidth - gap * (visible - 1)) / visible);
         const sidePad = Math.max(0, (scroller.clientWidth - cardWidth) / 2);
         scroller.style.setProperty('--blog-gap', `${gap}px`);
@@ -1531,27 +1538,58 @@ export default function Home() {
       };
       const setActive = (i: number) => {
         currentIdx = Math.max(0, Math.min(cards.length - 1, i));
-        scroller.style.setProperty('--blog-offset', `${currentIdx * (cards[0].offsetWidth + parseFloat(getComputedStyle(track).gap || '0'))}px`);
+        if (!isMobile()) {
+          scroller.style.setProperty('--blog-offset', `${currentIdx * (cards[0].offsetWidth + parseFloat(getComputedStyle(track).gap || '0'))}px`);
+        }
         dots.forEach((d, k) => d.classList.toggle('is-active', k === currentIdx));
         cards.forEach((c, k) => c.classList.toggle('is-current', k === currentIdx));
         if (prevBtn) prevBtn.disabled = currentIdx === 0;
         if (nextBtn) nextBtn.disabled = currentIdx === cards.length - 1;
       };
       const scrollTo = (idx: number) => {
-        setActive(idx);
+        const clamped = Math.max(0, Math.min(cards.length - 1, idx));
+        if (isMobile()) {
+          const target = cards[clamped];
+          if (target) {
+            const left = target.offsetLeft - (scroller.clientWidth - target.offsetWidth) / 2;
+            scroller.scrollTo({ left, behavior: 'smooth' });
+          }
+        }
+        setActive(clamped);
       };
       const onResize = () => { sizeCarousel(); setActive(currentIdx); };
-      const onPointerDown = (e: PointerEvent) => { pointerDown = true; startX = e.clientX; };
+      const onPointerDown = (e: PointerEvent) => { if (isMobile()) return; pointerDown = true; startX = e.clientX; };
       const onPointerUp = (e: PointerEvent) => {
         if (!pointerDown) return;
         pointerDown = false;
         const delta = e.clientX - startX;
         if (Math.abs(delta) > 45) scrollTo(currentIdx + (delta < 0 ? 1 : -1));
       };
+      let scrollRaf = 0;
+      const onScroll = () => {
+        if (!isMobile()) return;
+        if (scrollRaf) cancelAnimationFrame(scrollRaf);
+        scrollRaf = requestAnimationFrame(() => {
+          const center = scroller.scrollLeft + scroller.clientWidth / 2;
+          let bestIdx = 0;
+          let bestDist = Infinity;
+          cards.forEach((c, k) => {
+            const cCenter = c.offsetLeft + c.offsetWidth / 2;
+            const d = Math.abs(cCenter - center);
+            if (d < bestDist) { bestDist = d; bestIdx = k; }
+          });
+          if (bestIdx !== currentIdx) {
+            currentIdx = bestIdx;
+            dots.forEach((d, k) => d.classList.toggle('is-active', k === currentIdx));
+            cards.forEach((c, k) => c.classList.toggle('is-current', k === currentIdx));
+          }
+        });
+      };
       window.addEventListener('resize', onResize);
       scroller.addEventListener('pointerdown', onPointerDown, { passive: true });
       scroller.addEventListener('pointerup', onPointerUp, { passive: true });
       scroller.addEventListener('pointercancel', () => { pointerDown = false; }, { passive: true });
+      scroller.addEventListener('scroll', onScroll, { passive: true });
       const dotHandlers: Array<[HTMLButtonElement, () => void]> = [];
       dots.forEach((dot, idx) => {
         const h = () => scrollTo(idx);
@@ -1569,6 +1607,7 @@ export default function Home() {
         window.removeEventListener('resize', onResize);
         scroller.removeEventListener('pointerdown', onPointerDown);
         scroller.removeEventListener('pointerup', onPointerUp);
+        scroller.removeEventListener('scroll', onScroll);
         dotHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
         prevBtn?.removeEventListener('click', prevH);
         nextBtn?.removeEventListener('click', nextH);
