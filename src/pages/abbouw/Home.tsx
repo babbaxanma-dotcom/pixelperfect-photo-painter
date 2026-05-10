@@ -707,7 +707,7 @@ const HTML = (i: Record<string, string>) => `
         <li><a href="tel:+32470634413">+32 470 63 44 13</a></li>
         <li><a href="mailto:info@abbouwgroup.be">info@abbouwgroup.be</a></li>
         <li><a>Willebroek, België</a></li>
-        <li><a>Ma – Vr · 8u – 18u</a></li>
+        <li><a>Ma t.e.m. vr · 8u tot 18u</a></li>
       </ul></div>
     </div>
     <div class="footer-bottom">
