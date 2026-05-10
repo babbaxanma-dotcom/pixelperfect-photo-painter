@@ -163,7 +163,7 @@ const HTML = (i: Record<string, string>) => `
               { name: 'Nathalie Aerts', role: 'Energetische renovatie · Bonheiden', img: revNathalie, text: 'Spouwmuur, dak en glas in één traject. EPC gegaan van F naar C. Ze regelden alle premies, ik moest niets opzoeken. Heel ontzorgd voelt dat.', highlights: ['EPC gegaan van F naar C', 'alle premies', 'ontzorgd'] },
               { name: 'Filip Wouters', role: 'Hellend dak · Puurs', img: revFilip, text: 'Pannen vernieuwd, isolatie tussen de kepers, alles afgewerkt met zinken bakgoten. Werfleider was elke ochtend ter plaatse om de dag te overlopen. Klasse.', highlights: ['elke ochtend ter plaatse', 'Klasse'] },
               { name: 'Inge Vermeiren', role: 'Badkamer & toilet · Kontich', img: revInge, text: 'Vier weken stof, en dan een prachtige badkamer. Inloopdouche, zwevend meubel, vloerverwarming. De tegelzetter heeft hier echt zijn handtekening gezet.', highlights: ['prachtige badkamer', 'echt zijn handtekening gezet'] },
-              { name: 'Jeroen De Backer', role: 'Aanbouw · Willebroek', img: revJeroen, text: 'Aanbouw van 32m² met grote raampartij. Architect, EPB en uitvoering door één partij — dat scheelt zoveel mailverkeer. Alles correct opgeleverd.', highlights: ['één partij', 'correct opgeleverd'] },
+              { name: 'Jeroen De Backer', role: 'Aanbouw · Willebroek', img: revJeroen, text: 'Aanbouw van 32m² met grote raampartij. Architect, EPB en uitvoering door één partij, dat scheelt zoveel mailverkeer. Alles correct opgeleverd.', highlights: ['één partij', 'correct opgeleverd'] },
               { name: 'Hilde Goossens', role: 'Gevelisolatie · Boom', img: revHilde, text: 'Witte crepi op buitenisolatie. Onze stookkost is bijna gehalveerd deze winter. Net en proper gewerkt, ook bij de buren bedankjes achtergelaten.', highlights: ['bijna gehalveerd', 'Net en proper'] },
             ];
             const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -612,12 +612,12 @@ const HTML = (i: Record<string, string>) => `
       <div class="lf-support-card" data-reveal data-support-card>
         <div class="lf-support-meta"><span>01</span> Vergunningen</div>
         <h5>Vergunning geregeld</h5>
-        <p>Dossier, indiening en opvolging via Omgevingsloket — wij regelen alles.</p>
+        <p>Dossier, indiening en opvolging via Omgevingsloket. Wij regelen alles.</p>
       </div>
       <div class="lf-support-card" data-reveal data-reveal-delay="1" data-support-card>
         <div class="lf-support-meta"><span>02</span> Premies</div>
-        <h5>Tot €4.200 terug</h5>
-        <p>Mijn VerbouwPremie en Fluvius — berekend, aangevraagd en opgevolgd.</p>
+        <h5>Premies aangevraagd</h5>
+        <p>Mijn VerbouwPremie en Fluvius, berekend, aangevraagd en opgevolgd.</p>
       </div>
       <div class="lf-support-card" data-reveal data-reveal-delay="2" data-support-card>
         <div class="lf-support-meta"><span>03</span> Nazorg</div>
@@ -707,7 +707,7 @@ const HTML = (i: Record<string, string>) => `
         <li><a href="tel:+32470634413">+32 470 63 44 13</a></li>
         <li><a href="mailto:info@abbouwgroup.be">info@abbouwgroup.be</a></li>
         <li><a>Willebroek, België</a></li>
-        <li><a>Ma – Vr · 8u – 18u</a></li>
+        <li><a>Ma t.e.m. vr · 8u tot 18u</a></li>
       </ul></div>
     </div>
     <div class="footer-bottom">

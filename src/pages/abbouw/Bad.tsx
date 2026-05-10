@@ -160,7 +160,7 @@ ${buildHero({
       <div data-reveal>
         <span class="lf-eyebrow">Hoe lukt 4 weken?</span>
         <h2 class="lf-h2">Omdat alle vakken<br/>onder één dak zitten.</h2>
-        <p class="lf-lede">Een gemiddelde badkamerrenovatie duurt bij een algemene aannemer 8 tot 12 weken, omdat elke vakman op zijn beurt moet wachten. Bij ons werken loodgieter, tegelzetter en elektricien parallel — met dagelijkse afstemming op de werf.</p>
+        <p class="lf-lede">Een gemiddelde badkamerrenovatie duurt bij een algemene aannemer 8 tot 12 weken, omdat elke vakman op zijn beurt moet wachten. Bij ons werken loodgieter, tegelzetter en elektricien parallel, met dagelijkse afstemming op de werf.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Week 1: strip-out, leidingen, dampscherm</li>
           <li>Week 2: chape, tegels vloer en wand</li>

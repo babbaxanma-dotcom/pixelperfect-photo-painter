@@ -18,7 +18,7 @@ ${buildHero({
   bg: hero,
   eyebrow: '15 jaar ervaring',
   title: 'Bouwen aan vertrouwen,<br/>steen voor <span style="color:var(--accent)">steen</span>.',
-  lede: 'Wat begon als een eenmanszaak in Willebroek groeide uit tot een Vlaamse bouwgroep met zes specialisaties en 23 vakmensen in vaste dienst — zonder ooit de menselijke aanpak te verliezen.',
+  lede: 'Wat begon als een eenmanszaak in Willebroek groeide uit tot een Vlaamse bouwgroep met zes specialisaties en 23 vakmensen in vaste dienst, zonder ooit de menselijke aanpak te verliezen.',
   primary: { label: 'Plan een kennismaking', href: '/contact' },
   secondary: { label: 'Bekijk ons werk →', href: '/realisaties' },
 })}
@@ -44,7 +44,7 @@ ${buildHero({
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Onze pijlers</span>
       <h2 class="lf-h2">Drie principes die elke<br/>werf bij ons vorm geven.</h2>
-      <p class="lf-lede" style="margin: 0 auto;">Geen marketingpraat — gewoon hoe we al vijftien jaar werken, en waarom klanten ons aanbevelen aan hun buren.</p>
+      <p class="lf-lede" style="margin: 0 auto;">Geen marketingpraat. Gewoon hoe we al vijftien jaar werken, en waarom klanten ons aanbevelen aan hun buren.</p>
     </div>
     <div class="ab-pillars">
       <article class="ab-pillar" data-reveal>
@@ -60,7 +60,7 @@ ${buildHero({
         <div class="ab-pillar-body">
           <span class="ab-pillar-num">02</span>
           <h3>Eén prijs, geen verrassingen</h3>
-          <p>Onze offertes zijn gedetailleerd en bindend. Materialen, uurloon en planning, alles uitgesplitst. Wat we afspreken, dat bouwen we — voor de prijs die op papier staat.</p>
+          <p>Onze offertes zijn gedetailleerd en bindend. Materialen, uurloon en planning, alles uitgesplitst. Wat we afspreken, dat bouwen we, voor de prijs die op papier staat.</p>
         </div>
       </article>
       <article class="ab-pillar" data-reveal data-reveal-delay="2">
@@ -68,7 +68,7 @@ ${buildHero({
         <div class="ab-pillar-body">
           <span class="ab-pillar-num">03</span>
           <h3>Eén aanspreekpunt</h3>
-          <p>U krijgt één werfleider die uw dossier kent — van het plaatsbezoek tot de oplevering. Geen rondgestuurde mails, geen drie nummers om te bellen. Eén gezicht, eén mens.</p>
+          <p>U krijgt één werfleider die uw dossier kent, van het plaatsbezoek tot de oplevering. Geen rondgestuurde mails, geen drie nummers om te bellen. Eén gezicht, eén mens.</p>
         </div>
       </article>
     </div>
@@ -87,7 +87,7 @@ ${buildHero({
       <div class="ab-mv-card ab-mv-vision" data-reveal data-reveal-delay="1">
         <div class="ab-mv-tag">Visie</div>
         <h3>Het bouwbedrijf waar mensen blijven werken.</h3>
-        <p>Goede werven beginnen bij goede vakmensen. We investeren in opleiding, modern materieel en een correcte verloning, zodat onze ploegen blijven — en onze klanten dezelfde gezichten op hun werf zien, jaar na jaar.</p>
+        <p>Goede werven beginnen bij goede vakmensen. We investeren in opleiding, modern materieel en een correcte verloning, zodat onze ploegen blijven, en onze klanten dezelfde gezichten op hun werf zien, jaar na jaar.</p>
       </div>
     </div>
   </div>
@@ -162,7 +162,7 @@ ${buildHero({
       <div data-reveal>
         <span class="lf-eyebrow">Erkenningen</span>
         <h2 class="lf-h2">Officieel erkend,<br/>verzekerd en gecertificeerd.</h2>
-        <p class="lf-lede">Werken met een erkende aannemer is geen luxe — het is uw garantie dat de wettelijke verplichtingen, de tienjarige aansprakelijkheid en de verzekeringen écht in orde zijn.</p>
+        <p class="lf-lede">Werken met een erkende aannemer is geen luxe. Het is uw garantie dat de wettelijke verplichtingen, de tienjarige aansprakelijkheid en de verzekeringen écht in orde zijn.</p>
       </div>
       <div class="ab-certs" data-reveal data-reveal-delay="1">
         <div class="ab-cert"><strong>VCA*</strong><span>Veiligheidscertificering aannemers, jaarlijks geauditeerd</span></div>

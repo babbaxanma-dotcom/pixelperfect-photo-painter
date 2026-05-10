@@ -70,7 +70,7 @@ const types = [
   {
     id: 'sierpleister', img: imgSier, tag: 'Pleister',
     title: 'Sierpleister',
-    intro: 'Iets meer textuur dan crepi, en warmer in toon. Geeft een rustige, ambachtelijke uitstraling — zeker bij landelijke woningen.',
+    intro: 'Iets meer textuur dan crepi, en warmer in toon. Geeft een rustige, ambachtelijke uitstraling, zeker bij landelijke woningen.',
     specs: [
       ['Type', 'Mineraal sierpleister'],
       ['Korrel', '1,5 / 2,0 / 3,0 mm'],

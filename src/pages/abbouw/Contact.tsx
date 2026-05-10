@@ -35,7 +35,7 @@ ${buildHero({
           </div>
           <div class="lf-contact-info-item">
             <div class="lf-contact-info-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-            <div class="lf-contact-info-text"><strong>KANTOORUREN</strong><span>Ma – Vr · 8u tot 18u · Za op afspraak</span></div>
+            <div class="lf-contact-info-text"><strong>KANTOORUREN</strong><span>Ma t.e.m. vr · 8u tot 18u · Za op afspraak</span></div>
           </div>
           <div class="lf-contact-info-item">
             <div class="lf-contact-info-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
@@ -100,7 +100,7 @@ ${buildHero({
       </div>
       <div class="ab-map ab-map--photo" data-reveal data-reveal-delay="1" style="background-image: linear-gradient(180deg, rgba(11,18,32,0) 35%, rgba(11,18,32,0.85) 100%), url('${regionImg}');">
         <h4>Onze regio in beeld</h4>
-        <p>Vlaamse rooftops, velden en kanalen — van Antwerpen en Mechelen tot Brussel en Gent. Hier rijden onze ploegen wekelijks rond.</p>
+        <p>Vlaamse rooftops, velden en kanalen, van Antwerpen en Mechelen tot Brussel en Gent. Hier rijden onze ploegen wekelijks rond.</p>
       </div>
     </div>
   </div>
