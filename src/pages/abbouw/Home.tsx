@@ -798,8 +798,8 @@ const EXTRA_STYLE = `
 .lf-feature-num { flex-shrink:0; font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; line-height: 1; padding-top: 2px; min-width: 36px; }
 .lf-feature h4 { font-size: 15px; color: var(--navy); margin-bottom:4px; }
 .lf-feature p { font-size: 13.5px; color: var(--ink-soft); margin:0; }
-.lf-form { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; padding: 36px; box-shadow: 0 24px 60px -28px rgba(10,22,40,0.18); position: relative; overflow: visible; z-index: 2; }
-.lf-form::before { content:''; position:absolute; top:0; left:0; right:0; height: 4px; background: linear-gradient(90deg, #F5C518, #0A1F44); }
+.lf-form { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; padding: 36px; box-shadow: 0 24px 60px -28px rgba(10,22,40,0.18); position: relative; overflow: hidden; z-index: 2; }
+.lf-form::before { content:''; position:absolute; top:0; left:0; right:0; height: 4px; background: linear-gradient(90deg, #F5C518, #0A1F44); border-top-left-radius: 18px; border-top-right-radius: 18px; }
 .lf-form-header { margin-bottom: 22px; padding-bottom: 22px; border-bottom: 1px solid var(--ink-line-soft); }
 .lf-form-eyebrow { display:inline-flex; align-items:center; gap:6px; padding: 5px 12px; background: rgba(245,197,24,0.18); color: #8a6a00; border-radius: 999px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
 .lf-form-header h3 { font-family: var(--font-display); font-size: 24px; line-height:1.2; font-weight:700; color: var(--navy); margin-bottom: 6px; letter-spacing:-0.01em; }
