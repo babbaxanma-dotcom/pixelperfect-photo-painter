@@ -124,6 +124,8 @@ export function useAbBouwInteractions() {
     // ── Nav scroll state ────────────────────────────────
     const nav = document.getElementById('nav');
     const hero = document.querySelector<HTMLElement>('.lf-hero');
+    const isHome = location.pathname === '/';
+    document.body.classList.toggle('is-subpage', !isHome);
     nav?.classList.remove('hero-mode', 'nav-sweep-once');
     document.documentElement.style.setProperty('--nav-sweep', '0');
     document.documentElement.style.setProperty('--nav-sweep-clip', '50%');

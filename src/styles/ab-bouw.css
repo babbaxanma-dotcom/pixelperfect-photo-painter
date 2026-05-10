@@ -6410,19 +6410,19 @@ body.ab-bouw-page { margin: 0 !important; padding: 0 !important; }
   transition: top 0.3s var(--ease), opacity 0.08s linear, transform 0.08s linear;
   pointer-events: none;
 }
-/* Hidden while in the hero — only on the home page (subpages get .ab-body) */
-body:not(.ab-body):not(.past-hero) .lf-nav {
+/* Hidden while in the hero — only on the home page */
+body:not(.is-subpage):not(.past-hero) .lf-nav {
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
 }
 /* Subpages: nav always fully visible, no sweep/clip animation */
-body.ab-body .lf-nav {
+body.is-subpage .lf-nav {
   opacity: 1 !important;
   visibility: visible !important;
   transform: none !important;
 }
-body.ab-body .lf-nav .lf-nav-inner {
+body.is-subpage .lf-nav .lf-nav-inner {
   clip-path: none !important;
   transform: none !important;
 }
