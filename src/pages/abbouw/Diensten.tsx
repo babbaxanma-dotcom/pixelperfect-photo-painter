@@ -121,35 +121,94 @@ ${buildHero({
 </section>
 
 <!-- DEEP SERVICE BLOCKS -->
-<section class="lf-section" style="padding-top: 24px;">
+<section class="lf-section ab-svc-section" style="padding-top: 24px;">
   <div class="wrap">
-    ${services.map((s, i) => `
-      <div class="ab-sub" id="${s.id}">
-        <div class="ab-deep ${i % 2 === 1 ? 'reverse' : ''}" data-reveal>
-          <div>
-            <span class="ab-deep-tag">${s.tag} · ${s.n}</span>
-            <h3>${s.title}</h3>
-            <p>${s.intro}</p>
-            <details class="ab-more">
-              <summary>Meer details</summary>
-              <p>${s.deep}</p>
-              <ul class="ab-checks">
-                ${s.bullets.map(b => `<li>${b}</li>`).join('')}
-              </ul>
-            </details>
-            <div style="margin-top: 24px;">
-              <a href="${s.href}" class="lf-cta-pill">
-                <span>Meer over ${s.title}</span>
-                <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-              </a>
+    <div class="ab-svc-track" id="abSvcTrack">
+      ${services.map((s, i) => `
+        <div class="ab-sub ab-svc-slide" id="${s.id}">
+          <div class="ab-deep ${i % 2 === 1 ? 'reverse' : ''}" data-reveal>
+            <div>
+              <span class="ab-deep-tag">${s.tag} · ${s.n}</span>
+              <h3>${s.title}</h3>
+              <p>${s.intro}</p>
+              <details class="ab-more">
+                <summary>Meer details</summary>
+                <p>${s.deep}</p>
+                <ul class="ab-checks">
+                  ${s.bullets.map(b => `<li>${b}</li>`).join('')}
+                </ul>
+              </details>
+              <div style="margin-top: 24px;">
+                <a href="${s.href}" class="lf-cta-pill">
+                  <span>Meer over ${s.title}</span>
+                  <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+                </a>
+              </div>
             </div>
+            <div class="ab-deep-img"><img src="${s.img}" alt="${s.title}" loading="lazy"/></div>
           </div>
-          <div class="ab-deep-img"><img src="${s.img}" alt="${s.title}" loading="lazy"/></div>
         </div>
-      </div>
-    `).join('')}
+      `).join('')}
+    </div>
+    <div class="ab-svc-dots" id="abSvcDots" aria-hidden="true">
+      ${services.map((_, i) => `<button type="button" class="ab-svc-dot${i === 0 ? ' is-active' : ''}" data-i="${i}" aria-label="Dienst ${i + 1}"></button>`).join('')}
+    </div>
   </div>
 </section>
+
+<style>
+@media (max-width: 768px) {
+  .ab-svc-section .wrap { padding-left: 0 !important; padding-right: 0 !important; }
+  .ab-svc-track {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    gap: 14px;
+    padding: 4px 18px 8px;
+    scrollbar-width: none;
+  }
+  .ab-svc-track::-webkit-scrollbar { display: none; }
+  .ab-svc-track > .ab-svc-slide {
+    flex: 0 0 86%;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    margin: 0 !important;
+  }
+  .ab-svc-track .ab-deep {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    background: #fff;
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 10px 30px -18px rgba(10,22,40,0.18);
+    height: 100%;
+  }
+  .ab-svc-track .ab-deep.reverse { flex-direction: column !important; }
+  .ab-svc-track .ab-deep-img { order: -1; }
+  .ab-svc-track .ab-deep-img img { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; }
+  .ab-svc-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 0 4px;
+  }
+  .ab-svc-dot {
+    width: 8px; height: 8px; border-radius: 999px;
+    background: rgba(10,22,40,0.18);
+    border: 0; padding: 0; cursor: pointer;
+    transition: background 0.2s, width 0.2s;
+  }
+  .ab-svc-dot.is-active { background: hsl(var(--accent)); width: 22px; }
+}
+@media (min-width: 769px) {
+  .ab-svc-dots { display: none; }
+}
+</style>
 
 <!-- WHAT'S ALWAYS INCLUDED -->
 <section class="lf-section lf-tone-soft">
