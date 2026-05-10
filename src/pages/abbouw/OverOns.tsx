@@ -162,7 +162,7 @@ ${buildHero({
       <div data-reveal>
         <span class="lf-eyebrow">Erkenningen</span>
         <h2 class="lf-h2">Officieel erkend,<br/>verzekerd en gecertificeerd.</h2>
-        <p class="lf-lede">Werken met een erkende aannemer is geen luxe — het is uw garantie dat de wettelijke verplichtingen, de tienjarige aansprakelijkheid en de verzekeringen écht in orde zijn.</p>
+        <p class="lf-lede">Werken met een erkende aannemer is geen luxe. Het is uw garantie dat de wettelijke verplichtingen, de tienjarige aansprakelijkheid en de verzekeringen écht in orde zijn.</p>
       </div>
       <div class="ab-certs" data-reveal data-reveal-delay="1">
         <div class="ab-cert"><strong>VCA*</strong><span>Veiligheidscertificering aannemers, jaarlijks geauditeerd</span></div>
