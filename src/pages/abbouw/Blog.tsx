@@ -13,7 +13,7 @@ ${buildNav('home' as any)}
     <div class="lf-hero-card" data-reveal>
       <span class="lf-eyebrow">Bouwblog</span>
       <h1>Inzichten uit de praktijk,<br/>geschreven op de werf.</h1>
-      <p>Tips, trends en technieken van onze eigen vakmensen en projectleiders. Geen marketingpraat — wat werkt, wat niet, en wat het kost.</p>
+      <p>Tips, trends en technieken van onze eigen vakmensen en projectleiders. Geen marketingpraat, gewoon wat werkt, wat niet, en wat het kost.</p>
     </div>
   </div>
 </section>
