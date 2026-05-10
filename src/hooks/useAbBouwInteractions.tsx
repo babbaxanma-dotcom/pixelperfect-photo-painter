@@ -124,13 +124,16 @@ export function useAbBouwInteractions() {
     // ── Nav scroll state ────────────────────────────────
     const nav = document.getElementById('nav');
     const hero = document.querySelector<HTMLElement>('.lf-hero');
+    const isHome = location.pathname === '/';
+    document.body.classList.toggle('is-subpage', !isHome);
     nav?.classList.remove('hero-mode', 'nav-sweep-once');
-    document.documentElement.style.setProperty('--nav-sweep', '0');
-    document.documentElement.style.setProperty('--nav-sweep-clip', '50%');
-    document.documentElement.style.setProperty('--nav-sweep-y', '-18px');
+    document.documentElement.style.setProperty('--nav-sweep', isHome ? '0' : '1');
+    document.documentElement.style.setProperty('--nav-sweep-clip', isHome ? '50%' : '0%');
+    document.documentElement.style.setProperty('--nav-sweep-y', isHome ? '-18px' : '0px');
     document.documentElement.style.setProperty('--nav-shine-x', '-115%');
     document.documentElement.style.setProperty('--nav-shine-opacity', '0');
     document.body.classList.remove('past-hero', 'nav-revealed');
+    if (!isHome) document.body.classList.add('past-hero', 'nav-revealed');
     let navRaf = 0;
     const onScroll = () => {
       if (navRaf) return;
