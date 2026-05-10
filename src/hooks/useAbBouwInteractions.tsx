@@ -141,9 +141,11 @@ export function useAbBouwInteractions() {
         else nav?.classList.remove('scrolled');
         if (hero) {
           const heroH = hero.offsetHeight;
-          const navStart = heroH * 0.55;
-          const navEnd = heroH * 0.75;
-          const navP = Math.max(0, Math.min(1, (sy - navStart) / (navEnd - navStart)));
+          const navStart = heroH * 0.42;
+          const navEnd = heroH * 0.88;
+          const raw = Math.max(0, Math.min(1, (sy - navStart) / (navEnd - navStart)));
+          // easeInOutCubic — verzacht begin en einde van de sweep
+          const navP = raw < 0.5 ? 4 * raw * raw * raw : 1 - Math.pow(-2 * raw + 2, 3) / 2;
           document.documentElement.style.setProperty('--nav-sweep', navP.toFixed(3));
           document.documentElement.style.setProperty('--nav-sweep-clip', `${((1 - navP) * 50).toFixed(2)}%`);
           document.documentElement.style.setProperty('--nav-sweep-y', `${((1 - navP) * -18).toFixed(2)}px`);
