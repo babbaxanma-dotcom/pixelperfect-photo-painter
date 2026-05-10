@@ -44,6 +44,13 @@ import projUtil from '@/assets/project-utiliteit.jpg';
 import intWoonkamer from '@/assets/interieur/woonkamer-eik.jpg';
 import intKeuken from '@/assets/interieur/keuken-noten.jpg';
 import intTrap from '@/assets/interieur/trap-staal-eik.jpg';
+// realisaties — extra realistische foto's
+import rzGevelCrepi from '@/assets/realisaties/gevel-grijze-crepi.jpg';
+import rzGevelStrips from '@/assets/realisaties/gevel-steenstrips.jpg';
+import rzNbVrij from '@/assets/realisaties/nieuwbouw-vrijstaand.jpg';
+import rzRenoHoek from '@/assets/realisaties/reno-hoekwoning.jpg';
+import rzBadGast from '@/assets/realisaties/bad-gastentoilet.jpg';
+import rzIntDressing from '@/assets/realisaties/int-dressing-eik.jpg';
 
 type Card = { img: string; tag: string; t: string; d: string };
 type Filter = { key: string; label: string; imgs: [string, string, string, string]; cards: Card[] };
