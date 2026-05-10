@@ -147,7 +147,7 @@ export function useAbBouwInteractions() {
           // easeInOutCubic — verzacht begin en einde van de sweep
           let navP = raw < 0.5 ? 4 * raw * raw * raw : 1 - Math.pow(-2 * raw + 2, 3) / 2;
           const isPhone = window.matchMedia('(max-width: 760px)').matches;
-          const phoneTrigger = Math.min(heroH * 0.56, window.innerHeight * 0.62);
+          const phoneTrigger = 24;
           // Forceer volledig zichtbare nav zodra we op telefoon voorbij de hero-intro zitten.
           if ((isPhone && sy > phoneTrigger) || sy > heroH * 0.65) navP = 1;
           document.documentElement.style.setProperty('--nav-sweep', navP.toFixed(3));
