@@ -303,17 +303,14 @@ export default function Diensten() {
 
   useEffect(() => {
     const track = document.getElementById('abSvcTrack');
-    const dotsWrap = document.getElementById('abSvcDots');
-    if (!track || !dotsWrap) return;
-    const dots = Array.from(dotsWrap.querySelectorAll<HTMLButtonElement>('.ab-svc-dot'));
+    if (!track) return;
+    const dots: HTMLButtonElement[] = [];
     const slides = Array.from(track.querySelectorAll<HTMLElement>('.ab-svc-slide'));
     if (!slides.length) return;
 
     const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
 
-    const setActive = (i: number) => {
-      dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
-    };
+    const setActive = (_i: number) => { /* no-op: numbered pills removed */ };
 
     let raf = 0;
     const onScroll = () => {
