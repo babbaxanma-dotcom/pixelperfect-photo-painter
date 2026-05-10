@@ -303,5 +303,75 @@ export default function Diensten() {
     return () => { document.body.className = prev; styleEl.remove(); };
   }, []);
   useAbBouwInteractions();
+
+  useEffect(() => {
+    const track = document.getElementById('abSvcTrack');
+    const dotsWrap = document.getElementById('abSvcDots');
+    if (!track || !dotsWrap) return;
+    const dots = Array.from(dotsWrap.querySelectorAll<HTMLButtonElement>('.ab-svc-dot'));
+    const slides = Array.from(track.querySelectorAll<HTMLElement>('.ab-svc-slide'));
+    if (!slides.length) return;
+
+    const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+
+    const setActive = (i: number) => {
+      dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
+    };
+
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        if (!isMobile()) return;
+        const center = track.scrollLeft + track.clientWidth / 2;
+        let best = 0;
+        let bestDist = Infinity;
+        slides.forEach((s, k) => {
+          const c = s.offsetLeft + s.offsetWidth / 2;
+          const d = Math.abs(c - center);
+          if (d < bestDist) { bestDist = d; best = k; }
+        });
+        setActive(best);
+      });
+    };
+
+    track.addEventListener('scroll', onScroll, { passive: true });
+
+    const onDotClick = (e: Event) => {
+      const btn = (e.currentTarget as HTMLButtonElement);
+      const i = Number(btn.dataset.i || 0);
+      const s = slides[i];
+      if (!s) return;
+      const left = s.offsetLeft - (track.clientWidth - s.offsetWidth) / 2;
+      track.scrollTo({ left, behavior: 'smooth' });
+    };
+    dots.forEach(d => d.addEventListener('click', onDotClick));
+
+    // Hijack TOC clicks on mobile so anchor links scroll the carousel instead of the page
+    const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.ab-toc a'));
+    const onTocClick = (e: Event) => {
+      if (!isMobile()) return;
+      const a = e.currentTarget as HTMLAnchorElement;
+      const href = a.getAttribute('href') || '';
+      if (!href.startsWith('#')) return;
+      const id = href.slice(1);
+      const idx = slides.findIndex(s => s.id === id);
+      if (idx < 0) return;
+      e.preventDefault();
+      const s = slides[idx];
+      const left = s.offsetLeft - (track.clientWidth - s.offsetWidth) / 2;
+      track.scrollTo({ left, behavior: 'smooth' });
+      track.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    tocLinks.forEach(a => a.addEventListener('click', onTocClick));
+
+    return () => {
+      track.removeEventListener('scroll', onScroll);
+      dots.forEach(d => d.removeEventListener('click', onDotClick));
+      tocLinks.forEach(a => a.removeEventListener('click', onTocClick));
+    };
+  }, []);
+
   return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
 }
