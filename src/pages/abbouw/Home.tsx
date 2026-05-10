@@ -1059,13 +1059,23 @@ const EXTRA_STYLE = `
 .lf-blog-more-text a { color: var(--accent); font-weight: 700; }
 
 /* Horizontal scroll carousel */
-.lf-blog-scroller { position: relative; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.lf-blog-carousel { position: relative; }
+.lf-blog-scroller { position: relative; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 30px 0; }
 .lf-blog-scroller::-webkit-scrollbar { display: none; }
 .lf-blog-track { display: flex; gap: 28px; padding: 6px 0 24px; }
-.lf-blog-track .lf-blog-card { flex: 0 0 calc((100% - 56px) / 3); min-width: 0; scroll-snap-align: start; }
+.lf-blog-track .lf-blog-card { flex: 0 0 calc((100% - 56px) / 3); min-width: 0; scroll-snap-align: center; transform: scale(0.88); opacity: 0.55; transition: transform 0.5s var(--ease), opacity 0.5s var(--ease), box-shadow 0.5s var(--ease); transform-origin: center center; }
+.lf-blog-track .lf-blog-card.is-current { transform: scale(1.04); opacity: 1; box-shadow: 0 30px 60px -25px rgba(10,22,40,0.28); z-index: 2; }
+.lf-blog-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; width: 48px; height: 48px; border-radius: 50%; background: #fff; border: 1px solid var(--ink-line-soft); color: var(--navy); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 12px 28px -10px rgba(10,22,40,0.25); transition: all 0.25s var(--ease); }
+.lf-blog-arrow:hover { background: var(--navy); color: #fff; transform: translateY(-50%) scale(1.06); }
+.lf-blog-arrow:disabled { opacity: 0.35; cursor: not-allowed; }
+.lf-blog-arrow-prev { left: -22px; }
+.lf-blog-arrow-next { right: -22px; }
 @media (max-width: 900px) {
-  .lf-blog-track .lf-blog-card { flex: 0 0 82%; }
-  .lf-blog-scroller { padding: 0 24px; }
+  .lf-blog-arrow { display: none; }
+  .lf-blog-track { gap: 18px; padding: 6px 0 16px; }
+  .lf-blog-track .lf-blog-card { flex: 0 0 82%; transform: scale(0.92); }
+  .lf-blog-track .lf-blog-card.is-current { transform: scale(1); }
+  .lf-blog-scroller { padding: 16px 24px; }
 }
 @media (min-width: 901px) and (max-width: 1100px) {
   .lf-blog-track .lf-blog-card { flex: 0 0 calc((100% - 28px) / 2); }
