@@ -103,7 +103,7 @@ ${buildHero({
   bg: hero,
   eyebrow: 'Onze diensten',
   title: 'Zes specialisaties.<br/>Eén bouwpartner.',
-  lede: "Elke divisie heeft een eigen vakploeg en projectleider. Hieronder vindt u per discipline wat we doen, voor wie, en welke materialen we standaard gebruiken. Klik door naar een divisie voor realisaties en gedetailleerde informatie.",
+  lede: "Zes vakploegen, één projectleider. Klik door per divisie voor details en realisaties.",
   primary: { label: 'Vraag een plaatsbezoek aan', href: '/contact' },
   secondary: { label: 'Onze werkwijze →', href: '/werkwijze' },
 })}
