@@ -175,14 +175,9 @@ ${buildHero({
   .ab-svc-track::-webkit-scrollbar { display: none; }
   .ab-svc-track > .ab-svc-slide {
     flex: 0 0 calc(100vw - 32px);
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
-    margin: 0;
-    padding: 0;
-  }
-    flex: 0 0 calc(100vw - 32px);
     max-width: calc(100vw - 32px);
     scroll-snap-align: center;
+    scroll-snap-stop: always;
     margin: 0 !important;
     padding: 0 !important;
   }
