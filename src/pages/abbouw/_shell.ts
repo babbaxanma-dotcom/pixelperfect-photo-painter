@@ -180,7 +180,10 @@ export const SHELL_STYLE = `
 @media (max-width: 900px) {
   .lf-menu { display:none; }
   .lf-nav-phone { display:none; }
-  .lf-mobile-toggle { display:inline-flex; margin-left:auto; font-size:24px; padding:6px 10px; }
+  .lf-mobile-toggle { display:inline-flex; margin-left:auto; font-size:22px; padding:4px 6px; color: var(--navy); }
+  .lf-nav { top: 10px; }
+  .lf-nav-inner { max-width: calc(100% - 32px); padding: 8px 14px 8px 12px; gap: 14px; }
+  .lf-brand-logo { height: 36px; }
 }
 
 /* Buttons */
@@ -439,13 +442,15 @@ export const SHELL_STYLE = `
   .lf-section { padding: 56px 0; }
   .lf-section-head { margin-bottom: 32px; }
   .lf-h2 { font-size: 26px; line-height: 1.2; }
-  .lf-hero, .lf-hero[style] { min-height: 300px !important; height: auto !important; max-height: 56vh; }
-  .lf-hero-wrap { padding-top: 110px !important; padding-bottom: 22px !important; padding-left: 18px !important; padding-right: 18px !important; }
-  .lf-hero-card { padding: 18px 16px; border-radius: 12px; }
-  .lf-hero-card h1 { font-size: 20px; line-height: 1.2; margin-bottom: 8px; }
-  .lf-hero-card p { font-size: 13px; line-height: 1.5; margin-bottom: 0; }
-  .lf-hero-card .lf-eyebrow { font-size: 10px; margin-bottom: 8px; }
-  .lf-hero-card .lf-hero-actions { margin-top: 14px; }
+  .lf-hero, .lf-hero[style] { min-height: 410px !important; height: auto !important; max-height: none; align-items: flex-start; }
+  .lf-hero-wrap { padding-top: 82px !important; padding-bottom: 24px !important; padding-left: 18px !important; padding-right: 18px !important; }
+  .lf-hero-card { padding: 16px 14px 14px; border-radius: 12px; width: 100%; }
+  .lf-hero-card h1 { font-size: 20px; line-height: 1.18; margin-bottom: 8px; }
+  .lf-hero-card p { font-size: 12.5px; line-height: 1.45; margin-bottom: 0; }
+  .lf-hero-card .lf-eyebrow { display: none; }
+  .lf-hero-card .lf-hero-actions { margin-top: 12px; gap: 8px; }
+  .lf-hero-card .lf-cta-pill { padding: 11px 18px !important; font-size: 11.5px !important; max-width: 100%; white-space: normal; line-height: 1.15; }
+  .lf-hero-card .lf-btn-ghost { font-size: 12.5px; }
   .lf-support-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
   .lf-form { padding: 24px 20px; border-radius: 14px; }
   .lf-svc-grid { gap: 16px; }
