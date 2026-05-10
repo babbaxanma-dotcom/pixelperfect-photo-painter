@@ -929,6 +929,11 @@ const EXTRA_STYLE = `
 .lf-why-stack.is-trust-near .lf-why-photo { opacity: 0; transform: translateY(-24px) scale(0.97); pointer-events: none; }
 .lf-why-stack .lf-why-photo img { width:100%; height:100%; object-fit: cover; }
 
+.lf-svc-nav-cta { display:flex; justify-content:center; margin: 0 0 36px; }
+.lf-svc-all-btn { display:inline-flex; align-items:center; gap:10px; padding: 14px 26px; background: var(--navy); color:#fff !important; border-radius: 999px; font: 700 13px/1 inherit; letter-spacing: .04em; text-transform: uppercase; transition: background .25s var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease); box-shadow: 0 14px 32px -16px rgba(10,22,40,.45); }
+.lf-svc-all-btn:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 20px 40px -18px rgba(10,22,40,.55); }
+.lf-svc-all-btn svg { transition: transform .25s var(--ease); }
+.lf-svc-all-btn:hover svg { transform: translateX(4px); }
 
 /* Trust-strip: highlight items in cascade as the strip enters viewport */
 .lf-trust-strip[data-trust-strip] { position: relative; }
