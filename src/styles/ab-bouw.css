@@ -6517,14 +6517,25 @@ body.nav-revealed .lf-nav {
 }
 
 @media (max-width: 760px) {
+  body:not(.past-hero) .lf-nav,
   body.past-hero .lf-nav,
   body.nav-revealed .lf-nav {
+    opacity: 1 !important;
+    visibility: visible !important;
     transform: translateY(0) !important;
+    pointer-events: none !important;
   }
+  body:not(.past-hero) .lf-nav .lf-nav-inner,
   body.past-hero .lf-nav .lf-nav-inner,
   body.nav-revealed .lf-nav .lf-nav-inner {
     clip-path: inset(0 0 0 0 round 999px) !important;
     transform: scale(1) !important;
+  }
+  .lf-fab-call {
+    display: inline-flex !important;
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+    pointer-events: auto !important;
   }
 }
 
