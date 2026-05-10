@@ -40,6 +40,10 @@ import eVent from '@/assets/eco/ventilatie.jpg';
 import projVilla from '@/assets/project-villa.jpg';
 import projReno from '@/assets/project-renovatie.jpg';
 import projUtil from '@/assets/project-utiliteit.jpg';
+// interieur
+import intWoonkamer from '@/assets/interieur/woonkamer-eik.jpg';
+import intKeuken from '@/assets/interieur/keuken-noten.jpg';
+import intTrap from '@/assets/interieur/trap-staal-eik.jpg';
 
 type Card = { img: string; tag: string; t: string; d: string };
 type Filter = { key: string; label: string; imgs: [string, string, string, string]; cards: Card[] };
@@ -82,13 +86,13 @@ const nieuwbouw: Card[] = [
 
 const interieur: Card[] = [
   { img: svcInterieur, tag: 'Maatwerk', t: 'Penthouse Mechelen', d: 'Volledig maatwerk: keuken, dressing, TV-wand en bibliotheek in eik.' },
-  { img: cAfwerking, tag: 'Pleisterwerk', t: 'Herenhuis Antwerpen', d: 'Velours-pleisterwerk in alle leefruimtes, profielen en lichtkoven.' },
-  { img: skills, tag: 'Vloeren', t: 'Visgraat eik Mechelen', d: 'Massief eik visgraat geolied, met vloerverwarming.' },
-  { img: about, tag: 'Loft', t: 'Industriële loft Brussel', d: 'Open-plan met akoestisch plafond, betonlook gietvloer en stalen binnenpui.' },
+  { img: intKeuken, tag: 'Keuken', t: 'Maatkeuken Antwerpen', d: 'Gefineerde noten met composiet werkblad en geïntegreerde toestellen.' },
+  { img: intWoonkamer, tag: 'Vloeren', t: 'Visgraat eik Mechelen', d: 'Massief eik visgraat geolied, met vloerverwarming en ingebouwde bibliotheek.' },
+  { img: intTrap, tag: 'Trappen', t: 'Stalen trap Mechelen', d: 'Maatwerktrap in zwart staal met massieve eiken treden.' },
   { img: eKalk, tag: 'Kalkpleister', t: 'Cottage Bonheiden', d: 'Natuurlijke kalkpleister in alle leefruimtes, ademend en mat.' },
   { img: cVilla, tag: 'Schrijnwerk', t: 'Maatkasten Lier', d: 'Inbouw-dressing en TV-meubel in gerookte eik.' },
-  { img: svcInterieur, tag: 'Keuken', t: 'Maatkeuken Antwerpen', d: 'Gefineerde noten met composiet werkblad en geïntegreerde toestellen.' },
-  { img: cAfwerking, tag: 'Trappen', t: 'Stalen trap Mechelen', d: 'Maatwerktrap in zwart staal met massieve eiken treden.' },
+  { img: intWoonkamer, tag: 'Loft-afwerking', t: 'Stadsappartement Brussel', d: 'Open-plan met lichtkoven, eiken vloer en mat-witte gepleisterde wanden.' },
+  { img: intKeuken, tag: 'Open keuken', t: 'Open keuken Lier', d: 'Kookeiland in noten met zicht op tuin via grote schuifpui.' },
 ];
 
 const badkamer: Card[] = [
@@ -130,7 +134,7 @@ const filters: Filter[] = [
   { key: 'nieuwbouw', label: 'Nieuwbouw',
     imgs: [cVilla, cHalfopen, cNieuw, projVilla], cards: nieuwbouw },
   { key: 'interieur', label: 'Interieur',
-    imgs: [svcInterieur, cAfwerking, skills, about], cards: interieur },
+    imgs: [svcInterieur, intKeuken, intWoonkamer, intTrap], cards: interieur },
   { key: 'badkamer', label: 'Badkamer',
     imgs: [svcBad, dakRaam, cAfwerking, cAanbouw], cards: badkamer },
   { key: 'gevel', label: 'Gevelbekleding',
@@ -217,16 +221,20 @@ ${buildHero({
       <h2 class="lf-h2" id="rzCardsTitle">Een greep uit onze projecten,<br/>één kwaliteitsstandaard.</h2>
     </div>
     ${filters.map(f => `
-      <div class="lf-svc-grid rz-panel${f.key === 'alle' ? ' active' : ''}" data-rz-panel="${f.key}" style="${f.key === 'alle' ? '' : 'display:none;'}">
+      <div class="rz-grid rz-panel${f.key === 'alle' ? ' active' : ''}" data-rz-panel="${f.key}" style="${f.key === 'alle' ? '' : 'display:none;'}">
         ${f.cards.map(p => `
-          <div class="lf-svc-card" data-reveal>
-            <div class="lf-svc-img"><img src="${p.img}" alt="${p.t}" loading="lazy"/></div>
-            <div class="lf-svc-body">
-              <span class="lf-eyebrow" style="margin-bottom:10px;">${p.tag}</span>
-              <h4>${p.t}</h4>
-              <p>${p.d}</p>
+          <a class="rz-proj-card" data-reveal href="/contact" aria-label="${p.t}">
+            <div class="rz-proj-img"><img src="${p.img}" alt="${p.t}" loading="lazy"/></div>
+            <div class="rz-proj-foot">
+              <div class="rz-proj-meta">
+                <span class="rz-proj-tag">${p.tag}</span>
+                <span class="rz-proj-loc">${p.t}</span>
+              </div>
+              <span class="rz-proj-arrow" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+              </span>
             </div>
-          </div>`).join('')}
+          </a>`).join('')}
       </div>`).join('')}
   </div>
 </section>
@@ -253,6 +261,124 @@ export default function Realisaties() {
     styleEl.textContent = SHELL_STYLE + `
       .lf-proj-cell img { transition: opacity .35s ease; }
       .lf-proj-cell.swap img { opacity: 0; }
+
+      /* Project cards — locatie + pijl stijl */
+      .rz-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
+      }
+      @media (max-width: 720px) {
+        .rz-grid { grid-template-columns: 1fr; gap: 20px; }
+      }
+      .rz-proj-card {
+        position: relative;
+        display: block;
+        background: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        box-shadow: 0 1px 2px rgba(15,23,42,.04), 0 12px 28px -18px rgba(15,23,42,.18);
+        transition: transform .35s ease, box-shadow .35s ease;
+      }
+      .rz-proj-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 1px 2px rgba(15,23,42,.06), 0 28px 50px -22px rgba(15,23,42,.28);
+      }
+      .rz-proj-img {
+        position: relative;
+        aspect-ratio: 4 / 3;
+        overflow: hidden;
+        background: #eef0f3;
+      }
+      .rz-proj-img img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform .9s cubic-bezier(.2,.7,.2,1);
+      }
+      .rz-proj-card:hover .rz-proj-img img { transform: scale(1.04); }
+      .rz-proj-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 22px 20px;
+      }
+      .rz-proj-meta { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+      .rz-proj-tag {
+        font-size: 11px;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        color: #64748b;
+        font-weight: 600;
+      }
+      .rz-proj-loc {
+        font-size: 19px;
+        font-weight: 600;
+        color: #0f172a;
+        letter-spacing: -.01em;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      }
+      .rz-proj-arrow {
+        flex: 0 0 auto;
+        width: 40px; height: 40px;
+        border-radius: 999px;
+        display: inline-flex; align-items: center; justify-content: center;
+        color: #0f172a;
+        background: transparent;
+        transition: background .25s ease, color .25s ease, transform .35s ease;
+      }
+      .rz-proj-card:hover .rz-proj-arrow {
+        background: #0f172a; color: #fff; transform: translateX(4px);
+      }
+
+      /* Stats — strakker, foto naast cijfer */
+      .lf-stats { padding: 90px 0 110px; }
+      .lf-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-top: 48px;
+      }
+      @media (max-width: 980px) { .lf-stats-grid { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 520px) { .lf-stats-grid { grid-template-columns: 1fr; } }
+      .lf-stat-card {
+        background: #fff;
+        border: 1px solid rgba(15,23,42,.08);
+        border-radius: 16px;
+        padding: 18px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        box-shadow: 0 10px 24px -20px rgba(15,23,42,.25);
+      }
+      .lf-stat-photo {
+        flex: 0 0 auto;
+        width: 72px; height: 72px;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #eef0f3;
+      }
+      .lf-stat-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .lf-stat-card--nophoto .lf-stat-photo { display: none; }
+      .lf-stat-card--nophoto::before {
+        content: '';
+        flex: 0 0 auto;
+        width: 72px; height: 72px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+      }
+      .lf-stat-body { min-width: 0; }
+      .lf-stat-num {
+        display: flex; align-items: baseline; gap: 6px;
+        font-size: 30px; font-weight: 700; color: #0f172a; letter-spacing: -.02em;
+        line-height: 1;
+      }
+      .lf-stat-suffix { font-size: 16px; font-weight: 600; color: #475569; }
+      .lf-stat-label { margin-top: 8px; font-size: 13px; color: #64748b; letter-spacing: .02em; }
+      .lf-stat-dot { display: none; }
     `;
     document.head.appendChild(styleEl);
 
