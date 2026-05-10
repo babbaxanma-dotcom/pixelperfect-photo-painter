@@ -1537,18 +1537,22 @@ export default function Home() {
         scroller.style.setProperty('--blog-side-pad', `0px`);
       };
       const setActive = (i: number) => {
-        const visible = getVisible();
-        const maxIdx = Math.max(0, cards.length - (isMobile() ? 1 : visible));
-        currentIdx = Math.max(0, Math.min(maxIdx, i));
+        currentIdx = Math.max(0, Math.min(cards.length - 1, i));
         if (!isMobile()) {
-          const step = cards[0].offsetWidth + parseFloat(getComputedStyle(track).gap || '0');
-          scroller.style.setProperty('--blog-offset', `${currentIdx * step}px`);
+          const cardW = cards[0].offsetWidth;
+          const gap = parseFloat(getComputedStyle(track).gap || '0');
+          const step = cardW + gap;
+          // Center the active card, but clamp so we never scroll past either edge
+          const ideal = currentIdx * step - (scroller.clientWidth - cardW) / 2;
+          const totalTrackW = cards.length * cardW + gap * (cards.length - 1);
+          const maxOffset = Math.max(0, totalTrackW - scroller.clientWidth);
+          const clamped = Math.max(0, Math.min(maxOffset, ideal));
+          scroller.style.setProperty('--blog-offset', `${clamped}px`);
         }
-        const activeVisualIdx = isMobile() ? currentIdx : currentIdx;
-        dots.forEach((d, k) => d.classList.toggle('is-active', k === activeVisualIdx));
-        cards.forEach((c, k) => c.classList.toggle('is-current', isMobile() ? k === currentIdx : (k >= currentIdx && k < currentIdx + visible)));
+        dots.forEach((d, k) => d.classList.toggle('is-active', k === currentIdx));
+        cards.forEach((c, k) => c.classList.toggle('is-current', k === currentIdx));
         if (prevBtn) prevBtn.disabled = currentIdx === 0;
-        if (nextBtn) nextBtn.disabled = currentIdx >= maxIdx;
+        if (nextBtn) nextBtn.disabled = currentIdx === cards.length - 1;
       };
       const scrollTo = (idx: number) => {
         const clamped = Math.max(0, Math.min(cards.length - 1, idx));
