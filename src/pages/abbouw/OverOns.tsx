@@ -87,7 +87,7 @@ ${buildHero({
       <div class="ab-mv-card ab-mv-vision" data-reveal data-reveal-delay="1">
         <div class="ab-mv-tag">Visie</div>
         <h3>Het bouwbedrijf waar mensen blijven werken.</h3>
-        <p>Goede werven beginnen bij goede vakmensen. We investeren in opleiding, modern materieel en een correcte verloning, zodat onze ploegen blijven — en onze klanten dezelfde gezichten op hun werf zien, jaar na jaar.</p>
+        <p>Goede werven beginnen bij goede vakmensen. We investeren in opleiding, modern materieel en een correcte verloning, zodat onze ploegen blijven, en onze klanten dezelfde gezichten op hun werf zien, jaar na jaar.</p>
       </div>
     </div>
   </div>
