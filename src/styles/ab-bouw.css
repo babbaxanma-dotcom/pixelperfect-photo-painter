@@ -6419,6 +6419,39 @@ body.ab-bouw-page { margin: 0 !important; padding: 0 !important; }
   -webkit-backdrop-filter: saturate(1.4) blur(14px);
 }
 
+/* One-shot sweep when nav transitions out of the hero */
+.lf-nav .lf-nav-inner { position: relative; overflow: hidden; }
+.lf-nav .lf-nav-inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    transparent 30%,
+    hsl(var(--primary) / 0.18) 45%,
+    hsl(var(--accent) / 0.28) 55%,
+    transparent 70%,
+    transparent 100%
+  );
+  transform: translateX(-110%);
+  opacity: 0;
+  border-radius: inherit;
+}
+@keyframes lf-nav-sweep {
+  0%   { transform: translateX(-110%); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateX(110%); opacity: 0; }
+}
+.lf-nav.nav-sweep-once .lf-nav-inner::after {
+  animation: lf-nav-sweep 1100ms cubic-bezier(.22,.61,.36,1) 1 both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lf-nav.nav-sweep-once .lf-nav-inner::after { animation: none; }
+}
+
 /* ── Form attention: continuous calm pulse until interacted with ── */
 @keyframes lf-form-pulse {
   0%, 100% {

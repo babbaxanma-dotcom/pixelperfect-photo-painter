@@ -128,6 +128,18 @@ export function useAbBouwInteractions() {
     document.documentElement.style.setProperty('--nav-sweep', '1');
     document.body.classList.add('nav-revealed');
     let navRaf = 0;
+    let sweepDone = false;
+    let sweepTimer = 0;
+    const triggerSweep = () => {
+      if (sweepDone || !nav) return;
+      sweepDone = true;
+      nav.classList.remove('nav-sweep-once');
+      // force reflow so animation restarts cleanly
+      void nav.offsetWidth;
+      nav.classList.add('nav-sweep-once');
+      window.clearTimeout(sweepTimer);
+      sweepTimer = window.setTimeout(() => nav.classList.remove('nav-sweep-once'), 1300);
+    };
     const onScroll = () => {
       if (navRaf) return;
       navRaf = requestAnimationFrame(() => {
@@ -135,7 +147,7 @@ export function useAbBouwInteractions() {
         const sy = window.scrollY;
         if (sy > 30) nav?.classList.add('scrolled');
         else nav?.classList.remove('scrolled');
-        if (sy > 360) document.body.classList.add('past-hero');
+        if (sy > 360) { document.body.classList.add('past-hero'); triggerSweep(); }
         else document.body.classList.remove('past-hero');
         if (hero) {
           const heroH = hero.offsetHeight;
