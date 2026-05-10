@@ -546,31 +546,39 @@ const HTML = (i: Record<string, string>) => `
       <h2 class="lf-h2">Inzichten uit de praktijk<br>op de werf van vandaag.</h2>
       <p class="lf-lede" style="margin: 0 auto;">Tips, trends en technieken, geschreven door onze eigen experts. Zo maakt u onderbouwde keuzes voor uw woning.</p>
     </div>
-    <div class="lf-blog-scroller" data-blog-scroller>
-      <div class="lf-blog-track" data-blog-track>
-        ${BLOGS.map(b => `
-          <article class="lf-blog-card" data-blog-card>
-            <div class="lf-blog-img">
-              <img src="${b.img}" alt="${b.title}" loading="lazy"/>
-              <span class="lf-blog-tag">${b.tag}</span>
-              <span class="lf-blog-date-badge"><strong>${b.day}</strong><em>${b.month}</em></span>
-            </div>
-            <div class="lf-blog-body">
-              <h4><a href="/blog/${b.slug}">${b.title}</a></h4>
-              <p>${b.excerpt}</p>
-              <div class="lf-blog-foot">
-                <a href="/blog/${b.slug}" class="lf-blog-btn">Lees meer
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                </a>
-                <span class="lf-blog-author">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  ${b.author}
-                </span>
+    <div class="lf-blog-carousel">
+      <button type="button" class="lf-blog-arrow lf-blog-arrow-prev" data-blog-prev aria-label="Vorig artikel">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="lf-blog-scroller" data-blog-scroller>
+        <div class="lf-blog-track" data-blog-track>
+          ${BLOGS.map(b => `
+            <article class="lf-blog-card" data-blog-card>
+              <div class="lf-blog-img">
+                <img src="${b.img}" alt="${b.title}" loading="lazy"/>
+                <span class="lf-blog-tag">${b.tag}</span>
+                <span class="lf-blog-date-badge"><strong>${b.day}</strong><em>${b.month}</em></span>
               </div>
-            </div>
-          </article>
-        `).join('')}
+              <div class="lf-blog-body">
+                <h4><a href="/blog/${b.slug}">${b.title}</a></h4>
+                <p>${b.excerpt}</p>
+                <div class="lf-blog-foot">
+                  <a href="/blog/${b.slug}" class="lf-blog-btn">Lees meer
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </a>
+                  <span class="lf-blog-author">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    ${b.author}
+                  </span>
+                </div>
+              </div>
+            </article>
+          `).join('')}
+        </div>
       </div>
+      <button type="button" class="lf-blog-arrow lf-blog-arrow-next" data-blog-next aria-label="Volgend artikel">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
     </div>
     <div class="lf-blog-indicator">
       <div class="lf-blog-dots" data-blog-dots>
@@ -1051,13 +1059,23 @@ const EXTRA_STYLE = `
 .lf-blog-more-text a { color: var(--accent); font-weight: 700; }
 
 /* Horizontal scroll carousel */
-.lf-blog-scroller { position: relative; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.lf-blog-carousel { position: relative; }
+.lf-blog-scroller { position: relative; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 30px 0; }
 .lf-blog-scroller::-webkit-scrollbar { display: none; }
 .lf-blog-track { display: flex; gap: 28px; padding: 6px 0 24px; }
-.lf-blog-track .lf-blog-card { flex: 0 0 calc((100% - 56px) / 3); min-width: 0; scroll-snap-align: start; }
+.lf-blog-track .lf-blog-card { flex: 0 0 calc((100% - 56px) / 3); min-width: 0; scroll-snap-align: center; transform: scale(0.88); opacity: 0.55; transition: transform 0.5s var(--ease), opacity 0.5s var(--ease), box-shadow 0.5s var(--ease); transform-origin: center center; }
+.lf-blog-track .lf-blog-card.is-current { transform: scale(1.04); opacity: 1; box-shadow: 0 30px 60px -25px rgba(10,22,40,0.28); z-index: 2; }
+.lf-blog-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; width: 48px; height: 48px; border-radius: 50%; background: #fff; border: 1px solid var(--ink-line-soft); color: var(--navy); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 12px 28px -10px rgba(10,22,40,0.25); transition: all 0.25s var(--ease); }
+.lf-blog-arrow:hover { background: var(--navy); color: #fff; transform: translateY(-50%) scale(1.06); }
+.lf-blog-arrow:disabled { opacity: 0.35; cursor: not-allowed; }
+.lf-blog-arrow-prev { left: -22px; }
+.lf-blog-arrow-next { right: -22px; }
 @media (max-width: 900px) {
-  .lf-blog-track .lf-blog-card { flex: 0 0 82%; }
-  .lf-blog-scroller { padding: 0 24px; }
+  .lf-blog-arrow { display: none; }
+  .lf-blog-track { gap: 18px; padding: 6px 0 16px; }
+  .lf-blog-track .lf-blog-card { flex: 0 0 82%; transform: scale(0.92); }
+  .lf-blog-track .lf-blog-card.is-current { transform: scale(1); }
+  .lf-blog-scroller { padding: 16px 24px; }
 }
 @media (min-width: 901px) and (max-width: 1100px) {
   .lf-blog-track .lf-blog-card { flex: 0 0 calc((100% - 28px) / 2); }
@@ -1479,40 +1497,62 @@ export default function Home() {
     };
     const svcNavCleanup = svcNavSetup();
 
-    // Blog horizontal carousel: dots <-> scroll sync
+    // Blog horizontal carousel: dots <-> scroll sync + arrows + current-card scaling
     const blogCarouselSetup = () => {
       const scroller = document.querySelector<HTMLElement>('[data-blog-scroller]');
       const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-blog-dot]'));
       const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-blog-card]'));
+      const prevBtn = document.querySelector<HTMLButtonElement>('[data-blog-prev]');
+      const nextBtn = document.querySelector<HTMLButtonElement>('[data-blog-next]');
       if (!scroller || !dots.length || !cards.length) return () => {};
-      const setActive = (i: number) => dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
-      const onScroll = () => {
+      let currentIdx = 0;
+      const setActive = (i: number) => {
+        currentIdx = i;
+        dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
+        cards.forEach((c, k) => c.classList.toggle('is-current', k === i));
+        if (prevBtn) prevBtn.disabled = i === 0;
+        if (nextBtn) nextBtn.disabled = i === cards.length - 1;
+      };
+      const computeCenterIdx = () => {
         const sr = scroller.getBoundingClientRect();
+        const center = sr.left + sr.width / 2;
         let bestIdx = 0;
         let bestDist = Infinity;
         cards.forEach((c, idx) => {
           const cr = c.getBoundingClientRect();
-          const dist = Math.abs(cr.left - sr.left);
+          const cardCenter = cr.left + cr.width / 2;
+          const dist = Math.abs(cardCenter - center);
           if (dist < bestDist) { bestDist = dist; bestIdx = idx; }
         });
-        setActive(bestIdx);
+        return bestIdx;
       };
+      const onScroll = () => setActive(computeCenterIdx());
       scroller.addEventListener('scroll', onScroll, { passive: true });
+      const scrollTo = (idx: number) => {
+        const target = cards[idx];
+        if (!target) return;
+        const sr = scroller.getBoundingClientRect();
+        const cr = target.getBoundingClientRect();
+        const delta = (cr.left + cr.width / 2) - (sr.left + sr.width / 2);
+        scroller.scrollBy({ left: delta, behavior: 'smooth' });
+      };
       const dotHandlers: Array<[HTMLButtonElement, () => void]> = [];
       dots.forEach((dot, idx) => {
-        const h = () => {
-          const target = cards[idx];
-          if (!target) return;
-          const sr = scroller.getBoundingClientRect();
-          const cr = target.getBoundingClientRect();
-          scroller.scrollBy({ left: cr.left - sr.left, behavior: 'smooth' });
-        };
+        const h = () => scrollTo(idx);
         dot.addEventListener('click', h);
         dotHandlers.push([dot, h]);
       });
+      const prevH = () => scrollTo(Math.max(0, currentIdx - 1));
+      const nextH = () => scrollTo(Math.min(cards.length - 1, currentIdx + 1));
+      prevBtn?.addEventListener('click', prevH);
+      nextBtn?.addEventListener('click', nextH);
+      // initial
+      setActive(computeCenterIdx());
       return () => {
         scroller.removeEventListener('scroll', onScroll);
         dotHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
+        prevBtn?.removeEventListener('click', prevH);
+        nextBtn?.removeEventListener('click', nextH);
       };
     };
     const blogCleanup = blogCarouselSetup();
