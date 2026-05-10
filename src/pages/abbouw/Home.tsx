@@ -1521,8 +1521,8 @@ export default function Home() {
       const setActive = (i: number) => {
         currentIdx = Math.max(0, Math.min(cards.length - 1, i));
         scroller.style.setProperty('--blog-offset', `${currentIdx * (cards[0].offsetWidth + parseFloat(getComputedStyle(track).gap || '0'))}px`);
-        dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
-        cards.forEach((c, k) => c.classList.toggle('is-current', k === i));
+        dots.forEach((d, k) => d.classList.toggle('is-active', k === currentIdx));
+        cards.forEach((c, k) => c.classList.toggle('is-current', k === currentIdx));
         if (prevBtn) prevBtn.disabled = currentIdx === 0;
         if (nextBtn) nextBtn.disabled = currentIdx === cards.length - 1;
       };
