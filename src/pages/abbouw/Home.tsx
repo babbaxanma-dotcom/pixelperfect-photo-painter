@@ -1062,15 +1062,12 @@ const EXTRA_STYLE = `
 .lf-blog-more-text { font-size: 13.5px; color: var(--ink-soft); margin: 0; }
 .lf-blog-more-text a { color: var(--accent); font-weight: 700; }
 
-/* Horizontal scroll carousel */
+/* Controlled blog carousel */
 .lf-blog-carousel { position: relative; }
-.lf-blog-scroller { position: relative; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 30px 0; }
-.lf-blog-scroller::-webkit-scrollbar { display: none; }
-.lf-blog-track { display: flex; gap: 28px; padding: 6px 0 24px; }
-.lf-blog-track .lf-blog-card { flex: 0 0 calc((100% - 56px) / 3); min-width: 0; scroll-snap-align: center; transform: scale(0.88); opacity: 0.55; transition: transform 0.5s var(--ease), opacity 0.5s var(--ease), box-shadow 0.5s var(--ease); transform-origin: center center; }
-.lf-blog-track .lf-blog-card:first-child { margin-left: calc((100% - ((100% - 56px) / 3)) / 2); }
-.lf-blog-track .lf-blog-card:last-child { margin-right: calc((100% - ((100% - 56px) / 3)) / 2); }
-.lf-blog-track .lf-blog-card.is-current { transform: scale(1.04); opacity: 1; box-shadow: 0 30px 60px -25px rgba(10,22,40,0.28); z-index: 2; }
+.lf-blog-scroller { --blog-gap: 28px; --blog-card-width: 340px; --blog-side-pad: 0px; --blog-offset: 0px; position: relative; overflow: hidden; padding: 30px 0; touch-action: pan-y; }
+.lf-blog-track { display: flex; align-items: stretch; gap: var(--blog-gap); width: max-content; padding: 8px var(--blog-side-pad) 28px; transform: translate3d(calc(var(--blog-offset) * -1), 0, 0); transition: transform 0.55s cubic-bezier(.22,.78,.27,1); will-change: transform; }
+.lf-blog-track .lf-blog-card { flex: 0 0 var(--blog-card-width); min-width: 0; transform: scale(0.92); opacity: 0.62; transition: transform 0.45s var(--ease), opacity 0.45s var(--ease), box-shadow 0.45s var(--ease); transform-origin: center center; }
+.lf-blog-track .lf-blog-card.is-current { transform: scale(1); opacity: 1; box-shadow: 0 30px 60px -25px rgba(10,22,40,0.28); z-index: 2; }
 .lf-blog-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; width: 48px; height: 48px; border-radius: 50%; background: #fff; border: 1px solid var(--ink-line-soft); color: var(--navy); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 12px 28px -10px rgba(10,22,40,0.25); transition: all 0.25s var(--ease); }
 .lf-blog-arrow:hover { background: var(--navy); color: #fff; transform: translateY(-50%) scale(1.06); }
 .lf-blog-arrow:disabled { opacity: 0.35; cursor: not-allowed; }
@@ -1078,17 +1075,10 @@ const EXTRA_STYLE = `
 .lf-blog-arrow-next { right: -22px; }
 @media (max-width: 900px) {
   .lf-blog-arrow { display: none; }
-  .lf-blog-track { gap: 18px; }
-  .lf-blog-track .lf-blog-card { flex: 0 0 82%; transform: scale(0.92); }
-  .lf-blog-track .lf-blog-card:first-child { margin-left: 9%; }
-  .lf-blog-track .lf-blog-card:last-child { margin-right: 9%; }
+  .lf-blog-scroller { --blog-gap: 18px; }
+  .lf-blog-track .lf-blog-card { transform: scale(0.94); }
   .lf-blog-track .lf-blog-card.is-current { transform: scale(1); }
   .lf-blog-scroller { padding: 16px 0; }
-}
-@media (min-width: 901px) and (max-width: 1100px) {
-  .lf-blog-track .lf-blog-card { flex: 0 0 calc((100% - 28px) / 2); }
-  .lf-blog-track .lf-blog-card:first-child { margin-left: calc((100% - ((100% - 28px) / 2)) / 2); }
-  .lf-blog-track .lf-blog-card:last-child { margin-right: calc((100% - ((100% - 28px) / 2)) / 2); }
 }
 
 @media (max-width: 900px) {
@@ -1507,45 +1497,50 @@ export default function Home() {
     };
     const svcNavCleanup = svcNavSetup();
 
-    // Blog horizontal carousel: dots <-> scroll sync + arrows + current-card scaling
+    // Blog carousel: controlled transform, no browser scroll-snap jumps
     const blogCarouselSetup = () => {
       const scroller = document.querySelector<HTMLElement>('[data-blog-scroller]');
+      const track = document.querySelector<HTMLElement>('[data-blog-track]');
       const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-blog-dot]'));
       const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-blog-card]'));
       const prevBtn = document.querySelector<HTMLButtonElement>('[data-blog-prev]');
       const nextBtn = document.querySelector<HTMLButtonElement>('[data-blog-next]');
-      if (!scroller || !dots.length || !cards.length) return () => {};
+      if (!scroller || !track || !dots.length || !cards.length) return () => {};
       let currentIdx = 0;
+      let startX = 0;
+      let pointerDown = false;
+      const sizeCarousel = () => {
+        const gap = window.innerWidth <= 900 ? 18 : 28;
+        const visible = window.innerWidth <= 900 ? 1 : (window.innerWidth <= 1100 ? 2 : 3);
+        const cardWidth = Math.max(0, (scroller.clientWidth - gap * (visible - 1)) / visible);
+        const sidePad = Math.max(0, (scroller.clientWidth - cardWidth) / 2);
+        scroller.style.setProperty('--blog-gap', `${gap}px`);
+        scroller.style.setProperty('--blog-card-width', `${cardWidth}px`);
+        scroller.style.setProperty('--blog-side-pad', `${sidePad}px`);
+      };
       const setActive = (i: number) => {
-        currentIdx = i;
-        dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
-        cards.forEach((c, k) => c.classList.toggle('is-current', k === i));
-        if (prevBtn) prevBtn.disabled = i === 0;
-        if (nextBtn) nextBtn.disabled = i === cards.length - 1;
+        currentIdx = Math.max(0, Math.min(cards.length - 1, i));
+        scroller.style.setProperty('--blog-offset', `${currentIdx * (cards[0].offsetWidth + parseFloat(getComputedStyle(track).gap || '0'))}px`);
+        dots.forEach((d, k) => d.classList.toggle('is-active', k === currentIdx));
+        cards.forEach((c, k) => c.classList.toggle('is-current', k === currentIdx));
+        if (prevBtn) prevBtn.disabled = currentIdx === 0;
+        if (nextBtn) nextBtn.disabled = currentIdx === cards.length - 1;
       };
-      const computeCenterIdx = () => {
-        const sr = scroller.getBoundingClientRect();
-        const center = sr.left + sr.width / 2;
-        let bestIdx = 0;
-        let bestDist = Infinity;
-        cards.forEach((c, idx) => {
-          const cr = c.getBoundingClientRect();
-          const cardCenter = cr.left + cr.width / 2;
-          const dist = Math.abs(cardCenter - center);
-          if (dist < bestDist) { bestDist = dist; bestIdx = idx; }
-        });
-        return bestIdx;
-      };
-      const onScroll = () => setActive(computeCenterIdx());
-      scroller.addEventListener('scroll', onScroll, { passive: true });
       const scrollTo = (idx: number) => {
-        const target = cards[idx];
-        if (!target) return;
-        const left = target.offsetLeft - (scroller.clientWidth - target.offsetWidth) / 2;
-        const max = scroller.scrollWidth - scroller.clientWidth;
-        scroller.scrollTo({ left: Math.max(0, Math.min(max, left)), behavior: 'smooth' });
         setActive(idx);
       };
+      const onResize = () => { sizeCarousel(); setActive(currentIdx); };
+      const onPointerDown = (e: PointerEvent) => { pointerDown = true; startX = e.clientX; };
+      const onPointerUp = (e: PointerEvent) => {
+        if (!pointerDown) return;
+        pointerDown = false;
+        const delta = e.clientX - startX;
+        if (Math.abs(delta) > 45) scrollTo(currentIdx + (delta < 0 ? 1 : -1));
+      };
+      window.addEventListener('resize', onResize);
+      scroller.addEventListener('pointerdown', onPointerDown, { passive: true });
+      scroller.addEventListener('pointerup', onPointerUp, { passive: true });
+      scroller.addEventListener('pointercancel', () => { pointerDown = false; }, { passive: true });
       const dotHandlers: Array<[HTMLButtonElement, () => void]> = [];
       dots.forEach((dot, idx) => {
         const h = () => scrollTo(idx);
@@ -1557,9 +1552,12 @@ export default function Home() {
       prevBtn?.addEventListener('click', prevH);
       nextBtn?.addEventListener('click', nextH);
       // initial
-      setActive(computeCenterIdx());
+      sizeCarousel();
+      setActive(0);
       return () => {
-        scroller.removeEventListener('scroll', onScroll);
+        window.removeEventListener('resize', onResize);
+        scroller.removeEventListener('pointerdown', onPointerDown);
+        scroller.removeEventListener('pointerup', onPointerUp);
         dotHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
         prevBtn?.removeEventListener('click', prevH);
         nextBtn?.removeEventListener('click', nextH);
