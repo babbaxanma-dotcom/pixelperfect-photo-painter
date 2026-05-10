@@ -140,16 +140,55 @@ ${buildHero({
   </div>
 </section>
 
+<!-- HOE WIJ WERKEN -->
+<section class="lf-section lf-tone-soft">
+  <div class="wrap">
+    <div class="lf-section-head centered" data-reveal>
+      <span class="lf-eyebrow">Hoe wij werken</span>
+      <h2 class="lf-h2">Acht afspraken die wij<br/>met onszelf maken.</h2>
+      <p class="lf-lede" style="margin: 0 auto;">Geen loze beloftes. Onderstaande punten staan zwart op wit in elke offerte en zijn de meetlat waaraan u ons mag afrekenen.</p>
+    </div>
+    <div class="ab-rules">
+      <div class="ab-rule" data-reveal><span class="ab-rule-num">01</span><h5>Plaatsbezoek binnen 5 werkdagen</h5><p>U belt of mailt, wij komen binnen de week ter plaatse. Geen tussenpersonen, gewoon de werfleider die uw project zal opvolgen.</p></div>
+      <div class="ab-rule" data-reveal data-reveal-delay="1"><span class="ab-rule-num">02</span><h5>Offerte in 7 werkdagen</h5><p>Een gedetailleerde meetstaat, geen ronde forfaits. U weet exact wat materiaal kost, wat uurloon kost en wat de marge is.</p></div>
+      <div class="ab-rule" data-reveal data-reveal-delay="2"><span class="ab-rule-num">03</span><h5>Vaste startdatum op contract</h5><p>Bij ondertekening krijgt u een planning met start- én opleveringsdatum. Verschuift het, dan hoort u dat minstens twee weken vooraf.</p></div>
+      <div class="ab-rule" data-reveal data-reveal-delay="3"><span class="ab-rule-num">04</span><h5>Wekelijks werfrapport</h5><p>Elke vrijdag krijgt u een korte mail met foto's, gewerkte uren en de planning voor de volgende week. U weet altijd waar we staan.</p></div>
+      <div class="ab-rule" data-reveal data-reveal-delay="4"><span class="ab-rule-num">05</span><h5>Eén factuur per fase</h5><p>Geen losse rekeningen van metselaar, dakwerker en tegelzetter. Eén schijf per fase, telkens nadat u die fase samen met ons heeft opgeleverd.</p></div>
+      <div class="ab-rule" data-reveal data-reveal-delay="5"><span class="ab-rule-num">06</span><h5>Werf opgeruimd op vrijdag</h5><p>Standaard inbegrepen. Vloeren afgedekt, materiaal gestapeld, container leeg. U gebruikt uw woning gewoon door tijdens de werken.</p></div>
+      <div class="ab-rule" data-reveal data-reveal-delay="6"><span class="ab-rule-num">07</span><h5>Premiedossier door ons</h5><p>Mijn VerbouwPremie en Fluvius worden door onze EPB-verslaggever ingediend. Gemiddeld goed voor €4.200 retour per renovatieproject.</p></div>
+      <div class="ab-rule" data-reveal data-reveal-delay="7"><span class="ab-rule-num">08</span><h5>Nacontrole na 1 jaar</h5><p>Krimpscheuren, deuren bijregelen, voegen nakijken. Eén jaar na oplevering komen we gratis langs voor een eindcontrole.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TIJDLIJN -->
+<section class="lf-section">
+  <div class="wrap">
+    <div class="lf-section-head centered" data-reveal>
+      <span class="lf-eyebrow">Vijftien jaar bouwen</span>
+      <h2 class="lf-h2">Ons verhaal,<br/>jaar per jaar.</h2>
+    </div>
+    <div class="ab-timeline">
+      <div class="ab-tl" data-reveal><div class="ab-tl-year">2010</div><div class="ab-tl-body"><h5>De eenmanszaak</h5><p>Anthony start als zelfstandig metselaar in Willebroek met één bestelwagen, een stelling en een handvol vaste klanten uit de buurt.</p></div></div>
+      <div class="ab-tl" data-reveal data-reveal-delay="1"><div class="ab-tl-year">2013</div><div class="ab-tl-body"><h5>Eerste vaste medewerkers</h5><p>Twee vaste metselaars in dienst, een tweede bestelwagen, en een eigen werkplaats voor schrijnwerk in een loods in Boom.</p></div></div>
+      <div class="ab-tl" data-reveal data-reveal-delay="2"><div class="ab-tl-year">2016</div><div class="ab-tl-body"><h5>AB Dakwerken</h5><p>Een eigen dakploeg vervoegt het bedrijf. Vanaf nu wordt elk dak door eigen mensen geplaatst, met eigen verzekering en garantie.</p></div></div>
+      <div class="ab-tl" data-reveal data-reveal-delay="3"><div class="ab-tl-year">2019</div><div class="ab-tl-body"><h5>VCA*-certificering</h5><p>De volledige ploeg behaalt het VCA*-attest. Veiligheid op de werf wordt formeel geborgd, niet alleen vanzelfsprekend.</p></div></div>
+      <div class="ab-tl" data-reveal data-reveal-delay="4"><div class="ab-tl-year">2022</div><div class="ab-tl-body"><h5>AB Ecologisch</h5><p>Met de groeiende vraag naar warmtepompen, isolatie en zonnepanelen splitsen we de energetische renovaties af in een eigen divisie.</p></div></div>
+      <div class="ab-tl" data-reveal data-reveal-delay="5"><div class="ab-tl-year">2025</div><div class="ab-tl-body"><h5>Zes specialisaties, één dak</h5><p>Construct, Ecologisch, Interieurwerken, Dakwerken, Bad &amp; Wellness en Gevelbekleding. Samen 23 vakmensen in vaste dienst.</p></div></div>
+    </div>
+  </div>
+</section>
+
 <!-- VERHAAL / FOTO BAND -->
-<section class="lf-section ab-story">
+<section class="lf-section ab-story lf-tone-soft">
   <div class="wrap">
     <div class="lf-split">
       <div class="lf-split-img" data-reveal><img src="${why}" alt="Werf AB Bouw Group in uitvoering" loading="lazy"/></div>
       <div data-reveal data-reveal-delay="1">
-        <span class="lf-eyebrow">Ons verhaal</span>
-        <h2 class="lf-h2">Van eenmanszaak<br/>tot Vlaamse bouwgroep.</h2>
-        <p class="lf-lede">In 2010 startte Anthony als zelfstandig metselaar, met één bestelwagen en de overtuiging dat eerlijk werk vanzelf nieuwe klanten brengt. Vijftien jaar later staan er zes specialisaties onder één dak, een eigen werfopvolging en een ploeg die er nog elke dag voor gáát.</p>
-        <p class="lf-lede">We zijn geen ketenbedrijf en willen het ook niet worden. We blijven groot genoeg om uw volledig project zelf te dragen, en klein genoeg om u bij naam te kennen.</p>
+        <span class="lf-eyebrow">Onze werkregio</span>
+        <h2 class="lf-h2">Vlaams gebouwd,<br/>lokaal verankerd.</h2>
+        <p class="lf-lede">Vanuit ons kantoor in Willebroek bedienen we Antwerpen, Mechelen, Boom, Bonheiden, Lier, Brussel en omliggende gemeenten. Onze vaste leveranciers zitten in dezelfde driehoek, waardoor materiaal nooit ver moet komen en wij u snel kunnen helpen, ook bij dringende interventies.</p>
+        <p class="lf-lede">We blijven bewust een Vlaamse familiale bouwgroep. Groot genoeg om uw volledig project zelf te dragen, klein genoeg om u bij naam te kennen en jaren later nog op te bellen om te vragen hoe het ermee gaat.</p>
       </div>
     </div>
   </div>
@@ -221,14 +260,31 @@ ${FOOTER}
 
 .ab-story .lf-split-img img { border-radius: 16px; }
 
+.ab-rules { display:grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.ab-rule { background:#fff; border:1px solid var(--ink-line-soft); border-radius: 14px; padding: 22px 22px 24px; transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
+.ab-rule:hover { transform: translateY(-3px); box-shadow: 0 22px 40px -28px rgba(15,17,21,.18); }
+.ab-rule-num { font-family: var(--font-display); font-size: 11px; font-weight:700; letter-spacing:.14em; color: var(--accent); display:inline-block; margin-bottom: 10px; }
+.ab-rule h5 { font-family: var(--font-display); font-size: 15.5px; color: var(--navy); margin: 0 0 8px; line-height: 1.3; }
+.ab-rule p { font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); margin:0; }
+
+.ab-timeline { display:grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1100px; margin: 0 auto; }
+.ab-tl { background:#fff; border:1px solid var(--ink-line-soft); border-radius: 14px; padding: 24px 24px 26px; border-top: 3px solid var(--accent); }
+.ab-tl-year { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--navy); letter-spacing: -0.02em; margin-bottom: 10px; }
+.ab-tl-body h5 { font-family: var(--font-display); font-size: 15.5px; color: var(--navy); margin: 0 0 6px; }
+.ab-tl-body p { font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); margin: 0; }
+
 .ab-certs { display:grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .ab-cert { background: #fff; padding: 18px 20px; border-radius: 10px; border: 1px solid var(--ink-line-soft); border-left: 3px solid var(--accent); }
 .ab-cert strong { display:block; font-family: var(--font-display); font-size: 14.5px; color: var(--navy); margin-bottom: 4px; }
 .ab-cert span { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
 
+@media (max-width: 1100px) {
+  .ab-rules { grid-template-columns: repeat(2, 1fr); }
+}
 @media (max-width: 960px) {
   .ab-pillars { grid-template-columns: 1fr; }
   .ab-team { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; }
+  .ab-timeline { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 760px) {
   .ab-mv-grid { grid-template-columns: 1fr; }
@@ -237,6 +293,8 @@ ${FOOTER}
   .ab-fact { padding: 24px 14px; }
   .ab-fact-num { font-size: 32px; }
   .ab-certs { grid-template-columns: 1fr; }
+  .ab-rules { grid-template-columns: 1fr; }
+  .ab-timeline { grid-template-columns: 1fr; }
 }
 </style>
 `;
