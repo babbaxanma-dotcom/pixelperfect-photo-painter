@@ -158,6 +158,7 @@ ${buildHero({
 
 <style>
 @media (max-width: 768px) {
+  .ab-toc-wrap { display: none !important; }
   .ab-svc-section { padding-top: 12px !important; }
   .ab-svc-section .wrap { padding-left: 0 !important; padding-right: 0 !important; }
   .ab-svc-track {
