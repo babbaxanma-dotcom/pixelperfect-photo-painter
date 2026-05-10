@@ -124,22 +124,14 @@ export function useAbBouwInteractions() {
     // ── Nav scroll state ────────────────────────────────
     const nav = document.getElementById('nav');
     const hero = document.querySelector<HTMLElement>('.lf-hero');
-    nav?.classList.remove('hero-mode');
-    document.documentElement.style.setProperty('--nav-sweep', '1');
-    document.body.classList.add('nav-revealed');
+    nav?.classList.remove('hero-mode', 'nav-sweep-once');
+    document.documentElement.style.setProperty('--nav-sweep', '0');
+    document.documentElement.style.setProperty('--nav-sweep-clip', '50%');
+    document.documentElement.style.setProperty('--nav-sweep-y', '-18px');
+    document.documentElement.style.setProperty('--nav-shine-x', '-115%');
+    document.documentElement.style.setProperty('--nav-shine-opacity', '0');
+    document.body.classList.remove('past-hero', 'nav-revealed');
     let navRaf = 0;
-    let sweepDone = false;
-    let sweepTimer = 0;
-    const triggerSweep = () => {
-      if (sweepDone || !nav) return;
-      sweepDone = true;
-      nav.classList.remove('nav-sweep-once');
-      // force reflow so animation restarts cleanly
-      void nav.offsetWidth;
-      nav.classList.add('nav-sweep-once');
-      window.clearTimeout(sweepTimer);
-      sweepTimer = window.setTimeout(() => nav.classList.remove('nav-sweep-once'), 1300);
-    };
     const onScroll = () => {
       if (navRaf) return;
       navRaf = requestAnimationFrame(() => {
@@ -147,14 +139,28 @@ export function useAbBouwInteractions() {
         const sy = window.scrollY;
         if (sy > 30) nav?.classList.add('scrolled');
         else nav?.classList.remove('scrolled');
-        if (sy > 360) { document.body.classList.add('past-hero'); triggerSweep(); }
-        else { document.body.classList.remove('past-hero'); sweepDone = false; nav?.classList.remove('nav-sweep-once'); }
         if (hero) {
           const heroH = hero.offsetHeight;
+          const navStart = heroH * 0.55;
+          const navEnd = heroH * 0.75;
+          const navP = Math.max(0, Math.min(1, (sy - navStart) / (navEnd - navStart)));
+          document.documentElement.style.setProperty('--nav-sweep', navP.toFixed(3));
+          document.documentElement.style.setProperty('--nav-sweep-clip', `${((1 - navP) * 50).toFixed(2)}%`);
+          document.documentElement.style.setProperty('--nav-sweep-y', `${((1 - navP) * -18).toFixed(2)}px`);
+          document.documentElement.style.setProperty('--nav-shine-x', `${(-115 + navP * 230).toFixed(2)}%`);
+          document.documentElement.style.setProperty('--nav-shine-opacity', navP > 0.08 && navP < 0.98 ? '1' : '0');
+          document.body.classList.toggle('past-hero', navP > 0.02);
+          document.body.classList.toggle('nav-revealed', navP > 0.98);
           const fadeStart = heroH * 0.55;
           const fadeEnd = heroH * 0.95;
           const fade = Math.max(0, Math.min(1, 1 - (sy - fadeStart) / (fadeEnd - fadeStart)));
           document.documentElement.style.setProperty('--hf', fade.toString());
+        } else {
+          document.documentElement.style.setProperty('--nav-sweep', '1');
+          document.documentElement.style.setProperty('--nav-sweep-clip', '0%');
+          document.documentElement.style.setProperty('--nav-sweep-y', '0px');
+          document.documentElement.style.setProperty('--nav-shine-opacity', '0');
+          document.body.classList.add('past-hero', 'nav-revealed');
         }
         const sp = document.getElementById('scrollProgress');
         if (sp) {
