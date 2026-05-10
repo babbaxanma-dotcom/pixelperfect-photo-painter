@@ -13,12 +13,14 @@ export function useLenis() {
     if (reduced.matches) return;
 
     const lenis = new Lenis({
-      duration: 1.05,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      // Iets langer + zachter — voelt minder schokkerig en meer 'butter'
+      duration: 1.25,
+      easing: (t) => 1 - Math.pow(1 - t, 3.2),
       smoothWheel: true,
       // raak touch niet aan — native momentum op mobiel voelt beter
       touchMultiplier: 1,
-      wheelMultiplier: 1,
+      wheelMultiplier: 0.95,
+      lerp: 0.085,
     });
 
     let rafId = 0;
