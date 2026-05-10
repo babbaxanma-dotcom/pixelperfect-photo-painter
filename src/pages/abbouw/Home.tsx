@@ -1343,7 +1343,10 @@ html, body { overflow-x: hidden; max-width: 100%; }
   .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 16/10; }
   .lf-svc-body { padding: 18px; }
   .lf-svc-body h4 { font-size: 16px; }
-  .lf-blog-body { padding: 18px; }
+  .lf-blog-body { padding: 16px; gap: 8px; }
+  .lf-blog-body h4 { font-size: 16px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .lf-blog-body p { font-size: 13px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .lf-blog-img { aspect-ratio: 16/11; }
   .lf-blog-grid { gap: 16px; }
 
   /* Support: 2x2 */
