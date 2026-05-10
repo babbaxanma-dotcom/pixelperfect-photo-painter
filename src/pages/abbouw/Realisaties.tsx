@@ -202,12 +202,23 @@ ${buildHero({
           </button>`).join('')}
       </div>
     </div>
-    <div class="lf-proj-collage" data-reveal id="rzCollage">
-      <div class="lf-proj-cell lf-proj-tl"><img id="rzImg0" src="${filters[0].imgs[0]}" alt="" loading="lazy"/></div>
-      <div class="lf-proj-cell lf-proj-tr"><img id="rzImg1" src="${filters[0].imgs[1]}" alt="" loading="lazy"/></div>
-      <div class="lf-proj-cell lf-proj-bl"><img id="rzImg2" src="${filters[0].imgs[2]}" alt="" loading="lazy"/></div>
-      <div class="lf-proj-cell lf-proj-br"><img id="rzImg3" src="${filters[0].imgs[3]}" alt="" loading="lazy"/></div>
-      <div class="lf-proj-logo"><img src="${logo}" alt="AB Bouw Groep" /></div>
+    <div class="rz-grid rz-grid--preview" data-reveal id="rzCollage">
+      ${[0,1,2,3].map(i => {
+        const p = filters[0].cards[i] || filters[0].cards[0];
+        return `
+        <a class="rz-proj-card" href="/contact" aria-label="${p.t}" data-rz-preview="${i}">
+          <div class="rz-proj-img"><img id="rzImg${i}" src="${p.img}" alt="${p.t}" loading="lazy"/></div>
+          <div class="rz-proj-foot">
+            <div class="rz-proj-meta">
+              <span class="rz-proj-tag" id="rzTag${i}">${p.tag}</span>
+              <span class="rz-proj-loc" id="rzLoc${i}">${p.t}</span>
+            </div>
+            <span class="rz-proj-arrow" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+            </span>
+          </div>
+        </a>`;
+      }).join('')}
     </div>
   </div>
 </section>
