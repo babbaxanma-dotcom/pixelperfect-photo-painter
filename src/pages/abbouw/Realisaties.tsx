@@ -40,6 +40,10 @@ import eVent from '@/assets/eco/ventilatie.jpg';
 import projVilla from '@/assets/project-villa.jpg';
 import projReno from '@/assets/project-renovatie.jpg';
 import projUtil from '@/assets/project-utiliteit.jpg';
+// interieur
+import intWoonkamer from '@/assets/interieur/woonkamer-eik.jpg';
+import intKeuken from '@/assets/interieur/keuken-noten.jpg';
+import intTrap from '@/assets/interieur/trap-staal-eik.jpg';
 
 type Card = { img: string; tag: string; t: string; d: string };
 type Filter = { key: string; label: string; imgs: [string, string, string, string]; cards: Card[] };
@@ -82,13 +86,13 @@ const nieuwbouw: Card[] = [
 
 const interieur: Card[] = [
   { img: svcInterieur, tag: 'Maatwerk', t: 'Penthouse Mechelen', d: 'Volledig maatwerk: keuken, dressing, TV-wand en bibliotheek in eik.' },
-  { img: cAfwerking, tag: 'Pleisterwerk', t: 'Herenhuis Antwerpen', d: 'Velours-pleisterwerk in alle leefruimtes, profielen en lichtkoven.' },
-  { img: skills, tag: 'Vloeren', t: 'Visgraat eik Mechelen', d: 'Massief eik visgraat geolied, met vloerverwarming.' },
-  { img: about, tag: 'Loft', t: 'Industriële loft Brussel', d: 'Open-plan met akoestisch plafond, betonlook gietvloer en stalen binnenpui.' },
+  { img: intKeuken, tag: 'Keuken', t: 'Maatkeuken Antwerpen', d: 'Gefineerde noten met composiet werkblad en geïntegreerde toestellen.' },
+  { img: intWoonkamer, tag: 'Vloeren', t: 'Visgraat eik Mechelen', d: 'Massief eik visgraat geolied, met vloerverwarming en ingebouwde bibliotheek.' },
+  { img: intTrap, tag: 'Trappen', t: 'Stalen trap Mechelen', d: 'Maatwerktrap in zwart staal met massieve eiken treden.' },
   { img: eKalk, tag: 'Kalkpleister', t: 'Cottage Bonheiden', d: 'Natuurlijke kalkpleister in alle leefruimtes, ademend en mat.' },
   { img: cVilla, tag: 'Schrijnwerk', t: 'Maatkasten Lier', d: 'Inbouw-dressing en TV-meubel in gerookte eik.' },
-  { img: svcInterieur, tag: 'Keuken', t: 'Maatkeuken Antwerpen', d: 'Gefineerde noten met composiet werkblad en geïntegreerde toestellen.' },
-  { img: cAfwerking, tag: 'Trappen', t: 'Stalen trap Mechelen', d: 'Maatwerktrap in zwart staal met massieve eiken treden.' },
+  { img: intWoonkamer, tag: 'Loft-afwerking', t: 'Stadsappartement Brussel', d: 'Open-plan met lichtkoven, eiken vloer en mat-witte gepleisterde wanden.' },
+  { img: intKeuken, tag: 'Open keuken', t: 'Open keuken Lier', d: 'Kookeiland in noten met zicht op tuin via grote schuifpui.' },
 ];
 
 const badkamer: Card[] = [
@@ -130,7 +134,7 @@ const filters: Filter[] = [
   { key: 'nieuwbouw', label: 'Nieuwbouw',
     imgs: [cVilla, cHalfopen, cNieuw, projVilla], cards: nieuwbouw },
   { key: 'interieur', label: 'Interieur',
-    imgs: [svcInterieur, cAfwerking, skills, about], cards: interieur },
+    imgs: [svcInterieur, intKeuken, intWoonkamer, intTrap], cards: interieur },
   { key: 'badkamer', label: 'Badkamer',
     imgs: [svcBad, dakRaam, cAfwerking, cAanbouw], cards: badkamer },
   { key: 'gevel', label: 'Gevelbekleding',
