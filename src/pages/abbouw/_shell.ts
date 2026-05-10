@@ -440,7 +440,7 @@ export const SHELL_STYLE = `
   .lf-section-head { margin-bottom: 32px; }
   .lf-h2 { font-size: 26px; line-height: 1.2; }
   .lf-hero, .lf-hero[style] { min-height: 300px !important; height: auto !important; max-height: 56vh; }
-  .lf-hero-wrap { padding-top: 76px !important; padding-bottom: 22px !important; padding-left: 18px !important; padding-right: 18px !important; }
+  .lf-hero-wrap { padding-top: 110px !important; padding-bottom: 22px !important; padding-left: 18px !important; padding-right: 18px !important; }
   .lf-hero-card { padding: 18px 16px; border-radius: 12px; }
   .lf-hero-card h1 { font-size: 20px; line-height: 1.2; margin-bottom: 8px; }
   .lf-hero-card p { font-size: 13px; line-height: 1.5; margin-bottom: 0; }
