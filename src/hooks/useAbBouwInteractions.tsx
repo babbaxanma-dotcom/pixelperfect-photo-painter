@@ -143,19 +143,20 @@ export function useAbBouwInteractions() {
         if (hero && isHomePage) {
           const heroH = hero.offsetHeight;
           const isPhone = window.matchMedia('(max-width: 760px)').matches;
+          const revealAt = isPhone ? Math.min(heroH * 0.74, window.innerHeight * 0.62) : heroH * 0.65;
           const navStart = isPhone ? heroH * 0.72 : heroH * 0.42;
           const navEnd = isPhone ? heroH * 0.92 : heroH * 0.78;
           const raw = Math.max(0, Math.min(1, (sy - navStart) / (navEnd - navStart)));
           // easeInOutCubic — verzacht begin en einde van de sweep
           let navP = raw < 0.5 ? 4 * raw * raw * raw : 1 - Math.pow(-2 * raw + 2, 3) / 2;
-          if (sy > heroH * (isPhone ? 0.94 : 0.65)) navP = 1;
+          if (sy > revealAt) navP = 1;
           document.documentElement.style.setProperty('--nav-sweep', navP.toFixed(3));
           document.documentElement.style.setProperty('--nav-sweep-clip', `${((1 - navP) * 50).toFixed(2)}%`);
           document.documentElement.style.setProperty('--nav-sweep-y', `${((1 - navP) * -18).toFixed(2)}px`);
           document.documentElement.style.setProperty('--nav-shine-x', `${(-115 + navP * 230).toFixed(2)}%`);
           document.documentElement.style.setProperty('--nav-shine-opacity', navP > 0.08 && navP < 0.98 ? '1' : '0');
-          document.body.classList.toggle('past-hero', isPhone ? sy > heroH * 0.76 : navP > 0.02 || sy > heroH * 0.5);
-          document.body.classList.toggle('nav-revealed', navP > 0.95 || sy > heroH * (isPhone ? 0.94 : 0.65));
+          document.body.classList.toggle('past-hero', isPhone ? sy > revealAt : navP > 0.02 || sy > heroH * 0.5);
+          document.body.classList.toggle('nav-revealed', navP > 0.95 || sy > revealAt);
           const fadeStart = heroH * 0.55;
           const fadeEnd = heroH * 0.95;
           const fade = Math.max(0, Math.min(1, 1 - (sy - fadeStart) / (fadeEnd - fadeStart)));
