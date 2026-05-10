@@ -1273,27 +1273,29 @@ html, body { overflow-x: hidden; max-width: 100%; }
 @media (max-width: 760px) {
   .lf-fab-call {
     position: fixed;
-    right: 16px;
-    bottom: calc(20px + env(safe-area-inset-bottom));
+    right: 14px;
+    bottom: calc(16px + env(safe-area-inset-bottom));
     z-index: 60;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 15px 22px 15px 18px;
+    justify-content: center;
+    gap: 0;
+    width: 52px;
+    height: 52px;
+    padding: 0;
     background: #0a1628;
     color: #fff !important;
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 0.01em;
     text-decoration: none;
-    border-radius: 999px;
+    border-radius: 50%;
     border: 2px solid #fff;
-    box-shadow: 0 18px 40px -10px rgba(10,22,40,0.55), 0 6px 16px rgba(10,22,40,0.25);
+    box-shadow: 0 12px 28px -10px rgba(10,22,40,0.55), 0 4px 12px rgba(10,22,40,0.25);
     opacity: 0;
     transform: translateY(20px) scale(0.9);
     pointer-events: none;
     transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1);
   }
+  .lf-fab-call span:not(.lf-fab-pulse) { display: none; }
+  .lf-fab-call svg { width: 22px; height: 22px; }
   body.nav-revealed .lf-fab-call {
     opacity: 1;
     transform: translateY(0) scale(1);
