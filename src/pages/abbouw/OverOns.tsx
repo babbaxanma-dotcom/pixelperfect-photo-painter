@@ -110,22 +110,53 @@ ${buildHero({
 </section>
 
 <!-- HOE WIJ WERKEN -->
-<section class="lf-section lf-tone-soft">
+<section class="lf-section lf-tone-soft ab-rules-section">
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Hoe wij werken</span>
       <h2 class="lf-h2">Acht afspraken die wij<br/>met onszelf maken.</h2>
-      <p class="lf-lede" style="margin: 0 auto;">Geen loze beloftes. Onderstaande punten staan zwart op wit in elke offerte en zijn de meetlat waaraan u ons mag afrekenen.</p>
+      <p class="lf-lede" style="margin: 0 auto;">Geen loze beloftes. Klik door de acht punten die in elke offerte staan.</p>
     </div>
-    <div class="ab-rules">
-      <div class="ab-rule" data-reveal><span class="ab-rule-num">01</span><h5>Plaatsbezoek binnen 5 werkdagen</h5><p>U belt of mailt, wij komen binnen de week ter plaatse. Geen tussenpersonen, gewoon de werfleider die uw project zal opvolgen.</p></div>
-      <div class="ab-rule" data-reveal data-reveal-delay="1"><span class="ab-rule-num">02</span><h5>Offerte in 7 werkdagen</h5><p>Een gedetailleerde meetstaat, geen ronde forfaits. U weet exact wat materiaal kost, wat uurloon kost en wat de marge is.</p></div>
-      <div class="ab-rule" data-reveal data-reveal-delay="2"><span class="ab-rule-num">03</span><h5>Vaste startdatum op contract</h5><p>Bij ondertekening krijgt u een planning met start- én opleveringsdatum. Verschuift het, dan hoort u dat minstens twee weken vooraf.</p></div>
-      <div class="ab-rule" data-reveal data-reveal-delay="3"><span class="ab-rule-num">04</span><h5>Wekelijks werfrapport</h5><p>Elke vrijdag krijgt u een korte mail met foto's, gewerkte uren en de planning voor de volgende week. U weet altijd waar we staan.</p></div>
-      <div class="ab-rule" data-reveal data-reveal-delay="4"><span class="ab-rule-num">05</span><h5>Eén factuur per fase</h5><p>Geen losse rekeningen van metselaar, dakwerker en tegelzetter. Eén schijf per fase, telkens nadat u die fase samen met ons heeft opgeleverd.</p></div>
-      <div class="ab-rule" data-reveal data-reveal-delay="5"><span class="ab-rule-num">06</span><h5>Werf opgeruimd op vrijdag</h5><p>Standaard inbegrepen. Vloeren afgedekt, materiaal gestapeld, container leeg. U gebruikt uw woning gewoon door tijdens de werken.</p></div>
-      <div class="ab-rule" data-reveal data-reveal-delay="6"><span class="ab-rule-num">07</span><h5>Premiedossier door ons</h5><p>Mijn VerbouwPremie en Fluvius worden door onze EPB-verslaggever ingediend. Gemiddeld goed voor €4.200 retour per renovatieproject.</p></div>
-      <div class="ab-rule" data-reveal data-reveal-delay="7"><span class="ab-rule-num">08</span><h5>Nacontrole na 1 jaar</h5><p>Krimpscheuren, deuren bijregelen, voegen nakijken. Eén jaar na oplevering komen we gratis langs voor een eindcontrole.</p></div>
+
+    <div class="ab-promise" data-promise>
+      <div class="ab-promise-tabs" data-promise-tabs>
+        ${[
+          ['01','Plaatsbezoek binnen 5 werkdagen'],
+          ['02','Offerte in 7 werkdagen'],
+          ['03','Vaste startdatum op contract'],
+          ['04','Wekelijks werfrapport'],
+          ['05','Eén factuur per fase'],
+          ['06','Werf opgeruimd op vrijdag'],
+          ['07','Premiedossier door ons'],
+          ['08','Nacontrole na 1 jaar'],
+        ].map(([n,t], i) => `<button type="button" class="ab-promise-tab${i===0?' is-active':''}" data-promise-tab="${i}"><span class="ab-promise-tab-num">${n}</span><span class="ab-promise-tab-title">${t}</span></button>`).join('')}
+      </div>
+
+      <div class="ab-promise-stage" data-promise-stage>
+        ${[
+          ['01','Plaatsbezoek binnen 5 werkdagen','U belt of mailt, wij komen binnen de week ter plaatse. Geen tussenpersonen, gewoon de werfleider die uw project zal opvolgen.','Reactie binnen 24 u·Werfleider zelf ter plaatse·Vrijblijvend & gratis'],
+          ['02','Offerte in 7 werkdagen','Een gedetailleerde meetstaat, geen ronde forfaits. U weet exact wat materiaal kost, wat uurloon kost en wat de marge is.','Post per post uitgesplitst·Bindende prijs·Mondeling toegelicht'],
+          ['03','Vaste startdatum op contract','Bij ondertekening krijgt u een planning met start- én opleveringsdatum. Verschuift het, dan hoort u dat minstens twee weken vooraf.','Start- & einddatum zwart op wit·Boeteclausule bij vertraging·Geen open einde'],
+          ['04','Wekelijks werfrapport','Elke vrijdag krijgt u een korte mail met foto\\u2019s, gewerkte uren en de planning voor de volgende week. U weet altijd waar we staan.','Foto\\u2019s van de week·Gewerkte uren per fase·Planning vooruit'],
+          ['05','Eén factuur per fase','Geen losse rekeningen van metselaar, dakwerker en tegelzetter. Eén schijf per fase, telkens nadat u die fase samen met ons heeft opgeleverd.','Eén aanspreekpunt voor facturatie·Schijf na oplevering fase·Geen voorschotten zonder werk'],
+          ['06','Werf opgeruimd op vrijdag','Standaard inbegrepen. Vloeren afgedekt, materiaal gestapeld, container leeg. U gebruikt uw woning gewoon door tijdens de werken.','Stof­schotten & vloerbescherming·Container wekelijks geleegd·Sanitair blijft bruikbaar'],
+          ['07','Premiedossier door ons','Mijn VerbouwPremie en Fluvius worden door onze EPB-verslaggever ingediend. Gemiddeld goed voor \\u20ac4.200 retour per renovatieproject.','EPB-verslaggever in huis·Mijn VerbouwPremie + Fluvius·Gemiddeld \\u20ac4.200 retour'],
+          ['08','Nacontrole na 1 jaar','Krimpscheuren, deuren bijregelen, voegen nakijken. Eén jaar na oplevering komen we gratis langs voor een eindcontrole.','Gratis nacontrole·Bijregelen inbegrepen·10 jaar aansprakelijkheid'],
+        ].map(([n,t,d,b], i) => `
+          <article class="ab-promise-panel${i===0?' is-active':''}" data-promise-panel="${i}">
+            <div class="ab-promise-bignum">${n}</div>
+            <div class="ab-promise-body">
+              <span class="ab-promise-eyebrow">Afspraak ${n}</span>
+              <h3>${t}</h3>
+              <p>${d}</p>
+              <ul class="ab-promise-bullets">
+                ${(b as string).split('·').map(x => `<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>${x.trim()}</span></li>`).join('')}
+              </ul>
+            </div>
+          </article>
+        `).join('')}
+        <div class="ab-promise-progress" data-promise-progress><i></i></div>
+      </div>
     </div>
   </div>
 </section>
@@ -229,12 +260,27 @@ ${FOOTER}
 
 .ab-story .lf-split-img img { border-radius: 16px; }
 
-.ab-rules { display:grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
-.ab-rule { background:#fff; border:1px solid var(--ink-line-soft); border-radius: 14px; padding: 22px 22px 24px; transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
-.ab-rule:hover { transform: translateY(-3px); box-shadow: 0 22px 40px -28px rgba(15,17,21,.18); }
-.ab-rule-num { font-family: var(--font-display); font-size: 11px; font-weight:700; letter-spacing:.14em; color: var(--accent); display:inline-block; margin-bottom: 10px; }
-.ab-rule h5 { font-family: var(--font-display); font-size: 15.5px; color: var(--navy); margin: 0 0 8px; line-height: 1.3; }
-.ab-rule p { font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); margin:0; }
+.ab-promise { margin-top: 36px; display: grid; grid-template-columns: 320px 1fr; gap: 28px; align-items: stretch; }
+.ab-promise-tabs { display: flex; flex-direction: column; gap: 6px; }
+.ab-promise-tab { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: transparent; border: none; border-left: 3px solid transparent; border-radius: 10px; cursor: pointer; text-align: left; transition: background .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease); font-family: inherit; }
+.ab-promise-tab:hover { background: rgba(255,255,255,.65); transform: translateX(2px); }
+.ab-promise-tab.is-active { background: #fff; border-left-color: var(--accent); box-shadow: 0 18px 40px -28px rgba(15,17,21,.22); }
+.ab-promise-tab-num { font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .12em; min-width: 26px; }
+.ab-promise-tab-title { font-family: var(--font-display); font-size: 14.5px; color: var(--navy); font-weight: 600; line-height: 1.3; }
+
+.ab-promise-stage { position: relative; background: #fff; border-radius: 18px; border: 1px solid var(--ink-line-soft); padding: 44px 48px 56px; min-height: 360px; overflow: hidden; box-shadow: 0 30px 60px -40px rgba(15,17,21,.18); }
+.ab-promise-panel { position: absolute; inset: 44px 48px 56px; display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: start; opacity: 0; transform: translateY(14px); pointer-events: none; transition: opacity .5s var(--ease), transform .5s var(--ease); }
+.ab-promise-panel.is-active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.ab-promise-bignum { font-family: var(--font-display); font-size: 120px; font-weight: 700; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px var(--accent); letter-spacing: -0.04em; margin-top: -8px; }
+.ab-promise-body { max-width: 520px; }
+.ab-promise-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.ab-promise-body h3 { font-family: var(--font-display); font-size: 26px; line-height: 1.2; color: var(--navy); margin: 0 0 14px; letter-spacing: -0.01em; }
+.ab-promise-body p { font-size: 15px; line-height: 1.65; color: var(--ink-soft); margin: 0 0 22px; }
+.ab-promise-bullets { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.ab-promise-bullets li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--navy); font-weight: 500; }
+.ab-promise-bullets svg { color: var(--accent); flex-shrink: 0; }
+.ab-promise-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(0,0,0,.04); overflow: hidden; }
+.ab-promise-progress i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .15s linear; }
 
 .ab-timeline { display:grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1100px; margin: 0 auto; }
 .ab-tl { background:#fff; border:1px solid var(--ink-line-soft); border-radius: 14px; padding: 24px 24px 26px; border-top: 3px solid var(--accent); }
@@ -248,7 +294,13 @@ ${FOOTER}
 .ab-cert span { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
 
 @media (max-width: 1100px) {
-  .ab-rules { grid-template-columns: repeat(2, 1fr); }
+  .ab-promise { grid-template-columns: 1fr; }
+  .ab-promise-tabs { flex-direction: row; overflow-x: auto; gap: 8px; padding-bottom: 4px; scrollbar-width: none; }
+  .ab-promise-tabs::-webkit-scrollbar { display: none; }
+  .ab-promise-tab { flex: 0 0 auto; border-left: none; border-bottom: 3px solid transparent; padding: 10px 14px; }
+  .ab-promise-tab.is-active { border-left-color: transparent; border-bottom-color: var(--accent); }
+  .ab-promise-tab-title { display: none; }
+  .ab-promise-tab-num { font-size: 14px; }
 }
 @media (max-width: 960px) {
   .ab-pillars { grid-template-columns: 1fr; }
@@ -262,8 +314,11 @@ ${FOOTER}
   .ab-fact { padding: 24px 14px; }
   .ab-fact-num { font-size: 32px; }
   .ab-certs { grid-template-columns: 1fr; }
-  .ab-rules { grid-template-columns: 1fr; }
   .ab-timeline { grid-template-columns: 1fr; }
+  .ab-promise-stage { padding: 28px 22px 40px; min-height: 420px; }
+  .ab-promise-panel { inset: 28px 22px 40px; grid-template-columns: 1fr; gap: 6px; }
+  .ab-promise-bignum { font-size: 72px; }
+  .ab-promise-body h3 { font-size: 21px; }
 }
 </style>
 `;
@@ -279,7 +334,52 @@ export default function OverOns() {
     const styleEl = document.createElement('style');
     styleEl.textContent = SHELL_STYLE;
     document.head.appendChild(styleEl);
-    return () => { document.body.className = prev; styleEl.remove(); };
+
+    const promise = document.querySelector<HTMLElement>('[data-promise]');
+    let cleanupPromise = () => {};
+    if (promise) {
+      const tabs = Array.from(promise.querySelectorAll<HTMLButtonElement>('[data-promise-tab]'));
+      const panels = Array.from(promise.querySelectorAll<HTMLElement>('[data-promise-panel]'));
+      const progress = promise.querySelector<HTMLElement>('[data-promise-progress] i');
+      let active = 0;
+      let raf = 0;
+      let start = performance.now();
+      let paused = false;
+      const DURATION = 5000;
+      const setActive = (i: number, resetTimer = true) => {
+        active = (i + panels.length) % panels.length;
+        tabs.forEach((t, k) => t.classList.toggle('is-active', k === active));
+        panels.forEach((p, k) => p.classList.toggle('is-active', k === active));
+        if (resetTimer) start = performance.now();
+      };
+      const tick = (now: number) => {
+        if (!paused) {
+          const pct = Math.min(1, (now - start) / DURATION);
+          if (progress) progress.style.width = `${pct * 100}%`;
+          if (pct >= 1) setActive(active + 1);
+        }
+        raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+      const handlers: Array<[HTMLButtonElement, () => void]> = [];
+      tabs.forEach((tab, i) => {
+        const h = () => setActive(i);
+        tab.addEventListener('click', h);
+        handlers.push([tab, h]);
+      });
+      const onEnter = () => { paused = true; };
+      const onLeave = () => { paused = false; start = performance.now(); };
+      promise.addEventListener('mouseenter', onEnter);
+      promise.addEventListener('mouseleave', onLeave);
+      cleanupPromise = () => {
+        cancelAnimationFrame(raf);
+        handlers.forEach(([el, h]) => el.removeEventListener('click', h));
+        promise.removeEventListener('mouseenter', onEnter);
+        promise.removeEventListener('mouseleave', onLeave);
+      };
+    }
+
+    return () => { document.body.className = prev; styleEl.remove(); cleanupPromise(); };
   }, []);
   useAbBouwInteractions();
   return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
