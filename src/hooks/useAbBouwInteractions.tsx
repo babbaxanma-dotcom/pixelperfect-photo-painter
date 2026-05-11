@@ -46,7 +46,7 @@ export function useAbBouwInteractions() {
       if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       const target = (e.target as HTMLElement)?.closest('a') as HTMLAnchorElement | null;
       if (!target) return;
-      const href = target.getAttribute('href');
+      const href = target.dataset.route || target.getAttribute('href');
       if (!href) return;
       // Smooth in-page anchors (e.g. CTA → contact form, TOC → section)
       if (href.startsWith('#') && href.length > 1) {
