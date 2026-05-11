@@ -1451,43 +1451,6 @@ export default function Home() {
     styleEl.textContent = EXTRA_STYLE;
     document.head.appendChild(styleEl);
 
-    // Custom dropdown behaviour
-    const ddSetup = () => {
-      const dds = document.querySelectorAll<HTMLElement>('[data-dd]');
-      const cleanups: Array<() => void> = [];
-      dds.forEach((dd) => {
-        const toggle = dd.querySelector<HTMLElement>('[data-dd-toggle]');
-        const label = dd.querySelector<HTMLElement>('[data-dd-label]');
-        const input = dd.querySelector<HTMLInputElement>('[data-dd-input]');
-        const opts = dd.querySelectorAll<HTMLElement>('[data-dd-opt]');
-        if (!toggle || !label || !input) return;
-        const onToggle = (e: Event) => { e.stopPropagation(); dd.classList.toggle('open'); toggle.setAttribute('aria-expanded', dd.classList.contains('open') ? 'true' : 'false'); };
-        toggle.addEventListener('click', onToggle);
-        const optHandlers: Array<[HTMLElement, () => void]> = [];
-        opts.forEach((o) => {
-          const h = () => {
-            opts.forEach((x) => x.classList.remove('selected'));
-            o.classList.add('selected');
-            label.textContent = o.textContent || '';
-            label.classList.add('has-value');
-            input.value = o.textContent || '';
-            dd.classList.remove('open');
-          };
-          o.addEventListener('click', h);
-          optHandlers.push([o, h]);
-        });
-        const onDoc = (e: MouseEvent) => { if (!dd.contains(e.target as Node)) dd.classList.remove('open'); };
-        document.addEventListener('click', onDoc);
-        cleanups.push(() => {
-          toggle.removeEventListener('click', onToggle);
-          optHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
-          document.removeEventListener('click', onDoc);
-        });
-      });
-      return () => cleanups.forEach((c) => c());
-    };
-    const ddCleanup = ddSetup();
-
     // Services nav: scroll to card on click + active state on scroll
     const svcNavSetup = () => {
       const nav = document.querySelector<HTMLElement>('[data-svc-nav]');
@@ -1626,7 +1589,7 @@ export default function Home() {
     };
     const blogCleanup = blogCarouselSetup();
 
-    return () => { document.body.className = prevClass; styleEl.remove(); ddCleanup(); svcNavCleanup(); blogCleanup(); };
+    return () => { document.body.className = prevClass; styleEl.remove(); svcNavCleanup(); blogCleanup(); };
   }, []);
 
   useAbBouwInteractions();
