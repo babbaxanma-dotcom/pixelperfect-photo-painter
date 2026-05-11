@@ -78,6 +78,7 @@ export function useAbBouwInteractions() {
       }
       if (href.startsWith('/') && !href.startsWith('//') && !target.target) {
         const url = new URL(href, window.location.origin);
+        const nextHref = `${url.pathname}${url.search}${url.hash}`;
         if (url.pathname === location.pathname && url.hash.length > 1) {
           const el = document.querySelector(url.hash) as HTMLElement | null;
           if (el) {
@@ -87,11 +88,16 @@ export function useAbBouwInteractions() {
             return;
           }
         }
+        if (url.pathname === location.pathname && !url.hash && !url.search) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+          return;
+        }
         e.preventDefault();
-        runRoutePress(target, href);
+        runRoutePress(target, nextHref);
       }
     };
-    document.addEventListener('click', onClick);
+    document.addEventListener('click', onClick, true);
 
     if (location.hash.length > 1) {
       requestAnimationFrame(() => {
@@ -817,7 +823,7 @@ export function useAbBouwInteractions() {
 
     return () => {
       document.body.classList.remove('is-page-leaving');
-      document.removeEventListener('click', onClick);
+      document.removeEventListener('click', onClick, true);
       projTabs?.removeEventListener('click', onProjFilter);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('scroll', onParallax);
