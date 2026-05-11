@@ -28,6 +28,19 @@ export function useAbBouwInteractions() {
       highlightAnchorTarget(el);
     };
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const runRoutePress = (link: HTMLAnchorElement, href: string) => {
+      if (prefersReducedMotion) {
+        navigate(href);
+        return;
+      }
+      const card = link.closest<HTMLElement>('.lf-svc-card, .ab-deep, .rz-proj-card, .lf-cta-pill') ?? link;
+      card.classList.add('is-route-pressing');
+      document.body.classList.add('is-page-leaving');
+      window.setTimeout(() => navigate(href), 170);
+    };
+
     // ── SPA link interception ───────────────────────────
     const onClick = (e: MouseEvent) => {
       if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -75,7 +88,7 @@ export function useAbBouwInteractions() {
           }
         }
         e.preventDefault();
-        navigate(href);
+        runRoutePress(target, href);
       }
     };
     document.addEventListener('click', onClick);
