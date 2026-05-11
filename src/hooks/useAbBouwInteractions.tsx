@@ -189,8 +189,10 @@ export function useAbBouwInteractions() {
         requestAnimationFrame(() => {
           details.style.height = `${isOpening ? details.scrollHeight : summaryHeight}px`;
         });
+          let done = false;
         const finish = (te: TransitionEvent) => {
           if (te.propertyName !== 'height') return;
+            done = true;
           if (!isOpening) details.open = false;
           details.style.removeProperty('height');
           details.style.removeProperty('overflow');
@@ -199,6 +201,15 @@ export function useAbBouwInteractions() {
           details.removeEventListener('transitionend', finish);
         };
         details.addEventListener('transitionend', finish);
+          window.setTimeout(() => {
+            if (done) return;
+            if (!isOpening) details.open = false;
+            details.style.removeProperty('height');
+            details.style.removeProperty('overflow');
+            details.classList.remove('is-opening', 'is-closing');
+            details.dataset.animating = 'false';
+            details.removeEventListener('transitionend', finish);
+          }, 520);
       };
       summary.addEventListener('click', toggle);
       detailHandlers.push([summary, toggle]);
