@@ -44,7 +44,7 @@ ${buildHero({
         </div>
       </div>
 
-      <form class="lf-form" data-reveal data-reveal-delay="1" onsubmit="event.preventDefault(); alert('Bedankt, we nemen binnen 24u contact op.');">
+      <form class="lf-form" id="contact-form" data-reveal data-reveal-delay="1" onsubmit="event.preventDefault(); alert('Bedankt, we nemen binnen 24u contact op.');">
         <h3>Vraag uw plaatsbezoek aan</h3>
         <p>Vul het formulier in en we contacteren u binnen één werkdag.</p>
         <div class="lf-form-row">
@@ -54,16 +54,22 @@ ${buildHero({
         <input type="email" placeholder="E-mailadres" required />
         <input type="tel" placeholder="Telefoonnummer" required />
         <input type="text" placeholder="Postcode &amp; gemeente" />
-        <select required>
-          <option value="">Type werk</option>
-          <option>Algemene aanneming (Construct)</option>
-          <option>Ecologisch / duurzaam</option>
-          <option>Interieurwerken</option>
-          <option>Dakwerken</option>
-          <option>Badkamer / wellness</option>
-          <option>Gevelbekleding</option>
-          <option>Combinatie / weet ik niet</option>
-        </select>
+        <div class="lf-dd" data-dd>
+          <button type="button" class="lf-dd-toggle" data-dd-toggle aria-haspopup="listbox" aria-expanded="false">
+            <span class="lf-dd-label" data-dd-label>Type werk</span>
+            <svg class="lf-dd-caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="lf-dd-list" role="listbox">
+            <li role="option" data-dd-opt>Algemene aanneming (Construct)</li>
+            <li role="option" data-dd-opt>Ecologisch / duurzaam</li>
+            <li role="option" data-dd-opt>Interieurwerken</li>
+            <li role="option" data-dd-opt>Dakwerken</li>
+            <li role="option" data-dd-opt>Badkamer / wellness</li>
+            <li role="option" data-dd-opt>Gevelbekleding</li>
+            <li role="option" data-dd-opt>Combinatie / weet ik niet</li>
+          </ul>
+          <input type="hidden" name="type_werk" data-dd-input required />
+        </div>
         <textarea placeholder="Vertel kort over uw project (optioneel)"></textarea>
         <button type="submit" class="lf-cta-pill">
           <span>Verstuur aanvraag</span>
