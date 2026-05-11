@@ -13,6 +13,13 @@ export function useAbBouwInteractions() {
   useEffect(() => {
     window.scrollTo(0, 0);
 
+    const highlightAnchorTarget = (el: HTMLElement) => {
+      el.classList.remove('is-anchor-focus');
+      void el.offsetWidth;
+      el.classList.add('is-anchor-focus');
+      window.setTimeout(() => el.classList.remove('is-anchor-focus'), 1200);
+    };
+
     // ── SPA link interception ───────────────────────────
     const onClick = (e: MouseEvent) => {
       if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -42,7 +49,7 @@ export function useAbBouwInteractions() {
             const p = Math.min(1, (now - startT) / duration);
             window.scrollTo(0, startY + distance * ease(p));
             if (p < 1) requestAnimationFrame(step);
-            else history.replaceState(null, '', href);
+            else { history.replaceState(null, '', href); highlightAnchorTarget(el); }
           };
           requestAnimationFrame(step);
         }
