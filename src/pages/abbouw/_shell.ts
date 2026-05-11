@@ -669,8 +669,23 @@ ul.ab-checks li::before { content: '✓'; color: var(--accent); font-weight: 800
 [data-reveal-delay="2"] { transition-delay: 0.16s; }
 [data-reveal-delay="3"] { transition-delay: 0.24s; }
 [data-reveal-delay="4"] { transition-delay: 0.32s; }
+body.is-page-leaving .page-transition { opacity: 0; transform: translate3d(0, -8px, 0) scale(0.992); transition: opacity .18s var(--ease-out-quart), transform .18s var(--ease-out-quart); }
+.is-route-pressing { transform: translate3d(0, -3px, 0) scale(0.985) !important; opacity: .92; }
+.lf-cta-pill.is-route-pressing { transform: scale(0.96) !important; }
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal] { opacity: 1; transform: none; transition: none; }
+  [data-reveal], body.is-page-leaving .page-transition, .is-route-pressing { opacity: 1; transform: none !important; transition: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal].revealed .lf-split-img img,
+  [data-reveal].revealed.ab-pillar .ab-pillar-img img,
+  [data-reveal].revealed .ab-deep-img img {
+    animation: ab-photo-settle .8s var(--ease-out-quart) both;
+  }
+  @keyframes ab-photo-settle {
+    from { transform: scale(1.035); }
+    to { transform: scale(1); }
+  }
 }
 
 /* Skill bars animate to their width on reveal */
