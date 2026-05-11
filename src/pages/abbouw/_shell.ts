@@ -241,10 +241,10 @@ export const SHELL_STYLE = `
 
 /* Services Grid (used on /diensten) */
 .lf-svc-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-.lf-svc-card { display:flex; flex-direction:column; background:#fff; border-radius: 14px; overflow:hidden; border: 1px solid var(--ink-line-soft); transition: all 0.3s var(--ease); color: var(--ink); text-decoration:none; }
+.lf-svc-card { display:flex; flex-direction:column; background:#fff; border-radius: 14px; overflow:hidden; border: 1px solid var(--ink-line-soft); transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease), opacity 0.3s var(--ease); color: var(--ink); text-decoration:none; will-change: transform; }
 .lf-svc-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -20px rgba(10,22,40,0.18); border-color: var(--accent); }
 .lf-svc-img { position:relative; aspect-ratio: 4/3; overflow:hidden; }
-.lf-svc-img img { width:100%; height:100%; object-fit:cover; transition: transform 0.6s var(--ease); }
+.lf-svc-img img { width:100%; height:100%; object-fit:cover; transition: transform 0.6s var(--ease); will-change: transform; }
 .lf-svc-card:hover .lf-svc-img img { transform: scale(1.05); }
 .lf-svc-num { position:absolute; left:16px; bottom:16px; width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center; background: var(--accent); color:#fff; font-weight:700; font-size:14px; border-radius: 6px; box-shadow: 0 6px 16px rgba(217,140,3,0.4); }
 .lf-svc-body { padding: 24px; }
