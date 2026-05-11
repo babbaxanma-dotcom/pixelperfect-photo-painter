@@ -805,6 +805,7 @@ export function useAbBouwInteractions() {
     onTocScroll();
 
     return () => {
+      document.body.classList.remove('is-page-leaving');
       document.removeEventListener('click', onClick);
       projTabs?.removeEventListener('click', onProjFilter);
       window.removeEventListener('scroll', onScroll);
