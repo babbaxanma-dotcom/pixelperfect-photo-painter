@@ -733,6 +733,25 @@ export function useAbBouwInteractions() {
     window.addEventListener('scroll', onSupportScroll, { passive: true });
     onSupportScroll();
 
+    // ── Over ons promise tabs: real button behavior + soft panel transition ──
+    const promiseTabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-promise-tab]'));
+    const promisePanels = Array.from(document.querySelectorAll<HTMLElement>('[data-promise-panel]'));
+    const promiseProgress = document.querySelector<HTMLElement>('[data-promise-progress] i');
+    const promiseHandlers: Array<[HTMLButtonElement, () => void]> = [];
+    const setPromise = (idx: number) => {
+      promiseTabs.forEach((tab, i) => tab.classList.toggle('is-active', i === idx));
+      promisePanels.forEach((panel, i) => panel.classList.toggle('is-active', i === idx));
+      if (promiseProgress && promiseTabs.length > 1) {
+        promiseProgress.style.width = `${((idx + 1) / promiseTabs.length) * 100}%`;
+      }
+    };
+    promiseTabs.forEach((tab, idx) => {
+      const handler = () => setPromise(idx);
+      tab.addEventListener('click', handler);
+      promiseHandlers.push([tab, handler]);
+    });
+    if (promiseTabs.length) setPromise(promiseTabs.findIndex((tab) => tab.classList.contains('is-active')) || 0);
+
     // ===== ab-toc: smooth scroll on click + scroll-spy active state =====
     const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.ab-toc a[href^="#"]'));
     const tocTargets: { link: HTMLAnchorElement; el: HTMLElement }[] = [];
