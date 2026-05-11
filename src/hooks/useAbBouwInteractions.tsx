@@ -830,6 +830,7 @@ export function useAbBouwInteractions() {
       trustNearIo?.disconnect();
       faqHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
       tabHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
+      promiseHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
       svcCards.forEach((c) => c.removeEventListener('mousemove', svcMove));
       io.disconnect();
       cio.disconnect();
