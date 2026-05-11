@@ -399,6 +399,12 @@ export const SHELL_STYLE = `
 .lf-dd.open .lf-dd-list { opacity:1; transform: translateY(0) scale(1); pointer-events:auto; }
 .lf-dd-list li { padding: 11px 14px; font-size: 14px; color: var(--ink); border-radius: 8px; cursor:pointer; transition: background-color .15s var(--ease), color .15s var(--ease); }
 .lf-dd-list li:hover, .lf-dd-list li.selected { background: var(--bg-tint); color: var(--navy); }
+.lf-form.is-anchor-focus, .ab-sub.is-anchor-focus .ab-deep { animation: ab-anchor-focus 1.05s var(--ease-out-quart) both; }
+@keyframes ab-anchor-focus {
+  0% { transform: translateY(0) scale(1); box-shadow: 0 24px 60px -28px rgba(10,22,40,0.18); }
+  38% { transform: translateY(-4px) scale(1.008); box-shadow: 0 30px 70px -30px rgba(217,140,3,0.32); }
+  100% { transform: translateY(0) scale(1); box-shadow: 0 24px 60px -28px rgba(10,22,40,0.18); }
+}
 
 /* Footer */
 .footer { background: #fff !important; color: var(--ink) !important; border-top: 1px solid var(--ink-line) !important; padding: 60px 0 24px; }
