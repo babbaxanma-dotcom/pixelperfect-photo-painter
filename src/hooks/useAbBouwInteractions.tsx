@@ -56,11 +56,35 @@ export function useAbBouwInteractions() {
         return;
       }
       if (href.startsWith('/') && !href.startsWith('//') && !target.target) {
+        const url = new URL(href, window.location.origin);
+        if (url.pathname === location.pathname && url.hash.length > 1) {
+          const el = document.querySelector(url.hash) as HTMLElement | null;
+          if (el) {
+            e.preventDefault();
+            const navEl = document.getElementById('nav');
+            const navH = navEl ? navEl.getBoundingClientRect().height : 0;
+            window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - navH - 24), behavior: 'smooth' });
+            history.replaceState(null, '', url.hash);
+            highlightAnchorTarget(el);
+            return;
+          }
+        }
         e.preventDefault();
         navigate(href);
       }
     };
     document.addEventListener('click', onClick);
+
+    if (location.hash.length > 1) {
+      requestAnimationFrame(() => {
+        const el = document.querySelector(location.hash) as HTMLElement | null;
+        if (!el) return;
+        const navEl = document.getElementById('nav');
+        const navH = navEl ? navEl.getBoundingClientRect().height : 0;
+        window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - navH - 24), behavior: 'auto' });
+        highlightAnchorTarget(el);
+      });
+    }
 
     // ── Hero cinematic intro: trigger on next frame
     const heroAnim = document.querySelector<HTMLElement>('[data-hero-anim]');
