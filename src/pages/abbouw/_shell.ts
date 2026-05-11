@@ -62,6 +62,8 @@ export const buildHero = (opts: {
 }) => {
   const primary = opts.primary ?? { label: 'Vraag een plaatsbezoek aan', href: '/contact' };
   const primaryHref = primary.href === '/contact' ? '/contact#contact-form' : primary.href;
+  const primaryAttr = primaryHref.startsWith('/') ? `data-route="${primaryHref}"` : '';
+  const secondaryAttr = opts.secondary?.href?.startsWith('/') ? `data-route="${opts.secondary.href}"` : '';
   return `
 <section class="lf-hero">
   <div class="lf-hero-bg"><img src="${opts.bg}" alt="" /></div>
@@ -71,13 +73,13 @@ export const buildHero = (opts: {
       <h1>${opts.title}</h1>
       <p>${opts.lede}</p>
       <div class="lf-hero-actions">
-        <a href="${primaryHref}" class="lf-cta-pill">
+        <a href="${primaryHref}" ${primaryAttr} class="lf-cta-pill">
           <span>${primary.label}</span>
           <span class="lf-cta-pill-arrow">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </span>
         </a>
-        ${opts.secondary ? `<a href="${opts.secondary.href}" class="lf-btn-ghost">${opts.secondary.label}</a>` : ''}
+        ${opts.secondary ? `<a href="${opts.secondary.href}" ${secondaryAttr} class="lf-btn-ghost">${opts.secondary.label}</a>` : ''}
       </div>
     </div>
   </div>
