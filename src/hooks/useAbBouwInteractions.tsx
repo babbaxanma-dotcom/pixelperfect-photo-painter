@@ -11,13 +11,21 @@ export function useAbBouwInteractions() {
   const location = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!location.hash) window.scrollTo(0, 0);
 
     const highlightAnchorTarget = (el: HTMLElement) => {
       el.classList.remove('is-anchor-focus');
       void el.offsetWidth;
       el.classList.add('is-anchor-focus');
       window.setTimeout(() => el.classList.remove('is-anchor-focus'), 1200);
+    };
+
+    const scrollToTarget = (el: HTMLElement, behavior: ScrollBehavior = 'smooth') => {
+      const navEl = document.getElementById('nav');
+      const navH = navEl ? navEl.getBoundingClientRect().height : 0;
+      const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - navH - 24);
+      window.scrollTo({ top, behavior });
+      highlightAnchorTarget(el);
     };
 
     // ── SPA link interception ───────────────────────────
@@ -61,11 +69,8 @@ export function useAbBouwInteractions() {
           const el = document.querySelector(url.hash) as HTMLElement | null;
           if (el) {
             e.preventDefault();
-            const navEl = document.getElementById('nav');
-            const navH = navEl ? navEl.getBoundingClientRect().height : 0;
-            window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - navH - 24), behavior: 'smooth' });
+            scrollToTarget(el);
             history.replaceState(null, '', url.hash);
-            highlightAnchorTarget(el);
             return;
           }
         }
@@ -79,10 +84,7 @@ export function useAbBouwInteractions() {
       requestAnimationFrame(() => {
         const el = document.querySelector(location.hash) as HTMLElement | null;
         if (!el) return;
-        const navEl = document.getElementById('nav');
-        const navH = navEl ? navEl.getBoundingClientRect().height : 0;
-        window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - navH - 24), behavior: 'auto' });
-        highlightAnchorTarget(el);
+        scrollToTarget(el, 'smooth');
       });
     }
 
