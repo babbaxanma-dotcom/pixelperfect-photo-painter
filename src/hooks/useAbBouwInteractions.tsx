@@ -727,6 +727,7 @@ export function useAbBouwInteractions() {
       htmlEl.style.scrollBehavior = 'auto';
       window.scrollTo({ top, behavior: prefersReduced ? 'auto' : 'smooth' });
       requestAnimationFrame(() => { htmlEl.style.scrollBehavior = prevBehavior; });
+      highlightAnchorTarget(el);
       history.replaceState(null, '', `#${id}`);
     };
     tocLinks.forEach((a) => a.addEventListener('click', onTocClick as EventListener));
