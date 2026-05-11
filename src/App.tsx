@@ -39,6 +39,7 @@ const App = () => {
         <PageTransition>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/index" element={<Home />} />
           <Route path="/over" element={<OverOns />} />
           <Route path="/diensten" element={<Diensten />} />
           <Route path="/realisaties" element={<Realisaties />} />

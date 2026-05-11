@@ -11,13 +11,34 @@ export function useAbBouwInteractions() {
   const location = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!location.hash) window.scrollTo(0, 0);
 
     const highlightAnchorTarget = (el: HTMLElement) => {
       el.classList.remove('is-anchor-focus');
       void el.offsetWidth;
       el.classList.add('is-anchor-focus');
       window.setTimeout(() => el.classList.remove('is-anchor-focus'), 1200);
+    };
+
+    const scrollToTarget = (el: HTMLElement, behavior: ScrollBehavior = 'smooth') => {
+      const navEl = document.getElementById('nav');
+      const navH = navEl ? navEl.getBoundingClientRect().height : 0;
+      const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - navH - 24);
+      window.scrollTo({ top, behavior });
+      highlightAnchorTarget(el);
+    };
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const runRoutePress = (link: HTMLAnchorElement, href: string) => {
+      if (prefersReducedMotion) {
+        navigate(href);
+        return;
+      }
+      const card = link.closest<HTMLElement>('.lf-svc-card, .ab-deep, .rz-proj-card, .lf-cta-pill') ?? link;
+      card.classList.add('is-route-pressing');
+      document.body.classList.add('is-page-leaving');
+      window.setTimeout(() => navigate(href), 170);
     };
 
     // ── SPA link interception ───────────────────────────
@@ -61,16 +82,13 @@ export function useAbBouwInteractions() {
           const el = document.querySelector(url.hash) as HTMLElement | null;
           if (el) {
             e.preventDefault();
-            const navEl = document.getElementById('nav');
-            const navH = navEl ? navEl.getBoundingClientRect().height : 0;
-            window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - navH - 24), behavior: 'smooth' });
+            scrollToTarget(el);
             history.replaceState(null, '', url.hash);
-            highlightAnchorTarget(el);
             return;
           }
         }
         e.preventDefault();
-        navigate(href);
+        runRoutePress(target, href);
       }
     };
     document.addEventListener('click', onClick);
@@ -79,10 +97,7 @@ export function useAbBouwInteractions() {
       requestAnimationFrame(() => {
         const el = document.querySelector(location.hash) as HTMLElement | null;
         if (!el) return;
-        const navEl = document.getElementById('nav');
-        const navH = navEl ? navEl.getBoundingClientRect().height : 0;
-        window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - navH - 24), behavior: 'auto' });
-        highlightAnchorTarget(el);
+        scrollToTarget(el, 'smooth');
       });
     }
 
@@ -174,8 +189,10 @@ export function useAbBouwInteractions() {
         requestAnimationFrame(() => {
           details.style.height = `${isOpening ? details.scrollHeight : summaryHeight}px`;
         });
+          let done = false;
         const finish = (te: TransitionEvent) => {
           if (te.propertyName !== 'height') return;
+            done = true;
           if (!isOpening) details.open = false;
           details.style.removeProperty('height');
           details.style.removeProperty('overflow');
@@ -184,6 +201,15 @@ export function useAbBouwInteractions() {
           details.removeEventListener('transitionend', finish);
         };
         details.addEventListener('transitionend', finish);
+          window.setTimeout(() => {
+            if (done) return;
+            if (!isOpening) details.open = false;
+            details.style.removeProperty('height');
+            details.style.removeProperty('overflow');
+            details.classList.remove('is-opening', 'is-closing');
+            details.dataset.animating = 'false';
+            details.removeEventListener('transitionend', finish);
+          }, 520);
       };
       summary.addEventListener('click', toggle);
       detailHandlers.push([summary, toggle]);
@@ -718,6 +744,25 @@ export function useAbBouwInteractions() {
     window.addEventListener('scroll', onSupportScroll, { passive: true });
     onSupportScroll();
 
+    // ── Over ons promise tabs: real button behavior + soft panel transition ──
+    const promiseTabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-promise-tab]'));
+    const promisePanels = Array.from(document.querySelectorAll<HTMLElement>('[data-promise-panel]'));
+    const promiseProgress = document.querySelector<HTMLElement>('[data-promise-progress] i');
+    const promiseHandlers: Array<[HTMLButtonElement, () => void]> = [];
+    const setPromise = (idx: number) => {
+      promiseTabs.forEach((tab, i) => tab.classList.toggle('is-active', i === idx));
+      promisePanels.forEach((panel, i) => panel.classList.toggle('is-active', i === idx));
+      if (promiseProgress && promiseTabs.length > 1) {
+        promiseProgress.style.width = `${((idx + 1) / promiseTabs.length) * 100}%`;
+      }
+    };
+    promiseTabs.forEach((tab, idx) => {
+      const handler = () => setPromise(idx);
+      tab.addEventListener('click', handler);
+      promiseHandlers.push([tab, handler]);
+    });
+    if (promiseTabs.length) setPromise(promiseTabs.findIndex((tab) => tab.classList.contains('is-active')) || 0);
+
     // ===== ab-toc: smooth scroll on click + scroll-spy active state =====
     const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.ab-toc a[href^="#"]'));
     const tocTargets: { link: HTMLAnchorElement; el: HTMLElement }[] = [];
@@ -771,6 +816,7 @@ export function useAbBouwInteractions() {
     onTocScroll();
 
     return () => {
+      document.body.classList.remove('is-page-leaving');
       document.removeEventListener('click', onClick);
       projTabs?.removeEventListener('click', onProjFilter);
       window.removeEventListener('scroll', onScroll);
@@ -796,6 +842,7 @@ export function useAbBouwInteractions() {
       trustNearIo?.disconnect();
       faqHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
       tabHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
+      promiseHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
       svcCards.forEach((c) => c.removeEventListener('mousemove', svcMove));
       io.disconnect();
       cio.disconnect();

@@ -61,6 +61,7 @@ export const buildHero = (opts: {
   secondary?: { label: string; href: string };
 }) => {
   const primary = opts.primary ?? { label: 'Vraag een plaatsbezoek aan', href: '/contact' };
+  const primaryHref = primary.href === '/contact' ? '/contact#contact-form' : primary.href;
   return `
 <section class="lf-hero">
   <div class="lf-hero-bg"><img src="${opts.bg}" alt="" /></div>
@@ -70,7 +71,7 @@ export const buildHero = (opts: {
       <h1>${opts.title}</h1>
       <p>${opts.lede}</p>
       <div class="lf-hero-actions">
-        <a href="${primary.href}" class="lf-cta-pill">
+        <a href="${primaryHref}" class="lf-cta-pill" data-smooth>
           <span>${primary.label}</span>
           <span class="lf-cta-pill-arrow">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -93,8 +94,8 @@ export const buildCta = (title: string, lede: string) => `
         <h2>${title}</h2>
         <p>${lede}</p>
         <div class="lf-cta-actions">
-          <a href="/contact" class="lf-btn-light">Start uw project</a>
-          <a href="/contact" class="lf-btn-outline">Contacteer ons</a>
+          <a href="/contact#contact-form" class="lf-btn-light" data-smooth>Start uw project</a>
+          <a href="/contact#contact-form" class="lf-btn-outline" data-smooth>Contacteer ons</a>
         </div>
       </div>
     </div>
@@ -146,7 +147,7 @@ export const FOOTER = `
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
     Bel ons
   </a>
-  <a href="/contact" class="lf-mobile-bar-btn lf-mobile-bar-cta">
+  <a href="/contact#contact-form" class="lf-mobile-bar-btn lf-mobile-bar-cta" data-smooth>
     Vraag offerte
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
   </a>
@@ -185,17 +186,17 @@ export const SHELL_STYLE = `
 }
 
 /* Buttons */
-.lf-btn-pri { display:inline-flex; align-items:center; gap:10px; padding: 15px 28px; background: var(--navy); color:#fff !important; border-radius: 2px; font-weight: 500; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; transition: all 0.25s var(--ease); border:none; cursor:pointer; text-decoration:none; }
+.lf-btn-pri { display:inline-flex; align-items:center; gap:10px; padding: 15px 28px; background: var(--navy); color:#fff !important; border-radius: 2px; font-weight: 500; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background-color 0.25s var(--ease), opacity 0.25s var(--ease); border:none; cursor:pointer; text-decoration:none; }
 .lf-btn-pri:hover { background: #000; transform: translateY(-1px); box-shadow: 0 14px 28px -14px rgba(0,0,0,0.4); }
 .lf-btn-sm { padding: 11px 20px; font-size: 12px; }
-.lf-btn-light { display:inline-flex; align-items:center; gap:10px; padding: 15px 28px; background: #fff; color: var(--navy) !important; border-radius: 2px; font-weight:500; font-size:13px; letter-spacing: 0.04em; text-transform: uppercase; text-decoration:none; transition: all 0.25s var(--ease); }
+.lf-btn-light { display:inline-flex; align-items:center; gap:10px; padding: 15px 28px; background: #fff; color: var(--navy) !important; border-radius: 2px; font-weight:500; font-size:13px; letter-spacing: 0.04em; text-transform: uppercase; text-decoration:none; transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background-color 0.25s var(--ease), color 0.25s var(--ease), opacity 0.25s var(--ease); }
 .lf-btn-light:hover { background: var(--accent); color: #fff !important; }
-.lf-btn-outline { display:inline-flex; align-items:center; gap:10px; padding: 14px 28px; background: transparent; color: #fff !important; border: 1px solid rgba(255,255,255,0.35); border-radius: 2px; font-weight:500; font-size:13px; letter-spacing: 0.04em; text-transform: uppercase; text-decoration:none; transition: all 0.25s var(--ease); }
+.lf-btn-outline { display:inline-flex; align-items:center; gap:10px; padding: 14px 28px; background: transparent; color: #fff !important; border: 1px solid rgba(255,255,255,0.35); border-radius: 2px; font-weight:500; font-size:13px; letter-spacing: 0.04em; text-transform: uppercase; text-decoration:none; transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background-color 0.25s var(--ease), border-color 0.25s var(--ease), opacity 0.25s var(--ease); }
 .lf-btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.06); }
 .lf-btn-ghost { display:inline-flex; align-items:center; gap:6px; padding: 0; background: transparent; color: var(--ink) !important; border-radius: 0; font-weight: 500; font-size: 13px; letter-spacing: 0; text-transform: none; text-decoration: none; border: 0; transition: color 0.2s var(--ease); }
 .lf-btn-ghost:hover { color: var(--accent) !important; }
 
-.lf-cta-pill { position: relative; display:inline-flex; align-items:center; justify-content:center; gap:0; padding: 14px 26px; background: #d98c03 !important; color: #fff !important; border-radius: 999px; font-weight: 600; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; border: 0; cursor: pointer; transition: transform 0.08s var(--ease), background 0.15s var(--ease); text-decoration: none; line-height: 1; box-shadow: none; -webkit-tap-highlight-color: transparent; }
+.lf-cta-pill { position: relative; display:inline-flex; align-items:center; justify-content:center; gap:0; padding: 14px 26px; background: #d98c03 !important; color: #fff !important; border-radius: 999px; font-weight: 600; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; border: 0; cursor: pointer; transition: transform 0.16s var(--ease), background-color 0.16s var(--ease), box-shadow 0.24s var(--ease), opacity 0.24s var(--ease); text-decoration: none; line-height: 1; box-shadow: none; -webkit-tap-highlight-color: transparent; will-change: transform; }
 .lf-cta-pill:hover, .lf-cta-pill:focus, .lf-cta-pill:focus-visible { background: #c47e02 !important; color: #fff !important; outline: none; }
 .lf-cta-pill:active { background: #a86b01 !important; transform: scale(0.96); }
 .lf-cta-pill-arrow { display: none !important; }
@@ -240,10 +241,10 @@ export const SHELL_STYLE = `
 
 /* Services Grid (used on /diensten) */
 .lf-svc-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-.lf-svc-card { display:flex; flex-direction:column; background:#fff; border-radius: 14px; overflow:hidden; border: 1px solid var(--ink-line-soft); transition: all 0.3s var(--ease); color: var(--ink); text-decoration:none; }
+.lf-svc-card { display:flex; flex-direction:column; background:#fff; border-radius: 14px; overflow:hidden; border: 1px solid var(--ink-line-soft); transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease), opacity 0.3s var(--ease); color: var(--ink); text-decoration:none; will-change: transform; }
 .lf-svc-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -20px rgba(10,22,40,0.18); border-color: var(--accent); }
 .lf-svc-img { position:relative; aspect-ratio: 4/3; overflow:hidden; }
-.lf-svc-img img { width:100%; height:100%; object-fit:cover; transition: transform 0.6s var(--ease); }
+.lf-svc-img img { width:100%; height:100%; object-fit:cover; transition: transform 0.6s var(--ease); will-change: transform; }
 .lf-svc-card:hover .lf-svc-img img { transform: scale(1.05); }
 .lf-svc-num { position:absolute; left:16px; bottom:16px; width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center; background: var(--accent); color:#fff; font-weight:700; font-size:14px; border-radius: 6px; box-shadow: 0 6px 16px rgba(217,140,3,0.4); }
 .lf-svc-body { padding: 24px; }
@@ -668,8 +669,23 @@ ul.ab-checks li::before { content: '✓'; color: var(--accent); font-weight: 800
 [data-reveal-delay="2"] { transition-delay: 0.16s; }
 [data-reveal-delay="3"] { transition-delay: 0.24s; }
 [data-reveal-delay="4"] { transition-delay: 0.32s; }
+body.is-page-leaving .page-transition { opacity: 0; transform: translate3d(0, -8px, 0) scale(0.992); transition: opacity .18s var(--ease-out-quart), transform .18s var(--ease-out-quart); }
+.is-route-pressing { transform: translate3d(0, -3px, 0) scale(0.985) !important; opacity: .92; }
+.lf-cta-pill.is-route-pressing { transform: scale(0.96) !important; }
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal] { opacity: 1; transform: none; transition: none; }
+  [data-reveal], body.is-page-leaving .page-transition, .is-route-pressing { opacity: 1; transform: none !important; transition: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal].revealed .lf-split-img img,
+  [data-reveal].revealed.ab-pillar .ab-pillar-img img,
+  [data-reveal].revealed .ab-deep-img img {
+    animation: ab-photo-settle .8s var(--ease-out-quart) both;
+  }
+  @keyframes ab-photo-settle {
+    from { transform: scale(1.035); }
+    to { transform: scale(1); }
+  }
 }
 
 /* Skill bars animate to their width on reveal */
