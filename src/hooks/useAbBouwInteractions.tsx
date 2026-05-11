@@ -15,6 +15,7 @@ export function useAbBouwInteractions() {
 
     // ── SPA link interception ───────────────────────────
     const onClick = (e: MouseEvent) => {
+      if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       const target = (e.target as HTMLElement)?.closest('a') as HTMLAnchorElement | null;
       if (!target) return;
       const href = target.getAttribute('href');
@@ -120,6 +121,87 @@ export function useAbBouwInteractions() {
     // Activate first panel
     const firstPanel = document.querySelector('.svc-tab-panel');
     firstPanel?.classList.add('active');
+
+    // ── Smooth native <details> opening: no hard jump, no shifting media ──
+    const detailHandlers: Array<[HTMLElement, (e: Event) => void]> = [];
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll<HTMLDetailsElement>('.ab-more, .ab-faq details').forEach((details) => {
+      const summary = details.querySelector<HTMLElement>('summary');
+      if (!summary) return;
+      const toggle = (event: Event) => {
+        if (reducedMotion || details.dataset.animating === 'true') return;
+        event.preventDefault();
+        details.dataset.animating = 'true';
+        const startHeight = details.offsetHeight;
+        const summaryHeight = summary.offsetHeight;
+        const isOpening = !details.open;
+        details.classList.toggle('is-opening', isOpening);
+        details.classList.toggle('is-closing', !isOpening);
+        details.style.overflow = 'hidden';
+        details.style.height = `${startHeight}px`;
+        if (isOpening) details.open = true;
+        requestAnimationFrame(() => {
+          details.style.height = `${isOpening ? details.scrollHeight : summaryHeight}px`;
+        });
+        const finish = (te: TransitionEvent) => {
+          if (te.propertyName !== 'height') return;
+          if (!isOpening) details.open = false;
+          details.style.removeProperty('height');
+          details.style.removeProperty('overflow');
+          details.classList.remove('is-opening', 'is-closing');
+          details.dataset.animating = 'false';
+          details.removeEventListener('transitionend', finish);
+        };
+        details.addEventListener('transitionend', finish);
+      };
+      summary.addEventListener('click', toggle);
+      detailHandlers.push([summary, toggle]);
+    });
+
+    // ── Custom division dropdowns (works on every page, not only Home) ──
+    const ddCleanups: Array<() => void> = [];
+    document.querySelectorAll<HTMLElement>('[data-dd]').forEach((dd) => {
+      const toggle = dd.querySelector<HTMLElement>('[data-dd-toggle]');
+      const label = dd.querySelector<HTMLElement>('[data-dd-label]');
+      const input = dd.querySelector<HTMLInputElement>('[data-dd-input]');
+      const opts = Array.from(dd.querySelectorAll<HTMLElement>('[data-dd-opt]'));
+      if (!toggle || !label || !input || !opts.length) return;
+      const close = () => {
+        dd.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      };
+      const onToggle = (e: Event) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.querySelectorAll<HTMLElement>('[data-dd].open').forEach((other) => {
+          if (other !== dd) other.classList.remove('open');
+        });
+        const open = !dd.classList.contains('open');
+        dd.classList.toggle('open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      };
+      const optHandlers: Array<[HTMLElement, () => void]> = [];
+      opts.forEach((opt) => {
+        const choose = () => {
+          opts.forEach((x) => x.classList.remove('selected'));
+          opt.classList.add('selected');
+          label.textContent = opt.textContent || '';
+          label.classList.add('has-value');
+          input.value = opt.textContent || '';
+          close();
+        };
+        opt.addEventListener('click', choose);
+        optHandlers.push([opt, choose]);
+      });
+      const onDoc = (e: MouseEvent) => { if (!dd.contains(e.target as Node)) close(); };
+      toggle.addEventListener('click', onToggle);
+      document.addEventListener('click', onDoc);
+      ddCleanups.push(() => {
+        toggle.removeEventListener('click', onToggle);
+        document.removeEventListener('click', onDoc);
+        optHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
+      });
+    });
 
     // ── Nav scroll state ────────────────────────────────
     const nav = document.getElementById('nav');
