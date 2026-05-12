@@ -403,6 +403,8 @@ export default function Realisaties() {
 
       /* Stats — strakker, foto naast cijfer */
       .lf-stats { padding: 90px 0 110px; }
+      .lf-stats .lf-section-head .lf-eyebrow { color: rgba(255,255,255,.72); }
+      .lf-stats .lf-section-head .lf-h2 { color: #fff; }
       .lf-stats-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
