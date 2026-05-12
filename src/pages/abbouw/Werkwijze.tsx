@@ -6,7 +6,7 @@ import s1 from '@/assets/werkwijze/01-contact.jpg';
 import s2 from '@/assets/werkwijze/02-plaatsbezoek.jpg';
 import s3 from '@/assets/werkwijze/03-offerte.jpg';
 import s4 from '@/assets/werkwijze/04-voorbereiding.jpg';
-import s5 from '@/assets/construct/ruwbouw.jpg';
+import s5 from '@/assets/werkwijze/05-uitvoering.jpg';
 import s6 from '@/assets/werkwijze/06-voorop.jpg';
 import s7 from '@/assets/werkwijze/07-oplevering.jpg';
 import s8 from '@/assets/werkwijze/08-nazorg.jpg';
