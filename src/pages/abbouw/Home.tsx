@@ -766,6 +766,7 @@ const EXTRA_STYLE = `
 .lf-h2 { font-family: var(--font-display); font-size: clamp(28px, 3.4vw, 44px); line-height:1.15; font-weight:600; letter-spacing:-0.02em; color: var(--navy); margin-bottom: 18px; }
 .lf-section { padding: 90px 0; }
 .lf-section.lf-section-compact-stack { padding-bottom: 22px; }
+.lf-section.lf-section-compact-stack + .lf-section { padding-top: 56px; }
 .lf-section.lf-section-compact-stack .lf-section-head { margin-bottom: 30px; }
 .lf-section.lf-section-compact-stack .lf-section-head.centered { margin-bottom: 30px; }
 .lf-tone-soft { background: var(--bg-tint); }
