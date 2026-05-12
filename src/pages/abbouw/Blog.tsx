@@ -234,4 +234,7 @@ const BLOG_STYLE = `
   .lf-blog-grid--archive .lf-blog-card.is-x-active { opacity: 1; transform: scale(1); }
   .lf-blog-foot { flex-direction: column; align-items: flex-start; }
 }
+.lf-blog-topic { font-family: inherit; cursor: pointer; appearance: none; border: 1px solid var(--ink-line-soft); -webkit-tap-highlight-color: transparent; }
+.lf-blog-topic:hover { background: var(--navy); color: #fff; transform: translateY(-2px); }
+.lf-blog-topic:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 `;
