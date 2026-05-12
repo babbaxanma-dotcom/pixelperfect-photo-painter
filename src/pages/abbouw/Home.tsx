@@ -1045,8 +1045,8 @@ const EXTRA_STYLE = `
 .lf-cta-text h2 { color:#fff; font-family: var(--font-display); font-size: clamp(26px, 3vw, 38px); line-height:1.15; margin-bottom: 14px; letter-spacing:-0.02em; }
 .lf-cta-text p { color: rgba(255,255,255,0.75); font-size: 15px; margin-bottom: 26px; max-width: 460px; }
 .lf-cta-actions { display:flex; gap:12px; flex-wrap:wrap; }
-.lf-cta-img { position:relative; z-index:2; height: 460px; display:flex; justify-content:center; align-items:flex-end; }
-.lf-cta-img img { height:100%; width:auto; object-fit:contain; object-position: bottom; display:block; }
+.lf-cta-img { position:relative; z-index:2; height: 100%; min-height: 360px; display:flex; justify-content:center; align-items:flex-end; }
+.lf-cta-img img { height: 560px; max-height: none; width:auto; object-fit:contain; object-position: bottom; display:block; margin-bottom: -40px; }
 
 /* Blog */
 .lf-blog-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
