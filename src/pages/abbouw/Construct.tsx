@@ -104,8 +104,8 @@ ${buildHero({
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">AB Construct</span>
-        <h2 class="lf-h2">Eén contract,<br/>één resultaat.</h2>
-        <p class="lf-lede">U tekent met één partij. Wij coördineren ruwbouw, technieken en afwerking met eigen ploegen.</p>
+        <h2 class="lf-h2">Eén contract,<br/><span class="ab-mark">één resultaat</span>.</h2>
+        <p class="lf-lede">U tekent met <span class="ab-hl" data-hl-delay="0">één partij</span>. Wij coördineren ruwbouw, technieken en afwerking met <span class="ab-hl" data-hl-delay="1">eigen ploegen</span>.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Bindende offerte met meetstaat</li>
           <li>10 jaar wettelijke aansprakelijkheid</li>
