@@ -91,7 +91,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '05 · Badkamers & wellness',
   title: 'Sleutel-op-de-deur badkamers,<br/>klaar in <span style="color:var(--accent)">vier weken</span>.',
-  lede: 'Premium tegels, sanitair en maatkasten, geplaatst door één vaste ploeg. Van strip tot eerste douche: één coördinatie, één eindfactuur.',
+  lede: 'Premium tegels, sanitair en maatkasten, geplaatst door <span class="ab-hl" data-hl-delay="0">één vaste ploeg</span>. Van strip tot eerste douche: <span class="ab-hl" data-hl-delay="1">één coördinatie, één eindfactuur</span>.',
   primary: { label: 'Vraag plaatsbezoek aan', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
