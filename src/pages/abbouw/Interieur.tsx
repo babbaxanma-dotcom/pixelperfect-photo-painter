@@ -186,8 +186,8 @@ ${buildHero({
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">AB Interieurwerken</span>
-        <h2 class="lf-h2">Een ruwbouw kan<br/>iedereen leveren.</h2>
-        <p class="lf-lede">Een woning die klopt tot in elke hoek vraagt vakmensen die wéken aan dezelfde werf staan en oog hebben voor het detail dat niemand opmerkt, behalve uzelf, elke dag.</p>
+        <h2 class="lf-h2">Een ruwbouw kan<br/><span class="ab-mark">iedereen leveren</span>.</h2>
+        <p class="lf-lede">Een woning die <span class="ab-hl" data-hl-delay="0">klopt tot in elke hoek</span> vraagt vakmensen die wéken aan dezelfde werf staan en oog hebben voor <span class="ab-hl" data-hl-delay="1">het detail dat niemand opmerkt</span>, behalve uzelf, elke dag.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen schrijnwerker met eigen atelier in Mol</li>
           <li>Eén vaste interieurploeg, geen wisselende onderaannemers</li>
