@@ -396,7 +396,7 @@ const HTML = (i: Record<string, string>) => `
 </section>
 
 <!-- WHY US, collage -->
-<section class="lf-section lf-tone-soft lf-section-compact-stack">
+<section class="lf-section lf-tone-soft lf-section-compact-stack lf-why-section-tight">
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Waarom AB Bouw Group</span>
@@ -435,7 +435,7 @@ const HTML = (i: Record<string, string>) => `
       </div>
     </div>
 
-    <div class="lf-trust-strip" data-trust-strip data-reveal style="margin-top: 22px;">
+    <div class="lf-trust-strip" data-trust-strip data-reveal>
       <div class="lf-trust-item" data-trust-i="0"><strong>VCA*-gecertificeerd</strong><span>Veiligheid op de werf</span></div>
       <div class="lf-trust-divider"></div>
       <div class="lf-trust-item" data-trust-i="1"><strong>Lid Bouwunie</strong><span>Vlaamse Confederatie Bouw</span></div>
@@ -768,6 +768,9 @@ const EXTRA_STYLE = `
 .lf-section.lf-section-compact-stack + .lf-section { padding-top: 56px; }
 .lf-section.lf-section-compact-stack .lf-section-head { margin-bottom: 30px; }
 .lf-section.lf-section-compact-stack .lf-section-head.centered { margin-bottom: 30px; }
+.lf-section.lf-why-section-tight { padding-bottom: 0; }
+.lf-section.lf-why-section-tight + .lf-section { padding-top: 36px; }
+.lf-why-section-tight .lf-trust-strip { margin-top: 0; transform: translateY(-1px); }
 .lf-tone-soft { background: var(--bg-tint); }
 .lf-section-head { max-width: 720px; margin-bottom: 56px; }
 .lf-section-head.centered { margin: 0 auto 56px; text-align:center; }
@@ -934,7 +937,7 @@ const EXTRA_STYLE = `
 
 /* ── Why-us as scroll-stack: all tiles sticky in the SAME left column → real pile-up */
 .lf-why-collage.lf-why-stack { display:grid; grid-template-columns: 1fr 1.05fr; gap: 34px; align-items: stretch; max-width: 1180px; margin: 0 auto; }
-.lf-why-collage.lf-why-stack.lf-why-no-photo { grid-template-columns: 1fr; max-width: 820px; gap: 0; }
+.lf-why-collage.lf-why-stack.lf-why-no-photo { grid-template-columns: 1fr; max-width: 820px; gap: 0; margin-bottom: 0; }
 .lf-why-no-photo .lf-why-stack-left { gap: 16px; }
 .lf-why-no-photo .lf-why-tile { padding: 24px 28px; }
 .lf-why-stack .lf-why-stack-left { display:flex; flex-direction: column; gap: 12px; }
@@ -1098,6 +1101,9 @@ const EXTRA_STYLE = `
 @media (max-width: 900px) {
   .lf-section { padding: 60px 0; }
   .lf-section.lf-section-compact-stack { padding-bottom: 18px; }
+  .lf-section.lf-why-section-tight { padding-bottom: 0; }
+  .lf-section.lf-why-section-tight + .lf-section { padding-top: 34px; }
+  .lf-why-section-tight .lf-trust-strip { margin-top: 0; }
   .lf-section.lf-section-compact-stack .lf-section-head,
   .lf-section.lf-section-compact-stack .lf-section-head.centered { margin-bottom: 24px; }
   .lf-about-grid, .lf-skills-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -1407,6 +1413,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
 
   /* Trust strip stays 1-col but tighter */
   .lf-trust-strip { padding: 18px 18px; gap: 12px; margin-top: 14px; }
+  .lf-why-section-tight .lf-trust-strip { margin-top: 0; }
 
   /* Skills */
   .lf-skills-grid { gap: 32px; }
