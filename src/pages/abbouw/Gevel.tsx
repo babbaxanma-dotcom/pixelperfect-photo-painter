@@ -164,8 +164,8 @@ ${buildHero({
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">Buitenisolatie + crepi</span>
-        <h2 class="lf-h2">Twee vliegen,<br/>één stelling.</h2>
-        <p class="lf-lede">Een gevel openleggen is duur. Maak van die ene werf meteen een energetische upgrade: EPS- of minerale isolatieplaten op de bestaande gevel, daarna pas een nieuwe crepi-laag.</p>
+        <h2 class="lf-h2"><span class="ab-mark">Twee vliegen</span>,<br/>één stelling.</h2>
+        <p class="lf-lede">Een gevel openleggen is duur. Maak van die ene werf meteen een <span class="ab-hl" data-hl-delay="0">energetische upgrade</span>: EPS- of minerale isolatieplaten op de bestaande gevel, daarna pas een <span class="ab-hl" data-hl-delay="1">nieuwe crepi-laag</span>.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Tot 25–40% lagere stookkost</li>
           <li>Geen koudebruggen meer aan ramen</li>
