@@ -7,7 +7,7 @@ import heroBlog from '@/assets/home/hero-blog.jpg';
 const featured = BLOGS[0];
 const latest = BLOGS.slice(1, 4);
 const archive = BLOGS.slice(1);
-const topics = ['Renovatie', 'Energie', 'Bad & Wellness', 'Gevel', 'Interieur'];
+const topics = ['Alle', 'Renovatie', 'Energie', 'Bad & Wellness', 'Gevel', 'Interieur', 'Trends 2026'];
 
 const HTML = `
 ${buildNav('blog')}
@@ -78,14 +78,14 @@ ${buildNav('blog')}
         <span class="lf-eyebrow">Alle artikels</span>
         <h2 class="lf-h2">Bouwadvies per onderwerp.</h2>
       </div>
-      <div class="lf-blog-topic-row" data-x-rail>
-        ${topics.map((topic, idx) => `<span class="lf-blog-topic${idx === 0 ? ' is-active' : ''}">${topic}</span>`).join('')}
+      <div class="lf-blog-topic-row" data-x-rail role="tablist">
+        ${topics.map((topic, idx) => `<button type="button" class="lf-blog-topic${idx === 0 ? ' is-active' : ''}" data-topic-filter="${topic}" role="tab" aria-selected="${idx === 0 ? 'true' : 'false'}">${topic}</button>`).join('')}
       </div>
     </div>
     <div class="ab-scroll-hint lf-blog-mobile-hint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg> Swipe zijwaarts</div>
     <div class="lf-blog-grid lf-blog-grid--archive" data-x-rail>
       ${archive.map((b, idx) => `
-        <article class="lf-blog-card" data-reveal data-reveal-delay="${idx % 4}">
+        <article class="lf-blog-card" data-reveal data-reveal-delay="${idx % 4}" data-blog-tag="${b.tag}">
           <div class="lf-blog-img">
             <img src="${b.img}" alt="${b.title}" loading="lazy"/>
             <span class="lf-blog-tag">${b.tag}</span>
@@ -124,6 +124,42 @@ export default function Blog() {
     return () => { document.body.className = prevClass; styleEl.remove(); };
   }, []);
   useAbBouwInteractions();
+
+  useEffect(() => {
+    const root = document.querySelector('.lf-blog-library');
+    if (!root) return;
+    const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-topic-filter]'));
+    const cards = Array.from(root.querySelectorAll<HTMLElement>('.lf-blog-card[data-blog-tag]'));
+    if (!buttons.length || !cards.length) return;
+
+    const apply = (filter: string) => {
+      cards.forEach((card) => {
+        const tag = card.getAttribute('data-blog-tag') || '';
+        const show = filter === 'Alle' || tag === filter;
+        card.style.display = show ? '' : 'none';
+      });
+      buttons.forEach((b) => {
+        const active = b.getAttribute('data-topic-filter') === filter;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+    };
+
+    const handlers: Array<[HTMLButtonElement, (e: Event) => void]> = [];
+    buttons.forEach((btn) => {
+      const fn = (e: Event) => {
+        e.preventDefault();
+        const filter = btn.getAttribute('data-topic-filter') || 'Alle';
+        apply(filter);
+        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      };
+      btn.addEventListener('click', fn);
+      handlers.push([btn, fn]);
+    });
+
+    return () => { handlers.forEach(([b, fn]) => b.removeEventListener('click', fn)); };
+  }, []);
+
   return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
 }
 
@@ -198,4 +234,7 @@ const BLOG_STYLE = `
   .lf-blog-grid--archive .lf-blog-card.is-x-active { opacity: 1; transform: scale(1); }
   .lf-blog-foot { flex-direction: column; align-items: flex-start; }
 }
+.lf-blog-topic { font-family: inherit; cursor: pointer; appearance: none; border: 1px solid var(--ink-line-soft); -webkit-tap-highlight-color: transparent; }
+.lf-blog-topic:hover { background: var(--navy); color: #fff; transform: translateY(-2px); }
+.lf-blog-topic:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 `;
