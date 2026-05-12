@@ -145,11 +145,11 @@ export const FOOTER = `
 </footer>
 
 <div class="lf-mobile-bar">
-  <a href="tel:+32470634413" class="lf-mobile-bar-btn lf-mobile-bar-call">
+  <a href="tel:+32470634413" class="lf-mobile-bar-btn lf-mobile-bar-call" aria-label="Bel ons direct">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-    Bel ons
+    <span class="lf-mobile-bar-call-label">Bel ons</span>
   </a>
-  <a href="/contact#contact-form" class="lf-mobile-bar-btn lf-mobile-bar-cta">
+  <a href="/contact#contact-form" data-route="/contact#contact-form" class="lf-mobile-bar-btn lf-mobile-bar-cta">
     Vraag offerte
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
   </a>
@@ -424,16 +424,35 @@ export const SHELL_STYLE = `
 .footer-bottom-links a { color: var(--ink-soft) !important; text-decoration:none; }
 .footer-bottom-links a:hover { color: var(--accent) !important; }
 
-/* Sticky mobile bar */
+/* Sticky mobile bar — compact floating pills, bottom-right, geen overlap met content */
 .lf-mobile-bar { display: none; }
 @media (max-width: 760px) {
-  .lf-mobile-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 60; display: grid; grid-template-columns: 1fr 1.3fr; gap: 8px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: transparent; border-top: 0; box-shadow: none; pointer-events: none; transform: translateY(120%); opacity: 0; transition: transform 0.4s var(--ease), opacity 0.3s var(--ease); }
-  body.past-hero .lf-mobile-bar { transform: translateY(0); opacity: 1; }
-  .lf-mobile-bar-btn { pointer-events: auto; }
-  .lf-mobile-bar-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding: 13px 14px; border-radius: 999px; font-weight: 700; font-size: 14px; text-decoration: none; }
-  .lf-mobile-bar-call { background: #fff; color: var(--navy) !important; border: 1.5px solid var(--ink-line); }
-  .lf-mobile-bar-cta { background: var(--accent); color: #fff !important; }
-  body { padding-bottom: 72px; }
+  .lf-mobile-bar {
+    position: fixed;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    right: 12px;
+    left: auto;
+    z-index: 60;
+    display: inline-flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    background: transparent;
+    border-top: 0;
+    box-shadow: none;
+    pointer-events: none;
+    transform: translateY(20px) scale(0.92);
+    opacity: 0;
+    transition: transform 0.45s cubic-bezier(0.22,1,0.36,1), opacity 0.3s var(--ease);
+  }
+  body.past-hero .lf-mobile-bar { transform: translateY(0) scale(1); opacity: 1; }
+  .lf-mobile-bar-btn { pointer-events: auto; display:inline-flex; align-items:center; justify-content:center; gap:6px; border-radius: 999px; font-weight: 600; font-size: 13px; text-decoration: none; box-shadow: 0 10px 26px -10px rgba(10,22,40,0.45), 0 3px 8px rgba(10,22,40,0.18); transition: transform 0.2s var(--ease); }
+  .lf-mobile-bar-btn:active { transform: scale(0.96); }
+  .lf-mobile-bar-cta { background: var(--accent); color: #fff !important; padding: 11px 16px; }
+  .lf-mobile-bar-call { background: #fff; color: var(--navy) !important; border: 1px solid var(--ink-line); width: 42px; height: 42px; padding: 0; }
+  .lf-mobile-bar-call svg { width: 18px; height: 18px; }
+  .lf-mobile-bar-call-label { display: none; }
 }
 
 /* Responsive */
