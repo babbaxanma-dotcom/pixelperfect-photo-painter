@@ -44,7 +44,7 @@ ${buildHero({
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Onze pijlers</span>
       <h2 class="lf-h2">Drie principes die elke<br/>werf bij ons vorm geven.</h2>
-      <p class="lf-lede" style="margin: 0 auto;">Geen marketingpraat. Gewoon hoe we al vijftien jaar werken, en waarom klanten ons aanbevelen aan hun buren.</p>
+      <p class="lf-lede" style="margin: 0 auto;">Drie principes die al vijftien jaar onze werkwijze bepalen, en waarom klanten ons aanbevelen aan hun buren.</p>
     </div>
     <div class="ab-pillars">
       <article class="ab-pillar" data-reveal>
