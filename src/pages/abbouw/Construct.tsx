@@ -93,7 +93,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '01 · Algemene aanneming',
   title: 'Coördineren, bouwen,<br/><span style="color:var(--accent)">realiseren</span>.',
-  lede: 'AB Construct neemt de volledige coördinatie van uw bouw of renovatie op zich. Eén projectleider, één planning, één eindfactuur.',
+  lede: 'AB Construct neemt de <span class="ab-hl" data-hl-delay="0">volledige coördinatie</span> van uw bouw of renovatie op zich. <span class="ab-hl" data-hl-delay="1">Eén projectleider, één planning, één eindfactuur</span>.',
   primary: { label: 'Vraag plaatsbezoek aan', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
