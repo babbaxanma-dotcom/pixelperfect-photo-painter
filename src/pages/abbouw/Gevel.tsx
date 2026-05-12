@@ -95,7 +95,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '06 · Gevels & bekleding',
   title: 'Een nieuwe gevel<br/>verandert <span style="color:var(--accent)">alles</span>.',
-  lede: 'Witte of grijze crepi, sierpleister of steenstrips. Vaak gecombineerd met buitenisolatie, zodat uw gevel niet alleen mooier maar ook energetisch klopt.',
+  lede: 'Witte of grijze crepi, sierpleister of steenstrips. Vaak gecombineerd met <span class="ab-hl" data-hl-delay="0">esthetiek én energieprestatie</span>, zodat uw gevel niet alleen mooier maar ook <span class="ab-hl" data-hl-delay="1">energetisch klopt</span>.',
   primary: { label: 'Vraag plaatsbezoek aan', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
