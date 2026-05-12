@@ -7,7 +7,7 @@ import heroBlog from '@/assets/home/hero-blog.jpg';
 const featured = BLOGS[0];
 const latest = BLOGS.slice(1, 4);
 const archive = BLOGS.slice(1);
-const topics = ['Renovatie', 'Energie', 'Bad & Wellness', 'Gevel', 'Interieur'];
+const topics = ['Alle', 'Renovatie', 'Energie', 'Bad & Wellness', 'Gevel', 'Interieur', 'Trends 2026'];
 
 const HTML = `
 ${buildNav('blog')}
@@ -78,8 +78,8 @@ ${buildNav('blog')}
         <span class="lf-eyebrow">Alle artikels</span>
         <h2 class="lf-h2">Bouwadvies per onderwerp.</h2>
       </div>
-      <div class="lf-blog-topic-row" data-x-rail>
-        ${topics.map((topic, idx) => `<span class="lf-blog-topic${idx === 0 ? ' is-active' : ''}">${topic}</span>`).join('')}
+      <div class="lf-blog-topic-row" data-x-rail role="tablist">
+        ${topics.map((topic, idx) => `<button type="button" class="lf-blog-topic${idx === 0 ? ' is-active' : ''}" data-topic-filter="${topic}" role="tab" aria-selected="${idx === 0 ? 'true' : 'false'}">${topic}</button>`).join('')}
       </div>
     </div>
     <div class="ab-scroll-hint lf-blog-mobile-hint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg> Swipe zijwaarts</div>
