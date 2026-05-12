@@ -6424,8 +6424,12 @@ body.is-subpage .lf-nav .lf-nav-inner {
   clip-path: none !important;
   transform: none !important;
 }
-
-/* Mobile: keep the floating pill nav (subpages always visible, home toggles via .past-hero) */
+/* Home nav: ook géén clip-path "sweep" — gewoon dezelfde nette opacity/translateY
+   fade als bij naar-boven scrollen, zodat hij niet "popt" bij uit-de-hero scrollen. */
+body:not(.is-subpage) .lf-nav .lf-nav-inner {
+  clip-path: none !important;
+  transform: none !important;
+}
 .lf-nav .lf-nav-inner {
   position: relative;
   pointer-events: auto;
