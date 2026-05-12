@@ -781,13 +781,14 @@ export function useAbBouwInteractions() {
       rail.style.setProperty('--x-progress', `${rail.scrollLeft / max}`);
       items.forEach((item, idx) => item.classList.toggle('is-x-active', idx === bestIdx));
     };
+    const onXRailResize = () => xRails.forEach(updateXRail);
     xRails.forEach((rail) => {
       const handler = () => requestAnimationFrame(() => updateXRail(rail));
       rail.addEventListener('scroll', handler, { passive: true });
       xRailHandlers.push([rail, handler]);
       updateXRail(rail);
     });
-    window.addEventListener('resize', () => xRails.forEach(updateXRail));
+    window.addEventListener('resize', onXRailResize);
 
     // ── Over ons promise tabs: real button behavior + soft panel transition ──
     const promiseTabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-promise-tab]'));
@@ -883,6 +884,8 @@ export function useAbBouwInteractions() {
       mmLinks.forEach((a) => a.removeEventListener('click', mmClose));
       mmCloseBtn?.removeEventListener('click', mmClose);
       detailHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
+      xRailHandlers.forEach(([el, h]) => el.removeEventListener('scroll', h));
+      window.removeEventListener('resize', onXRailResize);
       ddCleanups.forEach((cleanup) => cleanup());
       trustNearIo?.disconnect();
       faqHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
