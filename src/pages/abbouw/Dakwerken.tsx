@@ -165,8 +165,8 @@ ${buildHero({
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">AB Dakwerken</span>
-        <h2 class="lf-h2">Een dak is geen<br/>quick fix.</h2>
-        <p class="lf-lede">We bekijken uw dak als systeem, niet als losse pannen. Eerlijk advies over wat écht nodig is.</p>
+        <h2 class="lf-h2">Een dak is geen<br/><span class="ab-mark">quick fix</span>.</h2>
+        <p class="lf-lede">We bekijken uw dak als <span class="ab-hl" data-hl-delay="0">systeem</span>, niet als losse pannen. <span class="ab-hl" data-hl-delay="1">Eerlijk advies</span> over wat écht nodig is.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen ploeg van 6 vaste dakdekkers</li>
           <li>Gratis dakinspectie met fotorapport</li>
