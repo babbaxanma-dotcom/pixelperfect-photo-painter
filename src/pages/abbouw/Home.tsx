@@ -396,7 +396,7 @@ const HTML = (i: Record<string, string>) => `
 </section>
 
 <!-- WHY US, collage -->
-<section class="lf-section lf-tone-soft lf-section-compact-stack">
+<section class="lf-section lf-tone-soft lf-section-compact-stack lf-why-section-tight">
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Waarom AB Bouw Group</span>
@@ -435,7 +435,7 @@ const HTML = (i: Record<string, string>) => `
       </div>
     </div>
 
-    <div class="lf-trust-strip" data-trust-strip data-reveal style="margin-top: 22px;">
+    <div class="lf-trust-strip" data-trust-strip data-reveal>
       <div class="lf-trust-item" data-trust-i="0"><strong>VCA*-gecertificeerd</strong><span>Veiligheid op de werf</span></div>
       <div class="lf-trust-divider"></div>
       <div class="lf-trust-item" data-trust-i="1"><strong>Lid Bouwunie</strong><span>Vlaamse Confederatie Bouw</span></div>
