@@ -436,7 +436,7 @@ const HTML = (i: Record<string, string>) => `
       <div class="lf-why-photo" data-reveal><img src="${i.why}" alt="" loading="lazy"/></div>
     </div>
 
-    <div class="lf-trust-strip" data-reveal data-trust-strip>
+    <div class="lf-trust-strip" data-trust-strip style="margin-top: 28px;">
       <div class="lf-trust-item" data-trust-i="0"><strong>VCA*-gecertificeerd</strong><span>Veiligheid op de werf</span></div>
       <div class="lf-trust-divider"></div>
       <div class="lf-trust-item" data-trust-i="1"><strong>Lid Bouwunie</strong><span>Vlaamse Confederatie Bouw</span></div>
