@@ -140,13 +140,11 @@ const badkamer: Card[] = [
 const gevel: Card[] = [
   { img: svcGevel, tag: 'Witte crepi', t: 'HOB Boom', d: 'Geïsoleerde gevel met witte siliconen-crepi. 4 weken.' },
   { img: rzGevelCrepi, tag: 'Grijze crepi', t: 'Nieuwbouw Mechelen', d: 'Antraciet siliconen-crepi met zwart aluminium schrijnwerk en magnolia voortuin.' },
-  { img: dakIso, tag: 'Buitenisolatie', t: 'ETICS Antwerpen', d: 'Volledige na-isolatie met EPS + minerale crepi. EPC sprong van D → B.' },
   { img: rzGevelStrips, tag: 'Steenstrips', t: 'Steenstrips Lier', d: 'Geïsoleerde steenstrips Wienerberger met crepi-accent boven de inkom.' },
   { img: about, tag: 'Houten gevel', t: 'Lariks Bonheiden', d: 'Ventileerde gevelbekleding in onbehandeld lariks, vergrijst natuurlijk.' },
   { img: svcGevel, tag: 'Composiet', t: 'Trespa Willebroek', d: 'Composiet gevelplaten Trespa Meteon op aluminium onderconstructie.' },
   { img: rzGevelStrips, tag: 'Renovatie', t: 'Gevelrenovatie Mechelen', d: 'Reiniging, hervoegen en accent in steenstrips boven inkom.' },
   { img: rzGevelCrepi, tag: 'Strip & crepi', t: 'Naïsolatie Antwerpen', d: 'Volledige na-isolatie met EPS en mat-grijze siliconen-crepi.' },
-  { img: dakIso, tag: 'ETICS', t: 'ETICS-systeem Boom', d: 'Geïsoleerd gevelsysteem met versterkingsweefsel en minerale eindlaag.' },
   { img: about, tag: 'Lariks', t: 'Lariks-aanbouw Lier', d: 'Verticale lariks-bekleding op aanbouw, ventileerd op aluminium rails.' },
   { img: rzGevelCrepi, tag: 'Antraciet crepi', t: 'Halfopen Bonheiden', d: 'Antraciet siliconen-crepi met diepe raamomkadering en plat dak.' },
   { img: rzGevelStrips, tag: 'Steenstrips', t: 'Steenstrips Antwerpen', d: 'Handvorm-steenstrips in warm rood-bruin, met witte crepi rond de inkom.' },
