@@ -28,7 +28,8 @@ export function useAbBouwInteractions() {
       highlightAnchorTarget(el);
     };
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Opdrachtgever wil de animaties voor iedereen — reduced-motion wordt niet gerespecteerd.
+    const prefersReducedMotion = false;
 
     const runRoutePress = (link: HTMLAnchorElement, href: string) => {
       if (prefersReducedMotion) {
@@ -176,7 +177,7 @@ export function useAbBouwInteractions() {
 
     // ── Smooth native <details> opening: no hard jump, no shifting media ──
     const detailHandlers: Array<[HTMLElement, (e: Event) => void]> = [];
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reducedMotion = false;
     document.querySelectorAll<HTMLDetailsElement>('.ab-more, .ab-faq details').forEach((details) => {
       const summary = details.querySelector<HTMLElement>('summary');
       if (!summary) return;
@@ -835,7 +836,7 @@ export function useAbBouwInteractions() {
       }
     });
     const navEl = document.getElementById('nav');
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReduced = false;
     const onTocClick = (e: MouseEvent) => {
       const a = e.currentTarget as HTMLAnchorElement;
       const id = a.getAttribute('href')?.slice(1);

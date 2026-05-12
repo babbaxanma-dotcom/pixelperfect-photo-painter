@@ -210,13 +210,7 @@ const STEP_REVEAL_CSS = `
 .ab-steps--seq [data-step-reveal].is-in .ab-step-media { transform: translateY(0) scale(1); }
 .ab-steps--seq [data-step-reveal].is-in .ab-step-body > * { opacity: 1; transform: translateY(0); }
 
-@media (prefers-reduced-motion: reduce) {
-  .ab-steps--seq [data-step-reveal],
-  .ab-steps--seq [data-step-reveal] .ab-step-media,
-  .ab-steps--seq [data-step-reveal] .ab-step-body > * {
-    opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important;
-  }
-}
+/* (reduced-motion override voor stap-reveal bewust verwijderd) */
 
 /* "Vier zekerheden" — staggered scroll-driven reveal */
 .ab-zek-card[data-zek-reveal] {
@@ -236,11 +230,7 @@ const STEP_REVEAL_CSS = `
   filter: blur(0);
 }
 .ab-zek-section .lf-section-head { margin-bottom: 36px; }
-@media (prefers-reduced-motion: reduce) {
-  .ab-zek-card[data-zek-reveal] {
-    opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important;
-  }
-}
+/* (reduced-motion override voor zek-reveal bewust verwijderd) */
 `;
 
 export default function Werkwijze() {
@@ -261,7 +251,7 @@ export default function Werkwijze() {
   useEffect(() => {
     const steps = Array.from(document.querySelectorAll<HTMLElement>('.ab-steps--seq [data-step-reveal]'));
     if (!steps.length) return;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reduced = false; // opdrachtgever: animaties voor iedereen
     if (reduced) {
       steps.forEach((s) => s.classList.add('is-in'));
       return;
@@ -284,7 +274,7 @@ export default function Werkwijze() {
   useEffect(() => {
     const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-zek-reveal]'));
     if (!cards.length) return;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reduced = false; // opdrachtgever: animaties voor iedereen
     if (reduced) { cards.forEach((c) => c.classList.add('is-in')); return; }
     const io = new IntersectionObserver(
       (entries) => {

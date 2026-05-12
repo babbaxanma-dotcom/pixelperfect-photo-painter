@@ -1455,7 +1455,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
 .ab-hl { position: relative; display: inline; background-image: linear-gradient(120deg, rgba(217,140,3,0.22) 0%, rgba(217,140,3,0.22) 100%); background-repeat: no-repeat; background-size: 0% 60%; background-position: 0 88%; padding: 0 2px; color: var(--navy); font-weight:500; transition: background-size .9s cubic-bezier(.22,1,.36,1); transition-delay: calc(.45s + var(--hl-i, 0) * .32s); }
 [data-reveal].revealed .ab-hl { background-size: 100% 60%; }
 .ab-hl[data-hl-delay="0"] { --hl-i: 0; } .ab-hl[data-hl-delay="1"] { --hl-i: 1; } .ab-hl[data-hl-delay="2"] { --hl-i: 2; }
-@media (prefers-reduced-motion: reduce) { .ab-mark::after { transform: scaleX(1); } .ab-hl { background-size: 100% 60%; } }
+/* (reduced-motion override voor highlight-sweep bewust verwijderd — animaties voor iedereen) */
 `;
 
 export default function Home() {

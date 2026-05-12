@@ -1001,9 +1001,7 @@ body.menu-open { overflow: hidden; }
 [data-reveal-delay="2"] { transition-delay: 0.1s; }
 [data-reveal-delay="3"] { transition-delay: 0.15s; }
 [data-reveal-delay="4"] { transition-delay: 0.2s; }
-@media (prefers-reduced-motion: reduce) {
-  [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
-}
+/* (reduced-motion override for [data-reveal] bewust verwijderd — animaties voor iedereen) */
 
 /* ===== Page transitions (clean fade + slight lift) ===== */
 .page-transition {
@@ -1019,15 +1017,7 @@ body.menu-open { overflow: hidden; }
   opacity: 1;
   transform: none;
 }
-@media (prefers-reduced-motion: reduce) {
-  .page-transition,
-  .page-transition--in,
-  .page-transition--out {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-}
+/* (reduced-motion override voor .page-transition bewust verwijderd) */
 
 .text-center { text-align: center; }
 .mt-32 { margin-top: 32px; }
@@ -6455,11 +6445,7 @@ body.is-subpage .lf-nav .lf-nav-inner {
 .lf-nav .lf-nav-inner::after {
   content: none;
 }
-@media (prefers-reduced-motion: reduce) {
-  .lf-nav,
-  .lf-nav .lf-nav-inner,
-  .lf-nav .lf-nav-inner::after { transition: none; }
-}
+/* (reduced-motion override voor .lf-nav bewust verwijderd) */
 
 /* ── Form attention: continuous calm pulse until interacted with ── */
 @keyframes lf-form-pulse {

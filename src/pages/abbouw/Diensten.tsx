@@ -154,57 +154,41 @@ ${buildHero({
 </section>
 
 <style>
+/* Diensten op mobiel: gewoon onder elkaar (zig-zag valt op smal scherm samen tot
+   stapelkaartjes — geen zijwaartse swipe meer). */
 @media (max-width: 768px) {
   .ab-toc-wrap { display: none !important; }
   .ab-svc-section { padding-top: 12px !important; }
-  .ab-svc-section .wrap { padding-left: 0 !important; padding-right: 0 !important; }
-  .ab-svc-track {
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-x pan-y;
-    overscroll-behavior-x: contain;
-    gap: 12px;
-    padding: 2px 16px 14px;
-    scrollbar-width: none;
-  }
-  .ab-svc-track::-webkit-scrollbar { display: none; }
+  .ab-svc-track { display: block; padding: 4px 0 4px; }
   .ab-svc-track > .ab-svc-slide {
-    flex: 0 0 calc(100vw - 32px);
-    max-width: calc(100vw - 32px);
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
-    margin: 0 !important;
+    display: block;
+    margin: 0 0 18px !important;
     padding: 0 !important;
+    scroll-margin-top: 96px;
   }
+  .ab-svc-track > .ab-svc-slide:last-child { margin-bottom: 0 !important; }
   .ab-svc-track .ab-deep,
   .ab-svc-track .ab-deep.reverse {
     display: flex !important;
     flex-direction: column !important;
-    gap: 10px !important;
+    gap: 12px !important;
     background: #fff;
     border-radius: 14px;
-    padding: 12px;
+    padding: 14px;
     box-shadow: 0 8px 24px -16px rgba(10,22,40,0.18);
-    height: 100%;
     min-width: 0;
   }
   .ab-svc-track .ab-deep > div:first-child { order: 2; }
   .ab-svc-track .ab-deep-img,
   .ab-svc-track .ab-deep.reverse .ab-deep-img { order: 1; aspect-ratio: auto; box-shadow: none; border-radius: 10px; }
   .ab-svc-track .ab-deep-img img { width: 100%; height: auto; aspect-ratio: 16/10; object-fit: cover; border-radius: 10px; display: block; }
-  .ab-svc-track .ab-deep h3 { font-size: 18px !important; line-height: 1.2 !important; margin: 6px 0 4px !important; }
-  .ab-svc-track .ab-deep p { font-size: 13px !important; line-height: 1.5 !important; margin: 0 !important; }
+  .ab-svc-track .ab-deep h3 { font-size: 19px !important; line-height: 1.2 !important; margin: 6px 0 4px !important; }
+  .ab-svc-track .ab-deep p { font-size: 13.5px !important; line-height: 1.55 !important; margin: 0 !important; }
   .ab-svc-track .ab-deep-tag { font-size: 10.5px !important; }
   .ab-svc-track .ab-more { margin-top: 8px !important; }
   .ab-svc-track .ab-more summary { font-size: 12.5px !important; }
   .ab-svc-track .ab-more p, .ab-svc-track .ab-checks li { font-size: 12.5px !important; }
   .ab-svc-track .lf-cta-pill { font-size: 13px !important; padding: 9px 14px !important; }
-  .ab-svc-track [data-reveal] { transform: none !important; opacity: 1 !important; }
 }
 </style>
 
