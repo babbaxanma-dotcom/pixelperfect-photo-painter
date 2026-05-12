@@ -762,6 +762,33 @@ export function useAbBouwInteractions() {
     window.addEventListener('scroll', onSupportScroll, { passive: true });
     onSupportScroll();
 
+    // ── Horizontal rails: scroll feeling for mobile carousels/blog rails ──
+    const xRails = Array.from(document.querySelectorAll<HTMLElement>('[data-x-rail], .dak-grid[data-scroll="x"]'));
+    const xRailHandlers: Array<[HTMLElement, () => void]> = [];
+    const updateXRail = (rail: HTMLElement) => {
+      const items = Array.from(rail.children).filter((el): el is HTMLElement => el instanceof HTMLElement);
+      if (!items.length) return;
+      const rect = rail.getBoundingClientRect();
+      const center = rect.left + rect.width / 2;
+      let bestIdx = 0;
+      let bestDist = Infinity;
+      items.forEach((item, idx) => {
+        const r = item.getBoundingClientRect();
+        const dist = Math.abs(r.left + r.width / 2 - center);
+        if (dist < bestDist) { bestDist = dist; bestIdx = idx; }
+      });
+      const max = Math.max(1, rail.scrollWidth - rail.clientWidth);
+      rail.style.setProperty('--x-progress', `${rail.scrollLeft / max}`);
+      items.forEach((item, idx) => item.classList.toggle('is-x-active', idx === bestIdx));
+    };
+    xRails.forEach((rail) => {
+      const handler = () => requestAnimationFrame(() => updateXRail(rail));
+      rail.addEventListener('scroll', handler, { passive: true });
+      xRailHandlers.push([rail, handler]);
+      updateXRail(rail);
+    });
+    window.addEventListener('resize', () => xRails.forEach(updateXRail));
+
     // ── Over ons promise tabs: real button behavior + soft panel transition ──
     const promiseTabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-promise-tab]'));
     const promisePanels = Array.from(document.querySelectorAll<HTMLElement>('[data-promise-panel]'));
