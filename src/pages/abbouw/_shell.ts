@@ -83,6 +83,12 @@ export const buildHero = (opts: {
       </div>
     </div>
   </div>
+  <button class="lf-scroll-cue" type="button" aria-label="Scroll naar beneden" onclick="window.scrollBy({top: window.innerHeight - 80, left: 0, behavior: 'smooth'})">
+    <span class="lf-scroll-cue-label">Scroll</span>
+    <span class="lf-scroll-cue-icon" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </span>
+  </button>
 </section>
 `;
 };
