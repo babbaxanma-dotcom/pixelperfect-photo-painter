@@ -127,15 +127,11 @@ const interieur: Card[] = [
 ];
 
 const badkamer: Card[] = [
-  { img: svcBad, tag: 'Wellness', t: 'Wellnesssuite Leuven', d: 'Walk-in douche, hammam, dubbele wastafel en maatkast, 4 weken.' },
-  { img: dakRaam, tag: 'Zolderbadkamer', t: 'Zolder Mechelen', d: 'Inbouw onder dakkapel met dakraam, microcement en zwevend toilet.' },
-  { img: cAfwerking, tag: 'Familiebadkamer', t: 'Familiebadkamer Lier', d: 'Bad + inloopdouche, tegelwerk grootformaat, regendouche. 3 weken.' },
+  { img: svcBad, tag: 'Inloopdouche', t: 'Inloopdouche Leuven', d: 'Walk-in douche met grootformaat tegels en zwart matte kraanwerk. 3 weken.' },
   { img: rzBadGast, tag: 'Compact', t: 'Gastenbadkamer Boom', d: 'Volledige strip & rebuild op 4 m² met zwevend meubel. 10 dagen.' },
   { img: svcBad, tag: 'Master', t: 'Master ensuite Bonheiden', d: 'Vrijstaand bad, dubbele inloopdouche en walk-in dressing. 5 weken.' },
   { img: eKalk, tag: 'Microcement', t: 'Microcementbadkamer Antwerpen', d: 'Naadloze microcement-afwerking op wanden en vloer, mat en warm.' },
   { img: svcBad, tag: 'Inloopdouche', t: 'Inloopdouche Mechelen', d: 'XL-inloopdouche met grootformaat tegels en zwart matte kraanwerk.' },
-  { img: cAfwerking, tag: 'Renovatie', t: 'Badkamerrenovatie Boom', d: 'Strip & rebuild bestaande badkamer in 2,5 weken, inclusief leidingwerk.' },
-  { img: dakRaam, tag: 'Dakbadkamer', t: 'Badkamer onder dak Lier', d: 'Volledig nieuwe badkamer onder hellend dak met twee VELUX-ramen.' },
   { img: rzBadGast, tag: 'Gastentoilet', t: 'Gastentoilet Antwerpen', d: 'Compact gastentoilet met fineer-meubel en mat zwart sanitair.' },
   { img: svcBad, tag: 'Wellness', t: 'Sauna-suite Bonheiden', d: 'Master ensuite met inbouwsauna en vrijstaand bad in microcement.' },
   { img: rzBadGast, tag: 'Microcement', t: 'Powderroom Mechelen', d: 'Microcementwanden in greige met fineer-meubel en mat zwart sanitair.' },
@@ -144,13 +140,11 @@ const badkamer: Card[] = [
 const gevel: Card[] = [
   { img: svcGevel, tag: 'Witte crepi', t: 'HOB Boom', d: 'Geïsoleerde gevel met witte siliconen-crepi. 4 weken.' },
   { img: rzGevelCrepi, tag: 'Grijze crepi', t: 'Nieuwbouw Mechelen', d: 'Antraciet siliconen-crepi met zwart aluminium schrijnwerk en magnolia voortuin.' },
-  { img: dakIso, tag: 'Buitenisolatie', t: 'ETICS Antwerpen', d: 'Volledige na-isolatie met EPS + minerale crepi. EPC sprong van D → B.' },
   { img: rzGevelStrips, tag: 'Steenstrips', t: 'Steenstrips Lier', d: 'Geïsoleerde steenstrips Wienerberger met crepi-accent boven de inkom.' },
   { img: about, tag: 'Houten gevel', t: 'Lariks Bonheiden', d: 'Ventileerde gevelbekleding in onbehandeld lariks, vergrijst natuurlijk.' },
   { img: svcGevel, tag: 'Composiet', t: 'Trespa Willebroek', d: 'Composiet gevelplaten Trespa Meteon op aluminium onderconstructie.' },
   { img: rzGevelStrips, tag: 'Renovatie', t: 'Gevelrenovatie Mechelen', d: 'Reiniging, hervoegen en accent in steenstrips boven inkom.' },
   { img: rzGevelCrepi, tag: 'Strip & crepi', t: 'Naïsolatie Antwerpen', d: 'Volledige na-isolatie met EPS en mat-grijze siliconen-crepi.' },
-  { img: dakIso, tag: 'ETICS', t: 'ETICS-systeem Boom', d: 'Geïsoleerd gevelsysteem met versterkingsweefsel en minerale eindlaag.' },
   { img: about, tag: 'Lariks', t: 'Lariks-aanbouw Lier', d: 'Verticale lariks-bekleding op aanbouw, ventileerd op aluminium rails.' },
   { img: rzGevelCrepi, tag: 'Antraciet crepi', t: 'Halfopen Bonheiden', d: 'Antraciet siliconen-crepi met diepe raamomkadering en plat dak.' },
   { img: rzGevelStrips, tag: 'Steenstrips', t: 'Steenstrips Antwerpen', d: 'Handvorm-steenstrips in warm rood-bruin, met witte crepi rond de inkom.' },
@@ -403,6 +397,8 @@ export default function Realisaties() {
 
       /* Stats — strakker, foto naast cijfer */
       .lf-stats { padding: 90px 0 110px; }
+      .lf-stats .lf-section-head .lf-eyebrow { color: rgba(255,255,255,.72); }
+      .lf-stats .lf-section-head .lf-h2 { color: #fff; }
       .lf-stats-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
