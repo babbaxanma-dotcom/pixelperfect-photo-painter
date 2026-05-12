@@ -63,6 +63,11 @@ html {
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { background: var(--bg); scroll-behavior: smooth; }
+/* When Lenis smooth-scroll is active it owns the scroll animation — let the
+   browser's native smooth-scroll step aside so programmatic scrollTo() calls
+   don't double-animate (jank). Falls back to native smooth when Lenis is off
+   (e.g. prefers-reduced-motion, where Lenis never initialises). */
+html.lenis.lenis-smooth { scroll-behavior: auto; }
 body {
   background: var(--bg); color: var(--ink);
   font-family: var(--font-body); font-weight: 400;

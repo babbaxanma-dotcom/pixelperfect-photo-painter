@@ -5,6 +5,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useLenis } from "@/hooks/useLenis";
+import "lenis/dist/lenis.css";
 import "./styles/ab-bouw.css";
 
 import Home from "./pages/abbouw/Home";

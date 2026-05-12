@@ -598,7 +598,9 @@ export function useAbBouwInteractions() {
     pinRail?.addEventListener('touchstart', onPinTouch, { passive: true });
     pinRail?.addEventListener('touchend', onPinTouchEnd, { passive: true });
 
-    const onPinScroll = () => {
+    let pinScrollRaf = 0;
+    const computePinScroll = () => {
+      pinScrollRaf = 0;
       if (!pinRail || !pinSection || !isMobile() || pinTouching) return;
       const rect = pinSection.getBoundingClientRect();
       const vh = window.innerHeight;
@@ -609,6 +611,7 @@ export function useAbBouwInteractions() {
       const max = pinRail.scrollWidth - pinRail.clientWidth;
       pinRail.scrollLeft = max * p;
     };
+    const onPinScroll = () => { if (pinScrollRaf) return; pinScrollRaf = requestAnimationFrame(computePinScroll); };
     window.addEventListener('scroll', onPinScroll, { passive: true });
 
     // ── Sequential reveal: why-tiles light up one by one as user scrolls
@@ -616,7 +619,9 @@ export function useAbBouwInteractions() {
     const whyTiles = whyWrap
       ? Array.from(whyWrap.querySelectorAll<HTMLElement>('[data-why-step]'))
       : [];
-    const onWhyScroll = () => {
+    let whyScrollRaf = 0;
+    const computeWhyScroll = () => {
+      whyScrollRaf = 0;
       if (!whyWrap || whyTiles.length === 0) return;
       const rect = whyWrap.getBoundingClientRect();
       const vh = window.innerHeight;
@@ -631,8 +636,9 @@ export function useAbBouwInteractions() {
         t.classList.toggle('is-active', on && idx === activeUpTo - 1);
       });
     };
+    const onWhyScroll = () => { if (whyScrollRaf) return; whyScrollRaf = requestAnimationFrame(computeWhyScroll); };
     window.addEventListener('scroll', onWhyScroll, { passive: true });
-    onWhyScroll();
+    computeWhyScroll();
 
     // ── Why-stack: scroll-linked scale on stacked cards (desktop), Olivier Larose pattern
     const whyStack = document.querySelector<HTMLElement>('[data-why-stack]');
@@ -663,7 +669,9 @@ export function useAbBouwInteractions() {
     const trustItems = trustStrip
       ? Array.from(trustStrip.querySelectorAll<HTMLElement>('.lf-trust-item'))
       : [];
-    const onTrustScroll = () => {
+    let trustScrollRaf = 0;
+    const computeTrustScroll = () => {
+      trustScrollRaf = 0;
       if (!trustStrip || trustItems.length === 0) return;
       const rect = trustStrip.getBoundingClientRect();
       const vh = window.innerHeight || 1;
@@ -673,8 +681,9 @@ export function useAbBouwInteractions() {
       const upTo = Math.floor(p * (trustItems.length + 0.5));
       trustItems.forEach((it, idx) => it.classList.toggle('is-marked', idx < upTo));
     };
+    const onTrustScroll = () => { if (trustScrollRaf) return; trustScrollRaf = requestAnimationFrame(computeTrustScroll); };
     window.addEventListener('scroll', onTrustScroll, { passive: true });
-    onTrustScroll();
+    computeTrustScroll();
 
     // ── Stacking-card scroll animation for services grid (mobile only)
     const svcStack = document.querySelector<HTMLElement>('[data-svc-stack]');
@@ -746,7 +755,9 @@ export function useAbBouwInteractions() {
 
     // ── Support cards: scroll-driven sequential highlight ──
     const supportCards = Array.from(document.querySelectorAll<HTMLElement>('[data-support-card]'));
-    const onSupportScroll = () => {
+    let supportScrollRaf = 0;
+    const computeSupportScroll = () => {
+      supportScrollRaf = 0;
       if (!supportCards.length) return;
       const center = window.innerHeight / 2;
       let bestIdx = -1;
@@ -759,8 +770,9 @@ export function useAbBouwInteractions() {
       });
       supportCards.forEach((c, i) => c.classList.toggle('is-active', i === bestIdx));
     };
+    const onSupportScroll = () => { if (supportScrollRaf) return; supportScrollRaf = requestAnimationFrame(computeSupportScroll); };
     window.addEventListener('scroll', onSupportScroll, { passive: true });
-    onSupportScroll();
+    computeSupportScroll();
 
     // ── Horizontal rails: scroll feeling for mobile carousels/blog rails ──
     const xRails = Array.from(document.querySelectorAll<HTMLElement>('[data-x-rail], .dak-grid[data-scroll="x"]'));
