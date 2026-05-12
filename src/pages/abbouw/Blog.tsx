@@ -132,7 +132,7 @@ const BLOG_STYLE = `
 .lf-blog-hero .lf-hero-bg::after { background: linear-gradient(90deg, rgba(10,18,32,0.88) 0%, rgba(10,18,32,0.58) 46%, rgba(10,18,32,0.22) 100%) !important; }
 .lf-blog-hero-wrap { position: relative; z-index: 2; width: 100%; padding: 160px clamp(24px, 6vw, 96px) 110px; }
 .lf-blog-hero-copy { max-width: 790px; color: #fff; }
-.lf-blog-kicker { display: inline-flex; margin-bottom: 18px; color: rgba(255,255,255,0.74); font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+.lf-blog-kicker { display: inline-block; margin-bottom: 18px; padding: 6px 14px; background: var(--accent); color: #fff; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .lf-blog-hero-copy h1 { font-family: var(--font-display); font-size: clamp(44px, 7vw, 88px); line-height: .96; font-weight: 650; color: #fff; letter-spacing: -0.035em; margin: 0 0 24px; text-wrap: balance; }
 .lf-blog-hero-copy p { max-width: 610px; color: rgba(255,255,255,0.82); font-size: clamp(16px, 1.4vw, 19px); line-height: 1.65; margin: 0; }
 .lf-blog-hero-meta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
