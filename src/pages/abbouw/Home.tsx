@@ -24,7 +24,7 @@ import proj4 from '@/assets/home/proj4.jpg';
 import team1 from '@/assets/home/team1.jpg';
 import team2 from '@/assets/home/team2.jpg';
 import team3 from '@/assets/home/team3.jpg';
-import ctaMan from '@/assets/home/cta-expert.jpg';
+import ctaMan from '@/assets/home/cta-expert.png';
 import { BLOGS } from '@/data/blogs';
 import logo from '@/assets/home/logo.png';
 import logoHero from '@/assets/home/logo-hero.png';
@@ -1039,14 +1039,14 @@ const EXTRA_STYLE = `
 .lf-testi-google { flex-shrink:0; }
 
 /* CTA */
-.lf-cta { background: var(--navy); border-radius: 18px; padding: 56px 56px; display:grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items:center; overflow:hidden; position:relative; }
+.lf-cta { background: var(--navy); border-radius: 18px; padding: 56px 56px 0 56px; display:grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items:end; overflow:visible; position:relative; min-height: 360px; }
 .lf-cta::before { content:''; position:absolute; right: 28%; top:50%; transform:translateY(-50%); width: 280px; height: 280px; border-radius:50%; background: var(--accent); opacity: 0.15; }
-.lf-cta-text { color:#fff; position:relative; z-index:2; }
+.lf-cta-text { color:#fff; position:relative; z-index:2; padding-bottom: 56px; }
 .lf-cta-text h2 { color:#fff; font-family: var(--font-display); font-size: clamp(26px, 3vw, 38px); line-height:1.15; margin-bottom: 14px; letter-spacing:-0.02em; }
 .lf-cta-text p { color: rgba(255,255,255,0.75); font-size: 15px; margin-bottom: 26px; max-width: 460px; }
 .lf-cta-actions { display:flex; gap:12px; flex-wrap:wrap; }
-.lf-cta-img { position:relative; z-index:2; height: 280px; display:flex; justify-content:flex-end; }
-.lf-cta-img img { height:100%; width:auto; object-fit:cover; border-radius: 12px; }
+.lf-cta-img { position:relative; z-index:2; height: 460px; display:flex; justify-content:center; align-items:flex-end; }
+.lf-cta-img img { height:100%; width:auto; object-fit:contain; object-position: bottom; display:block; }
 
 /* Blog */
 .lf-blog-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
