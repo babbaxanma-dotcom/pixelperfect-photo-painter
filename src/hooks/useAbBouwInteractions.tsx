@@ -35,7 +35,7 @@ export function useAbBouwInteractions() {
         navigate(href);
         return;
       }
-      const card = link.closest<HTMLElement>('.lf-svc-card, .ab-deep, .rz-proj-card, .lf-cta-pill') ?? link;
+      const card = link.closest<HTMLElement>('.lf-svc-card, .ab-deep, .rz-proj-card, .lf-blog-card, .lf-blog-feature, .lf-blog-latest-item, .lf-cta-pill') ?? link;
       card.classList.add('is-route-pressing');
       document.body.classList.add('is-page-leaving');
       window.setTimeout(() => navigate(href), 170);
@@ -339,7 +339,17 @@ export function useAbBouwInteractions() {
     projTabs?.addEventListener('click', onProjFilter);
 
     // ── Reveal on scroll ────────────────────────────────
-    const reveals = document.querySelectorAll('[data-reveal]');
+    document.querySelectorAll<HTMLElement>('.lf-section > .wrap > *:not([data-reveal]), .ab-sub > .wrap > *:not([data-reveal])').forEach((el, idx) => {
+      if (el.closest('.footer') || el.matches('script, style')) return;
+      el.dataset.reveal = idx % 2 ? 'left' : 'right';
+      el.dataset.revealDelay = String(Math.min(idx % 4, 3));
+    });
+
+    const reveals = document.querySelectorAll<HTMLElement>('[data-reveal]');
+    reveals.forEach((el) => {
+      const delay = Number(el.dataset.revealDelay || 0);
+      if (delay > 0) el.style.setProperty('--reveal-delay', `${Math.min(delay, 6) * 95}ms`);
+    });
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -752,6 +762,34 @@ export function useAbBouwInteractions() {
     window.addEventListener('scroll', onSupportScroll, { passive: true });
     onSupportScroll();
 
+    // ── Horizontal rails: scroll feeling for mobile carousels/blog rails ──
+    const xRails = Array.from(document.querySelectorAll<HTMLElement>('[data-x-rail], .dak-grid[data-scroll="x"]'));
+    const xRailHandlers: Array<[HTMLElement, () => void]> = [];
+    const updateXRail = (rail: HTMLElement) => {
+      const items = Array.from(rail.children).filter((el): el is HTMLElement => el instanceof HTMLElement);
+      if (!items.length) return;
+      const rect = rail.getBoundingClientRect();
+      const center = rect.left + rect.width / 2;
+      let bestIdx = 0;
+      let bestDist = Infinity;
+      items.forEach((item, idx) => {
+        const r = item.getBoundingClientRect();
+        const dist = Math.abs(r.left + r.width / 2 - center);
+        if (dist < bestDist) { bestDist = dist; bestIdx = idx; }
+      });
+      const max = Math.max(1, rail.scrollWidth - rail.clientWidth);
+      rail.style.setProperty('--x-progress', `${rail.scrollLeft / max}`);
+      items.forEach((item, idx) => item.classList.toggle('is-x-active', idx === bestIdx));
+    };
+    const onXRailResize = () => xRails.forEach(updateXRail);
+    xRails.forEach((rail) => {
+      const handler = () => requestAnimationFrame(() => updateXRail(rail));
+      rail.addEventListener('scroll', handler, { passive: true });
+      xRailHandlers.push([rail, handler]);
+      updateXRail(rail);
+    });
+    window.addEventListener('resize', onXRailResize);
+
     // ── Over ons promise tabs: real button behavior + soft panel transition ──
     const promiseTabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-promise-tab]'));
     const promisePanels = Array.from(document.querySelectorAll<HTMLElement>('[data-promise-panel]'));
@@ -846,6 +884,8 @@ export function useAbBouwInteractions() {
       mmLinks.forEach((a) => a.removeEventListener('click', mmClose));
       mmCloseBtn?.removeEventListener('click', mmClose);
       detailHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
+      xRailHandlers.forEach(([el, h]) => el.removeEventListener('scroll', h));
+      window.removeEventListener('resize', onXRailResize);
       ddCleanups.forEach((cleanup) => cleanup());
       trustNearIo?.disconnect();
       faqHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
