@@ -1440,6 +1440,15 @@ html, body { overflow-x: hidden; max-width: 100%; }
   .lf-faq-list .faq-q { padding: 16px 18px; font-size: 14px; gap: 12px; }
   .lf-faq-list .faq-a p { padding: 0 18px 18px; font-size: 13.5px; }
 }
+
+/* AB highlight & marker — gele scroll-in markeringen */
+.ab-mark { position: relative; display: inline-block; color: var(--navy); white-space: nowrap; }
+.ab-mark::after { content:''; position:absolute; left:-2%; right:-2%; bottom:4%; height:38%; background: var(--accent); opacity:.28; border-radius:3px; transform-origin:left center; transform: scaleX(0); transition: transform .9s cubic-bezier(.22,1,.36,1) .3s; z-index:-1; }
+[data-reveal].revealed .ab-mark::after { transform: scaleX(1); }
+.ab-hl { position: relative; display: inline; background-image: linear-gradient(120deg, rgba(217,140,3,0.22) 0%, rgba(217,140,3,0.22) 100%); background-repeat: no-repeat; background-size: 0% 60%; background-position: 0 88%; padding: 0 2px; color: var(--navy); font-weight:500; transition: background-size .9s cubic-bezier(.22,1,.36,1); transition-delay: calc(.45s + var(--hl-i, 0) * .32s); }
+[data-reveal].revealed .ab-hl { background-size: 100% 60%; }
+.ab-hl[data-hl-delay="0"] { --hl-i: 0; } .ab-hl[data-hl-delay="1"] { --hl-i: 1; } .ab-hl[data-hl-delay="2"] { --hl-i: 2; }
+@media (prefers-reduced-motion: reduce) { .ab-mark::after { transform: scaleX(1); } .ab-hl { background-size: 100% 60%; } }
 `;
 
 export default function Home() {
