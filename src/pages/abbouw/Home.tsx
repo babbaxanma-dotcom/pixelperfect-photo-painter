@@ -1101,6 +1101,9 @@ const EXTRA_STYLE = `
 @media (max-width: 900px) {
   .lf-section { padding: 60px 0; }
   .lf-section.lf-section-compact-stack { padding-bottom: 18px; }
+  .lf-section.lf-why-section-tight { padding-bottom: 0; }
+  .lf-section.lf-why-section-tight + .lf-section { padding-top: 34px; }
+  .lf-why-section-tight .lf-trust-strip { margin-top: 0; }
   .lf-section.lf-section-compact-stack .lf-section-head,
   .lf-section.lf-section-compact-stack .lf-section-head.centered { margin-bottom: 24px; }
   .lf-about-grid, .lf-skills-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -1410,6 +1413,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
 
   /* Trust strip stays 1-col but tighter */
   .lf-trust-strip { padding: 18px 18px; gap: 12px; margin-top: 14px; }
+  .lf-why-section-tight .lf-trust-strip { margin-top: 0; }
 
   /* Skills */
   .lf-skills-grid { gap: 32px; }
