@@ -83,6 +83,12 @@ export const buildHero = (opts: {
       </div>
     </div>
   </div>
+  <button class="lf-scroll-cue" type="button" aria-label="Scroll naar beneden" onclick="window.scrollBy({top: window.innerHeight - 80, left: 0, behavior: 'smooth'})">
+    <span class="lf-scroll-cue-label">Scroll</span>
+    <span class="lf-scroll-cue-icon" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </span>
+  </button>
 </section>
 `;
 };
@@ -232,6 +238,7 @@ export const SHELL_STYLE = `
 
 /* HERO (subpages reuse exactly the home hero look) */
 .lf-hero { position: relative; min-height: 620px; display:flex; align-items:center; overflow:hidden; margin-top: 0; }
+@media (min-width: 901px) { .lf-hero { min-height: 100vh; min-height: 100svh; } }
 .lf-hero-bg { position:absolute; inset:0; }
 .lf-hero-bg img { width:100%; height:100%; object-fit: cover; }
 .lf-hero-bg::after { content:''; position:absolute; inset:0; background: linear-gradient(90deg, rgba(10,22,40,0.6) 0%, rgba(10,22,40,0.2) 60%, transparent 100%); }
@@ -240,6 +247,37 @@ export const SHELL_STYLE = `
 .lf-hero-card h1 { font-family: var(--font-display); font-size: clamp(30px, 3.6vw, 44px); line-height:1.15; font-weight:700; letter-spacing:-0.02em; color: var(--navy); margin-bottom: 16px; }
 .lf-hero-card p { font-size: 15px; color: var(--ink-soft); line-height:1.7; margin-bottom: 26px; }
 .lf-hero-actions { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+
+/* Scroll cue (subtle, clean chevron in onderkant van hero) */
+.lf-scroll-cue {
+  position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%);
+  z-index: 3; display: none; flex-direction: column; align-items: center; gap: 8px;
+  background: transparent; border: 0; padding: 8px 14px; cursor: pointer;
+  color: rgba(255,255,255,0.92); font-family: var(--font-display, inherit);
+  font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; font-weight: 500;
+  opacity: 0; animation: lf-scroll-cue-in 0.9s var(--ease-out-quart, ease-out) 0.6s forwards;
+  transition: color 0.3s, transform 0.3s;
+}
+.lf-scroll-cue:hover { color: #fff; }
+.lf-scroll-cue-icon {
+  width: 38px; height: 38px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255,255,255,0.35);
+  animation: lf-scroll-cue-bob 2.2s ease-in-out infinite;
+  transition: border-color 0.3s, background 0.3s;
+}
+.lf-scroll-cue:hover .lf-scroll-cue-icon { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.08); }
+@keyframes lf-scroll-cue-in { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@keyframes lf-scroll-cue-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+@media (min-width: 901px) { .lf-scroll-cue { display: inline-flex; } }
+@media (prefers-reduced-motion: reduce) {
+  .lf-scroll-cue { animation: none; opacity: 1; }
+  .lf-scroll-cue-icon { animation: none; }
+}
+body.is-scrolled .lf-scroll-cue { opacity: 0; pointer-events: none; transition: opacity 0.4s; }
 
 /* Services Grid (used on /diensten) */
 .lf-svc-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }

@@ -286,6 +286,8 @@ export function useAbBouwInteractions() {
         const sy = window.scrollY;
         if (sy > 30) nav?.classList.add('scrolled');
         else nav?.classList.remove('scrolled');
+        if (sy > 80) document.body.classList.add('is-scrolled');
+        else document.body.classList.remove('is-scrolled');
         if (hero) {
           const heroH = hero.offsetHeight;
           const navStart = heroH * 0.42;
