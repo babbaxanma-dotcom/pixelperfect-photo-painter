@@ -17,8 +17,8 @@ ${buildNav('blog')}
   <div class="wrap lf-blog-hero-wrap">
     <div class="lf-blog-hero-copy" data-reveal="left">
       <span class="lf-blog-kicker">Bouwblog</span>
-      <h1>Praktische bouwkennis,<br/>zonder verkoopspraat.</h1>
-      <p>Heldere inzichten van projectleiders, vakmensen en interieurarchitecten. Wat werkt, wat kost het, en waar moet u op letten vóór de werken starten?</p>
+      <h1>Vakkennis en inzichten<br/>uit de Vlaamse bouwpraktijk.</h1>
+      <p>Analyses, technische dossiers en praktijkervaringen van onze projectleiders, vakmensen en interieurarchitecten. Onderbouwde antwoorden op de vragen die u zich stelt vóór, tijdens en na de werken.</p>
       <div class="lf-blog-hero-meta">
         <span><strong>${BLOGS.length}</strong> actuele artikels</span>
         <span><strong>2026</strong> premies & regels</span>
