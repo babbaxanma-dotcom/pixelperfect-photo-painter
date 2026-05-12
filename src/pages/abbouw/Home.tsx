@@ -400,43 +400,42 @@ const HTML = (i: Record<string, string>) => `
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Waarom AB Bouw Group</span>
-      <h2 class="lf-h2">De bouwpartner waar u<br>écht op kan rekenen.</h2>
+      <h2 class="lf-h2">De bouwpartner waar u<br><span class="ab-mark">écht op kan rekenen</span>.</h2>
     </div>
-    <div class="lf-why-collage lf-why-stack" data-why-seq data-why-stack>
+    <div class="lf-why-collage lf-why-stack lf-why-no-photo" data-why-seq data-why-stack>
       <div class="lf-why-stack-left">
-        <div class="lf-why-slot" data-why-slot>
+        <div class="lf-why-slot" data-why-slot data-reveal>
           <div class="lf-why-tile" data-why-step="0" data-why-card style="--why-i:0;--why-total:4">
             <div class="lf-why-meta"><span class="lf-why-num">01</span><span class="lf-why-label">Ontzorging</span></div>
             <h5>Wij regelen ook de papierwinkel</h5>
-            <p>Stedenbouwkundige vergunning, EPB-verslag, premieaanvraag Mijn VerbouwPremie en oplevering bij de architect. U tekent, wij regelen.</p>
+            <p>Stedenbouwkundige vergunning, EPB-verslag, premieaanvraag Mijn VerbouwPremie en oplevering bij de architect. <span class="ab-hl" data-hl-delay="0">U tekent, wij regelen</span>.</p>
           </div>
         </div>
-        <div class="lf-why-slot" data-why-slot>
+        <div class="lf-why-slot" data-why-slot data-reveal data-reveal-delay="1">
           <div class="lf-why-tile" data-why-step="1" data-why-card style="--why-i:1;--why-total:4">
             <div class="lf-why-meta"><span class="lf-why-num">02</span><span class="lf-why-label">Planning</span></div>
             <h5>Wekelijks werfrapport in uw mailbox</h5>
-            <p>Elke vrijdag een korte update met foto's, voortgang en planning voor de week erop. Vertraging? U weet het meteen, niet pas op de opleveringsdag.</p>
+            <p>Elke vrijdag een korte update met foto's, voortgang en planning voor de week erop. <span class="ab-hl" data-hl-delay="0">Vertraging? U weet het meteen</span>, niet pas op de opleveringsdag.</p>
           </div>
         </div>
-        <div class="lf-why-slot" data-why-slot>
+        <div class="lf-why-slot" data-why-slot data-reveal data-reveal-delay="2">
           <div class="lf-why-tile" data-why-step="2" data-why-card style="--why-i:2;--why-total:4">
             <div class="lf-why-meta"><span class="lf-why-num">03</span><span class="lf-why-label">Garantie</span></div>
             <h5>10-jarige aansprakelijkheid, wettelijk verzekerd</h5>
-            <p>VCA*-gecertificeerd, aangesloten bij Bouwunie. Polis stabiliteit en waterdichtheid via Federale Verzekering.</p>
+            <p><span class="ab-hl" data-hl-delay="0">VCA*-gecertificeerd</span>, aangesloten bij Bouwunie. Polis stabiliteit en waterdichtheid via Federale Verzekering.</p>
           </div>
         </div>
-        <div class="lf-why-slot" data-why-slot>
+        <div class="lf-why-slot" data-why-slot data-reveal data-reveal-delay="3">
           <div class="lf-why-tile" data-why-step="3" data-why-card style="--why-i:3;--why-total:4">
             <div class="lf-why-meta"><span class="lf-why-num">04</span><span class="lf-why-label">Vaste ploeg</span></div>
             <h5>Eigen ploegen op uw werf</h5>
-            <p>23 mensen in vaste dienst, metselaars, dakdekkers, tegelzetters, schrijnwerkers. Eén verantwoordelijkheid, één kwaliteitsstandaard.</p>
+            <p><span class="ab-hl" data-hl-delay="0">23 mensen in vaste dienst</span>, metselaars, dakdekkers, tegelzetters, schrijnwerkers. Eén verantwoordelijkheid, één kwaliteitsstandaard.</p>
           </div>
         </div>
       </div>
-      <div class="lf-why-photo" data-reveal><img src="${i.why}" alt="" loading="lazy"/></div>
     </div>
 
-    <div class="lf-trust-strip" data-trust-strip style="margin-top: 28px;">
+    <div class="lf-trust-strip" data-trust-strip data-reveal style="margin-top: 22px;">
       <div class="lf-trust-item" data-trust-i="0"><strong>VCA*-gecertificeerd</strong><span>Veiligheid op de werf</span></div>
       <div class="lf-trust-divider"></div>
       <div class="lf-trust-item" data-trust-i="1"><strong>Lid Bouwunie</strong><span>Vlaamse Confederatie Bouw</span></div>
