@@ -128,7 +128,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '02 · Duurzaam bouwen',
   title: 'Slim isoleren,<br/><span style="color:var(--accent)">duurzaam wonen</span>.',
-  lede: 'AB Ecologisch bundelt isolatie, warmtepomp, ventilatie en natuurlijke afwerking in één logisch totaalplan.',
+  lede: 'AB Ecologisch bundelt <span class="ab-hl" data-hl-delay="0">isolatie, warmtepomp en ventilatie</span> in één <span class="ab-hl" data-hl-delay="1">logisch totaalplan</span>.',
   primary: { label: 'Vraag plaatsbezoek aan', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
