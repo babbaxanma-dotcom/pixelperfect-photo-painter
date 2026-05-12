@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
-import { buildNav, FOOTER, SHELL_STYLE } from './_shell';
+import { buildNav, buildHero, FOOTER, SHELL_STYLE } from './_shell';
 import { BLOGS } from '@/data/blogs';
 import heroBlog from '@/assets/home/hero-blog.jpg';
 
@@ -12,25 +12,14 @@ const topics = ['Alle', 'Renovatie', 'Energie', 'Bad & Wellness', 'Gevel', 'Inte
 const HTML = `
 ${buildNav('blog')}
 
-<section class="lf-hero lf-blog-hero">
-  <div class="lf-hero-bg" style="background-image: url('${heroBlog}'); background-size: cover; background-position: center;"></div>
-  <div class="wrap lf-blog-hero-wrap">
-    <div class="lf-blog-hero-copy" data-reveal="left">
-      <span class="lf-blog-kicker">Bouwblog</span>
-      <h1>Vakkennis en inzichten<br/>uit de Vlaamse bouwpraktijk.</h1>
-      <p>Analyses, technische dossiers en praktijkervaringen van onze projectleiders, vakmensen en interieurarchitecten. Onderbouwde antwoorden op de vragen die u zich stelt vóór, tijdens en na de werken.</p>
-      <div class="lf-blog-hero-meta">
-        <span><strong>${BLOGS.length}</strong> actuele artikels</span>
-        <span><strong>2026</strong> premies & regels</span>
-        <span><strong>Vlaanderen</strong> praktijkgericht</span>
-      </div>
-    </div>
-  </div>
-  <button class="lf-scroll-cue" type="button" aria-label="Scroll naar beneden" onclick="window.scrollBy({top: window.innerHeight - 80, left: 0, behavior: 'smooth'})">
-    <span class="lf-scroll-cue-label">Scroll</span>
-    <span class="lf-scroll-cue-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
-  </button>
-</section>
+${buildHero({
+  bg: heroBlog,
+  eyebrow: 'Bouwblog',
+  title: 'Vakkennis en inzichten<br/>uit de Vlaamse bouwpraktijk.',
+  lede: 'Analyses, technische dossiers en praktijkervaringen van onze projectleiders, vakmensen en interieurarchitecten. Onderbouwde antwoorden op de vragen die u zich stelt vóór, tijdens en na de werken.',
+  primary: { label: 'Vraag een plaatsbezoek aan', href: '/contact' },
+  secondary: { label: 'Onze diensten →', href: '/diensten' },
+})}
 
 <section class="lf-section lf-blog-editorial">
   <div class="wrap">
