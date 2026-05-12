@@ -122,29 +122,29 @@ ${buildHero({
 </section>
 
 <!-- WHAT YOU GET / GUARANTEES -->
-<section class="lf-section lf-tone-soft">
+<section class="lf-section lf-tone-soft ab-zek-section">
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Schriftelijk vastgelegd</span>
       <h2 class="lf-h2">Vier zekerheden voor u<br/>als opdrachtgever.</h2>
     </div>
-    <div class="lf-support-grid" style="grid-template-columns: repeat(4, 1fr);">
-      <div class="lf-support-card" data-reveal>
+    <div class="lf-support-grid ab-zek-grid" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="lf-support-card ab-zek-card" data-zek-reveal style="--zek-i:0;">
         <div class="lf-support-meta"><span>01</span> Prijs</div>
         <h5>Vaste prijs, bindend</h5>
         <p>Geen meerwerk tenzij u zelf wijzigingen vraagt, en dan eerst goedgekeurd, nooit verrast op de eindfactuur.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="1">
+      <div class="lf-support-card ab-zek-card" data-zek-reveal style="--zek-i:1;">
         <div class="lf-support-meta"><span>02</span> Planning</div>
         <h5>Wekelijks werfrapport</h5>
         <p>Elke vrijdag een korte update met foto's, voortgang en planning voor de week erop. Vertraging? U weet het meteen, niet pas na drie weken.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="2">
+      <div class="lf-support-card ab-zek-card" data-zek-reveal style="--zek-i:2;">
         <div class="lf-support-meta"><span>03</span> Garantie</div>
         <h5>10 jaar aansprakelijkheid</h5>
         <p>Wettelijke 10-jarige aansprakelijkheid op stabiliteit en waterdichtheid, plus 2 jaar garantie op afwerking. Polis bij Federale Verzekering.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="3">
+      <div class="lf-support-card ab-zek-card" data-zek-reveal style="--zek-i:3;">
         <div class="lf-support-meta"><span>04</span> Aanspreekpunt</div>
         <h5>Eén projectleider</h5>
         <p>Dezelfde projectleider doet uw plaatsbezoek, levert de offerte op, leidt de werf en doet de oplevering. Geen carrousel van wisselende contactpersonen.</p>
@@ -217,6 +217,30 @@ const STEP_REVEAL_CSS = `
     opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important;
   }
 }
+
+/* "Vier zekerheden" — staggered scroll-driven reveal */
+.ab-zek-card[data-zek-reveal] {
+  opacity: 0;
+  transform: translateY(56px) scale(0.94);
+  filter: blur(8px);
+  transition:
+    opacity .85s cubic-bezier(.2,.7,.2,1),
+    transform 1s cubic-bezier(.2,.75,.2,1),
+    filter .85s cubic-bezier(.2,.7,.2,1);
+  transition-delay: calc(var(--zek-i, 0) * 110ms);
+  will-change: opacity, transform, filter;
+}
+.ab-zek-card[data-zek-reveal].is-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+.ab-zek-section .lf-section-head { margin-bottom: 36px; }
+@media (prefers-reduced-motion: reduce) {
+  .ab-zek-card[data-zek-reveal] {
+    opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important;
+  }
+}
 `;
 
 export default function Werkwijze() {
@@ -254,6 +278,26 @@ export default function Werkwijze() {
       { threshold: 0.22, rootMargin: '0px 0px -12% 0px' },
     );
     steps.forEach((s) => io.observe(s));
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-zek-reveal]'));
+    if (!cards.length) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) { cards.forEach((c) => c.classList.add('is-in')); return; }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            (e.target as HTMLElement).classList.add('is-in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.25, rootMargin: '0px 0px -10% 0px' },
+    );
+    cards.forEach((c) => io.observe(c));
     return () => io.disconnect();
   }, []);
 
