@@ -99,9 +99,9 @@ ${buildHero({
       <span class="lf-eyebrow">Acht stappen, in detail</span>
       <h2 class="lf-h2">Wat er gebeurt,<br/>wanneer het gebeurt.</h2>
     </div>
-    <div class="ab-steps">
+    <div class="ab-steps ab-steps--seq">
       ${stages.map((s, i) => `
-        <article class="ab-step ${i % 2 === 1 ? 'reverse' : ''}" data-reveal>
+        <article class="ab-step ${i % 2 === 1 ? 'reverse' : ''}" data-step-reveal style="--step-i:${i};">
           <div class="ab-step-media">
             <img src="${s.img}" alt="${s.title}" loading="lazy"/>
             <span class="ab-step-num">${s.n}</span>
