@@ -934,6 +934,9 @@ const EXTRA_STYLE = `
 
 /* ── Why-us as scroll-stack: all tiles sticky in the SAME left column → real pile-up */
 .lf-why-collage.lf-why-stack { display:grid; grid-template-columns: 1fr 1.05fr; gap: 34px; align-items: stretch; max-width: 1180px; margin: 0 auto; }
+.lf-why-collage.lf-why-stack.lf-why-no-photo { grid-template-columns: 1fr; max-width: 820px; gap: 0; }
+.lf-why-no-photo .lf-why-stack-left { gap: 16px; }
+.lf-why-no-photo .lf-why-tile { padding: 24px 28px; }
 .lf-why-stack .lf-why-stack-left { display:flex; flex-direction: column; gap: 12px; }
 .lf-why-stack .lf-why-slot { display: block; }
 .lf-why-stack .lf-why-tile { position: static; width: 100%; padding: 22px 24px; margin: 0; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 18px 40px -28px rgba(15,17,21,.18); }
