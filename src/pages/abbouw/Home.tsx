@@ -768,6 +768,9 @@ const EXTRA_STYLE = `
 .lf-section.lf-section-compact-stack + .lf-section { padding-top: 56px; }
 .lf-section.lf-section-compact-stack .lf-section-head { margin-bottom: 30px; }
 .lf-section.lf-section-compact-stack .lf-section-head.centered { margin-bottom: 30px; }
+.lf-section.lf-why-section-tight { padding-bottom: 0; }
+.lf-section.lf-why-section-tight + .lf-section { padding-top: 36px; }
+.lf-why-section-tight .lf-trust-strip { margin-top: 0; transform: translateY(-1px); }
 .lf-tone-soft { background: var(--bg-tint); }
 .lf-section-head { max-width: 720px; margin-bottom: 56px; }
 .lf-section-head.centered { margin: 0 auto 56px; text-align:center; }
@@ -934,7 +937,7 @@ const EXTRA_STYLE = `
 
 /* ── Why-us as scroll-stack: all tiles sticky in the SAME left column → real pile-up */
 .lf-why-collage.lf-why-stack { display:grid; grid-template-columns: 1fr 1.05fr; gap: 34px; align-items: stretch; max-width: 1180px; margin: 0 auto; }
-.lf-why-collage.lf-why-stack.lf-why-no-photo { grid-template-columns: 1fr; max-width: 820px; gap: 0; }
+.lf-why-collage.lf-why-stack.lf-why-no-photo { grid-template-columns: 1fr; max-width: 820px; gap: 0; margin-bottom: 0; }
 .lf-why-no-photo .lf-why-stack-left { gap: 16px; }
 .lf-why-no-photo .lf-why-tile { padding: 24px 28px; }
 .lf-why-stack .lf-why-stack-left { display:flex; flex-direction: column; gap: 12px; }
