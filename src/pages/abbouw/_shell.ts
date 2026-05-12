@@ -1224,6 +1224,7 @@ html { scroll-behavior: smooth; }
   padding: 8px 20px 28px;
   margin: 0 calc(-1 * max(20px, (100vw - 1180px) / 2));
   scrollbar-width: thin;
+  overscroll-behavior-x: contain;
 }
 .dak-grid[data-scroll="x"]::-webkit-scrollbar { height: 8px; }
 .dak-grid[data-scroll="x"]::-webkit-scrollbar-thumb { background: rgba(10,22,40,0.18); border-radius: 999px; }
@@ -1232,13 +1233,15 @@ html { scroll-behavior: smooth; }
   flex: 0 0 min(560px, 86vw);
   grid-template-columns: 1fr;
   scroll-snap-align: start;
+  transition: opacity .45s var(--ease-out-quart), transform .45s var(--ease-out-quart), box-shadow .3s var(--ease-out-quart), border-color .3s var(--ease-out-quart);
 }
 .dak-grid[data-scroll="x"] .dak-card:nth-child(even) .dak-card-img { order: 0; }
 .dak-grid[data-scroll="x"] .dak-card-img { aspect-ratio: 16/10; min-height: 0; }
 .dak-grid[data-scroll="x"] .dak-card-body { padding: 24px 26px; }
 @media (max-width: 720px) {
   .dak-grid[data-scroll="x"] { gap: 14px; padding: 6px 16px 22px; margin: 0 -16px; scroll-padding-left: 16px; }
-  .dak-grid[data-scroll="x"] .dak-card { flex-basis: 84vw; }
+  .dak-grid[data-scroll="x"] .dak-card { flex-basis: 84vw; opacity: .68; transform: scale(.955); scroll-snap-align: center; }
+  .dak-grid[data-scroll="x"] .dak-card.is-x-active { opacity: 1; transform: scale(1); }
   .dak-grid[data-scroll="x"] .dak-card-body { padding: 20px 22px; }
 }
 .ab-scroll-hint {
