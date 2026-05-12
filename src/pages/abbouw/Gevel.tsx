@@ -106,8 +106,8 @@ ${buildHero({
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">AB Gevelbekleding</span>
-        <h2 class="lf-h2">Esthetiek én<br/>energieprestatie.</h2>
-        <p class="lf-lede">Een gevelrenovatie is hét moment om in één werf ook gevelisolatie aan te pakken. We rekenen vooraf de E-peil-winst en de premies door, zodat u zeker weet dat de investering rendeert.</p>
+        <h2 class="lf-h2"><span class="ab-mark">Esthetiek</span> én<br/>energieprestatie.</h2>
+        <p class="lf-lede">Een gevelrenovatie is hét moment om in één werf ook gevelisolatie aan te pakken. We rekenen vooraf de <span class="ab-hl" data-hl-delay="0">E-peil-winst en de premies</span> door, zodat u zeker weet dat de <span class="ab-hl" data-hl-delay="1">investering rendeert</span>.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen ploeg gevelwerkers, geen onderaanneming</li>
           <li>Stelling en buurtbescherming inbegrepen</li>
