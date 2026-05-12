@@ -35,7 +35,7 @@ export function useAbBouwInteractions() {
         navigate(href);
         return;
       }
-      const card = link.closest<HTMLElement>('.lf-svc-card, .ab-deep, .rz-proj-card, .lf-cta-pill') ?? link;
+      const card = link.closest<HTMLElement>('.lf-svc-card, .ab-deep, .rz-proj-card, .lf-blog-card, .lf-blog-feature, .lf-blog-latest-item, .lf-cta-pill') ?? link;
       card.classList.add('is-route-pressing');
       document.body.classList.add('is-page-leaving');
       window.setTimeout(() => navigate(href), 170);
@@ -339,7 +339,17 @@ export function useAbBouwInteractions() {
     projTabs?.addEventListener('click', onProjFilter);
 
     // ── Reveal on scroll ────────────────────────────────
-    const reveals = document.querySelectorAll('[data-reveal]');
+    document.querySelectorAll<HTMLElement>('.lf-section > .wrap > *:not([data-reveal]), .ab-sub > .wrap > *:not([data-reveal])').forEach((el, idx) => {
+      if (el.closest('.footer') || el.matches('script, style')) return;
+      el.dataset.reveal = idx % 2 ? 'left' : 'right';
+      el.dataset.revealDelay = String(Math.min(idx % 4, 3));
+    });
+
+    const reveals = document.querySelectorAll<HTMLElement>('[data-reveal]');
+    reveals.forEach((el) => {
+      const delay = Number(el.dataset.revealDelay || 0);
+      if (delay > 0) el.style.setProperty('--reveal-delay', `${Math.min(delay, 6) * 95}ms`);
+    });
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
