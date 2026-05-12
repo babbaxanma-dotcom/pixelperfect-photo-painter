@@ -102,8 +102,8 @@ ${buildHero({
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">AB Bad &amp; Wellness</span>
-        <h2 class="lf-h2">Eén ploeg,<br/>één eindresultaat.</h2>
-        <p class="lf-lede">In een badkamer komen alle vakgebieden samen: loodgieterij, elektriciteit, tegelwerk, schrijnwerk en sanitair. Wij houden alles in eigen hand. Daardoor staat uw badkamer er na vier weken, niet na vier maanden.</p>
+        <h2 class="lf-h2">Eén ploeg,<br/><span class="ab-mark">één eindresultaat</span>.</h2>
+        <p class="lf-lede">In een badkamer komen alle vakgebieden samen: loodgieterij, elektriciteit, tegelwerk, schrijnwerk en sanitair. <span class="ab-hl" data-hl-delay="0">Wij houden alles in eigen hand</span>. Daardoor staat uw badkamer er <span class="ab-hl" data-hl-delay="1">na vier weken</span>, niet na vier maanden.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen tegelzetter, loodgieter en elektricien</li>
           <li>Vaste prijs op basis van 3D-ontwerp</li>
