@@ -127,15 +127,11 @@ const interieur: Card[] = [
 ];
 
 const badkamer: Card[] = [
-  { img: svcBad, tag: 'Wellness', t: 'Wellnesssuite Leuven', d: 'Walk-in douche, hammam, dubbele wastafel en maatkast, 4 weken.' },
-  { img: dakRaam, tag: 'Zolderbadkamer', t: 'Zolder Mechelen', d: 'Inbouw onder dakkapel met dakraam, microcement en zwevend toilet.' },
-  { img: cAfwerking, tag: 'Familiebadkamer', t: 'Familiebadkamer Lier', d: 'Bad + inloopdouche, tegelwerk grootformaat, regendouche. 3 weken.' },
+  { img: svcBad, tag: 'Inloopdouche', t: 'Inloopdouche Leuven', d: 'Walk-in douche met grootformaat tegels en zwart matte kraanwerk. 3 weken.' },
   { img: rzBadGast, tag: 'Compact', t: 'Gastenbadkamer Boom', d: 'Volledige strip & rebuild op 4 m² met zwevend meubel. 10 dagen.' },
   { img: svcBad, tag: 'Master', t: 'Master ensuite Bonheiden', d: 'Vrijstaand bad, dubbele inloopdouche en walk-in dressing. 5 weken.' },
   { img: eKalk, tag: 'Microcement', t: 'Microcementbadkamer Antwerpen', d: 'Naadloze microcement-afwerking op wanden en vloer, mat en warm.' },
   { img: svcBad, tag: 'Inloopdouche', t: 'Inloopdouche Mechelen', d: 'XL-inloopdouche met grootformaat tegels en zwart matte kraanwerk.' },
-  { img: cAfwerking, tag: 'Renovatie', t: 'Badkamerrenovatie Boom', d: 'Strip & rebuild bestaande badkamer in 2,5 weken, inclusief leidingwerk.' },
-  { img: dakRaam, tag: 'Dakbadkamer', t: 'Badkamer onder dak Lier', d: 'Volledig nieuwe badkamer onder hellend dak met twee VELUX-ramen.' },
   { img: rzBadGast, tag: 'Gastentoilet', t: 'Gastentoilet Antwerpen', d: 'Compact gastentoilet met fineer-meubel en mat zwart sanitair.' },
   { img: svcBad, tag: 'Wellness', t: 'Sauna-suite Bonheiden', d: 'Master ensuite met inbouwsauna en vrijstaand bad in microcement.' },
   { img: rzBadGast, tag: 'Microcement', t: 'Powderroom Mechelen', d: 'Microcementwanden in greige met fineer-meubel en mat zwart sanitair.' },
