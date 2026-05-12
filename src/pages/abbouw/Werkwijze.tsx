@@ -6,7 +6,7 @@ import s1 from '@/assets/werkwijze/01-contact.jpg';
 import s2 from '@/assets/werkwijze/02-plaatsbezoek.jpg';
 import s3 from '@/assets/werkwijze/03-offerte.jpg';
 import s4 from '@/assets/werkwijze/04-voorbereiding.jpg';
-import s5 from '@/assets/construct/ruwbouw.jpg';
+import s5 from '@/assets/werkwijze/05-uitvoering.jpg';
 import s6 from '@/assets/werkwijze/06-voorop.jpg';
 import s7 from '@/assets/werkwijze/07-oplevering.jpg';
 import s8 from '@/assets/werkwijze/08-nazorg.jpg';
@@ -99,9 +99,9 @@ ${buildHero({
       <span class="lf-eyebrow">Acht stappen, in detail</span>
       <h2 class="lf-h2">Wat er gebeurt,<br/>wanneer het gebeurt.</h2>
     </div>
-    <div class="ab-steps">
+    <div class="ab-steps ab-steps--seq">
       ${stages.map((s, i) => `
-        <article class="ab-step ${i % 2 === 1 ? 'reverse' : ''}" data-reveal>
+        <article class="ab-step ${i % 2 === 1 ? 'reverse' : ''}" data-step-reveal style="--step-i:${i};">
           <div class="ab-step-media">
             <img src="${s.img}" alt="${s.title}" loading="lazy"/>
             <span class="ab-step-num">${s.n}</span>
@@ -175,6 +175,50 @@ ${buildCta('Klaar om uw traject te starten?', 'Plan vandaag een vrijblijvend pla
 ${FOOTER}
 `;
 
+const STEP_REVEAL_CSS = `
+/* Per-step scroll-driven reveal — each card stays hidden until you scroll to it */
+.ab-steps--seq [data-step-reveal] {
+  opacity: 0;
+  transform: translateY(64px) scale(0.965);
+  filter: blur(6px);
+  transition:
+    opacity .9s cubic-bezier(.2,.7,.2,1),
+    transform 1.05s cubic-bezier(.2,.75,.2,1),
+    filter .9s cubic-bezier(.2,.7,.2,1);
+  will-change: opacity, transform, filter;
+}
+.ab-steps--seq [data-step-reveal] .ab-step-media {
+  transform: translateY(28px) scale(0.98);
+  transition: transform 1.1s cubic-bezier(.2,.75,.2,1);
+  transition-delay: .08s;
+}
+.ab-steps--seq [data-step-reveal] .ab-step-body > * {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.75,.2,1);
+}
+.ab-steps--seq [data-step-reveal] .ab-step-body > *:nth-child(1) { transition-delay: .15s; }
+.ab-steps--seq [data-step-reveal] .ab-step-body > *:nth-child(2) { transition-delay: .22s; }
+.ab-steps--seq [data-step-reveal] .ab-step-body > *:nth-child(3) { transition-delay: .29s; }
+.ab-steps--seq [data-step-reveal] .ab-step-body > *:nth-child(4) { transition-delay: .36s; }
+
+.ab-steps--seq [data-step-reveal].is-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+.ab-steps--seq [data-step-reveal].is-in .ab-step-media { transform: translateY(0) scale(1); }
+.ab-steps--seq [data-step-reveal].is-in .ab-step-body > * { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ab-steps--seq [data-step-reveal],
+  .ab-steps--seq [data-step-reveal] .ab-step-media,
+  .ab-steps--seq [data-step-reveal] .ab-step-body > * {
+    opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important;
+  }
+}
+`;
+
 export default function Werkwijze() {
   useEffect(() => {
     document.title = "Werkwijze | AB Bouw Group | 8 stappen van offerte tot oplevering";
@@ -184,10 +228,34 @@ export default function Werkwijze() {
     const prev = document.body.className;
     document.body.className = "";
     const styleEl = document.createElement('style');
-    styleEl.textContent = SHELL_STYLE;
+    styleEl.textContent = SHELL_STYLE + STEP_REVEAL_CSS;
     document.head.appendChild(styleEl);
     return () => { document.body.className = prev; styleEl.remove(); };
   }, []);
   useAbBouwInteractions();
+
+  useEffect(() => {
+    const steps = Array.from(document.querySelectorAll<HTMLElement>('.ab-steps--seq [data-step-reveal]'));
+    if (!steps.length) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      steps.forEach((s) => s.classList.add('is-in'));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            (e.target as HTMLElement).classList.add('is-in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.22, rootMargin: '0px 0px -12% 0px' },
+    );
+    steps.forEach((s) => io.observe(s));
+    return () => io.disconnect();
+  }, []);
+
   return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
 }
