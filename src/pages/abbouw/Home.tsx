@@ -24,7 +24,7 @@ import proj4 from '@/assets/home/proj4.jpg';
 import team1 from '@/assets/home/team1.jpg';
 import team2 from '@/assets/home/team2.jpg';
 import team3 from '@/assets/home/team3.jpg';
-import ctaMan from '@/assets/home/cta-man.jpg';
+import ctaMan from '@/assets/home/cta-expert.jpg';
 import { BLOGS } from '@/data/blogs';
 import logo from '@/assets/home/logo.png';
 import logoHero from '@/assets/home/logo-hero.png';
