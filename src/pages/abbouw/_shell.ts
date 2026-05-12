@@ -424,16 +424,35 @@ export const SHELL_STYLE = `
 .footer-bottom-links a { color: var(--ink-soft) !important; text-decoration:none; }
 .footer-bottom-links a:hover { color: var(--accent) !important; }
 
-/* Sticky mobile bar */
+/* Sticky mobile bar — compact floating pills, bottom-right, geen overlap met content */
 .lf-mobile-bar { display: none; }
 @media (max-width: 760px) {
-  .lf-mobile-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 60; display: grid; grid-template-columns: 1fr 1.3fr; gap: 8px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: transparent; border-top: 0; box-shadow: none; pointer-events: none; transform: translateY(120%); opacity: 0; transition: transform 0.4s var(--ease), opacity 0.3s var(--ease); }
-  body.past-hero .lf-mobile-bar { transform: translateY(0); opacity: 1; }
-  .lf-mobile-bar-btn { pointer-events: auto; }
-  .lf-mobile-bar-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding: 13px 14px; border-radius: 999px; font-weight: 700; font-size: 14px; text-decoration: none; }
-  .lf-mobile-bar-call { background: #fff; color: var(--navy) !important; border: 1.5px solid var(--ink-line); }
-  .lf-mobile-bar-cta { background: var(--accent); color: #fff !important; }
-  body { padding-bottom: 72px; }
+  .lf-mobile-bar {
+    position: fixed;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    right: 12px;
+    left: auto;
+    z-index: 60;
+    display: inline-flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    background: transparent;
+    border-top: 0;
+    box-shadow: none;
+    pointer-events: none;
+    transform: translateY(20px) scale(0.92);
+    opacity: 0;
+    transition: transform 0.45s cubic-bezier(0.22,1,0.36,1), opacity 0.3s var(--ease);
+  }
+  body.past-hero .lf-mobile-bar { transform: translateY(0) scale(1); opacity: 1; }
+  .lf-mobile-bar-btn { pointer-events: auto; display:inline-flex; align-items:center; justify-content:center; gap:6px; border-radius: 999px; font-weight: 600; font-size: 13px; text-decoration: none; box-shadow: 0 10px 26px -10px rgba(10,22,40,0.45), 0 3px 8px rgba(10,22,40,0.18); transition: transform 0.2s var(--ease); }
+  .lf-mobile-bar-btn:active { transform: scale(0.96); }
+  .lf-mobile-bar-cta { background: var(--accent); color: #fff !important; padding: 11px 16px; }
+  .lf-mobile-bar-call { background: #fff; color: var(--navy) !important; border: 1px solid var(--ink-line); width: 42px; height: 42px; padding: 0; }
+  .lf-mobile-bar-call svg { width: 18px; height: 18px; }
+  .lf-mobile-bar-call-label { display: none; }
 }
 
 /* Responsive */
