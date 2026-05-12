@@ -400,43 +400,42 @@ const HTML = (i: Record<string, string>) => `
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Waarom AB Bouw Group</span>
-      <h2 class="lf-h2">De bouwpartner waar u<br>écht op kan rekenen.</h2>
+      <h2 class="lf-h2">De bouwpartner waar u<br><span class="ab-mark">écht op kan rekenen</span>.</h2>
     </div>
-    <div class="lf-why-collage lf-why-stack" data-why-seq data-why-stack>
+    <div class="lf-why-collage lf-why-stack lf-why-no-photo" data-why-seq data-why-stack>
       <div class="lf-why-stack-left">
-        <div class="lf-why-slot" data-why-slot>
+        <div class="lf-why-slot" data-why-slot data-reveal>
           <div class="lf-why-tile" data-why-step="0" data-why-card style="--why-i:0;--why-total:4">
             <div class="lf-why-meta"><span class="lf-why-num">01</span><span class="lf-why-label">Ontzorging</span></div>
             <h5>Wij regelen ook de papierwinkel</h5>
-            <p>Stedenbouwkundige vergunning, EPB-verslag, premieaanvraag Mijn VerbouwPremie en oplevering bij de architect. U tekent, wij regelen.</p>
+            <p>Stedenbouwkundige vergunning, EPB-verslag, premieaanvraag Mijn VerbouwPremie en oplevering bij de architect. <span class="ab-hl" data-hl-delay="0">U tekent, wij regelen</span>.</p>
           </div>
         </div>
-        <div class="lf-why-slot" data-why-slot>
+        <div class="lf-why-slot" data-why-slot data-reveal data-reveal-delay="1">
           <div class="lf-why-tile" data-why-step="1" data-why-card style="--why-i:1;--why-total:4">
             <div class="lf-why-meta"><span class="lf-why-num">02</span><span class="lf-why-label">Planning</span></div>
             <h5>Wekelijks werfrapport in uw mailbox</h5>
-            <p>Elke vrijdag een korte update met foto's, voortgang en planning voor de week erop. Vertraging? U weet het meteen, niet pas op de opleveringsdag.</p>
+            <p>Elke vrijdag een korte update met foto's, voortgang en planning voor de week erop. <span class="ab-hl" data-hl-delay="0">Vertraging? U weet het meteen</span>, niet pas op de opleveringsdag.</p>
           </div>
         </div>
-        <div class="lf-why-slot" data-why-slot>
+        <div class="lf-why-slot" data-why-slot data-reveal data-reveal-delay="2">
           <div class="lf-why-tile" data-why-step="2" data-why-card style="--why-i:2;--why-total:4">
             <div class="lf-why-meta"><span class="lf-why-num">03</span><span class="lf-why-label">Garantie</span></div>
             <h5>10-jarige aansprakelijkheid, wettelijk verzekerd</h5>
-            <p>VCA*-gecertificeerd, aangesloten bij Bouwunie. Polis stabiliteit en waterdichtheid via Federale Verzekering.</p>
+            <p><span class="ab-hl" data-hl-delay="0">VCA*-gecertificeerd</span>, aangesloten bij Bouwunie. Polis stabiliteit en waterdichtheid via Federale Verzekering.</p>
           </div>
         </div>
-        <div class="lf-why-slot" data-why-slot>
+        <div class="lf-why-slot" data-why-slot data-reveal data-reveal-delay="3">
           <div class="lf-why-tile" data-why-step="3" data-why-card style="--why-i:3;--why-total:4">
             <div class="lf-why-meta"><span class="lf-why-num">04</span><span class="lf-why-label">Vaste ploeg</span></div>
             <h5>Eigen ploegen op uw werf</h5>
-            <p>23 mensen in vaste dienst, metselaars, dakdekkers, tegelzetters, schrijnwerkers. Eén verantwoordelijkheid, één kwaliteitsstandaard.</p>
+            <p><span class="ab-hl" data-hl-delay="0">23 mensen in vaste dienst</span>, metselaars, dakdekkers, tegelzetters, schrijnwerkers. Eén verantwoordelijkheid, één kwaliteitsstandaard.</p>
           </div>
         </div>
       </div>
-      <div class="lf-why-photo" data-reveal><img src="${i.why}" alt="" loading="lazy"/></div>
     </div>
 
-    <div class="lf-trust-strip" data-trust-strip style="margin-top: 28px;">
+    <div class="lf-trust-strip" data-trust-strip data-reveal style="margin-top: 22px;">
       <div class="lf-trust-item" data-trust-i="0"><strong>VCA*-gecertificeerd</strong><span>Veiligheid op de werf</span></div>
       <div class="lf-trust-divider"></div>
       <div class="lf-trust-item" data-trust-i="1"><strong>Lid Bouwunie</strong><span>Vlaamse Confederatie Bouw</span></div>
@@ -935,6 +934,9 @@ const EXTRA_STYLE = `
 
 /* ── Why-us as scroll-stack: all tiles sticky in the SAME left column → real pile-up */
 .lf-why-collage.lf-why-stack { display:grid; grid-template-columns: 1fr 1.05fr; gap: 34px; align-items: stretch; max-width: 1180px; margin: 0 auto; }
+.lf-why-collage.lf-why-stack.lf-why-no-photo { grid-template-columns: 1fr; max-width: 820px; gap: 0; }
+.lf-why-no-photo .lf-why-stack-left { gap: 16px; }
+.lf-why-no-photo .lf-why-tile { padding: 24px 28px; }
 .lf-why-stack .lf-why-stack-left { display:flex; flex-direction: column; gap: 12px; }
 .lf-why-stack .lf-why-slot { display: block; }
 .lf-why-stack .lf-why-tile { position: static; width: 100%; padding: 22px 24px; margin: 0; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 18px 40px -28px rgba(15,17,21,.18); }
@@ -1438,6 +1440,15 @@ html, body { overflow-x: hidden; max-width: 100%; }
   .lf-faq-list .faq-q { padding: 16px 18px; font-size: 14px; gap: 12px; }
   .lf-faq-list .faq-a p { padding: 0 18px 18px; font-size: 13.5px; }
 }
+
+/* AB highlight & marker — gele scroll-in markeringen */
+.ab-mark { position: relative; display: inline-block; color: var(--navy); white-space: nowrap; }
+.ab-mark::after { content:''; position:absolute; left:-2%; right:-2%; bottom:4%; height:38%; background: var(--accent); opacity:.28; border-radius:3px; transform-origin:left center; transform: scaleX(0); transition: transform .9s cubic-bezier(.22,1,.36,1) .3s; z-index:-1; }
+[data-reveal].revealed .ab-mark::after { transform: scaleX(1); }
+.ab-hl { position: relative; display: inline; background-image: linear-gradient(120deg, rgba(217,140,3,0.22) 0%, rgba(217,140,3,0.22) 100%); background-repeat: no-repeat; background-size: 0% 60%; background-position: 0 88%; padding: 0 2px; color: var(--navy); font-weight:500; transition: background-size .9s cubic-bezier(.22,1,.36,1); transition-delay: calc(.45s + var(--hl-i, 0) * .32s); }
+[data-reveal].revealed .ab-hl { background-size: 100% 60%; }
+.ab-hl[data-hl-delay="0"] { --hl-i: 0; } .ab-hl[data-hl-delay="1"] { --hl-i: 1; } .ab-hl[data-hl-delay="2"] { --hl-i: 2; }
+@media (prefers-reduced-motion: reduce) { .ab-mark::after { transform: scaleX(1); } .ab-hl { background-size: 100% 60%; } }
 `;
 
 export default function Home() {
