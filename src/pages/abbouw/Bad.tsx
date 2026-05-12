@@ -91,7 +91,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '05 · Badkamers & wellness',
   title: 'Sleutel-op-de-deur badkamers,<br/>klaar in <span style="color:var(--accent)">vier weken</span>.',
-  lede: 'Premium tegels, sanitair en maatkasten, geplaatst door één vaste ploeg. Van strip tot eerste douche: één coördinatie, één eindfactuur.',
+  lede: 'Premium tegels, sanitair en maatkasten, geplaatst door <span class="ab-hl" data-hl-delay="0">één vaste ploeg</span>. Van strip tot eerste douche: <span class="ab-hl" data-hl-delay="1">één coördinatie, één eindfactuur</span>.',
   primary: { label: 'Vraag plaatsbezoek aan', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
@@ -102,8 +102,8 @@ ${buildHero({
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">AB Bad &amp; Wellness</span>
-        <h2 class="lf-h2">Eén ploeg,<br/>één eindresultaat.</h2>
-        <p class="lf-lede">In een badkamer komen alle vakgebieden samen: loodgieterij, elektriciteit, tegelwerk, schrijnwerk en sanitair. Wij houden alles in eigen hand. Daardoor staat uw badkamer er na vier weken, niet na vier maanden.</p>
+        <h2 class="lf-h2">Eén ploeg,<br/><span class="ab-mark">één eindresultaat</span>.</h2>
+        <p class="lf-lede">In een badkamer komen alle vakgebieden samen: loodgieterij, elektriciteit, tegelwerk, schrijnwerk en sanitair. <span class="ab-hl" data-hl-delay="0">Wij houden alles in eigen hand</span>. Daardoor staat uw badkamer er <span class="ab-hl" data-hl-delay="1">na vier weken</span>, niet na vier maanden.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen tegelzetter, loodgieter en elektricien</li>
           <li>Vaste prijs op basis van 3D-ontwerp</li>
@@ -130,7 +130,8 @@ ${buildHero({
 <!-- TYPES -->
 <section class="lf-section" style="padding-top: 24px;">
   <div class="wrap">
-    <div class="dak-grid">
+    <div class="ab-scroll-hint" data-reveal><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg> Swipe zijwaarts</div>
+    <div class="dak-grid" data-scroll="x">
       ${types.map(t => `
         <article class="dak-card" id="${t.id}" data-reveal>
           <div class="dak-card-img"><img src="${t.img}" alt="${t.title.replace('&amp;', '&')}" loading="lazy"/><span class="dak-card-tag">${t.tag}</span></div>

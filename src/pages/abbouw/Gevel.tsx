@@ -95,7 +95,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '06 · Gevels & bekleding',
   title: 'Een nieuwe gevel<br/>verandert <span style="color:var(--accent)">alles</span>.',
-  lede: 'Witte of grijze crepi, sierpleister of steenstrips. Vaak gecombineerd met buitenisolatie, zodat uw gevel niet alleen mooier maar ook energetisch klopt.',
+  lede: 'Witte of grijze crepi, sierpleister of steenstrips. Vaak gecombineerd met <span class="ab-hl" data-hl-delay="0">esthetiek én energieprestatie</span>, zodat uw gevel niet alleen mooier maar ook <span class="ab-hl" data-hl-delay="1">energetisch klopt</span>.',
   primary: { label: 'Vraag plaatsbezoek aan', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
@@ -106,8 +106,8 @@ ${buildHero({
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">AB Gevelbekleding</span>
-        <h2 class="lf-h2">Esthetiek én<br/>energieprestatie.</h2>
-        <p class="lf-lede">Een gevelrenovatie is hét moment om in één werf ook gevelisolatie aan te pakken. We rekenen vooraf de E-peil-winst en de premies door, zodat u zeker weet dat de investering rendeert.</p>
+        <h2 class="lf-h2"><span class="ab-mark">Esthetiek</span> én<br/>energieprestatie.</h2>
+        <p class="lf-lede">Een gevelrenovatie is hét moment om in één werf ook gevelisolatie aan te pakken. We rekenen vooraf de <span class="ab-hl" data-hl-delay="0">E-peil-winst en de premies</span> door, zodat u zeker weet dat de <span class="ab-hl" data-hl-delay="1">investering rendeert</span>.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen ploeg gevelwerkers, geen onderaanneming</li>
           <li>Stelling en buurtbescherming inbegrepen</li>
@@ -134,7 +134,8 @@ ${buildHero({
 <!-- TYPES -->
 <section class="lf-section" style="padding-top: 24px;">
   <div class="wrap">
-    <div class="dak-grid">
+    <div class="ab-scroll-hint" data-reveal><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg> Swipe zijwaarts</div>
+    <div class="dak-grid" data-scroll="x">
       ${types.map(t => `
         <article class="dak-card" id="${t.id}" data-reveal>
           <div class="dak-card-img"><img src="${t.img}" alt="${t.title}" loading="lazy"/><span class="dak-card-tag">${t.tag}</span></div>
@@ -163,8 +164,8 @@ ${buildHero({
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">Buitenisolatie + crepi</span>
-        <h2 class="lf-h2">Twee vliegen,<br/>één stelling.</h2>
-        <p class="lf-lede">Een gevel openleggen is duur. Maak van die ene werf meteen een energetische upgrade: EPS- of minerale isolatieplaten op de bestaande gevel, daarna pas een nieuwe crepi-laag.</p>
+        <h2 class="lf-h2"><span class="ab-mark">Twee vliegen</span>,<br/>één stelling.</h2>
+        <p class="lf-lede">Een gevel openleggen is duur. Maak van die ene werf meteen een <span class="ab-hl" data-hl-delay="0">energetische upgrade</span>: EPS- of minerale isolatieplaten op de bestaande gevel, daarna pas een <span class="ab-hl" data-hl-delay="1">nieuwe crepi-laag</span>.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Tot 25–40% lagere stookkost</li>
           <li>Geen koudebruggen meer aan ramen</li>

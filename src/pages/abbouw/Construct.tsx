@@ -93,7 +93,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '01 · Algemene aanneming',
   title: 'Coördineren, bouwen,<br/><span style="color:var(--accent)">realiseren</span>.',
-  lede: 'AB Construct neemt de volledige coördinatie van uw bouw of renovatie op zich. Eén projectleider, één planning, één eindfactuur.',
+  lede: 'AB Construct neemt de <span class="ab-hl" data-hl-delay="0">volledige coördinatie</span> van uw bouw of renovatie op zich. <span class="ab-hl" data-hl-delay="1">Eén projectleider, één planning, één eindfactuur</span>.',
   primary: { label: 'Vraag plaatsbezoek aan', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
@@ -104,8 +104,8 @@ ${buildHero({
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">AB Construct</span>
-        <h2 class="lf-h2">Eén contract,<br/>één resultaat.</h2>
-        <p class="lf-lede">U tekent met één partij. Wij coördineren ruwbouw, technieken en afwerking met eigen ploegen.</p>
+        <h2 class="lf-h2">Eén contract,<br/><span class="ab-mark">één resultaat</span>.</h2>
+        <p class="lf-lede">U tekent met <span class="ab-hl" data-hl-delay="0">één partij</span>. Wij coördineren ruwbouw, technieken en afwerking met <span class="ab-hl" data-hl-delay="1">eigen ploegen</span>.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Bindende offerte met meetstaat</li>
           <li>10 jaar wettelijke aansprakelijkheid</li>
@@ -132,7 +132,8 @@ ${buildHero({
 <!-- TYPES -->
 <section class="lf-section" style="padding-top: 24px;">
   <div class="wrap">
-    <div class="dak-grid">
+    <div class="ab-scroll-hint" data-reveal><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg> Swipe zijwaarts</div>
+    <div class="dak-grid" data-scroll="x">
       ${types.map(t => `
         <article class="dak-card" id="${t.id}" data-reveal>
           <div class="dak-card-img"><img src="${t.img}" alt="${t.title}" loading="lazy"/><span class="dak-card-tag">${t.tag}</span></div>

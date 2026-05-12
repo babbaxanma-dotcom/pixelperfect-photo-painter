@@ -175,7 +175,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '03 · Interieurwerken',
   title: 'Strak afgewerkt<br/>tot in de <span style="color:var(--accent)">plint</span>.',
-  lede: 'Gyproc, pleisterwerk, vloeren, maatkasten en schrijnwerk. Onze interieurploeg zet de finale toets op uw woning, daar waar het verschil zichtbaar wordt.',
+  lede: 'Gyproc, pleisterwerk, vloeren, maatkasten en schrijnwerk. Onze interieurploeg zet de <span class="ab-hl" data-hl-delay="0">finale toets</span> op uw woning, daar waar het <span class="ab-hl" data-hl-delay="1">verschil zichtbaar wordt</span>.',
   primary: { label: 'Vraag interieuradvies', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
@@ -186,8 +186,8 @@ ${buildHero({
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">AB Interieurwerken</span>
-        <h2 class="lf-h2">Een ruwbouw kan<br/>iedereen leveren.</h2>
-        <p class="lf-lede">Een woning die klopt tot in elke hoek vraagt vakmensen die wéken aan dezelfde werf staan en oog hebben voor het detail dat niemand opmerkt, behalve uzelf, elke dag.</p>
+        <h2 class="lf-h2">Een ruwbouw kan<br/><span class="ab-mark">iedereen leveren</span>.</h2>
+        <p class="lf-lede">Een woning die <span class="ab-hl" data-hl-delay="0">klopt tot in elke hoek</span> vraagt vakmensen die wéken aan dezelfde werf staan en oog hebben voor <span class="ab-hl" data-hl-delay="1">het detail dat niemand opmerkt</span>, behalve uzelf, elke dag.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen schrijnwerker met eigen atelier in Mol</li>
           <li>Eén vaste interieurploeg, geen wisselende onderaannemers</li>
@@ -218,7 +218,8 @@ ${buildHero({
 <!-- INTERIEUR TYPES -->
 <section class="lf-section" style="padding-top: 24px;">
   <div class="wrap">
-    <div class="dak-grid">
+    <div class="ab-scroll-hint" data-reveal><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg> Swipe zijwaarts</div>
+    <div class="dak-grid" data-scroll="x">
       ${types.map(t => `
         <article class="dak-card" id="${t.id}" data-reveal>
           <div class="dak-card-img"><img src="${t.img}" alt="${t.title.replace('&amp;', '&')}" loading="lazy"/><span class="dak-card-tag">${t.tag}</span></div>

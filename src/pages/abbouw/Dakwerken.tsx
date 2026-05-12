@@ -154,7 +154,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '04 · Daken & isolatie',
   title: 'Hellende en platte daken,<br/>door <span style="color:var(--accent)">eigen dakdekkers</span>.',
-  lede: 'Volledige dakvervanging, dakisolatie, zinkwerk en dakgoten. Onze vaste dakploeg staat 12 maanden per jaar op de werf, zonder wachtlijsten van weken.',
+  lede: 'Volledige dakvervanging, dakisolatie, zinkwerk en dakgoten. Onze <span class="ab-hl" data-hl-delay="0">vaste dakploeg</span> staat <span class="ab-hl" data-hl-delay="1">12 maanden per jaar</span> op de werf, zonder wachtlijsten van weken.',
   primary: { label: 'Vraag dakinspectie aan', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
@@ -165,8 +165,8 @@ ${buildHero({
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">AB Dakwerken</span>
-        <h2 class="lf-h2">Een dak is geen<br/>quick fix.</h2>
-        <p class="lf-lede">We bekijken uw dak als systeem, niet als losse pannen. Eerlijk advies over wat écht nodig is.</p>
+        <h2 class="lf-h2">Een dak is geen<br/><span class="ab-mark">quick fix</span>.</h2>
+        <p class="lf-lede">We bekijken uw dak als <span class="ab-hl" data-hl-delay="0">systeem</span>, niet als losse pannen. <span class="ab-hl" data-hl-delay="1">Eerlijk advies</span> over wat écht nodig is.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen ploeg van 6 vaste dakdekkers</li>
           <li>Gratis dakinspectie met fotorapport</li>
@@ -193,7 +193,8 @@ ${buildHero({
 <!-- DAK TYPES -->
 <section class="lf-section" style="padding-top: 24px;">
   <div class="wrap">
-    <div class="dak-grid">
+    <div class="ab-scroll-hint" data-reveal><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg> Swipe zijwaarts</div>
+    <div class="dak-grid" data-scroll="x">
       ${types.map(t => `
         <article class="dak-card" id="${t.id}" data-reveal>
           <div class="dak-card-img"><img src="${t.img}" alt="${t.title}" loading="lazy"/><span class="dak-card-tag">${t.tag}</span></div>

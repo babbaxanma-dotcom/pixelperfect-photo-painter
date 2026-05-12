@@ -1128,5 +1128,75 @@ html { scroll-behavior: smooth; }
 .lf-blog-author svg { color: var(--accent); }
 @media (max-width: 1100px) { .lf-blog-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 720px) { .lf-blog-grid { grid-template-columns: 1fr; gap: 22px; } }
+
+/* =====================================================================
+   AB HIGHLIGHT — gele marker-arcering die in-scrollt op key woorden.
+   Werkt automatisch zodra de ouder [data-reveal] de .revealed klasse krijgt.
+   ===================================================================== */
+.ab-mark { position: relative; display: inline-block; color: var(--navy); white-space: nowrap; }
+.ab-mark::after {
+  content: ''; position: absolute; left: -2%; right: -2%; bottom: 4%; height: 38%;
+  background: var(--accent); opacity: 0.28; border-radius: 3px;
+  transform-origin: left center; transform: scaleX(0);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s; z-index: -1;
+}
+[data-reveal].revealed .ab-mark::after { transform: scaleX(1); }
+
+.ab-hl {
+  position: relative; display: inline;
+  background-image: linear-gradient(120deg, rgba(217,140,3,0.22) 0%, rgba(217,140,3,0.22) 100%);
+  background-repeat: no-repeat; background-size: 0% 60%; background-position: 0 88%;
+  padding: 0 2px; color: var(--navy); font-weight: 500;
+  transition: background-size 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(0.45s + var(--hl-i, 0) * 0.32s);
+}
+[data-reveal].revealed .ab-hl { background-size: 100% 60%; }
+.ab-hl[data-hl-delay="0"] { --hl-i: 0; }
+.ab-hl[data-hl-delay="1"] { --hl-i: 1; }
+.ab-hl[data-hl-delay="2"] { --hl-i: 2; }
+.ab-hl[data-hl-delay="3"] { --hl-i: 3; }
+.ab-hl[data-hl-delay="4"] { --hl-i: 4; }
+@media (prefers-reduced-motion: reduce) {
+  .ab-mark::after { transform: scaleX(1); transition: none; }
+  .ab-hl { background-size: 100% 60%; transition: none; }
+}
+
+/* =====================================================================
+   .dak-grid[data-scroll="x"] — horizontale carrousel voor de "types"
+   sectie op elke dienstenpagina. Op telefoon swipe je zijwaarts in plaats
+   van eindeloos te scrollen.
+   ===================================================================== */
+.dak-grid[data-scroll="x"] {
+  display: flex; gap: 22px;
+  overflow-x: auto; overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-left: max(20px, calc((100vw - 1180px) / 2));
+  padding: 8px 20px 28px;
+  margin: 0 calc(-1 * max(20px, (100vw - 1180px) / 2));
+  scrollbar-width: thin;
+}
+.dak-grid[data-scroll="x"]::-webkit-scrollbar { height: 8px; }
+.dak-grid[data-scroll="x"]::-webkit-scrollbar-thumb { background: rgba(10,22,40,0.18); border-radius: 999px; }
+.dak-grid[data-scroll="x"] .dak-card,
+.dak-grid[data-scroll="x"] .dak-card:nth-child(even) {
+  flex: 0 0 min(560px, 86vw);
+  grid-template-columns: 1fr;
+  scroll-snap-align: start;
+}
+.dak-grid[data-scroll="x"] .dak-card:nth-child(even) .dak-card-img { order: 0; }
+.dak-grid[data-scroll="x"] .dak-card-img { aspect-ratio: 16/10; min-height: 0; }
+.dak-grid[data-scroll="x"] .dak-card-body { padding: 24px 26px; }
+@media (max-width: 720px) {
+  .dak-grid[data-scroll="x"] { gap: 14px; padding: 6px 16px 22px; margin: 0 -16px; scroll-padding-left: 16px; }
+  .dak-grid[data-scroll="x"] .dak-card { flex-basis: 84vw; }
+  .dak-grid[data-scroll="x"] .dak-card-body { padding: 20px 22px; }
+}
+.ab-scroll-hint {
+  display:flex; align-items:center; gap:10px;
+  font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-mute); font-weight: 600; margin: -4px 0 14px;
+}
+.ab-scroll-hint svg { color: var(--accent); }
 `;
 

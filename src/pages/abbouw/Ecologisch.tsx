@@ -128,7 +128,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '02 · Duurzaam bouwen',
   title: 'Slim isoleren,<br/><span style="color:var(--accent)">duurzaam wonen</span>.',
-  lede: 'AB Ecologisch bundelt isolatie, warmtepomp, ventilatie en natuurlijke afwerking in één logisch totaalplan.',
+  lede: 'AB Ecologisch bundelt <span class="ab-hl" data-hl-delay="0">isolatie, warmtepomp en ventilatie</span> in één <span class="ab-hl" data-hl-delay="1">logisch totaalplan</span>.',
   primary: { label: 'Vraag plaatsbezoek aan', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
@@ -138,8 +138,8 @@ ${buildHero({
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">AB Ecologisch</span>
-        <h2 class="lf-h2">Bouwen voor<br/>de volgende generatie.</h2>
-        <p class="lf-lede">Een ecologisch huis is geen gimmick. Het is een slimmer totaalpakket: betere schil, lagere energiefactuur en een gezonder binnenklimaat.</p>
+        <h2 class="lf-h2">Bouwen voor<br/>de <span class="ab-mark">volgende generatie</span>.</h2>
+        <p class="lf-lede">Een ecologisch huis is geen gimmick. Het is een <span class="ab-hl" data-hl-delay="0">slimmer totaalpakket</span>: betere schil, <span class="ab-hl" data-hl-delay="1">lagere energiefactuur</span> en een <span class="ab-hl" data-hl-delay="2">gezonder binnenklimaat</span>.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eén plan voor isolatie, technieken en afwerking</li>
           <li>E-peil en premie-impact vooraf besproken</li>
@@ -164,7 +164,8 @@ ${buildHero({
 
 <section class="lf-section" style="padding-top: 24px;">
   <div class="wrap">
-    <div class="dak-grid">
+    <div class="ab-scroll-hint" data-reveal><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg> Swipe zijwaarts</div>
+    <div class="dak-grid" data-scroll="x">
       ${types.map(t => `
         <article class="dak-card" id="${t.id}" data-reveal>
           <div class="dak-card-img"><img src="${t.img}" alt="${t.title}" loading="lazy"/><span class="dak-card-tag">${t.tag}</span></div>
