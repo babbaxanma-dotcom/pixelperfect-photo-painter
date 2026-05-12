@@ -175,7 +175,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '03 · Interieurwerken',
   title: 'Strak afgewerkt<br/>tot in de <span style="color:var(--accent)">plint</span>.',
-  lede: 'Gyproc, pleisterwerk, vloeren, maatkasten en schrijnwerk. Onze interieurploeg zet de finale toets op uw woning, daar waar het verschil zichtbaar wordt.',
+  lede: 'Gyproc, pleisterwerk, vloeren, maatkasten en schrijnwerk. Onze interieurploeg zet de <span class="ab-hl" data-hl-delay="0">finale toets</span> op uw woning, daar waar het <span class="ab-hl" data-hl-delay="1">verschil zichtbaar wordt</span>.',
   primary: { label: 'Vraag interieuradvies', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
