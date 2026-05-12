@@ -138,8 +138,8 @@ ${buildHero({
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">AB Ecologisch</span>
-        <h2 class="lf-h2">Bouwen voor<br/>de volgende generatie.</h2>
-        <p class="lf-lede">Een ecologisch huis is geen gimmick. Het is een slimmer totaalpakket: betere schil, lagere energiefactuur en een gezonder binnenklimaat.</p>
+        <h2 class="lf-h2">Bouwen voor<br/>de <span class="ab-mark">volgende generatie</span>.</h2>
+        <p class="lf-lede">Een ecologisch huis is geen gimmick. Het is een <span class="ab-hl" data-hl-delay="0">slimmer totaalpakket</span>: betere schil, <span class="ab-hl" data-hl-delay="1">lagere energiefactuur</span> en een <span class="ab-hl" data-hl-delay="2">gezonder binnenklimaat</span>.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eén plan voor isolatie, technieken en afwerking</li>
           <li>E-peil en premie-impact vooraf besproken</li>
