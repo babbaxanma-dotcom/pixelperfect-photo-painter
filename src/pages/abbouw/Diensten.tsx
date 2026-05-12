@@ -243,21 +243,21 @@ ${buildHero({
       <span class="lf-eyebrow">Ondersteuning van A tot Z</span>
       <h2 class="lf-h2">Wij nemen u álles uit handen,<br/>ook wat niet zichtbaar is.</h2>
     </div>
-    <div class="lf-support-grid">
+    <div class="lf-support-grid" style="grid-template-columns: 1fr; max-width: 720px; margin: 0 auto; gap: 16px;">
       <div class="lf-support-card" data-reveal>
         <div class="lf-support-meta"><span>01</span> Vergunningen</div>
         <h5>Stedenbouwkundige vergunning</h5>
-        <p>Wij stellen het dossier op, dienen in via Omgevingsloket en volgen op tot goedkeuring. Doorlooptijd: 75 dagen voor een gewone aanvraag, 105 dagen bij openbaar onderzoek.</p>
+        <p>Wij stellen het dossier op en volgen het op tot goedkeuring.</p>
       </div>
       <div class="lf-support-card" data-reveal data-reveal-delay="1">
         <div class="lf-support-meta"><span>02</span> Premies</div>
         <h5>Mijn VerbouwPremie &amp; Fluvius</h5>
-        <p>We berekenen vooraf op welke premies u recht heeft (dak, muur, glas, warmtepomp, ventilatie) en dienen de aanvraag in. Gemiddeld €4.200 terug per renovatieproject.</p>
+        <p>Gemiddeld €4.200 terug per renovatie. Wij dienen alles in.</p>
       </div>
       <div class="lf-support-card" data-reveal data-reveal-delay="2">
         <div class="lf-support-meta"><span>03</span> Nazorg</div>
         <h5>Service na oplevering</h5>
-        <p>Eén jaar na oplevering komen we gratis langs voor een nacontrole, krimpscheuren, deuren bijregelen, voegen controleren. Klacht? Reactie binnen 48 uur, ook na de garantieperiode.</p>
+        <p>Gratis nacontrole na 1 jaar. Reactie binnen 48 uur.</p>
       </div>
     </div>
   </div>
