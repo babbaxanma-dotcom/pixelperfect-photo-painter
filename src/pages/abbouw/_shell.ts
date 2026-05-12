@@ -698,22 +698,33 @@ ul.ab-checks li::before { content: '✓'; color: var(--accent); font-weight: 800
 }
 .lf-nav.scrolled .lf-nav-inner { background: #ffffff !important; }
 
-/* Reveal animations (kept — needed for count-up + section reveals) */
+/* Reveal animations: duidelijker scrollgevoel, content komt pas binnen bij scroll */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s var(--ease-out-quart), transform 0.7s var(--ease-out-quart);
+  transform: translate3d(0, 54px, 0) scale(0.982);
+  filter: blur(8px);
+  transition:
+    opacity 0.95s var(--ease-out-quart),
+    transform 0.95s var(--ease-out-quart),
+    filter 0.95s var(--ease-out-quart),
+    box-shadow 0.35s var(--ease-out-quart),
+    border-color 0.35s var(--ease-out-quart);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
 }
-[data-reveal].revealed { opacity: 1; transform: translateY(0); }
-[data-reveal-delay="1"] { transition-delay: 0.08s; }
-[data-reveal-delay="2"] { transition-delay: 0.16s; }
-[data-reveal-delay="3"] { transition-delay: 0.24s; }
-[data-reveal-delay="4"] { transition-delay: 0.32s; }
+[data-reveal="left"] { transform: translate3d(-42px, 34px, 0) scale(0.982); }
+[data-reveal="right"] { transform: translate3d(42px, 34px, 0) scale(0.982); }
+[data-reveal="zoom"] { transform: translate3d(0, 34px, 0) scale(0.94); }
+[data-reveal].revealed { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
+[data-reveal-delay="1"] { --reveal-delay: 95ms; }
+[data-reveal-delay="2"] { --reveal-delay: 190ms; }
+[data-reveal-delay="3"] { --reveal-delay: 285ms; }
+[data-reveal-delay="4"] { --reveal-delay: 380ms; }
 body.is-page-leaving .page-transition { opacity: 0; transform: translate3d(0, -8px, 0) scale(0.992); transition: opacity .18s var(--ease-out-quart), transform .18s var(--ease-out-quart); }
 .is-route-pressing { transform: translate3d(0, -3px, 0) scale(0.985) !important; opacity: .92; }
 .lf-cta-pill.is-route-pressing { transform: scale(0.96) !important; }
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal], body.is-page-leaving .page-transition, .is-route-pressing { opacity: 1; transform: none !important; transition: none; }
+  [data-reveal], body.is-page-leaving .page-transition, .is-route-pressing { opacity: 1; transform: none !important; filter: none !important; transition: none; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
