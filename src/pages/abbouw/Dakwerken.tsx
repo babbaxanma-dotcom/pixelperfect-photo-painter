@@ -154,7 +154,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '04 · Daken & isolatie',
   title: 'Hellende en platte daken,<br/>door <span style="color:var(--accent)">eigen dakdekkers</span>.',
-  lede: 'Volledige dakvervanging, dakisolatie, zinkwerk en dakgoten. Onze vaste dakploeg staat 12 maanden per jaar op de werf, zonder wachtlijsten van weken.',
+  lede: 'Volledige dakvervanging, dakisolatie, zinkwerk en dakgoten. Onze <span class="ab-hl" data-hl-delay="0">vaste dakploeg</span> staat <span class="ab-hl" data-hl-delay="1">12 maanden per jaar</span> op de werf, zonder wachtlijsten van weken.',
   primary: { label: 'Vraag dakinspectie aan', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
