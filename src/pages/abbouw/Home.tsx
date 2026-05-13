@@ -2189,15 +2189,37 @@ html, body { overflow-x: hidden; max-width: 100%; }
 }
 
 /* Projecten die de tand des tijds doorstaan — verbeter de grid */
-.lf-projects-grid {
+.lf-proj-collage {
   gap: 24px !important;
 }
-.lf-projects-grid .lf-project-card {
-  transition: transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s cubic-bezier(.22,1,.36,1);
+.lf-proj-cell {
+  transition: transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s cubic-bezier(.22,1,.36,1) !important;
 }
-.lf-projects-grid .lf-project-card:hover {
+.lf-proj-cell:hover {
   transform: translateY(-4px);
   box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 30px 60px -22px rgba(15,17,21,0.30);
+}
+/* Op mobile: zijwaarts swipe ipv onder elkaar stacken (zelfde patroon als services) */
+@media (max-width: 900px) {
+  .lf-proj-collage {
+    display: flex !important;
+    grid-template-columns: none !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 0 20px 14px !important;
+    margin: 0 -20px !important;
+    gap: 14px !important;
+    scrollbar-width: none;
+  }
+  .lf-proj-collage::-webkit-scrollbar { display: none; }
+  .lf-proj-cell {
+    flex: 0 0 82% !important;
+    max-width: 82% !important;
+    scroll-snap-align: start !important;
+  }
 }
 `;
 

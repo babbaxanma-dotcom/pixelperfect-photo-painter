@@ -45,8 +45,18 @@ export const buildNav = (active: NavKey) => `
     <a href="/bad">AB Bad &amp; Wellness</a><a href="/gevel">AB Gevelbekleding</a>
   </div>
   <div class="mm-footer">
-    <a href="tel:+32470634413">📞 +32 470 63 44 13</a>
-    <a href="mailto:info@abgroep.be">✉ info@abgroep.be</a>
+    <a href="tel:+32470634413" class="mm-foot-link">
+      <span class="mm-foot-ico" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </span>
+      <span>+32 470 63 44 13</span>
+    </a>
+    <a href="mailto:info@abgroep.be" class="mm-foot-link">
+      <span class="mm-foot-ico" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+      </span>
+      <span>info@abgroep.be</span>
+    </a>
   </div>
 </div>
 `;
@@ -1294,17 +1304,78 @@ html { scroll-behavior: smooth; }
    ergonomics on subpages, forms, buttons, and grids.
    ===================================================================== */
 
-/* --- Bel-FAB op mobile: clean ronde bel-knop rechtsonder, geen rommelige bar eronder --- */
-@media (max-width: 900px) {
+/* --- Mobile menu open: nav-pil verbergen zodat hij niet overlapt met de X --- */
+body.mm-open .lf-nav { opacity: 0 !important; pointer-events: none !important; transition: opacity .2s ease !important; }
+/* Mobile menu footer: phone + email links met SVG icons (geen emoji's meer) */
+.mm-foot-link {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--ink) !important;
+}
+.mm-foot-link .mm-foot-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(217,140,3,0.10);
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.mm-foot-link:hover { color: var(--accent) !important; }
+.mm-foot-link:hover .mm-foot-ico { background: var(--accent); color: #fff; }
+
+/* --- Bel-FAB op mobile: IDENTIEK aan Home page (navy met witte rand) --- */
+@media (max-width: 760px) {
   .lf-fab-call {
+    position: fixed !important;
+    right: 14px !important;
+    bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+    z-index: 60 !important;
     display: inline-flex !important;
-    right: 16px !important;
-    bottom: 20px !important;
-    width: 58px !important;
-    height: 58px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    width: 52px !important;
+    height: 52px !important;
+    padding: 0 !important;
+    background: #0a1628 !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    border-radius: 50% !important;
+    border: 2px solid #fff !important;
+    box-shadow: 0 12px 28px -10px rgba(10,22,40,0.55), 0 4px 12px rgba(10,22,40,0.25) !important;
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1) !important;
   }
-  /* Bottom-bar (witte "Bel ons" + "Vraag offerte" buttons) verbergen op mobile —
-     de ronde FAB volstaat en is veel cleaner. */
+  .lf-fab-call .lf-fab-pulse {
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    opacity: 0;
+    animation: lf-fab-pulse-anim 2s ease-out infinite;
+    pointer-events: none;
+  }
+  @keyframes lf-fab-pulse-anim {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+  .lf-fab-call span:not(.lf-fab-pulse) { display: none !important; }
+  .lf-fab-call svg { width: 22px !important; height: 22px !important; }
+  body.nav-revealed .lf-fab-call,
+  body.is-subpage .lf-fab-call {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  .lf-fab-call:active { transform: scale(0.95) !important; }
+  /* Bottom-bar verbergen op mobile — de ronde FAB volstaat */
   .lf-mobile-bar {
     display: none !important;
   }

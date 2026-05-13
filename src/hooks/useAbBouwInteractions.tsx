@@ -119,16 +119,20 @@ export function useAbBouwInteractions() {
     }
 
     // ── Mobile menu ─────────────────────────────────────
+    // `mm-open` op body verbergt de nav-pil zodat hij niet overlapt met de X.
     (window as any).toggleMobileMenu = () => {
       const m = document.getElementById('mobileMenu');
-      m?.classList.toggle('open');
-      document.body.classList.toggle('menu-open');
+      const opening = !m?.classList.contains('open');
+      m?.classList.toggle('open', opening);
+      document.body.classList.toggle('menu-open', opening);
+      document.body.classList.toggle('mm-open', opening);
     };
     const mm = document.getElementById('mobileMenu');
     const mmLinks = mm?.querySelectorAll('a') ?? [];
     const mmClose = () => {
       mm?.classList.remove('open');
       document.body.classList.remove('menu-open');
+      document.body.classList.remove('mm-open');
     };
     mmLinks.forEach((a) => a.addEventListener('click', mmClose));
     const mmCloseBtn = document.getElementById('mobileMenuClose');
@@ -257,9 +261,24 @@ export function useAbBouwInteractions() {
         dd.classList.toggle('open', open);
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       };
-      const optHandlers: Array<[HTMLElement, () => void]> = [];
+      const optHandlers: Array<[HTMLElement, (ev: Event) => void]> = [];
       opts.forEach((opt) => {
+        // Track scroll-movement zodat een swipe NIET als click registreert.
+        // Probleem voorheen: touchend fired ook bij scroll → user kon de
+        // lijst niet doorbladeren zonder per ongeluk te kiezen.
+        let touchStartY = 0;
+        let touchMoved = false;
+        const onTouchStart = (e: TouchEvent) => {
+          touchStartY = e.touches[0]?.clientY ?? 0;
+          touchMoved = false;
+        };
+        const onTouchMove = (e: TouchEvent) => {
+          const dy = Math.abs((e.touches[0]?.clientY ?? 0) - touchStartY);
+          if (dy > 8) touchMoved = true;
+        };
         const choose = (ev: Event) => {
+          // Als de gebruiker scrollde → dit is geen tap → negeer.
+          if (touchMoved) return;
           ev.preventDefault();
           ev.stopPropagation();
           opts.forEach((x) => x.classList.remove('selected'));
@@ -269,11 +288,15 @@ export function useAbBouwInteractions() {
           input.value = opt.textContent || '';
           close();
         };
+        opt.addEventListener('touchstart', onTouchStart, { passive: true });
+        opt.addEventListener('touchmove', onTouchMove, { passive: true });
         opt.addEventListener('click', choose);
-        // Touch fallback voor iOS Safari — anders pakt sommige scroll-momentum
-        // de tap niet correct op binnen een overflow-y:auto container.
-        opt.addEventListener('touchend', choose, { passive: false });
-        optHandlers.push([opt, choose as () => void]);
+        optHandlers.push([opt, choose]);
+        // Bewaar ook touch listeners voor cleanup
+        ddCleanups.push(() => {
+          opt.removeEventListener('touchstart', onTouchStart);
+          opt.removeEventListener('touchmove', onTouchMove);
+        });
       });
       const onDoc = (e: MouseEvent) => { if (!dd.contains(e.target as Node)) close(); };
       toggle.addEventListener('click', onToggle);
