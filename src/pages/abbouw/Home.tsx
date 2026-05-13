@@ -345,10 +345,6 @@ const HTML = (i: Record<string, string>) => `
             </a>
           </div>
         `).join('')}
-      </div>
-      <div class="lf-svc-swipe-hint" aria-hidden="true">
-        <span>Swipe voor meer</span>
-        <svg width="20" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </div>`;
     })()}
   </div>
