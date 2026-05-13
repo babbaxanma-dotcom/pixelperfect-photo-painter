@@ -6621,3 +6621,34 @@ body.menu-open .lf-nav {
     margin-top: 0 !important;
   }
 }
+
+/* ============================================================
+   HOME hero MOBILE — echte fullscreen edge-to-edge.
+   Forceer html/body geen margin, hero start vlak tegen viewport top,
+   en geen ruimte onder de hero voor de volgende sectie.
+   ============================================================ */
+@media (max-width: 900px) {
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  /* Home page: hero is het eerste visuele element, vult heel het scherm */
+  body:not(.is-subpage) {
+    background: #0a0f1c; /* zelfde donker als hero gradient zodat geen wit gat */
+  }
+  body:not(.is-subpage) .lf-hero {
+    margin: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    height: 100vh;
+    height: 100dvh;
+  }
+  /* Cookie banner: verplaats naar boven of maak minder dominant */
+  .abc-banner {
+    bottom: 12px !important;
+    left: 8px !important;
+    right: 8px !important;
+  }
+}
