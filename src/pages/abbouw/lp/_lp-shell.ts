@@ -115,9 +115,9 @@ body.lp-page img { max-width: 100%; display: block; }
   max-width: 920px;
 }
 .lp-hero h1 em {
-  font-family: var(--lp-serif);
-  font-style: italic;
-  font-weight: 400;
+  font-family: var(--lp-display);
+  font-style: normal;
+  font-weight: 700;
   color: var(--lp-accent);
   margin-right: 4px;
 }
@@ -244,7 +244,9 @@ body.lp-page img { max-width: 100%; display: block; }
 }
 .lp-section.dark h2 { color: #fff; }
 .lp-section h2 em {
-  font-family: var(--lp-serif); font-style: italic; font-weight: 400;
+  font-family: var(--lp-display);
+  font-style: normal;
+  font-weight: 700;
   color: var(--lp-accent);
 }
 .lp-section-lede {
@@ -316,12 +318,13 @@ body.lp-page img { max-width: 100%; display: block; }
 }
 .lp-urgency-card:hover { border-color: var(--lp-accent); transform: translateY(-2px); }
 .lp-urgency-num {
-  font-family: var(--lp-serif);
-  font-style: italic;
-  font-size: 36px;
+  font-family: var(--lp-display);
+  font-weight: 700;
+  font-size: 32px;
   color: var(--lp-accent);
   line-height: 1;
   margin-bottom: 18px;
+  letter-spacing: -0.02em;
 }
 .lp-urgency-card h4 {
   font-family: var(--lp-display);
@@ -354,13 +357,14 @@ body.lp-page img { max-width: 100%; display: block; }
 }
 .lp-process-point:last-child { border-bottom: none; }
 .lp-process-point-num {
-  font-family: var(--lp-serif);
-  font-style: italic;
-  font-size: 36px;
+  font-family: var(--lp-display);
+  font-weight: 700;
+  font-size: 30px;
   color: var(--lp-accent);
   line-height: 1;
   flex-shrink: 0;
   width: 56px;
+  letter-spacing: -0.02em;
 }
 .lp-process-point-body strong {
   display: block;
@@ -434,14 +438,16 @@ body.lp-page img { max-width: 100%; display: block; }
 }
 .lp-expert-img img { width: 100%; height: 100%; object-fit: cover; }
 .lp-expert-quote {
-  font-family: var(--lp-serif);
+  font-family: var(--lp-display);
   font-size: clamp(22px, 2.4vw, 30px);
-  font-style: italic;
+  font-style: normal;
+  font-weight: 500;
   line-height: 1.35;
   color: var(--lp-navy);
   margin: 0 0 28px;
   position: relative;
   padding-left: 24px;
+  letter-spacing: -0.015em;
 }
 .lp-expert-quote::before {
   content: ''; position: absolute; left: 0; top: 4px; bottom: 4px;
@@ -499,9 +505,9 @@ body.lp-page img { max-width: 100%; display: block; }
 .lp-faq summary::-webkit-details-marker { display: none; }
 .lp-faq summary::after {
   content: '+';
-  font-family: var(--lp-serif);
+  font-family: var(--lp-display);
   font-weight: 400;
-  font-size: 28px;
+  font-size: 26px;
   color: var(--lp-accent);
   line-height: 0.7;
   flex-shrink: 0;
