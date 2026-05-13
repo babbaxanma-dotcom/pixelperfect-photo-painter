@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { LP_STYLE, lpStickyBar, lpTrustFoot } from './_lp-shell';
+import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
+import { buildHero, SHELL_STYLE } from '../_shell';
 import { submitLead } from '@/lib/leads';
 
-// Assets — hergebruik bestaande dakwerken foto's
 import heroBg from '@/assets/dak/intro-overview.jpg';
 import imgBenefits from '@/assets/dak/dakisolatie.jpg';
 import imgProcess from '@/assets/home/vakman-dak.jpg';
@@ -12,81 +12,226 @@ import g3 from '@/assets/dak/plat-epdm.jpg';
 import g4 from '@/assets/dak/zinkwerk.jpg';
 import expertImg from '@/assets/home/team1.jpg';
 
+// LP-specifieke aanvullingen op SHELL_STYLE. Hergebruikt ALLE bestaande
+// `.lf-*` klassen van de subpages voor 100% stijl-consistentie.
+const LP_EXTRA = `
+/* LP: bottom CTA bar mobile, sticky bel + offerte */
+.lp-bottom-bar { display: none; }
+@media (max-width: 900px) {
+  .lp-bottom-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    z-index: 60;
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 8px;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--ink-line);
+  }
+  .lp-bottom-bar a {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 13px 16px; border-radius: 999px;
+    font-weight: 700; font-size: 14px; text-decoration: none;
+  }
+  .lp-bottom-bar .lp-bb-call { background: var(--navy); color: #fff; }
+  .lp-bottom-bar .lp-bb-cta { background: var(--accent); color: #fff; }
+  body.lp-page { padding-bottom: 76px; }
+}
+
+/* LP trust foot — geen nav links, alleen bedrijfsgegevens */
+.lp-trust-foot {
+  padding: 56px 0 80px;
+  background: #fff;
+  border-top: 1px solid var(--ink-line-soft);
+  font-size: 13px; color: var(--ink-mute);
+}
+.lp-trust-foot .wrap {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+}
+.lp-trust-foot strong { display: block; color: var(--navy); font-size: 14px; margin-bottom: 4px; }
+.lp-trust-foot a { color: var(--ink-soft); text-decoration: none; }
+.lp-trust-foot a:hover { color: var(--accent); }
+@media (max-width: 720px) { .lp-trust-foot .wrap { grid-template-columns: 1fr 1fr; gap: 22px; } }
+
+/* LP stats (hergebruikt buildhero stat-look in nieuwe sectie) */
+.lp-stats-strip {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px;
+  padding: 56px 0;
+  border-bottom: 1px solid var(--ink-line-soft);
+}
+.lp-stat { position: relative; padding-left: 18px; }
+.lp-stat::before {
+  content: ''; position: absolute; left: 0; top: 4px; bottom: 8px;
+  width: 3px; background: var(--accent);
+}
+.lp-stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.025em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.lp-stat-label {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+@media (max-width: 900px) {
+  .lp-stats-strip { grid-template-columns: repeat(2, 1fr); gap: 28px 20px; padding: 40px 0; }
+}
+
+/* LP urgency cards — hergebruik card-stijl van de site */
+.lp-urgency-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.lp-urgency-card {
+  background: #fff;
+  border: 1px solid var(--ink-line-soft);
+  padding: 28px 26px;
+  border-radius: 14px;
+  transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.lp-urgency-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 22px 50px -20px rgba(15,17,21,0.22); }
+.lp-urgency-num { font-family: var(--font-display); font-weight: 700; font-size: 26px; color: var(--accent); line-height: 1; margin-bottom: 14px; letter-spacing: -0.02em; }
+.lp-urgency-card h4 { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--navy); margin: 0 0 8px; letter-spacing: -0.01em; }
+.lp-urgency-card p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; margin: 0; }
+@media (max-width: 900px) { .lp-urgency-grid { grid-template-columns: 1fr; gap: 14px; } }
+
+/* LP gallery — hergebruik project-collage look */
+.lp-gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.lp-gallery-cell { position: relative; aspect-ratio: 4/5; overflow: hidden; border-radius: 12px; text-decoration: none; color: inherit; }
+.lp-gallery-cell img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.22,1,.36,1); }
+.lp-gallery-cell:hover img { transform: scale(1.06); }
+.lp-gallery-cell::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(10,22,40,0.85) 100%); pointer-events: none; }
+.lp-gallery-cap { position: absolute; left: 18px; bottom: 16px; right: 18px; z-index: 2; color: #fff; }
+.lp-gallery-cap small { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.78); margin-bottom: 4px; }
+.lp-gallery-cap strong { display: block; font-family: var(--font-display); font-size: 16px; font-weight: 600; }
+@media (max-width: 900px) { .lp-gallery { grid-template-columns: 1fr 1fr; } }
+
+/* LP expert quote — hergebruik split layout */
+.lp-expert-quote { font-family: var(--font-display); font-size: clamp(20px, 2.2vw, 26px); font-weight: 500; line-height: 1.35; color: var(--navy); letter-spacing: -0.015em; margin: 0 0 24px; padding-left: 22px; border-left: 3px solid var(--accent); }
+.lp-expert-name { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--navy); }
+.lp-expert-role { font-size: 13.5px; color: var(--ink-mute); margin-bottom: 22px; }
+
+/* LP form bg — hergebruikt navy CTA-stijl */
+.lp-form-section { background: var(--navy); color: #fff; padding: 90px 0; }
+.lp-form-section h2 { color: #fff; }
+.lp-form-section .lf-eyebrow { color: var(--accent); }
+.lp-form-section p { color: rgba(255,255,255,0.82); }
+.lp-form-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: start; }
+.lp-form-card { background: #fff; color: var(--ink); padding: 36px 32px; border-radius: 14px; }
+.lp-form-card h3 { font-family: var(--font-display); font-size: 22px; color: var(--navy); margin: 0 0 8px; font-weight: 700; }
+.lp-form-card .lf-form-sub { font-size: 14px; color: var(--ink-soft); margin: 0 0 22px; }
+.lp-form-card form { display: flex; flex-direction: column; gap: 10px; }
+.lp-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.lp-form-card input, .lp-form-card textarea {
+  font: inherit; font-size: 15px;
+  width: 100%; padding: 13px 14px;
+  border: 1px solid var(--ink-line); border-radius: 10px;
+  background: #fff; color: var(--ink);
+}
+.lp-form-card input:focus, .lp-form-card textarea:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(217,140,3,0.14);
+}
+.lp-form-card textarea { min-height: 96px; resize: vertical; }
+.lp-form-card button[type="submit"] {
+  margin-top: 4px; padding: 15px 22px;
+  background: var(--accent); color: #fff; border: none;
+  border-radius: 999px; font: inherit; font-weight: 700; font-size: 14.5px;
+  cursor: pointer; transition: background .2s ease, transform .15s ease;
+}
+.lp-form-card button[type="submit"]:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.lp-form-card button[type="submit"]:disabled { opacity: 0.6; cursor: wait; }
+.lp-form-foot { margin-top: 10px; font-size: 12px; color: var(--ink-mute); }
+.lp-form-foot a { color: var(--accent); }
+.lp-form-thanks { display: none; padding: 24px 0; text-align: center; }
+.lp-form-card.is-success .lp-form-thanks { display: block; }
+.lp-form-card.is-success form { display: none; }
+.lp-form-side ul { list-style: none; padding: 0; margin: 22px 0 0; }
+.lp-form-side ul li {
+  padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.10);
+  font-size: 14px; color: rgba(255,255,255,0.85);
+  display: flex; align-items: center; gap: 12px;
+}
+.lp-form-side ul li::before {
+  content: ''; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--accent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-size: 12px; background-repeat: no-repeat; background-position: center;
+  flex-shrink: 0;
+}
+.lp-form-error { display: none; margin-top: 10px; padding: 10px 12px; background: #fdecea; border: 1px solid rgba(179,38,30,0.22); border-radius: 8px; color: #b3261e; font-size: 13.5px; }
+.lp-form-card.is-error .lp-form-error { display: block; }
+@media (max-width: 900px) {
+  .lp-form-grid { grid-template-columns: 1fr; gap: 32px; }
+  .lp-form-row { grid-template-columns: 1fr; }
+  .lp-form-card { padding: 26px 22px; }
+}
+`;
+
 const HTML = `
-<section class="lp-hero">
-  <div class="lp-hero-bg"><img src="${heroBg}" alt="Dakwerken Vlaanderen" /></div>
-  <div class="lp-hero-wrap">
-    <span class="lp-hero-tag">AB Dakwerken · Willebroek</span>
-    <h1><em>Nieuw dak.</em>Vaste prijs.<br/>Geplaatst door eigen dakdekkers.</h1>
-    <p class="lp-hero-lede">Volledige dakvervanging, dakisolatie en zinkwerk in Mechelen, Antwerpen, Lier en heel Vlaanderen. Gratis plaatsbezoek binnen 5 werkdagen, bindende offerte met fotorapport, 10 jaar garantie op waterdichtheid.</p>
-    <div class="lp-hero-actions">
-      <a href="#lp-form" class="lp-btn-primary" data-lp-smooth>
-        Gratis dakinspectie aanvragen
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-      <a href="tel:+32470634413" class="lp-btn-secondary">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        +32 470 63 44 13
-      </a>
-    </div>
-    <div class="lp-hero-trust">
-      <div><span class="lp-hero-stars">★★★★★</span><strong>4.9/5</strong> 124 reviews</div>
-      <div><strong>VCA*-gecertificeerd</strong></div>
-      <div><strong>10 jaar</strong> garantie</div>
-      <div><strong>Premiedossier</strong> inbegrepen</div>
+${buildHero({
+  bg: heroBg,
+  eyebrow: 'AB Dakwerken · Willebroek',
+  title: 'Nieuw dak.<br/>Vaste prijs. <span class="ab-mark">Eigen dakdekkers</span>.',
+  lede: 'Volledige dakvervanging, dakisolatie en zinkwerk in Mechelen, Antwerpen, Lier en heel Vlaanderen. Gratis plaatsbezoek binnen 5 werkdagen, bindende offerte met fotorapport, 10 jaar garantie op waterdichtheid.',
+  primary: { label: 'Gratis dakinspectie aanvragen', href: '#lp-form' },
+  secondary: { label: 'Bel +32 470 63 44 13 →', href: 'tel:+32470634413' },
+})}
+
+<section class="lf-section" style="padding: 0;">
+  <div class="wrap">
+    <div class="lp-stats-strip">
+      <div class="lp-stat" data-reveal><div class="lp-stat-num">48.325 m²</div><div class="lp-stat-label">Afgewerkte daken sinds 2010</div></div>
+      <div class="lp-stat" data-reveal data-reveal-delay="1"><div class="lp-stat-num">6 vaste</div><div class="lp-stat-label">Eigen dakdekkers in dienst</div></div>
+      <div class="lp-stat" data-reveal data-reveal-delay="2"><div class="lp-stat-num">30%</div><div class="lp-stat-label">Minder warmteverlies na isolatie</div></div>
+      <div class="lp-stat" data-reveal data-reveal-delay="3"><div class="lp-stat-num">€40/m²</div><div class="lp-stat-label">Premie dakisolatie 2026</div></div>
     </div>
   </div>
 </section>
 
-<section class="lp-stats">
-  <div class="lp-stats-grid">
-    <div class="lp-stat lp-reveal"><div class="lp-stat-num">48.325 m²</div><div class="lp-stat-label">Afgewerkte daken sinds 2010</div></div>
-    <div class="lp-stat lp-reveal"><div class="lp-stat-num">6 vaste</div><div class="lp-stat-label">Eigen dakdekkers in dienst</div></div>
-    <div class="lp-stat lp-reveal"><div class="lp-stat-num">30%</div><div class="lp-stat-label">Minder warmteverlies na isolatie</div></div>
-    <div class="lp-stat lp-reveal"><div class="lp-stat-num">€40/m²</div><div class="lp-stat-label">Mijn VerbouwPremie dakisolatie</div></div>
-  </div>
-</section>
-
-<section class="lp-section">
-  <div class="lp-section-wrap">
-    <div class="lp-benefits">
-      <div class="lp-reveal">
-        <span class="lp-eyebrow">Waarom een nieuw dak loont</span>
-        <h2>Meer comfort, <em>minder kosten,</em> hogere woningwaarde.</h2>
-        <p class="lp-section-lede">Een slecht dak verliest tot 30% van uw verwarming. Een goed dak bespaart u jaarlijks honderden euro's én verhoogt uw EPC-label met gemiddeld 80 punten in één renovatie.</p>
-        <ul class="lp-benefits-list">
-          <li><span><strong>Bescherming tegen lekkages</strong>Geen waterschade meer aan plafond, isolatie of structuur</span></li>
-          <li><span><strong>Tot 30% minder warmteverlies</strong>Direct lagere verwarmingsfactuur, binnen 1 winter merkbaar</span></li>
-          <li><span><strong>Hogere EPC-score</strong>Vereist voor verkoop, verhuur en de renovatieverplichting tegen 2028</span></li>
-          <li><span><strong>Waardevermeerdering</strong>€8.000 – €18.000 meerwaarde op uw woning bij verkoop</span></li>
+<section class="lf-section">
+  <div class="wrap">
+    <div class="lf-split">
+      <div data-reveal>
+        <span class="lf-eyebrow">Waarom een nieuw dak loont</span>
+        <h2 class="lf-h2">Meer comfort,<br/><span class="ab-mark">minder kosten</span>.</h2>
+        <p class="lf-lede">Een slecht dak verliest tot 30% van uw verwarming. Een goed dak bespaart u jaarlijks honderden euro's én verhoogt uw EPC-label met gemiddeld 80 punten in één renovatie.</p>
+        <ul class="ab-checks" style="margin-top: 22px;">
+          <li>Bescherming tegen lekkages — geen waterschade aan plafond of isolatie</li>
+          <li>Tot 30% minder warmteverlies — direct lagere verwarmingsfactuur</li>
+          <li>Hogere EPC-score — vereist voor renovatieverplichting 2028</li>
+          <li>€8.000-€18.000 meerwaarde bij verkoop van uw woning</li>
         </ul>
-        <a href="#lp-form" class="lp-btn-primary" data-lp-smooth>Vraag uw plaatsbezoek aan</a>
+        <a href="#lp-form" class="lf-cta-pill" style="margin-top: 28px;">
+          <span>Vraag uw plaatsbezoek aan</span>
+          <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
       </div>
-      <div class="lp-benefits-visual lp-reveal">
-        <img src="${imgBenefits}" alt="Dakisolatie wordt aangebracht door vakman" loading="lazy" />
-      </div>
+      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgBenefits}" alt="Dakisolatie wordt aangebracht" loading="lazy"/></div>
     </div>
   </div>
 </section>
 
-<section class="lp-section alt">
-  <div class="lp-section-wrap">
-    <div class="lp-reveal" style="margin-bottom: 48px;">
-      <span class="lp-eyebrow">Nu starten = meer voordeel</span>
-      <h2>Drie redenen om <em>niet te wachten</em>.</h2>
+<section class="lf-section lf-tone-soft">
+  <div class="wrap">
+    <div class="lf-section-head centered" data-reveal style="margin-bottom: 40px;">
+      <span class="lf-eyebrow">Nu starten = meer voordeel</span>
+      <h2 class="lf-h2">Drie redenen om<br/><span class="ab-mark">niet te wachten</span>.</h2>
     </div>
     <div class="lp-urgency-grid">
-      <div class="lp-urgency-card lp-reveal">
+      <div class="lp-urgency-card" data-reveal>
         <div class="lp-urgency-num">01</div>
         <h4>Premies dalen jaarlijks</h4>
-        <p>De Mijn VerbouwPremie staat in 2026 op €40/m² maar wordt elk jaar verlaagd. Op een gemiddelde rijwoning bespaart u nu €3.500-€5.400 die u in 2027 niet meer krijgt.</p>
+        <p>Mijn VerbouwPremie staat in 2026 op €40/m² maar wordt elk jaar verlaagd. Op een gemiddelde rijwoning bespaart u nu €3.500-€5.400 die u in 2027 niet meer krijgt.</p>
       </div>
-      <div class="lp-urgency-card lp-reveal">
+      <div class="lp-urgency-card" data-reveal data-reveal-delay="1">
         <div class="lp-urgency-num">02</div>
         <h4>Materiaalprijzen stijgen</h4>
-        <p>Pannen, leien en EPDM zijn sinds 2022 +18% duurder geworden en blijven stijgen. Wie nu boekt, krijgt nog 2026-tarieven vastgezet in offerte.</p>
+        <p>Pannen, leien en EPDM zijn sinds 2022 +18% duurder en blijven stijgen. Wie nu boekt, krijgt nog 2026-tarieven vastgezet in offerte.</p>
       </div>
-      <div class="lp-urgency-card lp-reveal">
+      <div class="lp-urgency-card" data-reveal data-reveal-delay="2">
         <div class="lp-urgency-num">03</div>
         <h4>Klaar voor de winter</h4>
         <p>Begin nu en uw dak ligt waterdicht vóór november. Wachten tot najaar betekent 2-3 maanden langer wachten en stormrisico ondertussen.</p>
@@ -95,157 +240,105 @@ const HTML = `
   </div>
 </section>
 
-<section class="lp-section">
-  <div class="lp-section-wrap">
-    <div class="lp-process">
-      <div class="lp-process-img lp-reveal">
-        <img src="${imgProcess}" alt="Dakdekker plaatst Koramic pannen op hellend dak" loading="lazy" />
-      </div>
-      <div class="lp-reveal">
-        <span class="lp-eyebrow">Snelle start, vlotte afwerking</span>
-        <h2>Van eerste gesprek tot <em>waterdicht dak</em> in 6 weken.</h2>
-        <p class="lp-section-lede">Eigen dakploeg betekent: geen onderaannemers, geen tussenstops, één verantwoordelijke. Wij beginnen en wij maken het af.</p>
-        <div class="lp-process-points">
-          <div class="lp-process-point">
-            <div class="lp-process-point-num">01</div>
-            <div class="lp-process-point-body"><strong>Gratis plaatsbezoek (week 1)</strong><p>Binnen 5 werkdagen langs voor opname, dakinspectie met dronefoto's en eerste richtprijs.</p></div>
-          </div>
-          <div class="lp-process-point">
-            <div class="lp-process-point-num">02</div>
-            <div class="lp-process-point-body"><strong>Bindende offerte (week 2)</strong><p>Gedetailleerde meetstaat met materialen, uurloon, timing en premiedossier — alles op één pagina.</p></div>
-          </div>
-          <div class="lp-process-point">
-            <div class="lp-process-point-num">03</div>
-            <div class="lp-process-point-body"><strong>Uitvoering (week 3-5)</strong><p>8 tot 14 werkdagen op de werf, weekrapport per email, één projectleider als aanspreekpunt.</p></div>
-          </div>
-          <div class="lp-process-point">
-            <div class="lp-process-point-num">04</div>
-            <div class="lp-process-point-body"><strong>Oplevering + 10 jaar garantie</strong><p>Gezamenlijke controle, opleveringsverslag, premie ingediend, garantie schriftelijk vastgelegd.</p></div>
-          </div>
-        </div>
+<section class="lf-section">
+  <div class="wrap">
+    <div class="lf-split">
+      <div class="lf-split-img" data-reveal><img src="${imgProcess}" alt="Dakdekker plaatst Koramic pannen" loading="lazy"/></div>
+      <div data-reveal data-reveal-delay="1">
+        <span class="lf-eyebrow">Onze werkwijze</span>
+        <h2 class="lf-h2">Van eerste gesprek tot<br/><span class="ab-mark">waterdicht dak</span> in 6 weken.</h2>
+        <p class="lf-lede">Eigen dakploeg betekent: geen onderaannemers, geen tussenstops, één verantwoordelijke. Wij beginnen en wij maken het af.</p>
+        <ul class="ab-checks" style="margin-top: 22px;">
+          <li><strong>Week 1</strong> — Gratis plaatsbezoek, dakinspectie met dronefoto's, eerste richtprijs</li>
+          <li><strong>Week 2</strong> — Bindende offerte, materialen vastgezet, premiedossier voorbereid</li>
+          <li><strong>Week 3-5</strong> — Uitvoering 8-14 werkdagen, weekrapport per email</li>
+          <li><strong>Oplevering</strong> — Premie ingediend, 10 jaar garantie schriftelijk vastgelegd</li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
-<section class="lp-section alt">
-  <div class="lp-section-wrap">
-    <div class="lp-reveal" style="margin-bottom: 40px;">
-      <span class="lp-eyebrow">Realisaties</span>
-      <h2>Daken die de <em>tand des tijds</em> doorstaan.</h2>
-      <p class="lp-section-lede">Een greep uit projecten in Mechelen, Antwerpen, Lier, Sint-Niklaas en Brussel. Allemaal door onze eigen ploeg geplaatst.</p>
+<section class="lf-section lf-tone-soft">
+  <div class="wrap">
+    <div class="lf-section-head" data-reveal style="margin-bottom: 36px;">
+      <span class="lf-eyebrow">Realisaties</span>
+      <h2 class="lf-h2">Daken die de<br/><span class="ab-mark">tand des tijds</span> doorstaan.</h2>
     </div>
     <div class="lp-gallery">
-      <a href="#lp-form" class="lp-gallery-cell lp-reveal" data-lp-smooth>
-        <img src="${g1}" alt="Hellend dak in keramische pannen Mechelen" loading="lazy" />
+      <a href="#lp-form" class="lp-gallery-cell" data-reveal>
+        <img src="${g1}" alt="Pannendak Mechelen" loading="lazy"/>
         <div class="lp-gallery-cap"><small>Hellend dak</small><strong>Pannendak — Mechelen</strong></div>
       </a>
-      <a href="#lp-form" class="lp-gallery-cell lp-reveal" data-lp-smooth>
-        <img src="${g2}" alt="Natuurleien dak villa Antwerpen" loading="lazy" />
+      <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="1">
+        <img src="${g2}" alt="Natuurleien Antwerpen" loading="lazy"/>
         <div class="lp-gallery-cap"><small>Hellend dak</small><strong>Natuurleien — Antwerpen</strong></div>
       </a>
-      <a href="#lp-form" class="lp-gallery-cell lp-reveal" data-lp-smooth>
-        <img src="${g3}" alt="Plat dak EPDM met PIR isolatie Lier" loading="lazy" />
+      <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="2">
+        <img src="${g3}" alt="Plat dak EPDM Lier" loading="lazy"/>
         <div class="lp-gallery-cap"><small>Plat dak</small><strong>EPDM rubber — Lier</strong></div>
       </a>
-      <a href="#lp-form" class="lp-gallery-cell lp-reveal" data-lp-smooth>
-        <img src="${g4}" alt="Zinken dakgoten en boordafwerking Sint-Niklaas" loading="lazy" />
+      <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="3">
+        <img src="${g4}" alt="Zinkwerk Sint-Niklaas" loading="lazy"/>
         <div class="lp-gallery-cap"><small>Afwerking</small><strong>Zinkwerk — Sint-Niklaas</strong></div>
       </a>
     </div>
   </div>
 </section>
 
-<section class="lp-section">
-  <div class="lp-section-wrap">
-    <div class="lp-expert">
-      <div class="lp-expert-img lp-reveal">
-        <img src="${expertImg}" alt="Bardh, dakwerken projectleider AB Bouw Groep" loading="lazy" />
-      </div>
-      <div class="lp-reveal">
-        <span class="lp-eyebrow">Direct advies</span>
+<section class="lf-section">
+  <div class="wrap">
+    <div class="lf-split">
+      <div class="lf-split-img" data-reveal><img src="${expertImg}" alt="Bardh, projectleider AB Dakwerken" loading="lazy"/></div>
+      <div data-reveal data-reveal-delay="1">
+        <span class="lf-eyebrow">Direct advies</span>
         <p class="lp-expert-quote">"Een dak is geen quick fix. Wij komen langs, meten alles op, en zeggen u eerlijk wat écht moet — en wat 5 jaar kan wachten."</p>
         <div class="lp-expert-name">Bardh</div>
         <div class="lp-expert-role">Projectleider Dakwerken · AB Bouw Groep</div>
-        <a href="tel:+32470634413" class="lp-btn-primary">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          Bel Bardh direct
+        <a href="tel:+32470634413" class="lf-cta-pill">
+          <span>Bel Bardh direct</span>
+          <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
         </a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="lp-section alt">
-  <div class="lp-section-wrap">
-    <div class="lp-reveal" style="text-align:center; margin: 0 auto 48px; max-width: 740px;">
-      <span class="lp-eyebrow">Wat klanten zeggen</span>
-      <h2 style="margin: 0 auto;">23 vakmensen, <em>500+ daken</em>, één manier van werken.</h2>
+<section class="lf-section lf-tone-soft">
+  <div class="wrap">
+    <div class="lf-section-head centered" data-reveal>
+      <span class="lf-eyebrow">Veelgestelde vragen</span>
+      <h2 class="lf-h2">Wat <span class="ab-mark">iedereen vraagt</span>.</h2>
     </div>
-    <div class="lp-reviews-grid">
-      <div class="lp-review-card lp-reveal">
-        <div class="lp-review-stars">★★★★★</div>
-        <p class="lp-review-text">"Volledig nieuw pannendak op onze rijwoning. Begonnen op afgesproken dag, klaar in 9 werkdagen, alles netjes opgeruimd. Het wekelijks fotorapport vond ik top — wist altijd waar ze stonden."</p>
-        <div class="lp-review-author">
-          <div class="lp-review-author-avatar">MV</div>
-          <div class="lp-review-author-info"><strong>Marc V.</strong><span>Mechelen</span></div>
-        </div>
-      </div>
-      <div class="lp-review-card lp-reveal">
-        <div class="lp-review-stars">★★★★★</div>
-        <p class="lp-review-text">"Plat dak in EPDM laten leggen op de aanbouw. Eerlijke offerte, geen verrassingen achteraf. Premiedossier hebben ze ook voor mij geregeld, kreeg €3.200 terug. Aanrader."</p>
-        <div class="lp-review-author">
-          <div class="lp-review-author-avatar">EK</div>
-          <div class="lp-review-author-info"><strong>Ellen K.</strong><span>Lier</span></div>
-        </div>
-      </div>
-      <div class="lp-review-card lp-reveal">
-        <div class="lp-review-stars">★★★★★</div>
-        <p class="lp-review-text">"Hadden lekkage tijdens herfststorm. Bardh kwam dezelfde week langs voor een tijdelijke fix, daarna volledig dak vernieuwd het voorjaar erop. Vakkundig en hij doet wat hij belooft."</p>
-        <div class="lp-review-author">
-          <div class="lp-review-author-avatar">DV</div>
-          <div class="lp-review-author-info"><strong>Dirk V.</strong><span>Antwerpen</span></div>
-        </div>
-      </div>
+    <div class="ab-faq">
+      <details data-reveal><summary>Wat kost een nieuw dak in 2026?</summary><div class="ab-faq-body"><p>Volledige vervanging hellend dak op rijwoning (120 m²): €18.000-€32.000 alles inbegrepen. Plat dak in EPDM iets goedkoper. De premie €40/m² haalt €3.500-€5.500 van die factuur. Bindende richtprijs na plaatsbezoek.</p></div></details>
+      <details data-reveal><summary>Hoe lang duurt de plaatsing?</summary><div class="ab-faq-body"><p>Hellend pannendak op rijwoning: 8-14 werkdagen. Plat dak EPDM: 4-8 werkdagen. Inclusief stelling en eindopkuis.</p></div></details>
+      <details data-reveal><summary>Doen jullie de premieaanvraag voor mij?</summary><div class="ab-faq-body"><p>Ja, standaard. We bereiden het Mijn VerbouwPremie-dossier voor, leveren foto's en facturen aan in juist format. U deelt enkel uw burgerprofiel-login.</p></div></details>
+      <details data-reveal><summary>Wat is uw garantie?</summary><div class="ab-faq-body"><p>10 jaar wettelijke aansprakelijkheid op waterdichtheid en stabiliteit, gedekt door polis bij Federale Verzekering. Plus fabrieksgarantie 30-50 jaar op Koramic/Eternit/Firestone materialen.</p></div></details>
+      <details data-reveal><summary>Werken jullie ook bij dringende lekkages?</summary><div class="ab-faq-body"><p>Ja. Bij stormschade bellen we dezelfde week. Tijdelijke water-stop, daarna structurele renovatie. Bel voor 16u → iemand dezelfde dag.</p></div></details>
+      <details data-reveal><summary>Welke regio's bedienen jullie?</summary><div class="ab-faq-body"><p>Antwerpen, Mechelen, Lier, Boom, Bornem, Puurs, Sint-Niklaas, Heist-op-den-Berg, Brussel, Vilvoorde, Asse, Aalst, Dendermonde, Leuven.</p></div></details>
     </div>
   </div>
 </section>
 
-<section class="lp-section">
-  <div class="lp-section-wrap">
-    <div class="lp-reveal" style="margin-bottom: 36px; text-align:center;">
-      <span class="lp-eyebrow">Veelgestelde vragen</span>
-      <h2 style="margin: 0 auto;">Antwoorden op wat <em>iedereen vraagt</em>.</h2>
-    </div>
-    <div class="lp-faq">
-      <details><summary>Wat kost een nieuw dak in 2026?</summary><p>Volledige vervanging van een hellend dak op een gemiddelde rijwoning (120 m²): tussen €18.000 en €32.000 alles inbegrepen (afbraak, isolatie, panlatten, pannen, dakgoten). Plat dak in EPDM is iets goedkoper per m². De premie van €40/m² dakisolatie haalt u gemiddeld €3.500-€5.500 van die factuur. We geven na het plaatsbezoek een bindende richtprijs, geen verrassingen achteraf.</p></details>
-      <details><summary>Hoe lang duurt de plaatsing?</summary><p>Een hellend pannendak op een rijwoning ligt waterdicht na 8 tot 14 werkdagen, exclusief weekenden en bij correct weer. Plat dak in EPDM is vaak in 4-8 werkdagen klaar. Inclusief opbouw stelling en eindopkuis.</p></details>
-      <details><summary>Doen jullie de premieaanvraag voor mij?</summary><p>Ja, standaard bij elke renovatie. We bereiden het Mijn VerbouwPremie-dossier voor, leveren de foto's en facturen aan in het juiste format, en bezorgen u het ontvangstbewijs van het Vlaams Energie Agentschap. U hoeft enkel uw burgerprofiel-login te delen.</p></details>
-      <details><summary>Wat is uw garantie?</summary><p>10 jaar wettelijke aansprakelijkheid op waterdichtheid en stabiliteit, gedekt door onze polis bij Federale Verzekering (BCCA Klasse 4). Daarbovenop krijgt u de fabrieksgarantie van Koramic, Eternit of Firestone op de gebruikte materialen — meestal 30-50 jaar.</p></details>
-      <details><summary>Werken jullie ook bij dringende lekkages?</summary><p>Ja. Bij stormschade of acute lekkage bellen we dezelfde week. We doen een tijdelijke water-stop (kapje, dekzeil, EPDM-patch) en plannen daarna pas de structurele renovatie in. Belt u liefst voor 16u, dan komt iemand nog dezelfde dag.</p></details>
-      <details><summary>Welke regio's bedienen jullie?</summary><p>Vanuit Willebroek werken wij in een straal van 80 km: Antwerpen, Mechelen, Lier, Boom, Bornem, Puurs, Sint-Niklaas, Heist-op-den-Berg, Brussel-stad, Vilvoorde, Asse, Aalst, Dendermonde, Leuven. Voor grote projecten ook daarbuiten — gewoon eens bellen.</p></details>
-    </div>
-  </div>
-</section>
-
-<section class="lp-section lp-form-section" id="lp-form">
-  <div class="lp-section-wrap">
+<section class="lp-form-section" id="lp-form">
+  <div class="wrap">
     <div class="lp-form-grid">
-      <div class="lp-form-side lp-reveal">
-        <span class="lp-eyebrow">Gratis dakinspectie</span>
-        <h2>Vraag uw <em>plaatsbezoek</em> aan.</h2>
+      <div class="lp-form-side" data-reveal>
+        <span class="lf-eyebrow">Gratis dakinspectie</span>
+        <h2 class="lf-h2" style="color:#fff;">Vraag uw<br/><span class="ab-mark">plaatsbezoek</span> aan.</h2>
         <p>Binnen 5 werkdagen komt onze dakploeg langs. Volledige opname met dronefoto's, eerste richtprijs ter plaatse, premiedossier doorgesproken — vrijblijvend en gratis.</p>
         <ul>
           <li>Plaatsbezoek binnen 5 werkdagen</li>
           <li>Bindende offerte op papier</li>
-          <li>Premiedossier inbegrepen (gemiddeld €3.500+ terug)</li>
+          <li>Premiedossier inbegrepen (gem. €3.500+ terug)</li>
           <li>10 jaar garantie op waterdichtheid</li>
           <li>Eigen dakploeg, geen onderaannemers</li>
         </ul>
       </div>
-      <div class="lp-form-card lp-reveal" data-lp-form-wrapper>
+      <div class="lp-form-card" data-reveal data-reveal-delay="1" data-lp-form-wrapper>
         <h3>Plan uw dakinspectie</h3>
-        <p class="lp-form-sub">Vul het formulier in, we bellen u binnen één werkdag terug om een afspraak in te plannen.</p>
+        <p class="lf-form-sub">We bellen u binnen één werkdag terug om een afspraak in te plannen.</p>
         <form data-lp-form novalidate>
           <div class="lp-form-row">
             <input type="text" name="firstName" placeholder="Voornaam *" required autocomplete="given-name" />
@@ -260,23 +353,37 @@ const HTML = `
           </div>
           <textarea name="aanvullende_info" placeholder="Vertel kort over uw dak (type, leeftijd, klacht)"></textarea>
           <button type="submit" data-lp-submit>Vraag dakinspectie aan</button>
-          <p class="lp-form-foot">Geen spam. Eén keer contact, dan plannen we het plaatsbezoek. Privacy verklaring op <a href="/privacy" target="_blank">/privacy</a>.</p>
+          <p class="lp-form-foot">Geen spam. Privacy verklaring op <a href="/privacy" target="_blank">/privacy</a>.</p>
           <div class="lp-form-error" data-lp-form-error></div>
         </form>
         <div class="lp-form-thanks">
-          <div class="lp-form-thanks-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
           <h3>Aanvraag ontvangen.</h3>
-          <p>We bellen u binnen één werkdag terug om uw plaatsbezoek in te plannen.</p>
+          <p style="color:var(--ink-soft);">We bellen u binnen één werkdag terug om uw plaatsbezoek in te plannen.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-${lpTrustFoot}
-${lpStickyBar('+32 470 63 44 13', 'Vraag offerte')}
+<section class="lp-trust-foot">
+  <div class="wrap">
+    <div><strong>AB Bouw Groep</strong>Industrieweg 14<br/>2830 Willebroek</div>
+    <div><strong>Telefoon</strong><a href="tel:+32470634413">+32 470 63 44 13</a></div>
+    <div><strong>Email</strong><a href="mailto:info@abgroep.be">info@abgroep.be</a></div>
+    <div><strong>Erkenningen</strong>VCA*-gecertificeerd<br/>Lid Bouwunie</div>
+  </div>
+</section>
+
+<div class="lp-bottom-bar">
+  <a href="tel:+32470634413" class="lp-bb-call" aria-label="Bel direct">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    Bel direct
+  </a>
+  <a href="#lp-form" class="lp-bb-cta">
+    Vraag offerte
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </a>
+</div>
 `;
 
 export default function LpDakwerken() {
@@ -287,37 +394,13 @@ export default function LpDakwerken() {
     m.setAttribute('content', 'Nieuw dak in Mechelen, Antwerpen, Lier en heel Vlaanderen. Eigen dakdekkers, 10 jaar garantie, premiedossier inbegrepen. Gratis plaatsbezoek binnen 5 werkdagen.');
 
     const prev = document.body.className;
-    document.body.className = 'lp-page';
+    document.body.className = 'lp-page is-subpage';
     const style = document.createElement('style');
-    style.textContent = LP_STYLE;
+    style.textContent = SHELL_STYLE + LP_EXTRA;
     document.head.appendChild(style);
     window.scrollTo(0, 0);
 
-    // Smooth scroll to anchor
-    const onAnchor = (e: MouseEvent) => {
-      const a = (e.target as HTMLElement)?.closest('a[data-lp-smooth]') as HTMLAnchorElement | null;
-      if (!a) return;
-      const href = a.getAttribute('href');
-      if (!href?.startsWith('#')) return;
-      const el = document.querySelector(href) as HTMLElement | null;
-      if (!el) return;
-      e.preventDefault();
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-    document.addEventListener('click', onAnchor);
-
-    // Reveal-on-scroll
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-in');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll<HTMLElement>('.lp-reveal').forEach((el) => io.observe(el));
-
-    // Form submit → GHL met bron_lead='ads:dakwerken'
+    // Form submit
     const wrap = document.querySelector<HTMLElement>('[data-lp-form-wrapper]');
     const form = document.querySelector<HTMLFormElement>('[data-lp-form]');
     const submitBtn = document.querySelector<HTMLButtonElement>('[data-lp-submit]');
@@ -361,11 +444,12 @@ export default function LpDakwerken() {
     return () => {
       document.body.className = prev;
       style.remove();
-      io.disconnect();
       form?.removeEventListener('submit', onSubmit);
-      document.removeEventListener('click', onAnchor);
     };
   }, []);
+
+  // Hergebruik de algemene site-interacties (reveal-on-scroll, FAQ open/close, smooth-scroll)
+  useAbBouwInteractions();
 
   return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
 }
