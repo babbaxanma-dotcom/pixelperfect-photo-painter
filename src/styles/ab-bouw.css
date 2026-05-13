@@ -6556,27 +6556,26 @@ body.menu-open .lf-nav {
     pointer-events: none;
     transition: opacity 0.4s ease !important;
   }
-  /* Hamburger ALTIJD zichtbaar — donkere navy bg met witte icoon
-     zodat hij contrast heeft op zowel licht als donker hero-beeld */
+  /* Hamburger — clean donkere navy knop, geen glow/shadow */
   body.is-subpage:not(.past-hero) .lf-mobile-toggle {
     color: #fff !important;
-    background: rgba(10, 22, 40, 0.88) !important;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1.5px solid rgba(255, 255, 255, 0.30) !important;
-    border-radius: 12px;
+    background: #0a1628 !important;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none !important;
+    border-radius: 10px;
     padding: 0;
-    width: 46px;
-    height: 46px;
+    width: 44px;
+    height: 44px;
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 400;
     line-height: 1;
     margin-left: auto;
-    box-shadow: 0 8px 24px -6px rgba(10, 22, 40, 0.45);
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: none !important;
+    transition: background 0.3s ease;
   }
   /* Na scroll past hero: pil-bg + content reveal smooth */
   body.is-subpage.past-hero .lf-nav-inner {
@@ -6669,17 +6668,15 @@ body[data-route="/diensten"] .lf-hero,
   /* Niet nodig — gebruik unieke class voor zekerheid (zie hieronder) */
 }
 
-/* Markeer via een page-class: pas door JS te zetten of via body.is-subpage.
-   Eenvoudigste werkende oplossing: target via .lf-hero binnen Diensten via
-   een ab-toc-wrap als eerste broer-sectie (uniek voor Diensten). */
-body.is-subpage .lf-hero:has(+ .lf-section + .lf-section.ab-svc-section),
-body.is-subpage .lf-hero:has(+ .lf-section .ab-toc-wrap) {
+/* ALLE subpage heroes krijgen dezelfde compacte proporties als de
+   Diensten hero (vond user het meest professioneel ogen). */
+body.is-subpage .lf-hero {
   min-height: 72vh !important;
+  min-height: 72svh !important;
 }
 @media (max-width: 900px) {
-  body.is-subpage .lf-hero:has(+ .lf-section + .lf-section.ab-svc-section),
-  body.is-subpage .lf-hero:has(+ .lf-section .ab-toc-wrap) {
-    min-height: 56vh !important;
-    min-height: 56dvh !important;
+  body.is-subpage .lf-hero {
+    min-height: 58vh !important;
+    min-height: 58dvh !important;
   }
 }
