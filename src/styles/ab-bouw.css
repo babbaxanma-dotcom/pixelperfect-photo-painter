@@ -6632,9 +6632,9 @@ body.menu-open .lf-nav {
     margin: 0 !important;
     padding: 0 !important;
   }
-  /* Home page: hero is het eerste visuele element, vult heel het scherm */
+  /* Home page hero: ECHTE edge-to-edge — vult viewport in width EN height */
   body:not(.is-subpage) {
-    background: #0a0f1c; /* zelfde donker als hero gradient zodat geen wit gat */
+    background: #fff;
   }
   body:not(.is-subpage) .lf-hero {
     margin: 0 !important;
@@ -6642,8 +6642,13 @@ body.menu-open .lf-nav {
     padding-bottom: 0 !important;
     min-height: 100vh !important;
     min-height: 100dvh !important;
-    height: 100vh;
     height: 100dvh;
+    /* Breekt uit container-padding zodat hero ECHT 100% breed is */
+    width: 100vw !important;
+    max-width: none !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    position: relative;
   }
   /* Cookie banner: verplaats naar boven of maak minder dominant */
   .abc-banner {
