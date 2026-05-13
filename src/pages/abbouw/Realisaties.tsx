@@ -52,6 +52,14 @@ import rzRenoHoek from '@/assets/realisaties/reno-hoekwoning.jpg';
 import rzBadGast from '@/assets/realisaties/bad-gastentoilet.jpg';
 import rzIntDressing from '@/assets/realisaties/int-dressing-eik.jpg';
 import rzStadswoningBrussel from '@/assets/realisaties/stadswoning-brussel.jpg';
+// realisaties — nieuwe portfolio uitbreidingen mei 2026
+import rzVillaMechelen from '@/assets/realisaties/01_extra_villa-modern-mechelen.jpg';
+import rzVillaVrij from '@/assets/realisaties/extra-22_villa-vrijstaand.jpg';
+import rzBeigeBalcony from '@/assets/realisaties/extra-23_beige-balcony.jpg';
+import rzGeelRij from '@/assets/realisaties/extra-24_geel-rijwoning.jpg';
+import rzRodeVilla from '@/assets/realisaties/extra-25_rode-baksteen-villa.jpg';
+import rzGeleVillaZij from '@/assets/realisaties/extra-26_gele-villa-zijaanzicht.jpg';
+import rzZonFermette from '@/assets/realisaties/extra-27_zonnepaneel-fermette.jpg';
 
 type Card = { img: string; tag: string; t: string; d: string };
 type Filter = { key: string; label: string; imgs: [string, string, string, string]; cards: Card[] };
@@ -93,6 +101,8 @@ const renovatie: Card[] = [
   { img: projUtil, tag: 'Bedrijfspand', t: 'Loods-renovatie Boom', d: 'Strip & rebuild loods naar kantoorruimte met dakisolatie en ramen.' },
   { img: cAfwerking, tag: 'Renovatie', t: 'Rijwoning Brussel', d: 'Open keuken-leefruimte gecreëerd door dragende muur weg te halen.' },
   { img: rzGevelStrips, tag: 'Gevel + interieur', t: 'Hoekhuis Lier', d: 'Nieuwe steenstrips-gevel gecombineerd met volledige binnenrenovatie.' },
+  { img: rzGeelRij, tag: 'Gevelrestauratie', t: 'Rijwoning Antwerpen', d: 'Originele gele baksteen gereinigd en hervoegd, slim antraciet schrijnwerk vervangt oude PVC. 6 weken.' },
+  { img: rzRodeVilla, tag: 'Karakterrenovatie', t: 'Vrijstaand huis Lier', d: 'Behoud authentieke rode baksteengevel, nieuwe ramen met dunne profielen en moderne inkom. 8 weken.' },
 ];
 
 const nieuwbouw: Card[] = [
@@ -108,6 +118,10 @@ const nieuwbouw: Card[] = [
   { img: cVilla, tag: 'Klassiek', t: 'Klassieke villa Lier', d: 'Klassieke vrijstaande woning in gevelsteen met zadeldak en dakkapel.' },
   { img: rzGevelCrepi, tag: 'Halfopen', t: 'HOB Mechelen', d: 'Halfopen nieuwbouw in antraciet crepi met zwart aluminium schrijnwerk.' },
   { img: cHalfopen, tag: 'Halfopen', t: 'HOB Boom', d: 'Halfopen bebouwing met klassieke gevelsteen en hellend pannendak.' },
+  { img: rzVillaMechelen, tag: 'Hedendaagse villa', t: 'Villa Mechelen-Oost', d: 'Strakke witte crepi met zwart aluminium schrijnwerk, BEN-norm en warmtepomp. 13 maanden.' },
+  { img: rzVillaVrij, tag: 'Vrijstaand', t: 'Vrijstaand Bonheiden', d: 'Klassieke vrijstaande woning met crepi en handvorm gevelsteenplint. 12 maanden.' },
+  { img: rzBeigeBalcony, tag: 'Modern', t: 'Open bebouwing Lier', d: 'Modern volume in lichtbeige gevelsteen met antraciet balkonleuning en groot raamoppervlak. 11 maanden.' },
+  { img: rzGeleVillaZij, tag: 'BEN-villa', t: 'BEN-woning Mortsel', d: 'Bijna-energieneutrale woning in gele Vlaamse gevelsteen, met PV en geothermische warmtepomp.' },
 ];
 
 const interieur: Card[] = [
@@ -162,6 +176,7 @@ const ecologisch: Card[] = [
   { img: eWarmte, tag: 'Geothermie', t: 'Bodemwarmtepomp Lier', d: 'Verticale boringen met geothermische warmtepomp en vloerverwarming.' },
   { img: eIso, tag: 'Bio-isolatie', t: 'Hennepisolatie Mechelen', d: 'Hennep- en houtvezelplaten in dakvlak van karakterwoning.' },
   { img: rzRenoHoek, tag: 'Energierenovatie', t: 'EPC-sprong Antwerpen', d: 'Volledige energetische upgrade: isolatie, schrijnwerk, warmtepomp en PV.' },
+  { img: rzZonFermette, tag: 'Zonnepanelen', t: 'Fermette Boom', d: '22 zwarte PV-panelen op het zuid-zadeldak van een gerenoveerde fermette met witte crepi. Met hybride omvormer.' },
 ];
 
 const filters: Filter[] = [
@@ -311,10 +326,10 @@ const FILTER_DATA = filters.reduce<Record<string, { imgs: string[]; label: strin
 
 export default function Realisaties() {
   useEffect(() => {
-    document.title = "Realisaties | AB Bouw Group";
+    document.title = "Realisaties | AB Bouw Groep";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', "Een greep uit recente bouw- en renovatieprojecten van AB Bouw Group in Vlaanderen en Brussel.");
+    m.setAttribute('content', "Een greep uit recente bouw- en renovatieprojecten van AB Bouw Groep in Vlaanderen en Brussel.");
     const prev = document.body.className;
     document.body.className = "";
     const styleEl = document.createElement('style');

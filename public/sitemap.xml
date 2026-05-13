@@ -1,19 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://pixelperfect-photo-painter.lovable.app/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://pixelperfect-photo-painter.lovable.app/diensten</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://pixelperfect-photo-painter.lovable.app/realisaties</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://pixelperfect-photo-painter.lovable.app/werkwijze</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pixelperfect-photo-painter.lovable.app/over</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://pixelperfect-photo-painter.lovable.app/blog</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pixelperfect-photo-painter.lovable.app/contact</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://pixelperfect-photo-painter.lovable.app/construct</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pixelperfect-photo-painter.lovable.app/interieur</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pixelperfect-photo-painter.lovable.app/dakwerken</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pixelperfect-photo-painter.lovable.app/gevel</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pixelperfect-photo-painter.lovable.app/bad</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pixelperfect-photo-painter.lovable.app/ecologisch</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pixelperfect-photo-painter.lovable.app/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://pixelperfect-photo-painter.lovable.app/voorwaarden</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://pixelperfect-photo-painter.lovable.app/cookies</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://abgroep.be/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://abgroep.be/diensten</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://abgroep.be/realisaties</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://abgroep.be/werkwijze</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/over</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/contact</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+
+  <!-- Divisies -->
+  <url><loc>https://abgroep.be/construct</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://abgroep.be/interieur</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://abgroep.be/dakwerken</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://abgroep.be/gevel</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://abgroep.be/bad</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://abgroep.be/ecologisch</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+
+  <!-- Blog artikelen -->
+  <url><loc>https://abgroep.be/blog/epc-label-c-2028</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/plat-dak-epdm-roofing-zink</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/microcement-versus-tegels-badkamer</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/vloerverwarming-nat-droog</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/asbestattest-verkoop-renovatie</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/mijn-verbouwpremie-2026</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/houtskelet-toekomst</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/fermette-renoveren</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/zonnepanelen-2026-rendement</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/bouwen-in-2026</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/warmtepomp-zonnepanelen</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/badkamertrends-2026</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/dakisolatie-renovatieplicht</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/gevelrenovatie-crepi-versus-steenstrips</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/sleutel-op-de-deur-renoveren</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/na-isolatie-spouw-of-buiten</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/wellness-thuis-budget</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/inloopdouche-zonder-drempel-prijs</loc><changefreq>yearly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://abgroep.be/blog/stoomdouche-hammam-prijs</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/italiaanse-douche-of-ligbad-2026</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/crepi-prijs-per-m2-2026</loc><changefreq>yearly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/blog/etics-buitengevelisolatie-premie-2026</loc><changefreq>yearly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/blog/houten-gevelbekleding-thermowood-lariks</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/renovatietrends-2026-vlaanderen</loc><changefreq>yearly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://abgroep.be/blog/smart-home-renovatie-knx-domotica</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abgroep.be/blog/biobased-bouwen-hempcrete-leem-houtvezel-2026</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+
+  <!-- Juridisch -->
+  <url><loc>https://abgroep.be/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://abgroep.be/voorwaarden</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://abgroep.be/cookies</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
 </urlset>

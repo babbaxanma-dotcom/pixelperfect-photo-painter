@@ -12,7 +12,7 @@ ${NAV}
     <div style="max-width: 800px;">
       <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span class="current">Privacybeleid</span></div>
       <h1>Privacybeleid</h1>
-      <p class="page-hero-lede">Hoe AB Bouw Group uw persoonsgegevens verzamelt, gebruikt en beschermt.</p>
+      <p class="page-hero-lede">Hoe AB Bouw Groep uw persoonsgegevens verzamelt, gebruikt en beschermt.</p>
       <p style="font-size:13px; color: var(--ink-mute); margin-top: 8px;">Laatste update: januari 2026</p>
     </div>
   </div>
@@ -24,8 +24,8 @@ ${NAV}
 
       <div>
         <h2 style="font-size: 20px; margin-bottom: 12px;">1. Wie zijn wij?</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">AB Bouw Group (hierna "wij", "ons" of "AB Bouw") is een bouw- en renovatiebedrijf gevestigd te Dokter Persoonslaan 33, 2830 Willebroek, België. Wij zijn verantwoordelijk voor de verwerking van uw persoonsgegevens zoals beschreven in dit privacybeleid.</p>
-        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Contactgegevens: <a href="mailto:info@abconstruct.be" style="color: var(--accent);">info@abconstruct.be</a> · <a href="tel:+32470634413" style="color: var(--accent);">+32 470 63 44 13</a></p>
+        <p style="color: var(--ink-soft); line-height: 1.7;">AB Bouw Groep (hierna "wij", "ons" of "AB Bouw") is een bouw- en renovatiebedrijf gevestigd te Industrieweg 14, 2830 Willebroek, België. Wij zijn verantwoordelijk voor de verwerking van uw persoonsgegevens zoals beschreven in dit privacybeleid.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Contactgegevens: <a href="mailto:info@abgroep.be" style="color: var(--accent);">info@abgroep.be</a> · <a href="tel:+32470634413" style="color: var(--accent);">+32 470 63 44 13</a></p>
       </div>
 
       <div>
@@ -68,7 +68,7 @@ ${NAV}
           <li>Bezwaar te maken tegen verwerking</li>
           <li>Uw gegevens over te laten dragen</li>
         </ul>
-        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Stuur uw verzoek per e-mail naar <a href="mailto:info@abconstruct.be" style="color: var(--accent);">info@abconstruct.be</a>. Wij reageren binnen 30 dagen.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Stuur uw verzoek per e-mail naar <a href="mailto:info@abgroep.be" style="color: var(--accent);">info@abgroep.be</a>. Wij reageren binnen 30 dagen.</p>
       </div>
 
       <div>
@@ -92,10 +92,10 @@ const EXTRA_STYLE = SHELL_STYLE + ``;
 
 export default function Privacy() {
   useEffect(() => {
-    document.title = "Privacybeleid | AB Bouw Group";
+    document.title = "Privacybeleid | AB Bouw Groep";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', "");
+    m.setAttribute('content', "Privacybeleid van AB Bouw Groep. Hoe wij uw persoonsgegevens verwerken conform GDPR. Renovatie- en bouwbedrijf in Vlaanderen.");
 
     const prevClass = document.body.className;
     document.body.className = "";

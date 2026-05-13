@@ -267,7 +267,7 @@ ${FOOTER}
 
 export default function Gevel() {
   useEffect(() => {
-    document.title = 'AB Gevelbekleding, crepi, sierpleister en steenstrips | AB Bouw Group';
+    document.title = 'AB Gevelbekleding, crepi, sierpleister en steenstrips | AB Bouw Groep';
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', 'Witte en grijze crepi, sierpleister en steenstrips, vaak gecombineerd met buitenisolatie. Eigen gevelploeg, premiedossier inbegrepen.');

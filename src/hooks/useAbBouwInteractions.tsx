@@ -32,11 +32,15 @@ export function useAbBouwInteractions() {
     const prefersReducedMotion = false;
 
     const runRoutePress = (link: HTMLAnchorElement, href: string) => {
-      if (prefersReducedMotion) {
+      // Cards in lijst krijgen een korte "press" animatie. Hero CTA's en knoppen
+      // in de hero hebben we daar bewust uit gehaald — anders voelt het traag aan
+      // en in sommige edge-cases werd de navigatie helemaal niet uitgevoerd.
+      const isHeroBtn = !!link.closest('.lf-hero, .lf-hero-actions, .lf-hero-card');
+      if (prefersReducedMotion || isHeroBtn) {
         navigate(href);
         return;
       }
-      const card = link.closest<HTMLElement>('.lf-svc-card, .ab-deep, .rz-proj-card, .lf-blog-card, .lf-blog-feature, .lf-blog-latest-item, .lf-cta-pill') ?? link;
+      const card = link.closest<HTMLElement>('.lf-svc-card, .ab-deep, .rz-proj-card, .lf-blog-card, .lf-blog-feature, .lf-blog-latest-item') ?? link;
       card.classList.add('is-route-pressing');
       document.body.classList.add('is-page-leaving');
       window.setTimeout(() => navigate(href), 170);
@@ -228,8 +232,17 @@ export function useAbBouwInteractions() {
       const toggle = dd.querySelector<HTMLElement>('[data-dd-toggle]');
       const label = dd.querySelector<HTMLElement>('[data-dd-label]');
       const input = dd.querySelector<HTMLInputElement>('[data-dd-input]');
+      const list = dd.querySelector<HTMLElement>('.lf-dd-list');
       const opts = Array.from(dd.querySelectorAll<HTMLElement>('[data-dd-opt]'));
       if (!toggle || !label || !input || !opts.length) return;
+      // Voorkom dat Lenis smooth-scroll de native overflow-scroll van de
+      // dropdown-opties opslokt — zonder dit kan de gebruiker niet door de
+      // lijst scrollen op desktop wheel of mobiele touch.
+      if (list) {
+        list.setAttribute('data-lenis-prevent', '');
+        list.setAttribute('data-lenis-prevent-wheel', '');
+        list.setAttribute('data-lenis-prevent-touch', '');
+      }
       const close = () => {
         dd.classList.remove('open');
         toggle.setAttribute('aria-expanded', 'false');
@@ -246,7 +259,9 @@ export function useAbBouwInteractions() {
       };
       const optHandlers: Array<[HTMLElement, () => void]> = [];
       opts.forEach((opt) => {
-        const choose = () => {
+        const choose = (ev: Event) => {
+          ev.preventDefault();
+          ev.stopPropagation();
           opts.forEach((x) => x.classList.remove('selected'));
           opt.classList.add('selected');
           label.textContent = opt.textContent || '';
@@ -255,15 +270,27 @@ export function useAbBouwInteractions() {
           close();
         };
         opt.addEventListener('click', choose);
-        optHandlers.push([opt, choose]);
+        // Touch fallback voor iOS Safari — anders pakt sommige scroll-momentum
+        // de tap niet correct op binnen een overflow-y:auto container.
+        opt.addEventListener('touchend', choose, { passive: false });
+        optHandlers.push([opt, choose as () => void]);
       });
       const onDoc = (e: MouseEvent) => { if (!dd.contains(e.target as Node)) close(); };
       toggle.addEventListener('click', onToggle);
+      // ESC sluit dropdown
+      const onKey = (e: KeyboardEvent) => {
+        if (e.key === 'Escape' && dd.classList.contains('open')) close();
+      };
       document.addEventListener('click', onDoc);
+      document.addEventListener('keydown', onKey);
       ddCleanups.push(() => {
         toggle.removeEventListener('click', onToggle);
         document.removeEventListener('click', onDoc);
-        optHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
+        document.removeEventListener('keydown', onKey);
+        optHandlers.forEach(([el, h]) => {
+          el.removeEventListener('click', h);
+          el.removeEventListener('touchend', h);
+        });
       });
     });
 
@@ -340,8 +367,11 @@ export function useAbBouwInteractions() {
     projTabs?.addEventListener('click', onProjFilter);
 
     // ── Reveal on scroll ────────────────────────────────
+    // SKIP elementen die zelf (of een kind) sticky-stacking gebruiken,
+    // anders breekt de transform op de parent de position:sticky binnenin.
     document.querySelectorAll<HTMLElement>('.lf-section > .wrap > *:not([data-reveal]), .ab-sub > .wrap > *:not([data-reveal])').forEach((el, idx) => {
       if (el.closest('.footer') || el.matches('script, style')) return;
+      if (el.hasAttribute('data-svc-stack') || el.querySelector('[data-svc-stack]')) return;
       el.dataset.reveal = idx % 2 ? 'left' : 'right';
       el.dataset.revealDelay = String(Math.min(idx % 4, 3));
     });

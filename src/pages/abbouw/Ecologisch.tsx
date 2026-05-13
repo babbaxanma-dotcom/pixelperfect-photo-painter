@@ -274,7 +274,7 @@ ${FOOTER}
 
 export default function Ecologisch() {
   useEffect(() => {
-    document.title = 'AB Ecologisch, duurzaam bouwen en renoveren | AB Bouw Group';
+    document.title = 'AB Ecologisch, duurzaam bouwen en renoveren | AB Bouw Groep';
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', 'Warmtepompen, natuurlijke isolatie, houtskelet, zonnepanelen, kalkpleister en ventilatie in één duurzaam totaalplan.');

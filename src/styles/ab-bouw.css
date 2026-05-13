@@ -73,7 +73,10 @@ body {
   font-family: var(--font-body); font-weight: 400;
   font-size: 16px; line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  /* overflow-x: hidden veroorzaakt impliciet overflow-y:auto → breekt
+     position:sticky in heel de site. overflow-x:clip doet hetzelfde
+     visueel zonder een scroll-context te creëren. */
+  overflow-x: clip;
 }
 section { background: var(--bg); color: var(--ink); }
 section.tone-soft { background: var(--bg-soft); }
@@ -6406,13 +6409,21 @@ body.ab-bouw-page { margin: 0 !important; padding: 0 !important; }
   pointer-events: auto;
   will-change: opacity, transform;
 }
-/* Hidden while in the hero — only on the home page */
+/* Home: nav opacity + lift volgen CONTINU de scroll uit de hero (--nav-sweep gaat
+   0→1 met easeInOutCubic over heroH·0.42 → heroH·0.88). Geen drempel-flip, geen
+   CSS-transition op opacity/transform → de nav fade-t mee i.p.v. te "poppen". */
+body:not(.is-subpage) .lf-nav {
+  opacity: var(--nav-sweep, 0) !important;
+  transform: translateY(calc((1 - var(--nav-sweep, 0)) * -10px)) !important;
+  transition: top 0.4s var(--ease) !important;
+  visibility: visible !important;
+  will-change: opacity, transform;
+  pointer-events: none;
+}
+body.past-hero .lf-nav { pointer-events: auto; }
+/* Diep in de hero: nav niet focusbaar (opacity is daar toch ~0). */
 body:not(.is-subpage):not(.past-hero) .lf-nav {
-  opacity: 0 !important;
-  transform: translateY(-12px) !important;
   visibility: hidden !important;
-  pointer-events: none !important;
-  transition: top 0.4s var(--ease), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.4s;
 }
 /* Subpages: nav always fully visible, no sweep/clip animation */
 body.is-subpage .lf-nav {
@@ -6424,8 +6435,7 @@ body.is-subpage .lf-nav .lf-nav-inner {
   clip-path: none !important;
   transform: none !important;
 }
-/* Home nav: ook géén clip-path "sweep" — gewoon dezelfde nette opacity/translateY
-   fade als bij naar-boven scrollen, zodat hij niet "popt" bij uit-de-hero scrollen. */
+/* Home nav: ook géén clip-path "sweep" — alleen de bovenstaande opacity-fade. */
 body:not(.is-subpage) .lf-nav .lf-nav-inner {
   clip-path: none !important;
   transform: none !important;

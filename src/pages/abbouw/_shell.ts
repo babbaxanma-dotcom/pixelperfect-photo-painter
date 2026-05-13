@@ -46,7 +46,7 @@ export const buildNav = (active: NavKey) => `
   </div>
   <div class="mm-footer">
     <a href="tel:+32470634413">📞 +32 470 63 44 13</a>
-    <a href="mailto:info@abbouwgroup.be">✉ info@abbouwgroup.be</a>
+    <a href="mailto:info@abgroep.be">✉ info@abgroep.be</a>
   </div>
 </div>
 `;
@@ -136,13 +136,13 @@ export const FOOTER = `
       </ul></div>
       <div class="footer-col"><h5>Contact</h5><ul>
         <li><a href="tel:+32470634413">+32 470 63 44 13</a></li>
-        <li><a href="mailto:info@abbouwgroup.be">info@abbouwgroup.be</a></li>
+        <li><a href="mailto:info@abgroep.be">info@abgroep.be</a></li>
         <li><a>Willebroek, België</a></li>
         <li><a>Ma t.e.m. vr · 8u tot 18u</a></li>
       </ul></div>
     </div>
     <div class="footer-bottom">
-      <div>© 2026 AB Bouw Group · BTW BE 0XXX.XXX.XXX</div>
+      <div>© 2026 AB Bouw Groep · Willebroek, België</div>
       <div class="footer-bottom-links">
         <a href="/privacy">Privacy</a><a href="/voorwaarden">Algemene voorwaarden</a><a href="/cookies">Cookies</a>
       </div>
@@ -430,16 +430,53 @@ body.is-scrolled .lf-scroll-cue { opacity: 0; pointer-events: none; transition: 
 .lf-form textarea { resize: vertical; min-height: 90px; }
 .lf-form button { margin-top: 8px; width:100%; justify-content:space-between; }
 .lf-dd { position: relative; margin-bottom: 12px; z-index: 5; }
-.lf-dd-toggle { width:100%; display:flex; align-items:center; justify-content:space-between; padding: 13px 16px; border: 1px solid var(--ink-line); border-radius: 10px; background: #fff; font-size: 14px; color: var(--ink-soft); font-family: inherit; cursor: pointer; transition: border-color .2s var(--ease), box-shadow .2s var(--ease); text-align:left; }
+.lf-dd-toggle { width:100%; display:flex; align-items:center; justify-content:space-between; padding: 14px 16px; border: 1px solid var(--ink-line); border-radius: 10px; background: #fff; font-size: 14px; color: var(--ink-soft); font-family: inherit; cursor: pointer; transition: border-color .2s var(--ease), box-shadow .2s var(--ease); text-align:left; }
+.lf-dd-toggle:hover { border-color: var(--ink-soft); }
 .lf-dd.open { z-index: 80; }
-.lf-dd.open .lf-dd-toggle { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(10,31,68,0.08); }
-.lf-dd-label.has-value { color: var(--ink); font-weight:500; }
+.lf-dd.open .lf-dd-toggle { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(217,140,3,0.14); }
+.lf-dd-label.has-value { color: var(--ink); font-weight: 600; }
 .lf-dd-caret { color: var(--ink-soft); transition: transform .22s var(--ease); flex-shrink:0; }
-.lf-dd.open .lf-dd-caret { transform: rotate(180deg); }
-.lf-dd-list { position:absolute; top: calc(100% + 6px); left:0; right:0; background:#fff; border:1px solid var(--ink-line-soft); border-radius: 12px; box-shadow: 0 18px 40px -18px rgba(10,22,40,0.22); list-style:none; margin:0; padding:6px; z-index: 30; max-height: min(320px, 46vh); overflow-y: auto; -webkit-overflow-scrolling: touch; opacity:0; transform: translateY(-6px) scale(.98); transform-origin: top; pointer-events:none; transition: opacity .18s var(--ease), transform .18s var(--ease); }
-.lf-dd.open .lf-dd-list { opacity:1; transform: translateY(0) scale(1); pointer-events:auto; }
-.lf-dd-list li { padding: 11px 14px; font-size: 14px; color: var(--ink); border-radius: 8px; cursor:pointer; transition: background-color .15s var(--ease), color .15s var(--ease); }
-.lf-dd-list li:hover, .lf-dd-list li.selected { background: var(--bg-tint); color: var(--navy); }
+.lf-dd.open .lf-dd-caret { transform: rotate(180deg); color: var(--accent); }
+.lf-dd-list {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid rgba(15,17,21,0.10);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(15,17,21,0.04), 0 24px 60px -20px rgba(10,22,40,0.30);
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+  z-index: 30;
+  max-height: min(340px, 50vh);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  opacity: 0;
+  transform: translateY(-8px) scale(.985);
+  transform-origin: top;
+  pointer-events: none;
+  transition: opacity .2s var(--ease), transform .2s var(--ease);
+}
+.lf-dd.open .lf-dd-list { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+.lf-dd-list li {
+  padding: 12px 14px;
+  font-size: 14px;
+  color: var(--ink);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color .15s var(--ease), color .15s var(--ease);
+  display: flex;
+  align-items: center;
+}
+.lf-dd-list li:hover,
+.lf-dd-list li.selected {
+  background: rgba(217,140,3,0.08);
+  color: var(--navy);
+  font-weight: 600;
+}
 .lf-form.is-anchor-focus, .ab-sub.is-anchor-focus .ab-deep { animation: ab-anchor-focus 1.05s var(--ease-out-quart) both; }
 @keyframes ab-anchor-focus {
   0% { transform: translateY(0) scale(1); box-shadow: 0 24px 60px -28px rgba(10,22,40,0.18); }
@@ -1250,5 +1287,205 @@ html { scroll-behavior: smooth; }
   color: var(--ink-mute); font-weight: 600; margin: -4px 0 14px;
 }
 .ab-scroll-hint svg { color: var(--accent); }
+
+/* =====================================================================
+   MOBILE UI OVERHAUL — applies to ALL subpages (excludes Home which has
+   its own .lf-hero-mini structure). Single source of truth for mobile
+   ergonomics on subpages, forms, buttons, and grids.
+   ===================================================================== */
+
+/* --- Bel-FAB op mobile: clean ronde bel-knop rechtsonder, geen rommelige bar eronder --- */
+@media (max-width: 900px) {
+  .lf-fab-call {
+    display: inline-flex !important;
+    right: 16px !important;
+    bottom: 20px !important;
+    width: 58px !important;
+    height: 58px !important;
+  }
+  /* Bottom-bar (witte "Bel ons" + "Vraag offerte" buttons) verbergen op mobile —
+     de ronde FAB volstaat en is veel cleaner. */
+  .lf-mobile-bar {
+    display: none !important;
+  }
+}
+
+/* --- Subpage hero compacter op mobile (NIET Home — die heeft .lf-hero-mini) --- */
+@media (max-width: 900px) {
+  .lf-hero:not(:has(.lf-hero-mini)) {
+    min-height: 460px;
+    padding-top: 0;
+  }
+  /* Verhoog de hero-wrap top-padding zodat de nav-pil NIET over de white card valt */
+  .lf-hero:not(:has(.lf-hero-mini)) .lf-hero-wrap {
+    padding-top: 110px !important;
+    padding-bottom: 36px !important;
+  }
+  .lf-hero:not(:has(.lf-hero-mini)) .lf-hero-card {
+    padding: 26px 24px 24px;
+    border-radius: 14px;
+  }
+  .lf-hero:not(:has(.lf-hero-mini)) .lf-hero-card h1 {
+    font-size: clamp(24px, 5.8vw, 32px) !important;
+    line-height: 1.2;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+  }
+  .lf-hero:not(:has(.lf-hero-mini)) .lf-hero-card p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .lf-hero:not(:has(.lf-hero-mini)) .lf-hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  .lf-hero:not(:has(.lf-hero-mini)) .lf-hero-actions > a {
+    width: 100%;
+    justify-content: center;
+  }
+}
+@media (max-width: 520px) {
+  .lf-hero:not(:has(.lf-hero-mini)) { min-height: 380px; }
+}
+
+/* --- Tap-targets: CTA pill + ghost btn min 48px hoog op mobile --- */
+@media (max-width: 900px) {
+  .lf-cta-pill {
+    min-height: 48px;
+    padding: 14px 22px !important;
+    font-size: 14px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .lf-btn-ghost,
+  .lf-btn-light,
+  .lf-btn-outline {
+    min-height: 48px;
+    padding: 14px 22px !important;
+    font-size: 14px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+}
+
+/* --- Form inputs iOS-zoom-proof (16px font-size minimum) --- */
+@media (max-width: 900px) {
+  .lf-form input,
+  .lf-form select,
+  .lf-form textarea,
+  .form-field input,
+  .form-field select,
+  .form-field textarea,
+  .lf-newsletter-input input,
+  .lf-dd-toggle {
+    font-size: 16px !important;
+    padding: 14px 16px !important;
+    min-height: 50px;
+    border-radius: 10px;
+  }
+  .lf-form textarea { min-height: 120px; }
+  .lf-form .lf-form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .lf-form button[type="submit"] {
+    width: 100%;
+    min-height: 52px;
+    font-size: 15px;
+  }
+  .lf-dd-list {
+    max-height: 260px;
+    overflow-y: auto;
+  }
+  .lf-dd-opt, .lf-dd-list li {
+    padding: 14px 18px !important;
+    font-size: 15px !important;
+  }
+}
+
+/* --- Grids: alle multi-kolom grids vallen terug naar 1 kolom op klein scherm --- */
+@media (max-width: 540px) {
+  .lf-blog-grid,
+  .lf-support-grid,
+  .lf-section-head + .lf-blog-magazine,
+  .ab-coverage,
+  .lf-contact-grid,
+  .lf-split,
+  .lf-why-collage,
+  .lf-form-row {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .lf-blog-magazine {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px;
+  }
+  .lf-newsletter-card {
+    grid-template-columns: 1fr !important;
+    gap: 22px !important;
+    padding: 28px 22px !important;
+  }
+}
+
+/* Geen bottom-bar meer → geen padding-bottom op body nodig */
+
+/* --- Mobile menu: bigger tap-targets --- */
+@media (max-width: 900px) {
+  .mm-section a,
+  .mobile-menu a {
+    padding: 16px 18px !important;
+    font-size: 16px !important;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+  }
+  .mm-footer a {
+    padding: 14px 16px !important;
+    min-height: 48px;
+  }
+}
+
+/* --- h1/h2 break-word fail-safe (320px iPhone SE) --- */
+@media (max-width: 380px) {
+  h1, h2, .lf-h2, .lf-h1 {
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+  }
+  h1, .lf-h1 { font-size: clamp(22px, 5vw, 28px) !important; }
+  h2, .lf-h2 { font-size: clamp(20px, 4.5vw, 26px) !important; }
+}
+
+/* --- Sectie spacing strakker op mobile --- */
+@media (max-width: 720px) {
+  .lf-section { padding: 60px 0 !important; }
+  .lf-section-compact-stack { padding: 48px 0 !important; }
+  .wrap { padding-left: 20px; padding-right: 20px; }
+}
+
+/* --- Section-head centered, niet overlap met hero op klein scherm --- */
+@media (max-width: 540px) {
+  .lf-section-head { margin-bottom: 26px; }
+  .lf-section-head h2, .lf-section-head .lf-h2 { font-size: clamp(22px, 5.5vw, 30px); }
+}
+
+/* --- CTA box compact op mobile --- */
+@media (max-width: 760px) {
+  .lf-cta {
+    padding: 32px 24px !important;
+    min-height: auto !important;
+  }
+  .lf-cta-text h2 { font-size: clamp(22px, 5.5vw, 28px) !important; }
+}
 `;
 

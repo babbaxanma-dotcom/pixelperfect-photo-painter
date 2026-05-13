@@ -12,7 +12,7 @@ ${NAV}
     <div style="max-width: 800px;">
       <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span class="current">Cookiebeleid</span></div>
       <h1>Cookiebeleid</h1>
-      <p class="page-hero-lede">Hoe en waarom AB Bouw Group cookies gebruikt op deze website.</p>
+      <p class="page-hero-lede">Hoe en waarom AB Bouw Groep cookies gebruikt op deze website.</p>
       <p style="font-size:13px; color: var(--ink-mute); margin-top: 8px;">Laatste update: januari 2026</p>
     </div>
   </div>
@@ -107,10 +107,10 @@ const EXTRA_STYLE = SHELL_STYLE + ``;
 
 export default function Cookies() {
   useEffect(() => {
-    document.title = "Cookiebeleid | AB Bouw Group";
+    document.title = "Cookiebeleid | AB Bouw Groep";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', "");
+    m.setAttribute('content', "Cookiebeleid AB Bouw Groep — transparantie over welke cookies abgroep.be gebruikt en hoe u uw toestemming kan aanpassen.");
 
     const prevClass = document.body.className;
     document.body.className = "";

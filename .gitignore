@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Environment — bevat GHL webhook URL, GA4 + Ads IDs, Web3Forms key
+.env
+.env.production
+.env.*.local
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

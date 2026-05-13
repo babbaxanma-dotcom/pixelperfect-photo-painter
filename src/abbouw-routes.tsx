@@ -13,6 +13,8 @@ import Gevel from './pages/abbouw/Gevel';
 import Privacy from './pages/abbouw/Privacy';
 import Voorwaarden from './pages/abbouw/Voorwaarden';
 import Cookies from './pages/abbouw/Cookies';
+import Blog from './pages/abbouw/Blog';
+import BlogPost from './pages/abbouw/BlogPost';
 import { Route } from 'react-router-dom';
 export const abBouwRoutes = (
   <>
@@ -28,6 +30,8 @@ export const abBouwRoutes = (
   <Route path="/dakwerken" element={<Dakwerken />} />
   <Route path="/bad" element={<Bad />} />
   <Route path="/gevel" element={<Gevel />} />
+  <Route path="/blog" element={<Blog />} />
+  <Route path="/blog/:slug" element={<BlogPost />} />
   <Route path="/privacy" element={<Privacy />} />
   <Route path="/voorwaarden" element={<Voorwaarden />} />
   <Route path="/cookies" element={<Cookies />} />

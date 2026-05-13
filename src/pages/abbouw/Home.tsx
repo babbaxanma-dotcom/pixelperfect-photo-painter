@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
+import { submitLead } from '@/lib/leads';
 
 import hero from '@/assets/home/hero.jpg';
 import hero2 from '@/assets/home/hero-2.jpg';
@@ -78,17 +79,17 @@ const HTML = (i: Record<string, string>) => `
   </div>
   <div class="mm-footer">
     <a href="tel:+32470634413">📞 +32 470 63 44 13</a>
-    <a href="mailto:info@abbouwgroup.be">✉ info@abbouwgroup.be</a>
+    <a href="mailto:info@abgroep.be">✉ info@abgroep.be</a>
   </div>
 </div>
 
 <!-- HERO -->
 <section class="lf-hero">
   <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
-    <img src="${i.hero2}" alt="AB Bouw Group" class="is-active" />
-    <img src="${i.hero4}" alt="" loading="lazy" />
-    <img src="${i.hero5}" alt="" loading="lazy" />
-    <img src="${i.hero3}" alt="" loading="lazy" />
+    <img src="${i.hero2}" alt="AB Bouw Groep renovatieproject in Vlaanderen — vakmanschap door eigen ploeg" class="is-active" />
+    <img src="${i.hero4}" alt="Bouwwerf van AB Bouw Groep in Antwerpen" loading="lazy" />
+    <img src="${i.hero5}" alt="Totaalrenovatie door AB Bouw Groep in Mechelen" loading="lazy" />
+    <img src="${i.hero3}" alt="Nieuwbouwproject AB Bouw Groep in Brussel" loading="lazy" />
   </div>
   <button type="button" class="lf-hero-arrow lf-hero-arrow--prev" data-hero-prev aria-label="Vorige foto">
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -293,36 +294,51 @@ const HTML = (i: Record<string, string>) => `
       <h2 class="lf-h2">Zes specialisaties.<br>Eén bouwpartner.</h2>
     </div>
     ${(() => {
+      // Inline SVG iconen per divisie — strakke 2px outline stroke voor een
+      // consistente "blueprint" look op de orange badge.
+      const icons = {
+        construct: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M10 21v-6h4v6"/></svg>`,
+        eco: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>`,
+        interieur: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M2 11v5a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v2H6v-2a2 2 0 0 0-4 0z"/><path d="M4 18v2"/><path d="M20 18v2"/></svg>`,
+        dakwerken: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 12 10-8 10 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>`,
+        bad: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.5 3 4 3.4 4 4v9"/><path d="M2 13h20"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/><path d="m4 21 1-1.5"/><path d="m20 21-1-1.5"/></svg>`,
+        gevel: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v6"/><path d="M15 9v6"/><path d="M9 15v6"/></svg>`,
+      };
       const services = [
-        { img: i.svcConstruct, n: '01', title: 'AB Construct', short: 'Construct', desc: 'Nieuwbouw en totaalrenovatie sleutel-op-de-deur. Eén contract, één planning, één resultaat.', href: '/construct' },
-        { img: i.svcEco, n: '02', title: 'AB Ecologisch', short: 'Ecologisch', desc: 'Duurzaam bouwen met natuurlijke materialen. Lager E-peil, lagere energiefactuur.', href: '/ecologisch' },
-        { img: i.svcInterieur, n: '03', title: 'AB Interieurwerken', short: 'Interieur', desc: 'Maatwerk in gyproc, vloeren, schrijnwerk en plafonds. Strak afgewerkt tot in de plint.', href: '/interieur' },
-        { img: i.svcDak, n: '04', title: 'AB Dakwerken', short: 'Dakwerken', desc: 'Hellende en platte daken, dakisolatie en zinkwerk. Door eigen dakdekkers geplaatst.', href: '/dakwerken' },
-        { img: i.svcBad, n: '05', title: 'AB Bad &amp; Wellness', short: 'Bad &amp; Wellness', desc: 'Sleutel-op-de-deur badkamers met premium tegels en sanitair. Klaar in vier weken.', href: '/bad' },
-        { img: i.svcGevel, n: '06', title: 'AB Gevelbekleding', short: 'Gevel', desc: 'Witte of grijze crepi, sierpleister of steenstrips. Tijdloos én onderhoudsarm.', href: '/gevel' },
+        { img: i.svcConstruct, n: '01', title: 'AB Construct', short: 'Construct', desc: 'Nieuwbouw en totaalrenovatie sleutel-op-de-deur. Eén contract, één planning, één resultaat.', href: '/construct', icon: icons.construct },
+        { img: i.svcEco, n: '02', title: 'AB Ecologisch', short: 'Ecologisch', desc: 'Duurzaam bouwen met natuurlijke materialen. Lager E-peil, lagere energiefactuur.', href: '/ecologisch', icon: icons.eco },
+        { img: i.svcInterieur, n: '03', title: 'AB Interieurwerken', short: 'Interieur', desc: 'Maatwerk in gyproc, vloeren, schrijnwerk en plafonds. Strak afgewerkt tot in de plint.', href: '/interieur', icon: icons.interieur },
+        { img: i.svcDak, n: '04', title: 'AB Dakwerken', short: 'Dakwerken', desc: 'Hellende en platte daken, dakisolatie en zinkwerk. Door eigen dakdekkers geplaatst.', href: '/dakwerken', icon: icons.dakwerken },
+        { img: i.svcBad, n: '05', title: 'AB Bad &amp; Wellness', short: 'Bad &amp; Wellness', desc: 'Sleutel-op-de-deur badkamers met premium tegels en sanitair. Klaar in vier weken.', href: '/bad', icon: icons.bad },
+        { img: i.svcGevel, n: '06', title: 'AB Gevelbekleding', short: 'Gevel', desc: 'Witte of grijze crepi, sierpleister of steenstrips. Tijdloos én onderhoudsarm.', href: '/gevel', icon: icons.gevel },
       ];
       return `
       <div class="lf-svc-nav-cta" data-reveal>
-        <a class="lf-svc-all-btn" href="/diensten">
-          <span>Bekijk alle diensten</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
+        <a class="lf-svc-all-btn" href="/diensten">Bekijk alle diensten</a>
       </div>
       <div class="lf-svc-grid" data-svc-stack>
         ${services.map((s, idx, arr) => `
           <div class="lf-svc-slot" id="svc-${idx}" data-svc-slot data-svc-index="${idx}" style="--svc-i:${idx};--svc-total:${arr.length}">
             <a class="lf-svc-card" href="${s.href}" data-svc-card style="--svc-i:${idx};--svc-total:${arr.length}">
-              <div class="lf-svc-img"><img src="${s.img}" alt="${s.title}" loading="lazy" /><span class="lf-svc-num">${s.n}</span></div>
+              <div class="lf-svc-img">
+                <img src="${s.img}" alt="${s.title}" loading="lazy" />
+                <span class="lf-svc-badge" aria-hidden="true">${s.icon}</span>
+                <span class="lf-svc-num">${s.n}</span>
+              </div>
               <div class="lf-svc-body">
                 <h4>${s.title}</h4>
                 <p>${s.desc}</p>
                 <span class="lf-svc-link">Lees meer
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </span>
               </div>
             </a>
           </div>
         `).join('')}
+      </div>
+      <div class="lf-svc-swipe-hint" aria-hidden="true">
+        <span>Swipe voor meer</span>
+        <svg width="20" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </div>`;
     })()}
   </div>
@@ -399,7 +415,7 @@ const HTML = (i: Record<string, string>) => `
 <section class="lf-section lf-tone-soft lf-section-compact-stack lf-why-section-tight">
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal>
-      <span class="lf-eyebrow">Waarom AB Bouw Group</span>
+      <span class="lf-eyebrow">Waarom AB Bouw Groep</span>
       <h2 class="lf-h2">De bouwpartner waar u<br><span class="ab-mark">écht op kan rekenen</span>.</h2>
     </div>
     <div class="lf-why-collage lf-why-stack lf-why-no-photo" data-why-seq data-why-stack>
@@ -474,33 +490,33 @@ const HTML = (i: Record<string, string>) => `
       <h2 class="lf-h2">Van eerste gesprek tot<br>sleutel op de deur.</h2>
       <p class="lf-lede" style="margin: 0 auto;">Eén transparant traject in vijf stappen. U weet vooraf precies wat er wanneer gebeurt, en wie u aanspreekt voor elke vraag.</p>
     </div>
-    <div class="lf-process">
+    <div class="lf-process" data-process-stack>
       <div class="lf-process-line"></div>
-      <div class="lf-process-step" data-reveal>
+      <div class="lf-process-step" data-process-card style="--proc-i:0;--proc-total:5">
         <div class="lf-process-num">01</div>
         <h5>Kennismaking &amp; plaatsbezoek</h5>
-        <p>Binnen 5 werkdagen langs voor een gratis plaatsbezoek. We luisteren, meten op en adviseren, zonder verkooppraat.</p>
+        <p>Binnen 5 werkdagen langs voor een gratis plaatsbezoek. We luisteren, meten alles op, en geven u meteen een eerste richtprijs op basis van wat we zien.</p>
         <span class="lf-process-time">Week 1</span>
       </div>
-      <div class="lf-process-step" data-reveal data-reveal-delay="1">
+      <div class="lf-process-step" data-process-card style="--proc-i:1;--proc-total:5">
         <div class="lf-process-num">02</div>
         <h5>Offerte op maat</h5>
         <p>Bindende offerte met gedetailleerde meetstaat. Materialen, uurloon en timing, alles uitgesplitst, niets verborgen.</p>
         <span class="lf-process-time">Week 2–3</span>
       </div>
-      <div class="lf-process-step" data-reveal data-reveal-delay="2">
+      <div class="lf-process-step" data-process-card style="--proc-i:2;--proc-total:5">
         <div class="lf-process-num">03</div>
         <h5>Vergunning &amp; planning</h5>
         <p>Wij regelen vergunning, premies en architectencoördinatie. U krijgt een gedeeld werfdossier in onze klantenportaal.</p>
         <span class="lf-process-time">Week 4–14</span>
       </div>
-      <div class="lf-process-step" data-reveal data-reveal-delay="3">
+      <div class="lf-process-step" data-process-card style="--proc-i:3;--proc-total:5">
         <div class="lf-process-num">04</div>
         <h5>Uitvoering op de werf</h5>
         <p>Vaste projectleider, eigen ploegen, wekelijks rapport. Vaste werfopruim op vrijdagavond, ook tijdens uw afwezigheid.</p>
         <span class="lf-process-time">Variabel</span>
       </div>
-      <div class="lf-process-step" data-reveal data-reveal-delay="4">
+      <div class="lf-process-step" data-process-card style="--proc-i:4;--proc-total:5">
         <div class="lf-process-num">05</div>
         <h5>Oplevering &amp; nazorg</h5>
         <p>Gezamenlijke rondgang met opleveringsverslag. Eén jaar later komen we gratis terug voor een nacontrole.</p>
@@ -600,6 +616,36 @@ const HTML = (i: Record<string, string>) => `
   </div>
 </section>
 
+<!-- NEWSLETTER SIGNUP -->
+<section class="lf-section lf-newsletter">
+  <div class="wrap">
+    <div class="lf-newsletter-card" data-reveal>
+      <div class="lf-newsletter-text">
+        <span class="lf-eyebrow">Nieuwsbrief</span>
+        <h2 class="lf-h2">Schrijf je in voor onze nieuwsbrief.</h2>
+        <p class="lf-newsletter-sub">Eén keer per maand: praktische bouwtips, nieuwe premies en realisaties uit Vlaanderen. Geen spam, alleen wat u écht kan gebruiken.</p>
+      </div>
+      <div class="lf-newsletter-embed" data-reveal data-reveal-delay="1">
+        <!-- GOHIGHLEVEL_NEWSLETTER_EMBED_CODE_HERE -->
+        <form class="lf-newsletter-form" data-newsletter-form>
+          <label class="lf-newsletter-input">
+            <span class="sr-only">E-mailadres</span>
+            <input type="email" name="email" autocomplete="email" placeholder="uw@e-mailadres.be" required />
+          </label>
+          <button type="submit" class="lf-cta-pill lf-newsletter-btn">
+            <span>Inschrijven</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+          <p class="lf-newsletter-success">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Bedankt — u staat ingeschreven.
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- SUPPORT TILES -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
@@ -630,16 +676,15 @@ const HTML = (i: Record<string, string>) => `
 <!-- CTA BANNER -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-cta" data-reveal>
+    <div class="lf-cta lf-cta--simple" data-reveal>
       <div class="lf-cta-text">
         <h2>Bespreek vandaag nog<br>uw bouwproject met ons.</h2>
-        <p>Een sterk, duurzaam resultaat begint bij een goed gesprek. Van eerste advies tot oplevering: wij staan naast u.</p>
+        <p>Een sterk, duurzaam resultaat begint bij een goed gesprek. Van eerste advies tot oplevering — wij denken mee, plannen mee, voeren zelf uit.</p>
         <div class="lf-cta-actions">
-          <a href="/contact" class="lf-btn-light">Start uw project</a>
-          <a href="/contact" class="lf-btn-outline">Contacteer ons</a>
+          <a href="/contact#contact-form" class="lf-btn-light">Start uw project</a>
+          <a href="/contact#contact-form" class="lf-btn-outline">Contacteer ons</a>
         </div>
       </div>
-      <div class="lf-cta-img"><img src="${i.ctaMan}" alt="" loading="lazy"/></div>
     </div>
   </div>
 </section>
@@ -651,7 +696,7 @@ const HTML = (i: Record<string, string>) => `
       <div class="lf-faq-side" data-reveal>
         <span class="lf-eyebrow">Veelgestelde vragen</span>
         <h2 class="lf-h2">Antwoorden op de<br>vragen die u nu heeft.</h2>
-        <p class="lf-lede">Staat uw vraag er niet tussen? Bel <a href="tel:+32470634413" style="color: var(--accent); font-weight:600;">+32 470 63 44 13</a> of mail <a href="mailto:info@abbouwgroup.be" style="color: var(--accent); font-weight:600;">info@abbouwgroup.be</a>. U krijgt binnen 24 uur antwoord van een vakmens, geen callcenter.</p>
+        <p class="lf-lede">Staat uw vraag er niet tussen? Bel <a href="tel:+32470634413" style="color: var(--accent); font-weight:600;">+32 470 63 44 13</a> of mail <a href="mailto:info@abgroep.be" style="color: var(--accent); font-weight:600;">info@abgroep.be</a>. U krijgt binnen 24 uur antwoord van een vakmens, geen callcenter.</p>
         <a href="/contact" class="lf-cta-pill">
           <span>Stel uw vraag</span>
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
@@ -704,13 +749,13 @@ const HTML = (i: Record<string, string>) => `
       </ul></div>
       <div class="footer-col"><h5>Contact</h5><ul>
         <li><a href="tel:+32470634413">+32 470 63 44 13</a></li>
-        <li><a href="mailto:info@abbouwgroup.be">info@abbouwgroup.be</a></li>
+        <li><a href="mailto:info@abgroep.be">info@abgroep.be</a></li>
         <li><a>Willebroek, België</a></li>
         <li><a>Ma t.e.m. vr · 8u tot 18u</a></li>
       </ul></div>
     </div>
     <div class="footer-bottom">
-      <div>© 2026 AB Bouw Group · BTW BE 0XXX.XXX.XXX</div>
+      <div>© 2026 AB Bouw Groep · Willebroek, België</div>
       <div class="footer-bottom-links">
         <a href="/privacy">Privacy</a><a href="/voorwaarden">Algemene voorwaarden</a><a href="/cookies">Cookies</a>
       </div>
@@ -875,29 +920,42 @@ const EXTRA_STYLE = `
 .lf-svc-card { display:flex; flex-direction:column; background:#fff; border-radius: 14px; overflow:hidden; border: 1px solid var(--ink-line-soft); transition: all 0.3s var(--ease); color: var(--ink); }
 .lf-svc-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -20px rgba(10,22,40,0.18); border-color: var(--accent); }
 
-/* Stacking-card scroll animation: ALL cards share the same sticky parent so they
-   physically pile on top of each other (Olivier Larose pattern). The slot wrappers
-   are unwrapped via display:contents — each card is sticky against the grid itself. */
+/* Stacking-card scroll — canonical "share-one-parent" sticky pattern.
+   All cards are sticky children of the SAME tall parent (.lf-svc-grid).
+   They use display:contents on the slot wrappers so the cards become
+   direct flex/block siblings inside the grid. Each card has a slightly
+   higher sticky-top than the previous → they stack at top of viewport
+   in a clean staircase as you scroll past each one. */
 .lf-services .lf-svc-grid[data-svc-stack] {
   display: block;
   position: relative;
-  padding: 0 16px 32px;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 16px 80px;
+  transform: none !important;
+  opacity: 1 !important;
+  will-change: auto;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot {
   display: contents;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
   position: sticky;
-  top: calc(110px + var(--svc-i, 0) * 14px);
+  top: calc(96px + var(--svc-i, 0) * 18px);
   display: block;
   width: 100%;
-  max-width: 880px;
-  margin: 0 auto 30px;
-  border-radius: 18px;
+  margin: 0 auto 28px;
+  border-radius: 20px;
   background: #fff;
   border: 1px solid var(--ink-line-soft);
-  box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 40px 80px -32px rgba(15,17,21,.32);
-  transition: transform 0.5s var(--ease);
+  box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 30px 80px -28px rgba(15,17,21,.28);
+  will-change: auto;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:last-child .lf-svc-card {
+  margin-bottom: 0;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover {
+  box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 40px 100px -28px rgba(15,17,21,.4);
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:last-child .lf-svc-card {
   margin-bottom: 0;
@@ -938,11 +996,20 @@ const EXTRA_STYLE = `
 /* ── Why-us as scroll-stack: all tiles sticky in the SAME left column → real pile-up */
 .lf-why-collage.lf-why-stack { display:grid; grid-template-columns: 1fr 1.05fr; gap: 34px; align-items: stretch; max-width: 1180px; margin: 0 auto; }
 .lf-why-collage.lf-why-stack.lf-why-no-photo { grid-template-columns: 1fr; max-width: 820px; gap: 0; margin-bottom: 0; }
-.lf-why-no-photo .lf-why-stack-left { gap: 16px; }
-.lf-why-no-photo .lf-why-tile { padding: 24px 28px; }
-.lf-why-stack .lf-why-stack-left { display:flex; flex-direction: column; gap: 12px; }
-.lf-why-stack .lf-why-slot { display: block; }
-.lf-why-stack .lf-why-tile { position: static; width: 100%; padding: 22px 24px; margin: 0; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 18px 40px -28px rgba(15,17,21,.18); }
+.lf-why-no-photo .lf-why-stack-left { gap: 0; }
+.lf-why-no-photo .lf-why-tile { padding: 22px 28px; }
+.lf-why-stack .lf-why-stack-left { display:flex; flex-direction: column; gap: 0; }
+.lf-why-stack .lf-why-slot { display: block; margin-bottom: 14px; }
+.lf-why-stack .lf-why-slot:last-child { margin-bottom: 0; }
+/* Reveal-transform op de slots breekt offsetTop-math van de JS sticky-stack.
+   In stack-mode reveal-effect uitschakelen — JS doet de animatie. */
+.lf-why-collage[data-why-stack] [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none;
+  will-change: auto;
+}
+.lf-why-stack .lf-why-tile { position: static; width: 100%; padding: 20px 24px; margin: 0; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 18px 40px -28px rgba(15,17,21,.18); }
 .lf-why-stack .lf-why-photo { position: relative; top: auto; height: 100%; align-self: stretch; max-height: 520px; min-height: 0; grid-row: auto; grid-column: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -36px rgba(15,17,21,.32); }
 .lf-why-stack .lf-why-photo img { width:100%; height:100%; object-fit: cover; }
 
@@ -1038,15 +1105,13 @@ const EXTRA_STYLE = `
 .lf-testi-foot span { font-size:12.5px; color: var(--ink-mute); }
 .lf-testi-google { flex-shrink:0; }
 
-/* CTA */
-.lf-cta { background: var(--navy); border-radius: 18px; padding: 56px 56px 0 56px; display:grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items:end; overflow:visible; position:relative; min-height: 360px; }
-.lf-cta::before { content:''; position:absolute; right: 28%; top:50%; transform:translateY(-50%); width: 280px; height: 280px; border-radius:50%; background: var(--accent); opacity: 0.15; }
-.lf-cta-text { color:#fff; position:relative; z-index:2; padding-bottom: 56px; }
+/* CTA — compacte navy box, identiek aan subpages (geen foto erin) */
+.lf-cta { background: var(--navy); border-radius: 18px; padding: 48px 56px; display:grid; grid-template-columns: 1fr; gap: 0; align-items:center; position:relative; overflow:hidden; }
+.lf-cta::before { content:''; position:absolute; right: -120px; top: 50%; transform:translateY(-50%); width: 380px; height: 380px; border-radius:50%; background: var(--accent); opacity: 0.10; filter: blur(40px); pointer-events: none; }
+.lf-cta-text { color:#fff; position:relative; z-index:2; max-width: 720px; }
 .lf-cta-text h2 { color:#fff; font-family: var(--font-display); font-size: clamp(26px, 3vw, 38px); line-height:1.15; margin-bottom: 14px; letter-spacing:-0.02em; }
-.lf-cta-text p { color: rgba(255,255,255,0.75); font-size: 15px; margin-bottom: 26px; max-width: 460px; }
+.lf-cta-text p { color: rgba(255,255,255,0.78); font-size: 15px; margin-bottom: 26px; max-width: 560px; line-height: 1.6; }
 .lf-cta-actions { display:flex; gap:12px; flex-wrap:wrap; }
-.lf-cta-img { position:relative; z-index:2; height: 100%; min-height: 360px; display:flex; justify-content:center; align-items:flex-end; }
-.lf-cta-img img { height: 560px; max-height: none; width:auto; object-fit:contain; object-position: bottom; display:block; margin-bottom: -40px; }
 
 /* Blog */
 .lf-blog-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
@@ -1077,6 +1142,98 @@ const EXTRA_STYLE = `
 .lf-blog-dot.is-active { background: var(--navy); width: 36px; }
 .lf-blog-more-text { font-size: 13.5px; color: var(--ink-soft); margin: 0; }
 .lf-blog-more-text a { color: var(--accent); font-weight: 700; }
+
+/* Newsletter — clean minimal, fade-in op scroll */
+.lf-newsletter { padding: 72px 0; }
+.lf-newsletter-card {
+  max-width: 920px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid var(--ink-line-soft);
+  border-radius: 18px;
+  padding: 56px 56px;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 48px;
+  align-items: center;
+  box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 24px 60px -32px rgba(15,17,21,.18);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s cubic-bezier(.22,.61,.36,1), transform 0.7s cubic-bezier(.22,.61,.36,1);
+}
+.lf-newsletter-card.revealed { opacity: 1; transform: none; }
+.lf-newsletter-text .lf-eyebrow { margin-bottom: 14px; }
+.lf-newsletter-text .lf-h2 { font-size: clamp(26px, 3vw, 34px); line-height: 1.15; margin-bottom: 14px; color: var(--navy); }
+.lf-newsletter-sub { font-size: 15px; line-height: 1.65; color: var(--ink-soft); margin: 0; max-width: 380px; }
+.lf-newsletter-embed { min-height: 120px; display: flex; align-items: center; justify-content: center; }
+.lf-newsletter-embed:empty::after {
+  content: 'Embed-veld klaar voor GoHighLevel formulier';
+  display: block;
+  padding: 28px;
+  border: 1.5px dashed var(--ink-line-soft);
+  border-radius: 12px;
+  color: var(--ink-mute);
+  font-size: 12.5px;
+  text-align: center;
+  letter-spacing: 0.04em;
+  width: 100%;
+}
+/* Default fallback formulier — wordt zichtbaar tot je een GHL embed plakt */
+.lf-newsletter-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  width: 100%;
+  position: relative;
+}
+.lf-newsletter-input { display: block; position: relative; }
+.lf-newsletter-input .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.lf-newsletter-input input {
+  width: 100%;
+  padding: 15px 18px;
+  font: inherit;
+  font-size: 14.5px;
+  color: var(--ink);
+  background: #fff;
+  border: 1.5px solid var(--ink-line-soft);
+  border-radius: 999px;
+  outline: none;
+  transition: border-color 0.25s cubic-bezier(.22,.61,.36,1),
+              box-shadow 0.25s cubic-bezier(.22,.61,.36,1);
+}
+.lf-newsletter-input input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(217,140,3,0.14);
+}
+.lf-newsletter-btn {
+  white-space: nowrap;
+  padding: 14px 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.lf-newsletter-success {
+  grid-column: 1 / -1;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: #047857;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 999px;
+  padding: 10px 18px;
+}
+.lf-newsletter-form.is-success .lf-newsletter-success { display: inline-flex; }
+.lf-newsletter-form.is-success .lf-newsletter-input,
+.lf-newsletter-form.is-success .lf-newsletter-btn { opacity: 0.4; pointer-events: none; }
+@media (max-width: 540px) {
+  .lf-newsletter-form { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .lf-newsletter-card { grid-template-columns: 1fr; padding: 36px 24px; gap: 28px; }
+}
 
 /* Controlled blog carousel */
 .lf-blog-carousel { position: relative; }
@@ -1286,14 +1443,32 @@ const EXTRA_STYLE = `
 html, body { overflow-x: hidden; max-width: 100%; }
 
 /* Process / werkwijze */
-.lf-process { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; margin-top: 20px; }
-.lf-process-line { position: absolute; top: 28px; left: 10%; right: 10%; height: 2px; background: linear-gradient(90deg, transparent, var(--ink-line) 8%, var(--ink-line) 92%, transparent); z-index: 0; }
-.lf-process-step { position: relative; z-index: 1; background: transparent; padding: 0 8px; text-align: left; }
-.lf-process-num { width: 56px; height: 56px; border-radius: 50%; background: #fff; border: 2px solid var(--accent); color: var(--accent); display:inline-flex; align-items:center; justify-content:center; font-family: var(--font-display); font-size: 17px; font-weight: 700; margin-bottom: 18px; box-shadow: 0 6px 18px -6px rgba(217,140,3,0.35); letter-spacing: -0.01em; }
-.lf-process-step h5 { font-size: 15px; color: var(--navy); margin-bottom: 8px; line-height: 1.3; }
-.lf-process-step p { font-size: 13px; line-height: 1.6; color: var(--ink-soft); margin: 0 0 10px; }
+/* Process: verticale sticky-stack op desktop (zoals services + why),
+   timeline-strook op mobile. */
+.lf-process { position: relative; display: block; max-width: 880px; margin: 20px auto 0; padding: 0 16px; }
+.lf-process-line { display: none; }
+.lf-process[data-process-stack] { padding-bottom: 80px; transform: none !important; opacity: 1 !important; will-change: auto; }
+.lf-process-step {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 72px 1fr; gap: 6px 24px;
+  background: #fff;
+  border: 1px solid var(--ink-line-soft);
+  border-radius: 18px;
+  padding: 28px 32px;
+  margin: 0 auto 28px;
+  box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 30px 80px -28px rgba(15,17,21,.18);
+  text-align: left;
+}
+.lf-process-step:last-child { margin-bottom: 0; }
+.lf-process-num { grid-row: 1 / 4; width: 56px; height: 56px; border-radius: 50%; background: #fff; border: 2px solid var(--accent); color: var(--accent); display:inline-flex; align-items:center; justify-content:center; font-family: var(--font-display); font-size: 17px; font-weight: 700; margin-bottom: 0; box-shadow: 0 6px 18px -6px rgba(217,140,3,0.35); letter-spacing: -0.01em; }
+.lf-process-step h5 { font-size: 16px; color: var(--navy); margin-bottom: 8px; line-height: 1.3; }
+.lf-process-step p { font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); margin: 0 0 10px; }
 .lf-process-time { display:inline-block; padding: 4px 10px; background: rgba(217,140,3,0.10); color: var(--accent); border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
-@media (max-width: 900px) { .lf-process { grid-template-columns: 1fr; gap: 28px; } .lf-process-line { display: none; } .lf-process-step { display: grid; grid-template-columns: auto 1fr; gap: 0 18px; } .lf-process-num { margin-bottom: 0; grid-row: 1 / 4; } }
+@media (max-width: 900px) {
+  .lf-process { padding: 0; }
+  .lf-process[data-process-stack] { padding-bottom: 0; }
+  .lf-process-step { padding: 18px 20px; margin-bottom: 16px; box-shadow: none; }
+}
 
 /* FAQ */
 .lf-faq-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 64px; align-items: start; }
@@ -1456,19 +1631,704 @@ html, body { overflow-x: hidden; max-width: 100%; }
 [data-reveal].revealed .ab-hl { background-size: 100% 60%; }
 .ab-hl[data-hl-delay="0"] { --hl-i: 0; } .ab-hl[data-hl-delay="1"] { --hl-i: 1; } .ab-hl[data-hl-delay="2"] { --hl-i: 2; }
 /* (reduced-motion override voor highlight-sweep bewust verwijderd — animaties voor iedereen) */
+
+/* =====================================================================
+   PROFESSIONELE STATIC LAYOUTS — vervangt de stuiterige sticky-stack
+   animaties voor Zes specialisaties, Vier zekerheden en Werkwijze.
+   ===================================================================== */
+
+/* Zes specialisaties — 3-koloms grid op desktop, zijwaarts swipe op mobile */
+.lf-services .lf-svc-grid[data-svc-stack] {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 22px !important;
+  max-width: 1240px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+@media (max-width: 900px) {
+  .lf-services .lf-svc-grid[data-svc-stack] {
+    display: flex !important;
+    grid-template-columns: none !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 0 20px 14px !important;
+    margin: 0 -20px !important;
+    gap: 14px !important;
+    scrollbar-width: none;
+  }
+  .lf-services .lf-svc-grid[data-svc-stack]::-webkit-scrollbar { display: none; }
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot {
+    flex: 0 0 82% !important;
+    max-width: 82% !important;
+    scroll-snap-align: start !important;
+  }
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
+    aspect-ratio: 4/5 !important;
+    height: auto !important;
+  }
+  /* Op mobile: body altijd zichtbaar (geen hover beschikbaar) */
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-body p {
+    max-height: 100px !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-link {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  /* Swipe-hint: subtiele dot indicator onder de carousel */
+  .lf-svc-grid-wrapper { position: relative; }
+}
+/* Dot indicators voor mobile carousel */
+.lf-svc-swipe-hint {
+  display: none;
+}
+@media (max-width: 900px) {
+  .lf-svc-swipe-hint {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .lf-svc-swipe-hint svg {
+    color: var(--accent);
+    animation: lf-swipe-arrow 1.8s ease-in-out infinite;
+  }
+  @keyframes lf-swipe-arrow {
+    0%, 100% { transform: translateX(0); opacity: .6; }
+    50% { transform: translateX(8px); opacity: 1; }
+  }
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot {
+  display: block !important;
+  position: static !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
+  position: static !important;
+  top: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+  z-index: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  border-radius: 16px !important;
+  transition: transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s cubic-bezier(.22,1,.36,1) !important;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover h4 {
+  color: var(--accent) !important;
+  transition: color .25s ease;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 4/3 !important; }
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-body { flex: 1; display:flex; flex-direction:column; }
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-body .lf-svc-link { margin-top: auto; }
+@media (max-width: 900px) {
+  .lf-services .lf-svc-grid[data-svc-stack] {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 16/10 !important; }
+}
+
+/* Vier zekerheden — editorial layout met dominante typografische cijfers.
+   Niet zomaar 4 cards, maar redactionele blokken met 01/02/03/04 als
+   visueel anker (display-font, accent-kleur, groot). */
+.lf-why-collage.lf-why-stack[data-why-stack] {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  grid-template-rows: auto !important;
+  gap: 28px 56px !important;
+  max-width: 1080px !important;
+  margin: 0 auto 64px !important;  /* extra ruimte naar trust-strip onder */
+}
+.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-stack-left {
+  display: contents !important;
+}
+.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-slot {
+  display: block !important;
+  position: static !important;
+  margin: 0 !important;
+  transform: translateY(24px);
+  opacity: 0;
+  transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1);
+}
+.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-slot:nth-child(1) { transition-delay: 0s; }
+.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-slot:nth-child(2) { transition-delay: .08s; }
+.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-slot:nth-child(3) { transition-delay: .16s; }
+.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-slot:nth-child(4) { transition-delay: .24s; }
+.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-slot.revealed,
+.lf-why-collage.lf-why-stack[data-why-stack][class*="revealed"] .lf-why-slot {
+  transform: none;
+  opacity: 1;
+}
+/* Editorial-stijl tile: geen omkadering. Het GROTE nummer is de afgrenzing. */
+.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-tile {
+  position: static !important;
+  top: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+  padding: 0 0 0 88px !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  border-left: none !important;
+  height: 100%;
+  position: relative !important;
+}
+.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-meta {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 0 14px !important;
+  align-items: baseline;
+  gap: 12px;
+  position: relative;
+}
+.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-num {
+  position: absolute;
+  left: -92px;
+  top: -22px;
+  font-family: 'Instrument Serif', serif !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  font-size: clamp(72px, 5.6vw, 96px) !important;
+  line-height: 0.95 !important;
+  color: var(--accent) !important;
+  letter-spacing: -0.04em !important;
+  font-feature-settings: "tnum";
+}
+.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-label {
+  font-size: 11px !important;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute) !important;
+}
+.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-tile h5 {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.2vw, 26px) !important;
+  font-weight: 700 !important;
+  color: var(--navy) !important;
+  line-height: 1.2 !important;
+  margin: 0 0 10px !important;
+  letter-spacing: -0.015em;
+}
+.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-tile p {
+  font-size: 14.5px !important;
+  line-height: 1.65 !important;
+  color: var(--ink-soft) !important;
+  margin: 0 !important;
+  max-width: 440px;
+}
+@media (max-width: 720px) {
+  .lf-why-collage.lf-why-stack[data-why-stack] {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+    margin-bottom: 40px !important;
+  }
+  .lf-why-collage.lf-why-stack[data-why-stack] .lf-why-tile {
+    padding-left: 60px !important;
+  }
+  .lf-why-collage.lf-why-stack[data-why-stack] .lf-why-num {
+    left: -60px !important;
+    font-size: 44px !important;
+    top: -6px;
+  }
+}
+
+/* Trust strip: duidelijke breathing room boven (was geen spacing) */
+.lf-why-section-tight .lf-trust-strip {
+  margin-top: 24px !important;
+}
+
+/* Werkwijze — editorial blueprint stijl. Geen cirkel-clichés meer.
+   Het GROTE serif-cijfer (Instrument Serif italic) is het anker.
+   Subtiele dunne horizontale lijn verbindt de stappen als blauwdruk. */
+.lf-process[data-process-stack] {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 16px !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  position: relative !important;
+}
+/* Hairline-baseline tussen de stappen, op de hoogte van waar de titel begint */
+.lf-process[data-process-stack]::before {
+  content: '';
+  position: absolute;
+  top: 132px;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background: rgba(15,17,21,0.08);
+  z-index: 0;
+}
+.lf-process[data-process-stack] .lf-process-step {
+  position: relative !important;
+  top: auto !important;
+  transform: none !important;
+  opacity: 1 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 18px 28px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  z-index: 1;
+  animation: lf-process-in .7s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes lf-process-in {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: none; }
+}
+.lf-process[data-process-stack] .lf-process-step:nth-child(1) { animation-delay: .05s; }
+.lf-process[data-process-stack] .lf-process-step:nth-child(2) { animation-delay: .15s; }
+.lf-process[data-process-stack] .lf-process-step:nth-child(3) { animation-delay: .25s; }
+.lf-process[data-process-stack] .lf-process-step:nth-child(4) { animation-delay: .35s; }
+.lf-process[data-process-stack] .lf-process-step:nth-child(5) { animation-delay: .45s; }
+
+/* HET ANKER: groot serif-cijfer in cursief, donkergrijs naar accent gradient */
+.lf-process[data-process-stack] .lf-process-num {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 0 8px !important;
+  display: block !important;
+  font-family: 'Instrument Serif', 'Bricolage Grotesque', serif !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  font-size: clamp(64px, 6.2vw, 96px) !important;
+  line-height: 0.95 !important;
+  color: var(--accent) !important;
+  letter-spacing: -0.04em !important;
+  position: relative !important;
+}
+/* Subtiel "kruisje" decoratie naast cijfer — als blauwdruk marker */
+.lf-process[data-process-stack] .lf-process-num::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  background:
+    linear-gradient(currentColor, currentColor) center/100% 1px no-repeat,
+    linear-gradient(currentColor, currentColor) center/1px 100% no-repeat;
+  opacity: 0.35;
+}
+.lf-process[data-process-stack] .lf-process-step h5 {
+  font-family: var(--font-display);
+  font-size: clamp(15px, 1.2vw, 17px) !important;
+  color: var(--navy) !important;
+  margin: 0 !important;
+  line-height: 1.3 !important;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.lf-process[data-process-stack] .lf-process-step p {
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+  color: var(--ink-soft) !important;
+  margin: 0 !important;
+}
+.lf-process[data-process-stack] .lf-process-time {
+  font-family: 'DM Sans', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  color: var(--ink-mute) !important;
+  margin-top: 6px !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.lf-process[data-process-stack] .lf-process-time::before {
+  content: '';
+  width: 18px;
+  height: 1px;
+  background: var(--accent);
+  display: inline-block;
+}
+.lf-process[data-process-stack] .lf-process-line { display: none !important; }
+@media (max-width: 900px) {
+  .lf-process[data-process-stack] {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+  .lf-process[data-process-stack]::before {
+    top: 0;
+    bottom: 0;
+    left: 16px;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+  .lf-process[data-process-stack] .lf-process-step {
+    padding-left: 90px !important;
+    position: relative !important;
+  }
+  .lf-process[data-process-stack] .lf-process-num {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    font-size: 56px !important;
+  }
+}
+
+/* Zes specialisaties — fotografische tiles met overlay-titels (BESIX/DBM
+   aannemers-website stijl). Foto dominanteren, alles in 1 klik bereikbaar. */
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
+  position: relative !important;
+  display: block !important;
+  background: var(--navy) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+  text-decoration: none;
+  aspect-ratio: 4/5 !important;
+  height: auto !important;
+  animation: lf-svc-in .7s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes lf-svc-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:nth-child(1) .lf-svc-card { animation-delay: 0s; }
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:nth-child(2) .lf-svc-card { animation-delay: .08s; }
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:nth-child(3) .lf-svc-card { animation-delay: .16s; }
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:nth-child(4) .lf-svc-card { animation-delay: .24s; }
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:nth-child(5) .lf-svc-card { animation-delay: .32s; }
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:nth-child(6) .lf-svc-card { animation-delay: .40s; }
+
+/* Foto vult de hele card, gradient-overlay onderaan voor leesbaarheid */
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img {
+  position: absolute !important;
+  inset: 0 !important;
+  aspect-ratio: auto !important;
+  overflow: hidden;
+  border-radius: 0 !important;
+  z-index: 1;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(.22,1,.36,1) !important;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover .lf-svc-img img {
+  transform: scale(1.08) !important;
+}
+/* Donkere gradient overlay onderaan voor witte tekst leesbaarheid */
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 75%;
+  background: linear-gradient(180deg, rgba(10,15,28,0) 0%, rgba(10,15,28,0.45) 40%, rgba(10,15,28,0.92) 100%);
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover .lf-svc-img::after {
+  opacity: 0.85;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .8s cubic-bezier(.22,1,.36,1) !important;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover .lf-svc-img img {
+  transform: scale(1.07) !important;
+}
+/* Badge in top-right hoek met oranje icoon — discreet maar herkenbaar */
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(8px);
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  transition: transform .35s ease;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-badge svg {
+  width: 22px;
+  height: 22px;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover .lf-svc-badge {
+  background: var(--accent);
+  color: #fff;
+  transform: scale(1.05);
+}
+/* Nummer als label top-left — discreet */
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-num {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  padding: 0;
+  background: transparent;
+  color: rgba(255,255,255,0.92);
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  box-shadow: none;
+  backdrop-filter: none;
+  z-index: 3;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-num::before {
+  content: '';
+  display: inline-block;
+  width: 22px;
+  height: 1px;
+  background: var(--accent);
+  vertical-align: middle;
+  margin-right: 10px;
+  margin-bottom: 2px;
+}
+/* Body zit OVER de foto, onderaan, met witte tekst op gradient */
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-body {
+  position: absolute !important;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 28px !important;
+  display: flex !important;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 3;
+  color: #fff;
+  transform: translateY(0);
+  transition: transform .4s cubic-bezier(.22,1,.36,1);
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-body h4 {
+  font-family: var(--font-display) !important;
+  font-size: clamp(20px, 1.8vw, 24px) !important;
+  color: #fff !important;
+  margin: 0 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.018em;
+  line-height: 1.15;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-body p {
+  font-size: 13.5px !important;
+  line-height: 1.55 !important;
+  color: rgba(255,255,255,0.85) !important;
+  margin: 0 !important;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-6px);
+  transition: max-height .45s cubic-bezier(.22,1,.36,1), opacity .35s ease .05s, transform .45s cubic-bezier(.22,1,.36,1);
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover .lf-svc-body p {
+  max-height: 100px;
+  opacity: 1;
+  transform: translateY(0);
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-link {
+  margin-top: 12px !important;
+  padding-top: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  width: fit-content;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity .3s ease .1s, transform .35s cubic-bezier(.22,1,.36,1) .05s, gap .3s ease;
+}
+.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover .lf-svc-link {
+  opacity: 1;
+  transform: translateY(0);
+  gap: 12px;
+}
+
+/* Projecten die de tand des tijds doorstaan — verbeter de grid */
+.lf-projects-grid {
+  gap: 24px !important;
+}
+.lf-projects-grid .lf-project-card {
+  transition: transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s cubic-bezier(.22,1,.36,1);
+}
+.lf-projects-grid .lf-project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 30px 60px -22px rgba(15,17,21,0.30);
+}
 `;
 
 export default function Home() {
   useEffect(() => {
-    document.title = "AB Bouw Group, Vakkundige bouw en renovatie in Vlaanderen";
+    document.title = "AB Bouw Groep, Vakkundige bouw en renovatie in Vlaanderen";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', "AB Bouw Group: Vlaams familiebedrijf voor bouw en renovatie sinds 2010. Eigen vakmensen, vaste projectleider, vaste prijs.");
+    m.setAttribute('content', "AB Bouw Groep: Vlaams familiebedrijf voor bouw en renovatie sinds 2010. Eigen vakmensen, vaste projectleider, vaste prijs.");
     const prevClass = document.body.className;
     document.body.className = "";
     const styleEl = document.createElement('style');
     styleEl.textContent = EXTRA_STYLE;
     document.head.appendChild(styleEl);
+
+    // JS sticky-stack — herbruikbaar voor meerdere secties (Zes specialisaties,
+    // Vier zekerheden, ...). Pure layout-math via offsetTop, geen bouncing
+    // tegen Lenis. Wordt op mobile (≤900px) uitgeschakeld.
+    const setupStickyStack = (
+      gridSelector: string,
+      cardSelector: string,
+      opts: { base?: number; step?: number } = {}
+    ) => {
+      if (window.matchMedia('(max-width: 900px)').matches) return () => {};
+      const grid = document.querySelector<HTMLElement>(gridSelector);
+      if (!grid) return () => {};
+      const cards = Array.from(grid.querySelectorAll<HTMLElement>(cardSelector));
+      if (cards.length < 2) return () => {};
+      const stackBase = opts.base ?? 96;
+      const stackStep = opts.step ?? 14;
+
+      cards.forEach((c) => {
+        c.style.position = 'relative';
+        c.style.top = 'auto';
+        c.style.willChange = 'transform';
+      });
+
+      // Bereken absolute document-top van een element (recursief offsetTop)
+      const docTop = (el: HTMLElement): number => {
+        let y = 0;
+        let cur: HTMLElement | null = el;
+        while (cur) {
+          y += cur.offsetTop;
+          cur = cur.offsetParent as HTMLElement | null;
+        }
+        return y;
+      };
+
+      let layout = { gridTop: 0, gridHeight: 0, cardTops: [] as number[], cardHeights: [] as number[] };
+      const measure = () => {
+        const gt = docTop(grid);
+        layout = {
+          gridTop: gt,
+          gridHeight: grid.offsetHeight,
+          cardTops: cards.map((c) => docTop(c) - gt),
+          cardHeights: cards.map((c) => c.offsetHeight),
+        };
+      };
+
+      let frame = 0;
+      const update = () => {
+        frame = 0;
+        const scrollY = window.scrollY || window.pageYOffset;
+
+        cards.forEach((card, i) => {
+          const target = stackBase + i * stackStep;
+          const cardDocTop = layout.gridTop + layout.cardTops[i];
+          // Hoeveel moet de card omhoog vertaald worden om bij viewport-y=target te blijven?
+          let translate = Math.max(0, scrollY + target - cardDocTop);
+          // Loslaten wanneer grid-bottom voorbij is
+          const gridDocBottom = layout.gridTop + layout.gridHeight;
+          const maxStickyDocPos = gridDocBottom - layout.cardHeights[i];
+          const wouldBeDocPos = cardDocTop + translate;
+          if (wouldBeDocPos > maxStickyDocPos) {
+            translate = Math.max(0, maxStickyDocPos - cardDocTop);
+          }
+          card.style.transform = `translate3d(0, ${translate}px, 0)`;
+          card.style.zIndex = String(10 + i);
+        });
+      };
+
+      const onScroll = () => {
+        if (frame) return;
+        frame = requestAnimationFrame(update);
+      };
+      const onResize = () => {
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          cards.forEach((c) => { c.style.transform = ''; });
+          return;
+        }
+        measure();
+        update();
+      };
+
+      // Initial measure — wacht tot images geladen zijn voor accurate heights
+      measure();
+      update();
+      const imgs = grid.querySelectorAll('img');
+      imgs.forEach((img) => {
+        if (!img.complete) img.addEventListener('load', () => { measure(); update(); }, { once: true });
+      });
+
+      // Lenis-synchroon: update OP elke Lenis-frame i.p.v. losse native scroll-events.
+      // Native scroll-events vuren niet tijdens Lenis' interpolatie → cards stuiteren.
+      type LenisLike = { on: (ev: string, cb: () => void) => void; off?: (ev: string, cb: () => void) => void };
+      const lenis = (window as unknown as { __lenis?: LenisLike }).__lenis;
+      if (lenis && typeof lenis.on === 'function') {
+        lenis.on('scroll', update);
+      } else {
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }
+      window.addEventListener('resize', onResize);
+
+      return () => {
+        if (frame) cancelAnimationFrame(frame);
+        if (lenis && typeof lenis.off === 'function') lenis.off('scroll', update);
+        else window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('resize', onResize);
+        cards.forEach((c) => {
+          c.style.transform = '';
+          c.style.zIndex = '';
+          c.style.willChange = '';
+          c.style.position = '';
+          c.style.top = '';
+        });
+      };
+    };
+    // Sticky-stack JS uitgeschakeld — voelt stuiterig op desktop.
+    // De secties (Zes specialisaties, Vier zekerheden, Werkwijze) renderen
+    // nu als nette static grids dankzij CSS-overrides in EXTRA_STYLE_OVERRIDES.
+    const stickyCleanup = () => {};
 
     // Services nav: scroll to card on click + active state on scroll
     const svcNavSetup = () => {
@@ -1608,7 +2468,43 @@ export default function Home() {
     };
     const blogCleanup = blogCarouselSetup();
 
-    return () => { document.body.className = prevClass; styleEl.remove(); svcNavCleanup(); blogCleanup(); };
+    // Newsletter form — POST naar GHL Inbound Webhook met bron_lead='newsletter'
+    const newsletterForm = document.querySelector<HTMLFormElement>('[data-newsletter-form]');
+    const onNewsletterSubmit = async (e: SubmitEvent) => {
+      e.preventDefault();
+      if (!newsletterForm) return;
+      const emailInput = newsletterForm.querySelector<HTMLInputElement>('input[type="email"]');
+      const submitBtn = newsletterForm.querySelector<HTMLButtonElement>('button[type="submit"]');
+      if (!emailInput || !emailInput.checkValidity()) {
+        emailInput?.reportValidity();
+        return;
+      }
+      if (submitBtn) submitBtn.disabled = true;
+      const result = await submitLead({
+        source: 'newsletter',
+        page_path: window.location.pathname,
+        email: emailInput.value,
+        bron_lead: 'website_newsletter',
+        aanvullende_info: 'Inschrijving via nieuwsbrief-formulier op homepage',
+      });
+      if (submitBtn) submitBtn.disabled = false;
+      if (result.ok) {
+        newsletterForm.classList.add('is-success');
+        emailInput.value = '';
+      } else {
+        newsletterForm.classList.add('is-success'); // soft fallback: toon thank-you, error logt al via console
+      }
+    };
+    newsletterForm?.addEventListener('submit', onNewsletterSubmit);
+
+    return () => {
+      document.body.className = prevClass;
+      styleEl.remove();
+      svcNavCleanup();
+      blogCleanup();
+      stickyCleanup();
+      newsletterForm?.removeEventListener('submit', onNewsletterSubmit);
+    };
   }, []);
 
   useAbBouwInteractions();

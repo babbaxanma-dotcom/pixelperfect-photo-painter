@@ -263,7 +263,7 @@ ${FOOTER}
 
 export default function Bad() {
   useEffect(() => {
-    document.title = 'AB Bad & Wellness, badkamerrenovatie in 4 weken | AB Bouw Group';
+    document.title = 'AB Bad & Wellness, badkamerrenovatie in 4 weken | AB Bouw Groep';
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', 'Sleutel-op-de-deur badkamers en wellness, klaar in vier weken. Eigen tegelzetter, loodgieter en elektricien. Vaste prijs op 3D-ontwerp.');

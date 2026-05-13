@@ -30,10 +30,10 @@ ${buildHero({
       <div data-reveal>
         <span class="lf-eyebrow">Wie we zijn</span>
         <h2 class="lf-h2">Een familiebedrijf<br/>met vakmensen in dienst.</h2>
-        <p class="lf-lede">AB Bouw Group is geen tussenpersoon en geen losse bende onderaannemers. Onze metselaars, dakdekkers, tegelzetters en schrijnwerkers staan op onze eigen loonlijst. Daardoor kunnen we instaan voor één planning, één prijs en één kwaliteitsstandaard, van de eerste schop tot de laatste plint.</p>
+        <p class="lf-lede">AB Bouw Groep is geen tussenpersoon en geen losse bende onderaannemers. Onze metselaars, dakdekkers, tegelzetters en schrijnwerkers staan op onze eigen loonlijst. Daardoor kunnen we instaan voor één planning, één prijs en één kwaliteitsstandaard, van de eerste schop tot de laatste plint.</p>
         <p class="lf-lede">Onze klanten zijn particulieren die hun gezinswoning bouwen of grondig renoveren, architecten die een uitvoerder zoeken die meedenkt, en kleine ondernemers die hun zaak laten verbouwen zonder de zaak stil te leggen. Wat ze gemeen hebben: ze willen één aanspreekpunt en een resultaat dat lang meegaat.</p>
       </div>
-      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${about}" alt="AB Bouw Group ploeg op de werf in Willebroek" loading="lazy"/></div>
+      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${about}" alt="AB Bouw Groep ploeg op de werf in Willebroek" loading="lazy"/></div>
     </div>
   </div>
 </section>
@@ -161,29 +161,11 @@ ${buildHero({
   </div>
 </section>
 
-<!-- TIJDLIJN -->
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
-      <span class="lf-eyebrow">Vijftien jaar bouwen</span>
-      <h2 class="lf-h2">Ons verhaal,<br/>jaar per jaar.</h2>
-    </div>
-    <div class="ab-timeline">
-      <div class="ab-tl" data-reveal><div class="ab-tl-year">2010</div><div class="ab-tl-body"><h5>De eenmanszaak</h5><p>Anthony start als zelfstandig metselaar in Willebroek met één bestelwagen, een stelling en een handvol vaste klanten uit de buurt.</p></div></div>
-      <div class="ab-tl" data-reveal data-reveal-delay="1"><div class="ab-tl-year">2013</div><div class="ab-tl-body"><h5>Eerste vaste medewerkers</h5><p>Twee vaste metselaars in dienst, een tweede bestelwagen, en een eigen werkplaats voor schrijnwerk in een loods in Boom.</p></div></div>
-      <div class="ab-tl" data-reveal data-reveal-delay="2"><div class="ab-tl-year">2016</div><div class="ab-tl-body"><h5>AB Dakwerken</h5><p>Een eigen dakploeg vervoegt het bedrijf. Vanaf nu wordt elk dak door eigen mensen geplaatst, met eigen verzekering en garantie.</p></div></div>
-      <div class="ab-tl" data-reveal data-reveal-delay="3"><div class="ab-tl-year">2019</div><div class="ab-tl-body"><h5>VCA*-certificering</h5><p>De volledige ploeg behaalt het VCA*-attest. Veiligheid op de werf wordt formeel geborgd, niet alleen vanzelfsprekend.</p></div></div>
-      <div class="ab-tl" data-reveal data-reveal-delay="4"><div class="ab-tl-year">2022</div><div class="ab-tl-body"><h5>AB Ecologisch</h5><p>Met de groeiende vraag naar warmtepompen, isolatie en zonnepanelen splitsen we de energetische renovaties af in een eigen divisie.</p></div></div>
-      <div class="ab-tl" data-reveal data-reveal-delay="5"><div class="ab-tl-year">2025</div><div class="ab-tl-body"><h5>Zes specialisaties, één dak</h5><p>Construct, Ecologisch, Interieurwerken, Dakwerken, Bad &amp; Wellness en Gevelbekleding. Samen 23 vakmensen in vaste dienst.</p></div></div>
-    </div>
-  </div>
-</section>
-
 <!-- VERHAAL / FOTO BAND -->
 <section class="lf-section ab-story lf-tone-soft">
   <div class="wrap">
     <div class="lf-split">
-      <div class="lf-split-img" data-reveal><img src="${why}" alt="Werf AB Bouw Group in uitvoering" loading="lazy"/></div>
+      <div class="lf-split-img" data-reveal><img src="${why}" alt="Werf AB Bouw Groep in uitvoering" loading="lazy"/></div>
       <div data-reveal data-reveal-delay="1">
         <span class="lf-eyebrow">Onze werkregio</span>
         <h2 class="lf-h2">Vlaams gebouwd,<br/>lokaal verankerd.</h2>
@@ -325,10 +307,10 @@ ${FOOTER}
 
 export default function OverOns() {
   useEffect(() => {
-    document.title = "Over ons | AB Bouw Group | 15 jaar Vlaams vakmanschap";
+    document.title = "Over ons | AB Bouw Groep | 15 jaar Vlaams vakmanschap";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', "Maak kennis met AB Bouw Group: 15 jaar ervaring, 6 specialisaties, 23 vakmensen in vaste dienst. VCA*-gecertificeerd familiebedrijf uit Willebroek.");
+    m.setAttribute('content', "Maak kennis met AB Bouw Groep: 15 jaar ervaring, 6 specialisaties, 23 vakmensen in vaste dienst. VCA*-gecertificeerd familiebedrijf uit Willebroek.");
     const prev = document.body.className;
     document.body.className = "";
     const styleEl = document.createElement('style');

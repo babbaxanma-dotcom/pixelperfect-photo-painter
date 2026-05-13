@@ -296,7 +296,7 @@ ${FOOTER}
 
 export default function Construct() {
   useEffect(() => {
-    document.title = "AB Construct, algemene aanneming en sleutel-op-de-deur | AB Bouw Group";
+    document.title = "AB Construct, algemene aanneming en sleutel-op-de-deur | AB Bouw Groep";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', "Nieuwbouw, totaalrenovatie, aan- en uitbouw en casco-bouw. Eén projectleider, vaste prijs, eigen ploegen, 10 jaar garantie.");

@@ -409,7 +409,7 @@ ${FOOTER}
 
 export default function Interieur() {
   useEffect(() => {
-    document.title = "AB Interieurwerken, gyproc, vloeren, maatkasten & schrijnwerk | AB Bouw Group";
+    document.title = "AB Interieurwerken, gyproc, vloeren, maatkasten & schrijnwerk | AB Bouw Groep";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', "Interieurafwerking door eigen vakmensen: gyproc, pleisterwerk, parket, gietvloer, maatkasten, trappen en hoge binnendeuren. Strak afgewerkt tot in de plint.");

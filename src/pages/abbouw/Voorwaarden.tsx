@@ -12,7 +12,7 @@ ${NAV}
     <div style="max-width: 800px;">
       <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span class="current">Algemene voorwaarden</span></div>
       <h1>Algemene Voorwaarden</h1>
-      <p class="page-hero-lede">De algemene verkoops- en uitvoeringsvoorwaarden van AB Bouw Group.</p>
+      <p class="page-hero-lede">De algemene verkoops- en uitvoeringsvoorwaarden van AB Bouw Groep.</p>
       <p style="font-size:13px; color: var(--ink-mute); margin-top: 8px;">Van toepassing vanaf januari 2026 · BTW BE 0XXX.XXX.XXX</p>
     </div>
   </div>
@@ -24,24 +24,24 @@ ${NAV}
 
       <div>
         <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 1, Toepassingsgebied</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Deze algemene voorwaarden zijn van toepassing op alle offertes, overeenkomsten en uitvoering van werken door AB Bouw Group (BTW BE 0XXX.XXX.XXX), gevestigd te Dokter Persoonslaan 33, 2830 Willebroek. Door het aanvaarden van een offerte aanvaardt de opdrachtgever deze voorwaarden in hun geheel.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7;">Deze algemene voorwaarden zijn van toepassing op alle offertes, overeenkomsten en uitvoering van werken door AB Bouw Groep (BTW BE 0XXX.XXX.XXX), gevestigd te Industrieweg 14, 2830 Willebroek. Door het aanvaarden van een offerte aanvaardt de opdrachtgever deze voorwaarden in hun geheel.</p>
       </div>
 
       <div>
         <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 2, Offertes en bestellingen</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Alle offertes zijn vrijblijvend en geldig gedurende 30 kalenderdagen na datum van uitgifte, tenzij anders vermeld. Een overeenkomst komt tot stand na schriftelijke aanvaarding van de offerte door de opdrachtgever én bevestiging door AB Bouw Group.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7;">Alle offertes zijn vrijblijvend en geldig gedurende 30 kalenderdagen na datum van uitgifte, tenzij anders vermeld. Een overeenkomst komt tot stand na schriftelijke aanvaarding van de offerte door de opdrachtgever én bevestiging door AB Bouw Groep.</p>
         <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">De in de offerte vermelde prijs is een vaste prijs. Meerwerken die door de opdrachtgever worden aangevraagd, worden steeds schriftelijk bevestigd vóór uitvoering en gefactureerd aan de geldende dagprijs.</p>
       </div>
 
       <div>
         <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 3, Uitvoering van werken</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">AB Bouw Group verbindt er zich toe de werken uit te voeren volgens de regels van goed vakmanschap en de geldende normen (STS, bestek, …). De opgegeven uitvoeringstermijnen zijn indicatief. Vertragingen te wijten aan overmacht, weersinvloeden, leveringsproblemen of wijzigingen door de opdrachtgever geven geen recht op schadevergoeding.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7;">AB Bouw Groep verbindt er zich toe de werken uit te voeren volgens de regels van goed vakmanschap en de geldende normen (STS, bestek, …). De opgegeven uitvoeringstermijnen zijn indicatief. Vertragingen te wijten aan overmacht, weersinvloeden, leveringsproblemen of wijzigingen door de opdrachtgever geven geen recht op schadevergoeding.</p>
         <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">De opdrachtgever zorgt voor vrije toegang tot de werf, aanwezigheid van water en elektriciteit, en verwijdert persoonlijke bezittingen uit de werkzone vóór aanvang van de werken.</p>
       </div>
 
       <div>
         <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 4, Betaling</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Facturen zijn betaalbaar binnen 14 kalenderdagen na factuurdatum, tenzij anders overeengekomen. Bij niet-tijdige betaling is van rechtswege en zonder voorafgaande ingebrekestelling een verwijlintrest van 10% per jaar verschuldigd, met een minimum van €50 administratiekosten. Bij aanhoudende niet-betaling behoudt AB Bouw Group het recht de werken op te schorten.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7;">Facturen zijn betaalbaar binnen 14 kalenderdagen na factuurdatum, tenzij anders overeengekomen. Bij niet-tijdige betaling is van rechtswege en zonder voorafgaande ingebrekestelling een verwijlintrest van 10% per jaar verschuldigd, met een minimum van €50 administratiekosten. Bij aanhoudende niet-betaling behoudt AB Bouw Groep het recht de werken op te schorten.</p>
         <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Standaard betalingsschema: 30% bij ondertekening · 40% bij ruwbouw/aanvang afwerking · 30% bij oplevering.</p>
       </div>
 
@@ -52,22 +52,22 @@ ${NAV}
 
       <div>
         <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 6, Garantie</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">AB Bouw Group verleent een commerciële garantie van 15 jaar op alle door haar uitgevoerde werken, ruimschoots boven de wettelijke tienjarige aansprakelijkheid (art. 1792 B.W.). Na 1 jaar na oplevering volgt een vrijblijvende inspectieronde. De garantie vervalt bij onoordeelkundig gebruik, wijzigingen door derden, of niet-betaling van openstaande facturen.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7;">AB Bouw Groep verleent een commerciële garantie van 15 jaar op alle door haar uitgevoerde werken, ruimschoots boven de wettelijke tienjarige aansprakelijkheid (art. 1792 B.W.). Na 1 jaar na oplevering volgt een vrijblijvende inspectieronde. De garantie vervalt bij onoordeelkundig gebruik, wijzigingen door derden, of niet-betaling van openstaande facturen.</p>
       </div>
 
       <div>
         <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 7, Aansprakelijkheid</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">De aansprakelijkheid van AB Bouw Group is beperkt tot het bedrag van de uitgevoerde werken, met een maximum van de verzekerde bedragen. AB Bouw Group is niet aansprakelijk voor onrechtstreekse schade, gevolgschade of schade door overmacht.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7;">De aansprakelijkheid van AB Bouw Groep is beperkt tot het bedrag van de uitgevoerde werken, met een maximum van de verzekerde bedragen. AB Bouw Groep is niet aansprakelijk voor onrechtstreekse schade, gevolgschade of schade door overmacht.</p>
       </div>
 
       <div>
         <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 8, Annulatie</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Bij annulatie door de opdrachtgever na ondertekening van de overeenkomst is een forfaitaire schadevergoeding verschuldigd van 20% van het totale aanneemsom, onverminderd het recht van AB Bouw Group om hogere bewezen schade te vorderen.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7;">Bij annulatie door de opdrachtgever na ondertekening van de overeenkomst is een forfaitaire schadevergoeding verschuldigd van 20% van het totale aanneemsom, onverminderd het recht van AB Bouw Groep om hogere bewezen schade te vorderen.</p>
       </div>
 
       <div>
         <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 9, Toepasselijk recht en bevoegde rechtbank</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Alle overeenkomsten met AB Bouw Group worden beheerst door het Belgisch recht. Bij geschillen zijn uitsluitend de rechtbanken van het arrondissement Mechelen bevoegd.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7;">Alle overeenkomsten met AB Bouw Groep worden beheerst door het Belgisch recht. Bij geschillen zijn uitsluitend de rechtbanken van het arrondissement Mechelen bevoegd.</p>
       </div>
 
       <div style="background: var(--bg-soft); border-radius: var(--r-md); padding: 28px;">
@@ -85,10 +85,10 @@ const EXTRA_STYLE = SHELL_STYLE + ``;
 
 export default function Voorwaarden() {
   useEffect(() => {
-    document.title = "Algemene Voorwaarden | AB Bouw Group";
+    document.title = "Algemene Voorwaarden | AB Bouw Groep";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', "");
+    m.setAttribute('content', "Algemene voorwaarden AB Bouw Groep voor bouw- en renovatieprojecten in Vlaanderen. Offerte-, uitvoerings- en betalingsvoorwaarden.");
 
     const prevClass = document.body.className;
     document.body.className = "";

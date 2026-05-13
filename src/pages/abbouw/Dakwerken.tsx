@@ -166,7 +166,7 @@ ${buildHero({
       <div data-reveal>
         <span class="lf-eyebrow">AB Dakwerken</span>
         <h2 class="lf-h2">Een dak is geen<br/><span class="ab-mark">quick fix</span>.</h2>
-        <p class="lf-lede">We bekijken uw dak als <span class="ab-hl" data-hl-delay="0">systeem</span>, niet als losse pannen. <span class="ab-hl" data-hl-delay="1">Eerlijk advies</span> over wat écht nodig is.</p>
+        <p class="lf-lede">We bekijken uw dak als <span class="ab-hl" data-hl-delay="0">systeem</span>, niet als losse pannen. <span class="ab-hl" data-hl-delay="1">Eerlijk advies</span> over wat écht nodig is. Actief in Willebroek, Mechelen, Antwerpen, Lier, Bornem en heel Vlaanderen.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen ploeg van 6 vaste dakdekkers</li>
           <li>Gratis dakinspectie met fotorapport</li>
@@ -340,10 +340,55 @@ ${FOOTER}
 
 export default function Dakwerken() {
   useEffect(() => {
-    document.title = "AB Dakwerken, Hellende & platte daken, dakisolatie | AB Bouw Group";
+    document.title = "Dakwerken Mechelen, Antwerpen & Vlaanderen — AB Bouw Groep";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', "Volledige dakvervanging, EPDM, leien, pannen, dakisolatie, zinkwerk en dakvensters. Eigen dakdekkers, 10 jaar garantie, premiedossier inbegrepen.");
+    m.setAttribute('content', "Dakwerken in Willebroek, Mechelen, Antwerpen en heel Vlaanderen. EPDM, leien, pannen, dakisolatie en zinkwerk door eigen dakdekkers. 10 jaar garantie, premiedossier inbegrepen.");
+
+    // Service schema voor lokale SEO
+    let ld = document.getElementById('jsonld-service-dakwerken');
+    if (!ld) {
+      ld = document.createElement('script');
+      ld.setAttribute('type', 'application/ld+json');
+      ld.id = 'jsonld-service-dakwerken';
+      ld.textContent = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Dakwerken",
+        "name": "AB Dakwerken — dakvervanging, dakisolatie en zinkwerk",
+        "description": "Hellende daken (pannen, leien) en platte daken (EPDM, bitumen, roofing). Dakisolatie tot K30. Zinkwerk en dakvensters. Eigen vaste dakploeg, 10 jaar garantie.",
+        "provider": {
+          "@type": "GeneralContractor",
+          "name": "AB Bouw Groep",
+          "url": "https://abgroep.be/",
+          "telephone": "+32470634413",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Industrieweg 14",
+            "postalCode": "2830",
+            "addressLocality": "Willebroek",
+            "addressCountry": "BE"
+          }
+        },
+        "areaServed": [
+          { "@type": "City", "name": "Willebroek" },
+          { "@type": "City", "name": "Mechelen" },
+          { "@type": "City", "name": "Antwerpen" },
+          { "@type": "City", "name": "Lier" },
+          { "@type": "City", "name": "Bornem" },
+          { "@type": "City", "name": "Puurs-Sint-Amands" },
+          { "@type": "City", "name": "Sint-Niklaas" },
+          { "@type": "City", "name": "Heist-op-den-Berg" },
+          { "@type": "AdministrativeArea", "name": "Vlaanderen" }
+        ],
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "EUR",
+          "priceRange": "€€"
+        }
+      });
+      document.head.appendChild(ld);
+    }
     const prev = document.body.className;
     document.body.className = "";
     const styleEl = document.createElement('style');

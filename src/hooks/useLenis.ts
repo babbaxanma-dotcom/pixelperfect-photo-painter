@@ -2,24 +2,21 @@ import { useEffect } from 'react';
 import Lenis from 'lenis';
 
 /**
- * Initialiseert Lenis smooth-scroll site-breed — voor alle bezoekers.
- * (Bewuste keuze van de opdrachtgever: de smooth-scroll/animaties blijven aan,
- *  ook als de bezoeker `prefers-reduced-motion` heeft staan.)
+ * Initialiseert Lenis smooth-scroll site-breed.
+ * Hooks ook alle in-page anchor-clicks (#hash, /pad#hash) zodat ze
+ * via Lenis vloeien i.p.v. de native instant-jump.
  */
 export function useLenis() {
   useEffect(() => {
     const lenis = new Lenis({
-      // Lerp-based smoothing. Lager = zwaarder/floaty (voelt laggy), hoger = snappy.
-      // 0.085 voelde sloom; 0.11 is buttery maar reageert direct op je input.
-      // (Let op: zodra `lerp` gezet is, negeert Lenis `duration`/`easing` — die zaten
-      //  hier nutteloos bij.)
       lerp: 0.11,
       smoothWheel: true,
-      // 0.95 maakte één muiswiel-notch te kort → "stroperig" gevoel. 1.0 = natuurlijk.
       wheelMultiplier: 1,
-      // touch blijft native — momentum op mobiel voelt al goed.
       touchMultiplier: 1,
     });
+
+    // Expose globaal voor componenten die programmatisch willen scrollen
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
 
     let rafId = 0;
     const raf = (time: number) => {
@@ -28,8 +25,25 @@ export function useLenis() {
     };
     rafId = requestAnimationFrame(raf);
 
+    // Anchor-link click handler: vang #hash + same-page CTA-buttons
+    const onAnchorClick = (e: MouseEvent) => {
+      const a = (e.target as HTMLElement)?.closest('a');
+      if (!a) return;
+      const href = a.getAttribute('href') || '';
+      // alleen pure in-page hashes ("#contact") of huidige pad + hash
+      if (!href.startsWith('#')) return;
+      if (href === '#') return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      lenis.scrollTo(target as HTMLElement, { offset: -80, duration: 1.2 });
+    };
+    document.addEventListener('click', onAnchorClick);
+
     return () => {
+      document.removeEventListener('click', onAnchorClick);
       cancelAnimationFrame(rafId);
+      (window as unknown as { __lenis?: Lenis }).__lenis = undefined;
       lenis.destroy();
     };
   }, []);

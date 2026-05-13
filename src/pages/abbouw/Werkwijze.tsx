@@ -71,7 +71,7 @@ ${buildHero({
   <div class="wrap">
     <div class="ab-quote" data-reveal>
       "We hebben in onze vijftien jaar ondervonden dat 90% van de problemen op een werf ontstaan door slechte communicatie. Niet door slechte uitvoering. Daarom investeren we evenveel in onze werkwijze als in onze vakmensen."
-      <footer>Zaakvoerder AB Bouw Group</footer>
+      <footer>Zaakvoerder AB Bouw Groep</footer>
     </div>
   </div>
 </section>
@@ -235,7 +235,7 @@ const STEP_REVEAL_CSS = `
 
 export default function Werkwijze() {
   useEffect(() => {
-    document.title = "Werkwijze | AB Bouw Group | 8 stappen van offerte tot oplevering";
+    document.title = "Werkwijze | AB Bouw Groep | 8 stappen van offerte tot oplevering";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', "Het volledige bouwtraject in 8 transparante stappen: plaatsbezoek, offerte, vergunning, werf, oplevering en nazorg. Vaste projectleider, vaste prijs.");

@@ -257,7 +257,7 @@ ${buildHero({
     <div class="ab-faq">
       <details data-reveal><summary>Werken jullie ook samen met mijn eigen architect?</summary><div class="ab-faq-body"><p>Ja, in ongeveer 70% van onze projecten werken we met de architect van de klant. We coördineren de uitvoeringsplannen, plannen werfvergaderingen mee en bezorgen de architect alle documenten voor de oplevering. Heeft u nog geen architect, dan kunnen we onze huisarchitect voorstellen.</p></div></details>
       <details data-reveal><summary>Hoe lang op voorhand moet ik reserveren?</summary><div class="ab-faq-body"><p>Voor een badkamer- of interieurproject rekenen we doorgaans 4 tot 8 weken tussen contracttekening en start werf. Voor totaalrenovaties of nieuwbouw rekenen we 3 tot 5 maanden, omdat vergunning, materiaalbestelling en planning meer tijd vergen. Spoedopdrachten kunnen we soms tussenschuiven, vraag het bij uw plaatsbezoek.</p></div></details>
-      <details data-reveal><summary>Krijg ik één prijs voor het volledige project?</summary><div class="ab-faq-body"><p>Ja. Wij geven één bindende offerte met meetstaat, ook als meerdere divisies betrokken zijn. U krijgt geen aparte rekeningen van metselaar, dakwerker en tegelzetter, alles loopt via AB Bouw Group, met één factuur per fase.</p></div></details>
+      <details data-reveal><summary>Krijg ik één prijs voor het volledige project?</summary><div class="ab-faq-body"><p>Ja. Wij geven één bindende offerte met meetstaat, ook als meerdere divisies betrokken zijn. U krijgt geen aparte rekeningen van metselaar, dakwerker en tegelzetter, alles loopt via AB Bouw Groep, met één factuur per fase.</p></div></details>
       <details data-reveal><summary>Wat als er onverwachte problemen opduiken tijdens de werf?</summary><div class="ab-faq-body"><p>Bij renovaties is dat soms onvermijdelijk: een verrotte balk, asbest in de oude vloer, een oude septische put. Wij stoppen dan de werf, documenteren het probleem met foto's, en geven u binnen 48 uur een aparte offerte voor het meerwerk. U beslist of we het meenemen of niet, pas na uw goedkeuring gaan we verder.</p></div></details>
       <details data-reveal><summary>Mag ik tijdens de werf op de werf komen?</summary><div class="ab-faq-body"><p>Uiteraard. We organiseren elke twee weken een werfvergadering waarop u welkom bent. Daarbuiten kan u na afspraak met de projectleider altijd langs. Veiligheidsschoenen en helm hebben we voor u klaar liggen.</p></div></details>
       <details data-reveal><summary>Wat als ik niet tevreden ben met een afgewerkt detail?</summary><div class="ab-faq-body"><p>Bij de oplevering maken we een lijst van eventuele punten ("verfopstoot in hoek", "deur sluit niet vlot"). Die punten lossen we op vóór de eindfactuur. Daarna geldt de wettelijke 10-jarige aansprakelijkheid op stabiliteit en waterdichtheid, plus 2 jaar op afwerking.</p></div></details>
@@ -273,7 +273,7 @@ ${FOOTER}
 
 export default function Diensten() {
   useEffect(() => {
-    document.title = "Diensten | AB Bouw Group | 6 bouwspecialisaties onder één dak";
+    document.title = "Diensten | AB Bouw Groep | 6 bouwspecialisaties onder één dak";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', "Construct, Ecologisch, Interieur, Dakwerken, Bad & Wellness, Gevelbekleding, alles onder één projectleider, één offerte, één factuur.");

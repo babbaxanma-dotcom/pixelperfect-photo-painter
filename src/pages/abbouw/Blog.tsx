@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
-import { buildNav, buildHero, FOOTER, SHELL_STYLE } from './_shell';
+import { buildNav, FOOTER, SHELL_STYLE } from './_shell';
 import { BLOGS } from '@/data/blogs';
-import heroBlog from '@/assets/home/hero-blog.jpg';
+// Hero-rotatie gebruikt de cover-foto's van de eerste 4 blog-posts
+const heroPics = BLOGS.slice(0, 4).map(b => b.img);
 
 const featured = BLOGS[0];
 const latest = BLOGS.slice(1, 4);
@@ -12,14 +13,39 @@ const topics = ['Alle', 'Renovatie', 'Energie', 'Bad & Wellness', 'Gevel', 'Inte
 const HTML = `
 ${buildNav('blog')}
 
-${buildHero({
-  bg: heroBlog,
-  eyebrow: 'Bouwblog',
-  title: 'Vakkennis en inzichten<br/>uit de Vlaamse bouwpraktijk.',
-  lede: 'Analyses, technische dossiers en praktijkervaringen van onze projectleiders, vakmensen en interieurarchitecten. Onderbouwde antwoorden op de vragen die u zich stelt vóór, tijdens en na de werken.',
-  primary: { label: 'Vraag een plaatsbezoek aan', href: '/contact' },
-  secondary: { label: 'Onze diensten →', href: '/diensten' },
-})}
+
+<!-- HERO met roterende blog-cover-foto's + extra-donkere overlay zoals andere subpages -->
+<section class="lf-hero lf-hero--blog">
+  <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
+    <img src="${heroPics[0]}" alt="Bouwblog AB Bouw Groep — renovatie en vakkennis in Vlaanderen" class="is-active" />
+    <img src="${heroPics[1]}" alt="" loading="lazy" />
+    <img src="${heroPics[2]}" alt="" loading="lazy" />
+    <img src="${heroPics[3]}" alt="" loading="lazy" />
+  </div>
+  <button type="button" class="lf-hero-arrow lf-hero-arrow--prev" data-hero-prev aria-label="Vorige foto">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button type="button" class="lf-hero-arrow lf-hero-arrow--next" data-hero-next aria-label="Volgende foto">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <div class="wrap lf-hero-wrap">
+    <div class="lf-hero-card" data-reveal>
+      <span class="lf-eyebrow">Bouwblog</span>
+      <h1>Vakkennis en inzichten<br/>uit de Vlaamse bouwpraktijk.</h1>
+      <p>Analyses, technische dossiers en praktijkervaringen van onze projectleiders, vakmensen en interieurarchitecten. Onderbouwde antwoorden op de vragen die u zich stelt vóór, tijdens en na de werken.</p>
+      <div class="lf-hero-actions">
+        <a href="/contact#contact-form" data-route="/contact#contact-form" class="lf-cta-pill">
+          <span>Vraag een plaatsbezoek aan</span>
+          <span class="lf-cta-pill-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+        <a href="/diensten" data-route="/diensten" class="lf-btn-ghost">Onze diensten →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <section class="lf-section lf-blog-editorial">
   <div class="wrap">
@@ -104,7 +130,7 @@ ${FOOTER}
 
 export default function Blog() {
   useEffect(() => {
-    document.title = 'Bouwblog | AB Bouw Group';
+    document.title = 'Bouwblog | AB Bouw Groep';
     const prevClass = document.body.className;
     document.body.className = 'ab-body';
     const styleEl = document.createElement('style');
@@ -153,6 +179,35 @@ export default function Blog() {
 }
 
 const BLOG_STYLE = `
+/* Donkerdere overlay specifiek op blog-hero zodat tekst contrast pakt over
+   wisselende blog-cover-foto's (sommige zijn licht/wit-crepi). We doen 2 dingen:
+   (1) filter: brightness/saturation op de slide-images zelf, kan niet
+       overschreven worden door bestaande ::after !important rules;
+   (2) een tweede dark layer via een eigen ::before pseudo. */
+.lf-hero--blog .lf-hero-bg--slides img {
+  filter: brightness(0.55) saturate(0.85) !important;
+}
+/* Mobile: blog-hero compacter — niet fullscreen, gewoon een korte "kop". */
+@media (max-width: 900px) {
+  .lf-hero--blog { min-height: 360px !important; }
+  .lf-hero--blog .lf-hero-arrow { width: 40px; height: 40px; }
+  .lf-hero--blog .lf-hero-wrap { padding-top: 90px; padding-bottom: 30px; }
+  .lf-hero--blog .lf-hero-card { padding: 22px 22px 22px; }
+  .lf-hero--blog .lf-hero-card h1 { font-size: clamp(22px, 6vw, 28px); line-height: 1.2; }
+  .lf-hero--blog .lf-hero-card p { font-size: 13.5px; line-height: 1.55; }
+  .lf-hero--blog .lf-hero-actions { gap: 8px; }
+  .lf-hero--blog .lf-cta-pill { padding: 11px 18px; font-size: 13px; }
+}
+.lf-hero--blog .lf-hero-bg--slides::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(5,9,18,0.10) 0%, rgba(5,9,18,0.55) 100%),
+    radial-gradient(ellipse at center, rgba(5,9,18,0.10) 0%, rgba(5,9,18,0.55) 100%);
+}
 .lf-blog-hero { min-height: 100vh; min-height: 100svh; align-items: flex-end; }
 .lf-blog-hero .lf-hero-bg::after { background: linear-gradient(90deg, rgba(10,18,32,0.88) 0%, rgba(10,18,32,0.58) 46%, rgba(10,18,32,0.22) 100%) !important; }
 .lf-blog-hero-wrap { position: relative; z-index: 2; width: 100%; padding: 160px clamp(24px, 6vw, 96px) 110px; }

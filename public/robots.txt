@@ -13,4 +13,8 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://pixelperfect-photo-painter.lovable.app/sitemap.xml
+# Landing pages voor ads worden niet geïndexeerd — duplicate content
+# zou de Quality Score schaden en concurrentie tussen organisch+ads veroorzaken.
+Disallow: /lp/
+
+Sitemap: https://abgroep.be/sitemap.xml
