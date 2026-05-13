@@ -1331,32 +1331,6 @@ const EXTRA_STYLE = `
   .lf-hero-card { padding: 32px 24px; }
   .lf-blog-foot { flex-direction: column; align-items: flex-start; }
 
-  /* Mobile swipe hint — animated arrow pill, like big carousel sites */
-  .lf-services .lf-section-head::after,
-  .lf-reviews-section .lf-reviews-head::after {
-    content: 'Veeg opzij  \\2192';
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin: 18px auto 0;
-    padding: 11px 22px;
-    font-size: 12.5px;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: #fff;
-    background: #0a1628;
-    border: 2px solid #0a1628;
-    border-radius: 999px;
-    width: fit-content;
-    box-shadow: 0 14px 30px -10px rgba(10,22,40,0.45);
-    animation: lf-swipe-nudge 1.6s cubic-bezier(.22,.78,.27,1) infinite;
-  }
-  @keyframes lf-swipe-nudge {
-    0%, 100% { transform: translateX(0); }
-    45%      { transform: translateX(10px); }
-    70%      { transform: translateX(-2px); }
-  }
   .lf-services .lf-section-head { text-align: center; }
   .lf-reviews-section .lf-reviews-head { text-align: center; }
 }
