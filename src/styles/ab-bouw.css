@@ -6657,3 +6657,29 @@ body.menu-open .lf-nav {
     right: 8px !important;
   }
 }
+
+/* ============================================================
+   DIENSTEN page hero — compacter zodat de eerste dienst-card al
+   peept aan de onderkant van de viewport (geen fullscreen).
+   ============================================================ */
+body[data-route="/diensten"] .lf-hero,
+.lf-section.ab-svc-section ~ * .lf-hero,
+/* Fallback via location-specific overrides: nav `diensten` active */
+.lf-nav a.active[href="/diensten"] ~ * .lf-hero {
+  /* Niet nodig — gebruik unieke class voor zekerheid (zie hieronder) */
+}
+
+/* Markeer via een page-class: pas door JS te zetten of via body.is-subpage.
+   Eenvoudigste werkende oplossing: target via .lf-hero binnen Diensten via
+   een ab-toc-wrap als eerste broer-sectie (uniek voor Diensten). */
+body.is-subpage .lf-hero:has(+ .lf-section + .lf-section.ab-svc-section),
+body.is-subpage .lf-hero:has(+ .lf-section .ab-toc-wrap) {
+  min-height: 72vh !important;
+}
+@media (max-width: 900px) {
+  body.is-subpage .lf-hero:has(+ .lf-section + .lf-section.ab-svc-section),
+  body.is-subpage .lf-hero:has(+ .lf-section .ab-toc-wrap) {
+    min-height: 56vh !important;
+    min-height: 56dvh !important;
+  }
+}
