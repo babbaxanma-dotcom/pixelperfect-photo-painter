@@ -6596,3 +6596,28 @@ body.menu-open .lf-nav {
     border-color: transparent !important;
   }
 }
+
+/* ============================================================
+   HOME hero fullscreen op mobile — geen witte balken boven/onder.
+   Hero vult HET HELE scherm (100dvh) op telefoon.
+   ============================================================ */
+@media (max-width: 900px) {
+  /* Hero op Home (heeft .lf-hero-mini) vult heel het scherm */
+  body:not(.is-subpage) .lf-hero,
+  .lf-hero:has(.lf-hero-mini) {
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  /* Body geen padding boven die de hero zou kunnen wegduwen */
+  body:not(.is-subpage) {
+    margin: 0;
+    padding-top: 0;
+  }
+  /* Sectie ONDER de hero start vlak tegen de onderrand van de hero */
+  body:not(.is-subpage) .lf-hero + section,
+  body:not(.is-subpage) .lf-hero + .lf-section {
+    margin-top: 0 !important;
+  }
+}
