@@ -6494,3 +6494,43 @@ body:not(.is-subpage) .lf-nav .lf-nav-inner {
   transition: box-shadow 0.4s ease, transform 0.4s ease;
 }
 
+
+/* ============================================================
+   GLOBAL — geldt op ALLE pages (Home + subpages).
+   Mobile menu open: nav-pil verbergen (geen overlap met X-close)
+   + mm-footer SVG icons (geen emoji's meer) + bel-FAB op subpages.
+   ============================================================ */
+
+/* Nav-pil verbergen wanneer mobile menu open */
+body.mm-open .lf-nav,
+body.menu-open .lf-nav {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.2s ease !important;
+}
+
+/* Mobile menu footer links met SVG icons in cirkel-badge */
+.mm-foot-link {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--ink) !important;
+}
+.mm-foot-link .mm-foot-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(217, 140, 3, 0.10);
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.mm-foot-link:hover { color: var(--accent) !important; }
+.mm-foot-link:hover .mm-foot-ico {
+  background: var(--accent);
+  color: #fff;
+}
