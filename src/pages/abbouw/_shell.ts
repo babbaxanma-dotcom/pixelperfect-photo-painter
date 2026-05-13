@@ -748,14 +748,14 @@ ul.ab-checks li::before { content: '✓'; color: var(--accent); font-weight: 800
 /* Reveal animations: duidelijker scrollgevoel, content komt pas binnen bij scroll */
 [data-reveal] {
   opacity: 0;
-  transform: translate3d(0, 54px, 0) scale(0.982);
-  filter: blur(8px);
+  transform: translate3d(0, 36px, 0) scale(0.99);
+  filter: blur(4px);
   transition:
-    opacity 0.95s var(--ease-out-quart),
-    transform 0.95s var(--ease-out-quart),
-    filter 0.95s var(--ease-out-quart),
-    box-shadow 0.35s var(--ease-out-quart),
-    border-color 0.35s var(--ease-out-quart);
+    opacity 0.55s var(--ease-out-quart),
+    transform 0.55s var(--ease-out-quart),
+    filter 0.45s var(--ease-out-quart),
+    box-shadow 0.3s var(--ease-out-quart),
+    border-color 0.3s var(--ease-out-quart);
   transition-delay: var(--reveal-delay, 0ms);
   will-change: opacity, transform, filter;
 }
