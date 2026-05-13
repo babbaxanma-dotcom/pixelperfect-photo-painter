@@ -242,7 +242,7 @@ export const SHELL_STYLE = `
 .lf-hero-bg { position:absolute; inset:0; }
 .lf-hero-bg img { width:100%; height:100%; object-fit: cover; }
 .lf-hero-bg::after { content:''; position:absolute; inset:0; background: linear-gradient(90deg, rgba(10,22,40,0.6) 0%, rgba(10,22,40,0.2) 60%, transparent 100%); }
-.lf-hero-wrap { position: relative; z-index:2; padding-top: 160px; padding-bottom: 90px; display:block; max-width: none !important; margin: 0 !important; padding-left: clamp(24px, 6vw, 96px) !important; padding-right: clamp(24px, 6vw, 96px) !important; }
+.lf-hero-wrap { position: relative; z-index:2; padding-top: 180px; padding-bottom: 90px; display:block; max-width: none !important; margin: 0 !important; padding-left: clamp(24px, 6vw, 96px) !important; padding-right: clamp(24px, 6vw, 96px) !important; }
 .lf-hero-card { background: rgba(255,255,255,0.96); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.6); padding: 44px 42px; border-radius: 18px; width: 580px; max-width: 100%; box-shadow: 0 30px 80px -30px rgba(10,22,40,0.45); }
 .lf-hero-card h1 { font-family: var(--font-display); font-size: clamp(30px, 3.6vw, 44px); line-height:1.15; font-weight:700; letter-spacing:-0.02em; color: var(--navy); margin-bottom: 16px; }
 .lf-hero-card p { font-size: 15px; color: var(--ink-soft); line-height:1.7; margin-bottom: 26px; }
@@ -1313,12 +1313,12 @@ html { scroll-behavior: smooth; }
 /* --- Subpage hero compacter op mobile (NIET Home — die heeft .lf-hero-mini) --- */
 @media (max-width: 900px) {
   .lf-hero:not(:has(.lf-hero-mini)) {
-    min-height: 460px;
+    min-height: 480px;
     padding-top: 0;
   }
   /* Verhoog de hero-wrap top-padding zodat de nav-pil NIET over de white card valt */
   .lf-hero:not(:has(.lf-hero-mini)) .lf-hero-wrap {
-    padding-top: 110px !important;
+    padding-top: 130px !important;
     padding-bottom: 36px !important;
   }
   .lf-hero:not(:has(.lf-hero-mini)) .lf-hero-card {

@@ -19,4 +19,23 @@ export default defineConfig(({ mode }) => ({
     },
     dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime", "@tanstack/react-query", "@tanstack/query-core"],
   },
+  build: {
+    // Splits vendor-dependencies in eigen chunks zodat Vercel CDN ze
+    // langer cached en de hoofdbundle kleiner wordt voor first-paint.
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react-dom') || id.includes('react/')) return 'react-vendor';
+            if (id.includes('react-router')) return 'router';
+            if (id.includes('lenis')) return 'lenis';
+            if (id.includes('@radix-ui')) return 'radix';
+            if (id.includes('@tanstack')) return 'query';
+            return 'vendor';
+          }
+        },
+      },
+    },
+    chunkSizeWarningLimit: 600,
+  },
 }));
