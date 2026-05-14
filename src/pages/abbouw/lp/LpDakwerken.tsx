@@ -403,84 +403,187 @@ const LP_EXTRA = `
   .lp-blog-grid { grid-template-columns: 1fr; gap: 16px; }
 }
 
-/* ───────── 3D model placeholder + roof anatomy ───────── */
-.lp-3d-frame {
-  aspect-ratio: 16/9;
-  background: linear-gradient(135deg, #0a1628 0%, #14233a 100%);
-  border-radius: 18px;
-  position: relative;
-  overflow: hidden;
-  margin: 24px 0 32px;
-  isolation: isolate;
+/* ───────── ECHT werkende 3D dak-anatomy (CSS perspective + preserve-3d) ───────── */
+.lp-anatomy {
+  display: grid; grid-template-columns: 1.3fr 1fr;
+  gap: 48px; align-items: center;
+  margin: 32px 0;
 }
-.lp-3d-frame::before {
+.lp-anatomy-stage {
+  position: relative;
+  height: 480px;
+  perspective: 1400px;
+  perspective-origin: 50% 35%;
+  transform-style: preserve-3d;
+}
+.lp-anatomy-stage::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 90%, rgba(15,17,21,0.10) 0%, transparent 60%);
+  pointer-events: none;
+}
+.lp-anatomy-card {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 360px; height: 64px;
+  margin: -32px 0 0 -180px;
+  border-radius: 12px;
+  box-shadow: 0 18px 32px -12px rgba(10,22,40,0.35), 0 2px 6px rgba(10,22,40,0.12);
+  transform-style: preserve-3d;
+  transform: rotateX(58deg) translateZ(calc(var(--depth, 0) * 1px));
+  transition: transform .55s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, filter .35s ease;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 16px;
+  padding: 0 22px;
+  font-family: var(--font-display); font-weight: 600;
+  color: #fff;
+  overflow: hidden;
+}
+.lp-anatomy-card::after {
   content: ''; position: absolute; inset: 0;
   background:
-    radial-gradient(circle at 30% 40%, rgba(217,140,3,0.20) 0%, transparent 50%),
-    radial-gradient(circle at 70% 60%, rgba(46,212,122,0.10) 0%, transparent 50%);
-  animation: lp-3d-pulse 8s ease-in-out infinite;
+    repeating-linear-gradient(90deg, transparent 0 12px, rgba(255,255,255,0.06) 12px 13px);
+  pointer-events: none;
 }
-@keyframes lp-3d-pulse {
-  0%, 100% { transform: scale(1) translate3d(0,0,0); opacity: 0.7; }
-  50%      { transform: scale(1.1) translate3d(2%, -1%, 0); opacity: 1; }
+.lp-anatomy-card[data-layer="1"] { --depth: 150; background: linear-gradient(180deg, #c24f1f 0%, #8e3a13 100%); }
+.lp-anatomy-card[data-layer="2"] { --depth: 90;  background: linear-gradient(180deg, #8e623c 0%, #6e472a 100%); }
+.lp-anatomy-card[data-layer="3"] { --depth: 30;  background: linear-gradient(180deg, #2e3845 0%, #1a2129 100%); }
+.lp-anatomy-card[data-layer="4"] { --depth: -30; background: linear-gradient(180deg, #dbac3e 0%, #a37f23 100%); }
+.lp-anatomy-card[data-layer="5"] { --depth: -90; background: linear-gradient(180deg, #94999f 0%, #5e6470 100%); }
+.lp-anatomy-card[data-layer="6"] { --depth: -150; background: linear-gradient(180deg, #fafaf3 0%, #e0ddd4 100%); color: var(--navy); }
+.lp-anatomy-card:hover {
+  transform: rotateX(58deg) translateZ(calc(var(--depth, 0) * 1px + 70px)) translateY(-10px);
+  box-shadow: 0 32px 50px -16px rgba(10,22,40,0.45), 0 4px 12px rgba(10,22,40,0.15);
+  filter: brightness(1.08);
 }
-.lp-3d-frame::after {
-  content: ''; position: absolute; inset: 0;
-  background-image:
-    linear-gradient(0deg, transparent 49.5%, rgba(255,255,255,0.05) 50%, transparent 50.5%),
-    linear-gradient(90deg, transparent 49.5%, rgba(255,255,255,0.05) 50%, transparent 50.5%);
-  background-size: 48px 48px;
-  opacity: 0.6;
-}
-.lp-3d-placeholder {
-  position: absolute; inset: 0; z-index: 2;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  color: rgba(255,255,255,0.78);
-  gap: 10px;
-  text-align: center; padding: 0 24px;
-}
-.lp-3d-icon {
-  width: 64px; height: 64px; border-radius: 16px;
-  background: rgba(217,140,3,0.18);
-  border: 1px solid rgba(217,140,3,0.36);
-  display: inline-flex; align-items: center; justify-content: center;
-  color: var(--accent);
-  margin-bottom: 6px;
-  animation: lp-3d-icon-spin 12s linear infinite;
-}
-@keyframes lp-3d-icon-spin {
-  to { transform: rotate(360deg); }
-}
-.lp-3d-label { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: #fff; }
-.lp-3d-sub { font-size: 13px; letter-spacing: 0.02em; color: rgba(255,255,255,0.6); }
-.lp-3d-layers {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
-}
-.lp-3d-layer {
-  padding: 16px 18px;
-  background: #fff;
-  border: 1px solid var(--ink-line-soft);
-  border-radius: 12px;
-  font-size: 14px; color: var(--ink);
-  display: flex; align-items: center; gap: 14px;
-  transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
-  position: relative; overflow: hidden;
-}
-.lp-3d-layer::before {
-  content: ''; position: absolute; left: -100%; top: 0; bottom: 0; width: 100%;
-  background: linear-gradient(90deg, transparent, rgba(217,140,3,0.08), transparent);
-  transition: left .6s ease;
-}
-.lp-3d-layer:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 16px 36px -20px rgba(217,140,3,0.5); }
-.lp-3d-layer:hover::before { left: 100%; }
-.lp-3d-layer strong {
-  display: inline-flex; align-items: center; justify-content: center;
+.lp-anatomy-card-num {
   width: 30px; height: 30px; border-radius: 50%;
-  background: var(--accent); color: #fff;
+  background: rgba(255,255,255,0.20);
+  display: inline-flex; align-items: center; justify-content: center;
   font-size: 13px; font-weight: 700;
   flex-shrink: 0;
+  position: relative; z-index: 1;
 }
-@media (max-width: 760px) { .lp-3d-layers { grid-template-columns: 1fr; } }
+.lp-anatomy-card[data-layer="6"] .lp-anatomy-card-num {
+  background: rgba(10,22,40,0.10); color: var(--navy);
+}
+.lp-anatomy-card-label {
+  font-size: 14.5px; letter-spacing: -0.01em;
+  position: relative; z-index: 1;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Scroll-into-view: layers float up to their final position from below */
+@keyframes lp-anatomy-rise {
+  from {
+    transform: rotateX(58deg) translateZ(0) translateY(120px);
+    opacity: 0;
+  }
+  to {
+    transform: rotateX(58deg) translateZ(calc(var(--depth, 0) * 1px));
+    opacity: 1;
+  }
+}
+[data-reveal].revealed .lp-anatomy-card {
+  animation: lp-anatomy-rise 1s cubic-bezier(.22,1,.36,1) backwards;
+}
+[data-reveal].revealed .lp-anatomy-card[data-layer="6"] { animation-delay: 0.05s; }
+[data-reveal].revealed .lp-anatomy-card[data-layer="5"] { animation-delay: 0.15s; }
+[data-reveal].revealed .lp-anatomy-card[data-layer="4"] { animation-delay: 0.25s; }
+[data-reveal].revealed .lp-anatomy-card[data-layer="3"] { animation-delay: 0.35s; }
+[data-reveal].revealed .lp-anatomy-card[data-layer="2"] { animation-delay: 0.45s; }
+[data-reveal].revealed .lp-anatomy-card[data-layer="1"] { animation-delay: 0.55s; }
+
+.lp-anatomy-info {
+  padding: 32px;
+  background: #fafaf7;
+  border-radius: 16px;
+  border: 1px solid var(--ink-line-soft);
+}
+.lp-anatomy-info-eyebrow {
+  display: inline-block;
+  font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.lp-anatomy-info h3 {
+  font-family: var(--font-display);
+  font-size: 24px; color: var(--navy);
+  margin: 0 0 12px; letter-spacing: -0.015em;
+  font-weight: 700;
+}
+.lp-anatomy-info p {
+  color: var(--ink-soft);
+  font-size: 14.5px; line-height: 1.65; margin: 0 0 16px;
+}
+.lp-anatomy-info ul {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.lp-anatomy-info ul li {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13.5px; color: var(--ink-soft);
+}
+.lp-anatomy-info ul li::before {
+  content: ''; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .lp-anatomy { grid-template-columns: 1fr; gap: 28px; }
+  .lp-anatomy-stage { height: 400px; perspective: 1100px; }
+  .lp-anatomy-card { width: 300px; margin-left: -150px; }
+  .lp-anatomy-card[data-layer="1"] { --depth: 110; }
+  .lp-anatomy-card[data-layer="2"] { --depth: 66; }
+  .lp-anatomy-card[data-layer="3"] { --depth: 22; }
+  .lp-anatomy-card[data-layer="4"] { --depth: -22; }
+  .lp-anatomy-card[data-layer="5"] { --depth: -66; }
+  .lp-anatomy-card[data-layer="6"] { --depth: -110; }
+}
+
+/* ───────── Heat-loss pie chart (educational infographic) ───────── */
+.lp-heatloss { display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: center; }
+.lp-heatloss-chart { position: relative; width: 220px; height: 220px; flex-shrink: 0; }
+.lp-heatloss-chart svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.lp-heatloss-chart circle.bg { fill: none; stroke: var(--ink-line-soft); stroke-width: 22; }
+.lp-heatloss-chart circle.seg {
+  fill: none; stroke-width: 22;
+  stroke-dasharray: 0 999;
+  transition: stroke-dasharray 1.6s cubic-bezier(.22,1,.36,1);
+}
+[data-reveal].revealed .lp-heatloss-chart circle.seg.dak  { stroke-dasharray: var(--dak-len, 188) 999; }
+[data-reveal].revealed .lp-heatloss-chart circle.seg.muur { stroke-dasharray: var(--muur-len, 157) 999; transition-delay: .2s; }
+[data-reveal].revealed .lp-heatloss-chart circle.seg.glas { stroke-dasharray: var(--glas-len, 94) 999; transition-delay: .4s; }
+[data-reveal].revealed .lp-heatloss-chart circle.seg.vloer { stroke-dasharray: var(--vloer-len, 94) 999; transition-delay: .6s; }
+[data-reveal].revealed .lp-heatloss-chart circle.seg.vent { stroke-dasharray: var(--vent-len, 94) 999; transition-delay: .8s; }
+.lp-heatloss-chart-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  pointer-events: none;
+}
+.lp-heatloss-chart-num {
+  font-size: 38px; font-weight: 700; color: var(--accent);
+  letter-spacing: -0.02em; line-height: 1;
+}
+.lp-heatloss-chart-sub {
+  font-size: 11.5px; font-weight: 500; color: var(--ink-mute);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-top: 4px;
+}
+.lp-heatloss-legend { display: grid; gap: 10px; }
+.lp-heatloss-legend-item {
+  display: grid; grid-template-columns: 14px 1fr auto; align-items: center; gap: 10px;
+  font-size: 14px; color: var(--ink);
+}
+.lp-heatloss-legend-item .dot {
+  width: 12px; height: 12px; border-radius: 3px;
+}
+.lp-heatloss-legend-item .pct { font-weight: 700; color: var(--ink-soft); }
+@media (max-width: 720px) {
+  .lp-heatloss { grid-template-columns: 1fr; gap: 24px; }
+  .lp-heatloss-chart { margin: 0 auto; }
+}
 
 /* ───────── Stats count-up animation ───────── */
 .lp-stat-num {
@@ -844,7 +947,37 @@ const HTML = `
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </a>
       </div>
-      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgPirIsolatie}" alt="PIR-isolatieplaten tussen dakkepers — geplaatst tijdens dakrenovatie" loading="lazy"/></div>
+      <div data-reveal data-reveal-delay="1">
+        <div class="lp-heatloss">
+          <div class="lp-heatloss-chart">
+            <svg viewBox="0 0 100 100">
+              <!-- Total circumference at r=40 ≈ 251.3 -->
+              <circle class="bg" cx="50" cy="50" r="40"/>
+              <!-- Dak 30% = 75.4 -->
+              <circle class="seg dak"  cx="50" cy="50" r="40" stroke="#d98c03" style="--dak-len: 75.4"/>
+              <!-- Muren 25% = 62.8 (offset 75.4) -->
+              <circle class="seg muur" cx="50" cy="50" r="40" stroke="#0a1628" style="--muur-len: 62.8" stroke-dashoffset="-75.4"/>
+              <!-- Ramen 15% = 37.7 (offset 138.2) -->
+              <circle class="seg glas" cx="50" cy="50" r="40" stroke="#4a9090" style="--glas-len: 37.7" stroke-dashoffset="-138.2"/>
+              <!-- Vloer 15% = 37.7 (offset 175.9) -->
+              <circle class="seg vloer" cx="50" cy="50" r="40" stroke="#6b8e4e" style="--vloer-len: 37.7" stroke-dashoffset="-175.9"/>
+              <!-- Ventilatie 15% = 37.7 (offset 213.6) -->
+              <circle class="seg vent" cx="50" cy="50" r="40" stroke="#9b3a3a" style="--vent-len: 37.7" stroke-dashoffset="-213.6"/>
+            </svg>
+            <div class="lp-heatloss-chart-center">
+              <div class="lp-heatloss-chart-num">30%</div>
+              <div class="lp-heatloss-chart-sub">verlies via dak</div>
+            </div>
+          </div>
+          <div class="lp-heatloss-legend">
+            <div class="lp-heatloss-legend-item"><span class="dot" style="background:#d98c03"></span><span>Dak</span><span class="pct">30%</span></div>
+            <div class="lp-heatloss-legend-item"><span class="dot" style="background:#0a1628"></span><span>Muren</span><span class="pct">25%</span></div>
+            <div class="lp-heatloss-legend-item"><span class="dot" style="background:#4a9090"></span><span>Ramen &amp; deuren</span><span class="pct">15%</span></div>
+            <div class="lp-heatloss-legend-item"><span class="dot" style="background:#6b8e4e"></span><span>Vloer</span><span class="pct">15%</span></div>
+            <div class="lp-heatloss-legend-item"><span class="dot" style="background:#9b3a3a"></span><span>Ventilatie</span><span class="pct">15%</span></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -916,22 +1049,43 @@ const HTML = `
       <h2 class="lf-h2">Uw dak in <span class="ab-mark">3D</span> — laag voor laag.</h2>
       <p class="lf-lede" style="margin: 14px auto 0; max-width: 620px;">Beweeg, draai, zoom in. Zo zit een nieuw Vlaams dak in elkaar — van pannen tot kepers, zes lagen vakwerk.</p>
     </div>
-    <div class="lp-3d-frame" data-reveal>
-      <div class="lp-3d-placeholder">
-        <span class="lp-3d-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-        </span>
-        <span class="lp-3d-label">3D model komt hier</span>
-        <span class="lp-3d-sub">Drag to rotate · Scroll to zoom · Click to inspect layer</span>
+    <div class="lp-anatomy" data-reveal>
+      <div class="lp-anatomy-stage">
+        <div class="lp-anatomy-card" data-layer="1">
+          <span class="lp-anatomy-card-num">1</span>
+          <span class="lp-anatomy-card-label">Dakpannen of natuurleien</span>
+        </div>
+        <div class="lp-anatomy-card" data-layer="2">
+          <span class="lp-anatomy-card-num">2</span>
+          <span class="lp-anatomy-card-label">Tengels en panlatten</span>
+        </div>
+        <div class="lp-anatomy-card" data-layer="3">
+          <span class="lp-anatomy-card-num">3</span>
+          <span class="lp-anatomy-card-label">Onderdak (waterdichte folie)</span>
+        </div>
+        <div class="lp-anatomy-card" data-layer="4">
+          <span class="lp-anatomy-card-num">4</span>
+          <span class="lp-anatomy-card-label">PIR-isolatie tussen kepers</span>
+        </div>
+        <div class="lp-anatomy-card" data-layer="5">
+          <span class="lp-anatomy-card-num">5</span>
+          <span class="lp-anatomy-card-label">Dampscherm</span>
+        </div>
+        <div class="lp-anatomy-card" data-layer="6">
+          <span class="lp-anatomy-card-num">6</span>
+          <span class="lp-anatomy-card-label">Binnenafwerking</span>
+        </div>
       </div>
-    </div>
-    <div class="lp-3d-layers" data-reveal data-reveal-delay="1">
-      <div class="lp-3d-layer"><strong>1</strong> Dakpannen of natuurleien</div>
-      <div class="lp-3d-layer"><strong>2</strong> Tengels en panlatten</div>
-      <div class="lp-3d-layer"><strong>3</strong> Onderdak (waterdichte folie)</div>
-      <div class="lp-3d-layer"><strong>4</strong> PIR-isolatie tussen kepers</div>
-      <div class="lp-3d-layer"><strong>5</strong> Dampscherm</div>
-      <div class="lp-3d-layer"><strong>6</strong> Binnenafwerking</div>
+      <div class="lp-anatomy-info">
+        <div class="lp-anatomy-info-eyebrow">Bouwlagen uitgelegd</div>
+        <h3>Een dak is geen pannen op een lat.</h3>
+        <p>Het zijn zes bouwlagen die samen zorgen voor waterdichtheid, isolatie en comfort. Beweeg met je muis over een laag om 'm los te zien.</p>
+        <ul>
+          <li>Elk dak dat wij plaatsen volgt deze 6-laagse opbouw</li>
+          <li>Sarking-systeem: isolatie ZONDER binnenafwerking afbreken</li>
+          <li>Conform Vlaamse renovatieplicht 2028</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
