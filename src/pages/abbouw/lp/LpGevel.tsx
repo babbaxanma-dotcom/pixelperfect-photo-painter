@@ -122,23 +122,7 @@ const LP_EXTRA = `
 }
 .lp-cta-microtrust b { color: rgba(255,255,255,0.92); font-weight: 600; }
 
-/* ───────── Reviews carousel — seamless auto-scroll (3 sets) ───────── */
-.lp-reviews .lf-testi-track {
-  animation: lp-testi-scroll-3sets 70s linear infinite !important;
-}
-@keyframes lp-testi-scroll-3sets {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-33.333%, 0, 0); }
-}
-.lp-reviews .lf-testi-marquee:hover .lf-testi-track,
-.lp-reviews .lf-testi-marquee:focus-within .lf-testi-track {
-  animation-play-state: paused;
-}
-.lp-reviews .lf-testi-marquee { padding-top: 28px; padding-bottom: 36px; }
-.lp-reviews .lf-testi-shift { transform: none !important; transition: none !important; }
-@media (prefers-reduced-motion: reduce) {
-  .lp-reviews .lf-testi-track { animation: none !important; }
-}
+/* Reviews carousel = IDENTIEK aan Home page (zelfde animation, zelfde hook) */
 
 /* ───────── Trust logo strip ───────── */
 .lp-trust-strip {
@@ -501,7 +485,13 @@ const HTML = `
         </div>
       </div>
     </div>
-    <div class="lf-testi-marquee" data-lp-testi-marquee>
+    <div class="lf-testi-marquee" data-testi-marquee>
+      <button type="button" class="lf-testi-arrow lf-testi-arrow--prev" data-testi-prev aria-label="Vorige review">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button type="button" class="lf-testi-arrow lf-testi-arrow--next" data-testi-next aria-label="Volgende review">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
       <div class="lf-testi-shift" data-testi-shift>
         <div class="lf-testi-track" data-testi-track>
           ${[-1, 0, 1].map((setIdx) => `
@@ -867,37 +857,8 @@ export default function LpGevel() {
     document.head.appendChild(style);
     window.scrollTo(0, 0);
 
-    // ── Carousel: CSS auto-scroll (lp-testi-scroll-3sets), JS doet alleen focus-RAF.
-    const marquee = document.querySelector<HTMLElement>('.lp-reviews [data-lp-testi-marquee]');
-    const allCards = Array.from(document.querySelectorAll<HTMLElement>('.lp-reviews .lf-testi'));
-    const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
-    let focusRaf = 0;
-    const updateFocus = () => {
-      focusRaf = 0;
-      if (!marquee || allCards.length === 0 || isMobile()) return;
-      const mRect = marquee.getBoundingClientRect();
-      const center = mRect.left + mRect.width / 2;
-      let bestIdx = -1; let bestDist = Infinity;
-      const dists: number[] = [];
-      allCards.forEach((c, i) => {
-        const r = c.getBoundingClientRect();
-        const d = Math.abs(r.left + r.width / 2 - center);
-        dists[i] = d;
-        if (d < bestDist) { bestDist = d; bestIdx = i; }
-      });
-      const cw = allCards[0]?.getBoundingClientRect().width || 360;
-      allCards.forEach((c, i) => {
-        c.classList.toggle('is-focus', i === bestIdx);
-        c.classList.toggle('is-near', i !== bestIdx && dists[i] < cw * 1.2);
-      });
-    };
-    const tickFocus = () => {
-      focusRaf = requestAnimationFrame(() => { updateFocus(); tickFocus(); });
-    };
-    const initTimer = window.setTimeout(() => {
-      if (marquee) marquee.classList.add('is-ready');
-      tickFocus();
-    }, 150);
+    // ── Reviews carousel: GEEN custom code — useAbBouwInteractions handelt
+    // alles af net zoals op Home page (data-testi-* attrs zijn identiek).
 
     // ── Stats count-up animation
     const formatNl = (n: number) => n.toLocaleString('nl-BE');
@@ -976,9 +937,7 @@ export default function LpGevel() {
       document.body.className = prev;
       style.remove();
       form?.removeEventListener('submit', onSubmit);
-      window.clearTimeout(initTimer);
       countObserver.disconnect();
-      if (focusRaf) cancelAnimationFrame(focusRaf);
     };
   }, []);
 
