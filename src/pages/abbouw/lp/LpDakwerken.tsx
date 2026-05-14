@@ -116,7 +116,11 @@ const LP_EXTRA = `
 /* LP form bg — hergebruikt navy CTA-stijl */
 .lp-form-section { background: var(--navy); color: #fff; padding: 90px 0; }
 .lp-form-section h2 { color: #fff; }
-.lp-form-section .lf-eyebrow { color: var(--accent); }
+.lp-form-section .lf-eyebrow {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,0.10);
+}
 .lp-form-section p { color: rgba(255,255,255,0.82); }
 .lp-form-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: start; }
 .lp-form-card { background: #fff; color: var(--ink); padding: 36px 32px; border-radius: 14px; }
@@ -373,6 +377,11 @@ ${buildHero({
     <div><strong>Erkenningen</strong>VCA*-gecertificeerd<br/>Lid Bouwunie</div>
   </div>
 </section>
+
+<a href="#lp-form" class="lp-sticky-cta" aria-label="Vraag offerte">
+  Vraag dakinspectie aan
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+</a>
 
 <div class="lp-bottom-bar">
   <a href="tel:+32470634413" class="lp-bb-call" aria-label="Bel direct">

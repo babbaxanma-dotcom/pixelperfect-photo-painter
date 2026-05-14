@@ -15,6 +15,39 @@ import expertImg from '@/assets/home/team2.jpg';
 // Zelfde LP_EXTRA als Dakwerken — gedeeld via gewone import zou cleaner zijn,
 // maar voor maintainability staat het hier inline. Bij update: kopieer in beide.
 const LP_EXTRA = `
+.lp-page .lf-hero-bg img { animation: lp-kenburns 22s ease-out infinite alternate; transform-origin: center center; }
+@keyframes lp-kenburns {
+  from { transform: scale(1.05) translate3d(0,0,0); }
+  to   { transform: scale(1.12) translate3d(-1.2%, -0.8%, 0); }
+}
+.lp-page .lf-section + .lf-section:not(.lf-tone-soft):not(.lp-form-section)::before {
+  content: ''; display: block; width: 56px; height: 1px; background: var(--accent); margin: -1px auto 56px;
+}
+.lp-sticky-cta { display: none; }
+@media (min-width: 901px) {
+  .lp-sticky-cta {
+    position: fixed; right: 24px; bottom: 24px; z-index: 60;
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 24px; background: var(--accent); color: #fff;
+    border-radius: 999px; font-family: var(--font-body); font-weight: 700; font-size: 14px;
+    text-decoration: none;
+    box-shadow: 0 18px 36px -10px rgba(217,140,3,0.55), 0 4px 12px rgba(0,0,0,0.18);
+    opacity: 0; transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+    transition: opacity .4s ease, transform .4s cubic-bezier(.22,1,.36,1), background .2s ease;
+  }
+  body.past-hero .lp-sticky-cta { opacity: 1; transform: none; pointer-events: auto; }
+  .lp-sticky-cta:hover { background: var(--accent-hover); transform: translateY(-2px) scale(1); }
+}
+.lp-stat { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s cubic-bezier(.22,1,.36,1); }
+.lp-stat.revealed { opacity: 1; transform: none; }
+.lp-gallery-cell { transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease; }
+.lp-gallery-cell:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -15px rgba(10,22,40,0.45); }
+.lp-form-card input:focus, .lp-form-card textarea:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(217,140,3,0.18), 0 1px 0 0 var(--accent) !important;
+}
+
 .lp-bottom-bar { display: none; }
 @media (max-width: 900px) {
   .lp-bottom-bar {
@@ -63,7 +96,11 @@ const LP_EXTRA = `
 .lp-expert-role { font-size: 13.5px; color: var(--ink-mute); margin-bottom: 22px; }
 .lp-form-section { background: var(--navy); color: #fff; padding: 90px 0; }
 .lp-form-section h2 { color: #fff; }
-.lp-form-section .lf-eyebrow { color: var(--accent); }
+.lp-form-section .lf-eyebrow {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,0.10);
+}
 .lp-form-section p { color: rgba(255,255,255,0.82); }
 .lp-form-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: start; }
 .lp-form-card { background: #fff; color: var(--ink); padding: 36px 32px; border-radius: 14px; }
@@ -297,6 +334,11 @@ ${buildHero({
     <div><strong>Erkenningen</strong>VCA*-gecertificeerd<br/>Lid Bouwunie</div>
   </div>
 </section>
+
+<a href="#lp-form" class="lp-sticky-cta" aria-label="Vraag offerte">
+  Vraag gevel-advies aan
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+</a>
 
 <div class="lp-bottom-bar">
   <a href="tel:+32470634413" class="lp-bb-call" aria-label="Bel direct">
