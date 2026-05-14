@@ -14,15 +14,18 @@ const LP_BLOGS = BLOGS.filter(b =>
   b.slug === 'epc-label-c-2028'
 ).slice(0, 3);
 
-// Hero rotatie — 4 dakwerk-realisaties, zelfde aanpak als de Home page
-import hero1 from '@/assets/dak/hellend-pannen.jpg';
-import hero2 from '@/assets/dak/leien.jpg';
-import hero3 from '@/assets/dak/plat-epdm.jpg';
-import hero4 from '@/assets/dak/zinkwerk.jpg';
+// Nieuwe dakwerken-LP foto's (FLUX 1.1 Pro Ultra met prompt_upsampling)
+// Hero rotation: 4 different emotional beats — pride / modern / urgency / warmth
+import heroPannendak from '@/assets/dak/lp-hero-pannendak.jpg';  // golden hour halfopen woning
+import imgPlatDak from '@/assets/dak/lp-plat-dak.jpg';            // EPDM panoramic
+import imgStormschade from '@/assets/dak/lp-stormschade.jpg';     // noodfix drama
+import imgVelux from '@/assets/dak/lp-velux.jpg';                 // warm interior comfort
 
-import imgBenefits from '@/assets/dak/dakisolatie.jpg';
-import imgProcess from '@/assets/home/vakman-dak.jpg';
-import gExtra from '@/assets/dak/dakraam.jpg';
+import imgVakman from '@/assets/dak/lp-vakman.jpg';               // process — action shot
+import imgPirIsolatie from '@/assets/dak/lp-pir-isolatie.jpg';    // benefits — technical
+import imgNatuurleien from '@/assets/dak/lp-natuurleien.jpg';     // gallery — slate close-up
+import imgZinkGoot from '@/assets/dak/lp-zink-goot.jpg';          // gallery — zink detail
+
 import expertImg from '@/assets/home/team1.jpg';
 
 import rev1 from '@/assets/reviews/marc.jpg';
@@ -623,10 +626,10 @@ const LP_EXTRA = `
 const HTML = `
 <section class="lf-hero lp-hero-cine">
   <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
-    <img src="${hero1}" alt="Hellend dak met Koramic pannen — AB Dakwerken Mechelen" class="is-active" />
-    <img src="${hero2}" alt="Natuurleien dakwerk Antwerpen — AB Bouw Groep" loading="lazy" />
-    <img src="${hero3}" alt="Plat dak EPDM rubber renovatie Lier" loading="lazy" />
-    <img src="${hero4}" alt="Zinkwerk en boordafwerking Sint-Niklaas" loading="lazy" />
+    <img src="${heroPannendak}" alt="Afgewerkt hellend pannendak in golden hour — AB Dakwerken Mechelen" class="is-active" />
+    <img src="${imgPlatDak}" alt="Plat dak EPDM rubber renovatie in Antwerpse rand — AB Bouw Groep" loading="lazy" />
+    <img src="${imgStormschade}" alt="Spoedinterventie stormschade dakherstel — AB Dakwerken" loading="lazy" />
+    <img src="${imgVelux}" alt="Velux dakvensters in afgewerkte zolderkamer — comfort dak­renovatie" loading="lazy" />
   </div>
   <button type="button" class="lf-hero-arrow lf-hero-arrow--prev" data-hero-prev aria-label="Vorige foto">
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -841,7 +844,7 @@ const HTML = `
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </a>
       </div>
-      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgBenefits}" alt="Dakisolatie wordt aangebracht" loading="lazy"/></div>
+      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgPirIsolatie}" alt="PIR-isolatieplaten tussen dakkepers — geplaatst tijdens dakrenovatie" loading="lazy"/></div>
     </div>
   </div>
 </section>
@@ -890,7 +893,7 @@ const HTML = `
 <section class="lf-section">
   <div class="wrap">
     <div class="lf-split">
-      <div class="lf-split-img" data-reveal><img src="${imgProcess}" alt="Dakdekker plaatst Koramic pannen" loading="lazy"/></div>
+      <div class="lf-split-img" data-reveal><img src="${imgVakman}" alt="Eigen dakdekker plaatst dakpannen op stelling — AB Bouw Groep" loading="lazy"/></div>
       <div data-reveal data-reveal-delay="1">
         <span class="lf-eyebrow">Onze werkwijze</span>
         <h2 class="lf-h2">Van eerste gesprek tot<br/><span class="ab-mark">waterdicht dak</span> in 6 weken.</h2>
@@ -956,20 +959,20 @@ const HTML = `
     </div>
     <div class="lp-gallery">
       <a href="#lp-form" class="lp-gallery-cell" data-reveal>
-        <img src="${hero1}" alt="Pannendak Mechelen" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Hellend dak</small><strong>Pannendak — Mechelen</strong></div>
+        <img src="${heroPannendak}" alt="Afgewerkt pannendak Mechelen" loading="lazy"/>
+        <div class="lp-gallery-cap"><small>Hellend dak</small><strong>Koramic pannen — Mechelen</strong></div>
       </a>
       <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="1">
-        <img src="${hero2}" alt="Natuurleien Antwerpen" loading="lazy"/>
+        <img src="${imgNatuurleien}" alt="Natuurleien close-up vakwerk" loading="lazy"/>
         <div class="lp-gallery-cap"><small>Hellend dak</small><strong>Natuurleien — Antwerpen</strong></div>
       </a>
       <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="2">
-        <img src="${hero3}" alt="Plat dak EPDM Lier" loading="lazy"/>
+        <img src="${imgPlatDak}" alt="Plat dak EPDM Lier" loading="lazy"/>
         <div class="lp-gallery-cap"><small>Plat dak</small><strong>EPDM rubber — Lier</strong></div>
       </a>
       <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="3">
-        <img src="${gExtra}" alt="Dakvenster Lier" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Dakvenster</small><strong>Velux plaatsing — Lier</strong></div>
+        <img src="${imgZinkGoot}" alt="Natuurzink dakgoot detail Sint-Niklaas" loading="lazy"/>
+        <div class="lp-gallery-cap"><small>Afwerking</small><strong>Zinkwerk — Sint-Niklaas</strong></div>
       </a>
     </div>
   </div>
