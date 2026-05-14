@@ -122,10 +122,21 @@ const LP_EXTRA = `
 }
 .lp-cta-microtrust b { color: rgba(255,255,255,0.92); font-weight: 600; }
 
-/* Reviews carousel: SHELL_STYLE injecteert eigen testi-CSS die divergeert
-   van Home. We overriden hier letterlijk Home's regels zodat .lp-reviews
-   exact als Home draait. */
+/* Reviews carousel: SHELL_STYLE's .lf-testi-marquee heeft een full-bleed
+   margin (calc(50% - 50vw)) die de marquee BUITEN de wrap trekt naar
+   100vw — dat trekt de cards naar de viewport-left-edge. Home heeft die
+   margin NIET. We resetten 'm hier zodat de marquee binnen .wrap blijft
+   (gecentreerd in 1280px) precies zoals Home. */
+.lp-reviews .lf-testi-marquee {
+  margin: 0 !important;
+  width: 100% !important;
+  padding: 56px 0 64px !important;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%) !important;
+          mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%) !important;
+}
 .lp-reviews .lf-testi-track {
+  gap: 0 !important;
+  padding: 0 !important;
   animation: lf-marquee-scroll 58s linear infinite !important;
 }
 .lp-reviews .lf-testi-marquee:hover .lf-testi-track,
