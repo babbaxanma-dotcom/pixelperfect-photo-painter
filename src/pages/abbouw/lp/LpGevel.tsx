@@ -970,7 +970,31 @@ export default function LpGevel() {
     document.head.appendChild(style);
     window.scrollTo(0, 0);
 
-    // ── Reviews carousel: GEEN custom JS — exact zoals Home (hook handelt af).
+    // ── Reviews carousel: Home's CSS + JS centering bovenop (LP-specifiek omdat
+    // reviews direct onder hero komen, animatie is niet vooruit gelopen).
+    const rShift = document.querySelector<HTMLElement>('.lp-reviews [data-testi-shift]');
+    const rMarquee = document.querySelector<HTMLElement>('.lp-reviews [data-testi-marquee]');
+    const rFirstCard = document.querySelector<HTMLElement>('.lp-reviews [data-testi-set="0"] .lf-testi');
+    const isRMobile = () => window.matchMedia('(max-width: 760px)').matches;
+    const centerReviews = () => {
+      if (!rShift || !rMarquee || !rFirstCard || isRMobile()) return;
+      const card = rFirstCard.getBoundingClientRect();
+      if (card.width < 50) return;
+      const mq = rMarquee.getBoundingClientRect();
+      const offset = (mq.left + mq.width / 2) - (card.left + card.width / 2);
+      rShift.style.transform = `translate3d(${offset}px, 0, 0)`;
+      rShift.style.setProperty('--testi-shift', `${offset}px`);
+    };
+    const rTimers = [
+      window.setTimeout(centerReviews, 100),
+      window.setTimeout(centerReviews, 400),
+      window.setTimeout(centerReviews, 1000),
+      window.setTimeout(centerReviews, 2000),
+    ];
+    const rResize = () => centerReviews();
+    window.addEventListener('resize', rResize);
+    const rLoad = () => requestAnimationFrame(centerReviews);
+    window.addEventListener('load', rLoad);
 
     // ── Stats count-up animation
     const formatNl = (n: number) => n.toLocaleString('nl-BE');
@@ -1050,6 +1074,9 @@ export default function LpGevel() {
       style.remove();
       form?.removeEventListener('submit', onSubmit);
       countObserver.disconnect();
+      rTimers.forEach((t) => window.clearTimeout(t));
+      window.removeEventListener('resize', rResize);
+      window.removeEventListener('load', rLoad);
     };
   }, []);
 

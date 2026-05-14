@@ -1099,9 +1099,34 @@ export default function LpDakwerken() {
     document.head.appendChild(style);
     window.scrollTo(0, 0);
 
-    // ── Reviews carousel: GEEN custom JS — exact zoals Home.
-    // useAbBouwInteractions hook handelt animation + arrows + focus-RAF af.
-    // LP_EXTRA CSS herstelt Home's animation rules op de track.
+    // ── Reviews carousel: animation = Home's exact CSS (lf-marquee-scroll).
+    // EXTRA op LP: JS centreert shift wrapper zodat eerste card visueel
+    // in viewport-midden start. Reden: op LP komt reviews direct onder hero
+    // — user heeft geen tijd om animation vooruit te laten lopen voor 'ie
+    // kijkt (Home heeft die luxe wel, daar lijken cards natuurlijk mid-scroll).
+    const rShift = document.querySelector<HTMLElement>('.lp-reviews [data-testi-shift]');
+    const rMarquee = document.querySelector<HTMLElement>('.lp-reviews [data-testi-marquee]');
+    const rFirstCard = document.querySelector<HTMLElement>('.lp-reviews [data-testi-set="0"] .lf-testi');
+    const isRMobile = () => window.matchMedia('(max-width: 760px)').matches;
+    const centerReviews = () => {
+      if (!rShift || !rMarquee || !rFirstCard || isRMobile()) return;
+      const card = rFirstCard.getBoundingClientRect();
+      if (card.width < 50) return;
+      const mq = rMarquee.getBoundingClientRect();
+      const offset = (mq.left + mq.width / 2) - (card.left + card.width / 2);
+      rShift.style.transform = `translate3d(${offset}px, 0, 0)`;
+      rShift.style.setProperty('--testi-shift', `${offset}px`);
+    };
+    const rTimers = [
+      window.setTimeout(centerReviews, 100),
+      window.setTimeout(centerReviews, 400),
+      window.setTimeout(centerReviews, 1000),
+      window.setTimeout(centerReviews, 2000),
+    ];
+    const rResize = () => centerReviews();
+    window.addEventListener('resize', rResize);
+    const rLoad = () => requestAnimationFrame(centerReviews);
+    window.addEventListener('load', rLoad);
 
     // ── Stats count-up — anime van 0 naar target wanneer in viewport
     const formatNl = (n: number) => n.toLocaleString('nl-BE');
@@ -1181,6 +1206,9 @@ export default function LpDakwerken() {
       style.remove();
       form?.removeEventListener('submit', onSubmit);
       countObserver.disconnect();
+      rTimers.forEach((t) => window.clearTimeout(t));
+      window.removeEventListener('resize', rResize);
+      window.removeEventListener('load', rLoad);
     };
   }, []);
 
