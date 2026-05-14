@@ -32,14 +32,14 @@ import rev7 from '@/assets/reviews/inge.jpg';
 import rev8 from '@/assets/reviews/marc.jpg';
 
 const GEVEL_REVIEWS = [
-  { name: 'Jasmien De Backer', role: 'Witte crepi rijwoning · Mechelen', img: rev1, text: 'Onze rijwoning had een vermoeide bezetting uit de jaren ‘80. Nu een spierwitte crepi-gevel die je zo van een interieurmagazine plukt. De buren komen letterlijk vragen wie het werk gedaan heeft. Strak, proper, op tijd opgeleverd.' },
-  { name: 'Joris Vanhove', role: 'ETICS + crepi · Boom', img: rev2, text: 'Volledig pakket: 16 cm EPS-isolatie + crepi-afwerking. EPC van F naar C in één werk. Stookkost deze winter bijna gehalveerd, en de muren binnen voelen niet meer koud aan. Heel het premie-dossier (€4.800) liep via hen.' },
-  { name: 'Roel Vandevoorde', role: 'Steenstrips voorgevel · Lier', img: rev3, text: 'We wilden de klassieke Vlaamse baksteen-look maar zonder de gewicht en de kost van echte stenen. Steenstrips Vandersanden, voegen kaarsrecht, aansluitingen rond ramen vakwerk. Niemand merkt het verschil — zelfs onze schoonvader niet.' },
-  { name: 'Cindy Van Looy', role: 'Sierpleister marmorino · Bornem', img: rev4, text: 'Marmorino-afwerking in zachte taupe. Bardh hielp met de kleurkeuze — wij wilden eerst grijs, hij overtuigde ons van een warmere tint. Achteraf super blij, het huis straalt nu een echt karakter uit waar buren over praten.' },
-  { name: 'Dimitri Maes', role: 'Crepi + buitenisolatie · Antwerpen', img: rev5, text: 'Halfopen woning uit 1968 die nooit was geïsoleerd. 16 cm EPS buitenisolatie + crepi. Comfort-sprong is enorm: geen koude muren meer in de winter. Wij hadden dit 10 jaar geleden moeten doen. Premie €5.400 zonder problemen uitbetaald.' },
-  { name: 'Steven Goossens', role: 'Gevelherstel + crepi · Willebroek', img: rev6, text: 'Onze gevel had scheuren en vochtproblemen, drie aannemers wilden direct crepi erop smeren. Bardh zei: eerst herstellen, anders gooi je geld weg. Werd uitgevoerd zoals beloofd. Factuur sluit aan op de offerte tot op de euro.' },
-  { name: 'Eva Vandeputte', role: 'Witte crepi nieuwbouw · Kontich', img: rev7, text: 'Nieuwbouw helemaal afgewerkt met witte crepi op de spouwmuur. Strakke lijn over de volledige gevel, geen scheuren of vlekken in de afwerking. Plaatsing in 5 werkdagen, stelling weg, oprit proper opgekuist, klaar.' },
-  { name: 'Patrick Beuselinck', role: 'Gevelisolatie + nieuwe crepi · Mechelen', img: rev8, text: 'Eerste aannemer wilde alleen crepi over de bestaande gevel. AB Bouw legde uit waarom we ETICS-isolatie nodig hadden voor onze woning. Hogere prijs, veel betere oplossing. EPC + comfort vlot, totaal geen spijt van die keuze.' },
+  { name: 'Jasmien De Backer', role: 'Witte crepi rijwoning · Mechelen', img: rev1, text: 'Onze rijwoning had een vermoeide bezetting uit de jaren ’80. Nu een spierwitte crepi-gevel die je zo van een interieurmagazine plukt. De buren komen vragen wie het werk gedaan heeft. Strak, proper, op tijd opgeleverd.', highlights: ['spierwitte crepi-gevel', 'op tijd opgeleverd'] },
+  { name: 'Joris Vanhove', role: 'ETICS + crepi · Boom', img: rev2, text: 'Volledig pakket: 16 cm EPS-isolatie + crepi-afwerking. EPC van F naar C in één werk. Stookkost deze winter bijna gehalveerd, en de muren binnen voelen niet meer koud aan. Premie-dossier (€4.800) liep via hen.', highlights: ['EPC van F naar C', 'bijna gehalveerd', '€4.800'] },
+  { name: 'Roel Vandevoorde', role: 'Steenstrips voorgevel · Lier', img: rev3, text: 'We wilden de klassieke Vlaamse baksteen-look zonder het gewicht en de kost van echte stenen. Steenstrips Vandersanden, voegen kaarsrecht, aansluitingen rond ramen vakwerk. Niemand merkt het verschil — zelfs onze schoonvader niet.', highlights: ['voegen kaarsrecht', 'zelfs onze schoonvader niet'] },
+  { name: 'Cindy Van Looy', role: 'Sierpleister marmorino · Bornem', img: rev4, text: 'Marmorino-afwerking in zachte taupe. Bardh hielp met de kleurkeuze — wij wilden eerst grijs, hij overtuigde ons van een warmere tint. Achteraf super blij, het huis straalt nu echt karakter uit.', highlights: ['zachte taupe', 'super blij', 'echt karakter'] },
+  { name: 'Dimitri Maes', role: 'Crepi + buitenisolatie · Antwerpen', img: rev5, text: 'Halfopen woning uit 1968 die nooit was geïsoleerd. 16 cm EPS buitenisolatie + crepi. Comfort-sprong is enorm: geen koude muren meer in de winter. Premie €5.400 zonder problemen uitbetaald.', highlights: ['Comfort-sprong is enorm', '€5.400 zonder problemen'] },
+  { name: 'Steven Goossens', role: 'Gevelherstel + crepi · Willebroek', img: rev6, text: 'Onze gevel had scheuren en vochtproblemen. Drie aannemers wilden direct crepi erop smeren. Bardh zei: eerst herstellen, anders gooi je geld weg. Uitgevoerd zoals beloofd. Factuur tot op de euro met de offerte.', highlights: ['eerst herstellen', 'tot op de euro'] },
+  { name: 'Eva Vandeputte', role: 'Witte crepi nieuwbouw · Kontich', img: rev7, text: 'Nieuwbouw afgewerkt met witte crepi op de spouwmuur. Strakke lijn over de volledige gevel, geen scheuren of vlekken. Plaatsing in 5 werkdagen, stelling weg, oprit proper opgekuist, klaar.', highlights: ['Strakke lijn', '5 werkdagen', 'proper opgekuist'] },
+  { name: 'Patrick Beuselinck', role: 'Gevelisolatie + nieuwe crepi · Mechelen', img: rev8, text: 'Eerste aannemer wilde alleen crepi over de bestaande gevel. AB Bouw legde uit waarom we ETICS-isolatie nodig hadden. Hogere prijs, veel betere oplossing. EPC + comfort vlot. Geen spijt van die keuze.', highlights: ['veel betere oplossing', 'Geen spijt'] },
 ];
 
 const LP_EXTRA = `
@@ -494,30 +494,56 @@ const HTML = `
       </button>
       <div class="lf-testi-shift" data-testi-shift>
         <div class="lf-testi-track" data-testi-track>
-          ${[-1, 0, 1].map((setIdx) => `
-            <div class="lf-testi-set" data-testi-set="${setIdx}"${setIdx !== 0 ? ' aria-hidden="true"' : ''}>
-              ${GEVEL_REVIEWS.map((t, i) => `
-                <article class="lf-testi" data-review-index="${i}">
-                  <div class="lf-testi-stars">★★★★★</div>
-                  <p>${t.text}</p>
+          ${(() => {
+            const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const wrapWords = (phrase: string, baseI: number) => {
+              const words = phrase.split(/(\s+)/);
+              let wi = 0;
+              return words.map((w) => {
+                if (/^\s+$/.test(w)) return w;
+                const idx = baseI + wi;
+                wi += 1;
+                return `<span class="lf-hl-word" style="--hl-i:${idx}">${w}</span>`;
+              }).join('');
+            };
+            const highlight = (text: string, terms: string[]) => {
+              let out = text;
+              let wordOffset = 0;
+              terms.forEach((term) => {
+                const re = new RegExp(escapeRe(term), 'i');
+                out = out.replace(re, (m) => {
+                  const wrapped = `<mark class="lf-hl">${wrapWords(m, wordOffset)}</mark>`;
+                  wordOffset += m.trim().split(/\s+/).length;
+                  return wrapped;
+                });
+              });
+              return out;
+            };
+            return [-1, 0, 1].map((setIdx) => `
+              <div class="lf-testi-set" data-testi-set="${setIdx}"${setIdx !== 0 ? ' aria-hidden="true"' : ''}>
+                ${GEVEL_REVIEWS.map((t, i) => `
+                  <article class="lf-testi" data-review-index="${i}">
+                    <div class="lf-testi-stars">★★★★★</div>
+                    <p>${highlight(t.text, t.highlights)}</p>
                   <div class="lf-testi-divider"></div>
-                  <div class="lf-testi-foot">
-                    <img class="lf-testi-avatar" src="${t.img}" alt="${t.name}" loading="lazy"/>
-                    <div class="lf-testi-meta">
-                      <strong>${t.name}</strong>
-                      <span>${t.role}</span>
+                    <div class="lf-testi-foot">
+                      <img class="lf-testi-avatar" src="${t.img}" alt="${t.name}" loading="lazy"/>
+                      <div class="lf-testi-meta">
+                        <strong>${t.name}</strong>
+                        <span>${t.role}</span>
+                      </div>
+                      <svg class="lf-testi-google" viewBox="0 0 48 48" width="22" height="22" aria-label="Google review">
+                        <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/>
+                        <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 19 13 24 13c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.6 8.4 6.3 14.7z"/>
+                        <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/>
+                        <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.3-4.1 5.6l6.2 5.2C41.4 35.5 44 30.2 44 24c0-1.3-.1-2.4-.4-3.5z"/>
+                      </svg>
                     </div>
-                    <svg class="lf-testi-google" viewBox="0 0 48 48" width="22" height="22" aria-label="Google review">
-                      <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/>
-                      <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 19 13 24 13c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.6 8.4 6.3 14.7z"/>
-                      <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/>
-                      <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.3-4.1 5.6l6.2 5.2C41.4 35.5 44 30.2 44 24c0-1.3-.1-2.4-.4-3.5z"/>
-                    </svg>
-                  </div>
-                </article>
-              `).join('')}
-            </div>
-          `).join('')}
+                  </article>
+                `).join('')}
+              </div>
+            `).join('');
+          })()}
         </div>
       </div>
     </div>
@@ -592,10 +618,10 @@ const HTML = `
         <h2 class="lf-h2">EPC-sprong,<br/><span class="ab-mark">strak resultaat</span>.</h2>
         <p class="lf-lede">Een ongeïsoleerde gevel verliest tot 40% van uw stookkost. Een ETICS-renovatie verlaagt EPC met gemiddeld 60 punten én geeft uw huis een volledig nieuwe uitstraling — vaak doorslaggevend bij verkoop.</p>
         <ul class="ab-checks" style="margin-top: 22px;">
-          <li>Tot 40% minder stookkost — direct lagere energiefactuur</li>
-          <li>EPC-sprong gemiddeld 60 punten — vereist voor renovatieverplichting 2028</li>
-          <li>Geen koudebruggen of vochtproblemen meer — gezonder binnenklimaat</li>
-          <li>€12.000-€25.000 meerwaarde bij verkoop van uw woning</li>
+          <li>40% lagere stookkost vanaf de eerste winter</li>
+          <li>EPC-sprong gemiddeld 60 punten — klaar voor renovatieplicht 2028</li>
+          <li>Geen koudebruggen, geen vochtschimmel meer — gezonder binnenklimaat</li>
+          <li>€12.000–€25.000 meerwaarde bij verkoop</li>
         </ul>
         <a href="#lp-form" class="lf-cta-pill" style="margin-top: 28px;">
           <span>Vraag uw plaatsbezoek aan</span>
@@ -736,7 +762,7 @@ const HTML = `
       <details data-reveal><summary>Crepi of steenstrips — wat past bij mijn woning?</summary><div class="ab-faq-body"><p>Crepi = strakke moderne look, goedkoper, sneller. Steenstrips = klassieke baksteen-look, duurder, langere plaatsing. Plaatsbezoek geeft uitsluitsel op basis van woningtype, buurt en budget. Beide kunnen op ETICS-isolatie.</p></div></details>
       <details data-reveal><summary>Doen jullie de premieaanvraag?</summary><div class="ab-faq-body"><p>Ja, standaard. We bereiden het Mijn VerbouwPremie-dossier voor, leveren foto's en facturen aan in juist format. U deelt enkel uw burgerprofiel-login.</p></div></details>
       <details data-reveal><summary>Wat is uw garantie?</summary><div class="ab-faq-body"><p>10 jaar wettelijke aansprakelijkheid op afwerking en isolatieprestatie, gedekt door polis bij Federale Verzekering. Plus fabrieksgarantie op Sto/Weber/Marmorino-systemen.</p></div></details>
-      <details data-reveal><summary>Welke regio's bedienen jullie?</summary><div class="ab-faq-body"><p>Antwerpen, Mechelen, Lier, Boom, Bornem, Puurs, Sint-Niklaas, Heist-op-den-Berg, Brussel, Vilvoorde, Asse, Aalst, Dendermonde, Leuven.</p></div></details>
+      <details data-reveal><summary>Welke regio's bedienen jullie?</summary><div class="ab-faq-body"><p>Volledige provincie Antwerpen en Vlaams-Brabant. Onze ploeg vertrekt elke ochtend uit Willebroek — werkbereik tot ongeveer 50 km. Mechelen, Antwerpen, Lier, Boom, Bornem, Puurs, Sint-Niklaas, Heist-op-den-Berg, Brussel-rand, Vilvoorde, Aalst, Dendermonde, Leuven. Twijfel je over jouw gemeente? Bel even — als we ‘ja’ zeggen, komen we.</p></div></details>
     </div>
   </div>
 </section>
@@ -832,7 +858,7 @@ const HTML = `
   </div>
 </section>
 
-<a href="#lp-form" class="lp-sticky-cta" aria-label="Vraag offerte">
+<a href="#lp-form" class="lp-sticky-cta" aria-label="Vraag gevelinspectie" style="background:#d98c03;color:#fff;">
   Vraag gevelinspectie aan
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
 </a>
