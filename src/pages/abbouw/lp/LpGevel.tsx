@@ -31,16 +31,7 @@ import rev6 from '@/assets/reviews/karim.jpg';
 import rev7 from '@/assets/reviews/inge.jpg';
 import rev8 from '@/assets/reviews/marc.jpg';
 
-const GEVEL_REVIEWS = [
-  { name: 'Jasmien De Backer', role: 'Witte crepi rijwoning · Mechelen', img: rev1, text: 'Onze rijwoning had een vermoeide bezetting uit de jaren ’80. Nu een spierwitte crepi-gevel die je zo van een interieurmagazine plukt. De buren komen vragen wie het werk gedaan heeft. Strak, proper, op tijd opgeleverd.', highlights: ['spierwitte crepi-gevel', 'op tijd opgeleverd'] },
-  { name: 'Joris Vanhove', role: 'ETICS + crepi · Boom', img: rev2, text: 'Volledig pakket: 16 cm EPS-isolatie + crepi-afwerking. EPC van F naar C in één werk. Stookkost deze winter bijna gehalveerd, en de muren binnen voelen niet meer koud aan. Premie-dossier (€4.800) liep via hen.', highlights: ['EPC van F naar C', 'bijna gehalveerd', '€4.800'] },
-  { name: 'Roel Vandevoorde', role: 'Steenstrips voorgevel · Lier', img: rev3, text: 'We wilden de klassieke Vlaamse baksteen-look zonder het gewicht en de kost van echte stenen. Steenstrips Vandersanden, voegen kaarsrecht, aansluitingen rond ramen vakwerk. Niemand merkt het verschil — zelfs onze schoonvader niet.', highlights: ['voegen kaarsrecht', 'zelfs onze schoonvader niet'] },
-  { name: 'Cindy Van Looy', role: 'Sierpleister marmorino · Bornem', img: rev4, text: 'Marmorino-afwerking in zachte taupe. Bardh hielp met de kleurkeuze — wij wilden eerst grijs, hij overtuigde ons van een warmere tint. Achteraf super blij, het huis straalt nu echt karakter uit.', highlights: ['zachte taupe', 'super blij', 'echt karakter'] },
-  { name: 'Dimitri Maes', role: 'Crepi + buitenisolatie · Antwerpen', img: rev5, text: 'Halfopen woning uit 1968 die nooit was geïsoleerd. 16 cm EPS buitenisolatie + crepi. Comfort-sprong is enorm: geen koude muren meer in de winter. Premie €5.400 zonder problemen uitbetaald.', highlights: ['Comfort-sprong is enorm', '€5.400 zonder problemen'] },
-  { name: 'Steven Goossens', role: 'Gevelherstel + crepi · Willebroek', img: rev6, text: 'Onze gevel had scheuren en vochtproblemen. Drie aannemers wilden direct crepi erop smeren. Bardh zei: eerst herstellen, anders gooi je geld weg. Uitgevoerd zoals beloofd. Factuur tot op de euro met de offerte.', highlights: ['eerst herstellen', 'tot op de euro'] },
-  { name: 'Eva Vandeputte', role: 'Witte crepi nieuwbouw · Kontich', img: rev7, text: 'Nieuwbouw afgewerkt met witte crepi op de spouwmuur. Strakke lijn over de volledige gevel, geen scheuren of vlekken. Plaatsing in 5 werkdagen, stelling weg, oprit proper opgekuist, klaar.', highlights: ['Strakke lijn', '5 werkdagen', 'proper opgekuist'] },
-  { name: 'Patrick Beuselinck', role: 'Gevelisolatie + nieuwe crepi · Mechelen', img: rev8, text: 'Eerste aannemer wilde alleen crepi over de bestaande gevel. AB Bouw legde uit waarom we ETICS-isolatie nodig hadden. Hogere prijs, veel betere oplossing. EPC + comfort vlot. Geen spijt van die keuze.', highlights: ['veel betere oplossing', 'Geen spijt'] },
-];
+// (Reviews data inline in IIFE in HTML section — exact zoals Home page)
 
 const LP_EXTRA = `
 /* ───────── LP cinematic hero ───────── */
@@ -122,11 +113,9 @@ const LP_EXTRA = `
 }
 .lp-cta-microtrust b { color: rgba(255,255,255,0.92); font-weight: 600; }
 
-/* Reviews carousel = Home's animation + LP-specifieke animation-delay 6s
-   zodat eerste card stil gecentreerd zichtbaar staat voor de scroll begint. */
+/* Reviews carousel: override SHELL_STYLE naar Home's exacte rules. */
 .lp-reviews .lf-testi-track {
   animation: lf-marquee-scroll 58s linear infinite !important;
-  animation-delay: 6s !important;
 }
 .lp-reviews .lf-testi-marquee:hover .lf-testi-track,
 .lp-reviews .lf-testi-marquee:focus-within .lf-testi-track {
@@ -523,9 +512,9 @@ const HTML = `
   </button>
 </section>
 
-<section class="lf-section lf-tone-soft lf-reviews-section lp-reviews" style="padding: 64px 0 80px;">
+<section class="lf-section lf-tone-soft lf-reviews-section lp-reviews" style="padding: 56px 0;">
   <div class="wrap">
-    <div class="lf-section-head centered lf-reviews-head" data-reveal style="margin-bottom: 32px;">
+    <div class="lf-section-head centered lf-reviews-head" data-reveal style="margin-bottom: 36px;">
       <span class="lf-eyebrow">Reviews gevelrenovatie</span>
       <div class="lf-reviews-rating">
         <span class="lf-reviews-score">4.9</span>
@@ -552,6 +541,16 @@ const HTML = `
       <div class="lf-testi-shift" data-testi-shift>
         <div class="lf-testi-track" data-testi-track>
           ${(() => {
+            const reviews = [
+              { name: 'Jasmien De Backer', role: 'Witte crepi rijwoning · Mechelen', img: rev1, text: 'Onze rijwoning had een vermoeide bezetting uit de jaren ’80. Nu een spierwitte crepi-gevel die je zo van een interieurmagazine plukt. De buren komen vragen wie het werk gedaan heeft. Strak, proper, op tijd opgeleverd.', highlights: ['spierwitte crepi-gevel', 'op tijd opgeleverd'] },
+              { name: 'Joris Vanhove', role: 'ETICS + crepi · Boom', img: rev2, text: 'Volledig pakket: 16 cm EPS-isolatie + crepi-afwerking. EPC van F naar C in één werk. Stookkost deze winter bijna gehalveerd, en de muren binnen voelen niet meer koud aan. Premie-dossier (€4.800) liep via hen.', highlights: ['EPC van F naar C', 'bijna gehalveerd', '€4.800'] },
+              { name: 'Roel Vandevoorde', role: 'Steenstrips voorgevel · Lier', img: rev3, text: 'We wilden de klassieke Vlaamse baksteen-look zonder het gewicht en de kost van echte stenen. Steenstrips Vandersanden, voegen kaarsrecht, aansluitingen rond ramen vakwerk. Niemand merkt het verschil — zelfs onze schoonvader niet.', highlights: ['voegen kaarsrecht', 'zelfs onze schoonvader niet'] },
+              { name: 'Cindy Van Looy', role: 'Sierpleister marmorino · Bornem', img: rev4, text: 'Marmorino-afwerking in zachte taupe. Bardh hielp met de kleurkeuze — wij wilden eerst grijs, hij overtuigde ons van een warmere tint. Achteraf super blij, het huis straalt nu echt karakter uit.', highlights: ['zachte taupe', 'super blij', 'echt karakter'] },
+              { name: 'Dimitri Maes', role: 'Crepi + buitenisolatie · Antwerpen', img: rev5, text: 'Halfopen woning uit 1968 die nooit was geïsoleerd. 16 cm EPS buitenisolatie + crepi. Comfort-sprong is enorm: geen koude muren meer in de winter. Premie €5.400 zonder problemen uitbetaald.', highlights: ['Comfort-sprong is enorm', '€5.400 zonder problemen'] },
+              { name: 'Steven Goossens', role: 'Gevelherstel + crepi · Willebroek', img: rev6, text: 'Onze gevel had scheuren en vochtproblemen. Drie aannemers wilden direct crepi erop smeren. Bardh zei: eerst herstellen, anders gooi je geld weg. Uitgevoerd zoals beloofd. Factuur tot op de euro met de offerte.', highlights: ['eerst herstellen', 'tot op de euro'] },
+              { name: 'Eva Vandeputte', role: 'Witte crepi nieuwbouw · Kontich', img: rev7, text: 'Nieuwbouw afgewerkt met witte crepi op de spouwmuur. Strakke lijn over de volledige gevel, geen scheuren of vlekken. Plaatsing in 5 werkdagen, stelling weg, oprit proper opgekuist, klaar.', highlights: ['Strakke lijn', '5 werkdagen', 'proper opgekuist'] },
+              { name: 'Patrick Beuselinck', role: 'Gevelisolatie + nieuwe crepi · Mechelen', img: rev8, text: 'Eerste aannemer wilde alleen crepi over de bestaande gevel. AB Bouw legde uit waarom we ETICS-isolatie nodig hadden. Hogere prijs, veel betere oplossing. EPC + comfort vlot. Geen spijt van die keuze.', highlights: ['veel betere oplossing', 'Geen spijt'] },
+            ];
             const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             const wrapWords = (phrase: string, baseI: number) => {
               const words = phrase.split(/(\s+)/);
@@ -576,20 +575,21 @@ const HTML = `
               });
               return out;
             };
-            return [-1, 0, 1].map((setIdx) => `
+            const loopedSets = [-1, 0, 1];
+            return loopedSets.map((setIdx) => `
               <div class="lf-testi-set" data-testi-set="${setIdx}"${setIdx !== 0 ? ' aria-hidden="true"' : ''}>
-                ${GEVEL_REVIEWS.map((t, i) => `
-                  <article class="lf-testi" data-review-index="${i}">
+                ${reviews.map((t, reviewIdx) => `
+                  <article class="lf-testi" data-review-index="${reviewIdx}">
                     <div class="lf-testi-stars">★★★★★</div>
                     <p>${highlight(t.text, t.highlights)}</p>
-                  <div class="lf-testi-divider"></div>
+                    <div class="lf-testi-divider"></div>
                     <div class="lf-testi-foot">
                       <img class="lf-testi-avatar" src="${t.img}" alt="${t.name}" loading="lazy"/>
                       <div class="lf-testi-meta">
                         <strong>${t.name}</strong>
                         <span>${t.role}</span>
                       </div>
-                      <svg class="lf-testi-google" viewBox="0 0 48 48" width="22" height="22" aria-label="Google review">
+                      <svg class="lf-testi-google" viewBox="0 0 48 48" width="22" height="22" aria-label="Review">
                         <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/>
                         <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 19 13 24 13c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.6 8.4 6.3 14.7z"/>
                         <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/>
@@ -972,32 +972,7 @@ export default function LpGevel() {
 
     // ── Reviews carousel: Home's CSS + JS centering bovenop (LP-specifiek omdat
     // reviews direct onder hero komen, animatie is niet vooruit gelopen).
-    const rShift = document.querySelector<HTMLElement>('.lp-reviews [data-testi-shift]');
-    const rMarquee = document.querySelector<HTMLElement>('.lp-reviews [data-testi-marquee]');
-    const rFirstCard = document.querySelector<HTMLElement>('.lp-reviews [data-testi-set="0"] .lf-testi');
-    const isRMobile = () => window.matchMedia('(max-width: 760px)').matches;
-    let rCentered = false;
-    const tryCenter = () => {
-      if (rCentered) return;
-      if (!rShift || !rMarquee || !rFirstCard || isRMobile()) return;
-      const card = rFirstCard.getBoundingClientRect();
-      if (card.width < 50) return;
-      const mq = rMarquee.getBoundingClientRect();
-      const offset = (mq.left + mq.width / 2) - (card.left + card.width / 2);
-      rShift.style.transform = `translate3d(${offset}px, 0, 0)`;
-      rShift.style.setProperty('--testi-shift', `${offset}px`);
-      rCentered = true;
-    };
-    const rTimers = [
-      window.setTimeout(tryCenter, 80),
-      window.setTimeout(tryCenter, 200),
-      window.setTimeout(tryCenter, 500),
-      window.setTimeout(tryCenter, 1200),
-    ];
-    const rResize = () => { rCentered = false; tryCenter(); };
-    window.addEventListener('resize', rResize);
-    const rLoad = () => requestAnimationFrame(tryCenter);
-    window.addEventListener('load', rLoad);
+    // Reviews carousel: GEEN custom JS — hook + LP_EXTRA CSS = Home gedrag.
 
     // ── Stats count-up animation
     const formatNl = (n: number) => n.toLocaleString('nl-BE');
@@ -1077,9 +1052,6 @@ export default function LpGevel() {
       style.remove();
       form?.removeEventListener('submit', onSubmit);
       countObserver.disconnect();
-      rTimers.forEach((t) => window.clearTimeout(t));
-      window.removeEventListener('resize', rResize);
-      window.removeEventListener('load', rLoad);
     };
   }, []);
 

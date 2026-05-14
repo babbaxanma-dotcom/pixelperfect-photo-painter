@@ -34,16 +34,7 @@ import rev6 from '@/assets/reviews/sofie.jpg';
 import rev7 from '@/assets/reviews/nathalie.jpg';
 import rev8 from '@/assets/reviews/ellen.jpg';
 
-const DAK_REVIEWS = [
-  { name: 'Stijn Devos', role: 'Pannendak Koramic · Mechelen', img: rev1, text: 'Onze rijwoning had een dak van 1962, lekte op drie plaatsen. AB Bouw stripte alles op één maandag en lag vrijdag waterdicht. Koramic Aleonard pannen, sarkingisolatie, nieuwe goten. Premie van €4.200 een maand na oplevering op de rekening.', highlights: ['vrijdag waterdicht', 'Koramic Aleonard', '€4.200 een maand na oplevering'] },
-  { name: 'Lieve Hermans', role: 'Plat dak EPDM · Antwerpen', img: rev2, text: 'Vrijdag een natte vlek op het plafond, zaterdag belde Bardh me terug. Maandag stond de ploeg op het dak. 70 m² EPDM in één stuk gelegd, geen naden, geen sjoemel. Factuur klopte tot op de euro met de offerte.', highlights: ['zaterdag belde Bardh me terug', 'geen naden', 'tot op de euro'] },
-  { name: 'Tom Vanherck', role: 'Sarking dakisolatie · Puurs', img: rev3, text: 'Wij wilden vooral lager EPC voor de verkoop. Sarkingsysteem buitenop, oude binnenafwerking bleef. EPC van F naar C op twee weken werk. De vastgoedmakelaar liet ons €18.000 hoger vragen na de renovatie.', highlights: ['EPC van F naar C', 'twee weken werk', '€18.000 hoger'] },
-  { name: 'Greet Coppens', role: 'Velux dakvenster · Lier', img: rev4, text: 'Twee Velux GGL ramen in de keperruimte voor onze nieuwe zolderslaapkamer. Plaatsing op twee dagen, binnenafwerking direct mee gepleisterd. Geen koudebrug, geen condens, en de zomer waren we héél blij met de Velux-zonwering.', highlights: ['twee dagen', 'Geen koudebrug', 'héél blij'] },
-  { name: 'Davy Janssens', role: 'Stormschade hersteld · Bornem', img: rev5, text: 'Storm Pia haalde de helft van de pannen weg. Bardh stuurde dezelfde dag iemand voor het dekzeil, de week erop volledig nieuw dak. Verzekering werd door hen rechtstreeks geregeld — wij moesten niets uitzoeken.', highlights: ['dezelfde dag', 'wij moesten niets uitzoeken'] },
-  { name: 'Annick Verstraete', role: 'Zinkwerk VMZinc · Sint-Niklaas', img: rev6, text: 'Oude koperen goten vervangen door natuurzink VMZinc Anthra-Zinc. Gesoldeerde verbindingen, geen plastic koppelstukken, geen kit. Strakke lijn rond heel het huis. Volgens de loodgieter gaat dit 60 jaar mee.', highlights: ['VMZinc Anthra-Zinc', 'Strakke lijn', '60 jaar mee'] },
-  { name: 'Bart Lambrechts', role: 'Volledige dakrenovatie · Bonheiden', img: rev7, text: 'Twee verdiepingen + zolder, alles gestript en opnieuw. Bardh stond elke vrijdag op de werf om de week te overlopen. Foto-update elke avond per WhatsApp. Premie van €5.200 ingediend door hen.', highlights: ['elke vrijdag op de werf', 'Foto-update elke avond', 'Premie van €5.200'] },
-  { name: 'Tine Verlinden', role: 'PIR-dakisolatie · Heist-op-den-Berg', img: rev8, text: 'Drie aannemers gevraagd, twee wilden direct alles vervangen. Bardh klopte op de pannen, zei: dit dak gaat nog 20 jaar mee, gewoon isolatie tussen kepers. Klaar in 3 dagen. EPC-sprong van 58 punten.', highlights: ['nog 20 jaar mee', 'Klaar in 3 dagen', 'EPC-sprong van 58 punten'] },
-];
+// (Reviews data inline in IIFE in HTML section — exact zoals Home page)
 
 // LP-specifieke aanvullingen op SHELL_STYLE — hergebruikt alle bestaande
 // `.lf-*` klassen voor 100% stijl-consistentie met de rest van de site.
@@ -131,12 +122,11 @@ const LP_EXTRA = `
 }
 .lp-cta-microtrust b { color: rgba(255,255,255,0.92); font-weight: 600; }
 
-/* Reviews carousel = Home's animation CSS + LP-specifieke animation-delay
-   van 6s zodat JS-gecentreerde eerste card eerst stil zichtbaar staat
-   voordat de scroll-animation begint. */
+/* Reviews carousel: SHELL_STYLE injecteert eigen testi-CSS die divergeert
+   van Home. We overriden hier letterlijk Home's regels zodat .lp-reviews
+   exact als Home draait. */
 .lp-reviews .lf-testi-track {
   animation: lf-marquee-scroll 58s linear infinite !important;
-  animation-delay: 6s !important;
 }
 .lp-reviews .lf-testi-marquee:hover .lf-testi-track,
 .lp-reviews .lf-testi-marquee:focus-within .lf-testi-track {
@@ -646,9 +636,9 @@ const HTML = `
   </button>
 </section>
 
-<section class="lf-section lf-tone-soft lf-reviews-section lp-reviews" style="padding: 64px 0 80px;">
+<section class="lf-section lf-tone-soft lf-reviews-section lp-reviews" style="padding: 56px 0;">
   <div class="wrap">
-    <div class="lf-section-head centered lf-reviews-head" data-reveal style="margin-bottom: 32px;">
+    <div class="lf-section-head centered lf-reviews-head" data-reveal style="margin-bottom: 36px;">
       <span class="lf-eyebrow">Reviews dakwerken</span>
       <div class="lf-reviews-rating">
         <span class="lf-reviews-score">4.9</span>
@@ -675,9 +665,16 @@ const HTML = `
       <div class="lf-testi-shift" data-testi-shift>
         <div class="lf-testi-track" data-testi-track>
           ${(() => {
-            // Identiek aan Home page: wrap belangrijke woorden in <mark class="lf-hl">
-            // met <span class="lf-hl-word"> per woord — yellow marker animeert word-
-            // by-word in als de card .is-focus krijgt.
+            const reviews = [
+              { name: 'Stijn Devos', role: 'Pannendak Koramic · Mechelen', img: rev1, text: 'Onze rijwoning had een dak van 1962, lekte op drie plaatsen. AB Bouw stripte alles op één maandag en lag vrijdag waterdicht. Koramic Aleonard pannen, sarkingisolatie, nieuwe goten. Premie van €4.200 een maand na oplevering op de rekening.', highlights: ['vrijdag waterdicht', 'Koramic Aleonard', '€4.200 een maand na oplevering'] },
+              { name: 'Lieve Hermans', role: 'Plat dak EPDM · Antwerpen', img: rev2, text: 'Vrijdag een natte vlek op het plafond, zaterdag belde Bardh me terug. Maandag stond de ploeg op het dak. 70 m² EPDM in één stuk gelegd, geen naden, geen sjoemel. Factuur klopte tot op de euro met de offerte.', highlights: ['zaterdag belde Bardh me terug', 'geen naden', 'tot op de euro'] },
+              { name: 'Tom Vanherck', role: 'Sarking dakisolatie · Puurs', img: rev3, text: 'Wij wilden vooral lager EPC voor de verkoop. Sarkingsysteem buitenop, oude binnenafwerking bleef. EPC van F naar C op twee weken werk. De vastgoedmakelaar liet ons €18.000 hoger vragen na de renovatie.', highlights: ['EPC van F naar C', 'twee weken werk', '€18.000 hoger'] },
+              { name: 'Greet Coppens', role: 'Velux dakvenster · Lier', img: rev4, text: 'Twee Velux GGL ramen in de keperruimte voor onze nieuwe zolderslaapkamer. Plaatsing op twee dagen, binnenafwerking direct mee gepleisterd. Geen koudebrug, geen condens, en de zomer waren we héél blij met de Velux-zonwering.', highlights: ['twee dagen', 'Geen koudebrug', 'héél blij'] },
+              { name: 'Davy Janssens', role: 'Stormschade hersteld · Bornem', img: rev5, text: 'Storm Pia haalde de helft van de pannen weg. Bardh stuurde dezelfde dag iemand voor het dekzeil, de week erop volledig nieuw dak. Verzekering werd door hen rechtstreeks geregeld — wij moesten niets uitzoeken.', highlights: ['dezelfde dag', 'wij moesten niets uitzoeken'] },
+              { name: 'Annick Verstraete', role: 'Zinkwerk VMZinc · Sint-Niklaas', img: rev6, text: 'Oude koperen goten vervangen door natuurzink VMZinc Anthra-Zinc. Gesoldeerde verbindingen, geen plastic koppelstukken, geen kit. Strakke lijn rond heel het huis. Volgens de loodgieter gaat dit 60 jaar mee.', highlights: ['VMZinc Anthra-Zinc', 'Strakke lijn', '60 jaar mee'] },
+              { name: 'Bart Lambrechts', role: 'Volledige dakrenovatie · Bonheiden', img: rev7, text: 'Twee verdiepingen + zolder, alles gestript en opnieuw. Bardh stond elke vrijdag op de werf om de week te overlopen. Foto-update elke avond per WhatsApp. Premie van €5.200 ingediend door hen.', highlights: ['elke vrijdag op de werf', 'Foto-update elke avond', 'Premie van €5.200'] },
+              { name: 'Tine Verlinden', role: 'PIR-dakisolatie · Heist-op-den-Berg', img: rev8, text: 'Drie aannemers gevraagd, twee wilden direct alles vervangen. Bardh klopte op de pannen, zei: dit dak gaat nog 20 jaar mee, gewoon isolatie tussen kepers. Klaar in 3 dagen. EPC-sprong van 58 punten.', highlights: ['nog 20 jaar mee', 'Klaar in 3 dagen', 'EPC-sprong van 58 punten'] },
+            ];
             const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             const wrapWords = (phrase: string, baseI: number) => {
               const words = phrase.split(/(\s+)/);
@@ -702,20 +699,21 @@ const HTML = `
               });
               return out;
             };
-            return [-1, 0, 1].map((setIdx) => `
+            const loopedSets = [-1, 0, 1];
+            return loopedSets.map((setIdx) => `
               <div class="lf-testi-set" data-testi-set="${setIdx}"${setIdx !== 0 ? ' aria-hidden="true"' : ''}>
-                ${DAK_REVIEWS.map((t, i) => `
-                  <article class="lf-testi" data-review-index="${i}">
+                ${reviews.map((t, reviewIdx) => `
+                  <article class="lf-testi" data-review-index="${reviewIdx}">
                     <div class="lf-testi-stars">★★★★★</div>
                     <p>${highlight(t.text, t.highlights)}</p>
-                  <div class="lf-testi-divider"></div>
+                    <div class="lf-testi-divider"></div>
                     <div class="lf-testi-foot">
                       <img class="lf-testi-avatar" src="${t.img}" alt="${t.name}" loading="lazy"/>
                       <div class="lf-testi-meta">
                         <strong>${t.name}</strong>
                         <span>${t.role}</span>
                       </div>
-                      <svg class="lf-testi-google" viewBox="0 0 48 48" width="22" height="22" aria-label="Google review">
+                      <svg class="lf-testi-google" viewBox="0 0 48 48" width="22" height="22" aria-label="Review">
                         <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/>
                         <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 19 13 24 13c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.6 8.4 6.3 14.7z"/>
                         <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/>
@@ -1098,39 +1096,8 @@ export default function LpDakwerken() {
     document.head.appendChild(style);
     window.scrollTo(0, 0);
 
-    // ── Reviews carousel: animation = Home's exact CSS (lf-marquee-scroll).
-    // EXTRA op LP: JS centreert shift wrapper zodat eerste card visueel
-    // in viewport-midden start. Reden: op LP komt reviews direct onder hero
-    // — user heeft geen tijd om animation vooruit te laten lopen voor 'ie
-    // kijkt (Home heeft die luxe wel, daar lijken cards natuurlijk mid-scroll).
-    const rShift = document.querySelector<HTMLElement>('.lp-reviews [data-testi-shift]');
-    const rMarquee = document.querySelector<HTMLElement>('.lp-reviews [data-testi-marquee]');
-    const rFirstCard = document.querySelector<HTMLElement>('.lp-reviews [data-testi-set="0"] .lf-testi');
-    const isRMobile = () => window.matchMedia('(max-width: 760px)').matches;
-    let rCentered = false;
-    const tryCenter = () => {
-      if (rCentered) return; // GEEN re-apply — voorkomt visuele jumps
-      if (!rShift || !rMarquee || !rFirstCard || isRMobile()) return;
-      const card = rFirstCard.getBoundingClientRect();
-      if (card.width < 50) return; // DOM nog niet klaar, probeer later
-      const mq = rMarquee.getBoundingClientRect();
-      const offset = (mq.left + mq.width / 2) - (card.left + card.width / 2);
-      rShift.style.transform = `translate3d(${offset}px, 0, 0)`;
-      rShift.style.setProperty('--testi-shift', `${offset}px`);
-      rCentered = true;
-    };
-    // Retry tot eerste succesvolle apply, dan stoppen.
-    const rTimers = [
-      window.setTimeout(tryCenter, 80),
-      window.setTimeout(tryCenter, 200),
-      window.setTimeout(tryCenter, 500),
-      window.setTimeout(tryCenter, 1200),
-    ];
-    // Op resize: forceer nieuwe centering (viewport kan veranderd zijn).
-    const rResize = () => { rCentered = false; tryCenter(); };
-    window.addEventListener('resize', rResize);
-    const rLoad = () => requestAnimationFrame(tryCenter);
-    window.addEventListener('load', rLoad);
+    // ── Reviews carousel: GEEN custom JS — useAbBouwInteractions hook handelt
+    // alles af, en LP_EXTRA CSS overrides SHELL_STYLE naar Home's exacte rules.
 
     // ── Stats count-up — anime van 0 naar target wanneer in viewport
     const formatNl = (n: number) => n.toLocaleString('nl-BE');
@@ -1210,9 +1177,6 @@ export default function LpDakwerken() {
       style.remove();
       form?.removeEventListener('submit', onSubmit);
       countObserver.disconnect();
-      rTimers.forEach((t) => window.clearTimeout(t));
-      window.removeEventListener('resize', rResize);
-      window.removeEventListener('load', rLoad);
     };
   }, []);
 
