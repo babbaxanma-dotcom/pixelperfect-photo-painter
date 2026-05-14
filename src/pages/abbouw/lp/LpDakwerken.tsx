@@ -322,11 +322,18 @@ const LP_EXTRA = `
 .lp-form-card textarea { min-height: 96px; resize: vertical; }
 .lp-form-card button[type="submit"] {
   margin-top: 4px; padding: 15px 22px;
-  background: var(--accent); color: #fff; border: none;
+  background: #d98c03 !important;
+  background-color: #d98c03 !important;
+  color: #fff !important;
+  border: none;
   border-radius: 999px; font: inherit; font-weight: 700; font-size: 14.5px;
   cursor: pointer; transition: background .2s ease, transform .15s ease;
 }
-.lp-form-card button[type="submit"]:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.lp-form-card button[type="submit"]:hover {
+  background: #b87502 !important;
+  background-color: #b87502 !important;
+  transform: translateY(-1px);
+}
 .lp-form-card button[type="submit"]:disabled { opacity: 0.6; cursor: wait; }
 .lp-form-foot { margin-top: 10px; font-size: 12px; color: var(--ink-mute); }
 .lp-form-foot a { color: var(--accent); }
@@ -549,23 +556,37 @@ const LP_EXTRA = `
   .lp-cta-banner-cta { width: 100%; justify-content: center; }
 }
 
-/* ───────── Form select dropdown styling ───────── */
+/* ───────── Form select dropdown — modern, clean, premium ───────── */
 .lp-form-card select {
   font: inherit; font-size: 15px;
-  width: 100%; padding: 13px 38px 13px 14px;
-  border: 1px solid var(--ink-line); border-radius: 10px;
-  background: #fff; color: var(--ink);
+  width: 100%;
+  padding: 14px 44px 14px 16px;
+  border: 1px solid var(--ink-line);
+  border-radius: 12px;
+  background-color: #fff;
+  color: var(--ink);
   cursor: pointer;
-  appearance: none; -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a5468' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  appearance: none; -webkit-appearance: none; -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a1628' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 14px center;
-  background-size: 18px;
+  background-position: right 16px center;
+  background-size: 16px;
+  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.lp-form-card select:hover {
+  border-color: rgba(217,140,3,0.5);
+  background-color: #fafafa;
 }
 .lp-form-card select:focus {
-  outline: none; border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(217,140,3,0.14);
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(217,140,3,0.18);
 }
+.lp-form-card select:invalid { color: var(--ink-mute); }
+.lp-form-card select option { color: var(--ink); padding: 12px; }
+.lp-form-card select option:first-child { color: var(--ink-mute); }
 
 /* Sticky desktop CTA — ALTIJD goud (background op base + media, niet alleen
    inside media query, en ook inline op de <a> met !important voor zekerheid) */
@@ -630,7 +651,7 @@ const HTML = `
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
-      <p class="lp-cta-microtrust"><b>Antwoord binnen 1 werkdag.</b> Geen verkooppraatje. Geen verplichting.</p>
+      <p class="lp-cta-microtrust"><b>Antwoord binnen 1 werkdag.</b> Vrijblijvend en gratis.</p>
       <div class="lp-hero-trust">
         <span><span class="lp-hero-trust-stars">★★★★★</span><b>4,9 / 5</b></span>
         <span><b>184+</b> klanten</span>
@@ -916,7 +937,7 @@ const HTML = `
   <div class="wrap">
     <div class="lp-cta-banner" data-reveal>
       <div class="lp-cta-banner-text">
-        <strong>Eerlijk advies, geen verkooppraatje.</strong>
+        <strong>Eerlijk advies, op uw eigen tempo.</strong>
         <span>Bardh komt langs en zegt u eerlijk wat moet en wat kan wachten. Vrijblijvend en gratis.</span>
       </div>
       <a href="tel:+32470634413" class="lp-cta-banner-cta">
@@ -994,7 +1015,7 @@ const HTML = `
     <div class="lf-section-head centered" data-reveal style="margin-bottom: 40px;">
       <span class="lf-eyebrow">Verdiepende reads</span>
       <h2 class="lf-h2">Eerst wat <span class="ab-mark">leren</span> over dakwerken?</h2>
-      <p class="lf-lede" style="margin: 16px auto 0; max-width: 620px;">Drie artikelen die de meest gestelde vragen beantwoorden — open in nieuw tabblad zodat u hier kan verder lezen.</p>
+      <p class="lf-lede" style="margin: 16px auto 0; max-width: 620px;">Drie artikelen die de meest gestelde vragen beantwoorden.</p>
     </div>
     <div class="lp-blog-grid">
       ${LP_BLOGS.map((b, i) => `
@@ -1060,7 +1081,7 @@ const HTML = `
             <input type="text" name="gemeente" placeholder="Gemeente" autocomplete="address-level2" />
           </div>
           <textarea name="aanvullende_info" placeholder="Vertel kort over uw dak (leeftijd, oppervlakte, klacht)"></textarea>
-          <button type="submit" data-lp-submit>Vraag dakinspectie aan</button>
+          <button type="submit" data-lp-submit style="background:#d98c03 !important; color:#fff !important;">Vraag dakinspectie aan</button>
           <p class="lp-form-foot">Geen spam. Privacy verklaring op <a href="/privacy" target="_blank">/privacy</a>.</p>
           <div class="lp-form-error" data-lp-form-error></div>
         </form>
