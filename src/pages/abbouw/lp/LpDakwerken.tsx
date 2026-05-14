@@ -35,14 +35,14 @@ import rev7 from '@/assets/reviews/nathalie.jpg';
 import rev8 from '@/assets/reviews/ellen.jpg';
 
 const DAK_REVIEWS = [
-  { name: 'Marc Van den Broeck', role: 'Pannendak vernieuwd · Mechelen', img: rev1, text: 'Eerlijke offerte, geen meerwerken achteraf. Eigen ploeg op de werf, geen 5 onderaannemers die elkaar tegenwerken. Het dak ligt er strak bij en de premie van €4.200 is netjes uitbetaald.' },
-  { name: 'Dirk Maes', role: 'Plat dak EPDM · Antwerpen', img: rev2, text: "Lekkend dak vrijdag gemeld, maandagochtend stond de ploeg er. EPDM in één stuk gelegd over 65m², geen naden, geen verrassingen. Top service voor wie z'n dak echt vakkundig wil." },
-  { name: 'Filip Wouters', role: 'Hellend dak + isolatie · Puurs', img: rev3, text: 'Volledige stripoperatie: oude pannen weg, nieuwe sarking-isolatie, Koramic pannen erop. Acht werkdagen, geen dag uitloop. EPC-score van label E naar B in één renovatie.' },
-  { name: 'Jeroen De Coster', role: 'Dakvenster Velux · Lier', img: rev4, text: 'Twee Velux-ramen in de keperruimte, met buitenzonwering. Plaatsing in twee dagen, binnenafwerking helemaal mee gepleisterd door eigen schrijnwerker. Geen koudebruggen, geen vocht.' },
-  { name: 'Mehmet Yıldız', role: 'Stormschade hersteld · Bornem', img: rev5, text: 'Helft van de pannen weggewaaid tijdens storm. AB Bouw kwam dezelfde dag voor noodfix met dekzeil, week erop nieuw dak gelegd. Factuur exact zoals afgesproken, verzekeringsdossier mee geregeld.' },
-  { name: 'Sofie Vermeulen', role: 'Zinken dakgoten + boordafwerking · Sint-Niklaas', img: rev6, text: 'Oude koperen goten vervangen door natuurzink (VMZinc). Gesoldeerde verbindingen, geen siliconen. Mooie strakke lijn rond heel het huis. Vakwerk dat 60 jaar meegaat.' },
-  { name: 'Nathalie Aerts', role: 'Volledige dakrenovatie · Bonheiden', img: rev7, text: 'Twee verdiepingen, complete dakvervanging. Bardh kwam wekelijks zelf langs om vragen te beantwoorden. Vlotte communicatie, foto-update elke vrijdag in mail. Premie van €5.200 ingediend door hen.' },
-  { name: 'Ellen De Smet', role: 'Dakisolatie zonder afbraak · Heist-op-den-Berg', img: rev8, text: 'PIR-isolatie tussen de kepers, geen volledig nieuw dak nodig volgens hen. Eerlijk advies, andere aannemers wilden meteen alles vervangen. EPC-sprong van 60 punten, factuur half zo groot.' },
+  { name: 'Stijn Devos', role: 'Pannendak Koramic · Mechelen', img: rev1, text: 'Onze rijwoning had een dak van 1962, lekte op drie plaatsen. AB Bouw stripte alles op één maandag en lag vrijdag waterdicht. Koramic Aleonard pannen, sarkingisolatie, nieuwe goten. Premie van €4.200 een maand na oplevering op de rekening.' },
+  { name: 'Lieve Hermans', role: 'Plat dak EPDM · Antwerpen', img: rev2, text: 'Vrijdag een natte vlek op het plafond, zaterdag belde Bardh me terug. Maandag stond de ploeg op het dak. 70 m² EPDM in één stuk gelegd, geen naden, geen sjoemel. Factuur klopte tot op de euro met de offerte.' },
+  { name: 'Tom Vanherck', role: 'Sarking dakisolatie · Puurs', img: rev3, text: 'Wij wilden vooral lager EPC voor de verkoop. Sarkingsysteem buitenop, oude binnenafwerking bleef. EPC van F naar C op twee weken werk. De vastgoedmakelaar liet ons €18.000 hoger vragen na de renovatie.' },
+  { name: 'Greet Coppens', role: 'Velux dakvenster · Lier', img: rev4, text: 'Twee Velux GGL ramen in de keperruimte voor onze nieuwe zolderslaapkamer. Plaatsing op twee dagen, binnenafwerking direct mee gepleisterd. Geen koudebrug, geen condens, en de zomer waren we héél blij met de Velux-zonwering.' },
+  { name: 'Davy Janssens', role: 'Stormschade hersteld · Bornem', img: rev5, text: 'Storm Pia haalde de helft van de pannen weg. Bardh stuurde dezelfde dag iemand voor het dekzeil, de week erop volledig nieuw dak. Verzekering Federale Verzekering werd door hen rechtstreeks ingelicht — wij moesten niets uitzoeken.' },
+  { name: 'Annick Verstraete', role: 'Zinkwerk VMZinc · Sint-Niklaas', img: rev6, text: 'Oude koperen goten vervangen door natuurzink VMZinc Anthra-Zinc. Gesoldeerde verbindingen, geen plastic koppelstukken, geen kit. Strakke lijn rond heel het huis. Volgens de loodgieter gaat dit 60 jaar mee.' },
+  { name: 'Bart Lambrechts', role: 'Volledige dakrenovatie · Bonheiden', img: rev7, text: 'Twee verdiepingen + zolder, alles gestript en opnieuw. Bardh stond elke vrijdag op de werf om de week te overlopen. Foto-update elke avond per WhatsApp. Premie van €5.200 ingediend door hen, geen formulier zelf moeten invullen.' },
+  { name: 'Tine Verlinden', role: 'PIR-dakisolatie · Heist-op-den-Berg', img: rev8, text: 'Drie aannemers gevraagd. Twee zeiden meteen "alles vervangen". Bardh kwam, klopte op de pannen, zei: dit dak gaat nog 20 jaar mee, gewoon isolatie tussen kepers. Werk klaar in 3 dagen. EPC-sprong van 58 punten. Eerlijk werk.' },
 ];
 
 // LP-specifieke aanvullingen op SHELL_STYLE — hergebruikt alle bestaande
@@ -131,12 +131,22 @@ const LP_EXTRA = `
 }
 .lp-cta-microtrust b { color: rgba(255,255,255,0.92); font-weight: 600; }
 
-/* ───────── Reviews carousel fix — disable auto-scroll, center set-0 ───────── */
-.lp-reviews .lf-testi-track { animation: none !important; }
-.lp-reviews .lf-testi-shift { transition: transform 0.55s cubic-bezier(.22,.7,.2,1); }
+/* ───────── Reviews carousel — seamless auto-scroll (3 sets → loop -33.333%) ───────── */
+.lp-reviews .lf-testi-track {
+  animation: lp-testi-scroll-3sets 70s linear infinite !important;
+}
+@keyframes lp-testi-scroll-3sets {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-33.333%, 0, 0); }
+}
+.lp-reviews .lf-testi-marquee:hover .lf-testi-track,
+.lp-reviews .lf-testi-marquee:focus-within .lf-testi-track {
+  animation-play-state: paused;
+}
 .lp-reviews .lf-testi-marquee { padding-top: 28px; padding-bottom: 36px; }
-@media (max-width: 760px) {
-  .lp-reviews .lf-testi-shift { transition: none; }
+.lp-reviews .lf-testi-shift { transform: none !important; transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .lp-reviews .lf-testi-track { animation: none !important; }
 }
 
 /* ───────── Trust logo strip ───────── */
@@ -283,9 +293,11 @@ const LP_EXTRA = `
 .lp-form-section { background: var(--navy); color: #fff; padding: 90px 0; }
 .lp-form-section h2 { color: #fff; }
 /* .ab-mark heeft default color:var(--navy) — onzichtbaar op navy bg.
-   Op LP form section forceren we 'm naar goud zodat het marked woord leest. */
-.lp-form-section h2 .ab-mark { color: var(--accent); }
-.lp-form-section h2 .ab-mark::after { opacity: 0.22; background: rgba(255,255,255,0.18); }
+   Force naar goud met !important om class-cascade te beating. */
+.lp-form-section h2 .ab-mark,
+.lp-form-section .lf-h2 .ab-mark { color: var(--accent) !important; }
+.lp-form-section h2 .ab-mark::after,
+.lp-form-section .lf-h2 .ab-mark::after { opacity: 0.22 !important; background: rgba(255,255,255,0.18) !important; }
 .lp-form-section .lf-eyebrow {
   background: var(--accent) !important;
   color: #fff !important;
@@ -380,6 +392,137 @@ const LP_EXTRA = `
 .lp-blog-card:hover .lp-blog-link { gap: 12px; }
 @media (max-width: 900px) {
   .lp-blog-grid { grid-template-columns: 1fr; gap: 16px; }
+}
+
+/* ───────── 3D model placeholder + roof anatomy ───────── */
+.lp-3d-frame {
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, #0a1628 0%, #14233a 100%);
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+  margin: 24px 0 32px;
+  isolation: isolate;
+}
+.lp-3d-frame::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(217,140,3,0.20) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(46,212,122,0.10) 0%, transparent 50%);
+  animation: lp-3d-pulse 8s ease-in-out infinite;
+}
+@keyframes lp-3d-pulse {
+  0%, 100% { transform: scale(1) translate3d(0,0,0); opacity: 0.7; }
+  50%      { transform: scale(1.1) translate3d(2%, -1%, 0); opacity: 1; }
+}
+.lp-3d-frame::after {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(0deg, transparent 49.5%, rgba(255,255,255,0.05) 50%, transparent 50.5%),
+    linear-gradient(90deg, transparent 49.5%, rgba(255,255,255,0.05) 50%, transparent 50.5%);
+  background-size: 48px 48px;
+  opacity: 0.6;
+}
+.lp-3d-placeholder {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.78);
+  gap: 10px;
+  text-align: center; padding: 0 24px;
+}
+.lp-3d-icon {
+  width: 64px; height: 64px; border-radius: 16px;
+  background: rgba(217,140,3,0.18);
+  border: 1px solid rgba(217,140,3,0.36);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--accent);
+  margin-bottom: 6px;
+  animation: lp-3d-icon-spin 12s linear infinite;
+}
+@keyframes lp-3d-icon-spin {
+  to { transform: rotate(360deg); }
+}
+.lp-3d-label { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: #fff; }
+.lp-3d-sub { font-size: 13px; letter-spacing: 0.02em; color: rgba(255,255,255,0.6); }
+.lp-3d-layers {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+}
+.lp-3d-layer {
+  padding: 16px 18px;
+  background: #fff;
+  border: 1px solid var(--ink-line-soft);
+  border-radius: 12px;
+  font-size: 14px; color: var(--ink);
+  display: flex; align-items: center; gap: 14px;
+  transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+  position: relative; overflow: hidden;
+}
+.lp-3d-layer::before {
+  content: ''; position: absolute; left: -100%; top: 0; bottom: 0; width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(217,140,3,0.08), transparent);
+  transition: left .6s ease;
+}
+.lp-3d-layer:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 16px 36px -20px rgba(217,140,3,0.5); }
+.lp-3d-layer:hover::before { left: 100%; }
+.lp-3d-layer strong {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 13px; font-weight: 700;
+  flex-shrink: 0;
+}
+@media (max-width: 760px) { .lp-3d-layers { grid-template-columns: 1fr; } }
+
+/* ───────── Stats count-up animation ───────── */
+.lp-stat-num {
+  display: inline-block;
+  transition: color .35s ease;
+}
+.lp-stat[data-counted] .lp-stat-num {
+  animation: lp-stat-pop 0.6s ease-out;
+}
+@keyframes lp-stat-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.06); color: var(--accent); }
+  100% { transform: scale(1); }
+}
+
+/* ───────── Premie box icon: roteren + pulserend goud ───────── */
+.lp-premie-ico {
+  position: relative;
+  animation: lp-premie-glow 3.6s ease-in-out infinite;
+}
+@keyframes lp-premie-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(217,140,3,0.45), 0 8px 22px -10px rgba(217,140,3,0.45); }
+  50%      { box-shadow: 0 0 0 10px rgba(217,140,3,0), 0 12px 30px -10px rgba(217,140,3,0.6); }
+}
+
+/* ───────── Urgency card: gradient sweep on hover ───────── */
+.lp-urgency-card { position: relative; overflow: hidden; }
+.lp-urgency-card::before {
+  content: ''; position: absolute; left: -100%; top: 0; bottom: 0; width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(217,140,3,0.08), transparent);
+  transition: left .7s cubic-bezier(.22,1,.36,1);
+  pointer-events: none;
+}
+.lp-urgency-card:hover::before { left: 100%; }
+
+/* ───────── Form select dropdown styling ───────── */
+.lp-form-card select {
+  font: inherit; font-size: 15px;
+  width: 100%; padding: 13px 38px 13px 14px;
+  border: 1px solid var(--ink-line); border-radius: 10px;
+  background: #fff; color: var(--ink);
+  cursor: pointer;
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a5468' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px;
+}
+.lp-form-card select:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(217,140,3,0.14);
 }
 
 /* Sticky desktop CTA — ALTIJD goud zichtbaar (niet gated by past-hero
@@ -478,12 +621,6 @@ const HTML = `
       </div>
     </div>
     <div class="lf-testi-marquee" data-lp-testi-marquee>
-      <button type="button" class="lf-testi-arrow lf-testi-arrow--prev" data-lp-testi-prev aria-label="Vorige review">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <button type="button" class="lf-testi-arrow lf-testi-arrow--next" data-lp-testi-next aria-label="Volgende review">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
       <div class="lf-testi-shift" data-testi-shift>
         <div class="lf-testi-track" data-testi-track>
           ${[-1, 0, 1].map((setIdx) => `
@@ -550,10 +687,10 @@ const HTML = `
 <section class="lf-section" style="padding: 64px 0 24px;">
   <div class="wrap">
     <div class="lp-stats-strip">
-      <div class="lp-stat" data-reveal><div class="lp-stat-num">48.325 m²</div><div class="lp-stat-label">Afgewerkte daken sinds 2010</div></div>
-      <div class="lp-stat" data-reveal data-reveal-delay="1"><div class="lp-stat-num">6 vaste</div><div class="lp-stat-label">Eigen dakdekkers in dienst</div></div>
-      <div class="lp-stat" data-reveal data-reveal-delay="2"><div class="lp-stat-num">30%</div><div class="lp-stat-label">Minder warmteverlies na isolatie</div></div>
-      <div class="lp-stat" data-reveal data-reveal-delay="3"><div class="lp-stat-num">€40/m²</div><div class="lp-stat-label">Premie dakisolatie 2026</div></div>
+      <div class="lp-stat" data-reveal><div class="lp-stat-num" data-count-up="48325" data-count-suffix=" m²">0 m²</div><div class="lp-stat-label">Afgewerkte daken sinds 2010</div></div>
+      <div class="lp-stat" data-reveal data-reveal-delay="1"><div class="lp-stat-num" data-count-up="6" data-count-suffix=" vaste">0 vaste</div><div class="lp-stat-label">Eigen dakdekkers in dienst</div></div>
+      <div class="lp-stat" data-reveal data-reveal-delay="2"><div class="lp-stat-num" data-count-up="30" data-count-suffix="%">0%</div><div class="lp-stat-label">Minder warmteverlies na isolatie</div></div>
+      <div class="lp-stat" data-reveal data-reveal-delay="3"><div class="lp-stat-num" data-count-up="40" data-count-prefix="€" data-count-suffix="/m²">€0/m²</div><div class="lp-stat-label">Premie dakisolatie 2026</div></div>
     </div>
   </div>
 </section>
@@ -640,6 +777,33 @@ const HTML = `
           <li><strong>Oplevering</strong> — Premie ingediend, 10 jaar garantie schriftelijk vastgelegd</li>
         </ul>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="lf-section">
+  <div class="wrap">
+    <div class="lf-section-head centered" data-reveal style="margin-bottom: 28px;">
+      <span class="lf-eyebrow">Interactief</span>
+      <h2 class="lf-h2">Uw dak in <span class="ab-mark">3D</span> — laag voor laag.</h2>
+      <p class="lf-lede" style="margin: 14px auto 0; max-width: 620px;">Beweeg, draai, zoom in. Zo zit een nieuw Vlaams dak in elkaar — van pannen tot kepers, zes lagen vakwerk.</p>
+    </div>
+    <div class="lp-3d-frame" data-reveal>
+      <div class="lp-3d-placeholder">
+        <span class="lp-3d-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </span>
+        <span class="lp-3d-label">3D model komt hier</span>
+        <span class="lp-3d-sub">Drag to rotate · Scroll to zoom · Click to inspect layer</span>
+      </div>
+    </div>
+    <div class="lp-3d-layers" data-reveal data-reveal-delay="1">
+      <div class="lp-3d-layer"><strong>1</strong> Dakpannen of natuurleien</div>
+      <div class="lp-3d-layer"><strong>2</strong> Tengels en panlatten</div>
+      <div class="lp-3d-layer"><strong>3</strong> Onderdak (waterdichte folie)</div>
+      <div class="lp-3d-layer"><strong>4</strong> PIR-isolatie tussen kepers</div>
+      <div class="lp-3d-layer"><strong>5</strong> Dampscherm</div>
+      <div class="lp-3d-layer"><strong>6</strong> Binnenafwerking</div>
     </div>
   </div>
 </section>
@@ -759,12 +923,24 @@ const HTML = `
           </div>
           <input type="email" name="email" placeholder="E-mailadres *" required autocomplete="email" />
           <input type="tel" name="phone" placeholder="Telefoonnummer *" required autocomplete="tel" />
+          <select name="type_dak" required>
+            <option value="">Type dakwerk *</option>
+            <option value="pannendak">Hellend dak (pannen)</option>
+            <option value="natuurleien">Hellend dak (natuurleien)</option>
+            <option value="plat_dak_epdm">Plat dak — EPDM</option>
+            <option value="plat_dak_roofing">Plat dak — bitumen / roofing</option>
+            <option value="dakvenster">Dakvenster (Velux)</option>
+            <option value="zinkwerk">Zinkwerk / dakgoten</option>
+            <option value="isolatie">Dakisolatie</option>
+            <option value="lekkage">Lekkage / stormschade</option>
+            <option value="anders">Anders / weet niet zeker</option>
+          </select>
           <input type="text" name="straat" placeholder="Straat en nummer" autocomplete="street-address" />
           <div class="lp-form-row">
             <input type="text" name="postcode" placeholder="Postcode" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="postal-code" />
             <input type="text" name="gemeente" placeholder="Gemeente" autocomplete="address-level2" />
           </div>
-          <textarea name="aanvullende_info" placeholder="Vertel kort over uw dak (type, leeftijd, klacht)"></textarea>
+          <textarea name="aanvullende_info" placeholder="Vertel kort over uw dak (leeftijd, oppervlakte, klacht)"></textarea>
           <button type="submit" data-lp-submit>Vraag dakinspectie aan</button>
           <p class="lp-form-foot">Geen spam. Privacy verklaring op <a href="/privacy" target="_blank">/privacy</a>.</p>
           <div class="lp-form-error" data-lp-form-error></div>
@@ -812,65 +988,28 @@ export default function LpDakwerken() {
     document.head.appendChild(style);
     window.scrollTo(0, 0);
 
-    // ── LP-specifieke testimonials-carrousel: auto-scroll uit, set-0 gecentreerd,
-    // arrows step één kaart tegelijk, focused card krijgt is-focus highlight.
-    // We gebruiken data-lp-testi-* attrs zodat de globale hook 'm niet aanraakt.
+    // ── Carousel: seamless auto-scroll via CSS animation (lp-testi-scroll-3sets).
+    // We only run an RAF focus-highlight loop to mark the card closest to center.
+    // Arrows weggehaald — auto-scroll is de motion, hover pauseert.
     const marquee = document.querySelector<HTMLElement>('.lp-reviews [data-lp-testi-marquee]');
-    const shift = document.querySelector<HTMLElement>('.lp-reviews [data-testi-shift]');
-    const set0 = document.querySelector<HTMLElement>('.lp-reviews [data-testi-set="0"]');
-    const prevBtn = document.querySelector<HTMLElement>('[data-lp-testi-prev]');
-    const nextBtn = document.querySelector<HTMLElement>('[data-lp-testi-next]');
-    const cards = Array.from(document.querySelectorAll<HTMLElement>('.lp-reviews [data-testi-set="0"] .lf-testi'));
-
-    let lpShift = 0;
+    const allCards = Array.from(document.querySelectorAll<HTMLElement>('.lp-reviews .lf-testi'));
     const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
-    const applyLpShift = () => {
-      if (!shift) return;
-      // Set BOTH the CSS var AND the inline transform — inline wins specificity
-      // wars en omzeilt cascade-issues met de base .lf-testi-shift rule.
-      shift.style.setProperty('--testi-shift', `${lpShift}px`);
-      shift.style.transform = `translate3d(${lpShift}px, 0, 0)`;
-    };
-    const recomputeInitial = () => {
-      if (!marquee || !set0 || cards.length === 0 || isMobile()) return;
-      // Skip wanneer cards nog niet correct gemeten kunnen worden (DOM nog niet settled).
-      const firstRect = cards[0].getBoundingClientRect();
-      if (firstRect.width < 50) return;
-      const mRect = marquee.getBoundingClientRect();
-      const viewportCenter = mRect.left + mRect.width / 2;
-      const cardCenter = firstRect.left + firstRect.width / 2;
-      lpShift = viewportCenter - cardCenter;
-      applyLpShift();
-    };
-    const step = (dir: 1 | -1) => {
-      if (!cards.length || isMobile()) return;
-      const gap = 24;
-      const cardW = cards[0].getBoundingClientRect().width + gap;
-      lpShift += -dir * cardW;
-      applyLpShift();
-    };
-    const onPrev = () => step(-1);
-    const onNext = () => step(1);
-    prevBtn?.addEventListener('click', onPrev);
-    nextBtn?.addEventListener('click', onNext);
-
-    // Focus highlight: vind welke card het dichtst bij viewport-center is
     let focusRaf = 0;
     const updateFocus = () => {
       focusRaf = 0;
-      if (!marquee || cards.length === 0 || isMobile()) return;
+      if (!marquee || allCards.length === 0 || isMobile()) return;
       const mRect = marquee.getBoundingClientRect();
       const center = mRect.left + mRect.width / 2;
       let bestIdx = -1; let bestDist = Infinity;
       const dists: number[] = [];
-      cards.forEach((c, i) => {
+      allCards.forEach((c, i) => {
         const r = c.getBoundingClientRect();
         const d = Math.abs(r.left + r.width / 2 - center);
         dists[i] = d;
         if (d < bestDist) { bestDist = d; bestIdx = i; }
       });
-      const cw = cards[0].getBoundingClientRect().width;
-      cards.forEach((c, i) => {
+      const cw = allCards[0]?.getBoundingClientRect().width || 360;
+      allCards.forEach((c, i) => {
         c.classList.toggle('is-focus', i === bestIdx);
         c.classList.toggle('is-near', i !== bestIdx && dists[i] < cw * 1.2);
       });
@@ -878,24 +1017,42 @@ export default function LpDakwerken() {
     const tickFocus = () => {
       focusRaf = requestAnimationFrame(() => { updateFocus(); tickFocus(); });
     };
-    // Multi-pass init: probeer op 100/300/700ms en op window.load. DOM kan settled
-    // zijn op T+100ms maar fonts/images kunnen layout shiften — daarom retries.
-    const initTimers: number[] = [];
-    const runInit = () => {
-      requestAnimationFrame(() => {
-        recomputeInitial();
-        updateFocus();
-        if (marquee) marquee.classList.add('is-ready');
-      });
-    };
-    initTimers.push(window.setTimeout(runInit, 100));
-    initTimers.push(window.setTimeout(runInit, 300));
-    initTimers.push(window.setTimeout(() => { runInit(); tickFocus(); }, 700));
-    const onLoad = () => requestAnimationFrame(recomputeInitial);
-    window.addEventListener('load', onLoad);
+    const initTimer = window.setTimeout(() => {
+      if (marquee) marquee.classList.add('is-ready');
+      tickFocus();
+    }, 150);
 
-    const onResize = () => { recomputeInitial(); };
-    window.addEventListener('resize', onResize);
+    // ── Stats count-up — anime van 0 naar target wanneer in viewport
+    const formatNl = (n: number) => n.toLocaleString('nl-BE');
+    const animateCount = (el: HTMLElement) => {
+      const target = parseInt(el.dataset.countUp || '0', 10);
+      if (!target || isNaN(target)) return;
+      const prefix = el.dataset.countPrefix || '';
+      const suffix = el.dataset.countSuffix || '';
+      const duration = 1600;
+      const start = performance.now();
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const current = Math.floor(eased * target);
+        el.textContent = prefix + formatNl(current) + suffix;
+        if (t < 1) requestAnimationFrame(tick);
+        else el.textContent = prefix + formatNl(target) + suffix;
+      };
+      requestAnimationFrame(tick);
+    };
+    const countNums = document.querySelectorAll<HTMLElement>('[data-count-up]');
+    const countObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        const el = e.target as HTMLElement;
+        if (e.isIntersecting && !el.dataset.counted) {
+          el.dataset.counted = '1';
+          animateCount(el);
+          el.parentElement?.setAttribute('data-counted', '1');
+        }
+      });
+    }, { threshold: 0.4 });
+    countNums.forEach((el) => countObserver.observe(el));
 
     // ── Form submit
     const wrap = document.querySelector<HTMLElement>('[data-lp-form-wrapper]');
@@ -924,7 +1081,7 @@ export default function LpDakwerken() {
         straat: (fd.get('straat') as string) || undefined,
         postcode: (fd.get('postcode') as string) || undefined,
         gemeente: (fd.get('gemeente') as string) || undefined,
-        type_werk: 'ab_dakwerken',
+        type_werk: ((fd.get('type_dak') as string) || 'ab_dakwerken'),
         aanvullende_info: (fd.get('aanvullende_info') as string) || undefined,
         bron_lead: 'ads:dakwerken',
       });
@@ -942,11 +1099,8 @@ export default function LpDakwerken() {
       document.body.className = prev;
       style.remove();
       form?.removeEventListener('submit', onSubmit);
-      prevBtn?.removeEventListener('click', onPrev);
-      nextBtn?.removeEventListener('click', onNext);
-      window.removeEventListener('resize', onResize);
-      window.removeEventListener('load', onLoad);
-      initTimers.forEach((t) => window.clearTimeout(t));
+      window.clearTimeout(initTimer);
+      countObserver.disconnect();
       if (focusRaf) cancelAnimationFrame(focusRaf);
     };
   }, []);
