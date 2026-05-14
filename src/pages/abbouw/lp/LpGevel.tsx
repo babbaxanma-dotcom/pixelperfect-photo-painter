@@ -740,11 +740,16 @@ export default function LpGevel() {
 
     let lpShift = 0;
     const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
-    const applyLpShift = () => { if (shift) shift.style.setProperty('--testi-shift', `${lpShift}px`); };
+    const applyLpShift = () => {
+      if (!shift) return;
+      shift.style.setProperty('--testi-shift', `${lpShift}px`);
+      shift.style.transform = `translate3d(${lpShift}px, 0, 0)`;
+    };
     const recomputeInitial = () => {
       if (!marquee || !set0 || cards.length === 0 || isMobile()) return;
-      const mRect = marquee.getBoundingClientRect();
       const firstRect = cards[0].getBoundingClientRect();
+      if (firstRect.width < 50) return;
+      const mRect = marquee.getBoundingClientRect();
       const viewportCenter = mRect.left + mRect.width / 2;
       const cardCenter = firstRect.left + firstRect.width / 2;
       lpShift = viewportCenter - cardCenter;
@@ -785,14 +790,19 @@ export default function LpGevel() {
     const tickFocus = () => {
       focusRaf = requestAnimationFrame(() => { updateFocus(); tickFocus(); });
     };
-    const initTimer = window.setTimeout(() => {
+    const initTimers: number[] = [];
+    const runInit = () => {
       requestAnimationFrame(() => {
         recomputeInitial();
         updateFocus();
-        tickFocus();
         if (marquee) marquee.classList.add('is-ready');
       });
-    }, 50);
+    };
+    initTimers.push(window.setTimeout(runInit, 100));
+    initTimers.push(window.setTimeout(runInit, 300));
+    initTimers.push(window.setTimeout(() => { runInit(); tickFocus(); }, 700));
+    const onLoad = () => requestAnimationFrame(recomputeInitial);
+    window.addEventListener('load', onLoad);
 
     const onResize = () => { recomputeInitial(); };
     window.addEventListener('resize', onResize);
@@ -845,7 +855,8 @@ export default function LpGevel() {
       prevBtn?.removeEventListener('click', onPrev);
       nextBtn?.removeEventListener('click', onNext);
       window.removeEventListener('resize', onResize);
-      window.clearTimeout(initTimer);
+      window.removeEventListener('load', onLoad);
+      initTimers.forEach((t) => window.clearTimeout(t));
       if (focusRaf) cancelAnimationFrame(focusRaf);
     };
   }, []);

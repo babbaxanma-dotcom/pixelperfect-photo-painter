@@ -835,16 +835,20 @@ export default function LpDakwerken() {
     let lpShift = 0;
     const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
     const applyLpShift = () => {
-      if (shift) shift.style.setProperty('--testi-shift', `${lpShift}px`);
+      if (!shift) return;
+      // Set BOTH the CSS var AND the inline transform — inline wins specificity
+      // wars en omzeilt cascade-issues met de base .lf-testi-shift rule.
+      shift.style.setProperty('--testi-shift', `${lpShift}px`);
+      shift.style.transform = `translate3d(${lpShift}px, 0, 0)`;
     };
     const recomputeInitial = () => {
       if (!marquee || !set0 || cards.length === 0 || isMobile()) return;
-      // Center the FIRST card of set-0 in the marquee viewport.
-      const mRect = marquee.getBoundingClientRect();
+      // Skip wanneer cards nog niet correct gemeten kunnen worden (DOM nog niet settled).
       const firstRect = cards[0].getBoundingClientRect();
+      if (firstRect.width < 50) return;
+      const mRect = marquee.getBoundingClientRect();
       const viewportCenter = mRect.left + mRect.width / 2;
       const cardCenter = firstRect.left + firstRect.width / 2;
-      // Note: this assumes initial CSS-applied --testi-shift is 0
       lpShift = viewportCenter - cardCenter;
       applyLpShift();
     };
@@ -884,15 +888,21 @@ export default function LpDakwerken() {
     const tickFocus = () => {
       focusRaf = requestAnimationFrame(() => { updateFocus(); tickFocus(); });
     };
-    // Run AFTER global hook has been set up. RAF + small delay ensures markup is settled.
-    const initTimer = window.setTimeout(() => {
+    // Multi-pass init: probeer op 100/300/700ms en op window.load. DOM kan settled
+    // zijn op T+100ms maar fonts/images kunnen layout shiften — daarom retries.
+    const initTimers: number[] = [];
+    const runInit = () => {
       requestAnimationFrame(() => {
         recomputeInitial();
         updateFocus();
-        tickFocus();
         if (marquee) marquee.classList.add('is-ready');
       });
-    }, 50);
+    };
+    initTimers.push(window.setTimeout(runInit, 100));
+    initTimers.push(window.setTimeout(runInit, 300));
+    initTimers.push(window.setTimeout(() => { runInit(); tickFocus(); }, 700));
+    const onLoad = () => requestAnimationFrame(recomputeInitial);
+    window.addEventListener('load', onLoad);
 
     const onResize = () => { recomputeInitial(); };
     window.addEventListener('resize', onResize);
@@ -945,7 +955,8 @@ export default function LpDakwerken() {
       prevBtn?.removeEventListener('click', onPrev);
       nextBtn?.removeEventListener('click', onNext);
       window.removeEventListener('resize', onResize);
-      window.clearTimeout(initTimer);
+      window.removeEventListener('load', onLoad);
+      initTimers.forEach((t) => window.clearTimeout(t));
       if (focusRaf) cancelAnimationFrame(focusRaf);
     };
   }, []);

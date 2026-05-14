@@ -2,25 +2,25 @@
    AB BOUW GROUP — v5 — strak, functioneel, RoofPro-stijl
    ════════════════════════════════════════════════════════════════ */
 
-/* Clean black browser scrollbar */
+/* Slim, subtle scrollbar — geen witte border (gaf op dark heroes een dikke navy/witte strip) */
 html {
   scrollbar-width: thin;
-  scrollbar-color: #0a1628 transparent;
+  scrollbar-color: rgba(20,35,58,0.32) transparent;
 }
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #0a1628;
+  background-color: rgba(20,35,58,0.32);
   border-radius: 8px;
-  border: 2px solid #ffffff;
+  border: none;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #000000;
+  background-color: rgba(20,35,58,0.55);
 }
 
 :root {
