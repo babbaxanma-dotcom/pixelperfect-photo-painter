@@ -122,7 +122,9 @@ const LP_EXTRA = `
 }
 .lp-cta-microtrust b { color: rgba(255,255,255,0.92); font-weight: 600; }
 
-/* Reviews carousel = IDENTIEK aan Home page (zelfde animation, zelfde hook) */
+/* Reviews carousel: identiek aan Home behalve animation-delay: -30s zodat
+   cards starten op midden-cycle (LP heeft reviews direct onder hero). */
+.lp-reviews .lf-testi-track { animation-delay: -30s !important; }
 
 /* ───────── Trust logo strip ───────── */
 .lp-trust-strip {
@@ -391,8 +393,13 @@ const LP_EXTRA = `
 }
 .lp-form-card select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(217,140,3,0.14); }
 
-/* Sticky desktop CTA — ALTIJD goud zichtbaar (geen past-hero gating) */
-.lp-sticky-cta { display: none; }
+/* Sticky desktop CTA — ALTIJD goud (background op base + media + inline) */
+.lp-sticky-cta {
+  display: none;
+  background: #d98c03 !important;
+  background-color: #d98c03 !important;
+  color: #fff !important;
+}
 @media (min-width: 901px) {
   .lp-sticky-cta {
     position: fixed !important;
@@ -402,19 +409,58 @@ const LP_EXTRA = `
     align-items: center;
     gap: 10px;
     padding: 14px 24px;
-    background: var(--accent) !important;
-    color: #fff !important;
     font-family: var(--font-display); font-weight: 600; font-size: 14px;
     text-decoration: none;
     border-radius: 999px;
     box-shadow: 0 14px 36px -10px rgba(217,140,3,0.55), 0 2px 4px rgba(15,17,21,0.08);
-    transition: transform .2s ease, box-shadow .25s ease, background .2s ease;
+    transition: transform .2s ease, box-shadow .25s ease;
   }
   .lp-sticky-cta:hover {
     transform: translateY(-2px);
-    background: var(--accent-hover) !important;
+    background: #b87502 !important;
+    background-color: #b87502 !important;
     box-shadow: 0 20px 44px -10px rgba(217,140,3,0.7), 0 2px 4px rgba(15,17,21,0.08);
   }
+}
+
+/* Inline CTA banner */
+.lp-cta-banner {
+  margin: 0; padding: 26px 34px;
+  background: linear-gradient(135deg, #0a1628 0%, #14233a 100%);
+  border-radius: 18px;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  color: #fff;
+  position: relative; overflow: hidden; isolation: isolate;
+}
+.lp-cta-banner::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 85% 50%, rgba(217,140,3,0.18) 0%, transparent 55%);
+  pointer-events: none;
+}
+.lp-cta-banner-text { flex: 1; position: relative; z-index: 2; }
+.lp-cta-banner-text strong {
+  display: block; font-family: var(--font-display); font-size: 19px; font-weight: 700;
+  letter-spacing: -0.012em; margin-bottom: 4px; color: #fff;
+}
+.lp-cta-banner-text span { font-size: 14px; color: rgba(255,255,255,0.78); }
+.lp-cta-banner-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 24px;
+  background: #d98c03 !important; color: #fff !important;
+  font-family: var(--font-display); font-weight: 700; font-size: 14px;
+  text-decoration: none; border-radius: 999px;
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+  white-space: nowrap; position: relative; z-index: 2;
+  box-shadow: 0 8px 22px -8px rgba(217,140,3,0.6);
+}
+.lp-cta-banner-cta:hover {
+  background: #b87502 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -8px rgba(217,140,3,0.75);
+}
+@media (max-width: 720px) {
+  .lp-cta-banner { flex-direction: column; padding: 22px 22px; gap: 16px; text-align: center; }
+  .lp-cta-banner-cta { width: 100%; justify-content: center; }
 }
 `;
 
@@ -659,6 +705,21 @@ const HTML = `
   </div>
 </section>
 
+<section class="lf-section" style="padding: 0 0 8px;">
+  <div class="wrap">
+    <div class="lp-cta-banner" data-reveal>
+      <div class="lp-cta-banner-text">
+        <strong>Vandaag bellen = volgende week opname.</strong>
+        <span>Plaatsbezoek binnen 5 werkdagen · bindende offerte · 10 jaar garantie.</span>
+      </div>
+      <a href="#lp-form" class="lp-cta-banner-cta" data-smooth>
+        Plan mijn gevelinspectie
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
 <section class="lf-section">
   <div class="wrap">
     <div class="lf-split">
@@ -701,6 +762,21 @@ const HTML = `
       <div class="lp-3d-layer"><strong>4</strong> Wapeningsnet + grondlaag</div>
       <div class="lp-3d-layer"><strong>5</strong> Crepi-afwerking</div>
       <div class="lp-3d-layer"><strong>6</strong> Aansluitingen + dilataties</div>
+    </div>
+  </div>
+</section>
+
+<section class="lf-section" style="padding: 8px 0 32px;">
+  <div class="wrap">
+    <div class="lp-cta-banner" data-reveal>
+      <div class="lp-cta-banner-text">
+        <strong>Eerlijk advies, geen verkooppraatje.</strong>
+        <span>Bardh komt langs en zegt eerlijk: crepi volstaat, of toch ETICS. Vrijblijvend en gratis.</span>
+      </div>
+      <a href="tel:+32470634413" class="lp-cta-banner-cta">
+        Bel Bardh direct
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </a>
     </div>
   </div>
 </section>
@@ -858,7 +934,7 @@ const HTML = `
   </div>
 </section>
 
-<a href="#lp-form" class="lp-sticky-cta" aria-label="Vraag gevelinspectie" style="background:#d98c03;color:#fff;">
+<a href="#lp-form" class="lp-sticky-cta" aria-label="Vraag gevelinspectie" style="background-color:#d98c03 !important; background-image:none !important; background:#d98c03 !important; color:#fff !important;">
   Vraag gevelinspectie aan
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
 </a>
