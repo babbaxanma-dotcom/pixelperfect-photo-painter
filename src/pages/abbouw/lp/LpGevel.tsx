@@ -122,9 +122,20 @@ const LP_EXTRA = `
 }
 .lp-cta-microtrust b { color: rgba(255,255,255,0.92); font-weight: 600; }
 
-/* Reviews carousel: identiek aan Home behalve animation-delay: -30s zodat
-   cards starten op midden-cycle (LP heeft reviews direct onder hero). */
-.lp-reviews .lf-testi-track { animation-delay: -30s !important; }
+/* Reviews carousel = LETTERLIJK identiek aan Home page.
+   Override SHELL_STYLE's lf-testi-scroll + hover-pause naar Home's
+   lf-marquee-scroll 58s zonder hover-pause. */
+.lp-reviews .lf-testi-track {
+  animation: lf-marquee-scroll 58s linear infinite !important;
+}
+.lp-reviews .lf-testi-marquee:hover .lf-testi-track,
+.lp-reviews .lf-testi-marquee:focus-within .lf-testi-track {
+  animation-play-state: running !important;
+}
+@keyframes lf-marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
 
 /* ───────── Trust logo strip ───────── */
 .lp-trust-strip {
@@ -959,30 +970,7 @@ export default function LpGevel() {
     document.head.appendChild(style);
     window.scrollTo(0, 0);
 
-    // ── Reviews carousel centering: JS verschuift shift wrapper zodat eerste
-    // card van set-0 initieel gecentreerd start (auto-scroll loopt erbinnen door).
-    const reviewsShift = document.querySelector<HTMLElement>('.lp-reviews [data-testi-shift]');
-    const reviewsSet0First = document.querySelector<HTMLElement>('.lp-reviews [data-testi-set="0"] .lf-testi');
-    const reviewsMarquee = document.querySelector<HTMLElement>('.lp-reviews [data-testi-marquee]');
-    const isReviewsMobile = () => window.matchMedia('(max-width: 760px)').matches;
-    const centerReviews = () => {
-      if (!reviewsShift || !reviewsSet0First || !reviewsMarquee || isReviewsMobile()) return;
-      const card = reviewsSet0First.getBoundingClientRect();
-      if (card.width < 50) return;
-      const marqueeRect = reviewsMarquee.getBoundingClientRect();
-      const viewportCenter = marqueeRect.left + marqueeRect.width / 2;
-      const cardCenter = card.left + card.width / 2;
-      const offset = viewportCenter - cardCenter;
-      reviewsShift.style.transform = `translate3d(${offset}px, 0, 0)`;
-    };
-    const reviewsTimers: number[] = [];
-    reviewsTimers.push(window.setTimeout(centerReviews, 200));
-    reviewsTimers.push(window.setTimeout(centerReviews, 600));
-    reviewsTimers.push(window.setTimeout(centerReviews, 1200));
-    const onReviewsResize = () => centerReviews();
-    window.addEventListener('resize', onReviewsResize);
-    const onReviewsLoad = () => requestAnimationFrame(centerReviews);
-    window.addEventListener('load', onReviewsLoad);
+    // ── Reviews carousel: GEEN custom JS — exact zoals Home (hook handelt af).
 
     // ── Stats count-up animation
     const formatNl = (n: number) => n.toLocaleString('nl-BE');
@@ -1062,9 +1050,6 @@ export default function LpGevel() {
       style.remove();
       form?.removeEventListener('submit', onSubmit);
       countObserver.disconnect();
-      reviewsTimers.forEach((t) => window.clearTimeout(t));
-      window.removeEventListener('resize', onReviewsResize);
-      window.removeEventListener('load', onReviewsLoad);
     };
   }, []);
 
