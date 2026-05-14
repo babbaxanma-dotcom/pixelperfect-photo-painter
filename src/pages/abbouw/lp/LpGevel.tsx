@@ -191,27 +191,7 @@ const LP_EXTRA = `
   .lp-premie-cta { width: 100%; justify-content: center; }
 }
 
-/* LP: bottom CTA bar mobile */
-.lp-bottom-bar { display: none; }
-@media (max-width: 900px) {
-  .lp-bottom-bar {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    z-index: 60;
-    display: grid; grid-template-columns: 1fr 1.4fr; gap: 8px;
-    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-    background: rgba(255,255,255,0.96);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    border-top: 1px solid var(--ink-line);
-  }
-  .lp-bottom-bar a {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    padding: 13px 16px; border-radius: 999px;
-    font-weight: 700; font-size: 14px; text-decoration: none;
-  }
-  .lp-bottom-bar .lp-bb-call { background: var(--navy); color: #fff; }
-  .lp-bottom-bar .lp-bb-cta { background: var(--accent); color: #fff; }
-  body.lp-page { padding-bottom: 76px; }
-}
+/* Mobile: gebruikt .lf-fab-call (telefoon-icon) uit SHELL_STYLE — zelfde als Home */
 
 /* LP trust foot */
 .lp-trust-foot {
@@ -262,6 +242,9 @@ const LP_EXTRA = `
 /* LP form section */
 .lp-form-section { background: var(--navy); color: #fff; padding: 90px 0; }
 .lp-form-section h2 { color: #fff; }
+/* .ab-mark default = navy text → onzichtbaar op navy bg → force goud */
+.lp-form-section h2 .ab-mark { color: var(--accent); }
+.lp-form-section h2 .ab-mark::after { opacity: 0.22; background: rgba(255,255,255,0.18); }
 .lp-form-section .lf-eyebrow { background: var(--accent) !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.10); }
 .lp-form-section p { color: rgba(255,255,255,0.82); }
 .lp-form-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: start; }
@@ -305,20 +288,30 @@ const LP_EXTRA = `
 .lp-blog-card:hover .lp-blog-link { gap: 12px; }
 @media (max-width: 900px) { .lp-blog-grid { grid-template-columns: 1fr; gap: 16px; } }
 
-/* Sticky desktop CTA */
+/* Sticky desktop CTA — ALTIJD goud zichtbaar (geen past-hero gating) */
 .lp-sticky-cta { display: none; }
 @media (min-width: 901px) {
-  body.past-hero .lp-sticky-cta {
-    position: fixed; right: 24px; bottom: 24px; z-index: 60;
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 14px 24px; background: var(--accent); color: #fff;
+  .lp-sticky-cta {
+    position: fixed !important;
+    right: 24px; bottom: 24px;
+    z-index: 60;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    background: var(--accent) !important;
+    color: #fff !important;
     font-family: var(--font-display); font-weight: 600; font-size: 14px;
-    text-decoration: none; border-radius: 999px;
+    text-decoration: none;
+    border-radius: 999px;
     box-shadow: 0 14px 36px -10px rgba(217,140,3,0.55), 0 2px 4px rgba(15,17,21,0.08);
     transition: transform .2s ease, box-shadow .25s ease, background .2s ease;
-    animation: lf-form-pulse 4s ease-in-out infinite;
   }
-  body.past-hero .lp-sticky-cta:hover { transform: translateY(-2px); background: var(--accent-hover); }
+  .lp-sticky-cta:hover {
+    transform: translateY(-2px);
+    background: var(--accent-hover) !important;
+    box-shadow: 0 20px 44px -10px rgba(217,140,3,0.7), 0 2px 4px rgba(15,17,21,0.08);
+  }
 }
 `;
 
@@ -342,7 +335,7 @@ const HTML = `
       <h1 class="lf-hero-headline">
         Nieuwe gevel.<br/>Strak afgewerkt. EPC-sprong.
       </h1>
-      <p class="lf-hero-sub">Crepi, ETICS-buitenisolatie, steenstrips en sierpleister in Mechelen, Antwerpen, Lier en heel Vlaanderen. Gratis plaatsbezoek binnen 5 werkdagen, bindende offerte, gemiddeld 60 EPC-punten verlaging in één renovatie.</p>
+      <p class="lf-hero-sub">Crepi, ETICS-buitenisolatie, steenstrips en sierpleister in Mechelen, Antwerpen, Lier en heel Vlaanderen. <strong style="color:#fff;">Gratis plaatsbezoek</strong> binnen 5 werkdagen · <strong style="color:#fff;">bindende offerte</strong> · <strong style="color:#fff;">60 EPC-punten</strong> winst gemiddeld.</p>
       <div class="lf-hero-actions">
         <a href="#lp-form" class="lf-cta-pill" data-smooth>
           <span>Gratis gevelinspectie aanvragen</span>
@@ -357,8 +350,8 @@ const HTML = `
       <div class="lp-hero-trust">
         <span><span class="lp-hero-trust-stars">★★★★★</span><b>4,9 / 5</b></span>
         <span><b>184+</b> klanten</span>
-        <span><b>15 jaar</b> Vlaanderen</span>
-        <span><span class="lp-hero-trust-dot"></span>Plaatsbezoek binnen 5 dagen</span>
+        <span><b>10 jaar</b> garantie</span>
+        <span><span class="lp-hero-trust-dot"></span>Gratis plaatsbezoek</span>
       </div>
     </div>
   </div>
@@ -477,8 +470,8 @@ const HTML = `
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
       </div>
       <div class="lp-premie-text">
-        <strong>Premie buitenisolatie €55/m² in 2026 — wordt elk jaar verlaagd</strong>
-        <p>Mijn VerbouwPremie voor ETICS-buitenisolatie staat dit jaar op €55 per m². Op een gemiddelde halfopen woning is dat €4.500-€7.200. Vanaf 2027 zakt het tarief — wie nu boekt zet de 2026-premie vast in offerte.</p>
+        <strong>Premie 2026: €55/m² — daarna minder.</strong>
+        <p>Op een halfopen woning <strong style="color:var(--navy);">€4.500–€7.200 terug</strong>. Vanaf 2027 zakt het tarief — wie nu boekt zet de 2026-premie vast in offerte. Wij regelen het volledige dossier.</p>
       </div>
       <a href="#lp-form" class="lp-premie-cta" data-smooth>
         Bereken mijn premie
@@ -651,7 +644,7 @@ const HTML = `
     <div class="lp-form-grid">
       <div class="lp-form-side" data-reveal>
         <span class="lf-eyebrow">Gratis gevelinspectie</span>
-        <h2 class="lf-h2" style="color:#fff;">Vraag uw<br/><span class="ab-mark">plaatsbezoek</span> aan.</h2>
+        <h2 class="lf-h2" style="color:#fff;">Vraag uw <span class="ab-mark">gratis gevelinspectie</span> aan.</h2>
         <p>Binnen 5 werkdagen komt onze gevelploeg langs. Volledige opname, eerste richtprijs ter plaatse, premiedossier doorgesproken — vrijblijvend en gratis.</p>
         <ul>
           <li>Plaatsbezoek binnen 5 werkdagen</li>
@@ -704,16 +697,10 @@ const HTML = `
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
 </a>
 
-<div class="lp-bottom-bar">
-  <a href="tel:+32470634413" class="lp-bb-call" aria-label="Bel direct">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-    Bel direct
-  </a>
-  <a href="#lp-form" class="lp-bb-cta">
-    Vraag offerte
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-  </a>
-</div>
+<a href="tel:+32470634413" class="lf-fab-call" aria-label="Bel ons direct">
+  <span class="lf-fab-pulse"></span>
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+</a>
 `;
 
 export default function LpGevel() {
