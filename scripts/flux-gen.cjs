@@ -16,6 +16,8 @@ const os = require("node:os");
 
 const BFL_ULTRA = "https://api.bfl.ai/v1/flux-pro-1.1-ultra";
 const BFL_PRO11 = "https://api.bfl.ai/v1/flux-pro-1.1";
+const BFL_KONTEXT_MAX = "https://api.bfl.ai/v1/flux-kontext-max";
+const BFL_KONTEXT_PRO = "https://api.bfl.ai/v1/flux-kontext-pro";
 const BFL_POLL = "https://api.bfl.ai/v1/get_result";
 
 function loadKey() {
@@ -37,6 +39,9 @@ function parseArgs() {
     else if (a[i] === "--image-prompt") o.imagePrompt = a[++i];
     else if (a[i] === "--image-strength") o.imgStrength = parseFloat(a[++i]);
     else if (a[i] === "--pro") o.model = "pro11";
+    else if (a[i] === "--kontext") o.model = "kontext-max";
+    else if (a[i] === "--kontext-pro") o.model = "kontext-pro";
+    else if (a[i] === "--input-image") o.inputImage = a[++i];
   }
   if (!o.out) throw new Error("--out <jpg> required");
   if (o.promptFile) o.prompt = fs.readFileSync(o.promptFile, "utf8");
@@ -73,8 +78,11 @@ async function downloadTo(url, dest) {
   const opts = parseArgs();
   const key = loadKey();
 
-  const endpoint = opts.model === "pro11" ? BFL_PRO11 : BFL_ULTRA;
-  const tagModel = opts.model === "pro11" ? "flux-pro-1.1" : "flux-pro-1.1-ultra raw";
+  let endpoint, tagModel;
+  if (opts.model === "pro11") { endpoint = BFL_PRO11; tagModel = "flux-pro-1.1"; }
+  else if (opts.model === "kontext-max") { endpoint = BFL_KONTEXT_MAX; tagModel = "flux-kontext-max"; }
+  else if (opts.model === "kontext-pro") { endpoint = BFL_KONTEXT_PRO; tagModel = "flux-kontext-pro"; }
+  else { endpoint = BFL_ULTRA; tagModel = "flux-pro-1.1-ultra raw"; }
   console.log(`→ Generating: ${opts.out}`);
   console.log(`  aspect=${opts.aspect}  model=${tagModel}  prompt=${opts.prompt.length}ch`);
 
@@ -90,6 +98,13 @@ async function downloadTo(url, dest) {
     const [w, h] = map[opts.aspect] || [1440, 960];
     body.width = w;
     body.height = h;
+  } else if (opts.model === "kontext-max" || opts.model === "kontext-pro") {
+    body.aspect_ratio = opts.aspect;
+    if (opts.inputImage) {
+      const imgBuf = fs.readFileSync(opts.inputImage);
+      body.input_image = imgBuf.toString("base64");
+      console.log(`  + input_image (edit mode): ${path.basename(opts.inputImage)}`);
+    }
   } else {
     body.aspect_ratio = opts.aspect;
     body.raw = true;
@@ -131,7 +146,8 @@ async function downloadTo(url, dest) {
 
   await downloadTo(imgUrl, opts.out);
   const dt = ((Date.now() - t0) / 1000).toFixed(1);
-  console.log(`✓ saved ${opts.out}  (${dt}s, ~$0.06)`);
+  const cost = opts.model === "kontext-max" ? "~$0.08" : opts.model === "kontext-pro" ? "~$0.04" : opts.model === "pro11" ? "~$0.04" : "~$0.06";
+  console.log(`✓ saved ${opts.out}  (${dt}s, ${cost})`);
 })().catch((e) => {
   console.error("✗", e.message);
   process.exit(1);

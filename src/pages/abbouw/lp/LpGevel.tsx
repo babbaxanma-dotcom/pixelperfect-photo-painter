@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
-import { buildHero, SHELL_STYLE } from '../_shell';
+import { SHELL_STYLE } from '../_shell';
 import { submitLead } from '@/lib/leads';
 import { BLOGS } from '@/data/blogs';
 
@@ -11,16 +11,17 @@ const LP_BLOGS = BLOGS.filter(b =>
   b.slug === 'epc-label-c-2028'
 ).slice(0, 3);
 
-import heroBg from '@/assets/gevel/witte-crepi.jpg';
+// Hero rotatie — 4 gevel-realisaties
+import hero1 from '@/assets/gevel/witte-crepi.jpg';
+import hero2 from '@/assets/gevel/grijze-crepi.jpg';
+import hero3 from '@/assets/gevel/steenstrips.jpg';
+import hero4 from '@/assets/gevel/sierpleister.jpg';
+
 import imgBenefits from '@/assets/gevel/grijze-crepi.jpg';
 import imgProcess from '@/assets/gevel/stelling.jpg';
-import g1 from '@/assets/gevel/witte-crepi.jpg';
-import g2 from '@/assets/gevel/grijze-crepi.jpg';
-import g3 from '@/assets/gevel/steenstrips.jpg';
-import g4 from '@/assets/gevel/sierpleister.jpg';
+import gExtra from '@/assets/gevel/intro.jpg';
 import expertImg from '@/assets/home/team2.jpg';
 
-// Tijdelijke review-avatars — vervang via Bardh's foto's
 import rev1 from '@/assets/reviews/sofie.jpg';
 import rev2 from '@/assets/reviews/hilde.jpg';
 import rev3 from '@/assets/reviews/pieter.jpg';
@@ -41,69 +42,199 @@ const GEVEL_REVIEWS = [
   { name: 'Marc Van den Broeck', role: 'Gevelisolatie + nieuwe crepi · Mechelen', img: rev8, text: 'Eerste aannemer gaf alleen offerte voor crepi alleen, AB Bouw legde uit waarom je ETICS NODIG hebt voor onze woning. Andere prijs maar veel betere oplossing. EPC sprong + comfort, ronduit zalig.' },
 ];
 
-// Zelfde LP_EXTRA als Dakwerken — gedeeld via gewone import zou cleaner zijn,
-// maar voor maintainability staat het hier inline. Bij update: kopieer in beide.
 const LP_EXTRA = `
-.lp-page .lf-hero-bg img { animation: lp-kenburns 22s ease-out infinite alternate; transform-origin: center center; }
-@keyframes lp-kenburns {
-  from { transform: scale(1.05) translate3d(0,0,0); }
-  to   { transform: scale(1.12) translate3d(-1.2%, -0.8%, 0); }
+/* ───────── LP cinematic hero ───────── */
+.lp-hero-cine { min-height: 100vh; min-height: 100dvh; }
+.lp-hero-cine .lf-hero-bg--slides { filter: contrast(1.04) saturate(0.96); }
+.lp-hero-cine .lf-hero-bg--slides::after {
+  background:
+    radial-gradient(ellipse at center, rgba(8,12,22,0.30) 0%, rgba(8,12,22,0.78) 70%, rgba(8,12,22,0.94) 100%),
+    linear-gradient(180deg, rgba(8,12,22,0.45) 0%, rgba(8,12,22,0.05) 22%, rgba(8,12,22,0.05) 70%, rgba(8,12,22,0.55) 100%);
+  z-index: 3;
 }
-.lp-page .lf-section + .lf-section:not(.lf-tone-soft):not(.lp-form-section)::before {
-  content: ''; display: block; width: 56px; height: 1px; background: var(--accent); margin: -1px auto 56px;
+.lp-hero-cine .lf-hero-wrap {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100vh; min-height: 100dvh;
+  padding-top: 120px !important;
+  padding-bottom: 90px !important;
 }
-.lp-sticky-cta { display: none; }
-@media (min-width: 901px) {
-  .lp-sticky-cta {
-    position: fixed; right: 24px; bottom: 24px; z-index: 60;
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 14px 24px; background: var(--accent); color: #fff;
-    border-radius: 999px; font-family: var(--font-body); font-weight: 700; font-size: 14px;
-    text-decoration: none;
-    box-shadow: 0 18px 36px -10px rgba(217,140,3,0.55), 0 4px 12px rgba(0,0,0,0.18);
-    opacity: 0; transform: translateY(20px) scale(0.95);
-    pointer-events: none;
-    transition: opacity .4s ease, transform .4s cubic-bezier(.22,1,.36,1), background .2s ease;
-  }
-  body.past-hero .lp-sticky-cta { opacity: 1; transform: none; pointer-events: auto; }
-  .lp-sticky-cta:hover { background: var(--accent-hover); transform: translateY(-2px) scale(1); }
+.lp-hero-cine .lf-hero-mini { max-width: 920px; }
+.lp-hero-cine .lf-hero-headline {
+  font-size: clamp(36px, 5.4vw, 64px);
+  line-height: 1.07;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  margin: 0 0 16px;
+  color: #fff;
 }
-.lp-stat { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s cubic-bezier(.22,1,.36,1); }
-.lp-stat.revealed { opacity: 1; transform: none; }
-.lp-gallery-cell { transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease; }
-.lp-gallery-cell:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -15px rgba(10,22,40,0.45); }
-.lp-form-card input:focus, .lp-form-card textarea:focus {
-  border-color: var(--accent) !important;
-  box-shadow: 0 0 0 3px rgba(217,140,3,0.18), 0 1px 0 0 var(--accent) !important;
+.lp-hero-cine .lf-hero-sub {
+  font-size: clamp(15.5px, 1.3vw, 18px);
+  color: rgba(255,255,255,0.86);
+  margin: 0 auto 30px;
+  max-width: 680px;
+  line-height: 1.6;
+}
+.lp-hero-cine .lf-hero-actions { gap: 14px; }
+.lp-hero-cine .lf-cta-pill {
+  padding: 16px 26px;
+  font-size: 14.5px;
+  box-shadow: 0 14px 32px -10px rgba(217,140,3,0.55);
+}
+.lp-hero-cine .lf-cta-pill:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -10px rgba(217,140,3,0.65); }
+
+.lp-hero-trust {
+  margin-top: 26px;
+  display: inline-flex;
+  align-items: center; gap: 0;
+  padding: 0;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-radius: 999px;
+  color: #fff;
+  font-family: var(--font-display);
+  overflow: hidden;
+}
+.lp-hero-trust > span {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  font-size: 13px; font-weight: 500;
+  white-space: nowrap;
+}
+.lp-hero-trust > span + span { border-left: 1px solid rgba(255,255,255,0.16); }
+.lp-hero-trust b { font-weight: 600; color: #fff; }
+.lp-hero-trust .lp-hero-trust-stars { color: #F5C518; letter-spacing: 1px; font-size: 12px; }
+.lp-hero-trust-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #2ed47a; box-shadow: 0 0 0 4px rgba(46,212,122,0.18); }
+@media (max-width: 720px) {
+  .lp-hero-trust { flex-wrap: wrap; border-radius: 18px; justify-content: center; }
+  .lp-hero-trust > span { padding: 8px 14px; font-size: 12.5px; }
+  .lp-hero-trust > span + span { border-left: 0; }
 }
 
+.lp-cta-microtrust {
+  margin-top: 12px;
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.74);
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+.lp-cta-microtrust b { color: rgba(255,255,255,0.92); font-weight: 600; }
+
+/* ───────── Reviews carousel fix ───────── */
+.lp-reviews .lf-testi-track { animation: none !important; }
+.lp-reviews .lf-testi-shift { transition: transform 0.55s cubic-bezier(.22,.7,.2,1); }
+.lp-reviews .lf-testi-marquee { padding-top: 28px; padding-bottom: 36px; }
+@media (max-width: 760px) {
+  .lp-reviews .lf-testi-shift { transition: none; }
+}
+
+/* ───────── Trust logo strip ───────── */
+.lp-trust-strip {
+  padding: 28px 0 36px;
+  background: #fff;
+  border-bottom: 1px solid var(--ink-line-soft);
+}
+.lp-trust-strip-inner {
+  display: flex; flex-wrap: wrap;
+  align-items: center; justify-content: center;
+  gap: 24px 44px;
+}
+.lp-trust-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--ink-soft);
+  letter-spacing: 0.01em;
+}
+.lp-trust-badge strong { color: var(--navy); font-weight: 700; font-size: 13.5px; }
+.lp-trust-badge svg { color: var(--accent); flex-shrink: 0; }
+.lp-trust-divider { width: 1px; height: 22px; background: var(--ink-line-soft); }
+@media (max-width: 720px) {
+  .lp-trust-strip { padding: 22px 0 26px; }
+  .lp-trust-strip-inner { gap: 14px 22px; }
+  .lp-trust-badge { font-size: 12px; }
+  .lp-trust-divider { display: none; }
+}
+
+/* ───────── Premie urgency box ───────── */
+.lp-premie {
+  background: linear-gradient(135deg, rgba(217,140,3,0.06) 0%, rgba(217,140,3,0.02) 100%);
+  border: 1px solid rgba(217,140,3,0.22);
+  border-radius: 16px;
+  padding: 28px 32px;
+  display: grid; grid-template-columns: auto 1fr auto; gap: 28px; align-items: center;
+}
+.lp-premie-ico {
+  width: 56px; height: 56px; border-radius: 14px;
+  background: var(--accent); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.lp-premie-text strong {
+  display: block; font-family: var(--font-display); font-size: 18px;
+  color: var(--navy); font-weight: 700; letter-spacing: -0.01em; margin-bottom: 4px;
+}
+.lp-premie-text p { margin: 0; font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
+.lp-premie-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 20px; border-radius: 999px;
+  background: var(--navy); color: #fff;
+  font-family: var(--font-display); font-weight: 600; font-size: 13.5px;
+  text-decoration: none; white-space: nowrap;
+  transition: background .2s ease, transform .15s ease;
+}
+.lp-premie-cta:hover { background: #0d1d36; transform: translateY(-1px); }
+@media (max-width: 720px) {
+  .lp-premie { grid-template-columns: 1fr; gap: 18px; padding: 22px 22px; text-align: left; }
+  .lp-premie-cta { width: 100%; justify-content: center; }
+}
+
+/* LP: bottom CTA bar mobile */
 .lp-bottom-bar { display: none; }
 @media (max-width: 900px) {
   .lp-bottom-bar {
-    position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
+    position: fixed; bottom: 0; left: 0; right: 0;
+    z-index: 60;
     display: grid; grid-template-columns: 1fr 1.4fr; gap: 8px;
     padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
     background: rgba(255,255,255,0.96);
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     border-top: 1px solid var(--ink-line);
   }
-  .lp-bottom-bar a { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 16px; border-radius: 999px; font-weight: 700; font-size: 14px; text-decoration: none; }
+  .lp-bottom-bar a {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 13px 16px; border-radius: 999px;
+    font-weight: 700; font-size: 14px; text-decoration: none;
+  }
   .lp-bottom-bar .lp-bb-call { background: var(--navy); color: #fff; }
   .lp-bottom-bar .lp-bb-cta { background: var(--accent); color: #fff; }
   body.lp-page { padding-bottom: 76px; }
 }
-.lp-trust-foot { padding: 56px 0 80px; background: #fff; border-top: 1px solid var(--ink-line-soft); font-size: 13px; color: var(--ink-mute); }
+
+/* LP trust foot */
+.lp-trust-foot {
+  padding: 56px 0 80px;
+  background: #fff;
+  border-top: 1px solid var(--ink-line-soft);
+  font-size: 13px; color: var(--ink-mute);
+}
 .lp-trust-foot .wrap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
 .lp-trust-foot strong { display: block; color: var(--navy); font-size: 14px; margin-bottom: 4px; }
 .lp-trust-foot a { color: var(--ink-soft); text-decoration: none; }
 .lp-trust-foot a:hover { color: var(--accent); }
 @media (max-width: 720px) { .lp-trust-foot .wrap { grid-template-columns: 1fr 1fr; gap: 22px; } }
+
+/* LP stats */
 .lp-stats-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; padding: 56px 0; border-bottom: 1px solid var(--ink-line-soft); }
 .lp-stat { position: relative; padding-left: 18px; }
 .lp-stat::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 8px; width: 3px; background: var(--accent); }
 .lp-stat-num { font-family: var(--font-display); font-size: clamp(28px, 3.2vw, 40px); font-weight: 700; color: var(--navy); letter-spacing: -0.025em; line-height: 1; margin-bottom: 6px; }
 .lp-stat-label { font-size: 13.5px; font-weight: 500; color: var(--ink-soft); line-height: 1.45; }
 @media (max-width: 900px) { .lp-stats-strip { grid-template-columns: repeat(2, 1fr); gap: 28px 20px; padding: 40px 0; } }
+
+/* LP urgency cards */
 .lp-urgency-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
 .lp-urgency-card { background: #fff; border: 1px solid var(--ink-line-soft); padding: 28px 26px; border-radius: 14px; transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease; }
 .lp-urgency-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 22px 50px -20px rgba(15,17,21,0.22); }
@@ -111,6 +242,8 @@ const LP_EXTRA = `
 .lp-urgency-card h4 { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--navy); margin: 0 0 8px; letter-spacing: -0.01em; }
 .lp-urgency-card p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; margin: 0; }
 @media (max-width: 900px) { .lp-urgency-grid { grid-template-columns: 1fr; gap: 14px; } }
+
+/* LP gallery */
 .lp-gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 .lp-gallery-cell { position: relative; aspect-ratio: 4/5; overflow: hidden; border-radius: 12px; text-decoration: none; color: inherit; }
 .lp-gallery-cell img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.22,1,.36,1); }
@@ -120,16 +253,16 @@ const LP_EXTRA = `
 .lp-gallery-cap small { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.78); margin-bottom: 4px; }
 .lp-gallery-cap strong { display: block; font-family: var(--font-display); font-size: 16px; font-weight: 600; }
 @media (max-width: 900px) { .lp-gallery { grid-template-columns: 1fr 1fr; } }
+
+/* LP expert quote */
 .lp-expert-quote { font-family: var(--font-display); font-size: clamp(20px, 2.2vw, 26px); font-weight: 500; line-height: 1.35; color: var(--navy); letter-spacing: -0.015em; margin: 0 0 24px; padding-left: 22px; border-left: 3px solid var(--accent); }
 .lp-expert-name { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--navy); }
 .lp-expert-role { font-size: 13.5px; color: var(--ink-mute); margin-bottom: 22px; }
+
+/* LP form section */
 .lp-form-section { background: var(--navy); color: #fff; padding: 90px 0; }
 .lp-form-section h2 { color: #fff; }
-.lp-form-section .lf-eyebrow {
-  background: var(--accent) !important;
-  color: #fff !important;
-  border: 1px solid rgba(255,255,255,0.10);
-}
+.lp-form-section .lf-eyebrow { background: var(--accent) !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.10); }
 .lp-form-section p { color: rgba(255,255,255,0.82); }
 .lp-form-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: start; }
 .lp-form-card { background: #fff; color: var(--ink); padding: 36px 32px; border-radius: 14px; }
@@ -153,11 +286,9 @@ const LP_EXTRA = `
 .lp-form-side ul li::before { content: ''; width: 18px; height: 18px; border-radius: 50%; background: var(--accent); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E"); background-size: 12px; background-repeat: no-repeat; background-position: center; flex-shrink: 0; }
 .lp-form-error { display: none; margin-top: 10px; padding: 10px 12px; background: #fdecea; border: 1px solid rgba(179,38,30,0.22); border-radius: 8px; color: #b3261e; font-size: 13.5px; }
 .lp-form-card.is-error .lp-form-error { display: block; }
-@media (max-width: 900px) {
-  .lp-form-grid { grid-template-columns: 1fr; gap: 32px; }
-  .lp-form-row { grid-template-columns: 1fr; }
-  .lp-form-card { padding: 26px 22px; }
-}
+@media (max-width: 900px) { .lp-form-grid { grid-template-columns: 1fr; gap: 32px; } .lp-form-row { grid-template-columns: 1fr; } .lp-form-card { padding: 26px 22px; } }
+
+/* Verdiepende reads */
 .lp-blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1180px; margin: 0 auto; }
 .lp-blog-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 14px; overflow: hidden; text-decoration: none; color: var(--ink); display: flex; flex-direction: column; transition: transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s ease, border-color .3s ease; }
 .lp-blog-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 22px 50px -20px rgba(15,17,21,0.22); }
@@ -173,145 +304,75 @@ const LP_EXTRA = `
 .lp-blog-link { margin-top: auto; padding-top: 4px; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: 0.02em; transition: gap .25s ease; }
 .lp-blog-card:hover .lp-blog-link { gap: 12px; }
 @media (max-width: 900px) { .lp-blog-grid { grid-template-columns: 1fr; gap: 16px; } }
+
+/* Sticky desktop CTA */
+.lp-sticky-cta { display: none; }
+@media (min-width: 901px) {
+  body.past-hero .lp-sticky-cta {
+    position: fixed; right: 24px; bottom: 24px; z-index: 60;
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 24px; background: var(--accent); color: #fff;
+    font-family: var(--font-display); font-weight: 600; font-size: 14px;
+    text-decoration: none; border-radius: 999px;
+    box-shadow: 0 14px 36px -10px rgba(217,140,3,0.55), 0 2px 4px rgba(15,17,21,0.08);
+    transition: transform .2s ease, box-shadow .25s ease, background .2s ease;
+    animation: lf-form-pulse 4s ease-in-out infinite;
+  }
+  body.past-hero .lp-sticky-cta:hover { transform: translateY(-2px); background: var(--accent-hover); }
+}
 `;
 
 const HTML = `
-${buildHero({
-  bg: heroBg,
-  eyebrow: 'AB Gevelbekleding · Willebroek',
-  title: 'Nieuwe gevel.<br/>Lagere energiefactuur. <span class="ab-mark">Hogere woningwaarde</span>.',
-  lede: 'Crepi, steenstrips en sierpleister — met of zonder buitenisolatie (ETICS). Gratis plaatsbezoek in Mechelen, Antwerpen, Lier en heel Vlaanderen. Premiedossier €30-45/m² inbegrepen, 10 jaar garantie op waterdichtheid.',
-  primary: { label: 'Gratis gevel-advies aanvragen', href: '#lp-form' },
-  secondary: { label: 'Bel +32 470 63 44 13 →', href: 'tel:+32470634413' },
-})}
-
-<section class="lf-section" style="padding: 0;">
-  <div class="wrap">
-    <div class="lp-stats-strip">
-      <div class="lp-stat" data-reveal><div class="lp-stat-num">63.112 m²</div><div class="lp-stat-label">Afgewerkte gevels sinds 2010</div></div>
-      <div class="lp-stat" data-reveal data-reveal-delay="1"><div class="lp-stat-num">€5.400</div><div class="lp-stat-label">Premie gem. rijwoning (ETICS)</div></div>
-      <div class="lp-stat" data-reveal data-reveal-delay="2"><div class="lp-stat-num">30%</div><div class="lp-stat-label">Minder warmteverlies via gevel</div></div>
-      <div class="lp-stat" data-reveal data-reveal-delay="3"><div class="lp-stat-num">€8-15K</div><div class="lp-stat-label">Meerwaarde bij verkoop</div></div>
-    </div>
+<section class="lf-hero lp-hero-cine">
+  <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
+    <img src="${hero1}" alt="Witte crepi gevelrenovatie rijwoning — AB Gevelbekleding Mechelen" class="is-active" />
+    <img src="${hero2}" alt="Grijze crepi halfopen woning — AB Bouw Groep Antwerpen" loading="lazy" />
+    <img src="${hero3}" alt="Steenstrips voorgevel — AB Gevelbekleding Lier" loading="lazy" />
+    <img src="${hero4}" alt="Sierpleister marmorino afwerking — Bornem" loading="lazy" />
   </div>
-</section>
-
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-split">
-      <div data-reveal>
-        <span class="lf-eyebrow">Waarom gevelrenovatie loont</span>
-        <h2 class="lf-h2">Meer dan een verfje —<br/><span class="ab-mark">uw woningschil</span>.</h2>
-        <p class="lf-lede">Een oude, niet-geïsoleerde gevel verliest tot 30% van uw verwarming. Buitenisolatie (ETICS) brengt uw woning meteen op label C of B en geeft u tot €45/m² premie in 2026.</p>
-        <ul class="ab-checks" style="margin-top: 22px;">
-          <li>Lagere energiefactuur — tot 25% besparing na ETICS</li>
-          <li>EPC-label sprong — gemiddeld 80-120 punten beter</li>
-          <li>Meer wooncomfort — geen koude buitenmuren meer</li>
-          <li>€8.000-€15.000 meerwaarde bij verkoop</li>
-        </ul>
-        <a href="#lp-form" class="lf-cta-pill" style="margin-top: 28px;">
-          <span>Vraag uw plaatsbezoek aan</span>
+  <button type="button" class="lf-hero-arrow lf-hero-arrow--prev" data-hero-prev aria-label="Vorige foto">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button type="button" class="lf-hero-arrow lf-hero-arrow--next" data-hero-next aria-label="Volgende foto">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <div class="wrap lf-hero-wrap">
+    <div class="lf-hero-mini" data-hero-anim>
+      <span class="lf-hero-eyebrow"><span class="lf-hero-eyebrow-dot"></span>AB Gevelbekleding · Willebroek</span>
+      <h1 class="lf-hero-headline">
+        Nieuwe gevel.<br/>Strak afgewerkt. EPC-sprong.
+      </h1>
+      <p class="lf-hero-sub">Crepi, ETICS-buitenisolatie, steenstrips en sierpleister in Mechelen, Antwerpen, Lier en heel Vlaanderen. Gratis plaatsbezoek binnen 5 werkdagen, bindende offerte, gemiddeld 60 EPC-punten verlaging in één renovatie.</p>
+      <div class="lf-hero-actions">
+        <a href="#lp-form" class="lf-cta-pill" data-smooth>
+          <span>Gratis gevelinspectie aanvragen</span>
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </a>
-      </div>
-      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgBenefits}" alt="Gevelrenovatie grijze crepi" loading="lazy"/></div>
-    </div>
-  </div>
-</section>
-
-<section class="lf-section lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-section-head centered" data-reveal style="margin-bottom: 40px;">
-      <span class="lf-eyebrow">Nu starten = meer voordeel</span>
-      <h2 class="lf-h2">Drie redenen om<br/><span class="ab-mark">niet te wachten</span>.</h2>
-    </div>
-    <div class="lp-urgency-grid">
-      <div class="lp-urgency-card" data-reveal>
-        <div class="lp-urgency-num">01</div>
-        <h4>Renovatieplicht 2028</h4>
-        <p>Vanaf 2028 moet elke verkochte woning binnen 5 jaar op label C. Wie nu de gevel doet, voldoet automatisch. Wachten = krappe planning + hogere prijs door piekvraag.</p>
-      </div>
-      <div class="lp-urgency-card" data-reveal data-reveal-delay="1">
-        <div class="lp-urgency-num">02</div>
-        <h4>Premies dalen jaarlijks</h4>
-        <p>Mijn VerbouwPremie staat in 2026 op €30-45/m² buitenisolatie. Op gevel van 120 m² = €3.600-€5.400 cash terug. Bedragen dalen in 2027.</p>
-      </div>
-      <div class="lp-urgency-card" data-reveal data-reveal-delay="2">
-        <div class="lp-urgency-num">03</div>
-        <h4>Klaar voor de winter</h4>
-        <p>Tussen april en oktober gaat sneller en droogt beter. Najaar = stelling die in regen blijft staan, langere uitvoering.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-split">
-      <div class="lf-split-img" data-reveal><img src="${imgProcess}" alt="Stelling voor gevelrenovatie" loading="lazy"/></div>
-      <div data-reveal data-reveal-delay="1">
-        <span class="lf-eyebrow">Onze werkwijze</span>
-        <h2 class="lf-h2">Van plaatsbezoek tot<br/><span class="ab-mark">nieuwe gevel</span> in 6 weken.</h2>
-        <p class="lf-lede">Eigen plaatsers, eigen stelling, eigen premiebehandelaar. Geen onderaannemers tussen u en het resultaat.</p>
-        <ul class="ab-checks" style="margin-top: 22px;">
-          <li><strong>Week 1</strong> — Gratis plaatsbezoek, U-waarde berekening, eerste richtprijs</li>
-          <li><strong>Week 2</strong> — Bindende offerte, kleurstalen ter plaatse, premiedossier voorbereid</li>
-          <li><strong>Week 3-6</strong> — Stelling, isolatie, wapenen, crepi-afwerking</li>
-          <li><strong>Oplevering</strong> — Premie ingediend, garantieattest in mailbox</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="lf-section lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-section-head" data-reveal style="margin-bottom: 36px;">
-      <span class="lf-eyebrow">Realisaties</span>
-      <h2 class="lf-h2">Gevels die<br/><span class="ab-mark">tijdloos mooi</span> blijven.</h2>
-    </div>
-    <div class="lp-gallery">
-      <a href="#lp-form" class="lp-gallery-cell" data-reveal>
-        <img src="${g1}" alt="Witte crepi rijwoning Mechelen" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Crepi</small><strong>Witte crepi — Mechelen</strong></div>
-      </a>
-      <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="1">
-        <img src="${g2}" alt="Grijze crepi halfopen Antwerpen" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Crepi + ETICS</small><strong>Grijze crepi — Antwerpen</strong></div>
-      </a>
-      <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="2">
-        <img src="${g3}" alt="Steenstrips villa Lier" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Steenstrips</small><strong>Steenstrips — Lier</strong></div>
-      </a>
-      <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="3">
-        <img src="${g4}" alt="Sierpleister Bornem" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Sierpleister</small><strong>Marmorino — Bornem</strong></div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-split">
-      <div class="lf-split-img" data-reveal><img src="${expertImg}" alt="Bardh, projectleider gevelrenovatie" loading="lazy"/></div>
-      <div data-reveal data-reveal-delay="1">
-        <span class="lf-eyebrow">Direct advies</span>
-        <p class="lp-expert-quote">"Voordat we praten over kleur of materiaal: eerst meten wat er ÉCHT moet. Soms volstaat een verfbeurt. Soms is ETICS de enige juiste keuze. Wij zeggen u eerlijk welk."</p>
-        <div class="lp-expert-name">Bardh</div>
-        <div class="lp-expert-role">Projectleider Gevelrenovatie · AB Bouw Groep</div>
-        <a href="tel:+32470634413" class="lf-cta-pill">
-          <span>Bel Bardh direct</span>
-          <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <a href="tel:+32470634413" class="lf-hero-ghost">
+          <span>Bel +32 470 63 44 13</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
+      <p class="lp-cta-microtrust"><b>Antwoord binnen 1 werkdag.</b> Geen verkooppraatje. Geen verplichting.</p>
+      <div class="lp-hero-trust">
+        <span><span class="lp-hero-trust-stars">★★★★★</span><b>4,9 / 5</b></span>
+        <span><b>184+</b> klanten</span>
+        <span><b>15 jaar</b> Vlaanderen</span>
+        <span><span class="lp-hero-trust-dot"></span>Plaatsbezoek binnen 5 dagen</span>
+      </div>
     </div>
   </div>
+  <button class="lf-scroll-cue" type="button" aria-label="Scroll naar beneden" onclick="window.scrollBy({top: window.innerHeight - 80, left: 0, behavior: 'smooth'})">
+    <span class="lf-scroll-cue-label">Scroll</span>
+    <span class="lf-scroll-cue-icon" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </span>
+  </button>
 </section>
 
-<section class="lf-section lf-reviews-section">
+<section class="lf-section lf-tone-soft lf-reviews-section lp-reviews" style="padding: 64px 0 80px;">
   <div class="wrap">
-    <div class="lf-section-head centered lf-reviews-head" data-reveal style="margin-bottom: 36px;">
+    <div class="lf-section-head centered lf-reviews-head" data-reveal style="margin-bottom: 32px;">
       <span class="lf-eyebrow">Reviews gevelrenovatie</span>
       <div class="lf-reviews-rating">
         <span class="lf-reviews-score">4.9</span>
@@ -324,15 +385,15 @@ ${buildHero({
             <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
             <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
           </div>
-          <span class="lf-reviews-count">98+ gevels beoordeeld</span>
+          <span class="lf-reviews-count">96+ gevelprojecten beoordeeld</span>
         </div>
       </div>
     </div>
-    <div class="lf-testi-marquee" data-testi-marquee>
-      <button type="button" class="lf-testi-arrow lf-testi-arrow--prev" data-testi-prev aria-label="Vorige review">
+    <div class="lf-testi-marquee" data-lp-testi-marquee>
+      <button type="button" class="lf-testi-arrow lf-testi-arrow--prev" data-lp-testi-prev aria-label="Vorige review">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <button type="button" class="lf-testi-arrow lf-testi-arrow--next" data-testi-next aria-label="Volgende review">
+      <button type="button" class="lf-testi-arrow lf-testi-arrow--next" data-lp-testi-next aria-label="Volgende review">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
       <div class="lf-testi-shift" data-testi-shift>
@@ -367,6 +428,179 @@ ${buildHero({
   </div>
 </section>
 
+<section class="lp-trust-strip">
+  <div class="wrap">
+    <div class="lp-trust-strip-inner">
+      <span class="lp-trust-badge">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span><strong>VCA*</strong> Veiligheidscertificaat</span>
+      </span>
+      <span class="lp-trust-divider"></span>
+      <span class="lp-trust-badge">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
+        <span><strong>Lid Bouwunie</strong></span>
+      </span>
+      <span class="lp-trust-divider"></span>
+      <span class="lp-trust-badge">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M8 14h2M8 17h6"/></svg>
+        <span>Verzekerd bij <strong>Federale</strong></span>
+      </span>
+      <span class="lp-trust-divider"></span>
+      <span class="lp-trust-badge">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <span><strong>10 jaar</strong> garantie afwerking</span>
+      </span>
+      <span class="lp-trust-divider"></span>
+      <span class="lp-trust-badge">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
+        <span><strong>Mijn VerbouwPremie</strong> expert</span>
+      </span>
+    </div>
+  </div>
+</section>
+
+<section class="lf-section" style="padding: 64px 0 24px;">
+  <div class="wrap">
+    <div class="lp-stats-strip">
+      <div class="lp-stat" data-reveal><div class="lp-stat-num">32.180 m²</div><div class="lp-stat-label">Gevelvlak afgewerkt sinds 2010</div></div>
+      <div class="lp-stat" data-reveal data-reveal-delay="1"><div class="lp-stat-num">60 EPC</div><div class="lp-stat-label">Gemiddelde puntenwinst per project</div></div>
+      <div class="lp-stat" data-reveal data-reveal-delay="2"><div class="lp-stat-num">30-40%</div><div class="lp-stat-label">Lagere stookkost na ETICS</div></div>
+      <div class="lp-stat" data-reveal data-reveal-delay="3"><div class="lp-stat-num">€55/m²</div><div class="lp-stat-label">Premie buitenisolatie 2026</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="lf-section">
+  <div class="wrap">
+    <div class="lp-premie" data-reveal>
+      <div class="lp-premie-ico">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      </div>
+      <div class="lp-premie-text">
+        <strong>Premie buitenisolatie €55/m² in 2026 — wordt elk jaar verlaagd</strong>
+        <p>Mijn VerbouwPremie voor ETICS-buitenisolatie staat dit jaar op €55 per m². Op een gemiddelde halfopen woning is dat €4.500-€7.200. Vanaf 2027 zakt het tarief — wie nu boekt zet de 2026-premie vast in offerte.</p>
+      </div>
+      <a href="#lp-form" class="lp-premie-cta" data-smooth>
+        Bereken mijn premie
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="lf-section">
+  <div class="wrap">
+    <div class="lf-split">
+      <div data-reveal>
+        <span class="lf-eyebrow">Waarom een gevelrenovatie loont</span>
+        <h2 class="lf-h2">EPC-sprong,<br/><span class="ab-mark">strak resultaat</span>.</h2>
+        <p class="lf-lede">Een ongeïsoleerde gevel verliest tot 40% van uw stookkost. Een ETICS-renovatie verlaagt EPC met gemiddeld 60 punten én geeft uw huis een volledig nieuwe uitstraling — vaak doorslaggevend bij verkoop.</p>
+        <ul class="ab-checks" style="margin-top: 22px;">
+          <li>Tot 40% minder stookkost — direct lagere energiefactuur</li>
+          <li>EPC-sprong gemiddeld 60 punten — vereist voor renovatieverplichting 2028</li>
+          <li>Geen koudebruggen of vochtproblemen meer — gezonder binnenklimaat</li>
+          <li>€12.000-€25.000 meerwaarde bij verkoop van uw woning</li>
+        </ul>
+        <a href="#lp-form" class="lf-cta-pill" style="margin-top: 28px;">
+          <span>Vraag uw plaatsbezoek aan</span>
+          <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
+      </div>
+      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgBenefits}" alt="Grijze crepi gevelrenovatie" loading="lazy"/></div>
+    </div>
+  </div>
+</section>
+
+<section class="lf-section lf-tone-soft">
+  <div class="wrap">
+    <div class="lf-section-head centered" data-reveal style="margin-bottom: 40px;">
+      <span class="lf-eyebrow">Nu starten = meer voordeel</span>
+      <h2 class="lf-h2">Drie redenen om<br/><span class="ab-mark">niet te wachten</span>.</h2>
+    </div>
+    <div class="lp-urgency-grid">
+      <div class="lp-urgency-card" data-reveal>
+        <div class="lp-urgency-num">01</div>
+        <h4>Premies dalen jaarlijks</h4>
+        <p>Mijn VerbouwPremie voor buitenisolatie staat in 2026 op €55/m² maar wordt elk jaar verlaagd. Op een halfopen woning bespaart u nu €4.500-€7.200 die u in 2027 niet meer krijgt.</p>
+      </div>
+      <div class="lp-urgency-card" data-reveal data-reveal-delay="1">
+        <div class="lp-urgency-num">02</div>
+        <h4>EPC-verplichting 2028</h4>
+        <p>Vanaf 2028 moet elke gekochte woning binnen 5 jaar EPC-label C halen. Wie nu renoveert is voorbereid; wie wacht riskeert sancties en lagere verkoopprijs.</p>
+      </div>
+      <div class="lp-urgency-card" data-reveal data-reveal-delay="2">
+        <div class="lp-urgency-num">03</div>
+        <h4>Klaar voor de winter</h4>
+        <p>Begin nu en uw gevel is afgewerkt vóór november. Wachten betekent één extra winter zonder isolatie — dat zijn al snel honderden euro's extra stookkost.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="lf-section">
+  <div class="wrap">
+    <div class="lf-split">
+      <div class="lf-split-img" data-reveal><img src="${imgProcess}" alt="Stelling tegen halfopen gevel" loading="lazy"/></div>
+      <div data-reveal data-reveal-delay="1">
+        <span class="lf-eyebrow">Onze werkwijze</span>
+        <h2 class="lf-h2">Van eerste gesprek tot<br/><span class="ab-mark">strakke gevel</span> in 5-7 weken.</h2>
+        <p class="lf-lede">Eigen gevelploeg betekent: geen onderaannemers, geen tussenstops, één verantwoordelijke. Wij beginnen en wij maken het af.</p>
+        <ul class="ab-checks" style="margin-top: 22px;">
+          <li><strong>Week 1</strong> — Gratis plaatsbezoek, gevelopname, eerste richtprijs</li>
+          <li><strong>Week 2</strong> — Bindende offerte, materialen vastgezet, premiedossier voorbereid</li>
+          <li><strong>Week 3-5</strong> — Uitvoering 10-18 werkdagen, weekrapport per email</li>
+          <li><strong>Oplevering</strong> — Premie ingediend, 10 jaar garantie schriftelijk vastgelegd</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="lf-section lf-tone-soft">
+  <div class="wrap">
+    <div class="lf-section-head" data-reveal style="margin-bottom: 36px;">
+      <span class="lf-eyebrow">Realisaties</span>
+      <h2 class="lf-h2">Gevels die<br/><span class="ab-mark">jaren strak blijven</span>.</h2>
+    </div>
+    <div class="lp-gallery">
+      <a href="#lp-form" class="lp-gallery-cell" data-reveal>
+        <img src="${hero1}" alt="Witte crepi Mechelen" loading="lazy"/>
+        <div class="lp-gallery-cap"><small>Crepi</small><strong>Witte crepi — Mechelen</strong></div>
+      </a>
+      <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="1">
+        <img src="${hero2}" alt="Grijze crepi Antwerpen" loading="lazy"/>
+        <div class="lp-gallery-cap"><small>Crepi</small><strong>Grijze crepi — Antwerpen</strong></div>
+      </a>
+      <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="2">
+        <img src="${hero3}" alt="Steenstrips Lier" loading="lazy"/>
+        <div class="lp-gallery-cap"><small>Steenstrips</small><strong>Klassieke look — Lier</strong></div>
+      </a>
+      <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="3">
+        <img src="${hero4}" alt="Sierpleister Bornem" loading="lazy"/>
+        <div class="lp-gallery-cap"><small>Sierpleister</small><strong>Marmorino — Bornem</strong></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="lf-section">
+  <div class="wrap">
+    <div class="lf-split">
+      <div class="lf-split-img" data-reveal><img src="${expertImg}" alt="Bardh, projectleider AB Gevelbekleding" loading="lazy"/></div>
+      <div data-reveal data-reveal-delay="1">
+        <span class="lf-eyebrow">Direct advies</span>
+        <p class="lp-expert-quote">"Een gevel is je eerste indruk én je grootste energieverlies. Wij komen langs, meten alles op, en zeggen u eerlijk wat écht moet — crepi alleen of volledige ETICS."</p>
+        <div class="lp-expert-name">Bardh</div>
+        <div class="lp-expert-role">Projectleider Gevelbekleding · AB Bouw Groep</div>
+        <a href="tel:+32470634413" class="lf-cta-pill">
+          <span>Bel Bardh direct</span>
+          <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal>
@@ -374,11 +608,11 @@ ${buildHero({
       <h2 class="lf-h2">Wat <span class="ab-mark">iedereen vraagt</span>.</h2>
     </div>
     <div class="ab-faq">
-      <details data-reveal><summary>Wat kost gevelrenovatie in 2026?</summary><div class="ab-faq-body"><p>Crepi op gezonde gevel: €45-€60/m². Crepi + ETICS: €110-€150/m². Steenstrips: €120-€180/m². Houten bekleding: €60-€140/m². Stelling rij­woning €1.800-€3.200. Premies €30-€45/m² halen flink stuk weg.</p></div></details>
-      <details data-reveal><summary>Wat is ETICS en heb ik dat nodig?</summary><div class="ab-faq-body"><p>External Thermal Insulation Composite System: isolatieplaat + wapeningsnet + crepi. Voor woningen vóór 1995 zonder spouwisolatie bijna altijd juiste keuze. R-waarde 4,5+, EPC-sprong 80-120 punten.</p></div></details>
-      <details data-reveal><summary>Doen jullie de premieaanvraag voor mij?</summary><div class="ab-faq-body"><p>Ja, standaard. Mijn VerbouwPremie-dossier met foto's, facturen en U-waarde-berekeningen. U deelt burgerprofiel-login, wij dienen in.</p></div></details>
-      <details data-reveal><summary>Hoeveel meerwaarde geeft gevelrenovatie?</summary><div class="ab-faq-body"><p>Vlaamse vastgoedmakelaars rapporteren €8.000-€15.000 meerwaarde voor rijwoning met geïsoleerde + opnieuw afgewerkte gevel. Woningen met label C+ verkopen 5-7 weken sneller.</p></div></details>
-      <details data-reveal><summary>Welke kleur is het meest gevraagd?</summary><div class="ab-faq-body"><p>Top 3 in 2026: gebroken wit (RAL 9001), licht-warmgrijs (NCS S 2000-N), taupe-beige. Heldere kleuren kosten €4-€6/m² meer (UV-stabiele pigmenten). Kleurstalen mee tijdens plaatsbezoek.</p></div></details>
+      <details data-reveal><summary>Wat kost een crepi-gevel in 2026?</summary><div class="ab-faq-body"><p>Crepi alleen op bestaande gevel (130m²): €6.500-€12.500. Volledige ETICS met buitenisolatie + crepi: €18.000-€32.000 alles inbegrepen. Premie €55/m² haalt €4.500-€7.200 van de factuur. Bindende richtprijs na plaatsbezoek.</p></div></details>
+      <details data-reveal><summary>Hoe lang duurt de plaatsing?</summary><div class="ab-faq-body"><p>Crepi op bestaande gevel: 5-9 werkdagen. ETICS volledig (isolatie + afwerking): 10-18 werkdagen. Inclusief stelling, afdekken en eindopkuis.</p></div></details>
+      <details data-reveal><summary>Crepi of steenstrips — wat past bij mijn woning?</summary><div class="ab-faq-body"><p>Crepi = strakke moderne look, goedkoper, sneller. Steenstrips = klassieke baksteen-look, duurder, langere plaatsing. Plaatsbezoek geeft uitsluitsel op basis van woningtype, buurt en budget. Beide kunnen op ETICS-isolatie.</p></div></details>
+      <details data-reveal><summary>Doen jullie de premieaanvraag?</summary><div class="ab-faq-body"><p>Ja, standaard. We bereiden het Mijn VerbouwPremie-dossier voor, leveren foto's en facturen aan in juist format. U deelt enkel uw burgerprofiel-login.</p></div></details>
+      <details data-reveal><summary>Wat is uw garantie?</summary><div class="ab-faq-body"><p>10 jaar wettelijke aansprakelijkheid op afwerking en isolatieprestatie, gedekt door polis bij Federale Verzekering. Plus fabrieksgarantie op Sto/Weber/Marmorino-systemen.</p></div></details>
       <details data-reveal><summary>Welke regio's bedienen jullie?</summary><div class="ab-faq-body"><p>Antwerpen, Mechelen, Lier, Boom, Bornem, Puurs, Sint-Niklaas, Heist-op-den-Berg, Brussel, Vilvoorde, Asse, Aalst, Dendermonde, Leuven.</p></div></details>
     </div>
   </div>
@@ -388,7 +622,7 @@ ${buildHero({
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal style="margin-bottom: 40px;">
       <span class="lf-eyebrow">Verdiepende reads</span>
-      <h2 class="lf-h2">Eerst wat <span class="ab-mark">leren</span> over gevelrenovatie?</h2>
+      <h2 class="lf-h2">Eerst wat <span class="ab-mark">leren</span> over gevels?</h2>
       <p class="lf-lede" style="margin: 16px auto 0; max-width: 620px;">Drie artikelen die de meest gestelde vragen beantwoorden — open in nieuw tabblad zodat u hier kan verder lezen.</p>
     </div>
     <div class="lp-blog-grid">
@@ -416,19 +650,19 @@ ${buildHero({
   <div class="wrap">
     <div class="lp-form-grid">
       <div class="lp-form-side" data-reveal>
-        <span class="lf-eyebrow">Gratis gevel-advies</span>
+        <span class="lf-eyebrow">Gratis gevelinspectie</span>
         <h2 class="lf-h2" style="color:#fff;">Vraag uw<br/><span class="ab-mark">plaatsbezoek</span> aan.</h2>
-        <p>Binnen 5 werkdagen langs voor opname, U-waarde berekening en kleurstalen ter plaatse. Vrijblijvend, gratis, geen verkoopgesprek.</p>
+        <p>Binnen 5 werkdagen komt onze gevelploeg langs. Volledige opname, eerste richtprijs ter plaatse, premiedossier doorgesproken — vrijblijvend en gratis.</p>
         <ul>
           <li>Plaatsbezoek binnen 5 werkdagen</li>
-          <li>Bindende offerte met kleurstaal</li>
+          <li>Bindende offerte op papier</li>
           <li>Premiedossier inbegrepen (gem. €4.500+ terug)</li>
-          <li>10 jaar garantie op waterdichtheid</li>
-          <li>Eigen plaatsers, eigen stelling</li>
+          <li>10 jaar garantie op afwerking</li>
+          <li>Eigen gevelploeg, geen onderaannemers</li>
         </ul>
       </div>
       <div class="lp-form-card" data-reveal data-reveal-delay="1" data-lp-form-wrapper>
-        <h3>Plan uw gevel-advies</h3>
+        <h3>Plan uw gevelinspectie</h3>
         <p class="lf-form-sub">We bellen u binnen één werkdag terug om een afspraak in te plannen.</p>
         <form data-lp-form novalidate>
           <div class="lp-form-row">
@@ -442,8 +676,8 @@ ${buildHero({
             <input type="text" name="postcode" placeholder="Postcode" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="postal-code" />
             <input type="text" name="gemeente" placeholder="Gemeente" autocomplete="address-level2" />
           </div>
-          <textarea name="aanvullende_info" placeholder="Vertel kort over uw gevel (bouwjaar, type woning, wens)"></textarea>
-          <button type="submit" data-lp-submit>Vraag gevel-advies aan</button>
+          <textarea name="aanvullende_info" placeholder="Vertel kort over uw gevel (type, leeftijd, klacht)"></textarea>
+          <button type="submit" data-lp-submit>Vraag gevelinspectie aan</button>
           <p class="lp-form-foot">Geen spam. Privacy verklaring op <a href="/privacy" target="_blank">/privacy</a>.</p>
           <div class="lp-form-error" data-lp-form-error></div>
         </form>
@@ -466,7 +700,7 @@ ${buildHero({
 </section>
 
 <a href="#lp-form" class="lp-sticky-cta" aria-label="Vraag offerte">
-  Vraag gevel-advies aan
+  Vraag gevelinspectie aan
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
 </a>
 
@@ -484,10 +718,10 @@ ${buildHero({
 
 export default function LpGevel() {
   useEffect(() => {
-    document.title = "Gevelrenovatie Mechelen, Antwerpen & Vlaanderen — Gratis gevel-advies | AB Bouw Groep";
+    document.title = "Gevelrenovatie Mechelen, Antwerpen & Vlaanderen — Gratis gevelinspectie | AB Bouw Groep";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name','description'); document.head.appendChild(m); }
-    m.setAttribute('content', 'Gevelrenovatie in Mechelen, Antwerpen, Lier en heel Vlaanderen. Crepi, steenstrips, ETICS-isolatie. Premie €30-45/m², 10 jaar garantie. Gratis plaatsbezoek binnen 5 werkdagen.');
+    m.setAttribute('content', 'Nieuwe gevel in Mechelen, Antwerpen, Lier en heel Vlaanderen. Crepi, ETICS-isolatie, steenstrips. Eigen ploeg, 10 jaar garantie, premiedossier inbegrepen.');
 
     const prev = document.body.className;
     document.body.className = 'lp-page is-subpage';
@@ -496,6 +730,74 @@ export default function LpGevel() {
     document.head.appendChild(style);
     window.scrollTo(0, 0);
 
+    // ── LP-specifieke testimonials-carrousel: auto-scroll uit, set-0 gecentreerd
+    const marquee = document.querySelector<HTMLElement>('.lp-reviews [data-lp-testi-marquee]');
+    const shift = document.querySelector<HTMLElement>('.lp-reviews [data-testi-shift]');
+    const set0 = document.querySelector<HTMLElement>('.lp-reviews [data-testi-set="0"]');
+    const prevBtn = document.querySelector<HTMLElement>('[data-lp-testi-prev]');
+    const nextBtn = document.querySelector<HTMLElement>('[data-lp-testi-next]');
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('.lp-reviews [data-testi-set="0"] .lf-testi'));
+
+    let lpShift = 0;
+    const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
+    const applyLpShift = () => { if (shift) shift.style.setProperty('--testi-shift', `${lpShift}px`); };
+    const recomputeInitial = () => {
+      if (!marquee || !set0 || cards.length === 0 || isMobile()) return;
+      const mRect = marquee.getBoundingClientRect();
+      const firstRect = cards[0].getBoundingClientRect();
+      const viewportCenter = mRect.left + mRect.width / 2;
+      const cardCenter = firstRect.left + firstRect.width / 2;
+      lpShift = viewportCenter - cardCenter;
+      applyLpShift();
+    };
+    const step = (dir: 1 | -1) => {
+      if (!cards.length || isMobile()) return;
+      const gap = 24;
+      const cardW = cards[0].getBoundingClientRect().width + gap;
+      lpShift += -dir * cardW;
+      applyLpShift();
+    };
+    const onPrev = () => step(-1);
+    const onNext = () => step(1);
+    prevBtn?.addEventListener('click', onPrev);
+    nextBtn?.addEventListener('click', onNext);
+
+    let focusRaf = 0;
+    const updateFocus = () => {
+      focusRaf = 0;
+      if (!marquee || cards.length === 0 || isMobile()) return;
+      const mRect = marquee.getBoundingClientRect();
+      const center = mRect.left + mRect.width / 2;
+      let bestIdx = -1; let bestDist = Infinity;
+      const dists: number[] = [];
+      cards.forEach((c, i) => {
+        const r = c.getBoundingClientRect();
+        const d = Math.abs(r.left + r.width / 2 - center);
+        dists[i] = d;
+        if (d < bestDist) { bestDist = d; bestIdx = i; }
+      });
+      const cw = cards[0].getBoundingClientRect().width;
+      cards.forEach((c, i) => {
+        c.classList.toggle('is-focus', i === bestIdx);
+        c.classList.toggle('is-near', i !== bestIdx && dists[i] < cw * 1.2);
+      });
+    };
+    const tickFocus = () => {
+      focusRaf = requestAnimationFrame(() => { updateFocus(); tickFocus(); });
+    };
+    const initTimer = window.setTimeout(() => {
+      requestAnimationFrame(() => {
+        recomputeInitial();
+        updateFocus();
+        tickFocus();
+        if (marquee) marquee.classList.add('is-ready');
+      });
+    }, 50);
+
+    const onResize = () => { recomputeInitial(); };
+    window.addEventListener('resize', onResize);
+
+    // ── Form submit
     const wrap = document.querySelector<HTMLElement>('[data-lp-form-wrapper]');
     const form = document.querySelector<HTMLFormElement>('[data-lp-form]');
     const submitBtn = document.querySelector<HTMLButtonElement>('[data-lp-submit]');
@@ -531,7 +833,7 @@ export default function LpGevel() {
       } else {
         wrap.classList.add('is-error');
         if (errBox) errBox.textContent = 'Er ging iets mis. Bel ons gerust op +32 470 63 44 13.';
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Vraag gevel-advies aan'; }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Vraag gevelinspectie aan'; }
       }
     };
     form?.addEventListener('submit', onSubmit);
@@ -540,6 +842,11 @@ export default function LpGevel() {
       document.body.className = prev;
       style.remove();
       form?.removeEventListener('submit', onSubmit);
+      prevBtn?.removeEventListener('click', onPrev);
+      nextBtn?.removeEventListener('click', onNext);
+      window.removeEventListener('resize', onResize);
+      window.clearTimeout(initTimer);
+      if (focusRaf) cancelAnimationFrame(focusRaf);
     };
   }, []);
 
