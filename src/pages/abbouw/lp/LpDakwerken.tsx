@@ -2,6 +2,17 @@ import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { buildHero, SHELL_STYLE } from '../_shell';
 import { submitLead } from '@/lib/leads';
+import { BLOGS } from '@/data/blogs';
+
+// Filter blogs op dakwerken-relevante tags zodat alleen relevante content
+// op de LP verschijnt. Linkjes openen in een NIEUWE tab (target=_blank) zodat
+// de bezoeker zijn LP-context niet kwijt is.
+const LP_BLOGS = BLOGS.filter(b =>
+  b.tag === 'Dakwerken' ||
+  b.slug === 'dakisolatie-renovatieplicht' ||
+  b.slug === 'plat-dak-epdm-roofing-zink' ||
+  b.slug === 'epc-label-c-2028'
+).slice(0, 3);
 
 import heroBg from '@/assets/dak/intro-overview.jpg';
 import imgBenefits from '@/assets/dak/dakisolatie.jpg';
@@ -11,6 +22,27 @@ import g2 from '@/assets/dak/leien.jpg';
 import g3 from '@/assets/dak/plat-epdm.jpg';
 import g4 from '@/assets/dak/zinkwerk.jpg';
 import expertImg from '@/assets/home/team1.jpg';
+
+// Tijdelijke review-avatars — vervang via Bardh's foto's
+import rev1 from '@/assets/reviews/marc.jpg';
+import rev2 from '@/assets/reviews/dirk.jpg';
+import rev3 from '@/assets/reviews/filip.jpg';
+import rev4 from '@/assets/reviews/jeroen.jpg';
+import rev5 from '@/assets/reviews/mehmet.jpg';
+import rev6 from '@/assets/reviews/sofie.jpg';
+import rev7 from '@/assets/reviews/nathalie.jpg';
+import rev8 from '@/assets/reviews/ellen.jpg';
+
+const DAK_REVIEWS = [
+  { name: 'Marc Van den Broeck', role: 'Pannendak vernieuwd · Mechelen', img: rev1, text: 'Eerlijke offerte, geen meerwerken achteraf. Eigen ploeg op de werf, geen 5 onderaannemers die elkaar tegenwerken. Het dak ligt er strak bij en de premie van €4.200 is netjes uitbetaald.' },
+  { name: 'Dirk Maes', role: 'Plat dak EPDM · Antwerpen', img: rev2, text: "Lekkend dak vrijdag gemeld, maandagochtend stond de ploeg er. EPDM in één stuk gelegd over 65m², geen naden, geen verrassingen. Top service voor wie z'n dak echt vakkundig wil." },
+  { name: 'Filip Wouters', role: 'Hellend dak + isolatie · Puurs', img: rev3, text: 'Volledige stripoperatie: oude pannen weg, nieuwe sarking-isolatie, Koramic pannen erop. Acht werkdagen, geen dag uitloop. EPC-score van label E naar B in één renovatie.' },
+  { name: 'Jeroen De Coster', role: 'Dakvenster Velux · Lier', img: rev4, text: 'Twee Velux-ramen in de keperruimte, met buitenzonwering. Plaatsing in twee dagen, binnenafwerking helemaal mee gepleisterd door eigen schrijnwerker. Geen koudebruggen, geen vocht.' },
+  { name: 'Mehmet Yıldız', role: 'Stormschade hersteld · Bornem', img: rev5, text: 'Helft van de pannen weggewaaid tijdens storm. AB Bouw kwam dezelfde dag voor noodfix met dekzeil, week erop nieuw dak gelegd. Factuur exact zoals afgesproken, verzekeringsdossier mee geregeld.' },
+  { name: 'Sofie Vermeulen', role: 'Zinken dakgoten + boordafwerking · Sint-Niklaas', img: rev6, text: 'Oude koperen goten vervangen door natuurzink (VMZinc). Gesoldeerde verbindingen, geen siliconen. Mooie strakke lijn rond heel het huis. Vakwerk dat 60 jaar meegaat.' },
+  { name: 'Nathalie Aerts', role: 'Volledige dakrenovatie · Bonheiden', img: rev7, text: 'Twee verdiepingen, complete dakvervanging. Bardh kwam wekelijks zelf langs om vragen te beantwoorden. Vlotte communicatie, foto-update elke vrijdag in mail. Premie van €5.200 ingediend door hen.' },
+  { name: 'Ellen De Smet', role: 'Dakisolatie zonder afbraak · Heist-op-den-Berg', img: rev8, text: 'PIR-isolatie tussen de kepers, geen volledig nieuw dak nodig volgens hen. Eerlijk advies, andere aannemers wilden meteen alles vervangen. EPC-sprong van 60 punten, factuur halfvel zo groot.' },
+];
 
 // LP-specifieke aanvullingen op SHELL_STYLE. Hergebruikt ALLE bestaande
 // `.lf-*` klassen van de subpages voor 100% stijl-consistentie.
@@ -172,6 +204,45 @@ const LP_EXTRA = `
   .lp-form-row { grid-template-columns: 1fr; }
   .lp-form-card { padding: 26px 22px; }
 }
+
+/* Verdiepende reads (gerelateerde blogs) — opens in new tab */
+.lp-blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1180px; margin: 0 auto; }
+.lp-blog-card {
+  background: #fff;
+  border: 1px solid var(--ink-line-soft);
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex; flex-direction: column;
+  transition: transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s ease, border-color .3s ease;
+}
+.lp-blog-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 22px 50px -20px rgba(15,17,21,0.22);
+}
+.lp-blog-img { aspect-ratio: 16/10; overflow: hidden; }
+.lp-blog-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.22,1,.36,1); }
+.lp-blog-card:hover .lp-blog-img img { transform: scale(1.05); }
+.lp-blog-body { padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.lp-blog-meta { display: flex; align-items: center; gap: 12px; font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; }
+.lp-blog-tag { color: var(--accent); font-weight: 700; }
+.lp-blog-time { color: var(--ink-mute); font-weight: 600; }
+.lp-blog-body h4 { font-family: var(--font-display); font-size: 18px; color: var(--navy); margin: 0; line-height: 1.3; font-weight: 700; letter-spacing: -0.01em; }
+.lp-blog-body p { font-size: 14px; line-height: 1.55; color: var(--ink-soft); margin: 0; }
+.lp-blog-link {
+  margin-top: auto;
+  padding-top: 4px;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 700; color: var(--accent);
+  letter-spacing: 0.02em;
+  transition: gap .25s ease;
+}
+.lp-blog-card:hover .lp-blog-link { gap: 12px; }
+@media (max-width: 900px) {
+  .lp-blog-grid { grid-template-columns: 1fr; gap: 16px; }
+}
 `;
 
 const HTML = `
@@ -308,6 +379,64 @@ ${buildHero({
   </div>
 </section>
 
+<section class="lf-section lf-reviews-section">
+  <div class="wrap">
+    <div class="lf-section-head centered lf-reviews-head" data-reveal style="margin-bottom: 36px;">
+      <span class="lf-eyebrow">Reviews dakwerken</span>
+      <div class="lf-reviews-rating">
+        <span class="lf-reviews-score">4.9</span>
+        <span class="lf-reviews-divider" aria-hidden="true"></span>
+        <div class="lf-reviews-meta">
+          <div class="lf-reviews-stars" aria-label="4.9 van 5 sterren">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
+            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
+            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
+            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
+            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
+          </div>
+          <span class="lf-reviews-count">124+ dakprojecten beoordeeld</span>
+        </div>
+      </div>
+    </div>
+    <div class="lf-testi-marquee" data-testi-marquee>
+      <button type="button" class="lf-testi-arrow lf-testi-arrow--prev" data-testi-prev aria-label="Vorige review">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button type="button" class="lf-testi-arrow lf-testi-arrow--next" data-testi-next aria-label="Volgende review">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="lf-testi-shift" data-testi-shift>
+        <div class="lf-testi-track" data-testi-track>
+          ${[-1, 0, 1].map((setIdx) => `
+            <div class="lf-testi-set" data-testi-set="${setIdx}"${setIdx !== 0 ? ' aria-hidden="true"' : ''}>
+              ${DAK_REVIEWS.map((t, i) => `
+                <article class="lf-testi" data-review-index="${i}">
+                  <div class="lf-testi-stars">★★★★★</div>
+                  <p>${t.text}</p>
+                  <div class="lf-testi-divider"></div>
+                  <div class="lf-testi-foot">
+                    <img class="lf-testi-avatar" src="${t.img}" alt="${t.name}" loading="lazy"/>
+                    <div class="lf-testi-meta">
+                      <strong>${t.name}</strong>
+                      <span>${t.role}</span>
+                    </div>
+                    <svg class="lf-testi-google" viewBox="0 0 48 48" width="22" height="22" aria-label="Google review">
+                      <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/>
+                      <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 19 13 24 13c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.6 8.4 6.3 14.7z"/>
+                      <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/>
+                      <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.3-4.1 5.6l6.2 5.2C41.4 35.5 44 30.2 44 24c0-1.3-.1-2.4-.4-3.5z"/>
+                    </svg>
+                  </div>
+                </article>
+              `).join('')}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal>
@@ -321,6 +450,34 @@ ${buildHero({
       <details data-reveal><summary>Wat is uw garantie?</summary><div class="ab-faq-body"><p>10 jaar wettelijke aansprakelijkheid op waterdichtheid en stabiliteit, gedekt door polis bij Federale Verzekering. Plus fabrieksgarantie 30-50 jaar op Koramic/Eternit/Firestone materialen.</p></div></details>
       <details data-reveal><summary>Werken jullie ook bij dringende lekkages?</summary><div class="ab-faq-body"><p>Ja. Bij stormschade bellen we dezelfde week. Tijdelijke water-stop, daarna structurele renovatie. Bel voor 16u → iemand dezelfde dag.</p></div></details>
       <details data-reveal><summary>Welke regio's bedienen jullie?</summary><div class="ab-faq-body"><p>Antwerpen, Mechelen, Lier, Boom, Bornem, Puurs, Sint-Niklaas, Heist-op-den-Berg, Brussel, Vilvoorde, Asse, Aalst, Dendermonde, Leuven.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="lf-section">
+  <div class="wrap">
+    <div class="lf-section-head centered" data-reveal style="margin-bottom: 40px;">
+      <span class="lf-eyebrow">Verdiepende reads</span>
+      <h2 class="lf-h2">Eerst wat <span class="ab-mark">leren</span> over dakwerken?</h2>
+      <p class="lf-lede" style="margin: 16px auto 0; max-width: 620px;">Drie artikelen die de meest gestelde vragen beantwoorden — open in nieuw tabblad zodat u hier kan verder lezen.</p>
+    </div>
+    <div class="lp-blog-grid">
+      ${LP_BLOGS.map((b, i) => `
+        <a href="/blog/${b.slug}" target="_blank" rel="noopener" class="lp-blog-card" data-reveal data-reveal-delay="${i}">
+          <div class="lp-blog-img"><img src="${b.img}" alt="${b.title}" loading="lazy"/></div>
+          <div class="lp-blog-body">
+            <div class="lp-blog-meta">
+              <span class="lp-blog-tag">${b.tag}</span>
+              <span class="lp-blog-time">${b.readTime}</span>
+            </div>
+            <h4>${b.title}</h4>
+            <p>${b.excerpt}</p>
+            <span class="lp-blog-link">Lees het volledige artikel
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><line x1="7" y1="17" x2="17" y2="7"/></svg>
+            </span>
+          </div>
+        </a>
+      `).join('')}
     </div>
   </div>
 </section>
