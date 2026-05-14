@@ -42,6 +42,8 @@ function parseArgs() {
     else if (a[i] === "--kontext") o.model = "kontext-max";
     else if (a[i] === "--kontext-pro") o.model = "kontext-pro";
     else if (a[i] === "--input-image") o.inputImage = a[++i];
+    else if (a[i] === "--no-upsample") o.noUpsample = true;
+    else if (a[i] === "--no-raw") o.noRaw = true;
   }
   if (!o.out) throw new Error("--out <jpg> required");
   if (o.promptFile) o.prompt = fs.readFileSync(o.promptFile, "utf8");
@@ -84,13 +86,17 @@ async function downloadTo(url, dest) {
   else if (opts.model === "kontext-pro") { endpoint = BFL_KONTEXT_PRO; tagModel = "flux-kontext-pro"; }
   else { endpoint = BFL_ULTRA; tagModel = "flux-pro-1.1-ultra raw"; }
   console.log(`→ Generating: ${opts.out}`);
-  console.log(`  aspect=${opts.aspect}  model=${tagModel}  prompt=${opts.prompt.length}ch`);
+  console.log(`  aspect=${opts.aspect}  model=${tagModel}  prompt=${opts.prompt.length}ch  upsample=${!opts.noUpsample}${opts.model === undefined || (!opts.model.startsWith('kontext') && opts.model !== 'pro11') ? `  raw=${!opts.noRaw}` : ''}`);
 
+  // BFL's prompt_upsampling=true laat hun interne LLM de prompt verrijken
+  // voor 'ie naar het model gaat — dit is wat ElevenLabs UI standaard doet,
+  // wat het verschil verklaart tussen onze rauwe BFL calls en hun output.
+  // Disable met --no-upsample.
   const body = {
     prompt: opts.prompt,
     safety_tolerance: 2,
     output_format: "jpeg",
-    prompt_upsampling: false,
+    prompt_upsampling: !opts.noUpsample,
   };
   if (opts.model === "pro11") {
     // flux-pro-1.1 uses width/height not aspect_ratio; map common aspects to safe dims
@@ -107,7 +113,7 @@ async function downloadTo(url, dest) {
     }
   } else {
     body.aspect_ratio = opts.aspect;
-    body.raw = true;
+    body.raw = !opts.noRaw; // ultra default raw=true (foto-realistisch), --no-raw zet 'm uit
   }
   if (opts.seed != null) body.seed = opts.seed;
   if (opts.imagePrompt) {
