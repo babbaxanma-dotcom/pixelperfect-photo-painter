@@ -131,13 +131,12 @@ const LP_EXTRA = `
 }
 .lp-cta-microtrust b { color: rgba(255,255,255,0.92); font-weight: 600; }
 
-/* Reviews carousel = LETTERLIJK identiek aan Home page.
-   SHELL_STYLE injecteert eigen testi-CSS (lf-testi-scroll keyframes +
-   hover-pause) die divergeert van Home. We overriden hier met Home's
-   exacte rules: lf-marquee-scroll keyframes (uit Home.tsx scoped CSS),
-   58s duur, GEEN hover-pause. */
+/* Reviews carousel = Home's animation CSS + LP-specifieke animation-delay
+   van 6s zodat JS-gecentreerde eerste card eerst stil zichtbaar staat
+   voordat de scroll-animation begint. */
 .lp-reviews .lf-testi-track {
   animation: lf-marquee-scroll 58s linear infinite !important;
+  animation-delay: 6s !important;
 }
 .lp-reviews .lf-testi-marquee:hover .lf-testi-track,
 .lp-reviews .lf-testi-marquee:focus-within .lf-testi-track {
@@ -1108,24 +1107,29 @@ export default function LpDakwerken() {
     const rMarquee = document.querySelector<HTMLElement>('.lp-reviews [data-testi-marquee]');
     const rFirstCard = document.querySelector<HTMLElement>('.lp-reviews [data-testi-set="0"] .lf-testi');
     const isRMobile = () => window.matchMedia('(max-width: 760px)').matches;
-    const centerReviews = () => {
+    let rCentered = false;
+    const tryCenter = () => {
+      if (rCentered) return; // GEEN re-apply — voorkomt visuele jumps
       if (!rShift || !rMarquee || !rFirstCard || isRMobile()) return;
       const card = rFirstCard.getBoundingClientRect();
-      if (card.width < 50) return;
+      if (card.width < 50) return; // DOM nog niet klaar, probeer later
       const mq = rMarquee.getBoundingClientRect();
       const offset = (mq.left + mq.width / 2) - (card.left + card.width / 2);
       rShift.style.transform = `translate3d(${offset}px, 0, 0)`;
       rShift.style.setProperty('--testi-shift', `${offset}px`);
+      rCentered = true;
     };
+    // Retry tot eerste succesvolle apply, dan stoppen.
     const rTimers = [
-      window.setTimeout(centerReviews, 100),
-      window.setTimeout(centerReviews, 400),
-      window.setTimeout(centerReviews, 1000),
-      window.setTimeout(centerReviews, 2000),
+      window.setTimeout(tryCenter, 80),
+      window.setTimeout(tryCenter, 200),
+      window.setTimeout(tryCenter, 500),
+      window.setTimeout(tryCenter, 1200),
     ];
-    const rResize = () => centerReviews();
+    // Op resize: forceer nieuwe centering (viewport kan veranderd zijn).
+    const rResize = () => { rCentered = false; tryCenter(); };
     window.addEventListener('resize', rResize);
-    const rLoad = () => requestAnimationFrame(centerReviews);
+    const rLoad = () => requestAnimationFrame(tryCenter);
     window.addEventListener('load', rLoad);
 
     // ── Stats count-up — anime van 0 naar target wanneer in viewport

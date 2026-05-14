@@ -122,11 +122,11 @@ const LP_EXTRA = `
 }
 .lp-cta-microtrust b { color: rgba(255,255,255,0.92); font-weight: 600; }
 
-/* Reviews carousel = LETTERLIJK identiek aan Home page.
-   Override SHELL_STYLE's lf-testi-scroll + hover-pause naar Home's
-   lf-marquee-scroll 58s zonder hover-pause. */
+/* Reviews carousel = Home's animation + LP-specifieke animation-delay 6s
+   zodat eerste card stil gecentreerd zichtbaar staat voor de scroll begint. */
 .lp-reviews .lf-testi-track {
   animation: lf-marquee-scroll 58s linear infinite !important;
+  animation-delay: 6s !important;
 }
 .lp-reviews .lf-testi-marquee:hover .lf-testi-track,
 .lp-reviews .lf-testi-marquee:focus-within .lf-testi-track {
@@ -976,7 +976,9 @@ export default function LpGevel() {
     const rMarquee = document.querySelector<HTMLElement>('.lp-reviews [data-testi-marquee]');
     const rFirstCard = document.querySelector<HTMLElement>('.lp-reviews [data-testi-set="0"] .lf-testi');
     const isRMobile = () => window.matchMedia('(max-width: 760px)').matches;
-    const centerReviews = () => {
+    let rCentered = false;
+    const tryCenter = () => {
+      if (rCentered) return;
       if (!rShift || !rMarquee || !rFirstCard || isRMobile()) return;
       const card = rFirstCard.getBoundingClientRect();
       if (card.width < 50) return;
@@ -984,16 +986,17 @@ export default function LpGevel() {
       const offset = (mq.left + mq.width / 2) - (card.left + card.width / 2);
       rShift.style.transform = `translate3d(${offset}px, 0, 0)`;
       rShift.style.setProperty('--testi-shift', `${offset}px`);
+      rCentered = true;
     };
     const rTimers = [
-      window.setTimeout(centerReviews, 100),
-      window.setTimeout(centerReviews, 400),
-      window.setTimeout(centerReviews, 1000),
-      window.setTimeout(centerReviews, 2000),
+      window.setTimeout(tryCenter, 80),
+      window.setTimeout(tryCenter, 200),
+      window.setTimeout(tryCenter, 500),
+      window.setTimeout(tryCenter, 1200),
     ];
-    const rResize = () => centerReviews();
+    const rResize = () => { rCentered = false; tryCenter(); };
     window.addEventListener('resize', rResize);
-    const rLoad = () => requestAnimationFrame(centerReviews);
+    const rLoad = () => requestAnimationFrame(tryCenter);
     window.addEventListener('load', rLoad);
 
     // ── Stats count-up animation
