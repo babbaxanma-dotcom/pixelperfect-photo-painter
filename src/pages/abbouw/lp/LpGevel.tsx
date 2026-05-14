@@ -959,8 +959,30 @@ export default function LpGevel() {
     document.head.appendChild(style);
     window.scrollTo(0, 0);
 
-    // ── Reviews carousel: GEEN custom code — useAbBouwInteractions handelt
-    // alles af net zoals op Home page (data-testi-* attrs zijn identiek).
+    // ── Reviews carousel centering: JS verschuift shift wrapper zodat eerste
+    // card van set-0 initieel gecentreerd start (auto-scroll loopt erbinnen door).
+    const reviewsShift = document.querySelector<HTMLElement>('.lp-reviews [data-testi-shift]');
+    const reviewsSet0First = document.querySelector<HTMLElement>('.lp-reviews [data-testi-set="0"] .lf-testi');
+    const reviewsMarquee = document.querySelector<HTMLElement>('.lp-reviews [data-testi-marquee]');
+    const isReviewsMobile = () => window.matchMedia('(max-width: 760px)').matches;
+    const centerReviews = () => {
+      if (!reviewsShift || !reviewsSet0First || !reviewsMarquee || isReviewsMobile()) return;
+      const card = reviewsSet0First.getBoundingClientRect();
+      if (card.width < 50) return;
+      const marqueeRect = reviewsMarquee.getBoundingClientRect();
+      const viewportCenter = marqueeRect.left + marqueeRect.width / 2;
+      const cardCenter = card.left + card.width / 2;
+      const offset = viewportCenter - cardCenter;
+      reviewsShift.style.transform = `translate3d(${offset}px, 0, 0)`;
+    };
+    const reviewsTimers: number[] = [];
+    reviewsTimers.push(window.setTimeout(centerReviews, 200));
+    reviewsTimers.push(window.setTimeout(centerReviews, 600));
+    reviewsTimers.push(window.setTimeout(centerReviews, 1200));
+    const onReviewsResize = () => centerReviews();
+    window.addEventListener('resize', onReviewsResize);
+    const onReviewsLoad = () => requestAnimationFrame(centerReviews);
+    window.addEventListener('load', onReviewsLoad);
 
     // ── Stats count-up animation
     const formatNl = (n: number) => n.toLocaleString('nl-BE');
@@ -1040,6 +1062,9 @@ export default function LpGevel() {
       style.remove();
       form?.removeEventListener('submit', onSubmit);
       countObserver.disconnect();
+      reviewsTimers.forEach((t) => window.clearTimeout(t));
+      window.removeEventListener('resize', onReviewsResize);
+      window.removeEventListener('load', onReviewsLoad);
     };
   }, []);
 

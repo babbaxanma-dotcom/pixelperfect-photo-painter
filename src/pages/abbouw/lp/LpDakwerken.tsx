@@ -1087,8 +1087,33 @@ export default function LpDakwerken() {
     document.head.appendChild(style);
     window.scrollTo(0, 0);
 
-    // ── Reviews carousel: GEEN custom code — useAbBouwInteractions handelt
-    // alles af net zoals op Home page (data-testi-* attrs zijn identiek).
+    // ── Reviews carousel: useAbBouwInteractions handelt animation + arrows +
+    // focus-RAF af (zelfde als Home). EXTRA: JS centreert shift wrapper zodat
+    // eerste card van set-0 initieel in viewport-center start (Home heeft die
+    // visuele centering niet nodig omdat user al lang scrollt voor 'ie reviews
+    // bereikt; LP heeft reviews direct onder hero dus animation niet vooruit).
+    const reviewsShift = document.querySelector<HTMLElement>('.lp-reviews [data-testi-shift]');
+    const reviewsSet0First = document.querySelector<HTMLElement>('.lp-reviews [data-testi-set="0"] .lf-testi');
+    const reviewsMarquee = document.querySelector<HTMLElement>('.lp-reviews [data-testi-marquee]');
+    const isReviewsMobile = () => window.matchMedia('(max-width: 760px)').matches;
+    const centerReviews = () => {
+      if (!reviewsShift || !reviewsSet0First || !reviewsMarquee || isReviewsMobile()) return;
+      const card = reviewsSet0First.getBoundingClientRect();
+      if (card.width < 50) return; // DOM nog niet settled
+      const marqueeRect = reviewsMarquee.getBoundingClientRect();
+      const viewportCenter = marqueeRect.left + marqueeRect.width / 2;
+      const cardCenter = card.left + card.width / 2;
+      const offset = viewportCenter - cardCenter;
+      reviewsShift.style.transform = `translate3d(${offset}px, 0, 0)`;
+    };
+    const reviewsTimers: number[] = [];
+    reviewsTimers.push(window.setTimeout(centerReviews, 200));
+    reviewsTimers.push(window.setTimeout(centerReviews, 600));
+    reviewsTimers.push(window.setTimeout(centerReviews, 1200));
+    const onReviewsResize = () => centerReviews();
+    window.addEventListener('resize', onReviewsResize);
+    const onReviewsLoad = () => requestAnimationFrame(centerReviews);
+    window.addEventListener('load', onReviewsLoad);
 
     // ── Stats count-up — anime van 0 naar target wanneer in viewport
     const formatNl = (n: number) => n.toLocaleString('nl-BE');
@@ -1168,6 +1193,9 @@ export default function LpDakwerken() {
       style.remove();
       form?.removeEventListener('submit', onSubmit);
       countObserver.disconnect();
+      reviewsTimers.forEach((t) => window.clearTimeout(t));
+      window.removeEventListener('resize', onReviewsResize);
+      window.removeEventListener('load', onReviewsLoad);
     };
   }, []);
 
