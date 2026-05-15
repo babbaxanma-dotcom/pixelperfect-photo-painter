@@ -22,6 +22,7 @@ import imgProcess from '@/assets/gevel/stelling.jpg';
 import gExtra from '@/assets/gevel/intro.jpg';
 
 // 5 FLUX-Ultra premium gevel-anatomy layer renders (ETICS opbouw)
+import gevCross from '@/assets/gevel/lp-anatomy-cross.jpg';
 import gevL1 from '@/assets/gevel/lp-anatomy-l1.jpg';
 import gevL2 from '@/assets/gevel/lp-anatomy-l2.jpg';
 import gevL3 from '@/assets/gevel/lp-anatomy-l3.jpg';
@@ -458,31 +459,12 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
   .lp-process-steps li span { font-size: 13px; }
 }
 
-/* Gevel ETICS cross-section — 5 lagen verticaal gestapeld in 1 vakje (crepi bovenop).
-   mix-blend-mode: multiply maakt de witte render-achtergrond visueel transparant. */
-.lp-gevel-cross-wrap { max-width: 360px; margin: 0 auto 56px; }
-.lp-gevel-cross {
-  display: flex; flex-direction: column;
-  background: #f5f1ec;
-  border-radius: 14px; overflow: hidden;
-  box-shadow: 0 24px 60px -20px rgba(10,22,40,0.35), 0 2px 8px -2px rgba(10,22,40,0.18);
-  border: 1px solid rgba(10,22,40,0.08);
+/* Gevel ETICS cross-section — één premium FLUX render boven het 5-card grid */
+.lp-gevel-cross-wrap { max-width: 440px; margin: 0 auto 48px; }
+.lp-gevel-cross-img {
+  display: block; width: 100%; height: auto;
+  filter: drop-shadow(0 24px 40px rgba(10,22,40,0.18));
 }
-.lp-gevel-cross-layer {
-  position: relative;
-  overflow: hidden;
-}
-.lp-gevel-cross-layer img {
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: center;
-  display: block;
-  mix-blend-mode: multiply;
-}
-.lp-gevel-cross-layer[data-l="5"] { height: 28px; }    /* Crepi (buitenste) */
-.lp-gevel-cross-layer[data-l="4"] { height: 16px; }    /* Wapening */
-.lp-gevel-cross-layer[data-l="3"] { height: 120px; }   /* EPS-isolatie 16cm — dik */
-.lp-gevel-cross-layer[data-l="2"] { height: 16px; }    /* Lijmlaag */
-.lp-gevel-cross-layer[data-l="1"] { height: 100px; }   /* Bestaande baksteen */
 
 /* ───────── Premium gevel anatomy grid (FLUX-Ultra renders) ───────── */
 .lp-anatomy-grid {
@@ -1030,13 +1012,7 @@ const HTML = `
       <p class="lf-lede" style="margin: 14px auto 0; max-width: 620px;">Geen crepi op een muur — <strong>5 lagen vakwerk</strong> die samen isolatie, EPC-winst en strak resultaat leveren. Conform Vlaamse renovatieplicht 2028.</p>
     </div>
     <div class="lp-gevel-cross-wrap" data-reveal>
-      <div class="lp-gevel-cross">
-        <div class="lp-gevel-cross-layer" data-l="5"><img src="${gevL5}" alt=""/></div>
-        <div class="lp-gevel-cross-layer" data-l="4"><img src="${gevL4}" alt=""/></div>
-        <div class="lp-gevel-cross-layer" data-l="3"><img src="${gevL3}" alt=""/></div>
-        <div class="lp-gevel-cross-layer" data-l="2"><img src="${gevL2}" alt=""/></div>
-        <div class="lp-gevel-cross-layer" data-l="1"><img src="${gevL1}" alt=""/></div>
-      </div>
+      <img class="lp-gevel-cross-img" src="${gevCross}" alt="ETICS-opbouw cross-section — 5 lagen van baksteen tot crepi"/>
     </div>
     <div class="lp-anatomy-grid" data-reveal>
       <div class="lp-anatomy-tile">
