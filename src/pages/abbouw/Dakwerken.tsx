@@ -364,7 +364,7 @@ export default function Dakwerken() {
           "telephone": "+32470634413",
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Industrieweg 14",
+            "streetAddress": "August van Landeghemstraat 65",
             "postalCode": "2830",
             "addressLocality": "Willebroek",
             "addressCountry": "BE"

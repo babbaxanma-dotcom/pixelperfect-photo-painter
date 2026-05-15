@@ -93,7 +93,7 @@ ${NAV}
 
       <div>
         <h2 style="font-size: 20px; margin-bottom: 12px;">Meer informatie</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Voor meer informatie over ons privacybeleid verwijzen wij u naar ons <a href="/privacy" style="color: var(--accent);">privacybeleid</a>. Vragen? Stuur een e-mail naar <a href="mailto:info@abconstruct.be" style="color: var(--accent);">info@abconstruct.be</a>.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7;">Voor meer informatie over ons privacybeleid verwijzen wij u naar ons <a href="/privacy" style="color: var(--accent);">privacybeleid</a>. Vragen? Stuur een e-mail naar <a href="mailto:info@abgroep.be" style="color: var(--accent);">info@abgroep.be</a>.</p>
       </div>
 
     </div>

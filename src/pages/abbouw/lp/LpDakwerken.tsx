@@ -1450,7 +1450,7 @@ const HTML = `
 
 <section class="lp-trust-foot">
   <div class="wrap">
-    <div><strong>AB Bouw Groep</strong>Industrieweg 14<br/>2830 Willebroek</div>
+    <div><strong>AB Bouw Groep</strong>August van Landeghemstraat 65<br/>2830 Willebroek</div>
     <div><strong>Telefoon</strong><a href="tel:+32470634413">+32 470 63 44 13</a></div>
     <div><strong>Email</strong><a href="mailto:info@abgroep.be">info@abgroep.be</a></div>
     <div><strong>Erkenningen</strong>VCA*-gecertificeerd<br/>Lid Bouwunie</div>

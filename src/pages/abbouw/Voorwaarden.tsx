@@ -24,7 +24,7 @@ ${NAV}
 
       <div>
         <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 1, Toepassingsgebied</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Deze algemene voorwaarden zijn van toepassing op alle offertes, overeenkomsten en uitvoering van werken door AB Bouw Groep (BTW BE 0XXX.XXX.XXX), gevestigd te Industrieweg 14, 2830 Willebroek. Door het aanvaarden van een offerte aanvaardt de opdrachtgever deze voorwaarden in hun geheel.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7;">Deze algemene voorwaarden zijn van toepassing op alle offertes, overeenkomsten en uitvoering van werken door AB Bouw Groep (BTW BE 0XXX.XXX.XXX), gevestigd te August van Landeghemstraat 65, 2830 Willebroek. Door het aanvaarden van een offerte aanvaardt de opdrachtgever deze voorwaarden in hun geheel.</p>
       </div>
 
       <div>
@@ -70,7 +70,7 @@ ${NAV}
         <p style="color: var(--ink-soft); line-height: 1.7;">AB Bouw Groep maakt op haar website, in marketingcommunicatie en op alle digitale uitingen gebruik van beeldmateriaal dat geheel of gedeeltelijk tot stand is gekomen door middel van artificiële-intelligentiesystemen, waaronder maar niet beperkt tot tekst-naar-beeld generatieve modellen, beeldbewerkingsalgoritmen, isometrische renderings en samengestelde visualisaties. Dergelijk beeldmateriaal kan onder meer betreffen: sfeerbeelden van woningen en gevels, technische cross-section illustraties, dakopbouw renders, klantenportretten ter illustratie van getuigenissen, voor- en na-renders, en sfeerbeelden van afgewerkte projecten.</p>
         <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Deze gegenereerde of AI-bewerkte beelden dienen uitsluitend ter illustratie van type-werkzaamheden, materialen, afwerkingen, stijlvoorkeuren of typische resultaten en vormen geen exacte weergave van een specifiek bestaand project, klant of locatie. Klantenportretten naast getuigenissen kunnen gegenereerd zijn ter bescherming van de privacy van werkelijke klanten of ter illustratie van het klantenprofiel. Werkelijke projecten worden afzonderlijk en duidelijk gemarkeerd als "realisatie" met locatie, uitvoeringsdatum en projectdetails.</p>
         <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">In overeenstemming met Artikel 50 van Verordening (EU) 2024/1689 (de AI-verordening) en de bijhorende uitvoeringsmaatregelen voorzien wij AI-gegenereerd beeldmateriaal van een machinaal leesbare markering waar technisch haalbaar, en streven wij naar transparantie omtrent de herkomst van visuele content. Getuigenissen, citaten en namen kunnen vereenvoudigd, samengevoegd of geanonimiseerd zijn ter bescherming van de persoonlijke levenssfeer van de werkelijke opdrachtgever. De inhoudelijke waarheidsgetrouwheid van het achterliggende project blijft te allen tijde gewaarborgd.</p>
-        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Voor specifieke vragen over een afbeelding, voor een verifieerbare realisatiefoto, of voor inzage in een specifiek projectdossier kunt u contact opnemen via <a href="mailto:info@abconstruct.be" style="color: var(--accent);">info@abconstruct.be</a>.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Voor specifieke vragen over een afbeelding, voor een verifieerbare realisatiefoto, of voor inzage in een specifiek projectdossier kunt u contact opnemen via <a href="mailto:info@abgroep.be" style="color: var(--accent);">info@abgroep.be</a>.</p>
       </div>
 
       <div>
@@ -79,7 +79,7 @@ ${NAV}
       </div>
 
       <div style="background: var(--bg-soft); border-radius: var(--r-md); padding: 28px;">
-        <p style="color: var(--ink-soft); font-size: 13.5px; line-height: 1.7;"><strong>Vragen over deze voorwaarden?</strong> Neem contact op via <a href="mailto:info@abconstruct.be" style="color: var(--accent);">info@abconstruct.be</a> of <a href="tel:+32470634413" style="color: var(--accent);">+32 470 63 44 13</a>.</p>
+        <p style="color: var(--ink-soft); font-size: 13.5px; line-height: 1.7;"><strong>Vragen over deze voorwaarden?</strong> Neem contact op via <a href="mailto:info@abgroep.be" style="color: var(--accent);">info@abgroep.be</a> of <a href="tel:+32470634413" style="color: var(--accent);">+32 470 63 44 13</a>.</p>
       </div>
 
     </div>

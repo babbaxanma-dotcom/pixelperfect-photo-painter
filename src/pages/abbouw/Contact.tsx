@@ -40,7 +40,7 @@ ${buildHero({
           </div>
           <div class="lf-contact-info-item">
             <div class="lf-contact-info-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-            <div class="lf-contact-info-text"><strong>KANTOOR</strong><span>Industrieweg 14 · 2830 Willebroek</span></div>
+            <div class="lf-contact-info-text"><strong>KANTOOR</strong><span>August van Landeghemstraat 65 · 2830 Willebroek</span></div>
           </div>
         </div>
       </div>

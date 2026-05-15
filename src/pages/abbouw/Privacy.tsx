@@ -24,7 +24,7 @@ ${NAV}
 
       <div>
         <h2 style="font-size: 20px; margin-bottom: 12px;">1. Wie zijn wij?</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">AB Bouw Groep (hierna "wij", "ons" of "AB Bouw") is een bouw- en renovatiebedrijf gevestigd te Industrieweg 14, 2830 Willebroek, België. Wij zijn verantwoordelijk voor de verwerking van uw persoonsgegevens zoals beschreven in dit privacybeleid.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7;">AB Bouw Groep (hierna "wij", "ons" of "AB Bouw") is een bouw- en renovatiebedrijf gevestigd te August van Landeghemstraat 65, 2830 Willebroek, België. Wij zijn verantwoordelijk voor de verwerking van uw persoonsgegevens zoals beschreven in dit privacybeleid.</p>
         <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Contactgegevens: <a href="mailto:info@abgroep.be" style="color: var(--accent);">info@abgroep.be</a> · <a href="tel:+32470634413" style="color: var(--accent);">+32 470 63 44 13</a></p>
       </div>
 
