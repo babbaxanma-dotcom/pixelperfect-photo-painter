@@ -460,35 +460,40 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 
 /* Gevel ETICS stack — 5 lagen gestapeld in isometric 3D boven het grid */
 .lp-gevel-stack-wrap {
-  max-width: 520px;
+  max-width: 720px;
   margin: 0 auto 56px;
-  perspective: 1600px;
+  perspective: 2000px;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .lp-gevel-stack {
   position: relative;
-  width: 100%;
-  aspect-ratio: 4 / 3;
+  width: 280px;
+  height: 200px;
   transform-style: preserve-3d;
-  transform: rotateX(20deg) rotateZ(-12deg);
+  transform: rotateX(48deg) rotateZ(-22deg);
 }
 .lp-gevel-stack-layer {
   position: absolute;
   inset: 0;
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 24px 60px -20px rgba(10,22,40,0.45), 0 2px 8px -2px rgba(10,22,40,0.25);
-  border: 1px solid rgba(255,255,255,0.6);
+  box-shadow: 0 24px 60px -20px rgba(10,22,40,0.4), 0 2px 8px -2px rgba(10,22,40,0.2);
+  border: 1px solid rgba(255,255,255,0.7);
 }
 .lp-gevel-stack-layer img {
   width: 100%; height: 100%; object-fit: cover; display: block;
 }
-.lp-gevel-stack-layer[data-l="1"] { transform: translate3d(-12%, -14%, -180px) scale(0.78); }
-.lp-gevel-stack-layer[data-l="2"] { transform: translate3d(-6%, -7%, -90px) scale(0.89); }
-.lp-gevel-stack-layer[data-l="3"] { transform: translate3d(0, 0, 0) scale(1); }
-.lp-gevel-stack-layer[data-l="4"] { transform: translate3d(6%, 7%, 90px) scale(1.11); }
-.lp-gevel-stack-layer[data-l="5"] { transform: translate3d(12%, 14%, 180px) scale(1.22); }
+.lp-gevel-stack-layer[data-l="1"] { transform: translate3d(-46%, -46%, 0); }
+.lp-gevel-stack-layer[data-l="2"] { transform: translate3d(-23%, -23%, 0); }
+.lp-gevel-stack-layer[data-l="3"] { transform: translate3d(0, 0, 0); }
+.lp-gevel-stack-layer[data-l="4"] { transform: translate3d(23%, 23%, 0); }
+.lp-gevel-stack-layer[data-l="5"] { transform: translate3d(46%, 46%, 0); }
 @media (max-width: 760px) {
-  .lp-gevel-stack-wrap { max-width: 340px; margin-bottom: 40px; }
+  .lp-gevel-stack-wrap { height: 280px; }
+  .lp-gevel-stack { width: 200px; height: 140px; }
 }
 
 /* ───────── Premium gevel anatomy grid (FLUX-Ultra renders) ───────── */
