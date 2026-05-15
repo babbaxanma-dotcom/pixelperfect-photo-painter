@@ -21,5 +21,14 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     chunkSizeWarningLimit: 900,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react/jsx-runtime'],
+          'router': ['react-router-dom'],
+          'query': ['@tanstack/react-query'],
+        },
+      },
+    },
   },
 }));

@@ -251,6 +251,16 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 .lp-urgency-card p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; margin: 0; }
 @media (max-width: 900px) { .lp-urgency-grid { grid-template-columns: 1fr; gap: 14px; } }
 
+/* LP differentiator USPs — wat anderen NIET bieden */
+.lp-usp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+.lp-usp-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 14px; padding: 22px 18px 20px; transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease; position: relative; }
+.lp-usp-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 18px 40px -20px rgba(217,140,3,0.35); }
+.lp-usp-icon { width: 42px; height: 42px; border-radius: 12px; background: rgba(217,140,3,0.12); color: var(--accent); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.lp-usp-card h4 { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--navy); margin: 0 0 6px; letter-spacing: -0.005em; line-height: 1.25; }
+.lp-usp-card p { font-size: 13px; color: var(--ink-soft); line-height: 1.5; margin: 0; }
+@media (max-width: 1100px) { .lp-usp-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .lp-usp-grid { grid-template-columns: 1fr; gap: 12px; } }
+
 /* LP gallery */
 .lp-gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 .lp-gallery-cell { position: relative; aspect-ratio: 4/5; overflow: hidden; border-radius: 12px; text-decoration: none; color: inherit; }
@@ -970,6 +980,42 @@ const HTML = `
   </div>
 </section>
 
+<section class="lf-section">
+  <div class="wrap">
+    <div class="lf-section-head centered" data-reveal style="margin-bottom: 36px;">
+      <span class="lf-eyebrow">Wat anderen niet bieden</span>
+      <h2 class="lf-h2">5 garanties die je elders<br/><span class="ab-mark">tevergeefs zoekt</span>.</h2>
+    </div>
+    <div class="lp-usp-grid">
+      <div class="lp-usp-card" data-reveal>
+        <div class="lp-usp-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <h4>Startdatum &lt;30 dagen</h4>
+        <p>Schriftelijk gegarandeerd in offerte. Geen wachten op aannemers die maanden weg zijn.</p>
+      </div>
+      <div class="lp-usp-card" data-reveal data-reveal-delay="1">
+        <div class="lp-usp-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h4>Asbest? Inbegrepen</h4>
+        <p>Oude rijwoningen hebben vaak asbestcement gevelplaten. Verwijdering + attest in offerte.</p>
+      </div>
+      <div class="lp-usp-card" data-reveal data-reveal-delay="2">
+        <div class="lp-usp-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <h4>Schone-werf garantie</h4>
+        <p>Stelling weg, oprit gestraald, geen pleisterresten. Foto-rapportage via WhatsApp.</p>
+      </div>
+      <div class="lp-usp-card" data-reveal data-reveal-delay="3">
+        <div class="lp-usp-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <h4>EPC-sprong of geld terug</h4>
+        <p>We beloven een EPC-verbetering. Halen we het niet? Korting of geld terug — zwart op wit.</p>
+      </div>
+      <div class="lp-usp-card" data-reveal data-reveal-delay="4">
+        <div class="lp-usp-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h4>Realisaties in uw gemeente</h4>
+        <p>5+ projecten binnen 5km. Vraag onze postcode-portfolio met adressen op aanvraag.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="lf-section" style="padding: 0 0 8px;">
   <div class="wrap">
     <div class="lp-cta-banner" data-reveal>
@@ -1223,10 +1269,82 @@ const HTML = `
 
 export default function LpGevel() {
   useEffect(() => {
-    document.title = "Gevelrenovatie Mechelen, Antwerpen & Vlaanderen — Gratis gevelinspectie | AB Bouw Groep";
+    document.title = "Gevelrenovatie Mechelen & Antwerpen — Crepi, ETICS, Steenstrips | AB Bouw Groep";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name','description'); document.head.appendChild(m); }
-    m.setAttribute('content', 'Nieuwe gevel in Mechelen, Antwerpen, Lier en heel Vlaanderen. Crepi, ETICS-isolatie, steenstrips. Eigen ploeg, 10 jaar garantie, premiedossier inbegrepen.');
+    m.setAttribute('content', 'Erkend gevelrenovatie-aannemer in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Crepi, ETICS-buitenisolatie, steenstrips, sierpleister. Eigen ploeg, 10 jaar garantie via Federale Verzekering, Mijn VerbouwPremie inbegrepen. Gratis plaatsbezoek binnen 5 werkdagen.');
+
+    // Open Graph + Twitter cards
+    const setMeta = (prop: string, content: string, isProperty = false) => {
+      const attr = isProperty ? 'property' : 'name';
+      let el = document.querySelector(`meta[${attr}="${prop}"]`);
+      if (!el) { el = document.createElement('meta'); el.setAttribute(attr, prop); document.head.appendChild(el); }
+      el.setAttribute('content', content);
+    };
+    setMeta('og:title', 'Gevelrenovatie Mechelen & Antwerpen — Crepi, ETICS, Steenstrips | AB Bouw Groep', true);
+    setMeta('og:description', 'Crepi, ETICS-buitenisolatie, steenstrips. Eigen ploeg, 10j garantie, premiedossier inbegrepen.', true);
+    setMeta('og:type', 'website', true);
+    setMeta('og:locale', 'nl_BE', true);
+    setMeta('twitter:card', 'summary_large_image');
+
+    // Schema.org JSON-LD: HomeAndConstructionBusiness + FAQ + Service
+    const schemaId = 'lp-gevel-schema';
+    document.getElementById(schemaId)?.remove();
+    const schema = document.createElement('script');
+    schema.id = schemaId;
+    schema.type = 'application/ld+json';
+    schema.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "HomeAndConstructionBusiness",
+          "@id": "https://abgroep.be/#organization",
+          "name": "AB Bouw Groep",
+          "url": "https://abgroep.be",
+          "telephone": "+32470634413",
+          "email": "info@abgroep.be",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "August van Landeghemstraat 65",
+            "postalCode": "2830",
+            "addressLocality": "Willebroek",
+            "addressCountry": "BE"
+          },
+          "areaServed": ["Mechelen","Antwerpen","Lier","Boom","Bornem","Willebroek","Bonheiden","Heist-op-den-Berg","Puurs","Sint-Niklaas","Kontich","Vilvoorde"],
+          "priceRange": "€€",
+          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "96", "bestRating": "5" }
+        },
+        {
+          "@type": "Service",
+          "name": "Gevelrenovatie — crepi, ETICS-isolatie, steenstrips, sierpleister",
+          "provider": { "@id": "https://abgroep.be/#organization" },
+          "areaServed": "Vlaanderen",
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Gevelrenovatie diensten",
+            "itemListElement": [
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Witte crepi gevel" }},
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Grijze crepi gevel" }},
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "ETICS buitenisolatie + crepi" }},
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Steenstrips Vandersanden" }},
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Marmorino sierpleister" }},
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Gevelherstel + scheurherstel" }}
+            ]
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            { "@type": "Question", "name": "Hoeveel kost een crepi-gevel?", "acceptedAnswer": { "@type": "Answer", "text": "Pure crepi op bestaande gevel kost gemiddeld €45-€75/m². ETICS-systeem (16cm isolatie + crepi) €110-€150/m². Definitieve prijs hangt af van gevelstaat en isolatiedikte." }},
+            { "@type": "Question", "name": "Wat is het verschil tussen crepi en ETICS?", "acceptedAnswer": { "@type": "Answer", "text": "Crepi = sierpleister direct op de gevel, voor optisch resultaat. ETICS = External Thermal Insulation Composite System: EPS-isolatie + wapeningsnet + crepi-afwerking, voor energieprestatie EN optisch resultaat." }},
+            { "@type": "Question", "name": "Doen jullie de Mijn VerbouwPremie aanvraag?", "acceptedAnswer": { "@type": "Answer", "text": "Ja, voor ETICS-buitenisolatie regelen wij het volledige premiedossier. Tot €5.000 premie afhankelijk van inkomenscategorie. Pure crepi zonder isolatie komt sinds 2026 niet meer in aanmerking." }},
+            { "@type": "Question", "name": "Hoe lang duurt een gevelrenovatie?", "acceptedAnswer": { "@type": "Answer", "text": "Een rijwoning gevel is gemiddeld in 2 weken afgewerkt. Halfopen of vrijstaande woning 3-4 weken inclusief opbouw stelling en uithardingstijd." }},
+            { "@type": "Question", "name": "Wat is uw garantie?", "acceptedAnswer": { "@type": "Answer", "text": "10 jaar wettelijke aansprakelijkheid op afwerking en isolatieprestatie, gedekt door polis bij Federale Verzekering. Plus fabrieksgarantie op Sto/Weber/Marmorino-systemen." }}
+          ]
+        }
+      ]
+    });
+    document.head.appendChild(schema);
 
     const prev = document.body.className;
     document.body.className = 'lp-page is-subpage';
@@ -1316,6 +1434,7 @@ export default function LpGevel() {
     return () => {
       document.body.className = prev;
       style.remove();
+      document.getElementById('lp-gevel-schema')?.remove();
       form?.removeEventListener('submit', onSubmit);
       countObserver.disconnect();
     };
