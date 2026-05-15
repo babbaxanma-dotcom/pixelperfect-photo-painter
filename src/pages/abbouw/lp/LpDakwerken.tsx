@@ -1066,13 +1066,13 @@ const HTML = `
           ${(() => {
             const reviews = [
               { name: 'Stijn Devos', role: 'Pannendak Koramic · Mechelen', img: rev1, text: 'Onze rijwoning had een dak van 1962, lekte op drie plaatsen. AB Bouw stripte alles op één maandag en lag vrijdag waterdicht. Koramic Aleonard pannen, sarkingisolatie, nieuwe goten. Premie van €4.200 een maand na oplevering op de rekening.', highlights: ['vrijdag waterdicht', 'Koramic Aleonard', '€4.200 een maand na oplevering'] },
-              { name: 'Lieve Hermans', role: 'Plat dak EPDM · Antwerpen', img: rev2, text: 'Vrijdag een natte vlek op het plafond, zaterdag belde Bardh me terug. Maandag stond de ploeg op het dak. 70 m² EPDM in één stuk gelegd, geen naden, geen sjoemel. Factuur klopte tot op de euro met de offerte.', highlights: ['zaterdag belde Bardh me terug', 'geen naden', 'tot op de euro'] },
+              { name: 'Lieve Hermans', role: 'Plat dak EPDM · Antwerpen', img: rev2, text: 'Vrijdag een natte vlek op het plafond, zaterdag belde een van de werfleiders me terug. Maandag stond de ploeg op het dak. 70 m² EPDM in één stuk gelegd, geen naden, geen sjoemel. Factuur klopte tot op de euro met de offerte.', highlights: ['zaterdag belde een van de werfleiders me terug', 'geen naden', 'tot op de euro'] },
               { name: 'Yusuf Demir', role: 'Sarking dakisolatie · Puurs', img: rev3, text: 'Wij wilden vooral lager EPC voor de verkoop. Sarkingsysteem buitenop, oude binnenafwerking bleef. EPC van F naar C op twee weken werk. De vastgoedmakelaar liet ons €18.000 hoger vragen na de renovatie.', highlights: ['EPC van F naar C', 'twee weken werk', '€18.000 hoger'] },
               { name: 'Greet Coppens', role: 'Velux dakvenster · Lier', img: rev4, text: 'Twee Velux GGL ramen in de keperruimte voor onze nieuwe zolderslaapkamer. Plaatsing op twee dagen, binnenafwerking direct mee gepleisterd. Geen koudebrug, geen condens, en de zomer waren we héél blij met de Velux-zonwering.', highlights: ['twee dagen', 'Geen koudebrug', 'héél blij'] },
-              { name: 'Davy Janssens', role: 'Stormschade hersteld · Bornem', img: rev5, text: 'Storm Pia haalde de helft van de pannen weg. Bardh stuurde dezelfde dag iemand voor het dekzeil, de week erop volledig nieuw dak. Verzekering werd door hen rechtstreeks geregeld — wij moesten niets uitzoeken.', highlights: ['dezelfde dag', 'wij moesten niets uitzoeken'] },
+              { name: 'Davy Janssens', role: 'Stormschade hersteld · Bornem', img: rev5, text: 'Storm Pia haalde de helft van de pannen weg. Eén van de experts stuurde dezelfde dag iemand voor het dekzeil, de week erop volledig nieuw dak. Verzekering werd door hen rechtstreeks geregeld — wij moesten niets uitzoeken.', highlights: ['dezelfde dag', 'wij moesten niets uitzoeken'] },
               { name: 'Annick Verstraete', role: 'Zinkwerk VMZinc · Sint-Niklaas', img: rev6, text: 'Oude koperen goten vervangen door natuurzink VMZinc Anthra-Zinc. Gesoldeerde verbindingen, geen plastic koppelstukken, geen kit. Strakke lijn rond heel het huis. Volgens de loodgieter gaat dit 60 jaar mee.', highlights: ['VMZinc Anthra-Zinc', 'Strakke lijn', '60 jaar mee'] },
               { name: 'Ahmed Berraf', role: 'Volledige dakrenovatie · Bonheiden', img: rev7, text: 'Twee verdiepingen + zolder, alles gestript en opnieuw. De werfleider stond elke vrijdag op de werf om de week te overlopen. Foto-update elke avond per WhatsApp. Premie van €5.200 ingediend door hen.', highlights: ['elke vrijdag op de werf', 'Foto-update elke avond', 'Premie van €5.200'] },
-              { name: 'Tine Verlinden', role: 'PIR-dakisolatie · Heist-op-den-Berg', img: rev8, text: 'Drie aannemers gevraagd, twee wilden direct alles vervangen. Bardh klopte op de pannen, zei: dit dak gaat nog 20 jaar mee, gewoon isolatie tussen kepers. Klaar in 3 dagen. EPC-sprong van 58 punten.', highlights: ['nog 20 jaar mee', 'Klaar in 3 dagen', 'EPC-sprong van 58 punten'] },
+              { name: 'Tine Verlinden', role: 'PIR-dakisolatie · Heist-op-den-Berg', img: rev8, text: 'Drie aannemers gevraagd, twee wilden direct alles vervangen. Eén van de experts klopte op de pannen, zei: dit dak gaat nog 20 jaar mee, gewoon isolatie tussen kepers. Klaar in 3 dagen. EPC-sprong van 58 punten.', highlights: ['nog 20 jaar mee', 'Klaar in 3 dagen', 'EPC-sprong van 58 punten'] },
             ];
             const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             const wrapWords = (phrase: string, baseI: number) => {
@@ -1371,10 +1371,10 @@ const HTML = `
     <div class="lp-cta-banner" data-reveal>
       <div class="lp-cta-banner-text">
         <strong>Eerlijk advies, op uw eigen tempo.</strong>
-        <span>Bardh komt langs en zegt u eerlijk wat moet en wat kan wachten. Vrijblijvend en gratis.</span>
+        <span>Eén van onze experts komt langs en zegt u eerlijk wat moet en wat kan wachten. Vrijblijvend en gratis.</span>
       </div>
       <a href="tel:+32470634413" class="lp-cta-banner-cta">
-        Bel Bardh direct
+        Bel een expert direct
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       </a>
     </div>

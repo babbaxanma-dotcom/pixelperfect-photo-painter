@@ -458,25 +458,31 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
   .lp-process-steps li span { font-size: 13px; }
 }
 
-/* Gevel ETICS cross-section — 5 lagen verticaal gestapeld in 1 vakje (crepi bovenop) */
-.lp-gevel-cross-wrap { max-width: 420px; margin: 0 auto 56px; }
+/* Gevel ETICS cross-section — 5 lagen verticaal gestapeld in 1 vakje (crepi bovenop).
+   mix-blend-mode: multiply maakt de witte render-achtergrond visueel transparant. */
+.lp-gevel-cross-wrap { max-width: 360px; margin: 0 auto 56px; }
 .lp-gevel-cross {
   display: flex; flex-direction: column;
+  background: #f5f1ec;
   border-radius: 14px; overflow: hidden;
   box-shadow: 0 24px 60px -20px rgba(10,22,40,0.35), 0 2px 8px -2px rgba(10,22,40,0.18);
   border: 1px solid rgba(10,22,40,0.08);
 }
 .lp-gevel-cross-layer {
-  background-size: 260% auto;
-  background-position: center 55%;
-  background-repeat: no-repeat;
   position: relative;
+  overflow: hidden;
 }
-.lp-gevel-cross-layer[data-l="5"] { height: 24px; }    /* Crepi (buitenste) */
-.lp-gevel-cross-layer[data-l="4"] { height: 14px; }    /* Wapening */
-.lp-gevel-cross-layer[data-l="3"] { height: 110px; }   /* EPS-isolatie 16cm — dik */
-.lp-gevel-cross-layer[data-l="2"] { height: 14px; }    /* Lijmlaag */
-.lp-gevel-cross-layer[data-l="1"] { height: 90px; }    /* Bestaande baksteen */
+.lp-gevel-cross-layer img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
+  mix-blend-mode: multiply;
+}
+.lp-gevel-cross-layer[data-l="5"] { height: 28px; }    /* Crepi (buitenste) */
+.lp-gevel-cross-layer[data-l="4"] { height: 16px; }    /* Wapening */
+.lp-gevel-cross-layer[data-l="3"] { height: 120px; }   /* EPS-isolatie 16cm — dik */
+.lp-gevel-cross-layer[data-l="2"] { height: 16px; }    /* Lijmlaag */
+.lp-gevel-cross-layer[data-l="1"] { height: 100px; }   /* Bestaande baksteen */
 
 /* ───────── Premium gevel anatomy grid (FLUX-Ultra renders) ───────── */
 .lp-anatomy-grid {
@@ -811,9 +817,9 @@ const HTML = `
               { name: 'Jasmien De Backer', role: 'Witte crepi rijwoning · Mechelen', img: rev1, text: 'Onze rijwoning had een vermoeide bezetting uit de jaren ’80. Nu een spierwitte crepi-gevel die je zo van een interieurmagazine plukt. De buren komen vragen wie het werk gedaan heeft. Strak, proper, op tijd opgeleverd.', highlights: ['spierwitte crepi-gevel', 'op tijd opgeleverd'] },
               { name: 'Joris Vanhove', role: 'ETICS + crepi · Boom', img: rev2, text: 'Volledig pakket: 16 cm EPS-isolatie + crepi-afwerking. EPC van F naar C in één werk. Stookkost deze winter bijna gehalveerd, en de muren binnen voelen niet meer koud aan. Premie-dossier (€4.800) liep via hen.', highlights: ['EPC van F naar C', 'bijna gehalveerd', '€4.800'] },
               { name: 'Marius Ionescu', role: 'Steenstrips voorgevel · Lier', img: rev3, text: 'We wilden de klassieke Vlaamse baksteen-look zonder het gewicht en de kost van echte stenen. Steenstrips Vandersanden, voegen kaarsrecht, aansluitingen rond ramen vakwerk. Niemand merkt het verschil — zelfs onze schoonvader niet.', highlights: ['voegen kaarsrecht', 'zelfs onze schoonvader niet'] },
-              { name: 'Cindy Van Looy', role: 'Sierpleister marmorino · Bornem', img: rev4, text: 'Marmorino-afwerking in zachte taupe. Bardh hielp met de kleurkeuze — wij wilden eerst grijs, hij overtuigde ons van een warmere tint. Achteraf super blij, het huis straalt nu echt karakter uit.', highlights: ['zachte taupe', 'super blij', 'echt karakter'] },
+              { name: 'Cindy Van Looy', role: 'Sierpleister marmorino · Bornem', img: rev4, text: 'Marmorino-afwerking in zachte taupe. Eén van de experts hielp met de kleurkeuze — wij wilden eerst grijs, hij overtuigde ons van een warmere tint. Achteraf super blij, het huis straalt nu echt karakter uit.', highlights: ['zachte taupe', 'super blij', 'echt karakter'] },
               { name: 'Dimitri Maes', role: 'Crepi + buitenisolatie · Antwerpen', img: rev5, text: 'Halfopen woning uit 1968 die nooit was geïsoleerd. 16 cm EPS buitenisolatie + crepi. Comfort-sprong is enorm: geen koude muren meer in de winter. Premie €5.400 zonder problemen uitbetaald.', highlights: ['Comfort-sprong is enorm', '€5.400 zonder problemen'] },
-              { name: 'Steven Goossens', role: 'Gevelherstel + crepi · Willebroek', img: rev6, text: 'Onze gevel had scheuren en vochtproblemen. Drie aannemers wilden direct crepi erop smeren. Bardh zei: eerst herstellen, anders gooi je geld weg. Uitgevoerd zoals beloofd. Factuur tot op de euro met de offerte.', highlights: ['eerst herstellen', 'tot op de euro'] },
+              { name: 'Steven Goossens', role: 'Gevelherstel + crepi · Willebroek', img: rev6, text: 'Onze gevel had scheuren en vochtproblemen. Drie aannemers wilden direct crepi erop smeren. Eén van de experts zei: eerst herstellen, anders gooi je geld weg. Uitgevoerd zoals beloofd. Factuur tot op de euro met de offerte.', highlights: ['eerst herstellen', 'tot op de euro'] },
               { name: 'Eva Vandeputte', role: 'Witte crepi nieuwbouw · Kontich', img: rev7, text: 'Nieuwbouw afgewerkt met witte crepi op de spouwmuur. Strakke lijn over de volledige gevel, geen scheuren of vlekken. Plaatsing in 5 werkdagen, stelling weg, oprit proper opgekuist, klaar.', highlights: ['Strakke lijn', '5 werkdagen', 'proper opgekuist'] },
               { name: 'Hicham Bouali', role: 'Gevelisolatie + nieuwe crepi · Mechelen', img: rev8, text: 'Eerste aannemer wilde alleen crepi over de bestaande gevel. AB Bouw legde uit waarom we ETICS-isolatie nodig hadden. Hogere prijs, veel betere oplossing. EPC + comfort vlot. Geen spijt van die keuze.', highlights: ['veel betere oplossing', 'Geen spijt'] },
             ];
@@ -1025,11 +1031,11 @@ const HTML = `
     </div>
     <div class="lp-gevel-cross-wrap" data-reveal>
       <div class="lp-gevel-cross">
-        <div class="lp-gevel-cross-layer" data-l="5" style="background-image: url(${gevL5})"></div>
-        <div class="lp-gevel-cross-layer" data-l="4" style="background-image: url(${gevL4})"></div>
-        <div class="lp-gevel-cross-layer" data-l="3" style="background-image: url(${gevL3})"></div>
-        <div class="lp-gevel-cross-layer" data-l="2" style="background-image: url(${gevL2})"></div>
-        <div class="lp-gevel-cross-layer" data-l="1" style="background-image: url(${gevL1})"></div>
+        <div class="lp-gevel-cross-layer" data-l="5"><img src="${gevL5}" alt=""/></div>
+        <div class="lp-gevel-cross-layer" data-l="4"><img src="${gevL4}" alt=""/></div>
+        <div class="lp-gevel-cross-layer" data-l="3"><img src="${gevL3}" alt=""/></div>
+        <div class="lp-gevel-cross-layer" data-l="2"><img src="${gevL2}" alt=""/></div>
+        <div class="lp-gevel-cross-layer" data-l="1"><img src="${gevL1}" alt=""/></div>
       </div>
     </div>
     <div class="lp-anatomy-grid" data-reveal>
@@ -1082,10 +1088,10 @@ const HTML = `
     <div class="lp-cta-banner" data-reveal>
       <div class="lp-cta-banner-text">
         <strong>Eerlijk advies, op uw eigen tempo.</strong>
-        <span>Bardh komt langs en zegt eerlijk: crepi volstaat, of toch ETICS. Vrijblijvend en gratis.</span>
+        <span>Eén van onze experts komt langs en zegt eerlijk: crepi volstaat, of toch ETICS. Vrijblijvend en gratis.</span>
       </div>
       <a href="tel:+32470634413" class="lp-cta-banner-cta">
-        Bel Bardh direct
+        Bel een expert direct
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       </a>
     </div>
