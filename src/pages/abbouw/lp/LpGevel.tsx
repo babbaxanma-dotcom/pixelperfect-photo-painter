@@ -467,7 +467,9 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
   border: 1px solid rgba(10,22,40,0.08);
 }
 .lp-gevel-cross-layer {
-  background-size: cover; background-position: center;
+  background-size: 260% auto;
+  background-position: center 55%;
+  background-repeat: no-repeat;
   position: relative;
 }
 .lp-gevel-cross-layer[data-l="5"] { height: 24px; }    /* Crepi (buitenste) */
