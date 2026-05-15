@@ -758,17 +758,27 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 
 /* ───────── Hot-button word highlight (solid brand orange, geen browser-default mark) ───────── */
 .lp-hot {
-  background: #d98c03 !important;
-  background-image: none !important;
-  color: #fff !important;
+  color: #d98c03 !important;
+  font-weight: 700;
+  background-color: transparent !important;
+  background-image: linear-gradient(#d98c03, #d98c03) !important;
+  background-size: 0% 100%;
+  background-position: left center;
+  background-repeat: no-repeat;
   padding: 2px 6px;
   border-radius: 3px;
-  font-weight: 700;
+  transition: background-size 0.6s cubic-bezier(.22,1,.36,1), color 0.4s ease;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
-.lp-form-side .lp-hot,
-.lp-form-card .lp-hot { background: #d98c03 !important; color: #fff !important; }
+.lp-urgency-card.revealed .lp-hot,
+.lp-form-side.revealed .lp-hot,
+.lp-form-side[data-reveal].revealed .lp-hot,
+.lp-form-card.revealed .lp-hot {
+  background-size: 100% 100%;
+  color: #fff !important;
+  transition-delay: calc(var(--lp-hot-delay, 0) * 1ms);
+}
 .lp-reviews-swipe-hint {
   display: none;
 }
