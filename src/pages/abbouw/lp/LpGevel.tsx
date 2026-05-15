@@ -458,43 +458,23 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
   .lp-process-steps li span { font-size: 13px; }
 }
 
-/* Gevel ETICS stack — 5 lagen gestapeld in isometric 3D boven het grid */
-.lp-gevel-stack-wrap {
-  max-width: 720px;
-  margin: 0 auto 56px;
-  perspective: 2000px;
-  height: 380px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Gevel ETICS cross-section — 5 lagen verticaal gestapeld in 1 vakje (crepi bovenop) */
+.lp-gevel-cross-wrap { max-width: 420px; margin: 0 auto 56px; }
+.lp-gevel-cross {
+  display: flex; flex-direction: column;
+  border-radius: 14px; overflow: hidden;
+  box-shadow: 0 24px 60px -20px rgba(10,22,40,0.35), 0 2px 8px -2px rgba(10,22,40,0.18);
+  border: 1px solid rgba(10,22,40,0.08);
 }
-.lp-gevel-stack {
+.lp-gevel-cross-layer {
+  background-size: cover; background-position: center;
   position: relative;
-  width: 280px;
-  height: 200px;
-  transform-style: preserve-3d;
-  transform: rotateX(48deg) rotateZ(-22deg);
 }
-.lp-gevel-stack-layer {
-  position: absolute;
-  inset: 0;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 24px 60px -20px rgba(10,22,40,0.4), 0 2px 8px -2px rgba(10,22,40,0.2);
-  border: 1px solid rgba(255,255,255,0.7);
-}
-.lp-gevel-stack-layer img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-}
-.lp-gevel-stack-layer[data-l="1"] { transform: translate3d(-46%, -46%, 0); }
-.lp-gevel-stack-layer[data-l="2"] { transform: translate3d(-23%, -23%, 0); }
-.lp-gevel-stack-layer[data-l="3"] { transform: translate3d(0, 0, 0); }
-.lp-gevel-stack-layer[data-l="4"] { transform: translate3d(23%, 23%, 0); }
-.lp-gevel-stack-layer[data-l="5"] { transform: translate3d(46%, 46%, 0); }
-@media (max-width: 760px) {
-  .lp-gevel-stack-wrap { height: 280px; }
-  .lp-gevel-stack { width: 200px; height: 140px; }
-}
+.lp-gevel-cross-layer[data-l="5"] { height: 24px; }    /* Crepi (buitenste) */
+.lp-gevel-cross-layer[data-l="4"] { height: 14px; }    /* Wapening */
+.lp-gevel-cross-layer[data-l="3"] { height: 110px; }   /* EPS-isolatie 16cm — dik */
+.lp-gevel-cross-layer[data-l="2"] { height: 14px; }    /* Lijmlaag */
+.lp-gevel-cross-layer[data-l="1"] { height: 90px; }    /* Bestaande baksteen */
 
 /* ───────── Premium gevel anatomy grid (FLUX-Ultra renders) ───────── */
 .lp-anatomy-grid {
@@ -1041,13 +1021,13 @@ const HTML = `
       <h2 class="lf-h2">Uw gevel in <span class="ab-mark">3D</span> — laag voor laag.</h2>
       <p class="lf-lede" style="margin: 14px auto 0; max-width: 620px;">Geen crepi op een muur — <strong>5 lagen vakwerk</strong> die samen isolatie, EPC-winst en strak resultaat leveren. Conform Vlaamse renovatieplicht 2028.</p>
     </div>
-    <div class="lp-gevel-stack-wrap" data-reveal>
-      <div class="lp-gevel-stack">
-        <div class="lp-gevel-stack-layer" data-l="1"><img src="${gevL1}" alt=""/></div>
-        <div class="lp-gevel-stack-layer" data-l="2"><img src="${gevL2}" alt=""/></div>
-        <div class="lp-gevel-stack-layer" data-l="3"><img src="${gevL3}" alt=""/></div>
-        <div class="lp-gevel-stack-layer" data-l="4"><img src="${gevL4}" alt=""/></div>
-        <div class="lp-gevel-stack-layer" data-l="5"><img src="${gevL5}" alt=""/></div>
+    <div class="lp-gevel-cross-wrap" data-reveal>
+      <div class="lp-gevel-cross">
+        <div class="lp-gevel-cross-layer" data-l="5" style="background-image: url(${gevL5})"></div>
+        <div class="lp-gevel-cross-layer" data-l="4" style="background-image: url(${gevL4})"></div>
+        <div class="lp-gevel-cross-layer" data-l="3" style="background-image: url(${gevL3})"></div>
+        <div class="lp-gevel-cross-layer" data-l="2" style="background-image: url(${gevL2})"></div>
+        <div class="lp-gevel-cross-layer" data-l="1" style="background-image: url(${gevL1})"></div>
       </div>
     </div>
     <div class="lp-anatomy-grid" data-reveal>
