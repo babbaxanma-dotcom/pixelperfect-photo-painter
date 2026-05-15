@@ -395,26 +395,44 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 /* Scroll-target fix — nav (~90px) compenseren bij CTA scroll-to-form */
 #lp-form { scroll-margin-top: 100px; }
 
-/* ───────── Mobile reviews: manual swipe ipv auto-scroll ───────── */
+/* ───────── Mobile reviews: manual swipe (mirror Home pattern) ───────── */
 @media (max-width: 760px) {
   .lp-reviews .lf-testi-marquee {
-    -webkit-mask-image: none !important;
-            mask-image: none !important;
-  }
-  .lp-reviews .lf-testi-track {
-    animation: none !important;
+    position: relative;
     overflow-x: auto !important;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 16px;
-    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    padding: 8px 0 28px !important;
+    height: auto;
+    min-height: 0;
+    -webkit-mask-image: none !important;
+            mask-image: none !important;
+    margin: 0 !important;
+    width: 100% !important;
   }
-  .lp-reviews .lf-testi-track::-webkit-scrollbar { display: none; }
-  .lp-reviews .lf-testi-set { display: flex; gap: 14px; }
-  .lp-reviews .lf-testi-set[data-testi-set="-1"],
-  .lp-reviews .lf-testi-set[data-testi-set="1"] { display: none; }
-  .lp-reviews .lf-testi { scroll-snap-align: start; flex: 0 0 88%; }
+  .lp-reviews .lf-testi-marquee::-webkit-scrollbar { display: none; }
+  .lp-reviews .lf-testi-shift { position: static; transform: none !important; transition: none !important; display: block; padding: 0; }
+  .lp-reviews .lf-testi-track { position: relative; display: flex; width: max-content; animation: none !important; overflow: visible; gap: 0; }
+  .lp-reviews .lf-testi-set:not([data-testi-set="0"]) { display: none !important; }
+  .lp-reviews .lf-testi-set[data-testi-set="0"] { display: flex; flex-wrap: nowrap; gap: 14px; padding: 4px 16px; }
+  .lp-reviews .lf-testi { flex: 0 0 86%; max-width: 360px; scroll-snap-align: center; transform: none !important; opacity: 1 !important; }
   .lp-reviews .lf-testi-arrow { display: none !important; }
+}
+
+/* ───────── Hot-button word highlight ───────── */
+.lp-urgency-card .lp-hot {
+  background-image: linear-gradient(120deg, rgba(217,140,3,0) 50%, rgba(217,140,3,0.32) 50%);
+  background-size: 220% 100%;
+  background-position: 100% 0;
+  background-repeat: no-repeat;
+  transition: background-position 1s cubic-bezier(.22,1,.36,1);
+  padding: 0 4px; border-radius: 2px; font-weight: 600; color: var(--navy);
+}
+.lp-urgency-card.revealed .lp-hot {
+  background-position: 0 0;
+  transition-delay: calc(var(--lp-hot-delay, 0) * 1ms);
 }
 .lp-reviews-swipe-hint { display: none; }
 @media (max-width: 760px) {
@@ -800,17 +818,17 @@ const HTML = `
       <div class="lp-urgency-card" data-reveal>
         <div class="lp-urgency-num">01</div>
         <h4>Premies dalen jaarlijks</h4>
-        <p>Mijn VerbouwPremie voor buitenisolatie staat in 2026 op €55/m² maar wordt elk jaar verlaagd. Op een halfopen woning bespaart u nu €4.500-€7.200 die u in 2027 niet meer krijgt.</p>
+        <p>Mijn VerbouwPremie voor buitenisolatie staat in 2026 op €55/m² maar wordt <mark class="lp-hot" style="--lp-hot-delay:120">elk jaar verlaagd</mark>. Op een halfopen woning bespaart u nu <mark class="lp-hot" style="--lp-hot-delay:340">€4.500-€7.200</mark> die u in 2027 <mark class="lp-hot" style="--lp-hot-delay:560">niet meer krijgt</mark>.</p>
       </div>
       <div class="lp-urgency-card" data-reveal data-reveal-delay="1">
         <div class="lp-urgency-num">02</div>
         <h4>EPC-verplichting 2028</h4>
-        <p>Vanaf 2028 moet elke gekochte woning binnen 5 jaar EPC-label C halen. Wie nu renoveert is voorbereid; wie wacht riskeert sancties en lagere verkoopprijs.</p>
+        <p>Vanaf 2028 moet elke gekochte woning binnen 5 jaar <mark class="lp-hot" style="--lp-hot-delay:120">EPC-label C halen</mark>. Wie nu renoveert is voorbereid; wie wacht riskeert <mark class="lp-hot" style="--lp-hot-delay:340">sancties en lagere verkoopprijs</mark>.</p>
       </div>
       <div class="lp-urgency-card" data-reveal data-reveal-delay="2">
         <div class="lp-urgency-num">03</div>
-        <h4>Klaar voor de winter</h4>
-        <p>Begin nu en uw gevel is afgewerkt vóór november. Wachten betekent één extra winter zonder isolatie — dat zijn al snel honderden euro's extra stookkost.</p>
+        <h4>Klaar binnen 2 weken</h4>
+        <p>Begin nu en uw gevel is <mark class="lp-hot" style="--lp-hot-delay:120">binnen 2 weken afgewerkt</mark>. Wachten betekent één extra winter zonder isolatie — al snel <mark class="lp-hot" style="--lp-hot-delay:340">honderden euro's extra stookkost</mark>.</p>
       </div>
     </div>
   </div>
