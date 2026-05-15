@@ -48,13 +48,25 @@ import rev8 from '@/assets/reviews/tine.jpg';
 const LP_EXTRA = `
 /* ───────── LP cinematic hero ───────── */
 .lp-hero-cine { min-height: 100vh; min-height: 100dvh; }
-.lp-hero-cine .lf-hero-bg--slides { filter: contrast(1.04) saturate(0.96); }
+.lp-hero-cine .lf-hero-bg--slides { filter: contrast(1.02) saturate(1.0); }
 .lp-hero-cine .lf-hero-bg--slides::after {
   background:
-    radial-gradient(ellipse at center, rgba(8,12,22,0.30) 0%, rgba(8,12,22,0.78) 70%, rgba(8,12,22,0.94) 100%),
-    linear-gradient(180deg, rgba(8,12,22,0.45) 0%, rgba(8,12,22,0.05) 22%, rgba(8,12,22,0.05) 70%, rgba(8,12,22,0.55) 100%);
+    linear-gradient(180deg, rgba(8,12,22,0.55) 0%, rgba(8,12,22,0.20) 30%, rgba(8,12,22,0.15) 70%, rgba(8,12,22,0.65) 100%);
   z-index: 3;
 }
+
+/* Mobile: hero fullscreen + nav hidden-until-scroll (matcht Home gedrag) */
+@media (max-width: 900px) {
+  .lf-hero.lp-hero-cine { min-height: 100vh !important; min-height: 100dvh !important; height: 100dvh !important; align-items: center !important; }
+  .lp-hero-cine .lf-hero-wrap { padding-top: 100px !important; padding-bottom: 60px !important; min-height: 100dvh !important; }
+}
+body.lp-page.is-subpage .lf-nav {
+  opacity: var(--nav-sweep, 0) !important;
+  transform: translateY(calc((1 - var(--nav-sweep, 0)) * -10px)) !important;
+  transition: top 0.4s var(--ease) !important;
+  pointer-events: none;
+}
+body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 .lp-hero-cine .lf-hero-wrap {
   display: flex !important;
   align-items: center !important;
@@ -193,9 +205,10 @@ const LP_EXTRA = `
 }
 .lp-premie-ico {
   width: 56px; height: 56px; border-radius: 14px;
-  background: var(--accent); color: #fff;
+  background: var(--navy); color: #fff;
   display: inline-flex; align-items: center; justify-content: center;
   flex-shrink: 0;
+  box-shadow: 0 8px 22px -10px rgba(10,22,40,0.45);
 }
 .lp-premie-text strong {
   display: block; font-family: var(--font-display); font-size: 18px;
@@ -609,8 +622,8 @@ const LP_EXTRA = `
   animation: lp-premie-glow 3.6s ease-in-out infinite;
 }
 @keyframes lp-premie-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(217,140,3,0.45), 0 8px 22px -10px rgba(217,140,3,0.45); }
-  50%      { box-shadow: 0 0 0 10px rgba(217,140,3,0), 0 12px 30px -10px rgba(217,140,3,0.6); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(10,22,40,0.45), 0 8px 22px -10px rgba(10,22,40,0.45); }
+  50%      { box-shadow: 0 0 0 10px rgba(10,22,40,0), 0 12px 30px -10px rgba(10,22,40,0.6); }
 }
 
 /* ───────── Urgency card: gradient sweep on hover ───────── */
@@ -888,7 +901,7 @@ const HTML = `
       <span class="lp-trust-divider"></span>
       <span class="lp-trust-badge">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M8 14h2M8 17h6"/></svg>
-        <span>Verzekerd bij <strong>Federale</strong></span>
+        <span>10-jarige polis bij <strong>Federale Verzekering</strong></span>
       </span>
       <span class="lp-trust-divider"></span>
       <span class="lp-trust-badge">
