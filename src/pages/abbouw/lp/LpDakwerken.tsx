@@ -29,6 +29,7 @@ import imgPlatDak from '@/assets/dak/lp-plat-dak.jpg';            // gallery EPD
 import imgZinkGoot from '@/assets/dak/lp-zink-goot.jpg';          // gallery zink detail
 
 import imgAnatomy from '@/assets/dak/lp-anatomy-illustration.jpg'; // 3D-illustration cross-section
+import dakCross from '@/assets/dak/lp-anatomy-cross.jpg';            // 6-layer composite cross-section
 import imgComfort from '@/assets/dak/lp-comfort-illustration.jpg'; // warm-interior comfort visual
 import imgHeatlossHouse from '@/assets/dak/lp-heatloss-house.jpg'; // premium isometric heatloss render
 
@@ -476,6 +477,13 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 .lp-anatomy-card[data-layer="4"] { --depth: -30; background: linear-gradient(180deg, #dbac3e 0%, #a37f23 100%); }
 .lp-anatomy-card[data-layer="5"] { --depth: -90; background: linear-gradient(180deg, #94999f 0%, #5e6470 100%); }
 .lp-anatomy-card[data-layer="6"] { --depth: -150; background: linear-gradient(180deg, #fafaf3 0%, #e0ddd4 100%); color: var(--navy); }
+
+/* Dak cross-section — één premium FLUX render boven het 6-card grid */
+.lp-dak-cross-wrap { max-width: 440px; margin: 0 auto 48px; }
+.lp-dak-cross-img {
+  display: block; width: 100%; height: auto;
+  filter: drop-shadow(0 24px 40px rgba(10,22,40,0.18));
+}
 
 /* ───────── Premium dak anatomy grid (FLUX-Ultra renders) ───────── */
 .lp-anatomy-grid {
@@ -1312,6 +1320,9 @@ const HTML = `
       <span class="lf-eyebrow">Interactief</span>
       <h2 class="lf-h2">Uw dak in <span class="ab-mark">3D</span> — laag voor laag.</h2>
       <p class="lf-lede" style="margin: 14px auto 0; max-width: 620px;">Geen pannen op een lat — <strong>6 lagen vakwerk</strong> die samen waterdichtheid, isolatie en comfort leveren. Conform Vlaamse renovatieplicht 2028.</p>
+    </div>
+    <div class="lp-dak-cross-wrap" data-reveal>
+      <img class="lp-dak-cross-img" src="${dakCross}" alt="Dak cross-section — 6 lagen van plafond tot dakpannen"/>
     </div>
     <div class="lp-anatomy-grid" data-reveal>
       <div class="lp-anatomy-tile">
