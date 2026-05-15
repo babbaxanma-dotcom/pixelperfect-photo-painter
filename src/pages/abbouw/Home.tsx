@@ -1784,17 +1784,21 @@ html, body { overflow-x: hidden; max-width: 100%; }
   position: relative;
 }
 .lf-why-collage.lf-why-stack[data-why-stack] .lf-why-num {
-  position: absolute;
-  left: -92px;
-  top: -22px;
-  font-family: 'Instrument Serif', serif !important;
-  font-style: italic !important;
-  font-weight: 400 !important;
-  font-size: clamp(72px, 5.6vw, 96px) !important;
-  line-height: 0.95 !important;
-  color: var(--accent) !important;
-  letter-spacing: -0.04em !important;
-  font-feature-settings: "tnum";
+  position: static !important;
+  display: inline-flex !important;
+  width: 26px; height: 26px;
+  border-radius: 6px !important;
+  background: var(--navy) !important;
+  color: #fff !important;
+  font-family: var(--font-display) !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0;
 }
 .lf-why-collage.lf-why-stack[data-why-stack] .lf-why-label {
   font-size: 11px !important;
@@ -1888,43 +1892,29 @@ html, body { overflow-x: hidden; max-width: 100%; }
 .lf-process[data-process-stack] .lf-process-step:nth-child(4) { animation-delay: .35s; }
 .lf-process[data-process-stack] .lf-process-step:nth-child(5) { animation-delay: .45s; }
 
-/* HET ANKER: groot serif-cijfer in cursief, donkergrijs naar accent gradient */
+/* Clean navy-box cijfer — vervangt het serif-cursief stempel */
 .lf-process[data-process-stack] .lf-process-num {
   position: static !important;
-  top: auto !important;
-  left: auto !important;
-  transform: none !important;
-  width: auto !important;
-  height: auto !important;
-  border-radius: 0 !important;
-  background: transparent !important;
+  display: inline-flex !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  background: var(--navy) !important;
+  color: #fff !important;
   border: none !important;
   box-shadow: none !important;
   padding: 0 !important;
-  margin: 0 0 8px !important;
-  display: block !important;
-  font-family: 'Instrument Serif', 'Bricolage Grotesque', serif !important;
-  font-style: italic !important;
-  font-weight: 400 !important;
-  font-size: clamp(64px, 6.2vw, 96px) !important;
-  line-height: 0.95 !important;
-  color: var(--accent) !important;
-  letter-spacing: -0.04em !important;
-  position: relative !important;
+  margin: 0 0 12px !important;
+  font-family: var(--font-display) !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
-/* Subtiel "kruisje" decoratie naast cijfer — als blauwdruk marker */
-.lf-process[data-process-stack] .lf-process-num::after {
-  content: '';
-  position: absolute;
-  top: 8px;
-  right: -2px;
-  width: 8px;
-  height: 8px;
-  background:
-    linear-gradient(currentColor, currentColor) center/100% 1px no-repeat,
-    linear-gradient(currentColor, currentColor) center/1px 100% no-repeat;
-  opacity: 0.35;
-}
+.lf-process[data-process-stack] .lf-process-num::after { content: none !important; }
 .lf-process[data-process-stack] .lf-process-step h5 {
   font-family: var(--font-display);
   font-size: clamp(15px, 1.2vw, 17px) !important;
