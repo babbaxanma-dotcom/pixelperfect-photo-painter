@@ -66,7 +66,15 @@ ${NAV}
       </div>
 
       <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 9, Toepasselijk recht en bevoegde rechtbank</h2>
+        <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 9, Beeldmateriaal, visualisaties en gegenereerde content</h2>
+        <p style="color: var(--ink-soft); line-height: 1.7;">AB Bouw Groep maakt op haar website, in marketingcommunicatie en op alle digitale uitingen gebruik van beeldmateriaal dat geheel of gedeeltelijk tot stand is gekomen door middel van artificiële-intelligentiesystemen, waaronder maar niet beperkt tot tekst-naar-beeld generatieve modellen, beeldbewerkingsalgoritmen, isometrische renderings en samengestelde visualisaties. Dergelijk beeldmateriaal kan onder meer betreffen: sfeerbeelden van woningen en gevels, technische cross-section illustraties, dakopbouw renders, klantenportretten ter illustratie van getuigenissen, voor- en na-renders, en sfeerbeelden van afgewerkte projecten.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Deze gegenereerde of AI-bewerkte beelden dienen uitsluitend ter illustratie van type-werkzaamheden, materialen, afwerkingen, stijlvoorkeuren of typische resultaten en vormen geen exacte weergave van een specifiek bestaand project, klant of locatie. Klantenportretten naast getuigenissen kunnen gegenereerd zijn ter bescherming van de privacy van werkelijke klanten of ter illustratie van het klantenprofiel. Werkelijke projecten worden afzonderlijk en duidelijk gemarkeerd als "realisatie" met locatie, uitvoeringsdatum en projectdetails.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">In overeenstemming met Artikel 50 van Verordening (EU) 2024/1689 (de AI-verordening) en de bijhorende uitvoeringsmaatregelen voorzien wij AI-gegenereerd beeldmateriaal van een machinaal leesbare markering waar technisch haalbaar, en streven wij naar transparantie omtrent de herkomst van visuele content. Getuigenissen, citaten en namen kunnen vereenvoudigd, samengevoegd of geanonimiseerd zijn ter bescherming van de persoonlijke levenssfeer van de werkelijke opdrachtgever. De inhoudelijke waarheidsgetrouwheid van het achterliggende project blijft te allen tijde gewaarborgd.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Voor specifieke vragen over een afbeelding, voor een verifieerbare realisatiefoto, of voor inzage in een specifiek projectdossier kunt u contact opnemen via <a href="mailto:info@abconstruct.be" style="color: var(--accent);">info@abconstruct.be</a>.</p>
+      </div>
+
+      <div>
+        <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 10, Toepasselijk recht en bevoegde rechtbank</h2>
         <p style="color: var(--ink-soft); line-height: 1.7;">Alle overeenkomsten met AB Bouw Groep worden beheerst door het Belgisch recht. Bij geschillen zijn uitsluitend de rechtbanken van het arrondissement Mechelen bevoegd.</p>
       </div>
 

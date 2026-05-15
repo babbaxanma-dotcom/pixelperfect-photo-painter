@@ -20,16 +20,15 @@ import hero4 from '@/assets/gevel/sierpleister.jpg';
 import imgBenefits from '@/assets/gevel/grijze-crepi.jpg';
 import imgProcess from '@/assets/gevel/stelling.jpg';
 import gExtra from '@/assets/gevel/intro.jpg';
-import expertImg from '@/assets/home/team2.jpg';
 
-import rev1 from '@/assets/reviews/sofie.jpg';
-import rev2 from '@/assets/reviews/hilde.jpg';
-import rev3 from '@/assets/reviews/pieter.jpg';
-import rev4 from '@/assets/reviews/ana.jpg';
-import rev5 from '@/assets/reviews/katrien.jpg';
-import rev6 from '@/assets/reviews/karim.jpg';
-import rev7 from '@/assets/reviews/inge.jpg';
-import rev8 from '@/assets/reviews/marc.jpg';
+import rev1 from '@/assets/reviews/jasmien.jpg';
+import rev2 from '@/assets/reviews/joris.jpg';
+import rev3 from '@/assets/reviews/marius.jpg';
+import rev4 from '@/assets/reviews/cindy.jpg';
+import rev5 from '@/assets/reviews/dimitri.jpg';
+import rev6 from '@/assets/reviews/steven.jpg';
+import rev7 from '@/assets/reviews/eva.jpg';
+import rev8 from '@/assets/reviews/hicham.jpg';
 
 // (Reviews data inline in IIFE in HTML section — exact zoals Home page)
 
@@ -588,12 +587,12 @@ const HTML = `
             const reviews = [
               { name: 'Jasmien De Backer', role: 'Witte crepi rijwoning · Mechelen', img: rev1, text: 'Onze rijwoning had een vermoeide bezetting uit de jaren ’80. Nu een spierwitte crepi-gevel die je zo van een interieurmagazine plukt. De buren komen vragen wie het werk gedaan heeft. Strak, proper, op tijd opgeleverd.', highlights: ['spierwitte crepi-gevel', 'op tijd opgeleverd'] },
               { name: 'Joris Vanhove', role: 'ETICS + crepi · Boom', img: rev2, text: 'Volledig pakket: 16 cm EPS-isolatie + crepi-afwerking. EPC van F naar C in één werk. Stookkost deze winter bijna gehalveerd, en de muren binnen voelen niet meer koud aan. Premie-dossier (€4.800) liep via hen.', highlights: ['EPC van F naar C', 'bijna gehalveerd', '€4.800'] },
-              { name: 'Roel Vandevoorde', role: 'Steenstrips voorgevel · Lier', img: rev3, text: 'We wilden de klassieke Vlaamse baksteen-look zonder het gewicht en de kost van echte stenen. Steenstrips Vandersanden, voegen kaarsrecht, aansluitingen rond ramen vakwerk. Niemand merkt het verschil — zelfs onze schoonvader niet.', highlights: ['voegen kaarsrecht', 'zelfs onze schoonvader niet'] },
+              { name: 'Marius Ionescu', role: 'Steenstrips voorgevel · Lier', img: rev3, text: 'We wilden de klassieke Vlaamse baksteen-look zonder het gewicht en de kost van echte stenen. Steenstrips Vandersanden, voegen kaarsrecht, aansluitingen rond ramen vakwerk. Niemand merkt het verschil — zelfs onze schoonvader niet.', highlights: ['voegen kaarsrecht', 'zelfs onze schoonvader niet'] },
               { name: 'Cindy Van Looy', role: 'Sierpleister marmorino · Bornem', img: rev4, text: 'Marmorino-afwerking in zachte taupe. Bardh hielp met de kleurkeuze — wij wilden eerst grijs, hij overtuigde ons van een warmere tint. Achteraf super blij, het huis straalt nu echt karakter uit.', highlights: ['zachte taupe', 'super blij', 'echt karakter'] },
               { name: 'Dimitri Maes', role: 'Crepi + buitenisolatie · Antwerpen', img: rev5, text: 'Halfopen woning uit 1968 die nooit was geïsoleerd. 16 cm EPS buitenisolatie + crepi. Comfort-sprong is enorm: geen koude muren meer in de winter. Premie €5.400 zonder problemen uitbetaald.', highlights: ['Comfort-sprong is enorm', '€5.400 zonder problemen'] },
               { name: 'Steven Goossens', role: 'Gevelherstel + crepi · Willebroek', img: rev6, text: 'Onze gevel had scheuren en vochtproblemen. Drie aannemers wilden direct crepi erop smeren. Bardh zei: eerst herstellen, anders gooi je geld weg. Uitgevoerd zoals beloofd. Factuur tot op de euro met de offerte.', highlights: ['eerst herstellen', 'tot op de euro'] },
               { name: 'Eva Vandeputte', role: 'Witte crepi nieuwbouw · Kontich', img: rev7, text: 'Nieuwbouw afgewerkt met witte crepi op de spouwmuur. Strakke lijn over de volledige gevel, geen scheuren of vlekken. Plaatsing in 5 werkdagen, stelling weg, oprit proper opgekuist, klaar.', highlights: ['Strakke lijn', '5 werkdagen', 'proper opgekuist'] },
-              { name: 'Patrick Beuselinck', role: 'Gevelisolatie + nieuwe crepi · Mechelen', img: rev8, text: 'Eerste aannemer wilde alleen crepi over de bestaande gevel. AB Bouw legde uit waarom we ETICS-isolatie nodig hadden. Hogere prijs, veel betere oplossing. EPC + comfort vlot. Geen spijt van die keuze.', highlights: ['veel betere oplossing', 'Geen spijt'] },
+              { name: 'Hicham Bouali', role: 'Gevelisolatie + nieuwe crepi · Mechelen', img: rev8, text: 'Eerste aannemer wilde alleen crepi over de bestaande gevel. AB Bouw legde uit waarom we ETICS-isolatie nodig hadden. Hogere prijs, veel betere oplossing. EPC + comfort vlot. Geen spijt van die keuze.', highlights: ['veel betere oplossing', 'Geen spijt'] },
             ];
             const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             const wrapWords = (phrase: string, baseI: number) => {
@@ -863,23 +862,6 @@ const HTML = `
   </div>
 </section>
 
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-split">
-      <div class="lf-split-img" data-reveal><img src="${expertImg}" alt="Bardh, projectleider AB Gevelbekleding" loading="lazy"/></div>
-      <div data-reveal data-reveal-delay="1">
-        <span class="lf-eyebrow">Direct advies</span>
-        <p class="lp-expert-quote">"Een gevel is je eerste indruk én je grootste energieverlies. Wij komen langs, meten alles op, en zeggen u eerlijk wat écht moet — crepi alleen of volledige ETICS."</p>
-        <div class="lp-expert-name">Bardh</div>
-        <div class="lp-expert-role">Projectleider Gevelbekleding · AB Bouw Groep</div>
-        <a href="tel:+32470634413" class="lf-cta-pill">
-          <span>Bel Bardh direct</span>
-          <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
