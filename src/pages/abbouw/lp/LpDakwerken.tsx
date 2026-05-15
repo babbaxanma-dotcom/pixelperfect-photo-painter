@@ -632,6 +632,9 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
   .lp-anatomy-card[data-layer="6"] { --depth: -110; }
 }
 
+/* Scroll-target fix — nav (~90px) compenseren bij CTA scroll-to-form */
+#lp-form { scroll-margin-top: 100px; }
+
 /* ───────── Heatloss-house premium 3D render (boven pie chart) ───────── */
 .lp-heatloss-hero {
   display: flex; justify-content: center;

@@ -392,6 +392,9 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 }
 @media (max-width: 760px) { .lp-3d-layers { grid-template-columns: 1fr; } }
 
+/* Scroll-target fix — nav (~90px) compenseren bij CTA scroll-to-form */
+#lp-form { scroll-margin-top: 100px; }
+
 /* ───────── Mobile reviews: manual swipe ipv auto-scroll ───────── */
 @media (max-width: 760px) {
   .lp-reviews .lf-testi-marquee {
