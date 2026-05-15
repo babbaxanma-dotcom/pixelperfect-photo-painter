@@ -756,28 +756,19 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
   .lp-reviews .lf-testi-arrow { display: none !important; }
 }
 
-/* ───────── Hot-button word highlight (scroll-triggered, thema-oranje #d98c03) ───────── */
+/* ───────── Hot-button word highlight (solid brand orange, geen browser-default mark) ───────── */
 .lp-hot {
-  background-image: linear-gradient(120deg, rgba(217,140,3,0) 50%, rgba(217,140,3,0.92) 50%);
-  background-size: 220% 100%;
-  background-position: 100% 0;
-  background-repeat: no-repeat;
-  transition: background-position 1.1s cubic-bezier(.22,1,.36,1);
+  background: #d98c03 !important;
+  background-image: none !important;
+  color: #fff !important;
   padding: 2px 6px;
   border-radius: 3px;
   font-weight: 700;
-  color: #fff;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
-.lp-urgency-card.revealed .lp-hot,
-.lp-form-side.revealed .lp-hot,
-.lp-form-side[data-reveal].revealed .lp-hot {
-  background-position: 0 0;
-  transition-delay: calc(var(--lp-hot-delay, 0) * 1ms);
-}
-/* Form-side variant: lichte oranje achtergrond ipv solid (witte tekst sectie is donker bg) */
-.lp-form-side .lp-hot { color: #fff; background-image: linear-gradient(120deg, rgba(217,140,3,0) 50%, rgba(217,140,3,0.85) 50%); }
+.lp-form-side .lp-hot,
+.lp-form-card .lp-hot { background: #d98c03 !important; color: #fff !important; }
 .lp-reviews-swipe-hint {
   display: none;
 }
@@ -1469,8 +1460,8 @@ const HTML = `
         </ul>
       </div>
       <div class="lp-form-card" data-reveal data-reveal-delay="1" data-lp-form-wrapper>
-        <h3>Plan uw gratis dakinspectie</h3>
-        <p class="lf-form-sub">We bellen u binnen één werkdag terug om een afspraak in te plannen.</p>
+        <h3>Plan uw gratis <mark class="lp-hot">dakinspectie</mark></h3>
+        <p class="lf-form-sub">We bellen u binnen één werkdag terug — <mark class="lp-hot">100% vrijblijvend</mark>.</p>
         <form data-lp-form novalidate>
           <div class="lp-form-row">
             <input type="text" name="firstName" placeholder="Voornaam *" required autocomplete="given-name" />
