@@ -989,8 +989,8 @@ const HTML = `
     <div class="lp-usp-grid">
       <div class="lp-usp-card" data-reveal>
         <div class="lp-usp-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-        <h4>Startdatum &lt;30 dagen</h4>
-        <p>Schriftelijk gegarandeerd in offerte. Geen wachten op aannemers die maanden weg zijn.</p>
+        <h4>Snelle planning</h4>
+        <p>Bij de meeste klanten starten we binnen 30 dagen na akkoord. Geen 6 maanden wachten zoals elders.</p>
       </div>
       <div class="lp-usp-card" data-reveal data-reveal-delay="1">
         <div class="lp-usp-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
@@ -1004,8 +1004,8 @@ const HTML = `
       </div>
       <div class="lp-usp-card" data-reveal data-reveal-delay="3">
         <div class="lp-usp-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-        <h4>EPC-sprong of geld terug</h4>
-        <p>We beloven een EPC-verbetering. Halen we het niet? Korting of geld terug — zwart op wit.</p>
+        <h4>EPC-winst vooraf berekend</h4>
+        <p>Wij berekenen uw verwachte EPC-verbetering en premie-bedrag vóór de offerte. Geen valse beloftes — alleen wat we kunnen waarmaken.</p>
       </div>
       <div class="lp-usp-card" data-reveal data-reveal-delay="4">
         <div class="lp-usp-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
