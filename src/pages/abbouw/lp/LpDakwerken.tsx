@@ -14,17 +14,22 @@ const LP_BLOGS = BLOGS.filter(b =>
   b.slug === 'epc-label-c-2028'
 ).slice(0, 3);
 
-// Nieuwe dakwerken-LP foto's (FLUX 1.1 Pro Ultra met prompt_upsampling)
-// Hero rotation: 4 different emotional beats — pride / modern / urgency / warmth
-import heroPannendak from '@/assets/dak/lp-hero-pannendak.jpg';  // golden hour halfopen woning
-import imgPlatDak from '@/assets/dak/lp-plat-dak.jpg';            // EPDM panoramic
-import imgStormschade from '@/assets/dak/lp-stormschade.jpg';     // noodfix drama
-import imgVelux from '@/assets/dak/lp-velux.jpg';                 // warm interior comfort
+// Finale dakwerken-LP foto's — Sony A7RV / Immoweb-listing aesthetic via
+// FLUX Ultra met --no-upsample en hand-laid brick + authentic BE door directives.
+// Hero rotation: variety van Belgisch residential — renovatie + 3 nieuwbouw types.
+import heroClassic from '@/assets/dak/lp-classic-renovatie.jpg';   // klassieke Vlaamse renovatie
+import heroCrepi from '@/assets/dak/lp-crepi-nieuwbouw.jpg';       // witte crepi modern nieuwbouw
+import heroOranje from '@/assets/dak/lp-oranje-solar.jpg';         // oranje brick + solar panels
+import heroGeel from '@/assets/dak/lp-geel-nieuwbouw.jpg';         // gele brick nieuwbouw
 
-import imgVakman from '@/assets/dak/lp-vakman.jpg';               // process — action shot
-import imgPirIsolatie from '@/assets/dak/lp-pir-isolatie.jpg';    // benefits — technical
-import imgNatuurleien from '@/assets/dak/lp-natuurleien.jpg';     // gallery — slate close-up
-import imgZinkGoot from '@/assets/dak/lp-zink-goot.jpg';          // gallery — zink detail
+import imgVelux from '@/assets/dak/lp-velux.jpg';                 // warm interior comfort
+import imgVakman from '@/assets/dak/lp-vakman.jpg';               // process action shot
+import imgNatuurleien from '@/assets/dak/lp-natuurleien.jpg';     // gallery slate close-up
+import imgPlatDak from '@/assets/dak/lp-plat-dak.jpg';            // gallery EPDM
+import imgZinkGoot from '@/assets/dak/lp-zink-goot.jpg';          // gallery zink detail
+
+import imgAnatomy from '@/assets/dak/lp-anatomy-illustration.jpg'; // 3D-illustration cross-section
+import imgComfort from '@/assets/dak/lp-comfort-illustration.jpg'; // warm-interior comfort visual
 
 import expertImg from '@/assets/home/team1.jpg';
 
@@ -729,10 +734,10 @@ const LP_EXTRA = `
 const HTML = `
 <section class="lf-hero lp-hero-cine">
   <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
-    <img src="${heroPannendak}" alt="Afgewerkt hellend pannendak in golden hour — AB Dakwerken Mechelen" class="is-active" />
-    <img src="${imgPlatDak}" alt="Plat dak EPDM rubber renovatie in Antwerpse rand — AB Bouw Groep" loading="lazy" />
-    <img src="${imgStormschade}" alt="Spoedinterventie stormschade dakherstel — AB Dakwerken" loading="lazy" />
-    <img src="${imgVelux}" alt="Velux dakvensters in afgewerkte zolderkamer — comfort dak­renovatie" loading="lazy" />
+    <img src="${heroClassic}" alt="Klassieke Vlaamse halfopen woning renovatie met terracotta pannen — AB Dakwerken Mechelen" class="is-active" />
+    <img src="${heroCrepi}" alt="Modern Vlaams nieuwbouw met crepi gevel en zwarte Koramic Nuance pannen — AB Bouw Groep" loading="lazy" />
+    <img src="${heroOranje}" alt="Energieneutrale Vlaamse nieuwbouw met oranje gevel en zonnepanelen — AB Dakwerken" loading="lazy" />
+    <img src="${heroGeel}" alt="Eigentijdse Vlaamse nieuwbouw met gele baksteen en zwart dak — AB Bouw Groep" loading="lazy" />
   </div>
   <button type="button" class="lf-hero-arrow lf-hero-arrow--prev" data-hero-prev aria-label="Vorige foto">
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -1026,7 +1031,7 @@ const HTML = `
 <section class="lf-section">
   <div class="wrap">
     <div class="lf-split">
-      <div class="lf-split-img" data-reveal><img src="${imgVakman}" alt="Eigen dakdekker plaatst dakpannen op stelling — AB Bouw Groep" loading="lazy"/></div>
+      <div class="lf-split-img" data-reveal><img src="${heroCrepi}" alt="Afgewerkte nieuwbouw met crepi en zwart dak — resultaat AB Dakwerken" loading="lazy"/></div>
       <div data-reveal data-reveal-delay="1">
         <span class="lf-eyebrow">Onze werkwijze</span>
         <h2 class="lf-h2">Van eerste gesprek tot<br/><span class="ab-mark">waterdicht dak</span> in 6 weken.</h2>
@@ -1113,20 +1118,20 @@ const HTML = `
     </div>
     <div class="lp-gallery">
       <a href="#lp-form" class="lp-gallery-cell" data-reveal>
-        <img src="${heroPannendak}" alt="Afgewerkt pannendak Mechelen" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Hellend dak</small><strong>Koramic pannen — Mechelen</strong></div>
+        <img src="${heroClassic}" alt="Klassieke Vlaamse renovatie met terracotta dak — Mechelen" loading="lazy"/>
+        <div class="lp-gallery-cap"><small>Renovatie</small><strong>Koramic pannen — Mechelen</strong></div>
       </a>
       <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="1">
         <img src="${imgNatuurleien}" alt="Natuurleien close-up vakwerk" loading="lazy"/>
         <div class="lp-gallery-cap"><small>Hellend dak</small><strong>Natuurleien — Antwerpen</strong></div>
       </a>
       <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="2">
-        <img src="${imgPlatDak}" alt="Plat dak EPDM Lier" loading="lazy"/>
+        <img src="${imgPlatDak}" alt="Plat dak EPDM met Vlaamse skyline — Lier" loading="lazy"/>
         <div class="lp-gallery-cap"><small>Plat dak</small><strong>EPDM rubber — Lier</strong></div>
       </a>
       <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="3">
-        <img src="${imgZinkGoot}" alt="Natuurzink dakgoot detail Sint-Niklaas" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Afwerking</small><strong>Zinkwerk — Sint-Niklaas</strong></div>
+        <img src="${heroOranje}" alt="Nieuwbouw met zwarte pannen + zonnepanelen — Lier" loading="lazy"/>
+        <div class="lp-gallery-cap"><small>Nieuwbouw</small><strong>Zwarte pannen + solar — Lier</strong></div>
       </a>
     </div>
   </div>
