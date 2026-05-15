@@ -421,21 +421,24 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
   .lp-reviews .lf-testi-arrow { display: none !important; }
 }
 
-/* ───────── Hot-button word highlight (scroll-triggered, thema-oranje) ───────── */
-.lp-urgency-card .lp-hot {
-  background-image: linear-gradient(120deg, rgba(217,140,3,0) 50%, rgba(217,140,3,0.55) 50%);
+/* ───────── Hot-button word highlight (scroll-triggered, thema-oranje #d98c03) ───────── */
+.lp-hot {
+  background-image: linear-gradient(120deg, rgba(217,140,3,0) 50%, rgba(217,140,3,0.92) 50%);
   background-size: 220% 100%;
   background-position: 100% 0;
   background-repeat: no-repeat;
   transition: background-position 1.1s cubic-bezier(.22,1,.36,1);
-  padding: 1px 5px; border-radius: 3px; font-weight: 700; color: var(--navy);
+  padding: 2px 6px; border-radius: 3px; font-weight: 700; color: #fff;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
-.lp-urgency-card.revealed .lp-hot {
+.lp-urgency-card.revealed .lp-hot,
+.lp-form-side.revealed .lp-hot,
+.lp-form-side[data-reveal].revealed .lp-hot {
   background-position: 0 0;
   transition-delay: calc(var(--lp-hot-delay, 0) * 1ms);
 }
+.lp-form-side .lp-hot { color: #fff; background-image: linear-gradient(120deg, rgba(217,140,3,0) 50%, rgba(217,140,3,0.85) 50%); }
 .lp-reviews-swipe-hint { display: none; }
 @media (max-width: 760px) {
   .lp-reviews-swipe-hint {
@@ -985,13 +988,13 @@ const HTML = `
   </div>
 </section>
 
-<section class="lp-form-section" id="lp-form">
+<section class="lp-form-section" id="lp-form" style="scroll-margin-top: 100px; padding-top: 40px;">
   <div class="wrap">
     <div class="lp-form-grid">
       <div class="lp-form-side" data-reveal>
         <span class="lf-eyebrow">Gratis gevelinspectie</span>
         <h2 class="lf-h2" style="color:#fff;">Vraag uw <span class="ab-mark">gratis gevelinspectie</span> aan.</h2>
-        <p>Binnen 5 werkdagen komt onze gevelploeg langs. Volledige opname, eerste richtprijs ter plaatse, premiedossier doorgesproken — vrijblijvend en gratis.</p>
+        <p>Binnen 5 werkdagen komt onze gevelploeg langs. Volledige opname, eerste richtprijs ter plaatse, premiedossier doorgesproken — <mark class="lp-hot" style="--lp-hot-delay:120">100% vrijblijvend en gratis</mark>.</p>
         <ul>
           <li>Plaatsbezoek binnen 5 werkdagen</li>
           <li>Bindende offerte op papier</li>
