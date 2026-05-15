@@ -392,6 +392,43 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 }
 @media (max-width: 760px) { .lp-3d-layers { grid-template-columns: 1fr; } }
 
+/* ───────── Mobile reviews: manual swipe ipv auto-scroll ───────── */
+@media (max-width: 760px) {
+  .lp-reviews .lf-testi-marquee {
+    -webkit-mask-image: none !important;
+            mask-image: none !important;
+  }
+  .lp-reviews .lf-testi-track {
+    animation: none !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 16px;
+    scrollbar-width: none;
+  }
+  .lp-reviews .lf-testi-track::-webkit-scrollbar { display: none; }
+  .lp-reviews .lf-testi-set { display: flex; gap: 14px; }
+  .lp-reviews .lf-testi-set[data-testi-set="-1"],
+  .lp-reviews .lf-testi-set[data-testi-set="1"] { display: none; }
+  .lp-reviews .lf-testi { scroll-snap-align: start; flex: 0 0 88%; }
+  .lp-reviews .lf-testi-arrow { display: none !important; }
+}
+.lp-reviews-swipe-hint { display: none; }
+@media (max-width: 760px) {
+  .lp-reviews-swipe-hint {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 6px;
+    font-family: var(--font-display);
+    font-size: 12.5px; color: var(--ink-mute);
+    letter-spacing: 0.02em;
+  }
+  .lp-reviews-swipe-hint svg { animation: lp-swipe-nudge 1.8s ease-in-out infinite; }
+  @keyframes lp-swipe-nudge {
+    0%, 100% { transform: translateX(0); opacity: 0.6; }
+    50%      { transform: translateX(6px); opacity: 1; }
+  }
+}
+
 /* Stats count-up bloom */
 .lp-stat-num { display: inline-block; transition: color .35s ease; }
 .lp-stat[data-counted] .lp-stat-num { animation: lp-stat-pop 0.6s ease-out; }
@@ -586,6 +623,10 @@ const HTML = `
           <span class="lf-reviews-count">96+ gevelprojecten beoordeeld</span>
         </div>
       </div>
+      <span class="lp-reviews-swipe-hint" aria-hidden="true">
+        Swipe voor meer reviews
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </span>
     </div>
     <div class="lf-testi-marquee" data-testi-marquee>
       <button type="button" class="lf-testi-arrow lf-testi-arrow--prev" data-testi-prev aria-label="Vorige review">
@@ -737,7 +778,7 @@ const HTML = `
           <li>€12.000–€25.000 meerwaarde bij verkoop</li>
         </ul>
         <a href="#lp-form" class="lf-cta-pill" style="margin-top: 28px;">
-          <span>Vraag uw plaatsbezoek aan</span>
+          <span>Vraag uw gratis plaatsbezoek aan</span>
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </a>
       </div>
@@ -777,10 +818,10 @@ const HTML = `
     <div class="lp-cta-banner" data-reveal>
       <div class="lp-cta-banner-text">
         <strong>Vandaag bellen = volgende week opname.</strong>
-        <span>Plaatsbezoek binnen 5 werkdagen · bindende offerte · 10 jaar garantie.</span>
+        <span>Gratis plaatsbezoek binnen 5 werkdagen · vrijblijvende offerte · 10 jaar garantie.</span>
       </div>
       <a href="#lp-form" class="lp-cta-banner-cta" data-smooth>
-        Plan mijn gevelinspectie
+        Plan mijn gratis gevelinspectie
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
     </div>
@@ -937,7 +978,7 @@ const HTML = `
         </ul>
       </div>
       <div class="lp-form-card" data-reveal data-reveal-delay="1" data-lp-form-wrapper>
-        <h3>Plan uw gevelinspectie</h3>
+        <h3>Plan uw gratis gevelinspectie</h3>
         <p class="lf-form-sub">We bellen u binnen één werkdag terug om een afspraak in te plannen.</p>
         <form data-lp-form novalidate>
           <div class="lp-form-row">
@@ -962,7 +1003,7 @@ const HTML = `
             <input type="text" name="gemeente" placeholder="Gemeente" autocomplete="address-level2" />
           </div>
           <textarea name="aanvullende_info" placeholder="Vertel kort over uw gevel (oppervlakte, leeftijd, klacht)"></textarea>
-          <button type="submit" data-lp-submit style="background:#d98c03 !important; color:#fff !important;">Vraag gevelinspectie aan</button>
+          <button type="submit" data-lp-submit style="background:#d98c03 !important; color:#fff !important;">Vraag gratis gevelinspectie aan</button>
           <p class="lp-form-foot">Geen spam. Privacy verklaring op <a href="/privacy" target="_blank">/privacy</a>.</p>
           <div class="lp-form-error" data-lp-form-error></div>
         </form>
@@ -985,7 +1026,7 @@ const HTML = `
 </section>
 
 <a href="#lp-form" class="lp-sticky-cta" aria-label="Vraag gevelinspectie" style="background-color:#d98c03 !important; background-image:none !important; background:#d98c03 !important; color:#fff !important;">
-  Vraag gevelinspectie aan
+  Vraag gratis gevelinspectie aan
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
 </a>
 
@@ -1081,7 +1122,7 @@ export default function LpGevel() {
       } else {
         wrap.classList.add('is-error');
         if (errBox) errBox.textContent = 'Er ging iets mis. Bel ons gerust op +32 470 63 44 13.';
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Vraag gevelinspectie aan'; }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Vraag gratis gevelinspectie aan'; }
       }
     };
     form?.addEventListener('submit', onSubmit);

@@ -30,6 +30,15 @@ import imgZinkGoot from '@/assets/dak/lp-zink-goot.jpg';          // gallery zin
 
 import imgAnatomy from '@/assets/dak/lp-anatomy-illustration.jpg'; // 3D-illustration cross-section
 import imgComfort from '@/assets/dak/lp-comfort-illustration.jpg'; // warm-interior comfort visual
+import imgHeatlossHouse from '@/assets/dak/lp-heatloss-house.jpg'; // premium isometric heatloss render
+
+// 6 FLUX-Ultra premium dak-anatomy layer renders (Cinema 4D / Octane quality)
+import anaL1 from '@/assets/dak/lp-anatomy-l1.jpg';  // pannen — terracotta
+import anaL2 from '@/assets/dak/lp-anatomy-l2.jpg';  // tengels — wood
+import anaL3 from '@/assets/dak/lp-anatomy-l3.jpg';  // onderdak — membrane
+import anaL4 from '@/assets/dak/lp-anatomy-l4.jpg';  // PIR — foil + foam
+import anaL5 from '@/assets/dak/lp-anatomy-l5.jpg';  // dampscherm — film
+import anaL6 from '@/assets/dak/lp-anatomy-l6.jpg';  // plafond — plaster
 
 
 import rev1 from '@/assets/reviews/stijn.jpg';
@@ -467,6 +476,71 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 .lp-anatomy-card[data-layer="4"] { --depth: -30; background: linear-gradient(180deg, #dbac3e 0%, #a37f23 100%); }
 .lp-anatomy-card[data-layer="5"] { --depth: -90; background: linear-gradient(180deg, #94999f 0%, #5e6470 100%); }
 .lp-anatomy-card[data-layer="6"] { --depth: -150; background: linear-gradient(180deg, #fafaf3 0%, #e0ddd4 100%); color: var(--navy); }
+
+/* ───────── Premium dak anatomy grid (FLUX-Ultra renders) ───────── */
+.lp-anatomy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 8px;
+}
+.lp-anatomy-tile {
+  background: #fff;
+  border: 1px solid rgba(10,22,40,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px -4px rgba(10,22,40,0.08);
+  transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, border-color .35s ease;
+  display: flex; flex-direction: column;
+}
+.lp-anatomy-tile:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 50px -16px rgba(10,22,40,0.18), 0 4px 12px -2px rgba(10,22,40,0.08);
+  border-color: rgba(217,140,3,0.35);
+}
+.lp-anatomy-tile-img {
+  background: linear-gradient(180deg, #f8f6f2 0%, #efece4 100%);
+  aspect-ratio: 16/9;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.lp-anatomy-tile-img img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center;
+  transition: transform .55s cubic-bezier(.22,1,.36,1);
+}
+.lp-anatomy-tile:hover .lp-anatomy-tile-img img { transform: scale(1.04); }
+.lp-anatomy-tile-body {
+  padding: 22px 24px 24px;
+  position: relative;
+}
+.lp-anatomy-tile-num {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.lp-anatomy-tile-body h4 {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: -0.015em;
+  margin: 0 0 8px;
+}
+.lp-anatomy-tile-body p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+@media (max-width: 900px) {
+  .lp-anatomy-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+}
+@media (max-width: 560px) {
+  .lp-anatomy-grid { grid-template-columns: 1fr; }
+}
 .lp-anatomy-card:hover {
   transform: rotateX(58deg) translateZ(calc(var(--depth, 0) * 1px + 70px)) translateY(-10px);
   box-shadow: 0 32px 50px -16px rgba(10,22,40,0.45), 0 4px 12px rgba(10,22,40,0.15);
@@ -556,6 +630,59 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
   .lp-anatomy-card[data-layer="4"] { --depth: -22; }
   .lp-anatomy-card[data-layer="5"] { --depth: -66; }
   .lp-anatomy-card[data-layer="6"] { --depth: -110; }
+}
+
+/* ───────── Heatloss-house premium 3D render (boven pie chart) ───────── */
+.lp-heatloss-hero {
+  display: flex; justify-content: center;
+  margin-bottom: 32px;
+}
+.lp-heatloss-hero img {
+  width: 100%; max-width: 420px;
+  height: auto; display: block;
+}
+@media (max-width: 720px) {
+  .lp-heatloss-hero img { max-width: 320px; }
+  .lp-heatloss-hero { margin-bottom: 18px; }
+}
+
+/* ───────── Mobile reviews: manual swipe ipv auto-scroll ───────── */
+@media (max-width: 760px) {
+  .lp-reviews .lf-testi-marquee {
+    -webkit-mask-image: none !important;
+            mask-image: none !important;
+  }
+  .lp-reviews .lf-testi-track {
+    animation: none !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 16px;
+    scrollbar-width: none;
+  }
+  .lp-reviews .lf-testi-track::-webkit-scrollbar { display: none; }
+  .lp-reviews .lf-testi-set { display: flex; gap: 14px; }
+  .lp-reviews .lf-testi-set[data-testi-set="-1"],
+  .lp-reviews .lf-testi-set[data-testi-set="1"] { display: none; }
+  .lp-reviews .lf-testi { scroll-snap-align: start; flex: 0 0 88%; }
+  .lp-reviews .lf-testi-arrow { display: none !important; }
+}
+.lp-reviews-swipe-hint {
+  display: none;
+}
+@media (max-width: 760px) {
+  .lp-reviews-swipe-hint {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 6px;
+    font-family: var(--font-display);
+    font-size: 12.5px; color: var(--ink-mute);
+    letter-spacing: 0.02em;
+  }
+  .lp-reviews-swipe-hint svg { animation: lp-swipe-nudge 1.8s ease-in-out infinite; }
+  @keyframes lp-swipe-nudge {
+    0%, 100% { transform: translateX(0); opacity: 0.6; }
+    50%      { transform: translateX(6px); opacity: 1; }
+  }
 }
 
 /* ───────── Heat-loss pie chart (educational infographic) ───────── */
@@ -809,6 +936,10 @@ const HTML = `
           <span class="lf-reviews-count">124+ dakprojecten beoordeeld</span>
         </div>
       </div>
+      <span class="lp-reviews-swipe-hint" aria-hidden="true">
+        Swipe voor meer reviews
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </span>
     </div>
     <div class="lf-testi-marquee" data-testi-marquee>
       <button type="button" class="lf-testi-arrow lf-testi-arrow--prev" data-testi-prev aria-label="Vorige review">
@@ -948,6 +1079,9 @@ const HTML = `
 
 <section class="lf-section">
   <div class="wrap">
+    <div class="lp-heatloss-hero" data-reveal>
+      <img src="${imgHeatlossHouse}" alt="Warmteverlies in een Belgische woning: 30% via het dak, 25% muren, 15% ramen, 15% vloer, 15% ventilatie" loading="lazy"/>
+    </div>
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">Waarom een nieuw dak loont</span>
@@ -960,7 +1094,7 @@ const HTML = `
           <li>€8.000–€18.000 meerwaarde bij verkoop</li>
         </ul>
         <a href="#lp-form" class="lf-cta-pill" style="margin-top: 28px;">
-          <span>Vraag uw plaatsbezoek aan</span>
+          <span>Vraag uw gratis plaatsbezoek aan</span>
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </a>
       </div>
@@ -1030,10 +1164,10 @@ const HTML = `
     <div class="lp-cta-banner" data-reveal>
       <div class="lp-cta-banner-text">
         <strong>Vandaag bellen = volgende week op uw dak.</strong>
-        <span>Plaatsbezoek binnen 5 werkdagen · bindende offerte · 10 jaar garantie.</span>
+        <span>Gratis plaatsbezoek binnen 5 werkdagen · vrijblijvende offerte · 10 jaar garantie.</span>
       </div>
       <a href="#lp-form" class="lp-cta-banner-cta" data-smooth>
-        Plan mijn dakinspectie
+        Plan mijn gratis dakinspectie
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
     </div>
@@ -1066,42 +1200,57 @@ const HTML = `
       <h2 class="lf-h2">Uw dak in <span class="ab-mark">3D</span> — laag voor laag.</h2>
       <p class="lf-lede" style="margin: 14px auto 0; max-width: 620px;">Beweeg, draai, zoom in. Zo zit een nieuw Vlaams dak in elkaar — van pannen tot kepers, zes lagen vakwerk.</p>
     </div>
-    <div class="lp-anatomy" data-reveal>
-      <div class="lp-anatomy-stage">
-        <div class="lp-anatomy-card" data-layer="1">
-          <span class="lp-anatomy-card-num">1</span>
-          <span class="lp-anatomy-card-label">Dakpannen of natuurleien</span>
-        </div>
-        <div class="lp-anatomy-card" data-layer="2">
-          <span class="lp-anatomy-card-num">2</span>
-          <span class="lp-anatomy-card-label">Tengels en panlatten</span>
-        </div>
-        <div class="lp-anatomy-card" data-layer="3">
-          <span class="lp-anatomy-card-num">3</span>
-          <span class="lp-anatomy-card-label">Onderdak (waterdichte folie)</span>
-        </div>
-        <div class="lp-anatomy-card" data-layer="4">
-          <span class="lp-anatomy-card-num">4</span>
-          <span class="lp-anatomy-card-label">PIR-isolatie tussen kepers</span>
-        </div>
-        <div class="lp-anatomy-card" data-layer="5">
-          <span class="lp-anatomy-card-num">5</span>
-          <span class="lp-anatomy-card-label">Dampscherm</span>
-        </div>
-        <div class="lp-anatomy-card" data-layer="6">
-          <span class="lp-anatomy-card-num">6</span>
-          <span class="lp-anatomy-card-label">Binnenafwerking</span>
+    <div class="lp-anatomy-intro" data-reveal>
+      <p class="lf-lede" style="text-align:center; max-width: 720px; margin: 0 auto 36px;">Een dak is geen pannen op een lat — het zijn zes bouwlagen die samen zorgen voor waterdichtheid, isolatie en comfort. Elk dak dat wij plaatsen volgt deze opbouw, conform de Vlaamse renovatieplicht 2028.</p>
+    </div>
+    <div class="lp-anatomy-grid" data-reveal>
+      <div class="lp-anatomy-tile">
+        <div class="lp-anatomy-tile-img"><img src="${anaL1}" alt="Koramic dakpannen — laag 1" loading="lazy"/></div>
+        <div class="lp-anatomy-tile-body">
+          <span class="lp-anatomy-tile-num">01</span>
+          <h4>Dakpannen of natuurleien</h4>
+          <p>Koramic ceramic pannen of Cupa natuurleien — waterdichte buitenste laag.</p>
         </div>
       </div>
-      <div class="lp-anatomy-info">
-        <div class="lp-anatomy-info-eyebrow">Bouwlagen uitgelegd</div>
-        <h3>Een dak is geen pannen op een lat.</h3>
-        <p>Het zijn zes bouwlagen die samen zorgen voor waterdichtheid, isolatie en comfort. Beweeg met je muis over een laag om 'm los te zien.</p>
-        <ul>
-          <li>Elk dak dat wij plaatsen volgt deze 6-laagse opbouw</li>
-          <li>Sarking-systeem: isolatie ZONDER binnenafwerking afbreken</li>
-          <li>Conform Vlaamse renovatieplicht 2028</li>
-        </ul>
+      <div class="lp-anatomy-tile">
+        <div class="lp-anatomy-tile-img"><img src="${anaL2}" alt="Tengels en panlatten — laag 2" loading="lazy"/></div>
+        <div class="lp-anatomy-tile-body">
+          <span class="lp-anatomy-tile-num">02</span>
+          <h4>Tengels en panlatten</h4>
+          <p>Pine houten dragers die de pannen op exacte hoogte houden voor luchtcirculatie.</p>
+        </div>
+      </div>
+      <div class="lp-anatomy-tile">
+        <div class="lp-anatomy-tile-img"><img src="${anaL3}" alt="Onderdak waterdichte folie — laag 3" loading="lazy"/></div>
+        <div class="lp-anatomy-tile-body">
+          <span class="lp-anatomy-tile-num">03</span>
+          <h4>Onderdak</h4>
+          <p>Diffuus-open waterdichte folie — vangt eventuele lekkages op.</p>
+        </div>
+      </div>
+      <div class="lp-anatomy-tile">
+        <div class="lp-anatomy-tile-img"><img src="${anaL4}" alt="PIR-isolatie tussen kepers — laag 4" loading="lazy"/></div>
+        <div class="lp-anatomy-tile-body">
+          <span class="lp-anatomy-tile-num">04</span>
+          <h4>PIR-isolatie</h4>
+          <p>Recticel Powerroof PIR-platen met aluminium reflectie — λ=0,022 W/mK, beste isolatie in zijn klasse.</p>
+        </div>
+      </div>
+      <div class="lp-anatomy-tile">
+        <div class="lp-anatomy-tile-img"><img src="${anaL5}" alt="Dampscherm — laag 5" loading="lazy"/></div>
+        <div class="lp-anatomy-tile-body">
+          <span class="lp-anatomy-tile-num">05</span>
+          <h4>Dampscherm</h4>
+          <p>Polyethyleen folie die vocht binnenshuis tegenhoudt vooraleer het in de isolatie komt.</p>
+        </div>
+      </div>
+      <div class="lp-anatomy-tile">
+        <div class="lp-anatomy-tile-img"><img src="${anaL6}" alt="Binnenafwerking — laag 6" loading="lazy"/></div>
+        <div class="lp-anatomy-tile-body">
+          <span class="lp-anatomy-tile-num">06</span>
+          <h4>Binnenafwerking</h4>
+          <p>Gipsplaten of gevoegde houten plafondbekleding — strak afgewerkt zoals in een woonkamer.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -1211,7 +1360,7 @@ const HTML = `
         </ul>
       </div>
       <div class="lp-form-card" data-reveal data-reveal-delay="1" data-lp-form-wrapper>
-        <h3>Plan uw dakinspectie</h3>
+        <h3>Plan uw gratis dakinspectie</h3>
         <p class="lf-form-sub">We bellen u binnen één werkdag terug om een afspraak in te plannen.</p>
         <form data-lp-form novalidate>
           <div class="lp-form-row">
@@ -1238,7 +1387,7 @@ const HTML = `
             <input type="text" name="gemeente" placeholder="Gemeente" autocomplete="address-level2" />
           </div>
           <textarea name="aanvullende_info" placeholder="Vertel kort over uw dak (leeftijd, oppervlakte, klacht)"></textarea>
-          <button type="submit" data-lp-submit style="background:#d98c03 !important; color:#fff !important;">Vraag dakinspectie aan</button>
+          <button type="submit" data-lp-submit style="background:#d98c03 !important; color:#fff !important;">Vraag gratis dakinspectie aan</button>
           <p class="lp-form-foot">Geen spam. Privacy verklaring op <a href="/privacy" target="_blank">/privacy</a>.</p>
           <div class="lp-form-error" data-lp-form-error></div>
         </form>
@@ -1261,7 +1410,7 @@ const HTML = `
 </section>
 
 <a href="#lp-form" class="lp-sticky-cta" aria-label="Vraag dakinspectie" style="background-color:#d98c03 !important; background-image:none !important; background:#d98c03 !important; color:#fff !important;">
-  Vraag dakinspectie aan
+  Vraag gratis dakinspectie aan
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
 </a>
 
@@ -1356,7 +1505,7 @@ export default function LpDakwerken() {
       } else {
         wrap.classList.add('is-error');
         if (errBox) errBox.textContent = 'Er ging iets mis. Bel ons gerust op +32 470 63 44 13.';
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Vraag dakinspectie aan'; }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Vraag gratis dakinspectie aan'; }
       }
     };
     form?.addEventListener('submit', onSubmit);
