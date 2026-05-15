@@ -699,17 +699,19 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
   .lp-reviews .lf-testi-arrow { display: none !important; }
 }
 
-/* ───────── Hot-button word highlight (scroll-triggered slide-in) ───────── */
+/* ───────── Hot-button word highlight (scroll-triggered, thema-oranje) ───────── */
 .lp-urgency-card .lp-hot {
-  background-image: linear-gradient(120deg, rgba(217,140,3,0) 50%, rgba(217,140,3,0.32) 50%);
+  background-image: linear-gradient(120deg, rgba(217,140,3,0) 50%, rgba(217,140,3,0.55) 50%);
   background-size: 220% 100%;
   background-position: 100% 0;
   background-repeat: no-repeat;
-  transition: background-position 1s cubic-bezier(.22,1,.36,1);
-  padding: 0 4px;
-  border-radius: 2px;
-  font-weight: 600;
+  transition: background-position 1.1s cubic-bezier(.22,1,.36,1);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 700;
   color: var(--navy);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 .lp-urgency-card.revealed .lp-hot {
   background-position: 0 0;
@@ -1477,6 +1479,7 @@ export default function LpDakwerken() {
 
     const prev = document.body.className;
     document.body.className = 'lp-page is-subpage';
+    try { sessionStorage.setItem('ab_last_lp', '/lp/dakwerken'); } catch {}
     const style = document.createElement('style');
     style.textContent = SHELL_STYLE + LP_EXTRA;
     document.head.appendChild(style);

@@ -21,6 +21,18 @@ export default function BlogPost() {
     styleEl.textContent = SHELL_STYLE;
     document.head.appendChild(styleEl);
     window.scrollTo(0, 0);
+
+    // Als bezoeker via een LP (dak/gevel) op blog kwam, stuur CTA's terug naar die LP's form
+    let lastLp: string | null = null;
+    try { lastLp = sessionStorage.getItem('ab_last_lp'); } catch {}
+    if (lastLp === '/lp/dakwerken' || lastLp === '/lp/gevel') {
+      const target = `${lastLp}#lp-form`;
+      // Hash-anchor scrollt naar het form na navigatie. data-smooth wordt op LP zelf afgehandeld.
+      document.querySelectorAll<HTMLAnchorElement>('.ab-article-cta a[href="/contact"], .ab-blog-sticky-cta[href="/contact"]').forEach(a => {
+        a.href = target;
+      });
+    }
+
     return () => { document.body.className = prevClass; styleEl.remove(); };
   }, [slug, post]);
   useAbBouwInteractions();
