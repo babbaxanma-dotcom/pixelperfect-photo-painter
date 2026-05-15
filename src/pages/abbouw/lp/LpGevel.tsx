@@ -21,6 +21,13 @@ import imgBenefits from '@/assets/gevel/grijze-crepi.jpg';
 import imgProcess from '@/assets/gevel/stelling.jpg';
 import gExtra from '@/assets/gevel/intro.jpg';
 
+// 5 FLUX-Ultra premium gevel-anatomy layer renders (ETICS opbouw)
+import gevL1 from '@/assets/gevel/lp-anatomy-l1.jpg';
+import gevL2 from '@/assets/gevel/lp-anatomy-l2.jpg';
+import gevL3 from '@/assets/gevel/lp-anatomy-l3.jpg';
+import gevL4 from '@/assets/gevel/lp-anatomy-l4.jpg';
+import gevL5 from '@/assets/gevel/lp-anatomy-l5.jpg';
+
 import rev1 from '@/assets/reviews/jasmien.jpg';
 import rev2 from '@/assets/reviews/joris.jpg';
 import rev3 from '@/assets/reviews/marius.jpg';
@@ -394,6 +401,117 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 
 /* Scroll-target fix — nav (~90px) compenseren bij CTA scroll-to-form */
 #lp-form { scroll-margin-top: 100px; }
+
+/* ───────── Werkwijze stepped cards ───────── */
+.lp-process-steps {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.lp-process-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 18px;
+  background: #fff;
+  border: 1px solid rgba(10,22,40,0.08);
+  border-radius: 14px;
+  box-shadow: 0 2px 6px -2px rgba(10,22,40,0.06);
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+.lp-process-steps li:hover {
+  transform: translateX(4px);
+  box-shadow: 0 14px 28px -10px rgba(10,22,40,0.14);
+  border-color: rgba(217,140,3,0.32);
+}
+.lp-process-num {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+  min-width: 36px;
+  line-height: 1;
+  padding-top: 2px;
+}
+.lp-process-steps li div { display: flex; flex-direction: column; gap: 3px; }
+.lp-process-steps li strong {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--navy);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.lp-process-steps li span {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+@media (max-width: 720px) {
+  .lp-process-steps li { padding: 14px 14px; gap: 12px; }
+  .lp-process-num { font-size: 19px; min-width: 30px; }
+  .lp-process-steps li strong { font-size: 15px; }
+  .lp-process-steps li span { font-size: 13px; }
+}
+
+/* ───────── Premium gevel anatomy grid (FLUX-Ultra renders) ───────── */
+.lp-anatomy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 8px;
+}
+.lp-anatomy-tile {
+  background: #fff;
+  border: 1px solid rgba(10,22,40,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px -4px rgba(10,22,40,0.08);
+  transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, border-color .35s ease;
+  display: flex; flex-direction: column;
+}
+.lp-anatomy-tile:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 50px -16px rgba(10,22,40,0.18), 0 4px 12px -2px rgba(10,22,40,0.08);
+  border-color: rgba(217,140,3,0.35);
+}
+.lp-anatomy-tile-img {
+  background: linear-gradient(180deg, #f8f6f2 0%, #efece4 100%);
+  aspect-ratio: 16/9;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.lp-anatomy-tile-img img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center;
+  transition: transform .55s cubic-bezier(.22,1,.36,1);
+}
+.lp-anatomy-tile:hover .lp-anatomy-tile-img img { transform: scale(1.04); }
+.lp-anatomy-tile-body { padding: 22px 24px 24px; position: relative; }
+.lp-anatomy-tile-num {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.lp-anatomy-tile-body h4 {
+  font-family: var(--font-display);
+  font-size: 19px; font-weight: 600;
+  color: var(--navy);
+  letter-spacing: -0.015em;
+  margin: 0 0 8px;
+}
+.lp-anatomy-tile-body p {
+  margin: 0; font-size: 14px; line-height: 1.55;
+  color: var(--ink-soft);
+}
+@media (max-width: 900px) { .lp-anatomy-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
+@media (max-width: 560px) { .lp-anatomy-grid { grid-template-columns: 1fr; } }
 
 /* ───────── Mobile reviews: manual swipe (mirror Home pattern) ───────── */
 @media (max-width: 760px) {
@@ -861,13 +979,13 @@ const HTML = `
       <div data-reveal data-reveal-delay="1">
         <span class="lf-eyebrow">Onze werkwijze</span>
         <h2 class="lf-h2">Van eerste gesprek tot<br/><span class="ab-mark">strakke gevel</span> in 5-7 weken.</h2>
-        <p class="lf-lede">Eigen gevelploeg betekent: geen onderaannemers, geen tussenstops, één verantwoordelijke. Wij beginnen en wij maken het af.</p>
-        <ul class="ab-checks" style="margin-top: 22px;">
-          <li><strong>Week 1</strong> — Gratis plaatsbezoek, gevelopname, eerste richtprijs</li>
-          <li><strong>Week 2</strong> — Bindende offerte, materialen vastgezet, premiedossier voorbereid</li>
-          <li><strong>Week 3-5</strong> — Uitvoering 10-18 werkdagen, weekrapport per email</li>
-          <li><strong>Oplevering</strong> — Premie ingediend, 10 jaar garantie schriftelijk vastgelegd</li>
-        </ul>
+        <p class="lf-lede" style="margin-bottom: 8px;">Eigen gevelploeg. Geen onderaannemers. Eén verantwoordelijke.</p>
+        <ol class="lp-process-steps">
+          <li><span class="lp-process-num">01</span><div><strong>Plaatsbezoek</strong><span>Week 1 · Gratis gevelopname + richtprijs</span></div></li>
+          <li><span class="lp-process-num">02</span><div><strong>Offerte</strong><span>Week 2 · Bindend op papier + premiedossier voorbereid</span></div></li>
+          <li><span class="lp-process-num">03</span><div><strong>Uitvoering</strong><span>Week 3-5 · 10-18 werkdagen + weekrapport per email</span></div></li>
+          <li><span class="lp-process-num">04</span><div><strong>Oplevering</strong><span>Premie ingediend · 10 jaar garantie schriftelijk</span></div></li>
+        </ol>
       </div>
     </div>
   </div>
@@ -876,26 +994,51 @@ const HTML = `
 <section class="lf-section">
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal style="margin-bottom: 28px;">
-      <span class="lf-eyebrow">Interactief</span>
-      <h2 class="lf-h2">Uw gevel in <span class="ab-mark">3D</span> — opbouw uitgelegd.</h2>
-      <p class="lf-lede" style="margin: 14px auto 0; max-width: 620px;">Beweeg, draai, zoom in. Zo zit een ETICS-gevel in elkaar — van bestaande muur tot crepi-afwerking, zes lagen vakwerk.</p>
+      <span class="lf-eyebrow">ETICS opbouw</span>
+      <h2 class="lf-h2">Uw gevel in <span class="ab-mark">3D</span> — laag voor laag.</h2>
+      <p class="lf-lede" style="margin: 14px auto 0; max-width: 620px;">Geen crepi op een muur — <strong>5 lagen vakwerk</strong> die samen isolatie, EPC-winst en strak resultaat leveren. Conform Vlaamse renovatieplicht 2028.</p>
     </div>
-    <div class="lp-3d-frame" data-reveal>
-      <div class="lp-3d-placeholder">
-        <span class="lp-3d-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-        </span>
-        <span class="lp-3d-label">3D model komt hier</span>
-        <span class="lp-3d-sub">Drag to rotate · Scroll to zoom · Click to inspect layer</span>
+    <div class="lp-anatomy-grid" data-reveal>
+      <div class="lp-anatomy-tile">
+        <div class="lp-anatomy-tile-img"><img src="${gevL1}" alt="Bestaande baksteengevel — laag 1" loading="lazy"/></div>
+        <div class="lp-anatomy-tile-body">
+          <span class="lp-anatomy-tile-num">01</span>
+          <h4>Bestaande gevel</h4>
+          <p>Bakstenen spouw- of massiefmuur. We controleren stevigheid, vocht en eventueel scheurherstel vooraf.</p>
+        </div>
       </div>
-    </div>
-    <div class="lp-3d-layers" data-reveal data-reveal-delay="1">
-      <div class="lp-3d-layer"><strong>1</strong> Bestaande spouwmuur</div>
-      <div class="lp-3d-layer"><strong>2</strong> Lijmlaag + pluggen</div>
-      <div class="lp-3d-layer"><strong>3</strong> EPS-isolatieplaten 16cm</div>
-      <div class="lp-3d-layer"><strong>4</strong> Wapeningsnet + grondlaag</div>
-      <div class="lp-3d-layer"><strong>5</strong> Crepi-afwerking</div>
-      <div class="lp-3d-layer"><strong>6</strong> Aansluitingen + dilataties</div>
+      <div class="lp-anatomy-tile">
+        <div class="lp-anatomy-tile-img"><img src="${gevL2}" alt="Lijmmortel en ankers — laag 2" loading="lazy"/></div>
+        <div class="lp-anatomy-tile-body">
+          <span class="lp-anatomy-tile-num">02</span>
+          <h4>Lijmlaag + ankers</h4>
+          <p>EPS-platen worden volledig verlijmd met cementgebonden lijm + mechanisch verankerd voor maximale grip.</p>
+        </div>
+      </div>
+      <div class="lp-anatomy-tile">
+        <div class="lp-anatomy-tile-img"><img src="${gevL3}" alt="EPS isolatieplaten — laag 3" loading="lazy"/></div>
+        <div class="lp-anatomy-tile-body">
+          <span class="lp-anatomy-tile-num">03</span>
+          <h4>EPS-isolatie 16cm</h4>
+          <p>Premium expanded polystyrene λ=0,031 W/mK. Levert EPC-sprong + maakt de muur permanent warm aan de binnenkant.</p>
+        </div>
+      </div>
+      <div class="lp-anatomy-tile">
+        <div class="lp-anatomy-tile-img"><img src="${gevL4}" alt="Wapeningsnet en grondlaag — laag 4" loading="lazy"/></div>
+        <div class="lp-anatomy-tile-body">
+          <span class="lp-anatomy-tile-num">04</span>
+          <h4>Wapening + grondlaag</h4>
+          <p>Glasvezelnet ingebed in een 4mm grondpleister — voorkomt scheuren en geeft een vlakke ondergrond.</p>
+        </div>
+      </div>
+      <div class="lp-anatomy-tile">
+        <div class="lp-anatomy-tile-img"><img src="${gevL5}" alt="Crepi sierpleister — laag 5" loading="lazy"/></div>
+        <div class="lp-anatomy-tile-body">
+          <span class="lp-anatomy-tile-num">05</span>
+          <h4>Crepi-afwerking</h4>
+          <p>Sierpleister Sto, Weber of Marmorino in uw kleur. UV-bestendig, krimpvrij, 25 jaar fabrieksgarantie.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>

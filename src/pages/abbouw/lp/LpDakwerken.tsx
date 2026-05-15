@@ -635,6 +635,63 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 /* Scroll-target fix — nav (~90px) compenseren bij CTA scroll-to-form */
 #lp-form { scroll-margin-top: 100px; }
 
+/* ───────── Werkwijze stepped cards (visueel ipv saaie bullet list) ───────── */
+.lp-process-steps {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  counter-reset: process;
+}
+.lp-process-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 18px;
+  background: #fff;
+  border: 1px solid rgba(10,22,40,0.08);
+  border-radius: 14px;
+  box-shadow: 0 2px 6px -2px rgba(10,22,40,0.06);
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+.lp-process-steps li:hover {
+  transform: translateX(4px);
+  box-shadow: 0 14px 28px -10px rgba(10,22,40,0.14);
+  border-color: rgba(217,140,3,0.32);
+}
+.lp-process-num {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+  min-width: 36px;
+  line-height: 1;
+  padding-top: 2px;
+}
+.lp-process-steps li div { display: flex; flex-direction: column; gap: 3px; }
+.lp-process-steps li strong {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--navy);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.lp-process-steps li span {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+@media (max-width: 720px) {
+  .lp-process-steps li { padding: 14px 14px; gap: 12px; }
+  .lp-process-num { font-size: 19px; min-width: 30px; }
+  .lp-process-steps li strong { font-size: 15px; }
+  .lp-process-steps li span { font-size: 13px; }
+}
+
 /* ───────── Heatloss-house premium 3D render (boven pie chart) ───────── */
 .lp-heatloss-hero {
   display: flex; justify-content: center;
@@ -742,11 +799,12 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 /* ───────── Heat-loss pie chart (educational infographic) ───────── */
 .lp-heatloss { display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: center; }
 .lp-heatloss-chart { position: relative; width: 220px; height: 220px; flex-shrink: 0; }
-.lp-heatloss-chart svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-.lp-heatloss-chart circle.bg { fill: none; stroke: var(--ink-line-soft); stroke-width: 22; }
+.lp-heatloss-chart svg { width: 100%; height: 100%; transform: rotate(-90deg); shape-rendering: geometricPrecision; }
+.lp-heatloss-chart circle.bg { fill: none; stroke: var(--ink-line-soft); stroke-width: 18; }
 .lp-heatloss-chart circle.seg {
-  fill: none; stroke-width: 22;
+  fill: none; stroke-width: 18;
   stroke-dasharray: 0 999;
+  stroke-linecap: round;
   transition: stroke-dasharray 1.6s cubic-bezier(.22,1,.36,1);
 }
 [data-reveal].revealed .lp-heatloss-chart circle.seg.dak  { stroke-dasharray: var(--dak-len, 188) 999; }
@@ -1235,13 +1293,13 @@ const HTML = `
       <div data-reveal data-reveal-delay="1">
         <span class="lf-eyebrow">Onze werkwijze</span>
         <h2 class="lf-h2">Van eerste gesprek tot<br/><span class="ab-mark">waterdicht dak</span> in 6 weken.</h2>
-        <p class="lf-lede">Eigen dakploeg betekent: geen onderaannemers, geen tussenstops, één verantwoordelijke. Wij beginnen en wij maken het af.</p>
-        <ul class="ab-checks" style="margin-top: 22px;">
-          <li><strong>Week 1</strong> — Gratis plaatsbezoek, dakinspectie met dronefoto's, eerste richtprijs</li>
-          <li><strong>Week 2</strong> — Bindende offerte, materialen vastgezet, premiedossier voorbereid</li>
-          <li><strong>Week 3-5</strong> — Uitvoering 8-14 werkdagen, weekrapport per email</li>
-          <li><strong>Oplevering</strong> — Premie ingediend, 10 jaar garantie schriftelijk vastgelegd</li>
-        </ul>
+        <p class="lf-lede" style="margin-bottom: 8px;">Eigen dakploeg. Geen onderaannemers. Eén verantwoordelijke.</p>
+        <ol class="lp-process-steps">
+          <li><span class="lp-process-num">01</span><div><strong>Plaatsbezoek</strong><span>Week 1 · Gratis inspectie + dronefoto's + richtprijs</span></div></li>
+          <li><span class="lp-process-num">02</span><div><strong>Offerte</strong><span>Week 2 · Bindend op papier + premiedossier voorbereid</span></div></li>
+          <li><span class="lp-process-num">03</span><div><strong>Uitvoering</strong><span>Week 3-5 · 8-14 werkdagen + weekrapport per email</span></div></li>
+          <li><span class="lp-process-num">04</span><div><strong>Oplevering</strong><span>Premie ingediend · 10 jaar garantie schriftelijk</span></div></li>
+        </ol>
       </div>
     </div>
   </div>
@@ -1252,10 +1310,7 @@ const HTML = `
     <div class="lf-section-head centered" data-reveal style="margin-bottom: 28px;">
       <span class="lf-eyebrow">Interactief</span>
       <h2 class="lf-h2">Uw dak in <span class="ab-mark">3D</span> — laag voor laag.</h2>
-      <p class="lf-lede" style="margin: 14px auto 0; max-width: 620px;">Beweeg, draai, zoom in. Zo zit een nieuw Vlaams dak in elkaar — van pannen tot kepers, zes lagen vakwerk.</p>
-    </div>
-    <div class="lp-anatomy-intro" data-reveal>
-      <p class="lf-lede" style="text-align:center; max-width: 720px; margin: 0 auto 36px;">Een dak is geen pannen op een lat — het zijn zes bouwlagen die samen zorgen voor waterdichtheid, isolatie en comfort. Elk dak dat wij plaatsen volgt deze opbouw, conform de Vlaamse renovatieplicht 2028.</p>
+      <p class="lf-lede" style="margin: 14px auto 0; max-width: 620px;">Geen pannen op een lat — <strong>6 lagen vakwerk</strong> die samen waterdichtheid, isolatie en comfort leveren. Conform Vlaamse renovatieplicht 2028.</p>
     </div>
     <div class="lp-anatomy-grid" data-reveal>
       <div class="lp-anatomy-tile">
