@@ -12,9 +12,9 @@ dist
 dist-ssr
 *.local
 
-# Environment — bevat GHL webhook URL, GA4 + Ads IDs, Web3Forms key
-.env
-.env.production
+# Environment — VITE_* vars worden client-side gebundeled (sowieso publiek
+# zichtbaar bij live site). Voor private secrets gebruik .env.local (ignored).
+.env.local
 .env.*.local
 
 # Editor directories and files
