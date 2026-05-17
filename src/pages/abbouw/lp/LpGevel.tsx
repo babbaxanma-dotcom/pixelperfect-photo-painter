@@ -1285,7 +1285,19 @@ export default function LpGevel() {
     setMeta('og:description', 'Crepi, ETICS-buitenisolatie, steenstrips. Eigen ploeg, 10j garantie, premiedossier inbegrepen.', true);
     setMeta('og:type', 'website', true);
     setMeta('og:locale', 'nl_BE', true);
+    setMeta('og:url', 'https://abgroep.be/lp/gevel', true);
     setMeta('twitter:card', 'summary_large_image');
+
+    // Canonical + hreflang
+    const setLink = (rel: string, href: string, hreflang?: string) => {
+      const selector = hreflang ? `link[rel="${rel}"][hreflang="${hreflang}"]` : `link[rel="${rel}"]:not([hreflang])`;
+      let el = document.querySelector(selector);
+      if (!el) { el = document.createElement('link'); el.setAttribute('rel', rel); if (hreflang) el.setAttribute('hreflang', hreflang); document.head.appendChild(el); }
+      el.setAttribute('href', href);
+    };
+    setLink('canonical', 'https://abgroep.be/lp/gevel');
+    setLink('alternate', 'https://abgroep.be/lp/gevel', 'nl-BE');
+    setLink('alternate', 'https://abgroep.be/lp/gevel', 'x-default');
 
     // Schema.org JSON-LD: HomeAndConstructionBusiness + FAQ + Service
     const schemaId = 'lp-gevel-schema';
@@ -1310,9 +1322,37 @@ export default function LpGevel() {
             "addressLocality": "Willebroek",
             "addressCountry": "BE"
           },
-          "areaServed": ["Mechelen","Antwerpen","Lier","Boom","Bornem","Willebroek","Bonheiden","Heist-op-den-Berg","Puurs","Sint-Niklaas","Kontich","Vilvoorde"],
+          "areaServed": [
+            { "@type": "City", "name": "Mechelen" },
+            { "@type": "City", "name": "Antwerpen" },
+            { "@type": "City", "name": "Lier" },
+            { "@type": "City", "name": "Boom" },
+            { "@type": "City", "name": "Bornem" },
+            { "@type": "City", "name": "Willebroek" },
+            { "@type": "City", "name": "Bonheiden" },
+            { "@type": "City", "name": "Heist-op-den-Berg" },
+            { "@type": "City", "name": "Puurs" },
+            { "@type": "City", "name": "Sint-Niklaas" },
+            { "@type": "City", "name": "Kontich" },
+            { "@type": "City", "name": "Vilvoorde" },
+            { "@type": "GeoCircle", "geoMidpoint": { "@type": "GeoCoordinates", "latitude": 51.0259, "longitude": 4.4778 }, "geoRadius": "40000" }
+          ],
+          "geo": { "@type": "GeoCoordinates", "latitude": 51.0596, "longitude": 4.3631 },
           "priceRange": "€€",
-          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "96", "bestRating": "5" }
+          "currenciesAccepted": "EUR",
+          "paymentAccepted": "Cash, Bank Transfer, Credit Card",
+          "openingHoursSpecification": [
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "07:00", "closes": "18:00" }
+          ],
+          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "96", "bestRating": "5" },
+          "sameAs": ["https://www.facebook.com/abbouwgroep", "https://www.instagram.com/abbouwgroep"]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://abgroep.be" },
+            { "@type": "ListItem", "position": 2, "name": "Gevelrenovatie", "item": "https://abgroep.be/lp/gevel" }
+          ]
         },
         {
           "@type": "Service",
@@ -1334,6 +1374,7 @@ export default function LpGevel() {
         },
         {
           "@type": "FAQPage",
+          "speakable": { "@type": "SpeakableSpecification", "cssSelector": [".ab-faq-body p"] },
           "mainEntity": [
             { "@type": "Question", "name": "Hoeveel kost een crepi-gevel?", "acceptedAnswer": { "@type": "Answer", "text": "Pure crepi op bestaande gevel kost gemiddeld €45-€75/m². ETICS-systeem (16cm isolatie + crepi) €110-€150/m². Definitieve prijs hangt af van gevelstaat en isolatiedikte." }},
             { "@type": "Question", "name": "Wat is het verschil tussen crepi en ETICS?", "acceptedAnswer": { "@type": "Answer", "text": "Crepi = sierpleister direct op de gevel, voor optisch resultaat. ETICS = External Thermal Insulation Composite System: EPS-isolatie + wapeningsnet + crepi-afwerking, voor energieprestatie EN optisch resultaat." }},

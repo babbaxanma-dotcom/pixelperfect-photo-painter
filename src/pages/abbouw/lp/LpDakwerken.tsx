@@ -1618,7 +1618,19 @@ export default function LpDakwerken() {
     setMeta('og:description', 'Nieuw dak, plat dak EPDM, dakisolatie. Eigen ploeg, 10j garantie, premiedossier inbegrepen.', true);
     setMeta('og:type', 'website', true);
     setMeta('og:locale', 'nl_BE', true);
+    setMeta('og:url', 'https://abgroep.be/lp/dakwerken', true);
     setMeta('twitter:card', 'summary_large_image');
+
+    // Canonical + hreflang
+    const setLink = (rel: string, href: string, hreflang?: string) => {
+      const selector = hreflang ? `link[rel="${rel}"][hreflang="${hreflang}"]` : `link[rel="${rel}"]:not([hreflang])`;
+      let el = document.querySelector(selector);
+      if (!el) { el = document.createElement('link'); el.setAttribute('rel', rel); if (hreflang) el.setAttribute('hreflang', hreflang); document.head.appendChild(el); }
+      el.setAttribute('href', href);
+    };
+    setLink('canonical', 'https://abgroep.be/lp/dakwerken');
+    setLink('alternate', 'https://abgroep.be/lp/dakwerken', 'nl-BE');
+    setLink('alternate', 'https://abgroep.be/lp/dakwerken', 'x-default');
 
     // Schema.org JSON-LD: RoofingContractor + FAQ + Service
     const schemaId = 'lp-dak-schema';
@@ -1643,9 +1655,37 @@ export default function LpDakwerken() {
             "addressLocality": "Willebroek",
             "addressCountry": "BE"
           },
-          "areaServed": ["Mechelen","Antwerpen","Lier","Boom","Bornem","Willebroek","Bonheiden","Heist-op-den-Berg","Puurs","Sint-Niklaas","Kontich","Vilvoorde"],
+          "areaServed": [
+            { "@type": "City", "name": "Mechelen" },
+            { "@type": "City", "name": "Antwerpen" },
+            { "@type": "City", "name": "Lier" },
+            { "@type": "City", "name": "Boom" },
+            { "@type": "City", "name": "Bornem" },
+            { "@type": "City", "name": "Willebroek" },
+            { "@type": "City", "name": "Bonheiden" },
+            { "@type": "City", "name": "Heist-op-den-Berg" },
+            { "@type": "City", "name": "Puurs" },
+            { "@type": "City", "name": "Sint-Niklaas" },
+            { "@type": "City", "name": "Kontich" },
+            { "@type": "City", "name": "Vilvoorde" },
+            { "@type": "GeoCircle", "geoMidpoint": { "@type": "GeoCoordinates", "latitude": 51.0259, "longitude": 4.4778 }, "geoRadius": "40000" }
+          ],
+          "geo": { "@type": "GeoCoordinates", "latitude": 51.0596, "longitude": 4.3631 },
           "priceRange": "€€",
-          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "124", "bestRating": "5" }
+          "currenciesAccepted": "EUR",
+          "paymentAccepted": "Cash, Bank Transfer, Credit Card",
+          "openingHoursSpecification": [
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "07:00", "closes": "18:00" }
+          ],
+          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "124", "bestRating": "5" },
+          "sameAs": ["https://www.facebook.com/abbouwgroep", "https://www.instagram.com/abbouwgroep"]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://abgroep.be" },
+            { "@type": "ListItem", "position": 2, "name": "Dakwerken", "item": "https://abgroep.be/lp/dakwerken" }
+          ]
         },
         {
           "@type": "Service",
@@ -1667,6 +1707,7 @@ export default function LpDakwerken() {
         },
         {
           "@type": "FAQPage",
+          "speakable": { "@type": "SpeakableSpecification", "cssSelector": [".ab-faq-body p"] },
           "mainEntity": [
             { "@type": "Question", "name": "Hoeveel kost een nieuw dak in Vlaanderen?", "acceptedAnswer": { "@type": "Answer", "text": "Een pannendak inclusief sarkingisolatie kost gemiddeld €120-€170/m². Een plat dak EPDM €90-€140/m². Definitieve prijs hangt af van isolatieniveau, dakopbouw en complexiteit. Wij geven een vaste prijs op offerte na plaatsbezoek." }},
             { "@type": "Question", "name": "Doen jullie de premieaanvraag voor Mijn VerbouwPremie?", "acceptedAnswer": { "@type": "Answer", "text": "Ja, standaard. Wij bereiden uw Mijn VerbouwPremie-dossier voor, leveren foto's en facturen aan in juist format (m² + Rd-waarde + notificatiecode). U deelt enkel uw burgerprofiel-login." }},

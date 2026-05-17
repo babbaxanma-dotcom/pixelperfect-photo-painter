@@ -12,6 +12,32 @@
   <!-- /lp/dakwerken -->
   <!-- /lp/gevel -->
 
+  <!-- Lokale SEO landing pages — per service per gemeente -->
+  <url><loc>https://abgroep.be/lokaal/dakwerker-mechelen</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://abgroep.be/lokaal/dakwerker-antwerpen</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://abgroep.be/lokaal/dakwerker-lier</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/dakwerker-bornem</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/dakwerker-willebroek</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://abgroep.be/lokaal/dakwerker-bonheiden</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/dakwerker-heist-op-den-berg</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/dakwerker-puurs</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/dakwerker-sint-niklaas</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/dakwerker-kontich</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/dakwerker-vilvoorde</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/dakwerker-boom</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/gevelrenovatie-mechelen</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://abgroep.be/lokaal/gevelrenovatie-antwerpen</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://abgroep.be/lokaal/gevelrenovatie-lier</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/gevelrenovatie-bornem</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/gevelrenovatie-willebroek</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://abgroep.be/lokaal/gevelrenovatie-bonheiden</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/gevelrenovatie-heist-op-den-berg</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/gevelrenovatie-puurs</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/gevelrenovatie-sint-niklaas</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/gevelrenovatie-kontich</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/gevelrenovatie-vilvoorde</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/gevelrenovatie-boom</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
   <!-- Divisies -->
   <url><loc>https://abgroep.be/construct</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
   <url><loc>https://abgroep.be/interieur</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
