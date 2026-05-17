@@ -1,0 +1,25 @@
+A 3D architectural exploded-view render showing ONLY a roof structure — no walls, no house body, no bricks, no surroundings. Pure white background, isolated subject.
+
+The roof is a small hipped roof shape (two sloping sides meeting at a ridge, with small triangular hip ends), shown at a slight three-quarter angle so all layers and edges are clearly visible.
+
+The roof anatomy is EXPLODED VERTICALLY: each construction layer floats separately above the next, with clear vertical gaps of roughly 20 centimeters between every layer, so the viewer immediately understands the construction order. Each layer is a copy of the roof shape, complete and properly aligned.
+
+From TOP to BOTTOM, six clearly distinct floating layers (top of frame to bottom of frame):
+
+LAYER 1 (very top): terracotta orange clay roof tiles, classic Belgian pannen profile (interlocking curved Koramic tiles), warm orange-red ceramic surface, slight texture. One single VELUX skylight window installed in this layer (clear glass, white frame).
+
+LAYER 2 (gap below layer 1): light pine wood battens — thin horizontal slats nailed in parallel rows, visible as wooden strips with natural pine color and grain.
+
+LAYER 3 (gap below layer 2): dark grey breathable underlay membrane — looks like dark felt fabric, smooth surface, slightly wrinkled.
+
+LAYER 4 (gap below layer 3): PIR rigid insulation panels — silver aluminum foil facing on top, yellow polyurethane foam core visible at the cut edges (Recticel/IKO style), 12cm thick.
+
+LAYER 5 (gap below layer 4): silver vapor barrier film — reflective metallic foil sheet.
+
+LAYER 6 (very bottom): structural roof framework — pine timber rafters arranged in roof shape, ridge beam at top, no decking, just the wooden skeleton.
+
+Each floating layer casts a subtle soft shadow on the layer below it. No house walls, no bricks, no chimney, no people, no surrounding environment. Pure white seamless background.
+
+Photorealistic 3D render, technical-industrial illustration style similar to Wienerberger/Koramic/Recticel product brochures. Clean, sharp, professional. Soft studio lighting, no harsh shadows. Centered composition. No text anywhere, no labels, no captions, no logos, no watermarks, no annotations, no measuring lines.
+
+8K resolution, sharp detail, photorealistic materials.

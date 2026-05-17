@@ -30,7 +30,7 @@ import imgPlatDak from '@/assets/dak/lp-plat-dak.jpg';            // gallery EPD
 import imgZinkGoot from '@/assets/dak/lp-zink-goot.jpg';          // gallery zink detail
 
 import imgAnatomy from '@/assets/dak/lp-anatomy-illustration.jpg'; // 3D-illustration cross-section
-import dakCross from '@/assets/dak/lp-anatomy-cross.jpg';            // 6-layer composite cross-section
+import dakCross from '@/assets/dak/lp-3d-exploded.jpg';              // exploded 3D roof anatomy — 6 lagen zwevend
 import imgComfort from '@/assets/dak/lp-comfort-illustration.jpg'; // warm-interior comfort visual
 import imgHeatlossHouse from '@/assets/dak/lp-heatloss-house.jpg'; // premium isometric heatloss render
 
