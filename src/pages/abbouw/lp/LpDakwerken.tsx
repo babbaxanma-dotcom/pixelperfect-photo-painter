@@ -1491,7 +1491,7 @@ const HTML = `
     </div>
     <div class="lp-blog-grid">
       ${LP_BLOGS.map((b, i) => `
-        <a href="/blog/${b.slug}" target="_blank" rel="noopener" class="lp-blog-card" data-reveal data-reveal-delay="${i}">
+        <a href="/blog/${b.slug}?lp=%2Flp%2Fdakwerken" target="_blank" rel="noopener" class="lp-blog-card" data-reveal data-reveal-delay="${i}">
           <div class="lp-blog-img"><img src="${b.img}" alt="${b.title}" loading="lazy"/></div>
           <div class="lp-blog-body">
             <div class="lp-blog-meta">
@@ -1823,6 +1823,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
           'in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
           `in ${local.name} en de regio.`
         )
+        .replaceAll('?lp=%2Flp%2Fdakwerken', `?lp=%2Flokaal%2Fdakwerker-${local.slug}`)
     : HTML;
 
   return <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />;

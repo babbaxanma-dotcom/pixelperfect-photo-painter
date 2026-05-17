@@ -22,12 +22,18 @@ export default function BlogPost() {
     document.head.appendChild(styleEl);
     window.scrollTo(0, 0);
 
-    // Als bezoeker via een LP (dak/gevel/lokaal) op blog kwam, stuur CTA's terug naar die LP's form
+    // Als bezoeker via een LP (dak/gevel/lokaal) op blog kwam, stuur CTA's terug naar die LP's form.
+    // ?lp=... URL-param wint (werkt over target="_blank"-tabs heen); sessionStorage = fallback same-tab.
     let lastLp: string | null = null;
-    try { lastLp = sessionStorage.getItem('ab_last_lp'); } catch {}
+    try {
+      lastLp = new URLSearchParams(window.location.search).get('lp');
+    } catch {}
+    if (!lastLp) {
+      try { lastLp = sessionStorage.getItem('ab_last_lp'); } catch {}
+    }
     if (lastLp && (lastLp.startsWith('/lp/') || lastLp.startsWith('/lokaal/'))) {
       const target = `${lastLp}#lp-form`;
-      // Hash-anchor scrollt naar het form na navigatie. data-smooth wordt op LP zelf afgehandeld.
+      try { sessionStorage.setItem('ab_last_lp', lastLp); } catch {} // bewaar voor evt. tweede blog
       document.querySelectorAll<HTMLAnchorElement>('.ab-article-cta a[href="/contact"], .ab-blog-sticky-cta[href="/contact"]').forEach(a => {
         a.href = target;
       });
