@@ -253,7 +253,7 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 @media (max-width: 900px) { .lp-urgency-grid { grid-template-columns: 1fr; gap: 14px; } }
 
 /* LP differentiator USPs — wat anderen NIET bieden */
-.lp-usp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+.lp-usp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 .lp-usp-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 14px; padding: 22px 18px 20px; transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease; position: relative; }
 .lp-usp-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 18px 40px -20px rgba(217,140,3,0.35); }
 .lp-usp-icon { width: 42px; height: 42px; border-radius: 12px; background: rgba(217,140,3,0.12); color: var(--accent); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px; }
@@ -985,7 +985,7 @@ const HTML = `
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal style="margin-bottom: 36px;">
       <span class="lf-eyebrow">Wat anderen niet bieden</span>
-      <h2 class="lf-h2">5 garanties die je elders<br/><span class="ab-mark">tevergeefs zoekt</span>.</h2>
+      <h2 class="lf-h2">4 garanties die je elders<br/><span class="ab-mark">tevergeefs zoekt</span>.</h2>
     </div>
     <div class="lp-usp-grid">
       <div class="lp-usp-card" data-reveal>

@@ -304,7 +304,7 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 @media (max-width: 900px) { .lp-urgency-grid { grid-template-columns: 1fr; gap: 14px; } }
 
 /* LP differentiator USPs — wat anderen NIET bieden */
-.lp-usp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+.lp-usp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 .lp-usp-card {
   background: #fff;
   border: 1px solid var(--ink-line-soft);
@@ -1308,7 +1308,7 @@ const HTML = `
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal style="margin-bottom: 36px;">
       <span class="lf-eyebrow">Wat anderen niet bieden</span>
-      <h2 class="lf-h2">5 garanties die je elders<br/><span class="ab-mark">tevergeefs zoekt</span>.</h2>
+      <h2 class="lf-h2">4 garanties die je elders<br/><span class="ab-mark">tevergeefs zoekt</span>.</h2>
     </div>
     <div class="lp-usp-grid">
       <div class="lp-usp-card" data-reveal>
