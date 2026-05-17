@@ -215,6 +215,55 @@ export const GEMEENTES: Record<string, Gemeente> = {
     reviewCount: 7,
     rating: "4.9"
   },
+  "sint-katelijne-waver": {
+    slug: "sint-katelijne-waver",
+    name: "Sint-Katelijne-Waver",
+    postcode: "2860",
+    lat: 51.0729,
+    lng: 4.5325,
+    neighborhoods: ["Onze-Lieve-Vrouw-Waver"],
+    intro: "Sint-Katelijne-Waver — tussen Mechelen en Lier, residentieel met veel halfopen en vrijstaande woningen. Onze ploegen rijden hier dagelijks.",
+    highlights: [
+      "Crepi + ETICS gevelisolatie typisch voor Sint-Katelijne-Waver halfopen woningen",
+      "Pannendaken Koramic op nieuwbouw + renovaties",
+      "Sarkingisolatie hellende daken — populair bij EPC-verbetering",
+      "Premiedossier Mijn VerbouwPremie tot €5.750 inbegrepen"
+    ],
+    reviewCount: 9,
+    rating: "4.9"
+  },
+  duffel: {
+    slug: "duffel",
+    name: "Duffel",
+    postcode: "2570",
+    lat: 51.0972,
+    lng: 4.4983,
+    intro: "Duffel — kleinere gemeente tussen Mechelen en Lier, veel klassieke rijwoningen en nieuwe verkavelingen. Korte aanrijtijd voor onze ploeg vanuit Willebroek.",
+    highlights: [
+      "Pannendaken + dakgoten klassieke Duffelse rijwoningen",
+      "ETICS-buitenisolatie voor EPC-sprong",
+      "Plat dak EPDM voor garages en aanbouwen",
+      "Volledige offerte inclusief premiedossier"
+    ],
+    reviewCount: 6,
+    rating: "5.0"
+  },
+  aartselaar: {
+    slug: "aartselaar",
+    name: "Aartselaar",
+    postcode: "2630",
+    lat: 51.1356,
+    lng: 4.3858,
+    intro: "Aartselaar — residentieel ten zuiden van Antwerpen, klassieke villa's en bungalows. Dak- en gevelrenovatie met respect voor de architectuur.",
+    highlights: [
+      "Natuurleien Cupa voor villa-daken",
+      "Witte crepi op klassieke bungalows",
+      "Velux + dakkapellen voor zolderverdiepingen",
+      "Zinkwerk + dakgoten in anthraciet"
+    ],
+    reviewCount: 7,
+    rating: "4.9"
+  },
 };
 
 export const GEMEENTE_SLUGS = Object.keys(GEMEENTES);

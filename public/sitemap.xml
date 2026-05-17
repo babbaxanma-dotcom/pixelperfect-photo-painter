@@ -37,6 +37,12 @@
   <url><loc>https://abgroep.be/lokaal/gevelrenovatie-kontich</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://abgroep.be/lokaal/gevelrenovatie-vilvoorde</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://abgroep.be/lokaal/gevelrenovatie-boom</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/dakwerker-sint-katelijne-waver</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://abgroep.be/lokaal/dakwerker-duffel</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/dakwerker-aartselaar</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/gevelrenovatie-sint-katelijne-waver</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://abgroep.be/lokaal/gevelrenovatie-duffel</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://abgroep.be/lokaal/gevelrenovatie-aartselaar</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 
   <!-- Divisies -->
   <url><loc>https://abgroep.be/construct</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
