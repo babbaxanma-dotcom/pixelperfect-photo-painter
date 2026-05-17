@@ -1331,11 +1331,6 @@ const HTML = `
         <h4>EPC-winst vooraf berekend</h4>
         <p>Wij berekenen uw verwachte EPC-verbetering en premie-bedrag vóór de offerte. Geen valse beloftes — alleen wat we kunnen waarmaken.</p>
       </div>
-      <div class="lp-usp-card" data-reveal data-reveal-delay="4">
-        <div class="lp-usp-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-        <h4>Realisaties in uw gemeente</h4>
-        <p>5+ projecten binnen 5km. Vraag onze postcode-portfolio met adressen op aanvraag.</p>
-      </div>
     </div>
   </div>
 </section>
