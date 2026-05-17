@@ -503,10 +503,18 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 .lp-anatomy-card[data-layer="6"] { --depth: -150; background: linear-gradient(180deg, #fafaf3 0%, #e0ddd4 100%); color: var(--navy); }
 
 /* Dak cross-section — één premium FLUX render boven het 6-card grid */
-.lp-dak-cross-wrap { max-width: 440px; margin: 0 auto 48px; }
+.lp-dak-cross-wrap {
+  max-width: 480px;
+  margin: 0 auto 48px;
+  background: #fff;
+  border: 1px solid rgba(10,22,40,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px -4px rgba(10,22,40,0.08);
+  padding: 18px;
+}
 .lp-dak-cross-img {
-  display: block; width: 100%; height: auto;
-  filter: drop-shadow(0 24px 40px rgba(10,22,40,0.18));
+  display: block; width: 100%; height: auto; border-radius: 6px;
 }
 
 /* ───────── Premium dak anatomy grid (FLUX-Ultra renders) ───────── */
