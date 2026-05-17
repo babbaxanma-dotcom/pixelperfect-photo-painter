@@ -32,7 +32,6 @@ import imgZinkGoot from '@/assets/dak/lp-zink-goot.jpg';          // gallery zin
 import imgAnatomy from '@/assets/dak/lp-anatomy-illustration.jpg'; // 3D-illustration cross-section
 import dakCross from '@/assets/dak/lp-3d-exploded.jpg';              // exploded 3D roof anatomy — 6 lagen zwevend
 import imgComfort from '@/assets/dak/lp-comfort-illustration.jpg'; // warm-interior comfort visual
-import imgHeatlossHouse from '@/assets/dak/lp-heatloss-house.jpg'; // premium isometric heatloss render
 
 // 6 FLUX-Ultra premium dak-anatomy layer renders (Cinema 4D / Octane quality)
 import anaL1 from '@/assets/dak/lp-anatomy-l1.jpg';  // pannen — terracotta
@@ -732,20 +731,6 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
   .lp-process-steps li span { font-size: 13px; }
 }
 
-/* ───────── Heatloss-house premium 3D render (boven pie chart) ───────── */
-.lp-heatloss-hero {
-  display: flex; justify-content: center;
-  margin-bottom: 32px;
-}
-.lp-heatloss-hero img {
-  width: 100%; max-width: 420px;
-  height: auto; display: block;
-}
-@media (max-width: 720px) {
-  .lp-heatloss-hero img { max-width: 320px; }
-  .lp-heatloss-hero { margin-bottom: 18px; }
-}
-
 /* ───────── Mobile reviews: manual swipe (mirror Home pattern) ───────── */
 @media (max-width: 760px) {
   .lp-reviews .lf-testi-marquee {
@@ -1232,9 +1217,6 @@ const HTML = `
 
 <section class="lf-section">
   <div class="wrap">
-    <div class="lp-heatloss-hero" data-reveal>
-      <img src="${imgHeatlossHouse}" alt="Warmteverlies in een Belgische woning: 30% via het dak, 25% muren, 15% ramen, 15% vloer, 15% ventilatie" loading="lazy"/>
-    </div>
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">Waarom een nieuw dak loont</span>

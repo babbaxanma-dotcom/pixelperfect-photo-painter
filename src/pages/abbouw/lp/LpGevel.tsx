@@ -471,10 +471,18 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 }
 
 /* Gevel ETICS cross-section — één premium FLUX render boven het 5-card grid */
-.lp-gevel-cross-wrap { max-width: 440px; margin: 0 auto 48px; }
+.lp-gevel-cross-wrap {
+  max-width: 480px;
+  margin: 0 auto 48px;
+  background: #fff;
+  border: 1px solid rgba(10,22,40,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px -4px rgba(10,22,40,0.08);
+  padding: 18px;
+}
 .lp-gevel-cross-img {
-  display: block; width: 100%; height: auto;
-  filter: drop-shadow(0 24px 40px rgba(10,22,40,0.18));
+  display: block; width: 100%; height: auto; border-radius: 6px;
 }
 
 /* ───────── Premium gevel anatomy grid (FLUX-Ultra renders) ───────── */
