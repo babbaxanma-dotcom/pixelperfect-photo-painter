@@ -1483,6 +1483,8 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
       });
       if (result.ok) {
         wrap.classList.add('is-success');
+        window.location.href = '/bedankt?service=gevel';
+        return;
       } else {
         wrap.classList.add('is-error');
         if (errBox) errBox.textContent = 'Er ging iets mis. Bel ons gerust op +32 470 63 44 13.';
