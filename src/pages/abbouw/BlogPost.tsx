@@ -34,7 +34,11 @@ export default function BlogPost() {
     if (lastLp && (lastLp.startsWith('/lp/') || lastLp.startsWith('/lokaal/'))) {
       const target = `${lastLp}#lp-form`;
       try { sessionStorage.setItem('ab_last_lp', lastLp); } catch {} // bewaar voor evt. tweede blog
-      document.querySelectorAll<HTMLAnchorElement>('.ab-article-cta a[href="/contact"], .ab-blog-sticky-cta[href="/contact"]').forEach(a => {
+      document.querySelectorAll<HTMLAnchorElement>(
+        '.ab-article-cta a[href="/contact"], ' +
+        '.ab-blog-sticky-cta[href="/contact"], ' +
+        '.lf-cta--simple a[href^="/contact"]'
+      ).forEach(a => {
         a.href = target;
       });
     }
