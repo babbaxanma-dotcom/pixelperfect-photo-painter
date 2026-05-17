@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { SHELL_STYLE } from '../_shell';
 import { submitLead } from '@/lib/leads';
+import type { Gemeente } from '@/data/gemeentes';
 import { BLOGS } from '@/data/blogs';
 
 const LP_BLOGS = BLOGS.filter(b =>
@@ -1267,12 +1268,17 @@ const HTML = `
 </a>
 `;
 
-export default function LpGevel() {
+export default function LpGevel({ local }: { local?: Gemeente } = {}) {
   useEffect(() => {
-    document.title = "Gevelrenovatie Mechelen & Antwerpen — Crepi, ETICS, Steenstrips | AB Bouw Groep";
+    const pageUrl = local ? `https://abgroep.be/lokaal/gevelrenovatie-${local.slug}` : 'https://abgroep.be/lp/gevel';
+    document.title = local
+      ? `Gevelrenovatie ${local.name} — Crepi, ETICS, Steenstrips | AB Bouw Groep`
+      : "Gevelrenovatie Mechelen & Antwerpen — Crepi, ETICS, Steenstrips | AB Bouw Groep";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name','description'); document.head.appendChild(m); }
-    m.setAttribute('content', 'Erkend gevelrenovatie-aannemer in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Crepi, ETICS-buitenisolatie, steenstrips, sierpleister. Eigen ploeg, 10 jaar garantie via Federale Verzekering, Mijn VerbouwPremie inbegrepen. Gratis plaatsbezoek binnen 5 werkdagen.');
+    m.setAttribute('content', local
+      ? `Erkend gevelrenovatie-aannemer in ${local.name} (${local.postcode}). Crepi, ETICS-buitenisolatie, steenstrips en sierpleister. Eigen ploeg uit Willebroek, 10 jaar garantie via Federale Verzekering, Mijn VerbouwPremie inbegrepen. Gratis plaatsbezoek binnen 5 werkdagen.`
+      : 'Erkend gevelrenovatie-aannemer in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Crepi, ETICS-buitenisolatie, steenstrips, sierpleister. Eigen ploeg, 10 jaar garantie via Federale Verzekering, Mijn VerbouwPremie inbegrepen. Gratis plaatsbezoek binnen 5 werkdagen.');
 
     // Open Graph + Twitter cards
     const setMeta = (prop: string, content: string, isProperty = false) => {
@@ -1281,11 +1287,15 @@ export default function LpGevel() {
       if (!el) { el = document.createElement('meta'); el.setAttribute(attr, prop); document.head.appendChild(el); }
       el.setAttribute('content', content);
     };
-    setMeta('og:title', 'Gevelrenovatie Mechelen & Antwerpen — Crepi, ETICS, Steenstrips | AB Bouw Groep', true);
-    setMeta('og:description', 'Crepi, ETICS-buitenisolatie, steenstrips. Eigen ploeg, 10j garantie, premiedossier inbegrepen.', true);
+    setMeta('og:title', local
+      ? `Gevelrenovatie ${local.name} — Crepi, ETICS, Steenstrips | AB Bouw Groep`
+      : 'Gevelrenovatie Mechelen & Antwerpen — Crepi, ETICS, Steenstrips | AB Bouw Groep', true);
+    setMeta('og:description', local
+      ? `Crepi, ETICS-buitenisolatie en steenstrips in ${local.name}. Eigen ploeg, 10j garantie, premiedossier inbegrepen.`
+      : 'Crepi, ETICS-buitenisolatie, steenstrips. Eigen ploeg, 10j garantie, premiedossier inbegrepen.', true);
     setMeta('og:type', 'website', true);
     setMeta('og:locale', 'nl_BE', true);
-    setMeta('og:url', 'https://abgroep.be/lp/gevel', true);
+    setMeta('og:url', pageUrl, true);
     setMeta('twitter:card', 'summary_large_image');
 
     // Canonical + hreflang
@@ -1295,9 +1305,9 @@ export default function LpGevel() {
       if (!el) { el = document.createElement('link'); el.setAttribute('rel', rel); if (hreflang) el.setAttribute('hreflang', hreflang); document.head.appendChild(el); }
       el.setAttribute('href', href);
     };
-    setLink('canonical', 'https://abgroep.be/lp/gevel');
-    setLink('alternate', 'https://abgroep.be/lp/gevel', 'nl-BE');
-    setLink('alternate', 'https://abgroep.be/lp/gevel', 'x-default');
+    setLink('canonical', pageUrl);
+    setLink('alternate', pageUrl, 'nl-BE');
+    setLink('alternate', pageUrl, 'x-default');
 
     // Schema.org JSON-LD: HomeAndConstructionBusiness + FAQ + Service
     const schemaId = 'lp-gevel-schema';
@@ -1349,10 +1359,16 @@ export default function LpGevel() {
         },
         {
           "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://abgroep.be" },
-            { "@type": "ListItem", "position": 2, "name": "Gevelrenovatie", "item": "https://abgroep.be/lp/gevel" }
-          ]
+          "itemListElement": local
+            ? [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://abgroep.be" },
+              { "@type": "ListItem", "position": 2, "name": "Gevelrenovatie", "item": "https://abgroep.be/gevel" },
+              { "@type": "ListItem", "position": 3, "name": `Gevelrenovatie ${local.name}`, "item": pageUrl }
+            ]
+            : [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://abgroep.be" },
+              { "@type": "ListItem", "position": 2, "name": "Gevelrenovatie", "item": "https://abgroep.be/lp/gevel" }
+            ]
         },
         {
           "@type": "Service",
@@ -1389,7 +1405,7 @@ export default function LpGevel() {
 
     const prev = document.body.className;
     document.body.className = 'lp-page is-subpage';
-    try { sessionStorage.setItem('ab_last_lp', '/lp/gevel'); } catch {}
+    try { sessionStorage.setItem('ab_last_lp', local ? `/lokaal/gevelrenovatie-${local.slug}` : '/lp/gevel'); } catch {}
     const style = document.createElement('style');
     style.textContent = SHELL_STYLE + LP_EXTRA;
     document.head.appendChild(style);
@@ -1460,7 +1476,7 @@ export default function LpGevel() {
         gemeente: (fd.get('gemeente') as string) || undefined,
         type_werk: ((fd.get('type_gevel') as string) || 'ab_gevelbekleding'),
         aanvullende_info: (fd.get('aanvullende_info') as string) || undefined,
-        bron_lead: 'ads:gevel',
+        bron_lead: local ? `seo:gevelrenovatie-${local.slug}` : 'ads:gevel',
       });
       if (result.ok) {
         wrap.classList.add('is-success');
@@ -1483,5 +1499,14 @@ export default function LpGevel() {
 
   useAbBouwInteractions();
 
-  return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
+  const renderedHtml = local
+    ? HTML
+        .replace('AB Gevelbekleding · Willebroek', `AB Gevelbekleding · ${local.name}`)
+        .replace(
+          'in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
+          `in ${local.name} en de regio.`
+        )
+    : HTML;
+
+  return <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />;
 }

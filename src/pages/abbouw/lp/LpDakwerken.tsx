@@ -3,6 +3,7 @@ import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { SHELL_STYLE } from '../_shell';
 import { submitLead } from '@/lib/leads';
 import { BLOGS } from '@/data/blogs';
+import type { Gemeente } from '@/data/gemeentes';
 
 // Filter blogs op dakwerken-relevante tags zodat alleen relevante content
 // op de LP verschijnt. Linkjes openen in een NIEUWE tab zodat de bezoeker
@@ -1600,12 +1601,17 @@ const HTML = `
 </a>
 `;
 
-export default function LpDakwerken() {
+export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
   useEffect(() => {
-    document.title = "Dakwerker Mechelen & Antwerpen — Pannen, Plat dak, EPDM, Isolatie | AB Bouw Groep";
+    const pageUrl = local ? `https://abgroep.be/lokaal/dakwerker-${local.slug}` : 'https://abgroep.be/lp/dakwerken';
+    document.title = local
+      ? `Dakwerker ${local.name} — Pannen, Plat dak EPDM, Sarkingisolatie | AB Bouw Groep`
+      : "Dakwerker Mechelen & Antwerpen — Pannen, Plat dak, EPDM, Isolatie | AB Bouw Groep";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name','description'); document.head.appendChild(m); }
-    m.setAttribute('content', 'Erkend dakwerker in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Pannendak, plat dak EPDM, sarking-isolatie, zinkwerk. Eigen dakdekkers, 10 jaar garantie via Federale Verzekering, premie Mijn VerbouwPremie inbegrepen. Gratis plaatsbezoek binnen 5 werkdagen.');
+    m.setAttribute('content', local
+      ? `Erkend dakwerker in ${local.name} (${local.postcode}). Pannendak Koramic, plat dak EPDM, sarkingisolatie, zinkwerk en natuurleien. Eigen ploeg uit Willebroek, 10 jaar garantie via Federale Verzekering, premie Mijn VerbouwPremie inbegrepen. Gratis plaatsbezoek binnen 5 werkdagen.`
+      : 'Erkend dakwerker in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Pannendak, plat dak EPDM, sarking-isolatie, zinkwerk. Eigen dakdekkers, 10 jaar garantie via Federale Verzekering, premie Mijn VerbouwPremie inbegrepen. Gratis plaatsbezoek binnen 5 werkdagen.');
 
     // Open Graph + Twitter cards
     const setMeta = (prop: string, content: string, isProperty = false) => {
@@ -1614,11 +1620,15 @@ export default function LpDakwerken() {
       if (!el) { el = document.createElement('meta'); el.setAttribute(attr, prop); document.head.appendChild(el); }
       el.setAttribute('content', content);
     };
-    setMeta('og:title', 'Dakwerker Mechelen & Antwerpen — Gratis dakinspectie | AB Bouw Groep', true);
-    setMeta('og:description', 'Nieuw dak, plat dak EPDM, dakisolatie. Eigen ploeg, 10j garantie, premiedossier inbegrepen.', true);
+    setMeta('og:title', local
+      ? `Dakwerker ${local.name} — Gratis dakinspectie | AB Bouw Groep`
+      : 'Dakwerker Mechelen & Antwerpen — Gratis dakinspectie | AB Bouw Groep', true);
+    setMeta('og:description', local
+      ? `Pannendak, plat dak EPDM en dakisolatie in ${local.name}. Eigen ploeg, 10j garantie, premiedossier inbegrepen.`
+      : 'Nieuw dak, plat dak EPDM, dakisolatie. Eigen ploeg, 10j garantie, premiedossier inbegrepen.', true);
     setMeta('og:type', 'website', true);
     setMeta('og:locale', 'nl_BE', true);
-    setMeta('og:url', 'https://abgroep.be/lp/dakwerken', true);
+    setMeta('og:url', pageUrl, true);
     setMeta('twitter:card', 'summary_large_image');
 
     // Canonical + hreflang
@@ -1628,9 +1638,9 @@ export default function LpDakwerken() {
       if (!el) { el = document.createElement('link'); el.setAttribute('rel', rel); if (hreflang) el.setAttribute('hreflang', hreflang); document.head.appendChild(el); }
       el.setAttribute('href', href);
     };
-    setLink('canonical', 'https://abgroep.be/lp/dakwerken');
-    setLink('alternate', 'https://abgroep.be/lp/dakwerken', 'nl-BE');
-    setLink('alternate', 'https://abgroep.be/lp/dakwerken', 'x-default');
+    setLink('canonical', pageUrl);
+    setLink('alternate', pageUrl, 'nl-BE');
+    setLink('alternate', pageUrl, 'x-default');
 
     // Schema.org JSON-LD: RoofingContractor + FAQ + Service
     const schemaId = 'lp-dak-schema';
@@ -1682,10 +1692,16 @@ export default function LpDakwerken() {
         },
         {
           "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://abgroep.be" },
-            { "@type": "ListItem", "position": 2, "name": "Dakwerken", "item": "https://abgroep.be/lp/dakwerken" }
-          ]
+          "itemListElement": local
+            ? [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://abgroep.be" },
+              { "@type": "ListItem", "position": 2, "name": "Dakwerker", "item": "https://abgroep.be/dakwerken" },
+              { "@type": "ListItem", "position": 3, "name": `Dakwerker ${local.name}`, "item": pageUrl }
+            ]
+            : [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://abgroep.be" },
+              { "@type": "ListItem", "position": 2, "name": "Dakwerken", "item": "https://abgroep.be/lp/dakwerken" }
+            ]
         },
         {
           "@type": "Service",
@@ -1722,7 +1738,7 @@ export default function LpDakwerken() {
 
     const prev = document.body.className;
     document.body.className = 'lp-page is-subpage';
-    try { sessionStorage.setItem('ab_last_lp', '/lp/dakwerken'); } catch {}
+    try { sessionStorage.setItem('ab_last_lp', local ? `/lokaal/dakwerker-${local.slug}` : '/lp/dakwerken'); } catch {}
     const style = document.createElement('style');
     style.textContent = SHELL_STYLE + LP_EXTRA;
     document.head.appendChild(style);
@@ -1792,7 +1808,7 @@ export default function LpDakwerken() {
         gemeente: (fd.get('gemeente') as string) || undefined,
         type_werk: ((fd.get('type_dak') as string) || 'ab_dakwerken'),
         aanvullende_info: (fd.get('aanvullende_info') as string) || undefined,
-        bron_lead: 'ads:dakwerken',
+        bron_lead: local ? `seo:dakwerker-${local.slug}` : 'ads:dakwerken',
       });
       if (result.ok) {
         wrap.classList.add('is-success');
@@ -1815,5 +1831,14 @@ export default function LpDakwerken() {
 
   useAbBouwInteractions();
 
-  return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
+  const renderedHtml = local
+    ? HTML
+        .replace('AB Dakwerken · Willebroek', `AB Dakwerken · ${local.name}`)
+        .replace(
+          'in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
+          `in ${local.name} en de regio.`
+        )
+    : HTML;
+
+  return <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />;
 }
