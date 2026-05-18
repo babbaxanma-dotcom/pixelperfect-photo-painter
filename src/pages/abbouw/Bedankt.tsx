@@ -8,12 +8,42 @@ import realisatiesImg from '@/assets/home/hero-realisaties.jpg';
 import werkwijzeImg from '@/assets/home/hero-werkwijze.jpg';
 import premieImg from '@/assets/home/blog-trends-2026.jpg';
 
+import revStijn from '@/assets/reviews/stijn.jpg';
+import revLieve from '@/assets/reviews/lieve.jpg';
+import revYusuf from '@/assets/reviews/yusuf.jpg';
+import revJasmien from '@/assets/reviews/jasmien.jpg';
+import revDimitri from '@/assets/reviews/dimitri.jpg';
+import revHicham from '@/assets/reviews/hicham.jpg';
+import revGreet from '@/assets/reviews/greet.jpg';
+import revAhmed from '@/assets/reviews/ahmed.jpg';
+import revTine from '@/assets/reviews/tine.jpg';
+
 type ServiceKey = 'dakwerken' | 'gevel' | 'default';
 
-const COPY: Record<ServiceKey, { label: string; expert: string }> = {
-  dakwerken: { label: 'dakwerken', expert: 'dakdekker' },
-  gevel:     { label: 'gevelrenovatie', expert: 'gevel-specialist' },
-  default:   { label: 'aanvraag', expert: 'projectleider' },
+type Review = { name: string; role: string; img: string; text: string };
+
+const LABEL: Record<ServiceKey, string> = {
+  dakwerken: 'dakwerken',
+  gevel: 'gevelrenovatie',
+  default: 'aanvraag',
+};
+
+const REVIEWS: Record<ServiceKey, Review[]> = {
+  dakwerken: [
+    { name: 'Stijn Devos', role: 'Pannendak · Mechelen', img: revStijn, text: 'Onze rijwoning had een dak van 1962, lekte op drie plaatsen. AB Bouw stripte alles op één maandag en lag vrijdag waterdicht. Koramic Aleonard pannen, sarkingisolatie, nieuwe goten. Premie van €4.200 een maand na oplevering op de rekening.' },
+    { name: 'Lieve Hermans', role: 'Plat dak EPDM · Antwerpen', img: revLieve, text: 'Vrijdag een natte vlek op het plafond, zaterdag belde een van de werfleiders me terug. Maandag stond de ploeg op het dak. 70 m² EPDM in één stuk gelegd, geen naden, geen sjoemel. Factuur klopte tot op de euro met de offerte.' },
+    { name: 'Yusuf Demir', role: 'Sarkingisolatie · Bornem', img: revYusuf, text: 'Sarkingisolatie boven de bestaande kepers, daarna nieuwe Koramic pannen. Werf was elke vrijdagavond opgeruimd. Foto-update via app, je wist op elk moment waar we stonden in de planning.' },
+  ],
+  gevel: [
+    { name: 'Jasmien De Backer', role: 'Witte crepi · Mechelen', img: revJasmien, text: 'Onze rijwoning had een vermoeide bezetting uit de jaren ’80. Nu een spierwitte crepi-gevel die je zo van een interieurmagazine plukt. Buren komen vragen wie het werk gedaan heeft. Strak, proper, op tijd opgeleverd.' },
+    { name: 'Dimitri Maes', role: 'Crepi + ETICS-isolatie · Antwerpen', img: revDimitri, text: 'Halfopen woning uit 1968 die nooit was geïsoleerd. 16 cm EPS buitenisolatie plus crepi. Comfort-sprong is enorm: geen koude muren meer in de winter. Premie van €5.400 zonder problemen uitbetaald.' },
+    { name: 'Hicham Bouali', role: 'Gevelisolatie · Mechelen', img: revHicham, text: 'Eerste aannemer wilde alleen crepi over de bestaande gevel. AB Bouw legde uit waarom ETICS-isolatie nodig was. Hogere prijs, veel betere oplossing. EPC en comfort beide vlot vooruit. Geen spijt van die keuze.' },
+  ],
+  default: [
+    { name: 'Greet Vermeiren', role: 'Totaalrenovatie · Lier', img: revGreet, text: 'Volledige renovatie van A tot Z. Eén aanspreekpunt voor alles, planning klopte tot op de dag, eindfactuur exact zoals offerte. Geen verrassingen, geen meerwerk-trucs.' },
+    { name: 'Ahmed Karimi', role: 'Badkamerrenovatie · Vilvoorde', img: revAhmed, text: 'Inloopdouche met microcement. Werfleider belde elke vrijdag voor de week-update. Klaar binnen de afgesproken termijn, propere werf, vakwerk tot in de laatste voeg.' },
+    { name: 'Tine Maes', role: 'Aanbouw · Bonheiden', img: revTine, text: 'Aanbouw van 28 m² met zinkwerk en grote raampartij. Architectenplan werd 1-op-1 uitgevoerd, de ploeg dacht actief mee bij detail-uitwerking. Erg tevreden over de afwerking.' },
+  ],
 };
 
 export default function Bedankt() {
@@ -23,7 +53,8 @@ export default function Bedankt() {
     param === 'dakwerken' ? 'dakwerken' :
     param === 'gevel' ? 'gevel' :
     'default';
-  const cfg = COPY[service];
+  const label = LABEL[service];
+  const reviews = REVIEWS[service];
 
   useEffect(() => {
     document.title = 'Bedankt voor uw aanvraag | AB Bouw Groep';
@@ -46,15 +77,16 @@ export default function Bedankt() {
   const html = `
 ${buildNav('home')}
 
-<section class="lf-section ab-bedankt-intro">
+<section class="ab-bedankt-hero">
+  <div class="ab-bedankt-hero-bg" aria-hidden="true"></div>
   <div class="wrap">
     <div class="ab-bedankt-card" data-reveal>
       <div class="ab-bedankt-check" aria-hidden="true">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
       </div>
       <span class="lf-eyebrow">Aanvraag binnen</span>
-      <h1 class="lf-h2 ab-bedankt-h1">Bedankt — we zijn met uw<br/><span class="ab-mark">${cfg.label}</span>-aanvraag bezig.</h1>
-      <p class="lf-lede ab-bedankt-lede">Een van onze ${cfg.expert}s neemt binnen één werkdag persoonlijk contact met u op. We luisteren naar wat u nodig heeft en plannen samen een gratis plaatsbezoek in op een moment dat u past.</p>
+      <h1 class="lf-h2 ab-bedankt-h1">Bedankt — we zijn met uw<br/><span class="ab-mark">${label}</span>-aanvraag bezig.</h1>
+      <p class="lf-lede ab-bedankt-lede">Een van onze projectleiders neemt binnen één werkdag persoonlijk contact met u op. We luisteren naar wat u nodig heeft en plannen samen een gratis plaatsbezoek in op een moment dat u past.</p>
       <div class="ab-bedankt-actions">
         <a href="${CONTACT.phone.href}" class="lf-cta-pill">
           <span>Liever direct bellen — ${CONTACT.phone.spaced}</span>
@@ -88,7 +120,7 @@ ${buildNav('home')}
       <div class="ab-flow-card" data-reveal data-reveal-delay="2">
         <div class="ab-flow-num">FASE 03</div>
         <h5>Plaatsbezoek</h5>
-        <p>Binnen vijf werkdagen. Onze ${cfg.expert} komt langs, meet op, neemt foto's en bespreekt opties. Vrijblijvend, geen verplichting.</p>
+        <p>Binnen vijf werkdagen. Onze projectleider komt langs, meet op, neemt foto's en bespreekt opties. Vrijblijvend, geen verplichting.</p>
       </div>
       <div class="ab-flow-card" data-reveal data-reveal-delay="3">
         <div class="ab-flow-num">FASE 04</div>
@@ -99,7 +131,37 @@ ${buildNav('home')}
   </div>
 </section>
 
-<section class="lf-section">
+<section class="lf-section ab-bedankt-rev-section">
+  <div class="wrap">
+    <div class="lf-section-head centered" data-reveal>
+      <span class="lf-eyebrow">Recent over ons</span>
+      <h2 class="lf-h2">Wat klanten zeggen<br/>na hun project.</h2>
+    </div>
+    <div class="ab-bedankt-rev-grid">
+      ${reviews.map((r, i) => `
+        <article class="ab-bedankt-rev" data-reveal data-reveal-delay="${i}">
+          <div class="ab-bedankt-rev-stars" aria-label="5 van 5 sterren">
+            <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
+            <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
+            <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
+            <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
+            <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
+          </div>
+          <p>${r.text}</p>
+          <div class="ab-bedankt-rev-foot">
+            <img src="${r.img}" alt="${r.name}" loading="lazy"/>
+            <div>
+              <strong>${r.name}</strong>
+              <span>${r.role}</span>
+            </div>
+          </div>
+        </article>
+      `).join('')}
+    </div>
+  </div>
+</section>
+
+<section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="ab-quote" data-reveal>
       "Een goede renovatie begint met luisteren. Daarom plannen we eerst een rustig telefoontje en pas dan een plaatsbezoek. Geen verkoperstrucs, geen drukte — gewoon kijken wat u nodig heeft en of wij dat correct voor u kunnen uitvoeren."
@@ -108,7 +170,7 @@ ${buildNav('home')}
   </div>
 </section>
 
-<section class="lf-section lf-tone-soft">
+<section class="lf-section">
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Schriftelijk vastgelegd</span>
@@ -139,7 +201,7 @@ ${buildNav('home')}
   </div>
 </section>
 
-<section class="lf-section">
+<section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Even tijd te doden?</span>
@@ -181,20 +243,96 @@ ${FOOTER}
 }
 
 const BEDANKT_CSS = `
-.ab-bedankt-intro { padding-top: 140px; padding-bottom: 56px; }
+/* HERO — soft gradient bg, big visible green check */
+.ab-bedankt-hero {
+  position: relative;
+  padding: 140px 0 80px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.ab-bedankt-hero-bg {
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(46,164,102,0.10) 0%, rgba(46,164,102,0) 55%),
+    linear-gradient(180deg, #f7f4ef 0%, #fff 70%);
+}
 .ab-bedankt-card {
-  max-width: 760px; margin: 0 auto; text-align: center;
+  max-width: 780px; margin: 0 auto; text-align: center;
 }
 .ab-bedankt-check {
-  width: 64px; height: 64px; border-radius: 50%;
-  background: var(--accent); color: #fff;
+  width: 84px; height: 84px; border-radius: 50%;
+  background: #2ea466;
   display: inline-flex; align-items: center; justify-content: center;
-  margin: 0 auto 22px;
-  box-shadow: 0 12px 28px -10px rgba(217, 140, 3, 0.45);
+  margin: 0 auto 26px;
+  box-shadow:
+    0 0 0 8px rgba(46,164,102,0.12),
+    0 16px 36px -12px rgba(46,164,102,0.45);
+  animation: bedanktPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
-.ab-bedankt-h1 { margin-top: 12px; }
-.ab-bedankt-lede { margin: 18px auto 28px; max-width: 600px; }
+@keyframes bedanktPop {
+  0%   { transform: scale(0.3); opacity: 0; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+.ab-bedankt-h1 { margin-top: 14px; }
+.ab-bedankt-lede { margin: 20px auto 30px; max-width: 620px; }
 .ab-bedankt-actions { display: flex; flex-direction: column; align-items: center; gap: 10px; }
 .ab-bedankt-actions .lf-cta-pill { display: inline-flex; }
 .ab-bedankt-sub { font-size: 12.5px; color: var(--ink-mute); }
+
+/* REVIEWS — clean cards, navy text, orange stars */
+.ab-bedankt-rev-section { padding: 80px 0; }
+.ab-bedankt-rev-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 36px;
+}
+.ab-bedankt-rev {
+  background: #fff;
+  border: 1px solid var(--ink-line-soft);
+  border-radius: 16px;
+  padding: 28px 26px;
+  display: flex; flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.ab-bedankt-rev:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px -16px rgba(10,22,40,0.14);
+}
+.ab-bedankt-rev-stars {
+  display: inline-flex; gap: 3px;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+.ab-bedankt-rev p {
+  font-size: 14px; line-height: 1.6; color: var(--ink-soft);
+  margin: 0 0 22px;
+  flex: 1;
+  font-style: italic;
+}
+.ab-bedankt-rev-foot {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+  padding-top: 18px;
+  border-top: 1px solid var(--ink-line-soft);
+}
+.ab-bedankt-rev-foot img {
+  width: 44px; height: 44px; border-radius: 50%; object-fit: cover;
+}
+.ab-bedankt-rev-foot strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--navy);
+  font-weight: 600;
+}
+.ab-bedankt-rev-foot span {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-mute);
+  margin-top: 2px;
+}
+@media (max-width: 900px) { .ab-bedankt-rev-grid { grid-template-columns: 1fr; gap: 14px; } }
 `;
