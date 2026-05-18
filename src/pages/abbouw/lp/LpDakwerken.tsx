@@ -4,6 +4,7 @@ import { SHELL_STYLE } from '../_shell';
 import { submitLead } from '@/lib/leads';
 import { BLOGS } from '@/data/blogs';
 import type { Gemeente } from '@/data/gemeentes';
+import { CONTACT } from '@/data/contact';
 
 // Filter blogs op dakwerken-relevante tags zodat alleen relevante content
 // op de LP verschijnt. Linkjes openen in een NIEUWE tab zodat de bezoeker
@@ -1034,8 +1035,8 @@ const HTML = `
           <span>Gratis dakinspectie aanvragen</span>
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </a>
-        <a href="tel:+32470634413" class="lf-hero-ghost">
-          <span>Bel +32 470 63 44 13</span>
+        <a href="${CONTACT.phone.href}" class="lf-hero-ghost">
+          <span>Bel ${CONTACT.phone.spaced}</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -1429,7 +1430,7 @@ const HTML = `
         <strong>Eerlijk advies, op uw eigen tempo.</strong>
         <span>Eén van onze experts komt langs en zegt u eerlijk wat moet en wat kan wachten. Vrijblijvend en gratis.</span>
       </div>
-      <a href="tel:+32470634413" class="lp-cta-banner-cta">
+      <a href="${CONTACT.phone.href}" class="lp-cta-banner-cta">
         Bel een expert direct
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       </a>
@@ -1569,7 +1570,7 @@ const HTML = `
 <section class="lp-trust-foot">
   <div class="wrap">
     <div><strong>AB Bouw Groep</strong>August van Landeghemstraat 65<br/>2830 Willebroek</div>
-    <div><strong>Telefoon</strong><a href="tel:+32470634413">+32 470 63 44 13</a></div>
+    <div><strong>Telefoon</strong><a href="${CONTACT.phone.href}">${CONTACT.phone.spaced}</a></div>
     <div><strong>Email</strong><a href="mailto:info@abgroep.be">info@abgroep.be</a></div>
     <div><strong>Erkenningen</strong>VCA*-gecertificeerd<br/>Lid Bouwunie</div>
   </div>
@@ -1580,7 +1581,7 @@ const HTML = `
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
 </a>
 
-<a href="tel:+32470634413" class="lf-fab-call" aria-label="Bel ons direct">
+<a href="${CONTACT.phone.href}" class="lf-fab-call" aria-label="Bel ons direct">
   <span class="lf-fab-pulse"></span>
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
 </a>
@@ -1641,7 +1642,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
           "@id": "https://abgroep.be/#organization",
           "name": "AB Bouw Groep",
           "url": "https://abgroep.be",
-          "telephone": "+32470634413",
+          "telephone": CONTACT.phone.e164,
           "email": "info@abgroep.be",
           "address": {
             "@type": "PostalAddress",
@@ -1801,7 +1802,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
         return;
       } else {
         wrap.classList.add('is-error');
-        if (errBox) errBox.textContent = 'Er ging iets mis. Bel ons gerust op +32 470 63 44 13.';
+        if (errBox) errBox.textContent = `Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced}.`;
         if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Vraag gratis dakinspectie aan'; }
       }
     };

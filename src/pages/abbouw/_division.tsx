@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { buildNav, buildHero, buildCta, FOOTER, SHELL_STYLE } from './_shell';
+import { CONTACT } from '@/data/contact';
 
 export type DivisionConfig = {
   slug: string;
@@ -97,7 +98,7 @@ ${buildHero({
       <div class="lf-faq-side" data-reveal>
         <span class="lf-eyebrow">Veelgestelde vragen</span>
         <h2 class="lf-h2">Antwoorden op<br/>uw vragen.</h2>
-        <p class="lf-lede">Staat uw vraag er niet tussen? Bel <a href="tel:+32470634413" style="color:var(--accent);font-weight:600;">+32 470 63 44 13</a>. U krijgt binnen 24 uur antwoord van een vakmens.</p>
+        <p class="lf-lede">Staat uw vraag er niet tussen? Bel <a href="${CONTACT.phone.href}" style="color:var(--accent);font-weight:600;">${CONTACT.phone.spaced}</a>. U krijgt binnen 24 uur antwoord van een vakmens.</p>
         <a href="/contact" class="lf-cta-pill">
           <span>Stel uw vraag</span>
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>

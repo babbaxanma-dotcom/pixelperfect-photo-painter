@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { buildNav, FOOTER, SHELL_STYLE } from './_shell';
+import { CONTACT } from '@/data/contact';
 
 import realisatiesImg from '@/assets/home/hero-realisaties.jpg';
 import werkwijzeImg from '@/assets/home/hero-werkwijze.jpg';
@@ -55,8 +56,8 @@ ${buildNav('home')}
       <h1 class="lf-h2 ab-bedankt-h1">Bedankt — we zijn met uw<br/><span class="ab-mark">${cfg.label}</span>-aanvraag bezig.</h1>
       <p class="lf-lede ab-bedankt-lede">Een van onze ${cfg.expert}s neemt binnen één werkdag persoonlijk contact met u op. We luisteren naar wat u nodig heeft en plannen samen een gratis plaatsbezoek in op een moment dat u past.</p>
       <div class="ab-bedankt-actions">
-        <a href="tel:+32470634413" class="lf-cta-pill">
-          <span>Liever direct bellen — +32 470 63 44 13</span>
+        <a href="${CONTACT.phone.href}" class="lf-cta-pill">
+          <span>Liever direct bellen — ${CONTACT.phone.spaced}</span>
           <span class="lf-cta-pill-arrow">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </span>

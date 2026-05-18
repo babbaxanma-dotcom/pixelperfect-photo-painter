@@ -2,6 +2,8 @@
 // Editorial / Recotex-stijl conversion-pagina: één duidelijk doel = lead.
 // Geen nav, geen footer-navigatie, alleen sticky bel + offerte CTA.
 
+import { CONTACT } from '@/data/contact';
+
 export const LP_STYLE = `
 :root {
   --lp-navy: #0a1628;
@@ -704,7 +706,7 @@ export const lpTrustFoot = `
     </div>
     <div>
       <strong>Telefoon</strong>
-      <a href="tel:+32470634413">+32 470 63 44 13</a>
+      <a href="${CONTACT.phone.href}">${CONTACT.phone.spaced}</a>
     </div>
     <div>
       <strong>Email</strong>

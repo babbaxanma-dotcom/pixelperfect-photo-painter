@@ -1,6 +1,7 @@
 // Shared shell (nav, hero helper, footer, sticky mobile bar) + full lf-* styling
 // reused across every AB Bouw subpage so the look is identical to the Home page.
 import logo from '@/assets/home/logo.png';
+import { CONTACT } from '@/data/contact';
 
 type NavKey = 'home' | 'over' | 'diensten' | 'werkwijze' | 'realisaties' | 'blog' | 'contact';
 
@@ -23,9 +24,9 @@ export const buildNav = (active: NavKey) => `
       <li><a href="/blog"${isActive('blog', active)}>Blog</a></li>
       <li><a href="/contact"${isActive('contact', active)}>Contact</a></li>
     </ul>
-    <a href="tel:+32470634413" class="lf-nav-phone">
+    <a href="${CONTACT.phone.href}" class="lf-nav-phone">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      +32 470 63 44 13
+      ${CONTACT.phone.spaced}
     </a>
     <button class="mobile-toggle lf-mobile-toggle" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
   </div>
@@ -45,11 +46,11 @@ export const buildNav = (active: NavKey) => `
     <a href="/bad">AB Bad &amp; Wellness</a><a href="/gevel">AB Gevelbekleding</a>
   </div>
   <div class="mm-footer">
-    <a href="tel:+32470634413" class="mm-foot-link">
+    <a href="${CONTACT.phone.href}" class="mm-foot-link">
       <span class="mm-foot-ico" aria-hidden="true">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       </span>
-      <span>+32 470 63 44 13</span>
+      <span>${CONTACT.phone.spaced}</span>
     </a>
     <a href="mailto:info@abgroep.be" class="mm-foot-link">
       <span class="mm-foot-ico" aria-hidden="true">
@@ -145,7 +146,7 @@ export const FOOTER = `
         <li><a href="/contact">Contact</a></li>
       </ul></div>
       <div class="footer-col"><h5>Contact</h5><ul>
-        <li><a href="tel:+32470634413">+32 470 63 44 13</a></li>
+        <li><a href="${CONTACT.phone.href}">${CONTACT.phone.spaced}</a></li>
         <li><a href="mailto:info@abgroep.be">info@abgroep.be</a></li>
         <li><a>Willebroek, België</a></li>
         <li><a>Ma t.e.m. vr · 8u tot 18u</a></li>
@@ -161,7 +162,7 @@ export const FOOTER = `
 </footer>
 
 <div class="lf-mobile-bar">
-  <a href="tel:+32470634413" class="lf-mobile-bar-btn lf-mobile-bar-call" aria-label="Bel ons direct">
+  <a href="${CONTACT.phone.href}" class="lf-mobile-bar-btn lf-mobile-bar-call" aria-label="Bel ons direct">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
     <span class="lf-mobile-bar-call-label">Bel ons</span>
   </a>
@@ -171,7 +172,7 @@ export const FOOTER = `
   </a>
 </div>
 
-<a href="tel:+32470634413" class="lf-fab-call" aria-label="Bel ons direct">
+<a href="${CONTACT.phone.href}" class="lf-fab-call" aria-label="Bel ons direct">
   <span class="lf-fab-pulse"></span>
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
 </a>

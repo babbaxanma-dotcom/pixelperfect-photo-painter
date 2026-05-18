@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { buildNav, FOOTER, SHELL_STYLE } from './_shell';
+import { CONTACT } from '@/data/contact';
 
 const NAV = buildNav('home');
 
@@ -79,7 +80,7 @@ ${NAV}
       </div>
 
       <div style="background: var(--bg-soft); border-radius: var(--r-md); padding: 28px;">
-        <p style="color: var(--ink-soft); font-size: 13.5px; line-height: 1.7;"><strong>Vragen over deze voorwaarden?</strong> Neem contact op via <a href="mailto:info@abgroep.be" style="color: var(--accent);">info@abgroep.be</a> of <a href="tel:+32470634413" style="color: var(--accent);">+32 470 63 44 13</a>.</p>
+        <p style="color: var(--ink-soft); font-size: 13.5px; line-height: 1.7;"><strong>Vragen over deze voorwaarden?</strong> Neem contact op via <a href="mailto:info@abgroep.be" style="color: var(--accent);">info@abgroep.be</a> of <a href="${CONTACT.phone.href}" style="color: var(--accent);">${CONTACT.phone.spaced}</a>.</p>
       </div>
 
     </div>

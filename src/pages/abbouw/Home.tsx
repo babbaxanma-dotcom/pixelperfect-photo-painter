@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { submitLead } from '@/lib/leads';
+import { CONTACT } from '@/data/contact';
 
 import hero from '@/assets/home/hero.jpg';
 import hero2 from '@/assets/home/hero-2.jpg';
@@ -61,9 +62,9 @@ const HTML = (i: Record<string, string>) => `
       <li><a href="/blog">Blog</a></li>
       <li><a href="/contact">Contact</a></li>
     </ul>
-    <a href="tel:+32470634413" class="lf-nav-phone">
+    <a href="${CONTACT.phone.href}" class="lf-nav-phone">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      +32 470 63 44 13
+      ${CONTACT.phone.spaced}
     </a>
     <button class="mobile-toggle lf-mobile-toggle" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
   </div>
@@ -78,11 +79,11 @@ const HTML = (i: Record<string, string>) => `
     <a href="/werkwijze">Werkwijze</a><a href="/realisaties">Realisaties</a><a href="/blog">Blog</a><a href="/contact">Contact</a>
   </div>
   <div class="mm-footer">
-    <a href="tel:+32470634413" class="mm-foot-link">
+    <a href="${CONTACT.phone.href}" class="mm-foot-link">
       <span class="mm-foot-ico" aria-hidden="true">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       </span>
-      <span>+32 470 63 44 13</span>
+      <span>${CONTACT.phone.spaced}</span>
     </a>
     <a href="mailto:info@abgroep.be" class="mm-foot-link">
       <span class="mm-foot-ico" aria-hidden="true">
@@ -273,7 +274,7 @@ const HTML = (i: Record<string, string>) => `
           <span>Vraag mijn gratis offerte aan</span>
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </button>
-        <p class="lf-form-foot">Of bel direct <a href="tel:+32470634413">+32 470 63 44 13</a></p>
+        <p class="lf-form-foot">Of bel direct <a href="${CONTACT.phone.href}">${CONTACT.phone.spaced}</a></p>
       </form>
     </aside>
 
@@ -702,7 +703,7 @@ const HTML = (i: Record<string, string>) => `
       <div class="lf-faq-side" data-reveal>
         <span class="lf-eyebrow">Veelgestelde vragen</span>
         <h2 class="lf-h2">Antwoorden op de<br>vragen die u nu heeft.</h2>
-        <p class="lf-lede">Staat uw vraag er niet tussen? Bel <a href="tel:+32470634413" style="color: var(--accent); font-weight:600;">+32 470 63 44 13</a> of mail <a href="mailto:info@abgroep.be" style="color: var(--accent); font-weight:600;">info@abgroep.be</a>. U krijgt binnen 24 uur antwoord van een vakmens, geen callcenter.</p>
+        <p class="lf-lede">Staat uw vraag er niet tussen? Bel <a href="${CONTACT.phone.href}" style="color: var(--accent); font-weight:600;">${CONTACT.phone.spaced}</a> of mail <a href="mailto:info@abgroep.be" style="color: var(--accent); font-weight:600;">info@abgroep.be</a>. U krijgt binnen 24 uur antwoord van een vakmens, geen callcenter.</p>
         <a href="/contact" class="lf-cta-pill">
           <span>Stel uw vraag</span>
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
@@ -754,7 +755,7 @@ const HTML = (i: Record<string, string>) => `
         <li><a href="/contact">Contact</a></li>
       </ul></div>
       <div class="footer-col"><h5>Contact</h5><ul>
-        <li><a href="tel:+32470634413">+32 470 63 44 13</a></li>
+        <li><a href="${CONTACT.phone.href}">${CONTACT.phone.spaced}</a></li>
         <li><a href="mailto:info@abgroep.be">info@abgroep.be</a></li>
         <li><a>Willebroek, België</a></li>
         <li><a>Ma t.e.m. vr · 8u tot 18u</a></li>
@@ -770,7 +771,7 @@ const HTML = (i: Record<string, string>) => `
 </footer>
 
 <!-- Floating mobile call button -->
-<a href="tel:+32470634413" class="lf-fab-call" aria-label="Bel ons">
+<a href="${CONTACT.phone.href}" class="lf-fab-call" aria-label="Bel ons">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
   <span>Bel ons</span>
 </a>

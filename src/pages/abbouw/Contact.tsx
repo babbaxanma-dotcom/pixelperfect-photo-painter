@@ -4,6 +4,7 @@ import { buildNav, buildHero, FOOTER, SHELL_STYLE } from './_shell';
 import hero from '@/assets/home/hero-contact.jpg';
 import regionImg from '@/assets/home/region-coverage.jpg';
 import { submitLead, divisieKey } from '@/lib/leads';
+import { CONTACT } from '@/data/contact';
 
 const HTML = `
 ${buildNav('contact')}
@@ -13,7 +14,7 @@ ${buildHero({
   eyebrow: 'Contact',
   title: 'Laten we<br/>kennismaken.',
   lede: 'Vertel ons kort over uw project, we reageren binnen één werkdag en plannen indien gewenst een gratis plaatsbezoek.',
-  primary: { label: 'Bel +32 470 63 44 13', href: 'tel:+32470634413' },
+  primary: { label: 'Bel ${CONTACT.phone.spaced}', href: '${CONTACT.phone.href}' },
   secondary: { label: 'info@abgroep.be →', href: 'mailto:info@abgroep.be' },
 })}
 
@@ -28,7 +29,7 @@ ${buildHero({
         <div class="lf-contact-info">
           <div class="lf-contact-info-item">
             <div class="lf-contact-info-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-            <div class="lf-contact-info-text"><strong>TELEFOON</strong><a href="tel:+32470634413">+32 470 63 44 13</a></div>
+            <div class="lf-contact-info-text"><strong>TELEFOON</strong><a href="${CONTACT.phone.href}">${CONTACT.phone.spaced}</a></div>
           </div>
           <div class="lf-contact-info-item">
             <div class="lf-contact-info-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></div>
@@ -137,7 +138,7 @@ ${buildHero({
     <div class="lf-support-grid" style="grid-template-columns: repeat(4, 1fr);">
       <div class="lf-support-card" data-reveal>
         <div class="lf-support-meta"><span>01</span> WhatsApp</div>
-        <h5>+32 470 63 44 13</h5>
+        <h5>${CONTACT.phone.spaced}</h5>
         <p>Stuur een berichtje, eventueel met foto van wat u laat doen. Praktisch voor korte vragen of een snelle prijsindicatie.</p>
       </div>
       <div class="lf-support-card" data-reveal data-reveal-delay="1">
@@ -356,7 +357,7 @@ export default function Contact() {
         if (btnLabel) btnLabel.textContent = 'Verstuur aanvraag';
         if (errBox) {
           errBox.hidden = false;
-          errBox.textContent = 'Er ging iets mis bij het versturen. Bel ons gerust op +32 470 63 44 13 of mail naar info@abgroep.be.';
+          errBox.textContent = `Er ging iets mis bij het versturen. Bel ons gerust op ${CONTACT.phone.spaced} of mail naar ${CONTACT.email}.`;
         }
       }
     };
