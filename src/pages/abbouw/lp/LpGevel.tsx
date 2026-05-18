@@ -1254,7 +1254,7 @@ const HTML = `
 
 <section class="lp-trust-foot">
   <div class="wrap">
-    <div><strong>AB Bouw Groep</strong>August van Landeghemstraat 65<br/>2830 Willebroek</div>
+    <div><strong>AB Bouw Groep</strong>${CONTACT.address.street}<br/>${CONTACT.address.postcode} ${CONTACT.address.city}</div>
     <div><strong>Telefoon</strong><a href="${CONTACT.phone.href}">${CONTACT.phone.spaced}</a></div>
     <div><strong>Email</strong><a href="mailto:info@abgroep.be">info@abgroep.be</a></div>
     <div><strong>Erkenningen</strong>VCA*-gecertificeerd<br/>Lid Bouwunie</div>
@@ -1331,9 +1331,9 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
           "email": "info@abgroep.be",
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "August van Landeghemstraat 65",
-            "postalCode": "2830",
-            "addressLocality": "Willebroek",
+            "streetAddress": CONTACT.address.street,
+            "postalCode": CONTACT.address.postcode,
+            "addressLocality": CONTACT.address.city,
             "addressCountry": "BE"
           },
           "areaServed": [

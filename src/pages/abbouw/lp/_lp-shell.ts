@@ -702,7 +702,7 @@ export const lpTrustFoot = `
   <div class="lp-trust-foot-grid">
     <div>
       <strong>AB Bouw Groep</strong>
-      Industrieweg 14<br/>2830 Willebroek
+      ${CONTACT.address.street}<br/>${CONTACT.address.postcode} ${CONTACT.address.city}
     </div>
     <div>
       <strong>Telefoon</strong>

@@ -1,4 +1,6 @@
 // Belgian gemeentes binnen 40km Mechelen — local SEO landing page data
+import { CONTACT } from './contact';
+
 export interface Gemeente {
   slug: string;          // URL slug: lowercase, no spaces
   name: string;          // Display name
@@ -87,7 +89,7 @@ export const GEMEENTES: Record<string, Gemeente> = {
     lat: 51.0561,
     lng: 4.3631,
     neighborhoods: ["Tisselt", "Heindonk", "Klein-Willebroek"],
-    intro: "Willebroek is ons kantoor — August van Landeghemstraat 65. We werken hier dagelijks, kennen elke straat, elk type woning, elke deelgemeente.",
+    intro: `Willebroek is ons kantoor — ${CONTACT.address.street}. We werken hier dagelijks, kennen elke straat, elk type woning, elke deelgemeente.`,
     highlights: [
       "Hoofdkantoor + werkplaats in Willebroek",
       "Werkkracht binnen 15 min ter plaatse — heel Willebroek + Tisselt + Heindonk",

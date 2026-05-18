@@ -25,7 +25,7 @@ ${NAV}
 
       <div>
         <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 1, Toepassingsgebied</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Deze algemene voorwaarden zijn van toepassing op alle offertes, overeenkomsten en uitvoering van werken door AB Bouw Groep (BTW BE 0XXX.XXX.XXX), gevestigd te August van Landeghemstraat 65, 2830 Willebroek. Door het aanvaarden van een offerte aanvaardt de opdrachtgever deze voorwaarden in hun geheel.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7;">Deze algemene voorwaarden zijn van toepassing op alle offertes, overeenkomsten en uitvoering van werken door AB Bouw Groep (BTW BE 0XXX.XXX.XXX), gevestigd te ${CONTACT.address.full}. Door het aanvaarden van een offerte aanvaardt de opdrachtgever deze voorwaarden in hun geheel.</p>
       </div>
 
       <div>

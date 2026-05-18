@@ -26,5 +26,7 @@ export const CONTACT = {
     postcode: '2830',
     city: 'Willebroek',
     country: 'BE',
+    /** "August van Landeghemstraat 65, 2830 Willebroek" — one-line full */
+    full: 'August van Landeghemstraat 65, 2830 Willebroek',
   },
 };
