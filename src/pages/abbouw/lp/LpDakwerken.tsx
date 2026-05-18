@@ -1781,6 +1781,26 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
       if (errBox) errBox.textContent = '';
       wrap.classList.remove('is-error');
       const fd = new FormData(form);
+      // Sub-service label voor GHL Task-omschrijving (GHL "Type werk" SINGLE_OPTIONS
+      // accepteert enkel divisie-labels, dus sub-service hier in aanvullende_info)
+      const TYPE_DAK_LABELS: Record<string, string> = {
+        pannendak: 'Hellend dak (pannen)',
+        natuurleien: 'Hellend dak (natuurleien)',
+        plat_dak_epdm: 'Plat dak — EPDM',
+        plat_dak_roofing: 'Plat dak — bitumen / roofing',
+        dakvenster: 'Dakvenster (Velux)',
+        zinkwerk: 'Zinkwerk / dakgoten',
+        isolatie: 'Dakisolatie',
+        lekkage: 'Lekkage / stormschade',
+        anders: 'Anders / weet niet zeker',
+      };
+      const typeDakRaw = (fd.get('type_dak') as string) || '';
+      const subService = TYPE_DAK_LABELS[typeDakRaw] || typeDakRaw;
+      const userInfo = ((fd.get('aanvullende_info') as string) || '').trim();
+      const combinedInfo = subService
+        ? `Type dakwerk: ${subService}${userInfo ? `\n\n${userInfo}` : ''}`
+        : (userInfo || undefined);
+
       const result = await submitLead({
         source: 'landing_page',
         landing_division: 'ab_dakwerken',
@@ -1792,8 +1812,8 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
         straat: (fd.get('straat') as string) || undefined,
         postcode: (fd.get('postcode') as string) || undefined,
         gemeente: (fd.get('gemeente') as string) || undefined,
-        type_werk: ((fd.get('type_dak') as string) || 'ab_dakwerken'),
-        aanvullende_info: (fd.get('aanvullende_info') as string) || undefined,
+        type_werk: 'AB Dakwerken',
+        aanvullende_info: combinedInfo,
         bron_lead: local ? `seo:dakwerker-${local.slug}` : 'ads:dakwerken',
       });
       if (result.ok) {

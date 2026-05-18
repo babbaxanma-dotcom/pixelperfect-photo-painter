@@ -33,6 +33,34 @@ export function divisieKey(label: string | null | undefined): Divisie {
   return DIVISIE_LABEL_TO_KEY[label.trim()] ?? 'nog_te_bepalen';
 }
 
+// GHL "Type werk" SINGLE_OPTIONS expects EXACT divisie-labels. Accepteert zowel
+// onze interne keys (ab_dakwerken) als de UI-labels uit Contact-form en LP's.
+const DIVISIE_TO_GHL_LABEL: Record<string, string> = {
+  // Interne keys
+  ab_construct: 'AB Construct',
+  ab_ecologisch: 'AB Ecologisch',
+  ab_interieurwerken: 'AB Interieurwerken',
+  ab_dakwerken: 'AB Dakwerken',
+  ab_bad__wellness: 'AB Bad & Wellness',
+  ab_gevelbekleding: 'AB Gevelbekleding',
+  combinatie_meerdere_divisies: 'Combinatie / meerdere divisies',
+  nog_te_bepalen: 'Nog te bepalen',
+  // Pass-through wanneer LP-handlers al de GHL-label sturen
+  'AB Construct': 'AB Construct',
+  'AB Ecologisch': 'AB Ecologisch',
+  'AB Interieurwerken': 'AB Interieurwerken',
+  'AB Dakwerken': 'AB Dakwerken',
+  'AB Bad & Wellness': 'AB Bad & Wellness',
+  'AB Gevelbekleding': 'AB Gevelbekleding',
+  'Combinatie / meerdere divisies': 'Combinatie / meerdere divisies',
+  'Nog te bepalen': 'Nog te bepalen',
+};
+
+function toGhlDivisie(input: string | undefined): string {
+  if (!input) return 'Nog te bepalen';
+  return DIVISIE_TO_GHL_LABEL[input] ?? 'Nog te bepalen';
+}
+
 export interface LeadPayload {
   // Pipeline-stuurinformatie
   source: 'contact_form' | 'newsletter' | 'landing_page';
@@ -91,7 +119,7 @@ function buildBody(p: LeadPayload) {
     country: 'BE',
 
     // Custom fields (zie Norvo context, sectie 4)
-    type_werk: p.type_werk ?? 'nog_te_bepalen',
+    type_werk: toGhlDivisie(p.type_werk),
     aanvullende_info: p.aanvullende_info?.trim() || undefined,
     adres_project: adresProject,
     bron_lead: p.bron_lead || (utm.utm_source ? `ads:${utm.utm_source}` : 'website'),

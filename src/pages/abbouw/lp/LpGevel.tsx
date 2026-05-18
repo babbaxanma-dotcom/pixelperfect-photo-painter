@@ -1467,6 +1467,24 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
       if (errBox) errBox.textContent = '';
       wrap.classList.remove('is-error');
       const fd = new FormData(form);
+      // Sub-service label voor GHL Task-omschrijving (GHL "Type werk" SINGLE_OPTIONS
+      // accepteert enkel divisie-labels, dus sub-service hier in aanvullende_info)
+      const TYPE_GEVEL_LABELS: Record<string, string> = {
+        crepi_alleen: 'Crepi op bestaande gevel',
+        etics_crepi: 'ETICS + crepi (buitenisolatie)',
+        steenstrips: 'Steenstrips',
+        sierpleister: 'Sierpleister (marmorino e.a.)',
+        reiniging: 'Gevelreiniging',
+        herstel: 'Gevelherstel (scheuren, vocht)',
+        anders: 'Anders / weet niet zeker',
+      };
+      const typeGevelRaw = (fd.get('type_gevel') as string) || '';
+      const subService = TYPE_GEVEL_LABELS[typeGevelRaw] || typeGevelRaw;
+      const userInfo = ((fd.get('aanvullende_info') as string) || '').trim();
+      const combinedInfo = subService
+        ? `Type gevelwerk: ${subService}${userInfo ? `\n\n${userInfo}` : ''}`
+        : (userInfo || undefined);
+
       const result = await submitLead({
         source: 'landing_page',
         landing_division: 'ab_gevelbekleding',
@@ -1478,8 +1496,8 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
         straat: (fd.get('straat') as string) || undefined,
         postcode: (fd.get('postcode') as string) || undefined,
         gemeente: (fd.get('gemeente') as string) || undefined,
-        type_werk: ((fd.get('type_gevel') as string) || 'ab_gevelbekleding'),
-        aanvullende_info: (fd.get('aanvullende_info') as string) || undefined,
+        type_werk: 'AB Gevelbekleding',
+        aanvullende_info: combinedInfo,
         bron_lead: local ? `seo:gevelrenovatie-${local.slug}` : 'ads:gevel',
       });
       if (result.ok) {
