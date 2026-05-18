@@ -86,7 +86,7 @@ ${buildNav('home')}
       </div>
       <span class="lf-eyebrow">Aanvraag binnen</span>
       <h1 class="lf-h2 ab-bedankt-h1">${h1}</h1>
-      <p class="lf-lede ab-bedankt-lede">U mag het loslaten — wij nemen het van hier over. Binnen één werkdag belt of mailt een van onze projectleiders u persoonlijk. Iemand van het AB Bouw team, geen callcenter. We luisteren eerst naar wat u in gedachten heeft, en plannen pas daarna samen een gratis plaatsbezoek in op een moment dat u uitkomt.</p>
+      <p class="lf-lede ab-bedankt-lede">Een van onze projectleiders neemt binnen één werkdag persoonlijk contact met u op. We bespreken kort wat u nodig heeft en plannen samen een gratis plaatsbezoek in op een moment dat u uitkomt.</p>
       <div class="ab-bedankt-actions">
         <a href="${CONTACT.phone.href}" class="lf-cta-pill">
           <span>Liever direct bellen — ${CONTACT.phone.spaced}</span>
