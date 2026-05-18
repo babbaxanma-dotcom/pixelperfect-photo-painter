@@ -22,10 +22,10 @@ type ServiceKey = 'dakwerken' | 'gevel' | 'default';
 
 type Review = { name: string; role: string; img: string; text: string };
 
-const LABEL: Record<ServiceKey, string> = {
-  dakwerken: 'dakwerken',
-  gevel: 'gevelrenovatie',
-  default: 'aanvraag',
+const H1: Record<ServiceKey, string> = {
+  dakwerken: 'Bedankt — uw <span class="ab-mark">dakwerken</span>-aanvraag is goed aangekomen.',
+  gevel:     'Bedankt — uw <span class="ab-mark">gevelrenovatie</span>-aanvraag is goed aangekomen.',
+  default:   'Bedankt — uw <span class="ab-mark">aanvraag</span> is goed aangekomen.',
 };
 
 const REVIEWS: Record<ServiceKey, Review[]> = {
@@ -53,7 +53,7 @@ export default function Bedankt() {
     param === 'dakwerken' ? 'dakwerken' :
     param === 'gevel' ? 'gevel' :
     'default';
-  const label = LABEL[service];
+  const h1 = H1[service];
   const reviews = REVIEWS[service];
 
   useEffect(() => {
@@ -85,8 +85,8 @@ ${buildNav('home')}
         <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
       </div>
       <span class="lf-eyebrow">Aanvraag binnen</span>
-      <h1 class="lf-h2 ab-bedankt-h1">Bedankt — we zijn met uw<br/><span class="ab-mark">${label}</span>-aanvraag bezig.</h1>
-      <p class="lf-lede ab-bedankt-lede">Een van onze projectleiders neemt binnen één werkdag persoonlijk contact met u op. We luisteren naar wat u nodig heeft en plannen samen een gratis plaatsbezoek in op een moment dat u past.</p>
+      <h1 class="lf-h2 ab-bedankt-h1">${h1}</h1>
+      <p class="lf-lede ab-bedankt-lede">U mag het loslaten — wij nemen het van hier over. Binnen één werkdag belt of mailt een van onze projectleiders u persoonlijk. Iemand van het AB Bouw team, geen callcenter. We luisteren eerst naar wat u in gedachten heeft, en plannen pas daarna samen een gratis plaatsbezoek in op een moment dat u uitkomt.</p>
       <div class="ab-bedankt-actions">
         <a href="${CONTACT.phone.href}" class="lf-cta-pill">
           <span>Liever direct bellen — ${CONTACT.phone.spaced}</span>
