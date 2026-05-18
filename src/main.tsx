@@ -6,11 +6,18 @@ import { allowsAnalytics, allowsMarketing, installConsentBanner, hasDecided } fr
 
 // Tracking bootstrap — laadt gtag.js, vangt UTM params, installeert global tel: click handler.
 // GDPR: gtag.js wordt NIET geladen vóór consent.
+// LP-routes krijgen events naar GA4_LP property; al de rest naar GA4_MAIN.
+// LP-set: /lp/*, /lokaal/*, /bedankt
+export function isLpPath(path: string): boolean {
+  return path.startsWith('/lp/') || path.startsWith('/lokaal/') || path === '/bedankt' || path.startsWith('/bedankt');
+}
+
 function bootTracking() {
   if (typeof window === 'undefined') return;
-  const ga4 = import.meta.env.VITE_GA4_ID as string | undefined;
+  const ga4Main = import.meta.env.VITE_GA4_ID as string | undefined;
+  const ga4Lp = import.meta.env.VITE_GA4_ID_LP as string | undefined;
   const gads = import.meta.env.VITE_GADS_ID as string | undefined;
-  const ids = [ga4, gads].filter(Boolean) as string[];
+  const ids = [ga4Main, ga4Lp, gads].filter(Boolean) as string[];
 
   captureUtm();
   installCallTracking();
@@ -27,8 +34,8 @@ function bootTracking() {
     return;
   }
 
-  // gtag.js loader — gebruik de eerste ID voor het script (GA4 als beschikbaar, anders Ads)
-  const primary = ga4 || gads!;
+  // gtag.js loader — gebruik de eerste beschikbare ID voor het script-load
+  const primary = ga4Main || ga4Lp || gads!;
   const s = document.createElement('script');
   s.async = true;
   s.src = `https://www.googletagmanager.com/gtag/js?id=${primary}`;
@@ -41,7 +48,10 @@ function bootTracking() {
   }
   (window as unknown as { gtag: typeof gtag }).gtag = gtag;
   gtag('js', new Date());
-  if (ga4) gtag('config', ga4, { anonymize_ip: true });
+  // Beide GA4 properties configureren — send_page_view UIT, we vuren handmatig
+  // per pad naar de juiste property
+  if (ga4Main) gtag('config', ga4Main, { anonymize_ip: true, send_page_view: false });
+  if (ga4Lp) gtag('config', ga4Lp, { anonymize_ip: true, send_page_view: false });
   if (gads) gtag('config', gads);
 
   trackPageView(window.location.pathname);
