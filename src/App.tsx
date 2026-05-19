@@ -29,6 +29,7 @@ import LpDakwerken from "./pages/abbouw/lp/LpDakwerken";
 import LpGevel from "./pages/abbouw/lp/LpGevel";
 import LpLokaal from "./pages/abbouw/lp/LpLokaal";
 import Bedankt from "./pages/abbouw/Bedankt";
+import CalculatorDak from "./pages/abbouw/calculator/CalculatorDak";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -65,6 +66,7 @@ const App = () => {
           <Route path="/lp/gevel" element={<LpGevel />} />
           <Route path="/lokaal/:slug" element={<LpLokaal />} />
           <Route path="/bedankt" element={<Bedankt />} />
+          <Route path="/calculator/dakwerken" element={<CalculatorDak />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         </PageTransition>
