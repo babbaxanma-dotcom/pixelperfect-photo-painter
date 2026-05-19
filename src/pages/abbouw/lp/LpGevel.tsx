@@ -1275,6 +1275,9 @@ const HTML = `
 export default function LpGevel({ local }: { local?: Gemeente } = {}) {
   useEffect(() => {
     const pageUrl = local ? `https://abgroep.be/lokaal/gevelrenovatie-${local.slug}` : 'https://abgroep.be/lp/gevel';
+    // Canonical: non-local LP wijst naar /gevel (organic service-page) om
+    // duplicate-content fight te vermijden. Lokale varianten blijven self-canonical.
+    const canonicalUrl = local ? pageUrl : 'https://abgroep.be/gevel';
     document.title = local
       ? `Gevelrenovatie ${local.name} — Crepi, ETICS, Steenstrips | AB Bouw Groep`
       : "Gevelrenovatie Mechelen & Antwerpen — Crepi, ETICS, Steenstrips | AB Bouw Groep";
@@ -1309,9 +1312,9 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
       if (!el) { el = document.createElement('link'); el.setAttribute('rel', rel); if (hreflang) el.setAttribute('hreflang', hreflang); document.head.appendChild(el); }
       el.setAttribute('href', href);
     };
-    setLink('canonical', pageUrl);
-    setLink('alternate', pageUrl, 'nl-BE');
-    setLink('alternate', pageUrl, 'x-default');
+    setLink('canonical', canonicalUrl);
+    setLink('alternate', canonicalUrl, 'nl-BE');
+    setLink('alternate', canonicalUrl, 'x-default');
 
     // Schema.org JSON-LD: HomeAndConstructionBusiness + FAQ + Service
     const schemaId = 'lp-gevel-schema';

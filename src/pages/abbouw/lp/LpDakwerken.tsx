@@ -1700,6 +1700,10 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
 
   useEffect(() => {
     const pageUrl = local ? `https://abgroep.be/lokaal/dakwerker-${local.slug}` : 'https://abgroep.be/lp/dakwerken';
+    // Canonical: non-local LP wijst naar de service-pagina /dakwerken om duplicate
+    // content-fight met organic te voorkomen. Lokal-varianten blijven self-canonical
+    // (stadsgerichte SEO is uniek).
+    const canonicalUrl = local ? pageUrl : 'https://abgroep.be/dakwerken';
     document.title = local
       ? `Dakwerker ${local.name} — Pannen, Plat dak EPDM, Sarkingisolatie | AB Bouw Groep`
       : "Dakwerker Mechelen & Antwerpen — Pannen, Plat dak, EPDM, Isolatie | AB Bouw Groep";
@@ -1734,9 +1738,9 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
       if (!el) { el = document.createElement('link'); el.setAttribute('rel', rel); if (hreflang) el.setAttribute('hreflang', hreflang); document.head.appendChild(el); }
       el.setAttribute('href', href);
     };
-    setLink('canonical', pageUrl);
-    setLink('alternate', pageUrl, 'nl-BE');
-    setLink('alternate', pageUrl, 'x-default');
+    setLink('canonical', canonicalUrl);
+    setLink('alternate', canonicalUrl, 'nl-BE');
+    setLink('alternate', canonicalUrl, 'x-default');
 
     // Schema.org JSON-LD: RoofingContractor + FAQ + Service
     const schemaId = 'lp-dak-schema';

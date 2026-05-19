@@ -13,8 +13,8 @@ Allow: /
 User-agent: *
 Allow: /
 
-# Landing pages voor ads worden niet geïndexeerd — duplicate content
-# zou de Quality Score schaden en concurrentie tussen organisch+ads veroorzaken.
-Disallow: /lp/
+# LP's mogen gecrawld worden — canonical-tag wijst Google naar de organic
+# service-pagina (/dakwerken, /gevelrenovatie). Zo geen duplicate content
+# en geen rode vlag in Search Console.
 
 Sitemap: https://abgroep.be/sitemap.xml
