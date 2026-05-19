@@ -164,6 +164,17 @@ export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
   const w3fKey = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
   const fallbackEmail = import.meta.env.VITE_LEAD_EMAIL_FALLBACK_TO as string | undefined;
 
+  // Last-line guard: lead-forms (alles behalve newsletter) moeten email + phone hebben.
+  // Voorkomt dat een form-handler-bug een lead zonder bereikbare contact-info doorlaat.
+  if (p.source !== 'newsletter') {
+    const emailOk = !!p.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email.trim());
+    const phoneOk = !!p.phone && (p.phone.replace(/\D/g, '').length >= 8);
+    if (!emailOk || !phoneOk) {
+      console.error('[lead] geblokkeerd — ongeldig email of telefoon', { emailOk, phoneOk, source: p.source });
+      return { ok: false, via: 'none', error: 'invalid_contact_info' };
+    }
+  }
+
   const body = buildBody(p);
 
   // 1) Probeer GHL Inbound Webhook

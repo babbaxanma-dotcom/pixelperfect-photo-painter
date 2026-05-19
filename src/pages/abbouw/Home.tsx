@@ -2510,7 +2510,7 @@ export default function Home() {
     const onHomeSubmit = async (e: SubmitEvent) => {
       e.preventDefault();
       if (!homeForm) return;
-      const required = homeForm.querySelectorAll<HTMLInputElement>('input[required]');
+      const required = homeForm.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[required]');
       for (const inp of Array.from(required)) {
         if (!inp.checkValidity()) { inp.reportValidity(); return; }
       }
@@ -2520,18 +2520,30 @@ export default function Home() {
         sel.focus();
         return;
       }
+      const fd = new FormData(homeForm);
+      const emailV = ((fd.get('email') as string) || '').trim();
+      const phoneV = ((fd.get('phone') as string) || '').trim();
+      if (!emailV || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailV)) {
+        if (homeErr) { homeErr.hidden = false; homeErr.textContent = 'Vul een geldig e-mailadres in.'; }
+        homeForm.querySelector<HTMLInputElement>('input[name="email"]')?.focus();
+        return;
+      }
+      if (!phoneV || phoneV.replace(/\D/g, '').length < 8) {
+        if (homeErr) { homeErr.hidden = false; homeErr.textContent = 'Vul een geldig telefoonnummer in (minstens 8 cijfers).'; }
+        homeForm.querySelector<HTMLInputElement>('input[name="phone"]')?.focus();
+        return;
+      }
       if (homeErr) { homeErr.hidden = true; homeErr.textContent = ''; }
       if (homeBtn) homeBtn.disabled = true;
       if (homeBtnLabel) homeBtnLabel.textContent = 'Even bezig…';
 
-      const fd = new FormData(homeForm);
       const result = await submitLead({
         source: 'contact_form',
         page_path: window.location.pathname,
         firstName: (fd.get('firstName') as string) || undefined,
         lastName: (fd.get('lastName') as string) || undefined,
-        email: ((fd.get('email') as string) || '').trim(),
-        phone: ((fd.get('phone') as string) || '').trim() || undefined,
+        email: emailV,
+        phone: phoneV,
         type_werk: divisieKey(fd.get('type_werk') as string),
         aanvullende_info: 'Via Home-pagina offerte-form',
         bron_lead: 'website:home',

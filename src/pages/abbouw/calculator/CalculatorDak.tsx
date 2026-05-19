@@ -96,6 +96,28 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
     const form = e.currentTarget;
     const fd = new FormData(form);
 
+    // Hard validation — noValidate skipt native check, dus zelf doen.
+    const firstName = ((fd.get('firstName') as string) || '').trim();
+    const lastName = ((fd.get('lastName') as string) || '').trim();
+    const emailV = ((fd.get('email') as string) || '').trim();
+    const phoneV = ((fd.get('phone') as string) || '').trim();
+    const missing: string[] = [];
+    if (!firstName) missing.push('voornaam');
+    if (!lastName) missing.push('familienaam');
+    if (!emailV || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailV)) missing.push('geldig e-mailadres');
+    if (!phoneV || phoneV.replace(/\D/g, '').length < 8) missing.push('telefoonnummer');
+    if (missing.length) {
+      setSubmitError(`Vul a.u.b. uw ${missing.join(', ')} in.`);
+      const firstInvalid = form.querySelector<HTMLInputElement>(
+        !firstName ? 'input[name="firstName"]' :
+        !lastName ? 'input[name="lastName"]' :
+        (!emailV || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailV)) ? 'input[name="email"]' :
+        'input[name="phone"]'
+      );
+      firstInvalid?.focus();
+      return;
+    }
+
     const subParts: string[] = [];
     if (state.dakType) subParts.push(`Type dak: ${state.dakType === 'plat' ? 'Plat dak' : 'Hellend dak'}`);
     if (state.bedekking) subParts.push(`Bedekking: ${BEDEKKING_LABELS[state.bedekking]}`);
@@ -110,10 +132,10 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
       source: 'landing_page',
       landing_division: 'ab_dakwerken',
       page_path: window.location.pathname,
-      firstName: (fd.get('firstName') as string) || undefined,
-      lastName: (fd.get('lastName') as string) || undefined,
-      email: ((fd.get('email') as string) || '').trim(),
-      phone: ((fd.get('phone') as string) || '').trim() || undefined,
+      firstName,
+      lastName,
+      email: emailV,
+      phone: phoneV,
       postcode: ((fd.get('postcode') as string) || '').trim() || undefined,
       gemeente: ((fd.get('gemeente') as string) || '').trim() || undefined,
       type_werk: 'AB Dakwerken',

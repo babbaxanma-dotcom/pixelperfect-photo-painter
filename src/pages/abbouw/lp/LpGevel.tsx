@@ -1459,14 +1459,28 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
     const onSubmit = async (e: SubmitEvent) => {
       e.preventDefault();
       if (!form || !wrap) return;
-      const requiredInputs = form.querySelectorAll<HTMLInputElement>('input[required]');
-      for (const inp of Array.from(requiredInputs)) {
+      const requiredFields = form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[required]');
+      for (const inp of Array.from(requiredFields)) {
         if (!inp.checkValidity()) { inp.reportValidity(); return; }
+      }
+      const fd = new FormData(form);
+      const emailV = ((fd.get('email') as string) || '').trim();
+      const phoneV = ((fd.get('phone') as string) || '').trim();
+      if (!emailV || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailV)) {
+        const el = form.querySelector<HTMLInputElement>('input[name="email"]');
+        el?.focus(); el?.reportValidity();
+        if (errBox) errBox.textContent = 'Vul een geldig e-mailadres in.';
+        return;
+      }
+      if (!phoneV || phoneV.replace(/\D/g, '').length < 8) {
+        const el = form.querySelector<HTMLInputElement>('input[name="phone"]');
+        el?.focus(); el?.reportValidity();
+        if (errBox) errBox.textContent = 'Vul een geldig telefoonnummer in (minstens 8 cijfers).';
+        return;
       }
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Even bezig…'; }
       if (errBox) errBox.textContent = '';
       wrap.classList.remove('is-error');
-      const fd = new FormData(form);
       // Sub-service label voor GHL Task-omschrijving (GHL "Type werk" SINGLE_OPTIONS
       // accepteert enkel divisie-labels, dus sub-service hier in aanvullende_info)
       const TYPE_GEVEL_LABELS: Record<string, string> = {
@@ -1491,8 +1505,8 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
         page_path: window.location.pathname,
         firstName: (fd.get('firstName') as string) || undefined,
         lastName: (fd.get('lastName') as string) || undefined,
-        email: (fd.get('email') as string) || '',
-        phone: (fd.get('phone') as string) || undefined,
+        email: emailV,
+        phone: phoneV,
         straat: (fd.get('straat') as string) || undefined,
         postcode: (fd.get('postcode') as string) || undefined,
         gemeente: (fd.get('gemeente') as string) || undefined,

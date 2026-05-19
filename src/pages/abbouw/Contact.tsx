@@ -306,8 +306,8 @@ export default function Contact() {
       if (!form || !wrapper) return;
 
       // Native HTML5 validation triggeren (we hebben novalidate aan voor custom dd)
-      const requiredInputs = form.querySelectorAll<HTMLInputElement>('input[required]');
-      for (const inp of Array.from(requiredInputs)) {
+      const requiredFields = form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[required]');
+      for (const inp of Array.from(requiredFields)) {
         if (!inp.checkValidity()) {
           inp.reportValidity();
           return;
@@ -323,19 +323,32 @@ export default function Contact() {
         return;
       }
 
+      const fd = new FormData(form);
+      const emailV = ((fd.get('email') as string) || '').trim();
+      const phoneV = ((fd.get('phone') as string) || '').trim();
+      if (!emailV || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailV)) {
+        if (errBox) { errBox.hidden = false; errBox.textContent = 'Vul een geldig e-mailadres in.'; }
+        form.querySelector<HTMLInputElement>('input[name="email"]')?.focus();
+        return;
+      }
+      if (!phoneV || phoneV.replace(/\D/g, '').length < 8) {
+        if (errBox) { errBox.hidden = false; errBox.textContent = 'Vul een geldig telefoonnummer in (minstens 8 cijfers).'; }
+        form.querySelector<HTMLInputElement>('input[name="phone"]')?.focus();
+        return;
+      }
+
       if (errBox) { errBox.hidden = true; errBox.textContent = ''; }
       wrapper.classList.add('is-submitting');
       if (btn) btn.disabled = true;
       if (btnLabel) btnLabel.textContent = 'Even bezig…';
 
-      const fd = new FormData(form);
       const result = await submitLead({
         source: 'contact_form',
         page_path: window.location.pathname,
         firstName: (fd.get('firstName') as string) || undefined,
         lastName: (fd.get('lastName') as string) || undefined,
-        email: (fd.get('email') as string) || '',
-        phone: (fd.get('phone') as string) || undefined,
+        email: emailV,
+        phone: phoneV,
         straat: (fd.get('straat') as string) || undefined,
         postcode: (fd.get('postcode') as string) || undefined,
         gemeente: (fd.get('gemeente') as string) || undefined,
