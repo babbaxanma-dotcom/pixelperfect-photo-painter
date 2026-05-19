@@ -61,22 +61,16 @@ ${buildHero({
             <input type="text" name="postcode" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="Postcode" />
             <input type="text" name="gemeente" autocomplete="address-level2" placeholder="Gemeente" />
           </div>
-          <div class="lf-dd" data-dd>
-            <button type="button" class="lf-dd-toggle" data-dd-toggle aria-haspopup="listbox" aria-expanded="false">
-              <span class="lf-dd-label" data-dd-label>Type werk</span>
-              <svg class="lf-dd-caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <ul class="lf-dd-list" role="listbox">
-              <li role="option" data-dd-opt>Algemene aanneming (Construct)</li>
-              <li role="option" data-dd-opt>Ecologisch / duurzaam</li>
-              <li role="option" data-dd-opt>Interieurwerken</li>
-              <li role="option" data-dd-opt>Dakwerken</li>
-              <li role="option" data-dd-opt>Badkamer / wellness</li>
-              <li role="option" data-dd-opt>Gevelbekleding</li>
-              <li role="option" data-dd-opt>Combinatie / weet ik niet</li>
-            </ul>
-            <input type="hidden" name="type_werk" data-dd-input required />
-          </div>
+          <select name="type_werk" class="lf-native-select" required>
+            <option value="">Type werk *</option>
+            <option value="Algemene aanneming (Construct)">Algemene aanneming (Construct)</option>
+            <option value="Ecologisch / duurzaam">Ecologisch / duurzaam</option>
+            <option value="Interieurwerken">Interieurwerken</option>
+            <option value="Dakwerken">Dakwerken</option>
+            <option value="Badkamer / wellness">Badkamer / wellness</option>
+            <option value="Gevelbekleding">Gevelbekleding</option>
+            <option value="Combinatie / weet ik niet">Combinatie / weet ik niet</option>
+          </select>
           <textarea name="aanvullende_info" placeholder="Vertel kort over uw project (optioneel)"></textarea>
           <button type="submit" class="lf-cta-pill" data-submit-btn>
             <span data-submit-label>Verstuur aanvraag</span>
@@ -319,12 +313,13 @@ export default function Contact() {
           return;
         }
       }
-      const ddInput = form.querySelector<HTMLInputElement>('input[name="type_werk"]');
-      if (ddInput && !ddInput.value) {
+      const sel = form.querySelector<HTMLSelectElement>('select[name="type_werk"]');
+      if (sel && !sel.value) {
         if (errBox) {
           errBox.hidden = false;
           errBox.textContent = 'Selecteer een type werk.';
         }
+        sel.focus();
         return;
       }
 

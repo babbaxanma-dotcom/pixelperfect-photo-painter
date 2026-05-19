@@ -439,6 +439,24 @@ body.is-scrolled .lf-scroll-cue { opacity: 0; pointer-events: none; transition: 
 .lf-form input, .lf-form select, .lf-form textarea { width:100%; padding: 13px 16px; border: 1px solid var(--ink-line); border-radius: 10px; background: #fff; margin-bottom: 12px; font-size: 14px; color: var(--ink); font-family: inherit; transition: all 0.2s; }
 .lf-form input:focus, .lf-form select:focus, .lf-form textarea:focus { outline:none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(10,31,68,0.08); }
 .lf-form textarea { resize: vertical; min-height: 90px; }
+/* Native select — solid, mobile-vriendelijk (geen Lenis-issues, geen custom dropdown scroll-bugs) */
+.lf-form .lf-native-select, .lf-form select.lf-native-select {
+  appearance: none; -webkit-appearance: none; -moz-appearance: none;
+  padding: 13px 44px 13px 16px;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a1628' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
+  cursor: pointer;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.lf-form .lf-native-select:hover { border-color: rgba(217,140,3,0.5); }
+.lf-form .lf-native-select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(217,140,3,0.18); }
+.lf-form .lf-native-select:invalid { color: var(--ink-mute); }
+.lf-form .lf-native-select option { color: var(--ink); padding: 12px; }
+.lf-form .lf-native-select option:first-child { color: var(--ink-mute); }
 .lf-form button { margin-top: 8px; width:100%; justify-content:space-between; }
 .lf-dd { position: relative; margin-bottom: 12px; z-index: 5; }
 .lf-dd-toggle { width:100%; display:flex; align-items:center; justify-content:space-between; padding: 14px 16px; border: 1px solid var(--ink-line); border-radius: 10px; background: #fff; font-size: 14px; color: var(--ink-soft); font-family: inherit; cursor: pointer; transition: border-color .2s var(--ease), box-shadow .2s var(--ease); text-align:left; }

@@ -255,22 +255,16 @@ const HTML = (i: Record<string, string>) => `
           <input type="email" name="email" placeholder="E-mailadres *" autocomplete="email" required />
           <input type="tel" name="phone" placeholder="Telefoonnummer *" autocomplete="tel" required />
         </div>
-        <div class="lf-dd" data-dd>
-          <button type="button" class="lf-dd-toggle" data-dd-toggle aria-haspopup="listbox" aria-expanded="false">
-            <span class="lf-dd-label" data-dd-label>Welke dienst interesseert u? *</span>
-            <svg class="lf-dd-caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <ul class="lf-dd-list" role="listbox">
-            <li role="option" data-dd-opt>Algemene aanneming (Construct)</li>
-            <li role="option" data-dd-opt>Dakwerken</li>
-            <li role="option" data-dd-opt>Interieurwerken</li>
-            <li role="option" data-dd-opt>Badkamer / wellness</li>
-            <li role="option" data-dd-opt>Gevelbekleding</li>
-            <li role="option" data-dd-opt>Ecologisch / duurzaam</li>
-            <li role="option" data-dd-opt>Combinatie / weet ik niet</li>
-          </ul>
-          <input type="hidden" name="type_werk" data-dd-input required />
-        </div>
+        <select name="type_werk" class="lf-native-select" required>
+          <option value="">Welke dienst interesseert u? *</option>
+          <option value="Algemene aanneming (Construct)">Algemene aanneming (Construct)</option>
+          <option value="Dakwerken">Dakwerken</option>
+          <option value="Interieurwerken">Interieurwerken</option>
+          <option value="Badkamer / wellness">Badkamer / wellness</option>
+          <option value="Gevelbekleding">Gevelbekleding</option>
+          <option value="Ecologisch / duurzaam">Ecologisch / duurzaam</option>
+          <option value="Combinatie / weet ik niet">Combinatie / weet ik niet</option>
+        </select>
         <button type="submit" class="lf-cta-pill lf-cta-pill-block" data-home-submit style="background:#d98c03 !important; color:#fff !important;">
           <span data-home-submit-label>Vraag mijn gratis offerte aan</span>
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
@@ -2520,9 +2514,10 @@ export default function Home() {
       for (const inp of Array.from(required)) {
         if (!inp.checkValidity()) { inp.reportValidity(); return; }
       }
-      const ddInput = homeForm.querySelector<HTMLInputElement>('input[name="type_werk"]');
-      if (ddInput && !ddInput.value) {
+      const sel = homeForm.querySelector<HTMLSelectElement>('select[name="type_werk"]');
+      if (sel && !sel.value) {
         if (homeErr) { homeErr.hidden = false; homeErr.textContent = 'Selecteer een dienst.'; }
+        sel.focus();
         return;
       }
       if (homeErr) { homeErr.hidden = true; homeErr.textContent = ''; }
