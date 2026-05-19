@@ -1,66 +1,216 @@
-# Google Ads — Assets + Copy Pack
-**AB Bouw Groep · launched 2026-05-19**
+# Google Ads — AB Bouw Groep · DURAL-SPEC SETUP
+**Launched 2026-05-19**
 
-Bardh hoeft alles enkel in de Ads UI te uploaden / plakken. Niets meer bedenken.
-
----
-
-## 1. Image Assets — uploaden
-
-Voor elke campagne (Dakwerken / Gevel / Brand) staan klare afbeeldingen in 3 ratios:
-
-| Map | Wat | Aantal | Hoeveel uploaden in Ads |
-|---|---|---|---|
-| `dakwerken/landscape/` | 1200×628 (1.91:1) | 9 | minstens **5 stuks** |
-| `dakwerken/square/` | 1200×1200 (1:1) | 9 | minstens **5 stuks** |
-| `dakwerken/portrait/` | 960×1200 (4:5) | 9 | **3 stuks** (optioneel maar +CTR) |
-| `gevel/landscape/` | 1200×628 | 7 | **5 stuks** |
-| `gevel/square/` | 1200×1200 | 7 | **5 stuks** |
-| `gevel/portrait/` | 960×1200 | 7 | **3 stuks** |
-| `brand/*` | algemene brand-foto's voor Performance Max of generieke campagne | 7 | **3-4 stuks per ratio** |
-
-**Hoe uploaden:**
-Google Ads → Campagne → tabblad **Assets** → **+ Toevoegen** → **Afbeeldingen** → Upload bestanden → koppel aan ad-groep.
-
-Google rouleert automatisch tussen de varianten en kiest de winnaar op CTR.
+Doel: ads er laten uitzien zoals Dural Bouwgroep (referentie-screenshots: `duralvb1-3.PNG`). De 5 dingen die zij hebben en wij niet — fix-pad hieronder.
 
 ---
 
-## 2. Sitelinks (4-6 stuks per campagne)
+## DURAL-DECONSTRUCT — wat zij doen dat wij gaan kopiëren
 
-### Campagne Dakwerken
-
-| Link tekst | Beschrijving 1 (35 tekens) | Beschrijving 2 (35 tekens) | URL |
-|---|---|---|---|
-| Gratis plaatsbezoek | Eigen dakdekkers ter plaatse | Vaste prijs binnen 1 werkdag | `https://abgroep.be/lp/dakwerken#contact-form` |
-| Plat dak EPDM | 20 jaar levensduur | 10 jaar garantie via Federale | `https://abgroep.be/lp/dakwerken#diensten` |
-| Pannendak renovatie | Koramic + Eternit | Stormbestendig, BENOR-keurmerk | `https://abgroep.be/lp/dakwerken#diensten` |
-| Dakisolatie | Sarking of langs binnen | Mijn VerbouwPremie inbegrepen | `https://abgroep.be/lp/dakwerken#diensten` |
-| Onze projecten | 124+ tevreden klanten | Foto's van afgewerkte daken | `https://abgroep.be/realisaties` |
-| Bel direct | 0460 20 77 88 | Antwoord binnen 1 werkdag | `tel:+32460207788` |
-
-### Campagne Gevel
-
-| Link tekst | Beschrijving 1 | Beschrijving 2 | URL |
-|---|---|---|---|
-| Gratis plaatsbezoek | Vakman komt langs en meet op | Vaste prijs vooraf | `https://abgroep.be/lp/gevel#contact-form` |
-| Crepi gevelrenovatie | Sto, Marmolit of Cova | 15+ kleuren beschikbaar | `https://abgroep.be/lp/gevel#diensten` |
-| ETICS buitenisolatie | Energiezuinig + frisser zomers | Premie tot €4.000 inbegrepen | `https://abgroep.be/lp/gevel#diensten` |
-| Steenstrips | Authentieke baksteen-look | Onderhoudsvrij 30+ jaar | `https://abgroep.be/lp/gevel#diensten` |
-| Onze projecten | Voor & na-foto's | Echte werven Mechelen/Antwerpen | `https://abgroep.be/realisaties` |
-| Bel direct | 0460 20 77 88 | Antwoord binnen 1 werkdag | `tel:+32460207788` |
+| Dural-feature | Hun screenshot | Hoe wij dit krijgen |
+|---|---|---|
+| Stadnaam in headline ("Dakwerken Olen", "Mechelen", "Willebroek") | `{LOCATION(City)}` template OF per-stad ad-groups | **§ 3 hieronder** |
+| ★★★★★ 4,9 (992 reviews) | Aggregator (Trustpilot/Feefo) — geen Google reviews | **§ 8** — start direct, sterren komen na ~3 mnd |
+| Logo + business name bovenaan | Business asset (verplicht 2026) | **§ 4** |
+| "Dakdekker · Adres · Geopend · Sluit om 20:00" | Location asset (GBP gekoppeld) | **§ 5** |
+| Big sitelinks met description | Sitelinks met Description 1+2 ingevuld | **§ 6** |
+| 1-2 grote foto's rechts | Image asset (al gegenereerd in deze map) | **§ 2** |
 
 ---
 
-## 3. Callouts (8-10 per campagne, max 25 tekens elk)
+## 1. STRATEGISCHE STRUCTUUR — campagnes + ad-groups
 
-Plak deze in als **Callouts asset** — verschijnen als extra benefit-regel onder de ad-tekst.
+**KIES NIET zomaar 1 campagne per dienst.** Maak per dienst een campagne met **per stad een ad-group** — dat is wat Dural doet, en dat is de enige manier om elke ad-headline matchend te krijgen met de zoekstad.
 
-**Dakwerken + Gevel (deelbaar):**
+### Campagne 1: Dakwerken
+| Ad group | Keywords (phrase + exact) | Final URL |
+|---|---|---|
+| Dakwerken-Mechelen | `"dakwerker mechelen"`, `[dakwerker mechelen]`, `"dakwerken mechelen"`, `[dakwerken mechelen]` | `/lokaal/dakwerker-mechelen` |
+| Dakwerken-Antwerpen | `"dakwerker antwerpen"`, `[dakwerker antwerpen]`, `"dakwerken antwerpen"`, ... | `/lokaal/dakwerker-antwerpen` |
+| Dakwerken-Willebroek | `"dakwerker willebroek"`, ... | `/lokaal/dakwerker-willebroek` |
+| Dakwerken-Lier | ... | `/lokaal/dakwerker-lier` |
+| Dakwerken-Bornem | ... | `/lokaal/dakwerker-bornem` |
+| Dakwerken-Sint-Niklaas | ... | `/lokaal/dakwerker-sint-niklaas` |
+| Dakwerken-Boom | ... | `/lokaal/dakwerker-boom` |
+| Dakwerken-Puurs | ... | `/lokaal/dakwerker-puurs` |
+| **Dakwerken-Generic** (fallback) | `"dakwerker"`, `"dakwerken offerte"`, `"plat dak EPDM"`, `"pannendak vernieuwen"`, `"dakisolatie premie"` | `/lp/dakwerken` |
+
+### Campagne 2: Gevelrenovatie — zelfde structuur
+Per stad een ad-group → URL `/lokaal/gevelrenovatie-{stad}`. Plus 1 generic ad-group → `/lp/gevel`.
+
+**Voordeel deze structuur:**
+- Each ad headline matched aan zoekstad → wat Dural doet
+- Landing page = stad-specifiek → hogere Quality Score → lagere CPC
+- Conversion-rate omhoog (relevantie effect)
+
+---
+
+## 2. IMAGE ASSETS (1.91:1 landscape + 1:1 square)
+
+Geen extra werk: 27 dakwerken + 21 gevel + 21 brand foto's al gegenereerd in:
+- `google-ads-assets/dakwerken/{landscape,square,portrait}/`
+- `google-ads-assets/gevel/{landscape,square,portrait}/`
+- `google-ads-assets/brand/{landscape,square,portrait}/`
+
+**Upload per campagne:** min 5 landscape + 5 square + 2-3 portrait. Google rouleert + kiest winnaar.
+
+**Hoe:** Google Ads → Campagne → tabblad **Assets** → **+** → **Afbeeldingen** → upload + koppel aan ad-group (of campaign-level).
+
+---
+
+## 3. RESPONSIVE SEARCH ADS — Headlines + Descriptions per ad-group
+
+### Format voor STAD-specifieke ad-groups (Dakwerken-Mechelen, -Antwerpen, etc.)
+
+Vervang `{STAD}` met de stadnaam in elke ad-group. Of gebruik `{LOCATION(City):Mechelen}` om Google automatisch user's stad te laten invullen, met "Mechelen" als fallback.
+
+**Headlines (15 invullen, max 30 tekens):**
+```
+Dakwerker {STAD}
+Dakwerken {STAD} — offerte
+Plat dak EPDM {STAD}
+Pannendak {STAD}
+Gratis dakinspectie {STAD}
+Eigen dakdekkers uit regio
+10 jaar garantie op dakwerk
+Mijn VerbouwPremie inbegrepen
+Vaste prijs vooraf
+Antwoord binnen 1 werkdag
+Erkend aannemer NACE 43.91
+124+ tevreden klanten
+Dakisolatie + premie
+Lekkage of stormschade?
+Bel direct: 0460 20 77 88
+```
+
+**Descriptions (4 invullen, max 90 tekens):**
+```
+Eigen dakdekkers in {STAD} en omstreken. 10 jaar garantie via Federale Verzekering.
+Plat dak EPDM, pannen of leien — vakman komt langs, vaste prijs binnen 1 werkdag.
+Mijn VerbouwPremie inbegrepen. Wij regelen het premiedossier voor u.
+Erkend dakwerker uit Willebroek. 124+ tevreden klanten. Gratis plaatsbezoek.
+```
+
+**Path 1:** `dakwerker` · **Path 2:** `{stad-slug}` (vb. `mechelen`)
+
+### Format voor GENERIC ad-group (Dakwerken-Generic, fallback)
+
+**Headlines:**
+```
+Dakwerker Vlaanderen
+Plat dak EPDM offerte
+Pannendak vernieuwen
+Gratis dakinspectie
+Eigen dakdekkers
+10 jaar garantie op dakwerk
+Mijn VerbouwPremie inbegrepen
+Vaste prijs binnen 1 werkdag
+Erkend aannemer Willebroek
+124+ tevreden klanten
+Dakisolatie + premie
+Lekkage of stormschade?
+Antwoord binnen 1 werkdag
+Bel 0460 20 77 88
+Antwerpen · Mechelen · Lier
+```
+
+**Final URL:** `https://abgroep.be/lp/dakwerken`
+
+### Gevel — STAD-specifiek
+
+**Headlines (vervang `{STAD}`):**
+```
+Gevelrenovatie {STAD}
+Crepi op gevel {STAD}
+ETICS-isolatie {STAD}
+Steenstrips {STAD}
+Gratis gevel-offerte
+Eigen vakmensen uit regio
+10 jaar garantie
+Mijn VerbouwPremie inbegrepen
+Vaste prijs vooraf
+Antwoord binnen 1 werkdag
+Erkend aannemer NACE 43.99
+124+ tevreden klanten
+Sto, Marmolit of Cova
+Sierpleister marmorino
+Bel: 0460 20 77 88
+```
+
+**Descriptions:**
+```
+Eigen vakmensen in {STAD}. 10 jaar garantie via Federale Verzekering. Gratis offerte.
+Buitenisolatie + crepi = warmer huis + nieuwe gevel. Premie tot €4.000 mogelijk.
+Vakman komt langs voor metingen + kleuradvies. Vaste prijs binnen 1 werkdag.
+Erkend gevelrenovatie-aannemer uit Willebroek. 124+ tevreden klanten.
+```
+
+---
+
+## 4. BUSINESS ASSET — logo + name (verplicht 2026)
+
+Zonder dit toont je ad geen logo bovenaan. Dural heeft het, jij moet het ook.
+
+**Setup:**
+1. Google Ads → **Account-level** → **Asset library** → **+** → **Logo**
+2. Upload `src/assets/home/logo.png` (verifieer min 128×128, square)
+3. Vul **Business name** in: `AB Bouw Groep`
+4. Wacht 1-3 werkdagen op Google's review/approval
+
+---
+
+## 5. LOCATION ASSET — adres + uren onder ad
+
+Dural toont "Dakdekker · Sluizenstraat 55 · Geopend · Sluit om 20:00". Wij willen "Dakdekker · August van Landeghemstraat 65 · Geopend · Sluit om 18:00".
+
+**Voorwaarden:**
+- GBP **moet verified** zijn (voucher per post is gangbaar in BE, duurt 5-14 dagen)
+- Business hours moeten ingevuld zijn
+- GBP categorie moet "Dakdekker" / "Bouwbedrijf" / "Aannemer" zijn
+
+**Setup:**
+1. Google Ads → **Tools** → **Linked accounts** → **Business Profile**
+2. Koppel via dezelfde Google-account waarop GBP staat
+3. In de campaign → Assets → **+** → **Locations** → selecteer "AB Bouw Groep"
+
+**Bonus:** zodra GBP verified is en gekoppeld, krijg je ook gratis vermelding in Google Maps voor je ad-keywords.
+
+---
+
+## 6. SITELINKS — expanded format (zoals Dural)
+
+Dural's "Dakwerken in Olen" / "Platte Daken" / "Over ons" / "Gratis offerte" sitelinks gebruiken de **expanded** vorm (met Description 1 + 2 onder de link-tekst). Niet de korte comma-vorm. Dit is een aanvinkje in de Ads UI: vul Description 1 + 2 in, en Google toont automatisch de expanded versie wanneer er ruimte is.
+
+### Campagne Dakwerken — 6 sitelinks
+
+| # | Link tekst (25) | Description 1 (35) | Description 2 (35) | URL |
+|---|---|---|---|---|
+| 1 | Dakwerken in uw regio | AB Bouw Groep — eigen dakdekkers | Vraag uw gratis dakinspectie aan | `/lp/dakwerken#contact-form` |
+| 2 | Platte Daken | EPDM 20j levensduur, BENOR | 10 jaar garantie Federale Verz. | `/lp/dakwerken#diensten` |
+| 3 | Pannendak renovatie | Koramic — stormbestendig | BENOR-keurmerk + 10j garantie | `/lp/dakwerken#diensten` |
+| 4 | Dakisolatie | Sarking of langs binnen | Mijn VerbouwPremie inbegrepen | `/lp/dakwerken#diensten` |
+| 5 | Realisaties | 124+ afgewerkte daken | Foto's en klantenervaringen | `/realisaties` |
+| 6 | Gratis offerte | Vakman komt langs binnen 5d | Vaste prijs vooraf — antwoord 1d | `/lp/dakwerken#contact-form` |
+
+### Campagne Gevel — 6 sitelinks
+
+| # | Link tekst | Description 1 | Description 2 | URL |
+|---|---|---|---|---|
+| 1 | Gevelrenovatie in uw regio | AB Bouw Groep — eigen vakmensen | Vraag uw gratis offerte aan | `/lp/gevel#contact-form` |
+| 2 | Crepi | Sto, Marmolit of Cova | 15+ kleuren — 10j garantie | `/lp/gevel#diensten` |
+| 3 | ETICS-buitenisolatie | Warmer huis + nieuwe gevel | Premie tot €4.000 mogelijk | `/lp/gevel#diensten` |
+| 4 | Steenstrips | Authentieke baksteen-look | Onderhoudsvrij 30+ jaar | `/lp/gevel#diensten` |
+| 5 | Realisaties | Voor & na-foto's gevels | Echte werven uit de regio | `/realisaties` |
+| 6 | Gratis offerte | Vakman komt langs binnen 5d | Vaste prijs vooraf — antwoord 1d | `/lp/gevel#contact-form` |
+
+---
+
+## 7. CALLOUTS — 10 stuks (Dural-stijl korte benefits)
+
 ```
 Eigen ploeg uit Willebroek
 10 jaar garantie
-Erkend aannemer NACE 43.91
+Erkend aannemer
 Federale Verzekering
 124+ tevreden klanten
 Gratis plaatsbezoek
@@ -72,211 +222,120 @@ Antwoord binnen 1 werkdag
 
 ---
 
-## 4. Structured Snippets (per campagne)
+## 8. STRUCTURED SNIPPETS — diensten + werkgebied
 
-**Header: "Diensten"** — Google laat 3-10 waarden toe.
-
-### Dakwerken
+### Header "Diensten" — Dakwerken
 ```
-Pannendak
-Natuurleien
-Plat dak EPDM
-Bitumen / roofing
-Dakisolatie
-Sarking
-Zinkwerk
-Dakgoten
-Velux dakvensters
-Lekkage herstel
+Pannendak, Natuurleien, Plat dak EPDM, Bitumen, Dakisolatie, Sarking, Zinkwerk, Velux, Lekkage herstel
 ```
 
-### Gevel
+### Header "Diensten" — Gevel
 ```
-Crepi
-ETICS buitenisolatie
-Steenstrips
-Sierpleister
-Gevelreiniging
-Gevelherstel
-Voegwerk
-Bezetting
+Crepi, ETICS isolatie, Steenstrips, Sierpleister, Gevelreiniging, Gevelherstel, Voegwerk
 ```
 
-**Header: "Werkgebied"** (extra snippet, optioneel — versterkt lokale relevantie):
+### Header "Werkgebied" (beide campagnes)
 ```
-Mechelen
-Antwerpen
-Lier
-Bornem
-Willebroek
-Sint-Niklaas
-Boom
-Puurs
+Mechelen, Antwerpen, Lier, Bornem, Willebroek, Sint-Niklaas, Boom, Puurs
 ```
 
 ---
 
-## 5. Call asset
+## 9. CALL ASSET
 
 | Veld | Waarde |
 |---|---|
-| Telefoonnummer | `+32 460 20 77 88` |
+| Nummer | `+32 460 20 77 88` |
 | Land | België |
-| Beschikbaar | Ma-Vr 08:00-18:00, Za 09:00-13:00 |
-| Call-reporting | AAN (zo zien we welke ads bellen genereren) |
-
-**Belangrijk:** call-reporting via Google werkt apart van de Twilio-tracking. Beide AAN — Google ziet de ad-attributie, Twilio ziet het gesprek-transcript. Geen conflict.
+| Uren | Ma-Vr 08:00-18:00, Za 09:00-13:00, Zo gesloten |
+| Call-reporting | AAN |
 
 ---
 
-## 6. Location asset
+## 10. LEAD FORM EXTENSION
 
-Koppel je Google Business Profile (AB Bouw Groep, August van Landeghemstraat 65, 2830 Willebroek) aan dit Ads-account.
-
-**Hoe:** Google Ads → Tools → **Linked accounts** → **Business Profile** → koppel via dezelfde Google-account waarop GBP staat.
-
-Resultaat: adres + map-pin verschijnt onder ads, ads worden ook in Google Maps getoond, lokale targeting wordt 30-40% relevanter.
-
----
-
-## 7. Lead form extension (optioneel — sterke conversion-boost)
-
-Direct in de SERP een mini-form aanbieden, zonder dat user naar je site moet. Google verzamelt naam/telefoon/email en die komen via webhook naar GHL.
+Direct in de SERP een form openen — geen klik naar site nodig.
 
 **Setup:**
-1. Ads → Assets → **+ Toevoegen** → **Lead form**
-2. **Form name:** "Gratis dakinspectie" / "Gratis gevel-offerte"
-3. **CTA:** "Vraag offerte aan"
-4. **Headline:** "Plan uw gratis plaatsbezoek — vakman langs binnen 5 werkdagen"
-5. **Description:** "Vrijblijvend advies, vaste prijs vooraf, eigen ploeg. 10 jaar garantie."
-6. **Questions:** voornaam, achternaam, email, telefoon, postcode
-7. **Webhook URL:** dezelfde GHL-webhook als de site-forms — `services.leadconnectorhq.com/hooks/86MhhNXcdg4sbqD689x4/webhook-trigger/c8ad7682-de0a-4d5d-a867-61ca44a25ecc`
-8. **Privacy policy URL:** `https://abgroep.be/privacy`
+1. Ads → Assets → **+** → **Lead form**
+2. **Headline:** "Plan uw gratis plaatsbezoek"
+3. **Description:** "Vrijblijvend advies, vaste prijs vooraf, eigen ploeg. 10 jaar garantie."
+4. **CTA:** "Vraag offerte aan"
+5. **Questions:** voornaam, achternaam, email, telefoon, postcode
+6. **Webhook URL:** dezelfde GHL-webhook als de site-forms — `https://services.leadconnectorhq.com/hooks/86MhhNXcdg4sbqD689x4/webhook-trigger/c8ad7682-de0a-4d5d-a867-61ca44a25ecc`
+7. **Privacy policy URL:** `https://abgroep.be/privacy`
 
-Verwachte impact: +20-40% leads voor dezelfde ad-spend, vooral op mobile.
-
----
-
-## 8. Seller ratings (sterren onder ad) — LANGE TERMIJN
-
-**Vereisten Google:** 100+ reviews afgelopen 12 maanden, minimum 3.5★ gemiddeld, via een **goedgekeurde aggregator** (Google reviews tellen NIET mee voor de ster-extension).
-
-**Aanbevolen aggregator voor BE:** Trustpilot Free tier.
-
-**Stappen:**
-1. Trustpilot account aanmaken op `business.trustpilot.com` voor abgroep.be
-2. Import-flow: invite je 30-40 oudste klanten via email (Trustpilot stuurt automatisch een reviewverzoek)
-3. Stuur elke nieuwe afgewerkte werf een Trustpilot-uitnodiging — meeste klanten reageren binnen een week
-4. Na ~3-4 maanden hebt je 100+ reviews → Google trekt automatisch de ster-data binnen
-5. Sterren verschijnen binnen 2-3 weken onder je ads (3-6% CTR-boost gemiddeld)
+Verwacht: +20-40% leads voor dezelfde spend, vooral mobile.
 
 ---
 
-## 9. Headlines + Descriptions — kant-en-klaar
+## 11. SELLER RATINGS (★★★★★) — Dural's 992-reviews aanpak kopiëren
 
-### Campagne Dakwerken — Responsive Search Ad
+Dural heeft 992 reviews op aggregator. Dat is een meerjarige investering. AB Bouw begint op 0 — fixen we als volgt:
 
-**Headlines (max 30 tekens, 15 invullen):**
-```
-Dakwerker Mechelen
-Plat dak EPDM offerte
-Pannendak vernieuwen
-Gratis dakinspectie
-Eigen dakdekkers — geen onderaannemers
-10 jaar garantie op dakwerk
-Mijn VerbouwPremie inbegrepen
-Vaste prijs vooraf
-Antwoord binnen 1 werkdag
-Erkend aannemer Willebroek
-124+ tevreden klanten
-Dakisolatie + premie
-Lekkage of stormschade?
-Zink + dakgoten vernieuwen
-Bel 0460 20 77 88
-```
+**Start nu (15 min):**
+1. **Trustpilot Free** account → `business.trustpilot.com` → claim `abgroep.be`
+2. Eerste batch invite: alle bestaande tevreden klanten (Bardh heeft contacts) via Trustpilot's email-invite tool — automatische sequence
+3. Trustpilot widget op `/realisaties` + bedankt-pagina installeren
 
-**Descriptions (max 90 tekens, 4 invullen):**
-```
-Eigen dakdekkers, 10 jaar garantie via Federale Verzekering. Vraag gratis plaatsbezoek aan.
-Plat dak EPDM, pannen of leien — vakman komt langs en meet op. Vaste prijs binnen 1 werkdag.
-Mijn VerbouwPremie inbegrepen in de offerte. Wij regelen het dossier voor u.
-Erkend dakwerker in Mechelen, Antwerpen, Lier en omstreken. 124+ tevreden klanten.
-```
+**Doorlopend (per werf):**
+- Elke afgewerkte werf → Trustpilot email-invite ~2 dagen na oplevering
+- Templated SMS-follow-up als email geen reactie geeft
 
-**Final URL:** `https://abgroep.be/lp/dakwerken`
+**Tijdlijn:** met 1-2 nieuwe reviews/week = ~50-80 reviews na 1 jaar. Sterren-extension activeert vanaf 100+ reviews (kan ~14 maanden duren). Net niet 992 zoals Dural, maar binnen 2 jaar wel ergens 200-300 = visueel net zo sterk.
 
 ---
 
-### Campagne Gevel — Responsive Search Ad
-
-**Headlines:**
-```
-Gevelrenovatie Mechelen
-Crepi op uw gevel
-ETICS buitenisolatie
-Steenstrips gevel
-Gratis gevel-offerte
-Eigen vakmensen — geen onderaannemers
-10 jaar garantie op gevelwerk
-Mijn VerbouwPremie inbegrepen
-Vaste prijs vooraf
-Antwoord binnen 1 werkdag
-Erkend aannemer Willebroek
-124+ tevreden klanten
-Sto, Marmolit of Cova
-Sierpleister marmorino
-Bel 0460 20 77 88
-```
-
-**Descriptions:**
-```
-Crepi, ETICS, steenstrips of sierpleister. Eigen ploeg, 10 jaar garantie. Gratis offerte.
-Buitenisolatie + crepi = warmer huis + nieuwe look. Premie tot €4.000 mogelijk.
-Vakman komt langs voor metingen + kleuradvies. Vaste prijs binnen 1 werkdag.
-Erkend gevelrenovatie-aannemer in Mechelen, Antwerpen, Lier en omstreken.
-```
-
-**Final URL:** `https://abgroep.be/lp/gevel`
-
----
-
-## 10. Bid-strategy + Budget — aanbeveling
+## 12. BID-STRATEGY + BUDGET
 
 | Setting | Waarde | Waarom |
 |---|---|---|
-| Bid strategy | **Maximize Clicks** (cap CPC €1.80) | Eerste 2 weken — leer welke kw's converteren. Daarna naar Maximize Conversions met tCPA. |
-| Budget | **€20-30/dag** per campagne | Bij €1.50-2.00 CPC = 10-15 clicks/dag = 1-2 leads/dag |
-| Match types | **Phrase + Exact** alleen | Geen Broad — verspilt budget aan irrelevante zoekopdrachten |
-| Negative keywords | "gratis", "doe het zelf", "tweedehands", "huren", "verhuur", "cursus", "opleiding", "vacature", "jobs" | Blokkeer non-buyer intent |
-| Locaties | Mechelen, Antwerpen, Lier, Bornem, Willebroek, Sint-Niklaas, Boom, Puurs — **+15km radius elk** | Concentreer op werkgebied AB Bouw |
-| Ad rotation | **Optimize** | Google kiest beste ad-variant |
-| Schedule | Ma-Vr 07:00-21:00, Za 09:00-17:00 — uit op zondag | Geen verspilling op zondag |
+| Bid strategy | **Maximize Clicks** (cap CPC €1.80) eerste 2 weken | Conversion-data verzamelen, dan switchen naar Maximize Conversions met tCPA €25-35 |
+| Budget | **€20-30/dag per campagne** | Dak + Gevel = €40-60/dag totaal. Bij €1.50-2.00 CPC = 10-15 clicks/dag = 1-2 leads/dag |
+| Match types | **Phrase + Exact** alleen | Broad verspilt budget |
+| Negative kw's (account-level) | `gratis`, `doe het zelf`, `tweedehands`, `huren`, `verhuur`, `cursus`, `opleiding`, `vacature`, `jobs`, `wikipedia`, `forum` | |
+| Locaties (per ad-group) | **Stad + 15km radius** (vb. Mechelen-ad-group → enkel Mechelen + 15km) | Concentreer impressions waar je kan leveren |
+| Ad rotation | **Optimize for clicks** | Google kiest beste variant |
+| Schedule | Ma-Vr 07:00-21:00, Za 09:00-17:00, Zo uit | Geen verspilling buiten werkdagen |
+| Devices | Geen exclusies | Laat Google leren |
+| Audiences | "Renovatie" + "Huiseigenaren 30-65 BE" (observation, niet targeting) | Zien welke segmenten converteren, later bid-adjusten |
 
 ---
 
-## 11. Conversion tracking — verifieer dat dit aan staat
+## 13. CONVERSION TRACKING — verifieer
 
 | Conversion | Source | Status |
 |---|---|---|
-| **Form submit** (alle leadforms) | GA4 event `generate_lead` → geïmporteerd in Ads | ✅ live |
-| **Phone call from ad** | Google call-asset reporting | Activeren bij call asset setup |
-| **Phone call from website** | Twilio number swap → GHL call-log | ✅ live |
-| **Lead form direct** (extension) | Webhook naar GHL | Activeren bij lead-form setup |
+| Form submit (alle leadforms) | GA4 event `generate_lead` → geïmporteerd in Ads | ✅ live |
+| Phone call from ad | Google call-asset reporting | Activeren bij call asset setup |
+| Phone call from website | Twilio number swap → GHL call-log | ✅ live |
+| Lead form direct (extension) | Webhook naar GHL | Activeren bij lead-form setup |
 
-In Ads → Tools → **Conversions** zou je minstens deze 4 moeten zien staan.
+In Ads → Tools → **Conversions**: alle 4 moeten zichtbaar zijn, status "Recording conversions".
 
 ---
 
-## Volgorde van uitvoering (1 uur werk totaal)
+## VOLGORDE VAN UITVOERING (~90 min)
 
-1. **Image assets uploaden** (15 min) — grootste visuele jump
-2. **Sitelinks** (10 min) — extra real estate onder ad
-3. **Callouts** (5 min) — copy-paste lijst
-4. **Structured snippets** (5 min) — copy-paste lijst
-5. **Call asset** (5 min) — nummer + uren
-6. **Location asset** (5 min) — GBP linken
-7. **Lead form extension** (10 min) — extra conversion-path
-8. **Trustpilot setup starten** (5 min nu, daarna gewoon klanten inviten) — sterren komen later
+1. **Business asset** (logo + name) — 5 min, eerst doen, kost 1-3d approval
+2. **GBP koppelen** als Location asset — 5 min, vereist verified GBP
+3. **Image assets uploaden** — 15 min (per campagne 5 landscape + 5 square)
+4. **Ad-groups per stad maken** — 30 min (8 dakwerken + 8 gevel = 16 ad-groups)
+5. **Sitelinks (expanded)** — 10 min, copy uit § 6
+6. **Callouts + Structured snippets** — 5 min, copy uit § 7 + 8
+7. **Call asset** — 5 min
+8. **Lead form extension** — 10 min, webhook al klaar
+9. **Bid + budget + negatives** — 5 min uit § 12
+10. **Trustpilot starten** — 15 min, sterren komen 6-14 maanden later
 
-Wat NIET vandaag, gewoon plannen:
-- Seller ratings ster-extension → komt vanzelf zodra Trustpilot 100+ reviews heeft
+---
+
+## CHECK NA 7 DAGEN
+
+- **CTR ad groups** — verwacht >5% op stad-specifieke ad-groups (Dural-niveau), >3% op generic
+- **Quality Score** — moet 7+ zijn op stad-specifieke ad-groups (Lokale LP-relevantie)
+- **Conversion rate** — verwacht 4-8% op LP, 2-4% op /lokaal/* (LP heeft betere conversion-flow)
+- **Cost per lead** — moet onder €30 zakken zodra Max Conversions actief is
+
+Als CTR onder 3% blijft op een ad-group → ad-copy A/B test (varieer headline 1 + description 1).
+Als CPL boven €40 zit na 2 weken → keyword negatives uitbreiden + match-type verkleinen.
