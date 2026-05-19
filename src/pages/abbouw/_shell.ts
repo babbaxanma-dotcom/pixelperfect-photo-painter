@@ -443,7 +443,8 @@ body.is-scrolled .lf-scroll-cue { opacity: 0; pointer-events: none; transition: 
 .lf-dd { position: relative; margin-bottom: 12px; z-index: 5; }
 .lf-dd-toggle { width:100%; display:flex; align-items:center; justify-content:space-between; padding: 14px 16px; border: 1px solid var(--ink-line); border-radius: 10px; background: #fff; font-size: 14px; color: var(--ink-soft); font-family: inherit; cursor: pointer; transition: border-color .2s var(--ease), box-shadow .2s var(--ease); text-align:left; }
 .lf-dd-toggle:hover { border-color: var(--ink-soft); }
-.lf-dd.open { z-index: 80; }
+.lf-dd { position: relative; }
+.lf-dd.open { z-index: 9999 !important; }
 .lf-dd.open .lf-dd-toggle { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(217,140,3,0.14); }
 .lf-dd-label.has-value { color: var(--ink); font-weight: 600; }
 .lf-dd-caret { color: var(--ink-soft); transition: transform .22s var(--ease); flex-shrink:0; }
@@ -460,7 +461,7 @@ body.is-scrolled .lf-scroll-cue { opacity: 0; pointer-events: none; transition: 
   list-style: none;
   margin: 0;
   padding: 8px;
-  z-index: 30;
+  z-index: 9999;
   max-height: min(340px, 50vh);
   overflow-y: auto;
   overflow-x: hidden;
