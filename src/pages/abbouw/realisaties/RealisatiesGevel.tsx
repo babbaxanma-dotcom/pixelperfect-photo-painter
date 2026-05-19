@@ -30,17 +30,17 @@ type Project = {
 const projects: Project[] = [
   {
     img: imgCrepiWit,
-    tag: 'Witte crepi + cederlat-accenten — Mechelen',
+    tag: 'Witte crepi + cederlat-accenten',
     title: 'Hedendaagse villa · witte crepi met houten gevelblokken',
     story:
       "Hedendaagse vrijstaande villa met strakke witte siliconencrepi-gevel, accenten in westerse cederlat rond de inkom en raampartijen. ETICS-buitenisolatie 14 cm EPS, afgewerkt met Sto Lotusan in helder wit. Anthraciet aluminium schrijnwerk Reynaers MasterLine, dorpels in arduin. Een gevel die clean leest van de straat en warm wordt door de houten accenten.",
     specs: { m2: '186 m² gevelvlak', tijd: '6 weken', materiaal: '14 cm EPS + Sto Lotusan + ceder accenten', premie: 'Mijn VerbouwPremie €4.020' },
-    quote: { text: 'De architect kwam zelf na de oplevering een rondje doen. Hij zei: "dit is geen pleisterwerk, dit is precisie-werk."', name: 'Annick D., Mechelen' },
+    quote: { text: 'De architect kwam zelf na de oplevering een rondje doen. Hij zei: "dit is geen pleisterwerk, dit is precisie-werk."', name: 'Annick D.' },
     filter: 'etics',
   },
   {
     img: imgCrepiGrijs,
-    tag: 'Lichtgrijze siliconencrepi — Boom',
+    tag: 'Lichtgrijze siliconencrepi',
     title: 'Klassieke woning · siliconencrepi in zacht lichtgrijs',
     story:
       'Vrijstaande klassieke woning met traditioneel zadeldak vroeg om een tijdloze gevel — geen hard antraciet, geen kil wit, maar een warm-grijze siliconencrepi die mooi met de leien afdaling samenwerkt. Sto Lotusan in lichtgrijs (RAL 7044), antraciet aluminium schrijnwerk en dorpels in arduin. Zelf-reinigende coating — regen spoelt vuil automatisch mee.',
@@ -49,17 +49,17 @@ const projects: Project[] = [
   },
   {
     img: imgSteenstrips,
-    tag: 'Anthraciet steenstrips — tuin-aanbouw Lier',
+    tag: 'Anthraciet steenstrips tuin-aanbouw',
     title: 'Aanbouw met schuifpui · steenstrips in zwart-anthraciet',
     story:
       'Tuinzijde-aanbouw met grote schuifpui die uitkijkt op het terras. Volume bekleed met handvorm-steenstrips in zwart-anthraciet (Vandersanden Black Diamond) — modern karakter dat contrasteert met de witgekalkte hoofdgevel. Onderhoudsvrij voor 30+ jaar.',
     specs: { m2: '64 m² aanbouwgevel', tijd: '4 weken', materiaal: 'Vandersanden Black Diamond handvorm-steenstrips' },
-    quote: { text: 'We hebben gekozen voor zwart steen i.p.v. crepi omdat we de tuin wilden laten "lezen" tegen iets sterks. Goeie keuze gebleken.', name: 'Stijn V., Lier' },
+    quote: { text: 'We hebben gekozen voor zwart steen i.p.v. crepi omdat we de tuin wilden laten "lezen" tegen iets sterks. Goeie keuze gebleken.', name: 'Stijn V.' },
     filter: 'steenstrips',
   },
   {
     img: imgSierpleister,
-    tag: 'Sierpleister + zwart cladding — Bonheiden',
+    tag: 'Sierpleister + zwart cladding',
     title: 'Modern volume · witte sierpleister boven anthraciet plint',
     story:
       'Hedendaagse villa met scherp contrast tussen het strakke witte bovenvolume in handgeschilderde sierpleister, en de zwarte horizontale anthraciet-cladding van de onderbouw. Composiet daktrim verbergt het plat dak compleet — een gevel die op afstand bijna grafisch leest, van dichtbij ambachtelijk.',
@@ -68,7 +68,7 @@ const projects: Project[] = [
   },
   {
     img: imgGevelCrepi,
-    tag: 'Crepi-renovatie — Willebroek',
+    tag: 'Crepi-renovatie + herstelcoating',
     title: 'Bestaande crepi · reiniging + herstelcoating',
     story:
       "Bestaande crepi-gevel uit 2003 had algenaangroei aan de noordzijde en kleine scheurtjes nabij de raamhoeken. Hogedruk-reiniging met algen-killer, scheuren hersteld met vezelmortel en netwapening, daarna volledige herstel-coating in dezelfde RAL-tint. Geen complete strip nodig — alleen waar het mogelijk was.",
@@ -77,17 +77,17 @@ const projects: Project[] = [
   },
   {
     img: imgVillaMod,
-    tag: 'Beige Vlaamse baksteen — Mechelen-Oost',
+    tag: 'Beige Vlaamse handvorm-baksteen',
     title: 'Nieuwbouw villa · gevelblokken in zacht beige handvorm',
     story:
       'Strakke moderne villa met als gevraagd materiaal: traditionele Vlaamse handvorm-gevelsteen in zacht beige-roze, met diepe voegen voor schaduwwerking en grote zwarte aluminium raamopeningen. Eigen metselploeg — geen losse onderaannemer — om ritme en voegdiepte over de volledige 312 m² consistent te houden.',
     specs: { m2: '312 m² gevelvlak', tijd: '8 weken', materiaal: 'Vandersanden handvorm beige + Reynaers schrijnwerk' },
-    quote: { text: 'De voegen lopen overal even diep, ook achter de balkons en in de dakranden. Dat is bij andere bouwers nooit het geval.', name: 'Patrick H., Mechelen' },
+    quote: { text: 'De voegen lopen overal even diep, ook achter de balkons en in de dakranden. Dat is bij andere bouwers nooit het geval.', name: 'Patrick H.' },
     filter: 'crepi',
   },
   {
     img: imgGevelStrips,
-    tag: 'Rood-bruine handvorm — Antwerpen',
+    tag: 'Rood-bruine handvorm-steenstrips',
     title: 'Naïsolatie rijhuis · klassieke rood-bruine steenstrips',
     story:
       'Tussenwoning eind 19e eeuw, enkele baksteen, geen isolatie. Volledig ingepakt met 14 cm EPS, daarna handvorm-steenstrips in warm rood-bruin Vandersanden — moderne thermische upgrade, klassiek straatbeeld behouden. Zwart aluminium schrijnwerk met diepe omkadering geeft een eigentijds detail.',
@@ -96,7 +96,7 @@ const projects: Project[] = [
   },
   {
     img: imgHoekwoning,
-    tag: 'Klassieke hoekwoning — Antwerpen',
+    tag: 'Klassieke baksteen-hoekwoning',
     title: 'Behoud baksteengevel · enkel voegherstel + reiniging',
     story:
       'Klassieke hoekwoning in originele rode Vlaamse baksteen. Eigenaar wou expliciet de gevel-uitstraling behouden — wij hebben geen ETICS toegepast maar zelectief voegherstel: oude verbrokkelende voegen uitgekapt, vervangen door kleurmatch kalkmortel. Biologische reiniging tegen algenaangroei. Karakter behouden, levensduur 25+ jaar verlengd.',
@@ -105,17 +105,17 @@ const projects: Project[] = [
   },
   {
     img: imgStadswoning,
-    tag: 'Stadswoning-restauratie — Brussel',
+    tag: 'Stadswoning-restauratie 1908',
     title: 'Burgerwoning · originele bepleistering hervoegd',
     story:
       'Beschermd stadszicht, geen ETICS toegestaan. We hebben de originele bepleistering uit 1908 gerestaureerd: losse delen vervangen door kalkmortel volgens recept van Brusselse monumentenzorg, geverfd in originele blauw-grijze RAL. Behoud van profileringen rond ramen en kornisen.',
     specs: { m2: '104 m² zijgevel', tijd: '7 weken', materiaal: 'Kalkmortel + Keim siliconaatverf' },
-    quote: { text: 'De Brusselse monumentenzorg gaf zelfs een complimentje. Dat is bij hen zeldzaam.', name: 'Mariam K., Brussel' },
+    quote: { text: 'De stedelijke monumentenzorg gaf zelfs een complimentje. Dat is bij hen zeldzaam.', name: 'Mariam K.' },
     filter: 'renovatie',
   },
   {
     img: imgRijwoning,
-    tag: 'Gevelreiniging + voegwerk — Antwerpen',
+    tag: 'Gevelreiniging + nieuw voegwerk',
     title: 'Gele baksteen-rijwoning · reiniging + nieuw voegwerk',
     story:
       'Originele gele Vlaamse baksteengevel met 30 jaar verkleuring en losse voegen. Hogedruk-reiniging met biologisch product (geen chemische schade aan baksteen), oude voegen uitgekapt tot 18 mm diep, vervangen door lichte kalkmortel. Resultaat: gevel oogt 20 jaar jonger. Antraciet schrijnwerk meegenomen voor moderne accent.',
@@ -124,7 +124,7 @@ const projects: Project[] = [
   },
   {
     img: imgRodeVilla,
-    tag: 'Karaktervilla · voegherstel — Lier',
+    tag: 'Karaktervilla · selectief voegherstel',
     title: 'Vrijstaande rode baksteen-villa · selectief voegherstel',
     story:
       'Bestaande rode baksteengevel was structureel gezond, maar voegen op de zuidoostzijde verbrokkelden. Selectieve uitkapping (alleen waar nodig), kleurmatch van de bestaande voeg, en finishing met silicaat-zout dat verkleuringen voorkomt. Karakter behouden, levensduur verlengd met decennia.',
@@ -133,7 +133,7 @@ const projects: Project[] = [
   },
   {
     img: imgGeleVilla,
-    tag: 'BEN-villa gevelafwerking — Mortsel',
+    tag: 'BEN-villa gele handvorm-gevelsteen',
     title: 'BEN-woning · gele gevelsteen met dieptevoeg',
     story:
       'Bijna-energie-neutrale nieuwbouw waar de gevel zelf de isolatie versterkt. Gele Vlaamse handvorm-gevelsteen op een geïsoleerde binnenmuur (Ytong 36 cm + 10 cm EPS), met een diep-uitgekapte voeg voor schaduw-werking. Architectonisch detail dat letterlijk het zonlicht modelleert.',

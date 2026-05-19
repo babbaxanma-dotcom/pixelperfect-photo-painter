@@ -5,19 +5,19 @@ import { CONTACT } from '@/data/contact';
 import logo from '@/assets/home/logo.png';
 
 // Hero + project photos — alle geverifieerd qua match met story-tekst
-import heroBg from '@/assets/realisaties-new/dak-hero.jpg';          // NEW FLUX — premium dak hero golden hour
-import imgGeelPannen from '@/assets/dak/lp-geel-nieuwbouw.jpg';      // proj 1 — gele baksteen + antraciet pannen
-import imgEpdmHero from '@/assets/dak/lp-plat-dak.jpg';              // proj 2 — premium plat dak sunset
-import imgLeien from '@/assets/realisaties-new/dak-leien-villa.jpg'; // NEW FLUX — leien karaktervilla full shot
-import imgVelux from '@/assets/dak/lp-velux.jpg';                    // proj 5 — Velux interieur
-import imgZink from '@/assets/dak/lp-zink-goot.jpg';                 // proj 6 — zink + pannen
-import imgSarking from '@/assets/dak/dakisolatie.jpg';               // proj 4 — sarking mid-werf (echte foto)
-import imgStorm from '@/assets/dak/lp-stormschade.jpg';              // proj 7 — werker met blauwe zeil
-import imgClassic from '@/assets/dak/lp-classic-renovatie.jpg';      // proj 11 — Belgisch huisje rood-oranje pannen
-import imgPannen from '@/assets/dak/hellend-pannen.jpg';             // proj 9 — pannendak vanuit hoge hoek
-import imgBitumen from '@/assets/dak/bitumen.jpg';                   // proj 12 — bitumen detail
-import imgDakopbouw from '@/assets/realisaties/08_extra_dakopbouw-mortsel.jpg'; // proj 8
-import imgDakkapelZink from '@/assets/realisaties/14_extra_dakkapel-zink-lier.jpg'; // proj 10 — ZINKEN dakkapel
+import heroBg from '@/assets/realisaties-new/dak-hero.jpg';
+import imgGeelPannen from '@/assets/dak/lp-geel-nieuwbouw.jpg';
+import imgEpdmHero from '@/assets/realisaties-new/dak-epdm-modern.jpg';      // NEW FLUX — moderne villa zonnedak + plat-dak gevelvolume
+import imgLeien from '@/assets/realisaties-new/dak-leien-villa.jpg';
+import imgVelux from '@/assets/dak/lp-velux.jpg';
+import imgZink from '@/assets/dak/lp-zink-goot.jpg';
+import imgSarking from '@/assets/dak/dakisolatie.jpg';
+import imgStorm from '@/assets/realisaties-new/dak-storm.jpg';               // NEW FLUX — afgewerkte storm-reparatie naast bestaande pannen
+import imgClassic from '@/assets/dak/lp-classic-renovatie.jpg';
+import imgPannen from '@/assets/realisaties-new/dak-rijwoning.jpg';          // NEW FLUX — rijwoning 1990s nieuw rood-bruin pannendak
+import imgBitumen from '@/assets/dak/bitumen.jpg';
+import imgDakopbouw from '@/assets/realisaties-new/dak-opbouw.jpg';          // NEW FLUX — zink-volume tussen klassieke rijwoningen
+import imgDakkapelZink from '@/assets/realisaties/14_extra_dakkapel-zink-lier.jpg';
 
 type Project = {
   img: string;
@@ -32,7 +32,7 @@ type Project = {
 const projects: Project[] = [
   {
     img: imgGeelPannen,
-    tag: 'Pannendak antraciet — Mechelen',
+    tag: 'Pannendak antraciet',
     title: 'Gele baksteenwoning · nieuw antraciet pannendak',
     story:
       "Hedendaagse woning in gele Vlaamse baksteen met origineel daken van betonpannen — kleur was vervaagd en porositeit toegenomen. Volledige vervanging met antraciet Koramic-keramiek, nieuwe onderdakfolie en panlatten. Tegelijk 18 cm PIR-isolatie tussen de kepers — strakke moderne dakblik tegen de warme gele gevelsteen.",
@@ -41,17 +41,17 @@ const projects: Project[] = [
   },
   {
     img: imgEpdmHero,
-    tag: 'Plat dak EPDM — Lier',
-    title: 'Modern plat dak · EPDM met geïntegreerd LED-detail',
+    tag: 'Hellend zonnedak + plat gevelvolume',
+    title: 'Hedendaagse villa · pannen-met-PV en plat dak boven gevelopening',
     story:
-      'Hedendaagse villa met groot plat dak (95 m²) in één naadloos vlak. Firestone RubberGard EPDM in één stuk gelegd, afschot naar bereikbare slokker, met LED-strip langs de daktrim voor sfeerverlichting na zonsondergang. Looprail toegevoegd voor onderhoud van de zonnepanelen. Dakopstand minimum afgewerkt voor maximaal zicht.',
-    specs: { m2: '95 m²', tijd: '8 werkdagen', materiaal: 'Firestone RubberGard EPDM 1.52 mm + LED-strip' },
-    quote: { text: 'De ploeg werkte super proper, elke avond was de werf schoon. Zelfs onze hond merkte niets.', name: 'Bart V., Lier' },
+      'Architecturale villa met asymmetrisch zadeldak — volledig bedekt met geïntegreerde PV-panelen op anthraciet pannen. Plat dak boven de inkom + grote schuifpui in EPDM Firestone met crepi-gevelvolume eronder. Cederlat-accent rondom de inkom. Wij hebben dak + PV-integratie + plat-dak details simultaan uitgevoerd zodat niets dubbel hoefde te worden gefactureerd.',
+    specs: { m2: '142 m² hoofddak + 36 m² plat dak', tijd: '14 werkdagen', materiaal: 'Pannen + JinkoSolar PV + Firestone EPDM' },
+    quote: { text: 'De ploeg werkte super proper, elke avond was de werf schoon. Zelfs onze hond merkte niets.', name: 'Bart V.' },
     filter: 'platdak',
   },
   {
     img: imgLeien,
-    tag: 'Natuurleien — Bonheiden',
+    tag: 'Natuurleien Cupa Heavy 3',
     title: 'Karaktervilla \'60 · volledig nieuw leiendak Cupa Heavy 3',
     story:
       'Klassieke vrijstaande karaktervilla met origineel leiendak dat na 60 winters versleten was — broze leien, lekkages bij de schouwen. Volledig nieuw dak in Spaanse natuurleien Cupa Heavy 3 in dezelfde blauwgrijze tint. Bestaande dakstructuur versterkt waar nodig, originele bakstenen schouwen behouden en gerestaureerd, koperen kielgoten op maat geklopt. De karakteristieke uitstraling van de buurt blijft intact.',
@@ -60,17 +60,17 @@ const projects: Project[] = [
   },
   {
     img: imgSarking,
-    tag: 'Sarking-isolatie — Willebroek',
+    tag: 'Sarking-isolatie 24 cm PIR',
     title: 'Halfopen woning · 24 cm PIR sarking op bestaand dak',
     story:
       'Onverdeeld dak met koude winters en hete zolders. Sarking-isolatie 24 cm PIR boven op de bestaande dakconstructie geplaatst, oude pannen tijdelijk verwijderd en herplaatst — de foto toont het dak halverwege uitvoering met de nieuwe PIR-platen en dampdichte folie zichtbaar. Premiedossier compleet door ons ingediend bij Fluvius — klant kreeg €6.480 retour.',
     specs: { m2: '165 m² dakvlak', tijd: '11 werkdagen', materiaal: '24 cm PIR sarking + Delta onderdakfolie', premie: 'Mijn VerbouwPremie €6.480' },
-    quote: { text: 'We hebben de eerste winter 38% minder gas verbruikt. De rekening is binnen 8 jaar terugverdiend.', name: 'Annick D., Willebroek' },
+    quote: { text: 'We hebben de eerste winter 38% minder gas verbruikt. De rekening is binnen 8 jaar terugverdiend.', name: 'Annick D.' },
     filter: 'sarking',
   },
   {
     img: imgVelux,
-    tag: 'Velux daklichten — Boom',
+    tag: 'Velux daklichten',
     title: 'Zoldertransformatie · 3 nieuwe Velux dakvensters',
     story:
       'Klant wou de donkere zolder ombouwen tot lichte werkkamer. Drie Velux GGL (formaat MK06) geplaatst met aansluitende pan-detaillering en binnenafwerking. We hebben in elke ruimte de lichtmeting voor/na gedocumenteerd: +280 lux op klepwerkhoogte volgens ons rapport.',
@@ -79,7 +79,7 @@ const projects: Project[] = [
   },
   {
     img: imgZink,
-    tag: 'Zinkwerk VMZinc — Mechelen',
+    tag: 'Zinkwerk VMZinc Quartz',
     title: 'Herenhuis 1925 · volledige vervanging bakgoten',
     story:
       'Originele zinkgoten met meerdere lekkages na de januaristorm. Vervangen door VMZinc Quartz-Zinc in originele profielmaten — modernere alloy met 80+ jaar levensduur. Koperen regenpijpen op maat gesoldeerd. Het pand behoudt zijn historische uitstraling met materiaal dat de tijd doorstaat.',
@@ -88,26 +88,26 @@ const projects: Project[] = [
   },
   {
     img: imgStorm,
-    tag: 'Stormschade — Antwerpen',
+    tag: 'Spoedinterventie stormschade',
     title: 'Spoedinterventie bitumen-dak · 48u na storm',
     story:
       'Groot deel van het bitumen-dak gescheurd na een windstoot van 130 km/u. Tijdelijke afdichting binnen 4 uur, definitief herstel met 2-laagse APP-bitumen na 48u. Verzekeringsdossier compleet door ons gefactureerd op AG Insurance — klant moest niet zelf bellen.',
     specs: { m2: '65 m²', tijd: '3 werkdagen (incl. spoeddichting binnen 4u)', materiaal: 'APP-bitumen 2-laags met leislag' },
-    quote: { text: 'Vrijdagavond gebeld, zaterdagmiddag was het dak weer dicht. Service zoals het hoort.', name: 'Yusuf B., Antwerpen' },
+    quote: { text: 'Vrijdagavond gebeld, zaterdagmiddag was het dak weer dicht. Service zoals het hoort.', name: 'Yusuf B.' },
     filter: 'platdak',
   },
   {
     img: imgDakopbouw,
-    tag: 'Dakopbouw met zink — Mortsel',
-    title: 'Plat dak omgebouwd tot volwaardige opbouw',
+    tag: 'Modern zink-volume tussen rijwoningen',
+    title: 'Nieuw gevel-volume in VMZinc Anthra · tussen twee klassieke buren',
     story:
-      'Bestaand plat dak omgebouwd tot een volwaardige opbouw met zinken bekleding (VMZinc Anthra-Zinc) en grote schuifpui naar dakterras. Constructief versterkt met staalprofielen, geïsoleerd tot passief-niveau, geïntegreerd in het bestaande gevelritme.',
-    specs: { m2: '38 m² extra woonruimte', tijd: '28 werkdagen', materiaal: 'VMZinc Anthra-Zinc + structuurstaal' },
+      "Tussenwoning waar het origineel pannendak boven de garage volledig is vervangen door een modern zinkvolume in VMZinc Anthra-Zinc met staande naden. Groot fixed-frame raam met zwart aluminium kader, plat-dak afwerking, geïsoleerd tot passief-niveau. Cleane breuk met de twee buren — twee traditionele rijwoningen met rood-bruine pannendaken aan weerszijden. Stedelijk inbreiding-werk dat het straatbeeld respecteert.",
+    specs: { m2: '52 m² gevel-volume', tijd: '24 werkdagen', materiaal: 'VMZinc Anthra-Zinc + structuurstaal' },
     filter: 'zinkwerk',
   },
   {
     img: imgPannen,
-    tag: 'Pannendak Koramic — Boom',
+    tag: 'Pannendak Koramic Datura',
     title: 'Rijwoning 1995 · vervanging cement-pannen',
     story:
       'Cement-pannen op leeftijd — schuimaangroei en losse pannen. Volledige vervanging met Koramic Datura in rood-bruin. Tegelijk dakgoten vernieuwd in zink, en 12 cm PIR-isolatie tussen kepers. Klant ontving Mijn VerbouwPremie van €1.520 voor de gelijktijdige isolatie.',
@@ -116,7 +116,7 @@ const projects: Project[] = [
   },
   {
     img: imgDakkapelZink,
-    tag: 'Zinken dakkapel — Lier',
+    tag: 'Zinken dakkapel VMZinc',
     title: 'Uitbreiding zolder · dakkapel in zink VMZinc Anthra',
     story:
       'Bestaande dakkapel met lekkage werd compleet vervangen door een grotere zinken-bekleede dakkapel — gevels in VMZinc Anthra-Zinc met staande naden, plat dak in EPDM. Resultaat: 6 m² extra woonruimte op zolder en een design-statement dat past bij de moderne buurt.',
@@ -125,17 +125,17 @@ const projects: Project[] = [
   },
   {
     img: imgClassic,
-    tag: 'Volledige dakvernieuwing — Lier',
+    tag: 'Volledige dakvernieuwing strip & rebuild',
     title: 'Belgisch huisje · nieuw rood-oranje pannendak',
     story:
       'Vrijstaande woning waar de originele dakstructuur niet meer voldeed aan moderne isolatie-normen. Strip-and-rebuild: kepers waar nodig vervangen, dampscherm opnieuw geplaatst, 22 cm PIR-isolatie en onderdakfolie. Twee Velux-dakvensters meegenomen. Finaal afgewerkt met Koramic Tempest in warme rood-oranje tint die past bij de baksteengevel.',
     specs: { m2: '220 m²', tijd: '18 werkdagen', materiaal: 'Koramic Tempest rood-oranje + 22 cm PIR' },
-    quote: { text: 'Drie offertes ontvangen. Bij AB Bouw was het meteen duidelijk: prijs vooraf vast, werkdocumenten compleet. Heel anders dan de twee andere.', name: 'Stijn V., Lier' },
+    quote: { text: 'Drie offertes ontvangen. Bij AB Bouw was het meteen duidelijk: prijs vooraf vast, werkdocumenten compleet. Heel anders dan de twee andere.', name: 'Stijn V.' },
     filter: 'pannendak',
   },
   {
     img: imgBitumen,
-    tag: 'Bitumen plat dak — Bornem',
+    tag: 'Bitumen plat dak APP 2-laags',
     title: 'Garagedak · vervanging meerdere lagen bitumen',
     story:
       'Garagedak met drie generaties bitumen op elkaar — te zwaar geworden voor de structuur. Volledig gestript tot op de OSB, nieuwe OSB-platen waar rotting aanwezig was, 2-laagse APP-bitumen met grijze leislag en aluminium daktrim rondom. Onder €3.500 compleet.',
