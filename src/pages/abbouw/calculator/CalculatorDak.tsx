@@ -35,27 +35,52 @@ type State = {
 
 const TOTAL_STEPS = 6;
 
-export default function CalculatorDak() {
+interface CalculatorDakProps {
+  /** Modal-modus: render als overlay met sluit-knop. Anders: full-page modus. */
+  onClose?: () => void;
+}
+
+export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
   const navigate = useNavigate();
+  const isModal = !!onClose;
   const [state, setState] = useState<State>({ step: 1, oppervlakte: 50 });
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
-    document.title = 'Bereken uw dakwerken-offerte | AB Bouw Groep';
-    let m = document.querySelector('meta[name="robots"]');
-    if (!m) { m = document.createElement('meta'); m.setAttribute('name','robots'); document.head.appendChild(m); }
-    m.setAttribute('content', 'noindex, nofollow');
+    if (!isModal) {
+      document.title = 'Bereken uw dakwerken-offerte | AB Bouw Groep';
+      let m = document.querySelector('meta[name="robots"]');
+      if (!m) { m = document.createElement('meta'); m.setAttribute('name','robots'); document.head.appendChild(m); }
+      m.setAttribute('content', 'noindex, nofollow');
+    }
 
     const prev = document.body.className;
-    document.body.className = '';
+    if (!isModal) document.body.className = '';
     const style = document.createElement('style');
-    style.textContent = SHELL_STYLE + CALC_CSS;
+    style.textContent = (isModal ? '' : SHELL_STYLE) + CALC_CSS;
     document.head.appendChild(style);
-    window.scrollTo(0, 0);
+    if (!isModal) window.scrollTo(0, 0);
 
-    return () => { document.body.className = prev; style.remove(); };
-  }, []);
+    // Modal: ESC + body scroll lock
+    let prevOverflow = '';
+    let onEsc: ((e: KeyboardEvent) => void) | null = null;
+    if (isModal) {
+      prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      onEsc = (e: KeyboardEvent) => { if (e.key === 'Escape' && onClose) onClose(); };
+      window.addEventListener('keydown', onEsc);
+    }
+
+    return () => {
+      if (!isModal) document.body.className = prev;
+      style.remove();
+      if (isModal) {
+        document.body.style.overflow = prevOverflow;
+        if (onEsc) window.removeEventListener('keydown', onEsc);
+      }
+    };
+  }, [isModal, onClose]);
   useAbBouwInteractions();
 
   const set = (patch: Partial<State>) => setState(prev => ({ ...prev, ...patch }));
@@ -110,18 +135,19 @@ export default function CalculatorDak() {
     }
   };
 
-  return (
-    <>
-      <div dangerouslySetInnerHTML={{ __html: buildNav('home') }} />
-      <section className="calc-section">
-        <div className="wrap">
-          <div className="calc-card" data-reveal>
+  const cardJSX = (
+    <div className="calc-card" data-reveal>
             <header className="calc-head">
-              <button type="button" className="calc-back-link" onClick={() => state.step > 1 ? back() : navigate('/lp/dakwerken')} aria-label="Terug">
+              <button type="button" className="calc-back-link" onClick={() => state.step > 1 ? back() : (isModal ? onClose!() : navigate('/lp/dakwerken'))} aria-label="Terug">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-                <span>Terug</span>
+                <span>{state.step > 1 ? 'Terug' : (isModal ? 'Sluiten' : 'Terug')}</span>
               </button>
               <span className="calc-head-label">Dakwerken — offerte-wizard</span>
+              {isModal && (
+                <button type="button" className="calc-modal-x" onClick={onClose} aria-label="Sluiten">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              )}
             </header>
             <div className="calc-progress">
               <div className="calc-progress-bar" style={{ width: `${pct}%` }} />
@@ -326,8 +352,25 @@ export default function CalculatorDak() {
                 ))}
               </div>
             )}
-          </div>
+    </div>
+  );
 
+  if (isModal) {
+    return (
+      <div className="calc-modal-backdrop" onClick={onClose} role="dialog" aria-modal="true" aria-label="Offerte calculator">
+        <div className="calc-modal-shell" onClick={(e) => e.stopPropagation()}>
+          {cardJSX}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div dangerouslySetInnerHTML={{ __html: buildNav('home') }} />
+      <section className="calc-section">
+        <div className="wrap">
+          {cardJSX}
           <div className="calc-trust" data-reveal>
             <div className="calc-trust-item"><strong>★ 4,9 / 5</strong><span>184+ tevreden klanten</span></div>
             <div className="calc-trust-item"><strong>10 jaar</strong><span>garantie via Federale Verzekering</span></div>
@@ -342,6 +385,39 @@ export default function CalculatorDak() {
 }
 
 const CALC_CSS = `
+/* Modal-modus backdrop + shell */
+.calc-modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(10,22,40,0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 40px 16px;
+  overflow-y: auto;
+  animation: calcFadeIn .2s ease-out;
+}
+.calc-modal-shell {
+  width: 100%; max-width: 720px;
+  animation: calcSlideUp .3s cubic-bezier(.22,1,.36,1);
+}
+@keyframes calcSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.calc-modal-x {
+  background: none; border: 1px solid var(--ink-line-soft);
+  width: 32px; height: 32px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--ink-soft); cursor: pointer;
+  padding: 0; margin-left: auto;
+  transition: border-color .2s, color .2s, background .2s;
+}
+.calc-modal-x:hover { border-color: var(--navy); color: var(--navy); background: var(--bg-soft); }
+@media (max-width: 720px) {
+  .calc-modal-backdrop { padding: 12px 8px; }
+}
+
 .calc-section {
   background: linear-gradient(180deg, var(--bg-soft) 0%, #fff 50%);
   padding: 120px 0 80px;

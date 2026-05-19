@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { SHELL_STYLE } from '../_shell';
 import { submitLead } from '@/lib/leads';
 import { BLOGS } from '@/data/blogs';
 import type { Gemeente } from '@/data/gemeentes';
 import { CONTACT } from '@/data/contact';
+import CalculatorDak from '../calculator/CalculatorDak';
 
 // Filter blogs op dakwerken-relevante tags zodat alleen relevante content
 // op de LP verschijnt. Linkjes openen in een NIEUWE tab zodat de bezoeker
@@ -1120,7 +1121,7 @@ const HTML = `
 
 <section class="lf-section lp-calc-cta-section" style="padding: 32px 0 8px;">
   <div class="wrap">
-    <a href="/calculator/dakwerken" class="lp-calc-cta" data-reveal>
+    <a href="/calculator/dakwerken" class="lp-calc-cta" data-calc-trigger data-reveal>
       <div class="lp-calc-cta-icon" aria-hidden="true">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="4" y="2" width="16" height="20" rx="2"/>
@@ -1680,6 +1681,23 @@ const HTML = `
 `;
 
 export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
+  const [calcOpen, setCalcOpen] = useState(false);
+
+  // Klikken op [data-calc-trigger] in de LP-HTML opent modal i.p.v. navigeren
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+      const trigger = target.closest('[data-calc-trigger]');
+      if (trigger) {
+        e.preventDefault();
+        setCalcOpen(true);
+      }
+    };
+    document.addEventListener('click', handler);
+    return () => document.removeEventListener('click', handler);
+  }, []);
+
   useEffect(() => {
     const pageUrl = local ? `https://abgroep.be/lokaal/dakwerker-${local.slug}` : 'https://abgroep.be/lp/dakwerken';
     document.title = local
@@ -1941,5 +1959,10 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
         .replaceAll('?lp=%2Flp%2Fdakwerken', `?lp=%2Flokaal%2Fdakwerker-${local.slug}`)
     : HTML;
 
-  return <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />;
+  return (
+    <>
+      <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />
+      {calcOpen && <CalculatorDak onClose={() => setCalcOpen(false)} />}
+    </>
+  );
 }
