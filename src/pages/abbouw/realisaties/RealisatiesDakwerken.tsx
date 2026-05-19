@@ -12,11 +12,11 @@ import imgLeien from '@/assets/realisaties-new/dak-leien-villa.jpg';
 import imgVelux from '@/assets/dak/lp-velux.jpg';
 import imgZink from '@/assets/dak/lp-zink-goot.jpg';
 import imgSarking from '@/assets/dak/dakisolatie.jpg';
-import imgStorm from '@/assets/realisaties-new/dak-storm.jpg';               // NEW FLUX — afgewerkte storm-reparatie naast bestaande pannen
+import imgStorm from '@/assets/realisaties-new/dak-storm-v2.jpg';            // NEW FLUX v2 — clean afgewerkt bitumen plat dak na storm-reparatie
 import imgClassic from '@/assets/dak/lp-classic-renovatie.jpg';
 import imgPannen from '@/assets/realisaties-new/dak-rijwoning.jpg';          // NEW FLUX — rijwoning 1990s nieuw rood-bruin pannendak
 import imgBitumen from '@/assets/dak/bitumen.jpg';
-import imgDakopbouw from '@/assets/realisaties-new/dak-opbouw.jpg';          // NEW FLUX — zink-volume tussen klassieke rijwoningen
+import imgDakopbouw from '@/assets/realisaties-new/dak-opbouw-v2.jpg';       // NEW FLUX v2 — volledig zink-volume tussen klassieke rijwoningen
 import imgDakkapelZink from '@/assets/realisaties/14_extra_dakkapel-zink-lier.jpg';
 
 type Project = {
@@ -98,11 +98,11 @@ const projects: Project[] = [
   },
   {
     img: imgDakopbouw,
-    tag: 'Modern zink-volume tussen rijwoningen',
-    title: 'Nieuw gevel-volume in VMZinc Anthra · tussen twee klassieke buren',
+    tag: 'Doorlopende zinkbekleding dak + gevel',
+    title: 'Radicale dak-en-gevel renovatie · VMZinc Anthra-Zinc',
     story:
-      "Tussenwoning waar het origineel pannendak boven de garage volledig is vervangen door een modern zinkvolume in VMZinc Anthra-Zinc met staande naden. Groot fixed-frame raam met zwart aluminium kader, plat-dak afwerking, geïsoleerd tot passief-niveau. Cleane breuk met de twee buren — twee traditionele rijwoningen met rood-bruine pannendaken aan weerszijden. Stedelijk inbreiding-werk dat het straatbeeld respecteert.",
-    specs: { m2: '52 m² gevel-volume', tijd: '24 werkdagen', materiaal: 'VMZinc Anthra-Zinc + structuurstaal' },
+      "Tussenwoning met volledige dak-en-gevel transformatie. Originele pannendak en voorgevel vervangen door doorlopende verticale zinkbekleding in VMZinc Anthra-Zinc met staande naden — identiek profiel op dakvlak én gevel maakt het volume monolitisch. Klassieke nokhoogte en breedte behouden zodat het volume aansluit op de twee buur-rijwoningen met hun traditionele rode pannen- en baksteengevel. Daagt de norm uit qua materiaal, respecteert de norm qua proportie.",
+    specs: { m2: '128 m² zinkbekleding (dak + gevel)', tijd: '32 werkdagen', materiaal: 'VMZinc Anthra-Zinc + nieuwe structuur + isolatie passief-niveau' },
     filter: 'zinkwerk',
   },
   {
