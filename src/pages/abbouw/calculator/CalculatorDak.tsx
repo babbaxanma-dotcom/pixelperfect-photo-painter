@@ -62,12 +62,9 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
     document.head.appendChild(style);
     if (!isModal) window.scrollTo(0, 0);
 
-    // Modal: ESC + body scroll lock
-    let prevOverflow = '';
+    // Widget-modus: enkel ESC sluiten (geen body scroll-lock — widget is floating)
     let onEsc: ((e: KeyboardEvent) => void) | null = null;
     if (isModal) {
-      prevOverflow = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
       onEsc = (e: KeyboardEvent) => { if (e.key === 'Escape' && onClose) onClose(); };
       window.addEventListener('keydown', onEsc);
     }
@@ -75,10 +72,7 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
     return () => {
       if (!isModal) document.body.className = prev;
       style.remove();
-      if (isModal) {
-        document.body.style.overflow = prevOverflow;
-        if (onEsc) window.removeEventListener('keydown', onEsc);
-      }
+      if (isModal && onEsc) window.removeEventListener('keydown', onEsc);
     };
   }, [isModal, onClose]);
   useAbBouwInteractions();
@@ -357,10 +351,8 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
 
   if (isModal) {
     return (
-      <div className="calc-modal-backdrop" onClick={onClose} role="dialog" aria-modal="true" aria-label="Offerte calculator">
-        <div className="calc-modal-shell" onClick={(e) => e.stopPropagation()}>
-          {cardJSX}
-        </div>
+      <div className="calc-widget" role="dialog" aria-label="Offerte calculator">
+        {cardJSX}
       </div>
     );
   }
@@ -385,25 +377,31 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
 }
 
 const CALC_CSS = `
-/* Modal-modus backdrop + shell */
-.calc-modal-backdrop {
-  position: fixed; inset: 0;
-  background: rgba(10,22,40,0.65);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  z-index: 9999;
-  display: flex; align-items: flex-start; justify-content: center;
-  padding: 40px 16px;
+/* Widget-modus — floating panel rechtsonder, geen backdrop, blokkeert site niet */
+.calc-widget {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  width: 420px; max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 48px);
+  z-index: 9000;
   overflow-y: auto;
-  animation: calcFadeIn .2s ease-out;
+  border-radius: 16px;
+  box-shadow:
+    0 24px 64px -16px rgba(10,22,40,0.30),
+    0 8px 20px -8px rgba(10,22,40,0.18);
+  animation: calcSlideUp .35s cubic-bezier(.22,1,.36,1);
+  background: #fff;
 }
-.calc-modal-shell {
-  width: 100%; max-width: 720px;
-  animation: calcSlideUp .3s cubic-bezier(.22,1,.36,1);
+.calc-widget .calc-card {
+  border: none !important;
+  border-radius: 16px;
+  padding: 20px 22px 24px !important;
+  box-shadow: none;
+  margin: 0;
 }
 @keyframes calcSlideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 .calc-modal-x {
   background: none; border: 1px solid var(--ink-line-soft);
@@ -414,8 +412,13 @@ const CALC_CSS = `
   transition: border-color .2s, color .2s, background .2s;
 }
 .calc-modal-x:hover { border-color: var(--navy); color: var(--navy); background: var(--bg-soft); }
+
 @media (max-width: 720px) {
-  .calc-modal-backdrop { padding: 12px 8px; }
+  .calc-widget {
+    bottom: 12px; right: 12px; left: 12px;
+    width: auto; max-width: none;
+    max-height: calc(100vh - 24px);
+  }
 }
 
 .calc-section {
