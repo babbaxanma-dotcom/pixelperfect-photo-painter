@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Google Ads image assets — regenereerbaar via scripts/generate-google-ads-assets.mjs
+# (zou bovendien repo bloaten — 12MB aan crops van bestaande src/assets/* foto's)
+google-ads-assets/*/landscape/
+google-ads-assets/*/square/
+google-ads-assets/*/portrait/
+
 # Environment — VITE_* vars worden client-side gebundeled (sowieso publiek
 # zichtbaar bij live site). Voor private secrets gebruik .env.local (ignored).
 .env.local
