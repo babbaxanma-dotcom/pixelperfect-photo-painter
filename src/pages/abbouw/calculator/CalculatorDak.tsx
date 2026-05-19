@@ -96,25 +96,22 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
     const form = e.currentTarget;
     const fd = new FormData(form);
 
-    // Hard validation — noValidate skipt native check, dus zelf doen.
+    // Low-friction validation — voornaam + (email OF phone), niet beide.
+    // Calculator is een lead-magnet, geen primaire contact-form — minimaal vragen
+    // verhoogt conversie aanzienlijk vs het LP-form dat full info vraagt.
     const firstName = ((fd.get('firstName') as string) || '').trim();
-    const lastName = ((fd.get('lastName') as string) || '').trim();
     const emailV = ((fd.get('email') as string) || '').trim();
     const phoneV = ((fd.get('phone') as string) || '').trim();
-    const missing: string[] = [];
-    if (!firstName) missing.push('voornaam');
-    if (!lastName) missing.push('familienaam');
-    if (!emailV || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailV)) missing.push('geldig e-mailadres');
-    if (!phoneV || phoneV.replace(/\D/g, '').length < 8) missing.push('telefoonnummer');
-    if (missing.length) {
-      setSubmitError(`Vul a.u.b. uw ${missing.join(', ')} in.`);
-      const firstInvalid = form.querySelector<HTMLInputElement>(
-        !firstName ? 'input[name="firstName"]' :
-        !lastName ? 'input[name="lastName"]' :
-        (!emailV || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailV)) ? 'input[name="email"]' :
-        'input[name="phone"]'
-      );
-      firstInvalid?.focus();
+    const emailValid = emailV && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailV);
+    const phoneValid = phoneV && phoneV.replace(/\D/g, '').length >= 8;
+    if (!firstName) {
+      setSubmitError('Vul a.u.b. uw voornaam in.');
+      form.querySelector<HTMLInputElement>('input[name="firstName"]')?.focus();
+      return;
+    }
+    if (!emailValid && !phoneValid) {
+      setSubmitError('Vul minstens uw telefoonnummer óf e-mailadres in zodat wij u kunnen bereiken.');
+      form.querySelector<HTMLInputElement>('input[name="phone"]')?.focus();
       return;
     }
 
@@ -133,11 +130,8 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
       landing_division: 'ab_dakwerken',
       page_path: window.location.pathname,
       firstName,
-      lastName,
-      email: emailV,
-      phone: phoneV,
-      postcode: ((fd.get('postcode') as string) || '').trim() || undefined,
-      gemeente: ((fd.get('gemeente') as string) || '').trim() || undefined,
+      email: emailV || undefined,
+      phone: phoneV || undefined,
       type_werk: 'AB Dakwerken',
       aanvullende_info: combined,
       bron_lead: 'calculator:dakwerken',
@@ -331,17 +325,10 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
                 </div>
 
                 <form className="calc-form" onSubmit={handleSubmit} noValidate>
-                  <div className="calc-form-row">
-                    <input type="text" name="firstName" placeholder="Voornaam *" required autoComplete="given-name" />
-                    <input type="text" name="lastName" placeholder="Familienaam *" required autoComplete="family-name" />
-                  </div>
-                  <input type="email" name="email" placeholder="E-mailadres *" required autoComplete="email" />
-                  <input type="tel" name="phone" placeholder="Telefoonnummer *" required autoComplete="tel" />
-                  <div className="calc-form-row">
-                    <input type="text" name="postcode" placeholder="Postcode" inputMode="numeric" pattern="[0-9]{4}" maxLength={4} autoComplete="postal-code" />
-                    <input type="text" name="gemeente" placeholder="Gemeente" autoComplete="address-level2" />
-                  </div>
-                  <textarea name="aanvullende_info" placeholder="Aanvullende info (optioneel)" rows={3}></textarea>
+                  <input type="text" name="firstName" placeholder="Voornaam *" required autoComplete="given-name" />
+                  <input type="tel" name="phone" placeholder="Telefoonnummer (sneller contact)" autoComplete="tel" inputMode="tel" />
+                  <input type="email" name="email" placeholder="Of e-mailadres" autoComplete="email" inputMode="email" />
+                  <p className="calc-form-hint">Vul telefoon óf e-mail in — minstens één. We bellen of mailen binnen 1 werkdag.</p>
 
                   {submitError && <p className="calc-error">{submitError}</p>}
 
@@ -724,6 +711,9 @@ const CALC_CSS = `
   outline: none; border-color: var(--accent);
 }
 .calc-form textarea { resize: vertical; min-height: 80px; font-family: inherit; }
+.calc-form-hint {
+  font-size: 12.5px; color: var(--ink-mute); margin: 2px 2px 0; line-height: 1.4;
+}
 .calc-error {
   font-size: 13px; color: #c4523f; padding: 8px 12px;
   background: #fcebe5; border-radius: 8px; margin: 0;
