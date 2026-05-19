@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
-import { buildNav, buildHero, buildCta, FOOTER, SHELL_STYLE } from '../_shell';
+import { buildHero, FOOTER, SHELL_STYLE } from '../_shell';
+import { CONTACT } from '@/data/contact';
+import logo from '@/assets/home/logo.png';
 
 // Hero + project photos — alle geverifieerd qua match met story-tekst
-import heroBg from '@/assets/dak/lp-hero-pannendak.jpg';
+import heroBg from '@/assets/realisaties-new/dak-hero.jpg';          // NEW FLUX — premium dak hero golden hour
 import imgGeelPannen from '@/assets/dak/lp-geel-nieuwbouw.jpg';      // proj 1 — gele baksteen + antraciet pannen
 import imgEpdmHero from '@/assets/dak/lp-plat-dak.jpg';              // proj 2 — premium plat dak sunset
-import imgLeien from '@/assets/dak/lp-natuurleien.jpg';              // proj 3 — leien close-up
+import imgLeien from '@/assets/realisaties-new/dak-leien-villa.jpg'; // NEW FLUX — leien karaktervilla full shot
 import imgVelux from '@/assets/dak/lp-velux.jpg';                    // proj 5 — Velux interieur
 import imgZink from '@/assets/dak/lp-zink-goot.jpg';                 // proj 6 — zink + pannen
 import imgSarking from '@/assets/dak/dakisolatie.jpg';               // proj 4 — sarking mid-werf (echte foto)
@@ -50,9 +52,9 @@ const projects: Project[] = [
   {
     img: imgLeien,
     tag: 'Natuurleien — Bonheiden',
-    title: 'Spaanse natuurleien · detailfoto na oplevering',
+    title: 'Karaktervilla \'60 · volledig nieuw leiendak Cupa Heavy 3',
     story:
-      'Karaktervilla met origineel leiendak na 60 winters versleten. Nieuwe Spaanse natuurleien Cupa Heavy 3 geplaatst met behoud van de bestaande dakstructuur waar mogelijk. Koperen kielgoten gerestaureerd. De foto toont een detail van de nieuwe legging — pure handwerk, leg na leg, zoals het ambacht het al 200 jaar voorschrijft.',
+      'Klassieke vrijstaande karaktervilla met origineel leiendak dat na 60 winters versleten was — broze leien, lekkages bij de schouwen. Volledig nieuw dak in Spaanse natuurleien Cupa Heavy 3 in dezelfde blauwgrijze tint. Bestaande dakstructuur versterkt waar nodig, originele bakstenen schouwen behouden en gerestaureerd, koperen kielgoten op maat geklopt. De karakteristieke uitstraling van de buurt blijft intact.',
     specs: { m2: '240 m²', tijd: '22 werkdagen', materiaal: 'Cupa Heavy 3 + VMZinc koperen kielgoten' },
     filter: 'leien',
   },

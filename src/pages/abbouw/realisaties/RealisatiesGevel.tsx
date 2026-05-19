@@ -3,7 +3,7 @@ import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { buildNav, buildHero, buildCta, FOOTER, SHELL_STYLE } from '../_shell';
 
 // Gevel + realisaties foto's
-import heroBg from '@/assets/gevel/witte-crepi.jpg';
+import heroBg from '@/assets/realisaties-new/gevel-hero.jpg';        // NEW FLUX — premium gevel hero
 import imgCrepiWit from '@/assets/gevel/witte-crepi.jpg';
 import imgCrepiGrijs from '@/assets/gevel/grijze-crepi.jpg';
 import imgSteenstrips from '@/assets/gevel/steenstrips.jpg';
@@ -11,7 +11,7 @@ import imgSierpleister from '@/assets/gevel/sierpleister.jpg';
 import imgGevelCrepi from '@/assets/realisaties/gevel-grijze-crepi.jpg';
 import imgGevelStrips from '@/assets/realisaties/gevel-steenstrips.jpg';
 import imgVillaMod from '@/assets/realisaties/01_extra_villa-modern-mechelen.jpg';
-import imgHoekwoning from '@/assets/realisaties/02_extra_hoekwoning-antwerpen.jpg';
+import imgHoekwoning from '@/assets/realisaties-new/gevel-hoekwoning.jpg'; // NEW FLUX — klassieke rode baksteen hoekwoning
 import imgStadswoning from '@/assets/realisaties/04_extra_stadswoning-brussel.jpg';
 import imgRijwoning from '@/assets/realisaties/extra-24_geel-rijwoning.jpg';
 import imgRodeVilla from '@/assets/realisaties/extra-25_rode-baksteen-villa.jpg';
