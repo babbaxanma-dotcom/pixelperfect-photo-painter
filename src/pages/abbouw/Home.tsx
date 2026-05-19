@@ -883,7 +883,7 @@ const EXTRA_STYLE = `
 .lf-offerte-head { text-align: center; max-width: 640px; margin: 0 auto 32px; }
 .lf-offerte-head .lf-h2 { margin-bottom: 14px; }
 .lf-offerte-head .lf-lede { margin: 0 auto; }
-.lf-form-compact { max-width: 640px; margin: 0 auto; padding: 28px 28px 24px; border-radius: 16px; position: relative; overflow: hidden; }
+.lf-form-compact { max-width: 640px; margin: 0 auto; padding: 28px 28px 24px; border-radius: 16px; }
 /* Success-state Home form */
 aside.lf-form.is-success > form { display: none; }
 aside.lf-form .lf-form-thanks { display: none; text-align: center; padding: 20px 0; }
