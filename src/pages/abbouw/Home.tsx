@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
-import { submitLead } from '@/lib/leads';
+import { submitLead, divisieKey } from '@/lib/leads';
 import { CONTACT } from '@/data/contact';
 
 import hero from '@/assets/home/hero.jpg';
@@ -246,36 +246,45 @@ const HTML = (i: Record<string, string>) => `
     </div>
 
     <aside class="lf-form lf-form-compact" id="contact-form" data-reveal data-reveal-delay="1">
-      <form onsubmit="event.preventDefault(); alert('Bedankt, we nemen binnen 24u contact op.');">
+      <form data-home-form novalidate>
         <div class="lf-form-row">
-          <input type="text" placeholder="Voornaam" required />
-          <input type="text" placeholder="Achternaam" required />
+          <input type="text" name="firstName" placeholder="Voornaam *" autocomplete="given-name" required />
+          <input type="text" name="lastName" placeholder="Achternaam *" autocomplete="family-name" required />
         </div>
         <div class="lf-form-row">
-          <input type="email" placeholder="E-mailadres" required />
-          <input type="tel" placeholder="Telefoonnummer" required />
+          <input type="email" name="email" placeholder="E-mailadres *" autocomplete="email" required />
+          <input type="tel" name="phone" placeholder="Telefoonnummer *" autocomplete="tel" required />
         </div>
         <div class="lf-dd" data-dd>
           <button type="button" class="lf-dd-toggle" data-dd-toggle aria-haspopup="listbox" aria-expanded="false">
-            <span class="lf-dd-label" data-dd-label>Welke dienst interesseert u?</span>
+            <span class="lf-dd-label" data-dd-label>Welke dienst interesseert u? *</span>
             <svg class="lf-dd-caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <ul class="lf-dd-list" role="listbox">
-            <li role="option" data-dd-opt>Algemene aanneming</li>
+            <li role="option" data-dd-opt>Algemene aanneming (Construct)</li>
             <li role="option" data-dd-opt>Dakwerken</li>
             <li role="option" data-dd-opt>Interieurwerken</li>
             <li role="option" data-dd-opt>Badkamer / wellness</li>
             <li role="option" data-dd-opt>Gevelbekleding</li>
-            <li role="option" data-dd-opt>Ecologisch bouwen</li>
+            <li role="option" data-dd-opt>Ecologisch / duurzaam</li>
+            <li role="option" data-dd-opt>Combinatie / weet ik niet</li>
           </ul>
-          <input type="hidden" name="dienst" data-dd-input required />
+          <input type="hidden" name="type_werk" data-dd-input required />
         </div>
-        <button type="submit" class="lf-cta-pill lf-cta-pill-block">
-          <span>Vraag mijn gratis offerte aan</span>
+        <button type="submit" class="lf-cta-pill lf-cta-pill-block" data-home-submit style="background:#d98c03 !important; color:#fff !important;">
+          <span data-home-submit-label>Vraag mijn gratis offerte aan</span>
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </button>
+        <p class="lf-form-error" data-home-error aria-live="polite" hidden></p>
         <p class="lf-form-foot">Of bel direct <a href="${CONTACT.phone.href}">${CONTACT.phone.spaced}</a></p>
       </form>
+      <div class="lf-form-thanks" data-home-thanks aria-hidden="true">
+        <div class="lf-form-thanks-circle">
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3>Bedankt voor uw aanvraag.</h3>
+        <p>We nemen binnen één werkdag persoonlijk contact met u op.</p>
+      </div>
     </aside>
 
     <div class="lf-mini-bullets" data-reveal data-reveal-delay="2">
@@ -874,7 +883,15 @@ const EXTRA_STYLE = `
 .lf-offerte-head { text-align: center; max-width: 640px; margin: 0 auto 32px; }
 .lf-offerte-head .lf-h2 { margin-bottom: 14px; }
 .lf-offerte-head .lf-lede { margin: 0 auto; }
-.lf-form-compact { max-width: 640px; margin: 0 auto; padding: 28px 28px 24px; border-radius: 16px; }
+.lf-form-compact { max-width: 640px; margin: 0 auto; padding: 28px 28px 24px; border-radius: 16px; position: relative; overflow: hidden; }
+/* Success-state Home form */
+aside.lf-form.is-success > form { display: none; }
+aside.lf-form .lf-form-thanks { display: none; text-align: center; padding: 20px 0; }
+aside.lf-form.is-success .lf-form-thanks { display: block; }
+aside.lf-form .lf-form-thanks-circle { width: 64px; height: 64px; border-radius: 50%; background: #2ea466; color: #fff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+aside.lf-form .lf-form-thanks h3 { font-size: 22px; color: var(--navy); margin: 0 0 8px; font-family: var(--font-display); }
+aside.lf-form .lf-form-thanks p { font-size: 14px; color: var(--ink-soft); margin: 0; }
+.lf-form-error { font-size: 13px; color: #c4523f; padding: 8px 12px; background: #fcebe5; border-radius: 8px; margin: 8px 0 0; }
 .lf-form-compact .lf-form-row { gap: 10px; }
 .lf-form-compact input, .lf-form-compact textarea, .lf-form-compact .lf-dd-toggle { padding: 12px 14px; font-size: 14px; margin-bottom: 10px; }
 .lf-form-foot { text-align: center; margin: 14px 0 0; font-size: 13px; color: var(--ink-soft); }
@@ -2490,6 +2507,51 @@ export default function Home() {
     };
     newsletterForm?.addEventListener('submit', onNewsletterSubmit);
 
+    // ── Home offerte-form submit handler ──
+    const homeForm = document.querySelector<HTMLFormElement>('[data-home-form]');
+    const homeAside = homeForm?.closest<HTMLElement>('aside.lf-form');
+    const homeBtn = document.querySelector<HTMLButtonElement>('[data-home-submit]');
+    const homeBtnLabel = document.querySelector<HTMLElement>('[data-home-submit-label]');
+    const homeErr = document.querySelector<HTMLElement>('[data-home-error]');
+    const onHomeSubmit = async (e: SubmitEvent) => {
+      e.preventDefault();
+      if (!homeForm) return;
+      const required = homeForm.querySelectorAll<HTMLInputElement>('input[required]');
+      for (const inp of Array.from(required)) {
+        if (!inp.checkValidity()) { inp.reportValidity(); return; }
+      }
+      const ddInput = homeForm.querySelector<HTMLInputElement>('input[name="type_werk"]');
+      if (ddInput && !ddInput.value) {
+        if (homeErr) { homeErr.hidden = false; homeErr.textContent = 'Selecteer een dienst.'; }
+        return;
+      }
+      if (homeErr) { homeErr.hidden = true; homeErr.textContent = ''; }
+      if (homeBtn) homeBtn.disabled = true;
+      if (homeBtnLabel) homeBtnLabel.textContent = 'Even bezig…';
+
+      const fd = new FormData(homeForm);
+      const result = await submitLead({
+        source: 'contact_form',
+        page_path: window.location.pathname,
+        firstName: (fd.get('firstName') as string) || undefined,
+        lastName: (fd.get('lastName') as string) || undefined,
+        email: ((fd.get('email') as string) || '').trim(),
+        phone: ((fd.get('phone') as string) || '').trim() || undefined,
+        type_werk: divisieKey(fd.get('type_werk') as string),
+        aanvullende_info: 'Via Home-pagina offerte-form',
+        bron_lead: 'website:home',
+      });
+
+      if (result.ok) {
+        homeAside?.classList.add('is-success');
+      } else {
+        if (homeBtn) homeBtn.disabled = false;
+        if (homeBtnLabel) homeBtnLabel.textContent = 'Vraag mijn gratis offerte aan';
+        if (homeErr) { homeErr.hidden = false; homeErr.textContent = `Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced}.`; }
+      }
+    };
+    homeForm?.addEventListener('submit', onHomeSubmit);
+
     return () => {
       document.body.className = prevClass;
       styleEl.remove();
@@ -2497,6 +2559,7 @@ export default function Home() {
       blogCleanup();
       stickyCleanup();
       newsletterForm?.removeEventListener('submit', onNewsletterSubmit);
+      homeForm?.removeEventListener('submit', onHomeSubmit);
     };
   }, []);
 

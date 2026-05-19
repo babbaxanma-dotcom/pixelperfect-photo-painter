@@ -465,6 +465,8 @@ body.is-scrolled .lf-scroll-cue { opacity: 0; pointer-events: none; transition: 
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
   opacity: 0;
   transform: translateY(-8px) scale(.985);
   transform-origin: top;
