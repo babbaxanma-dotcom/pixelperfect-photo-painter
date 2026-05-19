@@ -39,7 +39,20 @@ const SHOW_PATTERNS = [
 ];
 
 const STORAGE_KEY = 'ab_calc_popup_shown';
+const CONSENT_KEY = 'ab_bouw_consent_v1';
 const DELAY_MS = 15_000;
+
+/** Heeft user een keuze gemaakt op de cookie-banner? */
+const hasConsentDecision = (): boolean => {
+  try {
+    const raw = localStorage.getItem(CONSENT_KEY);
+    if (!raw) return false;
+    const parsed = JSON.parse(raw);
+    return !!(parsed && parsed.decided_at);
+  } catch {
+    return false;
+  }
+};
 
 export default function CalcPopup() {
   const [show, setShow] = useState(false);
@@ -47,14 +60,53 @@ export default function CalcPopup() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Bij elke route-change: popup eerst weghalen + opnieuw evalueren of er
+  // op deze page een timer moet starten. Voorkomt dat een popup blijft
+  // hangen na navigeren naar een andere page (bv. naar /calculator zelf).
   useEffect(() => {
+    setShow(false);
+    setClosing(false);
+
     const path = location.pathname;
     if (SKIP_PATTERNS.some((re) => re.test(path))) return;
     if (!SHOW_PATTERNS.some((re) => re.test(path))) return;
     if (sessionStorage.getItem(STORAGE_KEY) === '1') return;
 
-    const timer = window.setTimeout(() => setShow(true), DELAY_MS);
-    return () => window.clearTimeout(timer);
+    let timerId: number | undefined;
+    let consentWatchId: number | undefined;
+
+    // Timer start pas NADAT cookie-keuze gemaakt is. Anders verschijnt
+    // popup over de consent-banner heen (slechte UX + technisch GDPR-vraag).
+    const startTimer = () => {
+      if (timerId !== undefined) return; // al gestart
+      timerId = window.setTimeout(() => setShow(true), DELAY_MS);
+    };
+
+    if (hasConsentDecision()) {
+      startTimer();
+    } else {
+      // Wacht op consent-event (afgevuurd door consent.ts writeConsent())
+      const onConsentChanged = () => startTimer();
+      window.addEventListener('ab-bouw-consent-changed', onConsentChanged);
+      // Plus polling-fallback voor het geval consent buiten event om gezet wordt
+      consentWatchId = window.setInterval(() => {
+        if (hasConsentDecision()) {
+          window.removeEventListener('ab-bouw-consent-changed', onConsentChanged);
+          if (consentWatchId !== undefined) window.clearInterval(consentWatchId);
+          consentWatchId = undefined;
+          startTimer();
+        }
+      }, 1500);
+      return () => {
+        window.removeEventListener('ab-bouw-consent-changed', onConsentChanged);
+        if (consentWatchId !== undefined) window.clearInterval(consentWatchId);
+        if (timerId !== undefined) window.clearTimeout(timerId);
+      };
+    }
+
+    return () => {
+      if (timerId !== undefined) window.clearTimeout(timerId);
+    };
   }, [location.pathname]);
 
   useEffect(() => {
@@ -72,7 +124,12 @@ export default function CalcPopup() {
   };
 
   const handleClick = () => {
+    // 1) markeer als 'getoond' zodat hij niet terugkomt deze sessie
     sessionStorage.setItem(STORAGE_KEY, '1');
+    // 2) verberg DIRECT (geen wachten op route-change re-render)
+    setShow(false);
+    setClosing(false);
+    // 3) navigeer naar calculator
     navigate('/calculator/dakwerken');
   };
 
