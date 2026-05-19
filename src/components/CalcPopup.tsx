@@ -40,7 +40,7 @@ const SHOW_PATTERNS = [
 
 const STORAGE_KEY = 'ab_calc_popup_shown';
 const CONSENT_KEY = 'ab_bouw_consent_v1';
-const DELAY_MS = 15_000;
+const DELAY_MS = 9_000;
 
 /** Heeft user een keuze gemaakt op de cookie-banner? */
 const hasConsentDecision = (): boolean => {

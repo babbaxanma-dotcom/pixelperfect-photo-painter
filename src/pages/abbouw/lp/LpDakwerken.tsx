@@ -151,39 +151,53 @@ const LP_EXTRA = `
 }
 .lp-quick-form form {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr auto;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
   align-items: stretch;
 }
 .lp-quick-form input {
-  padding: 13px 14px;
+  padding: 14px 16px;
   border: 1px solid var(--ink-line);
   border-radius: 10px;
-  font: inherit; font-size: 14px;
+  font: inherit; font-size: 14.5px;
   color: var(--ink);
   background: #fff;
   transition: border-color .2s ease, box-shadow .2s ease;
+  width: 100%;
 }
 .lp-quick-form input:focus {
   outline: none; border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(217,140,3,0.18);
 }
-.lp-quick-form button {
-  padding: 13px 22px;
-  border-radius: 10px;
+.lp-quick-form button[type="submit"] {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+  padding: 16px 28px;
+  border-radius: 12px;
   border: none;
-  background: var(--accent) !important;
-  color: #fff !important;
-  font: inherit; font-size: 14px; font-weight: 600;
+  background: #d98c03 !important;
+  background-color: #d98c03 !important;
+  color: #ffffff !important;
+  font: inherit; font-size: 15.5px; font-weight: 700;
   letter-spacing: -0.01em;
   cursor: pointer;
-  transition: background .15s ease, transform .15s ease;
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background .15s ease, transform .15s ease, box-shadow .2s ease;
+  display: inline-flex !important;
+  align-items: center; justify-content: center;
+  gap: 10px;
   white-space: nowrap;
+  width: 100%;
+  box-shadow: 0 8px 20px -8px rgba(217,140,3,0.55);
 }
-.lp-quick-form button:hover { background: #c47a02 !important; }
-.lp-quick-form button:active { transform: translateY(1px); }
-.lp-quick-form button:disabled { opacity: 0.6; cursor: wait; }
+.lp-quick-form button[type="submit"]:hover {
+  background: #c47a02 !important;
+  background-color: #c47a02 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px -10px rgba(217,140,3,0.65);
+}
+.lp-quick-form button[type="submit"]:active { transform: translateY(0); }
+.lp-quick-form button[type="submit"]:disabled { opacity: 0.7; cursor: wait; }
+.lp-quick-form button[type="submit"] svg { flex-shrink: 0; }
 .lp-quick-form-error {
   font-size: 13px; color: #c4523f;
   background: #fcebe5; border-radius: 8px;
@@ -222,10 +236,12 @@ const LP_EXTRA = `
   .lp-quick-form-sub { font-size: 12px; }
   .lp-quick-form form {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 10px;
   }
-  .lp-quick-form button {
-    padding: 14px 20px;
+  .lp-quick-form button[type="submit"] {
+    grid-column: 1;
+    margin-top: 6px;
+    padding: 15px 22px;
     font-size: 15px;
   }
 }
@@ -1375,8 +1391,8 @@ const HTML = `
       <input type="text" name="firstName" placeholder="Voornaam *" required autocomplete="given-name" />
       <input type="email" name="email" placeholder="E-mailadres *" required autocomplete="email" inputmode="email" />
       <input type="tel" name="phone" placeholder="Telefoon *" required autocomplete="tel" inputmode="tel" />
-      <button type="submit" data-lp-quick-submit>
-        <span data-lp-quick-submit-label>Plan dakinspectie</span>
+      <button type="submit" data-lp-quick-submit style="background:#d98c03 !important; background-color:#d98c03 !important; color:#ffffff !important; border:none;">
+        <span data-lp-quick-submit-label>Plan mijn gratis dakinspectie</span>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
     </form>
@@ -2299,7 +2315,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
         quickWrap?.classList.add('is-success');
       } else {
         if (quickBtn) quickBtn.disabled = false;
-        if (quickBtnLabel) quickBtnLabel.textContent = 'Plan dakinspectie';
+        if (quickBtnLabel) quickBtnLabel.textContent = 'Plan mijn gratis dakinspectie';
         showError(`Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced}.`);
       }
     };
