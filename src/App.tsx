@@ -12,6 +12,8 @@ import Home from "./pages/abbouw/Home";
 import OverOns from "./pages/abbouw/OverOns";
 import Diensten from "./pages/abbouw/Diensten";
 import Realisaties from "./pages/abbouw/Realisaties";
+import RealisatiesDakwerken from "./pages/abbouw/realisaties/RealisatiesDakwerken";
+import RealisatiesGevel from "./pages/abbouw/realisaties/RealisatiesGevel";
 import Werkwijze from "./pages/abbouw/Werkwijze";
 import Contact from "./pages/abbouw/Contact";
 import Construct from "./pages/abbouw/Construct";
@@ -49,6 +51,8 @@ const App = () => {
           <Route path="/over" element={<OverOns />} />
           <Route path="/diensten" element={<Diensten />} />
           <Route path="/realisaties" element={<Realisaties />} />
+          <Route path="/realisaties/dakwerken" element={<RealisatiesDakwerken />} />
+          <Route path="/realisaties/gevel" element={<RealisatiesGevel />} />
           <Route path="/werkwijze" element={<Werkwijze />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/construct" element={<Construct />} />
