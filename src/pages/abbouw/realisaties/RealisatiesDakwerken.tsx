@@ -155,49 +155,59 @@ const filters = [
 ];
 
 const HTML = `
-${buildNav('realisaties')}
+<header class="lp-mini-header">
+  <div class="wrap lp-mini-header-inner">
+    <a class="lp-mini-brand" href="/" aria-label="AB Bouw Groep — home">
+      <img src="${logo}" alt="AB Bouw Groep — Dakwerken" class="lp-mini-logo" />
+    </a>
+    <a href="${CONTACT.phone.href}" class="lp-mini-phone" aria-label="Bel ons direct">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span class="lp-mini-phone-label">${CONTACT.phone.spaced}</span>
+    </a>
+  </div>
+</header>
 
 ${buildHero({
   bg: heroBg,
   eyebrow: 'Realisaties · dakwerken',
-  title: '48.325 m² dak.<br/>16 jaar. Eén ploeg.',
-  lede: '12 recente dakwerken uit Mechelen, Antwerpen, Lier en omstreken. Elk uitgevoerd door onze 6 vaste eigen dakdekkers — geen onderaannemers. Eerlijk verhaal, m²-aantallen, materiaal-keuze en doorlooptijd per project.',
+  title: 'Een dak dat<br/>doet wat het belooft.',
+  lede: '12 recent afgewerkte daken — pannen Koramic, EPDM, sarking-isolatie, Velux, zinkwerk en natuurleien. Voor elk project: oppervlakte, materiaal-keuze, doorlooptijd en wat de klant erover zei.',
   primary: { label: 'Plan uw gratis dakinspectie', href: '/lp/dakwerken#contact-form' },
-  secondary: { label: 'Naar dakwerken-pagina →', href: '/dakwerken' },
+  secondary: { label: 'Bereken uw offerte (60 sec)', href: '/calculator/dakwerken' },
 })}
 
-<!-- TRUST STRIP onmiddellijk onder hero -->
+<!-- TRUST STRIP — bewijs in plaats van marketing-getallen -->
 <section class="lf-section rzd-trust-section">
   <div class="wrap">
     <div class="rzd-trust" data-reveal>
       <div class="rzd-trust-item">
-        <span class="rzd-trust-num">48.325</span>
-        <span class="rzd-trust-lbl">m² dak afgewerkt</span>
+        <span class="rzd-trust-num">10 jaar</span>
+        <span class="rzd-trust-lbl">aansprakelijkheid via Federale</span>
       </div>
       <div class="rzd-trust-divider"></div>
       <div class="rzd-trust-item">
-        <span class="rzd-trust-num">124+</span>
-        <span class="rzd-trust-lbl">tevreden klanten</span>
+        <span class="rzd-trust-num">VCA*</span>
+        <span class="rzd-trust-lbl">veiligheidscertificaat hoogte</span>
       </div>
       <div class="rzd-trust-divider"></div>
       <div class="rzd-trust-item">
-        <span class="rzd-trust-num">6</span>
-        <span class="rzd-trust-lbl">vaste dakdekkers in dienst</span>
+        <span class="rzd-trust-num">Bouwunie</span>
+        <span class="rzd-trust-lbl">erkend lid sinds 2014</span>
       </div>
       <div class="rzd-trust-divider"></div>
       <div class="rzd-trust-item">
-        <span class="rzd-trust-num">2010</span>
-        <span class="rzd-trust-lbl">familiebedrijf sinds</span>
+        <span class="rzd-trust-num">Tot 50j</span>
+        <span class="rzd-trust-lbl">fabrieksgarantie Koramic, VMZinc</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- QUOTE -->
+<!-- QUOTE — story-driven, geen herhaling van trust-stats -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="ab-quote" data-reveal>
-      "Een dak is geen detail. Het beschermt 70% van wat eronder zit — vandaar dat we onze dakwerken altijd door dezelfde 6 vaste dakdekkers laten uitvoeren, nooit door losse onderaannemers. Dat is geen ideologie. Het is gewoon hoe je een dak in 16 jaar 48.325 m² lang laat staan."
+      "De vraag is niet 'wie legt mijn dak'. De vraag is: 'wie staat er nog binnen tien jaar als er iets is'. Dat antwoord is voor ons hetzelfde gebleven — een eigen dakdekker met een naam, een gsm-nummer en een polis bij Federale. Geen onderaannemer-keten waar niemand zich verantwoordelijk voelt."
       <footer>Zaakvoerder AB Bouw Groep</footer>
     </div>
   </div>
@@ -326,12 +336,143 @@ ${buildHero({
   </div>
 </section>
 
-${buildCta('Klaar voor uw eigen project?', 'Plan een gratis plaatsbezoek. Binnen 5 werkdagen ter plaatse — antwoord op uw vraag binnen één werkdag.')}
+<!-- CALCULATOR-CTA banner — zelfde patroon als /lp/dakwerken -->
+<section class="lf-section rzd-calc-cta-section">
+  <div class="wrap">
+    <a href="/calculator/dakwerken" class="rzd-calc-cta" data-reveal>
+      <div class="rzd-calc-cta-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="2" width="16" height="20" rx="2"/>
+          <line x1="8" y1="6" x2="16" y2="6"/>
+          <line x1="8" y1="10" x2="10" y2="10"/>
+          <line x1="12" y1="10" x2="14" y2="10"/>
+          <line x1="16" y1="10" x2="16" y2="10"/>
+          <line x1="8" y1="14" x2="10" y2="14"/>
+          <line x1="12" y1="14" x2="14" y2="14"/>
+          <line x1="16" y1="14" x2="16" y2="14"/>
+          <line x1="8" y1="18" x2="14" y2="18"/>
+        </svg>
+      </div>
+      <div class="rzd-calc-cta-text">
+        <span class="rzd-calc-cta-eyebrow">Sneller dan een formulier</span>
+        <strong class="rzd-calc-cta-title">Bereken uw offerte online — <span class="rzd-calc-cta-em">60 seconden</span></strong>
+        <span class="rzd-calc-cta-sub">6 simpele vragen. <strong>Geen technische kennis nodig.</strong> Wij meten alles nauwkeurig op bij het gratis plaatsbezoek.</span>
+      </div>
+      <div class="rzd-calc-cta-arrow" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- FINAL CTA — beide knoppen naar LP-form -->
+<section class="lf-section">
+  <div class="wrap">
+    <div class="lf-cta lf-cta--simple" data-reveal>
+      <div class="lf-cta-text">
+        <h2>Klaar voor uw eigen project?</h2>
+        <p>Plan een gratis plaatsbezoek. Binnen 5 werkdagen ter plaatse — antwoord op uw vraag binnen één werkdag.</p>
+        <div class="lf-cta-actions">
+          <a href="/lp/dakwerken#contact-form" class="lf-btn-light">Plan uw dakinspectie</a>
+          <a href="/lp/dakwerken#contact-form" class="lf-btn-outline">Vraag een offerte</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 ${FOOTER}
 `;
 
 const PAGE_STYLE = `
+/* Mini LP-header (logo + telefoon) — overlay op hero, geen volledige nav */
+.lp-mini-header {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  background: linear-gradient(180deg, rgba(8,12,22,0.55) 0%, rgba(8,12,22,0.25) 70%, rgba(8,12,22,0) 100%);
+  pointer-events: none;
+}
+.lp-mini-header > * { pointer-events: auto; }
+.lp-mini-header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 18px 0;
+}
+.lp-mini-brand {
+  display: inline-flex; align-items: center; text-decoration: none;
+  background: #fff; padding: 8px 14px; border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(8,12,22,0.18);
+}
+.lp-mini-logo { height: 30px; width: auto; display: block; }
+.lp-mini-phone {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 18px; border-radius: 999px;
+  background: var(--navy); color: #fff !important;
+  font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
+  text-decoration: none; transition: background .2s ease, transform .2s ease;
+}
+.lp-mini-phone:hover { background: #08213d; transform: translateY(-1px); }
+.lp-mini-phone svg { flex-shrink: 0; }
+@media (max-width: 720px) {
+  .lp-mini-header-inner { padding: 14px 0; }
+  .lp-mini-logo { height: 24px; }
+  .lp-mini-brand { padding: 6px 10px; }
+  .lp-mini-phone { padding: 9px 14px; font-size: 13px; }
+  .lp-mini-phone-label { display: none; }
+}
+
+/* Calculator-CTA banner (boven final CTA) — zelfde patroon als /lp/dakwerken */
+.rzd-calc-cta-section { padding: 32px 0 8px; background: var(--bg); }
+.rzd-calc-cta {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 22px;
+  align-items: center; max-width: 920px; margin: 0 auto;
+  background: linear-gradient(135deg, #fff 0%, #fff8ec 100%);
+  border: 1.5px solid rgba(217,140,3,0.32); border-radius: 18px;
+  padding: 22px 28px; text-decoration: none;
+  box-shadow: 0 10px 32px -14px rgba(217,140,3,0.25);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.rzd-calc-cta:hover {
+  transform: translateY(-3px); border-color: #d98c03;
+  box-shadow: 0 16px 40px -16px rgba(217,140,3,0.45);
+}
+.rzd-calc-cta-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  background: #d98c03; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; box-shadow: 0 8px 20px -8px rgba(217,140,3,0.55);
+}
+.rzd-calc-cta-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.rzd-calc-cta-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #d98c03;
+}
+.rzd-calc-cta-title {
+  font-family: var(--font-display); font-size: clamp(18px, 2.2vw, 22px);
+  font-weight: 700; color: var(--navy); line-height: 1.25;
+}
+.rzd-calc-cta-em {
+  background: linear-gradient(transparent 62%, rgba(217,140,3,0.32) 62%);
+  padding: 0 3px;
+}
+.rzd-calc-cta-sub { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
+.rzd-calc-cta-sub strong { color: var(--navy); font-weight: 700; }
+.rzd-calc-cta-arrow {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #d98c03; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: transform .25s ease;
+}
+.rzd-calc-cta:hover .rzd-calc-cta-arrow { transform: translateX(4px); }
+@media (max-width: 720px) {
+  .rzd-calc-cta { grid-template-columns: auto 1fr; padding: 18px 20px; }
+  .rzd-calc-cta-arrow { display: none; }
+  .rzd-calc-cta-icon { width: 44px; height: 44px; }
+}
+
 /* Trust strip */
 .rzd-trust-section { padding: 32px 0 8px; }
 .rzd-trust {
