@@ -91,14 +91,15 @@ export default function CalcPopup() {
           className="calc-popup-close"
           onClick={handleClose}
           aria-label="Sluit popup"
+          title="Sluiten"
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <line x1="18" y1="6" x2="6" y2="18"/>
             <line x1="6" y1="6" x2="18" y2="18"/>
           </svg>
         </button>
 
-        <div className="calc-popup-body" onClick={handleClick} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && handleClick()}>
+        <div className="calc-popup-body">
           <div className="calc-popup-icon" aria-hidden="true">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="4" y="2" width="16" height="20" rx="2"/>
@@ -117,11 +118,17 @@ export default function CalcPopup() {
             <strong id="calc-popup-title" className="calc-popup-title">
               Bereken uw offerte online — <span className="calc-popup-em">60 seconden</span>
             </strong>
-            <span className="calc-popup-sub">6 vragen, direct prijsindicatie. Geen contactstress.</span>
+            <span className="calc-popup-sub">6 vragen, vrijblijvende prijsindicatie. Geen verplichtingen.</span>
           </div>
+        </div>
+
+        <div className="calc-popup-actions">
+          <button type="button" className="calc-popup-dismiss" onClick={handleClose}>
+            Liever niet
+          </button>
           <button type="button" className="calc-popup-cta" onClick={handleClick}>
-            Start
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <span>Bereken offerte</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="5" y1="12" x2="19" y2="12"/>
               <polyline points="12 5 19 12 12 19"/>
             </svg>
@@ -133,143 +140,178 @@ export default function CalcPopup() {
         .calc-popup-card {
           position: fixed;
           bottom: 24px; right: 24px;
-          width: 420px; max-width: calc(100vw - 32px);
-          background: linear-gradient(135deg, #fff 0%, #fff8ec 100%);
-          border: 1.5px solid rgba(217,140,3,0.4);
-          border-radius: 18px;
-          box-shadow: 0 24px 60px -16px rgba(15,23,42,0.32), 0 4px 14px rgba(15,23,42,0.08);
+          width: 380px; max-width: calc(100vw - 32px);
+          background: #ffffff;
+          border: 1px solid rgba(15,23,42,0.10);
+          border-radius: 14px;
+          box-shadow: 0 24px 60px -16px rgba(15,23,42,0.28), 0 8px 20px -8px rgba(15,23,42,0.10);
           z-index: 9998;
           font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+          overflow: hidden;
         }
         .calc-popup-card.is-open {
-          animation: calcPopupIn 0.42s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+          animation: calcPopupIn 0.36s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
         .calc-popup-card.is-closing {
           animation: calcPopupOut 0.22s ease forwards;
         }
         @keyframes calcPopupIn {
-          from { opacity: 0; transform: translateY(20px) scale(0.96); }
+          from { opacity: 0; transform: translateY(20px) scale(0.97); }
           to { opacity: 1; transform: translateY(0) scale(1); }
         }
         @keyframes calcPopupOut {
           from { opacity: 1; transform: translateY(0) scale(1); }
-          to { opacity: 0; transform: translateY(10px) scale(0.98); }
+          to { opacity: 0; transform: translateY(8px) scale(0.98); }
         }
+
+        /* Close — groot, hoog-contrast navy circle. Geen mistake mogelijk. */
         .calc-popup-close {
           position: absolute;
-          top: 10px; right: 10px;
-          width: 28px; height: 28px;
+          top: 12px; right: 12px;
+          width: 36px; height: 36px;
           border-radius: 50%;
-          background: rgba(15,23,42,0.06);
-          color: #475569;
+          background: #0a1628;
+          color: #ffffff;
           border: none; cursor: pointer;
           display: flex; align-items: center; justify-content: center;
-          transition: background 0.2s, color 0.2s;
+          transition: background 0.2s, transform 0.15s;
           z-index: 2;
+          padding: 0;
         }
-        .calc-popup-close:hover { background: rgba(15,23,42,0.12); color: #0f172a; }
+        .calc-popup-close:hover { background: #1a2c4a; transform: scale(1.05); }
+        .calc-popup-close:focus-visible {
+          outline: 2px solid #d98c03; outline-offset: 2px;
+        }
+
         .calc-popup-body {
           display: grid;
-          grid-template-columns: auto 1fr auto;
-          align-items: center;
+          grid-template-columns: auto 1fr;
+          align-items: flex-start;
           gap: 16px;
-          padding: 20px 22px 20px 20px;
-          cursor: pointer;
+          padding: 22px 60px 18px 22px;
         }
         .calc-popup-icon {
-          width: 48px; height: 48px;
-          border-radius: 12px;
-          background: #d98c03;
-          color: #fff;
+          width: 44px; height: 44px;
+          border-radius: 10px;
+          background: #0a1628;
+          color: #ffffff;
           display: flex; align-items: center; justify-content: center;
           flex-shrink: 0;
-          box-shadow: 0 6px 16px -6px rgba(217,140,3,0.55);
         }
         .calc-popup-text {
-          display: flex; flex-direction: column; gap: 2px;
+          display: flex; flex-direction: column; gap: 4px;
           min-width: 0;
-          padding-right: 8px;
         }
         .calc-popup-eyebrow {
           font-size: 10.5px;
           font-weight: 700;
-          letter-spacing: 0.1em;
+          letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: #d98c03;
+          color: #64748b;
         }
         .calc-popup-title {
-          font-size: 15.5px;
+          font-size: 16px;
           font-weight: 700;
           color: #0a1628;
-          line-height: 1.25;
+          line-height: 1.3;
           letter-spacing: -0.01em;
         }
         .calc-popup-em {
-          background: linear-gradient(transparent 62%, rgba(217,140,3,0.32) 62%);
-          padding: 0 3px;
+          color: #d98c03;
+          font-weight: 700;
         }
         .calc-popup-sub {
-          font-size: 12.5px;
-          color: #64748b;
-          line-height: 1.4;
+          font-size: 13px;
+          color: #475569;
+          line-height: 1.45;
           margin-top: 2px;
         }
+
+        /* Actions footer — divider + 2 knoppen */
+        .calc-popup-actions {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 14px 22px 18px;
+          border-top: 1px solid rgba(15,23,42,0.06);
+          background: #fafbfc;
+        }
+        .calc-popup-dismiss {
+          flex: 0 0 auto;
+          padding: 9px 14px;
+          border-radius: 8px;
+          background: transparent;
+          color: #64748b;
+          border: 1px solid rgba(15,23,42,0.12);
+          font-size: 13px; font-weight: 500;
+          cursor: pointer;
+          transition: background 0.15s, color 0.15s, border-color 0.15s;
+          font-family: inherit;
+        }
+        .calc-popup-dismiss:hover {
+          background: rgba(15,23,42,0.04);
+          color: #0a1628;
+          border-color: rgba(15,23,42,0.20);
+        }
         .calc-popup-cta {
+          flex: 1 1 auto;
           display: inline-flex;
           align-items: center;
-          gap: 6px;
-          padding: 10px 16px;
-          border-radius: 999px;
+          justify-content: center;
+          gap: 8px;
+          padding: 11px 18px;
+          border-radius: 8px;
           background: #d98c03 !important;
-          color: #fff !important;
+          color: #ffffff !important;
           border: none;
-          font-size: 13.5px;
+          font-size: 14px;
           font-weight: 600;
           letter-spacing: -0.01em;
           cursor: pointer;
-          transition: background 0.2s, transform 0.2s;
+          transition: background 0.15s, transform 0.15s;
           font-family: inherit;
           white-space: nowrap;
-          flex-shrink: 0;
         }
-        .calc-popup-cta:hover { background: #c47a02 !important; transform: translateX(2px); }
+        .calc-popup-cta:hover { background: #c47a02 !important; }
+        .calc-popup-cta:active { transform: translateY(1px); }
         .calc-popup-cta svg { flex-shrink: 0; }
 
-        /* Mobile — slide-in vanaf onderkant, full-width minus marge */
+        /* Mobile — full-width onderaan, knoppen onder elkaar */
         @media (max-width: 640px) {
           .calc-popup-card {
-            bottom: 12px;
-            right: 12px;
-            left: 12px;
-            width: auto;
-            max-width: none;
+            bottom: 12px; right: 12px; left: 12px;
+            width: auto; max-width: none;
+            border-radius: 12px;
           }
           .calc-popup-body {
-            grid-template-columns: auto 1fr;
-            grid-template-rows: auto auto;
-            padding: 18px 18px 16px;
-            gap: 12px 14px;
+            padding: 20px 56px 16px 18px;
+            gap: 14px;
           }
-          .calc-popup-icon {
-            grid-row: 1; grid-column: 1;
-            width: 42px; height: 42px;
+          .calc-popup-icon { width: 40px; height: 40px; }
+          .calc-popup-title { font-size: 15px; }
+          .calc-popup-sub { font-size: 12.5px; }
+          .calc-popup-actions {
+            padding: 12px 18px 16px;
           }
-          .calc-popup-text {
-            grid-row: 1; grid-column: 2;
-            padding-right: 32px;
+          .calc-popup-dismiss {
+            padding: 10px 12px;
+            font-size: 12.5px;
           }
-          .calc-popup-title { font-size: 14.5px; }
-          .calc-popup-sub { font-size: 12px; }
           .calc-popup-cta {
-            grid-row: 2; grid-column: 1 / -1;
-            justify-content: center;
-            padding: 11px 16px;
-            font-size: 14px;
+            padding: 12px 16px;
+            font-size: 13.5px;
           }
-          .calc-popup-close { top: 8px; right: 8px; }
+          .calc-popup-close {
+            top: 10px; right: 10px;
+            width: 38px; height: 38px;
+          }
         }
 
-        /* Respecteer prefers-reduced-motion */
+        /* Tap-friendly minimum size op touch devices */
+        @media (pointer: coarse) {
+          .calc-popup-close { width: 44px; height: 44px; top: 10px; right: 10px; }
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .calc-popup-card.is-open,
           .calc-popup-card.is-closing { animation: none; }
