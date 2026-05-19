@@ -305,7 +305,12 @@ export default function CalculatorDak() {
 
                   <div className="calc-actions calc-actions-final">
                     <button type="button" className="calc-btn-ghost" onClick={back}>← Terug</button>
-                    <button type="submit" className="calc-btn-primary calc-btn-submit" disabled={submitting}>
+                    <button
+                      type="submit"
+                      className="calc-btn-primary calc-btn-submit"
+                      disabled={submitting}
+                      style={{ background: '#d98c03', color: '#ffffff', border: 'none' }}
+                    >
                       {submitting ? 'Even bezig…' : 'Stuur mijn aanvraag →'}
                     </button>
                   </div>
