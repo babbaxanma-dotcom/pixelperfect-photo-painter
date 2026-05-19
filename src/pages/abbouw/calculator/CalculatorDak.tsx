@@ -83,6 +83,19 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
   const goTo = (s: number) => set({ step: s });
   const pct = Math.round((state.step / TOTAL_STEPS) * 100);
 
+  // Psychologie-laag: per stap een motivational message + tijdschatting.
+  // Sunk-cost effect (mensen geven niet op halverwege) + forward momentum
+  // ('bijna klaar') + time framing (eerlijke seconden-resterend).
+  const STEP_PSYCHOLOGY: Record<number, { msg: string; timeLeft: string }> = {
+    1: { msg: 'Net begonnen', timeLeft: '± 60 sec resterend' },
+    2: { msg: 'Goed bezig — nog 4 stappen', timeLeft: '± 50 sec resterend' },
+    3: { msg: 'Halverwege', timeLeft: '± 35 sec resterend' },
+    4: { msg: 'Nog 2 vraagjes', timeLeft: '± 25 sec resterend' },
+    5: { msg: 'Bijna klaar', timeLeft: '± 15 sec resterend' },
+    6: { msg: 'Laatste stap — uw contactgegevens', timeLeft: '± 10 sec resterend' },
+  };
+  const psych = STEP_PSYCHOLOGY[state.step] ?? STEP_PSYCHOLOGY[1];
+
   const BEDEKKING_LABELS: Record<NonNullable<State['bedekking']>, string> = {
     pannen: 'Pannendak',
     leien: 'Natuurleien',
@@ -164,11 +177,30 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
                 </button>
               )}
             </header>
-            <div className="calc-progress">
-              <div className="calc-progress-bar" style={{ width: `${pct}%` }} />
-              <div className="calc-progress-text">
-                <span>Stap {state.step} van {TOTAL_STEPS}</span>
-                <span>{pct}%</span>
+            <div className="calc-progress-wrap">
+              <div className="calc-progress-head">
+                <div className="calc-progress-meta">
+                  <span className="calc-progress-step">Stap {state.step} van {TOTAL_STEPS}</span>
+                  <span className="calc-progress-msg">{psych.msg}</span>
+                </div>
+                <div className="calc-progress-pct" key={pct}>
+                  <span className="calc-progress-pct-num">{pct}</span>
+                  <span className="calc-progress-pct-sign">%</span>
+                </div>
+              </div>
+              <div className="calc-progress">
+                <div className="calc-progress-bar" style={{ width: `${pct}%` }} />
+              </div>
+              <div className="calc-progress-foot">
+                <span className="calc-progress-time">{psych.timeLeft}</span>
+                <span className="calc-progress-dots" aria-hidden="true">
+                  {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
+                    <span
+                      key={i}
+                      className={`calc-progress-dot ${i + 1 < state.step ? 'is-done' : i + 1 === state.step ? 'is-current' : ''}`}
+                    />
+                  ))}
+                </span>
               </div>
             </div>
 
@@ -464,17 +496,106 @@ const CALC_CSS = `
 .calc-back-link:hover { color: var(--navy); }
 .calc-head-label { font-size: 13px; font-weight: 600; color: var(--navy); letter-spacing: 0.02em; }
 
-.calc-progress { margin-bottom: 28px; }
-.calc-progress-bar {
-  height: 4px; background: var(--accent);
-  border-radius: 2px; transition: width .35s cubic-bezier(.22,1,.36,1);
+/* Progress UI — psychology-laag voor wizard-completion. Big % rechts-boven
+   trekt eye, motivational message links geeft micro-aanmoediging per stap.
+   Step-dots onderaan visualiseren chunked progress voor sunk-cost effect. */
+.calc-progress-wrap { margin-bottom: 28px; }
+.calc-progress-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; margin-bottom: 10px;
 }
-.calc-progress { background: rgba(10,22,40,0.06); height: 4px; border-radius: 2px; overflow: hidden; position: relative; }
-.calc-progress-text {
-  display: flex; justify-content: space-between;
-  font-size: 11.5px; font-weight: 600; color: var(--ink-soft);
-  text-transform: uppercase; letter-spacing: 0.08em;
-  margin-top: 8px;
+.calc-progress-meta {
+  display: flex; flex-direction: column; gap: 2px;
+  min-width: 0;
+}
+.calc-progress-step {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.calc-progress-msg {
+  font-size: 14.5px; font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.calc-progress-pct {
+  display: inline-flex; align-items: baseline;
+  color: var(--accent);
+  animation: calcPctPop .35s cubic-bezier(.22,1,.36,1);
+  flex-shrink: 0;
+}
+.calc-progress-pct-num {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 800;
+  letter-spacing: -0.02em; line-height: 1;
+}
+.calc-progress-pct-sign {
+  font-family: var(--font-display);
+  font-size: 16px; font-weight: 700;
+  margin-left: 2px;
+  opacity: 0.7;
+}
+@keyframes calcPctPop {
+  0%   { transform: scale(0.85); opacity: 0; }
+  60%  { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); }
+}
+.calc-progress {
+  background: rgba(10,22,40,0.06);
+  height: 8px; border-radius: 999px;
+  overflow: hidden; position: relative;
+}
+.calc-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #d98c03 0%, #f0a93d 100%);
+  border-radius: 999px;
+  transition: width .45s cubic-bezier(.22,1,.36,1);
+  box-shadow: 0 1px 3px rgba(217,140,3,0.4);
+  position: relative;
+}
+.calc-progress-bar::after {
+  content: ''; position: absolute; top: 0; bottom: 0; right: 0;
+  width: 8px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4));
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+}
+.calc-progress-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-top: 10px;
+}
+.calc-progress-time {
+  font-size: 12px; color: var(--ink-soft);
+  font-weight: 500; letter-spacing: 0.01em;
+}
+.calc-progress-dots {
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.calc-progress-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(10,22,40,0.16);
+  transition: background .3s ease, transform .3s ease;
+}
+.calc-progress-dot.is-done {
+  background: var(--accent);
+}
+.calc-progress-dot.is-current {
+  background: var(--accent);
+  transform: scale(1.4);
+  box-shadow: 0 0 0 4px rgba(217,140,3,0.18);
+}
+@media (max-width: 540px) {
+  .calc-progress-msg { font-size: 13.5px; }
+  .calc-progress-pct-num { font-size: 24px; }
+  .calc-progress-pct-sign { font-size: 14px; }
+  .calc-progress-time { font-size: 11.5px; }
+  .calc-progress-dot { width: 6px; height: 6px; }
+  .calc-progress-dot.is-current { transform: scale(1.35); box-shadow: 0 0 0 3px rgba(217,140,3,0.18); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .calc-progress-pct { animation: none; }
+  .calc-progress-dot { transition: none; }
 }
 
 .calc-step {
