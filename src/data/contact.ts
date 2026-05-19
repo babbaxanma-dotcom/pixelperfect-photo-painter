@@ -11,14 +11,14 @@
 
 export const CONTACT = {
   phone: {
-    /** "0470 63 44 13" — BE display format, met spaties */
-    display: '0470 63 44 13',
-    /** "+32 470 63 44 13" — internationaal met spaties */
-    spaced: '+32 470 63 44 13',
-    /** "+32470634413" — E.164 voor schema.org / tel:-href / API's */
-    e164: '+32470634413',
-    /** "tel:+32470634413" — direct in <a href> bruikbaar */
-    href: 'tel:+32470634413',
+    /** "0460 20 77 88" — BE display format, met spaties */
+    display: '0460 20 77 88',
+    /** "+32 460 20 77 88" — internationaal met spaties */
+    spaced: '+32 460 20 77 88',
+    /** "+32460207788" — E.164 voor schema.org / tel:-href / API's */
+    e164: '+32460207788',
+    /** "tel:+32460207788" — direct in <a href> bruikbaar */
+    href: 'tel:+32460207788',
   },
   email: 'info@abgroep.be',
   address: {
