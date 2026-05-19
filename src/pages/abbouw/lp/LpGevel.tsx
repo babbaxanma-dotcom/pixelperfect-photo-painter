@@ -5,6 +5,7 @@ import { submitLead } from '@/lib/leads';
 import type { Gemeente } from '@/data/gemeentes';
 import { CONTACT } from '@/data/contact';
 import { BLOGS } from '@/data/blogs';
+import logo from '@/assets/home/logo.png';
 
 const LP_BLOGS = BLOGS.filter(b =>
   b.tag === 'Gevel' ||
@@ -43,6 +44,58 @@ import rev8 from '@/assets/reviews/hicham.jpg';
 // (Reviews data inline in IIFE in HTML section — exact zoals Home page)
 
 const LP_EXTRA = `
+/* ───────── Mini LP-header (logo + telefoon, geen menu) ─────────
+   LP's hebben bewust geen volledige nav (zou afleiden van conversion-flow),
+   maar wel een brand-anchor zodat ads-traffic weet bij wie ze geland zijn. */
+.lp-mini-header {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  background: linear-gradient(180deg, rgba(8,12,22,0.55) 0%, rgba(8,12,22,0.25) 70%, rgba(8,12,22,0) 100%);
+  pointer-events: none;
+}
+.lp-mini-header > * { pointer-events: auto; }
+.lp-mini-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+}
+.lp-mini-brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  background: #fff;
+  padding: 8px 14px;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(8,12,22,0.18);
+}
+.lp-mini-logo { height: 30px; width: auto; display: block; }
+.lp-mini-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--navy);
+  color: #fff !important;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: background .2s ease, transform .2s ease;
+}
+.lp-mini-phone:hover { background: #08213d; transform: translateY(-1px); }
+.lp-mini-phone svg { flex-shrink: 0; }
+@media (max-width: 720px) {
+  .lp-mini-header-inner { padding: 14px 0; }
+  .lp-mini-logo { height: 24px; }
+  .lp-mini-brand { padding: 6px 10px; }
+  .lp-mini-phone { padding: 9px 14px; font-size: 13px; }
+  .lp-mini-phone-label { display: none; }
+}
+
 /* ───────── LP cinematic hero ───────── */
 .lp-hero-cine { min-height: 100vh; min-height: 100dvh; }
 .lp-hero-cine .lf-hero-bg--slides { filter: contrast(1.04) saturate(0.96); }
@@ -735,6 +788,18 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 `;
 
 const HTML = `
+<header class="lp-mini-header">
+  <div class="wrap lp-mini-header-inner">
+    <a class="lp-mini-brand" href="/" aria-label="AB Bouw Groep — home">
+      <img src="${logo}" alt="AB Bouw Groep — Gevelrenovatie" class="lp-mini-logo" />
+    </a>
+    <a href="${CONTACT.phone.href}" class="lp-mini-phone" aria-label="Bel ons direct">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span class="lp-mini-phone-label">${CONTACT.phone.spaced}</span>
+    </a>
+  </div>
+</header>
+
 <section class="lf-hero lp-hero-cine">
   <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
     <img src="${hero1}" alt="Witte crepi gevelrenovatie rijwoning — AB Gevelbekleding Mechelen" class="is-active" />
