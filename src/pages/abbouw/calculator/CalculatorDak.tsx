@@ -96,9 +96,9 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
     const form = e.currentTarget;
     const fd = new FormData(form);
 
-    // Low-friction validation — voornaam + (email OF phone), niet beide.
-    // Calculator is een lead-magnet, geen primaire contact-form — minimaal vragen
-    // verhoogt conversie aanzienlijk vs het LP-form dat full info vraagt.
+    // Hard validation — voornaam + email + phone moeten alle drie ingevuld zijn.
+    // Email-only of phone-only lead is voor Bardh onbruikbaar (sommige klanten
+    // beantwoorden enkel telefoon, anderen enkel email — beide nodig voor follow-up).
     const firstName = ((fd.get('firstName') as string) || '').trim();
     const emailV = ((fd.get('email') as string) || '').trim();
     const phoneV = ((fd.get('phone') as string) || '').trim();
@@ -109,8 +109,13 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
       form.querySelector<HTMLInputElement>('input[name="firstName"]')?.focus();
       return;
     }
-    if (!emailValid && !phoneValid) {
-      setSubmitError('Vul minstens uw telefoonnummer óf e-mailadres in zodat wij u kunnen bereiken.');
+    if (!emailValid) {
+      setSubmitError('Vul een geldig e-mailadres in.');
+      form.querySelector<HTMLInputElement>('input[name="email"]')?.focus();
+      return;
+    }
+    if (!phoneValid) {
+      setSubmitError('Vul uw telefoonnummer in (minstens 8 cijfers).');
       form.querySelector<HTMLInputElement>('input[name="phone"]')?.focus();
       return;
     }
@@ -326,9 +331,9 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
 
                 <form className="calc-form" onSubmit={handleSubmit} noValidate>
                   <input type="text" name="firstName" placeholder="Voornaam *" required autoComplete="given-name" />
-                  <input type="tel" name="phone" placeholder="Telefoonnummer (sneller contact)" autoComplete="tel" inputMode="tel" />
-                  <input type="email" name="email" placeholder="Of e-mailadres" autoComplete="email" inputMode="email" />
-                  <p className="calc-form-hint">Vul telefoon óf e-mail in — minstens één. We bellen of mailen binnen 1 werkdag.</p>
+                  <input type="tel" name="phone" placeholder="Telefoonnummer *" required autoComplete="tel" inputMode="tel" />
+                  <input type="email" name="email" placeholder="E-mailadres *" required autoComplete="email" inputMode="email" />
+                  <p className="calc-form-hint">We bellen u binnen 1 werkdag voor een vrijblijvende prijsindicatie en sturen de offerte na per e-mail.</p>
 
                   {submitError && <p className="calc-error">{submitError}</p>}
 

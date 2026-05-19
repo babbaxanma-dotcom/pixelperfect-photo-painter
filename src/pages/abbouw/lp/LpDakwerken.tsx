@@ -116,6 +116,176 @@ const LP_EXTRA = `
   .lp-mini-phone-label { display: none; }
 }
 
+/* ───────── Hero mini-form (above-fold quick-capture) ─────────
+   Doel: ads-traffic die nu nooit naar de form onderaan scrollt, vanaf
+   eerste seconde een laag-friction conversie-pad bieden. 3 velden,
+   alle required, inline horizontaal op desktop, gestapeld op mobile.
+   Compacte witte kaart onder hero met opvallende oranje CTA. */
+.lp-quick-form {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 18px 50px -22px rgba(15,23,42,0.30), 0 4px 12px -4px rgba(15,23,42,0.08);
+  padding: 22px 24px;
+  max-width: 880px;
+  margin: -60px auto 0;
+  position: relative;
+  z-index: 4;
+}
+.lp-quick-form-head {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 16px;
+}
+.lp-quick-form-head-icon {
+  width: 38px; height: 38px;
+  border-radius: 10px; background: var(--accent); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.lp-quick-form-title {
+  font-family: var(--font-display);
+  font-size: 17px; font-weight: 700; color: var(--navy);
+  line-height: 1.2; letter-spacing: -0.01em;
+}
+.lp-quick-form-sub {
+  font-size: 12.5px; color: var(--ink-soft); margin-top: 2px;
+}
+.lp-quick-form form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 10px;
+  align-items: stretch;
+}
+.lp-quick-form input {
+  padding: 13px 14px;
+  border: 1px solid var(--ink-line);
+  border-radius: 10px;
+  font: inherit; font-size: 14px;
+  color: var(--ink);
+  background: #fff;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.lp-quick-form input:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(217,140,3,0.18);
+}
+.lp-quick-form button {
+  padding: 13px 22px;
+  border-radius: 10px;
+  border: none;
+  background: var(--accent) !important;
+  color: #fff !important;
+  font: inherit; font-size: 14px; font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background .15s ease, transform .15s ease;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  white-space: nowrap;
+}
+.lp-quick-form button:hover { background: #c47a02 !important; }
+.lp-quick-form button:active { transform: translateY(1px); }
+.lp-quick-form button:disabled { opacity: 0.6; cursor: wait; }
+.lp-quick-form-error {
+  font-size: 13px; color: #c4523f;
+  background: #fcebe5; border-radius: 8px;
+  padding: 8px 12px; margin-top: 10px;
+}
+.lp-quick-form-thanks {
+  display: none;
+  text-align: center;
+  padding: 32px 24px;
+}
+.lp-quick-form.is-success form,
+.lp-quick-form.is-success .lp-quick-form-head { display: none; }
+.lp-quick-form.is-success .lp-quick-form-thanks { display: block; }
+.lp-quick-form-thanks-icon {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #d1f5e3; color: #0f7a4a;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 14px;
+}
+.lp-quick-form-thanks h4 {
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 700; color: var(--navy);
+  margin: 0 0 6px;
+}
+.lp-quick-form-thanks p {
+  font-size: 14px; color: var(--ink-soft); line-height: 1.5; margin: 0;
+}
+@media (max-width: 720px) {
+  .lp-quick-form {
+    margin: -40px 16px 0;
+    padding: 18px 18px 20px;
+    border-radius: 14px;
+  }
+  .lp-quick-form-head { margin-bottom: 12px; }
+  .lp-quick-form-title { font-size: 15.5px; }
+  .lp-quick-form-sub { font-size: 12px; }
+  .lp-quick-form form {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .lp-quick-form button {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+}
+
+/* Price anchor band — boven de hoofd-form, geeft buyer een budget-anker */
+.lp-price-anchor {
+  background: linear-gradient(135deg, rgba(217,140,3,0.08) 0%, rgba(217,140,3,0.02) 100%);
+  border-top: 1px solid rgba(217,140,3,0.18);
+  border-bottom: 1px solid rgba(217,140,3,0.18);
+  padding: 32px 0;
+}
+.lp-price-anchor-inner {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 28px;
+  align-items: center;
+  max-width: 980px; margin: 0 auto;
+}
+.lp-price-anchor-eyebrow-wrap {
+  flex-shrink: 0;
+}
+.lp-price-anchor-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #d98c03;
+  display: block; margin-bottom: 4px;
+}
+.lp-price-anchor-title {
+  font-family: var(--font-display);
+  font-size: 17px; font-weight: 700; color: var(--navy);
+  line-height: 1.2; letter-spacing: -0.01em;
+}
+.lp-price-anchor-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.lp-price-anchor-item {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.lp-price-anchor-num {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 700; color: var(--navy);
+  line-height: 1;
+}
+.lp-price-anchor-lbl {
+  font-size: 12.5px; color: var(--ink-soft); line-height: 1.4;
+}
+.lp-price-anchor-foot {
+  grid-column: 1 / -1;
+  font-size: 12px; color: var(--ink-mute);
+  padding-top: 14px; margin-top: 14px;
+  border-top: 1px solid rgba(15,23,42,0.06);
+  text-align: center;
+}
+@media (max-width: 720px) {
+  .lp-price-anchor-inner { grid-template-columns: 1fr; gap: 18px; }
+  .lp-price-anchor-grid { grid-template-columns: 1fr; gap: 12px; }
+  .lp-price-anchor-num { font-size: 19px; }
+}
+
 /* ───────── Calculator-CTA banner (boven reviews) ───────── */
 .lp-calc-cta-section { background: var(--bg); }
 .lp-calc-cta {
@@ -1189,6 +1359,38 @@ const HTML = `
   </button>
 </section>
 
+<!-- HERO MINI-FORM — boven-fold quick capture, 3 verplichte velden -->
+<div class="wrap">
+  <div class="lp-quick-form" data-lp-quick data-reveal>
+    <div class="lp-quick-form-head">
+      <div class="lp-quick-form-head-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div>
+        <div class="lp-quick-form-title">Plan uw gratis dakinspectie</div>
+        <div class="lp-quick-form-sub">Vakman langs binnen 5 werkdagen · bindende offerte · 100% vrijblijvend</div>
+      </div>
+    </div>
+    <form data-lp-quick-form novalidate>
+      <input type="text" name="firstName" placeholder="Voornaam *" required autocomplete="given-name" />
+      <input type="email" name="email" placeholder="E-mailadres *" required autocomplete="email" inputmode="email" />
+      <input type="tel" name="phone" placeholder="Telefoon *" required autocomplete="tel" inputmode="tel" />
+      <button type="submit" data-lp-quick-submit>
+        <span data-lp-quick-submit-label>Plan dakinspectie</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </form>
+    <div class="lp-quick-form-error" data-lp-quick-error hidden></div>
+    <div class="lp-quick-form-thanks" data-lp-quick-thanks aria-hidden="true">
+      <div class="lp-quick-form-thanks-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h4>Bedankt — we hebben uw aanvraag.</h4>
+      <p>Onze projectleider neemt binnen één werkdag persoonlijk contact met u op.</p>
+    </div>
+  </div>
+</div>
+
 <section class="lf-section lp-calc-cta-section" style="padding: 32px 0 8px;">
   <div class="wrap">
     <a href="/calculator/dakwerken" class="lp-calc-cta" data-calc-trigger>
@@ -1674,6 +1876,35 @@ const HTML = `
   </div>
 </section>
 
+<!-- PRIJS-ANKER: ruwe budget-zone voor sceptische BE-buyer -->
+<section class="lp-price-anchor" data-reveal>
+  <div class="wrap">
+    <div class="lp-price-anchor-inner">
+      <div class="lp-price-anchor-eyebrow-wrap">
+        <span class="lp-price-anchor-eyebrow">Ruwe richtprijs 2026</span>
+        <div class="lp-price-anchor-title">Wat kost een dak<br/>ongeveer?</div>
+      </div>
+      <div class="lp-price-anchor-grid">
+        <div class="lp-price-anchor-item">
+          <span class="lp-price-anchor-num">Vanaf €85/m²</span>
+          <span class="lp-price-anchor-lbl">Pannendak Koramic — incl. onderdak, panlatten en plaatsing</span>
+        </div>
+        <div class="lp-price-anchor-item">
+          <span class="lp-price-anchor-num">Vanaf €110/m²</span>
+          <span class="lp-price-anchor-lbl">Plat dak EPDM Firestone — incl. isolatie en dakopstand</span>
+        </div>
+        <div class="lp-price-anchor-item">
+          <span class="lp-price-anchor-num">Tot €40/m² premie</span>
+          <span class="lp-price-anchor-lbl">Mijn VerbouwPremie 2026 voor dakisolatie — wij regelen dossier</span>
+        </div>
+        <div class="lp-price-anchor-foot">
+          Richtprijzen exclusief btw, gebaseerd op standaard rijwoning. Definitieve prijs in offerte na plaatsbezoek — geen verrassingen achteraf.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="lp-form-section" id="lp-form" style="scroll-margin-top: 100px; padding-top: 40px;">
   <div class="wrap">
     <div class="lp-form-grid">
@@ -1695,12 +1926,12 @@ const HTML = `
         <form data-lp-form novalidate>
           <div class="lp-form-row">
             <input type="text" name="firstName" placeholder="Voornaam *" required autocomplete="given-name" />
-            <input type="text" name="lastName" placeholder="Familienaam *" required autocomplete="family-name" />
+            <input type="text" name="lastName" placeholder="Familienaam" autocomplete="family-name" />
           </div>
           <input type="email" name="email" placeholder="E-mailadres *" required autocomplete="email" />
           <input type="tel" name="phone" placeholder="Telefoonnummer *" required autocomplete="tel" />
-          <select name="type_dak" required>
-            <option value="">Type dakwerk *</option>
+          <select name="type_dak">
+            <option value="">Type dakwerk (optioneel)</option>
             <option value="pannendak">Hellend dak (pannen)</option>
             <option value="natuurleien">Hellend dak (natuurleien)</option>
             <option value="plat_dak_epdm">Plat dak — EPDM</option>
@@ -1711,12 +1942,7 @@ const HTML = `
             <option value="lekkage">Lekkage / stormschade</option>
             <option value="anders">Anders / weet niet zeker</option>
           </select>
-          <input type="text" name="straat" placeholder="Straat en nummer" autocomplete="street-address" />
-          <div class="lp-form-row">
-            <input type="text" name="postcode" placeholder="Postcode" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="postal-code" />
-            <input type="text" name="gemeente" placeholder="Gemeente" autocomplete="address-level2" />
-          </div>
-          <textarea name="aanvullende_info" placeholder="Vertel kort over uw dak (leeftijd, oppervlakte, klacht)"></textarea>
+          <textarea name="aanvullende_info" placeholder="Vertel kort over uw dak (optioneel)"></textarea>
           <button type="submit" data-lp-submit style="background:#d98c03 !important; color:#fff !important;">Vraag gratis dakinspectie aan</button>
           <p class="lp-form-foot">Geen spam. Privacy verklaring op <a href="/privacy" target="_blank">/privacy</a>.</p>
           <div class="lp-form-error" data-lp-form-error></div>
@@ -2027,11 +2253,64 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
     };
     form?.addEventListener('submit', onSubmit);
 
+    // === HERO MINI-FORM (above-fold quick capture) ===
+    const quickWrap = document.querySelector<HTMLElement>('[data-lp-quick]');
+    const quickForm = document.querySelector<HTMLFormElement>('[data-lp-quick-form]');
+    const quickBtn = document.querySelector<HTMLButtonElement>('[data-lp-quick-submit]');
+    const quickBtnLabel = document.querySelector<HTMLElement>('[data-lp-quick-submit-label]');
+    const quickErr = document.querySelector<HTMLElement>('[data-lp-quick-error]');
+
+    const onQuickSubmit = async (e: SubmitEvent) => {
+      e.preventDefault();
+      if (!quickForm) return;
+      const fd = new FormData(quickForm);
+      const firstName = ((fd.get('firstName') as string) || '').trim();
+      const emailV = ((fd.get('email') as string) || '').trim();
+      const phoneV = ((fd.get('phone') as string) || '').trim();
+      const emailValid = emailV && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailV);
+      const phoneValid = phoneV && phoneV.replace(/\D/g, '').length >= 8;
+
+      const showError = (msg: string, fieldName?: string) => {
+        if (quickErr) { quickErr.hidden = false; quickErr.textContent = msg; }
+        if (fieldName) quickForm.querySelector<HTMLInputElement>(`input[name="${fieldName}"]`)?.focus();
+      };
+
+      if (!firstName) { showError('Vul uw voornaam in.', 'firstName'); return; }
+      if (!emailValid) { showError('Vul een geldig e-mailadres in.', 'email'); return; }
+      if (!phoneValid) { showError('Vul uw telefoonnummer in (minstens 8 cijfers).', 'phone'); return; }
+
+      if (quickErr) quickErr.hidden = true;
+      if (quickBtn) quickBtn.disabled = true;
+      if (quickBtnLabel) quickBtnLabel.textContent = 'Even bezig…';
+
+      const result = await submitLead({
+        source: 'landing_page',
+        landing_division: 'ab_dakwerken',
+        page_path: window.location.pathname,
+        firstName,
+        email: emailV,
+        phone: phoneV,
+        type_werk: 'AB Dakwerken',
+        aanvullende_info: 'Hero-mini-form (3 velden, above-fold quick capture)',
+        bron_lead: local ? `seo:dakwerker-${local.slug}:quick` : 'ads:dakwerken:quick',
+      });
+
+      if (result.ok) {
+        quickWrap?.classList.add('is-success');
+      } else {
+        if (quickBtn) quickBtn.disabled = false;
+        if (quickBtnLabel) quickBtnLabel.textContent = 'Plan dakinspectie';
+        showError(`Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced}.`);
+      }
+    };
+    quickForm?.addEventListener('submit', onQuickSubmit);
+
     return () => {
       document.body.className = prev;
       style.remove();
       document.getElementById('lp-dak-schema')?.remove();
       form?.removeEventListener('submit', onSubmit);
+      quickForm?.removeEventListener('submit', onQuickSubmit);
       countObserver.disconnect();
     };
   }, []);

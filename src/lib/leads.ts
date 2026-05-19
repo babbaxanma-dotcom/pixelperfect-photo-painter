@@ -164,15 +164,15 @@ export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
   const w3fKey = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
   const fallbackEmail = import.meta.env.VITE_LEAD_EMAIL_FALLBACK_TO as string | undefined;
 
-  // Last-line guard: elke lead-payload (behalve newsletter) moet MINSTENS ÉÉN
-  // bereikbare contact-channel hebben — email OF phone, beide valid-formatted.
-  // Form-handlers met strengere regels (LP-forms eisen beide) doen extra eigen
-  // check vóórdat ze submitLead aanroepen.
+  // Last-line guard: elke lead-payload (behalve newsletter) moet ZOWEL email
+  // ALS phone hebben. Email-only of phone-only leads zijn niet bruikbaar voor
+  // follow-up (sommige klanten reageren alleen op telefoon, anderen alleen op
+  // email — voor solide opvolging hebben we beide kanalen nodig).
   if (p.source !== 'newsletter') {
     const emailOk = !!p.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email.trim());
     const phoneOk = !!p.phone && (p.phone.replace(/\D/g, '').length >= 8);
-    if (!emailOk && !phoneOk) {
-      console.error('[lead] geblokkeerd — geen geldige email én geen geldig telefoon', { emailOk, phoneOk, source: p.source });
+    if (!emailOk || !phoneOk) {
+      console.error('[lead] geblokkeerd — email of telefoon ontbreekt/ongeldig', { emailOk, phoneOk, source: p.source });
       return { ok: false, via: 'none', error: 'invalid_contact_info' };
     }
   }
