@@ -18,7 +18,11 @@ import imgHellendDak from '@/assets/dak/hellend-pannen.jpg';
 import imgPannen from '@/assets/dak/lp-hero-pannendak.jpg';
 import imgLeien from '@/assets/dak/lp-natuurleien.jpg';
 import imgEPDM from '@/assets/dak/plat-epdm.jpg';
-import imgRoofing from '@/assets/dak/leien.jpg';
+import imgRoofing from '@/assets/dak/bitumen.jpg';
+import imgIsolatieJa from '@/assets/dak/lp-pir-isolatie.jpg';
+import imgIsolatieNee from '@/assets/dak/lp-vakman.jpg';
+import imgAsbestJa from '@/assets/dak/lp-stormschade.jpg';
+import imgAsbestNee from '@/assets/dak/lp-classic-renovatie.jpg';
 
 type State = {
   step: number;
@@ -210,21 +214,21 @@ export default function CalculatorDak() {
             {state.step === 4 && (
               <div className="calc-step">
                 <h2 className="calc-q">Is er isolatie nodig?</h2>
-                <p className="calc-q-sub">Goede dakisolatie verlaagt uw stookkost. Vereist sinds 2028 (Vlaamse renovatieplicht).</p>
-                <div className="calc-options calc-options-1col">
-                  <button type="button" className={`calc-opt-row calc-opt-row--simple ${state.isolatie === 'ja' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'ja' }); setTimeout(next, 220); }}>
-                    <div className="calc-opt-row-body">
-                      <strong>Ja</strong>
-                      <span>Ik wil isolatie laten plaatsen</span>
+                <p className="calc-q-sub">Goede dakisolatie verlaagt uw stookkost fors. Verplicht voor renovatieplicht 2028.</p>
+                <div className="calc-options calc-options-2col">
+                  <button type="button" className={`calc-opt-card ${state.isolatie === 'ja' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'ja' }); setTimeout(next, 220); }}>
+                    <div className="calc-opt-img"><img src={imgIsolatieJa} alt="Isolatie plaatsen"/></div>
+                    <div className="calc-opt-body">
+                      <strong>Ja — graag isolatie</strong>
+                      <span>Sarkingisolatie of tussen kepers</span>
                     </div>
-                    <div className="calc-radio"></div>
                   </button>
-                  <button type="button" className={`calc-opt-row calc-opt-row--simple ${state.isolatie === 'nee' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'nee' }); setTimeout(next, 220); }}>
-                    <div className="calc-opt-row-body">
-                      <strong>Nee</strong>
-                      <span>Enkel dakwerken, geen isolatie</span>
+                  <button type="button" className={`calc-opt-card ${state.isolatie === 'nee' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'nee' }); setTimeout(next, 220); }}>
+                    <div className="calc-opt-img"><img src={imgIsolatieNee} alt="Enkel dakwerken"/></div>
+                    <div className="calc-opt-body">
+                      <strong>Nee — enkel dakwerken</strong>
+                      <span>Isolatie zit er al of niet nodig</span>
                     </div>
-                    <div className="calc-radio"></div>
                   </button>
                 </div>
                 <div className="calc-actions">
@@ -238,24 +242,26 @@ export default function CalculatorDak() {
                 <h2 className="calc-q">Is er asbest aanwezig in het dak?</h2>
                 <p className="calc-q-sub">Asbestverwijdering vereist speciale procedures — wij zijn erkend asbestverwerker.</p>
                 <div className="calc-options calc-options-1col">
-                  <button type="button" className={`calc-opt-row calc-opt-row--simple ${state.asbest === 'ja' ? 'is-active' : ''}`} onClick={() => { set({ asbest: 'ja' }); setTimeout(next, 220); }}>
+                  <button type="button" className={`calc-opt-row ${state.asbest === 'ja' ? 'is-active' : ''}`} onClick={() => { set({ asbest: 'ja' }); setTimeout(next, 220); }}>
+                    <div className="calc-opt-row-img"><img src={imgAsbestJa} alt="Asbest aanwezig"/></div>
                     <div className="calc-opt-row-body">
-                      <strong>Ja</strong>
-                      <span>Er is vermoedelijk asbest aanwezig</span>
+                      <strong>Ja, er is vermoedelijk asbest</strong>
+                      <span>Wij regelen verwijdering met erkend asbestverwerker</span>
                     </div>
                     <div className="calc-radio"></div>
                   </button>
-                  <button type="button" className={`calc-opt-row calc-opt-row--simple ${state.asbest === 'nee' ? 'is-active' : ''}`} onClick={() => { set({ asbest: 'nee' }); setTimeout(next, 220); }}>
+                  <button type="button" className={`calc-opt-row ${state.asbest === 'nee' ? 'is-active' : ''}`} onClick={() => { set({ asbest: 'nee' }); setTimeout(next, 220); }}>
+                    <div className="calc-opt-row-img"><img src={imgAsbestNee} alt="Geen asbest"/></div>
                     <div className="calc-opt-row-body">
-                      <strong>Nee</strong>
-                      <span>Er is geen asbest aanwezig</span>
+                      <strong>Nee, geen asbest</strong>
+                      <span>Dak is jonger dan 2001 of asbest is al verwijderd</span>
                     </div>
                     <div className="calc-radio"></div>
                   </button>
                   <button type="button" className={`calc-opt-row calc-opt-row--simple ${state.asbest === 'weet-niet' ? 'is-active' : ''}`} onClick={() => { set({ asbest: 'weet-niet' }); setTimeout(next, 220); }}>
                     <div className="calc-opt-row-body">
                       <strong>Weet ik niet zeker</strong>
-                      <span>We inspecteren dit voor de start van de werken</span>
+                      <span>Wij inspecteren dit voor de werken starten</span>
                     </div>
                     <div className="calc-radio"></div>
                   </button>
@@ -397,49 +403,74 @@ const CALC_CSS = `
 .calc-options-1col { grid-template-columns: 1fr; }
 @media (max-width: 560px) { .calc-options-2col { grid-template-columns: 1fr; } }
 
-/* Card-style options (with photo on top) */
+/* Card-style options (with photo on top) — bigger + clearer */
 .calc-opt-card {
   display: flex; flex-direction: column;
   background: #fff; border: 2px solid var(--ink-line-soft);
-  border-radius: 14px; overflow: hidden;
+  border-radius: 16px; overflow: hidden;
   cursor: pointer; padding: 0;
   font: inherit; text-align: left;
   transition: border-color .2s, transform .2s, box-shadow .2s;
-}
-.calc-opt-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 20px -10px rgba(10,22,40,0.18); }
-.calc-opt-card.is-active { border-color: var(--accent); background: var(--bg-tint); }
-.calc-opt-img { aspect-ratio: 4 / 3; overflow: hidden; background: var(--bg-soft); }
-.calc-opt-img img { width: 100%; height: 100%; object-fit: cover; }
-.calc-opt-body { padding: 14px 16px; }
-.calc-opt-body strong { display: block; color: var(--navy); font-size: 16px; font-weight: 600; margin-bottom: 2px; }
-.calc-opt-body span { display: block; color: var(--ink-soft); font-size: 12.5px; }
-
-/* Row-style options (photo on left, simpler) */
-.calc-opt-row {
-  display: grid; grid-template-columns: 96px 1fr auto; gap: 16px;
-  align-items: center;
-  background: #fff; border: 2px solid var(--ink-line-soft);
-  border-radius: 14px; padding: 12px 16px 12px 12px;
-  cursor: pointer; font: inherit; text-align: left;
-  transition: border-color .2s, background .2s;
-}
-.calc-opt-row--simple { grid-template-columns: 1fr auto; padding: 16px 18px; }
-.calc-opt-row:hover { border-color: var(--accent); }
-.calc-opt-row.is-active { border-color: var(--accent); background: var(--bg-tint); }
-.calc-opt-row-img { width: 96px; height: 72px; border-radius: 10px; overflow: hidden; background: var(--bg-soft); }
-.calc-opt-row-img img { width: 100%; height: 100%; object-fit: cover; }
-.calc-opt-row-body strong { display: block; color: var(--navy); font-size: 15px; font-weight: 600; margin-bottom: 2px; }
-.calc-opt-row-body span { display: block; color: var(--ink-soft); font-size: 12.5px; line-height: 1.4; }
-.calc-radio {
-  width: 22px; height: 22px; border-radius: 50%;
-  border: 2px solid var(--ink-line-soft); background: #fff;
-  transition: border-color .2s, background .2s;
   position: relative;
 }
-.calc-opt-row.is-active .calc-radio { border-color: var(--accent); background: var(--accent); }
+.calc-opt-card:hover {
+  border-color: #d98c03;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px -12px rgba(10,22,40,0.25);
+}
+.calc-opt-card.is-active {
+  border-color: #d98c03;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(217,140,3,0.15);
+}
+.calc-opt-card.is-active::after {
+  content: '✓';
+  position: absolute; top: 12px; right: 12px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: #d98c03; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700;
+  box-shadow: 0 4px 12px -2px rgba(217,140,3,0.6);
+}
+.calc-opt-img { aspect-ratio: 16 / 11; overflow: hidden; background: var(--bg-soft); }
+.calc-opt-img img { width: 100%; height: 100%; object-fit: cover; }
+.calc-opt-body { padding: 16px 18px 18px; }
+.calc-opt-body strong { display: block; color: var(--navy); font-size: 17px; font-weight: 700; margin-bottom: 4px; line-height: 1.25; }
+.calc-opt-body span { display: block; color: var(--ink-soft); font-size: 13px; line-height: 1.4; }
+
+/* Row-style options (photo on left, simpler) — bigger photos */
+.calc-opt-row {
+  display: grid; grid-template-columns: 120px 1fr auto; gap: 18px;
+  align-items: center;
+  background: #fff; border: 2px solid var(--ink-line-soft);
+  border-radius: 14px; padding: 14px 18px 14px 14px;
+  cursor: pointer; font: inherit; text-align: left;
+  transition: border-color .2s, background .2s, transform .2s;
+}
+.calc-opt-row--simple { grid-template-columns: 1fr auto; padding: 18px 20px; }
+.calc-opt-row:hover { border-color: #d98c03; transform: translateX(2px); }
+.calc-opt-row.is-active { border-color: #d98c03; background: #fff; box-shadow: 0 0 0 4px rgba(217,140,3,0.12); }
+.calc-opt-row-img { width: 120px; height: 90px; border-radius: 10px; overflow: hidden; background: var(--bg-soft); }
+.calc-opt-row-img img { width: 100%; height: 100%; object-fit: cover; }
+.calc-opt-row-body strong { display: block; color: var(--navy); font-size: 16px; font-weight: 700; margin-bottom: 3px; line-height: 1.25; }
+.calc-opt-row-body span { display: block; color: var(--ink-soft); font-size: 13px; line-height: 1.45; }
+.calc-radio {
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 2px solid var(--ink-line-soft); background: #fff;
+  transition: border-color .2s, background .2s;
+  position: relative; flex-shrink: 0;
+}
+.calc-opt-row.is-active .calc-radio { border-color: #d98c03; background: #d98c03; }
 .calc-opt-row.is-active .calc-radio::after {
-  content: ''; position: absolute; inset: 4px;
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px; height: 8px;
   border-radius: 50%; background: #fff;
+}
+@media (max-width: 480px) {
+  .calc-opt-row { grid-template-columns: 80px 1fr auto; gap: 12px; padding: 10px 14px 10px 10px; }
+  .calc-opt-row-img { width: 80px; height: 60px; }
 }
 
 /* Slider step */
@@ -507,14 +538,24 @@ const CALC_CSS = `
 }
 .calc-btn-ghost:hover { border-color: var(--navy); color: var(--navy); }
 .calc-btn-primary {
-  background: var(--accent); color: #fff;
-  border: none; padding: 14px 28px; border-radius: 10px;
+  background: #d98c03 !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 14px 28px; border-radius: 10px;
   font-size: 14px; font-weight: 700;
   cursor: pointer; transition: background .2s, transform .2s;
   box-shadow: 0 8px 18px -6px rgba(217,140,3,0.45);
 }
-.calc-btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
-.calc-btn-primary:disabled { opacity: .6; cursor: wait; }
+.calc-btn-primary:hover {
+  background: #b87502 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+.calc-btn-primary:disabled {
+  background: #d98c03 !important;
+  color: #ffffff !important;
+  opacity: .6; cursor: wait;
+}
 .calc-btn-submit { padding: 14px 22px; flex: 1; }
 
 /* Pager dots */
