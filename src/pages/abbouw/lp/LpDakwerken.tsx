@@ -57,6 +57,67 @@ import rev8 from '@/assets/reviews/tine.jpg';
 // LP-specifieke aanvullingen op SHELL_STYLE — hergebruikt alle bestaande
 // `.lf-*` klassen voor 100% stijl-consistentie met de rest van de site.
 const LP_EXTRA = `
+/* ───────── Calculator-CTA banner (boven reviews) ───────── */
+.lp-calc-cta-section { background: var(--bg); }
+.lp-calc-cta {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 22px;
+  align-items: center;
+  max-width: 920px; margin: 0 auto;
+  background: linear-gradient(135deg, #fff 0%, #fff8ec 100%);
+  border: 1.5px solid rgba(217,140,3,0.32);
+  border-radius: 18px;
+  padding: 22px 28px;
+  text-decoration: none;
+  box-shadow: 0 10px 32px -14px rgba(217,140,3,0.25);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.lp-calc-cta:hover {
+  transform: translateY(-3px);
+  border-color: #d98c03;
+  box-shadow: 0 16px 40px -16px rgba(217,140,3,0.45);
+}
+.lp-calc-cta-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  background: #d98c03; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px -8px rgba(217,140,3,0.55);
+}
+.lp-calc-cta-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.lp-calc-cta-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #d98c03;
+}
+.lp-calc-cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2.2vw, 22px);
+  font-weight: 700; color: var(--navy);
+  line-height: 1.25;
+}
+.lp-calc-cta-em {
+  background: linear-gradient(transparent 62%, rgba(217,140,3,0.32) 62%);
+  padding: 0 3px;
+}
+.lp-calc-cta-sub {
+  font-size: 13.5px; color: var(--ink-soft); line-height: 1.5;
+}
+.lp-calc-cta-sub strong { color: var(--navy); font-weight: 700; }
+.lp-calc-cta-arrow {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #d98c03; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: transform .25s ease;
+}
+.lp-calc-cta:hover .lp-calc-cta-arrow { transform: translateX(4px); }
+@media (max-width: 720px) {
+  .lp-calc-cta { grid-template-columns: auto 1fr; padding: 18px 20px; }
+  .lp-calc-cta-arrow { display: none; }
+  .lp-calc-cta-icon { width: 44px; height: 44px; }
+}
+
 /* ───────── LP cinematic hero ───────── */
 .lp-hero-cine { min-height: 100vh; min-height: 100dvh; }
 .lp-hero-cine .lf-hero-bg--slides { filter: contrast(1.02) saturate(1.0); }
@@ -1055,6 +1116,37 @@ const HTML = `
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
     </span>
   </button>
+</section>
+
+<section class="lf-section lp-calc-cta-section" style="padding: 32px 0 8px;">
+  <div class="wrap">
+    <a href="/calculator/dakwerken" class="lp-calc-cta" data-reveal>
+      <div class="lp-calc-cta-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="2" width="16" height="20" rx="2"/>
+          <line x1="8" y1="6" x2="16" y2="6"/>
+          <line x1="8" y1="10" x2="10" y2="10"/>
+          <line x1="12" y1="10" x2="14" y2="10"/>
+          <line x1="16" y1="10" x2="16" y2="10"/>
+          <line x1="8" y1="14" x2="10" y2="14"/>
+          <line x1="12" y1="14" x2="14" y2="14"/>
+          <line x1="16" y1="14" x2="16" y2="14"/>
+          <line x1="8" y1="18" x2="14" y2="18"/>
+        </svg>
+      </div>
+      <div class="lp-calc-cta-text">
+        <span class="lp-calc-cta-eyebrow">Sneller dan een formulier</span>
+        <strong class="lp-calc-cta-title">Bereken uw offerte online — <span class="lp-calc-cta-em">60 seconden</span></strong>
+        <span class="lp-calc-cta-sub">6 simpele vragen. <strong>Geen technische kennis nodig.</strong> Wij meten alles nauwkeurig op bij het gratis plaatsbezoek.</span>
+      </div>
+      <div class="lp-calc-cta-arrow" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </div>
+    </a>
+  </div>
 </section>
 
 <section class="lf-section lf-tone-soft lf-reviews-section lp-reviews" style="padding: 56px 0;">

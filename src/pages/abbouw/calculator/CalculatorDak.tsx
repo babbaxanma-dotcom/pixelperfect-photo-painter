@@ -134,7 +134,7 @@ export default function CalculatorDak() {
             {state.step === 1 && (
               <div className="calc-step">
                 <h2 className="calc-q">Welk soort dak heeft u?</h2>
-                <p className="calc-q-sub">Kies wat het meest overeenkomt — we vragen geen technische kennis.</p>
+                <p className="calc-q-sub">Kies wat het meest overeenkomt — <span className="calc-em">we vragen geen technische kennis</span>.</p>
                 <div className="calc-options calc-options-2col">
                   <button type="button" className={`calc-opt-card ${state.dakType === 'plat' ? 'is-active' : ''}`} onClick={() => { set({ dakType: 'plat' }); setTimeout(next, 220); }}>
                     <div className="calc-opt-img"><img src={imgPlatDak} alt="Plat dak"/></div>
@@ -157,7 +157,7 @@ export default function CalculatorDak() {
             {state.step === 2 && (
               <div className="calc-step">
                 <h2 className="calc-q">Welke dakbedekking wenst u?</h2>
-                <p className="calc-q-sub">Niet zeker? Kies wat u nu hebt — we adviseren tijdens het plaatsbezoek.</p>
+                <p className="calc-q-sub">Niet zeker? Kies wat u nu hebt — <span className="calc-em">we adviseren tijdens het plaatsbezoek</span>.</p>
                 <div className="calc-options calc-options-1col">
                   {(state.dakType === 'plat' ? [
                     { key: 'epdm' as const, label: 'EPDM', desc: 'Rubber membraan — 25 jaar gegarandeerd waterdicht', img: imgEPDM },
@@ -185,7 +185,7 @@ export default function CalculatorDak() {
             {state.step === 3 && (
               <div className="calc-step">
                 <h2 className="calc-q">Hoe groot is het dak?</h2>
-                <p className="calc-q-sub">Een ruwe schatting volstaat — we meten ter plaatse nauwkeurig op.</p>
+                <p className="calc-q-sub"><span className="calc-em">Een ruwe schatting volstaat</span> — wij meten ter plaatse nauwkeurig op.</p>
                 <div className="calc-slider-card">
                   <div className="calc-slider-value">
                     <span className="calc-slider-num">± {state.oppervlakte}</span>
@@ -203,7 +203,7 @@ export default function CalculatorDak() {
                     <span>300+ m²</span>
                   </div>
                 </div>
-                <div className="calc-tip">Niet zeker van de oppervlakte? Geen probleem — wij meten alles nauwkeurig op bij de inspectie.</div>
+                <div className="calc-tip">Niet zeker van de oppervlakte? <span className="calc-em">Geen probleem</span> — wij meten alles nauwkeurig op bij <span className="calc-em">het gratis plaatsbezoek</span>.</div>
                 <div className="calc-actions">
                   <button type="button" className="calc-btn-ghost" onClick={back}>← Terug</button>
                   <button type="button" className="calc-btn-primary" onClick={next}>Volgende →</button>
@@ -240,7 +240,7 @@ export default function CalculatorDak() {
             {state.step === 5 && (
               <div className="calc-step">
                 <h2 className="calc-q">Is er asbest aanwezig in het dak?</h2>
-                <p className="calc-q-sub">Asbestverwijdering vereist speciale procedures — wij zijn erkend asbestverwerker.</p>
+                <p className="calc-q-sub">Niet zeker? <span className="calc-em">Geen zorgen</span> — wij zijn <span className="calc-em">erkend asbestverwerker</span> en regelen het volledige dossier.</p>
                 <div className="calc-options calc-options-1col">
                   <button type="button" className={`calc-opt-row ${state.asbest === 'ja' ? 'is-active' : ''}`} onClick={() => { set({ asbest: 'ja' }); setTimeout(next, 220); }}>
                     <div className="calc-opt-row-img"><img src={imgAsbestJa} alt="Asbest aanwezig"/></div>
@@ -275,7 +275,7 @@ export default function CalculatorDak() {
             {state.step === 6 && (
               <div className="calc-step">
                 <h2 className="calc-q">Bijna klaar — waar mogen we u bereiken?</h2>
-                <p className="calc-q-sub">U krijgt binnen één werkdag persoonlijk contact met een vrijblijvende offerte op maat.</p>
+                <p className="calc-q-sub">U krijgt <span className="calc-em">binnen één werkdag</span> persoonlijk contact met een <span className="calc-em">vrijblijvende offerte op maat</span>.</p>
 
                 <div className="calc-summary" aria-label="Samenvatting van uw aanvraag">
                   <strong>Uw aanvraag in een notendop</strong>
@@ -314,7 +314,7 @@ export default function CalculatorDak() {
                       {submitting ? 'Even bezig…' : 'Stuur mijn aanvraag →'}
                     </button>
                   </div>
-                  <p className="calc-foot">Geen spam. Wij sturen alleen uw offerte. Privacy verklaring op <a href="/privacy">/privacy</a>.</p>
+                  <p className="calc-foot"><span className="calc-em">Geen spam.</span> Wij sturen alleen uw offerte. Privacy verklaring op <a href="/privacy">/privacy</a>.</p>
                 </form>
               </div>
             )}
@@ -402,6 +402,17 @@ const CALC_CSS = `
   font-size: 14px; color: var(--ink-soft); line-height: 1.5;
   margin: 0 0 24px;
 }
+
+/* Emphasis-span — highlight reassurance words (marker-pen effect) */
+.calc-em {
+  color: var(--navy);
+  font-weight: 700;
+  background: linear-gradient(transparent 62%, rgba(217,140,3,0.28) 62%);
+  padding: 0 3px;
+  border-radius: 2px;
+}
+.calc-tip .calc-em { color: var(--navy); background: linear-gradient(transparent 62%, rgba(217,140,3,0.4) 62%); }
+.calc-foot .calc-em { color: var(--navy); background: none; }
 
 .calc-options { display: grid; gap: 12px; margin-bottom: 18px; }
 .calc-options-2col { grid-template-columns: 1fr 1fr; }
