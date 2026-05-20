@@ -160,7 +160,7 @@ ${buildHero({
   eyebrow: 'Realisaties · gevelwerken',
   title: '63.112 m² gevel.<br/>16 jaar. Vakwerk dat blijft.',
   lede: '12 recente gevelprojecten uit Mechelen, Antwerpen, Lier en omstreken. Crepi, ETICS-buitenisolatie, steenstrips, sierpleister en renovatie van karaktergevels. Eigen vakmensen — m²-aantallen, materiaal en doorlooptijd per project.',
-  primary: { label: 'Plan uw gratis gevel-offerte', href: '/lp/gevel#contact-form' },
+  primary: { label: 'Plan uw gratis gevel-offerte', href: '/lp/gevel#lp-form' },
   secondary: { label: 'Naar gevelwerken-pagina →', href: '/gevel' },
 })}
 

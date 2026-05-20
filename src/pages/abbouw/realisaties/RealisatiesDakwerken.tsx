@@ -172,7 +172,7 @@ ${buildHero({
   eyebrow: 'Realisaties · dakwerken',
   title: 'Een dak dat<br/>doet wat het belooft.',
   lede: '12 recent afgewerkte daken — pannen Koramic, EPDM, sarking-isolatie, Velux, zinkwerk en natuurleien. Voor elk project: oppervlakte, materiaal-keuze, doorlooptijd en wat de klant erover zei.',
-  primary: { label: 'Plan uw gratis dakinspectie', href: '/lp/dakwerken#contact-form' },
+  primary: { label: 'Plan uw gratis dakinspectie', href: '/lp/dakwerken#lp-form' },
   secondary: { label: 'Bereken uw offerte (60 sec)', href: '/calculator/dakwerken' },
 })}
 
@@ -376,8 +376,8 @@ ${buildHero({
         <h2>Klaar voor uw eigen project?</h2>
         <p>Plan een gratis plaatsbezoek. Binnen 5 werkdagen ter plaatse — antwoord op uw vraag binnen één werkdag.</p>
         <div class="lf-cta-actions">
-          <a href="/lp/dakwerken#contact-form" class="lf-btn-light">Plan uw dakinspectie</a>
-          <a href="/lp/dakwerken#contact-form" class="lf-btn-outline">Vraag een offerte</a>
+          <a href="/lp/dakwerken#lp-form" class="lf-btn-light">Plan uw dakinspectie</a>
+          <a href="/lp/dakwerken#lp-form" class="lf-btn-outline">Vraag een offerte</a>
         </div>
       </div>
     </div>
