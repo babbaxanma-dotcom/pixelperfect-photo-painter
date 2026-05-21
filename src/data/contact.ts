@@ -22,11 +22,11 @@ export const CONTACT = {
   },
   email: 'info@abgroep.be',
   address: {
-    street: 'August van Landeghemstraat 65',
+    street: 'August van Landeghemstraat 63',
     postcode: '2830',
     city: 'Willebroek',
     country: 'BE',
-    /** "August van Landeghemstraat 65, 2830 Willebroek" — one-line full */
-    full: 'August van Landeghemstraat 65, 2830 Willebroek',
+    /** "August van Landeghemstraat 63, 2830 Willebroek" — one-line full */
+    full: 'August van Landeghemstraat 63, 2830 Willebroek',
   },
 };
