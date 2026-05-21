@@ -473,15 +473,32 @@ const CALC_CSS = `
   min-height: 100vh;
 }
 .calc-card {
-  max-width: 640px;
+  max-width: 560px;
   margin: 0 auto;
   background: #fff;
   border: 1px solid rgba(10,22,40,0.08);
-  border-radius: 18px;
-  padding: 28px 32px 36px;
+  border-radius: 16px;
+  padding: 24px 26px 28px;
   box-shadow: 0 16px 48px -20px rgba(10,22,40,0.18);
 }
-@media (max-width: 720px) { .calc-card { padding: 22px 20px 28px; border-radius: 14px; } }
+/* Mobile-compact: smaller paddings + tighter spacing so wizard fits one screen */
+@media (max-width: 720px) {
+  .calc-section { padding: 70px 0 40px; }
+  .calc-card { padding: 16px 14px 20px; border-radius: 12px; max-width: 100%; }
+  .calc-head { margin-bottom: 12px; padding-bottom: 10px; }
+  .calc-progress-wrap { margin-bottom: 16px; }
+  .calc-q { font-size: 19px !important; }
+  .calc-q-sub { font-size: 13px; margin-bottom: 14px; }
+  .calc-options { gap: 8px; margin-bottom: 12px; }
+  .calc-opt-img { aspect-ratio: 16 / 8; }
+  .calc-opt-body { padding: 10px 12px 12px; }
+  .calc-opt-body strong { font-size: 15px; }
+  .calc-opt-body span { font-size: 12px; }
+  .calc-slider-card { padding: 18px 16px 14px; }
+  .calc-tip { padding: 9px 11px; font-size: 12px; }
+  .calc-actions { margin-top: 12px; }
+  .calc-trust { display: none; }
+}
 
 .calc-head {
   display: flex; justify-content: space-between; align-items: center;
