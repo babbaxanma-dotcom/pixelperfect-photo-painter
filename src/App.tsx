@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PageTransition from "./components/PageTransition";
@@ -9,34 +10,42 @@ import { useLenis } from "@/hooks/useLenis";
 import "lenis/dist/lenis.css";
 import "./styles/ab-bouw.css";
 
+// LAZY-LOAD alle routes — initial bundle van 1MB -> ~150KB
+// Eager-load alleen Home want LCP-critical (first paint)
 import Home from "./pages/abbouw/Home";
-import OverOns from "./pages/abbouw/OverOns";
-import Diensten from "./pages/abbouw/Diensten";
-import Realisaties from "./pages/abbouw/Realisaties";
-import RealisatiesDakwerken from "./pages/abbouw/realisaties/RealisatiesDakwerken";
-import RealisatiesGevel from "./pages/abbouw/realisaties/RealisatiesGevel";
-import Werkwijze from "./pages/abbouw/Werkwijze";
-import Contact from "./pages/abbouw/Contact";
-import Construct from "./pages/abbouw/Construct";
-import Ecologisch from "./pages/abbouw/Ecologisch";
-import Interieur from "./pages/abbouw/Interieur";
-import Dakwerken from "./pages/abbouw/Dakwerken";
-import Bad from "./pages/abbouw/Bad";
-import Gevel from "./pages/abbouw/Gevel";
-import Privacy from "./pages/abbouw/Privacy";
-import Voorwaarden from "./pages/abbouw/Voorwaarden";
-import Cookies from "./pages/abbouw/Cookies";
-import Blog from "./pages/abbouw/Blog";
-import BlogPost from "./pages/abbouw/BlogPost";
-import LpDakwerken from "./pages/abbouw/lp/LpDakwerken";
-import LpGevel from "./pages/abbouw/lp/LpGevel";
-import LpLokaal from "./pages/abbouw/lp/LpLokaal";
-import Bedankt from "./pages/abbouw/Bedankt";
-import CalculatorDak from "./pages/abbouw/calculator/CalculatorDak";
-import CalculatorGevel from "./pages/abbouw/calculator/CalculatorGevel";
-import NotFound from "./pages/NotFound.tsx";
+
+const OverOns = lazy(() => import("./pages/abbouw/OverOns"));
+const Diensten = lazy(() => import("./pages/abbouw/Diensten"));
+const Realisaties = lazy(() => import("./pages/abbouw/Realisaties"));
+const RealisatiesDakwerken = lazy(() => import("./pages/abbouw/realisaties/RealisatiesDakwerken"));
+const RealisatiesGevel = lazy(() => import("./pages/abbouw/realisaties/RealisatiesGevel"));
+const Werkwijze = lazy(() => import("./pages/abbouw/Werkwijze"));
+const Contact = lazy(() => import("./pages/abbouw/Contact"));
+const Construct = lazy(() => import("./pages/abbouw/Construct"));
+const Ecologisch = lazy(() => import("./pages/abbouw/Ecologisch"));
+const Interieur = lazy(() => import("./pages/abbouw/Interieur"));
+const Dakwerken = lazy(() => import("./pages/abbouw/Dakwerken"));
+const Bad = lazy(() => import("./pages/abbouw/Bad"));
+const Gevel = lazy(() => import("./pages/abbouw/Gevel"));
+const Privacy = lazy(() => import("./pages/abbouw/Privacy"));
+const Voorwaarden = lazy(() => import("./pages/abbouw/Voorwaarden"));
+const Cookies = lazy(() => import("./pages/abbouw/Cookies"));
+const Blog = lazy(() => import("./pages/abbouw/Blog"));
+const BlogPost = lazy(() => import("./pages/abbouw/BlogPost"));
+const LpDakwerken = lazy(() => import("./pages/abbouw/lp/LpDakwerken"));
+const LpGevel = lazy(() => import("./pages/abbouw/lp/LpGevel"));
+const LpLokaal = lazy(() => import("./pages/abbouw/lp/LpLokaal"));
+const Bedankt = lazy(() => import("./pages/abbouw/Bedankt"));
+const CalculatorDak = lazy(() => import("./pages/abbouw/calculator/CalculatorDak"));
+const CalculatorGevel = lazy(() => import("./pages/abbouw/calculator/CalculatorGevel"));
+const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
+
+// Minimal loading state — geen spinner, gewoon achtergrond zodat layout-shift minimaal blijft
+const RouteLoading = () => (
+  <div style={{ minHeight: "60vh", background: "var(--bg, #faf9f7)" }} aria-hidden="true" />
+);
 
 const App = () => {
   useLenis();
@@ -47,6 +56,7 @@ const App = () => {
       <Sonner />
       <BrowserRouter>
         <PageTransition>
+        <Suspense fallback={<RouteLoading />}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/index" element={<Home />} />
@@ -76,6 +86,7 @@ const App = () => {
           <Route path="/calculator/gevel" element={<CalculatorGevel />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </Suspense>
         </PageTransition>
         <CalcPopup />
       </BrowserRouter>
