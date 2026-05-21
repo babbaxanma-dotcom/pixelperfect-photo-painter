@@ -96,6 +96,115 @@ const LP_EXTRA = `
   .lp-mini-phone-label { display: none; }
 }
 
+/* ───────── Hero mini-form (above-fold quick-capture) ───────── */
+.lp-quick-form {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 18px 50px -22px rgba(15,23,42,0.30), 0 4px 12px -4px rgba(15,23,42,0.08);
+  padding: 22px 24px;
+  max-width: 880px;
+  margin: -60px auto 0;
+  position: relative;
+  z-index: 4;
+}
+.lp-quick-form-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.lp-quick-form-head-icon {
+  width: 38px; height: 38px; border-radius: 10px; background: var(--accent); color: #fff;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.lp-quick-form-title {
+  font-family: var(--font-display); font-size: 17px; font-weight: 700;
+  color: var(--navy); line-height: 1.2; letter-spacing: -0.01em;
+}
+.lp-quick-form-sub { font-size: 12.5px; color: var(--ink-soft); margin-top: 2px; }
+.lp-quick-form form {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; align-items: stretch;
+}
+.lp-quick-form input {
+  padding: 14px 16px; border: 1px solid var(--ink-line); border-radius: 10px;
+  font: inherit; font-size: 14.5px; color: var(--ink); background: #fff;
+  transition: border-color .2s ease, box-shadow .2s ease; width: 100%;
+}
+.lp-quick-form input:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(217,140,3,0.18);
+}
+.lp-quick-form button[type="submit"] {
+  grid-column: 1 / -1; margin-top: 4px;
+  padding: 16px 28px; border-radius: 12px; border: none;
+  background: #d98c03 !important; background-color: #d98c03 !important;
+  color: #ffffff !important;
+  font: inherit; font-size: 15.5px; font-weight: 700; letter-spacing: -0.01em;
+  cursor: pointer; transition: background .15s ease, transform .15s ease, box-shadow .2s ease;
+  display: inline-flex !important; align-items: center; justify-content: center; gap: 10px;
+  white-space: nowrap; width: 100%;
+  box-shadow: 0 8px 20px -8px rgba(217,140,3,0.55);
+}
+.lp-quick-form button[type="submit"]:hover {
+  background: #c47a02 !important; background-color: #c47a02 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px -10px rgba(217,140,3,0.65);
+}
+.lp-quick-form button[type="submit"]:active { transform: translateY(0); }
+.lp-quick-form button[type="submit"]:disabled { opacity: 0.7; cursor: wait; }
+.lp-quick-form button[type="submit"] svg { flex-shrink: 0; }
+.lp-quick-form-error { font-size: 13px; color: #c4523f; background: #fcebe5; border-radius: 8px; padding: 8px 12px; margin-top: 10px; }
+.lp-quick-form-thanks { display: none; text-align: center; padding: 32px 24px; }
+.lp-quick-form.is-success form,
+.lp-quick-form.is-success .lp-quick-form-head { display: none; }
+.lp-quick-form.is-success .lp-quick-form-thanks { display: block; }
+.lp-quick-form-thanks-icon {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #d1f5e3; color: #0f7a4a;
+  display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;
+}
+.lp-quick-form-thanks h4 { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--navy); margin: 0 0 6px; }
+.lp-quick-form-thanks p { font-size: 14px; color: var(--ink-soft); line-height: 1.5; margin: 0; }
+@media (max-width: 720px) {
+  .lp-quick-form { margin: -40px 16px 0; padding: 18px 18px 20px; border-radius: 14px; }
+  .lp-quick-form-head { margin-bottom: 12px; }
+  .lp-quick-form-title { font-size: 15.5px; }
+  .lp-quick-form-sub { font-size: 12px; }
+  .lp-quick-form form { grid-template-columns: 1fr; gap: 10px; }
+  .lp-quick-form button[type="submit"] { grid-column: 1; margin-top: 6px; padding: 15px 22px; font-size: 15px; }
+}
+
+/* ───────── Calculator-CTA banner ───────── */
+.lp-calc-cta-section { background: var(--bg); padding: 32px 0 8px; }
+.lp-calc-cta {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 22px;
+  align-items: center; max-width: 920px; margin: 0 auto;
+  background: linear-gradient(135deg, #fff 0%, #fff8ec 100%);
+  border: 1.5px solid rgba(217,140,3,0.32); border-radius: 18px;
+  padding: 22px 28px; text-decoration: none;
+  box-shadow: 0 10px 32px -14px rgba(217,140,3,0.25);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.lp-calc-cta:hover { transform: translateY(-3px); border-color: #d98c03; box-shadow: 0 16px 40px -16px rgba(217,140,3,0.45); }
+.lp-calc-cta-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  background: #d98c03; color: #fff;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  box-shadow: 0 8px 20px -8px rgba(217,140,3,0.55);
+}
+.lp-calc-cta-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.lp-calc-cta-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #d98c03; }
+.lp-calc-cta-title { font-family: var(--font-display); font-size: clamp(18px, 2.2vw, 22px); font-weight: 700; color: var(--navy); line-height: 1.25; }
+.lp-calc-cta-em { background: linear-gradient(transparent 62%, rgba(217,140,3,0.32) 62%); padding: 0 3px; }
+.lp-calc-cta-sub { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
+.lp-calc-cta-sub strong { color: var(--navy); font-weight: 700; }
+.lp-calc-cta-arrow {
+  width: 44px; height: 44px; border-radius: 50%; background: #d98c03; color: #fff;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  transition: transform .25s ease;
+}
+.lp-calc-cta:hover .lp-calc-cta-arrow { transform: translateX(4px); }
+@media (max-width: 720px) {
+  .lp-calc-cta { grid-template-columns: auto 1fr; padding: 18px 20px; }
+  .lp-calc-cta-arrow { display: none; }
+  .lp-calc-cta-icon { width: 44px; height: 44px; }
+}
+
 /* ───────── LP cinematic hero ───────── */
 .lp-hero-cine { min-height: 100vh; min-height: 100dvh; }
 .lp-hero-cine .lf-hero-bg--slides { filter: contrast(1.04) saturate(0.96); }
@@ -847,6 +956,66 @@ const HTML = `
   </button>
 </section>
 
+<!-- HERO MINI-FORM — boven-fold quick capture, 3 verplichte velden -->
+<div class="wrap">
+  <div class="lp-quick-form" data-lp-quick data-reveal>
+    <div class="lp-quick-form-head">
+      <div class="lp-quick-form-head-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div>
+        <div class="lp-quick-form-title">Plan uw gratis gevel-offerte</div>
+        <div class="lp-quick-form-sub">Vakman langs binnen 5 werkdagen · bindende offerte · 100% vrijblijvend</div>
+      </div>
+    </div>
+    <form data-lp-quick-form novalidate>
+      <input type="text" name="firstName" placeholder="Voornaam *" required autocomplete="given-name" />
+      <input type="email" name="email" placeholder="E-mailadres *" required autocomplete="email" inputmode="email" />
+      <input type="tel" name="phone" placeholder="Telefoon *" required autocomplete="tel" inputmode="tel" />
+      <button type="submit" data-lp-quick-submit style="background:#d98c03 !important; background-color:#d98c03 !important; color:#ffffff !important; border:none;">
+        <span data-lp-quick-submit-label>Plan mijn gratis gevel-offerte</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </form>
+    <div class="lp-quick-form-error" data-lp-quick-error hidden></div>
+    <div class="lp-quick-form-thanks" data-lp-quick-thanks aria-hidden="true">
+      <div class="lp-quick-form-thanks-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h4>Bedankt — we hebben uw aanvraag.</h4>
+      <p>Onze projectleider neemt binnen één werkdag persoonlijk contact met u op.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CALCULATOR-CTA banner -->
+<section class="lf-section lp-calc-cta-section">
+  <div class="wrap">
+    <a href="/calculator/gevel" class="lp-calc-cta" data-reveal>
+      <div class="lp-calc-cta-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="2" width="16" height="20" rx="2"/>
+          <line x1="8" y1="6" x2="16" y2="6"/>
+          <line x1="8" y1="10" x2="10" y2="10"/><line x1="12" y1="10" x2="14" y2="10"/><line x1="16" y1="10" x2="16" y2="10"/>
+          <line x1="8" y1="14" x2="10" y2="14"/><line x1="12" y1="14" x2="14" y2="14"/><line x1="16" y1="14" x2="16" y2="14"/>
+          <line x1="8" y1="18" x2="14" y2="18"/>
+        </svg>
+      </div>
+      <div class="lp-calc-cta-text">
+        <span class="lp-calc-cta-eyebrow">Sneller dan een formulier</span>
+        <strong class="lp-calc-cta-title">Bereken uw gevel-offerte online — <span class="lp-calc-cta-em">60 seconden</span></strong>
+        <span class="lp-calc-cta-sub">6 simpele vragen. <strong>Geen technische kennis nodig.</strong> Wij meten alles nauwkeurig op bij het gratis plaatsbezoek.</span>
+      </div>
+      <div class="lp-calc-cta-arrow" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </div>
+    </a>
+  </div>
+</section>
+
 <section class="lf-section lf-tone-soft lf-reviews-section lp-reviews" style="padding: 56px 0;">
   <div class="wrap">
     <div class="lf-section-head centered lf-reviews-head" data-reveal style="margin-bottom: 36px;">
@@ -1594,11 +1763,64 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
     };
     form?.addEventListener('submit', onSubmit);
 
+    // === HERO MINI-FORM (above-fold quick capture) ===
+    const quickWrap = document.querySelector<HTMLElement>('[data-lp-quick]');
+    const quickForm = document.querySelector<HTMLFormElement>('[data-lp-quick-form]');
+    const quickBtn = document.querySelector<HTMLButtonElement>('[data-lp-quick-submit]');
+    const quickBtnLabel = document.querySelector<HTMLElement>('[data-lp-quick-submit-label]');
+    const quickErr = document.querySelector<HTMLElement>('[data-lp-quick-error]');
+
+    const onQuickSubmit = async (e: SubmitEvent) => {
+      e.preventDefault();
+      if (!quickForm) return;
+      const fd = new FormData(quickForm);
+      const firstName = ((fd.get('firstName') as string) || '').trim();
+      const emailV = ((fd.get('email') as string) || '').trim();
+      const phoneV = ((fd.get('phone') as string) || '').trim();
+      const emailValid = emailV && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailV);
+      const phoneValid = phoneV && phoneV.replace(/\D/g, '').length >= 8;
+
+      const showError = (msg: string, fieldName?: string) => {
+        if (quickErr) { quickErr.hidden = false; quickErr.textContent = msg; }
+        if (fieldName) quickForm.querySelector<HTMLInputElement>(`input[name="${fieldName}"]`)?.focus();
+      };
+
+      if (!firstName) { showError('Vul uw voornaam in.', 'firstName'); return; }
+      if (!emailValid) { showError('Vul een geldig e-mailadres in.', 'email'); return; }
+      if (!phoneValid) { showError('Vul uw telefoonnummer in (minstens 8 cijfers).', 'phone'); return; }
+
+      if (quickErr) quickErr.hidden = true;
+      if (quickBtn) quickBtn.disabled = true;
+      if (quickBtnLabel) quickBtnLabel.textContent = 'Even bezig…';
+
+      const result = await submitLead({
+        source: 'landing_page',
+        landing_division: 'ab_gevelbekleding',
+        page_path: window.location.pathname,
+        firstName,
+        email: emailV,
+        phone: phoneV,
+        type_werk: 'AB Gevelbekleding',
+        aanvullende_info: 'Hero-mini-form (3 velden, above-fold quick capture)',
+        bron_lead: local ? `seo:gevelrenovatie-${local.slug}:quick` : 'ads:gevel:quick',
+      });
+
+      if (result.ok) {
+        quickWrap?.classList.add('is-success');
+      } else {
+        if (quickBtn) quickBtn.disabled = false;
+        if (quickBtnLabel) quickBtnLabel.textContent = 'Plan mijn gratis gevel-offerte';
+        showError(`Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced}.`);
+      }
+    };
+    quickForm?.addEventListener('submit', onQuickSubmit);
+
     return () => {
       document.body.className = prev;
       style.remove();
       document.getElementById('lp-gevel-schema')?.remove();
       form?.removeEventListener('submit', onSubmit);
+      quickForm?.removeEventListener('submit', onQuickSubmit);
       countObserver.disconnect();
     };
   }, []);
