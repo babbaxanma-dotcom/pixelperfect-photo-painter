@@ -6024,15 +6024,15 @@ body.page-hero-dark .footer {
   width: 100%; height: 100%;
   object-fit: cover;
   opacity: 0;
-  transform: scale(1.10);
+  transform: scale(1.18);
   transform-origin: center center;
   /* long, gentle dissolve — no blur, no scale snap */
   transition: opacity 2.4s cubic-bezier(0.45, 0, 0.25, 1);
   will-change: opacity, transform;
   z-index: 0;
-  /* Ken Burns runs continuously on every image so motion never resets mid-fade.
-     Minimum scale 1.10 = altijd 10% overscan, ook bij ultra-wide schermen of
-     translate-extreme. Voorkomt dat navy achtergrond doorprikt in hoeken. */
+  /* Ken Burns: minimum scale 1.18 = altijd 18% overscan zodat navy bg NOOIT
+     doorprikt, ook bij ultra-wide LP-schermen / aspect-mismatch. Translate
+     bewust klein (-0.5%, -0.3%) zodat drift de overscan niet wegvreet. */
   animation: lf-hero-kenburns 14s ease-in-out infinite alternate;
   animation-play-state: paused;
 }
@@ -6048,8 +6048,8 @@ body.page-hero-dark .footer {
   animation-play-state: running;
 }
 @keyframes lf-hero-kenburns {
-  0%   { transform: scale(1.10) translate3d(0, 0, 0); }
-  100% { transform: scale(1.15) translate3d(-0.9%, -0.6%, 0); }
+  0%   { transform: scale(1.18) translate3d(0, 0, 0); }
+  100% { transform: scale(1.22) translate3d(-0.5%, -0.3%, 0); }
 }
 .lf-hero-bg--slides::after {
   content: '';
