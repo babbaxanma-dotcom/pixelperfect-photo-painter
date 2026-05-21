@@ -491,8 +491,10 @@ body.is-calc-page .scroll-progress { display: none !important; }
 
 /* Mobile-compact: aggressive sizing so wizard fits one screen */
 @media (max-width: 720px) {
+  /* Mobile width fix: .wrap padding eet ruimte op kleine schermen — strip op calc-page */
+  body.is-calc-page .wrap { padding-left: 8px !important; padding-right: 8px !important; max-width: 100% !important; }
   .calc-section { padding: 14px 0 18px; min-height: auto; }
-  .calc-card { padding: 14px 12px 18px; border-radius: 10px; max-width: 100%; box-shadow: none; border: none; }
+  .calc-card { padding: 16px 14px 20px; border-radius: 12px; max-width: 100%; width: 100%; box-shadow: none; border: 1px solid rgba(10,22,40,0.06); }
   .calc-head { margin-bottom: 10px; padding-bottom: 8px; }
   .calc-head-label { font-size: 12px; }
   .calc-progress-wrap { margin-bottom: 12px; }

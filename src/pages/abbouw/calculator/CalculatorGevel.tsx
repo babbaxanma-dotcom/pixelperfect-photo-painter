@@ -419,42 +419,35 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
 
 /* Gevel-count icons — simple SVG, schaalt naar grootte container */
 function GevelIcon({ count }: { count: AantalGevels }) {
-  const stroke = "currentColor";
-  if (count === '1') {
-    return <svg viewBox="0 0 80 80" fill="none" stroke={stroke} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="22" y="20" width="36" height="44" rx="2"/>
-      <line x1="22" y1="32" x2="58" y2="32"/>
-    </svg>;
-  }
-  if (count === '2') {
-    return <svg viewBox="0 0 80 80" fill="none" stroke={stroke} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="12" y="20" width="28" height="44" rx="2"/>
-      <rect x="42" y="20" width="28" height="44" rx="2"/>
-      <line x1="12" y1="32" x2="40" y2="32"/>
-      <line x1="42" y1="32" x2="70" y2="32"/>
-    </svg>;
-  }
-  if (count === '3') {
-    return <svg viewBox="0 0 80 80" fill="none" stroke={stroke} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="6" y="22" width="20" height="42" rx="2"/>
-      <rect x="30" y="22" width="20" height="42" rx="2"/>
-      <rect x="54" y="22" width="20" height="42" rx="2"/>
-      <line x1="6" y1="32" x2="26" y2="32"/>
-      <line x1="30" y1="32" x2="50" y2="32"/>
-      <line x1="54" y1="32" x2="74" y2="32"/>
-    </svg>;
-  }
-  // 4plus
-  return <svg viewBox="0 0 80 80" fill="none" stroke={stroke} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="6" y="24" width="16" height="40" rx="2"/>
-    <rect x="24" y="24" width="16" height="40" rx="2"/>
-    <rect x="42" y="24" width="16" height="40" rx="2"/>
-    <rect x="60" y="24" width="14" height="40" rx="2"/>
-    <line x1="6" y1="34" x2="22" y2="34"/>
-    <line x1="24" y1="34" x2="40" y2="34"/>
-    <line x1="42" y1="34" x2="58" y2="34"/>
-    <line x1="60" y1="34" x2="74" y2="34"/>
-  </svg>;
+  // Top-down view: square represents building footprint, N walls highlighted in orange
+  // Same visuele metaphor als Recotex (4 zijden rond een vierkant)
+  const inactiveColor = "rgba(10,22,40,0.18)";
+  const activeColor = "#d98c03";
+  const wallW = 6;
+  const n = count === '1' ? 1 : count === '2' ? 2 : count === '3' ? 3 : 4;
+
+  return (
+    <svg viewBox="0 0 80 80" fill="none">
+      {/* Inactive building outline (alle 4 walls in light grey) */}
+      <rect x="18" y="18" width="44" height="44" stroke={inactiveColor} strokeWidth={wallW} fill="none"/>
+      {/* Door marker — kleine streep onderin midden (signals "front") */}
+      <line x1="36" y1="62" x2="44" y2="62" stroke={inactiveColor} strokeWidth={wallW + 2} strokeLinecap="square"/>
+      {/* Active walls highlighted */}
+      {/* Front (bottom) */}
+      {n >= 1 && <line x1="18" y1="62" x2="62" y2="62" stroke={activeColor} strokeWidth={wallW} strokeLinecap="square"/>}
+      {/* Right side */}
+      {n >= 2 && <line x1="62" y1="18" x2="62" y2="62" stroke={activeColor} strokeWidth={wallW} strokeLinecap="square"/>}
+      {/* Back (top) */}
+      {n >= 3 && <line x1="18" y1="18" x2="62" y2="18" stroke={activeColor} strokeWidth={wallW} strokeLinecap="square"/>}
+      {/* Left side */}
+      {n >= 4 && <line x1="18" y1="18" x2="18" y2="62" stroke={activeColor} strokeWidth={wallW} strokeLinecap="square"/>}
+      {/* Count badge in center */}
+      <text x="40" y="44" textAnchor="middle" fontFamily="system-ui, -apple-system, sans-serif"
+        fontSize="14" fontWeight="700" fill="rgba(10,22,40,0.85)" style={{ letterSpacing: '-0.5px' }}>
+        {count === '4plus' ? '4+' : count}
+      </text>
+    </svg>
+  );
 }
 
 function TimingIconClock() {
@@ -512,8 +505,13 @@ body.is-calc-page .lf-mobile-bar { display: none !important; }
 body.is-calc-page .scroll-progress { display: none !important; }
 
 @media (max-width: 720px) {
+  /* Mobile width fix: .wrap padding eet ruimte op kleine schermen — strip op calc-page */
+  body.is-calc-page .wrap { padding-left: 8px !important; padding-right: 8px !important; max-width: 100% !important; }
   .calc-section { padding: 14px 0 18px; min-height: auto; }
-  .calc-card { padding: 14px 12px 18px; border-radius: 10px; max-width: 100%; box-shadow: none; border: none; }
+  .calc-card { padding: 16px 14px 20px; border-radius: 12px; max-width: 100%; width: 100%; box-shadow: none; border: 1px solid rgba(10,22,40,0.06); }
+  /* Icon-grid op mobile in 2 kolommen, vierkant aspect voor mooi gebouw-icon */
+  .calc-icon-grid { grid-template-columns: 1fr 1fr !important; gap: 10px; }
+  .calc-icon-card { aspect-ratio: 1.2 / 1; padding: 14px 8px; }
   .calc-head { margin-bottom: 10px; padding-bottom: 8px; }
   .calc-head-label { font-size: 12px; }
   .calc-progress-wrap { margin-bottom: 12px; }
@@ -586,24 +584,28 @@ body.is-calc-page .scroll-progress { display: none !important; }
 .calc-options-1col { grid-template-columns: 1fr; }
 @media (max-width: 480px) { .calc-options-2col { grid-template-columns: 1fr 1fr; } }
 
-/* Icon-card (step 1 — aantal gevels) */
+/* Icon-card (step 1 — aantal gevels) — top-down gebouw-view */
 .calc-icon-grid { gap: 10px; }
 .calc-icon-card {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 8px; padding: 18px 12px;
+  gap: 10px; padding: 20px 12px;
   background: #fff; border: 2px solid var(--ink-line-soft); border-radius: 12px;
   cursor: pointer; transition: border-color .2s, transform .2s, box-shadow .2s;
   font: inherit; text-align: center; color: var(--navy);
 }
 .calc-icon-card:hover { border-color: #d98c03; transform: translateY(-2px); }
-.calc-icon-card.is-active { border-color: #d98c03; box-shadow: 0 0 0 4px rgba(217,140,3,0.15); }
-.calc-icon-wrap { width: 56px; height: 56px; color: var(--navy); display: flex; align-items: center; justify-content: center; }
+.calc-icon-card.is-active {
+  border-color: #d98c03;
+  background: linear-gradient(180deg, #fff 60%, rgba(217,140,3,0.04) 100%);
+  box-shadow: 0 0 0 4px rgba(217,140,3,0.15);
+}
+.calc-icon-wrap { width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; }
 .calc-icon-wrap svg { width: 100%; height: 100%; }
-.calc-icon-card span { font-size: 14px; font-weight: 700; color: var(--navy); }
+.calc-icon-card span { font-size: 14px; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; }
 @media (max-width: 480px) {
-  .calc-icon-card { padding: 14px 10px; }
-  .calc-icon-wrap { width: 44px; height: 44px; }
-  .calc-icon-card span { font-size: 13px; }
+  .calc-icon-card { padding: 14px 8px; gap: 6px; }
+  .calc-icon-wrap { width: 64px; height: 64px; }
+  .calc-icon-card span { font-size: 13.5px; }
 }
 
 /* Card-style options (photo on top) */
