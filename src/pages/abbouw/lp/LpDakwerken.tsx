@@ -1330,10 +1330,10 @@ const HTML = `
 
 <section class="lf-hero lp-hero-cine">
   <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
-    <img src="${heroClassic}" alt="Klassieke Vlaamse halfopen woning renovatie met terracotta pannen — AB Dakwerken Mechelen" class="is-active" />
-    <img src="${heroCrepi}" alt="Modern Vlaams nieuwbouw met crepi gevel en zwarte Koramic Nuance pannen — AB Bouw Groep" loading="lazy" />
-    <img src="${heroOranje}" alt="Energieneutrale Vlaamse nieuwbouw met oranje gevel en zonnepanelen — AB Dakwerken" loading="lazy" />
-    <img src="${heroGeel}" alt="Eigentijdse Vlaamse nieuwbouw met gele baksteen en zwart dak — AB Bouw Groep" loading="lazy" />
+    <img src="${heroClassic}" alt="Vlaamse rijwoning renovatie met anthraciet pannen — AB Dakwerken" class="is-active" />
+    <img src="${heroCrepi}" alt="Moderne villa met witte crepi gevel en anthraciet pannen — AB Bouw Groep" loading="lazy" />
+    <img src="${heroOranje}" alt="Energieneutrale woning met oranje gevel en zonnepanelen — AB Dakwerken" loading="lazy" />
+    <img src="${heroGeel}" alt="Eigentijdse nieuwbouw met gele baksteen en anthraciet dak — AB Bouw Groep" loading="lazy" />
   </div>
   <button type="button" class="lf-hero-arrow lf-hero-arrow--prev" data-hero-prev aria-label="Vorige foto">
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -1472,14 +1472,14 @@ const HTML = `
         <div class="lf-testi-track" data-testi-track>
           ${(() => {
             const reviews = [
-              { name: 'Stijn Devos', role: 'Pannendak Koramic · Mechelen', img: rev1, text: 'Onze rijwoning had een dak van 1962, lekte op drie plaatsen. AB Bouw stripte alles op één maandag en lag vrijdag waterdicht. Koramic Aleonard pannen, sarkingisolatie, nieuwe goten. Premie van €4.200 een maand na oplevering op de rekening.', highlights: ['vrijdag waterdicht', 'Koramic Aleonard', '€4.200 een maand na oplevering'] },
-              { name: 'Lieve Hermans', role: 'Plat dak EPDM · Antwerpen', img: rev2, text: 'Vrijdag een natte vlek op het plafond, zaterdag belde een van de werfleiders me terug. Maandag stond de ploeg op het dak. 70 m² EPDM in één stuk gelegd, geen naden, geen sjoemel. Factuur klopte tot op de euro met de offerte.', highlights: ['zaterdag belde een van de werfleiders me terug', 'geen naden', 'tot op de euro'] },
-              { name: 'Yusuf Demir', role: 'Sarking dakisolatie · Puurs', img: rev3, text: 'Wij wilden vooral lager EPC voor de verkoop. Sarkingsysteem buitenop, oude binnenafwerking bleef. EPC van F naar C op twee weken werk. De vastgoedmakelaar liet ons €18.000 hoger vragen na de renovatie.', highlights: ['EPC van F naar C', 'twee weken werk', '€18.000 hoger'] },
-              { name: 'Greet Coppens', role: 'Velux dakvenster · Lier', img: rev4, text: 'Twee Velux GGL ramen in de keperruimte voor onze nieuwe zolderslaapkamer. Plaatsing op twee dagen, binnenafwerking direct mee gepleisterd. Geen koudebrug, geen condens, en de zomer waren we héél blij met de Velux-zonwering.', highlights: ['twee dagen', 'Geen koudebrug', 'héél blij'] },
-              { name: 'Davy Janssens', role: 'Stormschade hersteld · Bornem', img: rev5, text: 'Storm Pia haalde de helft van de pannen weg. Eén van de experts stuurde dezelfde dag iemand voor het dekzeil, de week erop volledig nieuw dak. Verzekering werd door hen rechtstreeks geregeld — wij moesten niets uitzoeken.', highlights: ['dezelfde dag', 'wij moesten niets uitzoeken'] },
-              { name: 'Annick Verstraete', role: 'Zinkwerk VMZinc · Sint-Niklaas', img: rev6, text: 'Oude koperen goten vervangen door natuurzink VMZinc Anthra-Zinc. Gesoldeerde verbindingen, geen plastic koppelstukken, geen kit. Strakke lijn rond heel het huis. Volgens de loodgieter gaat dit 60 jaar mee.', highlights: ['VMZinc Anthra-Zinc', 'Strakke lijn', '60 jaar mee'] },
-              { name: 'Ahmed Berraf', role: 'Volledige dakrenovatie · Bonheiden', img: rev7, text: 'Twee verdiepingen + zolder, alles gestript en opnieuw. De werfleider stond elke vrijdag op de werf om de week te overlopen. Foto-update elke avond per WhatsApp. Premie van €5.200 ingediend door hen.', highlights: ['elke vrijdag op de werf', 'Foto-update elke avond', 'Premie van €5.200'] },
-              { name: 'Tine Verlinden', role: 'PIR-dakisolatie · Heist-op-den-Berg', img: rev8, text: 'Drie aannemers gevraagd, twee wilden direct alles vervangen. Eén van de experts klopte op de pannen, zei: dit dak gaat nog 20 jaar mee, gewoon isolatie tussen kepers. Klaar in 3 dagen. EPC-sprong van 58 punten.', highlights: ['nog 20 jaar mee', 'Klaar in 3 dagen', 'EPC-sprong van 58 punten'] },
+              { name: 'Stijn Devos', role: 'Pannendak Koramic', img: rev1, text: 'Onze rijwoning had een dak van 1962, lekte op drie plaatsen. AB Bouw stripte alles op één maandag en lag vrijdag waterdicht. Koramic Aleonard pannen, sarkingisolatie, nieuwe goten. Premie van €4.200 een maand na oplevering op de rekening.', highlights: ['vrijdag waterdicht', 'Koramic Aleonard', '€4.200 een maand na oplevering'] },
+              { name: 'Lieve Hermans', role: 'Plat dak EPDM', img: rev2, text: 'Vrijdag een natte vlek op het plafond, zaterdag belde een van de werfleiders me terug. Maandag stond de ploeg op het dak. 70 m² EPDM in één stuk gelegd, geen naden, geen sjoemel. Factuur klopte tot op de euro met de offerte.', highlights: ['zaterdag belde een van de werfleiders me terug', 'geen naden', 'tot op de euro'] },
+              { name: 'Yusuf Demir', role: 'Sarking dakisolatie', img: rev3, text: 'Wij wilden vooral lager EPC voor de verkoop. Sarkingsysteem buitenop, oude binnenafwerking bleef. EPC van F naar C op twee weken werk. De vastgoedmakelaar liet ons €18.000 hoger vragen na de renovatie.', highlights: ['EPC van F naar C', 'twee weken werk', '€18.000 hoger'] },
+              { name: 'Greet Coppens', role: 'Velux dakvenster', img: rev4, text: 'Twee Velux GGL ramen in de keperruimte voor onze nieuwe zolderslaapkamer. Plaatsing op twee dagen, binnenafwerking direct mee gepleisterd. Geen koudebrug, geen condens, en de zomer waren we héél blij met de Velux-zonwering.', highlights: ['twee dagen', 'Geen koudebrug', 'héél blij'] },
+              { name: 'Davy Janssens', role: 'Stormschade hersteld', img: rev5, text: 'Storm Pia haalde de helft van de pannen weg. Eén van de experts stuurde dezelfde dag iemand voor het dekzeil, de week erop volledig nieuw dak. Verzekering werd door hen rechtstreeks geregeld — wij moesten niets uitzoeken.', highlights: ['dezelfde dag', 'wij moesten niets uitzoeken'] },
+              { name: 'Annick Verstraete', role: 'Zinkwerk VMZinc', img: rev6, text: 'Oude koperen goten vervangen door natuurzink VMZinc Anthra-Zinc. Gesoldeerde verbindingen, geen plastic koppelstukken, geen kit. Strakke lijn rond heel het huis. Volgens de loodgieter gaat dit 60 jaar mee.', highlights: ['VMZinc Anthra-Zinc', 'Strakke lijn', '60 jaar mee'] },
+              { name: 'Ahmed Berraf', role: 'Volledige dakrenovatie', img: rev7, text: 'Twee verdiepingen + zolder, alles gestript en opnieuw. De werfleider stond elke vrijdag op de werf om de week te overlopen. Foto-update elke avond per WhatsApp. Premie van €5.200 ingediend door hen.', highlights: ['elke vrijdag op de werf', 'Foto-update elke avond', 'Premie van €5.200'] },
+              { name: 'Tine Verlinden', role: 'PIR-dakisolatie', img: rev8, text: 'Drie aannemers gevraagd, twee wilden direct alles vervangen. Eén van de experts klopte op de pannen, zei: dit dak gaat nog 20 jaar mee, gewoon isolatie tussen kepers. Klaar in 3 dagen. EPC-sprong van 58 punten.', highlights: ['nog 20 jaar mee', 'Klaar in 3 dagen', 'EPC-sprong van 58 punten'] },
             ];
             const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             const wrapWords = (phrase: string, baseI: number) => {
@@ -1827,20 +1827,20 @@ const HTML = `
     </div>
     <div class="lp-gallery">
       <a href="#lp-form" class="lp-gallery-cell" data-reveal>
-        <img src="${heroClassic}" alt="Klassieke Vlaamse renovatie met terracotta dak — Mechelen" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Renovatie</small><strong>Koramic pannen — Mechelen</strong></div>
+        <img src="${heroClassic}" alt="Klassieke Vlaamse renovatie met anthraciet pannen" loading="lazy"/>
+        <div class="lp-gallery-cap"><small>Renovatie</small><strong>Anthraciet pannen</strong></div>
       </a>
       <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="1">
         <img src="${imgNatuurleien}" alt="Natuurleien close-up vakwerk" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Hellend dak</small><strong>Natuurleien — Antwerpen</strong></div>
+        <div class="lp-gallery-cap"><small>Hellend dak</small><strong>Natuurleien</strong></div>
       </a>
       <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="2">
-        <img src="${imgPlatDak}" alt="Plat dak EPDM met Vlaamse skyline — Lier" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Plat dak</small><strong>EPDM rubber — Lier</strong></div>
+        <img src="${imgPlatDak}" alt="Plat dak EPDM" loading="lazy"/>
+        <div class="lp-gallery-cap"><small>Plat dak</small><strong>EPDM rubber</strong></div>
       </a>
       <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="3">
-        <img src="${heroOranje}" alt="Nieuwbouw met zwarte pannen + zonnepanelen — Lier" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Nieuwbouw</small><strong>Zwarte pannen + solar — Lier</strong></div>
+        <img src="${heroOranje}" alt="Nieuwbouw met oranje gevel en zonnepanelen" loading="lazy"/>
+        <div class="lp-gallery-cap"><small>Nieuwbouw</small><strong>Oranje gevel + solar</strong></div>
       </a>
     </div>
   </div>

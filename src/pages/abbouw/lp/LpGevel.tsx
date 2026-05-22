@@ -911,10 +911,10 @@ const HTML = `
 
 <section class="lf-hero lp-hero-cine">
   <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
-    <img src="${hero1}" alt="Witte crepi gevelrenovatie rijwoning — AB Gevelbekleding Mechelen" class="is-active" />
-    <img src="${hero2}" alt="Grijze crepi halfopen woning — AB Bouw Groep Antwerpen" loading="lazy" />
-    <img src="${hero3}" alt="Steenstrips voorgevel — AB Gevelbekleding Lier" loading="lazy" />
-    <img src="${hero4}" alt="Sierpleister marmorino afwerking — Bornem" loading="lazy" />
+    <img src="${hero1}" alt="Witte crepi gevelrenovatie — AB Gevelbekleding" class="is-active" />
+    <img src="${hero2}" alt="Grijze crepi halfopen woning — AB Bouw Groep" loading="lazy" />
+    <img src="${hero3}" alt="Steenstrips tuinaanbouw — AB Gevelbekleding" loading="lazy" />
+    <img src="${hero4}" alt="Sierpleister marmorino afwerking — AB Bouw Groep" loading="lazy" />
   </div>
   <button type="button" class="lf-hero-arrow lf-hero-arrow--prev" data-hero-prev aria-label="Vorige foto">
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -1050,14 +1050,14 @@ const HTML = `
         <div class="lf-testi-track" data-testi-track>
           ${(() => {
             const reviews = [
-              { name: 'Jasmien De Backer', role: 'Witte crepi rijwoning · Mechelen', img: rev1, text: 'Onze rijwoning had een vermoeide bezetting uit de jaren ’80. Nu een spierwitte crepi-gevel die je zo van een interieurmagazine plukt. De buren komen vragen wie het werk gedaan heeft. Strak, proper, op tijd opgeleverd.', highlights: ['spierwitte crepi-gevel', 'op tijd opgeleverd'] },
-              { name: 'Joris Vanhove', role: 'ETICS + crepi · Boom', img: rev2, text: 'Volledig pakket: 16 cm EPS-isolatie + crepi-afwerking. EPC van F naar C in één werk. Stookkost deze winter bijna gehalveerd, en de muren binnen voelen niet meer koud aan. Premie-dossier (€4.800) liep via hen.', highlights: ['EPC van F naar C', 'bijna gehalveerd', '€4.800'] },
-              { name: 'Marius Ionescu', role: 'Steenstrips voorgevel · Lier', img: rev3, text: 'We wilden de klassieke Vlaamse baksteen-look zonder het gewicht en de kost van echte stenen. Steenstrips Vandersanden, voegen kaarsrecht, aansluitingen rond ramen vakwerk. Niemand merkt het verschil — zelfs onze schoonvader niet.', highlights: ['voegen kaarsrecht', 'zelfs onze schoonvader niet'] },
-              { name: 'Cindy Van Looy', role: 'Sierpleister marmorino · Bornem', img: rev4, text: 'Marmorino-afwerking in zachte taupe. Eén van de experts hielp met de kleurkeuze — wij wilden eerst grijs, hij overtuigde ons van een warmere tint. Achteraf super blij, het huis straalt nu echt karakter uit.', highlights: ['zachte taupe', 'super blij', 'echt karakter'] },
-              { name: 'Dimitri Maes', role: 'Crepi + buitenisolatie · Antwerpen', img: rev5, text: 'Halfopen woning uit 1968 die nooit was geïsoleerd. 16 cm EPS buitenisolatie + crepi. Comfort-sprong is enorm: geen koude muren meer in de winter. Premie €5.400 zonder problemen uitbetaald.', highlights: ['Comfort-sprong is enorm', '€5.400 zonder problemen'] },
-              { name: 'Steven Goossens', role: 'Gevelherstel + crepi · Willebroek', img: rev6, text: 'Onze gevel had scheuren en vochtproblemen. Drie aannemers wilden direct crepi erop smeren. Eén van de experts zei: eerst herstellen, anders gooi je geld weg. Uitgevoerd zoals beloofd. Factuur tot op de euro met de offerte.', highlights: ['eerst herstellen', 'tot op de euro'] },
+              { name: 'Jasmien De Backer', role: 'Witte crepi rijwoning', img: rev1, text: 'Onze rijwoning had een vermoeide bezetting uit de jaren ’80. Nu een spierwitte crepi-gevel die je zo van een interieurmagazine plukt. De buren komen vragen wie het werk gedaan heeft. Strak, proper, op tijd opgeleverd.', highlights: ['spierwitte crepi-gevel', 'op tijd opgeleverd'] },
+              { name: 'Joris Vanhove', role: 'ETICS + crepi', img: rev2, text: 'Volledig pakket: 16 cm EPS-isolatie + crepi-afwerking. EPC van F naar C in één werk. Stookkost deze winter bijna gehalveerd, en de muren binnen voelen niet meer koud aan. Premie-dossier (€4.800) liep via hen.', highlights: ['EPC van F naar C', 'bijna gehalveerd', '€4.800'] },
+              { name: 'Marius Ionescu', role: 'Steenstrips voorgevel', img: rev3, text: 'We wilden de klassieke Vlaamse baksteen-look zonder het gewicht en de kost van echte stenen. Steenstrips Vandersanden, voegen kaarsrecht, aansluitingen rond ramen vakwerk. Niemand merkt het verschil — zelfs onze schoonvader niet.', highlights: ['voegen kaarsrecht', 'zelfs onze schoonvader niet'] },
+              { name: 'Cindy Van Looy', role: 'Sierpleister marmorino', img: rev4, text: 'Marmorino-afwerking in zachte taupe. Eén van de experts hielp met de kleurkeuze — wij wilden eerst grijs, hij overtuigde ons van een warmere tint. Achteraf super blij, het huis straalt nu echt karakter uit.', highlights: ['zachte taupe', 'super blij', 'echt karakter'] },
+              { name: 'Dimitri Maes', role: 'Crepi + buitenisolatie', img: rev5, text: 'Halfopen woning uit 1968 die nooit was geïsoleerd. 16 cm EPS buitenisolatie + crepi. Comfort-sprong is enorm: geen koude muren meer in de winter. Premie €5.400 zonder problemen uitbetaald.', highlights: ['Comfort-sprong is enorm', '€5.400 zonder problemen'] },
+              { name: 'Steven Goossens', role: 'Gevelherstel + crepi', img: rev6, text: 'Onze gevel had scheuren en vochtproblemen. Drie aannemers wilden direct crepi erop smeren. Eén van de experts zei: eerst herstellen, anders gooi je geld weg. Uitgevoerd zoals beloofd. Factuur tot op de euro met de offerte.', highlights: ['eerst herstellen', 'tot op de euro'] },
               { name: 'Eva Vandeputte', role: 'Witte crepi nieuwbouw · Kontich', img: rev7, text: 'Nieuwbouw afgewerkt met witte crepi op de spouwmuur. Strakke lijn over de volledige gevel, geen scheuren of vlekken. Plaatsing in 5 werkdagen, stelling weg, oprit proper opgekuist, klaar.', highlights: ['Strakke lijn', '5 werkdagen', 'proper opgekuist'] },
-              { name: 'Hicham Bouali', role: 'Gevelisolatie + nieuwe crepi · Mechelen', img: rev8, text: 'Eerste aannemer wilde alleen crepi over de bestaande gevel. AB Bouw legde uit waarom we ETICS-isolatie nodig hadden. Hogere prijs, veel betere oplossing. EPC + comfort vlot. Geen spijt van die keuze.', highlights: ['veel betere oplossing', 'Geen spijt'] },
+              { name: 'Hicham Bouali', role: 'Gevelisolatie + nieuwe crepi', img: rev8, text: 'Eerste aannemer wilde alleen crepi over de bestaande gevel. AB Bouw legde uit waarom we ETICS-isolatie nodig hadden. Hogere prijs, veel betere oplossing. EPC + comfort vlot. Geen spijt van die keuze.', highlights: ['veel betere oplossing', 'Geen spijt'] },
             ];
             const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             const wrapWords = (phrase: string, baseI: number) => {
@@ -1367,20 +1367,20 @@ const HTML = `
     </div>
     <div class="lp-gallery">
       <a href="#lp-form" class="lp-gallery-cell" data-reveal>
-        <img src="${hero1}" alt="Witte crepi Mechelen" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Crepi</small><strong>Witte crepi — Mechelen</strong></div>
+        <img src="${hero1}" alt="Witte crepi" loading="lazy"/>
+        <div class="lp-gallery-cap"><small>Crepi</small><strong>Witte crepi</strong></div>
       </a>
       <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="1">
-        <img src="${hero2}" alt="Grijze crepi Antwerpen" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Crepi</small><strong>Grijze crepi — Antwerpen</strong></div>
+        <img src="${hero2}" alt="Grijze crepi" loading="lazy"/>
+        <div class="lp-gallery-cap"><small>Crepi</small><strong>Grijze crepi</strong></div>
       </a>
       <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="2">
-        <img src="${hero3}" alt="Steenstrips Lier" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Steenstrips</small><strong>Klassieke look — Lier</strong></div>
+        <img src="${hero3}" alt="Steenstrips" loading="lazy"/>
+        <div class="lp-gallery-cap"><small>Steenstrips</small><strong>Klassieke look</strong></div>
       </a>
       <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="3">
-        <img src="${hero4}" alt="Sierpleister Bornem" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Sierpleister</small><strong>Marmorino — Bornem</strong></div>
+        <img src="${hero4}" alt="Sierpleister" loading="lazy"/>
+        <div class="lp-gallery-cap"><small>Sierpleister</small><strong>Marmorino</strong></div>
       </a>
     </div>
   </div>
