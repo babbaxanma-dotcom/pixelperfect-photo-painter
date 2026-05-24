@@ -996,18 +996,18 @@ html { scroll-behavior: smooth; }
   width: 100%; height: 100%;
   object-fit: cover;
   opacity: 0;
-  transform: scale(1.12);
+  transform: scale(1.18);
   transform-origin: center center;
   transition: opacity 1.8s cubic-bezier(0.22,1,0.36,1);
   will-change: opacity, transform;
 }
 .lf-hero-bg--slides img.is-active {
   opacity: 1;
-  animation: lf-hero-kenburns 9s ease-out forwards;
+  animation: lf-hero-kenburns 14s ease-in-out infinite alternate;
 }
 @keyframes lf-hero-kenburns {
-  0%   { transform: scale(1.12) translate3d(0, 0, 0); }
-  100% { transform: scale(1.0)  translate3d(-1.5%, -1%, 0); }
+  0%   { transform: scale(1.18) translate3d(0, 0, 0); }
+  100% { transform: scale(1.22) translate3d(-0.5%, -0.3%, 0); }
 }
 
 /* Hero arrows */
