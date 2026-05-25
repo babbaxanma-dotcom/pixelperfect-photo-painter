@@ -1284,6 +1284,179 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 .lp-form-card select option { color: var(--ink); padding: 12px; }
 .lp-form-card select option:first-child { color: var(--ink-mute); }
 
+/* ───── PRIJS-SECTIE ───── */
+.lp-prijs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.lp-prijs-card {
+  background: #fff;
+  border: 1px solid rgba(10,22,40,0.08);
+  border-radius: 14px;
+  padding: 22px 22px 20px;
+  transition: border-color .25s ease, transform .25s ease;
+}
+.lp-prijs-card:hover { border-color: rgba(217,140,3,0.4); transform: translateY(-2px); }
+.lp-prijs-card-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.lp-prijs-card-amount {
+  display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.lp-prijs-card-from { font-size: 13px; color: var(--ink-soft); font-weight: 500; }
+.lp-prijs-card-amount strong {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.lp-prijs-card-unit { font-size: 13px; color: var(--ink-soft); }
+.lp-prijs-card-note { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
+.lp-prijs-foot {
+  font-size: 12.5px;
+  color: var(--ink-mute);
+  text-align: center;
+  margin: 22px auto 0;
+  max-width: 720px;
+  line-height: 1.6;
+}
+@media (max-width: 900px) {
+  .lp-prijs-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .lp-prijs-card { padding: 18px 16px 16px; }
+  .lp-prijs-card-amount strong { font-size: 22px; }
+  .lp-prijs-card-label { font-size: 11.5px; }
+}
+@media (max-width: 540px) {
+  .lp-prijs-grid { grid-template-columns: 1fr; }
+}
+
+/* ───── VELUX-SECTIE ───── */
+.lp-velux-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.lp-velux-card {
+  background: #fff;
+  border: 1.5px solid rgba(10,22,40,0.08);
+  border-radius: 16px;
+  padding: 26px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.lp-velux-card:hover {
+  border-color: rgba(217,140,3,0.5);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px -12px rgba(10,22,40,0.16);
+}
+.lp-velux-card-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.lp-velux-card-text {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin: 0 0 14px;
+}
+.lp-velux-card-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.lp-velux-card-list li {
+  font-size: 13.5px;
+  color: var(--ink);
+  padding-left: 18px;
+  position: relative;
+}
+.lp-velux-card-list li::before {
+  content: '✓';
+  position: absolute; left: 0; top: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+.lp-velux-card-list strong { color: var(--navy); font-weight: 700; }
+.lp-velux-card-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: auto;
+  padding: 11px 18px;
+  background: var(--navy);
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background .2s ease, transform .2s ease;
+  align-self: flex-start;
+}
+.lp-velux-card-cta:hover {
+  background: #07182a;
+  transform: translateY(-1px);
+}
+@media (max-width: 900px) {
+  .lp-velux-grid { grid-template-columns: 1fr; gap: 14px; }
+  .lp-velux-card { padding: 22px 20px 22px; }
+}
+
+/* ───── MOBILE TIGHTEN — overlap fixes + verminderde padding/text ───── */
+@media (max-width: 720px) {
+  .lf-section { padding: 44px 0 !important; }
+  .lf-section-head { margin-bottom: 22px !important; }
+  .lf-h2 { font-size: clamp(24px, 6vw, 32px) !important; line-height: 1.18 !important; letter-spacing: -0.02em; }
+  .lf-eyebrow { font-size: 11px; letter-spacing: 0.14em; }
+  .lf-lede { font-size: 14.5px !important; line-height: 1.55 !important; }
+  .lp-stats-strip { gap: 24px 16px !important; padding: 28px 0 !important; }
+  .lp-stat-num { font-size: clamp(28px, 7vw, 36px) !important; }
+  .lp-stat-label { font-size: 12.5px !important; line-height: 1.4 !important; }
+  .lp-premie { padding: 22px 18px !important; gap: 14px !important; }
+  .lp-premie-text strong { font-size: 15.5px !important; line-height: 1.3 !important; display: block; margin-bottom: 6px; }
+  .lp-premie-text p { font-size: 13.5px !important; line-height: 1.55 !important; }
+  .lp-premie-cta { font-size: 13px !important; padding: 11px 18px !important; }
+  /* Reviews carousel — tighter */
+  .lp-reviews { padding: 38px 0 !important; }
+  /* Anatomy grid tighter */
+  .lp-anatomy-grid { gap: 10px !important; }
+  .lp-anatomy-tile { padding: 14px 12px !important; }
+  /* FAQ tighter */
+  .ab-faq summary { padding: 14px 16px !important; font-size: 14.5px !important; }
+  .ab-faq-body { padding: 0 16px 14px !important; }
+  .ab-faq-body p { font-size: 13.5px !important; line-height: 1.55 !important; }
+  /* Blog cards tighter */
+  .lp-blog-card { padding: 0 !important; }
+  .lp-blog-body { padding: 14px 16px 16px !important; }
+  .lp-blog-meta { font-size: 11px !important; }
+  /* Gallery cells — tighter caption */
+  .lp-gallery-cap { padding: 10px 12px !important; }
+  .lp-gallery-cap strong { font-size: 13.5px !important; }
+  .lp-gallery-cap small { font-size: 10.5px !important; }
+  /* Form section */
+  .lp-form-section { padding: 36px 0 !important; }
+  .lp-form-card { padding: 22px 18px !important; }
+  .lp-form-card h3 { font-size: 19px !important; line-height: 1.25 !important; }
+  .lp-form-card label { font-size: 13px !important; }
+  .lp-form-card input, .lp-form-card select, .lp-form-card textarea {
+    padding: 12px 14px !important; font-size: 14.5px !important;
+  }
+}
+
 /* Sticky desktop CTA — ALTIJD goud (background op base + media, niet alleen
    inside media query, en ook inline op de <a> met !important voor zekerheid) */
 .lp-sticky-cta {
@@ -1594,6 +1767,93 @@ const HTML = `
         Bereken mijn premie
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
+    </div>
+  </div>
+</section>
+
+<!-- PRIJS-ANCHOR sectie — voor 'hoeveel kost' searches die nu bouncen -->
+<section class="lf-section" style="padding: 56px 0 56px;">
+  <div class="wrap">
+    <div class="lf-section-head" data-reveal style="margin-bottom: 28px;">
+      <span class="lf-eyebrow">Indicatieve richtprijzen 2026</span>
+      <h2 class="lf-h2">Wat kost een <span class="ab-mark">nieuw dak</span>?</h2>
+      <p class="lf-lede" style="margin: 14px 0 0; max-width: 640px;">Eerlijke richtprijzen op basis van onze recente projecten. Exacte prijs altijd na gratis plaatsbezoek met fotorapport.</p>
+    </div>
+    <div class="lp-prijs-grid" data-reveal>
+      <div class="lp-prijs-card">
+        <div class="lp-prijs-card-label">Pannendak — Koramic klei</div>
+        <div class="lp-prijs-card-amount"><span class="lp-prijs-card-from">vanaf</span> <strong>€140-200</strong> <span class="lp-prijs-card-unit">/ m²</span></div>
+        <div class="lp-prijs-card-note">Volledige vervanging, panlatten, onderdakfolie, dakgoot.</div>
+      </div>
+      <div class="lp-prijs-card">
+        <div class="lp-prijs-card-label">Plat dak — EPDM rubber</div>
+        <div class="lp-prijs-card-amount"><span class="lp-prijs-card-from">vanaf</span> <strong>€120-160</strong> <span class="lp-prijs-card-unit">/ m²</span></div>
+        <div class="lp-prijs-card-note">Firestone EPDM, aluminium daktrim, 25j garantie.</div>
+      </div>
+      <div class="lp-prijs-card">
+        <div class="lp-prijs-card-label">Dakisolatie — sarking PIR</div>
+        <div class="lp-prijs-card-amount"><span class="lp-prijs-card-from">vanaf</span> <strong>€95-140</strong> <span class="lp-prijs-card-unit">/ m²</span></div>
+        <div class="lp-prijs-card-note">22 cm PIR, Mijn VerbouwPremie €40/m² recupereerbaar.</div>
+      </div>
+      <div class="lp-prijs-card">
+        <div class="lp-prijs-card-label">Natuurleien — Cupa Heavy</div>
+        <div class="lp-prijs-card-amount"><span class="lp-prijs-card-from">vanaf</span> <strong>€220-310</strong> <span class="lp-prijs-card-unit">/ m²</span></div>
+        <div class="lp-prijs-card-note">Premium leien, koperen kielgoten, 100j levensduur.</div>
+      </div>
+      <div class="lp-prijs-card">
+        <div class="lp-prijs-card-label">Velux dakvenster</div>
+        <div class="lp-prijs-card-amount"><span class="lp-prijs-card-from">vanaf</span> <strong>€1.700</strong> <span class="lp-prijs-card-unit">per stuk</span></div>
+        <div class="lp-prijs-card-note">GGL/GPL, inclusief pan-aansluiting + binnenafwerking.</div>
+      </div>
+      <div class="lp-prijs-card">
+        <div class="lp-prijs-card-label">Zinkwerk — VMZinc</div>
+        <div class="lp-prijs-card-amount"><span class="lp-prijs-card-from">vanaf</span> <strong>€85-130</strong> <span class="lp-prijs-card-unit">/ lopende m</span></div>
+        <div class="lp-prijs-card-note">Bakgoot of mastgoot, koperen regenpijpen op maat.</div>
+      </div>
+    </div>
+    <p class="lp-prijs-foot" data-reveal>Prijzen excl. BTW (6% renovatie / 21% nieuwbouw). Gratis plaatsbezoek = exacte bindende offerte binnen 5 werkdagen.</p>
+  </div>
+</section>
+
+<!-- VELUX & DAKKAPEL sectie — anchor voor velux-search traffic -->
+<section class="lf-section lf-tone-soft" id="velux" style="padding: 56px 0 60px;">
+  <div class="wrap">
+    <div class="lf-section-head" data-reveal style="margin-bottom: 28px;">
+      <span class="lf-eyebrow">Velux & dakvensters</span>
+      <h2 class="lf-h2">Enkel een dakvenster? <span class="ab-mark">Vakman binnen 5 dagen.</span></h2>
+      <p class="lf-lede" style="margin: 14px 0 0; max-width: 640px;">Geen volledige dakrenovatie nodig — wij doen ook losse Velux- en dakvensterjobs van 1 tot 3 dagen.</p>
+    </div>
+    <div class="lp-velux-grid" data-reveal>
+      <div class="lp-velux-card">
+        <strong class="lp-velux-card-title">Velux plaatsen</strong>
+        <p class="lp-velux-card-text">Nieuw Velux GGL of GPL in bestaande pannen of leien. Inclusief pan-aansluiting, dampscherm, binnenafwerking en gootstuk.</p>
+        <ul class="lp-velux-card-list">
+          <li><strong>1-2 dagen</strong> per dakvenster</li>
+          <li><strong>10 jaar garantie</strong> waterdichtheid</li>
+          <li><strong>Vanaf €1.700</strong> compleet</li>
+        </ul>
+        <a href="#lp-form" class="lp-velux-card-cta" data-smooth>Vraag Velux-offerte<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="lp-velux-card">
+        <strong class="lp-velux-card-title">Dakkapel toevoegen</strong>
+        <p class="lp-velux-card-text">Volledige dakkapel met staand venster — meer licht én staanruimte op zolder. Bekleding in zink of crepi.</p>
+        <ul class="lp-velux-card-list">
+          <li><strong>2-3 weken</strong> per dakkapel</li>
+          <li><strong>Bouwvergunning</strong> wij regelen</li>
+          <li><strong>Vanaf €8.500</strong> compleet</li>
+        </ul>
+        <a href="#lp-form" class="lp-velux-card-cta" data-smooth>Vraag dakkapel-offerte<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="lp-velux-card">
+        <strong class="lp-velux-card-title">Dakraam vervangen</strong>
+        <p class="lp-velux-card-text">Oud Velux of dakraam met condens of lekkage? Vervanging in zelfde opening, vaak in 1 dag klaar.</p>
+        <ul class="lp-velux-card-list">
+          <li><strong>1 dag</strong> per raam</li>
+          <li><strong>Behoud</strong> binnenafwerking</li>
+          <li><strong>Vanaf €1.350</strong> compleet</li>
+        </ul>
+        <a href="#lp-form" class="lp-velux-card-cta" data-smooth>Vraag vervanging-offerte<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
     </div>
   </div>
 </section>
