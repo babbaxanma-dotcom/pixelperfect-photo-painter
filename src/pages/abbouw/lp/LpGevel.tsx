@@ -161,7 +161,7 @@ const LP_EXTRA = `
 .lp-quick-form-thanks h4 { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--navy); margin: 0 0 6px; }
 .lp-quick-form-thanks p { font-size: 14px; color: var(--ink-soft); line-height: 1.5; margin: 0; }
 @media (max-width: 720px) {
-  .lp-quick-form { margin: -80px 12px 0; padding: 16px 16px 18px; border-radius: 14px; box-shadow: 0 24px 60px -24px rgba(0,0,0,0.35), 0 8px 20px -8px rgba(0,0,0,0.18); }
+  .lp-quick-form { margin: -40px 16px 0; padding: 18px 18px 20px; border-radius: 14px; }
   .lp-quick-form-head { margin-bottom: 12px; }
   .lp-quick-form-title { font-size: 15.5px; }
   .lp-quick-form-sub { font-size: 12px; }
@@ -228,48 +228,6 @@ const LP_EXTRA = `
   .lp-hero-cine .lf-hero-wrap { padding-top: 90px !important; padding-bottom: 50px !important; min-height: 85dvh !important; }
 }
 
-/* Sticky mobile bottom CTA bar — alleen mobile, alleen na hero scrolled */
-.lp-sticky-mobile-cta { display: none; }
-@media (max-width: 720px) {
-  .lp-sticky-mobile-cta {
-    display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 8px;
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-    background: rgba(10,22,40,0.96);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    z-index: 50;
-    transform: translateY(120%);
-    transition: transform .35s cubic-bezier(.22,1,.36,1);
-    border-top: 1px solid rgba(255,255,255,0.08);
-  }
-  body.past-hero .lp-sticky-mobile-cta { transform: translateY(0); }
-  body.past-hero .lf-fab-call { display: none !important; }
-  body.past-hero { padding-bottom: 72px; }
-  .lp-sticky-call, .lp-sticky-form {
-    display: inline-flex; align-items: center; justify-content: center;
-    gap: 8px;
-    padding: 13px 12px;
-    border-radius: 10px;
-    font: inherit; font-size: 14px; font-weight: 700;
-    letter-spacing: -0.01em;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  .lp-sticky-call { background: #ffffff; color: var(--navy); }
-  .lp-sticky-call:hover, .lp-sticky-call:active { background: #f4f1eb; }
-  .lp-sticky-form {
-    background: #d98c03; color: #ffffff;
-    box-shadow: 0 4px 12px -4px rgba(217,140,3,0.45);
-  }
-  .lp-sticky-form:hover, .lp-sticky-form:active { background: #c47a02; }
-  .lp-sticky-cta-icon { flex-shrink: 0; }
-}
 body.lp-page.is-subpage .lf-nav {
   opacity: var(--nav-sweep, 0) !important;
   transform: translateY(calc((1 - var(--nav-sweep, 0)) * -10px)) !important;
@@ -1542,18 +1500,6 @@ const HTML = `
   Vraag gratis gevelinspectie aan
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
 </a>
-
-<!-- Sticky mobile bottom CTA bar — alleen mobile, alleen na hero scrolled -->
-<div class="lp-sticky-mobile-cta" aria-label="Snelle acties">
-  <a href="${CONTACT.phone.href}" class="lp-sticky-call" aria-label="Bel direct">
-    <svg class="lp-sticky-cta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-    Bel direct
-  </a>
-  <a href="#lp-form" class="lp-sticky-form" aria-label="Vraag gratis offerte" data-smooth>
-    <svg class="lp-sticky-cta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-    Vraag gratis offerte
-  </a>
-</div>
 
 <a href="${CONTACT.phone.href}" class="lf-fab-call" aria-label="Bel ons direct">
   <span class="lf-fab-pulse"></span>
