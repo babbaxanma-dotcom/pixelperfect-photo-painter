@@ -125,11 +125,19 @@ const LP_EXTRA = `
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 18px 50px -22px rgba(15,23,42,0.30), 0 4px 12px -4px rgba(15,23,42,0.08);
-  padding: 22px 24px;
+  padding: 26px 28px 24px;
   max-width: 880px;
   margin: -60px auto 0;
   position: relative;
   z-index: 4;
+  overflow: hidden;
+}
+.lp-quick-form::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #d98c03 0%, #f0a83a 50%, #d98c03 100%);
 }
 .lp-quick-form-head {
   display: flex; align-items: center; gap: 14px;
@@ -1312,9 +1320,25 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
   border: 1px solid rgba(10,22,40,0.08);
   border-radius: 14px;
   padding: 22px 22px 20px;
-  transition: border-color .25s ease, transform .25s ease;
+  transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+  position: relative;
+  overflow: hidden;
 }
-.lp-prijs-card:hover { border-color: rgba(217,140,3,0.4); transform: translateY(-2px); }
+.lp-prijs-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 36px; height: 3px;
+  background: var(--accent);
+  border-radius: 0 0 3px 0;
+  transition: width .3s ease;
+}
+.lp-prijs-card:hover {
+  border-color: rgba(217,140,3,0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px -16px rgba(10,22,40,0.18);
+}
+.lp-prijs-card:hover::before { width: 64px; }
 .lp-prijs-card-label {
   font-size: 12.5px;
   font-weight: 700;

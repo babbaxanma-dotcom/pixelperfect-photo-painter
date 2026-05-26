@@ -101,11 +101,19 @@ const LP_EXTRA = `
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 18px 50px -22px rgba(15,23,42,0.30), 0 4px 12px -4px rgba(15,23,42,0.08);
-  padding: 22px 24px;
+  padding: 26px 28px 24px;
   max-width: 880px;
   margin: -60px auto 0;
   position: relative;
   z-index: 4;
+  overflow: hidden;
+}
+.lp-quick-form::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #d98c03 0%, #f0a83a 50%, #d98c03 100%);
 }
 .lp-quick-form-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
 .lp-quick-form-head-icon {
