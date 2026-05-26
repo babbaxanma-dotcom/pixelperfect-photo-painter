@@ -47,7 +47,9 @@
         'wait_for_update': 500
       });
       gtag('js', new Date());
-      gtag('config', 'AW-18162707660');
+      // Enhanced Conversions: gtag hasht email/phone client-side; Google matched
+      // dat tegen ingelogde Google accounts → ~30-50% meer geattribueerde conversies.
+      gtag('config', 'AW-18162707660', { allow_enhanced_conversions: true });
       gtag('config', 'G-VSPZVRD0LW', { anonymize_ip: true, send_page_view: false });
       gtag('config', 'G-4421GRKGF8', { anonymize_ip: true, send_page_view: false });
     </script>

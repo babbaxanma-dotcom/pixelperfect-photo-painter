@@ -88,11 +88,45 @@ export function trackPageView(path: string) {
   });
 }
 
+// Normaliseer email/phone naar het formaat dat Google Ads Enhanced Conversions
+// verwacht. gtag hasht zelf SHA-256 voor wie via gtag('set', 'user_data', ...) gaat.
+function normalizeEmail(raw?: unknown): string | undefined {
+  if (typeof raw !== 'string') return undefined;
+  const v = raw.trim().toLowerCase();
+  return v.length > 0 && v.includes('@') ? v : undefined;
+}
+function normalizePhoneBE(raw?: unknown): string | undefined {
+  if (typeof raw !== 'string') return undefined;
+  let digits = raw.replace(/\D/g, '');
+  if (digits.length === 0) return undefined;
+  if (digits.startsWith('00')) digits = digits.slice(2);
+  if (digits.startsWith('0')) digits = '32' + digits.slice(1);
+  if (digits.length < 8) return undefined;
+  return '+' + digits;
+}
+
 export function fireConversion(kind: 'contact_form' | 'newsletter' | 'landing_page', payload: Record<string, unknown>) {
   const gadsId = import.meta.env.VITE_GADS_ID as string | undefined;
   const labelForm = import.meta.env.VITE_GADS_CONVERSION_LABEL_FORM as string | undefined;
   const labelNews = import.meta.env.VITE_GADS_CONVERSION_LABEL_NEWS as string | undefined;
   const ga4Target = activeGa4Id();
+
+  // Enhanced Conversions: stuur email/phone (normalized, unhashed — gtag hasht)
+  // VOOR de conversion event firet. Google matched dit tegen ingelogde Google
+  // accounts om consentless conversies alsnog te attribueren.
+  const email = normalizeEmail(payload.email);
+  const phone = normalizePhoneBE(payload.phone);
+  const firstName = typeof payload.firstName === 'string' ? payload.firstName.trim().toLowerCase() : undefined;
+  const lastName = typeof payload.lastName === 'string' ? payload.lastName.trim().toLowerCase() : undefined;
+  if (email || phone) {
+    const userData: Record<string, string | { first_name?: string; last_name?: string; country?: string }> = {};
+    if (email) userData.email = email;
+    if (phone) userData.phone_number = phone;
+    if (firstName || lastName) {
+      userData.address = { first_name: firstName, last_name: lastName, country: 'BE' };
+    }
+    gtag('set', 'user_data', userData);
+  }
 
   // GA4 event (custom) — naar de juiste property op basis van huidig pad
   if (ga4Target) {
@@ -121,7 +155,7 @@ export function fireConversion(kind: 'contact_form' | 'newsletter' | 'landing_pa
 
   // Quiet success log — handig bij QA
   if (typeof window !== 'undefined' && import.meta.env.DEV) {
-    console.info('[tracking] conversion fired:', kind, payload);
+    console.info('[tracking] conversion fired:', kind, { email: !!email, phone: !!phone });
   }
 }
 
