@@ -227,10 +227,15 @@ const LP_EXTRA = `
 }
 @media (max-width: 720px) {
   .lp-quick-form {
-    margin: -40px 16px 0;
-    padding: 18px 18px 20px;
+    margin: -50px 12px 0;
+    padding: 16px 16px 18px;
     border-radius: 14px;
+    box-shadow: 0 24px 60px -24px rgba(0,0,0,0.4), 0 8px 20px -8px rgba(0,0,0,0.18);
   }
+  .lp-quick-form-title { font-size: 15px !important; line-height: 1.25 !important; }
+  .lp-quick-form-sub { font-size: 11.5px !important; }
+  .lp-quick-form input { padding: 13px 14px !important; font-size: 15px !important; }
+  .lp-quick-form button[type="submit"] { padding: 14px 22px !important; font-size: 14.5px !important; }
   .lp-quick-form-head { margin-bottom: 12px; }
   .lp-quick-form-title { font-size: 15.5px; }
   .lp-quick-form-sub { font-size: 12px; }
@@ -372,10 +377,22 @@ const LP_EXTRA = `
   z-index: 3;
 }
 
-/* Mobile: hero 85vh (form 15% zichtbaar above-fold) + nav hidden-until-scroll */
+/* Mobile: hero compact (vorm zichtbaar above-fold) + nav hidden-until-scroll */
 @media (max-width: 900px) {
-  .lf-hero.lp-hero-cine { min-height: 85vh !important; min-height: 85dvh !important; height: 85dvh !important; align-items: center !important; }
-  .lp-hero-cine .lf-hero-wrap { padding-top: 90px !important; padding-bottom: 50px !important; min-height: 85dvh !important; }
+  .lf-hero.lp-hero-cine { min-height: 72vh !important; min-height: 72dvh !important; height: 72dvh !important; align-items: flex-start !important; }
+  .lp-hero-cine .lf-hero-wrap { padding-top: 80px !important; padding-bottom: 24px !important; min-height: 72dvh !important; }
+  .lp-hero-cine .lf-hero-headline { font-size: clamp(28px, 8vw, 38px) !important; line-height: 1.12 !important; margin: 0 0 12px !important; }
+  .lp-hero-cine .lf-hero-sub { font-size: 14px !important; line-height: 1.5 !important; margin: 0 0 16px !important; }
+  .lp-hero-cine .lf-hero-actions { gap: 10px !important; }
+  .lp-hero-cine .lf-cta-pill { padding: 14px 22px !important; font-size: 14px !important; }
+  .lp-hero-cine .lf-hero-ghost { font-size: 13.5px !important; padding: 8px 14px !important; }
+  /* Hide hero-trust + microtrust op mobile — duplicates met mini-form sub-text */
+  .lp-hero-cine .lp-hero-trust { display: none !important; }
+  .lp-hero-cine .lp-cta-microtrust { display: none !important; }
+  /* Scroll cue subtieler */
+  .lp-hero-cine .lf-scroll-cue { display: none !important; }
+  /* FAB-call ALTIJD weg op LP — anders overlapt het de form */
+  body.lp-page .lf-fab-call { display: none !important; }
 }
 
 body.lp-page.is-subpage .lf-nav {
