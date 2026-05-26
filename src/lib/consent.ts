@@ -51,6 +51,25 @@ export function allowsMarketing(): boolean {
   return readConsent()?.marketing === true;
 }
 
+// Push de huidige consent-state naar gtag. gtag.js zelf staat in index.html en
+// start in "denied" state (Consent Mode v2). Hier upgraden we naar "granted"
+// zodra de bezoeker de cookie-banner heeft geaccepteerd.
+export function syncConsentToGtag() {
+  if (typeof window === 'undefined') return;
+  type GtagFn = (...args: unknown[]) => void;
+  const w = window as unknown as { gtag?: GtagFn; dataLayer?: unknown[] };
+  const pushFn: GtagFn = w.gtag ?? ((...a: unknown[]) => { (w.dataLayer ??= []).push(a); });
+  const c = readConsent();
+  const analytics = c?.analytics === true ? 'granted' : 'denied';
+  const marketing = c?.marketing === true ? 'granted' : 'denied';
+  pushFn('consent', 'update', {
+    ad_storage: marketing,
+    ad_user_data: marketing,
+    ad_personalization: marketing,
+    analytics_storage: analytics,
+  });
+}
+
 const BANNER_ID = 'ab-bouw-cookie-banner';
 
 const BANNER_HTML = `
