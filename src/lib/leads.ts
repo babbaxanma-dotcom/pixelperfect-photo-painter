@@ -161,13 +161,9 @@ async function postJSON(url: string, body: unknown, timeoutMs = 8000) {
 
 export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
   const ghlUrl = import.meta.env.VITE_GHL_WEBHOOK_URL as string | undefined;
-  const w3fKey = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
-  const fallbackEmail = import.meta.env.VITE_LEAD_EMAIL_FALLBACK_TO as string | undefined;
 
   // Last-line guard: elke lead-payload (behalve newsletter) moet ZOWEL email
-  // ALS phone hebben. Email-only of phone-only leads zijn niet bruikbaar voor
-  // follow-up (sommige klanten reageren alleen op telefoon, anderen alleen op
-  // email — voor solide opvolging hebben we beide kanalen nodig).
+  // ALS phone hebben.
   if (p.source !== 'newsletter') {
     const emailOk = !!p.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email.trim());
     const phoneOk = !!p.phone && (p.phone.replace(/\D/g, '').length >= 8);
@@ -179,46 +175,17 @@ export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
 
   const body = buildBody(p);
 
-  // 1) Probeer GHL Inbound Webhook
   if (ghlUrl) {
     try {
       const res = await postJSON(ghlUrl, body);
       if (res.ok) {
         fireConversion(p.source, body);
-        // Web3Forms parallel als extra inbox-backup
-        if (w3fKey) void sendWeb3Forms(body, w3fKey, fallbackEmail);
         return { ok: true, via: 'ghl' };
       }
     } catch (err) {
-      // fall through naar Web3Forms
       console.warn('[lead] GHL submit failed:', err);
     }
   }
 
-  // 2) Web3Forms fallback (email naar Bardh + Tarik)
-  if (w3fKey) {
-    try {
-      const ok = await sendWeb3Forms(body, w3fKey, fallbackEmail);
-      if (ok) {
-        fireConversion(p.source, body);
-        return { ok: true, via: 'web3forms' };
-      }
-    } catch (err) {
-      console.warn('[lead] Web3Forms submit failed:', err);
-    }
-  }
-
   return { ok: false, via: 'none', error: 'no transport configured' };
-}
-
-async function sendWeb3Forms(body: ReturnType<typeof buildBody>, key: string, to?: string) {
-  const payload = {
-    access_key: key,
-    subject: `[AB Bouw site] Nieuwe ${body.source === 'newsletter' ? 'nieuwsbrief-inschrijving' : 'lead'} — ${body.name ?? body.email}`,
-    from_name: 'AB Bouw website',
-    ...(to ? { to } : {}),
-    ...body,
-  };
-  const res = await postJSON('https://api.web3forms.com/submit', payload);
-  return res.ok;
 }
