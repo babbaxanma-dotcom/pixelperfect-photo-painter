@@ -1581,7 +1581,7 @@ const HTML = `
       <p class="lf-hero-sub">Volledige dakvervanging, dakisolatie en zinkwerk in Mechelen, Antwerpen, Lier en heel Vlaanderen. <strong style="color:#fff;">Gratis plaatsbezoek</strong> binnen 5 werkdagen · <strong style="color:#fff;">bindende offerte</strong> met fotorapport · <strong style="color:#fff;">10 jaar garantie</strong> op waterdichtheid.</p>
       <div class="lf-hero-actions">
         <a href="#lp-form" class="lf-cta-pill" data-smooth>
-          <span>Gratis dakinspectie aanvragen</span>
+          <span>Vraag gratis plaatsbezoek</span>
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </a>
         <a href="${CONTACT.phone.href}" class="lf-hero-ghost">
@@ -1614,7 +1614,7 @@ const HTML = `
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       <div>
-        <div class="lp-quick-form-title">Plan uw gratis dakinspectie</div>
+        <div class="lp-quick-form-title">Vraag gratis plaatsbezoek</div>
         <div class="lp-quick-form-sub">Vakman langs binnen 5 werkdagen · bindende offerte · 100% vrijblijvend</div>
       </div>
     </div>
@@ -1623,7 +1623,7 @@ const HTML = `
       <input type="email" name="email" placeholder="E-mailadres *" required autocomplete="email" inputmode="email" />
       <input type="tel" name="phone" placeholder="Telefoon *" required autocomplete="tel" inputmode="tel" />
       <button type="submit" data-lp-quick-submit style="background:#d98c03 !important; background-color:#d98c03 !important; color:#ffffff !important; border:none;">
-        <span data-lp-quick-submit-label>Plan mijn gratis dakinspectie</span>
+        <span data-lp-quick-submit-label>Plan gratis plaatsbezoek</span>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
     </form>
@@ -2033,7 +2033,7 @@ const HTML = `
         <span>Gratis plaatsbezoek binnen 5 werkdagen · vrijblijvende offerte · 10 jaar garantie.</span>
       </div>
       <a href="#lp-form" class="lp-cta-banner-cta" data-smooth>
-        Plan mijn gratis dakinspectie
+        Plan gratis plaatsbezoek
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
     </div>
@@ -2634,7 +2634,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
         quickWrap?.classList.add('is-success');
       } else {
         if (quickBtn) quickBtn.disabled = false;
-        if (quickBtnLabel) quickBtnLabel.textContent = 'Plan mijn gratis dakinspectie';
+        if (quickBtnLabel) quickBtnLabel.textContent = 'Plan gratis plaatsbezoek';
         showError(`Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced}.`);
       }
     };

@@ -968,7 +968,7 @@ const HTML = `
       <p class="lf-hero-sub">Crepi, ETICS-buitenisolatie, steenstrips en sierpleister in Mechelen, Antwerpen, Lier en heel Vlaanderen. <strong style="color:#fff;">Gratis plaatsbezoek</strong> binnen 5 werkdagen · <strong style="color:#fff;">bindende offerte</strong> · <strong style="color:#fff;">60 EPC-punten</strong> winst gemiddeld.</p>
       <div class="lf-hero-actions">
         <a href="#lp-form" class="lf-cta-pill" data-smooth>
-          <span>Gratis gevelinspectie aanvragen</span>
+          <span>Vraag gratis plaatsbezoek</span>
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </a>
         <a href="${CONTACT.phone.href}" class="lf-hero-ghost">
@@ -1001,7 +1001,7 @@ const HTML = `
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       <div>
-        <div class="lp-quick-form-title">Plan uw gratis gevel-offerte</div>
+        <div class="lp-quick-form-title">Vraag gratis plaatsbezoek</div>
         <div class="lp-quick-form-sub">Vakman langs binnen 5 werkdagen · bindende offerte · 100% vrijblijvend</div>
       </div>
     </div>
@@ -1300,7 +1300,7 @@ const HTML = `
         <span>Gratis plaatsbezoek binnen 5 werkdagen · vrijblijvende offerte · 10 jaar garantie.</span>
       </div>
       <a href="#lp-form" class="lp-cta-banner-cta" data-smooth>
-        Plan mijn gratis gevelinspectie
+        Plan gratis plaatsbezoek
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
     </div>
