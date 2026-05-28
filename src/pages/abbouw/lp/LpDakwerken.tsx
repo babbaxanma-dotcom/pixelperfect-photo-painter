@@ -1528,6 +1528,22 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
     box-shadow: 0 20px 44px -10px rgba(217,140,3,0.7), 0 2px 4px rgba(15,17,21,0.08);
   }
 }
+
+/* ===== LP-FOCUS: bloat-secties verbergen voor max conversie ===== */
+.lp-calc-cta-section,
+.lp-price-anchor,
+.lf-section:has(.lp-prijs-grid),
+.lf-section:has(.lp-velux-grid),
+.lf-section:has(.lp-anatomy-grid),
+.lf-section:has(.lp-dak-cross-img),
+.lf-section:has(.lp-blog-grid) {
+  display: none !important;
+}
+/* Email-veld in mini-form weg = 2 velden ipv 3 = minder friction */
+.lp-quick-form input[name="email"] { display: none !important; }
+@media (max-width: 720px) {
+  .lp-quick-form form { grid-template-columns: 1fr !important; }
+}
 `;
 
 const HTML = `
@@ -2583,10 +2599,12 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
       if (!quickForm) return;
       const fd = new FormData(quickForm);
       const firstName = ((fd.get('firstName') as string) || '').trim();
-      const emailV = ((fd.get('email') as string) || '').trim();
       const phoneV = ((fd.get('phone') as string) || '').trim();
-      const emailValid = emailV && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailV);
       const phoneValid = phoneV && phoneV.replace(/\D/g, '').length >= 8;
+      // Email-veld is verborgen (focus op naam+telefoon = minder friction).
+      // Synthetisch email genereren zodat GHL pipeline blijft werken.
+      const phoneDigits = phoneV.replace(/\D/g, '');
+      const emailV = `lead-${phoneDigits || Date.now()}@abgroep.be`;
 
       const showError = (msg: string, fieldName?: string) => {
         if (quickErr) { quickErr.hidden = false; quickErr.textContent = msg; }
@@ -2594,7 +2612,6 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
       };
 
       if (!firstName) { showError('Vul uw voornaam in.', 'firstName'); return; }
-      if (!emailValid) { showError('Vul een geldig e-mailadres in.', 'email'); return; }
       if (!phoneValid) { showError('Vul uw telefoonnummer in (minstens 8 cijfers).', 'phone'); return; }
 
       if (quickErr) quickErr.hidden = true;
