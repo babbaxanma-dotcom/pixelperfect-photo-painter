@@ -1923,7 +1923,7 @@ const HTML = `
                 ${reviews.map((t, reviewIdx) => `
                   <article class="lf-testi" data-review-index="${reviewIdx}">
                     <div class="lf-testi-stars">★★★★★</div>
-                    <p>${highlight(t.text, t.highlights)}</p>
+                    <p>${t.text}</p>
                     <div class="lf-testi-divider"></div>
                     <div class="lf-testi-foot">
                       <img class="lf-testi-avatar" src="${t.img}" alt="${t.name}" loading="lazy"/>
