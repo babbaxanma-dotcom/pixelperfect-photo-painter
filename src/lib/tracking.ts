@@ -153,27 +153,24 @@ export function fireConversion(kind: 'contact_form' | 'newsletter' | 'landing_pa
   }
 
   // Google Ads conversion
-  if (gadsId) {
-    const label = kind === 'newsletter' ? labelNews : labelForm;
-    if (label) {
-      gtag('event', 'conversion', {
-        send_to: `${gadsId}/${label}`,
-        value: kind === 'newsletter' ? 1 : 50,
-        currency: 'EUR',
-        transaction_id: `${kind}-${Date.now()}`,
-      });
-    }
-  }
-
-  // Quiet success log — handig bij QA
-  if (typeof window !== 'undefined' && import.meta.env.DEV) {
-    console.info('[tracking] conversion fired:', kind, { email: !!email, phone: !!phone });
+  const label = kind === 'newsletter' ? labelNews : labelForm;
+  if (gadsId && label) {
+    gtag('event', 'conversion', {
+      send_to: `${gadsId}/${label}`,
+      value: kind === 'newsletter' ? 1 : 50,
+      currency: 'EUR',
+      transaction_id: `${kind}-${Date.now()}`,
+    });
+    console.info('[tracking] Google Ads conversie afgevuurd:', kind, `${gadsId}/${label}`, { ec: !!(email || phone) });
+  } else {
+    // Zichtbaar (ook in productie) zodat een ontbrekend label nooit meer stil faalt.
+    console.warn('[tracking] Google Ads conversie OVERGESLAGEN — id/label ontbreekt', { gadsId, label, kind });
   }
 }
 
 export function trackCallClick(source: string) {
-  const gadsId = import.meta.env.VITE_GADS_ID as string | undefined;
-  const labelCall = import.meta.env.VITE_GADS_CONVERSION_LABEL_CALL as string | undefined;
+  const gadsId = GADS_ID;
+  const labelCall = GADS_LABEL_CALL;
   const ga4Target = activeGa4Id();
 
   if (ga4Target) {
@@ -193,6 +190,9 @@ export function trackCallClick(source: string) {
       currency: 'EUR',
       transaction_id: `call-${Date.now()}`,
     });
+    console.info('[tracking] Google Ads CALL-conversie afgevuurd:', source, `${gadsId}/${labelCall}`);
+  } else {
+    console.warn('[tracking] CALL-conversie OVERGESLAGEN — id/label ontbreekt', { gadsId, labelCall });
   }
 }
 
