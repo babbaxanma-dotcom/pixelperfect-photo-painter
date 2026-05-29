@@ -281,9 +281,9 @@ export default function LpDienst({ slug }: { slug: string }) {
 const DIENST_CSS = `
 .dienst { font-family: var(--font-body, system-ui, sans-serif); color: var(--ink, #1a1f2b); background: #fff; }
 .dienst-header { position: absolute; top: 0; left: 0; right: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 16px clamp(16px,4vw,48px); }
-.dienst-brand { background: #fff; border-radius: 10px; padding: 7px 13px; box-shadow: 0 4px 14px rgba(8,12,22,0.18); display: inline-flex; }
+.dienst-brand { background: #fff; border-radius: 6px; padding: 7px 13px; box-shadow: 0 4px 14px rgba(8,12,22,0.18); display: inline-flex; }
 .dienst-brand img { height: 28px; display: block; }
-.dienst-phone { color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); padding: 9px 16px; border-radius: 999px; backdrop-filter: blur(8px); }
+.dienst-phone { color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); padding: 9px 16px; border-radius: 4px; backdrop-filter: blur(8px); }
 .dienst-hero { position: relative; min-height: 86vh; background-size: cover; background-position: center; display: flex; align-items: center; }
 .dienst-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(9,14,24,0.97) 0%, rgba(9,14,24,0.95) 30%, rgba(9,14,24,0.78) 46%, rgba(9,14,24,0.30) 64%, rgba(9,14,24,0.04) 82%, rgba(9,14,24,0) 100%); }
 .dienst-hero-inner { position: relative; z-index: 2; max-width: 1180px; margin: 0 auto; padding: 100px clamp(16px,4vw,48px) 80px; width: 100%; }
@@ -293,19 +293,19 @@ const DIENST_CSS = `
 .dienst-hero h1 { font-family: var(--font-display, inherit); font-size: clamp(38px,4.6vw,60px); font-weight: 700; line-height: 1.0; letter-spacing: -0.022em; color: #fff; margin: 0 0 20px; }
 .dienst-hero h1 br { display: block; }
 .dienst-hero p { font-size: clamp(15px,1.15vw,17px); line-height: 1.6; color: rgba(255,255,255,0.82); margin: 0 0 28px; max-width: 470px; }
-.dienst-cta { display: inline-flex; align-items: center; gap: 8px; background: #d98c03; color: #fff; font-weight: 700; font-size: 15px; padding: 15px 28px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 10px rgba(9,14,24,0.3); }
+.dienst-cta { display: inline-flex; align-items: center; gap: 8px; background: #d98c03; color: #fff; font-weight: 700; font-size: 15px; padding: 15px 28px; border-radius: 4px; text-decoration: none; box-shadow: none; }
 .dienst-cta:hover { background: #c47a02; }
 .dienst-trust { display: flex; flex-wrap: wrap; gap: 26px; margin-top: 26px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 13.5px; }
 .dienst-trust b { font-weight: 700; }
 .dienst-quick { max-width: 880px; margin: -52px auto 0; padding: 0 16px; position: relative; z-index: 5; }
-.dienst-quick-card { background: #fff; border-radius: 16px; padding: 24px 26px; box-shadow: 0 18px 50px -22px rgba(15,23,42,0.30); border-top: 3px solid #d98c03; }
+.dienst-quick-card { background: #fff; border-radius: 6px; padding: 24px 26px; box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 14px 34px -26px rgba(10,22,40,0.16); border-top: 3px solid #d98c03; }
 .dienst-quick-head { margin-bottom: 14px; }
 .dienst-quick-head strong { display: block; font-family: var(--font-display, inherit); font-size: 18px; color: var(--navy, #0a1628); }
 .dienst-quick-head span { font-size: 12.5px; color: #5a6473; }
 .dienst-form { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; }
-.dienst-form input { padding: 14px 15px; border: 1px solid #d7dce3; border-radius: 10px; font: inherit; font-size: 15px; }
+.dienst-form input { padding: 14px 15px; border: 1px solid #d7dce3; border-radius: 6px; font: inherit; font-size: 15px; }
 .dienst-form input:focus { outline: none; border-color: #d98c03; box-shadow: 0 0 0 3px rgba(217,140,3,0.16); }
-.dienst-form button { background: #d98c03; color: #fff; border: none; border-radius: 10px; font: inherit; font-weight: 700; font-size: 14.5px; padding: 14px 22px; cursor: pointer; white-space: nowrap; }
+.dienst-form button { background: #d98c03; color: #fff; border: none; border-radius: 6px; font: inherit; font-weight: 700; font-size: 14.5px; padding: 14px 22px; cursor: pointer; white-space: nowrap; }
 .dienst-form button:hover { background: #c47a02; }
 .dienst-form button:disabled { opacity: 0.6; }
 .dienst-err { grid-column: 1/-1; color: #c4523f; font-size: 13px; }
@@ -317,14 +317,14 @@ const DIENST_CSS = `
 .dienst-offer-head h2 { font-family: var(--font-display, inherit); font-size: clamp(24px,3vw,34px); font-weight: 700; color: var(--navy, #0a1628); letter-spacing: -0.02em; line-height: 1.12; margin: 0 0 10px; }
 .dienst-offer-head mark { background: linear-gradient(transparent 60%, rgba(217,140,3,0.3) 60%); color: inherit; }
 .dienst-offer-head p { font-size: 15px; color: #5a6473; line-height: 1.6; margin: 0; }
-.dienst-offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 32px; background: #fff; border: 1px solid rgba(10,22,40,0.08); border-radius: 16px; padding: 30px 32px; box-shadow: 0 18px 44px -28px rgba(10,22,40,0.18); }
+.dienst-offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 32px; background: #fff; border: 1px solid rgba(10,22,40,0.08); border-radius: 6px; padding: 30px 32px; box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 14px 34px -26px rgba(10,22,40,0.16); }
 .dienst-offer-item { display: flex; gap: 13px; align-items: flex-start; font-size: 14.5px; line-height: 1.5; }
 .dienst-offer-item strong { display: block; color: var(--navy, #0a1628); margin-bottom: 1px; }
-.dienst-check { width: 24px; height: 24px; border-radius: 50%; background: rgba(217,140,3,0.12); color: #d98c03; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
+.dienst-check { width: 24px; height: 24px; border-radius: 4px; background: rgba(217,140,3,0.12); color: #d98c03; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
 .dienst-steps { max-width: 1180px; margin: 0 auto; padding: 48px clamp(16px,4vw,48px) 8px; }
 .dienst-steps h2 { font-family: var(--font-display, inherit); font-size: clamp(22px,2.6vw,30px); color: var(--navy, #0a1628); margin: 0 0 24px; }
 .dienst-steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-.dienst-step { background: #f7f8fa; border-radius: 14px; padding: 24px; }
+.dienst-step { background: #f7f8fa; border-radius: 6px; padding: 24px; }
 .dienst-step-num { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: var(--navy, #0a1628); color: #fff; font-weight: 700; margin-bottom: 12px; }
 .dienst-step strong { display: block; color: var(--navy, #0a1628); font-size: 16px; margin-bottom: 5px; }
 .dienst-step-desc { font-size: 14px; color: #5a6473; line-height: 1.55; }
@@ -337,9 +337,9 @@ const DIENST_CSS = `
 .dienst-prijs { max-width: 760px; margin: 0 auto; padding: 52px clamp(16px,4vw,48px); text-align: center; }
 .dienst-prijs h2 { font-family: var(--font-display, inherit); font-size: clamp(22px,2.6vw,30px); color: var(--navy, #0a1628); margin: 0 0 14px; }
 .dienst-prijs p { font-size: 15.5px; color: #404a5a; line-height: 1.65; margin: 0 0 24px; }
-.dienst-cta.dark { box-shadow: 0 2px 10px rgba(217,140,3,0.3); }
+.dienst-cta.dark { box-shadow: none; }
 .dienst-reviews { max-width: 1180px; margin: 0 auto; padding: 8px clamp(16px,4vw,48px) 44px; display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-.dienst-reviews figure { margin: 0; display: flex; align-items: center; gap: 12px; background: #f7f8fa; border-radius: 14px; padding: 14px; }
+.dienst-reviews figure { margin: 0; display: flex; align-items: center; gap: 12px; background: #f7f8fa; border-radius: 6px; padding: 14px; }
 .dienst-reviews img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
 .dienst-reviews figcaption { font-size: 14px; }
 .dienst-reviews figcaption b { display: block; color: var(--navy, #0a1628); }
@@ -352,7 +352,7 @@ const DIENST_CSS = `
 .dienst-form-section { background: var(--navy, #0a1628); color: #fff; text-align: center; padding: 56px clamp(16px,4vw,48px); }
 .dienst-form-section h2 { font-family: var(--font-display, inherit); font-size: clamp(24px,3vw,34px); margin: 0 0 8px; }
 .dienst-form-section > p { color: rgba(255,255,255,0.75); margin: 0 0 24px; }
-.dienst-form-card { background: #fff; max-width: 620px; margin: 0 auto; border-radius: 16px; padding: 24px; }
+.dienst-form-card { background: #fff; max-width: 620px; margin: 0 auto; border-radius: 6px; padding: 24px; }
 .dienst-call { display: inline-block; margin-top: 16px; color: #f0a83a; font-weight: 600; text-decoration: none; }
 .dienst-footer { background: #070d16; color: rgba(255,255,255,0.6); text-align: center; padding: 24px; font-size: 13px; }
 @media (max-width: 720px) {
