@@ -1550,29 +1550,39 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
    glassmorphism-chips, glow-knop, eyebrow-bolletje. Foto = de held (ademt),
    content links geankerd & geaard. Editoriaal, solide, Belgisch-vakman. */
 
-/* 1. Foto ademt — directionele overlay (donker links waar tekst staat, foto vrij rechts) */
+/* 1. SPLIT-PANEL: vast navy paneel links (content op solide kleur = leesbaar +
+   structuur), foto ademt op volle kwaliteit rechts. Geen tekst-op-foto meer. */
 .lp-hero-cine .lf-hero-bg--slides::after {
   background:
-    linear-gradient(90deg, rgba(10,16,28,0.82) 0%, rgba(10,16,28,0.52) 34%, rgba(10,16,28,0.14) 64%, rgba(10,16,28,0) 100%),
-    linear-gradient(0deg, rgba(10,16,28,0.60) 0%, rgba(10,16,28,0) 38%) !important;
+    linear-gradient(90deg,
+      rgba(9,14,24,0.98) 0%,
+      rgba(9,14,24,0.97) 32%,
+      rgba(9,14,24,0.80) 46%,
+      rgba(9,14,24,0.32) 62%,
+      rgba(9,14,24,0.06) 80%,
+      rgba(9,14,24,0) 100%) !important;
 }
-.lp-hero-cine .lf-hero-bg--slides { filter: contrast(1.04) saturate(1.05) !important; }
+.lp-hero-cine .lf-hero-bg--slides { filter: contrast(1.05) saturate(1.06) brightness(1.02) !important; }
 
-/* 2. Content links geankerd, geaard onderaan — niet zwevend-gecentreerd */
+/* 2. Content vertikaal gecentreerd, links, ruim — niet meer in de hoek gepropt */
 .lp-hero-cine .lf-hero-wrap {
-  align-items: flex-end !important;
+  align-items: center !important;
   justify-content: flex-start !important;
-  padding-bottom: 66px !important;
+  padding-top: 100px !important;
+  padding-bottom: 80px !important;
 }
 .lp-hero-cine .lf-hero-mini {
-  max-width: 680px !important;
+  max-width: 540px !important;
   text-align: left !important;
   margin: 0 !important;
 }
 .lp-hero-cine .lf-hero-sub {
-  margin: 0 0 28px 0 !important;
+  font-size: clamp(15px, 1.15vw, 17px) !important;
+  line-height: 1.6 !important;
+  color: rgba(255,255,255,0.82) !important;
+  margin: 0 0 30px 0 !important;
   text-align: left !important;
-  max-width: 600px !important;
+  max-width: 470px !important;
 }
 .lp-hero-cine .lf-hero-actions { justify-content: flex-start !important; }
 
@@ -1592,11 +1602,13 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 }
 .lp-hero-cine .lf-hero-eyebrow-dot { display: none !important; }
 
-/* 4. Headline editoriaal — zwaarder, minder "startup tight tracking" */
+/* 4. Headline groot + zelfverzekerd, 3 strakke regels */
 .lp-hero-cine .lf-hero-headline {
+  font-size: clamp(38px, 4.6vw, 60px) !important;
   font-weight: 700 !important;
-  letter-spacing: -0.012em !important;
-  line-height: 1.05 !important;
+  letter-spacing: -0.022em !important;
+  line-height: 1.0 !important;
+  margin: 0 0 20px !important;
 }
 
 /* 5. Trust: glassmorphism-chip → solide editoriale balk met scheidingslijn */
@@ -1629,13 +1641,15 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 /* 7. Scroll-cue weg — template-tell */
 .lp-hero-cine .lf-scroll-cue { display: none !important; }
 
-/* Mobile: behoud links-geankerd, compacter */
+/* Mobile: foto bovenaan zichtbaar, content onderaan op solide donkere basis */
 @media (max-width: 900px) {
-  .lp-hero-cine .lf-hero-wrap { align-items: flex-end !important; justify-content: flex-start !important; padding-bottom: 28px !important; }
-  .lp-hero-cine .lf-hero-mini { text-align: left !important; }
+  .lp-hero-cine .lf-hero-wrap { align-items: flex-end !important; justify-content: flex-start !important; padding-bottom: 30px !important; }
+  .lp-hero-cine .lf-hero-mini { text-align: left !important; max-width: 100% !important; }
+  .lp-hero-cine .lf-hero-headline { font-size: clamp(30px, 8.5vw, 42px) !important; }
+  .lp-hero-cine .lf-hero-sub { max-width: 100% !important; font-size: 14.5px !important; }
   .lp-hero-cine .lf-hero-bg--slides::after {
     background:
-      linear-gradient(0deg, rgba(10,16,28,0.86) 0%, rgba(10,16,28,0.40) 46%, rgba(10,16,28,0.18) 100%) !important;
+      linear-gradient(0deg, rgba(9,14,24,0.94) 0%, rgba(9,14,24,0.78) 34%, rgba(9,14,24,0.30) 64%, rgba(9,14,24,0.10) 100%) !important;
   }
   .lp-hero-cine .lf-hero-eyebrow { margin-bottom: 12px !important; font-size: 11px !important; }
 }
@@ -1717,9 +1731,9 @@ const HTML = `
     <div class="lf-hero-mini" data-hero-anim>
       <span class="lf-hero-eyebrow"><span class="lf-hero-eyebrow-dot"></span>AB Dakwerken · Willebroek</span>
       <h1 class="lf-hero-headline">
-        Nieuw dak. Vaste prijs.<br/>Eigen dakdekkers.
+        Nieuw dak.<br/>Vaste prijs.<br/>Eigen dakdekkers.
       </h1>
-      <p class="lf-hero-sub">Volledige dakvervanging, dakisolatie en zinkwerk in Mechelen, Antwerpen, Lier en heel Vlaanderen. <strong style="color:#fff;">Gratis plaatsbezoek</strong> binnen 5 werkdagen · <strong style="color:#fff;">bindende offerte</strong> met fotorapport · <strong style="color:#fff;">10 jaar garantie</strong> op waterdichtheid.</p>
+      <p class="lf-hero-sub">Volledige dakvervanging, dakisolatie en zinkwerk in Mechelen, Antwerpen, Lier en heel Vlaanderen. Eigen ploeg, bindende offerte, 10 jaar garantie.</p>
       <div class="lf-hero-actions">
         <a href="#lp-form" class="lf-cta-pill" data-smooth>
           <span>Vraag gratis plaatsbezoek</span>
