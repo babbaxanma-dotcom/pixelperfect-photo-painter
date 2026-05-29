@@ -1509,8 +1509,8 @@ body.lp-page .lp-form-section .ab-mark { color: #f0a83a !important; }
     padding: 14px 24px;
     font-family: var(--font-display); font-weight: 600; font-size: 14px;
     text-decoration: none;
-    border-radius: 999px;
-    box-shadow: 0 14px 36px -10px rgba(217,140,3,0.55), 0 2px 4px rgba(15,17,21,0.08);
+    border-radius: 4px;
+    box-shadow: 0 8px 24px -10px rgba(10,16,28,0.35);
     transition: transform .2s ease, box-shadow .25s ease;
   }
   .lp-sticky-cta:hover {
@@ -1832,7 +1832,7 @@ const HTML = `
       ${[
         ['Gratis dakinspectie met fotorapport', 'Een vakman komt binnen 5 werkdagen langs en bezorgt u een fotorapport van de staat van uw dak.'],
         ['Bindende offerte zonder meerkost', 'De prijs op uw offerte is de prijs die u betaalt. Zwart op wit.'],
-        ['Mijn VerbouwPremie geregeld', 'Wij dienen het volledige premiedossier voor u in. In 2026 is dat €40 per m², goed voor gemiddeld €3.500 tot €5.500.'],
+        ['Mijn VerbouwPremie geregeld', 'Wij berekenen waar u recht op heeft en dienen het volledige premiedossier voor u in.'],
         ['Eigen dakdekkers', 'Uw dak wordt geplaatst door onze eigen ploeg, niet door onderaannemers.'],
         ['15 jaar garantie op waterdichtheid', 'U krijgt een schriftelijke garantie. Ook jaren na de werken blijven wij verantwoordelijk.'],
         ['Eén vaste contactpersoon', 'Dezelfde projectleider begeleidt u van de offerte tot de oplevering.'],
