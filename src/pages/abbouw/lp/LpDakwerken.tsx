@@ -2498,7 +2498,7 @@ const HTML = `
         <ul>
           <li>Plaatsbezoek binnen 5 werkdagen</li>
           <li>Bindende offerte op papier</li>
-          <li>Premiedossier inbegrepen (gem. €3.500+ terug)</li>
+          <li>Premiedossier regelen wij volledig voor u</li>
           <li>10 jaar garantie op waterdichtheid</li>
           <li>Eigen dakploeg, geen onderaannemers</li>
         </ul>
