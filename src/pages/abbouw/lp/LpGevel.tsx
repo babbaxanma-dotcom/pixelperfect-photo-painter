@@ -855,8 +855,8 @@ body.lp-page .lp-form-section .ab-mark { color: #f0a83a !important; }
     padding: 14px 24px;
     font-family: var(--font-display); font-weight: 600; font-size: 14px;
     text-decoration: none;
-    border-radius: 999px;
-    box-shadow: 0 14px 36px -10px rgba(217,140,3,0.55), 0 2px 4px rgba(15,17,21,0.08);
+    border-radius: 4px;
+    box-shadow: 0 8px 24px -10px rgba(10,16,28,0.35);
     transition: transform .2s ease, box-shadow .25s ease;
   }
   .lp-sticky-cta:hover {
