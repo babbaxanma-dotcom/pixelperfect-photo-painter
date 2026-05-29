@@ -35,6 +35,7 @@ const BlogPost = lazy(() => import("./pages/abbouw/BlogPost"));
 const LpDakwerken = lazy(() => import("./pages/abbouw/lp/LpDakwerken"));
 const LpGevel = lazy(() => import("./pages/abbouw/lp/LpGevel"));
 const LpLokaal = lazy(() => import("./pages/abbouw/lp/LpLokaal"));
+const LpDienst = lazy(() => import("./pages/abbouw/lp/LpDienst"));
 const Bedankt = lazy(() => import("./pages/abbouw/Bedankt"));
 const CalculatorDak = lazy(() => import("./pages/abbouw/calculator/CalculatorDak"));
 const CalculatorGevel = lazy(() => import("./pages/abbouw/calculator/CalculatorGevel"));
@@ -80,6 +81,9 @@ const App = () => {
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/lp/dakwerken" element={<LpDakwerken />} />
           <Route path="/lp/gevel" element={<LpGevel />} />
+          <Route path="/lp/velux" element={<LpDienst slug="velux" />} />
+          <Route path="/lp/gevelreiniging" element={<LpDienst slug="gevelreiniging" />} />
+          <Route path="/lp/hervoegen" element={<LpDienst slug="hervoegen" />} />
           <Route path="/lokaal/:slug" element={<LpLokaal />} />
           <Route path="/bedankt" element={<Bedankt />} />
           <Route path="/calculator/dakwerken" element={<CalculatorDak />} />
