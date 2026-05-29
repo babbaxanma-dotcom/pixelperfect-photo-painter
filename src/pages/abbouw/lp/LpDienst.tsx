@@ -191,7 +191,6 @@ export default function LpDienst({ slug }: { slug: string }) {
 
       <section className="dienst-hero" style={{ backgroundImage: `url(${d.heroImg})` }}>
         <div className="dienst-hero-inner">
-          <div className="dienst-eyebrow">{d.eyebrow}</div>
           <h1>{d.h1.map((l, i) => <span key={i}>{l}<br /></span>)}</h1>
           <p>{d.sub}</p>
           <a href="#aanvraag" className="dienst-cta">Vraag gratis plaatsbezoek →</a>

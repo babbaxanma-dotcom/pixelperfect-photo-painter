@@ -1796,7 +1796,6 @@ const HTML = `
 <section class="dak2-hero">
   <div class="dak2-wrap">
     <div>
-      <div class="dak2-eyebrow">AB Dakwerken · Willebroek</div>
       <h1 class="dak2-h1">Nieuw dak. Vaste prijs. Eigen dakdekkers.</h1>
       <p class="dak2-sub">Volledige dakvervanging, dakisolatie en zinkwerk in Mechelen, Antwerpen, Lier en heel Vlaanderen. Eigen ploeg, bindende offerte, 10 jaar garantie op waterdichtheid.</p>
       <div class="dak2-actions">

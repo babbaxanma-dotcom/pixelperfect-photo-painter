@@ -1053,7 +1053,6 @@ const HTML = `
 <section class="gev2-hero">
   <div class="gev2-wrap">
     <div>
-      <div class="gev2-eyebrow">AB Gevelbekleding · Willebroek</div>
       <h1 class="gev2-h1">Nieuwe gevel. Strak afgewerkt. Meer comfort.</h1>
       <p class="gev2-sub">Crepi, ETICS-buitenisolatie, steenstrips en sierpleister in Mechelen, Antwerpen, Lier en heel Vlaanderen. Eigen ploeg, bindende offerte, gemiddeld 60 EPC-punten winst.</p>
       <div class="gev2-actions">
