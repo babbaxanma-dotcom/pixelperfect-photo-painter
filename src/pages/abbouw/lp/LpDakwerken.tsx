@@ -1726,6 +1726,37 @@ body.lp-page .lp-cta-banner { background-image: none !important; border-radius: 
 body.lp-page .lp-offer-cta { box-shadow: none !important; }
 body.lp-page .lp-offer-cta:hover,
 body.lp-page .lf-cta-pill:hover { box-shadow: 0 2px 8px rgba(10,16,28,0.18) !important; }
+
+/* Mini-header telefoon: solide navy pill (leesbaar op licht én donker) */
+body.lp-page .lp-mini-phone { color: #fff !important; background: #0f1822 !important; border: none !important; }
+
+/* ════════════ NIEUWE LICHTE HERO (Dural-stijl) — vervangt donkere cinematische ════════════ */
+.dak2-hero { background: #f6f4f0; padding: 104px 0 0; }
+.dak2-wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px,4vw,40px); display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.dak2-eyebrow { font-size: 12.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #b87502; margin-bottom: 16px; }
+.dak2-h1 { font-family: var(--font-display); font-size: clamp(34px, 4.4vw, 54px); font-weight: 700; line-height: 1.04; letter-spacing: -0.02em; color: #0f1822; margin: 0 0 18px; }
+.dak2-sub { font-size: 16px; line-height: 1.6; color: #4a5563; margin: 0 0 26px; max-width: 460px; }
+.dak2-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.dak2-cta { display: inline-flex; align-items: center; gap: 8px; background: #d98c03; color: #fff; font-weight: 700; font-size: 15px; padding: 15px 26px; border-radius: 4px; text-decoration: none; }
+.dak2-cta:hover { background: #b87502; }
+.dak2-ghost { display: inline-flex; align-items: center; gap: 8px; color: #0f1822; font-weight: 600; font-size: 15px; padding: 14px 20px; border: 1px solid #d3d8df; border-radius: 4px; text-decoration: none; }
+.dak2-ghost:hover { border-color: #0f1822; }
+.dak2-trust { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 28px; padding-top: 20px; border-top: 1px solid #e3e1db; font-size: 14px; color: #4a5563; align-items: center; }
+.dak2-trust b { color: #0f1822; font-weight: 700; }
+.dak2-trust .stars { color: #f5b301; letter-spacing: 1px; }
+.dak2-photo img { width: 100%; height: 520px; object-fit: cover; border-radius: 8px; display: block; }
+.dak2-logos { border-top: 1px solid #e3e1db; margin-top: 52px; background: #f6f4f0; }
+.dak2-logos-inner { max-width: 1200px; margin: 0 auto; padding: 20px clamp(16px,4vw,40px); display: flex; flex-wrap: wrap; align-items: center; gap: 12px 34px; }
+.dak2-logos-label { font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8a93a0; }
+.dak2-logos-inner > span:not(.dak2-logos-label) { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: #6b7280; letter-spacing: 0.02em; }
+@media (max-width: 900px) {
+  .dak2-hero { padding: 84px 0 0; }
+  .dak2-wrap { grid-template-columns: 1fr; gap: 24px; }
+  .dak2-photo img { height: 260px; }
+  .dak2-h1 { font-size: clamp(30px, 8.5vw, 40px); }
+  .dak2-logos-inner { gap: 10px 22px; }
+  .dak2-logos-inner > span:not(.dak2-logos-label) { font-size: 14px; }
+}
 `;
 
 const HTML = `
@@ -1741,51 +1772,34 @@ const HTML = `
   </div>
 </header>
 
-<section class="lf-hero lp-hero-cine">
-  <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
-    <img src="${heroClassic}" alt="Vlaamse rijwoning renovatie met anthraciet pannen — AB Dakwerken" class="is-active" />
-    <img src="${heroCrepi}" alt="Moderne villa met witte crepi gevel en anthraciet pannen — AB Bouw Groep" loading="lazy" />
-    <img src="${heroOranje}" alt="Energieneutrale woning met oranje gevel en zonnepanelen — AB Dakwerken" loading="lazy" />
-    <img src="${heroGeel}" alt="Eigentijdse nieuwbouw met gele baksteen en anthraciet dak — AB Bouw Groep" loading="lazy" />
-  </div>
-  <button type="button" class="lf-hero-arrow lf-hero-arrow--prev" data-hero-prev aria-label="Vorige foto">
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-  </button>
-  <button type="button" class="lf-hero-arrow lf-hero-arrow--next" data-hero-next aria-label="Volgende foto">
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-  </button>
-  <div class="wrap lf-hero-wrap">
-    <div class="lf-hero-mini" data-hero-anim>
-      <span class="lf-hero-eyebrow"><span class="lf-hero-eyebrow-dot"></span>AB Dakwerken · Willebroek</span>
-      <h1 class="lf-hero-headline">
-        Nieuw dak.<br/>Vaste prijs.<br/>Eigen dakdekkers.
-      </h1>
-      <p class="lf-hero-sub">Volledige dakvervanging, dakisolatie en zinkwerk in Mechelen, Antwerpen, Lier en heel Vlaanderen. Eigen ploeg, bindende offerte, 10 jaar garantie.</p>
-      <div class="lf-hero-actions">
-        <a href="#lp-form" class="lf-cta-pill" data-smooth>
-          <span>Vraag gratis plaatsbezoek</span>
-          <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+<section class="dak2-hero">
+  <div class="dak2-wrap">
+    <div>
+      <div class="dak2-eyebrow">AB Dakwerken · Willebroek</div>
+      <h1 class="dak2-h1">Nieuw dak. Vaste prijs. Eigen dakdekkers.</h1>
+      <p class="dak2-sub">Volledige dakvervanging, dakisolatie en zinkwerk in Mechelen, Antwerpen, Lier en heel Vlaanderen. Eigen ploeg, bindende offerte, 10 jaar garantie op waterdichtheid.</p>
+      <div class="dak2-actions">
+        <a href="#lp-form" class="dak2-cta" data-smooth>Vraag gratis plaatsbezoek
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
-        <a href="${CONTACT.phone.href}" class="lf-hero-ghost">
-          <span>Bel ${CONTACT.phone.spaced}</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
+        <a href="${CONTACT.phone.href}" class="dak2-ghost">Bel ${CONTACT.phone.spaced}</a>
       </div>
-      <p class="lp-cta-microtrust"><b>Antwoord binnen 1 werkdag.</b> Vrijblijvend en gratis.</p>
-      <div class="lp-hero-trust">
-        <span><span class="lp-hero-trust-stars">★★★★★</span><b>4,9 / 5</b></span>
-        <span><b>124+</b> klanten</span>
-        <span><b>10 jaar</b> garantie</span>
-        <span><span class="lp-hero-trust-dot"></span>Gratis plaatsbezoek</span>
+      <div class="dak2-trust">
+        <span><span class="stars">★★★★★</span> <b>4,9</b> · 124+ klanten</span>
+        <span><b>15 jaar</b> garantie</span>
+        <span><b>Eigen ploeg</b>, geen onderaannemers</span>
       </div>
     </div>
+    <div class="dak2-photo">
+      <img src="${heroClassic}" alt="Afgewerkt pannendak op een Vlaamse woning — AB Dakwerken" />
+    </div>
   </div>
-  <button class="lf-scroll-cue" type="button" aria-label="Scroll naar beneden" onclick="window.scrollBy({top: window.innerHeight - 80, left: 0, behavior: 'smooth'})">
-    <span class="lf-scroll-cue-label">Scroll</span>
-    <span class="lf-scroll-cue-icon" aria-hidden="true">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    </span>
-  </button>
+  <div class="dak2-logos">
+    <div class="dak2-logos-inner">
+      <span class="dak2-logos-label">Wij werken met</span>
+      <span>Koramic</span><span>Velux</span><span>VMZinc</span><span>Wienerberger</span><span>Rockpanel</span>
+    </div>
+  </div>
 </section>
 
 <!-- HERO MINI-FORM — boven-fold quick capture, 3 verplichte velden -->
