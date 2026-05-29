@@ -7,14 +7,26 @@
 //   VITE_GADS_CONVERSION_LABEL_CALL    → conversion label voor tel: clicks
 //   VITE_GADS_CONVERSION_LABEL_NEWS    → conversion label voor newsletter signups
 
+// ── PRODUCTIE-FALLBACKS ──────────────────────────────────────────────────────
+// Deze client-side ID's zijn NIET geheim — de AW-tag staat al hardcoded in
+// index.html en alle gtag-ID's komen sowieso mee in de JS-bundle. We bakken ze
+// hier als fallback in, zodat een ontbrekende build-variabele in Lovable de
+// conversiemeting nooit meer stil kan slopen. Env var wint als hij gezet is.
+const GADS_ID = (import.meta.env.VITE_GADS_ID as string) || 'AW-18162707660';
+const GADS_LABEL_FORM = (import.meta.env.VITE_GADS_CONVERSION_LABEL_FORM as string) || 'hmUYCOLzvbMcEMzZ09RD';
+const GADS_LABEL_CALL = (import.meta.env.VITE_GADS_CONVERSION_LABEL_CALL as string) || 'OpJlCKGwvrMcEMzZ09RD';
+const GADS_LABEL_NEWS = (import.meta.env.VITE_GADS_CONVERSION_LABEL_NEWS as string) || '';
+const GA4_ID = (import.meta.env.VITE_GA4_ID as string) || 'G-VSPZVRD0LW';
+const GA4_ID_LP = (import.meta.env.VITE_GA4_ID_LP as string) || 'G-4421GRKGF8';
+
 // LP-paden: /lp/*, /lokaal/*, /bedankt → naar GA4_LP property
 function isLpPath(path: string): boolean {
   return path.startsWith('/lp/') || path.startsWith('/lokaal/') || path.startsWith('/bedankt');
 }
 
 function activeGa4Id(): string | undefined {
-  const main = import.meta.env.VITE_GA4_ID as string | undefined;
-  const lp = import.meta.env.VITE_GA4_ID_LP as string | undefined;
+  const main = GA4_ID || undefined;
+  const lp = GA4_ID_LP || undefined;
   if (typeof window === 'undefined') return main;
   return isLpPath(window.location.pathname) ? (lp ?? main) : main;
 }
@@ -77,8 +89,8 @@ export function getUtmParams(): UtmParams {
 }
 
 export function trackPageView(path: string) {
-  const main = import.meta.env.VITE_GA4_ID as string | undefined;
-  const lp = import.meta.env.VITE_GA4_ID_LP as string | undefined;
+  const main = GA4_ID || undefined;
+  const lp = GA4_ID_LP || undefined;
   const target = isLpPath(path) ? (lp ?? main) : main;
   if (!target) return;
   gtag('event', 'page_view', {
@@ -106,9 +118,9 @@ function normalizePhoneBE(raw?: unknown): string | undefined {
 }
 
 export function fireConversion(kind: 'contact_form' | 'newsletter' | 'landing_page', payload: Record<string, unknown>) {
-  const gadsId = import.meta.env.VITE_GADS_ID as string | undefined;
-  const labelForm = import.meta.env.VITE_GADS_CONVERSION_LABEL_FORM as string | undefined;
-  const labelNews = import.meta.env.VITE_GADS_CONVERSION_LABEL_NEWS as string | undefined;
+  const gadsId = GADS_ID;
+  const labelForm = GADS_LABEL_FORM;
+  const labelNews = GADS_LABEL_NEWS;
   const ga4Target = activeGa4Id();
 
   // Enhanced Conversions: stuur email/phone (normalized, unhashed — gtag hasht)

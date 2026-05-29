@@ -242,10 +242,10 @@ const LP_EXTRA = `
 }
 @media (max-width: 720px) {
   .lp-quick-form {
-    margin: -50px 12px 0;
+    margin: 28px 12px 0;
     padding: 16px 16px 18px;
-    border-radius: 14px;
-    box-shadow: 0 24px 60px -24px rgba(0,0,0,0.4), 0 8px 20px -8px rgba(0,0,0,0.18);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px -16px rgba(15,23,42,0.18);
   }
   .lp-quick-form-title { font-size: 15px !important; line-height: 1.25 !important; }
   .lp-quick-form-sub { font-size: 11.5px !important; }
