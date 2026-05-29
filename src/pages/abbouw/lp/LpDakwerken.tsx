@@ -1768,7 +1768,7 @@ body.lp-page .lf-cta-pill:hover { box-shadow: 0 2px 8px rgba(10,16,28,0.18) !imp
 .lf-reviews-count { display: inline-flex; align-items: center; gap: 7px; }
 .lf-google-g { flex-shrink: 0; }
 @media (max-width: 900px) {
-  .dak2-hero { padding: 84px 0 0; }
+  .dak2-hero { padding: 28px 0 0; }
   .dak2-wrap { grid-template-columns: 1fr; gap: 24px; }
   .dak2-photo img { height: 260px; }
   .dak2-h1 { font-size: clamp(30px, 8.5vw, 40px); }

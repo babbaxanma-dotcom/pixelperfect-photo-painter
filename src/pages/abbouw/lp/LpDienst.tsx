@@ -183,7 +183,10 @@ export default function LpDienst({ slug }: { slug: string }) {
       <style>{DIENST_CSS}</style>
       <header className="dienst-header">
         <a href="/" className="dienst-brand"><img src={logo} alt="AB Bouw Groep" /></a>
-        <a href={CONTACT.phone.href} className="dienst-phone">{CONTACT.phone.spaced}</a>
+        <div className="dienst-header-right">
+          <a href={CONTACT.phone.href} className="dienst-phone">{CONTACT.phone.spaced}</a>
+          <a href="#aanvraag" className="dienst-header-cta">Gratis offerte</a>
+        </div>
       </header>
 
       <section className="dienst-hero" style={{ backgroundImage: `url(${d.heroImg})` }}>
@@ -202,6 +205,21 @@ export default function LpDienst({ slug }: { slug: string }) {
         <div className="dienst-quick-head"><strong>Vraag gratis plaatsbezoek</strong><span>Vakman langs binnen 5 werkdagen · vaste prijs · vrijblijvend</span></div>
         {MiniForm}
       </div></section>
+
+      <section className="dienst-logos">
+        <div className="dienst-logos-head">Wij werken met de beste merken</div>
+        <div className="dienst-marquee">
+          <div className="dienst-marquee-track">
+            {[0, 1].map((s) => (
+              <div className="dienst-marquee-set" key={s} aria-hidden={s === 1}>
+                {['caparol', 'eternit', 'isover', 'knauf', 'isoproc', 'rectic', 'dorken', 'koramic', 'mato'].map((n) => (
+                  <img key={n} src={`/assets/logos/${n}.png`} alt={s === 0 ? n : ''} loading="lazy" />
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className="dienst-offer">
         <div className="dienst-offer-head">
@@ -281,6 +299,20 @@ const DIENST_CSS = `
 .dienst-brand { background: #fff; border-radius: 6px; padding: 7px 13px; box-shadow: 0 4px 14px rgba(8,12,22,0.18); display: inline-flex; }
 .dienst-brand img { height: 28px; display: block; }
 .dienst-phone { color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); padding: 9px 16px; border-radius: 4px; backdrop-filter: blur(8px); }
+.dienst-header-right { display: flex; align-items: center; gap: 12px; }
+.dienst-header-cta { background: #d98c03; color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; padding: 10px 17px; border-radius: 4px; white-space: nowrap; transition: background .2s ease; }
+.dienst-header-cta:hover { background: #c47a02; }
+/* Bewegende merk-marquee (zoals homepage) */
+.dienst-logos { background: #f6f4f0; border-top: 1px solid #e3e1db; border-bottom: 1px solid #e3e1db; padding: 26px 0 30px; margin-top: 44px; }
+.dienst-logos-head { text-align: center; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #8a93a0; margin-bottom: 18px; }
+.dienst-marquee { overflow: hidden; position: relative; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.dienst-marquee-track { display: flex; width: max-content; animation: dienst-marquee 42s linear infinite; }
+.dienst-marquee:hover .dienst-marquee-track { animation-play-state: paused; }
+.dienst-marquee-set { display: flex; align-items: center; gap: 56px; padding: 0 28px; flex-shrink: 0; }
+.dienst-marquee-set img { height: 32px; width: auto; object-fit: contain; filter: grayscale(1) opacity(0.5); transition: filter .3s ease; }
+.dienst-marquee-set img:hover { filter: grayscale(0) opacity(1); }
+@keyframes dienst-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .dienst-marquee-track { animation: none; } }
 .dienst-hero { position: relative; min-height: 86vh; background-size: cover; background-position: center; display: flex; align-items: center; }
 .dienst-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(9,14,24,0.97) 0%, rgba(9,14,24,0.95) 30%, rgba(9,14,24,0.78) 46%, rgba(9,14,24,0.30) 64%, rgba(9,14,24,0.04) 82%, rgba(9,14,24,0) 100%); }
 .dienst-hero-inner { position: relative; z-index: 2; max-width: 1180px; margin: 0 auto; padding: 100px clamp(16px,4vw,48px) 80px; width: 100%; }
@@ -360,5 +392,9 @@ const DIENST_CSS = `
   .dienst-reviews { grid-template-columns: 1fr; }
   .dienst-steps-grid { grid-template-columns: 1fr; }
   .dienst-why-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
+  .dienst-phone { display: none; }
+  .dienst-header-cta { padding: 9px 14px; font-size: 13px; }
+  .dienst-marquee-set { gap: 40px; padding: 0 20px; }
+  .dienst-marquee-set img { height: 28px; }
 }
 `;
