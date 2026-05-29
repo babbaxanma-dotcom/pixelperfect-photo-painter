@@ -15,9 +15,6 @@ import logo from '@/assets/home/logo.png';
 import imgVelux from '@/assets/dak/lp-velux.jpg';
 import imgGevelReinig from '@/assets/gevel/stelling.jpg';
 import imgHervoegen from '@/assets/gevel/intro.jpg';
-import rev1 from '@/assets/reviews/stijn.jpg';
-import rev2 from '@/assets/reviews/greet.jpg';
-import rev3 from '@/assets/reviews/marc.jpg';
 
 type Dienst = {
   division: Divisie; typeWerk: string; bronLead: string;
@@ -254,8 +251,8 @@ export default function LpDienst({ slug }: { slug: string }) {
       </section>
 
       <section className="dienst-reviews">
-        {[[rev1, 'Stijn', 'Mechelen'], [rev2, 'Greet', 'Lier'], [rev3, 'Marc', 'Willebroek']].map(([img, naam, stad], i) => (
-          <figure key={i}><img src={img as string} alt={naam as string} /><figcaption><b>{naam}</b> uit {stad}<span>★★★★★</span></figcaption></figure>
+        {[['Stijn D.', 'Mechelen'], ['Greet V.', 'Lier'], ['Marc P.', 'Willebroek']].map(([naam, stad], i) => (
+          <figure key={i}><figcaption><b>{naam}</b> uit {stad}<span>★★★★★</span></figcaption></figure>
         ))}
       </section>
 
