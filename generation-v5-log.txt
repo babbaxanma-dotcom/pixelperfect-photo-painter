@@ -1,0 +1,32 @@
+Mode: FULL (24 images)
+Output: ./generated-images-v3/
+
+[1/24] ✓ dak/lp-classic-renovatie.jpg (515KB, 23s, refs=classic-rijhuis)
+[2/24] ✓ dak/lp-crepi-nieuwbouw.jpg (328KB, 50s, refs=modern-villa)
+[3/24] ✓ dak/lp-oranje-solar.jpg (488KB, 82s, refs=orange-brick)
+[4/24] ✓ dak/lp-geel-nieuwbouw.jpg (453KB, 107s, refs=yellow-brick)
+[5/24] ✓ dak/lp-velux.jpg (289KB, 138s, refs=interior)
+[6/24] ✓ dak/lp-vakman.jpg (328KB, 162s, refs=worker-site)
+[7/24] ✓ dak/lp-natuurleien.jpg (506KB, 188s, refs=material-detail)
+[8/24] ✓ dak/lp-plat-dak.jpg (304KB, 214s, refs=flat-roof)
+[9/24] ✓ dak/lp-zink-goot.jpg (389KB, 238s, refs=material-detail)
+[10/24] ✗ dak/lp-anatomy-illustration.jpg: POST 422: {"detail":[{"loc":["body","image_urls"],"msg":"At least one image URL is required.","type":"value_error","url":"https://docs.fal.ai/errors#value_error","input":[]}]}
+[11/24] ✗ dak/lp-3d-exploded.jpg: POST 422: {"detail":[{"loc":["body","image_urls"],"msg":"At least one image URL is required.","type":"value_error","url":"https://docs.fal.ai/errors#value_error","input":[]}]}
+[12/24] ✓ dak/lp-comfort-illustration.jpg (222KB, 265s, refs=interior)
+[13/24] ✓ gevel/witte-crepi.jpg (455KB, 290s, refs=crepi-house)
+[14/24] ✓ gevel/grijze-crepi.jpg (371KB, 319s, refs=crepi-house)
+[15/24] ✓ gevel/steenstrips.jpg (487KB, 345s, refs=steenstrips-extension)
+[16/24] ✓ gevel/sierpleister.jpg (336KB, 370s, refs=modern-villa)
+[17/24] ✓ gevel/stelling.jpg (436KB, 394s, refs=worker-site)
+[18/24] ✓ gevel/intro.jpg (364KB, 420s, refs=classic-rijhuis)
+[19/24] ✗ gevel/lp-anatomy-cross.jpg: POST 422: {"detail":[{"loc":["body","image_urls"],"msg":"At least one image URL is required.","type":"value_error","url":"https://docs.fal.ai/errors#value_error","input":[]}]}
+[20/24] ✗ gevel/lp-anatomy-l1.jpg: POST 422: {"detail":[{"loc":["body","image_urls"],"msg":"At least one image URL is required.","type":"value_error","url":"https://docs.fal.ai/errors#value_error","input":[]}]}
+[21/24] ✗ gevel/lp-anatomy-l2.jpg: POST 422: {"detail":[{"loc":["body","image_urls"],"msg":"At least one image URL is required.","type":"value_error","url":"https://docs.fal.ai/errors#value_error","input":[]}]}
+[22/24] ✗ gevel/lp-anatomy-l3.jpg: POST 422: {"detail":[{"loc":["body","image_urls"],"msg":"At least one image URL is required.","type":"value_error","url":"https://docs.fal.ai/errors#value_error","input":[]}]}
+[23/24] ✗ gevel/lp-anatomy-l4.jpg: POST 422: {"detail":[{"loc":["body","image_urls"],"msg":"At least one image URL is required.","type":"value_error","url":"https://docs.fal.ai/errors#value_error","input":[]}]}
+[24/24] ✗ gevel/lp-anatomy-l5.jpg: POST 422: {"detail":[{"loc":["body","image_urls"],"msg":"At least one image URL is required.","type":"value_error","url":"https://docs.fal.ai/errors#value_error","input":[]}]}
+
+=== DONE ===
+Generated: 16 · Skipped: 0 · Failed: 8
+Time: 7 min
+Output: ./generated-images-v3/

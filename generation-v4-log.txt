@@ -1,0 +1,17 @@
+Mode: FULL (24 images)
+Output: ./generated-images-v3/
+
+[1/24] ✓ dak/lp-classic-renovatie.jpg (466KB, 26s, refs=classic-rijhuis)
+[2/24] ✓ dak/lp-crepi-nieuwbouw.jpg (365KB, 51s, refs=modern-villa)
+[3/24] ✓ dak/lp-oranje-solar.jpg (446KB, 75s, refs=orange-brick)
+[4/24] ✓ dak/lp-geel-nieuwbouw.jpg (544KB, 101s, refs=yellow-brick)
+[5/24] ✓ dak/lp-velux.jpg (316KB, 128s, refs=interior)
+[6/24] ✓ dak/lp-vakman.jpg (367KB, 153s, refs=worker-site)
+[7/24] ✓ dak/lp-natuurleien.jpg (497KB, 179s, refs=material-detail)
+[8/24] ✓ dak/lp-plat-dak.jpg (306KB, 204s, refs=flat-roof)
+[9/24] ✓ dak/lp-zink-goot.jpg (389KB, 229s, refs=material-detail)
+[10/24] ✗ dak/lp-anatomy-illustration.jpg: POST 422: {"detail":[{"loc":["body","image_urls"],"msg":"At least one image URL is required.","type":"value_error","url":"https://docs.fal.ai/errors#value_error","input":[]}]}
+[11/24] ✗ dak/lp-3d-exploded.jpg: POST 422: {"detail":[{"loc":["body","image_urls"],"msg":"At least one image URL is required.","type":"value_error","url":"https://docs.fal.ai/errors#value_error","input":[]}]}
+[12/24] ✓ dak/lp-comfort-illustration.jpg (230KB, 258s, refs=interior)
+[13/24] ✓ gevel/witte-crepi.jpg (432KB, 283s, refs=crepi-house)
+[14/24] ✓ gevel/grijze-crepi.jpg (371KB, 308s, refs=crepi-house)

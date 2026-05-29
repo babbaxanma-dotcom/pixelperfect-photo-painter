@@ -80,43 +80,56 @@ const LP_EXTRA = `
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 12px 0;
+  padding: 13px 0;
 }
 .lp-mini-brand {
   display: inline-flex;
   align-items: center;
   text-decoration: none;
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
 }
 .lp-mini-logo {
-  height: 30px;
+  height: 34px;
   width: auto;
   display: block;
 }
-.lp-mini-phone {
+.lp-mini-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.lp-mini-tel {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 18px;
-  border-radius: 999px;
+  gap: 8px;
+  text-decoration: none;
+  color: #0f1822;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.lp-mini-tel svg { color: #d98c03; flex-shrink: 0; }
+.lp-mini-cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 11px 20px;
+  border-radius: 4px;
   background: var(--navy);
-  color: #fff !important;
+  color: #fff;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: -0.01em;
   text-decoration: none;
-  transition: background .2s ease, transform .2s ease;
+  white-space: nowrap;
+  transition: background .2s ease;
 }
-.lp-mini-phone:hover { background: #08213d; transform: translateY(-1px); }
-.lp-mini-phone svg { flex-shrink: 0; }
+.lp-mini-cta:hover { background: #08213d; }
 @media (max-width: 720px) {
-  .lp-mini-header-inner { padding: 14px 0; }
-  .lp-mini-logo { height: 24px; }
-  .lp-mini-brand { padding: 6px 10px; }
-  .lp-mini-phone { padding: 9px 14px; font-size: 13px; }
-  .lp-mini-phone-label { display: none; }
+  .lp-mini-header-inner { padding: 11px 0; }
+  .lp-mini-logo { height: 26px; }
+  .lp-mini-right { gap: 10px; }
+  .lp-mini-tel span { display: none; }
+  .lp-mini-cta { padding: 10px 15px; font-size: 13px; }
 }
 
 /* ───────── Hero mini-form (above-fold quick-capture) ─────────
@@ -126,21 +139,16 @@ const LP_EXTRA = `
    Compacte witte kaart onder hero met opvallende oranje CTA. */
 .lp-quick-form {
   background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 18px 50px -22px rgba(15,23,42,0.30), 0 4px 12px -4px rgba(15,23,42,0.08);
+  border-radius: 8px;
+  border: 1px solid #e3e1db;
+  border-top: 3px solid #d98c03;
+  box-shadow: 0 8px 24px -16px rgba(15,23,42,0.18);
   padding: 26px 28px 24px;
   max-width: 880px;
-  margin: -60px auto 0;
+  margin: 40px auto 0;
   position: relative;
   z-index: 4;
   overflow: hidden;
-}
-.lp-quick-form::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #d98c03 0%, #f0a83a 50%, #d98c03 100%);
 }
 .lp-quick-form-head {
   display: flex; align-items: center; gap: 14px;
@@ -1736,12 +1744,8 @@ body.lp-page .lp-offer-cta { box-shadow: none !important; }
 body.lp-page .lp-offer-cta:hover,
 body.lp-page .lf-cta-pill:hover { box-shadow: 0 2px 8px rgba(10,16,28,0.18) !important; }
 
-/* Mini-header telefoon: solide navy pill (leesbaar op licht én donker) */
-body.lp-page .lp-mini-phone { color: #fff !important; background: #0f1822 !important; border: none !important; }
-
 /* ════════════ NIEUWE LICHTE HERO (Dural-stijl) — vervangt donkere cinematische ════════════ */
 .dak2-hero { background: #f6f4f0; padding: 52px 0 0; }
-body.lp-page .lp-mini-phone { border-radius: 4px !important; }
 .dak2-wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px,4vw,40px); display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
 .dak2-eyebrow { font-size: 12.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #b87502; margin-bottom: 16px; }
 .dak2-h1 { font-family: var(--font-display); font-size: clamp(34px, 4.4vw, 54px); font-weight: 700; line-height: 1.04; letter-spacing: -0.02em; color: #0f1822; margin: 0 0 18px; }
@@ -1778,10 +1782,13 @@ const HTML = `
     <a class="lp-mini-brand" href="/" aria-label="AB Bouw Groep — home">
       <img src="${logo}" alt="AB Bouw Groep — Dakwerken" class="lp-mini-logo" />
     </a>
-    <a href="${CONTACT.phone.href}" class="lp-mini-phone" aria-label="Bel ons direct">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      <span class="lp-mini-phone-label">${CONTACT.phone.spaced}</span>
-    </a>
+    <div class="lp-mini-right">
+      <a href="${CONTACT.phone.href}" class="lp-mini-tel" aria-label="Bel ons direct">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>${CONTACT.phone.spaced}</span>
+      </a>
+      <a href="#lp-form" class="lp-mini-cta" data-smooth>Gratis offerte</a>
+    </div>
   </div>
 </header>
 

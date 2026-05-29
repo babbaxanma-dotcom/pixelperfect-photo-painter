@@ -1,0 +1,38 @@
+Mode: FULL (30 images)
+Output: ./generated-images-v3/
+
+[1/30] ✓ dak/lp-classic-renovatie.jpg (637KB, 25s)
+[2/30] ✓ dak/lp-crepi-nieuwbouw.jpg (534KB, 49s)
+[3/30] ✓ dak/lp-oranje-solar.jpg (435KB, 73s)
+[4/30] ✓ dak/lp-geel-nieuwbouw.jpg (543KB, 96s)
+[5/30] ✓ dak/lp-velux.jpg (261KB, 119s)
+[6/30] ✓ dak/lp-vakman.jpg (344KB, 143s)
+[7/30] ✓ dak/lp-natuurleien.jpg (458KB, 166s)
+[8/30] ✓ dak/lp-plat-dak.jpg (320KB, 196s)
+[9/30] ✓ dak/lp-zink-goot.jpg (364KB, 222s)
+[10/30] ✓ dak/lp-anatomy-illustration.jpg (215KB, 246s)
+[11/30] ✓ dak/lp-3d-exploded.jpg (206KB, 266s)
+[12/30] ✓ dak/lp-comfort-illustration.jpg (255KB, 289s)
+[13/30] ✓ gevel/witte-crepi.jpg (436KB, 312s)
+[14/30] ✓ gevel/grijze-crepi.jpg (382KB, 336s)
+[15/30] ✓ gevel/steenstrips.jpg (506KB, 358s)
+[16/30] ✓ gevel/sierpleister.jpg (289KB, 382s)
+[17/30] ✓ gevel/stelling.jpg (511KB, 423s)
+[18/30] ✓ gevel/intro.jpg (532KB, 448s)
+[19/30] ✓ gevel/lp-anatomy-cross.jpg (189KB, 471s)
+[20/30] ✓ gevel/lp-anatomy-l1.jpg (205KB, 496s)
+[21/30] ✓ gevel/lp-anatomy-l2.jpg (202KB, 519s)
+[22/30] ✓ gevel/lp-anatomy-l3.jpg (211KB, 543s)
+[23/30] ✓ gevel/lp-anatomy-l4.jpg (106KB, 565s)
+[24/30] ✓ gevel/lp-anatomy-l5.jpg (115KB, 587s)
+[25/30] ✓ dak/hellend-pannen.jpg (539KB, 628s)
+[26/30] ✓ dak/lp-hero-pannendak.jpg (355KB, 650s)
+[27/30] ✓ dak/plat-epdm.jpg (479KB, 675s)
+[28/30] ✓ dak/bitumen.jpg (454KB, 700s)
+[29/30] ✓ dak/lp-pir-isolatie.jpg (340KB, 722s)
+[30/30] ✓ dak/lp-stormschade.jpg (492KB, 746s)
+
+=== DONE ===
+Generated: 30 · Skipped: 0 · Failed: 0
+Time: 12 min
+Output: ./generated-images-v3/
