@@ -23,6 +23,7 @@ type Dienst = {
   division: Divisie; typeWerk: string; bronLead: string;
   eyebrow: string; h1: string[]; sub: string; heroImg: string;
   offerTitle: string; offerMark: string; offerSub: string; offer: [string, string][];
+  steps: [string, string][]; prijs: string;
   faq: [string, string][]; metaTitle: string; metaDesc: string;
 };
 
@@ -42,10 +43,18 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Eigen dakdekkers', 'Geen onderaannemers. Onze eigen ploeg plaatst uw dakraam.'],
       ['Snel ingepland', 'Plaatsbezoek binnen 5 werkdagen, plaatsing op een afgesproken datum.'],
     ],
+    steps: [
+      ['Gratis opmeting', 'Een vakman komt langs, meet op en bespreekt welk type en formaat bij uw dak past.'],
+      ['Vaste offerte', 'U krijgt een bindende prijs inclusief plaatsing en binnenafwerking.'],
+      ['Plaatsing op afspraak', 'Onze eigen ploeg plaatst het dakraam waterdicht af, doorgaans op één dag.'],
+    ],
+    prijs: 'Een Velux-dakraam geplaatst start doorgaans rond €1.250 inclusief plaatsing en afwerking. De exacte prijs hangt af van het type, het formaat en uw dakopbouw. U krijgt een vaste prijs na de gratis opmeting.',
     faq: [
       ['Wat kost een Velux dakraam geplaatst?', 'Dat hangt af van het type, het formaat en de bestaande dakopbouw. Een standaardplaatsing start doorgaans rond €1.250 inclusief plaatsing. U krijgt een vaste prijs na de gratis opmeting.'],
       ['Plaatsen jullie ook in een bestaand pannendak?', 'Ja. Wij plaatsen Velux-dakramen in pannendaken en leien daken, met het juiste gootstuk zodat alles waterdicht blijft.'],
       ['Hoe lang duurt de plaatsing?', 'Een standaard dakraam plaatsen we doorgaans op één dag, inclusief binnenafwerking.'],
+      ['Krijg ik garantie op de plaatsing?', 'Ja. U krijgt garantie op de waterdichtheid van de plaatsing, bovenop de fabrieksgarantie van Velux op het raam zelf.'],
+      ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek en heel Vlaanderen. Bij het plaatsbezoek bevestigen we de planning.'],
     ],
     metaTitle: 'Velux dakraam laten plaatsen — vaste prijs | AB Bouw Groep',
     metaDesc: 'Velux-dakramen plaatsen en vervangen in Vlaanderen. Erkend plaatser, eigen ploeg, vaste prijs inclusief plaatsing. Gratis opmeting binnen 5 werkdagen.',
@@ -65,10 +74,18 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Vaste prijs vooraf', 'Bindende offerte, geen verrassingen achteraf.'],
       ['Eigen ploeg', 'Onze eigen mensen voeren het werk uit, geen onderaannemers.'],
     ],
+    steps: [
+      ['Gratis plaatsbezoek', 'Een vakman bekijkt uw gevel en bepaalt de juiste reinigingsmethode.'],
+      ['Vaste offerte', 'U krijgt een bindende prijs per m², met of zonder impregnatie.'],
+      ['Reiniging door eigen ploeg', 'Wij reinigen uw gevel zorgvuldig, zonder de voeg of steen te beschadigen.'],
+    ],
+    prijs: 'Gevelreiniging wordt geprijsd per m² en hangt af van de vervuiling, de gevelsteen en de bereikbaarheid. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.',
     faq: [
       ['Wat kost gevelreiniging per m²?', 'Dat hangt af van de vervuiling, de gevelsteen en de bereikbaarheid. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'],
       ['Beschadigt reinigen mijn gevel niet?', 'Niet als de juiste methode wordt gebruikt. Wij stemmen de druk en het middel af op uw gevelsteen, zodat voeg en steen intact blijven.'],
       ['Is impregneren nuttig?', 'Vaak wel. Een impregnatie houdt vocht en vuil tegen, waardoor uw gevel langer proper blijft. Wij adviseren of het zinvol is voor uw gevel.'],
+      ['Hoe lang blijft mijn gevel proper?', 'Met een impregnatie blijft uw gevel jaren langer schoon. Zonder hangt het af van de ligging en de begroeiing rond de woning.'],
+      ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek en heel Vlaanderen.'],
     ],
     metaTitle: 'Gevelreiniging — zonder schade aan uw gevel | AB Bouw Groep',
     metaDesc: 'Professionele gevelreiniging in Vlaanderen. Juiste methode per gevelsteen, geen schade aan de voegen, optioneel impregneren. Gratis plaatsbezoek.',
@@ -88,10 +105,18 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Nette werf', 'Wij ruimen alles op en laten uw woning proper achter.'],
       ['Eigen ploeg', 'Onze eigen mensen voeren het voegwerk uit.'],
     ],
+    steps: [
+      ['Gratis plaatsbezoek', 'Een vakman beoordeelt de staat van uw voegen en adviseert wat nodig is.'],
+      ['Vaste offerte', 'U krijgt een bindende prijs per m² voor uitslijpen en hervoegen.'],
+      ['Voegwerk door eigen ploeg', 'Wij slijpen de oude voegen uit en voegen opnieuw in de juiste kleur.'],
+    ],
+    prijs: 'Hervoegen wordt geprijsd per m² en hangt af van de staat van de voegen en de bereikbaarheid van de gevel. U krijgt een vaste prijs na het gratis plaatsbezoek.',
     faq: [
       ['Wanneer moet een gevel hervoegd worden?', 'Als de voegen loskomen, verbrokkelen of diep zijn uitgesleten. Dat laat vocht door en tast op termijn de muur aan. Een plaatsbezoek geeft uitsluitsel.'],
       ['Wat kost hervoegen per m²?', 'Dat hangt af van de staat van de voegen en de bereikbaarheid. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'],
       ['Hoe lang gaat een nieuwe voeg mee?', 'Vakkundig uitgeslepen en opnieuw gevoegd gaat een gevel doorgaans decennia mee.'],
+      ['Moet de hele gevel hervoegd worden?', 'Niet altijd. Soms volstaat een deel van de gevel. Bij het plaatsbezoek bekijken we wat echt nodig is.'],
+      ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek en heel Vlaanderen.'],
     ],
     metaTitle: 'Gevel hervoegen — uitslijpen en opnieuw voegen | AB Bouw Groep',
     metaDesc: 'Gevel laten hervoegen in Vlaanderen. Oude voegen uitslijpen, opnieuw voegen in de juiste kleur. Vaste prijs per m², eigen ploeg. Gratis plaatsbezoek.',
@@ -197,6 +222,37 @@ export default function LpDienst({ slug }: { slug: string }) {
         </div>
       </section>
 
+      <section className="dienst-steps">
+        <h2>Zo verloopt het</h2>
+        <div className="dienst-steps-grid">
+          {d.steps.map(([t, sub], i) => (
+            <div className="dienst-step" key={i}>
+              <span className="dienst-step-num">{i + 1}</span>
+              <strong>{t}</strong>
+              <span className="dienst-step-desc">{sub}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="dienst-why">
+        <div className="dienst-why-inner">
+          <h2>Waarom AB Bouw</h2>
+          <div className="dienst-why-grid">
+            <div><strong>Eigen ploeg</strong>Geen onderaannemers. Onze eigen mensen voeren het werk uit.</div>
+            <div><strong>Geen tussenpartij</strong>U praat direct met de aannemer die het werk doet, niet met een doorverkoper.</div>
+            <div><strong>Vaste prijs</strong>Een bindende offerte op papier. De prijs die u tekent, betaalt u.</div>
+            <div><strong>Premie geregeld</strong>Wij dienen waar mogelijk uw Mijn VerbouwPremie-dossier voor u in.</div>
+          </div>
+        </div>
+      </section>
+
+      <section className="dienst-prijs">
+        <h2>Wat kost het?</h2>
+        <p>{d.prijs}</p>
+        <a href="#aanvraag" className="dienst-cta dark">Vraag uw vaste prijs →</a>
+      </section>
+
       <section className="dienst-reviews">
         {[[rev1, 'Stijn', 'Mechelen'], [rev2, 'Greet', 'Lier'], [rev3, 'Marc', 'Willebroek']].map(([img, naam, stad], i) => (
           <figure key={i}><img src={img as string} alt={naam as string} /><figcaption><b>{naam}</b> uit {stad}<span>★★★★★</span></figcaption></figure>
@@ -265,7 +321,24 @@ const DIENST_CSS = `
 .dienst-offer-item { display: flex; gap: 13px; align-items: flex-start; font-size: 14.5px; line-height: 1.5; }
 .dienst-offer-item strong { display: block; color: var(--navy, #0a1628); margin-bottom: 1px; }
 .dienst-check { width: 24px; height: 24px; border-radius: 50%; background: rgba(217,140,3,0.12); color: #d98c03; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
-.dienst-reviews { max-width: 1180px; margin: 0 auto; padding: 44px clamp(16px,4vw,48px); display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.dienst-steps { max-width: 1180px; margin: 0 auto; padding: 48px clamp(16px,4vw,48px) 8px; }
+.dienst-steps h2 { font-family: var(--font-display, inherit); font-size: clamp(22px,2.6vw,30px); color: var(--navy, #0a1628); margin: 0 0 24px; }
+.dienst-steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.dienst-step { background: #f7f8fa; border-radius: 14px; padding: 24px; }
+.dienst-step-num { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: var(--navy, #0a1628); color: #fff; font-weight: 700; margin-bottom: 12px; }
+.dienst-step strong { display: block; color: var(--navy, #0a1628); font-size: 16px; margin-bottom: 5px; }
+.dienst-step-desc { font-size: 14px; color: #5a6473; line-height: 1.55; }
+.dienst-why { background: var(--navy, #0a1628); color: #fff; margin-top: 48px; }
+.dienst-why-inner { max-width: 1180px; margin: 0 auto; padding: 52px clamp(16px,4vw,48px); }
+.dienst-why h2 { font-family: var(--font-display, inherit); font-size: clamp(22px,2.6vw,30px); margin: 0 0 24px; }
+.dienst-why-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
+.dienst-why-grid div { font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.78); }
+.dienst-why-grid strong { display: block; color: #fff; font-size: 16px; margin-bottom: 6px; }
+.dienst-prijs { max-width: 760px; margin: 0 auto; padding: 52px clamp(16px,4vw,48px); text-align: center; }
+.dienst-prijs h2 { font-family: var(--font-display, inherit); font-size: clamp(22px,2.6vw,30px); color: var(--navy, #0a1628); margin: 0 0 14px; }
+.dienst-prijs p { font-size: 15.5px; color: #404a5a; line-height: 1.65; margin: 0 0 24px; }
+.dienst-cta.dark { box-shadow: 0 2px 10px rgba(217,140,3,0.3); }
+.dienst-reviews { max-width: 1180px; margin: 0 auto; padding: 8px clamp(16px,4vw,48px) 44px; display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
 .dienst-reviews figure { margin: 0; display: flex; align-items: center; gap: 12px; background: #f7f8fa; border-radius: 14px; padding: 14px; }
 .dienst-reviews img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
 .dienst-reviews figcaption { font-size: 14px; }
@@ -288,5 +361,7 @@ const DIENST_CSS = `
   .dienst-form { grid-template-columns: 1fr; }
   .dienst-offer-grid { grid-template-columns: 1fr; gap: 14px; padding: 22px 20px; }
   .dienst-reviews { grid-template-columns: 1fr; }
+  .dienst-steps-grid { grid-template-columns: 1fr; }
+  .dienst-why-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
 }
 `;
