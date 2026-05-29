@@ -931,6 +931,54 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
 @media (max-width: 720px) {
   .lp-quick-form form { grid-template-columns: 1fr !important; }
 }
+
+/* ═══════════════ HERO REDESIGN — "premium vakman" ipv tech-template ═══════════════
+   Zelfde redesign als dakwerken-LP: verwijdert AI-tells (even-donkere wash,
+   gecentreerde zwevende tekst, glassmorphism-chips, glow-knop, eyebrow-bolletje).
+   Foto = de held (ademt), content links geankerd & geaard. */
+.lp-hero-cine .lf-hero-bg--slides::after {
+  background:
+    linear-gradient(90deg, rgba(10,16,28,0.82) 0%, rgba(10,16,28,0.52) 34%, rgba(10,16,28,0.14) 64%, rgba(10,16,28,0) 100%),
+    linear-gradient(0deg, rgba(10,16,28,0.60) 0%, rgba(10,16,28,0) 38%) !important;
+}
+.lp-hero-cine .lf-hero-bg--slides { filter: contrast(1.04) saturate(1.05) !important; }
+.lp-hero-cine .lf-hero-wrap {
+  align-items: flex-end !important;
+  justify-content: flex-start !important;
+  padding-bottom: 66px !important;
+}
+.lp-hero-cine .lf-hero-mini { max-width: 680px !important; text-align: left !important; margin: 0 !important; }
+.lp-hero-cine .lf-hero-sub { margin: 0 0 28px 0 !important; text-align: left !important; max-width: 600px !important; }
+.lp-hero-cine .lf-hero-actions { justify-content: flex-start !important; }
+.lp-hero-cine .lf-hero-eyebrow {
+  background: none !important; border: none !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+  padding: 0 !important; margin-bottom: 18px !important;
+  font-size: 12.5px !important; font-weight: 700 !important;
+  letter-spacing: 0.2em !important; text-transform: uppercase !important; color: #f0a83a !important;
+}
+.lp-hero-cine .lf-hero-eyebrow-dot { display: none !important; }
+.lp-hero-cine .lf-hero-headline { font-weight: 700 !important; letter-spacing: -0.012em !important; line-height: 1.05 !important; }
+.lp-hero-cine .lp-hero-trust {
+  background: none !important; border: none !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+  border-radius: 0 !important; border-top: 1px solid rgba(255,255,255,0.20) !important;
+  padding: 18px 0 0 0 !important; margin-top: 26px !important; gap: 26px !important; flex-wrap: wrap !important;
+}
+.lp-hero-cine .lp-hero-trust > span { padding: 0 !important; font-size: 13.5px !important; }
+.lp-hero-cine .lp-hero-trust > span + span { border-left: none !important; }
+.lp-hero-cine .lf-cta-pill { border-radius: 8px !important; box-shadow: 0 2px 10px rgba(10,16,28,0.22) !important; }
+.lp-hero-cine .lf-cta-pill:hover { box-shadow: 0 6px 18px rgba(10,16,28,0.30) !important; transform: translateY(-1px) !important; }
+.lp-hero-cine .lf-hero-ghost { border-radius: 8px !important; }
+.lp-hero-cine .lf-scroll-cue { display: none !important; }
+@media (max-width: 900px) {
+  .lp-hero-cine .lf-hero-wrap { align-items: flex-end !important; justify-content: flex-start !important; padding-bottom: 28px !important; }
+  .lp-hero-cine .lf-hero-mini { text-align: left !important; }
+  .lp-hero-cine .lf-hero-bg--slides::after {
+    background: linear-gradient(0deg, rgba(10,16,28,0.86) 0%, rgba(10,16,28,0.40) 46%, rgba(10,16,28,0.18) 100%) !important;
+  }
+  .lp-hero-cine .lf-hero-eyebrow { margin-bottom: 12px !important; font-size: 11px !important; }
+}
 `;
 
 const HTML = `
