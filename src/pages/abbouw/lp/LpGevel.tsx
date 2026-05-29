@@ -1145,7 +1145,7 @@ const HTML = `
     <div class="lp-offer-grid" data-reveal data-reveal-delay="1">
       ${[
         ['Gratis plaatsbezoek met advies', 'Een vakman komt binnen 5 werkdagen langs en bekijkt ter plaatse wat uw gevel nodig heeft.'],
-        ['Bindende offerte zonder meerkost', 'De prijs op uw offerte is de prijs die u betaalt. Zwart op wit.'],
+        ['Offerte = factuur, ook bij prijsstijgingen', 'Wat u tekent, betaalt u — ook als materiaalprijzen stijgen of er tijdens de werken iets onverwachts opduikt. Geen naverrekening achteraf.'],
         ['Mijn VerbouwPremie geregeld', 'Wij dienen het volledige premiedossier voor u in, zodat u niets misloopt.'],
         ['Eigen gevelploeg', 'Uw gevel wordt uitgevoerd door onze eigen mensen, niet door onderaannemers.'],
         ['15 jaar garantie', 'U krijgt een schriftelijke garantie op de uitgevoerde werken.'],

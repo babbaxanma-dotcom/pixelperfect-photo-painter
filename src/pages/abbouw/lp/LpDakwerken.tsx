@@ -1888,7 +1888,7 @@ const HTML = `
     <div class="lp-offer-grid" data-reveal data-reveal-delay="1">
       ${[
         ['Gratis dakinspectie met fotorapport', 'Een vakman komt binnen 5 werkdagen langs en bezorgt u een fotorapport van de staat van uw dak.'],
-        ['Bindende offerte zonder meerkost', 'De prijs op uw offerte is de prijs die u betaalt. Zwart op wit.'],
+        ['Offerte = factuur, ook bij prijsstijgingen', 'De prijs op uw offerte is de prijs die u betaalt — ook als materiaalprijzen stijgen of er onverwachte zaken opduiken. Zwart op wit.'],
         ['Mijn VerbouwPremie geregeld', 'Wij berekenen waar u recht op heeft en dienen het volledige premiedossier voor u in.'],
         ['Eigen dakdekkers', 'Uw dak wordt geplaatst door onze eigen ploeg, niet door onderaannemers.'],
         ['15 jaar garantie op waterdichtheid', 'U krijgt een schriftelijke garantie. Ook jaren na de werken blijven wij verantwoordelijk.'],
