@@ -751,29 +751,19 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
   .lp-reviews .lf-testi-arrow { display: none !important; }
 }
 
-/* ───────── Hot-button word highlight (scroll-triggered slide-in zoals reviews) ───────── */
-.lp-hot {
-  color: #d98c03 !important;
-  font-weight: 700;
-  background-color: transparent !important;
-  background-image: linear-gradient(#d98c03, #d98c03) !important;
-  background-size: 0% 100%;
-  background-position: left center;
-  background-repeat: no-repeat;
-  padding: 2px 6px;
-  border-radius: 3px;
-  transition: background-size 0.6s cubic-bezier(.22,1,.36,1), color 0.4s ease;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
+/* Woord-nadruk ingetogen (geen markeerstift). Premium = rustig. */
+.lp-hot, .lf-hl {
+  color: inherit !important;
+  font-weight: 600 !important;
+  background: none !important;
+  background-image: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  transition: none !important;
 }
-.lp-urgency-card.revealed .lp-hot,
-.lp-form-side.revealed .lp-hot,
-.lp-form-side[data-reveal].revealed .lp-hot,
-.lp-form-card.revealed .lp-hot {
-  background-size: 100% 100%;
-  color: #fff !important;
-  transition-delay: calc(var(--lp-hot-delay, 0) * 1ms);
-}
+body.lp-page .ab-mark { color: var(--accent) !important; }
+body.lp-page .ab-mark::after { display: none !important; }
+body.lp-page .lp-form-section .ab-mark { color: #f0a83a !important; }
 .lp-reviews-swipe-hint { display: none; }
 @media (max-width: 760px) {
   .lp-reviews-swipe-hint {
@@ -1346,24 +1336,24 @@ const HTML = `
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal style="margin-bottom: 40px;">
-      <span class="lf-eyebrow">Nu starten = meer voordeel</span>
-      <h2 class="lf-h2">Drie redenen om<br/><span class="ab-mark">niet te wachten</span>.</h2>
+      <span class="lf-eyebrow">Goed om te weten</span>
+      <h2 class="lf-h2">Duidelijk van<br/><span class="ab-mark">begin tot eind</span>.</h2>
     </div>
     <div class="lp-urgency-grid">
       <div class="lp-urgency-card" data-reveal>
         <div class="lp-urgency-num">01</div>
-        <h4>Premies dalen jaarlijks</h4>
-        <p>Mijn VerbouwPremie voor buitenisolatie staat in 2026 op €55/m² maar wordt <mark class="lp-hot" style="--lp-hot-delay:120">elk jaar verlaagd</mark>. Op een halfopen woning bespaart u nu <mark class="lp-hot" style="--lp-hot-delay:340">€4.500-€7.200</mark> die u in 2027 <mark class="lp-hot" style="--lp-hot-delay:560">niet meer krijgt</mark>.</p>
+        <h4>Premie inbegrepen</h4>
+        <p>Bij gevelisolatie hoort doorgaans Mijn VerbouwPremie. Wij berekenen waar u recht op heeft en dienen het volledige dossier voor u in.</p>
       </div>
       <div class="lp-urgency-card" data-reveal data-reveal-delay="1">
         <div class="lp-urgency-num">02</div>
-        <h4>EPC-verplichting 2028</h4>
-        <p>Vanaf 2028 moet elke gekochte woning binnen 5 jaar <mark class="lp-hot" style="--lp-hot-delay:120">EPC-label C halen</mark>. Wie nu renoveert is voorbereid; wie wacht riskeert <mark class="lp-hot" style="--lp-hot-delay:340">sancties en lagere verkoopprijs</mark>.</p>
+        <h4>Beter EPC-label</h4>
+        <p>Gevelisolatie verhoogt uw EPC-score en het wooncomfort. Nuttig als u uw woning op termijn wil verkopen of verhuren.</p>
       </div>
       <div class="lp-urgency-card" data-reveal data-reveal-delay="2">
         <div class="lp-urgency-num">03</div>
-        <h4>Klaar binnen 2 weken</h4>
-        <p>Begin nu en uw gevel is <mark class="lp-hot" style="--lp-hot-delay:120">binnen 2 weken afgewerkt</mark>. Wachten betekent één extra winter zonder isolatie — al snel <mark class="lp-hot" style="--lp-hot-delay:340">honderden euro's extra stookkost</mark>.</p>
+        <h4>Vaste prijs op papier</h4>
+        <p>U krijgt een bindende offerte met een concrete startdatum. De prijs die u tekent is de prijs die u betaalt.</p>
       </div>
     </div>
   </div>
@@ -1618,7 +1608,7 @@ const HTML = `
             <input type="text" name="gemeente" placeholder="Gemeente" autocomplete="address-level2" />
           </div>
           <textarea name="aanvullende_info" placeholder="Vertel kort over uw gevel (oppervlakte, leeftijd, klacht)"></textarea>
-          <button type="submit" data-lp-submit style="background:#d98c03 !important; color:#fff !important;">Vraag gratis gevelinspectie aan</button>
+          <button type="submit" data-lp-submit style="background:#d98c03 !important; color:#fff !important;">Vraag gratis plaatsbezoek</button>
           <p class="lp-form-foot">Geen spam. Privacy verklaring op <a href="/privacy" target="_blank">/privacy</a>.</p>
           <div class="lp-form-error" data-lp-form-error></div>
         </form>
@@ -1641,7 +1631,7 @@ const HTML = `
 </section>
 
 <a href="#lp-form" class="lp-sticky-cta" aria-label="Vraag gevelinspectie" style="background-color:#d98c03 !important; background-image:none !important; background:#d98c03 !important; color:#fff !important;">
-  Vraag gratis gevelinspectie aan
+  Vraag gratis plaatsbezoek
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
 </a>
 
@@ -1903,7 +1893,7 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
       } else {
         wrap.classList.add('is-error');
         if (errBox) errBox.textContent = `Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced}.`;
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Vraag gratis gevelinspectie aan'; }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Vraag gratis plaatsbezoek'; }
       }
     };
     form?.addEventListener('submit', onSubmit);
