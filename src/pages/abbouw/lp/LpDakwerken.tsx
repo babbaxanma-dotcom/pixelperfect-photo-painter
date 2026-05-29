@@ -1114,29 +1114,21 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
   .lp-reviews .lf-testi-arrow { display: none !important; }
 }
 
-/* ───────── Hot-button word highlight (solid brand orange, geen browser-default mark) ───────── */
-.lp-hot {
-  color: #d98c03 !important;
-  font-weight: 700;
-  background-color: transparent !important;
-  background-image: linear-gradient(#d98c03, #d98c03) !important;
-  background-size: 0% 100%;
-  background-position: left center;
-  background-repeat: no-repeat;
-  padding: 2px 6px;
-  border-radius: 3px;
-  transition: background-size 0.6s cubic-bezier(.22,1,.36,1), color 0.4s ease;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
+/* Woord-nadruk: ingetogen (geen markeerstift-effect). Premium = rustig.
+   lp-hot en lf-hl renderen als gewoon iets-zwaarder ink, geen oranje sweep. */
+.lp-hot, .lf-hl {
+  color: inherit !important;
+  font-weight: 600 !important;
+  background: none !important;
+  background-image: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  transition: none !important;
 }
-.lp-urgency-card.revealed .lp-hot,
-.lp-form-side.revealed .lp-hot,
-.lp-form-side[data-reveal].revealed .lp-hot,
-.lp-form-card.revealed .lp-hot {
-  background-size: 100% 100%;
-  color: #fff !important;
-  transition-delay: calc(var(--lp-hot-delay, 0) * 1ms);
-}
+/* ab-mark op de LP: ingetogen accent-tekst, geen highlighter-balk achter woorden */
+body.lp-page .ab-mark { color: var(--accent) !important; }
+body.lp-page .ab-mark::after { display: none !important; }
+body.lp-page .lp-form-section .ab-mark { color: #f0a83a !important; }
 .lp-reviews-swipe-hint {
   display: none;
 }
@@ -2160,24 +2152,24 @@ const HTML = `
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal style="margin-bottom: 40px;">
-      <span class="lf-eyebrow">Nu starten = meer voordeel</span>
-      <h2 class="lf-h2">Drie redenen om<br/><span class="ab-mark">niet te wachten</span>.</h2>
+      <span class="lf-eyebrow">Goed om te weten</span>
+      <h2 class="lf-h2">Duidelijk van<br/><span class="ab-mark">begin tot eind</span>.</h2>
     </div>
     <div class="lp-urgency-grid">
       <div class="lp-urgency-card" data-reveal>
         <div class="lp-urgency-num">01</div>
-        <h4>Premies dalen jaarlijks</h4>
-        <p>Mijn VerbouwPremie staat in 2026 op €40/m² maar wordt <mark class="lp-hot" style="--lp-hot-delay:120">elk jaar verlaagd</mark>. Op een gemiddelde rijwoning bespaart u nu <mark class="lp-hot" style="--lp-hot-delay:340">€3.500-€5.400</mark> die u in 2027 <mark class="lp-hot" style="--lp-hot-delay:560">niet meer krijgt</mark>.</p>
+        <h4>Premie inbegrepen</h4>
+        <p>Bij een dakisolatie hoort doorgaans Mijn VerbouwPremie. Wij berekenen waar u recht op heeft en dienen het volledige dossier voor u in.</p>
       </div>
       <div class="lp-urgency-card" data-reveal data-reveal-delay="1">
         <div class="lp-urgency-num">02</div>
-        <h4>Materiaalprijzen stijgen</h4>
-        <p>Pannen, leien en EPDM zijn sinds 2022 <mark class="lp-hot" style="--lp-hot-delay:120">+18% duurder</mark> en blijven stijgen. Wie nu boekt, krijgt nog <mark class="lp-hot" style="--lp-hot-delay:340">2026-tarieven vastgezet</mark> in offerte.</p>
+        <h4>Vaste prijs op papier</h4>
+        <p>U krijgt een bindende offerte. De prijs die u tekent is de prijs die u betaalt, materiaal en plaatsing inbegrepen.</p>
       </div>
       <div class="lp-urgency-card" data-reveal data-reveal-delay="2">
         <div class="lp-urgency-num">03</div>
-        <h4>Klaar binnen 2 weken</h4>
-        <p>Begin nu en uw dak ligt <mark class="lp-hot" style="--lp-hot-delay:120">binnen 2 weken waterdicht</mark>. Wachten betekent langer met <mark class="lp-hot" style="--lp-hot-delay:340">stormrisico</mark> én een hogere stookrekening deze winter.</p>
+        <h4>Snel uitgevoerd</h4>
+        <p>Een gemiddeld hellend dak leggen we doorgaans in 3 tot 5 werkdagen, met een concrete startdatum in de offerte.</p>
       </div>
     </div>
   </div>
@@ -2466,7 +2458,7 @@ const HTML = `
             <option value="anders">Anders / weet niet zeker</option>
           </select>
           <textarea name="aanvullende_info" placeholder="Vertel kort over uw dak (optioneel)"></textarea>
-          <button type="submit" data-lp-submit style="background:#d98c03 !important; color:#fff !important;">Vraag gratis dakinspectie aan</button>
+          <button type="submit" data-lp-submit style="background:#d98c03 !important; color:#fff !important;">Vraag gratis plaatsbezoek</button>
           <p class="lp-form-foot">Geen spam. Privacy verklaring op <a href="/privacy" target="_blank">/privacy</a>.</p>
           <div class="lp-form-error" data-lp-form-error></div>
         </form>
@@ -2489,7 +2481,7 @@ const HTML = `
 </section>
 
 <a href="#lp-form" class="lp-sticky-cta" aria-label="Vraag dakinspectie" style="background-color:#d98c03 !important; background-image:none !important; background:#d98c03 !important; color:#fff !important;">
-  Vraag gratis dakinspectie aan
+  Vraag gratis plaatsbezoek
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
 </a>
 
@@ -2771,7 +2763,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
       } else {
         wrap.classList.add('is-error');
         if (errBox) errBox.textContent = `Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced}.`;
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Vraag gratis dakinspectie aan'; }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Vraag gratis plaatsbezoek'; }
       }
     };
     form?.addEventListener('submit', onSubmit);
