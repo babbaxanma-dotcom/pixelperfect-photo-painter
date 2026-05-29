@@ -1639,6 +1639,52 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
   }
   .lp-hero-cine .lf-hero-eyebrow { margin-bottom: 12px !important; font-size: 11px !important; }
 }
+
+/* ═══════════════ GRAND SLAM OFFER — "Zorgeloos Dak" (Hormozi) ═══════════════
+   Het aanbod expliciet maken = Heath's 300% hefboom. 8 elementen gestackt,
+   strak/scanbaar, navy+accent, geen emoji. Net na de mini-form. */
+.lp-offer { padding: 56px 0 8px; }
+.lp-offer-head { max-width: 720px; margin: 0 0 28px; }
+.lp-offer-eyebrow {
+  font-size: 12.5px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+}
+.lp-offer-title {
+  font-family: var(--font-display); font-size: clamp(24px, 3vw, 34px);
+  font-weight: 700; color: var(--navy); letter-spacing: -0.02em; line-height: 1.12; margin: 0 0 10px;
+}
+.lp-offer-sub { font-size: 15px; color: var(--ink-soft); line-height: 1.6; margin: 0; }
+.lp-offer-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px 32px;
+  background: #fff; border: 1px solid rgba(10,22,40,0.08);
+  border-radius: 16px; padding: 30px 32px;
+  box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 18px 44px -28px rgba(10,22,40,0.18);
+}
+.lp-offer-item { display: flex; gap: 13px; align-items: flex-start; }
+.lp-offer-check {
+  width: 24px; height: 24px; border-radius: 50%; background: rgba(217,140,3,0.12);
+  color: var(--accent); flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: 1px;
+}
+.lp-offer-item-text { font-size: 14.5px; line-height: 1.5; color: var(--ink); }
+.lp-offer-item-text strong { color: var(--navy); font-weight: 700; display: block; margin-bottom: 1px; }
+.lp-offer-foot {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px;
+  margin-top: 20px; padding-top: 4px;
+}
+.lp-offer-cta {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: #d98c03; color: #fff; font-weight: 700; font-size: 15px;
+  padding: 14px 26px; border-radius: 8px; text-decoration: none;
+  box-shadow: 0 2px 10px rgba(217,140,3,0.3); transition: transform .15s ease, background .2s ease;
+}
+.lp-offer-cta:hover { background: #c47a02; transform: translateY(-1px); }
+.lp-offer-foot-note { font-size: 13px; color: var(--ink-mute); }
+@media (max-width: 720px) {
+  .lp-offer { padding: 36px 0 4px; }
+  .lp-offer-grid { grid-template-columns: 1fr; gap: 14px; padding: 22px 20px; }
+  .lp-offer-foot { flex-direction: column; align-items: stretch; }
+  .lp-offer-cta { justify-content: center; }
+}
 `;
 
 const HTML = `
@@ -1732,6 +1778,40 @@ const HTML = `
     </div>
   </div>
 </div>
+
+<!-- GRAND SLAM OFFER — "Zorgeloos Dak" (Hormozi): aanbod expliciet + onweerstaanbaar -->
+<section class="lf-section lp-offer">
+  <div class="wrap">
+    <div class="lp-offer-head" data-reveal>
+      <div class="lp-offer-eyebrow">Wat u bij ons krijgt</div>
+      <h2 class="lp-offer-title">Het <span class="ab-mark">Zorgeloos Dak</span>-pakket</h2>
+      <p class="lp-offer-sub">Eén aanspreekpunt, vaste prijs, alles geregeld — van eerste plaatsbezoek tot waterdicht dak. Geen tussenpartij, geen verrassingen.</p>
+    </div>
+    <div class="lp-offer-grid" data-reveal data-reveal-delay="1">
+      ${[
+        ['Gratis dakinspectie + fotorapport', 'Vakman langs binnen 5 werkdagen — u krijgt een eerlijk beeld, ook van wat kán wachten.'],
+        ['Bindende offerte, geen meerkost', 'De prijs die u tekent is de prijs die u betaalt. Zwart op wit.'],
+        ['Mijn VerbouwPremie volledig geregeld', 'Wij dienen uw volledige premiedossier in. €40/m² in 2026 — gemiddeld €3.500–€5.500 terug.'],
+        ['Eigen dakdekkers in dienst', 'Geen onderaannemers. Vaste ploeg, eigen verantwoordelijkheid.'],
+        ['15 jaar garantie op waterdichtheid', 'Schriftelijk. Wij blijven verantwoordelijk lang nadat de werf gesloten is.'],
+        ['Eén vaste contactpersoon', 'Van offerte tot oplevering dezelfde projectleider. U weet altijd bij wie u terechtkunt.'],
+        ['Nette werf, volledige opruiming', 'Wij ruimen alles op. U houdt er een nieuw dak aan over, geen rommel.'],
+        ['Waterdicht dak in 6 weken', 'Concrete startdatum in de offerte — geen "ergens dit jaar".'],
+      ].map(([t, d]) => `
+      <div class="lp-offer-item">
+        <span class="lp-offer-check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+        <span class="lp-offer-item-text"><strong>${t}</strong>${d}</span>
+      </div>`).join('')}
+    </div>
+    <div class="lp-offer-foot" data-reveal>
+      <a href="#lp-form" class="lp-offer-cta" data-smooth>
+        Vraag gratis plaatsbezoek
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <span class="lp-offer-foot-note">Vrijblijvend · antwoord binnen 1 werkdag</span>
+    </div>
+  </div>
+</section>
 
 <section class="lf-section lp-calc-cta-section" style="padding: 32px 0 8px;">
   <div class="wrap">
