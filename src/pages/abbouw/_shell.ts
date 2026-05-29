@@ -770,21 +770,19 @@ ul.ab-checks li::before { content: '✓'; color: var(--accent); font-weight: 800
 /* Reveal animations: duidelijker scrollgevoel, content komt pas binnen bij scroll */
 [data-reveal] {
   opacity: 0;
-  transform: translate3d(0, 36px, 0) scale(0.99);
-  filter: blur(4px);
+  transform: translate3d(0, 22px, 0);
   transition:
-    opacity 0.55s var(--ease-out-quart),
-    transform 0.55s var(--ease-out-quart),
-    filter 0.45s var(--ease-out-quart),
+    opacity 0.5s var(--ease-out-quart),
+    transform 0.5s var(--ease-out-quart),
     box-shadow 0.3s var(--ease-out-quart),
     border-color 0.3s var(--ease-out-quart);
   transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform, filter;
+  will-change: opacity, transform;
 }
-[data-reveal="left"] { transform: translate3d(-42px, 34px, 0) scale(0.982); }
-[data-reveal="right"] { transform: translate3d(42px, 34px, 0) scale(0.982); }
-[data-reveal="zoom"] { transform: translate3d(0, 34px, 0) scale(0.94); }
-[data-reveal].revealed { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
+[data-reveal="left"] { transform: translate3d(-30px, 22px, 0); }
+[data-reveal="right"] { transform: translate3d(30px, 22px, 0); }
+[data-reveal="zoom"] { transform: translate3d(0, 22px, 0) scale(0.97); }
+[data-reveal].revealed { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 [data-reveal-delay="1"] { --reveal-delay: 95ms; }
 [data-reveal-delay="2"] { --reveal-delay: 190ms; }
 [data-reveal-delay="3"] { --reveal-delay: 285ms; }
