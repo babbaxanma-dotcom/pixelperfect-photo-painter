@@ -1691,6 +1691,41 @@ body.lp-page .lp-form-section .ab-mark { color: #f0a83a !important; }
   .lp-offer-foot { flex-direction: column; align-items: stretch; }
   .lp-offer-cta { justify-content: center; }
 }
+
+/* ═══════════════ ROBUUST PREMIUM — weg van AI-playful (Dural-stijl) ═══════════════
+   Scherpe hoeken ipv ronde pills, gradients/glows weg, vlak en solide.
+   Een gevestigd vakbedrijf oogt rustig en stevig, niet speels. */
+body.lp-page .lf-cta-pill,
+body.lp-page .lf-hero-ghost,
+body.lp-page .lp-quick-form button[type="submit"],
+body.lp-page .lp-offer-cta,
+body.lp-page .lp-premie-cta,
+body.lp-page .lp-cta-banner-cta,
+body.lp-page .lp-form-card button[type="submit"],
+body.lp-page button[data-lp-submit],
+body.lp-page button[data-lp-quick-submit] {
+  border-radius: 4px !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+/* Inputs + kaarten + chips: scherpere, vlakkere hoeken */
+body.lp-page .lp-quick-form { border-radius: 6px !important; box-shadow: 0 1px 0 rgba(10,22,40,0.06), 0 12px 30px -24px rgba(10,22,40,0.25) !important; }
+body.lp-page .lp-quick-form input,
+body.lp-page .lp-form-card input,
+body.lp-page .lp-form-card textarea,
+body.lp-page .lp-form-card select { border-radius: 4px !important; }
+body.lp-page .lp-offer-grid,
+body.lp-page .lp-usp-card,
+body.lp-page .lp-urgency-card,
+body.lp-page .lp-blog-card,
+body.lp-page .lf-testi { border-radius: 6px !important; box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 14px 34px -26px rgba(10,22,40,0.16) !important; }
+/* Premie-banner + cta-banners: vlak, geen gradient */
+body.lp-page .lp-premie,
+body.lp-page .lp-cta-banner { background-image: none !important; border-radius: 6px !important; }
+/* Ronde icoon-cirkels mogen blijven, maar geen glow */
+body.lp-page .lp-offer-cta { box-shadow: none !important; }
+body.lp-page .lp-offer-cta:hover,
+body.lp-page .lf-cta-pill:hover { box-shadow: 0 2px 8px rgba(10,16,28,0.18) !important; }
 `;
 
 const HTML = `
@@ -1790,8 +1825,8 @@ const HTML = `
   <div class="wrap">
     <div class="lp-offer-head" data-reveal>
       <div class="lp-offer-eyebrow">Wat u bij ons krijgt</div>
-      <h2 class="lp-offer-title">Het <span class="ab-mark">Zorgeloos Dak</span>-pakket</h2>
-      <p class="lp-offer-sub">Van het eerste plaatsbezoek tot een waterdicht dak regelt u alles met één ploeg en één vaste contactpersoon. Vaste prijs, geen tussenpartij.</p>
+      <h2 class="lp-offer-title">Alles geregeld, <span class="ab-mark">vaste prijs</span>.</h2>
+      <p class="lp-offer-sub">Van het eerste plaatsbezoek tot een waterdicht dak werkt u met één ploeg en één vaste contactpersoon. Geen tussenpartij.</p>
     </div>
     <div class="lp-offer-grid" data-reveal data-reveal-delay="1">
       ${[
