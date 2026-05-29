@@ -45,6 +45,11 @@ import anaL5 from '@/assets/dak/lp-anatomy-l5.jpg';  // dampscherm — film
 import anaL6 from '@/assets/dak/lp-anatomy-l6.jpg';  // plafond — plaster
 
 
+import merkVelux from '@/assets/merken/Velux.png';
+import merkKoramic from '@/assets/merken/Koramic.png';
+import merkWienerberger from '@/assets/merken/Wienerberger.png';
+import merkRockpanel from '@/assets/merken/rockpanel.png';
+
 import rev1 from '@/assets/reviews/stijn.jpg';
 import rev2 from '@/assets/reviews/lieve.jpg';
 import rev3 from '@/assets/reviews/yusuf.jpg';
@@ -580,13 +585,19 @@ body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
   border-top: 1px solid var(--ink-line-soft);
   font-size: 13px; color: var(--ink-mute);
 }
-.lp-trust-foot .wrap {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+.lp-trust-foot { padding: 56px 0 90px; }
+.lp-trust-foot .wrap:first-child {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 32px; line-height: 1.7;
 }
-.lp-trust-foot strong { display: block; color: var(--navy); font-size: 14px; margin-bottom: 4px; }
+.lp-trust-foot strong { display: block; color: var(--navy); font-size: 14px; margin-bottom: 6px; }
 .lp-trust-foot a { color: var(--ink-soft); text-decoration: none; }
 .lp-trust-foot a:hover { color: var(--accent); }
-@media (max-width: 720px) { .lp-trust-foot .wrap { grid-template-columns: 1fr 1fr; gap: 22px; } }
+.lp-foot-muted { color: var(--ink-mute); }
+.lp-foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; margin-top: 36px; padding-top: 22px; border-top: 1px solid var(--ink-line-soft); font-size: 12.5px; color: var(--ink-mute); }
+@media (max-width: 720px) {
+  .lp-trust-foot .wrap:first-child { grid-template-columns: 1fr 1fr; gap: 22px; }
+  .lp-foot-bottom { flex-direction: column; gap: 6px; }
+}
 
 /* LP stats (hergebruikt buildhero stat-look in nieuwe sectie) */
 .lp-stats-strip {
@@ -1746,8 +1757,11 @@ body.lp-page .lp-mini-phone { border-radius: 4px !important; }
 .dak2-photo img { width: 100%; height: 520px; object-fit: cover; border-radius: 8px; display: block; }
 .dak2-logos { border-top: 1px solid #e3e1db; margin-top: 52px; background: #f6f4f0; }
 .dak2-logos-inner { max-width: 1200px; margin: 0 auto; padding: 20px clamp(16px,4vw,40px); display: flex; flex-wrap: wrap; align-items: center; gap: 12px 34px; }
-.dak2-logos-label { font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8a93a0; }
-.dak2-logos-inner > span:not(.dak2-logos-label) { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: #6b7280; letter-spacing: 0.02em; }
+.dak2-logos-label { font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8a93a0; margin-right: 8px; }
+.dak2-logo { height: 26px; width: auto; filter: brightness(0) opacity(0.42); transition: filter .2s ease; }
+.dak2-logo:hover { filter: brightness(0) opacity(0.7); }
+.lf-reviews-count { display: inline-flex; align-items: center; gap: 7px; }
+.lf-google-g { flex-shrink: 0; }
 @media (max-width: 900px) {
   .dak2-hero { padding: 84px 0 0; }
   .dak2-wrap { grid-template-columns: 1fr; gap: 24px; }
@@ -1796,7 +1810,10 @@ const HTML = `
   <div class="dak2-logos">
     <div class="dak2-logos-inner">
       <span class="dak2-logos-label">Wij werken met</span>
-      <span>Koramic</span><span>Velux</span><span>VMZinc</span><span>Wienerberger</span><span>Rockpanel</span>
+      <img src="${merkKoramic}" alt="Koramic" class="dak2-logo" />
+      <img src="${merkVelux}" alt="Velux" class="dak2-logo" />
+      <img src="${merkWienerberger}" alt="Wienerberger" class="dak2-logo" />
+      <img src="${merkRockpanel}" alt="Rockpanel" class="dak2-logo" />
     </div>
   </div>
 </section>
@@ -1913,7 +1930,10 @@ const HTML = `
             <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
             <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
           </div>
-          <span class="lf-reviews-count">124+ dakprojecten beoordeeld</span>
+          <span class="lf-reviews-count">
+            <svg class="lf-google-g" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z"/></svg>
+            124+ beoordelingen op Google
+          </span>
         </div>
       </div>
       <span class="lp-reviews-swipe-hint" aria-hidden="true">
@@ -2521,10 +2541,15 @@ const HTML = `
 
 <section class="lp-trust-foot">
   <div class="wrap">
-    <div><strong>AB Bouw Groep</strong>${CONTACT.address.street}<br/>${CONTACT.address.postcode} ${CONTACT.address.city}</div>
-    <div><strong>Telefoon</strong><a href="${CONTACT.phone.href}">${CONTACT.phone.spaced}</a></div>
-    <div><strong>Email</strong><a href="mailto:info@abgroep.be">info@abgroep.be</a></div>
-    <div><strong>Erkenningen</strong>VCA*-gecertificeerd<br/>Lid Bouwunie</div>
+    <div><strong>AB Bouw Groep</strong>${CONTACT.address.street}<br/>${CONTACT.address.postcode} ${CONTACT.address.city}<br/><span class="lp-foot-muted">Erkend aannemer · Vlaanderen</span></div>
+    <div><strong>Contact</strong><a href="${CONTACT.phone.href}">${CONTACT.phone.spaced}</a><br/><a href="mailto:info@abgroep.be">info@abgroep.be</a></div>
+    <div><strong>Openingsuren</strong>Ma–Vr 08:00–18:00<br/>Za op afspraak<br/><span class="lp-foot-muted">Zo gesloten</span></div>
+    <div><strong>Werkgebied</strong>Mechelen · Willebroek · Boom<br/>Puurs · Bornem · Lier · Antwerpen</div>
+    <div><strong>Erkenningen</strong>VCA*-gecertificeerd<br/>Lid Bouwunie<br/>10 jaar polis Federale Verzekering</div>
+  </div>
+  <div class="wrap lp-foot-bottom">
+    <span>© 2026 AB Bouw Groep — Dakwerken &amp; gevelrenovatie</span>
+    <span>10 jaar garantie op waterdichtheid · bindende offerte · eigen ploeg</span>
   </div>
 </section>
 
