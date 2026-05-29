@@ -45,10 +45,6 @@ import anaL5 from '@/assets/dak/lp-anatomy-l5.jpg';  // dampscherm — film
 import anaL6 from '@/assets/dak/lp-anatomy-l6.jpg';  // plafond — plaster
 
 
-import merkVelux from '@/assets/merken/Velux.png';
-import merkKoramic from '@/assets/merken/Koramic.png';
-import merkWienerberger from '@/assets/merken/Wienerberger.png';
-import merkRockpanel from '@/assets/merken/rockpanel.png';
 
 import rev1 from '@/assets/reviews/stijn.jpg';
 import rev2 from '@/assets/reviews/lieve.jpg';
@@ -1759,11 +1755,16 @@ body.lp-page .lf-cta-pill:hover { box-shadow: 0 2px 8px rgba(10,16,28,0.18) !imp
 .dak2-trust b { color: #0f1822; font-weight: 700; }
 .dak2-trust .stars { color: #f5b301; letter-spacing: 1px; }
 .dak2-photo img { width: 100%; height: 520px; object-fit: cover; border-radius: 8px; display: block; }
-.dak2-logos { border-top: 1px solid #e3e1db; margin-top: 52px; background: #f6f4f0; }
-.dak2-logos-inner { max-width: 1200px; margin: 0 auto; padding: 20px clamp(16px,4vw,40px); display: flex; flex-wrap: wrap; align-items: center; gap: 12px 34px; }
-.dak2-logos-label { font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8a93a0; margin-right: 8px; }
-.dak2-logo { height: 26px; width: auto; filter: brightness(0) opacity(0.42); transition: filter .2s ease; }
-.dak2-logo:hover { filter: brightness(0) opacity(0.7); }
+.dak2-logos { border-top: 1px solid #e3e1db; margin-top: 52px; background: #f6f4f0; padding: 26px 0 30px; }
+.dak2-logos-head { text-align: center; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #8a93a0; margin-bottom: 18px; }
+.dak2-marquee { overflow: hidden; position: relative; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.dak2-marquee-track { display: flex; width: max-content; animation: dak2-marquee 42s linear infinite; }
+.dak2-marquee:hover .dak2-marquee-track { animation-play-state: paused; }
+.dak2-marquee-set { display: flex; align-items: center; gap: 56px; padding: 0 28px; flex-shrink: 0; }
+.dak2-marquee-set img { height: 34px; width: auto; object-fit: contain; filter: grayscale(1) opacity(0.5); transition: filter .3s ease; }
+.dak2-marquee-set img:hover { filter: grayscale(0) opacity(1); }
+@keyframes dak2-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .dak2-marquee-track { animation: none; } }
 .lf-reviews-count { display: inline-flex; align-items: center; gap: 7px; }
 .lf-google-g { flex-shrink: 0; }
 @media (max-width: 900px) {
@@ -1771,8 +1772,8 @@ body.lp-page .lf-cta-pill:hover { box-shadow: 0 2px 8px rgba(10,16,28,0.18) !imp
   .dak2-wrap { grid-template-columns: 1fr; gap: 24px; }
   .dak2-photo img { height: 260px; }
   .dak2-h1 { font-size: clamp(30px, 8.5vw, 40px); }
-  .dak2-logos-inner { gap: 10px 22px; }
-  .dak2-logos-inner > span:not(.dak2-logos-label) { font-size: 14px; }
+  .dak2-marquee-set { gap: 40px; padding: 0 20px; }
+  .dak2-marquee-set img { height: 28px; }
 }
 `;
 
@@ -1815,12 +1816,32 @@ const HTML = `
     </div>
   </div>
   <div class="dak2-logos">
-    <div class="dak2-logos-inner">
-      <span class="dak2-logos-label">Wij werken met</span>
-      <img src="${merkKoramic}" alt="Koramic" class="dak2-logo" />
-      <img src="${merkVelux}" alt="Velux" class="dak2-logo" />
-      <img src="${merkWienerberger}" alt="Wienerberger" class="dak2-logo" />
-      <img src="${merkRockpanel}" alt="Rockpanel" class="dak2-logo" />
+    <div class="dak2-logos-head">Wij werken met de beste merken</div>
+    <div class="dak2-marquee">
+      <div class="dak2-marquee-track">
+        <div class="dak2-marquee-set">
+          <img src="/assets/logos/koramic.png" alt="Koramic" loading="lazy" />
+          <img src="/assets/logos/eternit.png" alt="Eternit" loading="lazy" />
+          <img src="/assets/logos/dorken.png" alt="Dörken" loading="lazy" />
+          <img src="/assets/logos/isover.png" alt="Isover" loading="lazy" />
+          <img src="/assets/logos/knauf.png" alt="Knauf" loading="lazy" />
+          <img src="/assets/logos/rectic.png" alt="Recticel" loading="lazy" />
+          <img src="/assets/logos/isoproc.png" alt="Isoproc" loading="lazy" />
+          <img src="/assets/logos/mato.png" alt="Mato" loading="lazy" />
+          <img src="/assets/logos/caparol.png" alt="Caparol" loading="lazy" />
+        </div>
+        <div class="dak2-marquee-set" aria-hidden="true">
+          <img src="/assets/logos/koramic.png" alt="" loading="lazy" />
+          <img src="/assets/logos/eternit.png" alt="" loading="lazy" />
+          <img src="/assets/logos/dorken.png" alt="" loading="lazy" />
+          <img src="/assets/logos/isover.png" alt="" loading="lazy" />
+          <img src="/assets/logos/knauf.png" alt="" loading="lazy" />
+          <img src="/assets/logos/rectic.png" alt="" loading="lazy" />
+          <img src="/assets/logos/isoproc.png" alt="" loading="lazy" />
+          <img src="/assets/logos/mato.png" alt="" loading="lazy" />
+          <img src="/assets/logos/caparol.png" alt="" loading="lazy" />
+        </div>
+      </div>
     </div>
   </div>
 </section>
