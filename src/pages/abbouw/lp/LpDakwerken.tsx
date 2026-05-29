@@ -1785,18 +1785,18 @@ const HTML = `
     <div class="lp-offer-head" data-reveal>
       <div class="lp-offer-eyebrow">Wat u bij ons krijgt</div>
       <h2 class="lp-offer-title">Het <span class="ab-mark">Zorgeloos Dak</span>-pakket</h2>
-      <p class="lp-offer-sub">Eén aanspreekpunt, vaste prijs, alles geregeld — van eerste plaatsbezoek tot waterdicht dak. Geen tussenpartij, geen verrassingen.</p>
+      <p class="lp-offer-sub">Van het eerste plaatsbezoek tot een waterdicht dak regelt u alles met één ploeg en één vaste contactpersoon. Vaste prijs, geen tussenpartij.</p>
     </div>
     <div class="lp-offer-grid" data-reveal data-reveal-delay="1">
       ${[
-        ['Gratis dakinspectie + fotorapport', 'Vakman langs binnen 5 werkdagen — u krijgt een eerlijk beeld, ook van wat kán wachten.'],
-        ['Bindende offerte, geen meerkost', 'De prijs die u tekent is de prijs die u betaalt. Zwart op wit.'],
-        ['Mijn VerbouwPremie volledig geregeld', 'Wij dienen uw volledige premiedossier in. €40/m² in 2026 — gemiddeld €3.500–€5.500 terug.'],
-        ['Eigen dakdekkers in dienst', 'Geen onderaannemers. Vaste ploeg, eigen verantwoordelijkheid.'],
-        ['15 jaar garantie op waterdichtheid', 'Schriftelijk. Wij blijven verantwoordelijk lang nadat de werf gesloten is.'],
-        ['Eén vaste contactpersoon', 'Van offerte tot oplevering dezelfde projectleider. U weet altijd bij wie u terechtkunt.'],
-        ['Nette werf, volledige opruiming', 'Wij ruimen alles op. U houdt er een nieuw dak aan over, geen rommel.'],
-        ['Waterdicht dak in 6 weken', 'Concrete startdatum in de offerte — geen "ergens dit jaar".'],
+        ['Gratis dakinspectie met fotorapport', 'Een vakman komt binnen 5 werkdagen langs en bezorgt u een fotorapport van de staat van uw dak.'],
+        ['Bindende offerte zonder meerkost', 'De prijs op uw offerte is de prijs die u betaalt. Zwart op wit.'],
+        ['Mijn VerbouwPremie geregeld', 'Wij dienen het volledige premiedossier voor u in. In 2026 is dat €40 per m², goed voor gemiddeld €3.500 tot €5.500.'],
+        ['Eigen dakdekkers', 'Uw dak wordt geplaatst door onze eigen ploeg, niet door onderaannemers.'],
+        ['15 jaar garantie op waterdichtheid', 'U krijgt een schriftelijke garantie. Ook jaren na de werken blijven wij verantwoordelijk.'],
+        ['Eén vaste contactpersoon', 'Dezelfde projectleider begeleidt u van de offerte tot de oplevering.'],
+        ['Nette werf', 'Na de werken ruimen wij alles op en laten we uw woning proper achter.'],
+        ['Waterdicht dak in 6 weken', 'U krijgt een concrete startdatum in de offerte, geen vage belofte.'],
       ].map(([t, d]) => `
       <div class="lp-offer-item">
         <span class="lp-offer-check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
