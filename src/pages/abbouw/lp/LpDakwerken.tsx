@@ -64,28 +64,26 @@ const LP_EXTRA = `
    maar wel een brand-anchor zodat ads-traffic weet bij wie ze geland zijn.
    Mobile: logo links, phone-icon rechts (verkleind). */
 .lp-mini-header {
-  position: absolute;
+  position: sticky;
   top: 0; left: 0; right: 0;
   z-index: 50;
-  background: linear-gradient(180deg, rgba(8,12,22,0.55) 0%, rgba(8,12,22,0.25) 70%, rgba(8,12,22,0) 100%);
-  pointer-events: none;
+  background: #fff;
+  border-bottom: 1px solid #e7e4de;
 }
-.lp-mini-header > * { pointer-events: auto; }
 .lp-mini-header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 18px 0;
+  padding: 12px 0;
 }
 .lp-mini-brand {
   display: inline-flex;
   align-items: center;
   text-decoration: none;
-  background: #fff;
-  padding: 8px 14px;
-  border-radius: 10px;
-  box-shadow: 0 4px 14px rgba(8,12,22,0.18);
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
 }
 .lp-mini-logo {
   height: 30px;
@@ -1731,7 +1729,8 @@ body.lp-page .lf-cta-pill:hover { box-shadow: 0 2px 8px rgba(10,16,28,0.18) !imp
 body.lp-page .lp-mini-phone { color: #fff !important; background: #0f1822 !important; border: none !important; }
 
 /* ════════════ NIEUWE LICHTE HERO (Dural-stijl) — vervangt donkere cinematische ════════════ */
-.dak2-hero { background: #f6f4f0; padding: 104px 0 0; }
+.dak2-hero { background: #f6f4f0; padding: 52px 0 0; }
+body.lp-page .lp-mini-phone { border-radius: 4px !important; }
 .dak2-wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px,4vw,40px); display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
 .dak2-eyebrow { font-size: 12.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #b87502; margin-bottom: 16px; }
 .dak2-h1 { font-family: var(--font-display); font-size: clamp(34px, 4.4vw, 54px); font-weight: 700; line-height: 1.04; letter-spacing: -0.02em; color: #0f1822; margin: 0 0 18px; }
