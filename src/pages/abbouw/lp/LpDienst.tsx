@@ -1,51 +1,89 @@
 /**
- * LpDienst — lichte, herbruikbare sub-service landingspagina.
+ * LpDienst — herbruikbare sub-service landingspagina (navy-replica stijl).
  * Routes: /lp/velux, /lp/gevelreiniging, /lp/hervoegen
  *
- * Config-gedreven (DIENSTEN). Hergebruikt submitLead() uit @/lib/leads, dus
- * GHL-webhook + Google Ads conversie-tracking komen automatisch mee.
- * Split-panel hero (vast navy paneel links, foto rechts) + mini-form + offer +
- * reviews + FAQ + form. Bewust LEAN per Heath (één offer, één intentie).
+ * Config-gedreven (DIENSTEN): één component, drie diensten. De markup +
+ * styling spiegelt de bewezen dakwerken-LP (tr-* navy/orange thema, Lexend).
+ * Hergebruikt submitLead() uit @/lib/leads, dus GHL-webhook + Google Ads
+ * conversie-tracking komen automatisch mee. Belgische context, adres altijd
+ * uit CONTACT.address.
  */
 import { useEffect, useRef, useState } from 'react';
 import { submitLead, type Divisie } from '@/lib/leads';
 import { CONTACT } from '@/data/contact';
 import logo from '@/assets/home/logo.png';
+import velux from '@/assets/merken/Velux.png';
 
 import imgVelux from '@/assets/dak/lp-velux.jpg';
 import imgGevelReinig from '@/assets/gevel/stelling.jpg';
 import imgHervoegen from '@/assets/gevel/intro.jpg';
 
+const NAVY = '#0a1628';
+const NAVY2 = '#14233a';
+const ORANGE = '#d98c03';
+const ORANGE_H = '#b87502';
+
+type Review = { text: string; name: string; role: string };
+
 type Dienst = {
+  slug: string;
   division: Divisie; typeWerk: string; bronLead: string;
-  eyebrow: string; h1: string[]; sub: string; heroImg: string;
-  offerTitle: string; offerMark: string; offerSub: string; offer: [string, string][];
-  steps: [string, string][]; prijs: string;
-  faq: [string, string][]; metaTitle: string; metaDesc: string;
+  eyebrow: string; h1: string; sub: string; subBold: string; heroImg: string;
+  /** extra cert-logo in de hero (naast VCA/Bouwunie/Verzekerd) */
+  certLogo: { src: string; alt: string };
+  topbar: string[];
+  offerEyebrow: string; offerH2: string; offerIntro: string; offer: string[];
+  steps: [string, string][];
+  whatTitle: string; whatIntro: string; what: [string, string][]; whatImg: string;
+  reviews: Review[];
+  faq: [string, string][];
+  /** opties voor de "Type werk" select in de eind-CTA */
+  typeWerkOpties: string[];
+  finalSub: string;
+  metaTitle: string; metaDesc: string;
 };
 
 const DIENSTEN: Record<string, Dienst> = {
   velux: {
+    slug: 'velux',
     division: 'ab_dakwerken', typeWerk: 'AB Dakwerken', bronLead: 'ads:velux',
-    eyebrow: 'AB Dakwerken · Willebroek',
-    h1: ['Velux dakraam', 'vakkundig', 'geplaatst.'],
-    sub: 'Plaatsing en vervanging van Velux-dakramen in Mechelen, Antwerpen, Lier en heel Vlaanderen. Eigen ploeg, vaste prijs, waterdicht afgewerkt.',
+    eyebrow: 'Uw woning verdient het beste',
+    h1: 'Velux dakraam vakkundig geplaatst.',
+    sub: 'Plaatsing en vervanging van Velux-dakramen in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
+    subBold: 'Eigen dakdekkers',
     heroImg: imgVelux,
-    offerTitle: 'Het ', offerMark: 'Velux', offerSub: 'Van opmeting tot waterdichte afwerking, alles door één ploeg. Vaste prijs, geen tussenpartij.',
+    certLogo: { src: velux, alt: 'Velux' },
+    topbar: ['Gratis opmeting binnen 5 werkdagen', 'Familiebedrijf', 'Eigen ploeg'],
+    offerEyebrow: 'Over AB Bouw Groep',
+    offerH2: 'Uw erkende Velux-plaatser in heel Vlaanderen',
+    offerIntro: 'AB Bouw Groep is een familiebedrijf met een eigen ploeg uit Willebroek. Van opmeting tot waterdichte afwerking, alles door één ploeg.',
     offer: [
-      ['Gratis opmeting aan huis', 'Een vakman komt langs, meet op en adviseert het juiste type en formaat.'],
-      ['Vaste prijs inclusief plaatsing', 'De prijs op uw offerte is de prijs die u betaalt. Geen meerkost.'],
-      ['Erkend Velux-plaatser', 'Correcte plaatsing volgens de voorschriften, met behoud van garantie.'],
-      ['Waterdicht afgewerkt', 'Inclusief gootstuk, isolatie en binnenafwerking. Netjes afgewerkt.'],
-      ['Eigen dakdekkers', 'Geen onderaannemers. Onze eigen ploeg plaatst uw dakraam.'],
-      ['Snel ingepland', 'Plaatsbezoek binnen 5 werkdagen, plaatsing op een afgesproken datum.'],
+      'Offerte = factuur, ook bij prijsstijgingen',
+      'Gratis opmeting aan huis, met advies over type en formaat',
+      'Vaste prijs inclusief plaatsing en binnenafwerking',
+      'Erkend Velux-plaatser, met behoud van fabrieksgarantie',
+      'Eigen dakdekkers, geen onderaannemers',
+      'Plaatsbezoek binnen 5 werkdagen, plaatsing op afspraak',
     ],
     steps: [
       ['Gratis opmeting', 'Een vakman komt langs, meet op en bespreekt welk type en formaat bij uw dak past.'],
-      ['Vaste offerte', 'U krijgt een bindende prijs inclusief plaatsing en binnenafwerking.'],
+      ['Vaste offerte', 'U krijgt een bindende prijs inclusief plaatsing en binnenafwerking. Zo weet u exact waar u aan toe bent.'],
       ['Plaatsing op afspraak', 'Onze eigen ploeg plaatst het dakraam waterdicht af, doorgaans op één dag.'],
     ],
-    prijs: 'Een Velux-dakraam geplaatst start doorgaans rond €1.250 inclusief plaatsing en afwerking. De exacte prijs hangt af van het type, het formaat en uw dakopbouw. U krijgt een vaste prijs na de gratis opmeting.',
+    whatTitle: 'Wat houdt een Velux-plaatsing in?',
+    whatIntro: 'Een dakraam plaatsen is meer dan een gat in het dak. Wij verzorgen het volledige werk, van het juiste gootstuk tot de afgewerkte binnenkant.',
+    what: [
+      ['Nieuw dakraam', 'Plaatsing van een nieuw Velux-dakraam in een pannendak of leien dak, met het juiste gootstuk.'],
+      ['Vervanging', 'Een oud of lekkend dakraam vervangen we door een nieuw model, waterdicht aangesloten.'],
+      ['Isolatie & gootstuk', 'Correcte aansluiting met isolatie en gootstuk, zodat er geen koudebrug of condens ontstaat.'],
+      ['Binnenafwerking', 'De binnenkant netjes afgewerkt en gepleisterd, klaar voor gebruik.'],
+    ],
+    whatImg: imgVelux,
+    reviews: [
+      { text: '"Twee Velux-ramen in de zolderslaapkamer. Plaatsing op twee dagen, binnenafwerking direct mee gepleisterd. Geen koudebrug, geen condens."', name: 'Greet Coppens', role: 'Velux dakvenster' },
+      { text: '"Oud koepelraam vervangen door een modern Velux-dakraam. Vaste prijs vooraf, factuur klopte tot op de euro. Netjes afgewerkt."', name: 'Davy Janssens', role: 'Vervanging dakraam' },
+      { text: '"Vakman kwam eerst opmeten en gaf eerlijk advies over het formaat. Plaatsing op één dag, alles waterdicht en proper achtergelaten."', name: 'Annick Verstraete', role: 'Nieuw dakraam' },
+    ],
     faq: [
       ['Wat kost een Velux dakraam geplaatst?', 'Dat hangt af van het type, het formaat en de bestaande dakopbouw. Een standaardplaatsing start doorgaans rond €1.250 inclusief plaatsing. U krijgt een vaste prijs na de gratis opmeting.'],
       ['Plaatsen jullie ook in een bestaand pannendak?', 'Ja. Wij plaatsen Velux-dakramen in pannendaken en leien daken, met het juiste gootstuk zodat alles waterdicht blijft.'],
@@ -53,30 +91,51 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Krijg ik garantie op de plaatsing?', 'Ja. U krijgt garantie op de waterdichtheid van de plaatsing, bovenop de fabrieksgarantie van Velux op het raam zelf.'],
       ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek en heel Vlaanderen. Bij het plaatsbezoek bevestigen we de planning.'],
     ],
+    typeWerkOpties: ['Nieuw dakraam', 'Vervanging', 'Meerdere ramen', 'Anders'],
+    finalSub: 'Praat met onze dakwerker',
     metaTitle: 'Velux dakraam laten plaatsen — vaste prijs | AB Bouw Groep',
     metaDesc: 'Velux-dakramen plaatsen en vervangen in Vlaanderen. Erkend plaatser, eigen ploeg, vaste prijs inclusief plaatsing. Gratis opmeting binnen 5 werkdagen.',
   },
   gevelreiniging: {
+    slug: 'gevelreiniging',
     division: 'ab_gevelbekleding', typeWerk: 'AB Gevelbekleding', bronLead: 'ads:gevelreiniging',
-    eyebrow: 'AB Gevelbekleding · Willebroek',
-    h1: ['Uw gevel', 'als nieuw,', 'zonder schade.'],
-    sub: 'Professionele gevelreiniging in Mechelen, Antwerpen, Lier en heel Vlaanderen. Verwijdert vuil, mos en algen, met de juiste methode voor uw gevelsteen.',
+    eyebrow: 'Uw woning verdient het beste',
+    h1: 'Uw gevel als nieuw, zonder schade.',
+    sub: 'Professionele gevelreiniging in Mechelen, Antwerpen, Lier en heel Vlaanderen. De juiste methode voor uw gevelsteen.',
+    subBold: 'Eigen ploeg',
     heroImg: imgGevelReinig,
-    offerTitle: 'Het ', offerMark: 'Gevelreiniging', offerSub: 'De juiste reinigingsmethode voor uw type gevel, zonder de steen te beschadigen. Vaste prijs, eigen ploeg.',
+    certLogo: { src: '/assets/logos/caparol.png', alt: 'Caparol' },
+    topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Familiebedrijf', 'Eigen ploeg'],
+    offerEyebrow: 'Over AB Bouw Groep',
+    offerH2: 'Uw erkende gevelspecialist in heel Vlaanderen',
+    offerIntro: 'AB Bouw Groep is een familiebedrijf met een eigen ploeg uit Willebroek. Wij reinigen uw gevel met de juiste methode, zonder de steen te beschadigen.',
     offer: [
-      ['Gratis plaatsbezoek met advies', 'Een vakman bekijkt uw gevel en adviseert de juiste methode.'],
-      ['Aangepaste methode per gevel', 'Lagedruk, nevel of chemisch, afgestemd op uw gevelsteen.'],
-      ['Geen schade aan de voegen', 'Wij reinigen zonder de voeg of de steen aan te tasten.'],
-      ['Optioneel impregneren', 'Wij kunnen de gevel nadien beschermen tegen nieuw vuil en vocht.'],
-      ['Vaste prijs vooraf', 'Bindende offerte, geen verrassingen achteraf.'],
-      ['Eigen ploeg', 'Onze eigen mensen voeren het werk uit, geen onderaannemers.'],
+      'Offerte = factuur, ook bij prijsstijgingen',
+      'Gratis plaatsbezoek met advies over de juiste methode',
+      'Aangepaste methode per gevel: lagedruk, nevel of chemisch',
+      'Geen schade aan de voegen of de steen',
+      'Optioneel impregneren tegen nieuw vuil en vocht',
+      'Eigen ploeg, geen onderaannemers',
     ],
     steps: [
       ['Gratis plaatsbezoek', 'Een vakman bekijkt uw gevel en bepaalt de juiste reinigingsmethode.'],
-      ['Vaste offerte', 'U krijgt een bindende prijs per m², met of zonder impregnatie.'],
+      ['Vaste offerte', 'U krijgt een bindende prijs per m², met of zonder impregnatie. Zo weet u exact waar u aan toe bent.'],
       ['Reiniging door eigen ploeg', 'Wij reinigen uw gevel zorgvuldig, zonder de voeg of steen te beschadigen.'],
     ],
-    prijs: 'Gevelreiniging wordt geprijsd per m² en hangt af van de vervuiling, de gevelsteen en de bereikbaarheid. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.',
+    whatTitle: 'Wat houdt gevelreiniging in?',
+    whatIntro: 'Niet elke gevel reinig je op dezelfde manier. Wij kiezen de methode die uw gevelsteen aankan en pakken vuil, mos en algen grondig aan.',
+    what: [
+      ['Gevelreiniging', 'Vuil, roet en uitslag verwijderen met de juiste druk en het juiste middel voor uw gevelsteen.'],
+      ['Mos- en algenbestrijding', 'Groene aanslag, mos en algen behandelen en verwijderen, ook op moeilijk bereikbare plekken.'],
+      ['Impregneren', 'De gevel nadien beschermen tegen vocht en nieuw vuil, zodat hij jaren langer proper blijft.'],
+      ['Veilig werken', 'Met stelling of hoogwerker waar nodig, netjes afgeschermd en proper opgeruimd.'],
+    ],
+    whatImg: imgGevelReinig,
+    reviews: [
+      { text: '"Gevel vol groene aanslag, na de reiniging zag de woning er weer als nieuw uit. Geen schade aan de voegen, alles netjes opgeruimd."', name: 'Lieve Hermans', role: 'Gevelreiniging' },
+      { text: '"Vakman koos bewust voor lagedruk omdat onze steen poreus is. Eerlijk advies en een nette werf. Meteen ook laten impregneren."', name: 'Yusuf Demir', role: 'Reiniging + impregneren' },
+      { text: '"Vaste prijs per m² vooraf, geen verrassingen. De ploeg werkte stipt en proper. Verschil voor en na is enorm."', name: 'Greet Coppens', role: 'Gevelreiniging' },
+    ],
     faq: [
       ['Wat kost gevelreiniging per m²?', 'Dat hangt af van de vervuiling, de gevelsteen en de bereikbaarheid. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'],
       ['Beschadigt reinigen mijn gevel niet?', 'Niet als de juiste methode wordt gebruikt. Wij stemmen de druk en het middel af op uw gevelsteen, zodat voeg en steen intact blijven.'],
@@ -84,30 +143,51 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Hoe lang blijft mijn gevel proper?', 'Met een impregnatie blijft uw gevel jaren langer schoon. Zonder hangt het af van de ligging en de begroeiing rond de woning.'],
       ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek en heel Vlaanderen.'],
     ],
+    typeWerkOpties: ['Gevelreiniging', 'Impregneren', 'Mosbestrijding', 'Anders'],
+    finalSub: 'Praat met onze gevelspecialist',
     metaTitle: 'Gevelreiniging — zonder schade aan uw gevel | AB Bouw Groep',
     metaDesc: 'Professionele gevelreiniging in Vlaanderen. Juiste methode per gevelsteen, geen schade aan de voegen, optioneel impregneren. Gratis plaatsbezoek.',
   },
   hervoegen: {
+    slug: 'hervoegen',
     division: 'ab_gevelbekleding', typeWerk: 'AB Gevelbekleding', bronLead: 'ads:hervoegen',
-    eyebrow: 'AB Gevelbekleding · Willebroek',
-    h1: ['Gevel', 'opnieuw', 'voegen.'],
+    eyebrow: 'Uw woning verdient het beste',
+    h1: 'Uw gevel opnieuw voegen.',
     sub: 'Uitslijpen en hervoegen van uw gevel in Mechelen, Antwerpen, Lier en heel Vlaanderen. Lossende of verweerde voegen vakkundig vervangen.',
+    subBold: 'Eigen ploeg',
     heroImg: imgHervoegen,
-    offerTitle: 'Het ', offerMark: 'Hervoegen', offerSub: 'Oude voegen uitslijpen en opnieuw voegen in de juiste kleur en techniek. Vaste prijs, eigen ploeg.',
+    certLogo: { src: '/assets/logos/eternit.png', alt: 'Eternit' },
+    topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Familiebedrijf', 'Eigen ploeg'],
+    offerEyebrow: 'Over AB Bouw Groep',
+    offerH2: 'Uw erkende voegspecialist in heel Vlaanderen',
+    offerIntro: 'AB Bouw Groep is een familiebedrijf met een eigen ploeg uit Willebroek. Wij slijpen oude voegen uit en voegen opnieuw in de juiste kleur en techniek.',
     offer: [
-      ['Gratis plaatsbezoek', 'Een vakman beoordeelt de staat van uw voegen en adviseert.'],
-      ['Oude voegen volledig uitgeslepen', 'Wij slijpen de losse en verweerde voegen uit voor een duurzaam resultaat.'],
-      ['Kleur en techniek op maat', 'De nieuwe voeg afgestemd op uw gevelsteen en stijl.'],
-      ['Vaste prijs vooraf', 'Bindende offerte met duidelijke prijs per m².'],
-      ['Nette werf', 'Wij ruimen alles op en laten uw woning proper achter.'],
-      ['Eigen ploeg', 'Onze eigen mensen voeren het voegwerk uit.'],
+      'Offerte = factuur, ook bij prijsstijgingen',
+      'Gratis plaatsbezoek met beoordeling van uw voegen',
+      'Oude voegen volledig uitgeslepen voor een duurzaam resultaat',
+      'Kleur en techniek afgestemd op uw gevelsteen',
+      'Nette werf, alles proper opgeruimd',
+      'Eigen ploeg, geen onderaannemers',
     ],
     steps: [
       ['Gratis plaatsbezoek', 'Een vakman beoordeelt de staat van uw voegen en adviseert wat nodig is.'],
-      ['Vaste offerte', 'U krijgt een bindende prijs per m² voor uitslijpen en hervoegen.'],
+      ['Vaste offerte', 'U krijgt een bindende prijs per m² voor uitslijpen en hervoegen. Zo weet u exact waar u aan toe bent.'],
       ['Voegwerk door eigen ploeg', 'Wij slijpen de oude voegen uit en voegen opnieuw in de juiste kleur.'],
     ],
-    prijs: 'Hervoegen wordt geprijsd per m² en hangt af van de staat van de voegen en de bereikbaarheid van de gevel. U krijgt een vaste prijs na het gratis plaatsbezoek.',
+    whatTitle: 'Wat houdt hervoegen in?',
+    whatIntro: 'Verweerde voegen laten vocht door en tasten op termijn de muur aan. Wij slijpen ze uit en voegen opnieuw in, voor een gevel die weer decennia meegaat.',
+    what: [
+      ['Uitslijpen', 'De losse en verweerde voegen volledig uitslijpen tot een gezonde diepte.'],
+      ['Hervoegen', 'Opnieuw voegen met de juiste mortel, in een kleur die past bij uw gevelsteen.'],
+      ['Herstel voegen', 'Gedeeltelijk herstel waar enkel bepaalde zones zijn aangetast.'],
+      ['Nette afwerking', 'Strak doorgevoegd profiel, gevel proper opgeleverd zonder mortelresten.'],
+    ],
+    whatImg: imgHervoegen,
+    reviews: [
+      { text: '"Onze voegen brokkelden af en lieten vocht door. Alles uitgeslepen en opnieuw gevoegd in de juiste kleur. Gevel ziet er weer strak uit."', name: 'Davy Janssens', role: 'Volledige gevel hervoegd' },
+      { text: '"Slechts één gevel was aangetast. Eerlijk advies om enkel dat deel te doen, geen onnodig werk. Nette ploeg, vaste prijs vooraf."', name: 'Annick Verstraete', role: 'Gedeeltelijk hervoegen' },
+      { text: '"Voegwerk vakkundig gedaan, kleur perfect afgestemd op de steen. Werf elke dag proper achtergelaten. Top resultaat."', name: 'Ahmed Berraf', role: 'Herstel voegen' },
+    ],
     faq: [
       ['Wanneer moet een gevel hervoegd worden?', 'Als de voegen loskomen, verbrokkelen of diep zijn uitgesleten. Dat laat vocht door en tast op termijn de muur aan. Een plaatsbezoek geeft uitsluitsel.'],
       ['Wat kost hervoegen per m²?', 'Dat hangt af van de staat van de voegen en de bereikbaarheid. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'],
@@ -115,15 +195,60 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Moet de hele gevel hervoegd worden?', 'Niet altijd. Soms volstaat een deel van de gevel. Bij het plaatsbezoek bekijken we wat echt nodig is.'],
       ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek en heel Vlaanderen.'],
     ],
+    typeWerkOpties: ['Volledige gevel', 'Gedeeltelijk', 'Herstel voegen', 'Anders'],
+    finalSub: 'Praat met onze voegspecialist',
     metaTitle: 'Gevel hervoegen — uitslijpen en opnieuw voegen | AB Bouw Groep',
     metaDesc: 'Gevel laten hervoegen in Vlaanderen. Oude voegen uitslijpen, opnieuw voegen in de juiste kleur. Vaste prijs per m², eigen ploeg. Gratis plaatsbezoek.',
   },
 };
 
+const PHONE = CONTACT.phone.spaced;
+const PHONE_HREF = CONTACT.phone.href;
+const ADDRESS = CONTACT.address.full;
+const stars = '★★★★★';
+
+/* ── Inline SVG iconen (geen externe deps) ──────────────────────────────── */
+const Phone = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+);
+const Check = ({ s = 20 }: { s?: number }) => (
+  <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+);
+const Shield = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 12 11 14 15 10" /></svg>
+);
+const Pin = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+);
+const IcStep1 = () => (
+  <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /><path d="M9 16l2 2 4-4" /></svg>
+);
+const IcStep2 = () => (
+  <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="8" y1="13" x2="16" y2="13" /><line x1="8" y1="17" x2="13" y2="17" /></svg>
+);
+const IcStep3 = () => (
+  <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 10l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" /></svg>
+);
+const IcWhy1 = () => (
+  <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" /></svg>
+);
+const IcWhy2 = () => (
+  <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 12 11 14 15 10" /></svg>
+);
+const IcWhy3 = () => (
+  <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><polyline points="12 7 12 12 15 14" /></svg>
+);
+
+const STEP_ICONS = [IcStep1, IcStep2, IcStep3];
+
 export default function LpDienst({ slug }: { slug: string }) {
   const d = DIENSTEN[slug];
-  const [state, setState] = useState<'idle' | 'busy' | 'ok' | 'err'>('idle');
-  const formRef = useRef<HTMLFormElement>(null);
+  const [quickState, setQuickState] = useState<'idle' | 'busy' | 'ok'>('idle');
+  const [quickErr, setQuickErr] = useState('');
+  const [finalState, setFinalState] = useState<'idle' | 'busy' | 'ok'>('idle');
+  const [finalErr, setFinalErr] = useState('');
+  const quickRef = useRef<HTMLFormElement>(null);
+  const finalRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (!d) return;
@@ -132,268 +257,621 @@ export default function LpDienst({ slug }: { slug: string }) {
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     const prevDesc = m.getAttribute('content');
     m.setAttribute('content', d.metaDesc);
-    document.body.classList.add('lp-page');
+    const prevBody = document.body.className;
+    document.body.className = 'lp-page is-subpage';
     window.scrollTo(0, 0);
+
+    // Mobiel menu open/dicht via gedelegeerde click (zoals dakwerken-LP).
+    const handler = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+      if (target.closest('[data-menu-toggle]')) { document.body.classList.toggle('tr-menu-open'); return; }
+      if (target.closest('[data-menu-close]')) { document.body.classList.remove('tr-menu-open'); return; }
+      if (target.closest('.tr-mobmenu a')) { document.body.classList.remove('tr-menu-open'); }
+    };
+    document.addEventListener('click', handler);
+
     return () => {
-      document.body.classList.remove('lp-page');
+      document.body.className = prevBody;
+      document.body.classList.remove('tr-menu-open');
+      document.removeEventListener('click', handler);
       if (prevDesc) m!.setAttribute('content', prevDesc);
     };
   }, [d]);
 
   if (!d) { if (typeof window !== 'undefined') window.location.href = '/'; return null; }
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const onQuickSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const fd = new FormData(e.target as HTMLFormElement);
     const firstName = String(fd.get('firstName') || '').trim();
     const phone = String(fd.get('phone') || '').trim();
-    if (!firstName || phone.replace(/\D/g, '').length < 8) { setState('err'); return; }
-    setState('busy');
+    if (!firstName) { setQuickErr('Vul uw voornaam in.'); return; }
+    if (phone.replace(/\D/g, '').length < 8) { setQuickErr('Vul uw telefoonnummer in (minstens 8 cijfers).'); return; }
+    setQuickErr('');
+    setQuickState('busy');
     const digits = phone.replace(/\D/g, '');
     const res = await submitLead({
       source: 'landing_page', landing_division: d.division, page_path: window.location.pathname,
-      firstName, email: `lead-${digits}@abgroep.be`, phone, type_werk: d.typeWerk,
-      aanvullende_info: `Sub-service LP: ${slug}`, bron_lead: d.bronLead,
+      firstName, email: `lead-${digits || Date.now()}@abgroep.be`, phone, type_werk: d.typeWerk as Divisie,
+      aanvullende_info: `Hero-mini-form (sub-service LP: ${d.slug})`, bron_lead: `${d.bronLead}:quick`,
     });
-    setState(res.ok ? 'ok' : 'err');
+    if (res.ok) { setQuickState('ok'); }
+    else { setQuickState('idle'); setQuickErr(`Er ging iets mis. Bel ons gerust op ${PHONE}.`); }
   };
 
-  const MiniForm = (
-    <form ref={formRef} onSubmit={onSubmit} className="dienst-form" noValidate>
-      {state === 'ok' ? (
-        <div className="dienst-thanks">
-          <strong>Bedankt, we hebben uw aanvraag.</strong>
-          <span>Onze projectleider belt u binnen één werkdag.</span>
-        </div>
-      ) : (
-        <>
-          <input name="firstName" placeholder="Voornaam *" autoComplete="given-name" required />
-          <input name="phone" type="tel" inputMode="tel" placeholder="Telefoon *" autoComplete="tel" required />
-          <button type="submit" disabled={state === 'busy'}>
-            {state === 'busy' ? 'Even bezig…' : 'Vraag gratis plaatsbezoek'}
-          </button>
-          {state === 'err' && <span className="dienst-err">Vul uw voornaam en geldig telefoonnummer in, of bel {CONTACT.phone.spaced}.</span>}
-        </>
-      )}
-    </form>
-  );
+  const onFinalSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const fd = new FormData(e.target as HTMLFormElement);
+    const firstName = String(fd.get('firstName') || '').trim();
+    const phone = String(fd.get('phone') || '').trim();
+    const email = String(fd.get('email') || '').trim();
+    const typeWerkSel = String(fd.get('typeWerkSel') || '').trim();
+    const info = String(fd.get('aanvullende_info') || '').trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setFinalErr('Vul een geldig e-mailadres in.'); return; }
+    if (phone.replace(/\D/g, '').length < 8) { setFinalErr('Vul een geldig telefoonnummer in (minstens 8 cijfers).'); return; }
+    setFinalErr('');
+    setFinalState('busy');
+    const aanvullend = [typeWerkSel ? `Type werk: ${typeWerkSel}` : '', info].filter(Boolean).join(' — ') || `Sub-service LP: ${d.slug}`;
+    const res = await submitLead({
+      source: 'landing_page', landing_division: d.division, page_path: window.location.pathname,
+      firstName: firstName || undefined, email, phone, type_werk: d.typeWerk as Divisie,
+      aanvullende_info: aanvullend, bron_lead: d.bronLead,
+    });
+    if (res.ok) { setFinalState('ok'); window.location.href = `/bedankt?service=${d.slug}`; }
+    else { setFinalState('idle'); setFinalErr(`Er ging iets mis. Bel ons gerust op ${PHONE}.`); }
+  };
 
   return (
-    <main className="dienst">
-      <style>{DIENST_CSS}</style>
-      <header className="dienst-header">
-        <a href="/" className="dienst-brand"><img src={logo} alt="AB Bouw Groep" /></a>
-        <div className="dienst-header-right">
-          <a href={CONTACT.phone.href} className="dienst-phone">{CONTACT.phone.spaced}</a>
-          <a href="#aanvraag" className="dienst-header-cta">Gratis offerte</a>
+    <div className="tr">
+      <style>{LP_CSS}</style>
+
+      {/* 1. TOP BAR */}
+      <div className="tr-topbar">
+        <div className="tr-wrap">
+          <div className="tr-topbar-left">
+            {d.topbar.map((t, i) => <span key={i}>{t}</span>)}
+          </div>
+          <a className="tr-topbar-phone" href={PHONE_HREF}><Phone />{PHONE}</a>
         </div>
+      </div>
+
+      {/* 2. HEADER */}
+      <header className="tr-header">
+        <div className="tr-wrap">
+          <a href="/" aria-label="AB Bouw Groep"><img className="tr-logo" src={logo} alt="AB Bouw Groep" /></a>
+          <nav className="tr-nav">
+            <a href="#diensten">Diensten</a>
+            <a href="#werkwijze">Werkwijze</a>
+            <a href="#reviews">Reviews</a>
+            <a href="#contact">Contact</a>
+          </nav>
+          <div className="tr-header-right">
+            <div className="tr-rating">
+              <span className="tr-rating-score">4,9/5</span>
+              <span className="tr-rating-stars">{stars}</span>
+            </div>
+            <a className="tr-btn tr-headcta" href="#contact" style={{ padding: '12px 22px', fontSize: 14 }}>Gratis offerte</a>
+            <button type="button" className="tr-burger" data-menu-toggle aria-label="Menu" aria-expanded="false">
+              <span /><span /><span />
+            </button>
+          </div>
+        </div>
+        <div className="tr-mobmenu-overlay" data-menu-close />
+        <nav className="tr-mobmenu" aria-label="Mobiel menu">
+          <button type="button" className="tr-mobmenu-close" data-menu-close aria-label="Sluiten">&times;</button>
+          <a href="#diensten">Diensten</a>
+          <a href="#werkwijze">Werkwijze</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#contact">Contact</a>
+          <a className="tr-btn tr-mobmenu-cta" href="#contact">Offerte aanvragen</a>
+        </nav>
       </header>
 
-      <section className="dienst-hero" style={{ backgroundImage: `url(${d.heroImg})` }}>
-        <div className="dienst-hero-inner">
-          <h1>{d.h1.map((l, i) => <span key={i}>{l}<br /></span>)}</h1>
-          <p>{d.sub}</p>
-          <a href="#aanvraag" className="dienst-cta">Vraag gratis plaatsbezoek →</a>
-          <div className="dienst-trust">
-            <span>★★★★★ <b>4,9 / 5</b></span><span><b>124+</b> klanten</span><span><b>15 jaar</b> garantie</span>
+      {/* 3. HERO */}
+      <section className="tr-hero">
+        <div className="tr-hero-bg"><img src={d.heroImg} alt={d.h1} /></div>
+        <div className="tr-hero-inner">
+          <div className="tr-wrap">
+            <span className="tr-eyebrow">{d.eyebrow}</span>
+            <h1>{d.h1}</h1>
+            <p className="tr-hero-sub">{d.sub} <b>{d.subBold}</b>, vaste prijs, netjes afgewerkt.</p>
+            <div className="tr-certs">
+              <span className="tr-cert-pill"><Shield />VCA* gecertificeerd</span>
+              <span className="tr-cert-pill"><Check s={15} />Lid Bouwunie</span>
+              <span className="tr-cert-pill"><Shield />Verzekerd — Federale Verzekering</span>
+              <span className="tr-cert-logo"><img src={d.certLogo.src} alt={d.certLogo.alt} /></span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="dienst-quick"><div className="dienst-quick-card">
-        <div className="dienst-quick-head"><strong>Vraag gratis plaatsbezoek</strong><span>Vakman langs binnen 5 werkdagen · vaste prijs · vrijblijvend</span></div>
-        {MiniForm}
-      </div></section>
+      {/* 4. QUICK FORM */}
+      <div className="tr-quickform-shell">
+        <div className="tr-wrap">
+          <div className={`tr-quickform${quickState === 'ok' ? ' is-success' : ''}`}>
+            <span className="tr-eyebrow">Snelle aanvraag</span>
+            <h3>Vraag gratis plaatsbezoek</h3>
+            <form ref={quickRef} onSubmit={onQuickSubmit} noValidate>
+              <div className="tr-qf-grid">
+                <input type="text" name="firstName" placeholder="Voornaam" autoComplete="given-name" required />
+                <input type="tel" name="phone" placeholder="Telefoon" autoComplete="tel" required />
+                <button type="submit" className="tr-btn" disabled={quickState === 'busy'}>
+                  {quickState === 'busy' ? 'Even bezig…' : 'Verzend aanvraag'}
+                </button>
+              </div>
+            </form>
+            {quickErr && <div className="tr-qf-error" style={{ display: 'block' }}>{quickErr}</div>}
+            <div className="tr-qf-thanks">
+              <div className="tr-qf-thanks-ic"><Check s={26} /></div>
+              <h4>Bedankt, aanvraag ontvangen!</h4>
+              <p>We bellen u zo snel mogelijk terug voor uw gratis plaatsbezoek.</p>
+            </div>
+          </div>
+          <div className="tr-hero-testi">
+            <span className="tr-hero-testi-q">{d.reviews[0].text}</span>
+            <div className="tr-hero-testi-name">— {d.reviews[0].name}</div>
+          </div>
+        </div>
+      </div>
 
-      <section className="dienst-logos">
-        <div className="dienst-logos-head">Wij werken met de beste merken</div>
-        <div className="dienst-marquee">
-          <div className="dienst-marquee-track">
-            {[0, 1].map((s) => (
-              <div className="dienst-marquee-set" key={s} aria-hidden={s === 1}>
-                {['caparol', 'eternit', 'isover', 'knauf', 'isoproc', 'rectic', 'dorken', 'koramic', 'mato'].map((n) => (
-                  <img key={n} src={`/assets/logos/${n}.png`} alt={s === 0 ? n : ''} loading="lazy" />
+      {/* 5. THREE STEPS */}
+      <section className="tr-section">
+        <div className="tr-wrap">
+          <div className="tr-steps-box">
+            <h2>In 3 stappen geregeld</h2>
+            <div className="tr-steps-grid">
+              {d.steps.map(([t, sub], i) => {
+                const Ic = STEP_ICONS[i] ?? IcStep1;
+                return (
+                  <div className="tr-step" key={i}>
+                    <div className="tr-step-ic"><Ic /></div>
+                    <h3>{t}</h3>
+                    <p>{sub}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. ABOUT / CERTIFIED */}
+      <section className="tr-section" style={{ background: 'var(--bg-tint)' }}>
+        <div className="tr-wrap">
+          <div className="tr-about-grid">
+            <div className="tr-about-media">
+              <div className="tr-about-badges">
+                <span className="tr-about-badge"><img src={d.certLogo.src} alt={d.certLogo.alt} /></span>
+                <span className="tr-about-badge tr-vca">VCA*</span>
+              </div>
+              <div className="tr-about-photo"><img src={d.whatImg} alt="AB Bouw vakman aan het werk" /></div>
+            </div>
+            <div className="tr-about-body">
+              <span className="tr-eyebrow">{d.offerEyebrow}</span>
+              <h2>{d.offerH2}</h2>
+              <p className="tr-about-intro">{d.offerIntro}</p>
+              <ul className="tr-checks">
+                {d.offer.map((t, i) => (
+                  <li key={i}><Check />{i === 0 ? <span><b>{t}</b></span> : <span>{t}</span>}</li>
                 ))}
+              </ul>
+              <a className="tr-btn" href="#contact">Vraag gratis offerte</a>
+              <div className="tr-urgency">Nog enkele plaatsbezoeken vrij deze week.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. NUMBERS BAR */}
+      <section className="tr-numbers">
+        <div className="tr-num"><div className="tr-num-big">15 jaar</div><div className="tr-num-lbl">ervaring</div></div>
+        <div className="tr-num"><div className="tr-num-big">100%</div><div className="tr-num-lbl">eigen ploeg</div></div>
+        <div className="tr-num"><div className="tr-num-big">Vaste prijs</div><div className="tr-num-lbl">offerte = factuur</div></div>
+        <div className="tr-num"><div className="tr-num-big">Gratis</div><div className="tr-num-lbl">plaatsbezoek</div></div>
+      </section>
+
+      {/* 8. SERVICES / WAT HOUDT HET IN */}
+      <section className="tr-section tr-services" id="diensten">
+        <div className="tr-wrap">
+          <div className="tr-head">
+            <span className="tr-eyebrow">Onze aanpak</span>
+            <h2>{d.whatTitle}</h2>
+            <p style={{ color: 'rgba(255,255,255,0.74)', fontSize: 15, lineHeight: 1.6, marginTop: 14 }}>{d.whatIntro}</p>
+          </div>
+          <div className="tr-svc-grid">
+            {d.what.map(([t, sub], i) => (
+              <div className="tr-svc-card" key={i}>
+                <div className="tr-svc-body"><h3>{t}</h3><p>{sub}</p></div>
+              </div>
+            ))}
+          </div>
+          <div className="tr-foot">
+            <a className="tr-btn" href="#contact">Vraag gratis offerte</a>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. WHY CHOOSE */}
+      <section className="tr-section tr-why" id="werkwijze">
+        <div className="tr-wrap">
+          <div className="tr-head">
+            <span className="tr-eyebrow">Waarom AB Bouw</span>
+            <h2>Waarom kiezen voor AB Bouw Groep</h2>
+          </div>
+          <div className="tr-why-grid">
+            <div className="tr-why-col">
+              <div className="tr-why-ic"><IcWhy1 /></div>
+              <h3>Vakmanschap</h3>
+              <p>Een eigen, ervaren ploeg. Geen onderaannemers, wel mensen die hun werk graag goed doen.</p>
+            </div>
+            <div className="tr-why-col">
+              <div className="tr-why-ic"><IcWhy2 /></div>
+              <h3>Vaste prijs-garantie</h3>
+              <p>Wat u tekent, betaalt u. Ook als materiaalprijzen stijgen. Geen naverrekening achteraf.</p>
+            </div>
+            <div className="tr-why-col">
+              <div className="tr-why-ic"><IcWhy3 /></div>
+              <h3>Stipt & betrouwbaar</h3>
+              <p>U krijgt een concrete startdatum in de offerte. Wij komen wanneer we het zeggen.</p>
+            </div>
+          </div>
+          <div className="tr-foot"><a className="tr-btn" href="#contact">Vraag gratis offerte</a></div>
+        </div>
+      </section>
+
+      {/* 10. REVIEWS */}
+      <section className="tr-section tr-reviews" id="reviews">
+        <div className="tr-wrap">
+          <div className="tr-head">
+            <span className="tr-eyebrow">Wat klanten zeggen</span>
+            <h2>Tevreden klanten in heel Vlaanderen</h2>
+          </div>
+          <div className="tr-rev-grid">
+            {d.reviews.map((r, i) => (
+              <div className="tr-rev-card" key={i}>
+                <div className="tr-rev-stars">{stars}</div>
+                <p>{r.text}</p>
+                <div className="tr-rev-foot">
+                  <div className="tr-rev-name">{r.name}</div>
+                  <div className="tr-rev-role">{r.role}</div>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="dienst-offer">
-        <div className="dienst-offer-head">
-          <div className="dienst-eyebrow dark">Wat u bij ons krijgt</div>
-          <h2>{d.offerTitle}<mark>{d.offerMark}</mark>-pakket</h2>
-          <p>{d.offerSub}</p>
-        </div>
-        <div className="dienst-offer-grid">
-          {d.offer.map(([t, sub], i) => (
-            <div className="dienst-offer-item" key={i}>
-              <span className="dienst-check">✓</span>
-              <span><strong>{t}</strong>{sub}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="dienst-steps">
-        <h2>Zo verloopt het</h2>
-        <div className="dienst-steps-grid">
-          {d.steps.map(([t, sub], i) => (
-            <div className="dienst-step" key={i}>
-              <span className="dienst-step-num">{i + 1}</span>
-              <strong>{t}</strong>
-              <span className="dienst-step-desc">{sub}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="dienst-why">
-        <div className="dienst-why-inner">
-          <h2>Waarom AB Bouw</h2>
-          <div className="dienst-why-grid">
-            <div><strong>Eigen ploeg</strong>Geen onderaannemers. Onze eigen mensen voeren het werk uit.</div>
-            <div><strong>Geen tussenpartij</strong>U praat direct met de aannemer die het werk doet, niet met een doorverkoper.</div>
-            <div><strong>Vaste prijs</strong>Een bindende offerte op papier. De prijs die u tekent, betaalt u.</div>
-            <div><strong>Premie geregeld</strong>Wij dienen waar mogelijk uw Mijn VerbouwPremie-dossier voor u in.</div>
+      {/* 11. FAQ */}
+      <section className="tr-section" id="faq">
+        <div className="tr-wrap">
+          <div className="tr-faq-box">
+            <h2>Veelgestelde vragen</h2>
+            {d.faq.map(([q, a], i) => (
+              <details className="tr-faq-item" key={i}>
+                <summary>{q}</summary>
+                <p>{a}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="dienst-prijs">
-        <h2>Wat kost het?</h2>
-        <p>{d.prijs}</p>
-        <a href="#aanvraag" className="dienst-cta dark">Vraag uw vaste prijs →</a>
+      {/* 12. FINAL CTA */}
+      <section className="tr-section tr-final" id="contact">
+        <div className="tr-wrap">
+          <h2>Klaar om te starten?</h2>
+          <div className="tr-final-grid">
+            <div className="tr-final-contact">
+              <h3>Neem contact op</h3>
+              <div className="tr-big">{d.finalSub}</div>
+              <div className="tr-line"><Pin /><span>{ADDRESS}</span></div>
+              <div className="tr-line"><Phone /><span>Telefoon: <a href={PHONE_HREF}>{PHONE}</a></span></div>
+            </div>
+            <div className={`tr-final-card${finalState === 'ok' ? ' is-success' : ''}${finalErr ? ' is-error' : ''}`}>
+              <h3>Vraag uw gratis offerte</h3>
+              <div className="tr-safe"><Shield />Uw gegevens zijn 100% veilig</div>
+              <form ref={finalRef} onSubmit={onFinalSubmit} noValidate>
+                <div className="tr-final-row">
+                  <input type="text" name="firstName" placeholder="Voornaam" autoComplete="given-name" required />
+                  <input type="tel" name="phone" placeholder="Telefoon" autoComplete="tel" required />
+                </div>
+                <input type="email" name="email" placeholder="E-mail" autoComplete="email" required />
+                <select name="typeWerkSel" defaultValue="" required>
+                  <option value="" disabled>Type werk</option>
+                  {d.typeWerkOpties.map((o) => <option key={o} value={o}>{o}</option>)}
+                </select>
+                <textarea name="aanvullende_info" placeholder="Korte omschrijving" />
+                <button type="submit" className="tr-btn" disabled={finalState === 'busy'}>
+                  {finalState === 'busy' ? 'Even bezig…' : 'Vraag gratis offerte'}
+                </button>
+              </form>
+              {finalErr && <div className="tr-final-err">{finalErr}</div>}
+              <div className="tr-final-thanks">
+                <h4>Bedankt, aanvraag ontvangen!</h4>
+                <p>We nemen zo snel mogelijk contact met u op.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section className="dienst-reviews">
-        {[['Stijn D.', 'Mechelen'], ['Greet V.', 'Lier'], ['Marc P.', 'Willebroek']].map(([naam, stad], i) => (
-          <figure key={i}><figcaption><b>{naam}</b> uit {stad}<span>★★★★★</span></figcaption></figure>
-        ))}
-      </section>
-
-      <section className="dienst-faq">
-        <h2>Veelgestelde vragen</h2>
-        {d.faq.map(([q, a], i) => (
-          <details key={i}><summary>{q}</summary><p>{a}</p></details>
-        ))}
-      </section>
-
-      <section id="aanvraag" className="dienst-form-section">
-        <h2>Vraag uw gratis plaatsbezoek aan</h2>
-        <p>Antwoord binnen één werkdag. Vrijblijvend en gratis.</p>
-        <div className="dienst-form-card">{MiniForm}</div>
-        <a href={CONTACT.phone.href} className="dienst-call">of bel {CONTACT.phone.spaced}</a>
-      </section>
-
-      <footer className="dienst-footer">AB Bouw Groep · Industrieweg 14, 2830 Willebroek · {CONTACT.phone.spaced}</footer>
-    </main>
+      {/* 13. FOOTER */}
+      <footer className="tr-footer">
+        <div className="tr-wrap">
+          <div className="tr-footer-top">
+            <span className="tr-footer-wordmark">AB Bouw Groep</span>
+            <div className="tr-footer-links">
+              <a href="#diensten">Diensten</a>
+              <a href="#werkwijze">Werkwijze</a>
+              <a href="#reviews">Reviews</a>
+              <a href="#contact">Contact</a>
+              <a href={PHONE_HREF}>{PHONE}</a>
+            </div>
+          </div>
+          <div className="tr-footer-info">AB Bouw Groep · {ADDRESS} · {PHONE}</div>
+          <div className="tr-footer-copy">© {new Date().getFullYear()} AB Bouw Groep — Erkend vakbedrijf in heel Vlaanderen. Alle rechten voorbehouden.</div>
+        </div>
+      </footer>
+    </div>
   );
 }
 
-const DIENST_CSS = `
-.dienst { font-family: var(--font-body, system-ui, sans-serif); color: var(--ink, #1a1f2b); background: #fff; }
-.dienst-header { position: absolute; top: 0; left: 0; right: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 16px clamp(16px,4vw,48px); }
-.dienst-brand { background: #fff; border-radius: 6px; padding: 7px 13px; box-shadow: 0 4px 14px rgba(8,12,22,0.18); display: inline-flex; }
-.dienst-brand img { height: 28px; display: block; }
-.dienst-phone { color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); padding: 9px 16px; border-radius: 4px; backdrop-filter: blur(8px); }
-.dienst-header-right { display: flex; align-items: center; gap: 12px; }
-.dienst-header-cta { background: #d98c03; color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; padding: 10px 17px; border-radius: 4px; white-space: nowrap; transition: background .2s ease; }
-.dienst-header-cta:hover { background: #c47a02; }
-/* Bewegende merk-marquee (zoals homepage) */
-.dienst-logos { background: #f6f4f0; border-top: 1px solid #e3e1db; border-bottom: 1px solid #e3e1db; padding: 26px 0 30px; margin-top: 44px; }
-.dienst-logos-head { text-align: center; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #8a93a0; margin-bottom: 18px; }
-.dienst-marquee { overflow: hidden; position: relative; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
-.dienst-marquee-track { display: flex; width: max-content; animation: dienst-marquee 42s linear infinite; }
-.dienst-marquee:hover .dienst-marquee-track { animation-play-state: paused; }
-.dienst-marquee-set { display: flex; align-items: center; gap: 56px; padding: 0 28px; flex-shrink: 0; }
-.dienst-marquee-set img { height: 32px; width: auto; object-fit: contain; filter: grayscale(1) opacity(0.5); transition: filter .3s ease; }
-.dienst-marquee-set img:hover { filter: grayscale(0) opacity(1); }
-@keyframes dienst-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@media (prefers-reduced-motion: reduce) { .dienst-marquee-track { animation: none; } }
-.dienst-hero { position: relative; min-height: 86vh; background-size: cover; background-position: center; display: flex; align-items: center; }
-.dienst-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(9,14,24,0.97) 0%, rgba(9,14,24,0.95) 30%, rgba(9,14,24,0.78) 46%, rgba(9,14,24,0.30) 64%, rgba(9,14,24,0.04) 82%, rgba(9,14,24,0) 100%); }
-.dienst-hero-inner { position: relative; z-index: 2; max-width: 1180px; margin: 0 auto; padding: 100px clamp(16px,4vw,48px) 80px; width: 100%; }
-.dienst-hero-inner > * { max-width: 540px; }
-.dienst-eyebrow { font-size: 12.5px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #f0a83a; margin-bottom: 18px; }
-.dienst-eyebrow.dark { color: #d98c03; }
-.dienst-hero h1 { font-family: var(--font-display, inherit); font-size: clamp(38px,4.6vw,60px); font-weight: 700; line-height: 1.0; letter-spacing: -0.022em; color: #fff; margin: 0 0 20px; }
-.dienst-hero h1 br { display: block; }
-.dienst-hero p { font-size: clamp(15px,1.15vw,17px); line-height: 1.6; color: rgba(255,255,255,0.82); margin: 0 0 28px; max-width: 470px; }
-.dienst-cta { display: inline-flex; align-items: center; gap: 8px; background: #d98c03; color: #fff; font-weight: 700; font-size: 15px; padding: 15px 28px; border-radius: 4px; text-decoration: none; box-shadow: none; }
-.dienst-cta:hover { background: #c47a02; }
-.dienst-trust { display: flex; flex-wrap: wrap; gap: 26px; margin-top: 26px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 13.5px; }
-.dienst-trust b { font-weight: 700; }
-.dienst-quick { max-width: 880px; margin: -52px auto 0; padding: 0 16px; position: relative; z-index: 5; }
-.dienst-quick-card { background: #fff; border-radius: 6px; padding: 24px 26px; box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 14px 34px -26px rgba(10,22,40,0.16); border-top: 3px solid #d98c03; }
-.dienst-quick-head { margin-bottom: 14px; }
-.dienst-quick-head strong { display: block; font-family: var(--font-display, inherit); font-size: 18px; color: var(--navy, #0a1628); }
-.dienst-quick-head span { font-size: 12.5px; color: #5a6473; }
-.dienst-form { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; }
-.dienst-form input { padding: 14px 15px; border: 1px solid #d7dce3; border-radius: 6px; font: inherit; font-size: 15px; }
-.dienst-form input:focus { outline: none; border-color: #d98c03; box-shadow: 0 0 0 3px rgba(217,140,3,0.16); }
-.dienst-form button { background: #d98c03; color: #fff; border: none; border-radius: 6px; font: inherit; font-weight: 700; font-size: 14.5px; padding: 14px 22px; cursor: pointer; white-space: nowrap; }
-.dienst-form button:hover { background: #c47a02; }
-.dienst-form button:disabled { opacity: 0.6; }
-.dienst-err { grid-column: 1/-1; color: #c4523f; font-size: 13px; }
-.dienst-thanks { grid-column: 1/-1; text-align: center; padding: 14px; }
-.dienst-thanks strong { display: block; font-size: 17px; color: var(--navy, #0a1628); }
-.dienst-thanks span { font-size: 14px; color: #5a6473; }
-.dienst-offer { max-width: 1180px; margin: 0 auto; padding: 56px clamp(16px,4vw,48px) 8px; }
-.dienst-offer-head { max-width: 720px; margin-bottom: 28px; }
-.dienst-offer-head h2 { font-family: var(--font-display, inherit); font-size: clamp(24px,3vw,34px); font-weight: 700; color: var(--navy, #0a1628); letter-spacing: -0.02em; line-height: 1.12; margin: 0 0 10px; }
-.dienst-offer-head mark { background: linear-gradient(transparent 60%, rgba(217,140,3,0.3) 60%); color: inherit; }
-.dienst-offer-head p { font-size: 15px; color: #5a6473; line-height: 1.6; margin: 0; }
-.dienst-offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 32px; background: #fff; border: 1px solid rgba(10,22,40,0.08); border-radius: 6px; padding: 30px 32px; box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 14px 34px -26px rgba(10,22,40,0.16); }
-.dienst-offer-item { display: flex; gap: 13px; align-items: flex-start; font-size: 14.5px; line-height: 1.5; }
-.dienst-offer-item strong { display: block; color: var(--navy, #0a1628); margin-bottom: 1px; }
-.dienst-check { width: 24px; height: 24px; border-radius: 4px; background: rgba(217,140,3,0.12); color: #d98c03; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
-.dienst-steps { max-width: 1180px; margin: 0 auto; padding: 48px clamp(16px,4vw,48px) 8px; }
-.dienst-steps h2 { font-family: var(--font-display, inherit); font-size: clamp(22px,2.6vw,30px); color: var(--navy, #0a1628); margin: 0 0 24px; }
-.dienst-steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-.dienst-step { background: #f7f8fa; border-radius: 6px; padding: 24px; }
-.dienst-step-num { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: var(--navy, #0a1628); color: #fff; font-weight: 700; margin-bottom: 12px; }
-.dienst-step strong { display: block; color: var(--navy, #0a1628); font-size: 16px; margin-bottom: 5px; }
-.dienst-step-desc { font-size: 14px; color: #5a6473; line-height: 1.55; }
-.dienst-why { background: var(--navy, #0a1628); color: #fff; margin-top: 48px; }
-.dienst-why-inner { max-width: 1180px; margin: 0 auto; padding: 52px clamp(16px,4vw,48px); }
-.dienst-why h2 { font-family: var(--font-display, inherit); font-size: clamp(22px,2.6vw,30px); margin: 0 0 24px; }
-.dienst-why-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
-.dienst-why-grid div { font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.78); }
-.dienst-why-grid strong { display: block; color: #fff; font-size: 16px; margin-bottom: 6px; }
-.dienst-prijs { max-width: 760px; margin: 0 auto; padding: 52px clamp(16px,4vw,48px); text-align: center; }
-.dienst-prijs h2 { font-family: var(--font-display, inherit); font-size: clamp(22px,2.6vw,30px); color: var(--navy, #0a1628); margin: 0 0 14px; }
-.dienst-prijs p { font-size: 15.5px; color: #404a5a; line-height: 1.65; margin: 0 0 24px; }
-.dienst-cta.dark { box-shadow: none; }
-.dienst-reviews { max-width: 1180px; margin: 0 auto; padding: 8px clamp(16px,4vw,48px) 44px; display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-.dienst-reviews figure { margin: 0; display: flex; align-items: center; gap: 12px; background: #f7f8fa; border-radius: 6px; padding: 14px; }
-.dienst-reviews img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
-.dienst-reviews figcaption { font-size: 14px; }
-.dienst-reviews figcaption b { display: block; color: var(--navy, #0a1628); }
-.dienst-reviews figcaption span { color: #f5b301; font-size: 12px; }
-.dienst-faq { max-width: 760px; margin: 0 auto; padding: 16px clamp(16px,4vw,48px) 56px; }
-.dienst-faq h2 { font-family: var(--font-display, inherit); font-size: clamp(22px,2.6vw,30px); color: var(--navy, #0a1628); margin: 0 0 20px; }
-.dienst-faq details { border-bottom: 1px solid #e7eaef; padding: 14px 0; }
-.dienst-faq summary { font-weight: 600; font-size: 15.5px; color: var(--navy, #0a1628); cursor: pointer; }
-.dienst-faq p { font-size: 14.5px; color: #5a6473; line-height: 1.6; margin: 10px 0 0; }
-.dienst-form-section { background: var(--navy, #0a1628); color: #fff; text-align: center; padding: 56px clamp(16px,4vw,48px); }
-.dienst-form-section h2 { font-family: var(--font-display, inherit); font-size: clamp(24px,3vw,34px); margin: 0 0 8px; }
-.dienst-form-section > p { color: rgba(255,255,255,0.75); margin: 0 0 24px; }
-.dienst-form-card { background: #fff; max-width: 620px; margin: 0 auto; border-radius: 6px; padding: 24px; }
-.dienst-call { display: inline-block; margin-top: 16px; color: #f0a83a; font-weight: 600; text-decoration: none; }
-.dienst-footer { background: #070d16; color: rgba(255,255,255,0.6); text-align: center; padding: 24px; font-size: 13px; }
-@media (max-width: 720px) {
-  .dienst-hero { min-height: 78vh; }
-  .dienst-hero::after { background: linear-gradient(0deg, rgba(9,14,24,0.94) 0%, rgba(9,14,24,0.74) 40%, rgba(9,14,24,0.3) 100%); }
-  .dienst-form { grid-template-columns: 1fr; }
-  .dienst-offer-grid { grid-template-columns: 1fr; gap: 14px; padding: 22px 20px; }
-  .dienst-reviews { grid-template-columns: 1fr; }
-  .dienst-steps-grid { grid-template-columns: 1fr; }
-  .dienst-why-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
-  .dienst-phone { display: none; }
-  .dienst-header-cta { padding: 9px 14px; font-size: 13px; }
-  .dienst-marquee-set { gap: 40px; padding: 0 20px; }
-  .dienst-marquee-set img { height: 28px; }
+const LP_CSS = `
+.tr { font-family: var(--font-body); color: #1d2733; }
+.tr * { box-sizing: border-box; }
+.tr .tr-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.tr h1, .tr h2, .tr h3, .tr h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+.tr a { text-decoration: none; }
+
+.tr-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  background: ${ORANGE}; color: #fff; border: none; cursor: pointer;
+  font-family: var(--font-display); font-weight: 700; font-size: 15px;
+  letter-spacing: 0.01em; padding: 15px 30px; border-radius: 6px;
+  transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+  box-shadow: 0 10px 24px -12px rgba(217,140,3,0.6);
 }
+.tr-btn:hover { background: ${ORANGE_H}; transform: translateY(-1px); box-shadow: 0 16px 30px -12px rgba(217,140,3,0.7); }
+.tr-btn:active { transform: translateY(0); }
+.tr-btn:disabled { opacity: .65; cursor: wait; }
+.tr-eyebrow { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: 12px;
+  letter-spacing: 0.14em; text-transform: uppercase; color: ${ORANGE}; margin-bottom: 14px; }
+.tr-urgency { margin-top: 14px; font-size: 13px; color: ${ORANGE_H}; font-weight: 600; }
+.tr-section { padding: 84px 0; }
+
+/* 1 — TOP BAR */
+.tr-topbar { background: ${NAVY}; color: rgba(255,255,255,0.85); font-size: 13px; }
+.tr-topbar .tr-wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 40px; }
+.tr-topbar-left { display: inline-flex; align-items: center; gap: 0; flex-wrap: wrap; }
+.tr-topbar-left span { padding: 4px 0; }
+.tr-topbar-left span + span::before { content: "·"; margin: 0 12px; color: rgba(255,255,255,0.4); }
+.tr-topbar-phone { display: inline-flex; align-items: center; gap: 8px; background: ${ORANGE}; color: #fff;
+  font-weight: 700; padding: 7px 16px; border-radius: 999px; white-space: nowrap; }
+.tr-topbar-phone svg { width: 15px; height: 15px; }
+@media (max-width: 760px) { .tr-topbar-left span:not(:first-child) { display: none; } }
+
+/* 2 — HEADER */
+.tr-header { background: #fff; border-bottom: 1px solid #ececec; position: sticky; top: 0; z-index: 60; }
+.tr-header .tr-wrap { display: flex; align-items: center; gap: 24px; min-height: 74px; }
+.tr-logo { height: 38px; width: auto; display: block; }
+.tr-nav { display: flex; align-items: center; gap: 28px; margin: 0 auto; }
+.tr-nav a { color: ${NAVY}; font-family: var(--font-display); font-weight: 600; font-size: 15px; transition: color .18s; }
+.tr-nav a:hover { color: ${ORANGE}; }
+.tr-header-right { display: flex; align-items: center; gap: 18px; margin-left: auto; }
+.tr-rating { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.1; }
+.tr-rating-score { font-family: var(--font-display); font-weight: 700; font-size: 14px; color: ${NAVY}; }
+.tr-rating-stars { color: ${ORANGE}; font-size: 13px; letter-spacing: 1px; }
+.tr-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; padding: 10px; background: none; border: 0; cursor: pointer; }
+.tr-burger span { display: block; width: 100%; height: 2.5px; background: ${NAVY}; border-radius: 2px; transition: transform .25s var(--ease-out-quart, ease), opacity .2s; }
+.tr-mobmenu-overlay { display: none; }
+.tr-mobmenu { display: none; }
+@media (max-width: 980px) {
+  .tr-nav { display: none; }
+  .tr-rating { display: none; }
+  .tr-headcta { display: none; }
+  .tr-burger { display: flex; }
+  .tr-logo { height: 52px; }
+  .tr-header .tr-wrap { min-height: 66px; gap: 12px; }
+  .tr-mobmenu-overlay { display: block; position: fixed; inset: 0; background: rgba(10,22,40,0.55); opacity: 0; pointer-events: none; transition: opacity .28s ease; z-index: 150; }
+  body.tr-menu-open .tr-mobmenu-overlay { opacity: 1; pointer-events: auto; }
+  .tr-mobmenu { display: flex; flex-direction: column; gap: 2px; position: fixed; top: 0; right: 0; bottom: 0; width: min(84vw, 360px); background: #fff; box-shadow: -24px 0 60px -24px rgba(0,0,0,0.45); transform: translateX(100%); transition: transform .3s var(--ease-out-quart, ease); z-index: 200; padding: 30px 26px 30px; overflow-y: auto; }
+  body.tr-menu-open .tr-mobmenu { transform: translateX(0); }
+  body.tr-menu-open { overflow: hidden; }
+  .tr-mobmenu-close { align-self: flex-end; background: none; border: 0; font-size: 34px; line-height: 1; color: ${NAVY}; cursor: pointer; padding: 0 4px 6px; margin-bottom: 6px; }
+  .tr-mobmenu a:not(.tr-btn) { font-family: var(--font-display); font-weight: 600; font-size: 19px; color: ${NAVY}; padding: 15px 4px; border-bottom: 1px solid #efece5; }
+  .tr-mobmenu a:not(.tr-btn):active { color: ${ORANGE}; }
+  .tr-mobmenu-cta { margin-top: 22px; justify-content: center; text-align: center; padding: 16px; font-size: 16px; }
+  body.tr-menu-open .tr-burger span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  body.tr-menu-open .tr-burger span:nth-child(2) { opacity: 0; }
+  body.tr-menu-open .tr-burger span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+}
+
+/* 3 — HERO */
+.tr-hero { position: relative; background: ${NAVY}; color: #fff; overflow: hidden; }
+.tr-hero-bg { position: absolute; inset: 0; }
+.tr-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+.tr-hero-bg::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(10,22,40,0.86) 0%, rgba(10,22,40,0.72) 45%, rgba(10,22,40,0.9) 100%); }
+.tr-hero-inner { position: relative; z-index: 2; text-align: center; padding: 96px 0 150px; }
+.tr-hero h1 { font-size: clamp(34px, 5.2vw, 60px); line-height: 1.06; font-weight: 700; color: #fff; margin: 0 auto 20px; max-width: 920px; }
+.tr-hero-sub { font-size: clamp(15px, 1.4vw, 18px); line-height: 1.6; color: rgba(255,255,255,0.86);
+  max-width: 700px; margin: 0 auto 30px; }
+.tr-hero-sub b { color: #fff; }
+.tr-certs { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 14px; max-width: 880px; margin: 0 auto; }
+.tr-cert-pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 8px;
+  font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.92); white-space: nowrap; }
+.tr-cert-pill svg { color: ${ORANGE}; flex-shrink: 0; }
+.tr-cert-logo { display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 16px;
+  background: rgba(255,255,255,0.94); border-radius: 8px; }
+.tr-cert-logo img { height: 22px; width: auto; object-fit: contain; filter: grayscale(1); opacity: .8; }
+@media (max-width: 720px) { .tr-hero-inner { padding: 66px 0 120px; } .tr-cert-pill { height: 38px; padding: 0 13px; font-size: 12px; } }
+
+/* 4 — QUICK FORM */
+.tr-quickform-shell { background: #fff; }
+.tr-quickform { background: #fff; max-width: 880px; margin: -88px auto 0; position: relative; z-index: 5;
+  border: 1px solid #e7e4dd; border-radius: 10px; box-shadow: 0 26px 60px -28px rgba(10,22,40,0.4); padding: 34px 40px 36px; }
+.tr-quickform .tr-eyebrow { text-align: center; display: block; margin-bottom: 6px; }
+.tr-quickform h3 { text-align: center; font-size: 26px; font-weight: 700; color: ${NAVY}; margin: 0 0 22px; }
+.tr-qf-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; align-items: stretch; }
+.tr-qf-grid input { width: 100%; padding: 15px 16px; border: 1px solid #d9d6cd; border-radius: 6px; font: inherit;
+  font-size: 15px; color: #1d2733; background: #fbfaf7; transition: border-color .18s, box-shadow .18s; }
+.tr-qf-grid input:focus { outline: none; border-color: ${ORANGE}; box-shadow: 0 0 0 3px rgba(217,140,3,0.16); background: #fff; }
+.tr-qf-grid .tr-btn { white-space: nowrap; }
+.tr-qf-error { margin-top: 12px; font-size: 13.5px; color: #b3261e; background: #fdecea;
+  border: 1px solid rgba(179,38,30,0.2); border-radius: 6px; padding: 9px 12px; }
+.tr-qf-thanks { display: none; text-align: center; padding: 16px 0 6px; }
+.tr-qf-thanks-ic { width: 54px; height: 54px; border-radius: 50%; background: #d6f3e4; color: #0f7a4a;
+  display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+.tr-qf-thanks h4 { font-size: 21px; color: ${NAVY}; margin: 0 0 6px; }
+.tr-qf-thanks p { font-size: 14.5px; color: #5b6373; margin: 0; }
+.tr-quickform.is-success form, .tr-quickform.is-success .tr-eyebrow,
+.tr-quickform.is-success h3, .tr-quickform.is-success .tr-qf-error { display: none; }
+.tr-quickform.is-success .tr-qf-thanks { display: block; }
+.tr-hero-testi { max-width: 760px; margin: 30px auto 0; text-align: center; padding: 0 16px 8px; }
+.tr-hero-testi-q { font-size: 15.5px; line-height: 1.65; color: #3a4252; font-style: italic;
+  background: linear-gradient(transparent 60%, rgba(217,140,3,0.22) 60%); display: inline; padding: 1px 2px; }
+.tr-hero-testi-name { margin-top: 14px; font-family: var(--font-display); font-weight: 700; color: ${NAVY}; font-size: 14.5px; }
+@media (max-width: 720px) {
+  .tr-quickform { margin: -72px 14px 0; padding: 22px 18px 24px; }
+  .tr-quickform h3 { font-size: 21px; }
+  .tr-qf-grid { grid-template-columns: 1fr; }
+}
+
+/* 5 — THREE STEPS */
+.tr-steps-box { border: 2px solid ${ORANGE}; border-radius: 16px; padding: 48px 44px 52px; max-width: 1060px; margin: 0 auto; }
+.tr-steps-box h2 { text-align: center; font-size: clamp(26px, 3vw, 36px); color: ${NAVY}; font-weight: 700; margin: 0 0 44px; }
+.tr-steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+.tr-step { text-align: center; }
+.tr-step-ic { width: 56px; height: 56px; margin: 0 auto 18px; color: ${ORANGE}; display: flex; align-items: center; justify-content: center; }
+.tr-step-ic svg { width: 44px; height: 44px; }
+.tr-step h3 { font-size: 19px; color: ${NAVY}; font-weight: 700; margin: 0 0 10px; }
+.tr-step p { font-size: 14.5px; line-height: 1.62; color: #5b6373; margin: 0; }
+@media (max-width: 820px) { .tr-steps-grid { grid-template-columns: 1fr; gap: 30px; } .tr-steps-box { padding: 34px 22px 38px; } }
+
+/* 6 — ABOUT / CERTIFIED */
+.tr-about-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: center; }
+.tr-about-media { position: relative; }
+.tr-about-badges { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.tr-about-badge { display: inline-flex; align-items: center; justify-content: center; height: 52px; padding: 0 16px;
+  background: #fff; border: 1px solid #e7e4dd; border-radius: 8px; box-shadow: 0 8px 20px -14px rgba(10,22,40,0.3); }
+.tr-about-badge img { height: 28px; width: auto; object-fit: contain; }
+.tr-about-badge.tr-vca { font-family: var(--font-display); font-weight: 800; font-size: 18px; color: ${NAVY}; letter-spacing: -0.01em; }
+.tr-about-photo { border-radius: 8px; overflow: hidden; border: 1px solid #e7e4dd; box-shadow: 0 26px 54px -30px rgba(10,22,40,0.4); }
+.tr-about-photo img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+.tr-about-body h2 { font-size: clamp(27px, 3.2vw, 38px); color: ${NAVY}; font-weight: 700; line-height: 1.12; margin: 0 0 16px; }
+.tr-about-intro { font-size: 15.5px; line-height: 1.7; color: #4a5468; margin: 0 0 22px; }
+.tr-checks { list-style: none; padding: 0; margin: 0 0 28px; }
+.tr-checks li { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; font-size: 15px; color: #2b3543; line-height: 1.5; }
+.tr-checks li svg { color: ${ORANGE}; flex-shrink: 0; margin-top: 2px; }
+.tr-checks li b { background: linear-gradient(transparent 62%, rgba(217,140,3,0.28) 62%); padding: 0 2px; font-weight: 700; }
+@media (max-width: 900px) { .tr-about-grid { grid-template-columns: 1fr; gap: 36px; } }
+
+/* 7 — NUMBERS BAR */
+.tr-numbers { display: grid; grid-template-columns: repeat(4, 1fr); }
+.tr-num { padding: 40px 28px; text-align: center; color: #fff; }
+.tr-num:nth-child(odd) { background: ${NAVY}; }
+.tr-num:nth-child(even) { background: ${ORANGE}; }
+.tr-num-big { font-family: var(--font-display); font-weight: 800; font-size: clamp(26px, 3.4vw, 40px); line-height: 1; }
+.tr-num-lbl { margin-top: 8px; font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.92); }
+@media (max-width: 720px) { .tr-numbers { grid-template-columns: 1fr 1fr; } }
+
+/* 8 — SERVICES (dark) */
+.tr-services { background: ${NAVY}; color: #fff; }
+.tr-services .tr-head { text-align: center; max-width: 720px; margin: 0 auto 50px; }
+.tr-services .tr-head h2 { font-size: clamp(27px, 3.2vw, 40px); color: #fff; font-weight: 700; margin: 0; }
+.tr-svc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.tr-svc-card { background: ${NAVY2}; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; overflow: hidden;
+  display: flex; flex-direction: column; transition: transform .25s ease, border-color .25s ease; }
+.tr-svc-card:hover { transform: translateY(-4px); border-color: rgba(217,140,3,0.5); }
+.tr-svc-body { padding: 26px 22px 28px; }
+.tr-svc-body h3 { font-size: 18px; color: #fff; font-weight: 700; margin: 0 0 9px; }
+.tr-svc-body p { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.74); margin: 0; }
+.tr-services .tr-foot { text-align: center; margin-top: 46px; }
+@media (max-width: 1040px) { .tr-svc-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .tr-svc-grid { grid-template-columns: 1fr; } }
+
+/* 10 — WHY CHOOSE */
+.tr-why { text-align: center; background: var(--bg-tint); }
+.tr-why .tr-head { max-width: 720px; margin: 0 auto 50px; }
+.tr-why .tr-head h2 { font-size: clamp(27px, 3.2vw, 40px); color: ${NAVY}; font-weight: 700; margin: 0; }
+.tr-why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; max-width: 1000px; margin: 0 auto; }
+.tr-why-col { padding: 0 12px; }
+.tr-why-ic { width: 54px; height: 54px; margin: 0 auto 18px; color: ${ORANGE}; display: flex; align-items: center; justify-content: center; }
+.tr-why-ic svg { width: 42px; height: 42px; }
+.tr-why-col h3 { font-size: 18px; color: ${NAVY}; font-weight: 700; margin: 0 0 10px; }
+.tr-why-col p { font-size: 14.5px; line-height: 1.62; color: #5b6373; margin: 0; }
+.tr-why .tr-foot { margin-top: 46px; }
+@media (max-width: 820px) { .tr-why-grid { grid-template-columns: 1fr; gap: 30px; } }
+
+/* 11 — REVIEWS */
+.tr-reviews { background: #fff; }
+.tr-reviews .tr-head { text-align: center; max-width: 720px; margin: 0 auto 50px; }
+.tr-reviews .tr-head h2 { font-size: clamp(27px, 3.2vw, 40px); color: ${NAVY}; font-weight: 700; margin: 0; }
+.tr-rev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.tr-rev-card { background: #fff; border: 1px solid #e7e4dd; border-radius: 10px; padding: 28px 26px 26px;
+  display: flex; flex-direction: column; }
+.tr-rev-stars { color: ${ORANGE}; font-size: 15px; letter-spacing: 2px; margin-bottom: 14px; }
+.tr-rev-card p { font-size: 14.5px; line-height: 1.65; color: #3a4252; margin: 0 0 20px; flex: 1; }
+.tr-rev-foot { border-top: 1px solid #eeede4; padding-top: 16px; }
+.tr-rev-name { font-family: var(--font-display); font-weight: 700; color: ${NAVY}; font-size: 14.5px; }
+.tr-rev-role { font-size: 12.5px; color: ${ORANGE}; font-weight: 600; margin-top: 2px; }
+@media (max-width: 980px) { .tr-rev-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .tr-rev-grid { grid-template-columns: 1fr; } }
+
+/* 12 — FAQ */
+.tr-faq-box { border: 2px solid ${ORANGE}; border-radius: 16px; padding: 44px 48px 40px; max-width: 920px; margin: 0 auto; }
+.tr-faq-box h2 { text-align: center; font-size: clamp(26px, 3vw, 36px); color: ${NAVY}; font-weight: 700; margin: 0 0 30px; }
+.tr-faq-item { border-bottom: 1px solid #ece9e1; }
+.tr-faq-item summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 14px;
+  padding: 18px 4px; font-family: var(--font-display); font-weight: 600; font-size: 16px; color: ${NAVY}; }
+.tr-faq-item summary::-webkit-details-marker { display: none; }
+.tr-faq-item summary::before { content: "+"; flex-shrink: 0; width: 22px; height: 22px; display: inline-flex;
+  align-items: center; justify-content: center; color: ${ORANGE}; font-size: 20px; font-weight: 700; line-height: 1; }
+.tr-faq-item[open] summary::before { content: "–"; }
+.tr-faq-item p { margin: 0 0 18px 36px; font-size: 14.5px; line-height: 1.65; color: #5b6373; }
+@media (max-width: 720px) { .tr-faq-box { padding: 30px 20px 26px; } }
+
+/* 13 — FINAL CTA (dark) */
+.tr-final { background: ${NAVY}; color: #fff; }
+.tr-final h2 { text-align: center; font-size: clamp(27px, 3.2vw, 40px); color: #fff; font-weight: 700; margin: 0 0 48px; }
+.tr-final-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: start; }
+.tr-final-contact h3 { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: ${ORANGE}; font-weight: 700; margin: 0 0 10px; }
+.tr-final-contact .tr-big { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: #fff; margin: 0 0 24px; }
+.tr-final-contact .tr-line { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(255,255,255,0.84); margin-bottom: 14px; line-height: 1.5; }
+.tr-final-contact .tr-line svg { color: ${ORANGE}; flex-shrink: 0; margin-top: 2px; }
+.tr-final-contact a { color: rgba(255,255,255,0.84); }
+.tr-final-contact a:hover { color: #fff; }
+.tr-final-card { background: #fff; color: #1d2733; border-radius: 12px; padding: 34px 32px 32px; }
+.tr-final-card h3 { font-size: 23px; color: ${NAVY}; font-weight: 700; margin: 0 0 4px; }
+.tr-final-card .tr-safe { font-size: 13.5px; color: #6b7383; margin: 0 0 20px; display: flex; align-items: center; gap: 7px; }
+.tr-final-card .tr-safe svg { color: #0f7a4a; }
+.tr-final-card form { display: flex; flex-direction: column; gap: 11px; }
+.tr-final-row { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+.tr-final-card input, .tr-final-card textarea, .tr-final-card select { width: 100%; padding: 14px 15px; border: 1px solid #d9d6cd;
+  border-radius: 6px; font: inherit; font-size: 15px; color: #1d2733; background: #fbfaf7; }
+.tr-final-card input:focus, .tr-final-card textarea:focus, .tr-final-card select:focus { outline: none; border-color: ${ORANGE};
+  box-shadow: 0 0 0 3px rgba(217,140,3,0.16); background: #fff; }
+.tr-final-card textarea { min-height: 92px; resize: vertical; }
+.tr-final-card .tr-btn { margin-top: 4px; width: 100%; }
+.tr-final-err { margin-top: 10px; font-size: 13.5px; color: #b3261e; background: #fdecea;
+  border: 1px solid rgba(179,38,30,0.2); border-radius: 6px; padding: 9px 12px; }
+.tr-final-thanks { display: none; text-align: center; padding: 18px 0; }
+.tr-final-thanks h4 { font-size: 22px; color: ${NAVY}; margin: 0 0 6px; }
+.tr-final-thanks p { font-size: 14.5px; color: #5b6373; margin: 0; }
+.tr-final-card.is-success form { display: none; }
+.tr-final-card.is-success .tr-final-thanks { display: block; }
+@media (max-width: 900px) { .tr-final-grid { grid-template-columns: 1fr; gap: 34px; } .tr-final-row { grid-template-columns: 1fr; } }
+
+/* 14 — FOOTER */
+.tr-footer { background: ${NAVY}; color: rgba(255,255,255,0.7); padding: 48px 0 36px; border-top: 1px solid rgba(255,255,255,0.08); }
+.tr-footer-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; margin-bottom: 26px; }
+.tr-footer-wordmark { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: #fff; letter-spacing: -0.01em; }
+.tr-footer-links { display: flex; flex-wrap: wrap; gap: 22px; }
+.tr-footer-links a { color: rgba(255,255,255,0.72); font-size: 14px; }
+.tr-footer-links a:hover { color: ${ORANGE}; }
+.tr-footer-info { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+.tr-footer-copy { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: 12.5px; color: rgba(255,255,255,0.45); }
 `;

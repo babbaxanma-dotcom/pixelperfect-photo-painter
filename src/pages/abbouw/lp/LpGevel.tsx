@@ -4,1697 +4,708 @@ import { SHELL_STYLE } from '../_shell';
 import { submitLead } from '@/lib/leads';
 import type { Gemeente } from '@/data/gemeentes';
 import { CONTACT } from '@/data/contact';
-import { BLOGS } from '@/data/blogs';
 import logo from '@/assets/home/logo.png';
 
-const LP_BLOGS = BLOGS.filter(b =>
-  b.tag === 'Gevel' ||
-  b.slug === 'gevelrenovatie-crepi-versus-steenstrips' ||
-  b.slug === 'na-isolatie-spouw-of-buiten' ||
-  b.slug === 'epc-label-c-2028'
-).slice(0, 3);
+// Hero + section photos (gevel-realisaties).
+import heroWitte from '@/assets/gevel/witte-crepi.jpg';
+import imgGrijze from '@/assets/gevel/grijze-crepi.jpg';
+import imgSteenstrips from '@/assets/gevel/steenstrips.jpg';
+import imgSierpleister from '@/assets/gevel/sierpleister.jpg';
+import imgStelling from '@/assets/gevel/stelling.jpg';
+import imgIntro from '@/assets/gevel/intro.jpg';
 
-// Hero rotatie — 4 gevel-realisaties
-import hero1 from '@/assets/gevel/witte-crepi.jpg';
-import hero2 from '@/assets/gevel/grijze-crepi.jpg';
-import hero3 from '@/assets/gevel/steenstrips.jpg';
-import hero4 from '@/assets/gevel/sierpleister.jpg';
+/* ─────────────────────────────────────────────────────────────────────────
+   Texas-Roofing-Pros layout, faithfully replicated, NAVY theme, AB Bouw NL
+   content — gevel-variant. Zelfde structuur & CSS als LpDakwerken: scoped CSS
+   string injected via <style>, HTML als template literal gerenderd via
+   dangerouslySetInnerHTML. Forms wired in useEffect via data-* hooks.
+   ───────────────────────────────────────────────────────────────────────── */
 
-import imgBenefits from '@/assets/gevel/grijze-crepi.jpg';
-import imgProcess from '@/assets/gevel/stelling.jpg';
-import gExtra from '@/assets/gevel/intro.jpg';
+const NAVY = '#0a1628';
+const NAVY2 = '#14233a';
+const ORANGE = '#d98c03';
+const ORANGE_H = '#b87502';
 
-// 5 FLUX-Ultra premium gevel-anatomy layer renders (ETICS opbouw)
-import gevCross from '@/assets/gevel/lp-anatomy-cross.jpg';
-import gevL1 from '@/assets/gevel/lp-anatomy-l1.jpg';
-import gevL2 from '@/assets/gevel/lp-anatomy-l2.jpg';
-import gevL3 from '@/assets/gevel/lp-anatomy-l3.jpg';
-import gevL4 from '@/assets/gevel/lp-anatomy-l4.jpg';
-import gevL5 from '@/assets/gevel/lp-anatomy-l5.jpg';
+const LP_CSS = `
+.tr { font-family: var(--font-body); color: #1d2733; }
+.tr * { box-sizing: border-box; }
+.tr .tr-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.tr h1, .tr h2, .tr h3, .tr h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+.tr a { text-decoration: none; }
 
-import rev1 from '@/assets/reviews/jasmien.jpg';
-import rev2 from '@/assets/reviews/joris.jpg';
-import rev3 from '@/assets/reviews/marius.jpg';
-import rev4 from '@/assets/reviews/cindy.jpg';
-import rev5 from '@/assets/reviews/dimitri.jpg';
-import rev6 from '@/assets/reviews/steven.jpg';
-import rev7 from '@/assets/reviews/eva.jpg';
-import rev8 from '@/assets/reviews/hicham.jpg';
-
-// (Reviews data inline in IIFE in HTML section — exact zoals Home page)
-
-const LP_EXTRA = `
-/* ───────── Mini LP-header (logo + telefoon, geen menu) ─────────
-   LP's hebben bewust geen volledige nav (zou afleiden van conversion-flow),
-   maar wel een brand-anchor zodat ads-traffic weet bij wie ze geland zijn. */
-.lp-mini-header {
-  position: sticky;
-  top: 0; left: 0; right: 0;
-  z-index: 50;
-  background: #fff;
-  border-bottom: 1px solid #e7e4de;
+/* CTA buttons (always orange) */
+.tr-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  background: ${ORANGE}; color: #fff; border: none; cursor: pointer;
+  font-family: var(--font-display); font-weight: 700; font-size: 15px;
+  letter-spacing: 0.01em; padding: 15px 30px; border-radius: 6px;
+  transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+  box-shadow: 0 10px 24px -12px rgba(217,140,3,0.6);
 }
-.lp-mini-header-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 16px; padding: 13px 0;
+.tr-btn:hover { background: ${ORANGE_H}; transform: translateY(-1px); box-shadow: 0 16px 30px -12px rgba(217,140,3,0.7); }
+.tr-btn:active { transform: translateY(0); }
+.tr-btn:disabled { opacity: .65; cursor: wait; }
+.tr-eyebrow { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: 12px;
+  letter-spacing: 0.14em; text-transform: uppercase; color: ${ORANGE}; margin-bottom: 14px; }
+.tr-urgency { margin-top: 14px; font-size: 13px; color: ${ORANGE_H}; font-weight: 600; }
+.tr-section { padding: 84px 0; }
+
+/* 1 — TOP BAR */
+.tr-topbar { background: ${NAVY}; color: rgba(255,255,255,0.85); font-size: 13px; }
+.tr-topbar .tr-wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 40px; }
+.tr-topbar-left { display: inline-flex; align-items: center; gap: 0; flex-wrap: wrap; }
+.tr-topbar-left span { padding: 4px 0; }
+.tr-topbar-left span + span::before { content: "·"; margin: 0 12px; color: rgba(255,255,255,0.4); }
+.tr-topbar-phone { display: inline-flex; align-items: center; gap: 8px; background: ${ORANGE}; color: #fff;
+  font-weight: 700; padding: 7px 16px; border-radius: 999px; white-space: nowrap; }
+.tr-topbar-phone svg { width: 15px; height: 15px; }
+@media (max-width: 760px) { .tr-topbar-left span:not(:first-child) { display: none; } }
+
+/* 2 — HEADER */
+.tr-header { background: #fff; border-bottom: 1px solid #ececec; position: sticky; top: 0; z-index: 60; }
+.tr-header .tr-wrap { display: flex; align-items: center; gap: 24px; min-height: 74px; }
+.tr-logo { height: 38px; width: auto; display: block; }
+.tr-nav { display: flex; align-items: center; gap: 28px; margin: 0 auto; }
+.tr-nav a { color: ${NAVY}; font-family: var(--font-display); font-weight: 600; font-size: 15px; transition: color .18s; }
+.tr-nav a:hover { color: ${ORANGE}; }
+.tr-header-right { display: flex; align-items: center; gap: 18px; margin-left: auto; }
+.tr-rating { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.1; }
+.tr-rating-score { font-family: var(--font-display); font-weight: 700; font-size: 14px; color: ${NAVY}; }
+.tr-rating-stars { color: ${ORANGE}; font-size: 13px; letter-spacing: 1px; }
+/* Hamburger + mobiel menu */
+.tr-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; padding: 10px; background: none; border: 0; cursor: pointer; }
+.tr-burger span { display: block; width: 100%; height: 2.5px; background: ${NAVY}; border-radius: 2px; transition: transform .25s var(--ease-out-quart, ease), opacity .2s; }
+.tr-mobmenu-overlay { display: none; }
+.tr-mobmenu { display: none; }
+@media (max-width: 980px) {
+  .tr-nav { display: none; }
+  .tr-rating { display: none; }
+  .tr-headcta { display: none; }
+  .tr-burger { display: flex; }
+  .tr-logo { height: 52px; }
+  .tr-header .tr-wrap { min-height: 66px; gap: 12px; }
+  .tr-mobmenu-overlay { display: block; position: fixed; inset: 0; background: rgba(10,22,40,0.55); opacity: 0; pointer-events: none; transition: opacity .28s ease; z-index: 150; }
+  body.tr-menu-open .tr-mobmenu-overlay { opacity: 1; pointer-events: auto; }
+  .tr-mobmenu { display: flex; flex-direction: column; gap: 2px; position: fixed; top: 0; right: 0; bottom: 0; width: min(84vw, 360px); background: #fff; box-shadow: -24px 0 60px -24px rgba(0,0,0,0.45); transform: translateX(100%); transition: transform .3s var(--ease-out-quart, ease); z-index: 200; padding: 30px 26px 30px; overflow-y: auto; }
+  body.tr-menu-open .tr-mobmenu { transform: translateX(0); }
+  body.tr-menu-open { overflow: hidden; }
+  .tr-mobmenu-close { align-self: flex-end; background: none; border: 0; font-size: 34px; line-height: 1; color: ${NAVY}; cursor: pointer; padding: 0 4px 6px; margin-bottom: 6px; }
+  .tr-mobmenu a:not(.tr-btn) { font-family: var(--font-display); font-weight: 600; font-size: 19px; color: ${NAVY}; padding: 15px 4px; border-bottom: 1px solid #efece5; }
+  .tr-mobmenu a:not(.tr-btn):active { color: ${ORANGE}; }
+  .tr-mobmenu-cta { margin-top: 22px; justify-content: center; text-align: center; padding: 16px; font-size: 16px; }
+  body.tr-menu-open .tr-burger span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  body.tr-menu-open .tr-burger span:nth-child(2) { opacity: 0; }
+  body.tr-menu-open .tr-burger span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 }
-.lp-mini-brand { display: inline-flex; align-items: center; text-decoration: none; }
-.lp-mini-logo { height: 34px; width: auto; display: block; }
-.lp-mini-right { display: flex; align-items: center; gap: 16px; }
-.lp-mini-tel { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #0f1822; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; }
-.lp-mini-tel svg { color: #d98c03; flex-shrink: 0; }
-.lp-mini-cta { display: inline-flex; align-items: center; padding: 11px 20px; border-radius: 4px; background: var(--navy); color: #fff; font-size: 14px; font-weight: 600; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; transition: background .2s ease; }
-.lp-mini-cta:hover { background: #08213d; }
+
+/* 3 — HERO */
+.tr-hero { position: relative; background: ${NAVY}; color: #fff; overflow: hidden; }
+.tr-hero-bg { position: absolute; inset: 0; }
+.tr-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+.tr-hero-bg::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(10,22,40,0.86) 0%, rgba(10,22,40,0.72) 45%, rgba(10,22,40,0.9) 100%); }
+.tr-hero-inner { position: relative; z-index: 2; text-align: center; padding: 96px 0 150px; }
+.tr-hero h1 { font-size: clamp(34px, 5.2vw, 60px); line-height: 1.06; font-weight: 700; color: #fff; margin: 0 auto 20px; max-width: 920px; }
+.tr-hero-sub { font-size: clamp(15px, 1.4vw, 18px); line-height: 1.6; color: rgba(255,255,255,0.86);
+  max-width: 700px; margin: 0 auto 30px; }
+.tr-hero-sub b { color: #fff; }
+.tr-certs { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 14px; max-width: 880px; margin: 0 auto; }
+.tr-cert-pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 8px;
+  font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.92); white-space: nowrap; }
+.tr-cert-pill svg { color: ${ORANGE}; flex-shrink: 0; }
+.tr-cert-logo { display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 16px;
+  background: rgba(255,255,255,0.94); border-radius: 8px; }
+.tr-cert-logo img { height: 22px; width: auto; object-fit: contain; filter: grayscale(1); opacity: .8; }
+@media (max-width: 720px) { .tr-hero-inner { padding: 66px 0 120px; } .tr-cert-pill { height: 38px; padding: 0 13px; font-size: 12px; } }
+
+/* 4 — QUICK FORM (overlaps hero) */
+.tr-quickform-shell { background: #fff; }
+.tr-quickform { background: #fff; max-width: 880px; margin: -88px auto 0; position: relative; z-index: 5;
+  border: 1px solid #e7e4dd; border-radius: 10px; box-shadow: 0 26px 60px -28px rgba(10,22,40,0.4); padding: 34px 40px 36px; }
+.tr-quickform .tr-eyebrow { text-align: center; display: block; margin-bottom: 6px; }
+.tr-quickform h3 { text-align: center; font-size: 26px; font-weight: 700; color: ${NAVY}; margin: 0 0 22px; }
+.tr-qf-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; align-items: stretch; }
+.tr-qf-grid input { width: 100%; padding: 15px 16px; border: 1px solid #d9d6cd; border-radius: 6px; font: inherit;
+  font-size: 15px; color: #1d2733; background: #fbfaf7; transition: border-color .18s, box-shadow .18s; }
+.tr-qf-grid input:focus { outline: none; border-color: ${ORANGE}; box-shadow: 0 0 0 3px rgba(217,140,3,0.16); background: #fff; }
+.tr-qf-grid .tr-btn { white-space: nowrap; }
+.tr-qf-error { display: none; margin-top: 12px; font-size: 13.5px; color: #b3261e; background: #fdecea;
+  border: 1px solid rgba(179,38,30,0.2); border-radius: 6px; padding: 9px 12px; }
+.tr-qf-thanks { display: none; text-align: center; padding: 16px 0 6px; }
+.tr-qf-thanks-ic { width: 54px; height: 54px; border-radius: 50%; background: #d6f3e4; color: #0f7a4a;
+  display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+.tr-qf-thanks h4 { font-size: 21px; color: ${NAVY}; margin: 0 0 6px; }
+.tr-qf-thanks p { font-size: 14.5px; color: #5b6373; margin: 0; }
+.tr-quickform.is-success .tr-qf-grid, .tr-quickform.is-success .tr-eyebrow,
+.tr-quickform.is-success h3, .tr-quickform.is-success .tr-qf-error { display: none; }
+.tr-quickform.is-success .tr-qf-thanks { display: block; }
+.tr-hero-testi { max-width: 760px; margin: 30px auto 0; text-align: center; padding: 0 16px 8px; }
+.tr-hero-testi-q { font-size: 15.5px; line-height: 1.65; color: #3a4252; font-style: italic;
+  background: linear-gradient(transparent 60%, rgba(217,140,3,0.22) 60%); display: inline; padding: 1px 2px; }
+.tr-hero-testi-name { margin-top: 14px; font-family: var(--font-display); font-weight: 700; color: ${NAVY}; font-size: 14.5px; }
 @media (max-width: 720px) {
-  .lp-mini-header-inner { padding: 11px 0; }
-  .lp-mini-logo { height: 26px; }
-  .lp-mini-right { gap: 10px; }
-  .lp-mini-tel span { display: none; }
-  .lp-mini-cta { padding: 10px 15px; font-size: 13px; }
+  .tr-quickform { margin: -72px 14px 0; padding: 22px 18px 24px; }
+  .tr-quickform h3 { font-size: 21px; }
+  .tr-qf-grid { grid-template-columns: 1fr; }
 }
 
-/* ════════════ LICHTE HERO (Dural-stijl) — gevel ════════════ */
-.gev2-hero { background: #f6f4f0; padding: 52px 0 0; }
-.gev2-wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px,4vw,40px); display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-.gev2-eyebrow { font-size: 12.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #b87502; margin-bottom: 16px; }
-.gev2-h1 { font-family: var(--font-display); font-size: clamp(34px, 4.4vw, 54px); font-weight: 700; line-height: 1.04; letter-spacing: -0.02em; color: #0f1822; margin: 0 0 18px; }
-.gev2-sub { font-size: 16px; line-height: 1.6; color: #4a5563; margin: 0 0 26px; max-width: 460px; }
-.gev2-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-.gev2-cta { display: inline-flex; align-items: center; gap: 8px; background: #d98c03; color: #fff; font-weight: 700; font-size: 15px; padding: 15px 26px; border-radius: 4px; text-decoration: none; }
-.gev2-cta:hover { background: #b87502; }
-.gev2-ghost { display: inline-flex; align-items: center; gap: 8px; color: #0f1822; font-weight: 600; font-size: 15px; padding: 14px 20px; border: 1px solid #d3d8df; border-radius: 4px; text-decoration: none; }
-.gev2-ghost:hover { border-color: #0f1822; }
-.gev2-trust { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 28px; padding-top: 20px; border-top: 1px solid #e3e1db; font-size: 14px; color: #4a5563; align-items: center; }
-.gev2-trust b { color: #0f1822; font-weight: 700; }
-.gev2-trust .stars { color: #f5b301; letter-spacing: 1px; }
-.gev2-photo img { width: 100%; height: 520px; object-fit: cover; border-radius: 8px; display: block; }
-.gev2-logos { border-top: 1px solid #e3e1db; margin-top: 52px; background: #f6f4f0; padding: 26px 0 30px; }
-.gev2-logos-head { text-align: center; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #8a93a0; margin-bottom: 18px; }
-.gev2-marquee { overflow: hidden; position: relative; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
-.gev2-marquee-track { display: flex; width: max-content; animation: gev2-marquee 42s linear infinite; }
-.gev2-marquee:hover .gev2-marquee-track { animation-play-state: paused; }
-.gev2-marquee-set { display: flex; align-items: center; gap: 56px; padding: 0 28px; flex-shrink: 0; }
-.gev2-marquee-set img { height: 34px; width: auto; object-fit: contain; filter: grayscale(1) opacity(0.5); transition: filter .3s ease; }
-.gev2-marquee-set img:hover { filter: grayscale(0) opacity(1); }
-@keyframes gev2-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@media (prefers-reduced-motion: reduce) { .gev2-marquee-track { animation: none; } }
-@media (max-width: 900px) {
-  .gev2-hero { padding: 28px 0 0; }
-  .gev2-wrap { grid-template-columns: 1fr; gap: 24px; }
-  .gev2-photo img { height: 260px; }
-  .gev2-h1 { font-size: clamp(30px, 8.5vw, 40px); }
-}
-@media (max-width: 720px) {
-  .gev2-marquee-set { gap: 40px; padding: 0 20px; }
-  .gev2-marquee-set img { height: 28px; }
-}
+/* 5 — THREE STEPS (orange-bordered box) */
+.tr-steps-box { border: 2px solid ${ORANGE}; border-radius: 16px; padding: 48px 44px 52px; max-width: 1060px; margin: 0 auto; }
+.tr-steps-box h2 { text-align: center; font-size: clamp(26px, 3vw, 36px); color: ${NAVY}; font-weight: 700; margin: 0 0 44px; }
+.tr-steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+.tr-step { text-align: center; }
+.tr-step-ic { width: 56px; height: 56px; margin: 0 auto 18px; color: ${ORANGE}; display: flex; align-items: center; justify-content: center; }
+.tr-step-ic svg { width: 44px; height: 44px; }
+.tr-step h3 { font-size: 19px; color: ${NAVY}; font-weight: 700; margin: 0 0 10px; }
+.tr-step p { font-size: 14.5px; line-height: 1.62; color: #5b6373; margin: 0; }
+@media (max-width: 820px) { .tr-steps-grid { grid-template-columns: 1fr; gap: 30px; } .tr-steps-box { padding: 34px 22px 38px; } }
 
-/* ───────── Hero mini-form (above-fold quick-capture) ───────── */
-.lp-quick-form {
-  background: #fff;
-  border-radius: 8px;
-  border: 1px solid #e3e1db;
-  border-top: 3px solid #d98c03;
-  box-shadow: 0 8px 24px -16px rgba(15,23,42,0.18);
-  padding: 26px 28px 24px;
-  max-width: 880px;
-  margin: 40px auto 0;
-  position: relative;
-  z-index: 4;
-  overflow: hidden;
-}
-.lp-quick-form-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
-.lp-quick-form-head-icon {
-  width: 38px; height: 38px; border-radius: 10px; background: var(--accent); color: #fff;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-.lp-quick-form-title {
-  font-family: var(--font-display); font-size: 17px; font-weight: 700;
-  color: var(--navy); line-height: 1.2; letter-spacing: -0.01em;
-}
-.lp-quick-form-sub { font-size: 12.5px; color: var(--ink-soft); margin-top: 2px; }
-.lp-quick-form form {
-  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; align-items: stretch;
-}
-.lp-quick-form input {
-  padding: 14px 16px; border: 1px solid var(--ink-line); border-radius: 10px;
-  font: inherit; font-size: 14.5px; color: var(--ink); background: #fff;
-  transition: border-color .2s ease, box-shadow .2s ease; width: 100%;
-}
-.lp-quick-form input:focus {
-  outline: none; border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(217,140,3,0.18);
-}
-.lp-quick-form button[type="submit"] {
-  grid-column: 1 / -1; margin-top: 4px;
-  padding: 16px 28px; border-radius: 12px; border: none;
-  background: #d98c03 !important; background-color: #d98c03 !important;
-  color: #ffffff !important;
-  font: inherit; font-size: 15.5px; font-weight: 700; letter-spacing: -0.01em;
-  cursor: pointer; transition: background .15s ease, transform .15s ease, box-shadow .2s ease;
-  display: inline-flex !important; align-items: center; justify-content: center; gap: 10px;
-  white-space: nowrap; width: 100%;
-  box-shadow: 0 8px 20px -8px rgba(217,140,3,0.55);
-}
-.lp-quick-form button[type="submit"]:hover {
-  background: #c47a02 !important; background-color: #c47a02 !important;
-  transform: translateY(-1px);
-  box-shadow: 0 12px 26px -10px rgba(217,140,3,0.65);
-}
-.lp-quick-form button[type="submit"]:active { transform: translateY(0); }
-.lp-quick-form button[type="submit"]:disabled { opacity: 0.7; cursor: wait; }
-.lp-quick-form button[type="submit"] svg { flex-shrink: 0; }
-.lp-quick-form-error { font-size: 13px; color: #c4523f; background: #fcebe5; border-radius: 8px; padding: 8px 12px; margin-top: 10px; }
-.lp-quick-form-thanks { display: none; text-align: center; padding: 32px 24px; }
-.lp-quick-form.is-success form,
-.lp-quick-form.is-success .lp-quick-form-head { display: none; }
-.lp-quick-form.is-success .lp-quick-form-thanks { display: block; }
-.lp-quick-form-thanks-icon {
-  width: 56px; height: 56px; border-radius: 50%;
-  background: #d1f5e3; color: #0f7a4a;
-  display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;
-}
-.lp-quick-form-thanks h4 { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--navy); margin: 0 0 6px; }
-.lp-quick-form-thanks p { font-size: 14px; color: var(--ink-soft); line-height: 1.5; margin: 0; }
-@media (max-width: 720px) {
-  .lp-quick-form { margin: 28px 12px 0; padding: 16px 16px 18px; border-radius: 8px; box-shadow: 0 8px 24px -16px rgba(15,23,42,0.18); }
-  .lp-quick-form-title { font-size: 15px !important; line-height: 1.25 !important; }
-  .lp-quick-form-sub { font-size: 11.5px !important; }
-  .lp-quick-form input { padding: 13px 14px !important; font-size: 15px !important; }
-  .lp-quick-form button[type="submit"] { padding: 14px 22px !important; font-size: 14.5px !important; }
-  .lp-quick-form-head { margin-bottom: 12px; }
-  .lp-quick-form-title { font-size: 15.5px; }
-  .lp-quick-form-sub { font-size: 12px; }
-  .lp-quick-form form { grid-template-columns: 1fr; gap: 10px; }
-  .lp-quick-form button[type="submit"] { grid-column: 1; margin-top: 6px; padding: 15px 22px; font-size: 15px; }
-}
+/* 6 — ABOUT / CERTIFIED */
+.tr-about-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: center; }
+.tr-about-media { position: relative; }
+.tr-about-badges { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.tr-about-badge { display: inline-flex; align-items: center; justify-content: center; height: 52px; padding: 0 16px;
+  background: #fff; border: 1px solid #e7e4dd; border-radius: 8px; box-shadow: 0 8px 20px -14px rgba(10,22,40,0.3); }
+.tr-about-badge img { height: 28px; width: auto; object-fit: contain; }
+.tr-about-badge.tr-vca { font-family: var(--font-display); font-weight: 800; font-size: 18px; color: ${NAVY}; letter-spacing: -0.01em; }
+.tr-about-photo { border-radius: 8px; overflow: hidden; border: 1px solid #e7e4dd; box-shadow: 0 26px 54px -30px rgba(10,22,40,0.4); }
+.tr-about-photo img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+.tr-about-body h2 { font-size: clamp(27px, 3.2vw, 38px); color: ${NAVY}; font-weight: 700; line-height: 1.12; margin: 0 0 16px; }
+.tr-about-intro { font-size: 15.5px; line-height: 1.7; color: #4a5468; margin: 0 0 22px; }
+.tr-checks { list-style: none; padding: 0; margin: 0 0 28px; }
+.tr-checks li { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; font-size: 15px; color: #2b3543; line-height: 1.5; }
+.tr-checks li svg { color: ${ORANGE}; flex-shrink: 0; margin-top: 2px; }
+.tr-checks li b { background: linear-gradient(transparent 62%, rgba(217,140,3,0.28) 62%); padding: 0 2px; font-weight: 700; }
+@media (max-width: 900px) { .tr-about-grid { grid-template-columns: 1fr; gap: 36px; } }
 
-/* ───────── Calculator-CTA banner ───────── */
-.lp-calc-cta-section { background: var(--bg); padding: 32px 0 8px; }
-.lp-calc-cta {
-  display: grid; grid-template-columns: auto 1fr auto; gap: 22px;
-  align-items: center; max-width: 920px; margin: 0 auto;
-  background: linear-gradient(135deg, #fff 0%, #fff8ec 100%);
-  border: 1.5px solid rgba(217,140,3,0.32); border-radius: 18px;
-  padding: 22px 28px; text-decoration: none;
-  box-shadow: 0 10px 32px -14px rgba(217,140,3,0.25);
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-}
-.lp-calc-cta:hover { transform: translateY(-3px); border-color: #d98c03; box-shadow: 0 16px 40px -16px rgba(217,140,3,0.45); }
-.lp-calc-cta-icon {
-  width: 56px; height: 56px; border-radius: 14px;
-  background: #d98c03; color: #fff;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  box-shadow: 0 8px 20px -8px rgba(217,140,3,0.55);
-}
-.lp-calc-cta-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.lp-calc-cta-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #d98c03; }
-.lp-calc-cta-title { font-family: var(--font-display); font-size: clamp(18px, 2.2vw, 22px); font-weight: 700; color: var(--navy); line-height: 1.25; }
-.lp-calc-cta-em { background: linear-gradient(transparent 62%, rgba(217,140,3,0.32) 62%); padding: 0 3px; }
-.lp-calc-cta-sub { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
-.lp-calc-cta-sub strong { color: var(--navy); font-weight: 700; }
-.lp-calc-cta-arrow {
-  width: 44px; height: 44px; border-radius: 50%; background: #d98c03; color: #fff;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  transition: transform .25s ease;
-}
-.lp-calc-cta:hover .lp-calc-cta-arrow { transform: translateX(4px); }
-@media (max-width: 720px) {
-  .lp-calc-cta { grid-template-columns: auto 1fr; padding: 18px 20px; }
-  .lp-calc-cta-arrow { display: none; }
-  .lp-calc-cta-icon { width: 44px; height: 44px; }
-}
+/* 7 — NUMBERS BAR */
+.tr-numbers { display: grid; grid-template-columns: repeat(4, 1fr); }
+.tr-num { padding: 40px 28px; text-align: center; color: #fff; }
+.tr-num:nth-child(odd) { background: ${NAVY}; }
+.tr-num:nth-child(even) { background: ${ORANGE}; }
+.tr-num-big { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px, 3.4vw, 42px); line-height: 1; }
+.tr-num-lbl { margin-top: 8px; font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.92); }
+@media (max-width: 720px) { .tr-numbers { grid-template-columns: 1fr 1fr; } }
 
-/* ───────── LP cinematic hero ───────── */
-.lp-hero-cine { min-height: 100vh; min-height: 100dvh; }
-.lp-hero-cine .lf-hero-bg--slides { filter: contrast(1.04) saturate(0.96); }
-.lp-hero-cine .lf-hero-bg--slides::after {
-  background:
-    linear-gradient(180deg, rgba(8,12,22,0.55) 0%, rgba(8,12,22,0.20) 30%, rgba(8,12,22,0.15) 70%, rgba(8,12,22,0.65) 100%);
-  z-index: 3;
-}
-.lp-hero-cine .lf-hero-wrap {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  min-height: 100vh; min-height: 100dvh;
-  padding-top: 120px !important;
-  padding-bottom: 90px !important;
-}
+/* 8 — SERVICES (dark) */
+.tr-services { background: ${NAVY}; color: #fff; }
+.tr-services .tr-head { text-align: center; max-width: 720px; margin: 0 auto 50px; }
+.tr-services .tr-head h2 { font-size: clamp(27px, 3.2vw, 40px); color: #fff; font-weight: 700; margin: 0; }
+.tr-svc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.tr-svc-card { background: ${NAVY2}; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; overflow: hidden;
+  display: flex; flex-direction: column; transition: transform .25s ease, border-color .25s ease; }
+.tr-svc-card:hover { transform: translateY(-4px); border-color: rgba(217,140,3,0.5); }
+.tr-svc-img { aspect-ratio: 16/11; overflow: hidden; }
+.tr-svc-img img { width: 100%; height: 100%; object-fit: cover; }
+.tr-svc-body { padding: 22px 22px 26px; }
+.tr-svc-body h3 { font-size: 18px; color: #fff; font-weight: 700; margin: 0 0 9px; }
+.tr-svc-body p { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.74); margin: 0; }
+.tr-services .tr-foot { text-align: center; margin-top: 46px; }
+.tr-services .tr-urgency { color: rgba(255,255,255,0.66); }
+@media (max-width: 1040px) { .tr-svc-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .tr-svc-grid { grid-template-columns: 1fr; } }
 
-/* Mobile: hero compact (vorm zichtbaar above-fold) + nav hidden-until-scroll */
-@media (max-width: 900px) {
-  .lf-hero.lp-hero-cine { min-height: 72vh !important; min-height: 72dvh !important; height: 72dvh !important; align-items: flex-start !important; }
-  .lp-hero-cine .lf-hero-wrap { padding-top: 80px !important; padding-bottom: 24px !important; min-height: 72dvh !important; }
-  .lp-hero-cine .lf-hero-headline { font-size: clamp(28px, 8vw, 38px) !important; line-height: 1.12 !important; margin: 0 0 12px !important; }
-  .lp-hero-cine .lf-hero-sub { font-size: 14px !important; line-height: 1.5 !important; margin: 0 0 16px !important; }
-  .lp-hero-cine .lf-hero-actions { gap: 10px !important; }
-  .lp-hero-cine .lf-cta-pill { padding: 14px 22px !important; font-size: 14px !important; }
-  .lp-hero-cine .lf-hero-ghost { font-size: 13.5px !important; padding: 8px 14px !important; }
-  .lp-hero-cine .lp-hero-trust { display: none !important; }
-  .lp-hero-cine .lp-cta-microtrust { display: none !important; }
-  .lp-hero-cine .lf-scroll-cue { display: none !important; }
-  body.lp-page .lf-fab-call { display: none !important; }
-}
+/* 9 — WE ALSO OFFER / MAINTENANCE */
+.tr-also-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
+.tr-also-body h2 { font-size: clamp(27px, 3.2vw, 38px); color: ${NAVY}; font-weight: 700; margin: 0 0 16px; }
+.tr-also-body > p { font-size: 15.5px; line-height: 1.7; color: #4a5468; margin: 0 0 22px; }
+.tr-also-photo { border-radius: 8px; overflow: hidden; border: 1px solid #e7e4dd; box-shadow: 0 26px 54px -30px rgba(10,22,40,0.4); }
+.tr-also-photo img { width: 100%; aspect-ratio: 5/4; object-fit: cover; display: block; }
+@media (max-width: 900px) { .tr-also-grid { grid-template-columns: 1fr; gap: 36px; } }
 
-body.lp-page.is-subpage .lf-nav {
-  opacity: var(--nav-sweep, 0) !important;
-  transform: translateY(calc((1 - var(--nav-sweep, 0)) * -10px)) !important;
-  transition: top 0.4s var(--ease) !important;
-  pointer-events: none;
-}
-body.lp-page.is-subpage.past-hero .lf-nav { pointer-events: auto !important; }
-.lp-hero-cine .lf-hero-mini { max-width: 920px; }
-.lp-hero-cine .lf-hero-headline {
-  font-size: clamp(36px, 5.4vw, 64px);
-  line-height: 1.07;
-  font-weight: 600;
-  letter-spacing: -0.022em;
-  margin: 0 0 16px;
-  color: #fff;
-}
-.lp-hero-cine .lf-hero-sub {
-  font-size: clamp(15.5px, 1.3vw, 18px);
-  color: rgba(255,255,255,0.86);
-  margin: 0 auto 30px;
-  max-width: 680px;
-  line-height: 1.6;
-}
-.lp-hero-cine .lf-hero-actions { gap: 14px; }
-.lp-hero-cine .lf-cta-pill {
-  padding: 16px 26px;
-  font-size: 14.5px;
-  box-shadow: 0 14px 32px -10px rgba(217,140,3,0.55);
-}
-.lp-hero-cine .lf-cta-pill:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -10px rgba(217,140,3,0.65); }
+/* 10 — WHY CHOOSE */
+.tr-why { text-align: center; }
+.tr-why .tr-head { max-width: 720px; margin: 0 auto 50px; }
+.tr-why .tr-head h2 { font-size: clamp(27px, 3.2vw, 40px); color: ${NAVY}; font-weight: 700; margin: 0; }
+.tr-why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; max-width: 1000px; margin: 0 auto; }
+.tr-why-col { padding: 0 12px; }
+.tr-why-ic { width: 54px; height: 54px; margin: 0 auto 18px; color: ${ORANGE}; display: flex; align-items: center; justify-content: center; }
+.tr-why-ic svg { width: 42px; height: 42px; }
+.tr-why-col h3 { font-size: 18px; color: ${NAVY}; font-weight: 700; margin: 0 0 10px; }
+.tr-why-col p { font-size: 14.5px; line-height: 1.62; color: #5b6373; margin: 0; }
+.tr-why .tr-foot { margin-top: 46px; }
+@media (max-width: 820px) { .tr-why-grid { grid-template-columns: 1fr; gap: 30px; } }
 
-.lp-hero-trust {
-  margin-top: 26px;
-  display: inline-flex;
-  align-items: center; gap: 0;
-  padding: 0;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.18);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border-radius: 999px;
-  color: #fff;
-  font-family: var(--font-display);
-  overflow: hidden;
-}
-.lp-hero-trust > span {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 10px 18px;
-  font-size: 13px; font-weight: 500;
-  white-space: nowrap;
-}
-.lp-hero-trust > span + span { border-left: 1px solid rgba(255,255,255,0.16); }
-.lp-hero-trust b { font-weight: 600; color: #fff; }
-.lp-hero-trust .lp-hero-trust-stars { color: #F5C518; letter-spacing: 1px; font-size: 12px; }
-.lp-hero-trust-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #2ed47a; box-shadow: 0 0 0 4px rgba(46,212,122,0.18); }
-@media (max-width: 720px) {
-  .lp-hero-trust { flex-wrap: wrap; border-radius: 18px; justify-content: center; }
-  .lp-hero-trust > span { padding: 8px 14px; font-size: 12.5px; }
-  .lp-hero-trust > span + span { border-left: 0; }
-}
+/* 11 — REVIEWS */
+.tr-reviews { background: var(--bg-tint); }
+.tr-reviews .tr-head { text-align: center; max-width: 720px; margin: 0 auto 50px; }
+.tr-reviews .tr-head h2 { font-size: clamp(27px, 3.2vw, 40px); color: ${NAVY}; font-weight: 700; margin: 0; }
+.tr-rev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.tr-rev-card { background: #fff; border: 1px solid #e7e4dd; border-radius: 10px; padding: 28px 26px 26px;
+  display: flex; flex-direction: column; }
+.tr-rev-stars { color: ${ORANGE}; font-size: 15px; letter-spacing: 2px; margin-bottom: 14px; }
+.tr-rev-card p { font-size: 14.5px; line-height: 1.65; color: #3a4252; margin: 0 0 20px; flex: 1; }
+.tr-rev-foot { border-top: 1px solid #eeede4; padding-top: 16px; }
+.tr-rev-name { font-family: var(--font-display); font-weight: 700; color: ${NAVY}; font-size: 14.5px; }
+.tr-rev-role { font-size: 12.5px; color: ${ORANGE}; font-weight: 600; margin-top: 2px; }
+@media (max-width: 980px) { .tr-rev-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .tr-rev-grid { grid-template-columns: 1fr; } }
 
-.lp-cta-microtrust {
-  margin-top: 12px;
-  font-size: 12.5px;
-  color: rgba(255,255,255,0.74);
-  font-family: var(--font-display);
-  letter-spacing: 0.01em;
-}
-.lp-cta-microtrust b { color: rgba(255,255,255,0.92); font-weight: 600; }
+/* 12 — FAQ (orange-bordered box) */
+.tr-faq-box { border: 2px solid ${ORANGE}; border-radius: 16px; padding: 44px 48px 40px; max-width: 920px; margin: 0 auto; }
+.tr-faq-box h2 { text-align: center; font-size: clamp(26px, 3vw, 36px); color: ${NAVY}; font-weight: 700; margin: 0 0 30px; }
+.tr-faq-item { border-bottom: 1px solid #ece9e1; }
+.tr-faq-item summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 14px;
+  padding: 18px 4px; font-family: var(--font-display); font-weight: 600; font-size: 16px; color: ${NAVY}; }
+.tr-faq-item summary::-webkit-details-marker { display: none; }
+.tr-faq-item summary::before { content: "+"; flex-shrink: 0; width: 22px; height: 22px; display: inline-flex;
+  align-items: center; justify-content: center; color: ${ORANGE}; font-size: 20px; font-weight: 700; line-height: 1; }
+.tr-faq-item[open] summary::before { content: "–"; }
+.tr-faq-item p { margin: 0 0 18px 36px; font-size: 14.5px; line-height: 1.65; color: #5b6373; }
+@media (max-width: 720px) { .tr-faq-box { padding: 30px 20px 26px; } }
 
-/* Reviews carousel: SHELL_STYLE's .lf-testi-marquee heeft een full-bleed
-   margin: 0 calc(50% - 50vw) die de marquee BUITEN de wrap trekt naar
-   viewport-breed. Reset 'm hier zodat 'ie binnen wrap (1280px gecentreerd)
-   blijft zoals Home. */
-.lp-reviews .lf-testi-marquee {
-  margin: 0 !important;
-  width: 100% !important;
-  padding: 56px 0 64px !important;
-  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%) !important;
-          mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%) !important;
-}
-.lp-reviews .lf-testi-track {
-  gap: 0 !important;
-  padding: 0 !important;
-  animation: lf-marquee-scroll 58s linear infinite !important;
-}
-.lp-reviews .lf-testi-marquee:hover .lf-testi-track,
-.lp-reviews .lf-testi-marquee:focus-within .lf-testi-track {
-  animation-play-state: running !important;
-}
-@keyframes lf-marquee-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
+/* 13 — FINAL CTA (dark) */
+.tr-final { background: ${NAVY}; color: #fff; }
+.tr-final h2 { text-align: center; font-size: clamp(27px, 3.2vw, 40px); color: #fff; font-weight: 700; margin: 0 0 48px; }
+.tr-final-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: start; }
+.tr-final-contact h3 { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: ${ORANGE}; font-weight: 700; margin: 0 0 10px; }
+.tr-final-contact .tr-big { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: #fff; margin: 0 0 24px; }
+.tr-final-contact .tr-line { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(255,255,255,0.84); margin-bottom: 14px; line-height: 1.5; }
+.tr-final-contact .tr-line svg { color: ${ORANGE}; flex-shrink: 0; margin-top: 2px; }
+.tr-final-contact a { color: rgba(255,255,255,0.84); }
+.tr-final-contact a:hover { color: #fff; }
+.tr-final-card { background: #fff; color: #1d2733; border-radius: 12px; padding: 34px 32px 32px; }
+.tr-final-card h3 { font-size: 23px; color: ${NAVY}; font-weight: 700; margin: 0 0 4px; }
+.tr-final-card .tr-safe { font-size: 13.5px; color: #6b7383; margin: 0 0 20px; display: flex; align-items: center; gap: 7px; }
+.tr-final-card .tr-safe svg { color: #0f7a4a; }
+.tr-final-card form { display: flex; flex-direction: column; gap: 11px; }
+.tr-final-row { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+.tr-final-card input, .tr-final-card textarea, .tr-final-card select { width: 100%; padding: 14px 15px; border: 1px solid #d9d6cd;
+  border-radius: 6px; font: inherit; font-size: 15px; color: #1d2733; background: #fbfaf7; }
+.tr-final-card input:focus, .tr-final-card textarea:focus, .tr-final-card select:focus { outline: none; border-color: ${ORANGE};
+  box-shadow: 0 0 0 3px rgba(217,140,3,0.16); background: #fff; }
+.tr-final-card textarea { min-height: 92px; resize: vertical; }
+.tr-final-card select { appearance: none; -webkit-appearance: none; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235b6373' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; background-size: 16px; padding-right: 40px; }
+.tr-final-card .tr-btn { margin-top: 4px; width: 100%; }
+.tr-final-err { display: none; margin-top: 10px; font-size: 13.5px; color: #b3261e; background: #fdecea;
+  border: 1px solid rgba(179,38,30,0.2); border-radius: 6px; padding: 9px 12px; }
+.tr-final-card.is-error .tr-final-err { display: block; }
+.tr-final-thanks { display: none; text-align: center; padding: 18px 0; }
+.tr-final-thanks h4 { font-size: 22px; color: ${NAVY}; margin: 0 0 6px; }
+.tr-final-thanks p { font-size: 14.5px; color: #5b6373; margin: 0; }
+.tr-final-card.is-success form { display: none; }
+.tr-final-card.is-success .tr-final-thanks { display: block; }
+.tr-final-testi { grid-column: 1 / -1; margin-top: 40px; text-align: center; max-width: 760px;
+  margin-left: auto; margin-right: auto; }
+.tr-final-testi-q { font-size: 15.5px; line-height: 1.65; color: rgba(255,255,255,0.86); font-style: italic; }
+.tr-final-testi-name { margin-top: 12px; font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 14.5px; }
+@media (max-width: 900px) { .tr-final-grid { grid-template-columns: 1fr; gap: 34px; } .tr-final-row { grid-template-columns: 1fr; } }
 
-/* ───────── Trust logo strip ───────── */
-.lp-trust-strip {
-  padding: 28px 0 36px;
-  background: #fff;
-  border-bottom: 1px solid var(--ink-line-soft);
-}
-.lp-trust-strip-inner {
-  display: flex; flex-wrap: wrap;
-  align-items: center; justify-content: center;
-  gap: 24px 44px;
-}
-.lp-trust-badge {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--font-display);
-  font-size: 13px;
-  color: var(--ink-soft);
-  letter-spacing: 0.01em;
-}
-.lp-trust-badge strong { color: var(--navy); font-weight: 700; font-size: 13.5px; }
-.lp-trust-badge svg { color: var(--accent); flex-shrink: 0; }
-.lp-trust-divider { width: 1px; height: 22px; background: var(--ink-line-soft); }
-@media (max-width: 720px) {
-  .lp-trust-strip { padding: 22px 0 26px; }
-  .lp-trust-strip-inner { gap: 14px 22px; }
-  .lp-trust-badge { font-size: 12px; }
-  .lp-trust-divider { display: none; }
-}
-
-/* ───────── Premie urgency box ───────── */
-.lp-premie {
-  background: linear-gradient(135deg, rgba(217,140,3,0.06) 0%, rgba(217,140,3,0.02) 100%);
-  border: 1px solid rgba(217,140,3,0.22);
-  border-radius: 16px;
-  padding: 28px 32px;
-  display: grid; grid-template-columns: auto 1fr auto; gap: 28px; align-items: center;
-}
-.lp-premie-ico {
-  width: 56px; height: 56px; border-radius: 14px;
-  background: var(--navy); color: #fff;
-  display: inline-flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 8px 22px -10px rgba(10,22,40,0.45);
-}
-.lp-premie-text strong {
-  display: block; font-family: var(--font-display); font-size: 18px;
-  color: var(--navy); font-weight: 700; letter-spacing: -0.01em; margin-bottom: 4px;
-}
-.lp-premie-text p { margin: 0; font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
-.lp-premie-cta {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 12px 20px; border-radius: 999px;
-  background: var(--navy); color: #fff;
-  font-family: var(--font-display); font-weight: 600; font-size: 13.5px;
-  text-decoration: none; white-space: nowrap;
-  transition: background .2s ease, transform .15s ease;
-}
-.lp-premie-cta:hover { background: #0d1d36; transform: translateY(-1px); }
-@media (max-width: 720px) {
-  .lp-premie { grid-template-columns: 1fr; gap: 18px; padding: 22px 22px; text-align: left; }
-  .lp-premie-cta { width: 100%; justify-content: center; }
-}
-
-/* Mobile: gebruikt .lf-fab-call (telefoon-icon) uit SHELL_STYLE — zelfde als Home */
-
-/* LP trust foot */
-.lp-trust-foot {
-  padding: 56px 0 80px;
-  background: #fff;
-  border-top: 1px solid var(--ink-line-soft);
-  font-size: 13px; color: var(--ink-mute);
-}
-.lp-trust-foot .wrap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
-.lp-trust-foot strong { display: block; color: var(--navy); font-size: 14px; margin-bottom: 4px; }
-.lp-trust-foot a { color: var(--ink-soft); text-decoration: none; }
-.lp-trust-foot a:hover { color: var(--accent); }
-@media (max-width: 720px) { .lp-trust-foot .wrap { grid-template-columns: 1fr 1fr; gap: 22px; } }
-
-/* LP stats */
-.lp-stats-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; padding: 56px 0; border-bottom: 1px solid var(--ink-line-soft); }
-.lp-stat { position: relative; padding-left: 18px; }
-.lp-stat::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 8px; width: 3px; background: var(--accent); }
-.lp-stat-num { font-family: var(--font-display); font-size: clamp(28px, 3.2vw, 40px); font-weight: 700; color: var(--navy); letter-spacing: -0.025em; line-height: 1; margin-bottom: 6px; }
-.lp-stat-label { font-size: 13.5px; font-weight: 500; color: var(--ink-soft); line-height: 1.45; }
-@media (max-width: 900px) { .lp-stats-strip { grid-template-columns: repeat(2, 1fr); gap: 28px 20px; padding: 40px 0; } }
-
-/* LP urgency cards */
-.lp-urgency-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-.lp-urgency-card { background: #fff; border: 1px solid var(--ink-line-soft); padding: 28px 26px; border-radius: 14px; transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease; }
-.lp-urgency-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 22px 50px -20px rgba(15,17,21,0.22); }
-.lp-urgency-num { font-family: var(--font-display); font-weight: 700; font-size: 26px; color: var(--accent); line-height: 1; margin-bottom: 14px; letter-spacing: -0.02em; }
-.lp-urgency-card h4 { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--navy); margin: 0 0 8px; letter-spacing: -0.01em; }
-.lp-urgency-card p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; margin: 0; }
-@media (max-width: 900px) { .lp-urgency-grid { grid-template-columns: 1fr; gap: 14px; } }
-
-/* LP differentiator USPs — wat anderen NIET bieden */
-.lp-usp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-.lp-usp-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 14px; padding: 22px 18px 20px; transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease; position: relative; }
-.lp-usp-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 18px 40px -20px rgba(217,140,3,0.35); }
-.lp-usp-icon { width: 42px; height: 42px; border-radius: 12px; background: rgba(217,140,3,0.12); color: var(--accent); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px; }
-.lp-usp-card h4 { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--navy); margin: 0 0 6px; letter-spacing: -0.005em; line-height: 1.25; }
-.lp-usp-card p { font-size: 13px; color: var(--ink-soft); line-height: 1.5; margin: 0; }
-@media (max-width: 1100px) { .lp-usp-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .lp-usp-grid { grid-template-columns: 1fr; gap: 12px; } }
-
-/* LP gallery */
-.lp-gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-.lp-gallery-cell { position: relative; aspect-ratio: 4/5; overflow: hidden; border-radius: 12px; text-decoration: none; color: inherit; }
-.lp-gallery-cell img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.22,1,.36,1); }
-.lp-gallery-cell:hover img { transform: scale(1.06); }
-.lp-gallery-cell::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(10,22,40,0.85) 100%); pointer-events: none; }
-.lp-gallery-cap { position: absolute; left: 18px; bottom: 16px; right: 18px; z-index: 2; color: #fff; }
-.lp-gallery-cap small { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.78); margin-bottom: 4px; }
-.lp-gallery-cap strong { display: block; font-family: var(--font-display); font-size: 16px; font-weight: 600; }
-@media (max-width: 900px) { .lp-gallery { grid-template-columns: 1fr 1fr; } }
-
-/* LP expert quote */
-.lp-expert-quote { font-family: var(--font-display); font-size: clamp(20px, 2.2vw, 26px); font-weight: 500; line-height: 1.35; color: var(--navy); letter-spacing: -0.015em; margin: 0 0 24px; padding-left: 22px; border-left: 3px solid var(--accent); }
-.lp-expert-name { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--navy); }
-.lp-expert-role { font-size: 13.5px; color: var(--ink-mute); margin-bottom: 22px; }
-
-/* LP form section */
-.lp-form-section { background: var(--navy); color: #fff; padding: 90px 0; }
-.lp-form-section h2 { color: #fff; }
-/* .ab-mark default = navy text → invisible on navy bg → force goud met !important */
-.lp-form-section h2 .ab-mark,
-.lp-form-section .lf-h2 .ab-mark { color: var(--accent) !important; }
-.lp-form-section h2 .ab-mark::after,
-.lp-form-section .lf-h2 .ab-mark::after { opacity: 0.22 !important; background: rgba(255,255,255,0.18) !important; }
-.lp-form-section .lf-eyebrow { background: var(--accent) !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.10); }
-.lp-form-section p { color: rgba(255,255,255,0.82); }
-.lp-form-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: start; }
-.lp-form-card { background: #fff; color: var(--ink); padding: 36px 32px; border-radius: 14px; }
-.lp-form-card h3 { font-family: var(--font-display); font-size: 22px; color: var(--navy); margin: 0 0 8px; font-weight: 700; }
-.lp-form-card .lf-form-sub { font-size: 14px; color: var(--ink-soft); margin: 0 0 22px; }
-.lp-form-card form { display: flex; flex-direction: column; gap: 10px; }
-.lp-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.lp-form-card input, .lp-form-card textarea { font: inherit; font-size: 15px; width: 100%; padding: 13px 14px; border: 1px solid var(--ink-line); border-radius: 10px; background: #fff; color: var(--ink); }
-.lp-form-card input:focus, .lp-form-card textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(217,140,3,0.14); }
-.lp-form-card textarea { min-height: 96px; resize: vertical; }
-.lp-form-card button[type="submit"] {
-  margin-top: 4px; padding: 15px 22px;
-  background: #d98c03 !important;
-  background-color: #d98c03 !important;
-  color: #fff !important;
-  border: none;
-  border-radius: 999px; font: inherit; font-weight: 700; font-size: 14.5px;
-  cursor: pointer; transition: background .2s ease, transform .15s ease;
-}
-.lp-form-card button[type="submit"]:hover {
-  background: #b87502 !important;
-  background-color: #b87502 !important;
-  transform: translateY(-1px);
-}
-.lp-form-card button[type="submit"]:disabled { opacity: 0.6; cursor: wait; }
-.lp-form-foot { margin-top: 10px; font-size: 12px; color: var(--ink-mute); }
-.lp-form-foot a { color: var(--accent); }
-.lp-form-thanks { display: none; padding: 24px 0; text-align: center; }
-.lp-form-card.is-success .lp-form-thanks { display: block; }
-.lp-form-card.is-success form { display: none; }
-.lp-form-side ul { list-style: none; padding: 0; margin: 22px 0 0; }
-.lp-form-side ul li { padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.10); font-size: 14px; color: rgba(255,255,255,0.85); display: flex; align-items: center; gap: 12px; }
-.lp-form-side ul li::before { content: ''; width: 18px; height: 18px; border-radius: 50%; background: var(--accent); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E"); background-size: 12px; background-repeat: no-repeat; background-position: center; flex-shrink: 0; }
-.lp-form-error { display: none; margin-top: 10px; padding: 10px 12px; background: #fdecea; border: 1px solid rgba(179,38,30,0.22); border-radius: 8px; color: #b3261e; font-size: 13.5px; }
-.lp-form-card.is-error .lp-form-error { display: block; }
-@media (max-width: 900px) { .lp-form-grid { grid-template-columns: 1fr; gap: 32px; } .lp-form-row { grid-template-columns: 1fr; } .lp-form-card { padding: 26px 22px; } }
-
-/* Verdiepende reads */
-.lp-blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1180px; margin: 0 auto; }
-.lp-blog-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 14px; overflow: hidden; text-decoration: none; color: var(--ink); display: flex; flex-direction: column; transition: transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s ease, border-color .3s ease; }
-.lp-blog-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 22px 50px -20px rgba(15,17,21,0.22); }
-.lp-blog-img { aspect-ratio: 16/10; overflow: hidden; }
-.lp-blog-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.22,1,.36,1); }
-.lp-blog-card:hover .lp-blog-img img { transform: scale(1.05); }
-.lp-blog-body { padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
-.lp-blog-meta { display: flex; align-items: center; gap: 12px; font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; }
-.lp-blog-tag { color: var(--accent); font-weight: 700; }
-.lp-blog-time { color: var(--ink-mute); font-weight: 600; }
-.lp-blog-body h4 { font-family: var(--font-display); font-size: 18px; color: var(--navy); margin: 0; line-height: 1.3; font-weight: 700; letter-spacing: -0.01em; }
-.lp-blog-body p { font-size: 14px; line-height: 1.55; color: var(--ink-soft); margin: 0; }
-.lp-blog-link { margin-top: auto; padding-top: 4px; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: 0.02em; transition: gap .25s ease; }
-.lp-blog-card:hover .lp-blog-link { gap: 12px; }
-@media (max-width: 900px) { .lp-blog-grid { grid-template-columns: 1fr; gap: 16px; } }
-
-/* ───────── 3D model placeholder + gevel anatomy ───────── */
-.lp-3d-frame {
-  aspect-ratio: 16/9;
-  background: linear-gradient(135deg, #0a1628 0%, #14233a 100%);
-  border-radius: 18px;
-  position: relative; overflow: hidden;
-  margin: 24px 0 32px;
-  isolation: isolate;
-}
-.lp-3d-frame::before {
-  content: ''; position: absolute; inset: 0;
-  background:
-    radial-gradient(circle at 30% 40%, rgba(217,140,3,0.20) 0%, transparent 50%),
-    radial-gradient(circle at 70% 60%, rgba(46,212,122,0.10) 0%, transparent 50%);
-  animation: lp-3d-pulse 8s ease-in-out infinite;
-}
-@keyframes lp-3d-pulse {
-  0%, 100% { transform: scale(1) translate3d(0,0,0); opacity: 0.7; }
-  50%      { transform: scale(1.1) translate3d(2%, -1%, 0); opacity: 1; }
-}
-.lp-3d-frame::after {
-  content: ''; position: absolute; inset: 0;
-  background-image:
-    linear-gradient(0deg, transparent 49.5%, rgba(255,255,255,0.05) 50%, transparent 50.5%),
-    linear-gradient(90deg, transparent 49.5%, rgba(255,255,255,0.05) 50%, transparent 50.5%);
-  background-size: 48px 48px;
-  opacity: 0.6;
-}
-.lp-3d-placeholder {
-  position: absolute; inset: 0; z-index: 2;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  color: rgba(255,255,255,0.78);
-  gap: 10px; text-align: center; padding: 0 24px;
-}
-.lp-3d-icon {
-  width: 64px; height: 64px; border-radius: 16px;
-  background: rgba(217,140,3,0.18);
-  border: 1px solid rgba(217,140,3,0.36);
-  display: inline-flex; align-items: center; justify-content: center;
-  color: var(--accent);
-  margin-bottom: 6px;
-  animation: lp-3d-icon-spin 12s linear infinite;
-}
-@keyframes lp-3d-icon-spin { to { transform: rotate(360deg); } }
-.lp-3d-label { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: #fff; }
-.lp-3d-sub { font-size: 13px; letter-spacing: 0.02em; color: rgba(255,255,255,0.6); }
-.lp-3d-layers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-.lp-3d-layer {
-  padding: 16px 18px; background: #fff;
-  border: 1px solid var(--ink-line-soft); border-radius: 12px;
-  font-size: 14px; color: var(--ink);
-  display: flex; align-items: center; gap: 14px;
-  transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
-  position: relative; overflow: hidden;
-}
-.lp-3d-layer::before {
-  content: ''; position: absolute; left: -100%; top: 0; bottom: 0; width: 100%;
-  background: linear-gradient(90deg, transparent, rgba(217,140,3,0.08), transparent);
-  transition: left .6s ease;
-}
-.lp-3d-layer:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 16px 36px -20px rgba(217,140,3,0.5); }
-.lp-3d-layer:hover::before { left: 100%; }
-.lp-3d-layer strong {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 30px; height: 30px; border-radius: 50%;
-  background: var(--accent); color: #fff;
-  font-size: 13px; font-weight: 700; flex-shrink: 0;
-}
-@media (max-width: 760px) { .lp-3d-layers { grid-template-columns: 1fr; } }
-
-/* Scroll-target fix — nav (~90px) compenseren bij CTA scroll-to-form */
-#lp-form { scroll-margin-top: 100px; }
-
-/* ───────── Werkwijze stepped cards ───────── */
-.lp-process-steps {
-  list-style: none;
-  padding: 0;
-  margin: 28px 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.lp-process-steps li {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 16px 18px;
-  background: #fff;
-  border: 1px solid rgba(10,22,40,0.08);
-  border-radius: 14px;
-  box-shadow: 0 2px 6px -2px rgba(10,22,40,0.06);
-  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
-}
-.lp-process-steps li:hover {
-  transform: translateX(4px);
-  box-shadow: 0 14px 28px -10px rgba(10,22,40,0.14);
-  border-color: rgba(217,140,3,0.32);
-}
-.lp-process-num {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: -0.02em;
-  flex-shrink: 0;
-  min-width: 36px;
-  line-height: 1;
-  padding-top: 2px;
-}
-.lp-process-steps li div { display: flex; flex-direction: column; gap: 3px; }
-.lp-process-steps li strong {
-  font-family: var(--font-display);
-  font-size: 16px;
-  color: var(--navy);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-.lp-process-steps li span {
-  font-size: 13.5px;
-  color: var(--ink-soft);
-  line-height: 1.5;
-}
-@media (max-width: 720px) {
-  .lp-process-steps li { padding: 14px 14px; gap: 12px; }
-  .lp-process-num { font-size: 19px; min-width: 30px; }
-  .lp-process-steps li strong { font-size: 15px; }
-  .lp-process-steps li span { font-size: 13px; }
-}
-
-/* Gevel ETICS cross-section — één premium FLUX render boven het 5-card grid */
-.lp-gevel-cross-wrap {
-  max-width: 480px;
-  margin: 0 auto 48px;
-  background: #fff;
-  border: 1px solid rgba(10,22,40,0.08);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px -4px rgba(10,22,40,0.08);
-  padding: 18px;
-}
-.lp-gevel-cross-img {
-  display: block; width: 100%; height: auto; border-radius: 6px;
-}
-
-/* ───────── Premium gevel anatomy grid (FLUX-Ultra renders) ───────── */
-.lp-anatomy-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
-  margin-top: 8px;
-}
-.lp-anatomy-tile {
-  background: #fff;
-  border: 1px solid rgba(10,22,40,0.08);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px -4px rgba(10,22,40,0.08);
-  transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, border-color .35s ease;
-  display: flex; flex-direction: column;
-}
-.lp-anatomy-tile:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 24px 50px -16px rgba(10,22,40,0.18), 0 4px 12px -2px rgba(10,22,40,0.08);
-  border-color: rgba(217,140,3,0.35);
-}
-.lp-anatomy-tile-img {
-  background: linear-gradient(180deg, #f8f6f2 0%, #efece4 100%);
-  aspect-ratio: 16/9;
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
-}
-.lp-anatomy-tile-img img {
-  width: 100%; height: 100%; object-fit: cover; object-position: center;
-  transition: transform .55s cubic-bezier(.22,1,.36,1);
-}
-.lp-anatomy-tile:hover .lp-anatomy-tile-img img { transform: scale(1.04); }
-.lp-anatomy-tile-body { padding: 22px 24px 24px; position: relative; }
-.lp-anatomy-tile-num {
-  display: inline-block;
-  font-family: var(--font-display);
-  font-size: 13px; font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--accent);
-  margin-bottom: 8px;
-}
-.lp-anatomy-tile-body h4 {
-  font-family: var(--font-display);
-  font-size: 19px; font-weight: 600;
-  color: var(--navy);
-  letter-spacing: -0.015em;
-  margin: 0 0 8px;
-}
-.lp-anatomy-tile-body p {
-  margin: 0; font-size: 14px; line-height: 1.55;
-  color: var(--ink-soft);
-}
-@media (max-width: 900px) { .lp-anatomy-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
-@media (max-width: 560px) { .lp-anatomy-grid { grid-template-columns: 1fr; } }
-
-/* ───────── Mobile reviews: manual swipe (mirror Home pattern) ───────── */
-@media (max-width: 760px) {
-  .lp-reviews .lf-testi-marquee {
-    position: relative;
-    overflow-x: auto !important;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    padding: 8px 0 28px !important;
-    height: auto;
-    min-height: 0;
-    -webkit-mask-image: none !important;
-            mask-image: none !important;
-    margin: 0 !important;
-    width: 100% !important;
-  }
-  .lp-reviews .lf-testi-marquee::-webkit-scrollbar { display: none; }
-  .lp-reviews .lf-testi-shift { position: static; transform: none !important; transition: none !important; display: block; padding: 0; }
-  .lp-reviews .lf-testi-track { position: relative; display: flex; width: max-content; animation: none !important; overflow: visible; gap: 0; }
-  .lp-reviews .lf-testi-set:not([data-testi-set="0"]) { display: none !important; }
-  .lp-reviews .lf-testi-set[data-testi-set="0"] { display: flex; flex-wrap: nowrap; gap: 14px; padding: 4px 16px; }
-  .lp-reviews .lf-testi { flex: 0 0 86%; max-width: 360px; scroll-snap-align: center; transform: none !important; opacity: 1 !important; }
-  .lp-reviews .lf-testi-arrow { display: none !important; }
-}
-
-/* Woord-nadruk ingetogen (geen markeerstift). Premium = rustig. */
-.lp-hot, .lf-hl {
-  color: inherit !important;
-  font-weight: 600 !important;
-  background: none !important;
-  background-image: none !important;
-  padding: 0 !important;
-  border-radius: 0 !important;
-  transition: none !important;
-}
-body.lp-page .ab-mark { color: var(--accent) !important; }
-body.lp-page .ab-mark::after { display: none !important; }
-body.lp-page .lp-form-section .ab-mark { color: #f0a83a !important; }
-.lp-reviews-swipe-hint { display: none; }
-@media (max-width: 760px) {
-  .lp-reviews-swipe-hint {
-    display: inline-flex; align-items: center; gap: 8px;
-    margin-top: 6px;
-    font-family: var(--font-display);
-    font-size: 12.5px; color: var(--ink-mute);
-    letter-spacing: 0.02em;
-  }
-  .lp-reviews-swipe-hint svg { animation: lp-swipe-nudge 1.8s ease-in-out infinite; }
-  @keyframes lp-swipe-nudge {
-    0%, 100% { transform: translateX(0); opacity: 0.6; }
-    50%      { transform: translateX(6px); opacity: 1; }
-  }
-}
-
-/* Stats count-up bloom */
-.lp-stat-num { display: inline-block; transition: color .35s ease; }
-.lp-stat[data-counted] .lp-stat-num { animation: lp-stat-pop 0.6s ease-out; }
-@keyframes lp-stat-pop {
-  0% { transform: scale(1); }
-  40% { transform: scale(1.06); color: var(--accent); }
-  100% { transform: scale(1); }
-}
-
-/* Premie box icon: pulsing goud */
-.lp-premie-ico { position: relative; animation: lp-premie-glow 3.6s ease-in-out infinite; }
-@keyframes lp-premie-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(10,22,40,0.45), 0 8px 22px -10px rgba(10,22,40,0.45); }
-  50%      { box-shadow: 0 0 0 10px rgba(10,22,40,0), 0 12px 30px -10px rgba(10,22,40,0.6); }
-}
-
-/* Urgency card: gradient sweep on hover */
-.lp-urgency-card { position: relative; overflow: hidden; }
-.lp-urgency-card::before {
-  content: ''; position: absolute; left: -100%; top: 0; bottom: 0; width: 100%;
-  background: linear-gradient(90deg, transparent, rgba(217,140,3,0.08), transparent);
-  transition: left .7s cubic-bezier(.22,1,.36,1); pointer-events: none;
-}
-.lp-urgency-card:hover::before { left: 100%; }
-
-/* Form select dropdown — modern, clean, premium */
-.lp-form-card select {
-  font: inherit; font-size: 15px;
-  width: 100%;
-  padding: 14px 44px 14px 16px;
-  border: 1px solid var(--ink-line);
-  border-radius: 12px;
-  background-color: #fff;
-  color: var(--ink);
-  cursor: pointer;
-  appearance: none; -webkit-appearance: none; -moz-appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a1628' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 16px center;
-  background-size: 16px;
-  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
-  font-weight: 500;
-  line-height: 1.4;
-}
-.lp-form-card select:hover {
-  border-color: rgba(217,140,3,0.5);
-  background-color: #fafafa;
-}
-.lp-form-card select:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(217,140,3,0.18);
-}
-.lp-form-card select:invalid { color: var(--ink-mute); }
-.lp-form-card select option { color: var(--ink); padding: 12px; }
-.lp-form-card select option:first-child { color: var(--ink-mute); }
-
-/* Sticky desktop CTA — ALTIJD goud (background op base + media + inline) */
-.lp-sticky-cta {
-  display: none;
-  background: #d98c03 !important;
-  background-color: #d98c03 !important;
-  color: #fff !important;
-}
-@media (min-width: 901px) {
-  .lp-sticky-cta {
-    position: fixed !important;
-    right: 24px; bottom: 24px;
-    z-index: 60;
-    display: inline-flex !important;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 24px;
-    font-family: var(--font-display); font-weight: 600; font-size: 14px;
-    text-decoration: none;
-    border-radius: 4px;
-    box-shadow: 0 8px 24px -10px rgba(10,16,28,0.35);
-    transition: transform .2s ease, box-shadow .25s ease;
-  }
-  .lp-sticky-cta:hover {
-    transform: translateY(-2px);
-    background: #b87502 !important;
-    background-color: #b87502 !important;
-    box-shadow: 0 20px 44px -10px rgba(217,140,3,0.7), 0 2px 4px rgba(15,17,21,0.08);
-  }
-}
-
-/* Inline CTA banner */
-.lp-cta-banner {
-  margin: 0; padding: 26px 34px;
-  background: linear-gradient(135deg, #0a1628 0%, #14233a 100%);
-  border-radius: 18px;
-  display: flex; align-items: center; justify-content: space-between; gap: 24px;
-  color: #fff;
-  position: relative; overflow: hidden; isolation: isolate;
-}
-.lp-cta-banner::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(circle at 85% 50%, rgba(217,140,3,0.18) 0%, transparent 55%);
-  pointer-events: none;
-}
-.lp-cta-banner-text { flex: 1; position: relative; z-index: 2; }
-.lp-cta-banner-text strong {
-  display: block; font-family: var(--font-display); font-size: 19px; font-weight: 700;
-  letter-spacing: -0.012em; margin-bottom: 4px; color: #fff;
-}
-.lp-cta-banner-text span { font-size: 14px; color: rgba(255,255,255,0.78); }
-.lp-cta-banner-cta {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 13px 24px;
-  background: #d98c03 !important; color: #fff !important;
-  font-family: var(--font-display); font-weight: 700; font-size: 14px;
-  text-decoration: none; border-radius: 999px;
-  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
-  white-space: nowrap; position: relative; z-index: 2;
-  box-shadow: 0 8px 22px -8px rgba(217,140,3,0.6);
-}
-.lp-cta-banner-cta:hover {
-  background: #b87502 !important;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px -8px rgba(217,140,3,0.75);
-}
-@media (max-width: 720px) {
-  .lp-cta-banner { flex-direction: column; padding: 22px 22px; gap: 16px; text-align: center; }
-  .lp-cta-banner-cta { width: 100%; justify-content: center; }
-}
-
-/* ===== LP-FOCUS: bloat-secties verbergen voor max conversie ===== */
-.lp-calc-cta-section,
-.lp-price-anchor,
-.lf-section:has(.lp-prijs-grid),
-.lf-section:has(.lp-anatomy-grid),
-.lf-section:has(.lp-dak-cross-img),
-.lf-section:has(.lp-blog-grid) {
-  display: none !important;
-}
-/* Email-veld in mini-form weg = 2 velden ipv 3 = minder friction */
-.lp-quick-form input[name="email"] { display: none !important; }
-@media (max-width: 720px) {
-  .lp-quick-form form { grid-template-columns: 1fr !important; }
-}
-
-/* ═══════════════ HERO REDESIGN — "premium vakman" ipv tech-template ═══════════════
-   Zelfde redesign als dakwerken-LP: verwijdert AI-tells (even-donkere wash,
-   gecentreerde zwevende tekst, glassmorphism-chips, glow-knop, eyebrow-bolletje).
-   Foto = de held (ademt), content links geankerd & geaard. */
-.lp-hero-cine .lf-hero-bg--slides::after {
-  background:
-    linear-gradient(90deg,
-      rgba(9,14,24,0.98) 0%, rgba(9,14,24,0.97) 32%, rgba(9,14,24,0.80) 46%,
-      rgba(9,14,24,0.32) 62%, rgba(9,14,24,0.06) 80%, rgba(9,14,24,0) 100%) !important;
-}
-.lp-hero-cine .lf-hero-bg--slides { filter: contrast(1.05) saturate(1.06) brightness(1.02) !important; }
-.lp-hero-cine .lf-hero-wrap {
-  align-items: center !important;
-  justify-content: flex-start !important;
-  padding-top: 100px !important;
-  padding-bottom: 80px !important;
-}
-.lp-hero-cine .lf-hero-mini { max-width: 540px !important; text-align: left !important; margin: 0 !important; }
-.lp-hero-cine .lf-hero-sub { font-size: clamp(15px, 1.15vw, 17px) !important; line-height: 1.6 !important; color: rgba(255,255,255,0.82) !important; margin: 0 0 30px 0 !important; text-align: left !important; max-width: 470px !important; }
-.lp-hero-cine .lf-hero-actions { justify-content: flex-start !important; }
-.lp-hero-cine .lf-hero-eyebrow {
-  background: none !important; border: none !important;
-  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
-  padding: 0 !important; margin-bottom: 18px !important;
-  font-size: 12.5px !important; font-weight: 700 !important;
-  letter-spacing: 0.2em !important; text-transform: uppercase !important; color: #f0a83a !important;
-}
-.lp-hero-cine .lf-hero-eyebrow-dot { display: none !important; }
-.lp-hero-cine .lf-hero-headline { font-size: clamp(38px, 4.6vw, 60px) !important; font-weight: 700 !important; letter-spacing: -0.022em !important; line-height: 1.0 !important; margin: 0 0 20px !important; }
-.lp-hero-cine .lp-hero-trust {
-  background: none !important; border: none !important;
-  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
-  border-radius: 0 !important; border-top: 1px solid rgba(255,255,255,0.20) !important;
-  padding: 18px 0 0 0 !important; margin-top: 26px !important; gap: 26px !important; flex-wrap: wrap !important;
-}
-.lp-hero-cine .lp-hero-trust > span { padding: 0 !important; font-size: 13.5px !important; }
-.lp-hero-cine .lp-hero-trust > span + span { border-left: none !important; }
-.lp-hero-cine .lf-cta-pill { border-radius: 8px !important; box-shadow: 0 2px 10px rgba(10,16,28,0.22) !important; }
-.lp-hero-cine .lf-cta-pill:hover { box-shadow: 0 6px 18px rgba(10,16,28,0.30) !important; transform: translateY(-1px) !important; }
-.lp-hero-cine .lf-hero-ghost { border-radius: 8px !important; }
-.lp-hero-cine .lf-scroll-cue { display: none !important; }
-@media (max-width: 900px) {
-  .lp-hero-cine .lf-hero-wrap { align-items: flex-end !important; justify-content: flex-start !important; padding-bottom: 30px !important; }
-  .lp-hero-cine .lf-hero-mini { text-align: left !important; max-width: 100% !important; }
-  .lp-hero-cine .lf-hero-headline { font-size: clamp(30px, 8.5vw, 42px) !important; }
-  .lp-hero-cine .lf-hero-sub { max-width: 100% !important; font-size: 14.5px !important; }
-  .lp-hero-cine .lf-hero-bg--slides::after {
-    background: linear-gradient(0deg, rgba(9,14,24,0.94) 0%, rgba(9,14,24,0.78) 34%, rgba(9,14,24,0.30) 64%, rgba(9,14,24,0.10) 100%) !important;
-  }
-  .lp-hero-cine .lf-hero-eyebrow { margin-bottom: 12px !important; font-size: 11px !important; }
-}
-
-/* ═══════════════ GRAND SLAM OFFER — "Zorgeloze Gevel" (Hormozi) ═══════════════ */
-.lp-offer { padding: 56px 0 8px; }
-.lp-offer-head { max-width: 720px; margin: 0 0 28px; }
-.lp-offer-eyebrow { font-size: 12.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
-.lp-offer-title { font-family: var(--font-display); font-size: clamp(24px, 3vw, 34px); font-weight: 700; color: var(--navy); letter-spacing: -0.02em; line-height: 1.12; margin: 0 0 10px; }
-.lp-offer-sub { font-size: 15px; color: var(--ink-soft); line-height: 1.6; margin: 0; }
-.lp-offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 32px; background: #fff; border: 1px solid rgba(10,22,40,0.08); border-radius: 16px; padding: 30px 32px; box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 18px 44px -28px rgba(10,22,40,0.18); }
-.lp-offer-item { display: flex; gap: 13px; align-items: flex-start; }
-.lp-offer-check { width: 24px; height: 24px; border-radius: 50%; background: rgba(217,140,3,0.12); color: var(--accent); flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
-.lp-offer-item-text { font-size: 14.5px; line-height: 1.5; color: var(--ink); }
-.lp-offer-item-text strong { color: var(--navy); font-weight: 700; display: block; margin-bottom: 1px; }
-.lp-offer-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 20px; padding-top: 4px; }
-.lp-offer-cta { display: inline-flex; align-items: center; gap: 9px; background: #d98c03; color: #fff; font-weight: 700; font-size: 15px; padding: 14px 26px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 10px rgba(217,140,3,0.3); transition: transform .15s ease, background .2s ease; }
-.lp-offer-cta:hover { background: #c47a02; transform: translateY(-1px); }
-.lp-offer-foot-note { font-size: 13px; color: var(--ink-mute); }
-@media (max-width: 720px) {
-  .lp-offer { padding: 36px 0 4px; }
-  .lp-offer-grid { grid-template-columns: 1fr; gap: 14px; padding: 22px 20px; }
-  .lp-offer-foot { flex-direction: column; align-items: stretch; }
-  .lp-offer-cta { justify-content: center; }
-}
-
-/* ═══════════════ ROBUUST PREMIUM — weg van AI-playful (Dural-stijl) ═══════════════ */
-body.lp-page .lf-cta-pill,
-body.lp-page .lf-hero-ghost,
-body.lp-page .lp-quick-form button[type="submit"],
-body.lp-page .lp-offer-cta,
-body.lp-page .lp-premie-cta,
-body.lp-page .lp-cta-banner-cta,
-body.lp-page .lp-form-card button[type="submit"],
-body.lp-page button[data-lp-submit],
-body.lp-page button[data-lp-quick-submit] {
-  border-radius: 4px !important;
-  background-image: none !important;
-  box-shadow: none !important;
-}
-body.lp-page .lp-quick-form { border-radius: 6px !important; box-shadow: 0 1px 0 rgba(10,22,40,0.06), 0 12px 30px -24px rgba(10,22,40,0.25) !important; }
-body.lp-page .lp-quick-form input,
-body.lp-page .lp-form-card input,
-body.lp-page .lp-form-card textarea,
-body.lp-page .lp-form-card select { border-radius: 4px !important; }
-body.lp-page .lp-offer-grid,
-body.lp-page .lp-usp-card,
-body.lp-page .lp-urgency-card,
-body.lp-page .lp-blog-card,
-body.lp-page .lf-testi { border-radius: 6px !important; box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 14px 34px -26px rgba(10,22,40,0.16) !important; }
-body.lp-page .lp-premie,
-body.lp-page .lp-cta-banner { background-image: none !important; border-radius: 6px !important; }
-body.lp-page .lp-offer-cta:hover,
-body.lp-page .lf-cta-pill:hover { box-shadow: 0 2px 8px rgba(10,16,28,0.18) !important; }
+/* 14 — FOOTER */
+.tr-footer { background: ${NAVY}; color: rgba(255,255,255,0.7); padding: 48px 0 36px; border-top: 1px solid rgba(255,255,255,0.08); }
+.tr-footer-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; margin-bottom: 26px; }
+.tr-footer-wordmark { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: #fff; letter-spacing: -0.01em; }
+.tr-footer-links { display: flex; flex-wrap: wrap; gap: 22px; }
+.tr-footer-links a { color: rgba(255,255,255,0.72); font-size: 14px; }
+.tr-footer-links a:hover { color: ${ORANGE}; }
+.tr-footer-info { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+.tr-footer-copy { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: 12.5px; color: rgba(255,255,255,0.45); }
 `;
 
+/* ── Inline SVG icon set (no external deps) ─────────────────────────────── */
+const icPhone = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`;
+const icCheck = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+const icShield = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`;
+const icStep1 = `<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>`;
+const icStep2 = `<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>`;
+const icStep3 = `<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>`;
+const icWhy1 = `<svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`;
+const icWhy2 = `<svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`;
+const icWhy3 = `<svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>`;
+const icPin = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`;
+const stars = '★★★★★';
+
+const PHONE = CONTACT.phone.spaced;
+const PHONE_HREF = CONTACT.phone.href;
+const ADDRESS = CONTACT.address.full;
+
+/* ── Page HTML (template literal) ───────────────────────────────────────── */
 const HTML = `
-<header class="lp-mini-header">
-  <div class="wrap lp-mini-header-inner">
-    <a class="lp-mini-brand" href="/" aria-label="AB Bouw Groep — home">
-      <img src="${logo}" alt="AB Bouw Groep — Gevelrenovatie" class="lp-mini-logo" />
-    </a>
-    <div class="lp-mini-right">
-      <a href="${CONTACT.phone.href}" class="lp-mini-tel" aria-label="Bel ons direct">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        <span>${CONTACT.phone.spaced}</span>
-      </a>
-      <a href="#lp-form" class="lp-mini-cta" data-smooth>Gratis offerte</a>
-    </div>
-  </div>
-</header>
+<div class="tr">
 
-<section class="gev2-hero">
-  <div class="gev2-wrap">
-    <div>
-      <h1 class="gev2-h1">Nieuwe gevel. Strak afgewerkt. Meer comfort.</h1>
-      <p class="gev2-sub">Crepi, ETICS-buitenisolatie, steenstrips en sierpleister in Mechelen, Antwerpen, Lier en heel Vlaanderen. Eigen ploeg, bindende offerte, gemiddeld 60 EPC-punten winst.</p>
-      <div class="gev2-actions">
-        <a href="#lp-form" class="gev2-cta" data-smooth>Vraag gratis plaatsbezoek
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
-        <a href="${CONTACT.phone.href}" class="gev2-ghost">Bel ${CONTACT.phone.spaced}</a>
+  <!-- 1. TOP BAR -->
+  <div class="tr-topbar">
+    <div class="tr-wrap">
+      <div class="tr-topbar-left">
+        <span>Gratis gevelinspectie binnen 5 werkdagen</span>
+        <span>Familiebedrijf</span>
+        <span>Eigen ploeg</span>
       </div>
-      <div class="gev2-trust">
-        <span><span class="stars">★★★★★</span> <b>4,9</b> · 184+ klanten</span>
-        <span><b>10 jaar</b> garantie</span>
-        <span><b>Eigen ploeg</b>, geen onderaannemers</span>
-      </div>
-    </div>
-    <div class="gev2-photo">
-      <img src="${hero1}" alt="Afgewerkte witte crepi-gevel op een Vlaamse woning — AB Gevelbekleding" />
+      <a class="tr-topbar-phone" href="${PHONE_HREF}">${icPhone}${PHONE}</a>
     </div>
   </div>
-  <div class="gev2-logos">
-    <div class="gev2-logos-head">Wij werken met de beste merken</div>
-    <div class="gev2-marquee">
-      <div class="gev2-marquee-track">
-        <div class="gev2-marquee-set">
-          <img src="/assets/logos/caparol.png" alt="Caparol" loading="lazy" />
-          <img src="/assets/logos/eternit.png" alt="Eternit" loading="lazy" />
-          <img src="/assets/logos/isover.png" alt="Isover" loading="lazy" />
-          <img src="/assets/logos/knauf.png" alt="Knauf" loading="lazy" />
-          <img src="/assets/logos/isoproc.png" alt="Isoproc" loading="lazy" />
-          <img src="/assets/logos/rectic.png" alt="Recticel" loading="lazy" />
-          <img src="/assets/logos/dorken.png" alt="Dörken" loading="lazy" />
-          <img src="/assets/logos/koramic.png" alt="Koramic" loading="lazy" />
-          <img src="/assets/logos/mato.png" alt="Mato" loading="lazy" />
+
+  <!-- 2. HEADER -->
+  <header class="tr-header">
+    <div class="tr-wrap">
+      <a href="#" aria-label="AB Bouw Groep"><img class="tr-logo" src="${logo}" alt="AB Bouw Groep" /></a>
+      <nav class="tr-nav">
+        <a href="#diensten">Diensten</a>
+        <a href="#werkwijze">Werkwijze</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="tr-header-right">
+        <div class="tr-rating">
+          <span class="tr-rating-score">4,9/5</span>
+          <span class="tr-rating-stars">${stars}</span>
         </div>
-        <div class="gev2-marquee-set" aria-hidden="true">
-          <img src="/assets/logos/caparol.png" alt="" loading="lazy" />
-          <img src="/assets/logos/eternit.png" alt="" loading="lazy" />
-          <img src="/assets/logos/isover.png" alt="" loading="lazy" />
-          <img src="/assets/logos/knauf.png" alt="" loading="lazy" />
-          <img src="/assets/logos/isoproc.png" alt="" loading="lazy" />
-          <img src="/assets/logos/rectic.png" alt="" loading="lazy" />
-          <img src="/assets/logos/dorken.png" alt="" loading="lazy" />
-          <img src="/assets/logos/koramic.png" alt="" loading="lazy" />
-          <img src="/assets/logos/mato.png" alt="" loading="lazy" />
+        <a class="tr-btn tr-headcta" href="#contact" style="padding:12px 22px;font-size:14px;">Gratis offerte</a>
+        <button type="button" class="tr-burger" data-menu-toggle aria-label="Menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="tr-mobmenu-overlay" data-menu-close></div>
+    <nav class="tr-mobmenu" aria-label="Mobiel menu">
+      <button type="button" class="tr-mobmenu-close" data-menu-close aria-label="Sluiten">×</button>
+      <a href="#diensten">Diensten</a>
+      <a href="#werkwijze">Werkwijze</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">Veelgestelde vragen</a>
+      <a href="#contact">Contact</a>
+      <a class="tr-btn tr-mobmenu-cta" href="#contact">Offerte aanvragen</a>
+    </nav>
+  </header>
+
+  <!-- 3. HERO -->
+  <section class="tr-hero">
+    <div class="tr-hero-bg"><img src="${heroWitte}" alt="Gevelwerken Vlaanderen" /></div>
+    <div class="tr-hero-inner">
+      <div class="tr-wrap">
+        <span class="tr-eyebrow">Uw woning verdient het beste</span>
+        <h1>Het vakkundigste gevelwerk van Vlaanderen.</h1>
+        <p class="tr-hero-sub">Crepi, buitenisolatie (ETICS), steenstrips en sierpleister. <b>Eigen ploeg</b>, actief in Mechelen, Antwerpen, Lier en heel Vlaanderen.</p>
+        <div class="tr-certs">
+          <span class="tr-cert-pill">${icShield}VCA* gecertificeerd</span>
+          <span class="tr-cert-pill">${icCheck.replace('width="20" height="20"','width="15" height="15"')}Lid Bouwunie</span>
+          <span class="tr-cert-pill">${icShield}Verzekerd — Federale Verzekering</span>
+          <span class="tr-cert-logo"><img src="/assets/logos/caparol.png" alt="Caparol" /></span>
+          <span class="tr-cert-logo"><img src="/assets/logos/knauf.png" alt="Knauf" /></span>
+          <span class="tr-cert-logo"><img src="/assets/logos/isover.png" alt="Isover" /></span>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- HERO MINI-FORM — boven-fold quick capture, 3 verplichte velden -->
-<div class="wrap">
-  <div class="lp-quick-form" data-lp-quick data-reveal>
-    <div class="lp-quick-form-head">
-      <div class="lp-quick-form-head-icon" aria-hidden="true">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <div>
-        <div class="lp-quick-form-title">Vraag gratis plaatsbezoek</div>
-        <div class="lp-quick-form-sub">Vakman langs binnen 5 werkdagen · bindende offerte · 100% vrijblijvend</div>
-      </div>
-    </div>
-    <form data-lp-quick-form novalidate>
-      <input type="text" name="firstName" placeholder="Voornaam *" required autocomplete="given-name" />
-      <input type="email" name="email" placeholder="E-mailadres *" required autocomplete="email" inputmode="email" />
-      <input type="tel" name="phone" placeholder="Telefoon *" required autocomplete="tel" inputmode="tel" />
-      <button type="submit" data-lp-quick-submit style="background:#d98c03 !important; background-color:#d98c03 !important; color:#ffffff !important; border:none;">
-        <span data-lp-quick-submit-label>Plan mijn gratis gevel-offerte</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </button>
-    </form>
-    <div class="lp-quick-form-error" data-lp-quick-error hidden></div>
-    <div class="lp-quick-form-thanks" data-lp-quick-thanks aria-hidden="true">
-      <div class="lp-quick-form-thanks-icon">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <h4>Bedankt — we hebben uw aanvraag.</h4>
-      <p>Onze projectleider neemt binnen één werkdag persoonlijk contact met u op.</p>
-    </div>
-  </div>
-</div>
-
-<!-- GRAND SLAM OFFER — "Zorgeloze Gevel" (Hormozi): aanbod expliciet maken -->
-<section class="lf-section lp-offer">
-  <div class="wrap">
-    <div class="lp-offer-head" data-reveal>
-      <div class="lp-offer-eyebrow">Wat u bij ons krijgt</div>
-      <h2 class="lp-offer-title">Alles geregeld, <span class="ab-mark">vaste prijs</span>.</h2>
-      <p class="lp-offer-sub">Van het eerste plaatsbezoek tot een afgewerkte gevel werkt u met één ploeg en één vaste contactpersoon. Geen tussenpartij.</p>
-    </div>
-    <div class="lp-offer-grid" data-reveal data-reveal-delay="1">
-      ${[
-        ['Gratis plaatsbezoek met advies', 'Een vakman komt binnen 5 werkdagen langs en bekijkt ter plaatse wat uw gevel nodig heeft.'],
-        ['Offerte = factuur, ook bij prijsstijgingen', 'Wat u tekent, betaalt u — ook als materiaalprijzen stijgen of er tijdens de werken iets onverwachts opduikt. Geen naverrekening achteraf.'],
-        ['Mijn VerbouwPremie geregeld', 'Wij dienen het volledige premiedossier voor u in, zodat u niets misloopt.'],
-        ['Eigen gevelploeg', 'Uw gevel wordt uitgevoerd door onze eigen mensen, niet door onderaannemers.'],
-        ['15 jaar garantie', 'U krijgt een schriftelijke garantie op de uitgevoerde werken.'],
-        ['Eén vaste contactpersoon', 'Dezelfde projectleider begeleidt u van de offerte tot de oplevering.'],
-        ['Nette werf', 'Na de werken ruimen wij alles op en laten we uw woning proper achter.'],
-        ['Crepi, sierpleister, steenstrips of bekleding', 'Wij adviseren de afwerking die past bij uw woning en budget.'],
-      ].map(([t, d]) => `
-      <div class="lp-offer-item">
-        <span class="lp-offer-check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-        <span class="lp-offer-item-text"><strong>${t}</strong>${d}</span>
-      </div>`).join('')}
-    </div>
-    <div class="lp-offer-foot" data-reveal>
-      <a href="#lp-form" class="lp-offer-cta" data-smooth>
-        Vraag gratis plaatsbezoek
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-      <span class="lp-offer-foot-note">Vrijblijvend · antwoord binnen 1 werkdag</span>
-    </div>
-  </div>
-</section>
-
-<!-- CALCULATOR-CTA banner -->
-<section class="lf-section lp-calc-cta-section">
-  <div class="wrap">
-    <a href="/calculator/gevel" class="lp-calc-cta" data-reveal>
-      <div class="lp-calc-cta-icon" aria-hidden="true">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="4" y="2" width="16" height="20" rx="2"/>
-          <line x1="8" y1="6" x2="16" y2="6"/>
-          <line x1="8" y1="10" x2="10" y2="10"/><line x1="12" y1="10" x2="14" y2="10"/><line x1="16" y1="10" x2="16" y2="10"/>
-          <line x1="8" y1="14" x2="10" y2="14"/><line x1="12" y1="14" x2="14" y2="14"/><line x1="16" y1="14" x2="16" y2="14"/>
-          <line x1="8" y1="18" x2="14" y2="18"/>
-        </svg>
-      </div>
-      <div class="lp-calc-cta-text">
-        <span class="lp-calc-cta-eyebrow">Sneller dan een formulier</span>
-        <strong class="lp-calc-cta-title">Bereken uw gevel-offerte online — <span class="lp-calc-cta-em">60 seconden</span></strong>
-        <span class="lp-calc-cta-sub">6 simpele vragen. <strong>Geen technische kennis nodig.</strong> Wij meten alles nauwkeurig op bij het gratis plaatsbezoek.</span>
-      </div>
-      <div class="lp-calc-cta-arrow" aria-hidden="true">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="5" y1="12" x2="19" y2="12"/>
-          <polyline points="12 5 19 12 12 19"/>
-        </svg>
-      </div>
-    </a>
-  </div>
-</section>
-
-<section class="lf-section lf-tone-soft lf-reviews-section lp-reviews" style="padding: 56px 0;">
-  <div class="wrap">
-    <div class="lf-section-head centered lf-reviews-head" data-reveal style="margin-bottom: 36px;">
-      <span class="lf-eyebrow">Reviews gevelrenovatie</span>
-      <div class="lf-reviews-rating">
-        <span class="lf-reviews-score">4.9</span>
-        <span class="lf-reviews-divider" aria-hidden="true"></span>
-        <div class="lf-reviews-meta">
-          <div class="lf-reviews-stars" aria-label="4.9 van 5 sterren">
-            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
-            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
-            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
-            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
-            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
+  <!-- 4. QUICK FORM -->
+  <div class="tr-quickform-shell">
+    <div class="tr-wrap">
+      <div class="tr-quickform" id="form" data-lp-quick>
+        <span class="tr-eyebrow">Snelle aanvraag</span>
+        <h3>Vraag gratis gevelinspectie</h3>
+        <form data-lp-quick-form novalidate>
+          <div class="tr-qf-grid">
+            <input type="text" name="firstName" placeholder="Voornaam" autocomplete="given-name" required />
+            <input type="tel" name="phone" placeholder="Telefoon" autocomplete="tel" required />
+            <button type="submit" class="tr-btn" data-lp-quick-submit>
+              <span data-lp-quick-submit-label>Verzend aanvraag</span>
+            </button>
           </div>
-          <span class="lf-reviews-count">96+ gevelprojecten beoordeeld</span>
-        </div>
-      </div>
-      <span class="lp-reviews-swipe-hint" aria-hidden="true">
-        Swipe voor meer reviews
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </span>
-    </div>
-    <div class="lf-testi-marquee" data-testi-marquee>
-      <button type="button" class="lf-testi-arrow lf-testi-arrow--prev" data-testi-prev aria-label="Vorige review">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <button type="button" class="lf-testi-arrow lf-testi-arrow--next" data-testi-next aria-label="Volgende review">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
-      <div class="lf-testi-shift" data-testi-shift>
-        <div class="lf-testi-track" data-testi-track>
-          ${(() => {
-            const reviews = [
-              { name: 'Jasmien De Backer', role: 'Witte crepi rijwoning', img: rev1, text: 'Onze rijwoning had een vermoeide bezetting uit de jaren ’80. Nu een spierwitte crepi-gevel die je zo van een interieurmagazine plukt. De buren komen vragen wie het werk gedaan heeft. Strak, proper, op tijd opgeleverd.', highlights: ['spierwitte crepi-gevel', 'op tijd opgeleverd'] },
-              { name: 'Joris Vanhove', role: 'ETICS + crepi', img: rev2, text: 'Volledig pakket: 16 cm EPS-isolatie + crepi-afwerking. EPC van F naar C in één werk. Stookkost deze winter bijna gehalveerd, en de muren binnen voelen niet meer koud aan. Premie-dossier (€4.800) liep via hen.', highlights: ['EPC van F naar C', 'bijna gehalveerd', '€4.800'] },
-              { name: 'Marius Ionescu', role: 'Steenstrips voorgevel', img: rev3, text: 'We wilden de klassieke Vlaamse baksteen-look zonder het gewicht en de kost van echte stenen. Steenstrips Vandersanden, voegen kaarsrecht, aansluitingen rond ramen vakwerk. Niemand merkt het verschil — zelfs onze schoonvader niet.', highlights: ['voegen kaarsrecht', 'zelfs onze schoonvader niet'] },
-              { name: 'Cindy Van Looy', role: 'Sierpleister marmorino', img: rev4, text: 'Marmorino-afwerking in zachte taupe. Eén van de experts hielp met de kleurkeuze — wij wilden eerst grijs, hij overtuigde ons van een warmere tint. Achteraf super blij, het huis straalt nu echt karakter uit.', highlights: ['zachte taupe', 'super blij', 'echt karakter'] },
-              { name: 'Dimitri Maes', role: 'Crepi + buitenisolatie', img: rev5, text: 'Halfopen woning uit 1968 die nooit was geïsoleerd. 16 cm EPS buitenisolatie + crepi. Comfort-sprong is enorm: geen koude muren meer in de winter. Premie €5.400 zonder problemen uitbetaald.', highlights: ['Comfort-sprong is enorm', '€5.400 zonder problemen'] },
-              { name: 'Steven Goossens', role: 'Gevelherstel + crepi', img: rev6, text: 'Onze gevel had scheuren en vochtproblemen. Drie aannemers wilden direct crepi erop smeren. Eén van de experts zei: eerst herstellen, anders gooi je geld weg. Uitgevoerd zoals beloofd. Factuur tot op de euro met de offerte.', highlights: ['eerst herstellen', 'tot op de euro'] },
-              { name: 'Eva Vandeputte', role: 'Witte crepi nieuwbouw · Kontich', img: rev7, text: 'Nieuwbouw afgewerkt met witte crepi op de spouwmuur. Strakke lijn over de volledige gevel, geen scheuren of vlekken. Plaatsing in 5 werkdagen, stelling weg, oprit proper opgekuist, klaar.', highlights: ['Strakke lijn', '5 werkdagen', 'proper opgekuist'] },
-              { name: 'Hicham Bouali', role: 'Gevelisolatie + nieuwe crepi', img: rev8, text: 'Eerste aannemer wilde alleen crepi over de bestaande gevel. AB Bouw legde uit waarom we ETICS-isolatie nodig hadden. Hogere prijs, veel betere oplossing. EPC + comfort vlot. Geen spijt van die keuze.', highlights: ['veel betere oplossing', 'Geen spijt'] },
-            ];
-            const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            const wrapWords = (phrase: string, baseI: number) => {
-              const words = phrase.split(/(\s+)/);
-              let wi = 0;
-              return words.map((w) => {
-                if (/^\s+$/.test(w)) return w;
-                const idx = baseI + wi;
-                wi += 1;
-                return `<span class="lf-hl-word" style="--hl-i:${idx}">${w}</span>`;
-              }).join('');
-            };
-            const highlight = (text: string, terms: string[]) => {
-              let out = text;
-              let wordOffset = 0;
-              terms.forEach((term) => {
-                const re = new RegExp(escapeRe(term), 'i');
-                out = out.replace(re, (m) => {
-                  const wrapped = `<mark class="lf-hl">${wrapWords(m, wordOffset)}</mark>`;
-                  wordOffset += m.trim().split(/\s+/).length;
-                  return wrapped;
-                });
-              });
-              return out;
-            };
-            const loopedSets = [-1, 0, 1];
-            return loopedSets.map((setIdx) => `
-              <div class="lf-testi-set" data-testi-set="${setIdx}"${setIdx !== 0 ? ' aria-hidden="true"' : ''}>
-                ${reviews.map((t, reviewIdx) => `
-                  <article class="lf-testi" data-review-index="${reviewIdx}">
-                    <div class="lf-testi-stars">★★★★★</div>
-                    <p>${t.text}</p>
-                    <div class="lf-testi-divider"></div>
-                    <div class="lf-testi-foot">
-                      <div class="lf-testi-meta">
-                        <strong>${t.name}</strong>
-                        <span>${t.role}</span>
-                      </div>
-                    </div>
-                  </article>
-                `).join('')}
-              </div>
-            `).join('');
-          })()}
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="lp-trust-strip">
-  <div class="wrap">
-    <div class="lp-trust-strip-inner">
-      <span class="lp-trust-badge">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span><strong>VCA*</strong> Veiligheidscertificaat</span>
-      </span>
-      <span class="lp-trust-divider"></span>
-      <span class="lp-trust-badge">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
-        <span><strong>Lid Bouwunie</strong></span>
-      </span>
-      <span class="lp-trust-divider"></span>
-      <span class="lp-trust-badge">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M8 14h2M8 17h6"/></svg>
-        <span>10-jarige polis bij <strong>Federale Verzekering</strong></span>
-      </span>
-      <span class="lp-trust-divider"></span>
-      <span class="lp-trust-badge">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        <span><strong>10 jaar</strong> garantie afwerking</span>
-      </span>
-      <span class="lp-trust-divider"></span>
-      <span class="lp-trust-badge">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
-        <span><strong>Mijn VerbouwPremie</strong> expert</span>
-      </span>
-    </div>
-  </div>
-</section>
-
-<section class="lf-section" style="padding: 64px 0 24px;">
-  <div class="wrap">
-    <div class="lp-stats-strip">
-      <div class="lp-stat" data-reveal><div class="lp-stat-num" data-count-up="32180" data-count-suffix=" m²">0 m²</div><div class="lp-stat-label">Gevelvlak afgewerkt sinds 2010</div></div>
-      <div class="lp-stat" data-reveal data-reveal-delay="1"><div class="lp-stat-num" data-count-up="60" data-count-suffix=" EPC">0 EPC</div><div class="lp-stat-label">Gemiddelde puntenwinst per project</div></div>
-      <div class="lp-stat" data-reveal data-reveal-delay="2"><div class="lp-stat-num" data-count-up="40" data-count-suffix="%">0%</div><div class="lp-stat-label">Lagere stookkost na ETICS</div></div>
-      <div class="lp-stat" data-reveal data-reveal-delay="3"><div class="lp-stat-num" data-count-up="55" data-count-prefix="€" data-count-suffix="/m²">€0/m²</div><div class="lp-stat-label">Premie buitenisolatie 2026</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lp-premie" data-reveal>
-      <div class="lp-premie-ico">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-      </div>
-      <div class="lp-premie-text">
-        <strong>Premie 2026: €55/m² — daarna minder.</strong>
-        <p>Op een halfopen woning <strong style="color:var(--navy);">€4.500–€7.200 terug</strong>. Vanaf 2027 zakt het tarief — wie nu boekt zet de 2026-premie vast in offerte. Wij regelen het volledige dossier.</p>
-      </div>
-      <a href="#lp-form" class="lp-premie-cta" data-smooth>
-        Bereken mijn premie
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-split">
-      <div data-reveal>
-        <span class="lf-eyebrow">Waarom een gevelrenovatie loont</span>
-        <h2 class="lf-h2">EPC-sprong,<br/><span class="ab-mark">strak resultaat</span>.</h2>
-        <p class="lf-lede">Een ongeïsoleerde gevel verliest tot 40% van uw stookkost. Een ETICS-renovatie verlaagt EPC met gemiddeld 60 punten én geeft uw huis een volledig nieuwe uitstraling — vaak doorslaggevend bij verkoop.</p>
-        <ul class="ab-checks" style="margin-top: 22px;">
-          <li>40% lagere stookkost vanaf de eerste winter</li>
-          <li>EPC-sprong gemiddeld 60 punten — klaar voor renovatieplicht 2028</li>
-          <li>Geen koudebruggen, geen vochtschimmel meer — gezonder binnenklimaat</li>
-          <li>€12.000–€25.000 meerwaarde bij verkoop</li>
-        </ul>
-        <a href="#lp-form" class="lf-cta-pill" style="margin-top: 28px;">
-          <span>Vraag uw gratis plaatsbezoek aan</span>
-          <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-        </a>
-      </div>
-      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgBenefits}" alt="Grijze crepi gevelrenovatie" loading="lazy"/></div>
-    </div>
-  </div>
-</section>
-
-<section class="lf-section lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-section-head centered" data-reveal style="margin-bottom: 40px;">
-      <span class="lf-eyebrow">Goed om te weten</span>
-      <h2 class="lf-h2">Duidelijk van<br/><span class="ab-mark">begin tot eind</span>.</h2>
-    </div>
-    <div class="lp-urgency-grid">
-      <div class="lp-urgency-card" data-reveal>
-        <div class="lp-urgency-num">01</div>
-        <h4>Premie inbegrepen</h4>
-        <p>Bij gevelisolatie hoort doorgaans Mijn VerbouwPremie. Wij berekenen waar u recht op heeft en dienen het volledige dossier voor u in.</p>
-      </div>
-      <div class="lp-urgency-card" data-reveal data-reveal-delay="1">
-        <div class="lp-urgency-num">02</div>
-        <h4>Beter EPC-label</h4>
-        <p>Gevelisolatie verhoogt uw EPC-score en het wooncomfort. Nuttig als u uw woning op termijn wil verkopen of verhuren.</p>
-      </div>
-      <div class="lp-urgency-card" data-reveal data-reveal-delay="2">
-        <div class="lp-urgency-num">03</div>
-        <h4>Vaste prijs op papier</h4>
-        <p>U krijgt een bindende offerte met een concrete startdatum. De prijs die u tekent is de prijs die u betaalt.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-section-head centered" data-reveal style="margin-bottom: 36px;">
-      <span class="lf-eyebrow">Wat anderen niet bieden</span>
-      <h2 class="lf-h2">4 garanties die je elders<br/><span class="ab-mark">tevergeefs zoekt</span>.</h2>
-    </div>
-    <div class="lp-usp-grid">
-      <div class="lp-usp-card" data-reveal>
-        <div class="lp-usp-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-        <h4>Snelle planning</h4>
-        <p>Bij de meeste klanten starten we binnen 30 dagen na akkoord. Geen 6 maanden wachten zoals elders.</p>
-      </div>
-      <div class="lp-usp-card" data-reveal data-reveal-delay="1">
-        <div class="lp-usp-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
-        <h4>Asbest? Inbegrepen</h4>
-        <p>Oude rijwoningen hebben vaak asbestcement gevelplaten. Verwijdering + attest in offerte.</p>
-      </div>
-      <div class="lp-usp-card" data-reveal data-reveal-delay="2">
-        <div class="lp-usp-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
-        <h4>Schone-werf garantie</h4>
-        <p>Stelling weg, oprit gestraald, geen pleisterresten. Foto-rapportage via WhatsApp.</p>
-      </div>
-      <div class="lp-usp-card" data-reveal data-reveal-delay="3">
-        <div class="lp-usp-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-        <h4>EPC-winst vooraf berekend</h4>
-        <p>Wij berekenen uw verwachte EPC-verbetering en premie-bedrag vóór de offerte. Geen valse beloftes — alleen wat we kunnen waarmaken.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="lf-section" style="padding: 0 0 8px;">
-  <div class="wrap">
-    <div class="lp-cta-banner" data-reveal>
-      <div class="lp-cta-banner-text">
-        <strong>Vandaag bellen = volgende week opname.</strong>
-        <span>Gratis plaatsbezoek binnen 5 werkdagen · vrijblijvende offerte · 10 jaar garantie.</span>
-      </div>
-      <a href="#lp-form" class="lp-cta-banner-cta" data-smooth>
-        Plan gratis plaatsbezoek
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-split">
-      <div class="lf-split-img" data-reveal><img src="${imgProcess}" alt="Stelling tegen halfopen gevel" loading="lazy"/></div>
-      <div data-reveal data-reveal-delay="1">
-        <span class="lf-eyebrow">Onze werkwijze</span>
-        <h2 class="lf-h2">Van eerste gesprek tot<br/><span class="ab-mark">strakke gevel</span> in 5-7 weken.</h2>
-        <p class="lf-lede" style="margin-bottom: 8px;">Eigen gevelploeg. Geen onderaannemers. Eén verantwoordelijke.</p>
-        <ol class="lp-process-steps">
-          <li><span class="lp-process-num">01</span><div><strong>Plaatsbezoek</strong><span>Week 1 · Gratis gevelopname + richtprijs</span></div></li>
-          <li><span class="lp-process-num">02</span><div><strong>Offerte</strong><span>Week 2 · Bindend op papier + premiedossier voorbereid</span></div></li>
-          <li><span class="lp-process-num">03</span><div><strong>Uitvoering</strong><span>Week 3-5 · 10-18 werkdagen + weekrapport per email</span></div></li>
-          <li><span class="lp-process-num">04</span><div><strong>Oplevering</strong><span>Premie ingediend · 10 jaar garantie schriftelijk</span></div></li>
-        </ol>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-section-head centered" data-reveal style="margin-bottom: 28px;">
-      <span class="lf-eyebrow">ETICS opbouw</span>
-      <h2 class="lf-h2">Uw gevel in <span class="ab-mark">3D</span> — laag voor laag.</h2>
-      <p class="lf-lede" style="margin: 14px auto 0; max-width: 620px;">Geen crepi op een muur — <strong>5 lagen vakwerk</strong> die samen isolatie, EPC-winst en strak resultaat leveren. Conform Vlaamse renovatieplicht 2028.</p>
-    </div>
-    <div class="lp-gevel-cross-wrap" data-reveal>
-      <img class="lp-gevel-cross-img" src="${gevCross}" alt="ETICS-opbouw cross-section — 5 lagen van baksteen tot crepi"/>
-    </div>
-    <div class="lp-anatomy-grid" data-reveal>
-      <div class="lp-anatomy-tile">
-        <div class="lp-anatomy-tile-img"><img src="${gevL1}" alt="Bestaande baksteengevel — laag 1" loading="lazy"/></div>
-        <div class="lp-anatomy-tile-body">
-          <span class="lp-anatomy-tile-num">01</span>
-          <h4>Bestaande gevel</h4>
-          <p>Bakstenen spouw- of massiefmuur. We controleren stevigheid, vocht en eventueel scheurherstel vooraf.</p>
-        </div>
-      </div>
-      <div class="lp-anatomy-tile">
-        <div class="lp-anatomy-tile-img"><img src="${gevL2}" alt="Lijmmortel en ankers — laag 2" loading="lazy"/></div>
-        <div class="lp-anatomy-tile-body">
-          <span class="lp-anatomy-tile-num">02</span>
-          <h4>Lijmlaag + ankers</h4>
-          <p>EPS-platen worden volledig verlijmd met cementgebonden lijm + mechanisch verankerd voor maximale grip.</p>
-        </div>
-      </div>
-      <div class="lp-anatomy-tile">
-        <div class="lp-anatomy-tile-img"><img src="${gevL3}" alt="EPS isolatieplaten — laag 3" loading="lazy"/></div>
-        <div class="lp-anatomy-tile-body">
-          <span class="lp-anatomy-tile-num">03</span>
-          <h4>EPS-isolatie 16cm</h4>
-          <p>Premium expanded polystyrene λ=0,031 W/mK. Levert EPC-sprong + maakt de muur permanent warm aan de binnenkant.</p>
-        </div>
-      </div>
-      <div class="lp-anatomy-tile">
-        <div class="lp-anatomy-tile-img"><img src="${gevL4}" alt="Wapeningsnet en grondlaag — laag 4" loading="lazy"/></div>
-        <div class="lp-anatomy-tile-body">
-          <span class="lp-anatomy-tile-num">04</span>
-          <h4>Wapening + grondlaag</h4>
-          <p>Glasvezelnet ingebed in een 4mm grondpleister — voorkomt scheuren en geeft een vlakke ondergrond.</p>
-        </div>
-      </div>
-      <div class="lp-anatomy-tile">
-        <div class="lp-anatomy-tile-img"><img src="${gevL5}" alt="Crepi sierpleister — laag 5" loading="lazy"/></div>
-        <div class="lp-anatomy-tile-body">
-          <span class="lp-anatomy-tile-num">05</span>
-          <h4>Crepi-afwerking</h4>
-          <p>Sierpleister Sto, Weber of Marmorino in uw kleur. UV-bestendig, krimpvrij, 25 jaar fabrieksgarantie.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="lf-section" style="padding: 8px 0 32px;">
-  <div class="wrap">
-    <div class="lp-cta-banner" data-reveal>
-      <div class="lp-cta-banner-text">
-        <strong>Eerlijk advies, op uw eigen tempo.</strong>
-        <span>Eén van onze experts komt langs en zegt eerlijk: crepi volstaat, of toch ETICS. Vrijblijvend en gratis.</span>
-      </div>
-      <a href="${CONTACT.phone.href}" class="lp-cta-banner-cta">
-        Bel een expert direct
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="lf-section lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-section-head" data-reveal style="margin-bottom: 36px;">
-      <span class="lf-eyebrow">Realisaties</span>
-      <h2 class="lf-h2">Gevels die<br/><span class="ab-mark">jaren strak blijven</span>.</h2>
-    </div>
-    <div class="lp-gallery">
-      <a href="#lp-form" class="lp-gallery-cell" data-reveal>
-        <img src="${hero1}" alt="Witte crepi" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Crepi</small><strong>Witte crepi</strong></div>
-      </a>
-      <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="1">
-        <img src="${hero2}" alt="Grijze crepi" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Crepi</small><strong>Grijze crepi</strong></div>
-      </a>
-      <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="2">
-        <img src="${hero3}" alt="Steenstrips" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Steenstrips</small><strong>Klassieke look</strong></div>
-      </a>
-      <a href="#lp-form" class="lp-gallery-cell" data-reveal data-reveal-delay="3">
-        <img src="${hero4}" alt="Sierpleister" loading="lazy"/>
-        <div class="lp-gallery-cap"><small>Sierpleister</small><strong>Marmorino</strong></div>
-      </a>
-    </div>
-  </div>
-</section>
-
-
-<section class="lf-section lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
-      <span class="lf-eyebrow">Veelgestelde vragen</span>
-      <h2 class="lf-h2">Wat <span class="ab-mark">iedereen vraagt</span>.</h2>
-    </div>
-    <div class="ab-faq">
-      <details data-reveal><summary>Wat kost een crepi-gevel in 2026?</summary><div class="ab-faq-body"><p>Crepi alleen op bestaande gevel (130m²): €6.500-€12.500. Volledige ETICS met buitenisolatie + crepi: €18.000-€32.000 alles inbegrepen. Premie €55/m² haalt €4.500-€7.200 van de factuur. Bindende richtprijs na plaatsbezoek.</p></div></details>
-      <details data-reveal><summary>Hoe lang duurt de plaatsing?</summary><div class="ab-faq-body"><p>Crepi op bestaande gevel: 5-9 werkdagen. ETICS volledig (isolatie + afwerking): 10-18 werkdagen. Inclusief stelling, afdekken en eindopkuis.</p></div></details>
-      <details data-reveal><summary>Crepi of steenstrips — wat past bij mijn woning?</summary><div class="ab-faq-body"><p>Crepi = strakke moderne look, goedkoper, sneller. Steenstrips = klassieke baksteen-look, duurder, langere plaatsing. Plaatsbezoek geeft uitsluitsel op basis van woningtype, buurt en budget. Beide kunnen op ETICS-isolatie.</p></div></details>
-      <details data-reveal><summary>Doen jullie de premieaanvraag?</summary><div class="ab-faq-body"><p>Ja, standaard. We bereiden het Mijn VerbouwPremie-dossier voor, leveren foto's en facturen aan in juist format. U deelt enkel uw burgerprofiel-login.</p></div></details>
-      <details data-reveal><summary>Wat is uw garantie?</summary><div class="ab-faq-body"><p>10 jaar wettelijke aansprakelijkheid op afwerking en isolatieprestatie, gedekt door polis bij Federale Verzekering. Plus fabrieksgarantie op Sto/Weber/Marmorino-systemen.</p></div></details>
-      <details data-reveal><summary>Welke regio's bedienen jullie?</summary><div class="ab-faq-body"><p>Volledige provincie Antwerpen en Vlaams-Brabant. Onze ploeg vertrekt elke ochtend uit Willebroek — werkbereik tot ongeveer 50 km. Mechelen, Antwerpen, Lier, Boom, Bornem, Puurs, Sint-Niklaas, Heist-op-den-Berg, Brussel-rand, Vilvoorde, Aalst, Dendermonde, Leuven. Twijfel je over jouw gemeente? Bel even — als we ‘ja’ zeggen, komen we.</p></div></details>
-    </div>
-  </div>
-</section>
-
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-section-head centered" data-reveal style="margin-bottom: 40px;">
-      <span class="lf-eyebrow">Verdiepende reads</span>
-      <h2 class="lf-h2">Eerst wat <span class="ab-mark">leren</span> over gevels?</h2>
-      <p class="lf-lede" style="margin: 16px auto 0; max-width: 620px;">Drie artikelen die de meest gestelde vragen beantwoorden.</p>
-    </div>
-    <div class="lp-blog-grid">
-      ${LP_BLOGS.map((b, i) => `
-        <a href="/blog/${b.slug}?lp=%2Flp%2Fgevel" target="_blank" rel="noopener" class="lp-blog-card" data-reveal data-reveal-delay="${i}">
-          <div class="lp-blog-img"><img src="${b.img}" alt="${b.title}" loading="lazy"/></div>
-          <div class="lp-blog-body">
-            <div class="lp-blog-meta">
-              <span class="lp-blog-tag">${b.tag}</span>
-              <span class="lp-blog-time">${b.readTime}</span>
-            </div>
-            <h4>${b.title}</h4>
-            <p>${b.excerpt}</p>
-            <span class="lp-blog-link">Lees het volledige artikel
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><line x1="7" y1="17" x2="17" y2="7"/></svg>
-            </span>
-          </div>
-        </a>
-      `).join('')}
-    </div>
-  </div>
-</section>
-
-<section class="lp-form-section" id="lp-form" style="scroll-margin-top: 100px; padding-top: 40px;">
-  <div class="wrap">
-    <div class="lp-form-grid">
-      <div class="lp-form-side" data-reveal>
-        <span class="lf-eyebrow">Gratis gevelinspectie</span>
-        <h2 class="lf-h2" style="color:#fff;">Vraag uw <span class="ab-mark">gratis gevelinspectie</span> aan.</h2>
-        <p>Binnen 5 werkdagen komt onze gevelploeg langs. Volledige opname, eerste richtprijs ter plaatse, premiedossier doorgesproken — <mark class="lp-hot" style="--lp-hot-delay:120">100% vrijblijvend en gratis</mark>.</p>
-        <ul>
-          <li>Plaatsbezoek binnen 5 werkdagen</li>
-          <li>Bindende offerte op papier</li>
-          <li>Premiedossier inbegrepen (gem. €4.500+ terug)</li>
-          <li>10 jaar garantie op afwerking</li>
-          <li>Eigen gevelploeg, geen onderaannemers</li>
-        </ul>
-      </div>
-      <div class="lp-form-card" data-reveal data-reveal-delay="1" data-lp-form-wrapper>
-        <h3>Plan uw gratis <mark class="lp-hot">gevelinspectie</mark></h3>
-        <p class="lf-form-sub">We bellen u binnen één werkdag terug — <mark class="lp-hot">100% vrijblijvend</mark>.</p>
-        <form data-lp-form novalidate>
-          <div class="lp-form-row">
-            <input type="text" name="firstName" placeholder="Voornaam *" required autocomplete="given-name" />
-            <input type="text" name="lastName" placeholder="Familienaam *" required autocomplete="family-name" />
-          </div>
-          <input type="email" name="email" placeholder="E-mailadres *" required autocomplete="email" />
-          <input type="tel" name="phone" placeholder="Telefoonnummer *" required autocomplete="tel" />
-          <select name="type_gevel" required>
-            <option value="">Type gevelwerk *</option>
-            <option value="crepi_alleen">Crepi op bestaande gevel</option>
-            <option value="etics_crepi">ETICS + crepi (buitenisolatie)</option>
-            <option value="steenstrips">Steenstrips</option>
-            <option value="sierpleister">Sierpleister (marmorino e.a.)</option>
-            <option value="reiniging">Gevelreiniging</option>
-            <option value="herstel">Gevelherstel (scheuren, vocht)</option>
-            <option value="anders">Anders / weet niet zeker</option>
-          </select>
-          <input type="text" name="straat" placeholder="Straat en nummer" autocomplete="street-address" />
-          <div class="lp-form-row">
-            <input type="text" name="postcode" placeholder="Postcode" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="postal-code" />
-            <input type="text" name="gemeente" placeholder="Gemeente" autocomplete="address-level2" />
-          </div>
-          <textarea name="aanvullende_info" placeholder="Vertel kort over uw gevel (oppervlakte, leeftijd, klacht)"></textarea>
-          <button type="submit" data-lp-submit style="background:#d98c03 !important; color:#fff !important;">Vraag gratis plaatsbezoek</button>
-          <p class="lp-form-foot">Geen spam. Privacy verklaring op <a href="/privacy" target="_blank">/privacy</a>.</p>
-          <div class="lp-form-error" data-lp-form-error></div>
         </form>
-        <div class="lp-form-thanks">
-          <h3>Aanvraag ontvangen.</h3>
-          <p style="color:var(--ink-soft);">We bellen u binnen één werkdag terug om uw plaatsbezoek in te plannen.</p>
+        <div class="tr-qf-error" data-lp-quick-error hidden></div>
+        <div class="tr-qf-thanks">
+          <div class="tr-qf-thanks-ic">${icCheck.replace('width="20" height="20"','width="26" height="26"')}</div>
+          <h4>Bedankt, aanvraag ontvangen!</h4>
+          <p>We bellen u zo snel mogelijk terug voor uw gratis gevelinspectie.</p>
         </div>
+      </div>
+      <div class="tr-hero-testi">
+        <span class="tr-hero-testi-q">"Onze rijwoning had een vermoeide bezetting uit de jaren '80. Nu een spierwitte crepi-gevel die je zo uit een magazine plukt. Strak, proper, op tijd opgeleverd."</span>
+        <div class="tr-hero-testi-name">— Jasmien D., Mechelen</div>
       </div>
     </div>
   </div>
-</section>
 
-<section class="lp-trust-foot">
-  <div class="wrap">
-    <div><strong>AB Bouw Groep</strong>${CONTACT.address.street}<br/>${CONTACT.address.postcode} ${CONTACT.address.city}</div>
-    <div><strong>Telefoon</strong><a href="${CONTACT.phone.href}">${CONTACT.phone.spaced}</a></div>
-    <div><strong>Email</strong><a href="mailto:info@abgroep.be">info@abgroep.be</a></div>
-    <div><strong>Erkenningen</strong>VCA*-gecertificeerd<br/>Lid Bouwunie</div>
-  </div>
-</section>
+  <!-- 5. THREE STEPS -->
+  <section class="tr-section">
+    <div class="tr-wrap">
+      <div class="tr-steps-box">
+        <h2>In 3 stappen naar uw nieuwe gevel</h2>
+        <div class="tr-steps-grid">
+          <div class="tr-step">
+            <div class="tr-step-ic">${icStep1}</div>
+            <h3>Plan uw gratis gevelinspectie</h3>
+            <p>Kies een moment dat past. Onze vakman beoordeelt uw gevel en bezorgt een fotorapport van de staat.</p>
+          </div>
+          <div class="tr-step">
+            <div class="tr-step-ic">${icStep2}</div>
+            <h3>Ontvang uw vaste prijs-offerte</h3>
+            <p>U krijgt heldere opties, materiaalkeuze en een bindende prijs. Zo weet u exact waar u aan toe bent.</p>
+          </div>
+          <div class="tr-step">
+            <div class="tr-step-ic">${icStep3}</div>
+            <h3>Zorgeloze plaatsing door eigen ploeg</h3>
+            <p>Onze eigen gevelploeg voert alles uit van begin tot eind. Strak, proper, op een afgesproken startdatum.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<a href="#lp-form" class="lp-sticky-cta" aria-label="Vraag gevelinspectie" style="background-color:#d98c03 !important; background-image:none !important; background:#d98c03 !important; color:#fff !important;">
-  Vraag gratis plaatsbezoek
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-</a>
+  <!-- 6. ABOUT / CERTIFIED -->
+  <section class="tr-section" style="background:var(--bg-tint);">
+    <div class="tr-wrap">
+      <div class="tr-about-grid">
+        <div class="tr-about-media">
+          <div class="tr-about-badges">
+            <span class="tr-about-badge"><img src="/assets/logos/caparol.png" alt="Caparol" /></span>
+            <span class="tr-about-badge"><img src="/assets/logos/knauf.png" alt="Knauf" /></span>
+            <span class="tr-about-badge tr-vca">VCA*</span>
+          </div>
+          <div class="tr-about-photo"><img src="${imgStelling}" alt="AB Bouw gevelploeg aan het werk" /></div>
+        </div>
+        <div class="tr-about-body">
+          <span class="tr-eyebrow">Over AB Bouw Groep</span>
+          <h2>Uw erkende gevelspecialist in heel Vlaanderen</h2>
+          <p class="tr-about-intro">AB Bouw Groep is een familiebedrijf met een eigen ploeg uit Willebroek. Wij verzorgen crepi, buitenisolatie (ETICS), steenstrips en sierpleister van A tot Z.</p>
+          <ul class="tr-checks">
+            <li>${icCheck}<span><b>Offerte = factuur, ook bij prijsstijgingen</b></span></li>
+            <li>${icCheck}<span>Eigen ploeg, geen onderaannemers</span></li>
+            <li>${icCheck}<span>Mijn VerbouwPremie-dossier regelen wij</span></li>
+            <li>${icCheck}<span>Transparante prijs, geen verborgen kosten</span></li>
+            <li>${icCheck}<span>Strakke, duurzame afwerking</span></li>
+          </ul>
+          <a class="tr-btn" href="#contact">Vraag gratis offerte</a>
+          <div class="tr-urgency">Nog enkele inspectie-plaatsen deze week.</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<a href="${CONTACT.phone.href}" class="lf-fab-call" aria-label="Bel ons direct">
-  <span class="lf-fab-pulse"></span>
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-</a>
+  <!-- 7. NUMBERS BAR -->
+  <section class="tr-numbers">
+    <div class="tr-num"><div class="tr-num-big">15 jaar</div><div class="tr-num-lbl">ervaring</div></div>
+    <div class="tr-num"><div class="tr-num-big">120+</div><div class="tr-num-lbl">gevels gerenoveerd</div></div>
+    <div class="tr-num"><div class="tr-num-big">100%</div><div class="tr-num-lbl">eigen ploeg</div></div>
+    <div class="tr-num"><div class="tr-num-big">10 jaar</div><div class="tr-num-lbl">garantie</div></div>
+  </section>
+
+  <!-- 8. SERVICES -->
+  <section class="tr-section tr-services" id="diensten">
+    <div class="tr-wrap">
+      <div class="tr-head">
+        <span class="tr-eyebrow">Onze diensten</span>
+        <h2>Vakkundig gevelwerk in heel Vlaanderen</h2>
+      </div>
+      <div class="tr-svc-grid">
+        <div class="tr-svc-card">
+          <div class="tr-svc-img"><img src="${heroWitte}" alt="Crepi en sierpleister" /></div>
+          <div class="tr-svc-body"><h3>Crepi & sierpleister</h3><p>Strakke crepi of marmorino-afwerking in elke kleur, egaal en jaren mooi.</p></div>
+        </div>
+        <div class="tr-svc-card">
+          <div class="tr-svc-img"><img src="${imgGrijze}" alt="ETICS buitenisolatie" /></div>
+          <div class="tr-svc-body"><h3>ETICS buitenisolatie</h3><p>16 cm isolatie buitenop + crepi. Lager EPC, geen koude muren meer.</p></div>
+        </div>
+        <div class="tr-svc-card">
+          <div class="tr-svc-img"><img src="${imgSteenstrips}" alt="Steenstrips" /></div>
+          <div class="tr-svc-body"><h3>Steenstrips</h3><p>Authentieke baksteen-look zonder het gewicht. Voegen kaarsrecht.</p></div>
+        </div>
+        <div class="tr-svc-card">
+          <div class="tr-svc-img"><img src="${imgSierpleister}" alt="Gevelreiniging en hervoegen" /></div>
+          <div class="tr-svc-body"><h3>Gevelreiniging & hervoegen</h3><p>Reinigen, impregneren of hervoegen — uw gevel weer als nieuw.</p></div>
+        </div>
+      </div>
+      <div class="tr-foot">
+        <a class="tr-btn" href="#contact">Vraag gratis offerte</a>
+        <div class="tr-urgency">Nog enkele inspectie-plaatsen deze week.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. WE ALSO OFFER / ONDERHOUD -->
+  <section class="tr-section">
+    <div class="tr-wrap">
+      <div class="tr-also-grid">
+        <div class="tr-also-body">
+          <span class="tr-eyebrow">Wij doen ook</span>
+          <h2>Gevelonderhoud & herstellingen</h2>
+          <p>Niet altijd een volledig nieuwe gevel nodig? Onze ploeg doet ook gericht onderhoud en herstellingen die uw gevel jaren langer mooi en gezond houden.</p>
+          <ul class="tr-checks">
+            <li>${icCheck}<span>Gevelreiniging</span></li>
+            <li>${icCheck}<span>Hervoegen van metselwerk</span></li>
+            <li>${icCheck}<span>Impregneren tegen vocht</span></li>
+            <li>${icCheck}<span>Herstel van scheuren en vochtschade</span></li>
+            <li>${icCheck}<span>Schilderwerk buiten</span></li>
+            <li>${icCheck}<span>En meer — vraag het ons gerust</span></li>
+          </ul>
+          <a class="tr-btn" href="#contact">Vraag gratis offerte</a>
+        </div>
+        <div class="tr-also-photo"><img src="${imgIntro}" alt="Gevelonderhoud en herstellingen" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. WHY CHOOSE -->
+  <section class="tr-section tr-why" id="werkwijze" style="background:var(--bg-tint);">
+    <div class="tr-wrap">
+      <div class="tr-head">
+        <span class="tr-eyebrow">Waarom AB Bouw</span>
+        <h2>Waarom kiezen voor AB Bouw Groep</h2>
+      </div>
+      <div class="tr-why-grid">
+        <div class="tr-why-col">
+          <div class="tr-why-ic">${icWhy1}</div>
+          <h3>Vakmanschap</h3>
+          <p>Een eigen, ervaren ploeg gevelwerkers. Geen onderaannemers, wel mensen die hun werk graag goed doen.</p>
+        </div>
+        <div class="tr-why-col">
+          <div class="tr-why-ic">${icWhy2}</div>
+          <h3>Vaste prijs-garantie</h3>
+          <p>Wat u tekent, betaalt u. Ook als materiaalprijzen stijgen. Geen naverrekening achteraf.</p>
+        </div>
+        <div class="tr-why-col">
+          <div class="tr-why-ic">${icWhy3}</div>
+          <h3>Stipt & betrouwbaar</h3>
+          <p>U krijgt een concrete startdatum in de offerte. Wij komen wanneer we het zeggen.</p>
+        </div>
+      </div>
+      <div class="tr-foot"><a class="tr-btn" href="#contact">Vraag gratis offerte</a></div>
+    </div>
+  </section>
+
+  <!-- 11. REVIEWS -->
+  <section class="tr-section tr-reviews" id="reviews">
+    <div class="tr-wrap">
+      <div class="tr-head">
+        <span class="tr-eyebrow">Wat klanten zeggen</span>
+        <h2>Tevreden klanten in heel Vlaanderen</h2>
+      </div>
+      <div class="tr-rev-grid">
+        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Volledig pakket: 16 cm EPS + crepi. EPC van F naar C in één werk. Stookkost bijna gehalveerd. Premie-dossier (€4.800) liep via hen."</p><div class="tr-rev-foot"><div class="tr-rev-name">Joris Vanhove</div><div class="tr-rev-role">ETICS + crepi</div></div></div>
+        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Steenstrips Vandersanden, voegen kaarsrecht, aansluitingen rond ramen vakwerk. Niemand merkt het verschil met echte steen."</p><div class="tr-rev-foot"><div class="tr-rev-name">Marius Ionescu</div><div class="tr-rev-role">Steenstrips voorgevel</div></div></div>
+        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Marmorino in zachte taupe. Eén van de mannen hielp met de kleurkeuze. Achteraf super blij, het huis straalt karakter uit."</p><div class="tr-rev-foot"><div class="tr-rev-name">Cindy Van Looy</div><div class="tr-rev-role">Sierpleister marmorino</div></div></div>
+        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Halfopen woning uit 1968, nooit geïsoleerd. 16 cm EPS + crepi. Comfortsprong enorm, geen koude muren meer."</p><div class="tr-rev-foot"><div class="tr-rev-name">Dimitri Maes</div><div class="tr-rev-role">Crepi + buitenisolatie</div></div></div>
+        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Gevel had scheuren en vocht. Eerst herstellen, dan crepi — uitgevoerd zoals beloofd. Factuur tot op de euro met de offerte."</p><div class="tr-rev-foot"><div class="tr-rev-name">Steven Goossens</div><div class="tr-rev-role">Gevelherstel + crepi</div></div></div>
+        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Strakke lijn over de volledige gevel, geen scheuren of vlekken. Plaatsing in 5 werkdagen, oprit proper opgekuist."</p><div class="tr-rev-foot"><div class="tr-rev-name">Eva Vandeputte</div><div class="tr-rev-role">Witte crepi nieuwbouw</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. FAQ -->
+  <section class="tr-section" id="faq">
+    <div class="tr-wrap">
+      <div class="tr-faq-box">
+        <h2>Veelgestelde vragen</h2>
+        <details class="tr-faq-item"><summary>Wat kost een gevelrenovatie?</summary><p>Dat hangt af van de oppervlakte, de gekozen afwerking (crepi, steenstrips, sierpleister) en of er isolatie bij komt. Na een gratis plaatsbezoek krijgt u een bindende prijs op papier.</p></details>
+        <details class="tr-faq-item"><summary>Hoe lang duurt het?</summary><p>Een gemiddelde rijwoning is doorgaans in 1 tot 2 weken afgewerkt, afhankelijk van het systeem en het weer. U krijgt een concrete startdatum in de offerte.</p></details>
+        <details class="tr-faq-item"><summary>Doen jullie de premieaanvraag?</summary><p>Ja. Voor buitenisolatie (ETICS) berekenen wij waar u recht op heeft en dienen wij het volledige Mijn VerbouwPremie-dossier voor u in.</p></details>
+        <details class="tr-faq-item"><summary>Wat is jullie garantie?</summary><p>10 jaar garantie op de uitvoering, plus de fabrieksgarantie op de gevelsystemen (Caparol, Knauf, Isover).</p></details>
+        <details class="tr-faq-item"><summary>Crepi of steenstrips — wat past bij mijn woning?</summary><p>Crepi geeft een strakke, moderne look in elke kleur; steenstrips geven een warme baksteen-uitstraling. Onze vakman adviseert u ter plaatse op basis van uw woning en budget.</p></details>
+        <details class="tr-faq-item"><summary>Welke regio's bedienen jullie?</summary><p>Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. FINAL CTA -->
+  <section class="tr-section tr-final" id="contact">
+    <div class="tr-wrap">
+      <h2>Klaar voor uw nieuwe gevel?</h2>
+      <div class="tr-final-grid">
+        <div class="tr-final-contact">
+          <h3>Neem contact op</h3>
+          <div class="tr-big">Praat met onze gevelspecialist</div>
+          <div class="tr-line">${icPin}<span>${ADDRESS}</span></div>
+          <div class="tr-line">${icPhone}<span>Telefoon: <a href="${PHONE_HREF}">${PHONE}</a></span></div>
+        </div>
+        <div class="tr-final-card" data-lp-form-wrapper>
+          <h3>Vraag uw gratis offerte</h3>
+          <div class="tr-safe">${icShield}Uw gegevens zijn 100% veilig</div>
+          <form data-lp-form novalidate>
+            <div class="tr-final-row">
+              <input type="text" name="firstName" placeholder="Voornaam" autocomplete="given-name" required />
+              <input type="tel" name="phone" placeholder="Telefoon" autocomplete="tel" required />
+            </div>
+            <input type="email" name="email" placeholder="E-mail" autocomplete="email" required />
+            <select name="type_gevelwerk" required>
+              <option value="" disabled selected>Type gevelwerk</option>
+              <option value="Crepi / Sierpleister">Crepi / Sierpleister</option>
+              <option value="Buitenisolatie (ETICS)">Buitenisolatie (ETICS)</option>
+              <option value="Steenstrips">Steenstrips</option>
+              <option value="Gevelreiniging">Gevelreiniging</option>
+              <option value="Hervoegen">Hervoegen</option>
+              <option value="Anders/weet nog niet">Anders/weet nog niet</option>
+            </select>
+            <textarea name="aanvullende_info" placeholder="Korte omschrijving"></textarea>
+            <button type="submit" class="tr-btn" data-lp-submit>Vraag gratis offerte</button>
+          </form>
+          <div class="tr-final-err" data-lp-form-error></div>
+          <div class="tr-final-thanks">
+            <h4>Bedankt, aanvraag ontvangen!</h4>
+            <p>We nemen zo snel mogelijk contact met u op.</p>
+          </div>
+        </div>
+        <div class="tr-final-testi">
+          <div class="tr-final-testi-q">"Onze verouderde gevel is in twee weken omgetoverd tot een strakke crepi-afwerking. Proper gewerkt, perfect opgeleverd en de prijs klopte met de offerte."</div>
+          <div class="tr-final-testi-name">— Patrick D., Bornem</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14. FOOTER -->
+  <footer class="tr-footer">
+    <div class="tr-wrap">
+      <div class="tr-footer-top">
+        <span class="tr-footer-wordmark">AB Bouw Groep</span>
+        <div class="tr-footer-links">
+          <a href="#diensten">Diensten</a>
+          <a href="#werkwijze">Werkwijze</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#contact">Contact</a>
+          <a href="${PHONE_HREF}">${PHONE}</a>
+        </div>
+      </div>
+      <div class="tr-footer-info">AB Bouw Groep · ${ADDRESS} · ${PHONE}</div>
+      <div class="tr-footer-copy">© ${new Date().getFullYear()} AB Bouw Groep — Erkend gevelspecialist in heel Vlaanderen. Alle rechten voorbehouden.</div>
+    </div>
+  </footer>
+
+</div>
 `;
 
 export default function LpGevel({ local }: { local?: Gemeente } = {}) {
+  // Mobiel menu open/sluiten via data-* hooks in de LP-HTML.
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+      if (target.closest('[data-menu-toggle]')) {
+        document.body.classList.toggle('tr-menu-open');
+        return;
+      }
+      if (target.closest('[data-menu-close]')) {
+        document.body.classList.remove('tr-menu-open');
+        return;
+      }
+      if (target.closest('.tr-mobmenu a')) {
+        document.body.classList.remove('tr-menu-open');
+      }
+    };
+    document.addEventListener('click', handler);
+    return () => {
+      document.removeEventListener('click', handler);
+      document.body.classList.remove('tr-menu-open');
+    };
+  }, []);
+
   useEffect(() => {
     const pageUrl = local ? `https://abgroep.be/lokaal/gevelrenovatie-${local.slug}` : 'https://abgroep.be/lp/gevel';
-    // Canonical: non-local LP wijst naar /gevel (organic service-page) om
-    // duplicate-content fight te vermijden. Lokale varianten blijven self-canonical.
     const canonicalUrl = local ? pageUrl : 'https://abgroep.be/gevel';
     document.title = local
-      ? `Gevelrenovatie ${local.name} — Crepi, ETICS, Steenstrips | AB Bouw Groep`
-      : "Gevelrenovatie Mechelen & Antwerpen — Crepi, ETICS, Steenstrips | AB Bouw Groep";
+      ? `Gevelwerken ${local.name} — Crepi, ETICS, Steenstrips, Sierpleister | AB Bouw Groep`
+      : 'Gevelwerken Mechelen & Antwerpen — Crepi, Buitenisolatie, Steenstrips | AB Bouw Groep';
     let m = document.querySelector('meta[name="description"]');
-    if (!m) { m = document.createElement('meta'); m.setAttribute('name','description'); document.head.appendChild(m); }
+    if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', local
-      ? `Erkend gevelrenovatie-aannemer in ${local.name} (${local.postcode}). Crepi, ETICS-buitenisolatie, steenstrips en sierpleister. Eigen ploeg uit Willebroek, 10 jaar garantie via Federale Verzekering, Mijn VerbouwPremie inbegrepen. Gratis plaatsbezoek binnen 5 werkdagen.`
-      : 'Erkend gevelrenovatie-aannemer in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Crepi, ETICS-buitenisolatie, steenstrips, sierpleister. Eigen ploeg, 10 jaar garantie via Federale Verzekering, Mijn VerbouwPremie inbegrepen. Gratis plaatsbezoek binnen 5 werkdagen.');
+      ? `Erkend gevelspecialist in ${local.name} (${local.postcode}). Crepi, buitenisolatie (ETICS), steenstrips en sierpleister. Eigen ploeg uit Willebroek, 10 jaar garantie via Federale Verzekering, premie Mijn VerbouwPremie inbegrepen. Gratis gevelinspectie binnen 5 werkdagen.`
+      : 'Erkend gevelspecialist in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Crepi, buitenisolatie (ETICS), steenstrips, sierpleister en gevelreiniging. Eigen ploeg, 10 jaar garantie via Federale Verzekering, premie Mijn VerbouwPremie inbegrepen. Gratis gevelinspectie binnen 5 werkdagen.');
 
-    // Open Graph + Twitter cards
+    // Open Graph + Twitter
     const setMeta = (prop: string, content: string, isProperty = false) => {
       const attr = isProperty ? 'property' : 'name';
       let el = document.querySelector(`meta[${attr}="${prop}"]`);
@@ -1702,11 +713,11 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
       el.setAttribute('content', content);
     };
     setMeta('og:title', local
-      ? `Gevelrenovatie ${local.name} — Crepi, ETICS, Steenstrips | AB Bouw Groep`
-      : 'Gevelrenovatie Mechelen & Antwerpen — Crepi, ETICS, Steenstrips | AB Bouw Groep', true);
+      ? `Gevelwerken ${local.name} — Gratis gevelinspectie | AB Bouw Groep`
+      : 'Gevelwerken Mechelen & Antwerpen — Gratis gevelinspectie | AB Bouw Groep', true);
     setMeta('og:description', local
-      ? `Crepi, ETICS-buitenisolatie en steenstrips in ${local.name}. Eigen ploeg, 10j garantie, premiedossier inbegrepen.`
-      : 'Crepi, ETICS-buitenisolatie, steenstrips. Eigen ploeg, 10j garantie, premiedossier inbegrepen.', true);
+      ? `Crepi, buitenisolatie (ETICS) en steenstrips in ${local.name}. Eigen ploeg, 10j garantie, premiedossier inbegrepen.`
+      : 'Crepi, buitenisolatie (ETICS), steenstrips en sierpleister. Eigen ploeg, 10j garantie, premiedossier inbegrepen.', true);
     setMeta('og:type', 'website', true);
     setMeta('og:locale', 'nl_BE', true);
     setMeta('og:url', pageUrl, true);
@@ -1723,97 +734,71 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
     setLink('alternate', canonicalUrl, 'nl-BE');
     setLink('alternate', canonicalUrl, 'x-default');
 
-    // Schema.org JSON-LD: HomeAndConstructionBusiness + FAQ + Service
+    // Schema.org JSON-LD: HomeAndConstructionBusiness + Breadcrumb + Service + FAQ
     const schemaId = 'lp-gevel-schema';
     document.getElementById(schemaId)?.remove();
     const schema = document.createElement('script');
     schema.id = schemaId;
     schema.type = 'application/ld+json';
     schema.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@graph": [
+      '@context': 'https://schema.org',
+      '@graph': [
         {
-          "@type": "HomeAndConstructionBusiness",
-          "@id": "https://abgroep.be/#organization",
-          "name": "AB Bouw Groep",
-          "url": "https://abgroep.be",
-          "telephone": CONTACT.phone.e164,
-          "email": "info@abgroep.be",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": CONTACT.address.street,
-            "postalCode": CONTACT.address.postcode,
-            "addressLocality": CONTACT.address.city,
-            "addressCountry": "BE"
+          '@type': 'HomeAndConstructionBusiness',
+          '@id': 'https://abgroep.be/#organization',
+          name: 'AB Bouw Groep',
+          url: 'https://abgroep.be',
+          telephone: CONTACT.phone.e164,
+          email: CONTACT.email,
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'August van Landeghemstraat 63',
+            postalCode: '2830',
+            addressLocality: 'Willebroek',
+            addressCountry: 'BE',
           },
-          "areaServed": [
-            { "@type": "City", "name": "Mechelen" },
-            { "@type": "City", "name": "Antwerpen" },
-            { "@type": "City", "name": "Lier" },
-            { "@type": "City", "name": "Boom" },
-            { "@type": "City", "name": "Bornem" },
-            { "@type": "City", "name": "Willebroek" },
-            { "@type": "City", "name": "Bonheiden" },
-            { "@type": "City", "name": "Heist-op-den-Berg" },
-            { "@type": "City", "name": "Puurs" },
-            { "@type": "City", "name": "Sint-Niklaas" },
-            { "@type": "City", "name": "Kontich" },
-            { "@type": "City", "name": "Vilvoorde" },
-            { "@type": "GeoCircle", "geoMidpoint": { "@type": "GeoCoordinates", "latitude": 51.0259, "longitude": 4.4778 }, "geoRadius": "40000" }
+          areaServed: [
+            { '@type': 'City', name: 'Mechelen' },
+            { '@type': 'City', name: 'Antwerpen' },
+            { '@type': 'City', name: 'Lier' },
+            { '@type': 'City', name: 'Willebroek' },
+            { '@type': 'City', name: 'Bornem' },
+            { '@type': 'City', name: 'Sint-Niklaas' },
           ],
-          "geo": { "@type": "GeoCoordinates", "latitude": 51.0596, "longitude": 4.3631 },
-          "priceRange": "€€",
-          "currenciesAccepted": "EUR",
-          "paymentAccepted": "Cash, Bank Transfer, Credit Card",
-          "openingHoursSpecification": [
-            { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "07:00", "closes": "18:00" }
-          ],
-          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "96", "bestRating": "5" },
-          "sameAs": ["https://www.facebook.com/abbouwgroep", "https://www.instagram.com/abbouwgroep"]
+          priceRange: '€€',
+          aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.9', reviewCount: '120', bestRating: '5' },
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": local
+          '@type': 'BreadcrumbList',
+          itemListElement: local
             ? [
-              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://abgroep.be" },
-              { "@type": "ListItem", "position": 2, "name": "Gevelrenovatie", "item": "https://abgroep.be/gevel" },
-              { "@type": "ListItem", "position": 3, "name": `Gevelrenovatie ${local.name}`, "item": pageUrl }
+              { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://abgroep.be' },
+              { '@type': 'ListItem', position: 2, name: 'Gevelwerken', item: 'https://abgroep.be/gevel' },
+              { '@type': 'ListItem', position: 3, name: `Gevelwerken ${local.name}`, item: pageUrl },
             ]
             : [
-              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://abgroep.be" },
-              { "@type": "ListItem", "position": 2, "name": "Gevelrenovatie", "item": "https://abgroep.be/lp/gevel" }
-            ]
+              { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://abgroep.be' },
+              { '@type': 'ListItem', position: 2, name: 'Gevelwerken', item: 'https://abgroep.be/lp/gevel' },
+            ],
         },
         {
-          "@type": "Service",
-          "name": "Gevelrenovatie — crepi, ETICS-isolatie, steenstrips, sierpleister",
-          "provider": { "@id": "https://abgroep.be/#organization" },
-          "areaServed": "Vlaanderen",
-          "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "Gevelrenovatie diensten",
-            "itemListElement": [
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Witte crepi gevel" }},
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Grijze crepi gevel" }},
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "ETICS buitenisolatie + crepi" }},
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Steenstrips Vandersanden" }},
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Marmorino sierpleister" }},
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Gevelherstel + scheurherstel" }}
-            ]
-          }
+          '@type': 'Service',
+          name: 'Gevelwerken — crepi, buitenisolatie (ETICS), steenstrips, sierpleister',
+          provider: { '@id': 'https://abgroep.be/#organization' },
+          areaServed: 'Vlaanderen',
         },
         {
-          "@type": "FAQPage",
-          "speakable": { "@type": "SpeakableSpecification", "cssSelector": [".ab-faq-body p"] },
-          "mainEntity": [
-            { "@type": "Question", "name": "Hoeveel kost een crepi-gevel?", "acceptedAnswer": { "@type": "Answer", "text": "Pure crepi op bestaande gevel kost gemiddeld €45-€75/m². ETICS-systeem (16cm isolatie + crepi) €110-€150/m². Definitieve prijs hangt af van gevelstaat en isolatiedikte." }},
-            { "@type": "Question", "name": "Wat is het verschil tussen crepi en ETICS?", "acceptedAnswer": { "@type": "Answer", "text": "Crepi = sierpleister direct op de gevel, voor optisch resultaat. ETICS = External Thermal Insulation Composite System: EPS-isolatie + wapeningsnet + crepi-afwerking, voor energieprestatie EN optisch resultaat." }},
-            { "@type": "Question", "name": "Doen jullie de Mijn VerbouwPremie aanvraag?", "acceptedAnswer": { "@type": "Answer", "text": "Ja, voor ETICS-buitenisolatie regelen wij het volledige premiedossier. Tot €5.000 premie afhankelijk van inkomenscategorie. Pure crepi zonder isolatie komt sinds 2026 niet meer in aanmerking." }},
-            { "@type": "Question", "name": "Hoe lang duurt een gevelrenovatie?", "acceptedAnswer": { "@type": "Answer", "text": "Een rijwoning gevel is gemiddeld in 2 weken afgewerkt. Halfopen of vrijstaande woning 3-4 weken inclusief opbouw stelling en uithardingstijd." }},
-            { "@type": "Question", "name": "Wat is uw garantie?", "acceptedAnswer": { "@type": "Answer", "text": "10 jaar wettelijke aansprakelijkheid op afwerking en isolatieprestatie, gedekt door polis bij Federale Verzekering. Plus fabrieksgarantie op Sto/Weber/Marmorino-systemen." }}
-          ]
-        }
-      ]
+          '@type': 'FAQPage',
+          mainEntity: [
+            { '@type': 'Question', name: 'Wat kost een gevelrenovatie?', acceptedAnswer: { '@type': 'Answer', text: 'Dat hangt af van de oppervlakte, de gekozen afwerking (crepi, steenstrips, sierpleister) en of er isolatie bij komt. Na een gratis plaatsbezoek krijgt u een bindende prijs op papier.' } },
+            { '@type': 'Question', name: 'Hoe lang duurt het?', acceptedAnswer: { '@type': 'Answer', text: 'Een gemiddelde rijwoning is doorgaans in 1 tot 2 weken afgewerkt, afhankelijk van het systeem en het weer. U krijgt een concrete startdatum in de offerte.' } },
+            { '@type': 'Question', name: 'Doen jullie de premieaanvraag?', acceptedAnswer: { '@type': 'Answer', text: 'Ja. Voor buitenisolatie (ETICS) berekenen wij waar u recht op heeft en dienen wij het volledige Mijn VerbouwPremie-dossier voor u in.' } },
+            { '@type': 'Question', name: 'Wat is jullie garantie?', acceptedAnswer: { '@type': 'Answer', text: '10 jaar garantie op de uitvoering, plus de fabrieksgarantie op de gevelsystemen (Caparol, Knauf, Isover).' } },
+            { '@type': 'Question', name: 'Crepi of steenstrips — wat past bij mijn woning?', acceptedAnswer: { '@type': 'Answer', text: 'Crepi geeft een strakke, moderne look in elke kleur; steenstrips geven een warme baksteen-uitstraling. Onze vakman adviseert u ter plaatse op basis van uw woning en budget.' } },
+            { '@type': 'Question', name: 'Welke regio\'s bedienen jullie?', acceptedAnswer: { '@type': 'Answer', text: 'Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.' } },
+          ],
+        },
+      ],
     });
     document.head.appendChild(schema);
 
@@ -1821,47 +806,11 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
     document.body.className = 'lp-page is-subpage';
     try { sessionStorage.setItem('ab_last_lp', local ? `/lokaal/gevelrenovatie-${local.slug}` : '/lp/gevel'); } catch {}
     const style = document.createElement('style');
-    style.textContent = SHELL_STYLE + LP_EXTRA;
+    style.textContent = SHELL_STYLE + LP_CSS;
     document.head.appendChild(style);
     window.scrollTo(0, 0);
 
-    // ── Reviews carousel: Home's CSS + JS centering bovenop (LP-specifiek omdat
-    // reviews direct onder hero komen, animatie is niet vooruit gelopen).
-    // Reviews carousel: GEEN custom JS — hook + LP_EXTRA CSS = Home gedrag.
-
-    // ── Stats count-up animation
-    const formatNl = (n: number) => n.toLocaleString('nl-BE');
-    const animateCount = (el: HTMLElement) => {
-      const target = parseInt(el.dataset.countUp || '0', 10);
-      if (!target || isNaN(target)) return;
-      const prefix = el.dataset.countPrefix || '';
-      const suffix = el.dataset.countSuffix || '';
-      const duration = 1600;
-      const start = performance.now();
-      const tick = (now: number) => {
-        const t = Math.min(1, (now - start) / duration);
-        const eased = 1 - Math.pow(1 - t, 3);
-        const current = Math.floor(eased * target);
-        el.textContent = prefix + formatNl(current) + suffix;
-        if (t < 1) requestAnimationFrame(tick);
-        else el.textContent = prefix + formatNl(target) + suffix;
-      };
-      requestAnimationFrame(tick);
-    };
-    const countNums = document.querySelectorAll<HTMLElement>('[data-count-up]');
-    const countObserver = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        const el = e.target as HTMLElement;
-        if (e.isIntersecting && !el.dataset.counted) {
-          el.dataset.counted = '1';
-          animateCount(el);
-          el.parentElement?.setAttribute('data-counted', '1');
-        }
-      });
-    }, { threshold: 0.4 });
-    countNums.forEach((el) => countObserver.observe(el));
-
-    // ── Form submit
+    // ── Main form (final CTA) submit ─────────────────────────────────────
     const wrap = document.querySelector<HTMLElement>('[data-lp-form-wrapper]');
     const form = document.querySelector<HTMLFormElement>('[data-lp-form]');
     const submitBtn = document.querySelector<HTMLButtonElement>('[data-lp-submit]');
@@ -1869,10 +818,6 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
     const onSubmit = async (e: SubmitEvent) => {
       e.preventDefault();
       if (!form || !wrap) return;
-      const requiredFields = form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[required]');
-      for (const inp of Array.from(requiredFields)) {
-        if (!inp.checkValidity()) { inp.reportValidity(); return; }
-      }
       const fd = new FormData(form);
       const emailV = ((fd.get('email') as string) || '').trim();
       const phoneV = ((fd.get('phone') as string) || '').trim();
@@ -1891,35 +836,19 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Even bezig…'; }
       if (errBox) errBox.textContent = '';
       wrap.classList.remove('is-error');
-      // Sub-service label voor GHL Task-omschrijving (GHL "Type werk" SINGLE_OPTIONS
-      // accepteert enkel divisie-labels, dus sub-service hier in aanvullende_info)
-      const TYPE_GEVEL_LABELS: Record<string, string> = {
-        crepi_alleen: 'Crepi op bestaande gevel',
-        etics_crepi: 'ETICS + crepi (buitenisolatie)',
-        steenstrips: 'Steenstrips',
-        sierpleister: 'Sierpleister (marmorino e.a.)',
-        reiniging: 'Gevelreiniging',
-        herstel: 'Gevelherstel (scheuren, vocht)',
-        anders: 'Anders / weet niet zeker',
-      };
-      const typeGevelRaw = (fd.get('type_gevel') as string) || '';
-      const subService = TYPE_GEVEL_LABELS[typeGevelRaw] || typeGevelRaw;
-      const userInfo = ((fd.get('aanvullende_info') as string) || '').trim();
-      const combinedInfo = subService
-        ? `Type gevelwerk: ${subService}${userInfo ? `\n\n${userInfo}` : ''}`
-        : (userInfo || undefined);
+
+      const typeGevel = ((fd.get('type_gevelwerk') as string) || '').trim();
+      const extra = ((fd.get('aanvullende_info') as string) || '').trim();
+      const combinedInfo = [typeGevel ? `Type gevelwerk: ${typeGevel}` : '', extra]
+        .filter(Boolean).join(' — ') || undefined;
 
       const result = await submitLead({
         source: 'landing_page',
         landing_division: 'ab_gevelbekleding',
         page_path: window.location.pathname,
         firstName: (fd.get('firstName') as string) || undefined,
-        lastName: (fd.get('lastName') as string) || undefined,
         email: emailV,
         phone: phoneV,
-        straat: (fd.get('straat') as string) || undefined,
-        postcode: (fd.get('postcode') as string) || undefined,
-        gemeente: (fd.get('gemeente') as string) || undefined,
         type_werk: 'AB Gevelbekleding',
         aanvullende_info: combinedInfo,
         bron_lead: local ? `seo:gevelrenovatie-${local.slug}` : 'ads:gevel',
@@ -1931,18 +860,17 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
       } else {
         wrap.classList.add('is-error');
         if (errBox) errBox.textContent = `Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced}.`;
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Vraag gratis plaatsbezoek'; }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Vraag gratis offerte'; }
       }
     };
     form?.addEventListener('submit', onSubmit);
 
-    // === HERO MINI-FORM (above-fold quick capture) ===
+    // ── Hero quick-form (above-fold) submit ──────────────────────────────
     const quickWrap = document.querySelector<HTMLElement>('[data-lp-quick]');
     const quickForm = document.querySelector<HTMLFormElement>('[data-lp-quick-form]');
     const quickBtn = document.querySelector<HTMLButtonElement>('[data-lp-quick-submit]');
     const quickBtnLabel = document.querySelector<HTMLElement>('[data-lp-quick-submit-label]');
     const quickErr = document.querySelector<HTMLElement>('[data-lp-quick-error]');
-
     const onQuickSubmit = async (e: SubmitEvent) => {
       e.preventDefault();
       if (!quickForm) return;
@@ -1957,7 +885,6 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
         if (quickErr) { quickErr.hidden = false; quickErr.textContent = msg; }
         if (fieldName) quickForm.querySelector<HTMLInputElement>(`input[name="${fieldName}"]`)?.focus();
       };
-
       if (!firstName) { showError('Vul uw voornaam in.', 'firstName'); return; }
       if (!phoneValid) { showError('Vul uw telefoonnummer in (minstens 8 cijfers).', 'phone'); return; }
 
@@ -1973,15 +900,14 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
         email: emailV,
         phone: phoneV,
         type_werk: 'AB Gevelbekleding',
-        aanvullende_info: 'Hero-mini-form (3 velden, above-fold quick capture)',
+        aanvullende_info: 'Hero-mini-form (2 velden, above-fold quick capture)',
         bron_lead: local ? `seo:gevelrenovatie-${local.slug}:quick` : 'ads:gevel:quick',
       });
-
       if (result.ok) {
         quickWrap?.classList.add('is-success');
       } else {
         if (quickBtn) quickBtn.disabled = false;
-        if (quickBtnLabel) quickBtnLabel.textContent = 'Plan mijn gratis gevel-offerte';
+        if (quickBtnLabel) quickBtnLabel.textContent = 'Verzend aanvraag';
         showError(`Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced}.`);
       }
     };
@@ -1993,7 +919,6 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
       document.getElementById('lp-gevel-schema')?.remove();
       form?.removeEventListener('submit', onSubmit);
       quickForm?.removeEventListener('submit', onQuickSubmit);
-      countObserver.disconnect();
     };
   }, []);
 
@@ -2001,12 +926,14 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
 
   const renderedHtml = local
     ? HTML
-        .replace('AB Gevelbekleding · Willebroek', `AB Gevelbekleding · ${local.name}`)
         .replace(
-          'in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
-          `in ${local.name} en de regio.`
+          'Het vakkundigste gevelwerk van Vlaanderen.',
+          `Het vakkundigste gevelwerk van ${local.name}.`,
         )
-        .replaceAll('?lp=%2Flp%2Fgevel', `?lp=%2Flokaal%2Fgevelrenovatie-${local.slug}`)
+        .replace(
+          'actief in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
+          `actief in ${local.name} en heel Vlaanderen.`,
+        )
     : HTML;
 
   return <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />;
