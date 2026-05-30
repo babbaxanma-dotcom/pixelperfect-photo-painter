@@ -274,7 +274,7 @@ const LP_CSS = `
 /* 14 — FOOTER */
 .tr-footer { background: ${NAVY}; color: rgba(255,255,255,0.7); padding: 48px 0 36px; border-top: 1px solid rgba(255,255,255,0.08); }
 .tr-footer-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; margin-bottom: 26px; }
-.tr-footer-logo { height: 34px; width: auto; filter: brightness(0) invert(1); opacity: 0.92; }
+.tr-footer-wordmark { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: #fff; letter-spacing: -0.01em; }
 .tr-footer-links { display: flex; flex-wrap: wrap; gap: 22px; }
 .tr-footer-links a { color: rgba(255,255,255,0.72); font-size: 14px; }
 .tr-footer-links a:hover { color: ${ORANGE}; }
@@ -606,7 +606,7 @@ const HTML = `
   <footer class="tr-footer">
     <div class="tr-wrap">
       <div class="tr-footer-top">
-        <img class="tr-footer-logo" src="${logo}" alt="AB Bouw Groep" />
+        <span class="tr-footer-wordmark">AB Bouw Groep</span>
         <div class="tr-footer-links">
           <a href="#diensten">Diensten</a>
           <a href="#werkwijze">Werkwijze</a>
