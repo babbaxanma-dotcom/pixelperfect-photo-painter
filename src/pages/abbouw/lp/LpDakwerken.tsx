@@ -67,7 +67,7 @@ const LP_CSS = `
 /* 2 — HEADER */
 .tr-header { background: #fff; border-bottom: 1px solid #ececec; position: sticky; top: 0; z-index: 60; }
 .tr-header .tr-wrap { display: flex; align-items: center; gap: 24px; min-height: 74px; }
-.tr-logo { height: 38px; width: auto; display: block; }
+.tr-logo { height: 50px; width: auto; display: block; }
 .tr-nav { display: flex; align-items: center; gap: 28px; margin: 0 auto; }
 .tr-nav a { color: ${NAVY}; font-family: var(--font-display); font-weight: 600; font-size: 15px; transition: color .18s; }
 .tr-nav a:hover { color: ${ORANGE}; }
@@ -274,10 +274,13 @@ const LP_CSS = `
 .tr-final-card .tr-safe svg { color: #0f7a4a; }
 .tr-final-card form { display: flex; flex-direction: column; gap: 11px; }
 .tr-final-row { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
-.tr-final-card input, .tr-final-card textarea { width: 100%; padding: 14px 15px; border: 1px solid #d9d6cd;
+.tr-final-card input, .tr-final-card textarea, .tr-final-card select { width: 100%; padding: 14px 15px; border: 1px solid #d9d6cd;
   border-radius: 6px; font: inherit; font-size: 15px; color: #1d2733; background: #fbfaf7; }
-.tr-final-card input:focus, .tr-final-card textarea:focus { outline: none; border-color: ${ORANGE};
-  box-shadow: 0 0 0 3px rgba(217,140,3,0.16); background: #fff; }
+.tr-final-card select { appearance: none; -webkit-appearance: none; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23667' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
+.tr-final-card select:invalid { color: #8a8f98; }
+.tr-final-card input:focus, .tr-final-card textarea:focus, .tr-final-card select:focus { outline: none; border-color: ${ORANGE};
+  box-shadow: 0 0 0 3px rgba(217,140,3,0.16); background-color: #fff; }
 .tr-final-card textarea { min-height: 92px; resize: vertical; }
 .tr-final-card .tr-btn { margin-top: 4px; width: 100%; }
 .tr-final-err { display: none; margin-top: 10px; font-size: 13.5px; color: #b3261e; background: #fdecea;
@@ -621,7 +624,18 @@ const HTML = `
               <input type="tel" name="phone" placeholder="Telefoon" autocomplete="tel" required />
             </div>
             <input type="email" name="email" placeholder="E-mail" autocomplete="email" required />
-            <textarea name="aanvullende_info" placeholder="Korte omschrijving"></textarea>
+            <select name="type_dakwerk" class="tr-final-select" required>
+              <option value="" disabled selected>Type dakwerk kiezen…</option>
+              <option>Nieuw dak / dakvervanging</option>
+              <option>Plat dak (EPDM)</option>
+              <option>Dakisolatie / sarking</option>
+              <option>Zinkwerk &amp; goten</option>
+              <option>Dakherstelling / lekkage</option>
+              <option>Velux dakraam</option>
+              <option>Dakonderhoud</option>
+              <option>Anders / weet ik nog niet</option>
+            </select>
+            <textarea name="aanvullende_info" placeholder="Korte omschrijving (optioneel)"></textarea>
             <button type="submit" class="tr-btn" data-lp-submit>Vraag gratis offerte</button>
           </form>
           <div class="tr-final-err" data-lp-form-error></div>
@@ -844,8 +858,12 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
         firstName: (fd.get('firstName') as string) || undefined,
         email: emailV,
         phone: phoneV,
-        type_werk: 'AB Dakwerken',
-        aanvullende_info: ((fd.get('aanvullende_info') as string) || '').trim() || undefined,
+        type_werk: ((fd.get('type_dakwerk') as string) || '').trim() || 'AB Dakwerken',
+        aanvullende_info: (() => {
+          const t = ((fd.get('type_dakwerk') as string) || '').trim();
+          const m = ((fd.get('aanvullende_info') as string) || '').trim();
+          return [t && `Type dakwerk: ${t}`, m].filter(Boolean).join(' — ') || undefined;
+        })(),
         bron_lead: local ? `seo:dakwerker-${local.slug}` : 'ads:dakwerken',
       });
       if (result.ok) {
