@@ -53,8 +53,8 @@ html {
   --d5: #4a9090; --d5-soft: #cee3e3;
   --d6: #5a544e; --d6-soft: #d8d4cf;
 
- --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
- --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+ --font-display: 'Lexend', 'Plus Jakarta Sans', system-ui, sans-serif;
+ --font-body: 'Lexend', 'Plus Jakarta Sans', system-ui, sans-serif;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-xl: 20px; --r-2xl: 28px; --r-full: 999px;
