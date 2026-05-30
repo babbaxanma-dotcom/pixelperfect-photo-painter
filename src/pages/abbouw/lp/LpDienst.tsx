@@ -15,8 +15,8 @@ import logo from '@/assets/home/logo.png';
 import velux from '@/assets/merken/Velux.png';
 
 import imgVelux from '@/assets/dak/lp-velux.jpg';
-import imgGevelReinig from '@/assets/gevel/stelling.jpg';
-import imgHervoegen from '@/assets/gevel/intro.jpg';
+import imgGevelReinig from '@/assets/gevel/lp-gevelreiniging.jpg';
+import imgHervoegen from '@/assets/gevel/lp-hervoegen.jpg';
 
 const NAVY = '#0a1628';
 const NAVY2 = '#14233a';
