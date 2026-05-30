@@ -9,8 +9,8 @@ import logo from '@/assets/home/logo.png';
 // Hero + section photos (gevel-realisaties).
 import heroWitte from '@/assets/gevel/witte-crepi.jpg';
 import imgGrijze from '@/assets/gevel/grijze-crepi.jpg';
-import imgSteenstrips from '@/assets/gevel/steenstrips.jpg';
-import imgSierpleister from '@/assets/gevel/sierpleister.jpg';
+import imgSteenstrips from '@/assets/gevel/lp-steenstrips-zwart.jpg';
+import imgSierpleister from '@/assets/gevel/lp-gevelreiniging.jpg';
 import imgStelling from '@/assets/gevel/stelling.jpg';
 import imgIntro from '@/assets/gevel/intro.jpg';
 

@@ -9,13 +9,13 @@ import logo from '@/assets/home/logo.png';
 import velux from '@/assets/merken/Velux.png';
 
 // Hero + section photos (reused asset set — Belgian residential roofing).
-import heroClassic from '@/assets/dak/lp-classic-renovatie.jpg';
+import heroClassic from '@/assets/dak/lp-hero-rijwoning.jpg';
 import imgVelux from '@/assets/dak/lp-velux.jpg';
 import imgVakman from '@/assets/dak/lp-vakman.jpg';
 import imgNatuurleien from '@/assets/dak/lp-natuurleien.jpg';
 import imgPlatDak from '@/assets/dak/lp-plat-dak.jpg';
-import imgZinkGoot from '@/assets/dak/lp-zink-goot.jpg';
-import imgComfort from '@/assets/dak/lp-comfort-illustration.jpg';
+import imgZinkGoot from '@/assets/dak/lp-zinkwerk-dakkapel.jpg';
+import imgComfort from '@/assets/dak/lp-sarking-zolder.jpg';
 
 /* ─────────────────────────────────────────────────────────────────────────
    Texas-Roofing-Pros layout, faithfully replicated, NAVY theme, AB Bouw NL
