@@ -195,7 +195,7 @@ const LP_CSS = `
 .tr-services { background: ${NAVY}; color: #fff; }
 .tr-services .tr-head { text-align: center; max-width: 720px; margin: 0 auto 50px; }
 .tr-services .tr-head h2 { font-size: clamp(27px, 3.2vw, 40px); color: #fff; font-weight: 700; margin: 0; }
-.tr-svc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.tr-svc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(208px, 1fr)); gap: 22px; }
 .tr-svc-card { background: ${NAVY2}; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; overflow: hidden;
   display: flex; flex-direction: column; transition: transform .25s ease, border-color .25s ease; }
 .tr-svc-card:hover { transform: translateY(-4px); border-color: rgba(217,140,3,0.5); }
@@ -511,6 +511,10 @@ const HTML = `
         <div class="tr-svc-card">
           <div class="tr-svc-img"><img src="${imgZinkGoot}" alt="Zinkwerk en goten" /></div>
           <div class="tr-svc-body"><h3>Zinkwerk & goten</h3><p>Natuurzinken goten en kielgoten, gesoldeerd. Strakke lijn die 50+ jaar meegaat.</p></div>
+        </div>
+        <div class="tr-svc-card">
+          <div class="tr-svc-img"><img src="${imgVelux}" alt="Velux dakramen" /></div>
+          <div class="tr-svc-body"><h3>Velux dakramen</h3><p>Plaatsing en vervanging van Velux-dakvensters. Waterdicht ingewerkt, meer daglicht op zolder.</p></div>
         </div>
       </div>
       <div class="tr-foot">
