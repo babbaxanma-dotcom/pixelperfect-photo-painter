@@ -75,8 +75,31 @@ const LP_CSS = `
 .tr-rating { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.1; }
 .tr-rating-score { font-family: var(--font-display); font-weight: 700; font-size: 14px; color: ${NAVY}; }
 .tr-rating-stars { color: ${ORANGE}; font-size: 13px; letter-spacing: 1px; }
-@media (max-width: 980px) { .tr-nav { display: none; } }
-@media (max-width: 560px) { .tr-rating { display: none; } }
+/* Hamburger + mobiel menu */
+.tr-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; padding: 10px; background: none; border: 0; cursor: pointer; }
+.tr-burger span { display: block; width: 100%; height: 2.5px; background: ${NAVY}; border-radius: 2px; transition: transform .25s var(--ease-out-quart, ease), opacity .2s; }
+.tr-mobmenu-overlay { display: none; }
+.tr-mobmenu { display: none; }
+@media (max-width: 980px) {
+  .tr-nav { display: none; }
+  .tr-rating { display: none; }
+  .tr-headcta { display: none; }
+  .tr-burger { display: flex; }
+  .tr-logo { height: 52px; }
+  .tr-header .tr-wrap { min-height: 66px; gap: 12px; }
+  .tr-mobmenu-overlay { display: block; position: fixed; inset: 0; background: rgba(10,22,40,0.55); opacity: 0; pointer-events: none; transition: opacity .28s ease; z-index: 150; }
+  body.tr-menu-open .tr-mobmenu-overlay { opacity: 1; pointer-events: auto; }
+  .tr-mobmenu { display: flex; flex-direction: column; gap: 2px; position: fixed; top: 0; right: 0; bottom: 0; width: min(84vw, 360px); background: #fff; box-shadow: -24px 0 60px -24px rgba(0,0,0,0.45); transform: translateX(100%); transition: transform .3s var(--ease-out-quart, ease); z-index: 200; padding: 30px 26px 30px; overflow-y: auto; }
+  body.tr-menu-open .tr-mobmenu { transform: translateX(0); }
+  body.tr-menu-open { overflow: hidden; }
+  .tr-mobmenu-close { align-self: flex-end; background: none; border: 0; font-size: 34px; line-height: 1; color: ${NAVY}; cursor: pointer; padding: 0 4px 6px; margin-bottom: 6px; }
+  .tr-mobmenu a:not(.tr-btn) { font-family: var(--font-display); font-weight: 600; font-size: 19px; color: ${NAVY}; padding: 15px 4px; border-bottom: 1px solid #efece5; }
+  .tr-mobmenu a:not(.tr-btn):active { color: ${ORANGE}; }
+  .tr-mobmenu-cta { margin-top: 22px; justify-content: center; text-align: center; padding: 16px; font-size: 16px; }
+  body.tr-menu-open .tr-burger span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  body.tr-menu-open .tr-burger span:nth-child(2) { opacity: 0; }
+  body.tr-menu-open .tr-burger span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+}
 
 /* 3 — HERO */
 .tr-hero { position: relative; background: ${NAVY}; color: #fff; overflow: hidden; }
@@ -331,9 +354,22 @@ const HTML = `
           <span class="tr-rating-score">4,9/5</span>
           <span class="tr-rating-stars">${stars}</span>
         </div>
-        <a class="tr-btn" href="#form" style="padding:12px 22px;font-size:14px;">Gratis offerte</a>
+        <a class="tr-btn tr-headcta" href="#contact" style="padding:12px 22px;font-size:14px;">Gratis offerte</a>
+        <button type="button" class="tr-burger" data-menu-toggle aria-label="Menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
+    <div class="tr-mobmenu-overlay" data-menu-close></div>
+    <nav class="tr-mobmenu" aria-label="Mobiel menu">
+      <button type="button" class="tr-mobmenu-close" data-menu-close aria-label="Sluiten">×</button>
+      <a href="#diensten">Diensten</a>
+      <a href="#werkwijze">Werkwijze</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">Veelgestelde vragen</a>
+      <a href="#contact">Contact</a>
+      <a class="tr-btn tr-mobmenu-cta" href="#contact">Offerte aanvragen</a>
+    </nav>
   </header>
 
   <!-- 3. HERO -->
@@ -434,7 +470,7 @@ const HTML = `
             <li>${icCheck}<span>Transparante prijs, geen verborgen kosten</span></li>
             <li>${icCheck}<span>10 jaar garantie op waterdichtheid</span></li>
           </ul>
-          <a class="tr-btn" href="#form">Vraag gratis offerte</a>
+          <a class="tr-btn" href="#contact">Vraag gratis offerte</a>
           <div class="tr-urgency">Nog enkele inspectie-plaatsen deze week.</div>
         </div>
       </div>
@@ -475,7 +511,7 @@ const HTML = `
         </div>
       </div>
       <div class="tr-foot">
-        <a class="tr-btn" href="#form">Vraag gratis offerte</a>
+        <a class="tr-btn" href="#contact">Vraag gratis offerte</a>
         <div class="tr-urgency">Nog enkele inspectie-plaatsen deze week.</div>
       </div>
     </div>
@@ -497,7 +533,7 @@ const HTML = `
             <li>${icCheck}<span>Mosbestrijding en dakreiniging</span></li>
             <li>${icCheck}<span>En meer — vraag het ons gerust</span></li>
           </ul>
-          <a class="tr-btn" href="#form">Vraag gratis offerte</a>
+          <a class="tr-btn" href="#contact">Vraag gratis offerte</a>
         </div>
         <div class="tr-also-photo"><img src="${imgVelux}" alt="Dakonderhoud en herstellingen" /></div>
       </div>
@@ -528,7 +564,7 @@ const HTML = `
           <p>U krijgt een concrete startdatum in de offerte. Wij komen wanneer we het zeggen.</p>
         </div>
       </div>
-      <div class="tr-foot"><a class="tr-btn" href="#form">Vraag gratis offerte</a></div>
+      <div class="tr-foot"><a class="tr-btn" href="#contact">Vraag gratis offerte</a></div>
     </div>
   </section>
 
@@ -551,7 +587,7 @@ const HTML = `
   </section>
 
   <!-- 12. FAQ -->
-  <section class="tr-section">
+  <section class="tr-section" id="faq">
     <div class="tr-wrap">
       <div class="tr-faq-box">
         <h2>Veelgestelde vragen</h2>
@@ -636,9 +672,25 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
         e.preventDefault();
         setCalcOpen(true);
       }
+      // Mobiel menu: openen/sluiten
+      if (target.closest('[data-menu-toggle]')) {
+        document.body.classList.toggle('tr-menu-open');
+        return;
+      }
+      if (target.closest('[data-menu-close]')) {
+        document.body.classList.remove('tr-menu-open');
+        return;
+      }
+      // Klik op een menu-link → menu sluiten (anchor-scroll laat doorgaan)
+      if (target.closest('.tr-mobmenu a')) {
+        document.body.classList.remove('tr-menu-open');
+      }
     };
     document.addEventListener('click', handler);
-    return () => document.removeEventListener('click', handler);
+    return () => {
+      document.removeEventListener('click', handler);
+      document.body.classList.remove('tr-menu-open');
+    };
   }, []);
 
   useEffect(() => {
