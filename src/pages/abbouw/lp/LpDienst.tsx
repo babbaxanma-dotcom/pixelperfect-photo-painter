@@ -23,6 +23,26 @@ import imgCrepiWit from '@/assets/gevel/witte-crepi.jpg';
 import imgCrepiGrijs from '@/assets/gevel/grijze-crepi.jpg';
 import imgSteenstripsLp from '@/assets/gevel/lp-steenstrips-zwart.jpg';
 import wienerberger from '@/assets/merken/Wienerberger.png';
+// Galerij-foto's (Recente realisaties) — vers gegenereerd per thema
+import imgCrepi1 from '@/assets/gevel/lp-crepi-1.jpg';
+import imgCrepi2 from '@/assets/gevel/lp-crepi-2.jpg';
+import imgCrepi3 from '@/assets/gevel/lp-crepi-3.jpg';
+import imgSteen1 from '@/assets/gevel/lp-steen-1.jpg';
+import imgSteen2 from '@/assets/gevel/lp-steen-2.jpg';
+import imgSteen3 from '@/assets/gevel/lp-steen-3.jpg';
+import imgReinig1 from '@/assets/gevel/lp-reinig-1.jpg';
+import imgReinig2 from '@/assets/gevel/lp-reinig-2.jpg';
+import imgReinig3 from '@/assets/gevel/lp-reinig-3.jpg';
+import imgHervoeg1 from '@/assets/gevel/lp-hervoeg-1.jpg';
+import imgIsol1 from '@/assets/dak/lp-isol-1.jpg';
+import imgIsol2 from '@/assets/dak/lp-isol-2.jpg';
+import imgIsol3 from '@/assets/dak/lp-isol-3.jpg';
+import imgPdak1 from '@/assets/dak/lp-platdak-1.jpg';
+import imgPdak2 from '@/assets/dak/lp-platdak-2.jpg';
+import imgPdak3 from '@/assets/dak/lp-platdak-3.jpg';
+import imgVx1 from '@/assets/dak/lp-veluxg-1.jpg';
+import imgVx2 from '@/assets/dak/lp-veluxg-2.jpg';
+import imgVx3 from '@/assets/dak/lp-veluxg-3.jpg';
 
 const NAVY = '#0a1628';
 const NAVY2 = '#14233a';
@@ -41,6 +61,8 @@ type Dienst = {
   offerEyebrow: string; offerH2: string; offerIntro: string; offer: string[];
   steps: [string, string][];
   whatTitle: string; whatIntro: string; what: [string, string][]; whatImg: string;
+  /** Recente-realisaties galerij (3 themafoto's), optioneel */
+  gallery?: string[];
   reviews: Review[];
   faq: [string, string][];
   /** opties voor de "Type werk" select in de eind-CTA */
@@ -84,7 +106,8 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Isolatie & gootstuk', 'Correcte aansluiting met isolatie en gootstuk, zodat er geen koudebrug of condens ontstaat.'],
       ['Binnenafwerking', 'De binnenkant netjes afgewerkt en gepleisterd, klaar voor gebruik.'],
     ],
-    whatImg: imgVelux,
+    whatImg: imgVx1,
+    gallery: [imgVx1, imgVx2, imgVx3],
     reviews: [
       { text: '"Twee Velux-ramen in de zolderslaapkamer. Plaatsing op twee dagen, binnenafwerking direct mee gepleisterd. Geen koudebrug, geen condens."', name: 'Greet Coppens', role: 'Velux dakvenster' },
       { text: '"Oud koepelraam vervangen door een modern Velux-dakraam. Vaste prijs vooraf, factuur klopte tot op de euro. Netjes afgewerkt."', name: 'Davy Janssens', role: 'Vervanging dakraam' },
@@ -136,7 +159,8 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Impregneren', 'De gevel nadien beschermen tegen vocht en nieuw vuil, zodat hij jaren langer proper blijft.'],
       ['Veilig werken', 'Met stelling of hoogwerker waar nodig, netjes afgeschermd en proper opgeruimd.'],
     ],
-    whatImg: imgGevelReinig,
+    whatImg: imgReinig1,
+    gallery: [imgReinig1, imgReinig2, imgReinig3],
     reviews: [
       { text: '"Gevel vol groene aanslag, na de reiniging zag de woning er weer als nieuw uit. Geen schade aan de voegen, alles netjes opgeruimd."', name: 'Lieve Hermans', role: 'Gevelreiniging' },
       { text: '"Vakman koos bewust voor lagedruk omdat onze steen poreus is. Eerlijk advies en een nette werf. Meteen ook laten impregneren."', name: 'Yusuf Demir', role: 'Reiniging + impregneren' },
@@ -188,7 +212,7 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Herstel voegen', 'Gedeeltelijk herstel waar enkel bepaalde zones zijn aangetast.'],
       ['Nette afwerking', 'Strak doorgevoegd profiel, gevel proper opgeleverd zonder mortelresten.'],
     ],
-    whatImg: imgHervoegen,
+    whatImg: imgHervoeg1,
     reviews: [
       { text: '"Onze voegen brokkelden af en lieten vocht door. Alles uitgeslepen en opnieuw gevoegd in de juiste kleur. Gevel ziet er weer strak uit."', name: 'Davy Janssens', role: 'Volledige gevel hervoegd' },
       { text: '"Slechts één gevel was aangetast. Eerlijk advies om enkel dat deel te doen, geen onnodig werk. Nette ploeg, vaste prijs vooraf."', name: 'Annick Verstraete', role: 'Gedeeltelijk hervoegen' },
@@ -240,7 +264,8 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Zoldervloer isoleren', 'Snelle en voordelige oplossing wanneer de zolder niet bewoond is.'],
       ['Luchtdicht afwerken', 'Correct dampscherm en aansluitingen, zodat er geen condens of koudebrug ontstaat.'],
     ],
-    whatImg: imgSarking,
+    whatImg: imgIsol2,
+    gallery: [imgIsol1, imgIsol2, imgIsol3],
     reviews: [
       { text: '"Dak vernieuwd met sarkingisolatie in één beweging. De zolder is nu een volwaardige kamer, en de verwarming staat merkbaar lager."', name: 'Davy Janssens', role: 'Sarkingisolatie' },
       { text: '"Eerlijk advies over de isolatiewaarde, geen overdreven dikte verkocht. Vaste prijs vooraf, factuur klopte. Nette ploeg."', name: 'Annick Verstraete', role: 'Dakisolatie' },
@@ -292,7 +317,8 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Isolatie', 'Het dak isoleren volgens de huidige normen, voor minder warmteverlies.'],
       ['Randen & afvoer', 'Strakke randprofielen en een correcte waterafvoer, netjes afgewerkt.'],
     ],
-    whatImg: imgPlatdak,
+    whatImg: imgPdak1,
+    gallery: [imgPdak1, imgPdak2, imgPdak3],
     reviews: [
       { text: '"Plat dak van de aanbouw volledig vernieuwd in EPDM. Eén naadloos stuk, geen plakranden meer. Al twee winters volledig droog."', name: 'Ahmed Berraf', role: 'Plat dak EPDM' },
       { text: '"Oud lekkend garagedak vervangen. Vaste prijs vooraf, op twee dagen klaar. Nette randafwerking, proper opgeruimd."', name: 'Davy Janssens', role: 'Renovatie plat dak' },
@@ -345,6 +371,7 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Voorbereiding', 'Ondergrond reinigen, herstellen en voorstrijken, zodat de crepi jaren blijft zitten.'],
     ],
     whatImg: imgCrepiGrijs,
+    gallery: [imgCrepi1, imgCrepi2, imgCrepi3],
     reviews: [
       { text: '"Volledige gevel in witte crepi. Egaal aangebracht, geen vlekken of overgangen. De woning ziet er compleet vernieuwd uit."', name: 'Annick Verstraete', role: 'Crepi-gevel' },
       { text: '"Crepi in een warme grijstint, kleur perfect zoals op staal. Vaste prijs per m² vooraf, nette ploeg, proper opgeleverd."', name: 'Yusuf Demir', role: 'Crepi + kleur' },
@@ -396,7 +423,8 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Keuze uit kleuren', 'Van klassiek roodbruin tot modern antraciet, met de voegkleur naar keuze.'],
       ['Strak voegwerk', 'Voegen kaarsrecht doorgetrokken, niet van echt metselwerk te onderscheiden.'],
     ],
-    whatImg: imgSteenstripsLp,
+    whatImg: imgSteen1,
+    gallery: [imgSteen1, imgSteen2, imgSteen3],
     reviews: [
       { text: '"Gevel in antraciet steenstrips, meteen op isolatie. Niet van echt metselwerk te onderscheiden. Buren vragen wie het deed."', name: 'Davy Janssens', role: 'Steenstrips op ETICS' },
       { text: '"Roodbruine steenstrips op de voorgevel. Voegen kaarsrecht, kleur perfect. Vaste prijs vooraf, nette ploeg."', name: 'Annick Verstraete', role: 'Steenstrips' },
@@ -705,6 +733,25 @@ export default function LpDienst({ slug }: { slug: string }) {
           </div>
         </div>
       </section>
+
+      {/* 8b. RECENTE REALISATIES (galerij) */}
+      {d.gallery && d.gallery.length > 0 && (
+        <section className="tr-section" style={{ background: 'var(--bg-tint)' }}>
+          <div className="tr-wrap">
+            <div className="tr-head" style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 44px' }}>
+              <span className="tr-eyebrow">Recente realisaties</span>
+              <h2 style={{ fontSize: 'clamp(27px, 3.2vw, 38px)', color: NAVY, fontWeight: 700, margin: 0 }}>Ons werk in beeld</h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 18 }}>
+              {d.gallery.map((src, i) => (
+                <div key={i} style={{ borderRadius: 10, overflow: 'hidden', border: '1px solid #e7e4dd', boxShadow: '0 18px 40px -24px rgba(10,22,40,0.35)', aspectRatio: '4 / 3' }}>
+                  <img src={src} alt={`${d.typeWerk} realisatie ${i + 1}`} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* 9. WHY CHOOSE */}
       <section className="tr-section tr-why" id="werkwijze">
