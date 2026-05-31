@@ -848,6 +848,7 @@ const LP_CSS = `
   letter-spacing: 0.08em; text-transform: uppercase; color: #5b6373; margin-bottom: 14px; }
 .tr-urgency { margin-top: 14px; font-size: 13px; color: #6b7383; font-weight: 600; }
 .tr-section { padding: var(--section-y) 0; }
+.tr-section[id] { scroll-margin-top: 88px; }
 .tr-section.tr-section--lg { padding: var(--section-y-lg) 0; }
 .tr-section.tr-section--compact { padding: var(--section-y-compact) 0; }
 
@@ -961,7 +962,7 @@ const LP_CSS = `
 @media (max-width: 820px) { .tr-steps-grid { grid-template-columns: 1fr; gap: 30px; } .tr-steps-box { padding: 34px 22px 38px; } }
 
 /* 6 — ABOUT / CERTIFIED */
-.tr-about-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: center; }
+.tr-about-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
 .tr-about-media { position: relative; }
 .tr-about-badges { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
 .tr-about-badge { display: inline-flex; align-items: center; justify-content: center; height: 52px; padding: 0 16px;
@@ -991,7 +992,7 @@ const LP_CSS = `
 .tr-services { background: ${NAVY}; color: #fff; }
 .tr-services .tr-head { text-align: left; max-width: 680px; margin: 0 0 44px; }
 .tr-services .tr-head h2 { font-size: clamp(27px, 3.2vw, 40px); color: #fff; font-weight: 600; margin: 0; }
-.tr-svc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.tr-svc-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; align-items: start; }
 .tr-svc-card { background: ${NAVY2}; border: 1px solid rgba(255,255,255,0.08); border-radius: var(--tr-r-card); overflow: hidden;
   display: flex; flex-direction: column; transition: transform .25s ease, border-color .25s ease; }
 .tr-svc-card:hover { border-color: rgba(255,255,255,0.28); }
