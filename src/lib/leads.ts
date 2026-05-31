@@ -174,18 +174,48 @@ export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
   }
 
   const body = buildBody(p);
+  let via: SubmitResult['via'] = 'none';
 
+  // 1) Primair: GoHighLevel inbound webhook.
   if (ghlUrl) {
     try {
       const res = await postJSON(ghlUrl, body);
-      if (res.ok) {
-        fireConversion(p.source, body);
-        return { ok: true, via: 'ghl' };
-      }
+      if (res.ok) via = 'ghl';
+      else console.warn('[lead] GHL niet-ok status:', res.status);
     } catch (err) {
       console.warn('[lead] GHL submit failed:', err);
     }
   }
 
-  return { ok: false, via: 'none', error: 'no transport configured' };
+  // 2) Fallback: Web3Forms email-bezorging zodat een lead NOOIT stil verloren gaat
+  //    als GHL ontbreekt/faalt (CORS/4xx/timeout). Conversie-meting mag niet aan
+  //    één transport hangen — dat was de €900-fout van mei (conversies=0).
+  if (via === 'none') {
+    const w3key = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
+    const w3to = import.meta.env.VITE_LEAD_EMAIL_FALLBACK_TO as string | undefined;
+    if (w3key) {
+      try {
+        const res = await postJSON('https://api.web3forms.com/submit', {
+          access_key: w3key,
+          subject: `Nieuwe AB Bouw lead (${p.source}) — ${body.name || body.email}`,
+          from_name: 'AB Bouw website',
+          ...(w3to ? { to: w3to } : {}),
+          ...body,
+        });
+        if (res.ok) via = 'web3forms';
+        else console.warn('[lead] Web3Forms niet-ok status:', res.status);
+      } catch (err) {
+        console.warn('[lead] Web3Forms fallback failed:', err);
+      }
+    }
+  }
+
+  // Conversie vuurt bij geslaagde bezorging via WELK transport dan ook.
+  if (via !== 'none') {
+    fireConversion(p.source, body);
+    return { ok: true, via };
+  }
+
+  console.error('[lead] geen enkel transport geslaagd — lead niet bezorgd', { source: p.source });
+  return { ok: false, via: 'none', error: 'no transport succeeded' };
 }
