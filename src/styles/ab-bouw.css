@@ -53,12 +53,20 @@ html {
   --d5: #4a9090; --d5-soft: #cee3e3;
   --d6: #5a544e; --d6-soft: #d8d4cf;
 
- --font-display: 'Lexend', 'Plus Jakarta Sans', system-ui, sans-serif;
- --font-body: 'Lexend', 'Plus Jakarta Sans', system-ui, sans-serif;
+ --font-display: 'Bricolage Grotesque', 'Lexend', system-ui, sans-serif;
+ --font-body: 'DM Sans', 'Lexend', system-ui, sans-serif;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-xl: 20px; --r-2xl: 28px; --r-full: 999px;
   --wrap: 1280px;
+
+  /* 8px-spacing-schaal — enige bron van waarheid voor verticaal ritme (LP-overhaul) */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-6: 24px; --s-8: 32px;
+  --s-10: 40px; --s-12: 48px; --s-16: 64px; --s-20: 80px; --s-24: 96px;
+  --section-y: clamp(56px, 7vw, 104px);
+  --section-y-compact: clamp(40px, 5vw, 72px);
+  --section-y-lg: clamp(72px, 9vw, 128px);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -90,14 +98,14 @@ input, select, textarea { font: inherit; }
 
 h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.02em;
   line-height: 1.1;
   color: var(--ink);
 }
-.display { font-size: clamp(40px, 5.4vw, 76px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 600; }
-.display-md { font-size: clamp(32px, 3.8vw, 52px); line-height: 1.1; letter-spacing: -0.025em; font-weight: 600; }
-.display-sm { font-size: clamp(26px, 3vw, 38px); line-height: 1.15; letter-spacing: -0.02em; font-weight: 600; }
+.display { font-size: clamp(40px, 5.4vw, 76px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 500; }
+.display-md { font-size: clamp(32px, 3.8vw, 52px); line-height: 1.1; letter-spacing: -0.025em; font-weight: 500; }
+.display-sm { font-size: clamp(26px, 3vw, 38px); line-height: 1.15; letter-spacing: -0.02em; font-weight: 500; }
 h3 { font-size: 22px; font-weight: 600; }
 h4 { font-size: 18px; font-weight: 600; letter-spacing: -0.015em; }
 p { font-size: 16px; line-height: 1.65; color: var(--ink-soft); }
