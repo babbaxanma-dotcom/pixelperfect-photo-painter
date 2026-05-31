@@ -1,6 +1,4 @@
 import { useEffect } from 'react';
-import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
-import { SHELL_STYLE } from '../_shell';
 import { submitLead } from '@/lib/leads';
 import type { Gemeente } from '@/data/gemeentes';
 import { CONTACT } from '@/data/contact';
@@ -764,7 +762,7 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
     document.body.className = 'lp-page is-subpage';
     try { sessionStorage.setItem('ab_last_lp', local ? `/lokaal/gevelrenovatie-${local.slug}` : '/lp/gevel'); } catch {}
     const style = document.createElement('style');
-    style.textContent = SHELL_STYLE + LP_CSS;
+    style.textContent = LP_CSS;
     document.head.appendChild(style);
     window.scrollTo(0, 0);
 
@@ -880,7 +878,6 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
     };
   }, []);
 
-  useAbBouwInteractions();
 
   const renderedHtml = local
     ? HTML

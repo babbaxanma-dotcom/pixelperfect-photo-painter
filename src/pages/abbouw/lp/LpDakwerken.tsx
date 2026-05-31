@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
-import { SHELL_STYLE } from '../_shell';
 import { submitLead } from '@/lib/leads';
 import type { Gemeente } from '@/data/gemeentes';
 import { CONTACT } from '@/data/contact';
@@ -785,7 +783,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
     document.body.className = 'lp-page is-subpage';
     try { sessionStorage.setItem('ab_last_lp', local ? `/lokaal/dakwerker-${local.slug}` : '/lp/dakwerken'); } catch {}
     const style = document.createElement('style');
-    style.textContent = SHELL_STYLE + LP_CSS;
+    style.textContent = LP_CSS;
     document.head.appendChild(style);
     window.scrollTo(0, 0);
 
@@ -900,7 +898,6 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
     };
   }, []);
 
-  useAbBouwInteractions();
 
   const renderedHtml = local
     ? HTML
