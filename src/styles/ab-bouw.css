@@ -53,8 +53,8 @@ html {
   --d5: #4a9090; --d5-soft: #cee3e3;
   --d6: #5a544e; --d6-soft: #d8d4cf;
 
- --font-display: 'Bricolage Grotesque', 'Lexend', system-ui, sans-serif;
- --font-body: 'DM Sans', 'Lexend', system-ui, sans-serif;
+ --font-display: 'Lexend', system-ui, -apple-system, 'Segoe UI', sans-serif;
+ --font-body: 'Lexend', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
@@ -98,14 +98,14 @@ input, select, textarea { font: inherit; }
 
 h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.1;
   color: var(--ink);
 }
-.display { font-size: clamp(40px, 5.4vw, 76px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 500; }
-.display-md { font-size: clamp(32px, 3.8vw, 52px); line-height: 1.1; letter-spacing: -0.025em; font-weight: 500; }
-.display-sm { font-size: clamp(26px, 3vw, 38px); line-height: 1.15; letter-spacing: -0.02em; font-weight: 500; }
+.display { font-size: clamp(40px, 5.4vw, 76px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 700; }
+.display-md { font-size: clamp(32px, 3.8vw, 52px); line-height: 1.1; letter-spacing: -0.025em; font-weight: 600; }
+.display-sm { font-size: clamp(26px, 3vw, 38px); line-height: 1.15; letter-spacing: -0.02em; font-weight: 600; }
 h3 { font-size: 22px; font-weight: 600; }
 h4 { font-size: 18px; font-weight: 600; letter-spacing: -0.015em; }
 p { font-size: 16px; line-height: 1.65; color: var(--ink-soft); }
