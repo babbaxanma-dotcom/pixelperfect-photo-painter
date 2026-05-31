@@ -109,9 +109,9 @@ const DIENSTEN: Record<string, Dienst> = {
     whatImg: imgVx1,
     gallery: [imgVx1, imgVx2, imgVx3],
     reviews: [
-      { text: '"Twee Velux-ramen in de zolderslaapkamer. Plaatsing op twee dagen, binnenafwerking direct mee gepleisterd. Geen koudebrug, geen condens."', name: 'Greet Coppens', role: 'Velux dakvenster' },
-      { text: '"Oud koepelraam vervangen door een modern Velux-dakraam. Vaste prijs vooraf, factuur klopte tot op de euro. Netjes afgewerkt."', name: 'Davy Janssens', role: 'Vervanging dakraam' },
-      { text: '"Vakman kwam eerst opmeten en gaf eerlijk advies over het formaat. Plaatsing op één dag, alles waterdicht en proper achtergelaten."', name: 'Annick Verstraete', role: 'Nieuw dakraam' },
+      { text: '"Twee Velux-ramen in de zolderslaapkamer. Plaatsing op twee dagen, binnenafwerking direct mee gepleisterd. Geen koudebrug, geen condens."', name: 'Bart Wouters', role: 'Velux dakvenster' },
+      { text: '"Oud koepelraam vervangen door een modern Velux-dakraam. Vaste prijs vooraf, factuur klopte tot op de euro. Netjes afgewerkt."', name: 'Katrien De Smet', role: 'Vervanging dakraam' },
+      { text: '"Vakman kwam eerst opmeten en gaf eerlijk advies over het formaat. Plaatsing op één dag, alles waterdicht en proper achtergelaten."', name: 'Tom Vermeulen', role: 'Nieuw dakraam' },
     ],
     faq: [
       ['Wat kost een Velux dakraam geplaatst?', 'Dat hangt af van het type, het formaat en de bestaande dakopbouw. Een standaardplaatsing start doorgaans rond €1.250 inclusief plaatsing. U krijgt een vaste prijs na de gratis opmeting.'],
@@ -162,9 +162,9 @@ const DIENSTEN: Record<string, Dienst> = {
     whatImg: imgReinig1,
     gallery: [imgReinig1, imgReinig2, imgReinig3],
     reviews: [
-      { text: '"Gevel vol groene aanslag, na de reiniging zag de woning er weer als nieuw uit. Geen schade aan de voegen, alles netjes opgeruimd."', name: 'Lieve Hermans', role: 'Gevelreiniging' },
-      { text: '"Vakman koos bewust voor lagedruk omdat onze steen poreus is. Eerlijk advies en een nette werf. Meteen ook laten impregneren."', name: 'Yusuf Demir', role: 'Reiniging + impregneren' },
-      { text: '"Vaste prijs per m² vooraf, geen verrassingen. De ploeg werkte stipt en proper. Verschil voor en na is enorm."', name: 'Greet Coppens', role: 'Gevelreiniging' },
+      { text: '"Gevel vol groene aanslag, na de reiniging zag de woning er weer als nieuw uit. Geen schade aan de voegen, alles netjes opgeruimd."', name: 'Nele Peeters', role: 'Gevelreiniging' },
+      { text: '"Vakman koos bewust voor lagedruk omdat onze steen poreus is. Eerlijk advies en een nette werf. Meteen ook laten impregneren."', name: 'Sofie Claes', role: 'Reiniging + impregneren' },
+      { text: '"Vaste prijs per m² vooraf, geen verrassingen. De ploeg werkte stipt en proper. Verschil voor en na is enorm."', name: 'Koen Willems', role: 'Gevelreiniging' },
     ],
     faq: [
       ['Wat kost gevelreiniging per m²?', 'Dat hangt af van de vervuiling, de gevelsteen en de bereikbaarheid. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'],
@@ -214,9 +214,9 @@ const DIENSTEN: Record<string, Dienst> = {
     ],
     whatImg: imgHervoeg1,
     reviews: [
-      { text: '"Onze voegen brokkelden af en lieten vocht door. Alles uitgeslepen en opnieuw gevoegd in de juiste kleur. Gevel ziet er weer strak uit."', name: 'Davy Janssens', role: 'Volledige gevel hervoegd' },
-      { text: '"Slechts één gevel was aangetast. Eerlijk advies om enkel dat deel te doen, geen onnodig werk. Nette ploeg, vaste prijs vooraf."', name: 'Annick Verstraete', role: 'Gedeeltelijk hervoegen' },
-      { text: '"Voegwerk vakkundig gedaan, kleur perfect afgestemd op de steen. Werf elke dag proper achtergelaten. Top resultaat."', name: 'Ahmed Berraf', role: 'Herstel voegen' },
+      { text: '"Onze voegen brokkelden af en lieten vocht door. Alles uitgeslepen en opnieuw gevoegd in de juiste kleur. Gevel ziet er weer strak uit."', name: 'Dirk Van Damme', role: 'Volledige gevel hervoegd' },
+      { text: '"Slechts één gevel was aangetast. Eerlijk advies om enkel dat deel te doen, geen onnodig werk. Nette ploeg, vaste prijs vooraf."', name: 'Inge Mertens', role: 'Gedeeltelijk hervoegen' },
+      { text: '"Voegwerk vakkundig gedaan, kleur perfect afgestemd op de steen. Werf elke dag proper achtergelaten. Top resultaat."', name: 'Stijn Jacobs', role: 'Herstel voegen' },
     ],
     faq: [
       ['Wanneer moet een gevel hervoegd worden?', 'Als de voegen loskomen, verbrokkelen of diep zijn uitgesleten. Dat laat vocht door en tast op termijn de muur aan. Een plaatsbezoek geeft uitsluitsel.'],
@@ -267,9 +267,9 @@ const DIENSTEN: Record<string, Dienst> = {
     whatImg: imgIsol2,
     gallery: [imgIsol1, imgIsol2, imgIsol3],
     reviews: [
-      { text: '"Dak vernieuwd met sarkingisolatie in één beweging. De zolder is nu een volwaardige kamer, en de verwarming staat merkbaar lager."', name: 'Davy Janssens', role: 'Sarkingisolatie' },
-      { text: '"Eerlijk advies over de isolatiewaarde, geen overdreven dikte verkocht. Vaste prijs vooraf, factuur klopte. Nette ploeg."', name: 'Annick Verstraete', role: 'Dakisolatie' },
-      { text: '"Zoldervloer laten isoleren, op één dag gedaan. Het scheelt direct op de stookkost. Alles proper opgeruimd."', name: 'Greet Coppens', role: 'Zoldervloerisolatie' },
+      { text: '"Dak vernieuwd met sarkingisolatie in één beweging. De zolder is nu een volwaardige kamer, en de verwarming staat merkbaar lager."', name: 'Hilde Declercq', role: 'Sarkingisolatie' },
+      { text: '"Eerlijk advies over de isolatiewaarde, geen overdreven dikte verkocht. Vaste prijs vooraf, factuur klopte. Nette ploeg."', name: 'Wim De Backer', role: 'Dakisolatie' },
+      { text: '"Zoldervloer laten isoleren, op één dag gedaan. Het scheelt direct op de stookkost. Alles proper opgeruimd."', name: 'Els Vandenberghe', role: 'Zoldervloerisolatie' },
     ],
     faq: [
       ['Wat kost dakisolatie?', 'Dat hangt af van de methode, de oppervlakte en de gewenste isolatiewaarde. U krijgt een vaste prijs na de gratis dakinspectie.'],
@@ -320,9 +320,9 @@ const DIENSTEN: Record<string, Dienst> = {
     whatImg: imgPdak1,
     gallery: [imgPdak1, imgPdak2, imgPdak3],
     reviews: [
-      { text: '"Plat dak van de aanbouw volledig vernieuwd in EPDM. Eén naadloos stuk, geen plakranden meer. Al twee winters volledig droog."', name: 'Ahmed Berraf', role: 'Plat dak EPDM' },
-      { text: '"Oud lekkend garagedak vervangen. Vaste prijs vooraf, op twee dagen klaar. Nette randafwerking, proper opgeruimd."', name: 'Davy Janssens', role: 'Renovatie plat dak' },
-      { text: '"Eerlijk advies, de isolatie meteen mee vernieuwd. Factuur klopte tot op de euro. Strak resultaat."', name: 'Greet Coppens', role: 'Nieuw plat dak' },
+      { text: '"Plat dak van de aanbouw volledig vernieuwd in EPDM. Eén naadloos stuk, geen plakranden meer. Al twee winters volledig droog."', name: 'Nadia El Amrani', role: 'Plat dak EPDM' },
+      { text: '"Oud lekkend garagedak vervangen. Vaste prijs vooraf, op twee dagen klaar. Nette randafwerking, proper opgeruimd."', name: 'Pieter Lauwers', role: 'Renovatie plat dak' },
+      { text: '"Eerlijk advies, de isolatie meteen mee vernieuwd. Factuur klopte tot op de euro. Strak resultaat."', name: 'Marleen Stevens', role: 'Nieuw plat dak' },
     ],
     faq: [
       ['Wat kost een plat dak in EPDM?', 'Dat hangt af van de oppervlakte, de opbouw en de isolatie. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'],
@@ -373,9 +373,9 @@ const DIENSTEN: Record<string, Dienst> = {
     whatImg: imgCrepiGrijs,
     gallery: [imgCrepi1, imgCrepi2, imgCrepi3],
     reviews: [
-      { text: '"Volledige gevel in witte crepi. Egaal aangebracht, geen vlekken of overgangen. De woning ziet er compleet vernieuwd uit."', name: 'Annick Verstraete', role: 'Crepi-gevel' },
-      { text: '"Crepi in een warme grijstint, kleur perfect zoals op staal. Vaste prijs per m² vooraf, nette ploeg, proper opgeleverd."', name: 'Yusuf Demir', role: 'Crepi + kleur' },
-      { text: '"Crepi meteen op buitenisolatie laten zetten. Warmer huis én een strakke gevel in één werk. Top advies vooraf."', name: 'Davy Janssens', role: 'Crepi op ETICS' },
+      { text: '"Volledige gevel in witte crepi. Egaal aangebracht, geen vlekken of overgangen. De woning ziet er compleet vernieuwd uit."', name: 'Johan Aerts', role: 'Crepi-gevel' },
+      { text: '"Crepi in een warme grijstint, kleur perfect zoals op staal. Vaste prijs per m² vooraf, nette ploeg, proper opgeleverd."', name: 'Carine Verlinden', role: 'Crepi + kleur' },
+      { text: '"Crepi meteen op buitenisolatie laten zetten. Warmer huis én een strakke gevel in één werk. Top advies vooraf."', name: 'Rik Dewulf', role: 'Crepi op ETICS' },
     ],
     faq: [
       ['Wat kost crepi per m²?', 'Dat hangt af van de ondergrond, de gewenste afwerking en de bereikbaarheid. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'],
@@ -426,9 +426,9 @@ const DIENSTEN: Record<string, Dienst> = {
     whatImg: imgSteen1,
     gallery: [imgSteen1, imgSteen2, imgSteen3],
     reviews: [
-      { text: '"Gevel in antraciet steenstrips, meteen op isolatie. Niet van echt metselwerk te onderscheiden. Buren vragen wie het deed."', name: 'Davy Janssens', role: 'Steenstrips op ETICS' },
-      { text: '"Roodbruine steenstrips op de voorgevel. Voegen kaarsrecht, kleur perfect. Vaste prijs vooraf, nette ploeg."', name: 'Annick Verstraete', role: 'Steenstrips' },
-      { text: '"Eerlijk advies over steen en voegkleur, met stalen aan huis. Strak resultaat, proper opgeleverd."', name: 'Yusuf Demir', role: 'Gevelbekleding' },
+      { text: '"Gevel in antraciet steenstrips, meteen op isolatie. Niet van echt metselwerk te onderscheiden. Buren vragen wie het deed."', name: 'An Verhoeven', role: 'Steenstrips op ETICS' },
+      { text: '"Roodbruine steenstrips op de voorgevel. Voegen kaarsrecht, kleur perfect. Vaste prijs vooraf, nette ploeg."', name: 'Luc Segers', role: 'Steenstrips' },
+      { text: '"Eerlijk advies over steen en voegkleur, met stalen aan huis. Strak resultaat, proper opgeleverd."', name: 'Tania Govaerts', role: 'Gevelbekleding' },
     ],
     faq: [
       ['Wat kost steenstrips per m²?', 'Dat hangt af van de steensoort, de ondergrond en de bereikbaarheid. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'],
