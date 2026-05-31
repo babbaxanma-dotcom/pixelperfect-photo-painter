@@ -76,7 +76,7 @@ const DIENSTEN: Record<string, Dienst> = {
   velux: {
     slug: 'velux',
     division: 'ab_dakwerken', typeWerk: 'AB Dakwerken', bronLead: 'ads:velux',
-    eyebrow: 'Uw woning verdient het beste',
+    eyebrow: 'Dakramen · heel Vlaanderen',
     h1: 'Velux dakraam vakkundig geplaatst.',
     sub: 'Plaatsing en vervanging van Velux-dakramen in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
     subBold: 'Eigen dakdekkers',
@@ -129,7 +129,7 @@ const DIENSTEN: Record<string, Dienst> = {
   gevelreiniging: {
     slug: 'gevelreiniging',
     division: 'ab_gevelbekleding', typeWerk: 'AB Gevelbekleding', bronLead: 'ads:gevelreiniging',
-    eyebrow: 'Uw woning verdient het beste',
+    eyebrow: 'Gevelreiniging · heel Vlaanderen',
     h1: 'Uw gevel als nieuw, zonder schade.',
     sub: 'Professionele gevelreiniging in Mechelen, Antwerpen, Lier en heel Vlaanderen. De juiste methode voor uw gevelsteen.',
     subBold: 'Eigen ploeg',
@@ -182,7 +182,7 @@ const DIENSTEN: Record<string, Dienst> = {
   hervoegen: {
     slug: 'hervoegen',
     division: 'ab_gevelbekleding', typeWerk: 'AB Gevelbekleding', bronLead: 'ads:hervoegen',
-    eyebrow: 'Uw woning verdient het beste',
+    eyebrow: 'Gevelrenovatie · heel Vlaanderen',
     h1: 'Uw gevel opnieuw voegen.',
     sub: 'Uitslijpen en hervoegen van uw gevel in Mechelen, Antwerpen, Lier en heel Vlaanderen. Lossende of verweerde voegen vakkundig vervangen.',
     subBold: 'Eigen ploeg',
@@ -234,7 +234,7 @@ const DIENSTEN: Record<string, Dienst> = {
   dakisolatie: {
     slug: 'dakisolatie',
     division: 'ab_dakwerken', typeWerk: 'AB Dakwerken', bronLead: 'ads:dakisolatie',
-    eyebrow: 'Uw woning verdient het beste',
+    eyebrow: 'Dakisolatie · heel Vlaanderen',
     h1: 'Dakisolatie die uw factuur verlaagt.',
     sub: 'Sarkingisolatie en zoldervloerisolatie in Mechelen, Antwerpen, Lier en heel Vlaanderen. Warmer huis, lagere stookkost.',
     subBold: 'Eigen dakdekkers',
@@ -287,7 +287,7 @@ const DIENSTEN: Record<string, Dienst> = {
   platdak: {
     slug: 'platdak',
     division: 'ab_dakwerken', typeWerk: 'AB Dakwerken', bronLead: 'ads:platdak',
-    eyebrow: 'Uw woning verdient het beste',
+    eyebrow: 'Platte daken · heel Vlaanderen',
     h1: 'Plat dak in naadloos EPDM.',
     sub: 'Platte daken in EPDM voor aanbouw, garage of bijgebouw in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
     subBold: 'Eigen dakdekkers',
@@ -340,7 +340,7 @@ const DIENSTEN: Record<string, Dienst> = {
   crepi: {
     slug: 'crepi',
     division: 'ab_gevelbekleding', typeWerk: 'AB Gevelbekleding', bronLead: 'ads:crepi',
-    eyebrow: 'Uw woning verdient het beste',
+    eyebrow: 'Crepi & sierpleister · heel Vlaanderen',
     h1: 'Een strakke crepi-gevel die jaren mooi blijft.',
     sub: 'Crepi en sierpleister in elke kleur, in Mechelen, Antwerpen, Lier en heel Vlaanderen. Egaal, duurzaam en onderhoudsarm.',
     subBold: 'Eigen ploeg',
@@ -393,7 +393,7 @@ const DIENSTEN: Record<string, Dienst> = {
   steenstrips: {
     slug: 'steenstrips',
     division: 'ab_gevelbekleding', typeWerk: 'AB Gevelbekleding', bronLead: 'ads:steenstrips',
-    eyebrow: 'Uw woning verdient het beste',
+    eyebrow: 'Steenstrips · heel Vlaanderen',
     h1: 'Steenstrips met een authentieke baksteen-look.',
     sub: 'Steenstrips en gevelbekleding in Mechelen, Antwerpen, Lier en heel Vlaanderen. De look van baksteen, zonder het gewicht.',
     subBold: 'Eigen ploeg',
@@ -463,26 +463,6 @@ const Shield = () => (
 const Pin = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
 );
-const IcStep1 = () => (
-  <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /><path d="M9 16l2 2 4-4" /></svg>
-);
-const IcStep2 = () => (
-  <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="8" y1="13" x2="16" y2="13" /><line x1="8" y1="17" x2="13" y2="17" /></svg>
-);
-const IcStep3 = () => (
-  <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 10l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" /></svg>
-);
-const IcWhy1 = () => (
-  <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" /></svg>
-);
-const IcWhy2 = () => (
-  <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 12 11 14 15 10" /></svg>
-);
-const IcWhy3 = () => (
-  <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><polyline points="12 7 12 12 15 14" /></svg>
-);
-
-const STEP_ICONS = [IcStep1, IcStep2, IcStep3];
 
 export default function LpDienst({ slug }: { slug: string }) {
   const d = DIENSTEN[slug];
@@ -618,7 +598,7 @@ export default function LpDienst({ slug }: { slug: string }) {
           <div className="tr-wrap">
             <span className="tr-eyebrow">{d.eyebrow}</span>
             <h1>{d.h1}</h1>
-            <p className="tr-hero-sub">{d.sub} <b>{d.subBold}</b>, vaste prijs, netjes afgewerkt.</p>
+            <p className="tr-hero-sub">{d.sub} <b>{d.subBold}</b>.</p>
             <div className="tr-certs">
               <span className="tr-cert-pill"><Shield />VCA* gecertificeerd</span>
               <span className="tr-cert-pill"><Check s={15} />Lid Bouwunie</span>
@@ -658,17 +638,16 @@ export default function LpDienst({ slug }: { slug: string }) {
         </div>
       </div>
 
-      {/* 5. THREE STEPS */}
-      <section className="tr-section">
+      {/* 5. WERKWIJZE / 3 STAPPEN */}
+      <section className="tr-section" id="werkwijze">
         <div className="tr-wrap">
           <div className="tr-steps-box">
             <h2>In 3 stappen geregeld</h2>
             <div className="tr-steps-grid">
               {d.steps.map(([t, sub], i) => {
-                const Ic = STEP_ICONS[i] ?? IcStep1;
                 return (
                   <div className="tr-step" key={i}>
-                    <div className="tr-step-ic"><Ic /></div>
+                    <div className="tr-step-num">{String(i + 1).padStart(2, '0')}</div>
                     <h3>{t}</h3>
                     <p>{sub}</p>
                   </div>
@@ -691,7 +670,7 @@ export default function LpDienst({ slug }: { slug: string }) {
               <div className="tr-about-photo"><img src={d.whatImg} alt="AB Bouw vakman aan het werk" /></div>
             </div>
             <div className="tr-about-body">
-              <span className="tr-eyebrow">{d.offerEyebrow}</span>
+              
               <h2>{d.offerH2}</h2>
               <p className="tr-about-intro">{d.offerIntro}</p>
               <ul className="tr-checks">
@@ -699,8 +678,7 @@ export default function LpDienst({ slug }: { slug: string }) {
                   <li key={i}><Check />{i === 0 ? <span><b>{t}</b></span> : <span>{t}</span>}</li>
                 ))}
               </ul>
-              <a className="tr-btn" href="#contact">Vraag gratis offerte</a>
-              <div className="tr-urgency">Nog enkele plaatsbezoeken vrij deze week.</div>
+              <div className="tr-urgency">Gratis plaatsbezoek, meestal binnen 5 werkdagen.</div>
             </div>
           </div>
         </div>
@@ -710,15 +688,15 @@ export default function LpDienst({ slug }: { slug: string }) {
       <section className="tr-numbers">
         <div className="tr-num"><div className="tr-num-big">15 jaar</div><div className="tr-num-lbl">ervaring</div></div>
         <div className="tr-num"><div className="tr-num-big">100%</div><div className="tr-num-lbl">eigen ploeg</div></div>
-        <div className="tr-num"><div className="tr-num-big">Vaste prijs</div><div className="tr-num-lbl">offerte = factuur</div></div>
-        <div className="tr-num"><div className="tr-num-big">Gratis</div><div className="tr-num-lbl">plaatsbezoek</div></div>
+        <div className="tr-num"><div className="tr-num-big">124+</div><div className="tr-num-lbl">projecten</div></div>
+        <div className="tr-num"><div className="tr-num-big">10 jaar</div><div className="tr-num-lbl">garantie</div></div>
       </section>
 
       {/* 8. SERVICES / WAT HOUDT HET IN */}
       <section className="tr-section tr-services" id="diensten">
         <div className="tr-wrap">
           <div className="tr-head">
-            <span className="tr-eyebrow">Onze aanpak</span>
+            
             <h2>{d.whatTitle}</h2>
             <p style={{ color: 'rgba(255,255,255,0.74)', fontSize: 15, lineHeight: 1.6, marginTop: 14 }}>{d.whatIntro}</p>
           </div>
@@ -729,9 +707,6 @@ export default function LpDienst({ slug }: { slug: string }) {
               </div>
             ))}
           </div>
-          <div className="tr-foot">
-            <a className="tr-btn" href="#contact">Vraag gratis offerte</a>
-          </div>
         </div>
       </section>
 
@@ -741,7 +716,7 @@ export default function LpDienst({ slug }: { slug: string }) {
           <div className="tr-wrap">
             <div className="tr-head" style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 44px' }}>
               <span className="tr-eyebrow">Recente realisaties</span>
-              <h2 style={{ fontSize: 'clamp(27px, 3.2vw, 38px)', color: NAVY, fontWeight: 700, margin: 0 }}>Ons werk in beeld</h2>
+              <h2 style={{ fontSize: 'clamp(27px, 3.2vw, 38px)', color: NAVY, fontWeight: 600, margin: 0 }}>Ons werk in beeld</h2>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 18 }}>
               {d.gallery.map((src, i) => (
@@ -754,39 +729,11 @@ export default function LpDienst({ slug }: { slug: string }) {
         </section>
       )}
 
-      {/* 9. WHY CHOOSE */}
-      <section className="tr-section tr-why" id="werkwijze">
-        <div className="tr-wrap">
-          <div className="tr-head">
-            <span className="tr-eyebrow">Waarom AB Bouw</span>
-            <h2>Waarom kiezen voor AB Bouw Groep</h2>
-          </div>
-          <div className="tr-why-grid">
-            <div className="tr-why-col">
-              <div className="tr-why-ic"><IcWhy1 /></div>
-              <h3>Vakmanschap</h3>
-              <p>Een eigen, ervaren ploeg. Geen onderaannemers, wel mensen die hun werk graag goed doen.</p>
-            </div>
-            <div className="tr-why-col">
-              <div className="tr-why-ic"><IcWhy2 /></div>
-              <h3>Vaste prijs-garantie</h3>
-              <p>Wat u tekent, betaalt u. Ook als materiaalprijzen stijgen. Geen naverrekening achteraf.</p>
-            </div>
-            <div className="tr-why-col">
-              <div className="tr-why-ic"><IcWhy3 /></div>
-              <h3>Stipt & betrouwbaar</h3>
-              <p>U krijgt een concrete startdatum in de offerte. Wij komen wanneer we het zeggen.</p>
-            </div>
-          </div>
-          <div className="tr-foot"><a className="tr-btn" href="#contact">Vraag gratis offerte</a></div>
-        </div>
-      </section>
-
       {/* 10. REVIEWS */}
       <section className="tr-section tr-reviews" id="reviews">
         <div className="tr-wrap">
           <div className="tr-head">
-            <span className="tr-eyebrow">Wat klanten zeggen</span>
+            
             <h2>Tevreden klanten in heel Vlaanderen</h2>
           </div>
           <div className="tr-rev-grid">
@@ -832,7 +779,7 @@ export default function LpDienst({ slug }: { slug: string }) {
             </div>
             <div className={`tr-final-card${finalState === 'ok' ? ' is-success' : ''}${finalErr ? ' is-error' : ''}`}>
               <h3>Vraag uw gratis offerte</h3>
-              <div className="tr-safe"><Shield />Uw gegevens zijn 100% veilig</div>
+              <div className="tr-safe"><Shield />Vrijblijvend — we bellen u terug binnen 1 werkdag</div>
               <form ref={finalRef} onSubmit={onFinalSubmit} noValidate>
                 <div className="tr-final-row">
                   <input type="text" name="firstName" placeholder="Voornaam" autoComplete="given-name" required />
@@ -899,7 +846,7 @@ const LP_CSS = `
 .tr-btn:disabled { opacity: .65; cursor: wait; }
 .tr-eyebrow { display: inline-block; font-family: var(--font-display); font-weight: 600; font-size: 12px;
   letter-spacing: 0.08em; text-transform: uppercase; color: #5b6373; margin-bottom: 14px; }
-.tr-urgency { margin-top: 14px; font-size: 13px; color: ${ORANGE_H}; font-weight: 600; }
+.tr-urgency { margin-top: 14px; font-size: 13px; color: #6b7383; font-weight: 600; }
 .tr-section { padding: var(--section-y) 0; }
 .tr-section.tr-section--lg { padding: var(--section-y-lg) 0; }
 .tr-section.tr-section--compact { padding: var(--section-y-compact) 0; }
@@ -1008,8 +955,7 @@ const LP_CSS = `
 .tr-steps-box h2 { text-align: center; font-size: clamp(26px, 3vw, 36px); color: ${NAVY}; font-weight: 600; margin: 0 0 44px; }
 .tr-steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
 .tr-step { text-align: center; }
-.tr-step-ic { width: 56px; height: 56px; margin: 0 auto 18px; color: ${NAVY}; display: flex; align-items: center; justify-content: center; }
-.tr-step-ic svg { width: 44px; height: 44px; }
+.tr-step-num { font-family: var(--font-display); font-size: 42px; font-weight: 600; line-height: 1; color: ${NAVY}; margin: 0 auto 14px; letter-spacing: -0.02em; }
 .tr-step h3 { font-size: 19px; color: ${NAVY}; font-weight: 600; margin: 0 0 10px; }
 .tr-step p { font-size: 14.5px; line-height: 1.62; color: #5b6373; margin: 0; }
 @media (max-width: 820px) { .tr-steps-grid { grid-template-columns: 1fr; gap: 30px; } .tr-steps-box { padding: 34px 22px 38px; } }

@@ -51,7 +51,7 @@ const LP_CSS = `
 .tr-btn:disabled { opacity: .65; cursor: wait; }
 .tr-eyebrow { display: inline-block; font-family: var(--font-display); font-weight: 600; font-size: 12px;
   letter-spacing: 0.08em; text-transform: uppercase; color: #5b6373; margin-bottom: 14px; }
-.tr-urgency { margin-top: 14px; font-size: 13px; color: ${ORANGE_H}; font-weight: 600; }
+.tr-urgency { margin-top: 14px; font-size: 13px; color: #6b7383; font-weight: 600; }
 .tr-section { padding: var(--section-y) 0; }
 .tr-section.tr-section--lg { padding: var(--section-y-lg) 0; }
 .tr-section.tr-section--compact { padding: var(--section-y-compact) 0; }
@@ -161,8 +161,7 @@ const LP_CSS = `
 .tr-steps-box h2 { text-align: center; font-size: clamp(26px, 3vw, 36px); color: ${NAVY}; font-weight: 600; margin: 0 0 44px; }
 .tr-steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
 .tr-step { text-align: center; }
-.tr-step-ic { width: 56px; height: 56px; margin: 0 auto 18px; color: ${NAVY}; display: flex; align-items: center; justify-content: center; }
-.tr-step-ic svg { width: 44px; height: 44px; }
+.tr-step-num { font-family: var(--font-display); font-size: 42px; font-weight: 600; line-height: 1; color: ${NAVY}; margin: 0 auto 14px; letter-spacing: -0.02em; }
 .tr-step h3 { font-size: 19px; color: ${NAVY}; font-weight: 600; margin: 0 0 10px; }
 .tr-step p { font-size: 14.5px; line-height: 1.62; color: #5b6373; margin: 0; }
 @media (max-width: 820px) { .tr-steps-grid { grid-template-columns: 1fr; gap: 30px; } .tr-steps-box { padding: 34px 22px 38px; } }
@@ -188,8 +187,7 @@ const LP_CSS = `
 /* 7 — NUMBERS BAR */
 .tr-numbers { display: grid; grid-template-columns: repeat(4, 1fr); }
 .tr-num { padding: 40px 28px; text-align: center; color: #fff; }
-.tr-num:nth-child(odd) { background: ${NAVY}; }
-.tr-num:nth-child(even) { background: ${NAVY}; }
+.tr-num { background: ${NAVY}; }
 .tr-num-big { font-family: var(--font-display); font-weight: 600; font-size: clamp(30px, 3.4vw, 42px); line-height: 1; color: ${GOLD}; }
 .tr-num-lbl { margin-top: 8px; font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.92); }
 @media (max-width: 720px) { .tr-numbers { grid-template-columns: 1fr 1fr; } }
@@ -316,12 +314,6 @@ const LP_CSS = `
 const icPhone = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`;
 const icCheck = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
 const icShield = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`;
-const icStep1 = `<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>`;
-const icStep2 = `<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>`;
-const icStep3 = `<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>`;
-const icWhy1 = `<svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`;
-const icWhy2 = `<svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`;
-const icWhy3 = `<svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>`;
 const icPin = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`;
 const icCheckBig = `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
 const stars = '★★★★★';
@@ -383,7 +375,7 @@ const HTML = `
     <div class="tr-hero-bg"><img src="${heroClassic}" alt="Dakwerken Vlaanderen" /></div>
     <div class="tr-hero-inner">
       <div class="tr-wrap">
-        <span class="tr-eyebrow">Uw woning verdient het beste</span>
+        <span class="tr-eyebrow">Dakwerken · heel Vlaanderen</span>
         <h1>Het vakkundigste dakwerk van Vlaanderen.</h1>
         <p class="tr-hero-sub">Daklek of toe aan vervanging? Bel voor een gratis offerte. <b>Eigen dakdekkers</b>, actief in Mechelen, Antwerpen, Lier en heel Vlaanderen.</p>
         <div class="tr-certs">
@@ -427,24 +419,24 @@ const HTML = `
     </div>
   </div>
 
-  <!-- 5. THREE STEPS -->
-  <section class="tr-section">
+  <!-- 5. WERKWIJZE / 3 STAPPEN -->
+  <section class="tr-section" id="werkwijze">
     <div class="tr-wrap">
       <div class="tr-steps-box">
         <h2>In 3 stappen naar uw nieuwe dak</h2>
         <div class="tr-steps-grid">
           <div class="tr-step">
-            <div class="tr-step-ic">${icStep1}</div>
+            <div class="tr-step-num">01</div>
             <h3>Plan uw gratis dakinspectie</h3>
             <p>Kies een moment dat past. Onze vakman beoordeelt uw dak en bezorgt een fotorapport van de staat.</p>
           </div>
           <div class="tr-step">
-            <div class="tr-step-ic">${icStep2}</div>
+            <div class="tr-step-num">02</div>
             <h3>Ontvang uw vaste prijs-offerte</h3>
             <p>U krijgt heldere opties, materiaalkeuze en een bindende prijs. Zo weet u exact waar u aan toe bent.</p>
           </div>
           <div class="tr-step">
-            <div class="tr-step-ic">${icStep3}</div>
+            <div class="tr-step-num">03</div>
             <h3>Zorgeloze plaatsing door eigen ploeg</h3>
             <p>Onze eigen dakdekkers voeren alles uit van begin tot eind. Strak, proper, op een afgesproken startdatum.</p>
           </div>
@@ -466,7 +458,7 @@ const HTML = `
           <div class="tr-about-photo"><img src="${imgVakman}" alt="AB Bouw vakman aan het werk" /></div>
         </div>
         <div class="tr-about-body">
-          <span class="tr-eyebrow">Over AB Bouw Groep</span>
+          
           <h2>Uw erkende dakwerker in heel Vlaanderen</h2>
           <p class="tr-about-intro">AB Bouw Groep is een familiebedrijf met een eigen ploeg uit Willebroek. Wij verzorgen dakrenovatie, plat dak, dakisolatie en zinkwerk van A tot Z.</p>
           <ul class="tr-checks">
@@ -476,8 +468,7 @@ const HTML = `
             <li>${icCheck}<span>Transparante prijs, geen verborgen kosten</span></li>
             <li>${icCheck}<span>10 jaar garantie op waterdichtheid</span></li>
           </ul>
-          <a class="tr-btn" href="#contact">Vraag gratis offerte</a>
-          <div class="tr-urgency">Nog enkele inspectie-plaatsen deze week.</div>
+          <div class="tr-urgency">Gratis plaatsbezoek, meestal binnen 5 werkdagen.</div>
         </div>
       </div>
     </div>
@@ -495,7 +486,7 @@ const HTML = `
   <section class="tr-section tr-services" id="diensten">
     <div class="tr-wrap">
       <div class="tr-head">
-        <span class="tr-eyebrow">Onze diensten</span>
+        
         <h2>Vakkundig dakwerk in heel Vlaanderen</h2>
       </div>
       <div class="tr-svc-grid">
@@ -520,10 +511,6 @@ const HTML = `
           <div class="tr-svc-body"><h3>Velux dakramen</h3><p>Plaatsing en vervanging van Velux-dakvensters. Waterdicht ingewerkt, meer daglicht op zolder.</p></div>
         </div>
       </div>
-      <div class="tr-foot">
-        <a class="tr-btn" href="#contact">Vraag gratis offerte</a>
-        <div class="tr-urgency">Nog enkele inspectie-plaatsen deze week.</div>
-      </div>
     </div>
   </section>
 
@@ -532,7 +519,7 @@ const HTML = `
     <div class="tr-wrap">
       <div class="tr-also-grid">
         <div class="tr-also-body">
-          <span class="tr-eyebrow">Wij doen ook</span>
+          
           <h2>Dakonderhoud & herstellingen</h2>
           <p>Niet altijd een volledig nieuw dak nodig? Onze ploeg doet ook gericht onderhoud en kleine herstellingen die uw dak jaren langer laten meegaan.</p>
           <ul class="tr-checks">
@@ -541,40 +528,10 @@ const HTML = `
             <li>${icCheck}<span>Daklekkage opsporen en herstellen</span></li>
             <li>${icCheck}<span>Schoorsteen- en loodwerk</span></li>
             <li>${icCheck}<span>Mosbestrijding en dakreiniging</span></li>
-            <li>${icCheck}<span>En meer — vraag het ons gerust</span></li>
           </ul>
-          <a class="tr-btn" href="#contact">Vraag gratis offerte</a>
         </div>
         <div class="tr-also-photo"><img src="${imgVelux}" alt="Dakonderhoud en herstellingen" /></div>
       </div>
-    </div>
-  </section>
-
-  <!-- 10. WHY CHOOSE -->
-  <section class="tr-section tr-why" id="werkwijze" style="background:var(--bg-tint);">
-    <div class="tr-wrap">
-      <div class="tr-head">
-        <span class="tr-eyebrow">Waarom AB Bouw</span>
-        <h2>Waarom kiezen voor AB Bouw Groep</h2>
-      </div>
-      <div class="tr-why-grid">
-        <div class="tr-why-col">
-          <div class="tr-why-ic">${icWhy1}</div>
-          <h3>Vakmanschap</h3>
-          <p>Een eigen, ervaren ploeg dakdekkers. Geen onderaannemers, wel mensen die hun werk graag goed doen.</p>
-        </div>
-        <div class="tr-why-col">
-          <div class="tr-why-ic">${icWhy2}</div>
-          <h3>Vaste prijs-garantie</h3>
-          <p>Wat u tekent, betaalt u. Ook als materiaalprijzen stijgen. Geen naverrekening achteraf.</p>
-        </div>
-        <div class="tr-why-col">
-          <div class="tr-why-ic">${icWhy3}</div>
-          <h3>Stipt & betrouwbaar</h3>
-          <p>U krijgt een concrete startdatum in de offerte. Wij komen wanneer we het zeggen.</p>
-        </div>
-      </div>
-      <div class="tr-foot"><a class="tr-btn" href="#contact">Vraag gratis offerte</a></div>
     </div>
   </section>
 
@@ -582,16 +539,13 @@ const HTML = `
   <section class="tr-section tr-reviews" id="reviews">
     <div class="tr-wrap">
       <div class="tr-head">
-        <span class="tr-eyebrow">Wat klanten zeggen</span>
+        
         <h2>Tevreden klanten in heel Vlaanderen</h2>
       </div>
       <div class="tr-rev-grid">
         <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Vrijdag een natte vlek op het plafond, zaterdag belde de werfleider me terug. Maandag stond de ploeg op het dak. 70 m² EPDM in één stuk, geen naden. Factuur klopte tot op de euro met de offerte."</p><div class="tr-rev-foot"><div class="tr-rev-name">Lieve Hermans</div><div class="tr-rev-role">Plat dak EPDM</div></div></div>
         <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Wij wilden vooral een lager EPC voor de verkoop. Sarkingsysteem buitenop, oude binnenafwerking bleef. EPC van F naar C in twee weken werk."</p><div class="tr-rev-foot"><div class="tr-rev-name">Yusuf Demir</div><div class="tr-rev-role">Sarking dakisolatie</div></div></div>
-        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Twee Velux-ramen in de zolderslaapkamer. Plaatsing op twee dagen, binnenafwerking direct mee gepleisterd. Geen koudebrug, geen condens."</p><div class="tr-rev-foot"><div class="tr-rev-name">Greet Coppens</div><div class="tr-rev-role">Velux dakvenster</div></div></div>
         <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Storm haalde de helft van de pannen weg. Dezelfde dag iemand voor het dekzeil, de week erop een volledig nieuw dak. Verzekering rechtstreeks door hen geregeld."</p><div class="tr-rev-foot"><div class="tr-rev-name">Davy Janssens</div><div class="tr-rev-role">Stormschade</div></div></div>
-        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Oude koperen goten vervangen door natuurzink. Gesoldeerde verbindingen, geen plastic koppelstukken. Strakke lijn rond heel het huis."</p><div class="tr-rev-foot"><div class="tr-rev-name">Annick Verstraete</div><div class="tr-rev-role">Zinkwerk VMZinc</div></div></div>
-        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Twee verdiepingen + zolder, alles gestript en opnieuw. Werfleider elke vrijdag op de werf, foto-update elke avond per WhatsApp."</p><div class="tr-rev-foot"><div class="tr-rev-name">Ahmed Berraf</div><div class="tr-rev-role">Volledige dakrenovatie</div></div></div>
       </div>
     </div>
   </section>
@@ -601,7 +555,7 @@ const HTML = `
     <div class="tr-wrap">
       <div class="tr-faq-box">
         <h2>Veelgestelde vragen</h2>
-        <details class="tr-faq-item"><summary>Wat kost een nieuw dak in 2026?</summary><p>Dat hangt af van de oppervlakte, het type dak en de staat van de constructie. Na een gratis plaatsbezoek krijgt u een bindende prijs op papier.</p></details>
+        <details class="tr-faq-item"><summary>Wat kost een nieuw dak?</summary><p>Dat hangt af van de oppervlakte, het type dak en de staat van de constructie. Na een gratis plaatsbezoek krijgt u een bindende prijs op papier.</p></details>
         <details class="tr-faq-item"><summary>Hoe lang duurt de plaatsing?</summary><p>Een gemiddeld hellend dak ligt waterdicht in 1 tot 2 weken. U krijgt een concrete startdatum in de offerte.</p></details>
         <details class="tr-faq-item"><summary>Doen jullie de premieaanvraag voor mij?</summary><p>Ja. Wij berekenen waar u recht op heeft en dienen het volledige Mijn VerbouwPremie-dossier voor u in.</p></details>
         <details class="tr-faq-item"><summary>Wat is jullie garantie?</summary><p>10 jaar op waterdichtheid, plus fabrieksgarantie op de materialen (Koramic, Eternit, Firestone).</p></details>
@@ -624,7 +578,7 @@ const HTML = `
         </div>
         <div class="tr-final-card" data-lp-form-wrapper>
           <h3>Vraag uw gratis offerte</h3>
-          <div class="tr-safe">${icShield}Uw gegevens zijn 100% veilig</div>
+          <div class="tr-safe">${icShield}Vrijblijvend — we bellen u terug binnen 1 werkdag</div>
           <form data-lp-form novalidate>
             <div class="tr-final-row">
               <input type="text" name="firstName" placeholder="Voornaam" autocomplete="given-name" required />
