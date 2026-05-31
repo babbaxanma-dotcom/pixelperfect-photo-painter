@@ -10,6 +10,7 @@
  */
 import { useEffect, useRef, useState } from 'react';
 import { submitLead, type Divisie } from '@/lib/leads';
+import { initRealisatieLightbox } from './_lightbox';
 import { CONTACT } from '@/data/contact';
 import logo from '@/assets/home/logo.png';
 import velux from '@/assets/merken/Velux.png';
@@ -502,6 +503,9 @@ export default function LpDienst({ slug }: { slug: string }) {
     };
   }, [d]);
 
+  // Realisatie-lightbox: klik op een galerij-foto -> 3 foto's groot, scrollbaar
+  useEffect(() => initRealisatieLightbox(), []);
+
   if (!d) { if (typeof window !== 'undefined') window.location.href = '/'; return null; }
 
   const onQuickSubmit = async (e: React.FormEvent) => {
@@ -720,8 +724,19 @@ export default function LpDienst({ slug }: { slug: string }) {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 18 }}>
               {d.gallery.map((src, i) => (
-                <div key={i} style={{ borderRadius: 4, overflow: 'hidden', boxShadow: '0 30px 60px -30px rgba(10,22,40,0.35)', aspectRatio: '4 / 3' }}>
+                <div
+                  key={i}
+                  className="rl-thumb"
+                  data-rl-trigger
+                  data-rl-index={i}
+                  data-rl-photos={JSON.stringify(d.gallery)}
+                  data-rl-title={`${d.typeWerk} — realisatie`}
+                  style={{ borderRadius: 4, overflow: 'hidden', boxShadow: '0 30px 60px -30px rgba(10,22,40,0.35)', aspectRatio: '4 / 3' }}
+                >
                   <img src={src} alt={`${d.typeWerk} realisatie ${i + 1}`} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <span className="rl-zoom" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /><line x1="11" y1="8" x2="11" y2="14" /><line x1="8" y1="11" x2="14" y2="11" /></svg>
+                  </span>
                 </div>
               ))}
             </div>
