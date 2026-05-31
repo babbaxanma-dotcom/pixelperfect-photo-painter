@@ -28,6 +28,11 @@ export default defineConfig(({ mode }) => ({
           'router': ['react-router-dom'],
           'query': ['@tanstack/react-query'],
         },
+        // Neutrale, hash-only bestandsnamen: geen herkenbare/verraderlijke
+        // namen (lp-velux, LpDakwerken, ...) zichtbaar in de gebouwde HTML.
+        entryFileNames: 'assets/[hash].js',
+        chunkFileNames: 'assets/[hash].js',
+        assetFileNames: 'assets/[hash][extname]',
       },
     },
   },
