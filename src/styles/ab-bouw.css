@@ -5842,7 +5842,7 @@ body.page-hero-dark .footer {
   content: '';
   position: absolute;
   inset: 0;
-  background: #F5C518;
+  background: #d98c03;
   border-radius: inherit;
   transform: scaleX(0);
   transform-origin: left center;
@@ -6032,7 +6032,7 @@ body.page-hero-dark .footer {
   width: 100%; height: 100%;
   object-fit: cover;
   opacity: 0;
-  transform: scale(1.18);
+  transform: scale(1.06);
   transform-origin: center center;
   /* long, gentle dissolve — no blur, no scale snap */
   transition: opacity 2.4s cubic-bezier(0.45, 0, 0.25, 1);
@@ -6056,13 +6056,19 @@ body.page-hero-dark .footer {
   animation-play-state: running;
 }
 @keyframes lf-hero-kenburns {
-  0%   { transform: scale(1.18) translate3d(0, 0, 0); }
-  100% { transform: scale(1.22) translate3d(-0.5%, -0.3%, 0); }
+  0%   { transform: scale(1.06) translate3d(0, 0, 0); }
+  100% { transform: scale(1.10) translate3d(-0.4%, -0.2%, 0); }
 }
 .lf-hero-bg--slides::after {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse at center, rgba(10,15,28,0.40) 0%, rgba(10,15,28,0.78) 80%);
+  /* Lichtere, gerichte overlay: foto blijft helder bovenaan, donkerder onderaan
+     waar de tekst staat. Premium = de foto is de held, niet een grijze waas.
+     Subtiele radiale vignet + verticaal verloop houdt witte tekst leesbaar
+     zonder de Belgische projectfoto's tot bijna-zwart te knijpen. */
+  background:
+    linear-gradient(to bottom, rgba(10,15,28,0.18) 0%, rgba(10,15,28,0.10) 32%, rgba(10,15,28,0.42) 78%, rgba(10,15,28,0.60) 100%),
+    radial-gradient(ellipse 120% 80% at 50% 42%, transparent 40%, rgba(10,15,28,0.30) 100%);
   z-index: 3;
 }
 
@@ -6159,22 +6165,24 @@ body.page-hero-dark .footer {
 .lf-hero-headline {
   font-family: var(--font-display);
   color: #fff;
-  font-size: clamp(34px, 5.2vw, 68px);
-  line-height: 1.08;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-size: clamp(36px, 5.6vw, 72px);
+  line-height: 1.06;
+  font-weight: 700;
+  letter-spacing: -0.025em;
   margin: 0;
-  text-shadow: none;
+  /* Lichte schaduw: nu de overlay lichter is, houdt dit witte tekst crisp
+     over de helderdere foto zonder de zware grijze waas terug te brengen. */
+  text-shadow: 0 2px 28px rgba(10,15,28,0.45);
 }
 .lf-hero-sub {
   font-family: var(--font-display);
-  color: rgba(255,255,255,0.88);
+  color: rgba(255,255,255,0.92);
   font-size: clamp(15px, 1.25vw, 18px);
   line-height: 1.6;
   font-weight: 400;
   margin: 0;
-  max-width: 720px;
-  text-shadow: none;
+  max-width: 600px;
+  text-shadow: 0 1px 16px rgba(10,15,28,0.5);
 }
 .lf-hero-eyebrow {
   display: inline-flex;
@@ -6196,7 +6204,7 @@ body.page-hero-dark .footer {
 }
 .lf-hero-eyebrow-dot {
   width: 7px; height: 7px; border-radius: 50%;
-  background: #F5C518;
+  background: #d98c03;
   box-shadow: 0 0 0 4px rgba(245,197,24,0.18);
 }
 .lf-hero-mini .lf-hero-actions {
@@ -6241,6 +6249,25 @@ body.page-hero-dark .footer {
 .lf-hero-ghost:hover::after { transform: scaleX(1); background: rgba(255,255,255,0.85); }
 .lf-hero-ghost svg { transition: transform 0.25s ease; }
 .lf-hero-ghost:hover svg { transform: translateX(3px); }
+
+/* Hero-CTA: premium rechthoekige knop (geen 999px "startup-pill", geen
+   uppercase-micro-tekst). SCOPED op .lf-hero-mini zodat de globale
+   .lf-cta-pill van het conversie-formulier ONGEMOEID blijft. */
+.lf-hero-mini .lf-cta-pill {
+  border-radius: 6px;
+  padding: 16px 28px;
+  font-size: 14.5px;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  gap: 10px;
+  box-shadow: 0 14px 34px -14px rgba(217,140,3,0.6);
+}
+.lf-hero-mini .lf-cta-pill .lf-cta-pill-arrow {
+  display: inline-flex !important;
+  align-items: center;
+  transition: transform 0.25s var(--ease);
+}
+.lf-hero-mini .lf-cta-pill:hover .lf-cta-pill-arrow { transform: translateX(3px); }
 
 @media (max-width: 768px) {
   .lf-hero-wrap {
@@ -6351,6 +6378,7 @@ body.page-hero-dark .footer {
   /* wrap inner text in a transform via animation */
 }
 /* inner-word animation: use translateY on the word itself, mask via overflow hidden on parent inline-block */
+.lf-hero-mini .lf-hero-eyebrow,
 .lf-hero-mini .lf-hw,
 .lf-hero-mini .lf-hero-sub,
 .lf-hero-mini .lf-hero-actions {
@@ -6358,6 +6386,7 @@ body.page-hero-dark .footer {
   transform: translateY(110%);
   will-change: transform, opacity;
 }
+.lf-hero-mini.played .lf-hero-eyebrow,
 .lf-hero-mini.played .lf-hw,
 .lf-hero-mini.played .lf-hero-sub,
 .lf-hero-mini.played .lf-hero-actions {
@@ -6690,3 +6719,13 @@ body.is-subpage .lf-hero {
     min-height: 58dvh !important;
   }
 }
+
+
+/* ── Website-polish override (audit wf_ec4b091c): highlighter-AI-tell uit + radius-uniform ── */
+.ab-mark::after { display: none !important; }
+.ab-mark { color: var(--accent); }
+.ab-hl { background-image: none !important; background: none !important; color: var(--navy); font-weight: 600; }
+.lf-hl-word::before { display: none !important; }
+.lf-hl-word { font-weight: 600; color: var(--navy); }
+.lf-stat-card, .lf-testi, .lf-form, .lf-process-step, .lf-cta { border-radius: 14px; }
+.lf-stat-photo, .lf-svc-img, .lf-blog-img { border-radius: 10px; }

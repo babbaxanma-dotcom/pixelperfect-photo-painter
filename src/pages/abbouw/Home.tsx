@@ -97,10 +97,10 @@ const HTML = (i: Record<string, string>) => `
 <!-- HERO -->
 <section class="lf-hero">
   <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
-    <img src="${i.hero2}" alt="AB Bouw Groep renovatieproject in Vlaanderen — vakmanschap door eigen ploeg" class="is-active" />
+    <img src="${i.hero}" alt="Afgewerkte woning met dak en gevel door AB Bouw Groep" class="is-active" />
     <img src="${i.hero4}" alt="Bouwwerf van AB Bouw Groep in Antwerpen" loading="lazy" />
-    <img src="${i.hero5}" alt="Totaalrenovatie door AB Bouw Groep in Mechelen" loading="lazy" />
-    <img src="${i.hero3}" alt="Nieuwbouwproject AB Bouw Groep in Brussel" loading="lazy" />
+    <img src="${i.hero3}" alt="Afgewerkte gevelrenovatie door AB Bouw Groep" loading="lazy" />
+    <img src="${i.svcGevel}" alt="Gevelrenovatie door AB Bouw Groep" loading="lazy" />
   </div>
   <button type="button" class="lf-hero-arrow lf-hero-arrow--prev" data-hero-prev aria-label="Vorige foto">
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -110,13 +110,18 @@ const HTML = (i: Record<string, string>) => `
   </button>
   <div class="wrap lf-hero-wrap">
     <div class="lf-hero-mini" data-hero-anim>
+      <span class="lf-hero-eyebrow" style="--i:0">
+        <span class="lf-hero-eyebrow-dot" aria-hidden="true"></span>
+        Eigen vakmensen in vaste dienst sinds 2010
+      </span>
       <h1 class="lf-hero-headline">
-        <span class="lf-hw" style="--i:0">Vakmanschap</span>
-        <span class="lf-hw" style="--i:1">in</span>
-        <span class="lf-hw" style="--i:2">heel</span>
-        <span class="lf-hw" style="--i:3">Vlaanderen</span>
+        <span class="lf-hw" style="--i:1">Vakmanschap</span>
+        <span class="lf-hw" style="--i:2">in</span>
+        <span class="lf-hw" style="--i:3">heel</span>
+        <span class="lf-hw" style="--i:4">Vlaanderen</span>
       </h1>
-      <div class="lf-hero-actions" style="--i:7">
+      <p class="lf-hero-sub" style="--i:5">Dak, gevel, interieur en totaalrenovatie. Eén bouwpartner, eigen ploegen, een vaste prijs op papier.</p>
+      <div class="lf-hero-actions" style="--i:6">
         <a href="#contact-form" class="lf-cta-pill" data-smooth>
           <span>Plan een kennismaking</span>
           <span class="lf-cta-pill-arrow">
@@ -129,6 +134,12 @@ const HTML = (i: Record<string, string>) => `
         </a>
       </div>
     </div>
+  </div>
+  <div class="lf-hero-dots" data-hero-dots aria-label="Hero diavoorstelling">
+    <button type="button" class="lf-hero-dot is-active" data-hero-dot="0" aria-label="Foto 1"><span></span></button>
+    <button type="button" class="lf-hero-dot" data-hero-dot="1" aria-label="Foto 2"><span></span></button>
+    <button type="button" class="lf-hero-dot" data-hero-dot="2" aria-label="Foto 3"><span></span></button>
+    <button type="button" class="lf-hero-dot" data-hero-dot="3" aria-label="Foto 4"><span></span></button>
   </div>
 </section>
 
@@ -829,7 +840,9 @@ const EXTRA_STYLE = `
 .lf-hero { position: relative; min-height: 720px; display:flex; align-items:center; overflow:hidden; margin-top: 0; }
 .lf-hero-bg { position:absolute; inset:0; }
 .lf-hero-bg img { width:100%; height:100%; object-fit: cover; }
-.lf-hero-bg::after { content:''; position:absolute; inset:0; background: linear-gradient(90deg, rgba(10,22,40,0.55) 0%, rgba(10,22,40,0.15) 60%, transparent 100%); }
+/* Alleen voor de oude single-image hero-variant. De slideshow (.lf-hero-bg--slides)
+   heeft een eigen, lichtere overlay in ab-bouw.css — die mag deze NIET overschrijven. */
+.lf-hero-bg:not(.lf-hero-bg--slides)::after { content:''; position:absolute; inset:0; background: linear-gradient(90deg, rgba(10,22,40,0.55) 0%, rgba(10,22,40,0.15) 60%, transparent 100%); }
 .lf-hero-wrap { position: relative; z-index:2; padding-top: 160px; padding-bottom: 100px; display:block; max-width: none !important; margin: 0 !important; padding-left: clamp(24px, 6vw, 96px) !important; padding-right: clamp(24px, 6vw, 96px) !important; }
 .lf-hero-card { background: rgba(255,255,255,0.96); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.6); padding: 48px 44px; border-radius: 18px; width: 540px; max-width: 100%; box-shadow: 0 30px 80px -30px rgba(10,22,40,0.45); margin: 0 !important; }
 .lf-hero-card h1 { font-family: var(--font-display); font-size: clamp(30px, 3.6vw, 44px); line-height:1.15; font-weight:700; letter-spacing:-0.02em; color: var(--navy); margin-bottom: 18px; }
@@ -850,7 +863,7 @@ const EXTRA_STYLE = `
 .lf-feature h4 { font-size: 15px; color: var(--navy); margin-bottom:4px; }
 .lf-feature p { font-size: 13.5px; color: var(--ink-soft); margin:0; }
 .lf-form { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; padding: 36px; box-shadow: 0 24px 60px -28px rgba(10,22,40,0.18); position: relative; overflow: hidden; z-index: 2; }
-.lf-form::before { content:''; position:absolute; top:0; left:0; right:0; height: 4px; background: linear-gradient(90deg, #F5C518, #0A1F44); border-top-left-radius: 18px; border-top-right-radius: 18px; }
+.lf-form::before { content:''; position:absolute; top:0; left:0; right:0; height: 4px; background: linear-gradient(90deg, #d98c03, #0A1F44); border-top-left-radius: 18px; border-top-right-radius: 18px; }
 .lf-form-header { margin-bottom: 22px; padding-bottom: 22px; border-bottom: 1px solid var(--ink-line-soft); }
 .lf-form-eyebrow { display:inline-flex; align-items:center; gap:6px; padding: 5px 12px; background: rgba(245,197,24,0.18); color: #8a6a00; border-radius: 999px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
 .lf-form-header h3 { font-family: var(--font-display); font-size: 24px; line-height:1.2; font-weight:700; color: var(--navy); margin-bottom: 6px; letter-spacing:-0.01em; }

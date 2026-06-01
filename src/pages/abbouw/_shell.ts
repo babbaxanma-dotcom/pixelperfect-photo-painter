@@ -432,7 +432,7 @@ body.is-scrolled .lf-scroll-cue { opacity: 0; pointer-events: none; transition: 
 .lf-contact-info-text strong { font-size:13px; color: var(--navy); font-weight:700; }
 .lf-contact-info-text a, .lf-contact-info-text span { font-size:14.5px; color: var(--ink-soft); text-decoration:none; }
 .lf-form { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; padding: 36px; box-shadow: 0 24px 60px -28px rgba(10,22,40,0.18); position: relative; overflow: visible; }
-.lf-form::before { content:''; position:absolute; top:0; left:0; right:0; height: 4px; background: linear-gradient(90deg, #F5C518, var(--navy)); border-top-left-radius: 18px; border-top-right-radius: 18px; }
+.lf-form::before { content:''; position:absolute; top:0; left:0; right:0; height: 4px; background: linear-gradient(90deg, #d98c03, var(--navy)); border-top-left-radius: 18px; border-top-right-radius: 18px; }
 .lf-form h3 { font-family: var(--font-display); font-size: 24px; color: var(--navy); margin-bottom: 8px; }
 .lf-form > p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 22px; padding-bottom: 22px; border-bottom: 1px solid var(--ink-line-soft); }
 .lf-form-row { display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -671,7 +671,7 @@ ul.ab-checks li::before { content: '✓'; color: var(--accent); font-weight: 800
 .ab-tier { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 16px; padding: 32px 28px; display:flex; flex-direction:column; }
 .ab-tier.featured { background: var(--navy); color: #fff; border-color: var(--navy); transform: translateY(-8px); box-shadow: 0 30px 70px -30px rgba(10,22,40,0.45); }
 .ab-tier-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
-.ab-tier.featured .ab-tier-tag { color: #F5C518; }
+.ab-tier.featured .ab-tier-tag { color: #d98c03; }
 .ab-tier h4 { font-family: var(--font-display); font-size: 20px; margin-bottom: 8px; color: var(--navy); }
 .ab-tier.featured h4 { color: #fff; }
 .ab-tier-price { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
