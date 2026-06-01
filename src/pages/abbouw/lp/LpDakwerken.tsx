@@ -14,6 +14,16 @@ import imgNatuurleien from '@/assets/dak/lp-natuurleien.jpg';
 import imgPlatDak from '@/assets/dak/lp-plat-dak.jpg';
 import imgZinkGoot from '@/assets/dak/lp-zinkwerk-dakkapel.jpg';
 import imgComfort from '@/assets/dak/lp-sarking-zolder.jpg';
+import { initRealisatieLightbox } from './_lightbox';
+import imgRealPan1 from '@/assets/dak/lp-real-pan-1.jpg';
+import imgRealPan2 from '@/assets/dak/lp-real-pan-2.jpg';
+import imgRealPan3 from '@/assets/dak/lp-real-pan-3.jpg';
+import imgRealEpdm1 from '@/assets/dak/lp-real-epdm-1.jpg';
+import imgRealEpdm2 from '@/assets/dak/lp-real-epdm-2.jpg';
+import imgRealEpdm3 from '@/assets/dak/lp-real-epdm-3.jpg';
+import imgRealDet1 from '@/assets/dak/lp-real-det-1.jpg';
+import imgRealDet2 from '@/assets/dak/lp-real-det-2.jpg';
+import imgRealDet3 from '@/assets/dak/lp-real-det-3.jpg';
 
 /* ─────────────────────────────────────────────────────────────────────────
    Texas-Roofing-Pros layout, faithfully replicated, NAVY theme, AB Bouw NL
@@ -312,6 +322,10 @@ const PHONE = CONTACT.phone.spaced;
 const PHONE_HREF = CONTACT.phone.href;
 
 /* ── Page HTML (template literal) ───────────────────────────────────────── */
+const RL_PAN = JSON.stringify([imgRealPan1, imgRealPan2, imgRealPan3]).replace(/"/g, '&quot;');
+const RL_EPDM = JSON.stringify([imgRealEpdm1, imgRealEpdm2, imgRealEpdm3]).replace(/"/g, '&quot;');
+const RL_DET = JSON.stringify([imgRealDet1, imgRealDet2, imgRealDet3]).replace(/"/g, '&quot;');
+
 const HTML = `
 <div class="tr">
 
@@ -521,6 +535,30 @@ const HTML = `
           </ul>
         </div>
         <div class="tr-also-photo"><img src="${imgVelux}" alt="Dakonderhoud en herstellingen" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10b. RECENTE REALISATIES -->
+  <section class="tr-section" id="realisaties" style="background:var(--bg-tint)">
+    <div class="tr-wrap">
+      <div class="tr-head" style="text-align:left;max-width:760px;margin:0 0 36px">
+        <h2 style="font-size:clamp(27px,3.2vw,38px);color:#0a1628;font-weight:700;margin:0">Recente realisaties</h2>
+        <p style="font-size:15px;line-height:1.6;color:#454f60;margin:10px 0 0">Echte daken die onze eigen ploeg in Vlaanderen plaatste. Klik op een project voor meer beelden.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
+        <div class="rl-thumb" data-rl-trigger data-rl-index="0" data-rl-photos="${RL_PAN}" data-rl-title="Pannendak-renovatie" style="border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(10,22,40,.35);aspect-ratio:4/3;position:relative">
+          <img src="${imgRealPan1}" alt="Pannendak-renovatie realisatie" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
+          <span style="position:absolute;left:14px;bottom:12px;color:#fff;font-family:var(--font-display);font-weight:600;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.55)">Pannendak-renovatie</span>
+        </div>
+        <div class="rl-thumb" data-rl-trigger data-rl-index="0" data-rl-photos="${RL_EPDM}" data-rl-title="Plat dak — EPDM" style="border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(10,22,40,.35);aspect-ratio:4/3;position:relative">
+          <img src="${imgRealEpdm1}" alt="Plat dak EPDM realisatie" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
+          <span style="position:absolute;left:14px;bottom:12px;color:#fff;font-family:var(--font-display);font-weight:600;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.55)">Plat dak — EPDM</span>
+        </div>
+        <div class="rl-thumb" data-rl-trigger data-rl-index="0" data-rl-photos="${RL_DET}" data-rl-title="Velux &amp; zinkwerk" style="border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(10,22,40,.35);aspect-ratio:4/3;position:relative">
+          <img src="${imgRealDet1}" alt="Velux en zinkwerk realisatie" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
+          <span style="position:absolute;left:14px;bottom:12px;color:#fff;font-family:var(--font-display);font-weight:600;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.55)">Velux &amp; zinkwerk</span>
+        </div>
       </div>
     </div>
   </section>
@@ -898,6 +936,8 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
           `actief in ${local.name} en heel Vlaanderen.`,
         )
     : HTML;
+
+  useEffect(() => initRealisatieLightbox(), []);
 
   return (
     <>

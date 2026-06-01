@@ -11,6 +11,16 @@ import imgSteenstrips from '@/assets/gevel/lp-steenstrips-zwart.jpg';
 import imgSierpleister from '@/assets/gevel/lp-gevelreiniging.jpg';
 import imgStelling from '@/assets/gevel/stelling.jpg';
 import imgIntro from '@/assets/gevel/intro.jpg';
+import { initRealisatieLightbox } from './_lightbox';
+import imgRealCrepi1 from '@/assets/gevel/lp-real-crepi-1.jpg';
+import imgRealCrepi2 from '@/assets/gevel/lp-real-crepi-2.jpg';
+import imgRealCrepi3 from '@/assets/gevel/lp-real-crepi-3.jpg';
+import imgRealSteen1 from '@/assets/gevel/lp-real-steen-1.jpg';
+import imgRealSteen2 from '@/assets/gevel/lp-real-steen-2.jpg';
+import imgRealSteen3 from '@/assets/gevel/lp-real-steen-3.jpg';
+import imgRealReinig1 from '@/assets/gevel/lp-real-reinig-1.jpg';
+import imgRealReinig2 from '@/assets/gevel/lp-real-reinig-2.jpg';
+import imgRealReinig3 from '@/assets/gevel/lp-real-reinig-3.jpg';
 
 /* ─────────────────────────────────────────────────────────────────────────
    Texas-Roofing-Pros layout, faithfully replicated, NAVY theme, AB Bouw NL
@@ -306,6 +316,10 @@ const PHONE_HREF = CONTACT.phone.href;
 const ADDRESS = CONTACT.address.full;
 
 /* ── Page HTML (template literal) ───────────────────────────────────────── */
+const RL_CREPI = JSON.stringify([imgRealCrepi1, imgRealCrepi2, imgRealCrepi3]).replace(/"/g, '&quot;');
+const RL_STEEN = JSON.stringify([imgRealSteen1, imgRealSteen2, imgRealSteen3]).replace(/"/g, '&quot;');
+const RL_REINIG = JSON.stringify([imgRealReinig1, imgRealReinig2, imgRealReinig3]).replace(/"/g, '&quot;');
+
 const HTML = `
 <div class="tr">
 
@@ -511,6 +525,30 @@ const HTML = `
           </ul>
         </div>
         <div class="tr-also-photo"><img src="${imgIntro}" alt="Gevelonderhoud en herstellingen" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10b. RECENTE REALISATIES -->
+  <section class="tr-section" id="realisaties" style="background:var(--bg-tint)">
+    <div class="tr-wrap">
+      <div class="tr-head" style="text-align:left;max-width:760px;margin:0 0 36px">
+        <h2 style="font-size:clamp(27px,3.2vw,38px);color:#0a1628;font-weight:700;margin:0">Recente realisaties</h2>
+        <p style="font-size:15px;line-height:1.6;color:#454f60;margin:10px 0 0">Echte gevels die onze eigen ploeg in Vlaanderen afwerkte. Klik op een project voor meer beelden.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
+        <div class="rl-thumb" data-rl-trigger data-rl-index="0" data-rl-photos="${RL_CREPI}" data-rl-title="Crepi &amp; buitenisolatie" style="border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(10,22,40,.35);aspect-ratio:4/3;position:relative">
+          <img src="${imgRealCrepi1}" alt="Crepi-gevel realisatie" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
+          <span style="position:absolute;left:14px;bottom:12px;color:#fff;font-family:var(--font-display);font-weight:600;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.55)">Crepi &amp; buitenisolatie</span>
+        </div>
+        <div class="rl-thumb" data-rl-trigger data-rl-index="0" data-rl-photos="${RL_STEEN}" data-rl-title="Steenstrips" style="border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(10,22,40,.35);aspect-ratio:4/3;position:relative">
+          <img src="${imgRealSteen1}" alt="Steenstrips-gevel realisatie" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
+          <span style="position:absolute;left:14px;bottom:12px;color:#fff;font-family:var(--font-display);font-weight:600;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.55)">Steenstrips</span>
+        </div>
+        <div class="rl-thumb" data-rl-trigger data-rl-index="0" data-rl-photos="${RL_REINIG}" data-rl-title="Gevelreiniging" style="border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(10,22,40,.35);aspect-ratio:4/3;position:relative">
+          <img src="${imgRealReinig1}" alt="Gevelreiniging realisatie" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
+          <span style="position:absolute;left:14px;bottom:12px;color:#fff;font-family:var(--font-display);font-weight:600;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.55)">Gevelreiniging</span>
+        </div>
       </div>
     </div>
   </section>
@@ -878,6 +916,8 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
           `actief in ${local.name} en heel Vlaanderen.`,
         )
     : HTML;
+
+  useEffect(() => initRealisatieLightbox(), []);
 
   return <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />;
 }
