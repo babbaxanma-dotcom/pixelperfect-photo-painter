@@ -7,13 +7,14 @@ import logo from '@/assets/home/logo.png';
 import velux from '@/assets/merken/Velux.png';
 
 // Hero + section photos (reused asset set — Belgian residential roofing).
-import heroClassic from '@/assets/dak/lp-hero-rijwoning.jpg';
+import heroClassic from '@/assets/dak/lp-hero-pannendak.jpg';
 import imgVelux from '@/assets/dak/lp-velux.jpg';
 import imgVakman from '@/assets/home/vakmanschap-2.jpg';
 import imgNatuurleien from '@/assets/dak/lp-natuurleien.jpg';
 import imgPlatDak from '@/assets/dak/lp-plat-dak.jpg';
 import imgZinkGoot from '@/assets/dak/lp-zinkwerk-dakkapel.jpg';
 import imgComfort from '@/assets/dak/lp-sarking-zolder.jpg';
+import imgOnderhoud from '@/assets/dak/lp-classic-renovatie.jpg';
 import { initRealisatieLightbox } from './_lightbox';
 import imgRealPan1 from '@/assets/dak/lp-real-pan-1.jpg';
 import imgRealPan2 from '@/assets/dak/lp-real-pan-2.jpg';
@@ -121,25 +122,26 @@ const LP_CSS = `
 .tr-hero { position: relative; background: ${NAVY}; color: #fff; overflow: hidden; }
 @media (min-width: 1024px) { .tr-hero { display: flex; align-items: center; min-height: clamp(560px, 64vh, 720px); } .tr-hero-inner { width: 100%; } }
 .tr-hero-bg { position: absolute; inset: 0; }
-.tr-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+.tr-hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 62%; }
 .tr-hero-bg::after { content: ""; position: absolute; inset: 0;
-  background: linear-gradient(100deg, rgba(10,22,40,0.92) 0%, rgba(10,22,40,0.74) 48%, rgba(10,22,40,0.5) 100%), linear-gradient(180deg, rgba(10,22,40,0.22) 0%, rgba(10,22,40,0) 40%, rgba(10,22,40,0.6) 100%); }
+  background: linear-gradient(100deg, rgba(10,22,40,0.90) 0%, rgba(10,22,40,0.70) 46%, rgba(10,22,40,0.40) 100%), linear-gradient(180deg, rgba(10,22,40,0.14) 0%, rgba(10,22,40,0) 46%, rgba(10,22,40,0.55) 100%); }
 .tr-hero-inner { position: relative; z-index: 2; text-align: left; padding: clamp(72px,8vw,112px) 0 clamp(110px,12vw,168px); }
 .tr-hero h1 { font-size: clamp(32px, 4.9vw, 60px); line-height: 1.07; font-weight: 700; letter-spacing: -0.035em; color: #fff; margin: 0 0 22px; max-width: 16ch; text-wrap: balance; }
 .tr-hero-sub { font-size: clamp(15px, 1.45vw, 19px); line-height: 1.6; color: rgba(255,255,255,0.92);
   max-width: 620px; margin: 0 0 32px; }
 .tr-hero-sub b { color: #fff; }
+.tr-hero-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 22px; margin: 0 0 30px; }
+.tr-hero-call { font-family: var(--font-display); font-weight: 600; font-size: 15px; color: rgba(255,255,255,0.86); text-decoration: none; transition: color .18s; }
+.tr-hero-call:hover { color: ${GOLD}; }
+@media (max-width: 720px) { .tr-hero-cta { justify-content: center; gap: 12px 18px; margin-bottom: 24px; } }
 .tr-hero .tr-eyebrow { color: ${GOLD}; margin-bottom: 18px; }
 .tr-hero .tr-eyebrow::before { background: ${GOLD}; }
-.tr-certs { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 12px 14px; max-width: 880px; margin: 4px 0 0; }
-.tr-cert-pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px;
-  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: var(--tr-r-ui);
-  font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.92); white-space: nowrap; }
-.tr-cert-pill svg { color: ${GOLD}; flex-shrink: 0; }
-.tr-cert-logo { display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 16px;
-  background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.16); border-radius: var(--tr-r-ui); }
-.tr-cert-logo img { height: 20px; width: auto; object-fit: contain; opacity: 0.92; filter: brightness(0) invert(1); }
-@media (max-width: 720px) { .tr-hero { display: flex; align-items: center; min-height: 76vh; } .tr-hero-inner { width: 100%; padding: 44px 0 116px; text-align: center; } .tr-hero-sub { margin-left: auto; margin-right: auto; } .tr-certs { justify-content: center; gap: 9px 10px; } .tr-cert-pill { height: 36px; padding: 0 12px; font-size: 11.5px; } .tr-cert-logo { height: 36px; padding: 0 12px; } .tr-cert-logo img { height: 17px; } }
+.tr-certs { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 10px; max-width: 620px; margin: 6px 0 0; }
+.tr-cert-pill { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.13); border-radius: var(--tr-r-ui);
+  font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); white-space: nowrap; }
+.tr-cert-pill svg { color: ${GOLD}; flex-shrink: 0; opacity: 0.92; }
+@media (max-width: 720px) { .tr-hero { display: flex; align-items: center; min-height: 76vh; } .tr-hero-inner { width: 100%; padding: 44px 0 116px; text-align: center; } .tr-hero-sub { margin-left: auto; margin-right: auto; } .tr-certs { justify-content: center; gap: 9px 10px; } .tr-cert-pill { height: 36px; padding: 0 13px; font-size: 12px; } }
 
 /* 4 — QUICK FORM (overlaps hero) */
 .tr-quickform-shell { background: #fff; }
@@ -257,7 +259,7 @@ const LP_CSS = `
 @media (max-width: 620px) { .tr-rev-grid { grid-template-columns: 1fr; } }
 
 /* 12 — FAQ (orange-bordered box) */
-.tr-faq-box { border-top: 1px solid #ece9e1; padding: 12px 0 0; max-width: 760px; margin: 0 auto; }
+.tr-faq-box { padding: 12px 0 0; max-width: 760px; margin: 0 auto; }
 .tr-faq-box h2 { text-align: center; font-size: clamp(26px, 3vw, 36px); color: ${NAVY}; font-weight: 700; margin: 0 0 30px; }
 .tr-faq-item { border-bottom: 1px solid #ece9e1; }
 .tr-faq-item summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 14px;
@@ -414,13 +416,14 @@ const HTML = `
         <span class="tr-eyebrow">Dakwerken · heel Vlaanderen</span>
         <h1>Het vakkundigste dakwerk van Vlaanderen.</h1>
         <p class="tr-hero-sub">Daklek of toe aan vervanging? Bel voor een gratis offerte. <b>Eigen dakdekkers</b>, actief in Mechelen, Antwerpen, Lier en heel Vlaanderen.</p>
+        <div class="tr-hero-cta">
+          <a href="#lp-form" class="tr-btn">Gratis offerte aanvragen</a>
+          <a href="${PHONE_HREF}" class="tr-hero-call">of bel ${PHONE}</a>
+        </div>
         <div class="tr-certs">
           <span class="tr-cert-pill">${icShield}VCA* gecertificeerd</span>
           <span class="tr-cert-pill">${icCheck.replace('width="20" height="20"','width="15" height="15"')}Lid Bouwunie</span>
-          <span class="tr-cert-pill">${icShield}Verzekerd — Federale Verzekering</span>
-          <span class="tr-cert-logo"><img src="/assets/logos/koramic.png" alt="Koramic" /></span>
-          <span class="tr-cert-logo"><img src="/assets/logos/eternit.png" alt="Eternit" /></span>
-          <span class="tr-cert-logo"><img src="${velux}" alt="Velux" /></span>
+          <span class="tr-cert-pill">${icShield}Verzekerd via Federale</span>
         </div>
       </div>
     </div>
@@ -430,14 +433,13 @@ const HTML = `
   <div class="tr-quickform-shell">
     <div class="tr-wrap">
       <div class="tr-quickform" id="lp-form" data-lp-quick>
-        <span class="tr-eyebrow">Snelle aanvraag</span>
-        <h3>Vraag gratis dakinspectie</h3>
+        <h3>Vraag uw gratis dakinspectie</h3>
         <form data-lp-quick-form novalidate>
           <div class="tr-qf-grid">
             <input type="text" name="firstName" placeholder="Voornaam" autocomplete="given-name" required />
             <input type="tel" name="phone" placeholder="Telefoon" autocomplete="tel" required />
             <button type="submit" class="tr-btn" data-lp-quick-submit>
-              <span data-lp-quick-submit-label>Verzend aanvraag</span>
+              <span data-lp-quick-submit-label>Plan mijn dakinspectie</span>
             </button>
           </div>
         </form>
@@ -566,7 +568,7 @@ const HTML = `
             <li>${icCheck}<span>Mosbestrijding en dakreiniging</span></li>
           </ul>
         </div>
-        <div class="tr-also-photo"><img src="${imgVelux}" alt="Dakonderhoud en herstellingen" /></div>
+        <div class="tr-also-photo"><img src="${imgOnderhoud}" alt="Dakonderhoud en herstellingen" /></div>
       </div>
     </div>
   </section>
@@ -611,7 +613,7 @@ const HTML = `
   </section>
 
   <!-- 12. FAQ -->
-  <section class="tr-section" id="faq">
+  <section class="tr-section" id="faq" style="background:var(--bg-tint)">
     <div class="tr-wrap">
       <div class="tr-faq-box">
         <h2>Veelgestelde vragen</h2>
