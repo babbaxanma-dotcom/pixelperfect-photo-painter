@@ -60,7 +60,23 @@ const CSS = `
 .rl-dot { width: 7px; height: 7px; border-radius: 999px; background: rgba(255,255,255,0.3); }
 .rl-dot.is-active { background: rgba(255,255,255,0.9); }
 body.rl-open { overflow: hidden; }
-@media (max-width: 720px) { .rl-bar { padding: 14px 16px; } }
+@media (max-width: 720px) {
+  .rl-bar { padding: 14px 16px; }
+  .rl-scroll {
+    flex-direction: row; align-items: center;
+    overflow-x: auto; overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 0; padding: 0 0 24px;
+    scrollbar-width: none;
+  }
+  .rl-scroll::-webkit-scrollbar { display: none; }
+  .rl-scroll img {
+    flex: 0 0 100%; width: 100%; max-width: 100%;
+    scroll-snap-align: center;
+    padding: 0 16px; box-sizing: border-box;
+  }
+}
 `;
 
 export function initRealisatieLightbox(): () => void {
@@ -117,17 +133,25 @@ export function initRealisatieLightbox(): () => void {
     const imgs = overlay.querySelectorAll<HTMLImageElement>('.rl-scroll img');
     const dots = overlay.querySelectorAll<HTMLElement>('.rl-dot');
 
-    // scroll naar de aangeklikte foto (na fade-in)
+    // scroll naar de aangeklikte foto (na fade-in) — mobiel horizontaal, desktop verticaal
+    const isMobile = () => window.matchMedia('(max-width: 720px)').matches;
     if (startIndex > 0 && imgs[startIndex]) {
-      setTimeout(() => imgs[startIndex].scrollIntoView({ block: 'center' }), 60);
+      setTimeout(() => imgs[startIndex].scrollIntoView(
+        isMobile() ? { inline: 'center', block: 'nearest' } : { block: 'center' }
+      ), 60);
     }
 
-    // actieve dot meelopen tijdens scrollen
+    // actieve dot meelopen tijdens scrollen (per as)
     if (scroll && dots.length) {
       scroll.addEventListener('scroll', () => {
         let active = 0;
-        const mid = scroll.scrollTop + scroll.clientHeight / 2;
-        imgs.forEach((img, i) => { if (img.offsetTop <= mid) active = i; });
+        if (isMobile()) {
+          const mid = scroll.scrollLeft + scroll.clientWidth / 2;
+          imgs.forEach((img, i) => { if (img.offsetLeft <= mid) active = i; });
+        } else {
+          const mid = scroll.scrollTop + scroll.clientHeight / 2;
+          imgs.forEach((img, i) => { if (img.offsetTop <= mid) active = i; });
+        }
         dots.forEach((d, i) => d.classList.toggle('is-active', i === active));
       }, { passive: true });
     }

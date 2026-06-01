@@ -59,7 +59,7 @@ html {
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-xl: 20px; --r-2xl: 28px; --r-full: 999px;
-  --wrap: 1280px;
+  --wrap: 1320px;
 
   /* 8px-spacing-schaal — enige bron van waarheid voor verticaal ritme (LP-overhaul) */
   --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-6: 24px; --s-8: 32px;
@@ -94,7 +94,7 @@ a { color: inherit; text-decoration: none; cursor: pointer; }
 button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
 input, select, textarea { font: inherit; }
 ::selection { background: var(--accent); color: #fff; }
-.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 32px; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 clamp(24px, 4vw, 64px); }
 
 h1, h2, h3, h4, h5 {
   font-family: var(--font-display);

@@ -145,9 +145,9 @@ const HTML = (i: Record<string, string>) => `
 
 
 <!-- TESTIMONIALS — direct onder hero, eerste sociale proof -->
-<section class="lf-section lf-tone-soft lf-reviews-section" style="padding: 56px 0;">
+<section class="lf-section lf-tone-soft lf-reviews-section" style="padding: var(--section-y-compact) 0;">
   <div class="wrap">
-    <div class="lf-section-head centered lf-reviews-head" data-reveal style="margin-bottom: 36px;">
+    <div class="lf-section-head centered lf-reviews-head" data-reveal style="margin-bottom: 24px;">
       <span class="lf-eyebrow">Wat klanten zeggen</span>
       <div class="lf-reviews-rating">
         <span class="lf-reviews-score">4.9</span>
@@ -307,7 +307,7 @@ const HTML = (i: Record<string, string>) => `
 <!-- SERVICES GRID -->
 <section class="lf-section lf-services lf-section-compact-stack">
   <div class="wrap">
-    <div class="lf-section-head" data-reveal>
+    <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Onze diensten</span>
       <h2 class="lf-h2">Zes specialisaties.<br>Eén bouwpartner.</h2>
     </div>
@@ -822,17 +822,21 @@ const EXTRA_STYLE = `
 
 .lf-eyebrow { display:inline-block; padding: 6px 14px; background: var(--accent); color:#fff; border-radius: 4px; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform: uppercase; margin-bottom: 18px; }
 .lf-h2 { font-family: var(--font-display); font-size: clamp(28px, 3.4vw, 44px); line-height:1.15; font-weight:600; letter-spacing:-0.02em; color: var(--navy); margin-bottom: 18px; }
-.lf-section { padding: 90px 0; }
+.lf-section { padding: var(--section-y) 0; }
 .lf-section.lf-section-compact-stack { padding-bottom: 22px; }
-.lf-section.lf-section-compact-stack + .lf-section { padding-top: 56px; }
+.lf-section.lf-section-compact-stack + .lf-section { padding-top: var(--section-y-compact); }
 .lf-section.lf-section-compact-stack .lf-section-head { margin-bottom: 30px; }
 .lf-section.lf-section-compact-stack .lf-section-head.centered { margin-bottom: 30px; }
 .lf-section.lf-why-section-tight { padding-bottom: 0; }
-.lf-section.lf-why-section-tight + .lf-section { padding-top: 36px; }
+.lf-section.lf-why-section-tight + .lf-section { padding-top: var(--section-y-compact); }
 .lf-why-section-tight .lf-trust-strip { margin-top: 0; transform: translateY(-1px); }
 .lf-tone-soft { background: var(--bg-tint); }
 .lf-section-head { max-width: 720px; margin-bottom: 56px; }
-.lf-section-head.centered { margin: 0 auto 56px; text-align:center; }
+.lf-section-head.centered { margin: 0 auto 56px; text-align:center; max-width: 820px; }
+.lf-cta.lf-cta--simple { max-width: 920px; margin: 0 auto; text-align: center; padding: 56px 48px; }
+.lf-cta--simple .lf-cta-text { max-width: none; margin: 0 auto; }
+.lf-cta--simple .lf-cta-text p { margin-left: auto; margin-right: auto; }
+.lf-cta--simple .lf-cta-actions { justify-content: center; }
 .lf-section-head.centered .lf-eyebrow { display:inline-block; }
 .lf-lede { font-size: 16px; color: var(--ink-soft); line-height:1.7; max-width: 560px; margin-bottom: 28px; }
 
@@ -879,11 +883,11 @@ const EXTRA_STYLE = `
 .lf-form button { margin-top: 10px; }
 
 /* Compact offerte section: heading top, form middle, two bullets below */
-.lf-offerte-section { padding: 80px 0 64px; }
-.lf-offerte-head { text-align: center; max-width: 640px; margin: 0 auto 32px; }
+.lf-offerte-section { padding: 88px 0; }
+.lf-offerte-head { text-align: center; max-width: 720px; margin: 0 auto 36px; }
 .lf-offerte-head .lf-h2 { margin-bottom: 14px; }
 .lf-offerte-head .lf-lede { margin: 0 auto; }
-.lf-form-compact { max-width: 640px; margin: 0 auto; padding: 28px 28px 24px; border-radius: 16px; }
+.lf-form-compact { max-width: 680px; margin: 0 auto; padding: 28px 28px 24px; border-radius: 16px; }
 /* Success-state Home form */
 aside.lf-form.is-success > form { display: none; }
 aside.lf-form .lf-form-thanks { display: none; text-align: center; padding: 20px 0; }
@@ -896,7 +900,7 @@ aside.lf-form .lf-form-thanks p { font-size: 14px; color: var(--ink-soft); margi
 .lf-form-compact input, .lf-form-compact textarea, .lf-form-compact .lf-dd-toggle { padding: 12px 14px; font-size: 14px; margin-bottom: 10px; }
 .lf-form-foot { text-align: center; margin: 14px 0 0; font-size: 13px; color: var(--ink-soft); }
 .lf-form-foot a { color: var(--navy); font-weight: 700; text-decoration: none; border-bottom: 1.5px solid var(--accent); }
-.lf-mini-bullets { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 640px; margin: 28px auto 0; }
+.lf-mini-bullets { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 760px; margin: 32px auto 0; }
 .lf-mini-bullet { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 14px; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
 .lf-mini-bullet:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -16px rgba(10,22,40,0.18); border-color: var(--accent); }
 .lf-mini-bullet-num { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--accent); line-height: 1; flex-shrink: 0; }
@@ -1072,7 +1076,7 @@ aside.lf-form .lf-form-thanks p { font-size: 14px; color: var(--ink-soft); margi
 /* hover animation removed */
 
 /* Team */
-.lf-team-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 900px; margin: 0 auto; }
+.lf-team-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 1080px; margin: 0 auto; }
 .lf-team-card { text-align:center; }
 .lf-team-img { aspect-ratio: 4/4; border-radius: 12px; overflow:hidden; margin-bottom: 16px; position:relative; }
 .lf-team-img::before { content:''; position:absolute; right:-1px; bottom:-1px; width:42px; height:42px; background: var(--accent); clip-path: polygon(100% 0, 100% 100%, 0 100%); z-index:2; }
@@ -1170,7 +1174,7 @@ aside.lf-form .lf-form-thanks p { font-size: 14px; color: var(--ink-soft); margi
 /* Newsletter — clean minimal, fade-in op scroll */
 .lf-newsletter { padding: 72px 0; }
 .lf-newsletter-card {
-  max-width: 920px;
+  max-width: 1040px;
   margin: 0 auto;
   background: #fff;
   border: 1px solid var(--ink-line-soft);
@@ -1406,8 +1410,8 @@ aside.lf-form .lf-form-thanks p { font-size: 14px; color: var(--ink-soft); margi
 @keyframes lf-marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* Stats counters */
-.lf-stats { padding: 80px 0; background: var(--bg-tint, #f7f5ef); }
-.lf-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.lf-stats { padding: var(--section-y-compact) 0; background: var(--bg-tint, #f7f5ef); }
+.lf-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
 .lf-stat-card { background: #fff; border: 1px solid var(--ink-line-soft, #e8e6df); border-radius: 22px; padding: 22px; transition: transform .35s var(--ease), box-shadow .35s var(--ease); position: relative; overflow: hidden; display:flex; flex-direction:column; gap: 18px; }
 .lf-stat-card:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -28px rgba(10,22,40,0.22); }
 .lf-stat-card:hover .lf-stat-photo img { transform: scale(1.06); }
@@ -1639,8 +1643,8 @@ html, body { overflow-x: hidden; max-width: 100%; }
 .lf-services .lf-svc-grid[data-svc-stack] {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
-  gap: 22px !important;
-  max-width: 1240px !important;
+  gap: 32px !important;
+  max-width: 1200px !important;
   margin: 0 auto !important;
   padding: 0 !important;
 }
@@ -1665,7 +1669,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
     scroll-snap-align: start !important;
   }
   .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
-    aspect-ratio: 4/5 !important;
+    aspect-ratio: 3/4 !important;
     height: auto !important;
   }
   /* Op mobile: body altijd zichtbaar (geen hover beschikbaar) */
@@ -1755,9 +1759,9 @@ html, body { overflow-x: hidden; max-width: 100%; }
   display: grid !important;
   grid-template-columns: repeat(2, 1fr) !important;
   grid-template-rows: auto !important;
-  gap: 28px 56px !important;
-  max-width: 1080px !important;
-  margin: 0 auto 64px !important;  /* extra ruimte naar trust-strip onder */
+  gap: 40px 64px !important;
+  max-width: 1200px !important;
+  margin: 0 auto 72px !important;  /* extra ruimte naar trust-strip onder */
 }
 .lf-why-collage.lf-why-stack[data-why-stack] .lf-why-stack-left {
   display: contents !important;
