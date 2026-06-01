@@ -483,7 +483,13 @@ export default function LpDienst({ slug }: { slug: string }) {
     m.setAttribute('content', d.metaDesc);
     const prevBody = document.body.className;
     document.body.className = 'lp-page is-subpage';
-    window.scrollTo(0, 0);
+    // Hash-deeplink (bv. Google-sitelink /lp/...#werkwijze): scroll naar de sectie i.p.v. naar boven.
+    if (window.location.hash && window.location.hash.length > 1) {
+      const _id = window.location.hash.slice(1);
+      setTimeout(() => { const _el = document.getElementById(_id); if (_el) _el.scrollIntoView({ behavior: 'smooth', block: 'start' }); else window.scrollTo(0, 0); }, 90);
+    } else {
+      window.scrollTo(0, 0);
+    }
 
     // Mobiel menu open/dicht via gedelegeerde click (zoals dakwerken-LP).
     const handler = (e: MouseEvent) => {

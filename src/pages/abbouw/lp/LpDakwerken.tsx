@@ -845,7 +845,13 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
     const style = document.createElement('style');
     style.textContent = LP_CSS;
     document.head.appendChild(style);
-    window.scrollTo(0, 0);
+    // Hash-deeplink (bv. Google-sitelink /lp/...#werkwijze): scroll naar de sectie i.p.v. naar boven.
+    if (window.location.hash && window.location.hash.length > 1) {
+      const _id = window.location.hash.slice(1);
+      setTimeout(() => { const _el = document.getElementById(_id); if (_el) _el.scrollIntoView({ behavior: 'smooth', block: 'start' }); else window.scrollTo(0, 0); }, 90);
+    } else {
+      window.scrollTo(0, 0);
+    }
 
     // ── Main form (final CTA) submit ─────────────────────────────────────
     const wrap = document.querySelector<HTMLElement>('[data-lp-form-wrapper]');
