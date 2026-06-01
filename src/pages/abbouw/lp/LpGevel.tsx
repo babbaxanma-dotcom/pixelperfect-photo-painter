@@ -427,13 +427,13 @@ const HTML = `
   <div class="tr-quickform-shell">
     <div class="tr-wrap">
       <div class="tr-quickform" id="lp-form" data-lp-quick>
-        <h3>Vraag uw gratis gevelinspectie</h3>
+        <h3>Gratis terugbelverzoek</h3>
         <form data-lp-quick-form novalidate>
           <div class="tr-qf-grid">
             <input type="text" name="firstName" placeholder="Voornaam" autocomplete="given-name" required />
             <input type="tel" name="phone" placeholder="Telefoon" autocomplete="tel" required />
             <button type="submit" class="tr-btn" data-lp-quick-submit>
-              <span data-lp-quick-submit-label>Verzend aanvraag</span>
+              <span data-lp-quick-submit-label>Bel mij terug</span>
             </button>
           </div>
         </form>
@@ -923,7 +923,7 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
         quickWrap?.classList.add('is-success');
       } else {
         if (quickBtn) quickBtn.disabled = false;
-        if (quickBtnLabel) quickBtnLabel.textContent = 'Verzend aanvraag';
+        if (quickBtnLabel) quickBtnLabel.textContent = 'Bel mij terug';
         showError(`Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced}.`);
       }
     };

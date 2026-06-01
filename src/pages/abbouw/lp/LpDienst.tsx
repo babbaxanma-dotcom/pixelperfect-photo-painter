@@ -620,13 +620,13 @@ export default function LpDienst({ slug }: { slug: string }) {
       <div className="tr-quickform-shell">
         <div className="tr-wrap">
           <div id="lp-form" className={`tr-quickform${quickState === 'ok' ? ' is-success' : ''}`}>
-            <h3>Vraag uw gratis plaatsbezoek</h3>
+            <h3>Gratis terugbelverzoek</h3>
             <form ref={quickRef} onSubmit={onQuickSubmit} noValidate>
               <div className="tr-qf-grid">
                 <input type="text" name="firstName" placeholder="Voornaam" autoComplete="given-name" required />
                 <input type="tel" name="phone" placeholder="Telefoon" autoComplete="tel" required />
                 <button type="submit" className="tr-btn" disabled={quickState === 'busy'}>
-                  {quickState === 'busy' ? 'Even bezig…' : 'Verzend aanvraag'}
+                  {quickState === 'busy' ? 'Even bezig…' : 'Bel mij terug'}
                 </button>
               </div>
             </form>
