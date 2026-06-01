@@ -246,10 +246,9 @@ const LP_CSS = `
 @media (max-width: 980px) { .tr-rev-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 620px) { .tr-rev-grid { grid-template-columns: 1fr; } }
 
-/* 12 — FAQ (asymmetrische 2-koloms band: kop links, accordeon rechts) */
-.tr-faq-box { border-top: 1px solid #ece9e1; padding: 36px 0 0; max-width: none; margin: 0; display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(40px, 6vw, 88px); align-items: start; }
-.tr-faq-box h2 { text-align: left; font-size: clamp(28px, 3.2vw, 40px); color: ${NAVY}; font-weight: 700; margin: 0; position: sticky; top: 100px; }
-.tr-faq-box > .tr-faq-item:first-of-type { border-top: 1px solid #ece9e1; }
+/* 12 — FAQ (orange-bordered box) */
+.tr-faq-box { border-top: 1px solid #ece9e1; padding: 12px 0 0; max-width: 760px; margin: 0 auto; }
+.tr-faq-box h2 { text-align: center; font-size: clamp(26px, 3vw, 36px); color: ${NAVY}; font-weight: 700; margin: 0 0 30px; }
 .tr-faq-item { border-bottom: 1px solid #ece9e1; }
 .tr-faq-item summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 14px;
   padding: 18px 4px; font-family: var(--font-display); font-weight: 600; font-size: 16px; color: ${NAVY}; }
@@ -258,8 +257,7 @@ const LP_CSS = `
   align-items: center; justify-content: center; color: ${NAVY}; font-size: 20px; font-weight: 700; line-height: 1; }
 .tr-faq-item[open] summary::before { content: "–"; }
 .tr-faq-item p { margin: 0 0 18px 36px; font-size: 14.5px; line-height: 1.65; color: #454f60; }
-@media (max-width: 900px) { .tr-faq-box { grid-template-columns: 1fr; gap: 24px; } .tr-faq-box h2 { position: static; text-align: center; } }
-@media (max-width: 720px) { .tr-faq-box { padding: 30px 0 0; } }
+@media (max-width: 720px) { .tr-faq-box { padding: 30px 20px 26px; } }
 
 /* 13 — FINAL CTA (dark) */
 .tr-final { background: ${NAVY}; color: #fff; }
