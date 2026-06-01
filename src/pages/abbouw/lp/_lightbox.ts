@@ -3,8 +3,9 @@
  *
  * Werkt via één gedelegeerde document-click op [data-rl-trigger]. Het element
  * draagt data-rl-photos (JSON-array van image-URL's) en optioneel data-rl-index
- * (welke foto eerst in beeld) + data-rl-title. De lightbox toont de foto's groot
- * en verticaal scrollbaar; sluiten via X, klik op achtergrond of Esc.
+ * (welke foto eerst in beeld) + data-rl-title. De lightbox toont de foto's groot;
+ * navigeren via pijl-knoppen (‹ ›), toetsenbord-pijlen, klikbare bolletjes,
+ * of scrollen/swipen. Sluiten via X, klik op achtergrond of Esc.
  *
  * Eén implementatie i.p.v. drie: roep initRealisatieLightbox() aan in een
  * useEffect per LP en ruim op met de teruggegeven cleanup-functie.
@@ -36,7 +37,7 @@ const CSS = `
 .rl-bar {
   display: flex; align-items: center; justify-content: space-between;
   padding: 18px clamp(16px, 4vw, 40px); color: rgba(255,255,255,0.92);
-  font-family: var(--font-display, sans-serif); flex-shrink: 0;
+  font-family: var(--font-display, sans-serif); flex-shrink: 0; position: relative; z-index: 3;
 }
 .rl-bar-title { font-size: 15px; font-weight: 500; letter-spacing: 0.01em; }
 .rl-bar-count { font-size: 13px; color: rgba(255,255,255,0.6); margin-left: 12px; }
@@ -56,12 +57,31 @@ const CSS = `
   display: block; width: 100%; max-width: 960px; height: auto; border-radius: 4px;
   box-shadow: 0 40px 80px -40px rgba(0,0,0,0.6);
 }
-.rl-dots { display: flex; justify-content: center; gap: 8px; padding: 0 0 18px; flex-shrink: 0; }
-.rl-dot { width: 7px; height: 7px; border-radius: 999px; background: rgba(255,255,255,0.3); }
-.rl-dot.is-active { background: rgba(255,255,255,0.9); }
+
+/* Navigatie-pijlen (desktop) */
+.rl-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 54px; height: 54px; border-radius: 999px; z-index: 4;
+  border: 1px solid rgba(255,255,255,0.28); background: rgba(20,32,52,0.55);
+  color: #fff; cursor: pointer; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  transition: background .2s ease, opacity .2s ease, transform .2s ease;
+}
+.rl-nav svg { width: 26px; height: 26px; }
+.rl-nav:hover { background: rgba(40,56,84,0.85); }
+.rl-prev { left: clamp(14px, 3vw, 40px); }
+.rl-next { right: clamp(14px, 3vw, 40px); }
+.rl-nav:disabled { opacity: 0; pointer-events: none; }
+
+.rl-dots { display: flex; justify-content: center; gap: 9px; padding: 0 0 18px; flex-shrink: 0; position: relative; z-index: 3; }
+.rl-dot { width: 9px; height: 9px; border-radius: 999px; background: rgba(255,255,255,0.3); border: 0; padding: 0; cursor: pointer; transition: background .2s ease, transform .2s ease; }
+.rl-dot:hover { background: rgba(255,255,255,0.6); }
+.rl-dot.is-active { background: rgba(255,255,255,0.95); transform: scale(1.15); }
 body.rl-open { overflow: hidden; }
 @media (max-width: 720px) {
   .rl-bar { padding: 14px 16px; }
+  .rl-nav { display: none; }          /* mobiel = swipe */
   .rl-scroll {
     flex-direction: row; align-items: center;
     overflow-x: auto; overflow-y: hidden;
@@ -79,6 +99,9 @@ body.rl-open { overflow: hidden; }
 }
 `;
 
+const ARROW_L = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>';
+const ARROW_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+
 export function initRealisatieLightbox(): () => void {
   if (typeof document === 'undefined') return () => {};
 
@@ -90,6 +113,8 @@ export function initRealisatieLightbox(): () => void {
   }
 
   let overlay: HTMLElement | null = null;
+  // navigatie-hooks van de open overlay (voor toetsenbord-pijlen op document-niveau)
+  let nav: { prev: () => void; next: () => void } | null = null;
 
   const close = () => {
     if (!overlay) return;
@@ -98,6 +123,7 @@ export function initRealisatieLightbox(): () => void {
     const el = overlay;
     setTimeout(() => { el.remove(); }, 280);
     overlay = null;
+    nav = null;
   };
 
   const open = (photos: string[], startIndex: number, title: string) => {
@@ -109,6 +135,7 @@ export function initRealisatieLightbox(): () => void {
     overlay.setAttribute('aria-modal', 'true');
     overlay.setAttribute('aria-label', title || 'Realisatie');
 
+    const multi = photos.length > 1;
     const safeTitle = (title || 'Realisatie').replace(/</g, '&lt;');
     overlay.innerHTML =
       '<div class="rl-bar">' +
@@ -119,8 +146,10 @@ export function initRealisatieLightbox(): () => void {
       '<div class="rl-scroll">' +
         photos.map((src) => '<img src="' + src + '" alt="' + safeTitle + '" loading="lazy" />').join('') +
       '</div>' +
+      (multi ? '<button type="button" class="rl-nav rl-prev" aria-label="Vorige foto">' + ARROW_L + '</button>' +
+               '<button type="button" class="rl-nav rl-next" aria-label="Volgende foto">' + ARROW_R + '</button>' : '') +
       '<div class="rl-dots">' +
-        photos.map((_, i) => '<span class="rl-dot' + (i === startIndex ? ' is-active' : '') + '"></span>').join('') +
+        photos.map((_, i) => '<button type="button" class="rl-dot' + (i === startIndex ? ' is-active' : '') + '" aria-label="Foto ' + (i + 1) + '"></button>').join('') +
       '</div>';
 
     document.body.appendChild(overlay);
@@ -132,16 +161,39 @@ export function initRealisatieLightbox(): () => void {
     const scroll = overlay.querySelector<HTMLElement>('.rl-scroll');
     const imgs = overlay.querySelectorAll<HTMLImageElement>('.rl-scroll img');
     const dots = overlay.querySelectorAll<HTMLElement>('.rl-dot');
-
-    // scroll naar de aangeklikte foto (na fade-in) — mobiel horizontaal, desktop verticaal
+    const prevBtn = overlay.querySelector<HTMLButtonElement>('.rl-prev');
+    const nextBtn = overlay.querySelector<HTMLButtonElement>('.rl-next');
     const isMobile = () => window.matchMedia('(max-width: 720px)').matches;
+
+    let current = startIndex;
+    const setActive = (i: number) => {
+      current = i;
+      dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
+      if (prevBtn) prevBtn.disabled = i <= 0;
+      if (nextBtn) nextBtn.disabled = i >= photos.length - 1;
+    };
+    const goTo = (i: number) => {
+      const n = Math.max(0, Math.min(photos.length - 1, i));
+      const img = imgs[n];
+      if (img) img.scrollIntoView(isMobile() ? { inline: 'center', block: 'nearest', behavior: 'smooth' } : { block: 'center', behavior: 'smooth' });
+      setActive(n);
+    };
+
+    setActive(startIndex);
+    // initieel naar de aangeklikte foto (na fade-in)
     if (startIndex > 0 && imgs[startIndex]) {
       setTimeout(() => imgs[startIndex].scrollIntoView(
         isMobile() ? { inline: 'center', block: 'nearest' } : { block: 'center' }
       ), 60);
     }
 
-    // actieve dot meelopen tijdens scrollen (per as)
+    nav = { prev: () => goTo(current - 1), next: () => goTo(current + 1) };
+
+    prevBtn?.addEventListener('click', (e) => { e.stopPropagation(); goTo(current - 1); });
+    nextBtn?.addEventListener('click', (e) => { e.stopPropagation(); goTo(current + 1); });
+    dots.forEach((d, i) => d.addEventListener('click', (e) => { e.stopPropagation(); goTo(i); }));
+
+    // actieve dot/pijl-status meelopen tijdens handmatig scrollen/swipen (per as)
     if (scroll && dots.length) {
       scroll.addEventListener('scroll', () => {
         let active = 0;
@@ -152,14 +204,14 @@ export function initRealisatieLightbox(): () => void {
           const mid = scroll.scrollTop + scroll.clientHeight / 2;
           imgs.forEach((img, i) => { if (img.offsetTop <= mid) active = i; });
         }
-        dots.forEach((d, i) => d.classList.toggle('is-active', i === active));
+        setActive(active);
       }, { passive: true });
     }
 
     overlay.querySelector('.rl-close')?.addEventListener('click', close);
     overlay.addEventListener('click', (e) => {
       const t = e.target as HTMLElement;
-      // klik op achtergrond/scroll-leegte (niet op een foto) sluit
+      // klik op achtergrond/scroll-leegte (niet op een foto/knop) sluit
       if (t === overlay || t.classList.contains('rl-scroll')) close();
     });
   };
@@ -175,7 +227,12 @@ export function initRealisatieLightbox(): () => void {
     open(photos, idx, title);
   };
 
-  const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
+  const onKey = (e: KeyboardEvent) => {
+    if (!overlay) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); nav?.prev(); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); nav?.next(); }
+  };
 
   document.addEventListener('click', onClick);
   document.addEventListener('keydown', onKey);
