@@ -417,7 +417,7 @@ const HTML = `
         <h1>Het vakkundigste dakwerk van Vlaanderen.</h1>
         <p class="tr-hero-sub">Daklek of toe aan vervanging? Bel voor een gratis offerte. <b>Eigen dakdekkers</b>, actief in Mechelen, Antwerpen, Lier en heel Vlaanderen.</p>
         <div class="tr-hero-cta">
-          <a href="#lp-form" class="tr-btn">Gratis offerte aanvragen</a>
+          <a href="#contact" class="tr-btn">Gratis offerte aanvragen</a>
           <a href="${PHONE_HREF}" class="tr-hero-call">of bel ${PHONE}</a>
         </div>
         <div class="tr-certs">

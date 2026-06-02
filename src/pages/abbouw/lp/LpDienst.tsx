@@ -613,7 +613,7 @@ export default function LpDienst({ slug }: { slug: string }) {
             <h1>{d.h1}</h1>
             <p className="tr-hero-sub">{d.sub} <b>{d.subBold}</b>.</p>
             <div className="tr-hero-cta">
-              <a href="#lp-form" className="tr-btn">Gratis offerte aanvragen</a>
+              <a href="#contact" className="tr-btn">Gratis offerte aanvragen</a>
               <a href={PHONE_HREF} className="tr-hero-call">of bel {PHONE}</a>
             </div>
             <div className="tr-certs">

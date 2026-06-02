@@ -413,7 +413,7 @@ const HTML = `
         <h1>Het vakkundigste gevelwerk van Vlaanderen.</h1>
         <p class="tr-hero-sub">Crepi, buitenisolatie (ETICS), steenstrips en sierpleister. <b>Eigen ploeg</b>, actief in Mechelen, Antwerpen, Lier en heel Vlaanderen.</p>
         <div class="tr-hero-cta">
-          <a href="#lp-form" class="tr-btn">Gratis offerte aanvragen</a>
+          <a href="#contact" class="tr-btn">Gratis offerte aanvragen</a>
           <a href="${PHONE_HREF}" class="tr-hero-call">of bel ${PHONE}</a>
         </div>
         <div class="tr-certs">
