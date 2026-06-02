@@ -626,7 +626,7 @@ const HTML = `
       <div class="tr-final-grid">
         <div class="tr-final-contact">
           <h3>Neem contact op</h3>
-          <div class="tr-big">Praat met onze gevelspecialist</div>
+          <div class="tr-big">Praat met één van onze projectleiders</div>
           <div class="tr-line">${icPin}<span>${ADDRESS}</span></div>
           <div class="tr-line">${icPhone}<span>Telefoon: <a href="${PHONE_HREF}">${PHONE}</a></span></div>
         </div>
