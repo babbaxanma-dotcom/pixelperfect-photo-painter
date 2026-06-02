@@ -11,6 +11,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { submitLead, type Divisie } from '@/lib/leads';
 import { initRealisatieLightbox } from './_lightbox';
+import { initLpReveal } from './_reveal';
 import { CONTACT } from '@/data/contact';
 import logo from '@/assets/home/logo.png';
 import velux from '@/assets/merken/Velux.png';
@@ -514,6 +515,7 @@ export default function LpDienst({ slug }: { slug: string }) {
 
   // Realisatie-lightbox: klik op een galerij-foto -> 3 foto's groot, scrollbaar
   useEffect(() => initRealisatieLightbox(), []);
+  useEffect(() => initLpReveal(), []);
 
   if (!d) { if (typeof window !== 'undefined') window.location.href = '/'; return null; }
 

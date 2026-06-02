@@ -16,6 +16,7 @@ import imgZinkGoot from '@/assets/dak/lp-zink-goot.jpg';
 import imgComfort from '@/assets/dak/lp-isol-1.jpg';
 import imgOnderhoud from '@/assets/dak/lp-dakonderhoud.jpg';
 import { initRealisatieLightbox } from './_lightbox';
+import { initLpReveal } from './_reveal';
 import imgRealPan1 from '@/assets/dak/lp-real-pan-1.jpg';
 import imgRealPan2 from '@/assets/dak/lp-real-pan-2.jpg';
 import imgRealPan3 from '@/assets/dak/lp-real-pan-3.jpg';
@@ -978,6 +979,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
     : HTML;
 
   useEffect(() => initRealisatieLightbox(), []);
+  useEffect(() => initLpReveal(), []);
 
   return (
     <>
