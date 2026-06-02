@@ -14,6 +14,7 @@ import imgStelling from '@/assets/gevel/lp-gevelspecialist.jpg';
 import imgIntro from '@/assets/gevel/intro.jpg';
 import { initRealisatieLightbox } from './_lightbox';
 import { initLpReveal } from './_reveal';
+import { initLpCallFab } from './_fab';
 import imgRealCrepi1 from '@/assets/gevel/lp-real-crepi-1.jpg';
 import imgRealCrepi2 from '@/assets/gevel/lp-real-crepi-2.jpg';
 import imgRealCrepi3 from '@/assets/gevel/lp-real-crepi-3.jpg';
@@ -428,7 +429,8 @@ const HTML = `
   <div class="tr-quickform-shell">
     <div class="tr-wrap">
       <div class="tr-quickform" id="lp-form" data-lp-quick>
-        <h3>Gratis terugbelverzoek</h3>
+        <span class="tr-eyebrow">Vrijblijvend</span>
+        <h3>Terugbelverzoek</h3>
         <form data-lp-quick-form novalidate>
           <div class="tr-qf-grid">
             <input type="text" name="firstName" placeholder="Voornaam" autocomplete="given-name" required />
@@ -960,6 +962,7 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
 
   useEffect(() => initRealisatieLightbox(), []);
   useEffect(() => initLpReveal(), []);
+  useEffect(() => initLpCallFab(), []);
 
   return <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />;
 }

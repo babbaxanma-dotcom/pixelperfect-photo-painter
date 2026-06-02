@@ -12,6 +12,7 @@ import { useEffect, useRef, useState } from 'react';
 import { submitLead, type Divisie } from '@/lib/leads';
 import { initRealisatieLightbox } from './_lightbox';
 import { initLpReveal } from './_reveal';
+import { initLpCallFab } from './_fab';
 import { CONTACT } from '@/data/contact';
 import logo from '@/assets/home/logo.png';
 import velux from '@/assets/merken/Velux.png';
@@ -516,6 +517,7 @@ export default function LpDienst({ slug }: { slug: string }) {
   // Realisatie-lightbox: klik op een galerij-foto -> 3 foto's groot, scrollbaar
   useEffect(() => initRealisatieLightbox(), []);
   useEffect(() => initLpReveal(), []);
+  useEffect(() => initLpCallFab(), []);
 
   if (!d) { if (typeof window !== 'undefined') window.location.href = '/'; return null; }
 
@@ -630,7 +632,7 @@ export default function LpDienst({ slug }: { slug: string }) {
       <div className="tr-quickform-shell">
         <div className="tr-wrap">
           <div id="lp-form" className={`tr-quickform${quickState === 'ok' ? ' is-success' : ''}`}>
-            <h3>Gratis terugbelverzoek</h3>
+            <span className="tr-eyebrow">Vrijblijvend</span><h3>Terugbelverzoek</h3>
             <form ref={quickRef} onSubmit={onQuickSubmit} noValidate>
               <div className="tr-qf-grid">
                 <input type="text" name="firstName" placeholder="Voornaam" autoComplete="given-name" required />

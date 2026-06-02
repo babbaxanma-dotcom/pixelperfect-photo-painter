@@ -17,6 +17,7 @@ import imgComfort from '@/assets/dak/lp-isol-1.jpg';
 import imgOnderhoud from '@/assets/dak/lp-dakonderhoud.jpg';
 import { initRealisatieLightbox } from './_lightbox';
 import { initLpReveal } from './_reveal';
+import { initLpCallFab } from './_fab';
 import imgRealPan1 from '@/assets/dak/lp-real-pan-1.jpg';
 import imgRealPan2 from '@/assets/dak/lp-real-pan-2.jpg';
 import imgRealPan3 from '@/assets/dak/lp-real-pan-3.jpg';
@@ -432,7 +433,8 @@ const HTML = `
   <div class="tr-quickform-shell">
     <div class="tr-wrap">
       <div class="tr-quickform" id="lp-form" data-lp-quick>
-        <h3>Gratis terugbelverzoek</h3>
+        <span class="tr-eyebrow">Vrijblijvend</span>
+        <h3>Terugbelverzoek</h3>
         <form data-lp-quick-form novalidate>
           <div class="tr-qf-grid">
             <input type="text" name="firstName" placeholder="Voornaam" autocomplete="given-name" required />
@@ -978,6 +980,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
 
   useEffect(() => initRealisatieLightbox(), []);
   useEffect(() => initLpReveal(), []);
+  useEffect(() => initLpCallFab(), []);
 
   return (
     <>
