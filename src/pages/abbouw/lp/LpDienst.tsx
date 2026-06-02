@@ -15,7 +15,7 @@ import { CONTACT } from '@/data/contact';
 import logo from '@/assets/home/logo.png';
 import velux from '@/assets/merken/Velux.png';
 
-import imgVelux from '@/assets/dak/lp-velux.jpg';
+import imgVelux from '@/assets/dak/lp-velux-huis.jpg';
 import imgGevelReinig from '@/assets/gevel/lp-gevelreiniging.jpg';
 import imgHervoegen from '@/assets/gevel/lp-hervoegen.jpg';
 import imgSarking from '@/assets/dak/lp-sarking-zolder.jpg';
