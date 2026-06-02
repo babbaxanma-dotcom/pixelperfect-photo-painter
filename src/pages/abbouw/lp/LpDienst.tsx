@@ -41,6 +41,7 @@ import imgIsol3 from '@/assets/dak/lp-isol-3.jpg';
 import imgPdak1 from '@/assets/dak/lp-platdak-1.jpg';
 import imgPdak2 from '@/assets/dak/lp-platdak-2.jpg';
 import imgPdak3 from '@/assets/dak/lp-platdak-3.jpg';
+import imgRoofing from '@/assets/dak/lp-roofing-1.jpg';
 import imgVx1 from '@/assets/dak/lp-veluxg-1.jpg';
 import imgVx2 from '@/assets/dak/lp-veluxg-2.jpg';
 import imgVx3 from '@/assets/dak/lp-veluxg-3.jpg';
@@ -320,9 +321,9 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Randen & afvoer', 'Strakke randprofielen en een correcte waterafvoer, netjes afgewerkt.'],
     ],
     whatImg: imgPdak1,
-    gallery: [imgPdak1, imgPdak2, imgPdak3],
+    gallery: [imgPdak1, imgRoofing, imgPdak2, imgPdak3],
     reviews: [
-      { text: '"Plat dak van de aanbouw volledig vernieuwd in EPDM. Eén naadloos stuk, geen plakranden meer. Al twee winters volledig droog."', name: 'Nadia El Amrani', role: 'Plat dak EPDM' },
+      { text: '"Plat dak van de aanbouw volledig vernieuwd in EPDM. Eén naadloos stuk, geen plakranden meer. Al twee winters volledig droog."', name: 'Sofie Vermeulen', role: 'Plat dak EPDM' },
       { text: '"Oud lekkend garagedak vervangen. Vaste prijs vooraf, op twee dagen klaar. Nette randafwerking, proper opgeruimd."', name: 'Pieter Lauwers', role: 'Renovatie plat dak' },
       { text: '"Eerlijk advies, de isolatie meteen mee vernieuwd. Factuur klopte tot op de euro. Strak resultaat."', name: 'Marleen Stevens', role: 'Nieuw plat dak' },
     ],
