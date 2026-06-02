@@ -538,7 +538,7 @@ const HTML = `
         </div>
         <div class="tr-svc-card">
           <div class="tr-svc-img rl-thumb" data-rl-trigger data-rl-photos="[&quot;${imgComfort}&quot;]" data-rl-title="Dakisolatie &amp; sarking"><img src="${imgComfort}" alt="Dakisolatie sarking" /><span class="rl-zoom">⤢</span></div>
-          <div class="tr-svc-body"><h3>Dakisolatie / sarking</h3><p>Sarkingisolatie buitenop of tussen de kepers. Lager EPC, meer comfort, lagere stookkost.</p></div>
+          <div class="tr-svc-body"><h3>Dakisolatie / sarking</h3><p>Sarkingisolatie buitenop of tussen de balken. Lager EPC, meer comfort, lagere stookkost.</p></div>
         </div>
         <div class="tr-svc-card">
           <div class="tr-svc-img rl-thumb" data-rl-trigger data-rl-photos="[&quot;${imgZinkGoot}&quot;]" data-rl-title="Zinkwerk &amp; goten"><img src="${imgZinkGoot}" alt="Zinkwerk en goten" /><span class="rl-zoom">⤢</span></div>
