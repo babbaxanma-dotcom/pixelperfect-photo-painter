@@ -589,9 +589,9 @@ const HTML = `
           <img src="${imgRealEpdm1}" alt="Plat dak EPDM realisatie" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
           <span style="position:absolute;left:14px;bottom:12px;color:#fff;font-family:var(--font-display);font-weight:600;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.55)">Plat dak — EPDM</span>
         </div>
-        <div class="rl-thumb" data-rl-trigger data-rl-index="0" data-rl-photos="${RL_DET}" data-rl-title="Velux &amp; zinkwerk" style="border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(10,22,40,.35);aspect-ratio:4/3;position:relative">
-          <img src="${imgRealDet1}" alt="Velux en zinkwerk realisatie" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
-          <span style="position:absolute;left:14px;bottom:12px;color:#fff;font-family:var(--font-display);font-weight:600;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.55)">Velux &amp; zinkwerk</span>
+        <div class="rl-thumb" data-rl-trigger data-rl-index="0" data-rl-photos="${RL_DET}" data-rl-title="Hellend dak vernieuwd" style="border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(10,22,40,.35);aspect-ratio:4/3;position:relative">
+          <img src="${imgRealDet1}" alt="Vernieuwd hellend dak realisatie" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
+          <span style="position:absolute;left:14px;bottom:12px;color:#fff;font-family:var(--font-display);font-weight:600;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.55)">Hellend dak vernieuwd</span>
         </div>
       </div>
     </div>
