@@ -219,9 +219,8 @@ const LP_CSS = `
 .tr-services .tr-head { text-align: left; max-width: 680px; margin: 0 0 44px; }
 .tr-services .tr-head h2 { font-size: clamp(27px, 4.4vw, 52px); color: #fff; font-weight: 700; letter-spacing: -0.02em; line-height: 1.06; margin: 0; }
 .tr-svc-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 22px; }
-.tr-svc-grid > .tr-svc-card:first-child { grid-column: span 4; grid-row: span 2; }
-.tr-svc-grid > .tr-svc-card:first-child .tr-svc-img { aspect-ratio: 4 / 3; }
-.tr-svc-grid > .tr-svc-card:not(:first-child) { grid-column: span 2; }
+.tr-svc-grid > .tr-svc-card:nth-child(-n+2) { grid-column: span 3; }
+.tr-svc-grid > .tr-svc-card:nth-child(n+3) { grid-column: span 2; }
 .tr-svc-card { background: ${NAVY2}; border: 1px solid rgba(255,255,255,0.13); border-radius: var(--tr-r-card); overflow: hidden; box-shadow: 0 24px 48px -34px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.05);
   display: flex; flex-direction: column; transition: transform .25s ease, border-color .25s ease; }
 .tr-svc-card:hover { border-color: rgba(255,255,255,0.28); }
@@ -231,8 +230,8 @@ const LP_CSS = `
 .tr-svc-body h3 { font-size: 18px; color: #fff; font-weight: 600; margin: 0 0 9px; }
 .tr-svc-body p { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.74); margin: 0; }
 .tr-services .tr-urgency { color: rgba(255,255,255,0.66); }
-@media (max-width: 1040px) { .tr-svc-grid { grid-template-columns: 1fr 1fr; } .tr-svc-grid > .tr-svc-card:first-child { grid-column: 1 / -1; grid-row: auto; } .tr-svc-grid > .tr-svc-card:not(:first-child) { grid-column: auto; } }
-@media (max-width: 560px) { .tr-svc-grid { grid-template-columns: 1fr; } .tr-svc-grid > .tr-svc-card:first-child { grid-column: 1 / -1; } }
+@media (max-width: 1040px) { .tr-svc-grid { grid-template-columns: 1fr 1fr; } .tr-svc-grid > .tr-svc-card { grid-column: auto; } }
+@media (max-width: 560px) { .tr-svc-grid { grid-template-columns: 1fr; } .tr-svc-grid > .tr-svc-card { grid-column: auto; } }
 
 /* 9 — WE ALSO OFFER / MAINTENANCE */
 .tr-also-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
