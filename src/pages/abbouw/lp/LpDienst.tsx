@@ -240,7 +240,7 @@ const DIENSTEN: Record<string, Dienst> = {
     h1: 'Dakisolatie die uw factuur verlaagt.',
     sub: 'Sarkingisolatie en zoldervloerisolatie in Mechelen, Antwerpen, Lier en heel Vlaanderen. Warmer huis, lagere stookkost.',
     subBold: 'Eigen dakdekkers',
-    heroImg: imgSarking,
+    heroImg: imgIsol1,
     certLogo: { src: '/assets/logos/rectic.png', alt: 'Recticel' },
     topbar: ['Gratis dakinspectie binnen 5 werkdagen', 'Familiebedrijf', 'Eigen ploeg'],
     offerEyebrow: 'Over AB Bouw Groep',
