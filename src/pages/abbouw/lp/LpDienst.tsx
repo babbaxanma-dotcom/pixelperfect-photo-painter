@@ -85,10 +85,10 @@ const DIENSTEN: Record<string, Dienst> = {
     subBold: 'Eigen dakdekkers',
     heroImg: imgVelux,
     certLogo: { src: velux, alt: 'Velux' },
-    topbar: ['Gratis opmeting binnen 5 werkdagen', 'Familiebedrijf', 'Eigen ploeg'],
+    topbar: ['Gratis opmeting binnen 5 werkdagen', 'Eigen ploeg'],
     offerEyebrow: 'Over AB Bouw Groep',
     offerH2: 'Uw erkende Velux-plaatser in heel Vlaanderen',
-    offerIntro: 'AB Bouw Groep is een familiebedrijf met een eigen ploeg uit Willebroek. Van opmeting tot waterdichte afwerking, alles door één ploeg.',
+    offerIntro: 'AB Bouw Groep werkt met een eigen vaste ploeg. Van opmeting tot waterdichte afwerking, alles door één ploeg.',
     offer: [
       'Offerte = factuur, ook bij prijsstijgingen',
       'Gratis opmeting aan huis, met advies over type en formaat',
@@ -138,10 +138,10 @@ const DIENSTEN: Record<string, Dienst> = {
     subBold: 'Eigen ploeg',
     heroImg: imgGevelReinig,
     certLogo: { src: '/assets/logos/caparol.png', alt: 'Caparol' },
-    topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Familiebedrijf', 'Eigen ploeg'],
+    topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Eigen ploeg'],
     offerEyebrow: 'Over AB Bouw Groep',
     offerH2: 'Uw erkende gevelspecialist in heel Vlaanderen',
-    offerIntro: 'AB Bouw Groep is een familiebedrijf met een eigen ploeg uit Willebroek. Wij reinigen uw gevel met de juiste methode, zonder de steen te beschadigen.',
+    offerIntro: 'AB Bouw Groep werkt met een eigen vaste ploeg. Wij reinigen uw gevel met de juiste methode, zonder de steen te beschadigen.',
     offer: [
       'Offerte = factuur, ook bij prijsstijgingen',
       'Gratis plaatsbezoek met advies over de juiste methode',
@@ -191,10 +191,10 @@ const DIENSTEN: Record<string, Dienst> = {
     subBold: 'Eigen ploeg',
     heroImg: imgHervoegen,
     certLogo: { src: '/assets/logos/eternit.png', alt: 'Eternit' },
-    topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Familiebedrijf', 'Eigen ploeg'],
+    topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Eigen ploeg'],
     offerEyebrow: 'Over AB Bouw Groep',
     offerH2: 'Uw erkende voegspecialist in heel Vlaanderen',
-    offerIntro: 'AB Bouw Groep is een familiebedrijf met een eigen ploeg uit Willebroek. Wij slijpen oude voegen uit en voegen opnieuw in de juiste kleur en techniek.',
+    offerIntro: 'AB Bouw Groep werkt met een eigen vaste ploeg. Wij slijpen oude voegen uit en voegen opnieuw in de juiste kleur en techniek.',
     offer: [
       'Offerte = factuur, ook bij prijsstijgingen',
       'Gratis plaatsbezoek met beoordeling van uw voegen',
@@ -243,10 +243,10 @@ const DIENSTEN: Record<string, Dienst> = {
     subBold: 'Eigen dakdekkers',
     heroImg: imgIsol1,
     certLogo: { src: '/assets/logos/rectic.png', alt: 'Recticel' },
-    topbar: ['Gratis dakinspectie binnen 5 werkdagen', 'Familiebedrijf', 'Eigen ploeg'],
+    topbar: ['Gratis dakinspectie binnen 5 werkdagen', 'Eigen ploeg'],
     offerEyebrow: 'Over AB Bouw Groep',
     offerH2: 'Uw erkende dakisolatie-specialist in heel Vlaanderen',
-    offerIntro: 'AB Bouw Groep is een familiebedrijf met een eigen ploeg uit Willebroek. Wij isoleren uw dak luchtdicht en zonder koudebruggen, voor blijvend comfort.',
+    offerIntro: 'AB Bouw Groep werkt met een eigen vaste ploeg. Wij isoleren uw dak luchtdicht en zonder koudebruggen, voor blijvend comfort.',
     offer: [
       'Offerte = factuur, ook bij prijsstijgingen',
       'Gratis dakinspectie met advies over de juiste isolatiewaarde',
@@ -298,10 +298,10 @@ const DIENSTEN: Record<string, Dienst> = {
     subBold: 'Eigen dakdekkers',
     heroImg: imgPlatdak,
     certLogo: { src: '/assets/logos/dorken.png', alt: 'Dörken' },
-    topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Familiebedrijf', 'Eigen ploeg'],
+    topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Eigen ploeg'],
     offerEyebrow: 'Over AB Bouw Groep',
     offerH2: 'Uw erkende platdak-specialist in heel Vlaanderen',
-    offerIntro: 'AB Bouw Groep is een familiebedrijf met een eigen ploeg uit Willebroek. Wij leggen uw plat dak in EPDM of roofing, vakkundig en jaren waterdicht.',
+    offerIntro: 'AB Bouw Groep werkt met een eigen vaste ploeg. Wij leggen uw plat dak in EPDM of roofing, vakkundig en jaren waterdicht.',
     offer: [
       'Offerte = factuur, ook bij prijsstijgingen',
       'Gratis plaatsbezoek met advies over opbouw en isolatie',
@@ -351,10 +351,10 @@ const DIENSTEN: Record<string, Dienst> = {
     subBold: 'Eigen ploeg',
     heroImg: imgCrepiWit,
     certLogo: { src: '/assets/logos/caparol.png', alt: 'Caparol' },
-    topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Familiebedrijf', 'Eigen ploeg'],
+    topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Eigen ploeg'],
     offerEyebrow: 'Over AB Bouw Groep',
     offerH2: 'Uw erkende crepi-specialist in heel Vlaanderen',
-    offerIntro: 'AB Bouw Groep is een familiebedrijf met een eigen ploeg uit Willebroek. Wij brengen crepi egaal en strak aan, in de kleur en korrel die u kiest.',
+    offerIntro: 'AB Bouw Groep werkt met een eigen vaste ploeg. Wij brengen crepi egaal en strak aan, in de kleur en korrel die u kiest.',
     offer: [
       'Offerte = factuur, ook bij prijsstijgingen',
       'Gratis plaatsbezoek met kleur- en korreladvies',
@@ -404,10 +404,10 @@ const DIENSTEN: Record<string, Dienst> = {
     subBold: 'Eigen ploeg',
     heroImg: imgSteenstripsLp,
     certLogo: { src: wienerberger, alt: 'Wienerberger' },
-    topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Familiebedrijf', 'Eigen ploeg'],
+    topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Eigen ploeg'],
     offerEyebrow: 'Over AB Bouw Groep',
     offerH2: 'Uw erkende steenstrips-specialist in heel Vlaanderen',
-    offerIntro: 'AB Bouw Groep is een familiebedrijf met een eigen ploeg uit Willebroek. Wij plaatsen steenstrips kaarsrecht, met voegen zoals echt metselwerk.',
+    offerIntro: 'AB Bouw Groep werkt met een eigen vaste ploeg. Wij plaatsen steenstrips kaarsrecht, met voegen zoals echt metselwerk.',
     offer: [
       'Offerte = factuur, ook bij prijsstijgingen',
       'Gratis plaatsbezoek met advies over steen en voegkleur',
@@ -577,7 +577,7 @@ export default function LpDienst({ slug }: { slug: string }) {
       {/* 2. HEADER */}
       <header className="tr-header">
         <div className="tr-wrap">
-          <a href="/" aria-label="AB Bouw Groep"><img className="tr-logo" src={logo} alt="AB Bouw Groep" /></a>
+          <a href="#" aria-label="AB Bouw Groep"><img className="tr-logo" src={logo} alt="AB Bouw Groep" /></a>
           <nav className="tr-nav">
             <a href="#diensten">Diensten</a>
             <a href="#werkwijze">Werkwijze</a>
@@ -611,7 +611,6 @@ export default function LpDienst({ slug }: { slug: string }) {
         <div className="tr-hero-bg"><img src={d.heroImg} alt={d.h1} /></div>
         <div className="tr-hero-inner">
           <div className="tr-wrap">
-            <span className="tr-eyebrow">{d.eyebrow}</span>
             <h1>{d.h1}</h1>
             <p className="tr-hero-sub">{d.sub} <b>{d.subBold}</b>.</p>
             <div className="tr-hero-cta">

@@ -365,8 +365,7 @@ const HTML = `
     <div class="tr-wrap">
       <div class="tr-topbar-left">
         <span>Gratis gevelinspectie binnen 5 werkdagen</span>
-        <span>Familiebedrijf</span>
-        <span>Eigen ploeg</span>
+                <span>Eigen ploeg</span>
       </div>
       <a class="tr-topbar-phone" href="${PHONE_HREF}">${icPhone}${PHONE}</a>
     </div>
@@ -410,7 +409,6 @@ const HTML = `
     <div class="tr-hero-bg"><img src="${heroWitte}" alt="Gevelwerken Vlaanderen" /></div>
     <div class="tr-hero-inner">
       <div class="tr-wrap">
-        <span class="tr-eyebrow">Gevelwerken · heel Vlaanderen</span>
         <h1>Het vakkundigste gevelwerk van Vlaanderen.</h1>
         <p class="tr-hero-sub">Crepi, buitenisolatie (ETICS), steenstrips en sierpleister. <b>Eigen ploeg</b>, actief in Mechelen, Antwerpen, Lier en heel Vlaanderen.</p>
         <div class="tr-hero-cta">
@@ -495,7 +493,7 @@ const HTML = `
         <div class="tr-about-body">
           
           <h2>Uw erkende gevelspecialist in heel Vlaanderen</h2>
-          <p class="tr-about-intro">AB Bouw Groep is een familiebedrijf met een eigen ploeg uit Willebroek. Wij verzorgen crepi, buitenisolatie (ETICS), steenstrips en sierpleister van A tot Z.</p>
+          <p class="tr-about-intro">AB Bouw Groep werkt met een eigen vaste ploeg. Wij verzorgen crepi, buitenisolatie (ETICS), steenstrips en sierpleister van A tot Z.</p>
           <ul class="tr-checks">
             <li>${icCheck}<span><b>Offerte = factuur, ook bij prijsstijgingen</b></span></li>
             <li>${icCheck}<span>Eigen ploeg, geen onderaannemers</span></li>
@@ -721,7 +719,7 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', local
-      ? `Erkend gevelspecialist in ${local.name} (${local.postcode}). Crepi, buitenisolatie (ETICS), steenstrips en sierpleister. Eigen ploeg uit Willebroek, 10 jaar garantie via Federale Verzekering, premie Mijn VerbouwPremie inbegrepen. Gratis gevelinspectie binnen 5 werkdagen.`
+      ? `Erkend gevelspecialist in ${local.name} (${local.postcode}). Crepi, buitenisolatie (ETICS), steenstrips en sierpleister. Eigen vaste ploeg, 10 jaar garantie via Federale Verzekering, premie Mijn VerbouwPremie inbegrepen. Gratis gevelinspectie binnen 5 werkdagen.`
       : 'Erkend gevelspecialist in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Crepi, buitenisolatie (ETICS), steenstrips, sierpleister en gevelreiniging. Eigen ploeg, 10 jaar garantie via Federale Verzekering, premie Mijn VerbouwPremie inbegrepen. Gratis gevelinspectie binnen 5 werkdagen.');
 
     // Open Graph + Twitter

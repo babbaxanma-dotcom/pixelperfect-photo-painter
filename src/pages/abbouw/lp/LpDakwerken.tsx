@@ -369,7 +369,6 @@ const HTML = `
     <div class="tr-wrap">
       <div class="tr-topbar-left">
         <span>Gratis dakinspectie binnen 5 werkdagen</span>
-        <span>Familiebedrijf</span>
         <span>Eigen ploeg</span>
       </div>
       <a class="tr-topbar-phone" href="${PHONE_HREF}">${icPhone}${PHONE}</a>
@@ -414,7 +413,6 @@ const HTML = `
     <div class="tr-hero-bg"><img src="${heroClassic}" alt="Dakwerken Vlaanderen" /></div>
     <div class="tr-hero-inner">
       <div class="tr-wrap">
-        <span class="tr-eyebrow">Dakwerken · heel Vlaanderen</span>
         <h1>Het vakkundigste dakwerk van Vlaanderen.</h1>
         <p class="tr-hero-sub">Daklek of toe aan vervanging? Bel voor een gratis offerte. <b>Eigen dakdekkers</b>, actief in Mechelen, Antwerpen, Lier en heel Vlaanderen.</p>
         <div class="tr-hero-cta">
@@ -499,7 +497,7 @@ const HTML = `
         <div class="tr-about-body">
           <span class="tr-eyebrow">Over AB Bouw Groep</span>
           <h2>Uw erkende dakwerker in heel Vlaanderen</h2>
-          <p class="tr-about-intro">AB Bouw Groep is een familiebedrijf met een eigen ploeg uit Willebroek. Wij verzorgen dakrenovatie, plat dak, dakisolatie en zinkwerk van A tot Z.</p>
+          <p class="tr-about-intro">AB Bouw Groep werkt met een eigen vaste ploeg. Wij verzorgen dakrenovatie, plat dak, dakisolatie en zinkwerk van A tot Z.</p>
           <ul class="tr-checks">
             <li>${icCheck}<span><b>Offerte = factuur, ook bij prijsstijgingen</b></span></li>
             <li>${icCheck}<span>Eigen dakdekkers, geen onderaannemers</span></li>
@@ -740,7 +738,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', local
-      ? `Erkend dakwerker in ${local.name} (${local.postcode}). Pannendak Koramic, plat dak EPDM, sarkingisolatie, zinkwerk en natuurleien. Eigen ploeg uit Willebroek, 10 jaar garantie via Federale Verzekering, premie Mijn VerbouwPremie inbegrepen. Gratis dakinspectie binnen 5 werkdagen.`
+      ? `Erkend dakwerker in ${local.name} (${local.postcode}). Pannendak Koramic, plat dak EPDM, sarkingisolatie, zinkwerk en natuurleien. Eigen vaste ploeg, 10 jaar garantie via Federale Verzekering, premie Mijn VerbouwPremie inbegrepen. Gratis dakinspectie binnen 5 werkdagen.`
       : 'Erkend dakwerker in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Pannendak, plat dak EPDM, sarking-isolatie, zinkwerk. Eigen dakdekkers, 10 jaar garantie via Federale Verzekering, premie Mijn VerbouwPremie inbegrepen. Gratis dakinspectie binnen 5 werkdagen.');
 
     // Open Graph + Twitter
