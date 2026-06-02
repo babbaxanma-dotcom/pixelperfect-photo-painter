@@ -529,23 +529,23 @@ const HTML = `
       </div>
       <div class="tr-svc-grid">
         <div class="tr-svc-card">
-          <div class="tr-svc-img"><img src="${imgNatuurleien}" alt="Dakvernieuwing" /></div>
+          <div class="tr-svc-img rl-thumb" data-rl-trigger data-rl-photos="[&quot;${imgNatuurleien}&quot;]" data-rl-title="Dakvernieuwing"><img src="${imgNatuurleien}" alt="Dakvernieuwing" /><span class="rl-zoom">⤢</span></div>
           <div class="tr-svc-body"><h3>Dakvernieuwing</h3><p>Volledige dakvervanging met pannen, natuurleien of kunstleien. Strak gelegd, jaren waterdicht.</p></div>
         </div>
         <div class="tr-svc-card">
-          <div class="tr-svc-img"><img src="${imgPlatDak}" alt="Plat dak EPDM" /></div>
+          <div class="tr-svc-img rl-thumb" data-rl-trigger data-rl-photos="[&quot;${imgPlatDak}&quot;]" data-rl-title="Plat dak EPDM"><img src="${imgPlatDak}" alt="Plat dak EPDM" /><span class="rl-zoom">⤢</span></div>
           <div class="tr-svc-body"><h3>Plat dak EPDM</h3><p>Naadloos EPDM in één stuk, geen plakranden. Ideaal voor aanbouw, garage of bijgebouw.</p></div>
         </div>
         <div class="tr-svc-card">
-          <div class="tr-svc-img"><img src="${imgComfort}" alt="Dakisolatie sarking" /></div>
+          <div class="tr-svc-img rl-thumb" data-rl-trigger data-rl-photos="[&quot;${imgComfort}&quot;]" data-rl-title="Dakisolatie &amp; sarking"><img src="${imgComfort}" alt="Dakisolatie sarking" /><span class="rl-zoom">⤢</span></div>
           <div class="tr-svc-body"><h3>Dakisolatie / sarking</h3><p>Sarkingisolatie buitenop of tussen de kepers. Lager EPC, meer comfort, lagere stookkost.</p></div>
         </div>
         <div class="tr-svc-card">
-          <div class="tr-svc-img"><img src="${imgZinkGoot}" alt="Zinkwerk en goten" /></div>
+          <div class="tr-svc-img rl-thumb" data-rl-trigger data-rl-photos="[&quot;${imgZinkGoot}&quot;]" data-rl-title="Zinkwerk &amp; goten"><img src="${imgZinkGoot}" alt="Zinkwerk en goten" /><span class="rl-zoom">⤢</span></div>
           <div class="tr-svc-body"><h3>Zinkwerk & goten</h3><p>Natuurzinken goten en kielgoten, gesoldeerd. Strakke lijn die 50+ jaar meegaat.</p></div>
         </div>
         <div class="tr-svc-card">
-          <div class="tr-svc-img"><img src="${imgVelux}" alt="Velux dakramen" /></div>
+          <div class="tr-svc-img rl-thumb" data-rl-trigger data-rl-photos="[&quot;${imgVelux}&quot;]" data-rl-title="Velux dakramen"><img src="${imgVelux}" alt="Velux dakramen" /><span class="rl-zoom">⤢</span></div>
           <div class="tr-svc-body"><h3>Velux dakramen</h3><p>Plaatsing en vervanging van Velux-dakvensters. Waterdicht ingewerkt, meer daglicht op zolder.</p></div>
         </div>
       </div>

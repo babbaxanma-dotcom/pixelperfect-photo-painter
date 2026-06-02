@@ -525,19 +525,19 @@ const HTML = `
       </div>
       <div class="tr-svc-grid">
         <div class="tr-svc-card">
-          <div class="tr-svc-img"><img src="${imgCrepiCard}" alt="Crepi en sierpleister" /></div>
+          <div class="tr-svc-img rl-thumb" data-rl-trigger data-rl-photos="[&quot;${imgCrepiCard}&quot;]" data-rl-title="Crepi &amp; sierpleister"><img src="${imgCrepiCard}" alt="Crepi en sierpleister" /><span class="rl-zoom">⤢</span></div>
           <div class="tr-svc-body"><h3>Crepi & sierpleister</h3><p>Strakke crepi of marmorino-afwerking in elke kleur, egaal en jaren mooi.</p></div>
         </div>
         <div class="tr-svc-card">
-          <div class="tr-svc-img"><img src="${imgGrijze}" alt="ETICS buitenisolatie" /></div>
+          <div class="tr-svc-img rl-thumb" data-rl-trigger data-rl-photos="[&quot;${imgGrijze}&quot;]" data-rl-title="ETICS buitenisolatie"><img src="${imgGrijze}" alt="ETICS buitenisolatie" /><span class="rl-zoom">⤢</span></div>
           <div class="tr-svc-body"><h3>ETICS buitenisolatie</h3><p>16 cm isolatie buitenop + crepi. Lager EPC, geen koude muren meer.</p></div>
         </div>
         <div class="tr-svc-card">
-          <div class="tr-svc-img"><img src="${imgSteenstrips}" alt="Steenstrips" /></div>
+          <div class="tr-svc-img rl-thumb" data-rl-trigger data-rl-photos="[&quot;${imgSteenstrips}&quot;]" data-rl-title="Steenstrips"><img src="${imgSteenstrips}" alt="Steenstrips" /><span class="rl-zoom">⤢</span></div>
           <div class="tr-svc-body"><h3>Steenstrips</h3><p>Authentieke baksteen-look zonder het gewicht. Voegen kaarsrecht.</p></div>
         </div>
         <div class="tr-svc-card">
-          <div class="tr-svc-img"><img src="${imgSierpleister}" alt="Gevelreiniging en hervoegen" /></div>
+          <div class="tr-svc-img rl-thumb" data-rl-trigger data-rl-photos="[&quot;${imgSierpleister}&quot;]" data-rl-title="Gevelreiniging &amp; hervoegen"><img src="${imgSierpleister}" alt="Gevelreiniging en hervoegen" /><span class="rl-zoom">⤢</span></div>
           <div class="tr-svc-body"><h3>Gevelreiniging & hervoegen</h3><p>Reinigen, impregneren of hervoegen — uw gevel weer als nieuw.</p></div>
         </div>
       </div>
