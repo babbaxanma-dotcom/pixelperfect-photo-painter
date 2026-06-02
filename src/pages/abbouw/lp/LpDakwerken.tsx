@@ -8,13 +8,13 @@ import velux from '@/assets/merken/Velux.png';
 
 // Hero + section photos (reused asset set — Belgian residential roofing).
 import heroClassic from '@/assets/dak/lp-hero-pannendak.jpg';
-import imgVelux from '@/assets/dak/lp-veluxg-2.jpg';
+import imgVelux from '@/assets/dak/lp-velux-huis.jpg';
 import imgVakman from '@/assets/home/vakmanschap-2.jpg';
 import imgNatuurleien from '@/assets/dak/lp-dakvernieuwing.jpg';
 import imgPlatDak from '@/assets/dak/lp-platdak-1.jpg';
 import imgZinkGoot from '@/assets/dak/lp-zink-goot.jpg';
 import imgComfort from '@/assets/dak/lp-isol-1.jpg';
-import imgOnderhoud from '@/assets/dak/lp-stormschade.jpg';
+import imgOnderhoud from '@/assets/dak/lp-dakonderhoud.jpg';
 import { initRealisatieLightbox } from './_lightbox';
 import imgRealPan1 from '@/assets/dak/lp-real-pan-1.jpg';
 import imgRealPan2 from '@/assets/dak/lp-real-pan-2.jpg';
