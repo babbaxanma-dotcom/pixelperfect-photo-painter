@@ -37,6 +37,8 @@ import imgReinig1 from '@/assets/gevel/lp-reinig-1.jpg';
 import imgReinig2 from '@/assets/gevel/lp-reinig-2.jpg';
 import imgReinig3 from '@/assets/gevel/lp-reinig-3.jpg';
 import imgHervoeg1 from '@/assets/gevel/lp-hervoeg-1.jpg';
+import imgHervoeg2 from '@/assets/gevel/lp-hervoeg-2.jpg';
+import imgHervoeg3 from '@/assets/gevel/lp-hervoeg-3.jpg';
 import imgIsol1 from '@/assets/dak/lp-isol-1.jpg';
 import imgIsol2 from '@/assets/dak/lp-isol-2.jpg';
 import imgIsol3 from '@/assets/dak/lp-isol-3.jpg';
@@ -218,6 +220,7 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Nette afwerking', 'Strak doorgevoegd profiel, gevel proper opgeleverd zonder mortelresten.'],
     ],
     whatImg: imgHervoeg1,
+    gallery: [imgHervoeg1, imgHervoeg2, imgHervoeg3],
     reviews: [
       { text: '"Onze voegen brokkelden af en lieten vocht door. Alles uitgeslepen en opnieuw gevoegd in de juiste kleur. Gevel ziet er weer strak uit."', name: 'Dirk Van Damme', role: 'Volledige gevel hervoegd' },
       { text: '"Slechts één gevel was aangetast. Eerlijk advies om enkel dat deel te doen, geen onnodig werk. Nette ploeg, vaste prijs vooraf."', name: 'Inge Mertens', role: 'Gedeeltelijk hervoegen' },
@@ -280,7 +283,7 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Wat kost dakisolatie?', 'Dat hangt af van de methode, de oppervlakte en de gewenste isolatiewaarde. U krijgt een vaste prijs na de gratis dakinspectie.'],
       ['Wat is sarking en waarom kiezen mensen ervoor?', 'Bij sarking komt de isolatie als één doorlopende laag bovenop de dakstructuur, onder de nieuwe dakbedekking. Zo behoudt u uw volledige zolderruimte, blijven de houten balken binnen zichtbaar en bruikbaar, en zijn er nagenoeg geen koudebruggen. Ideaal wanneer uw dak toch vernieuwd wordt.'],
       ['Moet ik mijn dak of mijn zoldervloer isoleren?', 'Gebruikt u de zolder als leefruimte (nu of in de toekomst), dan isoleren we het dakvlak zelf: van buitenaf bij een dakrenovatie, of van binnenuit als het dak intact blijft. Gebruikt u de zolder enkel als opslag, dan volstaat vaak het isoleren van de zoldervloer — sneller en voordeliger. Wij adviseren gratis wat bij uw situatie past.'],
-      ['Heb ik recht op premie voor dakisolatie?', 'Vaak wel, via Mijn VerbouwPremie, mits aan de vereiste R-waarde wordt voldaan. Wij plaatsen conform de voorwaarden en regelen het dossier mee.'],
+      ['Heb ik recht op premie voor dakisolatie?', 'De premievoorwaarden zijn in 2026 gewijzigd; afhankelijk van uw inkomenscategorie en de R-waarde kan er nog premie zijn. Wij bekijken of u in aanmerking komt en regelen sowieso het 6% BTW-tarief (woning ouder dan 10 jaar) en het papierwerk.'],
       ['Sarking of tussen de balken?', 'Sarking is ideaal bij een dakrenovatie, omdat de isolatie buitenop komt. Blijft het dak intact, dan isoleren we tussen en onder de balken.'],
       ['Hoeveel bespaar ik?', 'Een slecht geïsoleerd dak verliest tot 30% warmte. Goede dakisolatie verdient zich doorgaans terug via een lagere stookkost.'],
       ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek en heel Vlaanderen.'],
@@ -288,7 +291,7 @@ const DIENSTEN: Record<string, Dienst> = {
     typeWerkOpties: ['Sarkingisolatie', 'Tussen de balken', 'Zoldervloer', 'Anders'],
     finalSub: 'Praat met één van onze projectleiders',
     metaTitle: 'Dakisolatie laten plaatsen — sarking & meer | AB Bouw Groep',
-    metaDesc: 'Dakisolatie in Vlaanderen: sarking, tussen de balken of zoldervloer. Lager EPC, lagere stookkost, premie-dossier geregeld. Vaste prijs, eigen ploeg.',
+    metaDesc: 'Dakisolatie in Vlaanderen: sarking, tussen de balken of zoldervloer. Lager EPC, lagere stookkost, 6% BTW-voordeel. Vaste prijs, eigen ploeg.',
   },
   platdak: {
     slug: 'platdak',
@@ -413,7 +416,7 @@ const DIENSTEN: Record<string, Dienst> = {
       'Offerte = factuur, ook bij prijsstijgingen',
       'Gratis plaatsbezoek met advies over steen en voegkleur',
       'Authentieke baksteen-look, zonder het gewicht',
-      'Voegen kaarsrecht, niet van echt metselwerk te onderscheiden',
+      'Voegen kaarsrecht, met een warme authentieke baksteen-look',
       'Vaak in combinatie met buitenisolatie (ETICS)',
       'Eigen ploeg, geen onderaannemers',
     ],
@@ -428,18 +431,18 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Steenstrips op gevel', 'Dunne baksteenstroken verlijmd op uw bestaande gevel, strak doorgevoegd.'],
       ['Op buitenisolatie', 'Steenstrips als afwerking op ETICS, voor een lager EPC én een baksteen-look.'],
       ['Keuze uit kleuren', 'Van klassiek roodbruin tot modern antraciet, met de voegkleur naar keuze.'],
-      ['Strak voegwerk', 'Voegen kaarsrecht doorgetrokken, niet van echt metselwerk te onderscheiden.'],
+      ['Strak voegwerk', 'Voegen kaarsrecht doorgetrokken voor een verzorgde, authentieke baksteen-look.'],
     ],
     whatImg: imgSteen1,
     gallery: [imgSteen1, imgSteen2, imgSteen3],
     reviews: [
-      { text: '"Gevel in antraciet steenstrips, meteen op isolatie. Niet van echt metselwerk te onderscheiden. Buren vragen wie het deed."', name: 'An Verhoeven', role: 'Steenstrips op ETICS' },
+      { text: '"Gevel in antraciet steenstrips, meteen op isolatie. Strak gevoegd, mooie baksteen-look. Heel tevreden met het resultaat."', name: 'An Verhoeven', role: 'Steenstrips op ETICS' },
       { text: '"Roodbruine steenstrips op de voorgevel. Voegen kaarsrecht, kleur perfect. Vaste prijs vooraf, nette ploeg."', name: 'Luc Segers', role: 'Steenstrips' },
       { text: '"Eerlijk advies over steen en voegkleur, met stalen aan huis. Strak resultaat, proper opgeleverd."', name: 'Tania Govaerts', role: 'Gevelbekleding' },
     ],
     faq: [
       ['Wat kost steenstrips per m²?', 'Dat hangt af van de steensoort, de ondergrond en de bereikbaarheid. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'],
-      ['Zien steenstrips er echt uit als baksteen?', 'Ja. Het zijn dunne stroken echte baksteen, strak doorgevoegd. Ze zijn niet van volwaardig metselwerk te onderscheiden.'],
+      ['Zien steenstrips er echt uit als baksteen?', 'Ja. Het zijn dunne stroken echte baksteen, strak doorgevoegd. Op het gevelvlak krijgt u een warme, authentieke baksteen-look; enkel aan hoeken en dagkanten is er een klein verschil met vol metselwerk.'],
       ['Kunnen steenstrips op isolatie?', 'Ja. Steenstrips zijn ideaal als afwerking op buitenisolatie (ETICS): een lager EPC én een baksteen-look.'],
       ['Op welke ondergrond kan het?', 'Op de meeste gezonde gevels en op isolatieplaten. Wij beoordelen de ondergrond bij het plaatsbezoek.'],
       ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek en heel Vlaanderen.'],

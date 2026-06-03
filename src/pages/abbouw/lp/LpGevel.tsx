@@ -499,7 +499,7 @@ const HTML = `
           <ul class="tr-checks">
             <li>${icCheck}<span><b>Offerte = factuur, ook bij prijsstijgingen</b></span></li>
             <li>${icCheck}<span>Eigen ploeg, geen onderaannemers</span></li>
-            <li>${icCheck}<span>Mijn VerbouwPremie-dossier regelen wij</span></li>
+            <li>${icCheck}<span>6% BTW-tarief en premie-advies regelen wij</span></li>
             <li>${icCheck}<span>Transparante prijs, geen verborgen kosten</span></li>
             <li>${icCheck}<span>Strakke, duurzame afwerking</span></li>
           </ul>
@@ -598,7 +598,7 @@ const HTML = `
         <h2>Tevreden klanten in heel Vlaanderen</h2>
       </div>
       <div class="tr-rev-grid">
-        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Volledig pakket: 16 cm EPS + crepi. EPC van F naar C in één werk. Stookkost bijna gehalveerd. Premie-dossier (€4.800) liep via hen."</p><div class="tr-rev-foot"><div class="tr-rev-name">Joris Vanhove</div><div class="tr-rev-role">ETICS + crepi</div></div></div>
+        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Volledig pakket: 16 cm EPS + crepi. Merkbaar warmer binnen en een lagere energiefactuur. Alles via één ploeg, papierwerk en 6% BTW geregeld."</p><div class="tr-rev-foot"><div class="tr-rev-name">Joris Vanhove</div><div class="tr-rev-role">ETICS + crepi</div></div></div>
         <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Steenstrips Vandersanden, voegen kaarsrecht, aansluitingen rond ramen vakwerk. Niemand merkt het verschil met echte steen."</p><div class="tr-rev-foot"><div class="tr-rev-name">Marius Ionescu</div><div class="tr-rev-role">Steenstrips voorgevel</div></div></div>
         <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Marmorino in zachte taupe. Eén van de mannen hielp met de kleurkeuze. Achteraf super blij, het huis straalt karakter uit."</p><div class="tr-rev-foot"><div class="tr-rev-name">Cindy Van Looy</div><div class="tr-rev-role">Sierpleister marmorino</div></div></div>
       </div>
@@ -612,7 +612,7 @@ const HTML = `
         <h2>Veelgestelde vragen</h2>
         <details class="tr-faq-item"><summary>Wat kost een gevelrenovatie?</summary><p>Dat hangt af van de oppervlakte, de gekozen afwerking (crepi, steenstrips, sierpleister) en of er isolatie bij komt. Na een gratis plaatsbezoek krijgt u een bindende prijs op papier.</p></details>
         <details class="tr-faq-item"><summary>Hoe lang duurt het?</summary><p>Een gemiddelde rijwoning is doorgaans in 1 tot 2 weken afgewerkt, afhankelijk van het systeem en het weer. U krijgt een concrete startdatum in de offerte.</p></details>
-        <details class="tr-faq-item"><summary>Doen jullie de premieaanvraag?</summary><p>Ja. Voor buitenisolatie (ETICS) berekenen wij waar u recht op heeft en dienen wij het volledige Mijn VerbouwPremie-dossier voor u in.</p></details>
+        <details class="tr-faq-item"><summary>Welke premies en voordelen zijn er?</summary><p>Wij bekijken voor welke voordelen u in aanmerking komt: het 6% BTW-tarief (voor woningen ouder dan 10 jaar) en de Mijn VerbouwLening. Behoort u tot de juiste inkomenscategorie, dan regelen wij ook uw Mijn VerbouwPremie-dossier.</p></details>
         <details class="tr-faq-item"><summary>Wat is jullie garantie?</summary><p>10 jaar garantie op de uitvoering, plus de fabrieksgarantie op de gevelsystemen (Caparol, Knauf, Isover).</p></details>
         <details class="tr-faq-item"><summary>Crepi of steenstrips — wat past bij mijn woning?</summary><p>Crepi geeft een strakke, moderne look in elke kleur; steenstrips geven een warme baksteen-uitstraling. Onze vakman adviseert u ter plaatse op basis van uw woning en budget.</p></details>
         <details class="tr-faq-item"><summary>Welke regio's bedienen jullie?</summary><p>Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.</p></details>
@@ -721,8 +721,8 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', local
-      ? `Erkend gevelspecialist in ${local.name} (${local.postcode}). Crepi, buitenisolatie (ETICS), steenstrips en sierpleister. Eigen vaste ploeg, 10 jaar garantie via Federale Verzekering, premie Mijn VerbouwPremie inbegrepen. Gratis gevelinspectie binnen 5 werkdagen.`
-      : 'Erkend gevelspecialist in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Crepi, buitenisolatie (ETICS), steenstrips, sierpleister en gevelreiniging. Eigen ploeg, 10 jaar garantie via Federale Verzekering, premie Mijn VerbouwPremie inbegrepen. Gratis gevelinspectie binnen 5 werkdagen.');
+      ? `Erkend gevelspecialist in ${local.name} (${local.postcode}). Crepi, buitenisolatie (ETICS), steenstrips en sierpleister. Eigen vaste ploeg, 10 jaar garantie via Federale Verzekering, 6% BTW-voordeel. Gratis gevelinspectie binnen 5 werkdagen.`
+      : 'Erkend gevelspecialist in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Crepi, buitenisolatie (ETICS), steenstrips, sierpleister en gevelreiniging. Eigen ploeg, 10 jaar garantie via Federale Verzekering, 6% BTW-voordeel. Gratis gevelinspectie binnen 5 werkdagen.');
 
     // Open Graph + Twitter
     const setMeta = (prop: string, content: string, isProperty = false) => {
@@ -735,8 +735,8 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
       ? `Gevelwerken ${local.name} — Gratis gevelinspectie | AB Bouw Groep`
       : 'Gevelwerken Mechelen & Antwerpen — Gratis gevelinspectie | AB Bouw Groep', true);
     setMeta('og:description', local
-      ? `Crepi, buitenisolatie (ETICS) en steenstrips in ${local.name}. Eigen ploeg, 10j garantie, premiedossier inbegrepen.`
-      : 'Crepi, buitenisolatie (ETICS), steenstrips en sierpleister. Eigen ploeg, 10j garantie, premiedossier inbegrepen.', true);
+      ? `Crepi, buitenisolatie (ETICS) en steenstrips in ${local.name}. Eigen ploeg, 10j garantie, 6% BTW-voordeel.`
+      : 'Crepi, buitenisolatie (ETICS), steenstrips en sierpleister. Eigen ploeg, 10j garantie, 6% BTW-voordeel.', true);
     setMeta('og:type', 'website', true);
     setMeta('og:locale', 'nl_BE', true);
     setMeta('og:url', pageUrl, true);
@@ -811,7 +811,7 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
           mainEntity: [
             { '@type': 'Question', name: 'Wat kost een gevelrenovatie?', acceptedAnswer: { '@type': 'Answer', text: 'Dat hangt af van de oppervlakte, de gekozen afwerking (crepi, steenstrips, sierpleister) en of er isolatie bij komt. Na een gratis plaatsbezoek krijgt u een bindende prijs op papier.' } },
             { '@type': 'Question', name: 'Hoe lang duurt het?', acceptedAnswer: { '@type': 'Answer', text: 'Een gemiddelde rijwoning is doorgaans in 1 tot 2 weken afgewerkt, afhankelijk van het systeem en het weer. U krijgt een concrete startdatum in de offerte.' } },
-            { '@type': 'Question', name: 'Doen jullie de premieaanvraag?', acceptedAnswer: { '@type': 'Answer', text: 'Ja. Voor buitenisolatie (ETICS) berekenen wij waar u recht op heeft en dienen wij het volledige Mijn VerbouwPremie-dossier voor u in.' } },
+            { '@type': 'Question', name: 'Welke premies en voordelen zijn er?', acceptedAnswer: { '@type': 'Answer', text: 'Wij bekijken voor welke voordelen u in aanmerking komt: het 6% BTW-tarief (voor woningen ouder dan 10 jaar) en de Mijn VerbouwLening. Behoort u tot de juiste inkomenscategorie, dan regelen wij ook uw Mijn VerbouwPremie-dossier.' } },
             { '@type': 'Question', name: 'Wat is jullie garantie?', acceptedAnswer: { '@type': 'Answer', text: '10 jaar garantie op de uitvoering, plus de fabrieksgarantie op de gevelsystemen (Caparol, Knauf, Isover).' } },
             { '@type': 'Question', name: 'Crepi of steenstrips — wat past bij mijn woning?', acceptedAnswer: { '@type': 'Answer', text: 'Crepi geeft een strakke, moderne look in elke kleur; steenstrips geven een warme baksteen-uitstraling. Onze vakman adviseert u ter plaatse op basis van uw woning en budget.' } },
             { '@type': 'Question', name: 'Welke regio\'s bedienen jullie?', acceptedAnswer: { '@type': 'Answer', text: 'Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.' } },
