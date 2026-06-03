@@ -261,27 +261,27 @@ ${buildHero({
       <div class="lf-stat-card" data-reveal>
         <div class="lf-stat-photo"><img src="${svcDak}" alt="" loading="lazy"/></div>
         <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span data-count="48325">0</span><span class="lf-stat-suffix">m²</span></div>
+          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span data-count="42000">0</span><span class="lf-stat-suffix">m²</span></div>
           <div class="lf-stat-label">Afgewerkte daken</div>
         </div>
       </div>
       <div class="lf-stat-card" data-reveal data-reveal-delay="1">
         <div class="lf-stat-photo"><img src="${svcGevel}" alt="" loading="lazy"/></div>
         <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span data-count="63112">0</span><span class="lf-stat-suffix">m²</span></div>
+          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span data-count="30000">0</span><span class="lf-stat-suffix">m²</span></div>
           <div class="lf-stat-label">Afgewerkte gevels</div>
         </div>
       </div>
       <div class="lf-stat-card" data-reveal data-reveal-delay="2">
         <div class="lf-stat-photo"><img src="${svcConstruct}" alt="" loading="lazy"/></div>
         <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span data-count="184">0</span><span class="lf-stat-suffix">+</span></div>
+          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span data-count="480">0</span><span class="lf-stat-suffix">+</span></div>
           <div class="lf-stat-label">Opgeleverde projecten</div>
         </div>
       </div>
       <div class="lf-stat-card lf-stat-card--nophoto" data-reveal data-reveal-delay="3">
         <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span data-count="1326">0</span><span class="lf-stat-suffix">+</span></div>
+          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span data-count="440">0</span><span class="lf-stat-suffix">+</span></div>
           <div class="lf-stat-label">Tevreden klanten</div>
         </div>
       </div>
