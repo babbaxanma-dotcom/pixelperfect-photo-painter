@@ -36,7 +36,7 @@ const projects: Project[] = [
     title: 'Gele baksteenwoning · nieuw antraciet pannendak',
     story:
       "Hedendaagse woning in gele Vlaamse baksteen met origineel daken van betonpannen — kleur was vervaagd en porositeit toegenomen. Volledige vervanging met antraciet Koramic-keramiek, nieuwe onderdakfolie en panlatten. Tegelijk 18 cm PIR-isolatie tussen de kepers — strakke moderne dakblik tegen de warme gele gevelsteen.",
-    specs: { m2: '180 m²', tijd: '14 werkdagen', materiaal: 'Koramic Tempest antraciet keramiek', premie: 'Mijn VerbouwPremie €2.880' },
+    specs: { m2: '180 m²', tijd: '14 werkdagen', materiaal: 'Koramic Tempest antraciet keramiek', premie: '6% btw-tarief' },
     filter: 'pannendak',
   },
   {
@@ -64,7 +64,7 @@ const projects: Project[] = [
     title: 'Halfopen woning · 24 cm PIR sarking op bestaand dak',
     story:
       'Onverdeeld dak met koude winters en hete zolders. Sarking-isolatie 24 cm PIR boven op de bestaande dakconstructie geplaatst, oude pannen tijdelijk verwijderd en herplaatst — de foto toont het dak halverwege uitvoering met de nieuwe PIR-platen en dampdichte folie zichtbaar. Premiedossier compleet door ons ingediend bij Fluvius — klant kreeg €6.480 retour.',
-    specs: { m2: '165 m² dakvlak', tijd: '11 werkdagen', materiaal: '24 cm PIR sarking + Delta onderdakfolie', premie: 'Mijn VerbouwPremie €6.480' },
+    specs: { m2: '165 m² dakvlak', tijd: '11 werkdagen', materiaal: '24 cm PIR sarking + Delta onderdakfolie', premie: '6% btw-tarief' },
     quote: { text: 'We hebben de eerste winter 38% minder gas verbruikt. De rekening is binnen 8 jaar terugverdiend.', name: 'Annick D.' },
     filter: 'sarking',
   },
@@ -110,8 +110,8 @@ const projects: Project[] = [
     tag: 'Pannendak Koramic Datura',
     title: 'Rijwoning 1995 · vervanging cement-pannen',
     story:
-      'Cement-pannen op leeftijd — schuimaangroei en losse pannen. Volledige vervanging met Koramic Datura in rood-bruin. Tegelijk dakgoten vernieuwd in zink, en 12 cm PIR-isolatie tussen kepers. Klant ontving Mijn VerbouwPremie van €1.520 voor de gelijktijdige isolatie.',
-    specs: { m2: '110 m²', tijd: '9 werkdagen', materiaal: 'Koramic Datura rood-bruin + zinkwerk', premie: 'Mijn VerbouwPremie €1.520' },
+      'Cement-pannen op leeftijd — schuimaangroei en losse pannen. Volledige vervanging met Koramic Datura in rood-bruin. Tegelijk dakgoten vernieuwd in zink, en 12 cm PIR-isolatie tussen kepers.',
+    specs: { m2: '110 m²', tijd: '9 werkdagen', materiaal: 'Koramic Datura rood-bruin + zinkwerk', premie: '6% btw-tarief' },
     filter: 'pannendak',
   },
   {

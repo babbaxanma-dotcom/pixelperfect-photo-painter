@@ -34,7 +34,7 @@ const projects: Project[] = [
     title: 'Hedendaagse villa · witte crepi met houten gevelblokken',
     story:
       "Hedendaagse vrijstaande villa met strakke witte siliconencrepi-gevel, accenten in westerse cederlat rond de inkom en raampartijen. ETICS-buitenisolatie 14 cm EPS, afgewerkt met Sto Lotusan in helder wit. Anthraciet aluminium schrijnwerk Reynaers MasterLine, dorpels in arduin. Een gevel die clean leest van de straat en warm wordt door de houten accenten.",
-    specs: { m2: '186 m² gevelvlak', tijd: '6 weken', materiaal: '14 cm EPS + Sto Lotusan + ceder accenten', premie: 'Mijn VerbouwPremie €4.020' },
+    specs: { m2: '186 m² gevelvlak', tijd: '6 weken', materiaal: '14 cm EPS + Sto Lotusan + ceder accenten', premie: '6% btw-tarief' },
     quote: { text: 'De architect kwam zelf na de oplevering een rondje doen. Hij zei: "dit is geen pleisterwerk, dit is precisie-werk."', name: 'Annick D.' },
     filter: 'etics',
   },
@@ -91,7 +91,7 @@ const projects: Project[] = [
     title: 'Naïsolatie rijhuis · klassieke rood-bruine steenstrips',
     story:
       'Tussenwoning eind 19e eeuw, enkele baksteen, geen isolatie. Volledig ingepakt met 14 cm EPS, daarna handvorm-steenstrips in warm rood-bruin Vandersanden — moderne thermische upgrade, klassiek straatbeeld behouden. Zwart aluminium schrijnwerk met diepe omkadering geeft een eigentijds detail.',
-    specs: { m2: '128 m² gevelvlak', tijd: '6 weken', materiaal: '14 cm EPS + Vandersanden Forum rood-bruin', premie: 'Mijn VerbouwPremie €2.880' },
+    specs: { m2: '128 m² gevelvlak', tijd: '6 weken', materiaal: '14 cm EPS + Vandersanden Forum rood-bruin', premie: '6% btw-tarief' },
     filter: 'steenstrips',
   },
   {

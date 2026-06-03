@@ -405,7 +405,7 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
         <div className="wrap">
           {cardJSX}
           <div className="calc-trust" data-reveal>
-            <div className="calc-trust-item"><strong>★ 4,9 / 5</strong><span>184+ tevreden klanten</span></div>
+            <div className="calc-trust-item"><strong>★ 4,9 / 5</strong><span>184+ reviews</span></div>
             <div className="calc-trust-item"><strong>10 jaar</strong><span>garantie via Federale Verzekering</span></div>
             <div className="calc-trust-item"><strong>Eigen ploeg</strong><span>geen onderaannemers</span></div>
             <div className="calc-trust-item"><strong>Sinds 2010</strong><span>actief in heel Vlaanderen</span></div>
