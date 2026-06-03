@@ -64,9 +64,9 @@ html {
   /* 8px-spacing-schaal — enige bron van waarheid voor verticaal ritme (LP-overhaul) */
   --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-6: 24px; --s-8: 32px;
   --s-10: 40px; --s-12: 48px; --s-16: 64px; --s-20: 80px; --s-24: 96px;
-  --section-y: clamp(56px, 7vw, 104px);
-  --section-y-compact: clamp(40px, 5vw, 72px);
-  --section-y-lg: clamp(72px, 9vw, 128px);
+  --section-y: clamp(52px, 6vw, 88px);
+  --section-y-compact: clamp(36px, 4.5vw, 60px);
+  --section-y-lg: clamp(68px, 8vw, 112px);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
