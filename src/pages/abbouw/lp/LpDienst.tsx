@@ -84,7 +84,7 @@ const DIENSTEN: Record<string, Dienst> = {
     h1: 'Velux dakraam vakkundig geplaatst.',
     sub: 'Plaatsing en vervanging van Velux-dakramen in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
     subBold: 'Eigen dakdekkers',
-    heroImg: imgVelux,
+    heroImg: imgVx2,
     certLogo: { src: velux, alt: 'Velux' },
     topbar: ['Gratis opmeting binnen 5 werkdagen', 'Eigen ploeg'],
     offerEyebrow: 'Over AB Bouw Groep',
