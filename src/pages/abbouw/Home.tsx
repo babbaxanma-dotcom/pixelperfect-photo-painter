@@ -164,26 +164,18 @@ const HTML = (i: Record<string, string>) => `
         </div>
       </div>
     </div>
-    <div class="lf-testi-marquee" data-testi-marquee>
-      <button type="button" class="lf-testi-arrow lf-testi-arrow--prev" data-testi-prev aria-label="Vorige review">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <button type="button" class="lf-testi-arrow lf-testi-arrow--next" data-testi-next aria-label="Volgende review">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
-      <div class="lf-testi-shift" data-testi-shift>
-        <div class="lf-testi-track" data-testi-track>
+    <div class="lf-reviews-grid">
           ${(() => {
             const reviews = [
               { name: 'Marc Van den Broeck', role: 'Dakrenovatie · Mechelen', img: revMarc, text: 'Van offerte tot oplevering volledig correct. Geen meerwerken, binnen het budget, en de projectleider belde elke vrijdag met een update. Het dak ligt er strak bij.', highlights: ['volledig correct', 'binnen het budget', 'strak'] },
-              { name: 'Ellen De Smet', role: 'Totaalrenovatie · Leuven', img: revEllen, text: 'We hebben drie aannemers vergeleken. AB Bouw was de enige die alle vragen grondig beantwoordde en ook de premieaanvraag voor ons regelde. Resultaat: 3.500 euro terug.', highlights: ['grondig beantwoordde', 'premieaanvraag', '3.500 euro terug'] },
+              { name: 'Ellen De Smet', role: 'Totaalrenovatie · Leuven', img: revEllen, text: 'We hebben drie aannemers vergeleken. AB Bouw was de enige die alle vragen grondig beantwoordde en ook de volledige papierwinkel voor ons regelde. Eén aanspreekpunt van begin tot eind.', highlights: ['grondig beantwoordde', 'volledige papierwinkel', 'Eén aanspreekpunt'] },
               { name: 'Katrien Peeters', role: 'Badkamer · Antwerpen', img: revKatrien, text: 'Eigen badkamerploeg, eigen tegelzetter, eigen loodgieter. Alles door dezelfde mensen. Dat zie je in het eindresultaat: vakwerk tot in de laatste voeg.', highlights: ['dezelfde mensen', 'vakwerk tot in de laatste voeg'] },
               { name: 'Mehmet Yıldız', role: 'Nieuwbouw · Bornem', img: revMehmet, text: 'Eerlijk, snel en correct. We kregen wekelijks een rapport en konden altijd Tom bereiken. Sleutel ontvangen op exact de afgesproken datum, dat is in deze sector zeldzaam.', highlights: ['Eerlijk, snel en correct', 'wekelijks een rapport', 'op exact de afgesproken datum'] },
               { name: 'Sofie Vermeulen', role: 'Gevelrenovatie · Sint-Niklaas', img: revSofie, text: 'De gevel ligt er strak bij, alle buren komen vragen wie het werk gedaan heeft. Aanrader voor wie kwaliteit en stiptheid belangrijk vindt.', highlights: ['strak', 'kwaliteit en stiptheid'] },
               { name: 'Dirk Maes', role: 'Plat dak · Antwerpen', img: revDirk, text: 'Lekkend dak op vrijdag gemeld, maandagochtend stond de ploeg op het dak. Probleem opgelost, factuur exact zoals afgesproken. Top service.', highlights: ['maandagochtend stond de ploeg op het dak', 'exact zoals afgesproken', 'Top service'] },
               { name: 'Ana Popescu', role: 'Interieur · Mechelen', img: revAna, text: 'Maatwerk in keuken en dressing perfect uitgevoerd. Plinten, plafonds, alles tot op de millimeter. Heldere communicatie van begin tot einde.', highlights: ['perfect uitgevoerd', 'tot op de millimeter', 'Heldere communicatie'] },
               { name: 'Tim Verbeeck', role: 'Carport & oprit · Lier', img: revTim, text: 'Carport in hout met aansluitende klinkeroprit. Drie weken werk, geen dag uitloop. De ploeg ruimde elke vrijdag de werf op, dat scheelt enorm met kleine kinderen.', highlights: ['geen dag uitloop', 'ruimde elke vrijdag de werf op'] },
-              { name: 'Nathalie Aerts', role: 'Energetische renovatie · Bonheiden', img: revNathalie, text: 'Spouwmuur, dak en glas in één traject. EPC gegaan van F naar C. Ze regelden alle premies, ik moest niets opzoeken. Heel ontzorgd voelt dat.', highlights: ['EPC gegaan van F naar C', 'alle premies', 'ontzorgd'] },
+              { name: 'Nathalie Aerts', role: 'Energetische renovatie · Bonheiden', img: revNathalie, text: 'Spouwmuur, dak en glas in één traject. EPC gegaan van F naar C. Ze regelden het hele dossier, ik moest niets opzoeken. Heel ontzorgd voelt dat.', highlights: ['EPC gegaan van F naar C', 'het hele dossier', 'ontzorgd'] },
               { name: 'Filip Wouters', role: 'Hellend dak · Puurs', img: revFilip, text: 'Pannen vernieuwd, isolatie tussen de kepers, alles afgewerkt met zinken bakgoten. Werfleider was elke ochtend ter plaatse om de dag te overlopen. Klasse.', highlights: ['elke ochtend ter plaatse', 'Klasse'] },
               { name: 'Inge Vermeiren', role: 'Badkamer & toilet · Kontich', img: revInge, text: 'Vier weken stof, en dan een prachtige badkamer. Inloopdouche, zwevend meubel, vloerverwarming. De tegelzetter heeft hier echt zijn handtekening gezet.', highlights: ['prachtige badkamer', 'echt zijn handtekening gezet'] },
               { name: 'Karim El Amrani', role: 'Aanbouw · Willebroek', img: revKarim, text: 'Aanbouw van 32m² met grote raampartij. Architect, EPB en uitvoering door één partij, dat scheelt zoveel mailverkeer. Alles correct opgeleverd.', highlights: ['één partij', 'correct opgeleverd'] },
@@ -213,13 +205,10 @@ const HTML = (i: Record<string, string>) => `
               });
               return out;
             };
-            const loopedSets = [-1, 0, 1];
-            return loopedSets.map((setIdx) => `
-              <div class="lf-testi-set" data-testi-set="${setIdx}"${setIdx !== 0 ? ' aria-hidden="true"' : ''}>
-                ${reviews.map((t, reviewIdx) => `
-                  <article class="lf-testi" data-review-index="${reviewIdx}">
+            return reviews.map((t) => `
+                  <article class="lf-testi">
                     <div class="lf-testi-stars">★★★★★</div>
-                    <p>${highlight(t.text, t.highlights)}</p>
+                    <p>${t.text}</p>
                     <div class="lf-testi-divider"></div>
                     <div class="lf-testi-foot">
                       <div class="lf-testi-meta">
@@ -228,12 +217,8 @@ const HTML = (i: Record<string, string>) => `
                       </div>
                     </div>
                   </article>
-                `).join('')}
-              </div>
-            `).join('');
+                `).join('');
           })()}
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -396,27 +381,27 @@ const HTML = (i: Record<string, string>) => `
        <div class="lf-stat-card" data-reveal>
         <div class="lf-stat-photo"><img src="${i.svcDak}" alt="" loading="lazy"/></div>
         <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span data-count="48325">0</span><span class="lf-stat-suffix">m²</span></div>
+          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span data-count="42000">0</span><span class="lf-stat-suffix">m²</span></div>
           <div class="lf-stat-label">Afgewerkte daken</div>
         </div>
       </div>
       <div class="lf-stat-card" data-reveal data-reveal-delay="1">
         <div class="lf-stat-photo"><img src="${i.svcGevel}" alt="" loading="lazy"/></div>
         <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span data-count="63112">0</span><span class="lf-stat-suffix">m²</span></div>
+          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span data-count="30000">0</span><span class="lf-stat-suffix">m²</span></div>
           <div class="lf-stat-label">Afgewerkte gevels</div>
         </div>
       </div>
       <div class="lf-stat-card" data-reveal data-reveal-delay="2">
         <div class="lf-stat-photo"><img src="${i.svcConstruct}" alt="" loading="lazy"/></div>
         <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span data-count="184">0</span><span class="lf-stat-suffix">+</span></div>
+          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span data-count="480">0</span><span class="lf-stat-suffix">+</span></div>
           <div class="lf-stat-label">Opgeleverde projecten</div>
         </div>
       </div>
       <div class="lf-stat-card lf-stat-card--nophoto" data-reveal data-reveal-delay="3">
         <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span data-count="1326">0</span><span class="lf-stat-suffix">+</span></div>
+          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span data-count="440">0</span><span class="lf-stat-suffix">+</span></div>
           <div class="lf-stat-label">Tevreden klanten</div>
         </div>
       </div>
@@ -1123,6 +1108,9 @@ aside.lf-form .lf-form-thanks p { font-size: 14px; color: var(--ink-soft); margi
 /* Testimonials */
 .lf-testi-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .lf-testi { background:#fff; padding: 32px; border-radius: 14px; border: 1px solid var(--ink-line-soft); display:flex; flex-direction:column; }
+.lf-reviews-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 920px) { .lf-reviews-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .lf-reviews-grid { grid-template-columns: 1fr; } }
 .lf-testi-stars { color: #F5B400; font-size: 18px; letter-spacing: 3px; margin-bottom: 18px; }
 .lf-testi p { font-size: 14.5px; line-height:1.7; color: var(--ink-soft); margin-bottom: 22px; flex:1; }
 .lf-testi-divider { height:1px; background: var(--ink-line-soft); margin-bottom: 18px; }

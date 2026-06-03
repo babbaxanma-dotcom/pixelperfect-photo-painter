@@ -103,7 +103,7 @@ ${buildHero({
     <div class="ab-facts">
       <div class="ab-fact" data-reveal><div class="ab-fact-num">15</div><div class="ab-fact-lbl">Jaar ervaring</div></div>
       <div class="ab-fact" data-reveal data-reveal-delay="1"><div class="ab-fact-num">23</div><div class="ab-fact-lbl">Vakmensen in vaste dienst</div></div>
-      <div class="ab-fact" data-reveal data-reveal-delay="2"><div class="ab-fact-num">150+</div><div class="ab-fact-lbl">Opgeleverde projecten</div></div>
+      <div class="ab-fact" data-reveal data-reveal-delay="2"><div class="ab-fact-num">480+</div><div class="ab-fact-lbl">Opgeleverde projecten</div></div>
       <div class="ab-fact" data-reveal data-reveal-delay="3"><div class="ab-fact-num">6</div><div class="ab-fact-lbl">Specialisaties onder één dak</div></div>
     </div>
   </div>
