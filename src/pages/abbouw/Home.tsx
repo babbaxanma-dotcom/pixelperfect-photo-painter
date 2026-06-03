@@ -294,11 +294,17 @@ const HTML = (i: Record<string, string>) => `
 </section>
 
 <!-- SERVICES GRID -->
-<section class="lf-section lf-services lf-section-compact-stack">
+<section class="lf-section lf-divisies">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
-      <span class="lf-eyebrow">Onze diensten</span>
-      <h2 class="lf-h2">Zes specialisaties.<br>Eén bouwpartner.</h2>
+    <div class="lf-div-head" data-reveal>
+      <div class="lf-div-head-left">
+        <span class="lf-eyebrow">Onze divisies</span>
+        <h2 class="lf-h2">Zes specialisaties,<br>één bouwpartner.</h2>
+        <p class="lf-lede">Van ruwbouw tot afwerking — elke divisie met eigen vakmensen, één projectleider en één planning. U heeft maar één aanspreekpunt nodig.</p>
+      </div>
+      <a class="lf-div-head-cta" href="/diensten">Bekijk alle diensten
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
     </div>
     ${(() => {
       // Inline SVG iconen per divisie — strakke 2px outline stroke voor een
@@ -319,29 +325,43 @@ const HTML = (i: Record<string, string>) => `
         { img: i.svcBad, n: '05', title: 'AB Bad &amp; Wellness', short: 'Bad &amp; Wellness', desc: 'Sleutel-op-de-deur badkamers met premium tegels en sanitair. Klaar in vier weken.', href: '/bad', icon: icons.bad },
         { img: i.svcGevel, n: '06', title: 'AB Gevelbekleding', short: 'Gevel', desc: 'Witte of grijze crepi, sierpleister of steenstrips. Tijdloos én onderhoudsarm.', href: '/gevel', icon: icons.gevel },
       ];
+      const feat = services[0];
+      const rest = services.slice(1);
       return `
-      <div class="lf-svc-nav-cta" data-reveal>
-        <a class="lf-svc-all-btn" href="/diensten">Bekijk alle diensten</a>
-      </div>
-      <div class="lf-svc-grid" data-svc-stack>
-        ${services.map((s, idx, arr) => `
-          <div class="lf-svc-slot" id="svc-${idx}" data-svc-slot data-svc-index="${idx}" style="--svc-i:${idx};--svc-total:${arr.length}">
-            <a class="lf-svc-card" href="${s.href}" data-svc-card style="--svc-i:${idx};--svc-total:${arr.length}">
-              <div class="lf-svc-img">
-                <img src="${s.img}" alt="${s.title}" loading="lazy" />
-                <span class="lf-svc-badge" aria-hidden="true">${s.icon}</span>
-                <span class="lf-svc-num">${s.n}</span>
-              </div>
-              <div class="lf-svc-body">
-                <h4>${s.title}</h4>
-                <p>${s.desc}</p>
-                <span class="lf-svc-link">Lees meer
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                </span>
-              </div>
-            </a>
-          </div>
+      <a class="lf-div-feature" href="${feat.href}" data-reveal>
+        <div class="lf-div-feature-img"><img src="${feat.img}" alt="${feat.title}" loading="lazy" /></div>
+        <div class="lf-div-feature-body">
+          <span class="lf-div-tag">Onze hoofddivisie</span>
+          <h3>${feat.title}</h3>
+          <p>${feat.desc} Van vergunning en EPB tot de laatste verflaag — alles in eigen beheer, onder één projectleider.</p>
+          <span class="lf-div-link">Ontdek ${feat.title}
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </div>
+      </a>
+      <div class="lf-div-grid" data-reveal>
+        ${rest.map((s) => `
+          <a class="lf-div-card" href="${s.href}">
+            <div class="lf-div-card-img"><img src="${s.img}" alt="${s.title}" loading="lazy" /></div>
+            <div class="lf-div-card-body">
+              <h4>${s.title}</h4>
+              <p>${s.desc}</p>
+              <span class="lf-div-link">Lees meer
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
+            </div>
+          </a>
         `).join('')}
+        <a class="lf-div-cta-card" href="/contact">
+          <div class="lf-div-cta-inner">
+            <span class="lf-div-tag light">Advies nodig?</span>
+            <h4>Niet zeker welke divisie u nodig heeft?</h4>
+            <p>Eén gesprek en wij wijzen u meteen de juiste richting — volledig vrijblijvend.</p>
+            <span class="lf-div-link light">Vraag gratis advies
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
       </div>`;
     })()}
   </div>
@@ -1991,6 +2011,59 @@ html, body { overflow-x: hidden; max-width: 100%; }
     top: 0 !important;
     font-size: 56px !important;
   }
+}
+
+/* ── Divisies (premium herbouw: editorial kop + feature-tegel + content-cards) ── */
+.lf-divisies { padding: var(--section-y) 0; }
+.lf-div-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-bottom: 44px; }
+.lf-div-head-left { max-width: 640px; }
+.lf-div-head-left .lf-h2 { margin-bottom: 16px; }
+.lf-div-head-left .lf-lede { margin-bottom: 0; max-width: 600px; }
+.lf-div-head-cta { flex-shrink: 0; display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--navy); border-bottom: 2px solid var(--accent); padding-bottom: 6px; white-space: nowrap; transition: gap .25s ease; }
+.lf-div-head-cta svg { transition: transform .25s ease; }
+.lf-div-head-cta:hover { gap: 12px; }
+.lf-div-head-cta:hover svg { transform: translateX(3px); }
+
+.lf-div-feature { display: grid; grid-template-columns: 1.15fr 1fr; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; margin-bottom: 24px; text-decoration: none; color: var(--ink); transition: box-shadow .3s var(--ease), transform .3s var(--ease); }
+.lf-div-feature:hover { transform: translateY(-3px); box-shadow: 0 30px 64px -30px rgba(10,22,40,0.28); }
+.lf-div-feature-img { position: relative; min-height: 360px; overflow: hidden; background: #eef0f2; }
+.lf-div-feature-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.22,1,.36,1); }
+.lf-div-feature:hover .lf-div-feature-img img { transform: scale(1.04); }
+.lf-div-feature-body { padding: 48px; display: flex; flex-direction: column; justify-content: center; }
+.lf-div-feature-body h3 { font-family: var(--font-display); font-size: clamp(26px, 2.6vw, 34px); font-weight: 700; color: var(--navy); margin: 14px 0; letter-spacing: -0.02em; line-height: 1.1; }
+.lf-div-feature-body p { font-size: 15px; line-height: 1.7; color: var(--ink-soft); margin: 0 0 26px; max-width: 44ch; }
+.lf-div-tag { display: inline-flex; align-self: flex-start; padding: 5px 13px; background: rgba(217,140,3,0.12); color: #a8690a; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
+.lf-div-tag.light { background: rgba(255,255,255,0.16); color: #fff; }
+
+.lf-div-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.lf-div-card { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 16px; overflow: hidden; text-decoration: none; color: var(--ink); transition: box-shadow .3s var(--ease), transform .3s var(--ease), border-color .3s var(--ease); }
+.lf-div-card:hover { transform: translateY(-4px); box-shadow: 0 26px 52px -28px rgba(10,22,40,0.24); border-color: rgba(217,140,3,0.45); }
+.lf-div-card-img { aspect-ratio: 16/10; overflow: hidden; background: #eef0f2; }
+.lf-div-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.22,1,.36,1); }
+.lf-div-card:hover .lf-div-card-img img { transform: scale(1.05); }
+.lf-div-card-body { padding: 24px 24px 26px; display: flex; flex-direction: column; flex: 1; }
+.lf-div-card-body h4 { font-family: var(--font-display); font-size: 19px; font-weight: 700; color: var(--navy); margin: 0 0 9px; letter-spacing: -0.01em; }
+.lf-div-card-body p { font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); margin: 0 0 20px; flex: 1; }
+.lf-div-link { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); margin-top: auto; }
+.lf-div-link.light { color: #fff; }
+.lf-div-link svg { transition: transform .25s ease; }
+.lf-div-card:hover .lf-div-link svg, .lf-div-feature:hover .lf-div-link svg { transform: translateX(4px); }
+
+.lf-div-cta-card { background: linear-gradient(150deg, #0a1628 0%, #15294a 100%); border-radius: 16px; text-decoration: none; display: flex; transition: box-shadow .3s var(--ease), transform .3s var(--ease); }
+.lf-div-cta-card:hover { box-shadow: 0 26px 52px -28px rgba(10,22,40,0.4); transform: translateY(-4px); }
+.lf-div-cta-inner { padding: 28px 26px 30px; display: flex; flex-direction: column; justify-content: center; }
+.lf-div-cta-card h4 { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff; margin: 14px 0 9px; line-height: 1.2; }
+.lf-div-cta-card p { font-size: 13.5px; line-height: 1.6; color: rgba(255,255,255,0.78); margin: 0 0 20px; }
+
+@media (max-width: 920px) {
+  .lf-div-head { flex-direction: column; align-items: flex-start; gap: 18px; margin-bottom: 32px; }
+  .lf-div-feature { grid-template-columns: 1fr; }
+  .lf-div-feature-img { min-height: 0; aspect-ratio: 16/10; }
+  .lf-div-feature-body { padding: 28px 24px 30px; }
+  .lf-div-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+}
+@media (max-width: 600px) {
+  .lf-div-grid { grid-template-columns: 1fr; }
 }
 
 /* Zes specialisaties — fotografische tiles met overlay-titels (BESIX/DBM
