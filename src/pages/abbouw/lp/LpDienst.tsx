@@ -44,6 +44,8 @@ import imgIsol2 from '@/assets/dak/lp-isol-2.jpg';
 import imgIsol3 from '@/assets/dak/lp-isol-3.jpg';
 import imgIsolGyproc from '@/assets/dak/lp-isol-gyproc.jpg';
 import imgIsolGestuct from '@/assets/dak/lp-isol-gestuct.jpg';
+import imgIsolSarking from '@/assets/dak/lp-isol-sarking.jpg';
+import imgIsolKoramic from '@/assets/dak/lp-isol-koramic.jpg';
 import imgPdak1 from '@/assets/dak/lp-platdak-1.jpg';
 import imgPdak2 from '@/assets/dak/lp-platdak-2.jpg';
 import imgPdak3 from '@/assets/dak/lp-platdak-3.jpg';
@@ -275,7 +277,7 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Luchtdicht afwerken', 'Correct dampscherm en aansluitingen, zodat er geen condens of koudebrug ontstaat.'],
     ],
     whatImg: imgIsol2,
-    gallery: [imgIsol2, imgIsolGyproc, imgIsolGestuct],
+    gallery: [imgIsol2, imgIsolGyproc, imgIsolGestuct, imgIsolSarking, imgIsolKoramic],
     reviews: [
       { text: '"Dak vernieuwd met sarkingisolatie in één beweging. De zolder is nu een volwaardige kamer, en de verwarming staat merkbaar lager."', name: 'Hilde Declercq', role: 'Sarkingisolatie' },
       { text: '"Eerlijk advies over de isolatiewaarde, geen overdreven dikte verkocht. Vaste prijs vooraf, factuur klopte. Nette ploeg."', name: 'Wim De Backer', role: 'Dakisolatie' },
