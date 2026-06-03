@@ -6404,10 +6404,8 @@ body.page-hero-dark .footer {
 :root { --hf: 1; }
 .lf-hero {
   position: relative;
-  height: 100vh;
-  height: 100dvh;
-  min-height: 100vh !important;
-  min-height: 100dvh !important;
+  min-height: clamp(560px, 64vh, 720px) !important;
+  height: auto;
   width: 100vw;
   max-width: 100%;
   margin-left: 0 !important;
@@ -6644,8 +6642,7 @@ body.menu-open .lf-nav {
   /* Hero op Home (heeft .lf-hero-mini) vult heel het scherm */
   body:not(.is-subpage) .lf-hero,
   .lf-hero:has(.lf-hero-mini) {
-    min-height: 100vh !important;
-    min-height: 100dvh !important;
+    min-height: clamp(480px, 74vh, 640px) !important;
     margin-top: 0 !important;
     padding-top: 0 !important;
   }
@@ -6679,9 +6676,8 @@ body.menu-open .lf-nav {
     margin: 0 !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
-    min-height: 100vh !important;
-    min-height: 100dvh !important;
-    height: 100dvh;
+    min-height: clamp(480px, 74vh, 640px) !important;
+    height: auto;
     /* Breekt uit container-padding zodat hero ECHT 100% breed is */
     width: 100vw !important;
     max-width: none !important;
