@@ -164,7 +164,9 @@ const HTML = (i: Record<string, string>) => `
         </div>
       </div>
     </div>
-    <div class="lf-reviews-grid">
+    <div class="lf-rev-carousel">
+      <button type="button" class="lf-rev-arrow lf-rev-prev" data-rev-prev aria-label="Vorige reviews"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <div class="lf-rev-scroll" data-rev-scroll>
           ${(() => {
             const reviews = [
               { name: 'Marc Van den Broeck', role: 'Dakrenovatie · Mechelen', img: revMarc, text: 'Van offerte tot oplevering volledig correct. Geen meerwerken, binnen het budget, en de projectleider belde elke vrijdag met een update. Het dak ligt er strak bij.', highlights: ['volledig correct', 'binnen het budget', 'strak'] },
@@ -219,6 +221,8 @@ const HTML = (i: Record<string, string>) => `
                   </article>
                 `).join('');
           })()}
+      </div>
+      <button type="button" class="lf-rev-arrow lf-rev-next" data-rev-next aria-label="Volgende reviews"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
     </div>
   </div>
 </section>
@@ -352,7 +356,7 @@ const HTML = (i: Record<string, string>) => `
     </div>
     <div class="lf-marquee">
       <div class="lf-marquee-track">
-        ${Array.from({ length: 2 }).map(() => `
+        ${Array.from({ length: 1 }).map(() => `
           <div class="lf-marquee-set">
             <img src="/assets/logos/dorken.png" alt="Dörken" loading="lazy" />
             <img src="/assets/logos/eternit.png" alt="Eternit" loading="lazy" />
@@ -810,8 +814,8 @@ const EXTRA_STYLE = `
 .lf-section { padding: var(--section-y) 0; }
 .lf-section.lf-section-compact-stack { padding-bottom: 22px; }
 .lf-section.lf-section-compact-stack + .lf-section { padding-top: var(--section-y-compact); }
-.lf-section.lf-section-compact-stack .lf-section-head { margin-bottom: 30px; }
-.lf-section.lf-section-compact-stack .lf-section-head.centered { margin-bottom: 30px; }
+.lf-section.lf-section-compact-stack .lf-section-head { margin-bottom: 44px; }
+.lf-section.lf-section-compact-stack .lf-section-head.centered { margin-bottom: 44px; }
 .lf-section.lf-why-section-tight { padding-bottom: 0; }
 .lf-section.lf-why-section-tight + .lf-section { padding-top: var(--section-y-compact); }
 .lf-why-section-tight .lf-trust-strip { margin-top: 0; transform: translateY(-1px); }
@@ -1108,9 +1112,16 @@ aside.lf-form .lf-form-thanks p { font-size: 14px; color: var(--ink-soft); margi
 /* Testimonials */
 .lf-testi-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .lf-testi { background:#fff; padding: 32px; border-radius: 14px; border: 1px solid var(--ink-line-soft); display:flex; flex-direction:column; }
-.lf-reviews-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-@media (max-width: 920px) { .lf-reviews-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px) { .lf-reviews-grid { grid-template-columns: 1fr; } }
+.lf-rev-carousel { position: relative; display: flex; align-items: stretch; gap: 10px; }
+.lf-rev-scroll { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; padding: 4px 2px; flex: 1 1 auto; }
+.lf-rev-scroll::-webkit-scrollbar { display: none; }
+.lf-rev-scroll .lf-testi { flex: 0 0 calc((100% - 40px) / 3); scroll-snap-align: start; box-sizing: border-box; }
+.lf-rev-arrow { flex: 0 0 auto; align-self: center; width: 46px; height: 46px; border-radius: 999px; border: 1px solid rgba(10,22,40,0.12); background: #fff; color: var(--ab-ink, #0a1628); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 28px -14px rgba(10,22,40,0.35); transition: background .18s ease, color .18s ease, transform .18s ease, opacity .18s ease; }
+.lf-rev-arrow:hover { background: var(--ab-accent, #d98c03); color: #fff; transform: translateY(-1px); }
+.lf-rev-arrow:disabled { opacity: 0.32; cursor: default; box-shadow: none; }
+.lf-rev-arrow:disabled:hover { background: #fff; color: var(--ab-ink, #0a1628); transform: none; }
+@media (max-width: 920px) { .lf-rev-scroll .lf-testi { flex: 0 0 calc((100% - 20px) / 2); } }
+@media (max-width: 600px) { .lf-rev-carousel { gap: 6px; } .lf-rev-scroll .lf-testi { flex: 0 0 86%; } .lf-rev-arrow { width: 40px; height: 40px; } }
 .lf-testi-stars { color: #F5B400; font-size: 18px; letter-spacing: 3px; margin-bottom: 18px; }
 .lf-testi p { font-size: 14.5px; line-height:1.7; color: var(--ink-soft); margin-bottom: 22px; flex:1; }
 .lf-testi-divider { height:1px; background: var(--ink-line-soft); margin-bottom: 18px; }
@@ -1388,14 +1399,12 @@ aside.lf-form .lf-form-thanks p { font-size: 14px; color: var(--ink-soft); margi
 .lf-partners-row img:hover { filter: grayscale(0) opacity(1); }
 @media (max-width: 900px) { .lf-partners-row { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
 
-/* Marquee logos */
-.lf-marquee { overflow: hidden; position: relative; padding: 8px 0; mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); }
-.lf-marquee-track { display: flex; width: max-content; animation: lf-marquee-scroll 46s linear infinite; }
-.lf-marquee-set { display: flex; align-items: center; gap: 58px; padding: 0 58px; flex-shrink: 0; }
-.lf-marquee-set img { height: 56px; width: 260px; object-fit: contain; flex: 0 0 260px; filter: grayscale(1) opacity(0.55); transition: filter 0.3s var(--ease); }
+/* Partner-logo's — statische, gecentreerde strip (premium/robuust i.p.v. scrollende marquee) */
+.lf-marquee { overflow: hidden; position: relative; padding: 8px 0; }
+.lf-marquee-track { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; width: auto; gap: 26px 54px; }
+.lf-marquee-set { display: contents; }
+.lf-marquee-set img { height: 40px; width: auto; max-width: 150px; object-fit: contain; filter: grayscale(1) opacity(0.5); transition: filter 0.3s var(--ease); }
 .lf-marquee-set img:hover { filter: grayscale(0) opacity(1); }
-.lf-marquee:hover .lf-marquee-track { animation-play-state: paused; }
-@keyframes lf-marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* Stats counters */
 .lf-stats { padding: var(--section-y-compact) 0; background: var(--bg-tint, #f7f5ef); }
@@ -1615,10 +1624,8 @@ html, body { overflow-x: hidden; max-width: 100%; }
 
 /* AB highlight & marker — gele scroll-in markeringen */
 .ab-mark { position: relative; display: inline-block; color: var(--navy); white-space: nowrap; }
-.ab-mark::after { content:''; position:absolute; left:-2%; right:-2%; bottom:4%; height:38%; background: var(--accent); opacity:.28; border-radius:3px; transform-origin:left center; transform: scaleX(0); transition: transform .9s cubic-bezier(.22,1,.36,1) .3s; z-index:-1; }
-[data-reveal].revealed .ab-mark::after { transform: scaleX(1); }
-.ab-hl { position: relative; display: inline; background-image: linear-gradient(120deg, rgba(217,140,3,0.22) 0%, rgba(217,140,3,0.22) 100%); background-repeat: no-repeat; background-size: 0% 60%; background-position: 0 88%; padding: 0 2px; color: var(--navy); font-weight:500; transition: background-size .9s cubic-bezier(.22,1,.36,1); transition-delay: calc(.45s + var(--hl-i, 0) * .32s); }
-[data-reveal].revealed .ab-hl { background-size: 100% 60%; }
+.ab-mark::after { content:''; position:absolute; left:-2%; right:-2%; bottom:4%; height:38%; background: var(--accent); opacity:.28; border-radius:3px; transform-origin:left center; transform: scaleX(1); z-index:-1; }
+.ab-hl { position: relative; display: inline; background-image: linear-gradient(120deg, rgba(217,140,3,0.22) 0%, rgba(217,140,3,0.22) 100%); background-repeat: no-repeat; background-size: 100% 60%; background-position: 0 88%; padding: 0 2px; color: var(--navy); font-weight:500; }
 .ab-hl[data-hl-delay="0"] { --hl-i: 0; } .ab-hl[data-hl-delay="1"] { --hl-i: 1; } .ab-hl[data-hl-delay="2"] { --hl-i: 2; }
 /* (reduced-motion override voor highlight-sweep bewust verwijderd — animaties voor iedereen) */
 
@@ -1670,6 +1677,11 @@ html, body { overflow-x: hidden; max-width: 100%; }
     opacity: 1 !important;
     transform: none !important;
   }
+  /* Mobiel: titel + tekst staan altijd zichtbaar, dus overlay sterker houden */
+  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img::after {
+    height: 86% !important;
+    background: linear-gradient(180deg, rgba(10,15,28,0) 0%, rgba(10,15,28,0.35) 35%, rgba(10,15,28,0.88) 100%) !important;
+  }
   /* Swipe-hint: subtiele dot indicator onder de carousel */
   .lf-svc-grid-wrapper { position: relative; }
 }
@@ -1692,11 +1704,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
   }
   .lf-svc-swipe-hint svg {
     color: var(--accent);
-    animation: lf-swipe-arrow 1.8s ease-in-out infinite;
-  }
-  @keyframes lf-swipe-arrow {
-    0%, 100% { transform: translateX(0); opacity: .6; }
-    50% { transform: translateX(8px); opacity: 1; }
+    opacity: .75;
   }
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot {
@@ -1997,18 +2005,8 @@ html, body { overflow-x: hidden; max-width: 100%; }
   text-decoration: none;
   aspect-ratio: 4/5 !important;
   height: auto !important;
-  animation: lf-svc-in .7s cubic-bezier(.22,1,.36,1) both;
+  animation: none;
 }
-@keyframes lf-svc-in {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: none; }
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:nth-child(1) .lf-svc-card { animation-delay: 0s; }
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:nth-child(2) .lf-svc-card { animation-delay: .08s; }
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:nth-child(3) .lf-svc-card { animation-delay: .16s; }
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:nth-child(4) .lf-svc-card { animation-delay: .24s; }
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:nth-child(5) .lf-svc-card { animation-delay: .32s; }
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:nth-child(6) .lf-svc-card { animation-delay: .40s; }
 
 /* Foto vult de hele card, gradient-overlay onderaan voor leesbaarheid */
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img {
@@ -2023,33 +2021,28 @@ html, body { overflow-x: hidden; max-width: 100%; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 1.2s cubic-bezier(.22,1,.36,1) !important;
+  transition: transform .6s cubic-bezier(.22,1,.36,1) !important;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover .lf-svc-img img {
-  transform: scale(1.08) !important;
+  transform: scale(1.04) !important;
 }
-/* Donkere gradient overlay onderaan voor witte tekst leesbaarheid */
+/* Lichtere gradient: de foto domineert, alleen de titel onderaan blijft leesbaar.
+   Op hover wordt de overlay sterker zodat de onthulde tekst leesbaar blijft. */
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img::after {
   content: '';
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 75%;
-  background: linear-gradient(180deg, rgba(10,15,28,0) 0%, rgba(10,15,28,0.45) 40%, rgba(10,15,28,0.92) 100%);
+  height: 62%;
+  background: linear-gradient(180deg, rgba(10,15,28,0) 0%, rgba(10,15,28,0.28) 50%, rgba(10,15,28,0.80) 100%);
   z-index: 1;
   pointer-events: none;
-  transition: opacity .35s ease;
+  transition: height .4s ease, background .4s ease;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover .lf-svc-img::after {
-  opacity: 0.85;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform .8s cubic-bezier(.22,1,.36,1) !important;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover .lf-svc-img img {
-  transform: scale(1.07) !important;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(10,15,28,0) 0%, rgba(10,15,28,0.50) 42%, rgba(10,15,28,0.90) 100%);
 }
 /* Badge in top-right hoek met oranje icoon — discreet maar herkenbaar */
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-badge {
@@ -2066,7 +2059,8 @@ html, body { overflow-x: hidden; max-width: 100%; }
   align-items: center;
   justify-content: center;
   z-index: 3;
-  transition: transform .35s ease;
+  box-shadow: 0 6px 18px -8px rgba(0,0,0,0.45);
+  transition: transform .35s ease, background .3s ease, color .3s ease;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-badge svg {
   width: 22px;
@@ -2075,7 +2069,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover .lf-svc-badge {
   background: var(--accent);
   color: #fff;
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 /* Nummer als label top-left — discreet */
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-num {
@@ -2088,11 +2082,12 @@ html, body { overflow-x: hidden; max-width: 100%; }
   font-family: 'DM Sans', sans-serif;
   font-style: normal;
   font-weight: 600;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   box-shadow: none;
   backdrop-filter: none;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
   z-index: 3;
 }
 .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-num::before {
@@ -2470,6 +2465,28 @@ export default function Home() {
     };
     const blogCleanup = blogCarouselSetup();
 
+    // ── Reviews carousel — 3 zichtbaar, handmatige pijltjes (geen auto-scroll) ──
+    const revScroll = document.querySelector<HTMLElement>('[data-rev-scroll]');
+    const revPrevBtn = document.querySelector<HTMLButtonElement>('[data-rev-prev]');
+    const revNextBtn = document.querySelector<HTMLButtonElement>('[data-rev-next]');
+    const revStep = () => {
+      const card = revScroll?.querySelector<HTMLElement>('.lf-testi');
+      return card ? card.offsetWidth + 20 : 320;
+    };
+    const revSync = () => {
+      if (!revScroll) return;
+      const max = revScroll.scrollWidth - revScroll.clientWidth - 4;
+      if (revPrevBtn) revPrevBtn.disabled = revScroll.scrollLeft <= 4;
+      if (revNextBtn) revNextBtn.disabled = revScroll.scrollLeft >= max;
+    };
+    const revPrevH = () => revScroll?.scrollBy({ left: -revStep(), behavior: 'smooth' });
+    const revNextH = () => revScroll?.scrollBy({ left: revStep(), behavior: 'smooth' });
+    revPrevBtn?.addEventListener('click', revPrevH);
+    revNextBtn?.addEventListener('click', revNextH);
+    revScroll?.addEventListener('scroll', revSync);
+    window.addEventListener('resize', revSync);
+    revSync();
+
     // Newsletter form — POST naar GHL Inbound Webhook met bron_lead='newsletter'
     const newsletterForm = document.querySelector<HTMLFormElement>('[data-newsletter-form]');
     const onNewsletterSubmit = async (e: SubmitEvent) => {
@@ -2563,6 +2580,10 @@ export default function Home() {
       svcNavCleanup();
       blogCleanup();
       stickyCleanup();
+      revPrevBtn?.removeEventListener('click', revPrevH);
+      revNextBtn?.removeEventListener('click', revNextH);
+      revScroll?.removeEventListener('scroll', revSync);
+      window.removeEventListener('resize', revSync);
       newsletterForm?.removeEventListener('submit', onNewsletterSubmit);
       homeForm?.removeEventListener('submit', onHomeSubmit);
     };
