@@ -274,7 +274,7 @@ export const SHELL_STYLE = `
   width: 38px; height: 38px; border-radius: 999px;
   display: inline-flex; align-items: center; justify-content: center;
   border: 1px solid rgba(255,255,255,0.35);
-  animation: lf-scroll-cue-bob 2.2s ease-in-out infinite;
+  
   transition: border-color 0.3s, background 0.3s;
 }
 .lf-scroll-cue:hover .lf-scroll-cue-icon { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.08); }
@@ -949,17 +949,16 @@ html { scroll-behavior: smooth; }
 .lf-hero-bg::after {
   background: radial-gradient(ellipse at center, rgba(10,22,40,0.45) 0%, rgba(10,22,40,0.78) 75%) !important;
 }
-[data-hero-line] { opacity: 0; transform: translateY(18px); filter: blur(6px); }
-[data-hero-anim].played [data-hero-line] { animation: lf-hero-rise 1.05s var(--ease-out-quart) both; }
+[data-hero-line] { opacity: 0; }
+[data-hero-anim].played [data-hero-line] { animation: lf-hero-rise 0.5s ease both; }
 [data-hero-anim].played [data-hero-line][data-hero-delay="1"] { animation-delay: 0.12s; }
 [data-hero-anim].played [data-hero-line][data-hero-delay="2"] { animation-delay: 0.24s; }
 [data-hero-anim].played [data-hero-line][data-hero-delay="3"] { animation-delay: 0.46s; }
 [data-hero-anim].played [data-hero-line][data-hero-delay="4"] { animation-delay: 0.62s; }
 [data-hero-anim].played [data-hero-line][data-hero-delay="5"] { animation-delay: 0.95s; }
 @keyframes lf-hero-rise {
-  0%   { opacity: 0; transform: translateY(18px); filter: blur(6px); }
-  60%  { opacity: 1; filter: blur(0); }
-  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 .lf-hero-scroll {
   margin-top: 38px; display: inline-flex; flex-direction: column;
@@ -970,7 +969,7 @@ html { scroll-behavior: smooth; }
   display:block; width:1px; height:36px;
   background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.7), rgba(255,255,255,0));
   background-size: 100% 200%;
-  animation: lf-scroll-pulse 2.2s ease-in-out infinite;
+  
 }
 @keyframes lf-scroll-pulse {
   0%   { background-position: 0 -100%; }
@@ -1001,7 +1000,7 @@ html { scroll-behavior: smooth; }
 }
 .lf-hero-bg--slides img.is-active {
   opacity: 1;
-  animation: lf-hero-kenburns 14s ease-in-out infinite alternate;
+  
 }
 @keyframes lf-hero-kenburns {
   0%   { transform: scale(1.18) translate3d(0, 0, 0); }
@@ -1184,7 +1183,7 @@ html { scroll-behavior: smooth; }
   gap: 24px;
   width: max-content;
   padding: 0 24px;
-  animation: lf-testi-scroll 60s linear infinite;
+  
 }
 .lf-testi-marquee:hover .lf-testi-track,
 .lf-testi-marquee:focus-within .lf-testi-track {
@@ -1253,18 +1252,15 @@ html { scroll-behavior: smooth; }
 .ab-mark::after {
   content: ''; position: absolute; left: -2%; right: -2%; bottom: 4%; height: 38%;
   background: var(--accent); opacity: 0.28; border-radius: 3px;
-  transform-origin: left center; transform: scaleX(0);
-  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s; z-index: -1;
+  transform-origin: left center; transform: scaleX(1); z-index: -1;
 }
 [data-reveal].revealed .ab-mark::after { transform: scaleX(1); }
 
 .ab-hl {
   position: relative; display: inline;
   background-image: linear-gradient(120deg, rgba(217,140,3,0.22) 0%, rgba(217,140,3,0.22) 100%);
-  background-repeat: no-repeat; background-size: 0% 60%; background-position: 0 88%;
+  background-repeat: no-repeat; background-size: 100% 60%; background-position: 0 88%;
   padding: 0 2px; color: var(--navy); font-weight: 500;
-  transition: background-size 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: calc(0.45s + var(--hl-i, 0) * 0.32s);
 }
 [data-reveal].revealed .ab-hl { background-size: 100% 60%; }
 .ab-hl[data-hl-delay="0"] { --hl-i: 0; }
@@ -1373,7 +1369,7 @@ body.mm-open .lf-nav { opacity: 0 !important; pointer-events: none !important; t
     pointer-events: none;
     transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1) !important;
   }
-  .lf-fab-call .lf-fab-pulse {
+  .lf-fab-call .lf-fab-pulse { display: none;
     position: absolute;
     inset: -2px;
     border-radius: 50%;

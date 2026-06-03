@@ -447,7 +447,7 @@ export function useAbBouwInteractions() {
           const target = parseFloat(el.dataset.count || '0');
           const decimals = parseInt(el.dataset.decimals || '0', 10);
           const suffix = el.dataset.suffix || '';
-          const dur = 1400;
+          const dur = 250;
           const start = performance.now();
           const tick = (now: number) => {
             const t = Math.min(1, (now - start) / dur);

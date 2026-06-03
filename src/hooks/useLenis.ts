@@ -31,7 +31,7 @@ export function useLenis() {
 
     // === DESKTOP PATH: Lenis met sneller duration ===
     const lenis = new Lenis({
-      lerp: 0.12,
+      lerp: 0.08,
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 1,
