@@ -14,10 +14,10 @@ export function initLpReveal(): () => void {
     const s = document.createElement('style');
     s.id = STYLE_ID;
     s.textContent =
-      '.tr [data-reveal]{opacity:0;transform:translateY(22px);' +
-      'transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1);' +
-      'transition-delay:var(--reveal-delay,0ms);will-change:opacity,transform}' +
-      '.tr [data-reveal].revealed{opacity:1;transform:none}';
+      '.tr [data-reveal]{opacity:0;' +
+      'transition:opacity .35s cubic-bezier(.25,.46,.45,.94);' +
+      'transition-delay:var(--reveal-delay,0ms);will-change:opacity}' +
+      '.tr [data-reveal].revealed{opacity:1}';
     document.head.appendChild(s);
   }
 
