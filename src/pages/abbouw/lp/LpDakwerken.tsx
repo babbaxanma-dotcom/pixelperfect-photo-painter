@@ -804,7 +804,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
             { '@type': 'City', name: 'Sint-Niklaas' },
           ],
           priceRange: '€€',
-          aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.9', reviewCount: '124', bestRating: '5' },
+
         },
         {
           '@type': 'BreadcrumbList',

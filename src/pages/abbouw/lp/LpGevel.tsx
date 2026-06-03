@@ -785,7 +785,7 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
             { '@type': 'City', name: 'Sint-Niklaas' },
           ],
           priceRange: '€€',
-          aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.9', reviewCount: '120', bestRating: '5' },
+
         },
         {
           '@type': 'BreadcrumbList',
