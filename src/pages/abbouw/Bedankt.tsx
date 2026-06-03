@@ -115,7 +115,7 @@ ${buildNav('home')}
       <div class="ab-flow-card" data-reveal data-reveal-delay="1">
         <div class="ab-flow-num">FASE 02</div>
         <h5>Telefonische intake</h5>
-        <p>Eerstvolgende werkdag. Een kort gesprek (10 à 15 min) waarin we luisteren naar uw plannen. Geen verkooppraatje, geen druk.</p>
+        <p>Eerstvolgende werkdag. Een kort gesprek (10 à 15 min) waarin we luisteren naar uw plannen en eerlijk aangeven wat haalbaar is.</p>
       </div>
       <div class="ab-flow-card" data-reveal data-reveal-delay="2">
         <div class="ab-flow-num">FASE 03</div>
@@ -221,7 +221,7 @@ ${buildNav('home')}
         <div class="lf-blog-body">
           <span class="lf-blog-tag">Premie-gids</span>
           <h3>Welke premies krijgt u in 2026?</h3>
-          <p>Mijn VerbouwPremie in mensentaal — wat u kunt krijgen, hoe het werkt, en wat wij voor u regelen.</p>
+          <p>Mijn VerbouwPremie in mensentaal — wat in 2026 nog kan, wat het 6% BTW-tarief oplevert, en wat wij voor u regelen.</p>
         </div>
       </a>
       <a href="/werkwijze" class="lf-blog-card" data-reveal data-reveal-delay="2">

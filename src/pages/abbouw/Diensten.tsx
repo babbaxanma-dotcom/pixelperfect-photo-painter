@@ -27,14 +27,14 @@ const services = [
   {
     id: 'ecologisch', img: svcEco, n: '02', title: 'AB Ecologisch',
     tag: 'Duurzaam bouwen',
-    intro: 'Energetische renovaties en bio-ecologisch bouwen. Warmtepomp, dak- en spouwisolatie, kalkpleister, houtskeletbouw en zonnepanelen, alles in één dossier, met de premieaanvraag inbegrepen.',
+    intro: 'Energetische renovaties en bio-ecologisch bouwen. Warmtepomp, dak- en spouwisolatie, kalkpleister, houtskeletbouw en zonnepanelen, alles in één dossier. Wij rekenen vooraf uit op welke steun (6% btw-tarief, Mijn VerbouwLening, en eventueel premie) u recht heeft.',
     deep: 'Sinds 2022 is AB Ecologisch onze snelst groeiende divisie. De reden is simpel: een goed geïsoleerde woning met warmtepomp betaalt zichzelf terug op vijf tot zeven jaar via de lagere energiefactuur en de Mijn VerbouwPremie. Wij berekenen vooraf het exacte rendement op basis van uw EPC-attest en geven u één offerte voor het volledige pakket.',
     bullets: [
       'Lucht/water-warmtepompen (Daikin, Mitsubishi, Vaillant)',
       'Dakisolatie PIR/PUR/cellulose, K-waarde tot K30',
       'Spouwmuurisolatie en na-isolatie buitengevels',
       'Houtskeletbouw en strobalenbouw op aanvraag',
-      'Premiedossier Mijn VerbouwPremie + Fluvius',
+      'Voordeeldossier: 6% btw, Mijn VerbouwLening, Fluvius en premie-check',
     ],
     href: '/ecologisch',
   },
@@ -210,7 +210,7 @@ ${buildHero({
           <li>Wekelijks werfrapport met foto's</li>
           <li>Stortkosten en afvalcontainer</li>
           <li>Beschermingsmateriaal (vloeren, meubilair)</li>
-          <li>Indienen Mijn VerbouwPremie</li>
+          <li>Steun- en premie-check (btw 6%, Mijn VerbouwLening, Fluvius)</li>
           <li>10-jarige aansprakelijkheid &amp; verzekering</li>
           <li>Oplevering met opleveringsverslag</li>
           <li>Nacontrole 1 jaar na oplevering</li>
@@ -234,9 +234,9 @@ ${buildHero({
         <p>Wij stellen het dossier op en volgen het op tot goedkeuring.</p>
       </div>
       <div class="lf-support-card" data-reveal data-reveal-delay="1">
-        <div class="lf-support-meta"><span>02</span> Premies</div>
-        <h5>Mijn VerbouwPremie &amp; Fluvius</h5>
-        <p>Gemiddeld €4.200 terug per renovatie. Wij dienen alles in.</p>
+        <div class="lf-support-meta"><span>02</span> Financieel voordeel</div>
+        <h5>Btw 6%, lening &amp; premie-check</h5>
+        <p>Wij rekenen uit op welke steun u recht heeft en regelen de aanvraag.</p>
       </div>
       <div class="lf-support-card" data-reveal data-reveal-delay="2">
         <div class="lf-support-meta"><span>03</span> Nazorg</div>

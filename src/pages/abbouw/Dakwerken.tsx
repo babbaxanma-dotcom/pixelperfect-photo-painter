@@ -22,7 +22,7 @@ const types = [
       ['Levensduur', '50 tot 80 jaar'],
       ['Isolatie K-peil', 'tot K30 mogelijk'],
       ['Helling', '20° tot 60°'],
-      ['Premie', 'Tot €40/m² dakisolatie'],
+      ['BTW-tarief', '6% bij renovatie woning >10 jaar'],
       ['Doorlooptijd', '8 tot 14 werkdagen'],
     ],
     bullets: [
@@ -41,7 +41,7 @@ const types = [
       ['Levensduur', '60 tot 100 jaar (natuurlei)'],
       ['Plaatsing', 'Diamant of vierkant patroon'],
       ['Helling', 'minimum 25°'],
-      ['Premie', 'Tot €40/m² dakisolatie'],
+      ['BTW-tarief', '6% bij renovatie woning >10 jaar'],
       ['Doorlooptijd', '10 tot 18 werkdagen'],
     ],
     bullets: [
@@ -57,10 +57,10 @@ const types = [
     intro: 'Eén stuk synthetisch rubber over uw volledig dak. Geen lassen, geen naden, geen lekrisico aan verbindingen.',
     specs: [
       ['Materialen', 'Firestone RubberCover, Carlisle'],
-      ['Levensduur', '50+ jaar (gegarandeerd)'],
+      ['Levensduur', '50+ jaar'],
       ['Dikte', '1,2 of 1,5 mm'],
       ['Isolatie', 'PIR 100 tot 180 mm'],
-      ['Premie', 'Tot €40/m² dakisolatie'],
+      ['BTW-tarief', '6% bij renovatie woning >10 jaar'],
       ['Doorlooptijd', '4 tot 8 werkdagen'],
     ],
     bullets: [
@@ -79,7 +79,7 @@ const types = [
       ['Levensduur', '25 tot 35 jaar'],
       ['Opbouw', 'Dampscherm + PIR + 2 lagen bitumen'],
       ['Afwerking', 'Met of zonder leislag'],
-      ['Premie', 'Tot €40/m² dakisolatie'],
+      ['BTW-tarief', '6% bij renovatie woning >10 jaar'],
       ['Doorlooptijd', '5 tot 10 werkdagen'],
     ],
     bullets: [
@@ -98,14 +98,15 @@ const types = [
       ['Diktes', '120 tot 240 mm'],
       ['λ-waarde', '0,022 (PIR) tot 0,040 (glaswol)'],
       ['Plaatsing', 'Tussen kepers of op kepers (sarking)'],
-      ['Premie', 'Mijn VerbouwPremie tot €40/m²'],
+      ['Financiering', '6% BTW + Mijn VerbouwLening (renteloos)'],
+      ['Premie', 'Voorwaardelijk — wij checken uw dossier'],
       ['Doorlooptijd', '2 tot 6 werkdagen'],
     ],
     bullets: [
       'Vooraf advies over dampscherm en luchtdichtheid',
-      'Premiedossier door ons ingediend',
+      'Wij checken of u recht hebt op premie of VerbouwLening',
       'Combineerbaar met dakvervanging (sarking)',
-      'EPC-stijging gemiddeld 80 punten',
+      'Merkbaar lagere energiefactuur en hoger EPC-label',
     ],
   },
   {
@@ -136,7 +137,7 @@ const types = [
       ['Types', 'Tuimel, klap-tuimel, schuif'],
       ['Beglazing', 'HR++ of HR+++'],
       ['Bediening', 'Manueel of elektrisch'],
-      ['Premie', 'Mogelijk via beglazingspremie'],
+      ['BTW-tarief', '6% bij renovatie woning >10 jaar'],
       ['Doorlooptijd', '2 tot 4 dagen per venster'],
     ],
     bullets: [
@@ -167,12 +168,12 @@ ${buildHero({
       <div data-reveal>
         <span class="lf-eyebrow">AB Dakwerken</span>
         <h2 class="lf-h2">Een dak is geen<br/><span class="ab-mark">quick fix</span>.</h2>
-        <p class="lf-lede">We bekijken uw dak als <span class="ab-hl" data-hl-delay="0">systeem</span>, niet als losse pannen. <span class="ab-hl" data-hl-delay="1">Eerlijk advies</span> over wat écht nodig is. Actief in Willebroek, Mechelen, Antwerpen, Lier, Bornem en heel Vlaanderen.</p>
+        <p class="lf-lede">We bekijken uw dak als <span class="ab-hl" data-hl-delay="0">systeem</span>, niet als losse pannen. <span class="ab-hl" data-hl-delay="1">Eerlijk advies</span> over wat écht nodig is. Actief in Mechelen, Antwerpen, Lier, Bornem en heel Vlaanderen.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen ploeg van 6 vaste dakdekkers</li>
           <li>Gratis dakinspectie met fotorapport</li>
           <li>10-jaar garantie op waterdichtheid</li>
-          <li>Aanvraag Mijn VerbouwPremie inbegrepen</li>
+          <li>Premie- en VerbouwLening-check op uw situatie</li>
         </ul>
       </div>
       <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgIntro}" alt="Overzicht dak" loading="lazy"/></div>
@@ -258,10 +259,10 @@ ${buildHero({
       <h2 class="lf-h2">Van inspectie tot<br/>oplevering.</h2>
     </div>
     <div class="ab-flow">
-      <div class="ab-flow-card" data-reveal><div class="ab-flow-num">STAP 01</div><h5>Dakinspectie</h5><p>Gratis bezoek met fotorapport en eerlijke diagnose. Geen verkoopgesprek.</p></div>
+      <div class="ab-flow-card" data-reveal><div class="ab-flow-num">STAP 01</div><h5>Dakinspectie</h5><p>Gratis bezoek met fotorapport en een eerlijke diagnose van de staat van uw dak.</p></div>
       <div class="ab-flow-card" data-reveal data-reveal-delay="1"><div class="ab-flow-num">STAP 02</div><h5>Offerte &amp; advies</h5><p>Vaste prijs met opties: enkel herstellen vs. volledige renovatie.</p></div>
       <div class="ab-flow-card" data-reveal data-reveal-delay="2"><div class="ab-flow-num">STAP 03</div><h5>Werf weersafhankelijk</h5><p>Planning met buffer voor regen. Dak nooit langer dan 24u open.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="3"><div class="ab-flow-num">STAP 04</div><h5>Oplevering</h5><p>Lekvrij verklaard, garantieattesten en premiedossier in orde.</p></div>
+      <div class="ab-flow-card" data-reveal data-reveal-delay="3"><div class="ab-flow-num">STAP 04</div><h5>Oplevering</h5><p>Lekvrij verklaard, garantieattesten in orde en — indien van toepassing — uw premie- of VerbouwLening-dossier.</p></div>
     </div>
   </div>
 </section>
@@ -282,7 +283,7 @@ ${buildHero({
           <li>Beschermingszeil en buurtbescherming</li>
           <li>Afvoer en stortkosten oude dakbedekking</li>
           <li>Volledige onderkant: tengels, panlatten, onderdak</li>
-          <li>Indienen Mijn VerbouwPremie</li>
+          <li>Premie- en financieringscheck (VerbouwLening, 6% BTW)</li>
           <li>10-jaar garantie waterdichtheid</li>
           <li>Eindcontrole met thermografisch beeld (op vraag)</li>
         </ul>
@@ -300,7 +301,7 @@ ${buildHero({
     </div>
     <div class="ab-faq">
       <details data-reveal><summary>Hoe lang duurt een volledige dakvervanging?</summary><div class="ab-faq-body"><p>Een gemiddelde gezinswoning (ca. 100 m²) doen we in 8 tot 14 werkdagen. Bij regen werken we niet aan een open dak, daarom plannen we 2 tot 3 reservedagen in.</p></div></details>
-      <details data-reveal><summary>Krijg ik premie voor dakisolatie?</summary><div class="ab-faq-body"><p>Ja, tot €40/m² via Mijn VerbouwPremie (R-waarde minstens 4,5 m²K/W). Wij dienen het dossier voor u in.</p></div></details>
+      <details data-reveal><summary>Krijg ik nog premie voor dakisolatie?</summary><div class="ab-faq-body"><p>Sinds 1 maart 2026 is de isolatiepremie via Mijn VerbouwPremie afgebouwd voor de meeste inkomenscategorieën. Voor wie nog in aanmerking komt, dienen wij het dossier in (R-waarde minstens 4,5 m²K/W). Komt u niet in aanmerking, dan blijft het 6%-BTW-tarief gelden en kunt u een renteloze Mijn VerbouwLening aanvragen. Wij checken uw concrete situatie vooraf.</p></div></details>
       <details data-reveal><summary>Wat als ik enkel een lekkage heb?</summary><div class="ab-faq-body"><p>Geen probleem. Ongeveer 30% van onze dakopdrachten zijn herstellingen, met dezelfde garantie als grotere werken.</p></div></details>
       <details data-reveal><summary>Hoe lang gaat een nieuw dak mee?</summary><div class="ab-faq-body"><p>Keramische pannen 50–80 jaar, natuurleien 60–100 jaar, EPDM 50+ jaar, bitumen 25–35 jaar, natuurzink 60–80 jaar.</p></div></details>
     </div>
@@ -344,7 +345,7 @@ export default function Dakwerken() {
     document.title = "Dakwerken Mechelen, Antwerpen & Vlaanderen — AB Bouw Groep";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', "Dakwerken in Willebroek, Mechelen, Antwerpen en heel Vlaanderen. EPDM, leien, pannen, dakisolatie en zinkwerk door eigen dakdekkers. 10 jaar garantie, premiedossier inbegrepen.");
+    m.setAttribute('content', "Dakwerken in Mechelen, Antwerpen, Lier en heel Vlaanderen. EPDM, leien, pannen, dakisolatie en zinkwerk door eigen dakdekkers. 10 jaar garantie, 6% BTW en premie-check inbegrepen.");
 
     // Service schema voor lokale SEO
     let ld = document.getElementById('jsonld-service-dakwerken');

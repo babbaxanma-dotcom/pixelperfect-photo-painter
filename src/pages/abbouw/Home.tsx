@@ -160,7 +160,7 @@ const HTML = (i: Record<string, string>) => `
             <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
             <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
           </div>
-          <span class="lf-reviews-count">184+ tevreden klanten</span>
+          <span class="lf-reviews-count">Gebaseerd op 184+ reviews</span>
         </div>
       </div>
     </div>
@@ -438,7 +438,7 @@ const HTML = (i: Record<string, string>) => `
           <div class="lf-why-tile" data-why-step="0" data-why-card style="--why-i:0;--why-total:4">
             <div class="lf-why-meta"><span class="lf-why-num">01</span><span class="lf-why-label">Ontzorging</span></div>
             <h5>Wij regelen ook de papierwinkel</h5>
-            <p>Stedenbouwkundige vergunning, EPB-verslag, premieaanvraag Mijn VerbouwPremie en oplevering bij de architect. <span class="ab-hl" data-hl-delay="0">U tekent, wij regelen</span>.</p>
+            <p>Stedenbouwkundige vergunning, EPB-verslag, premie- en financieringscheck en oplevering bij de architect. <span class="ab-hl" data-hl-delay="0">U tekent, wij regelen</span>.</p>
           </div>
         </div>
         <div class="lf-why-slot" data-why-slot data-reveal data-reveal-delay="1">
@@ -675,8 +675,8 @@ const HTML = (i: Record<string, string>) => `
       </div>
       <div class="lf-support-card" data-reveal data-reveal-delay="1" data-support-card>
         <div class="lf-support-meta"><span>02</span> Premies</div>
-        <h5>Premies aangevraagd</h5>
-        <p>Mijn VerbouwPremie en Fluvius, berekend, aangevraagd en opgevolgd.</p>
+        <h5>Voordelen uitgezocht</h5>
+        <p>Btw 6%, Mijn VerbouwLening en eventuele premies: we checken waar u recht op heeft en regelen de aanvraag.</p>
       </div>
       <div class="lf-support-card" data-reveal data-reveal-delay="2" data-support-card>
         <div class="lf-support-meta"><span>03</span> Nazorg</div>
@@ -721,7 +721,7 @@ const HTML = (i: Record<string, string>) => `
           { q: 'Hoe lang duurt een gemiddelde renovatie?', a: 'Een totaalrenovatie van een rijwoning duurt gemiddeld 4 tot 6 maanden, afhankelijk van de omvang. Een dakrenovatie is meestal klaar binnen 2 weken, een badkamer binnen 4 weken. U krijgt vooraf een gedetailleerde planning met opleverdatum.' },
           { q: 'Wat kost een plaatsbezoek?', a: 'Niets. Het eerste plaatsbezoek en het opmaken van een offerte zijn volledig gratis en vrijblijvend. U bent tot niets verplicht, pas bij ondertekening van het contract gaan we van start.' },
           { q: 'Wie staat er op mijn werf?', a: 'Onze 23 vakmensen, metselaars, dakdekkers, tegelzetters en schrijnwerkers, zijn allemaal in vaste dienst. Enkel zeer gespecialiseerd werk (zoals liftinstallatie of zwembadtechniek) besteden we uit aan vaste partners die wij sinds jaren kennen.' },
-          { q: 'Welke premies kan ik krijgen?', a: 'Voor energetische renovaties komt u in aanmerking voor Mijn VerbouwPremie (tot €13.000) en eventueel Fluvius-premies. Wij berekenen vooraf op welke u recht heeft en dienen de aanvraag voor u in. Gemiddeld krijgen onze klanten €4.200 terug.' },
+          { q: 'Welke premies of voordelen kan ik krijgen?', a: 'Voor renovatie van een woning ouder dan tien jaar geldt sowieso het verlaagde btw-tarief van 6%, en u kunt een Mijn VerbouwLening (0%) aanvragen. Sinds 1 maart 2026 is de premie voor dak- en gevelisolatie voor de meeste eigenaars (inkomenscategorie 1 en 2) weggevallen; of u nog recht heeft op Mijn VerbouwPremie of Fluvius-premies hangt af van uw inkomenscategorie. Wij checken dit vooraf en dienen het dossier in als u in aanmerking komt.' },
           { q: 'Krijg ik garantie op het werk?', a: 'Ja. U krijgt de wettelijke 10-jarige aansprakelijkheid op stabiliteit en waterdichtheid (verzekerd via Federale Verzekering, polis 24/0089), én 2 jaar garantie op afwerking. Defect binnen de garantieperiode? Wij staan binnen 48 uur op uw stoep.' },
           { q: 'Kunnen jullie ook met mijn architect samenwerken?', a: 'Zeker. We werken vaak samen met de architect die u zelf gekozen heeft. Heeft u nog geen architect? Wij brengen u in contact met drie architecten uit ons partnernetwerk waarmee we al jaren samenwerken.' },
         ].map((f, i) => `

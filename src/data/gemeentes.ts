@@ -24,7 +24,7 @@ export const GEMEENTES: Record<string, Gemeente> = {
     neighborhoods: ["Walem", "Hombeek", "Leest", "Muizen", "Battel"],
     intro: "Mechelen is onze thuisbasis. We werken hier dagelijks aan dakwerken, gevelrenovatie en totaalrenovatie. Korte aanrijtijden, vertrouwde leveranciers, eigen ploeg ter plaatse in 30 minuten.",
     highlights: [
-      "Erkend aannemer in Mechelen sinds 2010",
+      "Actief bouwbedrijf in Mechelen sinds 2010",
       "100+ realisaties in Walem, Hombeek, Muizen, Leest, Battel",
       "Materialen rechtstreeks via lokale BE leveranciers (Vandersanden, Koramic, Wienerberger)",
       "Kennis van klassieke Mechelse rijwoning + nieuwbouw verkavelingen Nekkerpark/Vrijbroek"
@@ -72,12 +72,12 @@ export const GEMEENTES: Record<string, Gemeente> = {
     postcode: "2880",
     lat: 51.1014,
     lng: 4.2417,
-    intro: "Bornem en omgeving — rijwoningen, halfopen en vrijstaande nieuwbouw langs de Scheldedijken. Volledige gevel- en dakwerken inclusief premie-dossier.",
+    intro: "Bornem en omgeving — rijwoningen, halfopen en vrijstaande nieuwbouw langs de Scheldedijken. Volledige gevel- en dakwerken inclusief premie- en financieringscheck (6% BTW).",
     highlights: [
       "Sarkingisolatie + nieuwe pannendaken halfopen woningen",
       "Crepi + ETICS gevelisolatie typische Bornemse rijwoning",
       "Stormschade herstel langs de Schelde",
-      "Premiedossier Mijn VerbouwPremie tot €5.750"
+      "6% BTW-tarief; premie-check op uw inkomenscategorie"
     ],
     reviewCount: 9,
     rating: "5.0"
@@ -196,7 +196,7 @@ export const GEMEENTES: Record<string, Gemeente> = {
       "Gevelrenovatie typische Vilvoordse rijwoning",
       "EPDM platte daken appartementsgebouwen",
       "Asbestverwijdering + heropbouw — courante problematiek 1960-1980 woningen",
-      "Premiedossier + EPC-attest inbegrepen"
+      "6% BTW + EPC-attest; premie-check op uw inkomenscategorie"
     ],
     reviewCount: 5,
     rating: "5.0"
@@ -245,7 +245,7 @@ export const GEMEENTES: Record<string, Gemeente> = {
       "Pannendaken + dakgoten klassieke Duffelse rijwoningen",
       "ETICS-buitenisolatie voor EPC-sprong",
       "Plat dak EPDM voor garages en aanbouwen",
-      "Volledige offerte inclusief premiedossier"
+      "Volledige offerte inclusief premie- en financieringscheck"
     ],
     reviewCount: 6,
     rating: "5.0"

@@ -68,7 +68,7 @@ export const BLOGS: BlogPost[] = [
       <h3>3. Wat kost label E → C?</h3>
       <p>Voor een gemiddelde rijwoning rekent u op € 35.000 tot € 60.000 voor de volledige sprong, premies niet meegerekend. Met Mijn VerbouwPremie en de juiste fasering blijft de netto-investering vaak onder € 40.000.</p>
       <h3>4. Waarom 2028 dichterbij is dan u denkt</h3>
-      <p>De vergunningstermijnen, wachttijden bij aannemers en levertijden van materialen lopen op. Wie pas in 2027 begint, zit krap. Wie nu start, kiest het beste seizoen, de beste prijs en het beste team.</p>
+      <p>De vergunningstermijnen, wachttijden bij aannemers en levertijden van materialen lopen op. Wie pas in 2027 begint, zit krap. Wie nu start, heeft meer keuze in planning, prijs en uitvoeringsperiode.</p>
       <h3>Ons advies</h3>
       <p>Vraag een EPC-audit aan vóór u iets uitvoert. Op basis daarvan maken wij een fasering over twee tot drie jaar — geen werk dubbelop, geen onnodige uitgaven.</p>
     `,
@@ -194,7 +194,7 @@ export const BLOGS: BlogPost[] = [
       <h3>5. Wat veel mensen vergeten</h3>
       <p>Btw-tarief van 6% voor woningen ouder dan 10 jaar geldt nog altijd. Op een totaalrenovatie van € 80.000 is dat € 12.800 minder dan aan 21%.</p>
       <h3>Ons advies</h3>
-      <p>Wij dienen alle premies standaard mee in. Eén dossier, één opvolger, één afrekening. U doet niets — behalve handtekenen.</p>
+      <p>Sinds 1 maart 2026 verviel de dak- en gevelisolatiepremie voor de meeste eigenaars (inkomenscategorie 1 en 2). Wat overblijft: het 6% BTW-tarief en de Mijn VerbouwLening (0%). Wij checken of u nog premie-recht heeft en dienen het dossier in als dat zo is.</p>
     `,
   },
   {

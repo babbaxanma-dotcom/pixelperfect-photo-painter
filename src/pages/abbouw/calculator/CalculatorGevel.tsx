@@ -254,13 +254,13 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
       {state.step === 3 && (
         <div className="calc-step">
           <h2 className="calc-q">Wenst u ook isolatie?</h2>
-          <p className="calc-q-sub">ETICS-buitenisolatie + crepi = <span className="calc-em">tot €5.000 premie</span> + warmer huis.</p>
+          <p className="calc-q-sub">ETICS-buitenisolatie + crepi = <span className="calc-em">6% BTW</span> + fors warmer huis.</p>
           <div className="calc-options calc-options-2col">
             <button type="button" className={`calc-opt-card ${state.isolatie === 'ja' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'ja' }); setTimeout(next, 220); }}>
               <div className="calc-opt-img"><img src={imgIsolatieJa} alt="ETICS isolatie"/></div>
               <div className="calc-opt-body">
                 <strong>Ja — ETICS isolatie</strong>
-                <span>Buitenisolatie + crepi-afwerking, premie inbegrepen</span>
+                <span>Buitenisolatie + crepi-afwerking, 6% BTW-tarief</span>
               </div>
             </button>
             <button type="button" className={`calc-opt-card ${state.isolatie === 'nee' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'nee' }); setTimeout(next, 220); }}>
@@ -408,7 +408,7 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
             <div className="calc-trust-item"><strong>★ 4,9 / 5</strong><span>184+ tevreden klanten</span></div>
             <div className="calc-trust-item"><strong>10 jaar</strong><span>garantie via Federale Verzekering</span></div>
             <div className="calc-trust-item"><strong>Eigen ploeg</strong><span>geen onderaannemers</span></div>
-            <div className="calc-trust-item"><strong>Sinds 2010</strong><span>erkend bouwbedrijf in Willebroek</span></div>
+            <div className="calc-trust-item"><strong>Sinds 2010</strong><span>actief in heel Vlaanderen</span></div>
           </div>
         </div>
       </section>

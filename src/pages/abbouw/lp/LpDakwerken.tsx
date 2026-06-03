@@ -414,7 +414,7 @@ const HTML = `
     <div class="tr-hero-bg"><img src="${heroClassic}" alt="Dakwerken Vlaanderen" /></div>
     <div class="tr-hero-inner">
       <div class="tr-wrap">
-        <h1>Het vakkundigste dakwerk van Vlaanderen.</h1>
+        <h1>Vakkundig dakwerk in heel Vlaanderen.</h1>
         <p class="tr-hero-sub">Daklek of toe aan vervanging? Bel voor een gratis offerte. <b>Eigen dakdekkers</b>, actief in Mechelen, Antwerpen, Lier en heel Vlaanderen.</p>
         <div class="tr-hero-cta">
           <a href="#contact" class="tr-btn">Gratis offerte aanvragen</a>
@@ -498,7 +498,7 @@ const HTML = `
         </div>
         <div class="tr-about-body">
           <span class="tr-eyebrow">Over AB Bouw Groep</span>
-          <h2>Uw erkende dakwerker in heel Vlaanderen</h2>
+          <h2>Uw dakwerker in heel Vlaanderen</h2>
           <p class="tr-about-intro">AB Bouw Groep werkt met een eigen vaste ploeg. Wij verzorgen dakrenovatie, plat dak, dakisolatie en zinkwerk van A tot Z.</p>
           <ul class="tr-checks">
             <li>${icCheck}<span><b>Offerte = factuur, ook bij prijsstijgingen</b></span></li>
@@ -969,8 +969,8 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
   const renderedHtml = local
     ? HTML
         .replace(
-          'Het vakkundigste dakwerk van Vlaanderen.',
-          `Het vakkundigste dakwerk van ${local.name}.`,
+          'Vakkundig dakwerk in heel Vlaanderen.',
+          `Vakkundig dakwerk in ${local.name}.`,
         )
         .replace(
           'actief in Mechelen, Antwerpen, Lier en heel Vlaanderen.',

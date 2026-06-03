@@ -39,7 +39,7 @@ const types = [
       ['Technieken', 'Volledig vernieuwd'],
       ['Isolatie', 'Dak, gevel en vloer in één'],
       ['Doorlooptijd', '4 tot 7 maanden'],
-      ['Premie', 'Mijn VerbouwPremie inbegrepen'],
+      ['Fiscaal', '6% BTW + Mijn VerbouwLening'],
     ],
     bullets: [
       'Bewoonbaarheidsplan: in welke fase u kunt blijven',
@@ -257,7 +257,8 @@ ${buildHero({
       <details data-reveal><summary>Hoe lang duurt een totaalrenovatie?</summary><div class="ab-faq-body"><p>Een rijwoning gemiddeld 4 tot 6 maanden, een grotere woning 6 tot 8 maanden. U krijgt vooraf een gedetailleerde kalender met opleverdatum.</p></div></details>
       <details data-reveal><summary>Wat kost een plaatsbezoek?</summary><div class="ab-faq-body"><p>Niets. Het eerste plaatsbezoek én de offerte zijn gratis en vrijblijvend.</p></div></details>
       <details data-reveal><summary>Krijg ik een vaste prijs?</summary><div class="ab-faq-body"><p>Ja. U krijgt een bindende offerte met gedetailleerde meetstaat. Meerwerk wordt enkel uitgevoerd na uw schriftelijke goedkeuring.</p></div></details>
-      <details data-reveal><summary>Welke garantie krijg ik?</summary><div class="ab-faq-body"><p>10 jaar wettelijke aansprakelijkheid op stabiliteit en waterdichtheid (verzekerd via Federale Verzekering), plus 2 jaar op afwerking.</p></div></details>
+      <details data-reveal><summary>Welke garantie krijg ik?</summary><div class="ab-faq-body"><p>10 jaar wettelijke aansprakelijkheid op stabiliteit en waterdichtheid, verzekerd via Federale Verzekering.</p></div></details>
+      <details data-reveal><summary>Welke premies en voordelen zijn er?</summary><div class="ab-faq-body"><p>Wij bekijken voor welke voordelen u in aanmerking komt: het 6% BTW-tarief (voor woningen ouder dan 10 jaar) en de Mijn VerbouwLening. Behoort u tot de juiste inkomenscategorie, dan regelen wij ook uw Mijn VerbouwPremie-dossier.</p></div></details>
     </div>
   </div>
 </section>

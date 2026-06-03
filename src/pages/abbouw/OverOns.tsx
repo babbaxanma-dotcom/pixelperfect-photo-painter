@@ -18,7 +18,7 @@ ${buildHero({
   bg: hero,
   eyebrow: '15 jaar ervaring',
   title: 'Bouwen aan vertrouwen,<br/>steen voor <span style="color:var(--accent)">steen</span>.',
-  lede: 'Wat begon als een eenmanszaak in Willebroek groeide uit tot een Vlaamse bouwgroep met zes specialisaties en 23 vakmensen in vaste dienst, zonder ooit de menselijke aanpak te verliezen.',
+  lede: 'Wat begon als een eenmanszaak groeide uit tot een Vlaamse bouwgroep met zes specialisaties en 23 vakmensen in vaste dienst, zonder ooit de persoonlijke aanpak te verliezen.',
   primary: { label: 'Plan een kennismaking', href: '/contact' },
   secondary: { label: 'Bekijk ons werk →', href: '/realisaties' },
 })}
@@ -30,7 +30,7 @@ ${buildHero({
       <div data-reveal>
         <span class="lf-eyebrow">Wie we zijn</span>
         <h2 class="lf-h2">Een familiebedrijf<br/>met vakmensen in dienst.</h2>
-        <p class="lf-lede">AB Bouw Groep is geen tussenpersoon en geen losse bende onderaannemers. Onze metselaars, dakdekkers, tegelzetters en schrijnwerkers staan op onze eigen loonlijst. Daardoor kunnen we instaan voor één planning, één prijs en één kwaliteitsstandaard, van de eerste schop tot de laatste plint.</p>
+        <p class="lf-lede">AB Bouw Groep werkt niet met een wisselende keten van onderaannemers. Onze metselaars, dakdekkers, tegelzetters en schrijnwerkers staan op onze eigen loonlijst. Daardoor kunnen we instaan voor één planning, één prijs en één kwaliteitsstandaard, van de eerste schop tot de laatste plint.</p>
         <p class="lf-lede">Onze klanten zijn particulieren die hun gezinswoning bouwen of grondig renoveren, architecten die een uitvoerder zoeken die meedenkt, en kleine ondernemers die hun zaak laten verbouwen zonder de zaak stil te leggen. Wat ze gemeen hebben: ze willen één aanspreekpunt en een resultaat dat lang meegaat.</p>
       </div>
       <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${about}" alt="AB Bouw Groep ploeg op de werf in Willebroek" loading="lazy"/></div>
@@ -48,7 +48,7 @@ ${buildHero({
     </div>
     <div class="ab-pillars">
       <article class="ab-pillar" data-reveal>
-        <div class="ab-pillar-img"><img src="${vakmanInterieur}" alt="Schrijnwerker werkt aan maatkast" loading="lazy"/></div>
+        <div class="ab-pillar-img"><img src="${vakmanInterieur}" alt="Werfleider en opdrachtgevers bespreken het bouwplan op de werf" loading="lazy"/></div>
         <div class="ab-pillar-body">
           <span class="ab-pillar-num">01</span>
           <h3>Vakmanschap in vaste dienst</h3>
@@ -56,7 +56,7 @@ ${buildHero({
         </div>
       </article>
       <article class="ab-pillar" data-reveal data-reveal-delay="1">
-        <div class="ab-pillar-img"><img src="${vakmanDak}" alt="Dakdekker plaatst Koramic dakpannen" loading="lazy"/></div>
+        <div class="ab-pillar-img"><img src="${vakmanDak}" alt="Dakdekker plaatst keramische dakpannen op een hellend dak" loading="lazy"/></div>
         <div class="ab-pillar-body">
           <span class="ab-pillar-num">02</span>
           <h3>Eén prijs, geen verrassingen</h3>
@@ -103,7 +103,7 @@ ${buildHero({
     <div class="ab-facts">
       <div class="ab-fact" data-reveal><div class="ab-fact-num">15</div><div class="ab-fact-lbl">Jaar ervaring</div></div>
       <div class="ab-fact" data-reveal data-reveal-delay="1"><div class="ab-fact-num">23</div><div class="ab-fact-lbl">Vakmensen in vaste dienst</div></div>
-      <div class="ab-fact" data-reveal data-reveal-delay="2"><div class="ab-fact-num">184+</div><div class="ab-fact-lbl">Opgeleverde projecten</div></div>
+      <div class="ab-fact" data-reveal data-reveal-delay="2"><div class="ab-fact-num">150+</div><div class="ab-fact-lbl">Opgeleverde projecten</div></div>
       <div class="ab-fact" data-reveal data-reveal-delay="3"><div class="ab-fact-num">6</div><div class="ab-fact-lbl">Specialisaties onder één dak</div></div>
     </div>
   </div>
@@ -140,7 +140,7 @@ ${buildHero({
           ['04','Wekelijks werfrapport','Elke vrijdag krijgt u een korte mail met foto\\u2019s, gewerkte uren en de planning voor de volgende week. U weet altijd waar we staan.','Foto\\u2019s van de week·Gewerkte uren per fase·Planning vooruit'],
           ['05','Eén factuur per fase','Geen losse rekeningen van metselaar, dakwerker en tegelzetter. Eén schijf per fase, telkens nadat u die fase samen met ons heeft opgeleverd.','Eén aanspreekpunt voor facturatie·Schijf na oplevering fase·Geen voorschotten zonder werk'],
           ['06','Werf opgeruimd op vrijdag','Standaard inbegrepen. Vloeren afgedekt, materiaal gestapeld, container leeg. U gebruikt uw woning gewoon door tijdens de werken.','Stof­schotten & vloerbescherming·Container wekelijks geleegd·Sanitair blijft bruikbaar'],
-          ['07','Premiedossier door ons','Mijn VerbouwPremie en Fluvius worden door onze EPB-verslaggever ingediend. Gemiddeld goed voor \\u20ac4.200 retour per renovatieproject.','EPB-verslaggever in huis·Mijn VerbouwPremie + Fluvius·Gemiddeld \\u20ac4.200 retour'],
+          ['07','Premies & financiering geregeld','Wij rekenen het 6%-BTW-tarief correct toe waar u recht op heeft en bekijken samen of u in aanmerking komt voor de Mijn VerbouwLening of een resterende premie. Onze EPB-verslaggever dient een eventueel dossier voor u in.','6%-BTW waar van toepassing·Mijn VerbouwLening bekeken·Premie-check op uw situatie'],
           ['08','Nacontrole na 1 jaar','Krimpscheuren, deuren bijregelen, voegen nakijken. Eén jaar na oplevering komen we gratis langs voor een eindcontrole.','Gratis nacontrole·Bijregelen inbegrepen·10 jaar aansprakelijkheid'],
         ].map(([n,t,d,b], i) => `
           <article class="ab-promise-panel${i===0?' is-active':''}" data-promise-panel="${i}">
@@ -190,7 +190,7 @@ ${buildHero({
         <div class="ab-cert"><strong>10-jarige aansprakelijkheid</strong><span>Polis stabiliteit &amp; waterdichtheid bij Federale Verzekering</span></div>
         <div class="ab-cert"><strong>BTW &amp; KBO geregistreerd</strong><span>BE 0712.443.881 · lid Bouwunie</span></div>
         <div class="ab-cert"><strong>EPB-verslaggever in huis</strong><span>Voor renovatie- en nieuwbouwdossiers</span></div>
-        <div class="ab-cert"><strong>Erkend voor Mijn VerbouwPremie</strong><span>Wij dienen het premiedossier voor u in</span></div>
+        <div class="ab-cert"><strong>6%-BTW &amp; Mijn VerbouwLening</strong><span>Correcte tarieftoepassing en begeleiding bij financiering</span></div>
         <div class="ab-cert"><strong>Eigen ploegen, geen schijnzelfstandigen</strong><span>Alle vakmensen in vaste dienst, RSZ in orde</span></div>
       </div>
     </div>

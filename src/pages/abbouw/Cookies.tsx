@@ -32,7 +32,7 @@ ${NAV}
 
         <div style="border: 1px solid var(--ink-line); border-radius: var(--r-md); overflow: hidden; margin-top: 16px;">
           <div style="background: var(--bg-soft); padding: 16px 20px; border-bottom: 1px solid var(--ink-line);">
-            <strong style="font-size: 14px;">🟢 Functionele cookies (altijd actief)</strong>
+            <strong style="font-size: 14px;">Functionele cookies (altijd actief)</strong>
           </div>
           <div style="padding: 16px 20px;">
             <p style="color: var(--ink-soft); font-size: 14px; line-height: 1.6;">Deze cookies zijn strikt noodzakelijk voor het correct functioneren van de website. Ze worden automatisch geplaatst en kunnen niet uitgeschakeld worden.</p>
@@ -62,7 +62,7 @@ ${NAV}
 
         <div style="border: 1px solid var(--ink-line); border-radius: var(--r-md); overflow: hidden; margin-top: 12px;">
           <div style="background: var(--bg-soft); padding: 16px 20px; border-bottom: 1px solid var(--ink-line);">
-            <strong style="font-size: 14px;">⚪ Analytische cookies (optioneel)</strong>
+            <strong style="font-size: 14px;">Analytische cookies (optioneel)</strong>
           </div>
           <div style="padding: 16px 20px;">
             <p style="color: var(--ink-soft); font-size: 14px; line-height: 1.6;">Momenteel gebruiken wij geen analytische cookies (zoals Google Analytics). Als dit in de toekomst wijzigt, zullen wij u hierom vooraf om toestemming vragen.</p>
@@ -71,7 +71,7 @@ ${NAV}
 
         <div style="border: 1px solid var(--ink-line); border-radius: var(--r-md); overflow: hidden; margin-top: 12px;">
           <div style="background: var(--bg-soft); padding: 16px 20px; border-bottom: 1px solid var(--ink-line);">
-            <strong style="font-size: 14px;">🚫 Marketing- en trackingcookies</strong>
+            <strong style="font-size: 14px;">Marketing- en trackingcookies</strong>
           </div>
           <div style="padding: 16px 20px;">
             <p style="color: var(--ink-soft); font-size: 14px; line-height: 1.6;">Wij plaatsen geen marketing- of trackingcookies. Uw surfgedrag wordt niet gedeeld met advertentienetwerken of sociale media platforms.</p>

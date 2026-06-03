@@ -233,7 +233,7 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
                 <p className="calc-q-sub">Niet zeker? Kies wat u nu hebt — <span className="calc-em">we adviseren tijdens het plaatsbezoek</span>.</p>
                 <div className="calc-options calc-options-1col">
                   {(state.dakType === 'plat' ? [
-                    { key: 'epdm' as const, label: 'EPDM', desc: 'Rubber membraan — 25 jaar gegarandeerd waterdicht', img: imgEPDM },
+                    { key: 'epdm' as const, label: 'EPDM', desc: 'Rubber membraan — 25+ jaar levensduur, 10 jaar garantie op uitvoering', img: imgEPDM },
                     { key: 'roofing' as const, label: 'Bitumen / Roofing', desc: 'Klassieke bituminuze afdichting', img: imgRoofing },
                   ] : [
                     { key: 'pannen' as const, label: 'Pannen (klei of beton)', desc: 'Klassieke keramische pannen — Koramic, Aleonard', img: imgPannen },
@@ -413,7 +413,7 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
             <div className="calc-trust-item"><strong>★ 4,9 / 5</strong><span>184+ tevreden klanten</span></div>
             <div className="calc-trust-item"><strong>10 jaar</strong><span>garantie via Federale Verzekering</span></div>
             <div className="calc-trust-item"><strong>Eigen ploeg</strong><span>geen onderaannemers</span></div>
-            <div className="calc-trust-item"><strong>Sinds 2010</strong><span>erkend bouwbedrijf in Willebroek</span></div>
+            <div className="calc-trust-item"><strong>Sinds 2010</strong><span>actief in heel Vlaanderen</span></div>
           </div>
         </div>
       </section>

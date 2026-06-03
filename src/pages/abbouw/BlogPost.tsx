@@ -99,7 +99,7 @@ ${buildNav('home' as any)}
         <div class="ab-article-cta-text">
           <span class="lf-eyebrow">Hulp nodig voor uw project?</span>
           <h3>Vraag een <strong>gratis plaatsbezoek</strong> aan</h3>
-          <p>Onze projectleider komt vrijblijvend langs in heel Vlaanderen, meet uw situatie op, en stuurt een <strong>vrijblijvende offerte</strong> binnen 5 werkdagen. Premie-dossier inbegrepen.</p>
+          <p>Onze projectleider komt vrijblijvend langs in heel Vlaanderen, meet uw situatie op, en stuurt een <strong>vrijblijvende offerte</strong> binnen 5 werkdagen. Inclusief 6% BTW-tarief en premie-check.</p>
         </div>
         <div class="ab-article-cta-actions">
           <a href="/contact" class="lf-cta-pill"><span>Vraag uw gratis plaatsbezoek aan</span><span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></a>

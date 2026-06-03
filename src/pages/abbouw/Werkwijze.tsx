@@ -29,8 +29,8 @@ const stages = [
   },
   {
     n: '04', img: s4, title: 'Voorbereidende fase', tag: 'Week 3–14',
-    p: 'Na ondertekening starten we de administratieve voorbereiding. Wij regelen vergunning, premieaanvragen en bestellen de hoofdmaterialen zodat de werf zonder vertraging kan starten.',
-    bullets: ['Stedenbouwkundige aanvraag (indien nodig)', 'EPB-startverklaring door onze verslaggever', 'Indienen Mijn VerbouwPremie + Fluvius', 'Materiaalbestellingen (tegels, sanitair, schrijnwerk)', 'Detailplanning per week opgeleverd'],
+    p: 'Na ondertekening starten we de administratieve voorbereiding. Wij regelen de vergunning, doen de premie-check en dienen in waar u recht op hebt, en bestellen de hoofdmaterialen zodat de werf zonder vertraging kan starten.',
+    bullets: ['Stedenbouwkundige aanvraag (indien nodig)', 'EPB-startverklaring door onze verslaggever', 'Premie-check + indienen indien u in aanmerking komt (Fluvius)', 'Materiaalbestellingen (tegels, sanitair, schrijnwerk)', 'Detailplanning per week opgeleverd'],
   },
   {
     n: '05', img: s5, title: 'Uitvoering op de werf', tag: 'Variabel',
@@ -63,14 +63,14 @@ ${buildHero({
   title: 'Acht stappen,<br/>nul verrassingen.',
   lede: 'Een goed traject is voorspelbaar. U weet wie u contacteert, wat er wanneer gebeurt, en welke documenten u krijgt, van het eerste telefoontje tot de nacontrole één jaar na de werf.',
   primary: { label: 'Start uw traject', href: '/contact' },
-  secondary: { label: 'Onze werkwijze →', href: '/werkwijze' },
+  secondary: { label: 'Bekijk realisaties', href: '/realisaties' },
 })}
 
 <!-- INTRO -->
 <section class="lf-section">
   <div class="wrap">
     <div class="ab-quote" data-reveal>
-      "We hebben in onze vijftien jaar ondervonden dat 90% van de problemen op een werf ontstaan door slechte communicatie. Niet door slechte uitvoering. Daarom investeren we evenveel in onze werkwijze als in onze vakmensen."
+      "In vijftien jaar hebben we gemerkt dat de meeste problemen op een werf ontstaan door slechte communicatie, niet door slechte uitvoering. Daarom investeren we evenveel in onze werkwijze als in onze vakmensen."
       <footer>Zaakvoerder AB Bouw Groep</footer>
     </div>
   </div>
@@ -142,7 +142,7 @@ ${buildHero({
       <div class="lf-support-card ab-zek-card" data-zek-reveal style="--zek-i:2;">
         <div class="lf-support-meta"><span>03</span> Garantie</div>
         <h5>10 jaar aansprakelijkheid</h5>
-        <p>Wettelijke 10-jarige aansprakelijkheid op stabiliteit en waterdichtheid, plus 2 jaar garantie op afwerking. Polis bij Federale Verzekering.</p>
+        <p>Wettelijke 10-jarige aansprakelijkheid op stabiliteit en waterdichtheid, plus 2 jaar garantie op afwerking. Verzekerd via een erkende verzekeraar.</p>
       </div>
       <div class="lf-support-card ab-zek-card" data-zek-reveal style="--zek-i:3;">
         <div class="lf-support-meta"><span>04</span> Aanspreekpunt</div>
@@ -230,6 +230,9 @@ const STEP_REVEAL_CSS = `
   filter: blur(0);
 }
 .ab-zek-section .lf-section-head { margin-bottom: 36px; }
+.ab-zek-grid { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 900px) { .ab-zek-grid[style] { grid-template-columns: 1fr 1fr !important; } }
+@media (max-width: 600px) { .ab-zek-grid[style] { grid-template-columns: 1fr !important; } }
 /* (reduced-motion override voor zek-reveal bewust verwijderd) */
 `;
 

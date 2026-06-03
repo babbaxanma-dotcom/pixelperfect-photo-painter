@@ -410,7 +410,7 @@ const HTML = `
     <div class="tr-hero-bg"><img src="${heroWitte}" alt="Gevelwerken Vlaanderen" /></div>
     <div class="tr-hero-inner">
       <div class="tr-wrap">
-        <h1>Het vakkundigste gevelwerk van Vlaanderen.</h1>
+        <h1>Vakkundig gevelwerk in heel Vlaanderen.</h1>
         <p class="tr-hero-sub">Crepi, buitenisolatie (ETICS), steenstrips en sierpleister. <b>Eigen ploeg</b>, actief in Mechelen, Antwerpen, Lier en heel Vlaanderen.</p>
         <div class="tr-hero-cta">
           <a href="#contact" class="tr-btn">Gratis offerte aanvragen</a>
@@ -494,7 +494,7 @@ const HTML = `
         </div>
         <div class="tr-about-body">
           
-          <h2>Uw erkende gevelspecialist in heel Vlaanderen</h2>
+          <h2>Uw gevelspecialist in heel Vlaanderen</h2>
           <p class="tr-about-intro">AB Bouw Groep werkt met een eigen vaste ploeg. Wij verzorgen crepi, buitenisolatie (ETICS), steenstrips en sierpleister van A tot Z.</p>
           <ul class="tr-checks">
             <li>${icCheck}<span><b>Offerte = factuur, ook bij prijsstijgingen</b></span></li>
@@ -951,8 +951,8 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
   const renderedHtml = local
     ? HTML
         .replace(
-          'Het vakkundigste gevelwerk van Vlaanderen.',
-          `Het vakkundigste gevelwerk van ${local.name}.`,
+          'Vakkundig gevelwerk in heel Vlaanderen.',
+          `Vakkundig gevelwerk in ${local.name}.`,
         )
         .replace(
           'actief in Mechelen, Antwerpen, Lier en heel Vlaanderen.',

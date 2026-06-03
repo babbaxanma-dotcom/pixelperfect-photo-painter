@@ -75,7 +75,7 @@ const dakwerken: Card[] = [
   { img: dakIntro, tag: 'Dakrenovatie', t: 'Volledige dakvernieuwing', d: 'Strip & rebuild dak: nieuwe spanten, isolatie en pannen.' },
   { img: dakPannen, tag: 'Hellend dak', t: 'Pannendak', d: 'Vervanging keramische pannen Wienerberger met onderdakfolie en tengellatten.' },
   { img: dakEpdm, tag: 'Plat dak', t: 'EPDM dakkapel', d: 'EPDM Firestone op nieuwe OSB-onderlaag met aluminium daktrim.' },
-  { img: dakIso, tag: 'Dakisolatie', t: 'PUR zoldervloer', d: 'Geprojecteerde PUR 16 cm op de zoldervloer, premiedossier inbegrepen.' },
+  { img: dakIso, tag: 'Dakisolatie', t: 'PUR zoldervloer', d: 'Geprojecteerde PUR 16 cm op de zoldervloer, naadloos rond alle leidingen.' },
   { img: dakZink, tag: 'Zinkwerk', t: 'Mastgoten villa', d: 'Zinken mastgoten op verborgen consoles, koperen regenpijpen op maat.' },
   { img: dakLeien, tag: 'Leien', t: 'Leiendak pastorij', d: 'Restauratie leiendak met behoud originele dakkapellen en koperen kielgoten.' },
   { img: dakRaam, tag: 'Dakramen', t: 'Lichtkoepel', d: 'Twee VELUX-koepels op plat dak met opstanden en EPDM-aansluiting.' },
@@ -216,7 +216,7 @@ ${buildHero({
   title: 'Projecten die de tand<br/>des tijds doorstaan.',
   lede: 'Een greep uit ons recent werk. Elke realisatie is gebouwd door onze eigen vakmensen, opgevolgd door één projectleider en opgeleverd op de afgesproken datum.',
   primary: { label: 'Start uw project', href: '/contact' },
-  secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
+  secondary: { label: 'Onze diensten →', href: '/diensten' },
 })}
 
 <section class="lf-section">
@@ -507,7 +507,7 @@ export default function Realisaties() {
         if (eb) eb.textContent = key === 'alle' ? 'Recent werk' : data.label;
         if (tt) tt.innerHTML = key === 'alle'
           ? 'Een greep uit onze projecten,<br/>één kwaliteitsstandaard.'
-          : `Recent werk, <span style="color:var(--brand,#c9a24a)">${data.label}</span>`;
+          : `Recent werk, <span style="color:var(--accent)">${data.label}</span>`;
       };
       chip.addEventListener('click', h);
       handlers.push([chip, h]);

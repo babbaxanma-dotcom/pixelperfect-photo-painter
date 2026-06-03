@@ -94,7 +94,7 @@ const DIENSTEN: Record<string, Dienst> = {
     certLogo: { src: velux, alt: 'Velux' },
     topbar: ['Gratis opmeting binnen 5 werkdagen', 'Eigen ploeg'],
     offerEyebrow: 'Over AB Bouw Groep',
-    offerH2: 'Uw erkende Velux-plaatser in heel Vlaanderen',
+    offerH2: 'Uw Velux-plaatser in heel Vlaanderen',
     offerIntro: 'AB Bouw Groep werkt met een eigen vaste ploeg. Van opmeting tot waterdichte afwerking, alles door één ploeg.',
     offer: [
       'Offerte = factuur, ook bij prijsstijgingen',

@@ -19,14 +19,14 @@ const types = [
       ['Type', 'Lucht-water'],
       ['Toepassing', 'Nieuwbouw & renovatie'],
       ['Afgifte', 'Vloerverwarming / lage temperatuur'],
-      ['Premie', 'Mijn VerbouwPremie'],
-      ['Rendement', 'SCOP tot 4,8'],
+      ['Premie', 'Mogelijk via Mijn VerbouwPremie (afhankelijk van profiel)'],
+      ['Rendement', 'Hoge SCOP (afhankelijk van toestel en afgifte)'],
     ],
     bullets: [
       'Dimensionering op warmteverliesberekening',
       'Combinatie met sanitair warm water',
       'Stille buitenunit met correcte plaatsing',
-      'Premiedossier mee opgenomen',
+      'Premiecheck en dossier waar van toepassing',
     ],
   },
   {
@@ -37,7 +37,7 @@ const types = [
       ['Materialen', 'Cellulose, houtvezel'],
       ['Toepassing', 'Dak, wand, vloer'],
       ['Eigenschap', 'Dampopen & vochtregulerend'],
-      ['Premie', 'Tot €40/m² afhankelijk van pakket'],
+      ['Voordeel', '6% btw bij renovatie · premie afhankelijk van profiel'],
       ['Doel', 'EPC-sprong + comfort'],
     ],
     bullets: [
@@ -139,12 +139,12 @@ ${buildHero({
       <div data-reveal>
         <span class="lf-eyebrow">AB Ecologisch</span>
         <h2 class="lf-h2">Bouwen voor<br/>de <span class="ab-mark">volgende generatie</span>.</h2>
-        <p class="lf-lede">Een ecologisch huis is geen gimmick. Het is een <span class="ab-hl" data-hl-delay="0">slimmer totaalpakket</span>: betere schil, <span class="ab-hl" data-hl-delay="1">lagere energiefactuur</span> en een <span class="ab-hl" data-hl-delay="2">gezonder binnenklimaat</span>.</p>
+        <p class="lf-lede">Een ecologische woning is in de eerste plaats een <span class="ab-hl" data-hl-delay="0">slimmer totaalpakket</span>: betere schil, <span class="ab-hl" data-hl-delay="1">lagere energiefactuur</span> en een <span class="ab-hl" data-hl-delay="2">gezonder binnenklimaat</span>.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eén plan voor isolatie, technieken en afwerking</li>
           <li>E-peil en premie-impact vooraf besproken</li>
           <li>Dampopen en duurzame opbouwen waar zinvol</li>
-          <li>Praktisch advies, niet ideologisch</li>
+          <li>Praktisch advies, gericht op comfort en rendement</li>
         </ul>
       </div>
       <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgIntro}" alt="Ecologische woning" loading="lazy"/></div>
@@ -218,7 +218,7 @@ ${buildHero({
           <li>Materiaaladvies op basis van woningtype</li>
           <li>Afstemming met EPB-verslaggever</li>
           <li>Coördinatie tussen isolatie en technieken</li>
-          <li>Premiedossier mee opgenomen</li>
+          <li>Uitleg over 6% btw-tarief en Mijn VerbouwLening</li>
           <li>Oplevering met duidelijke uitleg</li>
         </ul>
       </div>

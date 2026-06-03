@@ -19,7 +19,7 @@ const types = [
       ['Korrel', '1,0 / 1,5 / 2,0 mm'],
       ['Levensduur', '25+ jaar zonder herschilderen'],
       ['Onderhoud', 'Sporadisch reinigen'],
-      ['Premie', 'Tot €30/m² bij gevelisolatie'],
+      ['BTW', '6% bij woning ouder dan 10 jaar'],
       ['Doorlooptijd', '2 tot 4 weken'],
     ],
     bullets: [
@@ -38,14 +38,14 @@ const types = [
       ['Kleuren', 'Antraciet · parelgrijs · steengrijs'],
       ['Levensduur', '25+ jaar'],
       ['Combinatie', 'Met larix-cladding of zink'],
-      ['Premie', 'Tot €30/m² bij gevelisolatie'],
+      ['BTW', '6% bij woning ouder dan 10 jaar'],
       ['Doorlooptijd', '2 tot 4 weken'],
     ],
     bullets: [
       'Donkere tinten in UV-stabiele formule',
       'Vlakke afwerking voor strakke architectuur',
       'Naadloos rond ramen en hoeken',
-      'Lange kleurvastheid zonder verkleuring',
+      'Hoge kleurvastheid, ook in donkere tinten',
     ],
   },
   {
@@ -107,12 +107,12 @@ ${buildHero({
       <div data-reveal>
         <span class="lf-eyebrow">AB Gevelbekleding</span>
         <h2 class="lf-h2"><span class="ab-mark">Esthetiek</span> én<br/>energieprestatie.</h2>
-        <p class="lf-lede">Een gevelrenovatie is hét moment om in één werf ook gevelisolatie aan te pakken. We rekenen vooraf de <span class="ab-hl" data-hl-delay="0">E-peil-winst en de premies</span> door, zodat u zeker weet dat de <span class="ab-hl" data-hl-delay="1">investering rendeert</span>.</p>
+        <p class="lf-lede">Een gevelrenovatie is hét moment om in één werf ook gevelisolatie aan te pakken. We rekenen vooraf de <span class="ab-hl" data-hl-delay="0">E-peil-winst en uw voordelen</span> door — het 6% BTW-tarief en eventuele premies — zodat u weet wat de <span class="ab-hl" data-hl-delay="1">investering oplevert</span>.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen ploeg gevelwerkers, geen onderaanneming</li>
           <li>Stelling en buurtbescherming inbegrepen</li>
           <li>10 jaar garantie op stabiliteit van bekleding</li>
-          <li>Premiedossier (Mijn VerbouwPremie) door ons</li>
+          <li>6% BTW-tarief en premie-check regelen wij voor u</li>
         </ul>
       </div>
       <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgIntro}" alt="Gevelisolatie in uitvoering" loading="lazy"/></div>
@@ -166,10 +166,10 @@ ${buildHero({
         <h2 class="lf-h2"><span class="ab-mark">Twee vliegen</span>,<br/>één stelling.</h2>
         <p class="lf-lede">Een gevel openleggen is duur. Maak van die ene werf meteen een <span class="ab-hl" data-hl-delay="0">energetische upgrade</span>: EPS- of minerale isolatieplaten op de bestaande gevel, daarna pas een <span class="ab-hl" data-hl-delay="1">nieuwe crepi-laag</span>.</p>
         <ul class="ab-checks" style="margin-top:18px;">
-          <li>Tot 25–40% lagere stookkost</li>
+          <li>Merkbaar lagere stookkost na isolatie</li>
           <li>Geen koudebruggen meer aan ramen</li>
           <li>EPC-sprong gemiddeld 60–100 punten</li>
-          <li>Premie tot €30/m² via Mijn VerbouwPremie</li>
+          <li>6% BTW-tarief, plus Mijn VerbouwLening waar u recht op heeft</li>
         </ul>
       </div>
       <div data-reveal data-reveal-delay="1"><img src="${imgStelling}" alt="Stelling rond gevelrenovatie" loading="lazy" style="width:100%; border-radius: 16px; aspect-ratio: 4/3; object-fit: cover;"/></div>
@@ -209,7 +209,8 @@ ${buildHero({
           <li>Reiniging en herstel van de bestaande ondergrond</li>
           <li>Hoekprofielen in inox of alu voor scherpe lijnen</li>
           <li>Nieuwe raamtabletten waar nodig</li>
-          <li>Indienen Mijn VerbouwPremie</li>
+          <li>Premie-check en aanvraag waar u in aanmerking komt</li>
+          <li>6% BTW-tarief geregeld (woning ouder dan 10 jaar)</li>
           <li>10 jaar garantie op stabiliteit van bekleding</li>
           <li>Eindcontrole en onderhoudsadvies</li>
         </ul>
@@ -227,7 +228,7 @@ ${buildHero({
     </div>
     <div class="ab-faq">
       <details data-reveal><summary>Welke gevelafwerking is het meest onderhoudsvrij?</summary><div class="ab-faq-body"><p>Siliconen-crepi en steenstrips vragen het minst onderhoud. Een goede crepi gaat 25 jaar mee zonder herschilderen.</p></div></details>
-      <details data-reveal><summary>Krijg ik premie voor gevelisolatie?</summary><div class="ab-faq-body"><p>Ja, tot €30/m² via Mijn VerbouwPremie (R-waarde minstens 3,0 m²K/W). Wij regelen het dossier voor u.</p></div></details>
+      <details data-reveal><summary>Krijg ik premie voor gevelisolatie?</summary><div class="ab-faq-body"><p>De premievoorwaarden zijn in 2026 gewijzigd. Afhankelijk van uw inkomenscategorie en de R-waarde (minstens 3,0 m²K/W) kan er nog premie zijn. Wij bekijken of u in aanmerking komt en regelen sowieso het 6% BTW-tarief (woning ouder dan 10 jaar) en, indien gewenst, de Mijn VerbouwLening.</p></div></details>
       <details data-reveal><summary>Kan crepi op elke gevel?</summary><div class="ab-faq-body"><p>Op de meeste gevels wel. Bij sterk vervuilde of vochtige muren komt eerst een sanering. Dat zien we bij het plaatsbezoek meteen.</p></div></details>
       <details data-reveal><summary>Hoe lang duurt een gevelrenovatie?</summary><div class="ab-faq-body"><p>Een doorsnee gezinswoning: 2 tot 4 weken voor enkel crepi, 4 tot 6 weken inclusief buitenisolatie. We werken weersafhankelijk.</p></div></details>
     </div>
@@ -270,7 +271,7 @@ export default function Gevel() {
     document.title = 'AB Gevelbekleding, crepi, sierpleister en steenstrips | AB Bouw Groep';
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', 'Witte en grijze crepi, sierpleister en steenstrips, vaak gecombineerd met buitenisolatie. Eigen gevelploeg, premiedossier inbegrepen.');
+    m.setAttribute('content', 'Witte en grijze crepi, sierpleister en steenstrips, vaak gecombineerd met buitenisolatie. Eigen gevelploeg, 10 jaar garantie en 6% BTW-voordeel.');
     const prev = document.body.className;
     document.body.className = '';
     const styleEl = document.createElement('style');
