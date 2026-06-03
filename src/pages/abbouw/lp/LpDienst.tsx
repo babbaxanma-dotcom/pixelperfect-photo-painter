@@ -517,6 +517,80 @@ export default function LpDienst({ slug }: { slug: string }) {
     };
   }, [d]);
 
+  // SEO: canonical + Open Graph + JSON-LD (Organization + Breadcrumb + Service + FAQPage uit d.faq)
+  useEffect(() => {
+    if (!d) return;
+    const pageUrl = `https://abgroep.be/lp/${d.slug}`;
+    const setLink = (rel: string, href: string, hreflang?: string) => {
+      const selector = hreflang ? `link[rel="${rel}"][hreflang="${hreflang}"]` : `link[rel="${rel}"]:not([hreflang])`;
+      let el = document.querySelector(selector);
+      if (!el) { el = document.createElement('link'); el.setAttribute('rel', rel); if (hreflang) el.setAttribute('hreflang', hreflang); document.head.appendChild(el); }
+      el.setAttribute('href', href);
+    };
+    setLink('canonical', pageUrl);
+    setLink('alternate', pageUrl, 'nl-BE');
+    setLink('alternate', pageUrl, 'x-default');
+    const setMeta = (prop: string, content: string, isProperty = false) => {
+      const attr = isProperty ? 'property' : 'name';
+      let el = document.querySelector(`meta[${attr}="${prop}"]`);
+      if (!el) { el = document.createElement('meta'); el.setAttribute(attr, prop); document.head.appendChild(el); }
+      el.setAttribute('content', content);
+    };
+    setMeta('og:title', d.metaTitle, true);
+    setMeta('og:description', d.metaDesc, true);
+    setMeta('og:type', 'website', true);
+    setMeta('og:locale', 'nl_BE', true);
+    setMeta('og:url', pageUrl, true);
+    setMeta('twitter:card', 'summary_large_image');
+    const schemaId = 'lp-dienst-schema';
+    document.getElementById(schemaId)?.remove();
+    const schema = document.createElement('script');
+    schema.id = schemaId;
+    schema.type = 'application/ld+json';
+    schema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'HomeAndConstructionBusiness',
+          '@id': 'https://abgroep.be/#organization',
+          name: 'AB Bouw Groep',
+          url: 'https://abgroep.be',
+          telephone: CONTACT.phone.e164,
+          email: CONTACT.email,
+          address: { '@type': 'PostalAddress', streetAddress: 'August van Landeghemstraat 63', postalCode: '2830', addressLocality: 'Willebroek', addressCountry: 'BE' },
+          areaServed: [
+            { '@type': 'City', name: 'Mechelen' },
+            { '@type': 'City', name: 'Antwerpen' },
+            { '@type': 'City', name: 'Lier' },
+            { '@type': 'City', name: 'Willebroek' },
+            { '@type': 'City', name: 'Bornem' },
+            { '@type': 'City', name: 'Sint-Niklaas' },
+          ],
+          priceRange: '€€',
+        },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://abgroep.be' },
+            { '@type': 'ListItem', position: 2, name: d.h1, item: pageUrl },
+          ],
+        },
+        {
+          '@type': 'Service',
+          name: d.metaTitle,
+          provider: { '@id': 'https://abgroep.be/#organization' },
+          areaServed: 'Vlaanderen',
+        },
+        {
+          '@type': 'FAQPage',
+          mainEntity: d.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+        },
+      ],
+    });
+    document.head.appendChild(schema);
+    return () => { document.getElementById(schemaId)?.remove(); };
+  }, [d]);
+
   // Realisatie-lightbox: klik op een galerij-foto -> 3 foto's groot, scrollbaar
   useEffect(() => initRealisatieLightbox(), []);
   useEffect(() => initLpReveal(), []);
