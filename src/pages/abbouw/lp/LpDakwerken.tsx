@@ -452,7 +452,7 @@ const HTML = `
         </div>
       </div>
       <div class="tr-hero-testi">
-        <span class="tr-hero-testi-q">"Onze rijwoning had een dak van 1962 en lekte op drie plaatsen. AB Bouw stripte alles op één maandag en lag vrijdag waterdicht. Koramic-pannen, sarkingisolatie, nieuwe goten. Premie een maand na oplevering op de rekening."</span>
+        <span class="tr-hero-testi-q">"Onze rijwoning had een dak van 1962 en lekte op drie plaatsen. AB Bouw stripte alles op één maandag en lag vrijdag waterdicht. Koramic-pannen, sarkingisolatie, nieuwe goten. Strak gewerkt en op tijd waterdicht opgeleverd."</span>
         <div class="tr-hero-testi-name">— Stijn D., Mechelen</div>
       </div>
     </div>
@@ -503,7 +503,7 @@ const HTML = `
           <ul class="tr-checks">
             <li>${icCheck}<span><b>Offerte = factuur, ook bij prijsstijgingen</b></span></li>
             <li>${icCheck}<span>Eigen dakdekkers, geen onderaannemers</span></li>
-            <li>${icCheck}<span>Mijn VerbouwPremie-dossier regelen wij</span></li>
+            <li>${icCheck}<span>6% BTW-tarief en premie-advies regelen wij</span></li>
             <li>${icCheck}<span>Transparante prijs, geen verborgen kosten</span></li>
             <li>${icCheck}<span>10 jaar garantie op waterdichtheid</span></li>
           </ul>
@@ -620,7 +620,7 @@ const HTML = `
         <h2>Veelgestelde vragen</h2>
         <details class="tr-faq-item"><summary>Wat kost een nieuw dak?</summary><p>Dat hangt af van de oppervlakte, het type dak en de staat van de constructie. Na een gratis plaatsbezoek krijgt u een bindende prijs op papier.</p></details>
         <details class="tr-faq-item"><summary>Hoe lang duurt de plaatsing?</summary><p>Een gemiddeld hellend dak ligt waterdicht in 1 tot 2 weken. U krijgt een concrete startdatum in de offerte.</p></details>
-        <details class="tr-faq-item"><summary>Doen jullie de premieaanvraag voor mij?</summary><p>Ja. Wij berekenen waar u recht op heeft en dienen het volledige Mijn VerbouwPremie-dossier voor u in.</p></details>
+        <details class="tr-faq-item"><summary>Doen jullie de premieaanvraag voor mij?</summary><p>Wij bekijken voor welke voordelen u in aanmerking komt: het 6% BTW-tarief (voor woningen ouder dan 10 jaar) en de Mijn VerbouwLening. Behoort u tot de juiste inkomenscategorie, dan regelen wij ook uw Mijn VerbouwPremie-dossier.</p></details>
         <details class="tr-faq-item"><summary>Wat is jullie garantie?</summary><p>10 jaar op waterdichtheid, plus fabrieksgarantie op de materialen (Koramic, Eternit, Firestone).</p></details>
         <details class="tr-faq-item"><summary>Werken jullie ook bij dringende lekkages?</summary><p>Ja, bij acute lekkage komen we zo snel mogelijk langs voor een noodherstel of dekzeil, daarna plannen we de definitieve herstelling.</p></details>
         <details class="tr-faq-item"><summary>Welke regio's bedienen jullie?</summary><p>Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.</p></details>
@@ -740,8 +740,8 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', local
-      ? `Erkend dakwerker in ${local.name} (${local.postcode}). Pannendak Koramic, plat dak EPDM, sarkingisolatie, zinkwerk en natuurleien. Eigen vaste ploeg, 10 jaar garantie via Federale Verzekering, premie Mijn VerbouwPremie inbegrepen. Gratis dakinspectie binnen 5 werkdagen.`
-      : 'Erkend dakwerker in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Pannendak, plat dak EPDM, sarking-isolatie, zinkwerk. Eigen dakdekkers, 10 jaar garantie via Federale Verzekering, premie Mijn VerbouwPremie inbegrepen. Gratis dakinspectie binnen 5 werkdagen.');
+      ? `Erkend dakwerker in ${local.name} (${local.postcode}). Pannendak Koramic, plat dak EPDM, sarkingisolatie, zinkwerk en natuurleien. Eigen vaste ploeg, 10 jaar garantie via Federale Verzekering, 6% BTW-voordeel. Gratis dakinspectie binnen 5 werkdagen.`
+      : 'Erkend dakwerker in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Pannendak, plat dak EPDM, sarking-isolatie, zinkwerk. Eigen dakdekkers, 10 jaar garantie via Federale Verzekering, 6% BTW-voordeel. Gratis dakinspectie binnen 5 werkdagen.');
 
     // Open Graph + Twitter
     const setMeta = (prop: string, content: string, isProperty = false) => {
@@ -754,8 +754,8 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
       ? `Dakwerker ${local.name} — Gratis dakinspectie | AB Bouw Groep`
       : 'Dakwerker Mechelen & Antwerpen — Gratis dakinspectie | AB Bouw Groep', true);
     setMeta('og:description', local
-      ? `Pannendak, plat dak EPDM en dakisolatie in ${local.name}. Eigen ploeg, 10j garantie, premiedossier inbegrepen.`
-      : 'Nieuw dak, plat dak EPDM, dakisolatie. Eigen ploeg, 10j garantie, premiedossier inbegrepen.', true);
+      ? `Pannendak, plat dak EPDM en dakisolatie in ${local.name}. Eigen ploeg, 10j garantie, 6% BTW-voordeel.`
+      : 'Nieuw dak, plat dak EPDM, dakisolatie. Eigen ploeg, 10j garantie, 6% BTW-voordeel.', true);
     setMeta('og:type', 'website', true);
     setMeta('og:locale', 'nl_BE', true);
     setMeta('og:url', pageUrl, true);
@@ -830,7 +830,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
           mainEntity: [
             { '@type': 'Question', name: 'Wat kost een nieuw dak in 2026?', acceptedAnswer: { '@type': 'Answer', text: 'Dat hangt af van de oppervlakte, het type dak en de staat van de constructie. Na een gratis plaatsbezoek krijgt u een bindende prijs op papier.' } },
             { '@type': 'Question', name: 'Hoe lang duurt de plaatsing?', acceptedAnswer: { '@type': 'Answer', text: 'Een gemiddeld hellend dak ligt waterdicht in 1 tot 2 weken. U krijgt een concrete startdatum in de offerte.' } },
-            { '@type': 'Question', name: 'Doen jullie de premieaanvraag voor mij?', acceptedAnswer: { '@type': 'Answer', text: 'Ja. Wij berekenen waar u recht op heeft en dienen het volledige Mijn VerbouwPremie-dossier voor u in.' } },
+            { '@type': 'Question', name: 'Doen jullie de premieaanvraag voor mij?', acceptedAnswer: { '@type': 'Answer', text: 'Wij bekijken voor welke voordelen u in aanmerking komt: het 6% BTW-tarief (voor woningen ouder dan 10 jaar) en de Mijn VerbouwLening. Behoort u tot de juiste inkomenscategorie, dan regelen wij ook uw Mijn VerbouwPremie-dossier.' } },
             { '@type': 'Question', name: 'Wat is jullie garantie?', acceptedAnswer: { '@type': 'Answer', text: '10 jaar op waterdichtheid, plus fabrieksgarantie op de materialen (Koramic, Eternit, Firestone).' } },
             { '@type': 'Question', name: 'Werken jullie ook bij dringende lekkages?', acceptedAnswer: { '@type': 'Answer', text: 'Ja, bij acute lekkage komen we zo snel mogelijk langs voor een noodherstel of dekzeil, daarna plannen we de definitieve herstelling.' } },
             { '@type': 'Question', name: 'Welke regio\'s bedienen jullie?', acceptedAnswer: { '@type': 'Answer', text: 'Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.' } },
