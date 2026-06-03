@@ -716,8 +716,8 @@ export default function LpDienst({ slug }: { slug: string }) {
             <span className="tr-eyebrow">Vrijblijvend</span><h3>Terugbelverzoek</h3>
             <form ref={quickRef} onSubmit={onQuickSubmit} noValidate>
               <div className="tr-qf-grid">
-                <input type="text" name="firstName" placeholder="Voornaam" autoComplete="given-name" required />
-                <input type="tel" name="phone" placeholder="Telefoon" autoComplete="tel" required />
+                <input type="text" name="firstName" placeholder="Voornaam *" autoComplete="given-name" required />
+                <input type="tel" name="phone" placeholder="Telefoonnummer *" autoComplete="tel" required />
                 <button type="submit" className="tr-btn" disabled={quickState === 'busy'}>
                   {quickState === 'busy' ? 'Even bezig…' : 'Bel mij terug'}
                 </button>
@@ -892,10 +892,10 @@ export default function LpDienst({ slug }: { slug: string }) {
               <div className="tr-safe"><Shield />Vrijblijvend — we bellen u terug binnen 1 werkdag</div>
               <form ref={finalRef} onSubmit={onFinalSubmit} noValidate>
                 <div className="tr-final-row">
-                  <input type="text" name="firstName" placeholder="Voornaam" autoComplete="given-name" required />
-                  <input type="tel" name="phone" placeholder="Telefoon" autoComplete="tel" required />
+                  <input type="text" name="firstName" placeholder="Voornaam *" autoComplete="given-name" required />
+                  <input type="tel" name="phone" placeholder="Telefoonnummer *" autoComplete="tel" required />
                 </div>
-                <input type="email" name="email" placeholder="E-mail" autoComplete="email" required />
+                <input type="email" name="email" placeholder="E-mail *" autoComplete="email" required />
                 <select name="typeWerkSel" defaultValue="" required>
                   <option value="" disabled>Type werk</option>
                   {d.typeWerkOpties.map((o) => <option key={o} value={o}>{o}</option>)}

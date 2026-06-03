@@ -433,8 +433,8 @@ const HTML = `
         <h3>Terugbelverzoek</h3>
         <form data-lp-quick-form novalidate>
           <div class="tr-qf-grid">
-            <input type="text" name="firstName" placeholder="Voornaam" autocomplete="given-name" required />
-            <input type="tel" name="phone" placeholder="Telefoon" autocomplete="tel" required />
+            <input type="text" name="firstName" placeholder="Voornaam *" autocomplete="given-name" required />
+            <input type="tel" name="phone" placeholder="Telefoonnummer *" autocomplete="tel" required />
             <button type="submit" class="tr-btn" data-lp-quick-submit>
               <span data-lp-quick-submit-label>Bel mij terug</span>
             </button>
@@ -636,10 +636,10 @@ const HTML = `
           <div class="tr-safe">${icShield}Vrijblijvend — we bellen u terug binnen 1 werkdag</div>
           <form data-lp-form novalidate>
             <div class="tr-final-row">
-              <input type="text" name="firstName" placeholder="Voornaam" autocomplete="given-name" required />
-              <input type="tel" name="phone" placeholder="Telefoon" autocomplete="tel" required />
+              <input type="text" name="firstName" placeholder="Voornaam *" autocomplete="given-name" required />
+              <input type="tel" name="phone" placeholder="Telefoonnummer *" autocomplete="tel" required />
             </div>
-            <input type="email" name="email" placeholder="E-mail" autocomplete="email" required />
+            <input type="email" name="email" placeholder="E-mail *" autocomplete="email" required />
             <select name="type_gevelwerk" required>
               <option value="" disabled selected>Type gevelwerk</option>
               <option value="Crepi / Sierpleister">Crepi / Sierpleister</option>
