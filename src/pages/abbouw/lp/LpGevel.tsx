@@ -84,7 +84,7 @@ const LP_CSS = `
 /* 2 — HEADER */
 .tr-header { background: #fff; border-bottom: 1px solid #ececec; position: sticky; top: 0; z-index: 60; }
 .tr-header .tr-wrap { display: flex; align-items: center; gap: 24px; min-height: 74px; }
-.tr-logo { height: 38px; width: auto; display: block; }
+.tr-logo { height: 50px; width: auto; display: block; }
 .tr-nav { display: flex; align-items: center; gap: 28px; margin: 0 auto; }
 .tr-nav a { color: ${NAVY}; font-family: var(--font-display); font-weight: 600; font-size: 15px; transition: color .18s; }
 .tr-nav a:hover { color: ${ORANGE}; }
