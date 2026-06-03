@@ -13,7 +13,7 @@ import imgVakman from '@/assets/home/vakmanschap-2.jpg';
 import imgNatuurleien from '@/assets/dak/lp-dakvernieuwing.jpg';
 import imgPlatDak from '@/assets/dak/lp-platdak-1.jpg';
 import imgZinkGoot from '@/assets/dak/lp-zink-goot.jpg';
-import imgComfort from '@/assets/dak/lp-isol-1.jpg';
+import imgComfort from '@/assets/dak/lp-isol-sarking.jpg';
 import imgOnderhoud from '@/assets/dak/lp-dakonderhoud.jpg';
 import { initRealisatieLightbox } from './_lightbox';
 import { initLpReveal } from './_reveal';
