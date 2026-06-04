@@ -898,7 +898,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
       });
       if (result.ok) {
         wrap.classList.add('is-success');
-        window.location.href = '/bedankt?service=dakwerken';
+        wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       } else {
         wrap.classList.add('is-error');

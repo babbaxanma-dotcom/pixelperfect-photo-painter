@@ -880,7 +880,7 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
       });
       if (result.ok) {
         wrap.classList.add('is-success');
-        window.location.href = '/bedankt?service=gevel';
+        wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       } else {
         wrap.classList.add('is-error');

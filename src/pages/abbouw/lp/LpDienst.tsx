@@ -639,7 +639,7 @@ export default function LpDienst({ slug }: { slug: string }) {
       firstName: firstName || undefined, email, phone, type_werk: d.typeWerk as Divisie,
       aanvullende_info: aanvullend, bron_lead: d.bronLead,
     });
-    if (res.ok) { setFinalState('ok'); window.location.href = `/bedankt?service=${d.slug}`; }
+    if (res.ok) { setFinalState('ok'); document.getElementById('lp-final')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
     else { setFinalState('idle'); setFinalErr(`Er ging iets mis. Bel ons gerust op ${PHONE}.`); }
   };
 
@@ -887,7 +887,7 @@ export default function LpDienst({ slug }: { slug: string }) {
               <div className="tr-line"><Pin /><span>{ADDRESS}</span></div>
               <div className="tr-line"><Phone /><span>Telefoon: <a href={PHONE_HREF}>{PHONE}</a></span></div>
             </div>
-            <div className={`tr-final-card${finalState === 'ok' ? ' is-success' : ''}${finalErr ? ' is-error' : ''}`}>
+            <div id="lp-final" className={`tr-final-card${finalState === 'ok' ? ' is-success' : ''}${finalErr ? ' is-error' : ''}`}>
               <h3>Vraag uw gratis offerte</h3>
               <div className="tr-safe"><Shield />Vrijblijvend — we bellen u terug binnen 1 werkdag</div>
               <form ref={finalRef} onSubmit={onFinalSubmit} noValidate>
