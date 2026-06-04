@@ -33,7 +33,9 @@ function activeGa4Id(): string | undefined {
 
 const LS_UTM_KEY = 'ab_bouw_utm_v1';
 
-const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'] as const;
+// gbraid/wbraid = iOS/app + web-to-app click-ids; Google strips gclid op iOS/Safari,
+// dus deze parallel vangen is nodig voor volledige attributie (research 2026).
+const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid', 'fbclid'] as const;
 
 export type UtmParams = Partial<Record<(typeof UTM_KEYS)[number], string>>;
 

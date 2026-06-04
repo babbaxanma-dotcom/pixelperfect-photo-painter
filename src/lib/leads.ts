@@ -134,6 +134,8 @@ function buildBody(p: LeadPayload) {
     utm_term: utm.utm_term,
     utm_content: utm.utm_content,
     gclid: utm.gclid,
+    gbraid: utm.gbraid,
+    wbraid: utm.wbraid,
     fbclid: utm.fbclid,
     referrer: typeof document !== 'undefined' ? document.referrer || undefined : undefined,
     user_agent: typeof navigator !== 'undefined' ? navigator.userAgent : undefined,
