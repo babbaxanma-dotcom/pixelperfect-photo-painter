@@ -888,7 +888,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
         firstName: (fd.get('firstName') as string) || undefined,
         email: emailV,
         phone: phoneV,
-        type_werk: ((fd.get('type_dakwerk') as string) || '').trim() || 'AB Dakwerken',
+        type_werk: 'AB Dakwerken',
         aanvullende_info: (() => {
           const t = ((fd.get('type_dakwerk') as string) || '').trim();
           const m = ((fd.get('aanvullende_info') as string) || '').trim();
