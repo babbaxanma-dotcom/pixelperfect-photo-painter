@@ -11,6 +11,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { submitLead, type Divisie } from '@/lib/leads';
 import { initRealisatieLightbox } from './_lightbox';
+import { initBeforeAfter } from './_beforeafter';
 import { initLpReveal } from './_reveal';
 import { initLpCallFab } from './_fab';
 import { CONTACT } from '@/data/contact';
@@ -39,6 +40,8 @@ import imgReinig3 from '@/assets/gevel/lp-reinig-3.jpg';
 import imgHervoeg1 from '@/assets/gevel/lp-hervoeg-1.jpg';
 import imgHervoeg2 from '@/assets/gevel/lp-hervoeg-2.jpg';
 import imgHervoeg3 from '@/assets/gevel/lp-hervoeg-3.jpg';
+import imgHervoegVoor from '@/assets/gevel/lp-hervoeg-voor.jpg';
+import imgHervoegNa from '@/assets/gevel/lp-hervoeg-na.jpg';
 import imgIsol1 from '@/assets/dak/lp-isol-1.jpg';
 import imgIsol2 from '@/assets/dak/lp-isol-2.jpg';
 import imgIsol3 from '@/assets/dak/lp-isol-3.jpg';
@@ -72,6 +75,8 @@ type Dienst = {
   offerEyebrow: string; offerH2: string; offerIntro: string; offer: string[];
   steps: [string, string][];
   whatTitle: string; whatIntro: string; what: [string, string][]; whatImg: string;
+  /** optionele voor/na sleep-slider die whatImg in de about-sectie vervangt */
+  beforeAfter?: { before: string; after: string };
   /** Recente-realisaties galerij (3 themafoto's), optioneel */
   gallery?: string[];
   reviews: Review[];
@@ -224,6 +229,7 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Nette afwerking', 'Strak doorgevoegd profiel, gevel proper opgeleverd zonder mortelresten.'],
     ],
     whatImg: imgHervoeg1,
+    beforeAfter: { before: imgHervoegVoor, after: imgHervoegNa },
     gallery: [imgHervoeg1, imgHervoeg2, imgHervoeg3],
     reviews: [
       { text: '"Onze voegen brokkelden af en lieten vocht door. Alles uitgeslepen en opnieuw gevoegd in de juiste kleur. Gevel ziet er weer strak uit."', name: 'Dirk Van Damme', role: 'Volledige gevel hervoegd' },
@@ -597,6 +603,7 @@ export default function LpDienst({ slug }: { slug: string }) {
 
   // Realisatie-lightbox: klik op een galerij-foto -> 3 foto's groot, scrollbaar
   useEffect(() => initRealisatieLightbox(), []);
+  useEffect(() => initBeforeAfter(), []);
   useEffect(() => initLpReveal(), []);
   useEffect(() => initLpCallFab(), []);
 
@@ -766,7 +773,19 @@ export default function LpDienst({ slug }: { slug: string }) {
                 <span className="tr-about-badge"><img src={d.certLogo.src} alt={d.certLogo.alt} /></span>
                 <span className="tr-about-badge tr-vca">VCA*</span>
               </div>
-              <div className="tr-about-photo"><img src={d.whatImg} alt="AB Bouw vakman aan het werk" /></div>
+              <div className="tr-about-photo">
+                {d.beforeAfter ? (
+                  <div className="ba-slider" data-ba>
+                    <img className="ba-base" src={d.beforeAfter.after} alt="Gevel na het hervoegen" />
+                    <div className="ba-clip"><img src={d.beforeAfter.before} alt="Gevel voor het hervoegen" /></div>
+                    <div className="ba-handle"><span className="ba-grip" aria-hidden="true">⟷</span></div>
+                    <span className="ba-tag ba-tag-l">Voor</span>
+                    <span className="ba-tag ba-tag-r">Na</span>
+                  </div>
+                ) : (
+                  <img src={d.whatImg} alt="AB Bouw vakman aan het werk" />
+                )}
+              </div>
             </div>
             <div className="tr-about-body">
               
@@ -1094,6 +1113,16 @@ const LP_CSS = `
 .tr-about-badge.tr-vca { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: ${NAVY}; letter-spacing: -0.01em; }
 .tr-about-photo { border-radius: var(--tr-r-photo); overflow: hidden; box-shadow: 0 30px 60px -30px rgba(10,22,40,0.35); }
 .tr-about-photo img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+/* Voor/na sleep-slider (hervoegen) */
+.ba-slider { position: relative; width: 100%; aspect-ratio: 4/3; border-radius: var(--tr-r-photo); overflow: hidden; box-shadow: 0 30px 60px -30px rgba(10,22,40,0.35); cursor: ew-resize; user-select: none; touch-action: none; container-type: inline-size; }
+.ba-slider img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.ba-clip { position: absolute; top: 0; left: 0; height: 100%; width: 50%; overflow: hidden; }
+.ba-clip img { width: 100cqw; max-width: none; }
+.ba-handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #fff; transform: translateX(-1px); box-shadow: 0 0 0 1px rgba(10,22,40,0.22); pointer-events: none; }
+.ba-grip { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 42px; height: 42px; border-radius: 50%; background: #fff; color: ${NAVY}; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 6px 16px -5px rgba(10,22,40,0.55); }
+.ba-tag { position: absolute; bottom: 12px; padding: 5px 13px; border-radius: 999px; background: rgba(10,22,40,0.74); color: #fff; font-family: var(--font-display); font-weight: 600; font-size: 12px; letter-spacing: 0.04em; pointer-events: none; }
+.ba-tag-l { left: 12px; }
+.ba-tag-r { right: 12px; }
 .tr-about-body h2 { font-size: clamp(27px, 4.2vw, 48px); color: ${NAVY}; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 16px; }
 .tr-about-intro { font-size: 16px; line-height: 1.7; color: #3a4453; margin: 0 0 22px; }
 .tr-checks { list-style: none; padding: 0; margin: 0 0 28px; }
