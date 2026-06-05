@@ -15,6 +15,7 @@ import imgIntro from '@/assets/gevel/intro.jpg';
 import { initRealisatieLightbox } from './_lightbox';
 import { initLpReveal } from './_reveal';
 import { initLpCallFab } from './_fab';
+import { initBeforeAfter } from './_beforeafter';
 import imgRealCrepi1 from '@/assets/gevel/lp-real-crepi-1.jpg';
 import imgRealCrepi2 from '@/assets/gevel/lp-real-crepi-2.jpg';
 import imgRealCrepi3 from '@/assets/gevel/lp-real-crepi-3.jpg';
@@ -24,6 +25,8 @@ import imgRealSteen3 from '@/assets/gevel/lp-real-steen-3.jpg';
 import imgRealReinig1 from '@/assets/gevel/lp-real-reinig-1.jpg';
 import imgRealReinig2 from '@/assets/gevel/lp-real-reinig-2.jpg';
 import imgRealReinig3 from '@/assets/gevel/lp-real-reinig-3.jpg';
+import imgVoornaNa from '@/assets/gevel/lp-voorna-na.jpg';
+import imgVoornaVoor from '@/assets/gevel/lp-voorna-voor.jpg';
 
 /* ─────────────────────────────────────────────────────────────────────────
    Texas-Roofing-Pros layout, faithfully replicated, NAVY theme, AB Bouw NL
@@ -340,6 +343,15 @@ const LP_CSS = `
   .tr-footer-links { gap: 32px; }
   .tr-footer-info { font-size: 14.5px; }
 }
+.ba-slider { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: var(--tr-r-photo); overflow: hidden; box-shadow: 0 30px 60px -30px rgba(10,22,40,0.35); cursor: ew-resize; user-select: none; touch-action: none; container-type: inline-size; }
+.ba-slider img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.ba-clip { position: absolute; top: 0; left: 0; height: 100%; width: 50%; overflow: hidden; }
+.ba-clip img { width: 100cqw; max-width: none; }
+.ba-handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; background: #fff; transform: translateX(-1.5px); box-shadow: 0 0 0 1px rgba(10,22,40,0.22); pointer-events: none; }
+.ba-grip { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 46px; height: 46px; border-radius: 50%; background: #fff; color: ${NAVY}; display: flex; align-items: center; justify-content: center; font-size: 19px; box-shadow: 0 6px 16px -5px rgba(10,22,40,0.55); }
+.ba-tag { position: absolute; bottom: 14px; padding: 6px 14px; border-radius: 999px; background: rgba(10,22,40,0.74); color: #fff; font-family: var(--font-display); font-weight: 600; font-size: 12.5px; letter-spacing: 0.04em; pointer-events: none; }
+.ba-tag-l { left: 14px; }
+.ba-tag-r { right: 14px; }
 `;
 
 /* ── Inline SVG icon set (no external deps) ─────────────────────────────── */
@@ -590,6 +602,23 @@ const HTML = `
     </div>
   </section>
 
+  <!-- 10c. VOOR & NA -->
+  <section class="tr-section" style="background:#fff">
+    <div class="tr-wrap">
+      <div class="tr-head" style="text-align:left;max-width:760px;margin:0 0 32px">
+        <h2 style="font-size:clamp(27px,3.2vw,38px);color:#0a1628;font-weight:700;margin:0">Het verschil — sleep van voor naar na</h2>
+        <p style="font-size:15px;line-height:1.6;color:#454f60;margin:10px 0 0">Zo verandert een vermoeide gevel in een strakke, frisse crepi-afwerking. Sleep de balk om voor en na te vergelijken.</p>
+      </div>
+      <div class="ba-slider" data-ba style="max-width:940px;margin:0 auto">
+        <img class="ba-base" src="${imgVoornaNa}" alt="Gevel na renovatie" />
+        <div class="ba-clip"><img src="${imgVoornaVoor}" alt="Gevel voor renovatie" /></div>
+        <div class="ba-handle"><span class="ba-grip" aria-hidden="true">⟷</span></div>
+        <span class="ba-tag ba-tag-l">Voor</span>
+        <span class="ba-tag ba-tag-r">Na</span>
+      </div>
+    </div>
+  </section>
+
   <!-- 11. REVIEWS -->
   <section class="tr-section tr-reviews" id="reviews">
     <div class="tr-wrap">
@@ -680,7 +709,7 @@ const HTML = `
         </div>
       </div>
       <div class="tr-footer-info">AB Bouw Groep · ${ADDRESS} · ${PHONE}</div>
-      <div class="tr-footer-copy">© ${new Date().getFullYear()} AB Bouw Groep — Erkend gevelspecialist in heel Vlaanderen. Alle rechten voorbehouden.</div>
+      <div class="tr-footer-copy">© ${new Date().getFullYear()} AB Bouw Groep — Erkend gevelspecialist in heel Vlaanderen. Alle rechten voorbehouden. &nbsp;·&nbsp; <a href="/voorwaarden" style="color:rgba(255,255,255,0.72);text-decoration:underline">Gebruiksvoorwaarden</a> &nbsp;·&nbsp; <a href="/privacy" style="color:rgba(255,255,255,0.72);text-decoration:underline">Privacybeleid</a> &nbsp;·&nbsp; <a href="/cookies" style="color:rgba(255,255,255,0.72);text-decoration:underline">Cookiebeleid</a></div>
     </div>
   </footer>
 
@@ -963,6 +992,7 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
   useEffect(() => initRealisatieLightbox(), []);
   useEffect(() => initLpReveal(), []);
   useEffect(() => initLpCallFab(), []);
+  useEffect(() => initBeforeAfter(), []);
 
   return <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />;
 }

@@ -77,6 +77,8 @@ type Dienst = {
   whatTitle: string; whatIntro: string; what: [string, string][]; whatImg: string;
   /** optionele voor/na sleep-slider die whatImg in de about-sectie vervangt */
   beforeAfter?: { before: string; after: string };
+  /** optionele "herkent u dit?" signalen-sectie */
+  signs?: { title: string; intro: string; items: string[] };
   /** Recente-realisaties galerij (3 themafoto's), optioneel */
   gallery?: string[];
   reviews: Review[];
@@ -230,6 +232,18 @@ const DIENSTEN: Record<string, Dienst> = {
     ],
     whatImg: imgHervoeg1,
     beforeAfter: { before: imgHervoegVoor, after: imgHervoegNa },
+    signs: {
+      title: 'Tijd om te hervoegen? Herkent u dit?',
+      intro: 'Voegen gaan niet eeuwig mee. Deze signalen wijzen erop dat uw gevel toe is aan nieuw voegwerk — wacht niet tot vocht de muur aantast.',
+      items: [
+        'Voegen die loskomen, verbrokkelen of als zand wegvallen',
+        'Diep uitgesleten voegen waar u makkelijk een muntstuk in steekt',
+        'Vochtplekken, schimmel of een muffe geur aan de binnenmuur',
+        'Groene aanslag of mosvorming op de gevel',
+        'Losse of hol klinkende gevelstenen',
+        'Witte kalkuitslag (uitbloei) op het metselwerk',
+      ],
+    },
     gallery: [imgHervoeg1, imgHervoeg2, imgHervoeg3],
     reviews: [
       { text: '"Onze voegen brokkelden af en lieten vocht door. Alles uitgeslepen en opnieuw gevoegd in de juiste kleur. Gevel ziet er weer strak uit."', name: 'Dirk Van Damme', role: 'Volledige gevel hervoegd' },
@@ -828,6 +842,25 @@ export default function LpDienst({ slug }: { slug: string }) {
         </div>
       </section>
 
+      {/* 8a. HERKENT U DIT? — signalen */}
+      {d.signs && (
+        <section className="tr-section" style={{ background: '#fff' }}>
+          <div className="tr-wrap">
+            <div className="tr-head" style={{ textAlign: 'left', maxWidth: 760, margin: '0 0 30px' }}>
+              <h2 style={{ fontSize: 'clamp(26px, 3vw, 36px)', color: NAVY, fontWeight: 700, margin: 0 }}>{d.signs.title}</h2>
+              <p style={{ fontSize: 15, lineHeight: 1.6, color: '#454f60', marginTop: 10 }}>{d.signs.intro}</p>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 14 }}>
+              {d.signs.items.map((t, i) => (
+                <div key={i} style={{ display: 'flex', gap: 12, padding: '16px 18px', background: 'var(--bg-tint)', borderRadius: 10, border: '1px solid var(--tr-line)', fontSize: 14.5, lineHeight: 1.5, color: '#2b3543' }}>
+                  <span style={{ color: ORANGE, flexShrink: 0, fontWeight: 700, fontSize: 18, lineHeight: 1.2 }}>›</span><span>{t}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* 8b. RECENTE REALISATIES (galerij) */}
       {d.gallery && d.gallery.length > 0 && (
         <section className="tr-section" style={{ background: 'var(--bg-tint)' }}>
@@ -948,7 +981,7 @@ export default function LpDienst({ slug }: { slug: string }) {
             </div>
           </div>
           <div className="tr-footer-info">AB Bouw Groep · {ADDRESS} · {PHONE}</div>
-          <div className="tr-footer-copy">© {new Date().getFullYear()} AB Bouw Groep — Erkend vakbedrijf in heel Vlaanderen. Alle rechten voorbehouden.</div>
+          <div className="tr-footer-copy">© {new Date().getFullYear()} AB Bouw Groep — Erkend vakbedrijf in heel Vlaanderen. Alle rechten voorbehouden.{' · '}<a href="/voorwaarden" style={{ color: 'rgba(255,255,255,0.72)', textDecoration: 'underline' }}>Gebruiksvoorwaarden</a>{' · '}<a href="/privacy" style={{ color: 'rgba(255,255,255,0.72)', textDecoration: 'underline' }}>Privacybeleid</a>{' · '}<a href="/cookies" style={{ color: 'rgba(255,255,255,0.72)', textDecoration: 'underline' }}>Cookiebeleid</a></div>
         </div>
       </footer>
     </div>

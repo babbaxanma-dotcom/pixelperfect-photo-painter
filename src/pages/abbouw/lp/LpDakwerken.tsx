@@ -690,7 +690,7 @@ const HTML = `
         </div>
       </div>
       <div class="tr-footer-info">AB Bouw Groep · August van Landeghemstraat 63, 2830 Willebroek · ${PHONE}</div>
-      <div class="tr-footer-copy">© ${new Date().getFullYear()} AB Bouw Groep — Erkend dakwerker in heel Vlaanderen. Alle rechten voorbehouden.</div>
+      <div class="tr-footer-copy">© ${new Date().getFullYear()} AB Bouw Groep — Erkend dakwerker in heel Vlaanderen. Alle rechten voorbehouden. &nbsp;·&nbsp; <a href="/voorwaarden" style="color:rgba(255,255,255,0.72);text-decoration:underline">Gebruiksvoorwaarden</a> &nbsp;·&nbsp; <a href="/privacy" style="color:rgba(255,255,255,0.72);text-decoration:underline">Privacybeleid</a> &nbsp;·&nbsp; <a href="/cookies" style="color:rgba(255,255,255,0.72);text-decoration:underline">Cookiebeleid</a></div>
     </div>
   </footer>
 
