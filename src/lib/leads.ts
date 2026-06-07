@@ -8,6 +8,15 @@
 
 import { getUtmParams, fireConversion } from './tracking';
 
+// ── Web3Forms email-backup ────────────────────────────────────────────────
+// Vuurt ALTIJD parallel met de GHL-webhook, zodat een lead NOOIT verloren gaat
+// als de GHL-workflow/webhook niet afvuurt. De key mag via env (VITE_WEB3FORMS_KEY)
+// OF hieronder hardcoded — Lovable-env blijkt soms leeg, dáárom kwam de backup
+// niet binnen. Mails arriveren op het e-mailadres waarmee de key is aangemaakt
+// (LEAD_EMAIL_TO override is optioneel).
+const WEB3FORMS_ACCESS_KEY = 'b01e4fea-3e73-418b-b65a-acfb1d3ee43c'; // Mohammeds Web3Forms access key
+const LEAD_EMAIL_TO = ''; // optioneel: forceer ontvanger; leeg = Web3Forms-registratie-mail
+
 export type Divisie =
   | 'ab_construct'
   | 'ab_ecologisch'
@@ -176,44 +185,45 @@ export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
   }
 
   const body = buildBody(p);
-  let via: SubmitResult['via'] = 'none';
 
-  // 1) Primair: GoHighLevel inbound webhook.
+  const w3key = (import.meta.env.VITE_WEB3FORMS_KEY as string | undefined) || WEB3FORMS_ACCESS_KEY || undefined;
+  const w3to = (import.meta.env.VITE_LEAD_EMAIL_FALLBACK_TO as string | undefined) || LEAD_EMAIL_TO || undefined;
+
+  let ghlOk = false;
+  let w3Ok = false;
+
+  // Beide transporten ALTIJD parallel: GHL (CRM/pipeline) ÉN Web3Forms (email-backup).
+  // Geen enkele lead mag verloren gaan als de GHL-webhook/workflow niet afvuurt.
+  const tasks: Promise<void>[] = [];
+
   if (ghlUrl) {
-    try {
-      const res = await postJSON(ghlUrl, body);
-      if (res.ok) via = 'ghl';
-      else console.warn('[lead] GHL niet-ok status:', res.status);
-    } catch (err) {
-      console.warn('[lead] GHL submit failed:', err);
-    }
+    tasks.push(
+      postJSON(ghlUrl, body)
+        .then((res) => { ghlOk = res.ok; if (!res.ok) console.warn('[lead] GHL niet-ok status:', res.status); })
+        .catch((err) => { console.warn('[lead] GHL submit failed:', err); })
+    );
   }
 
-  // 2) Fallback: Web3Forms email-bezorging zodat een lead NOOIT stil verloren gaat
-  //    als GHL ontbreekt/faalt (CORS/4xx/timeout). Conversie-meting mag niet aan
-  //    één transport hangen — dat was de €900-fout van mei (conversies=0).
-  if (via === 'none') {
-    const w3key = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
-    const w3to = import.meta.env.VITE_LEAD_EMAIL_FALLBACK_TO as string | undefined;
-    if (w3key) {
-      try {
-        const res = await postJSON('https://api.web3forms.com/submit', {
-          access_key: w3key,
-          subject: `Nieuwe AB Bouw lead (${p.source}) — ${body.name || body.email}`,
-          from_name: 'AB Bouw website',
-          ...(w3to ? { to: w3to } : {}),
-          ...body,
-        });
-        if (res.ok) via = 'web3forms';
-        else console.warn('[lead] Web3Forms niet-ok status:', res.status);
-      } catch (err) {
-        console.warn('[lead] Web3Forms fallback failed:', err);
-      }
-    }
+  if (w3key) {
+    tasks.push(
+      postJSON('https://api.web3forms.com/submit', {
+        access_key: w3key,
+        subject: `Nieuwe AB Bouw lead (${p.source}) — ${body.name || body.email}`,
+        from_name: 'AB Bouw website',
+        ...(w3to ? { to: w3to } : {}),
+        ...body,
+      })
+        .then((res) => { w3Ok = res.ok; if (!res.ok) console.warn('[lead] Web3Forms niet-ok status:', res.status); })
+        .catch((err) => { console.warn('[lead] Web3Forms submit failed:', err); })
+    );
   }
+
+  await Promise.allSettled(tasks);
+
+  const via: SubmitResult['via'] = ghlOk ? 'ghl' : w3Ok ? 'web3forms' : 'none';
 
   // Conversie vuurt bij geslaagde bezorging via WELK transport dan ook.
-  if (via !== 'none') {
+  if (ghlOk || w3Ok) {
     fireConversion(p.source, body);
     return { ok: true, via };
   }
