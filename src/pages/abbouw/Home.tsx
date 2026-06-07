@@ -491,11 +491,6 @@ const HTML = (i: Record<string, string>) => `
       <span class="lf-eyebrow">Onze expertise</span>
       <h2 class="lf-h2">Vakmanschap dat<br>het verschil maakt.</h2>
       <p class="lf-lede">Onze vakmensen werken al meer dan een decennium samen op de werf. Die ervaring zit in elk detail: van de eerste fundering tot de laatste verfstreek.</p>
-      <div class="lf-bars">
-        <div class="lf-bar"><div class="lf-bar-head"><span>Vakmanschap &amp; afwerking</span><span class="lf-bar-pct">95<em>%</em></span></div><div class="lf-bar-track"><i style="width:95%"><span class="lf-bar-knob"></span></i></div></div>
-        <div class="lf-bar"><div class="lf-bar-head"><span>Moderne bouwtechnieken</span><span class="lf-bar-pct">93<em>%</em></span></div><div class="lf-bar-track"><i style="width:93%"><span class="lf-bar-knob"></span></i></div></div>
-        <div class="lf-bar"><div class="lf-bar-head"><span>Probleemoplossend denken</span><span class="lf-bar-pct">99<em>%</em></span></div><div class="lf-bar-track"><i style="width:99%"><span class="lf-bar-knob"></span></i></div></div>
-      </div>
       <a href="/over" class="lf-btn-pri lf-btn-sm"><span>Lees meer</span></a>
     </div>
     <div class="lf-skills-collage" data-reveal data-reveal-delay="1">
