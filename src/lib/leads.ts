@@ -14,7 +14,7 @@ import { getUtmParams, fireConversion } from './tracking';
 // OF hieronder hardcoded — Lovable-env blijkt soms leeg, dáárom kwam de backup
 // niet binnen. Mails arriveren op het e-mailadres waarmee de key is aangemaakt
 // (LEAD_EMAIL_TO override is optioneel).
-const WEB3FORMS_ACCESS_KEY = 'b01e4fea-3e73-418b-b65a-acfb1d3ee43c'; // Mohammeds Web3Forms access key
+const WEB3FORMS_ACCESS_KEY = '28574905-cb34-4bf5-83ed-6e09edec92d0'; // Mohammeds Web3Forms access key (nieuwe geverifieerde mail)
 const LEAD_EMAIL_TO = ''; // optioneel: forceer ontvanger; leeg = Web3Forms-registratie-mail
 
 export type Divisie =
