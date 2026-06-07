@@ -118,7 +118,7 @@ function buildBody(p: LeadPayload) {
     firstName: p.firstName?.trim() || undefined,
     lastName: p.lastName?.trim() || undefined,
     name: [p.firstName, p.lastName].filter(Boolean).join(' ').trim() || undefined,
-    email: p.email.trim().toLowerCase(),
+    email: p.email?.trim().toLowerCase() || undefined,
     phone: p.phone?.trim() || undefined,
 
     // GHL standaard adres-velden (komen door tot Contact.address1 / postalCode / city)
@@ -173,13 +173,14 @@ async function postJSON(url: string, body: unknown, timeoutMs = 8000) {
 export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
   const ghlUrl = import.meta.env.VITE_GHL_WEBHOOK_URL as string | undefined;
 
-  // Last-line guard: elke lead-payload (behalve newsletter) moet ZOWEL email
-  // ALS phone hebben.
+  // Last-line guard: blokkeer ALLEEN als er GEEN enkel contactmiddel is.
+  // (Snelle LP-formulieren sturen vaak enkel telefoon — die mogen NOOIT verloren
+  // gaan; een lead met enkel telefoon is bruikbaar.)
   if (p.source !== 'newsletter') {
     const emailOk = !!p.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email.trim());
     const phoneOk = !!p.phone && (p.phone.replace(/\D/g, '').length >= 8);
-    if (!emailOk || !phoneOk) {
-      console.error('[lead] geblokkeerd — email of telefoon ontbreekt/ongeldig', { emailOk, phoneOk, source: p.source });
+    if (!emailOk && !phoneOk) {
+      console.error('[lead] geblokkeerd — geen email én geen telefoon', { emailOk, phoneOk, source: p.source });
       return { ok: false, via: 'none', error: 'invalid_contact_info' };
     }
   }
