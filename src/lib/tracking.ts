@@ -170,6 +170,27 @@ export function fireConversion(kind: 'contact_form' | 'newsletter' | 'landing_pa
   }
 }
 
+// Funnel-top signaal: de bezoeker BEGINT een formulier in te vullen (eerste focus/
+// keystroke), nog vóór submit. Samen met de `generate_lead`-conversie bij submit
+// geeft dit de drop-off: hoeveel mensen STARTEN vs VOLTOOIEN een formulier. Dat is
+// precies het gat dat je niet kon zien — "veel klikken, weinig conversies" splitst
+// nu in "komen ze niet aan het formulier?" vs "haken ze in het formulier af?".
+// Géén Google Ads-conversie (een start is geen conversie); enkel GA4, 1x per form.
+const _startedForms = new Set<string>();
+export function trackFormStart(formId: string) {
+  if (_startedForms.has(formId)) return; // dedupe — elke keystroke triggert anders opnieuw
+  _startedForms.add(formId);
+  const ga4Target = activeGa4Id();
+  if (!ga4Target) return;
+  gtag('event', 'form_start', {
+    send_to: ga4Target,
+    event_category: 'lead',
+    method: formId,
+    page_path: typeof window !== 'undefined' ? window.location.pathname : undefined,
+  });
+  console.info('[tracking] form_start:', formId);
+}
+
 export function trackCallClick(source: string) {
   const gadsId = GADS_ID;
   const labelCall = GADS_LABEL_CALL;

@@ -888,7 +888,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
         firstName: (fd.get('firstName') as string) || undefined,
         email: emailV,
         phone: phoneV,
-        type_werk: 'AB Dakwerken',
+        type_werk: 'ab_dakwerken',
         aanvullende_info: (() => {
           const t = ((fd.get('type_dakwerk') as string) || '').trim();
           const m = ((fd.get('aanvullende_info') as string) || '').trim();
@@ -942,7 +942,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
         firstName,
         email: emailV,
         phone: phoneV,
-        type_werk: 'AB Dakwerken',
+        type_werk: 'ab_dakwerken',
         aanvullende_info: 'Hero-mini-form (2 velden, above-fold quick capture)',
         bron_lead: local ? `seo:dakwerker-${local.slug}:quick` : 'ads:dakwerken:quick',
       });

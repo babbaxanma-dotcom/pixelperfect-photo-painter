@@ -150,7 +150,7 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
       firstName,
       email: emailV || undefined,
       phone: phoneV || undefined,
-      type_werk: 'AB Dakwerken',
+      type_werk: 'ab_dakwerken',
       aanvullende_info: combined,
       bron_lead: 'calculator:dakwerken',
     });

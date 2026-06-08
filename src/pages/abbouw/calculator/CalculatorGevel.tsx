@@ -149,7 +149,7 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
       firstName,
       email: emailV || undefined,
       phone: phoneV || undefined,
-      type_werk: 'AB Gevelbekleding',
+      type_werk: 'ab_gevelbekleding',
       aanvullende_info: combined,
       bron_lead: 'calculator:gevel',
     });

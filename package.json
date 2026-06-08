@@ -10,7 +10,10 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json",
+    "check:ads": "node scripts/check-ads-negatives.cjs",
+    "verify": "npm run typecheck && npm run check:ads && npm run test"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

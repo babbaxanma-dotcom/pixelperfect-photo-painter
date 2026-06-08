@@ -10,6 +10,7 @@
  */
 import { useEffect, useRef, useState } from 'react';
 import { submitLead, type Divisie } from '@/lib/leads';
+import { trackFormStart } from '@/lib/tracking';
 import { initRealisatieLightbox } from './_lightbox';
 import { initBeforeAfter } from './_beforeafter';
 import { initLpReveal } from './_reveal';
@@ -735,7 +736,7 @@ export default function LpDienst({ slug }: { slug: string }) {
         <div className="tr-wrap">
           <div id="lp-form" className={`tr-quickform${quickState === 'ok' ? ' is-success' : ''}`}>
             <span className="tr-eyebrow">Vrijblijvend</span><h3>Terugbelverzoek</h3>
-            <form ref={quickRef} onSubmit={onQuickSubmit} noValidate>
+            <form ref={quickRef} onSubmit={onQuickSubmit} onFocusCapture={() => trackFormStart(`lp:${d.slug}:quick`)} noValidate>
               <div className="tr-qf-grid">
                 <input type="text" name="firstName" placeholder="Voornaam *" autoComplete="given-name" required />
                 <input type="tel" name="phone" placeholder="Telefoonnummer *" autoComplete="tel" required />
@@ -942,7 +943,7 @@ export default function LpDienst({ slug }: { slug: string }) {
             <div id="lp-final" className={`tr-final-card${finalState === 'ok' ? ' is-success' : ''}${finalErr ? ' is-error' : ''}`}>
               <h3>Vraag uw gratis offerte</h3>
               <div className="tr-safe"><Shield />Vrijblijvend — we bellen u terug binnen 1 werkdag</div>
-              <form ref={finalRef} onSubmit={onFinalSubmit} noValidate>
+              <form ref={finalRef} onSubmit={onFinalSubmit} onFocusCapture={() => trackFormStart(`lp:${d.slug}:final`)} noValidate>
                 <div className="tr-final-row">
                   <input type="text" name="firstName" placeholder="Voornaam *" autoComplete="given-name" required />
                   <input type="tel" name="phone" placeholder="Telefoonnummer *" autoComplete="tel" required />

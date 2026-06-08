@@ -903,7 +903,7 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
         firstName: (fd.get('firstName') as string) || undefined,
         email: emailV,
         phone: phoneV,
-        type_werk: 'AB Gevelbekleding',
+        type_werk: 'ab_gevelbekleding',
         aanvullende_info: combinedInfo,
         bron_lead: local ? `seo:gevelrenovatie-${local.slug}` : 'ads:gevel',
       });
@@ -953,7 +953,7 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
         firstName,
         email: emailV,
         phone: phoneV,
-        type_werk: 'AB Gevelbekleding',
+        type_werk: 'ab_gevelbekleding',
         aanvullende_info: 'Hero-mini-form (2 velden, above-fold quick capture)',
         bron_lead: local ? `seo:gevelrenovatie-${local.slug}:quick` : 'ads:gevel:quick',
       });
