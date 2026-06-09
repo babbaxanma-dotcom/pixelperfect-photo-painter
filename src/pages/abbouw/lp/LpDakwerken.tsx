@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { submitLead } from '@/lib/leads';
+import { trackFormStart } from '@/lib/tracking';
 import type { Gemeente } from '@/data/gemeentes';
 import { CONTACT } from '@/data/contact';
 import CalculatorDak from '../calculator/CalculatorDak';
@@ -907,6 +908,9 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
       }
     };
     form?.addEventListener('submit', onSubmit);
+    // Funnel-top: vuur form_start bij eerste focus (trackFormStart dedupet per id).
+    const onFinalStart = () => trackFormStart(local ? `lp:dakwerker-${local.slug}:final` : 'lp:dakwerken:final');
+    form?.addEventListener('focusin', onFinalStart);
 
     // ── Hero quick-form (above-fold) submit ──────────────────────────────
     const quickWrap = document.querySelector<HTMLElement>('[data-lp-quick]');
@@ -955,6 +959,8 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
       }
     };
     quickForm?.addEventListener('submit', onQuickSubmit);
+    const onQuickStart = () => trackFormStart(local ? `lp:dakwerker-${local.slug}:quick` : 'lp:dakwerken:quick');
+    quickForm?.addEventListener('focusin', onQuickStart);
 
     return () => {
       document.body.className = prev;
@@ -962,6 +968,8 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
       document.getElementById('lp-dak-schema')?.remove();
       form?.removeEventListener('submit', onSubmit);
       quickForm?.removeEventListener('submit', onQuickSubmit);
+      form?.removeEventListener('focusin', onFinalStart);
+      quickForm?.removeEventListener('focusin', onQuickStart);
     };
   }, []);
 
