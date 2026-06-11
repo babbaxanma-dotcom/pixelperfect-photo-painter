@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { submitLead, divisieKey } from '@/lib/leads';
+import { trackFormStart } from '@/lib/tracking';
 import { CONTACT } from '@/data/contact';
 
 import hero from '@/assets/home/hero.jpg';
@@ -94,64 +95,69 @@ const HTML = (i: Record<string, string>) => `
   </div>
 </div>
 
-<!-- HERO -->
-<section class="lf-hero">
-  <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
-    <img src="${i.hero}" alt="Afgewerkte woning met dak en gevel door AB Bouw Groep" class="is-active" />
-    <img src="${i.hero4}" alt="Bouwwerf van AB Bouw Groep in Antwerpen" loading="lazy" />
-    <img src="${i.hero3}" alt="Afgewerkte gevelrenovatie door AB Bouw Groep" loading="lazy" />
-    <img src="${i.svcGevel}" alt="Gevelrenovatie door AB Bouw Groep" loading="lazy" />
+<!-- HERO (offerte-form in hero) -->
+<section class="lf-hero lf-qhero">
+  <div class="lf-hero-bg">
+    <img src="${i.hero}" alt="Afgewerkte woning met dak, gevel en renovatie door AB Bouw Groep" fetchpriority="high" width="1920" height="1080" />
   </div>
-  <button type="button" class="lf-hero-arrow lf-hero-arrow--prev" data-hero-prev aria-label="Vorige foto">
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-  </button>
-  <button type="button" class="lf-hero-arrow lf-hero-arrow--next" data-hero-next aria-label="Volgende foto">
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-  </button>
   <div class="wrap lf-hero-wrap">
-    <div class="lf-hero-mini" data-hero-anim>
-      <span class="lf-hero-eyebrow" style="--i:0">
-        <span class="lf-hero-eyebrow-dot" aria-hidden="true"></span>
-        Eigen vakmensen in vaste dienst sinds 2010
-      </span>
-      <h1 class="lf-hero-headline">
-        <span class="lf-hw" style="--i:1">Aannemer</span>
-        <span class="lf-hw" style="--i:2">voor</span>
-        <span class="lf-hw" style="--i:3">dak,</span>
-        <span class="lf-hw" style="--i:4">gevel</span>
-        <span class="lf-hw" style="--i:5">&amp;</span>
-        <span class="lf-hw" style="--i:6">renovatie</span>
-        <span class="lf-hw" style="--i:7">in</span>
-        <span class="lf-hw" style="--i:8; color:#c69a4b">Vlaanderen</span>
-      </h1>
-      <p class="lf-hero-sub" style="--i:9">Eén vaste bouwpartner met eigen ploegen voor dak, gevel, interieur en totaalrenovatie. Een vaste prijs op papier, 6% btw waar het kan, en een gratis plaatsbezoek meestal binnen 5 werkdagen.</p>
-      <div class="lf-hero-trust" style="--i:10">
-        <span class="lf-hero-trust-stars" aria-hidden="true">★★★★★</span>
-        <span><strong>4,9/5</strong> op Google</span>
-        <span class="lf-hero-trust-sep" aria-hidden="true">·</span>
-        <span>124+ realisaties in Vlaanderen</span>
-        <span class="lf-hero-trust-sep" aria-hidden="true">·</span>
-        <span>Eigen ploegen sinds 2010</span>
-      </div>
-      <div class="lf-hero-actions" style="--i:11">
-        <a href="#contact-form" class="lf-cta-pill" data-smooth>
-          <span>Gratis offerte</span>
-          <span class="lf-cta-pill-arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    <div class="lf-qhero-grid">
+      <div class="lf-qhero-left">
+        <span class="lf-hero-eyebrow">
+          <span class="lf-hero-eyebrow-dot" aria-hidden="true"></span>
+          Heel Vlaanderen en Brussel · sinds 2010
+        </span>
+        <h1 class="lf-qhero-h1">Uw offerte is uw <span class="lf-qhero-accent">factuur</span>: één aannemer voor dak, gevel en totaalrenovatie</h1>
+        <p class="lf-qhero-sub">De prijs ligt zwart op wit vast vóór de eerste werkdag, zonder meerwerk achteraf. Eén vast aanspreekpunt regelt alles, van plaatsbezoek tot oplevering.</p>
+        <div class="lf-qhero-trust">
+          <span class="lf-qhero-stars" aria-hidden="true">★★★★★</span>
+          <span><strong>4,9/5</strong> op Google (184+ reviews)</span>
+          <span class="lf-qhero-dot" aria-hidden="true">·</span>
+          <span>124+ woningen gerenoveerd</span>
+          <span class="lf-qhero-dot" aria-hidden="true">·</span>
+          <span>10 jaar garantie</span>
+        </div>
+        <a href="${CONTACT.phone.href}" class="lf-qhero-phone">
+          <span class="lf-qhero-phone-ic" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           </span>
-        </a>
-        <a href="${CONTACT.phone.href}" class="lf-hero-phone">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <span>of bel ${CONTACT.phone.spaced}</span>
+          <span>Of bel rechtstreeks <strong>${CONTACT.phone.spaced}</strong></span>
         </a>
       </div>
+      <aside class="lf-qcard" id="contact-form">
+        <div class="lf-qcard-body">
+          <span class="lf-qcard-eyebrow">Gratis en vrijblijvend</span>
+          <h2 class="lf-qcard-title">Vraag uw offerte aan</h2>
+          <p class="lf-qcard-subline">Invullen duurt een halve minuut.</p>
+          <form data-hero-form novalidate>
+            <label class="lf-qcard-label" for="qh-name">Uw naam</label>
+            <input id="qh-name" type="text" name="name" autocomplete="name" placeholder="Bv. Marc Peeters" />
+            <label class="lf-qcard-label" for="qh-phone">Uw telefoonnummer</label>
+            <input id="qh-phone" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="Bv. 0470 12 34 56" />
+            <label class="lf-qcard-label" for="qh-dienst">Waarover gaat het?</label>
+            <select id="qh-dienst" name="dienst" class="lf-qcard-select" required>
+              <option value="">Kies een dienst</option>
+              <option>Dak</option>
+              <option>Gevel</option>
+              <option>Interieur</option>
+              <option>Totaalrenovatie</option>
+              <option>Iets anders</option>
+            </select>
+            <div class="lf-qcard-err" data-hero-error role="alert" aria-live="polite" hidden></div>
+            <button type="submit" class="lf-qcard-btn" data-hero-submit><span data-hero-submit-label>Vraag uw vaste prijs aan</span></button>
+          </form>
+          <p class="lf-qcard-micro">Vrijblijvend. Wij bellen u binnen één werkdag terug.</p>
+          <p class="lf-qcard-micro2">Of bel direct <a href="${CONTACT.phone.href}">${CONTACT.phone.spaced}</a></p>
+        </div>
+        <div class="lf-qcard-thanks">
+          <div class="lf-qcard-thanks-ic">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3>Bedankt, uw aanvraag is verstuurd.</h3>
+          <p>Wij bellen u binnen één werkdag voor uw gratis plaatsbezoek.</p>
+        </div>
+      </aside>
     </div>
-  </div>
-  <div class="lf-hero-dots" data-hero-dots aria-label="Hero diavoorstelling">
-    <button type="button" class="lf-hero-dot is-active" data-hero-dot="0" aria-label="Foto 1"><span></span></button>
-    <button type="button" class="lf-hero-dot" data-hero-dot="1" aria-label="Foto 2"><span></span></button>
-    <button type="button" class="lf-hero-dot" data-hero-dot="2" aria-label="Foto 3"><span></span></button>
-    <button type="button" class="lf-hero-dot" data-hero-dot="3" aria-label="Foto 4"><span></span></button>
   </div>
 </section>
 
@@ -162,7 +168,7 @@ const HTML = (i: Record<string, string>) => `
     <div class="lf-section-head centered lf-reviews-head" data-reveal style="margin-bottom: 24px;">
       <span class="lf-eyebrow">Wat klanten zeggen</span>
       <div class="lf-reviews-rating">
-        <span class="lf-reviews-score">4.9</span>
+        <span class="lf-reviews-score">4,9</span>
         <span class="lf-reviews-divider" aria-hidden="true"></span>
         <div class="lf-reviews-meta">
           <div class="lf-reviews-stars" aria-label="4.9 van 5 sterren">
@@ -250,7 +256,7 @@ const HTML = (i: Record<string, string>) => `
       <p class="lf-lede">Binnen 24u persoonlijk contact met een ervaren vakman. Eerlijk advies en een vaste, transparante prijs.</p>
     </div>
 
-    <aside class="lf-form lf-form-compact" id="contact-form" data-reveal data-reveal-delay="1">
+    <aside class="lf-form lf-form-compact" data-reveal data-reveal-delay="1">
       <form data-home-form novalidate>
         <div class="lf-form-row">
           <input type="text" name="firstName" placeholder="Voornaam *" autocomplete="given-name" required />
@@ -875,6 +881,64 @@ const EXTRA_STYLE = `
 .lf-cta-pill:active { background: #a86b01 !important; transform: scale(0.96); }
 .lf-cta-pill-arrow { display: none !important; }
 .lf-cta-pill-block { width:100%; }
+
+/* ===== Quote-hero: offerte-form in de hero (split, Fable-spec) ===== */
+.lf-qhero .lf-hero-bg img { width:100%; height:100%; object-fit:cover; object-position:62% 38%; }
+.lf-qhero .lf-hero-bg::after { content:''; position:absolute; inset:0; background: linear-gradient(92deg, rgba(10,22,40,0.86) 0%, rgba(10,22,40,0.60) 48%, rgba(10,22,40,0.28) 80%, rgba(10,22,40,0.36) 100%); }
+.lf-qhero .lf-hero-wrap { display:block; }
+.lf-hero.lf-qhero { overflow: visible; }
+.lf-qhero-grid { display:grid; grid-template-columns: minmax(0,1fr) 408px; gap: clamp(40px, 5vw, 80px); align-items:center; }
+.lf-qhero-left { max-width: 640px; }
+.lf-qhero-left .lf-hero-eyebrow { opacity:1 !important; }
+.lf-qhero-h1 { font-family: var(--font-display); font-weight:700; font-size: clamp(32px, 3.3vw, 46px); line-height:1.12; letter-spacing:-0.02em; color:#fff; margin:14px 0 0; max-width:26ch; text-shadow:0 2px 22px rgba(10,15,28,0.42); }
+.lf-qhero-accent { color:#c69a4b; }
+.lf-qhero-sub { margin:18px 0 0; font-size:17px; line-height:1.65; color:rgba(255,255,255,0.92); max-width:56ch; text-shadow:0 1px 14px rgba(10,15,28,0.5); }
+.lf-qhero-trust { margin:22px 0 0; display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px; font-size:15px; color:#fff; text-shadow:0 1px 12px rgba(10,15,28,0.5); }
+.lf-qhero-trust strong { font-weight:700; }
+.lf-qhero-stars { color:#c69a4b; letter-spacing:1px; }
+.lf-qhero-dot { color:rgba(255,255,255,0.45); }
+.lf-qhero-phone { margin:26px 0 0; display:inline-flex; align-items:center; gap:12px; min-height:52px; color:#fff; text-decoration:none; font-size:18px; font-weight:600; }
+.lf-qhero-phone-ic { width:40px; height:40px; border-radius:50%; background:#d98c03; color:#fff; display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; }
+.lf-qhero-phone strong { font-weight:700; }
+.lf-qhero-phone:hover strong { text-decoration:underline; }
+
+/* form card rechts */
+.lf-qcard { background:#fff; border-radius:14px; border-top:4px solid #d98c03; padding:28px 28px 22px; box-shadow:0 30px 80px -30px rgba(10,22,40,0.55); width:408px; max-width:100%; }
+.lf-qcard-eyebrow { display:block; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#8a5a02; margin-bottom:6px; }
+.lf-qcard-title { font-family: var(--font-display); font-weight:700; font-size:22px; line-height:1.2; color: var(--navy); margin:0 0 4px; }
+.lf-qcard-subline { font-size:14px; color: var(--ink-soft); margin:0 0 18px; }
+.lf-qcard-label { display:block; font-size:14px; font-weight:600; color: var(--navy); margin:0 0 6px; }
+.lf-qcard form input, .lf-qcard form select { width:100%; height:52px; font-size:16px; border:1px solid #cfd4dc; border-radius:10px; padding:0 14px; margin-bottom:16px; color: var(--ink); background-color:#fff; font-family:inherit; }
+.lf-qcard form input:focus, .lf-qcard form select:focus { outline:none; border-color: #d98c03; box-shadow:0 0 0 3px rgba(217,140,3,0.16); }
+.lf-qcard-select { appearance:none; -webkit-appearance:none; -moz-appearance:none; cursor:pointer; padding-right:40px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23525b6b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; }
+.lf-qcard-select:invalid { color: var(--ink-mute); }
+.lf-qcard-err { margin:-6px 0 12px; font-size:14px; line-height:1.4; color:#b3261e; }
+.lf-qcard-btn { width:100%; min-height:56px; border:0; border-radius:999px; background: #d98c03; color:#fff; font-size:17px; font-weight:600; cursor:pointer; font-family:inherit; transition: background 0.18s var(--ease); }
+.lf-qcard-btn:hover { background: #b87502; }
+.lf-qcard-btn:disabled { opacity:0.7; cursor:wait; }
+.lf-qcard-micro { text-align:center; font-size:13.5px; color: var(--ink-mute); margin:12px 0 0; }
+.lf-qcard-micro2 { text-align:center; font-size:14px; margin:6px 0 0; color: var(--ink-soft); }
+.lf-qcard-micro2 a { color: var(--navy); font-weight:600; text-decoration:underline; }
+.lf-qcard-thanks { display:none; text-align:center; padding:24px 8px; min-height:300px; flex-direction:column; align-items:center; justify-content:center; }
+.lf-qcard.is-success .lf-qcard-body { display:none; }
+.lf-qcard.is-success .lf-qcard-thanks { display:flex; }
+.lf-qcard-thanks-ic { width:60px; height:60px; border-radius:50%; background:#2ea466; color:#fff; display:inline-flex; align-items:center; justify-content:center; margin-bottom:14px; }
+.lf-qcard-thanks h3 { font-family: var(--font-display); font-size:22px; color: var(--navy); margin:0 0 8px; }
+.lf-qcard-thanks p { font-size:14.5px; color: var(--ink-soft); margin:0; max-width:34ch; }
+
+@media (max-width: 1079px) {
+  .lf-hero.lf-qhero { align-items: flex-start; min-height: auto; }
+  .lf-qhero-grid { grid-template-columns: 1fr; gap:28px; justify-items:start; }
+  .lf-qcard { width:100%; max-width:520px; margin:0 auto; }
+  .lf-qhero-left { max-width:640px; }
+}
+@media (max-width: 767px) {
+  .lf-qhero .lf-hero-bg::after { background: rgba(10,22,40,0.72); }
+  .lf-qhero .lf-hero-wrap { padding-top:104px !important; padding-bottom:48px !important; }
+  .lf-qhero-h1 { font-size:28px; line-height:1.18; }
+  .lf-qhero-sub { font-size:15.5px; }
+  .lf-qcard { padding:24px 18px; }
+}
 
 /* About + Form */
 .lf-about-grid { display:grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: start; }
@@ -2654,6 +2718,61 @@ export default function Home() {
       }
     };
     homeForm?.addEventListener('submit', onHomeSubmit);
+
+    // ── Hero offerte-form submit handler (korte 3-veld lead-form in de hero) ──
+    const heroForm = document.querySelector<HTMLFormElement>('[data-hero-form]');
+    const heroCard = heroForm?.closest<HTMLElement>('.lf-qcard');
+    const heroBtn = document.querySelector<HTMLButtonElement>('[data-hero-submit]');
+    const heroBtnLabel = document.querySelector<HTMLElement>('[data-hero-submit-label]');
+    const heroErr = document.querySelector<HTMLElement>('[data-hero-error]');
+    // korte dienst-labels → de volledige labels die divisieKey() kent (type-veilig, geen losse keys)
+    const HERO_DIENST: Record<string, string> = {
+      Dak: 'Dakwerken', Gevel: 'Gevelbekleding', Interieur: 'Interieurwerken',
+      Totaalrenovatie: 'Algemene aanneming (Construct)', 'Iets anders': '',
+    };
+    let heroStarted = false;
+    heroForm?.addEventListener('focusin', () => { if (!heroStarted) { heroStarted = true; trackFormStart('home:hero'); } });
+    const onHeroSubmit = async (e: SubmitEvent) => {
+      e.preventDefault();
+      if (!heroForm) return;
+      const fd = new FormData(heroForm);
+      const name = ((fd.get('name') as string) || '').trim();
+      const phone = ((fd.get('phone') as string) || '').trim();
+      const dienst = ((fd.get('dienst') as string) || '').trim();
+      const showErr = (msg: string, sel?: string) => {
+        if (heroErr) { heroErr.hidden = false; heroErr.textContent = msg; }
+        if (sel) heroForm.querySelector<HTMLElement>(sel)?.focus();
+      };
+      if (name.length < 2) return showErr('Vul uw naam in.', 'input[name="name"]');
+      if (phone.replace(/\D/g, '').length < 8) return showErr('Vul een geldig telefoonnummer in (minstens 8 cijfers).', 'input[name="phone"]');
+      if (!dienst) return showErr('Kies een dienst.', 'select[name="dienst"]');
+      if (heroErr) { heroErr.hidden = true; heroErr.textContent = ''; }
+      if (heroBtn) heroBtn.disabled = true;
+      if (heroBtnLabel) heroBtnLabel.textContent = 'Even bezig…';
+      const sp = name.indexOf(' ');
+      const firstName = sp > 0 ? name.slice(0, sp) : name;
+      const lastName = sp > 0 ? name.slice(sp + 1) : undefined;
+      const digits = phone.replace(/\D/g, '');
+      const result = await submitLead({
+        source: 'contact_form',
+        page_path: window.location.pathname,
+        firstName,
+        lastName,
+        email: `lead-${digits}@abgroep.be`,
+        phone,
+        type_werk: divisieKey(HERO_DIENST[dienst] ?? ''),
+        aanvullende_info: `Hero-form homepage — dienst: ${dienst}; e-mail telefonisch opvragen`,
+        bron_lead: 'website:home:hero',
+      });
+      if (result.ok) {
+        heroCard?.classList.add('is-success');
+      } else {
+        if (heroBtn) heroBtn.disabled = false;
+        if (heroBtnLabel) heroBtnLabel.textContent = 'Vraag uw vaste prijs aan';
+        showErr(`Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced}.`);
+      }
+    };
+    heroForm?.addEventListener('submit', onHeroSubmit);
 
     return () => {
       document.body.className = prevClass;
