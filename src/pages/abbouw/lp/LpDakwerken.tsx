@@ -147,6 +147,17 @@ const LP_CSS = `
 @media (max-width: 720px) { .tr-hero { display: flex; align-items: center; min-height: 76vh; } .tr-hero-inner { width: 100%; padding: 44px 0 116px; text-align: center; } .tr-hero-sub { margin-left: auto; margin-right: auto; } .tr-certs { justify-content: center; gap: 9px 10px; } .tr-cert-pill { height: 36px; padding: 0 13px; font-size: 12px; }
   .tr-hero-bg::after { background: linear-gradient(180deg, rgba(10,22,40,0.82) 0%, rgba(10,22,40,0.66) 42%, rgba(10,22,40,0.88) 100%); } }
 
+/* hero trust-row + sticky-header phone (repositioning, video-2 above-the-fold) */
+.tr-hero-trust { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin:0 0 20px; font-size:14.5px; font-weight:600; color:rgba(255,255,255,0.92); }
+.tr-hero-trust b { color:#fff; }
+.tr-hero-trust-stars { color:${GOLD}; letter-spacing:1px; font-size:15px; }
+.tr-hero-trust-dot { color:rgba(255,255,255,0.4); }
+.tr-headphone { display:inline-flex; align-items:center; gap:8px; color:${NAVY}; border:1.5px solid #e0ddd3; background:#fff; font-family:var(--font-display); font-weight:700; font-size:14px; padding:10px 16px; border-radius:999px; white-space:nowrap; transition:border-color .18s, color .18s; }
+.tr-headphone svg { color:${ORANGE}; }
+.tr-headphone:hover { border-color:${ORANGE}; color:${ORANGE}; }
+@media (max-width:980px){ .tr-headphone{ background:${ORANGE}; color:#fff; border-color:${ORANGE}; padding:0; width:42px; height:42px; justify-content:center; gap:0; } .tr-headphone svg{ color:#fff; } .tr-headphone-num{ display:none; } }
+@media (max-width:720px){ .tr-hero-trust{ justify-content:center; font-size:13px; gap:6px 10px; } }
+
 /* 4 — QUICK FORM (overlaps hero) */
 .tr-quickform-shell { background: #fff; }
 .tr-quickform { background: #fff; max-width: 880px; margin: -88px auto 0; position: relative; z-index: 5;
@@ -393,6 +404,7 @@ const HTML = `
           <span class="tr-rating-stars">${stars}</span>
         </div>
         <a class="tr-btn tr-headcta" href="#contact" style="padding:12px 22px;font-size:14px;">Gratis offerte</a>
+        <a class="tr-headphone" href="${PHONE_HREF}" aria-label="Bel ons">${icPhone}<span class="tr-headphone-num">${PHONE}</span></a>
         <button type="button" class="tr-burger" data-menu-toggle aria-label="Menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -415,8 +427,14 @@ const HTML = `
     <div class="tr-hero-bg"><img src="${heroClassic}" alt="Dakwerken Vlaanderen" /></div>
     <div class="tr-hero-inner">
       <div class="tr-wrap">
-        <h1>Vakkundig dakwerk in heel Vlaanderen.</h1>
-        <p class="tr-hero-sub">Daklek of toe aan vervanging? Bel voor een gratis offerte. <b>Eigen dakdekkers</b>, actief in Mechelen, Antwerpen, Lier en heel Vlaanderen.</p>
+        <div class="tr-hero-trust">
+          <span class="tr-hero-trust-stars">${stars}</span>
+          <span><b>4,9/5</b> op Google</span><span class="tr-hero-trust-dot">·</span>
+          <span>124+ daken vernieuwd</span><span class="tr-hero-trust-dot">·</span>
+          <span>10 jaar garantie</span>
+        </div>
+        <h1>Dakwerken in heel Vlaanderen</h1>
+        <p class="tr-hero-sub">Daklek of toe aan vervanging? <b>Eigen dakdekkers</b>, een vaste prijs op papier en een gratis dakinspectie binnen 5 werkdagen. Actief in Antwerpen, Mechelen, Lier en heel Vlaanderen.</p>
         <div class="tr-hero-cta">
           <a href="#contact" class="tr-btn">Gratis offerte aanvragen</a>
           <a href="${PHONE_HREF}" class="tr-hero-call">of bel ${PHONE}</a>
@@ -435,7 +453,7 @@ const HTML = `
     <div class="tr-wrap">
       <div class="tr-quickform" id="lp-form" data-lp-quick>
         <span class="tr-eyebrow">Vrijblijvend</span>
-        <h3>Terugbelverzoek</h3>
+        <h3>Gratis dakinspectie aanvragen</h3>
         <form data-lp-quick-form novalidate>
           <div class="tr-qf-grid">
             <input type="text" name="firstName" placeholder="Voornaam *" autocomplete="given-name" required />

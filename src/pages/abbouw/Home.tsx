@@ -115,22 +115,34 @@ const HTML = (i: Record<string, string>) => `
         Eigen vakmensen in vaste dienst sinds 2010
       </span>
       <h1 class="lf-hero-headline">
-        <span class="lf-hw" style="--i:1">Vakmanschap</span>
-        <span class="lf-hw" style="--i:2">in</span>
-        <span class="lf-hw" style="--i:3">heel</span>
-        <span class="lf-hw" style="--i:4">Vlaanderen</span>
+        <span class="lf-hw" style="--i:1">Aannemer</span>
+        <span class="lf-hw" style="--i:2">voor</span>
+        <span class="lf-hw" style="--i:3">dak,</span>
+        <span class="lf-hw" style="--i:4">gevel</span>
+        <span class="lf-hw" style="--i:5">&amp;</span>
+        <span class="lf-hw" style="--i:6">renovatie</span>
+        <span class="lf-hw" style="--i:7">in</span>
+        <span class="lf-hw" style="--i:8; color:#c69a4b">Vlaanderen</span>
       </h1>
-      <p class="lf-hero-sub" style="--i:5">Dak, gevel, interieur en totaalrenovatie. Eén bouwpartner, eigen ploegen, een vaste prijs op papier.</p>
-      <div class="lf-hero-actions" style="--i:6">
+      <p class="lf-hero-sub" style="--i:9">Eén vaste bouwpartner met eigen ploegen voor dak, gevel, interieur en totaalrenovatie. Een vaste prijs op papier, 6% btw waar het kan, en een gratis plaatsbezoek meestal binnen 5 werkdagen.</p>
+      <div class="lf-hero-trust" style="--i:10">
+        <span class="lf-hero-trust-stars" aria-hidden="true">★★★★★</span>
+        <span><strong>4,9/5</strong> op Google</span>
+        <span class="lf-hero-trust-sep" aria-hidden="true">·</span>
+        <span>124+ realisaties in Vlaanderen</span>
+        <span class="lf-hero-trust-sep" aria-hidden="true">·</span>
+        <span>Eigen ploegen sinds 2010</span>
+      </div>
+      <div class="lf-hero-actions" style="--i:11">
         <a href="#contact-form" class="lf-cta-pill" data-smooth>
-          <span>Plan een kennismaking</span>
+          <span>Gratis offerte</span>
           <span class="lf-cta-pill-arrow">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </span>
         </a>
-        <a href="/realisaties" class="lf-hero-ghost">
-          <span>Bekijk realisaties</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <a href="${CONTACT.phone.href}" class="lf-hero-phone">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>of bel ${CONTACT.phone.spaced}</span>
         </a>
       </div>
     </div>

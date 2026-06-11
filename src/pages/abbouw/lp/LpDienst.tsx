@@ -95,7 +95,7 @@ const DIENSTEN: Record<string, Dienst> = {
     slug: 'velux',
     division: 'ab_dakwerken', typeWerk: 'AB Dakwerken', bronLead: 'ads:velux',
     eyebrow: 'Dakramen · heel Vlaanderen',
-    h1: 'Velux dakraam vakkundig geplaatst.',
+    h1: 'Velux dakramen plaatsen in Vlaanderen',
     sub: 'Plaatsing en vervanging van Velux-dakramen in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
     subBold: 'Eigen dakdekkers',
     heroImg: imgVx2,
@@ -695,6 +695,7 @@ export default function LpDienst({ slug }: { slug: string }) {
               <span className="tr-rating-stars">{stars}</span>
             </div>
             <a className="tr-btn tr-headcta" href="#contact" style={{ padding: '12px 22px', fontSize: 14 }}>Gratis offerte</a>
+            <a className="tr-headphone" href={PHONE_HREF} aria-label="Bel ons"><Phone /><span className="tr-headphone-num">{PHONE}</span></a>
             <button type="button" className="tr-burger" data-menu-toggle aria-label="Menu" aria-expanded="false">
               <span /><span /><span />
             </button>
@@ -716,6 +717,12 @@ export default function LpDienst({ slug }: { slug: string }) {
         <div className="tr-hero-bg"><img src={d.heroImg} alt={d.h1} /></div>
         <div className="tr-hero-inner">
           <div className="tr-wrap">
+            <div className="tr-hero-trust">
+              <span className="tr-hero-trust-stars">{stars}</span>
+              <span><b>4,9/5</b> op Google</span><span className="tr-hero-trust-dot">·</span>
+              <span>124+ realisaties</span><span className="tr-hero-trust-dot">·</span>
+              <span>Eigen ploeg sinds 2010</span>
+            </div>
             <h1>{d.h1}</h1>
             <p className="tr-hero-sub">{d.sub} <b>{d.subBold}</b>.</p>
             <div className="tr-hero-cta">
@@ -1039,6 +1046,15 @@ const LP_CSS = `
 .tr-nav a { color: ${NAVY}; font-family: var(--font-display); font-weight: 600; font-size: 15px; transition: color .18s; }
 .tr-nav a:hover { color: ${ORANGE}; }
 .tr-header-right { display: flex; align-items: center; gap: 18px; margin-left: auto; }
+.tr-hero-trust { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin:0 0 20px; font-size:14.5px; font-weight:600; color:rgba(255,255,255,0.92); }
+.tr-hero-trust b { color:#fff; }
+.tr-hero-trust-stars { color:${GOLD}; letter-spacing:1px; font-size:15px; }
+.tr-hero-trust-dot { color:rgba(255,255,255,0.4); }
+.tr-headphone { display:inline-flex; align-items:center; gap:8px; color:${NAVY}; border:1.5px solid #e0ddd3; background:#fff; font-family:var(--font-display); font-weight:700; font-size:14px; padding:10px 16px; border-radius:999px; white-space:nowrap; transition:border-color .18s, color .18s; }
+.tr-headphone svg { color:${ORANGE}; }
+.tr-headphone:hover { border-color:${ORANGE}; color:${ORANGE}; }
+@media (max-width:980px){ .tr-headphone{ background:${ORANGE}; color:#fff; border-color:${ORANGE}; padding:0; width:42px; height:42px; justify-content:center; gap:0; } .tr-headphone svg{ color:#fff; } .tr-headphone-num{ display:none; } }
+@media (max-width:720px){ .tr-hero-trust{ justify-content:center; font-size:13px; gap:6px 10px; } }
 .tr-rating { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.1; }
 .tr-rating-score { font-family: var(--font-display); font-weight: 700; font-size: 14px; color: ${NAVY}; }
 .tr-rating-stars { color: ${GOLD}; font-size: 13px; letter-spacing: 1px; }

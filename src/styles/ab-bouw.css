@@ -5988,7 +5988,7 @@ body.page-hero-dark .footer {
   padding: 14px 22px;
   background: #fff;
   border: 1px solid rgba(15, 23, 42, 0.06);
-  border-radius: 999px;
+  border-radius: 12px;
   box-shadow: 0 8px 28px -18px rgba(15, 23, 42, 0.25);
 }
 .lf-reviews-score {
@@ -6068,8 +6068,8 @@ body.page-hero-dark .footer {
      Subtiele radiale vignet + verticaal verloop houdt witte tekst leesbaar
      zonder de Belgische projectfoto's tot bijna-zwart te knijpen. */
   background:
-    linear-gradient(to bottom, rgba(10,15,28,0.18) 0%, rgba(10,15,28,0.10) 32%, rgba(10,15,28,0.42) 78%, rgba(10,15,28,0.60) 100%),
-    radial-gradient(ellipse 120% 80% at 50% 42%, transparent 40%, rgba(10,15,28,0.30) 100%);
+    linear-gradient(to bottom, rgba(10,15,28,0.34) 0%, rgba(10,15,28,0.24) 32%, rgba(10,15,28,0.46) 78%, rgba(10,15,28,0.62) 100%),
+    radial-gradient(ellipse 96% 66% at 50% 46%, rgba(10,15,28,0.30) 0%, rgba(10,15,28,0.10) 56%, transparent 82%);
   z-index: 3;
 }
 
@@ -6254,6 +6254,16 @@ body.page-hero-dark .footer {
 .lf-hero-ghost svg { transition: transform 0.25s ease; }
 .lf-hero-ghost:hover svg { transform: translateX(3px); }
 
+/* hero trust-row + phone CTA (repositioning, video-2 above-the-fold) */
+.lf-hero-trust { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 12px; font-family: var(--font-display); font-size: 14.5px; font-weight: 500; color: rgba(255,255,255,0.92); text-shadow: 0 1px 14px rgba(10,15,28,0.55); }
+.lf-hero-trust strong { font-weight: 700; color: #fff; }
+.lf-hero-trust-stars { color: #f0b429; letter-spacing: 1px; font-size: 15px; }
+.lf-hero-trust-sep { color: rgba(255,255,255,0.4); }
+.lf-hero-phone { display: inline-flex; align-items: center; gap: 8px; color: #fff; font-family: var(--font-display); font-weight: 600; font-size: 15px; text-decoration: none; padding: 6px 4px; transition: color 0.2s ease; text-shadow: 0 1px 14px rgba(10,15,28,0.5); }
+.lf-hero-phone svg { color: #c69a4b; flex-shrink: 0; }
+.lf-hero-phone:hover { color: #c69a4b; }
+@media (max-width: 720px) { .lf-hero-trust { font-size: 12.5px; gap: 5px 9px; } }
+
 /* Hero-CTA: premium rechthoekige knop (geen 999px "startup-pill", geen
    uppercase-micro-tekst). SCOPED op .lf-hero-mini zodat de globale
    .lf-cta-pill van het conversie-formulier ONGEMOEID blijft. */
@@ -6385,6 +6395,7 @@ body.page-hero-dark .footer {
 .lf-hero-mini .lf-hero-eyebrow,
 .lf-hero-mini .lf-hw,
 .lf-hero-mini .lf-hero-sub,
+.lf-hero-mini .lf-hero-trust,
 .lf-hero-mini .lf-hero-actions {
   opacity: 0;
   will-change: opacity;
@@ -6392,6 +6403,7 @@ body.page-hero-dark .footer {
 .lf-hero-mini.played .lf-hero-eyebrow,
 .lf-hero-mini.played .lf-hw,
 .lf-hero-mini.played .lf-hero-sub,
+.lf-hero-mini.played .lf-hero-trust,
 .lf-hero-mini.played .lf-hero-actions {
   animation: lf-hero-rise 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   animation-delay: calc(var(--i, 0) * 80ms + 120ms);
