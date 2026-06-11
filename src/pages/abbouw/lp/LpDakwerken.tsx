@@ -229,20 +229,22 @@ const LP_CSS = `
 @media (max-width: 720px) { .tr-numbers { grid-template-columns: 1fr 1fr; } .tr-num + .tr-num::before { display: none; } .tr-num { padding: 34px 20px; } }
 
 /* 8 — SERVICES (dark) */
-.tr-services { background: ${NAVY}; color: #fff; border-top: 1px solid rgba(255,255,255,0.07); box-shadow: inset 0 1px 0 rgba(255,255,255,0.04); }
-.tr-services .tr-head { text-align: left; max-width: 680px; margin: 0 0 clamp(44px, 5vw, 72px); }
+.tr-services { background: ${NAVY}; color: #fff; border-top: 1px solid rgba(255,255,255,0.07); }
+.tr-services .tr-head { text-align: left; max-width: 680px; margin: 0 0 clamp(36px, 4vw, 56px); }
 .tr-services .tr-head h2 { font-size: clamp(27px, 4.4vw, 52px); color: #fff; font-weight: 700; letter-spacing: -0.02em; line-height: 1.06; margin: 0; }
-.tr-svc-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: clamp(22px, 2.4vw, 34px); }
+.tr-services .tr-head p { font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.8); max-width: 560px; margin: 12px 0 0; }
+.tr-services .tr-eyebrow { color: rgba(255,255,255,0.7); }
+.tr-svc-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 24px; }
 .tr-svc-grid > .tr-svc-card:nth-child(-n+2) { grid-column: span 3; }
 .tr-svc-grid > .tr-svc-card:nth-child(n+3) { grid-column: span 2; }
-.tr-svc-card { background: ${NAVY2}; border: 1px solid rgba(255,255,255,0.13); border-radius: var(--tr-r-card); overflow: hidden; box-shadow: 0 24px 48px -34px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.05);
-  display: flex; flex-direction: column; transition: transform .25s ease, border-color .25s ease; }
-.tr-svc-card:hover { border-color: rgba(255,255,255,0.28); }
-.tr-svc-img { aspect-ratio: 16/11; overflow: hidden; }
+.tr-svc-card { background: #15263f; border: 1px solid rgba(255,255,255,0.18); border-radius: var(--tr-r-card); overflow: hidden;
+  display: flex; flex-direction: column; transition: border-color .25s ease; }
+.tr-svc-card:hover { border-color: rgba(255,255,255,0.32); }
+.tr-svc-img { aspect-ratio: 16/10; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.08); }
 .tr-svc-img img { width: 100%; height: 100%; object-fit: cover; }
-.tr-svc-body { padding: 22px 22px 26px; flex: 1 1 auto; display: flex; flex-direction: column; justify-content: flex-end; }
-.tr-svc-body h3 { font-size: 18px; color: #fff; font-weight: 600; margin: 0 0 9px; }
-.tr-svc-body p { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.74); margin: 0; }
+.tr-svc-body { padding: 24px 24px 28px; flex: 1 1 auto; display: flex; flex-direction: column; }
+.tr-svc-body h3 { font-size: 19px; color: #fff; font-weight: 600; margin: 0 0 8px; }
+.tr-svc-body p { font-size: 15px; line-height: 1.65; color: rgba(255,255,255,0.84); margin: 0; }
 .tr-services .tr-urgency { color: rgba(255,255,255,0.66); }
 @media (max-width: 1040px) { .tr-svc-grid { grid-template-columns: 1fr 1fr; } .tr-svc-grid > .tr-svc-card { grid-column: auto; } }
 @media (max-width: 560px) { .tr-svc-grid { grid-template-columns: 1fr; } .tr-svc-grid > .tr-svc-card { grid-column: auto; } }
@@ -382,7 +384,7 @@ const HTML = `
     <div class="tr-wrap">
       <div class="tr-topbar-left">
         <span>Gratis dakinspectie binnen 5 werkdagen</span>
-        <span>Eigen ploeg</span>
+        <span>Erkend dakwerker</span>
       </div>
       <a class="tr-topbar-phone" href="${PHONE_HREF}">${icPhone}${PHONE}</a>
     </div>
@@ -429,15 +431,15 @@ const HTML = `
       <div class="tr-wrap">
         <div class="tr-hero-trust">
           <span class="tr-hero-trust-stars">${stars}</span>
-          <span><b>4,9/5</b> op Google</span><span class="tr-hero-trust-dot">·</span>
+          <span><b>4,9/5</b> op Google (184+ reviews)</span><span class="tr-hero-trust-dot">·</span>
           <span>124+ daken vernieuwd</span><span class="tr-hero-trust-dot">·</span>
-          <span>10 jaar garantie</span>
+          <span>Sinds 2010</span>
         </div>
-        <h1>Dakwerken in heel Vlaanderen</h1>
-        <p class="tr-hero-sub">Daklek of toe aan vervanging? <b>Eigen dakdekkers</b>, een vaste prijs op papier en een gratis dakinspectie binnen 5 werkdagen. Actief in Antwerpen, Mechelen, Lier en heel Vlaanderen.</p>
+        <h1>Dakwerken in heel Vlaanderen: uw dak 10 jaar gegarandeerd waterdicht</h1>
+        <p class="tr-hero-sub">Daklek of toe aan een nieuw dak? Bij een lek staan we snel bij u op het dak. Al de rest begint met een gratis dakinspectie: we fotograferen wat we vinden, zodat u ziet wat wij zien. Zo weet u vooraf wat er moet gebeuren en wat het kost, zwart op wit.</p>
         <div class="tr-hero-cta">
-          <a href="#contact" class="tr-btn">Gratis offerte aanvragen</a>
-          <a href="${PHONE_HREF}" class="tr-hero-call">of bel ${PHONE}</a>
+          <a href="#lp-form" class="tr-btn">Gratis dakinspectie aanvragen</a>
+          <a href="${PHONE_HREF}" class="tr-hero-call">Daklek? Bel direct ${PHONE}</a>
         </div>
         <div class="tr-certs">
           <span class="tr-cert-pill">${icShield}VCA* gecertificeerd</span>
@@ -453,7 +455,7 @@ const HTML = `
     <div class="tr-wrap">
       <div class="tr-quickform" id="lp-form" data-lp-quick>
         <span class="tr-eyebrow">Vrijblijvend</span>
-        <h3>Gratis dakinspectie aanvragen</h3>
+        <h3>Gratis dakinspectie met fotorapport</h3>
         <form data-lp-quick-form novalidate>
           <div class="tr-qf-grid">
             <input type="text" name="firstName" placeholder="Voornaam *" autocomplete="given-name" required />
@@ -466,13 +468,13 @@ const HTML = `
         <div class="tr-qf-error" data-lp-quick-error hidden></div>
         <div class="tr-qf-thanks">
           <div class="tr-qf-thanks-ic">${icCheck.replace('width="20" height="20"','width="26" height="26"')}</div>
-          <h4>Bedankt, aanvraag ontvangen!</h4>
+          <h4>Bedankt, uw aanvraag is ontvangen.</h4>
           <p>We bellen u zo snel mogelijk terug voor uw gratis dakinspectie.</p>
         </div>
       </div>
       <div class="tr-hero-testi">
-        <span class="tr-hero-testi-q">"Onze rijwoning had een dak van 1962 en lekte op drie plaatsen. AB Bouw stripte alles op één maandag en lag vrijdag waterdicht. Koramic-pannen, sarkingisolatie, nieuwe goten. Strak gewerkt en op tijd waterdicht opgeleverd."</span>
-        <div class="tr-hero-testi-name">— Stijn D., Mechelen</div>
+        <span class="tr-hero-testi-q">Onze rijwoning had nog het dak van 1962 en het lekte op drie plaatsen. Maandag begonnen ze te strippen, vrijdag lag het nieuwe dak erop, isolatie inbegrepen. Eén week werf en sindsdien geen druppel meer binnen.</span>
+        <div class="tr-hero-testi-name">Stijn D., Mechelen</div>
       </div>
     </div>
   </div>
@@ -486,17 +488,17 @@ const HTML = `
           <div class="tr-step">
             <div class="tr-step-num">01</div>
             <h3>Plan uw gratis dakinspectie</h3>
-            <p>Kies een moment dat past. Onze vakman beoordeelt uw dak en bezorgt een fotorapport van de staat.</p>
+            <p>Kies een moment dat past. Wij bekijken uw dak ter plaatse en u ontvangt een fotorapport van wat we vinden.</p>
           </div>
           <div class="tr-step">
             <div class="tr-step-num">02</div>
             <h3>Ontvang uw vaste prijs-offerte</h3>
-            <p>U krijgt heldere opties, materiaalkeuze en een bindende prijs. Zo weet u exact waar u aan toe bent.</p>
+            <p>U krijgt heldere opties, materiaalkeuze en een bindende prijs. In de offerte ziet u per post wat er gebeurt en waarom.</p>
           </div>
           <div class="tr-step">
             <div class="tr-step-num">03</div>
-            <h3>Zorgeloze plaatsing door eigen ploeg</h3>
-            <p>Onze eigen dakdekkers voeren alles uit van begin tot eind. Strak, proper, op een afgesproken startdatum.</p>
+            <h3>Zorgeloze plaatsing van begin tot eind</h3>
+            <p>Wij voeren alles uit, van het strippen tot de afwerking. Strak, proper, op een afgesproken startdatum.</p>
           </div>
         </div>
       </div>
@@ -517,14 +519,15 @@ const HTML = `
         </div>
         <div class="tr-about-body">
           <span class="tr-eyebrow">Over AB Bouw Groep</span>
-          <h2>Uw dakwerker in heel Vlaanderen</h2>
-          <p class="tr-about-intro">AB Bouw Groep werkt met een eigen vaste ploeg. Wij verzorgen dakrenovatie, plat dak, dakisolatie en zinkwerk van A tot Z.</p>
+          <h2>Dakwerkers die doen wat ze zeggen</h2>
+          <p class="tr-about-intro">Wie aan zijn dak laat werken, wil eigenlijk maar drie dingen weten: wie komt er, wanneer is het klaar en wat gaat het kosten. Daarom krijgt u bij ons één projectleider die alles opvolgt, van de eerste inspectie tot de oplevering. Die neemt op als u belt. En als we zeggen dat we maandag starten, dan staan we er maandag.</p>
           <ul class="tr-checks">
-            <li>${icCheck}<span><b>Offerte = factuur, ook bij prijsstijgingen</b></span></li>
-            <li>${icCheck}<span>Eigen dakdekkers, geen onderaannemers</span></li>
-            <li>${icCheck}<span>6% BTW-tarief en premie-advies regelen wij</span></li>
-            <li>${icCheck}<span>Transparante prijs, geen verborgen kosten</span></li>
-            <li>${icCheck}<span>10 jaar garantie op waterdichtheid</span></li>
+            <li>${icCheck}<span><b>Offerte = factuur. Geen indexatie, geen meerwerken achteraf.</b></span></li>
+            <li>${icCheck}<span>Fotorapport bij de inspectie: u ziet wat uw dak nodig heeft, en wat niet</span></li>
+            <li>${icCheck}<span>Een concrete startdatum in de offerte, niet ‘ergens in het voorjaar’</span></li>
+            <li>${icCheck}<span>10 jaar garantie op waterdichtheid, verzekerd via Federale</span></li>
+            <li>${icCheck}<span>Premies en het 6% btw-tarief: wij zoeken uit waar u recht op hebt en maken het dossier in orde</span></li>
+            <li>${icCheck}<span>Ook voor kleine herstellingen en onderhoud, niet alleen volledige daken</span></li>
           </ul>
           <div class="tr-urgency">Gratis plaatsbezoek, meestal binnen 5 werkdagen.</div>
         </div>
@@ -534,18 +537,34 @@ const HTML = `
 
   <!-- 7. NUMBERS BAR -->
   <section class="tr-numbers">
-    <div class="tr-num"><div class="tr-num-big">15 jaar</div><div class="tr-num-lbl">ervaring</div></div>
+    <div class="tr-num"><div class="tr-num-big">${new Date().getFullYear() - 2010} jaar</div><div class="tr-num-lbl">ervaring</div></div>
     <div class="tr-num"><div class="tr-num-big">124+</div><div class="tr-num-lbl">daken gerenoveerd</div></div>
-    <div class="tr-num"><div class="tr-num-big">100%</div><div class="tr-num-lbl">eigen ploeg</div></div>
+    <div class="tr-num"><div class="tr-num-big">1</div><div class="tr-num-lbl">vast aanspreekpunt</div></div>
     <div class="tr-num"><div class="tr-num-big">10 jaar</div><div class="tr-num-lbl">garantie</div></div>
+  </section>
+
+  <!-- REVIEWS — naar boven verplaatst (CRO: sociale proof vlak na de cijfers) -->
+  <section class="tr-section tr-reviews" id="reviews">
+    <div class="tr-wrap">
+      <div class="tr-head">
+        <span class="tr-eyebrow">Wat klanten zeggen</span>
+        <h2>Een lek, een verkoop en een storm</h2>
+      </div>
+      <div class="tr-rev-grid">
+        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>Natte plek op het plafond, net voor een weekend vol regen. Zaterdagochtend kreeg ik toch iemand aan de lijn en maandag stonden ze op het dak. Het lood rond de schoorsteen bleek verschoven; dezelfde week was alles hersteld. Geen grote werf, wel iemand die direct kwam toen het nodig was.</p><div class="tr-rev-foot"><div class="tr-rev-name">Lieve Hermans</div><div class="tr-rev-role">Daklek hersteld, Lier</div></div></div>
+        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>We wilden verkopen, maar met EPC-label F kwam er amper volk kijken. De isolatie is langs buiten geplaatst, binnen bleef alles zoals het was. Twee weken werk en het nieuwe attest geeft label C. Dat heeft de verkoop vlotgetrokken.</p><div class="tr-rev-foot"><div class="tr-rev-name">Yusuf Demir</div><div class="tr-rev-role">Sarking dakisolatie, Antwerpen</div></div></div>
+        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>Na de storm in februari lag een deel van onze pannen in de tuin. Nog dezelfde avond kwam er iemand een zeil spannen. Het dossier voor de verzekering hebben zij opgemaakt, foto's en verslag erbij, ik heb daar zelf amper papierwerk aan gehad. Twee weken later lag er een nieuw dak op.</p><div class="tr-rev-foot"><div class="tr-rev-name">Davy Janssens</div><div class="tr-rev-role">Stormschade, Sint-Niklaas</div></div></div>
+      </div>
+    </div>
   </section>
 
   <!-- 8. SERVICES -->
   <section class="tr-section tr-services" id="diensten">
     <div class="tr-wrap">
       <div class="tr-head">
-        <span class="tr-eyebrow" style="color:rgba(255,255,255,0.62)">Onze diensten</span>
-        <h2>Vakkundig dakwerk in heel Vlaanderen</h2>
+        <span class="tr-eyebrow">Onze diensten</span>
+        <h2>Alles wat uw dak nodig heeft</h2>
+        <p>Van volledige dakvernieuwing tot zinkwerk en dakramen: u regelt het met één offerte.</p>
       </div>
       <div class="tr-svc-grid">
         <div class="tr-svc-card">
@@ -579,7 +598,7 @@ const HTML = `
         <div class="tr-also-body">
           
           <h2>Dakonderhoud & herstellingen</h2>
-          <p>Niet altijd een volledig nieuw dak nodig? Onze ploeg doet ook gericht onderhoud en kleine herstellingen die uw dak jaren langer laten meegaan.</p>
+          <p>Niet altijd een volledig nieuw dak nodig? Wij doen ook gericht onderhoud en kleine herstellingen die uw dak jaren langer laten meegaan.</p>
           <ul class="tr-checks">
             <li>${icCheck}<span>Dakgoot reinigen en herstellen</span></li>
             <li>${icCheck}<span>Losse of gebroken pannen vervangen</span></li>
@@ -598,36 +617,21 @@ const HTML = `
     <div class="tr-wrap">
       <div class="tr-head" style="text-align:left;max-width:760px;margin:0 0 36px">
         <h2 style="font-size:clamp(27px,3.2vw,38px);color:#0a1628;font-weight:700;margin:0">Recente realisaties</h2>
-        <p style="font-size:15px;line-height:1.6;color:#454f60;margin:10px 0 0">Echte daken die onze eigen ploeg in Vlaanderen plaatste. Klik op een project voor meer beelden.</p>
+        <p style="font-size:15px;line-height:1.6;color:#454f60;margin:10px 0 0">Een greep uit recent opgeleverde daken. Klik op een project voor meer beelden.</p>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
         <div class="rl-thumb" data-rl-trigger data-rl-index="0" data-rl-photos="${RL_PAN}" data-rl-title="Pannendak-renovatie" style="border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(10,22,40,.35);aspect-ratio:4/3;position:relative">
           <img src="${imgRealPan1}" alt="Pannendak-renovatie realisatie" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
           <span style="position:absolute;left:14px;bottom:12px;color:#fff;font-family:var(--font-display);font-weight:600;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.55)">Pannendak-renovatie</span>
         </div>
-        <div class="rl-thumb" data-rl-trigger data-rl-index="0" data-rl-photos="${RL_EPDM}" data-rl-title="Plat dak — EPDM" style="border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(10,22,40,.35);aspect-ratio:4/3;position:relative">
+        <div class="rl-thumb" data-rl-trigger data-rl-index="0" data-rl-photos="${RL_EPDM}" data-rl-title="Plat dak in EPDM" style="border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(10,22,40,.35);aspect-ratio:4/3;position:relative">
           <img src="${imgRealEpdm1}" alt="Plat dak EPDM realisatie" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
-          <span style="position:absolute;left:14px;bottom:12px;color:#fff;font-family:var(--font-display);font-weight:600;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.55)">Plat dak — EPDM</span>
+          <span style="position:absolute;left:14px;bottom:12px;color:#fff;font-family:var(--font-display);font-weight:600;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.55)">Plat dak in EPDM</span>
         </div>
         <div class="rl-thumb" data-rl-trigger data-rl-index="0" data-rl-photos="${RL_DET}" data-rl-title="Hellend dak vernieuwd" style="border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(10,22,40,.35);aspect-ratio:4/3;position:relative">
           <img src="${imgRealDet1}" alt="Vernieuwd hellend dak realisatie" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
           <span style="position:absolute;left:14px;bottom:12px;color:#fff;font-family:var(--font-display);font-weight:600;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.55)">Hellend dak vernieuwd</span>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 11. REVIEWS -->
-  <section class="tr-section tr-reviews" id="reviews">
-    <div class="tr-wrap">
-      <div class="tr-head">
-        <span class="tr-eyebrow">Wat klanten zeggen</span>
-        <h2>Tevreden klanten in heel Vlaanderen</h2>
-      </div>
-      <div class="tr-rev-grid">
-        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Vrijdag een natte vlek op het plafond, zaterdag belde de werfleider me terug. Maandag stond de ploeg op het dak. 70 m² EPDM in één stuk, geen naden. Factuur klopte tot op de euro met de offerte."</p><div class="tr-rev-foot"><div class="tr-rev-name">Lieve Hermans</div><div class="tr-rev-role">Plat dak EPDM</div></div></div>
-        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Wij wilden vooral een lager EPC voor de verkoop. Sarkingsysteem buitenop, oude binnenafwerking bleef. EPC van F naar C in twee weken werk."</p><div class="tr-rev-foot"><div class="tr-rev-name">Yusuf Demir</div><div class="tr-rev-role">Sarking dakisolatie</div></div></div>
-        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Storm haalde de helft van de pannen weg. Dezelfde dag iemand voor het dekzeil, de week erop een volledig nieuw dak. Verzekering rechtstreeks door hen geregeld."</p><div class="tr-rev-foot"><div class="tr-rev-name">Davy Janssens</div><div class="tr-rev-role">Stormschade</div></div></div>
       </div>
     </div>
   </section>
@@ -650,17 +654,17 @@ const HTML = `
   <!-- 13. FINAL CTA -->
   <section class="tr-section tr-section--lg tr-final" id="contact">
     <div class="tr-wrap">
-      <h2>Klaar voor uw nieuwe dak?</h2>
+      <h2>Laat ons eerst eens komen kijken</h2>
       <div class="tr-final-grid">
         <div class="tr-final-contact">
           <h3>Neem contact op</h3>
-          <div class="tr-big">Praat met één van onze projectleiders</div>
+          <div class="tr-big">Uw projectleider neemt zelf op</div>
           <div class="tr-line">${icPin}<span>August van Landeghemstraat 63, 2830 Willebroek</span></div>
           <div class="tr-line">${icPhone}<span>Telefoon: <a href="${PHONE_HREF}">${PHONE}</a></span></div>
         </div>
         <div class="tr-final-card" data-lp-form-wrapper>
           <h3>Vraag uw gratis offerte</h3>
-          <div class="tr-safe">${icShield}Vrijblijvend — we bellen u terug binnen 1 werkdag</div>
+          <div class="tr-safe">${icShield}Vrijblijvend. We bellen u terug binnen één werkdag</div>
           <form data-lp-form novalidate>
             <div class="tr-final-row">
               <input type="text" name="firstName" placeholder="Voornaam *" autocomplete="given-name" required />
@@ -683,13 +687,13 @@ const HTML = `
           </form>
           <div class="tr-final-err" data-lp-form-error></div>
           <div class="tr-final-thanks">
-            <h4>Bedankt, aanvraag ontvangen!</h4>
+            <h4>Bedankt, uw aanvraag is ontvangen.</h4>
             <p>We nemen zo snel mogelijk contact met u op.</p>
           </div>
         </div>
         <div class="tr-final-testi">
-          <div class="tr-final-testi-q">"We hadden na 20 jaar een volledige dakvervanging nodig en vreesden de overlast. AB Bouw was in twee dagen klaar en de kwaliteit is top."</div>
-          <div class="tr-final-testi-name">— Patrick D., Bornem</div>
+          <div class="tr-final-testi-q">We stelden de dakvervanging al jaren uit omdat we opzagen tegen de werken. Na goed een week was alles klaar, en de werf lag er elke avond opgeruimd bij.</div>
+          <div class="tr-final-testi-name">Patrick D., Bornem</div>
         </div>
       </div>
     </div>
@@ -709,7 +713,7 @@ const HTML = `
         </div>
       </div>
       <div class="tr-footer-info">AB Bouw Groep · August van Landeghemstraat 63, 2830 Willebroek · ${PHONE}</div>
-      <div class="tr-footer-copy">© ${new Date().getFullYear()} AB Bouw Groep — Erkend dakwerker in heel Vlaanderen. Alle rechten voorbehouden. &nbsp;·&nbsp; <a href="/voorwaarden" style="color:rgba(255,255,255,0.72);text-decoration:underline">Gebruiksvoorwaarden</a> &nbsp;·&nbsp; <a href="/privacy" style="color:rgba(255,255,255,0.72);text-decoration:underline">Privacybeleid</a> &nbsp;·&nbsp; <a href="/cookies" style="color:rgba(255,255,255,0.72);text-decoration:underline">Cookiebeleid</a></div>
+      <div class="tr-footer-copy">© ${new Date().getFullYear()} AB Bouw Groep · Erkend dakwerker in heel Vlaanderen. Alle rechten voorbehouden. &nbsp;·&nbsp; <a href="/voorwaarden" style="color:rgba(255,255,255,0.72);text-decoration:underline">Gebruiksvoorwaarden</a> &nbsp;·&nbsp; <a href="/privacy" style="color:rgba(255,255,255,0.72);text-decoration:underline">Privacybeleid</a> &nbsp;·&nbsp; <a href="/cookies" style="color:rgba(255,255,255,0.72);text-decoration:underline">Cookiebeleid</a></div>
     </div>
   </footer>
 
@@ -759,8 +763,8 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', local
-      ? `Erkend dakwerker in ${local.name} (${local.postcode}). Pannendak Koramic, plat dak EPDM, sarkingisolatie, zinkwerk en natuurleien. Eigen vaste ploeg, 10 jaar garantie via Federale Verzekering, 6% BTW-voordeel. Gratis dakinspectie binnen 5 werkdagen.`
-      : 'Erkend dakwerker in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Pannendak, plat dak EPDM, sarking-isolatie, zinkwerk. Eigen dakdekkers, 10 jaar garantie via Federale Verzekering, 6% BTW-voordeel. Gratis dakinspectie binnen 5 werkdagen.');
+      ? `Erkend dakwerker in ${local.name} (${local.postcode}). Pannendak Koramic, plat dak EPDM, sarkingisolatie, zinkwerk en natuurleien. Vaste prijs op papier, 10 jaar garantie op waterdichtheid via Federale Verzekering, 6% BTW-voordeel. Gratis dakinspectie binnen 5 werkdagen.`
+      : 'Erkend dakwerker in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Pannendak, plat dak EPDM, sarking-isolatie, zinkwerk. Vaste prijs op papier, 10 jaar garantie op waterdichtheid via Federale Verzekering, 6% BTW-voordeel. Gratis dakinspectie binnen 5 werkdagen.');
 
     // Open Graph + Twitter
     const setMeta = (prop: string, content: string, isProperty = false) => {
@@ -773,8 +777,8 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
       ? `Dakwerker ${local.name} — Gratis dakinspectie | AB Bouw Groep`
       : 'Dakwerker Mechelen & Antwerpen — Gratis dakinspectie | AB Bouw Groep', true);
     setMeta('og:description', local
-      ? `Pannendak, plat dak EPDM en dakisolatie in ${local.name}. Eigen ploeg, 10j garantie, 6% BTW-voordeel.`
-      : 'Nieuw dak, plat dak EPDM, dakisolatie. Eigen ploeg, 10j garantie, 6% BTW-voordeel.', true);
+      ? `Pannendak, plat dak EPDM en dakisolatie in ${local.name}. Vaste prijs op papier, 10j garantie op waterdichtheid, 6% BTW-voordeel.`
+      : 'Nieuw dak, plat dak EPDM, dakisolatie. Vaste prijs op papier, 10j garantie op waterdichtheid, 6% BTW-voordeel.', true);
     setMeta('og:type', 'website', true);
     setMeta('og:locale', 'nl_BE', true);
     setMeta('og:url', pageUrl, true);
@@ -847,7 +851,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
         {
           '@type': 'FAQPage',
           mainEntity: [
-            { '@type': 'Question', name: 'Wat kost een nieuw dak in 2026?', acceptedAnswer: { '@type': 'Answer', text: 'Dat hangt af van de oppervlakte, het type dak en de staat van de constructie. Na een gratis plaatsbezoek krijgt u een bindende prijs op papier.' } },
+            { '@type': 'Question', name: 'Wat kost een nieuw dak?', acceptedAnswer: { '@type': 'Answer', text: 'Dat hangt af van de oppervlakte, het type dak en de staat van de constructie. Na een gratis plaatsbezoek krijgt u een bindende prijs op papier.' } },
             { '@type': 'Question', name: 'Hoe lang duurt de plaatsing?', acceptedAnswer: { '@type': 'Answer', text: 'Een gemiddeld hellend dak ligt waterdicht in 1 tot 2 weken. U krijgt een concrete startdatum in de offerte.' } },
             { '@type': 'Question', name: 'Doen jullie de premieaanvraag voor mij?', acceptedAnswer: { '@type': 'Answer', text: 'Wij bekijken voor welke voordelen u in aanmerking komt: het 6% BTW-tarief (voor woningen ouder dan 10 jaar) en de Mijn VerbouwLening. Behoort u tot de juiste inkomenscategorie, dan regelen wij ook uw Mijn VerbouwPremie-dossier.' } },
             { '@type': 'Question', name: 'Wat is jullie garantie?', acceptedAnswer: { '@type': 'Answer', text: '10 jaar op waterdichtheid, plus fabrieksgarantie op de materialen (Koramic, Eternit, Firestone).' } },
@@ -993,15 +997,10 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
 
 
   const renderedHtml = local
-    ? HTML
-        .replace(
-          'Vakkundig dakwerk in heel Vlaanderen.',
-          `Vakkundig dakwerk in ${local.name}.`,
-        )
-        .replace(
-          'actief in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
-          `actief in ${local.name} en heel Vlaanderen.`,
-        )
+    ? HTML.replace(
+        'Dakwerken in heel Vlaanderen: uw dak 10 jaar gegarandeerd waterdicht',
+        `Dakwerken in ${local.name}: uw dak 10 jaar gegarandeerd waterdicht`,
+      )
     : HTML;
 
   useEffect(() => initRealisatieLightbox(), []);

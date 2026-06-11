@@ -88,36 +88,45 @@ type Dienst = {
   typeWerkOpties: string[];
   finalSub: string;
   metaTitle: string; metaDesc: string;
+  /** per-dienst overrides van gedeelde markup (de-cliché + eigen invalshoek per pagina) */
+  reviewsH2?: string;     // reviews-kop (default 'Wat onze klanten vertellen')
+  quickformH3?: string;   // mini-form kop (default 'Liever dat wij u bellen?')
+  werkwijzeH2?: string;   // stappen-kop (default 'In 3 stappen geregeld')
+  finalH2?: string;       // eind-CTA kop (default 'Klaar om te starten?')
+  urgencyLine?: string;   // about urgency-regel (default plaatsbezoek-variant)
+  quickThanks?: string;   // mini-form bedankt-tekst
+  breadcrumb?: string;    // schema breadcrumb-naam (default = dienstnaam i.p.v. h1)
+  galleryNoun?: string;   // publieke dienstnaam voor lightbox/alt (default d.typeWerk)
 };
 
 const DIENSTEN: Record<string, Dienst> = {
   velux: {
     slug: 'velux',
     division: 'ab_dakwerken', typeWerk: 'AB Dakwerken', bronLead: 'ads:velux',
-    eyebrow: 'Dakramen · heel Vlaanderen',
-    h1: 'Velux dakramen plaatsen in Vlaanderen',
-    sub: 'Plaatsing en vervanging van Velux-dakramen in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
-    subBold: 'Eigen dakdekkers',
+    eyebrow: 'Velux dakramen · plaatsing en vervanging',
+    h1: 'Meer daglicht op zolder met een Velux dakraam',
+    sub: 'Een raam in uw dak, dat moet in één keer goed zitten. Wij plaatsen en vervangen Velux dakramen in heel Vlaanderen: waterdicht ingewerkt met het juiste gootstuk, zonder koudebrug of condens achteraf, en vanbinnen netjes mee gepleisterd.',
+    subBold: 'Eén vaste prijs, plaatsing en binnenafwerking inbegrepen',
     heroImg: imgVx2,
     certLogo: { src: velux, alt: 'Velux' },
-    topbar: ['Gratis opmeting binnen 5 werkdagen', 'Eigen ploeg'],
+    topbar: ['Gratis opmeting binnen 5 werkdagen', 'Erkend Velux-plaatser'],
     offerEyebrow: 'Over AB Bouw Groep',
-    offerH2: 'Uw Velux-plaatser in heel Vlaanderen',
-    offerIntro: 'AB Bouw Groep werkt met een eigen vaste ploeg. Van opmeting tot waterdichte afwerking, alles door één ploeg.',
+    offerH2: 'Een dakraam is dakwerk. En dakwerk is ons vak.',
+    offerIntro: 'Het raam zelf is Velux-kwaliteit. Of het over twintig jaar nog altijd waterdicht zit, hangt af van wie het plaatst. AB Bouw Groep renoveert daken sinds 2010: gootstukken, onderdak en isolatie zijn ons dagelijks werk. Daarom durven we 10 jaar garantie te geven op de waterdichtheid, met één vast aanspreekpunt van opmeting tot oplevering.',
     offer: [
-      'Offerte = factuur, ook bij prijsstijgingen',
-      'Gratis opmeting aan huis, met advies over type en formaat',
-      'Vaste prijs inclusief plaatsing en binnenafwerking',
-      'Erkend Velux-plaatser, met behoud van fabrieksgarantie',
-      'Eigen dakdekkers, geen onderaannemers',
-      'Plaatsbezoek binnen 5 werkdagen, plaatsing op afspraak',
+      'Eén vaste prijs voor raam, plaatsing en binnenafwerking. Offerte = factuur.',
+      '10 jaar garantie op de waterdichtheid van de plaatsing',
+      'Gratis opmeting aan huis, met eerlijk advies over type en formaat',
+      'Erkend Velux-plaatser, uw fabrieksgarantie blijft gewoon gelden',
+      '6% btw bij een woning ouder dan 10 jaar, wij regelen het papierwerk',
+      'Binnen afgeschermd tegen stof, nadien alles netjes opgeruimd',
     ],
     steps: [
       ['Gratis opmeting', 'Een vakman komt langs, meet op en bespreekt welk type en formaat bij uw dak past.'],
-      ['Vaste offerte', 'U krijgt een bindende prijs inclusief plaatsing en binnenafwerking. Zo weet u exact waar u aan toe bent.'],
-      ['Plaatsing op afspraak', 'Onze eigen ploeg plaatst het dakraam waterdicht af, doorgaans op één dag.'],
+      ['Vaste offerte', 'U krijgt één bindende prijs voor raam, plaatsing en binnenafwerking; een standaardplaatsing start rond 1.250 euro. Die prijs staat vast, ook als materiaal duurder wordt.'],
+      ['Plaatsing op één dag', 'Wij plaatsen het raam, werken het waterdicht in en pleisteren de binnenkant netjes af. Doorgaans op één dag, en \'s avonds is uw dak gewoon weer dicht.'],
     ],
-    whatTitle: 'Wat houdt een Velux-plaatsing in?',
+    whatTitle: 'Wat komt er kijken bij een Velux-plaatsing?',
     whatIntro: 'Een dakraam plaatsen is meer dan een gat in het dak. Wij verzorgen het volledige werk, van het juiste gootstuk tot de afgewerkte binnenkant.',
     what: [
       ['Nieuw dakraam', 'Plaatsing van een nieuw Velux-dakraam in een pannendak of leien dak, met het juiste gootstuk.'],
@@ -128,21 +137,29 @@ const DIENSTEN: Record<string, Dienst> = {
     whatImg: imgVx1,
     gallery: [imgVx1, imgVx2, imgVx3],
     reviews: [
-      { text: '"Twee Velux-ramen in de zolderslaapkamer. Plaatsing op twee dagen, binnenafwerking direct mee gepleisterd. Geen koudebrug, geen condens."', name: 'Bart Wouters', role: 'Velux dakvenster' },
-      { text: '"Oud koepelraam vervangen door een modern Velux-dakraam. Vaste prijs vooraf, factuur klopte tot op de euro. Netjes afgewerkt."', name: 'Katrien De Smet', role: 'Vervanging dakraam' },
-      { text: '"Vakman kwam eerst opmeten en gaf eerlijk advies over het formaat. Plaatsing op één dag, alles waterdicht en proper achtergelaten."', name: 'Tom Vermeulen', role: 'Nieuw dakraam' },
+      { text: 'Twee Velux-ramen laten plaatsen in de zolderkamer. \'s Morgens om acht uur begonnen, tegen de avond zat alles dicht en was de binnenkant mee gepleisterd. Je zou niet zeggen dat het dak open heeft gelegen.', name: 'Bart Wouters', role: 'Twee dakramen op zolder' },
+      { text: 'Er zat condens tussen het glas van ons oud dakraam en bij felle regen kwam er water binnen. Vervangen door een nieuwe Velux, gootstuk en al. De factuur klopte tot op de euro met de offerte. Hadden we eerder moeten laten doen.', name: 'Katrien De Smet', role: 'Vervanging oud dakraam' },
+      { text: 'De opmeter raadde ons een kleiner formaat aan dan we in gedachten hadden, anders moest er een keper doorgezaagd worden. Een ander had ons dat waarschijnlijk niet gezegd. Op één dag geplaatst en proper achtergelaten.', name: 'Tom Vermeulen', role: 'Nieuw dakraam' },
     ],
     faq: [
       ['Wat kost een Velux dakraam geplaatst?', 'Dat hangt af van het type, het formaat en de bestaande dakopbouw. Een standaardplaatsing start doorgaans rond €1.250 inclusief plaatsing. U krijgt een vaste prijs na de gratis opmeting.'],
       ['Plaatsen jullie ook in een bestaand pannendak?', 'Ja. Wij plaatsen Velux-dakramen in pannendaken en leien daken, met het juiste gootstuk zodat alles waterdicht blijft.'],
+      ['Krijg ik condens op mijn nieuwe dakraam?', 'Bij een correct geplaatst dakraam met geïsoleerde inwerking hoort condens niet thuis. Condens tussen het glas van een oud dakraam betekent versleten beglazing; dat lost een vervanging op. Goed ventileren blijft belangrijk, zoals bij elk raam.'],
       ['Hoe lang duurt de plaatsing?', 'Een standaard dakraam plaatsen we doorgaans op één dag, inclusief binnenafwerking.'],
-      ['Krijg ik garantie op de plaatsing?', 'Ja. U krijgt garantie op de waterdichtheid van de plaatsing, bovenop de fabrieksgarantie van Velux op het raam zelf.'],
-      ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek en heel Vlaanderen. Bij het plaatsbezoek bevestigen we de planning.'],
+      ['Krijg ik garantie op de plaatsing?', 'Ja. U krijgt 10 jaar garantie op de waterdichtheid van de plaatsing, bovenop de fabrieksgarantie van Velux op het raam zelf.'],
+      ['Werken jullie in mijn regio?', 'Wij werken in heel Vlaanderen, met de meeste werven rond Antwerpen, Mechelen en Lier. Bij de gratis opmeting bevestigen we meteen de planning.'],
     ],
     typeWerkOpties: ['Nieuw dakraam', 'Vervanging', 'Meerdere ramen', 'Anders'],
-    finalSub: 'Praat met één van onze projectleiders',
-    metaTitle: 'Velux dakraam laten plaatsen — vaste prijs | AB Bouw Groep',
-    metaDesc: 'Velux-dakramen plaatsen en vervangen in Vlaanderen. Erkend plaatser, eigen ploeg, vaste prijs inclusief plaatsing. Gratis opmeting binnen 5 werkdagen.',
+    finalSub: 'Liever eerst iemand aan de lijn? Bel gerust.',
+    metaTitle: 'Velux dakraam laten plaatsen aan vaste prijs | AB Bouw Groep',
+    metaDesc: 'Velux dakramen plaatsen en vervangen in Vlaanderen. Vaste prijs incl. plaatsing en binnenafwerking, 10 jaar garantie op waterdichtheid. Gratis opmeting.',
+    reviewsH2: 'Klanten over hun nieuwe dakraam',
+    quickformH3: 'Liever dat wij u bellen?',
+    finalH2: 'Klaar voor meer licht op zolder?',
+    urgencyLine: 'Gratis opmeting, meestal binnen 5 werkdagen.',
+    quickThanks: 'We bellen u zo snel mogelijk terug om uw gratis opmeting in te plannen.',
+    breadcrumb: 'Velux dakramen',
+    galleryNoun: 'Velux dakraam',
   },
   gevelreiniging: {
     slug: 'gevelreiniging',
@@ -266,31 +283,31 @@ const DIENSTEN: Record<string, Dienst> = {
   dakisolatie: {
     slug: 'dakisolatie',
     division: 'ab_dakwerken', typeWerk: 'AB Dakwerken', bronLead: 'ads:dakisolatie',
-    eyebrow: 'Dakisolatie · heel Vlaanderen',
-    h1: 'Dakisolatie die uw factuur verlaagt.',
-    sub: 'Sarkingisolatie en zoldervloerisolatie in Mechelen, Antwerpen, Lier en heel Vlaanderen. Warmer huis, lagere stookkost.',
-    subBold: 'Eigen dakdekkers',
+    eyebrow: 'Dakisolatie',
+    h1: 'Dakisolatie die uw energiefactuur verlaagt.',
+    sub: 'Tot 30% van uw warmte ontsnapt via het dak. Wij isoleren uw hellend dak of zoldervloer, luchtdicht afgewerkt, in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
+    subBold: 'Vaste prijs vooraf, 6% btw waar het kan',
     heroImg: imgIsol1,
     certLogo: { src: '/assets/logos/rectic.png', alt: 'Recticel' },
-    topbar: ['Gratis dakinspectie binnen 5 werkdagen', 'Eigen ploeg'],
+    topbar: ['Gratis dakinspectie binnen 5 werkdagen', 'Eén vast aanspreekpunt'],
     offerEyebrow: 'Over AB Bouw Groep',
-    offerH2: 'Uw erkende dakisolatie-specialist in heel Vlaanderen',
-    offerIntro: 'AB Bouw Groep werkt met een eigen vaste ploeg. Wij isoleren uw dak luchtdicht en zonder koudebruggen, voor blijvend comfort.',
+    offerH2: 'Isoleren doet u maar één keer',
+    offerIntro: 'Dan kiest u liefst een aannemer die het in één keer juist doet. AB Bouw Groep vernieuwt en isoleert daken sinds 2010, luchtdicht en zonder koudebruggen, met een prijs die op papier vastligt vóór we beginnen.',
     offer: [
       'Offerte = factuur, ook bij prijsstijgingen',
-      'Gratis dakinspectie met advies over de juiste isolatiewaarde',
-      'Sarking buitenop of isolatie tussen de balken',
+      'Gratis dakinspectie met fotorapport: u ziet zelf hoe uw dak erbij ligt',
+      'Sarking buitenop of isolatie tussen de balken, afgestemd op uw dak en uw plannen',
       'Lager EPC en een merkbaar lagere stookkost',
-      'Luchtdicht afgewerkt, geen koudebruggen of condens',
-      'Eigen dakdekkers, geen onderaannemers',
+      'Luchtdicht afgewerkt met dampscherm, geen koudebruggen of condens',
+      '6% btw waar het kan, en we bekijken of u recht hebt op premie',
     ],
     steps: [
-      ['Gratis dakinspectie', 'Een vakman bekijkt uw dak en adviseert de juiste isolatiemethode en dikte.'],
-      ['Vaste offerte', 'U krijgt een bindende prijs, met de verwachte EPC-winst. Zo weet u exact waar u aan toe bent.'],
-      ['Isolatie door eigen ploeg', 'Wij plaatsen de isolatie luchtdicht af, met dampscherm en nette afwerking.'],
+      ['Gratis dakinspectie', 'Een vakman inspecteert uw dak en zolder en adviseert methode en dikte, met foto\'s van wat hij vaststelt.'],
+      ['Vaste offerte', 'U krijgt een bindende prijs op papier, met de verwachte EPC-winst erbij. Dat bedrag is meteen ook uw factuur.'],
+      ['Plaatsing op de afgesproken dag', 'Wij plaatsen de isolatie, werken alles luchtdicht af met dampscherm en laten de zolder netjes achter.'],
     ],
-    whatTitle: 'Wat houdt dakisolatie in?',
-    whatIntro: 'Een slecht geïsoleerd dak is goed voor tot 30% warmteverlies. Wij kiezen de methode die bij uw dak past en werken alles luchtdicht af.',
+    whatTitle: 'Welke isolatie past bij uw dak?',
+    whatIntro: 'Sarking buitenop, isolatie tussen de balken of een geïsoleerde zoldervloer: elk dak vraagt een eigen aanpak. Wij adviseren wat bij uw dak en uw plannen past, en werken alles luchtdicht af.',
     what: [
       ['Sarkingisolatie', 'Isolatie buitenop de balken, ideaal bij een dakrenovatie. Geen verlies aan zolderhoogte.'],
       ['Tussen de balken', 'Isolatie tussen en onder de balken, met dampscherm, wanneer het dak intact blijft.'],
@@ -300,52 +317,60 @@ const DIENSTEN: Record<string, Dienst> = {
     whatImg: imgIsol2,
     gallery: [imgIsol2, imgIsolGyproc, imgIsolGestuct, imgIsolSarking, imgIsolKoramic],
     reviews: [
-      { text: '"Dak vernieuwd met sarkingisolatie in één beweging. De zolder is nu een volwaardige kamer, en de verwarming staat merkbaar lager."', name: 'Hilde Declercq', role: 'Sarkingisolatie' },
-      { text: '"Eerlijk advies over de isolatiewaarde, geen overdreven dikte verkocht. Vaste prijs vooraf, factuur klopte. Nette ploeg."', name: 'Wim De Backer', role: 'Dakisolatie' },
-      { text: '"Zoldervloer laten isoleren, op één dag gedaan. Het scheelt direct op de stookkost. Alles proper opgeruimd."', name: 'Els Vandenberghe', role: 'Zoldervloerisolatie' },
+      { text: 'Ons dak moest toch vernieuwd worden, dus hebben we er meteen sarking op laten leggen. De zolder is nu een volwaardige kamer en de chauffage staat een graad lager dan vorige winter.', name: 'Hilde Declercq', role: 'Sarking bij dakrenovatie' },
+      { text: 'Wij vroegen prijs voor isolatie tussen de balken, maar omdat onze zolder toch enkel berging is, raadden ze de zoldervloer aan. Dat was een stuk goedkoper. En de prijs op de offerte was exact de prijs op de factuur.', name: 'Wim De Backer', role: 'Zoldervloerisolatie' },
+      { text: 'De slaapkamers onder het dak kregen we \'s winters nooit warm. De eerste koude week na de werken voelde je meteen het verschil. Spijtig dat we zo lang gewacht hebben.', name: 'Els Vandenberghe', role: 'Isolatie tussen de balken' },
     ],
     faq: [
       ['Wat kost dakisolatie?', 'Dat hangt af van de methode, de oppervlakte en de gewenste isolatiewaarde. U krijgt een vaste prijs na de gratis dakinspectie.'],
       ['Wat is sarking en waarom kiezen mensen ervoor?', 'Bij sarking komt de isolatie als één doorlopende laag bovenop de dakstructuur, onder de nieuwe dakbedekking. Zo behoudt u uw volledige zolderruimte, blijven de houten balken binnen zichtbaar en bruikbaar, en zijn er nagenoeg geen koudebruggen. Ideaal wanneer uw dak toch vernieuwd wordt.'],
-      ['Moet ik mijn dak of mijn zoldervloer isoleren?', 'Gebruikt u de zolder als leefruimte (nu of in de toekomst), dan isoleren we het dakvlak zelf: van buitenaf bij een dakrenovatie, of van binnenuit als het dak intact blijft. Gebruikt u de zolder enkel als opslag, dan volstaat vaak het isoleren van de zoldervloer — sneller en voordeliger. Wij adviseren gratis wat bij uw situatie past.'],
+      ['Moet ik mijn dak of mijn zoldervloer isoleren?', 'Gebruikt u de zolder als leefruimte (nu of in de toekomst), dan isoleren we het dakvlak zelf: van buitenaf bij een dakrenovatie, of van binnenuit als het dak intact blijft. Gebruikt u de zolder enkel als opslag, dan volstaat vaak het isoleren van de zoldervloer. Dat is sneller en voordeliger. Wij adviseren gratis wat bij uw situatie past.'],
       ['Heb ik recht op premie voor dakisolatie?', 'De premievoorwaarden zijn in 2026 gewijzigd; afhankelijk van uw inkomenscategorie en de R-waarde kan er nog premie zijn. Wij bekijken of u in aanmerking komt en regelen sowieso het 6% BTW-tarief (woning ouder dan 10 jaar) en het papierwerk.'],
       ['Sarking of tussen de balken?', 'Sarking is ideaal bij een dakrenovatie, omdat de isolatie buitenop komt. Blijft het dak intact, dan isoleren we tussen en onder de balken.'],
-      ['Hoeveel bespaar ik?', 'Een slecht geïsoleerd dak verliest tot 30% warmte. Goede dakisolatie verdient zich doorgaans terug via een lagere stookkost.'],
+      ['Hoeveel bespaar ik?', 'U voelt het vooral in de stookkost: een geïsoleerd dak houdt de warmte binnen die nu langs boven verdwijnt. Bij de offerte krijgt u de verwachte EPC-winst op papier.'],
       ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek en heel Vlaanderen.'],
     ],
     typeWerkOpties: ['Sarkingisolatie', 'Tussen de balken', 'Zoldervloer', 'Anders'],
-    finalSub: 'Praat met één van onze projectleiders',
-    metaTitle: 'Dakisolatie laten plaatsen — sarking & meer | AB Bouw Groep',
-    metaDesc: 'Dakisolatie in Vlaanderen: sarking, tussen de balken of zoldervloer. Lager EPC, lagere stookkost, 6% BTW-voordeel. Vaste prijs, eigen ploeg.',
+    finalSub: 'Vragen over sarking, premies of planning? Bel ons even.',
+    metaTitle: 'Dakisolatie laten plaatsen met vaste prijs | AB Bouw Groep',
+    metaDesc: 'Dakisolatie in Vlaanderen: sarking, tussen de balken of zoldervloer. Lager EPC, lagere stookkost, 6% btw waar het kan. Vaste prijs en gratis dakinspectie.',
+    reviewsH2: 'Wat klanten na de eerste winter zeggen',
+    quickformH3: 'Snel uw prijs weten?',
+    werkwijzeH2: 'In 3 stappen naar een geïsoleerd dak',
+    finalH2: 'Tijd voor een warmer huis?',
+    urgencyLine: 'Gratis dakinspectie, meestal binnen 5 werkdagen.',
+    quickThanks: 'We bellen u terug om de gratis dakinspectie in te plannen. Daarna volgt uw vaste prijs op papier.',
+    breadcrumb: 'Dakisolatie',
+    galleryNoun: 'Dakisolatie',
   },
   platdak: {
     slug: 'platdak',
     division: 'ab_dakwerken', typeWerk: 'AB Dakwerken', bronLead: 'ads:platdak',
-    eyebrow: 'Platte daken · heel Vlaanderen',
-    h1: 'Plat dak in EPDM of roofing.',
-    sub: 'Platte daken in EPDM of roofing voor aanbouw, garage of bijgebouw in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
-    subBold: 'Eigen dakdekkers',
+    eyebrow: 'Platte daken · EPDM en roofing',
+    h1: 'Een plat dak dat jaren droog blijft.',
+    sub: 'Platte daken lekken bijna nooit in het midden, wel op de naden en aan de randen. Daarom leggen wij EPDM in één naadloos stuk rubber en werken we de randen en de afvoer strak af. Liever bewezen roofing? Dat kan ook, en het is voordeliger. Voor uw aanbouw, garage of bijgebouw, in heel Vlaanderen.',
+    subBold: 'En u krijgt 10 jaar garantie op de waterdichtheid',
     heroImg: imgPlatdak,
     certLogo: { src: '/assets/logos/dorken.png', alt: 'Dörken' },
-    topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Eigen ploeg'],
+    topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Vaste prijs, geen verrassingen achteraf'],
     offerEyebrow: 'Over AB Bouw Groep',
-    offerH2: 'Uw erkende platdak-specialist in heel Vlaanderen',
-    offerIntro: 'AB Bouw Groep werkt met een eigen vaste ploeg. Wij leggen uw plat dak in EPDM of roofing, vakkundig en jaren waterdicht.',
+    offerH2: 'Een plat dak vergeeft geen half werk',
+    offerIntro: 'Op een hellend dak loopt regen vanzelf weg. Op een plat dak blijft hij liggen, en water vindt vroeg of laat elk zwak punt: een hoek, een doorvoer, de aansluiting met de muur. Wij leggen al meer dan vijftien jaar platte daken, dus die punten kennen we vanbuiten. Daar zetten we 10 jaar garantie op de waterdichtheid tegenover.',
     offer: [
-      'Offerte = factuur, ook bij prijsstijgingen',
-      'Gratis plaatsbezoek met advies over opbouw en isolatie',
-      'EPDM (naadloos) of bewezen roofing — u kiest',
-      'Geïsoleerd volgens de huidige normen',
-      'Strakke randafwerking en correcte waterafvoer',
-      'Eigen dakdekkers, geen onderaannemers',
+      'Uw offerte is uw factuur: vaste prijs, ook als materiaal duurder wordt',
+      'Gratis plaatsbezoek met eerlijk advies, ook als roofing gewoon volstaat',
+      'EPDM wordt verlijmd, niet gebrand: geen open vlam op uw dak',
+      'Meteen geïsoleerd volgens de huidige normen, geen tweede werf later',
+      'Woning ouder dan 10 jaar? Dan factureren wij aan 6% btw',
+      'Oude dakbedekking voeren wij af en de werf blijft proper',
     ],
     steps: [
-      ['Gratis plaatsbezoek', 'Een vakman bekijkt uw dak, meet op en adviseert over opbouw en isolatie.'],
-      ['Vaste offerte', 'U krijgt een bindende prijs inclusief isolatie en afwerking. Zo weet u exact waar u aan toe bent.'],
-      ['Plaatsing door eigen ploeg', 'Wij leggen uw EPDM of roofing geïsoleerd en waterdicht af.'],
+      ['Gratis plaatsbezoek', 'We komen langs, meten op en bekijken de hele opbouw: bedekking, isolatie, randen en afvoer. U hoort meteen of een herstelling volstaat of dat het dak aan vervanging toe is.'],
+      ['Vaste offerte', 'U krijgt één bindende prijs voor het volledige werk, isolatie en randafwerking inbegrepen. Wat op die offerte staat, is wat u betaalt.'],
+      ['Plaatsing en oplevering', 'We verwijderen de oude lagen waar nodig, isoleren volgens de huidige normen en werken alles waterdicht af tot en met de randen en de afvoer. Een doorsnee garagedak is op één à twee dagen klaar.'],
     ],
-    whatTitle: 'Wat houdt een plat dak in?',
-    whatIntro: 'Wij leggen platte daken in EPDM of roofing. EPDM is een rubbermembraan in één naadloos stuk; roofing (bitumen) is een bewezen, voordelige bedekking. Bij het gratis plaatsbezoek adviseren we wat het best past.',
+    whatTitle: 'EPDM of roofing? Wij leggen allebei.',
+    whatIntro: 'EPDM is een rubbermembraan in één naadloos stuk en gaat doorgaans 40 tot 50 jaar mee. Roofing is de bewezen bitumenlaag: voordeliger, goed voor 15 tot 25 jaar. Wat het slimst is voor uw dak hangt af van de oppervlakte, de opbouw en uw budget. En omdat wij allebei leggen, hebben we geen enkele reden om u het duurste aan te praten.',
     what: [
       ['Nieuw plat dak', 'Volledige opbouw met isolatie, afgewerkt in EPDM of roofing, voor aanbouw, garage of bijgebouw.'],
       ['EPDM of roofing', 'EPDM leggen we naadloos in één stuk; roofing is een bewezen, voordelige bitumenbedekking. U kiest na eerlijk advies.'],
@@ -355,21 +380,29 @@ const DIENSTEN: Record<string, Dienst> = {
     whatImg: imgPdak1,
     gallery: [imgPdak1, imgRoofing, imgPdak2, imgPdak3],
     reviews: [
-      { text: '"Plat dak van de aanbouw volledig vernieuwd in EPDM. Eén naadloos stuk, geen plakranden meer. Al twee winters volledig droog."', name: 'Sofie Vermeulen', role: 'Plat dak EPDM' },
-      { text: '"Oud lekkend garagedak vervangen. Vaste prijs vooraf, op twee dagen klaar. Nette randafwerking, proper opgeruimd."', name: 'Pieter Lauwers', role: 'Renovatie plat dak' },
-      { text: '"Eerlijk advies, de isolatie meteen mee vernieuwd. Factuur klopte tot op de euro. Strak resultaat."', name: 'Marleen Stevens', role: 'Nieuw plat dak' },
+      { text: 'Het dak boven onze aanbouw was al twee keer opgelapt en toch kwam die vochtplek in het plafond altijd terug. Ze hebben alles eraf gehaald, nieuwe isolatie gelegd en er één stuk EPDM over getrokken. Twee winters verder is het plafond nog altijd droog.', name: 'Sofie Claes', role: 'EPDM op de aanbouw' },
+      { text: 'Ons garagedak was dertig jaar oud en helemaal op. Alles in twee dagen vernieuwd, isolatie erbij en de randen netjes afgewerkt. De tweede avond konden we de auto er alweer binnenzetten.', name: 'Pieter Lauwers', role: 'Garagedak vernieuwd' },
+      { text: 'Voor het bijgebouw achteraan raadde hun vakman ons gewoon roofing aan, omdat EPDM daar de meerprijs niet waard was. Die eerlijkheid had ik niet verwacht. Strak gelegd, en al de oude roofing hebben ze zelf afgevoerd.', name: 'Marleen Stevens', role: 'Roofing op het bijgebouw' },
     ],
     faq: [
-      ['Wat kost een plat dak?', 'Dat hangt af van de oppervlakte, de opbouw, de isolatie en de keuze tussen EPDM of roofing. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'],
-      ['EPDM of roofing — wat kies ik?', 'EPDM leggen we naadloos in één stuk, zonder brander, met de langste levensduur. Roofing (bitumen) is bewezen en voordeliger. Bij het plaatsbezoek adviseren we eerlijk wat past bij uw dak en budget.'],
+      ['Wat kost een plat dak?', 'Dat hangt af van de oppervlakte, de opbouw, de isolatie en de keuze tussen EPDM of roofing. U krijgt een vaste prijs per m² na het gratis plaatsbezoek. Is uw woning ouder dan 10 jaar, dan valt het werk onder 6% btw; dat papierwerk regelen wij.'],
+      ['EPDM of roofing: wat kies ik?', 'EPDM leggen we naadloos in één stuk, zonder brander, met de langste levensduur. Roofing (bitumen) is bewezen en voordeliger. Bij het plaatsbezoek adviseren we eerlijk wat past bij uw dak en budget.'],
       ['Hoe lang gaat het mee?', 'Een correct gelegd EPDM-dak gaat doorgaans 40 tot 50 jaar mee; roofing doorgaans 15 tot 25 jaar.'],
       ['Kan de isolatie mee vernieuwd worden?', 'Ja. Bij een nieuw of vernieuwd plat dak isoleren we meteen volgens de huidige normen.'],
-      ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek en heel Vlaanderen.'],
+      ['Werken jullie in mijn regio?', 'Wij werken in heel Vlaanderen, met de meeste werven rond Antwerpen, Mechelen en Lier. Bij het gratis plaatsbezoek bevestigen we meteen de planning.'],
     ],
-    typeWerkOpties: ['Nieuw plat dak', 'Renovatie', 'EPDM of roofing', 'Met isolatie', 'Anders'],
-    finalSub: 'Praat met één van onze projectleiders',
-    metaTitle: 'Plat dak laten leggen — EPDM of roofing, vaste prijs | AB Bouw Groep',
-    metaDesc: 'Plat dak in EPDM of roofing in Vlaanderen. Voor aanbouw, garage of bijgebouw, geïsoleerd en waterdicht. Vaste prijs per m², eigen ploeg. Gratis plaatsbezoek.',
+    typeWerkOpties: ['Nieuw plat dak', 'Renovatie', 'Met isolatie', 'Anders'],
+    finalSub: 'Twijfelt u tussen EPDM en roofing? Bel ons, dan denken we mee.',
+    metaTitle: 'Plat dak laten leggen: EPDM of roofing, vaste prijs | AB Bouw Groep',
+    metaDesc: 'Plat dak voor aanbouw, garage of bijgebouw: EPDM naadloos of bewezen roofing, geïsoleerd en met 10 jaar garantie op de waterdichtheid. Gratis plaatsbezoek.',
+    reviewsH2: 'Klanten, een paar stevige regenbuien later',
+    quickformH3: 'Uw plat dak laten bekijken?',
+    werkwijzeH2: 'Zo pakken we uw dak aan',
+    finalH2: 'Nooit meer naar het plafond kijken als het giet',
+    urgencyLine: 'Gratis plaatsbezoek, meestal binnen 5 werkdagen. Een acuut lek krijgt voorrang in de planning.',
+    quickThanks: 'We bellen u terug om het gratis plaatsbezoek vast te leggen. Lekt uw dak nu? Zeg het ons, dan proberen we sneller te komen.',
+    breadcrumb: 'Plat dak',
+    galleryNoun: 'Plat dak',
   },
   crepi: {
     slug: 'crepi',
@@ -597,7 +630,7 @@ export default function LpDienst({ slug }: { slug: string }) {
           '@type': 'BreadcrumbList',
           itemListElement: [
             { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://abgroep.be' },
-            { '@type': 'ListItem', position: 2, name: d.h1, item: pageUrl },
+            { '@type': 'ListItem', position: 2, name: d.breadcrumb ?? d.h1, item: pageUrl },
           ],
         },
         {
@@ -719,9 +752,9 @@ export default function LpDienst({ slug }: { slug: string }) {
           <div className="tr-wrap">
             <div className="tr-hero-trust">
               <span className="tr-hero-trust-stars">{stars}</span>
-              <span><b>4,9/5</b> op Google</span><span className="tr-hero-trust-dot">·</span>
+              <span><b>4,9/5</b> op Google (184+ reviews)</span><span className="tr-hero-trust-dot">·</span>
               <span>124+ realisaties</span><span className="tr-hero-trust-dot">·</span>
-              <span>Eigen ploeg sinds 2010</span>
+              <span>Actief sinds 2010</span>
             </div>
             <h1>{d.h1}</h1>
             <p className="tr-hero-sub">{d.sub} <b>{d.subBold}</b>.</p>
@@ -742,7 +775,7 @@ export default function LpDienst({ slug }: { slug: string }) {
       <div className="tr-quickform-shell">
         <div className="tr-wrap">
           <div id="lp-form" className={`tr-quickform${quickState === 'ok' ? ' is-success' : ''}`}>
-            <span className="tr-eyebrow">Vrijblijvend</span><h3>Terugbelverzoek</h3>
+            <span className="tr-eyebrow">Vrijblijvend</span><h3>{d.quickformH3 ?? 'Liever dat wij u bellen?'}</h3>
             <form ref={quickRef} onSubmit={onQuickSubmit} onFocusCapture={() => trackFormStart(`lp:${d.slug}:quick`)} noValidate>
               <div className="tr-qf-grid">
                 <input type="text" name="firstName" placeholder="Voornaam *" autoComplete="given-name" required />
@@ -755,13 +788,13 @@ export default function LpDienst({ slug }: { slug: string }) {
             {quickErr && <div className="tr-qf-error" style={{ display: 'block' }}>{quickErr}</div>}
             <div className="tr-qf-thanks">
               <div className="tr-qf-thanks-ic"><Check s={26} /></div>
-              <h4>Bedankt, aanvraag ontvangen!</h4>
-              <p>We bellen u zo snel mogelijk terug voor uw gratis plaatsbezoek.</p>
+              <h4>Bedankt, uw aanvraag is ontvangen.</h4>
+              <p>{d.quickThanks ?? 'We bellen u zo snel mogelijk terug om uw afspraak in te plannen.'}</p>
             </div>
           </div>
           <div className="tr-hero-testi">
             <span className="tr-hero-testi-q">{d.reviews[0].text}</span>
-            <div className="tr-hero-testi-name">— {d.reviews[0].name}</div>
+            <div className="tr-hero-testi-name">{d.reviews[0].name} · {d.reviews[0].role}</div>
           </div>
         </div>
       </div>
@@ -770,7 +803,7 @@ export default function LpDienst({ slug }: { slug: string }) {
       <section className="tr-section" id="werkwijze">
         <div className="tr-wrap">
           <div className="tr-steps-box">
-            <h2>In 3 stappen geregeld</h2>
+            <h2>{d.werkwijzeH2 ?? 'In 3 stappen geregeld'}</h2>
             <div className="tr-steps-grid">
               {d.steps.map(([t, sub], i) => {
                 return (
@@ -818,7 +851,7 @@ export default function LpDienst({ slug }: { slug: string }) {
                   <li key={i}><Check />{i === 0 ? <span><b>{t}</b></span> : <span>{t}</span>}</li>
                 ))}
               </ul>
-              <div className="tr-urgency">Gratis plaatsbezoek, meestal binnen 5 werkdagen.</div>
+              <div className="tr-urgency">{d.urgencyLine ?? 'Gratis plaatsbezoek, meestal binnen 5 werkdagen.'}</div>
             </div>
           </div>
         </div>
@@ -826,10 +859,31 @@ export default function LpDienst({ slug }: { slug: string }) {
 
       {/* 7. NUMBERS BAR */}
       <section className="tr-numbers">
-        <div className="tr-num"><div className="tr-num-big">15 jaar</div><div className="tr-num-lbl">ervaring</div></div>
-        <div className="tr-num"><div className="tr-num-big">100%</div><div className="tr-num-lbl">eigen ploeg</div></div>
+        <div className="tr-num"><div className="tr-num-big">{new Date().getFullYear() - 2010} jaar</div><div className="tr-num-lbl">ervaring</div></div>
+        <div className="tr-num"><div className="tr-num-big">1</div><div className="tr-num-lbl">vast aanspreekpunt</div></div>
         <div className="tr-num"><div className="tr-num-big">124+</div><div className="tr-num-lbl">projecten</div></div>
         <div className="tr-num"><div className="tr-num-big">10 jaar</div><div className="tr-num-lbl">garantie</div></div>
+      </section>
+
+      {/* 9. REVIEWS — naar boven verplaatst (CRO: sociale proof vlak na de cijfers) */}
+      <section className="tr-section tr-reviews" id="reviews">
+        <div className="tr-wrap">
+          <div className="tr-head">
+            <h2>{d.reviewsH2 ?? 'Wat onze klanten vertellen'}</h2>
+          </div>
+          <div className="tr-rev-grid">
+            {(d.division === 'ab_dakwerken' ? d.reviews.slice(1) : d.reviews).map((r, i) => (
+              <div className="tr-rev-card" key={i}>
+                <div className="tr-rev-stars">{stars}</div>
+                <p>{r.text}</p>
+                <div className="tr-rev-foot">
+                  <div className="tr-rev-name">{r.name}</div>
+                  <div className="tr-rev-role">{r.role}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* 8. SERVICES / WAT HOUDT HET IN */}
@@ -838,7 +892,7 @@ export default function LpDienst({ slug }: { slug: string }) {
           <div className="tr-head">
             
             <h2>{d.whatTitle}</h2>
-            <p style={{ color: 'rgba(255,255,255,0.74)', fontSize: 15, lineHeight: 1.6, marginTop: 14 }}>{d.whatIntro}</p>
+            <p style={{ color: 'rgba(255,255,255,0.84)', fontSize: 15, lineHeight: 1.6, marginTop: 14 }}>{d.whatIntro}</p>
           </div>
           <div className="tr-svc-grid">
             {d.what.map(([t, sub], i) => (
@@ -885,10 +939,10 @@ export default function LpDienst({ slug }: { slug: string }) {
                   data-rl-trigger
                   data-rl-index={i}
                   data-rl-photos={JSON.stringify(d.gallery)}
-                  data-rl-title={`${d.typeWerk} — realisatie`}
+                  data-rl-title={`${d.galleryNoun ?? d.typeWerk} realisatie`}
                   style={{ borderRadius: 4, overflow: 'hidden', boxShadow: '0 30px 60px -30px rgba(10,22,40,0.35)', aspectRatio: '4 / 3', position: 'relative' }}
                 >
-                  <img src={src} alt={`${d.typeWerk} realisatie ${i + 1}`} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <img src={src} alt={`${d.galleryNoun ?? d.typeWerk}, realisatie ${i + 1}`} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   <span className="rl-zoom" aria-hidden="true">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /><line x1="11" y1="8" x2="11" y2="14" /><line x1="8" y1="11" x2="14" y2="11" /></svg>
                   </span>
@@ -898,28 +952,6 @@ export default function LpDienst({ slug }: { slug: string }) {
           </div>
         </section>
       )}
-
-      {/* 10. REVIEWS */}
-      <section className="tr-section tr-reviews" id="reviews">
-        <div className="tr-wrap">
-          <div className="tr-head">
-            
-            <h2>Tevreden klanten in heel Vlaanderen</h2>
-          </div>
-          <div className="tr-rev-grid">
-            {d.reviews.map((r, i) => (
-              <div className="tr-rev-card" key={i}>
-                <div className="tr-rev-stars">{stars}</div>
-                <p>{r.text}</p>
-                <div className="tr-rev-foot">
-                  <div className="tr-rev-name">{r.name}</div>
-                  <div className="tr-rev-role">{r.role}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* 11. FAQ */}
       <section className="tr-section" id="faq">
@@ -939,7 +971,7 @@ export default function LpDienst({ slug }: { slug: string }) {
       {/* 12. FINAL CTA */}
       <section className="tr-section tr-final" id="contact">
         <div className="tr-wrap">
-          <h2>Klaar om te starten?</h2>
+          <h2>{d.finalH2 ?? 'Klaar om te starten?'}</h2>
           <div className="tr-final-grid">
             <div className="tr-final-contact">
               <h3>Neem contact op</h3>
@@ -949,7 +981,7 @@ export default function LpDienst({ slug }: { slug: string }) {
             </div>
             <div id="lp-final" className={`tr-final-card${finalState === 'ok' ? ' is-success' : ''}${finalErr ? ' is-error' : ''}`}>
               <h3>Vraag uw gratis offerte</h3>
-              <div className="tr-safe"><Shield />Vrijblijvend — we bellen u terug binnen 1 werkdag</div>
+              <div className="tr-safe"><Shield />Vrijblijvend. We bellen u terug binnen één werkdag</div>
               <form ref={finalRef} onSubmit={onFinalSubmit} onFocusCapture={() => trackFormStart(`lp:${d.slug}:final`)} noValidate>
                 <div className="tr-final-row">
                   <input type="text" name="firstName" placeholder="Voornaam *" autoComplete="given-name" required />
@@ -967,7 +999,7 @@ export default function LpDienst({ slug }: { slug: string }) {
               </form>
               {finalErr && <div className="tr-final-err">{finalErr}</div>}
               <div className="tr-final-thanks">
-                <h4>Bedankt, aanvraag ontvangen!</h4>
+                <h4>Bedankt, uw aanvraag is ontvangen.</h4>
                 <p>We nemen zo snel mogelijk contact met u op.</p>
               </div>
             </div>
@@ -989,7 +1021,7 @@ export default function LpDienst({ slug }: { slug: string }) {
             </div>
           </div>
           <div className="tr-footer-info">AB Bouw Groep · {ADDRESS} · {PHONE}</div>
-          <div className="tr-footer-copy">© {new Date().getFullYear()} AB Bouw Groep — Erkend vakbedrijf in heel Vlaanderen. Alle rechten voorbehouden.{' · '}<a href="/voorwaarden" style={{ color: 'rgba(255,255,255,0.72)', textDecoration: 'underline' }}>Gebruiksvoorwaarden</a>{' · '}<a href="/privacy" style={{ color: 'rgba(255,255,255,0.72)', textDecoration: 'underline' }}>Privacybeleid</a>{' · '}<a href="/cookies" style={{ color: 'rgba(255,255,255,0.72)', textDecoration: 'underline' }}>Cookiebeleid</a></div>
+          <div className="tr-footer-copy">© {new Date().getFullYear()} AB Bouw Groep · Erkend vakbedrijf voor dak- en gevelwerken. Alle rechten voorbehouden.{' · '}<a href="/voorwaarden" style={{ color: 'rgba(255,255,255,0.72)', textDecoration: 'underline' }}>Gebruiksvoorwaarden</a>{' · '}<a href="/privacy" style={{ color: 'rgba(255,255,255,0.72)', textDecoration: 'underline' }}>Privacybeleid</a>{' · '}<a href="/cookies" style={{ color: 'rgba(255,255,255,0.72)', textDecoration: 'underline' }}>Cookiebeleid</a></div>
         </div>
       </footer>
     </div>
@@ -1191,27 +1223,27 @@ const LP_CSS = `
 .tr-num-lbl { margin-top: 12px; font-size: 14px; font-weight: 600; letter-spacing: 0.02em; color: rgba(255,255,255,0.88); }
 @media (max-width: 720px) { .tr-numbers { grid-template-columns: 1fr 1fr; } .tr-num + .tr-num::before { display: none; } .tr-num { padding: 34px 20px; } }
 
-/* 8 — SERVICES (dark) */
-.tr-services { background: ${NAVY}; color: #fff; border-top: 1px solid rgba(255,255,255,0.07); box-shadow: inset 0 1px 0 rgba(255,255,255,0.04); }
+/* 8 — SERVICES (dark, tekst-only cards: randen i.p.v. schaduw, gouden keyline-accent, leesbaar voor 45-65j) */
+.tr-services { background: ${NAVY}; color: #fff; border-top: 1px solid rgba(255,255,255,0.07); }
 .tr-services .tr-head { text-align: left; max-width: 680px; margin: 0 0 clamp(44px, 5vw, 72px); }
 .tr-services .tr-head h2 { font-size: clamp(27px, 4.4vw, 52px); color: #fff; font-weight: 700; letter-spacing: -0.02em; line-height: 1.06; margin: 0; }
-.tr-svc-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(22px, 2.4vw, 34px); align-items: stretch; }
-.tr-svc-card { background: ${NAVY2}; border: 1px solid rgba(255,255,255,0.13); border-radius: var(--tr-r-card); overflow: hidden; box-shadow: 0 24px 48px -34px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.05);
-  display: flex; flex-direction: column; height: 100%; transition: transform .25s ease, border-color .25s ease; }
-.tr-svc-card:hover { border-color: rgba(255,255,255,0.28); }
-.tr-svc-body { padding: 26px 22px 28px; flex: 1 1 auto; display: flex; flex-direction: column; min-height: 168px; justify-content: flex-start; }
-.tr-svc-body h3 { font-size: 18px; color: #fff; font-weight: 600; margin: 0 0 9px; }
-.tr-svc-body p { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.74); margin: 0; }
-@media (max-width: 1040px) { .tr-svc-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 720px) { .tr-svc-body { min-height: 0; } }
-@media (max-width: 560px) { .tr-svc-grid { grid-template-columns: 1fr; } }
+.tr-svc-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
+.tr-svc-card { background: #15263f; border: 1px solid rgba(255,255,255,0.18); border-radius: var(--tr-r-card);
+  display: flex; flex-direction: column; height: 100%; transition: border-color .2s ease; }
+.tr-svc-card:hover { border-color: rgba(255,255,255,0.32); }
+.tr-svc-body { padding: 24px 24px 28px; flex: 1 1 auto; display: flex; flex-direction: column; }
+.tr-svc-body::before { content: ""; width: 28px; height: 2px; background: ${GOLD}; margin: 2px 0 16px; flex: none; }
+.tr-svc-body h3 { font-size: 19px; color: #fff; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 9px; }
+.tr-svc-body p { font-size: 15px; line-height: 1.65; color: rgba(255,255,255,0.84); margin: 0; }
+@media (max-width: 1040px) { .tr-svc-grid { grid-template-columns: 1fr 1fr; gap: 18px; } }
+@media (max-width: 560px) { .tr-svc-grid { grid-template-columns: 1fr; } .tr-svc-body { padding: 22px 20px 24px; } }
 
 
 /* 11 — REVIEWS */
 .tr-reviews { background: #fff; }
 .tr-reviews .tr-head { text-align: left; max-width: 680px; margin: 0 0 clamp(44px, 5vw, 72px); }
 .tr-reviews .tr-head h2 { font-size: clamp(27px, 3.2vw, 40px); color: ${NAVY}; font-weight: 700; margin: 0; }
-.tr-rev-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 2.4vw, 34px); align-items: stretch; }
+.tr-rev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 380px)); justify-content: center; gap: clamp(24px, 2.4vw, 34px); align-items: stretch; }
 .tr-rev-card { background: #fff; border: 1px solid #e7e4dd; border-radius: var(--tr-r-card); padding: 28px 26px 26px;
   display: flex; flex-direction: column; }
 .tr-rev-stars { color: ${GOLD}; font-size: 15px; letter-spacing: 2px; margin-bottom: 14px; }
