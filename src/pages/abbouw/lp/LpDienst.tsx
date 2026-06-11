@@ -105,26 +105,26 @@ const DIENSTEN: Record<string, Dienst> = {
     division: 'ab_dakwerken', typeWerk: 'AB Dakwerken', bronLead: 'ads:velux',
     eyebrow: 'Velux dakramen · plaatsing en vervanging',
     h1: 'Meer daglicht op zolder met een Velux dakraam',
-    sub: 'Een raam in uw dak, dat moet in één keer goed zitten. Wij plaatsen en vervangen Velux dakramen in heel Vlaanderen: waterdicht ingewerkt met het juiste gootstuk, zonder koudebrug of condens achteraf, en vanbinnen netjes mee gepleisterd.',
+    sub: 'Een raam in uw dak moet in één keer goed zitten. Wij plaatsen en vervangen Velux dakramen in heel Vlaanderen, waterdicht ingewerkt en vanbinnen netjes afgewerkt.',
     subBold: 'Eén vaste prijs, plaatsing en binnenafwerking inbegrepen',
     heroImg: imgVx2,
     certLogo: { src: velux, alt: 'Velux' },
     topbar: ['Gratis opmeting binnen 5 werkdagen', 'Erkend Velux-plaatser'],
     offerEyebrow: 'Over AB Bouw Groep',
     offerH2: 'Een dakraam is dakwerk. En dakwerk is ons vak.',
-    offerIntro: 'Het raam zelf is Velux-kwaliteit. Of het over twintig jaar nog altijd waterdicht zit, hangt af van wie het plaatst. AB Bouw Groep renoveert daken sinds 2010: gootstukken, onderdak en isolatie zijn ons dagelijks werk. Daarom durven we 10 jaar garantie te geven op de waterdichtheid, met één vast aanspreekpunt van opmeting tot oplevering.',
+    offerIntro: 'Het raam is Velux-kwaliteit; of het over twintig jaar nog waterdicht zit, hangt af van wie het plaatst. Wij renoveren daken sinds 2010 en geven 10 jaar garantie op de waterdichtheid.',
     offer: [
-      'Eén vaste prijs voor raam, plaatsing en binnenafwerking. Offerte = factuur.',
-      '10 jaar garantie op de waterdichtheid van de plaatsing',
-      'Gratis opmeting aan huis, met eerlijk advies over type en formaat',
-      'Erkend Velux-plaatser, uw fabrieksgarantie blijft gewoon gelden',
-      '6% btw bij een woning ouder dan 10 jaar, wij regelen het papierwerk',
-      'Binnen afgeschermd tegen stof, nadien alles netjes opgeruimd',
+      'Eén vaste prijs, plaatsing en afwerking inbegrepen',
+      '10 jaar garantie op de waterdichtheid',
+      'Gratis opmeting met eerlijk advies',
+      'Erkend Velux-plaatser, fabrieksgarantie behouden',
+      '6% btw waar het kan, papierwerk inbegrepen',
+      'Binnen afgeschermd tegen stof, proper opgeleverd',
     ],
     steps: [
-      ['Gratis opmeting', 'Een vakman komt langs, meet op en bespreekt welk type en formaat bij uw dak past.'],
-      ['Vaste offerte', 'U krijgt één bindende prijs voor raam, plaatsing en binnenafwerking; een standaardplaatsing start rond 1.250 euro. Die prijs staat vast, ook als materiaal duurder wordt.'],
-      ['Plaatsing op één dag', 'Wij plaatsen het raam, werken het waterdicht in en pleisteren de binnenkant netjes af. Doorgaans op één dag, en \'s avonds is uw dak gewoon weer dicht.'],
+      ['Gratis opmeting', 'Een vakman meet op en bespreekt type en formaat.'],
+      ['Vaste offerte', 'Eén bindende prijs, plaatsing en afwerking inbegrepen. Een standaardplaatsing start rond 1.250 euro.'],
+      ['Plaatsing op één dag', 'Waterdicht ingewerkt en vanbinnen afgewerkt. Doorgaans op één dag, \'s avonds is uw dak weer dicht.'],
     ],
     whatTitle: 'Wat komt er kijken bij een Velux-plaatsing?',
     whatIntro: 'Een dakraam plaatsen is meer dan een gat in het dak. Wij verzorgen het volledige werk, van het juiste gootstuk tot de afgewerkte binnenkant.',
@@ -137,9 +137,9 @@ const DIENSTEN: Record<string, Dienst> = {
     whatImg: imgVx1,
     gallery: [imgVx1, imgVx2, imgVx3],
     reviews: [
-      { text: 'Twee Velux-ramen laten plaatsen in de zolderkamer. \'s Morgens om acht uur begonnen, tegen de avond zat alles dicht en was de binnenkant mee gepleisterd. Je zou niet zeggen dat het dak open heeft gelegen.', name: 'Bart Wouters', role: 'Twee dakramen op zolder' },
-      { text: 'Er zat condens tussen het glas van ons oud dakraam en bij felle regen kwam er water binnen. Vervangen door een nieuwe Velux, gootstuk en al. De factuur klopte tot op de euro met de offerte. Hadden we eerder moeten laten doen.', name: 'Katrien De Smet', role: 'Vervanging oud dakraam' },
-      { text: 'De opmeter raadde ons een kleiner formaat aan dan we in gedachten hadden, anders moest er een keper doorgezaagd worden. Een ander had ons dat waarschijnlijk niet gezegd. Op één dag geplaatst en proper achtergelaten.', name: 'Tom Vermeulen', role: 'Nieuw dakraam' },
+      { text: 'Twee Velux-ramen op de zolderkamer. \'s Morgens begonnen, tegen de avond alles dicht en de binnenkant mee gepleisterd.', name: 'Bart Wouters', role: 'Twee dakramen op zolder' },
+      { text: 'Ons oud dakraam had condens tussen het glas en lekte bij felle regen. Vervangen door een nieuwe Velux, gootstuk en al. Netjes afgewerkt.', name: 'Katrien De Smet', role: 'Vervanging oud dakraam' },
+      { text: 'De opmeter raadde een kleiner formaat aan, anders moest een keper doorgezaagd worden. Eerlijk advies, op één dag geplaatst.', name: 'Tom Vermeulen', role: 'Nieuw dakraam' },
     ],
     faq: [
       ['Wat kost een Velux dakraam geplaatst?', 'Dat hangt af van het type, het formaat en de bestaande dakopbouw. Een standaardplaatsing start doorgaans rond €1.250 inclusief plaatsing. U krijgt een vaste prijs na de gratis opmeting.'],
@@ -153,7 +153,7 @@ const DIENSTEN: Record<string, Dienst> = {
     finalSub: 'Liever eerst iemand aan de lijn? Bel gerust.',
     metaTitle: 'Velux dakraam laten plaatsen aan vaste prijs | AB Bouw Groep',
     metaDesc: 'Velux dakramen plaatsen en vervangen in Vlaanderen. Vaste prijs incl. plaatsing en binnenafwerking, 10 jaar garantie op waterdichtheid. Gratis opmeting.',
-    reviewsH2: 'Klanten over hun nieuwe dakraam',
+    reviewsH2: 'Klantbeoordelingen',
     quickformH3: 'Liever dat wij u bellen?',
     finalH2: 'Klaar voor meer licht op zolder?',
     urgencyLine: 'Gratis opmeting, meestal binnen 5 werkdagen.',
@@ -285,26 +285,26 @@ const DIENSTEN: Record<string, Dienst> = {
     division: 'ab_dakwerken', typeWerk: 'AB Dakwerken', bronLead: 'ads:dakisolatie',
     eyebrow: 'Dakisolatie',
     h1: 'Dakisolatie die uw energiefactuur verlaagt.',
-    sub: 'Tot 30% van uw warmte ontsnapt via het dak. Wij isoleren uw hellend dak of zoldervloer, luchtdicht afgewerkt, in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
+    sub: 'Tot 30% van uw warmte ontsnapt via het dak. Wij isoleren uw hellend dak of zoldervloer, luchtdicht afgewerkt, in heel Vlaanderen.',
     subBold: 'Vaste prijs vooraf, 6% btw waar het kan',
     heroImg: imgIsol1,
     certLogo: { src: '/assets/logos/rectic.png', alt: 'Recticel' },
     topbar: ['Gratis dakinspectie binnen 5 werkdagen', 'Eén vast aanspreekpunt'],
     offerEyebrow: 'Over AB Bouw Groep',
     offerH2: 'Isoleren doet u maar één keer',
-    offerIntro: 'Dan kiest u liefst een aannemer die het in één keer juist doet. AB Bouw Groep vernieuwt en isoleert daken sinds 2010, luchtdicht en zonder koudebruggen, met een prijs die op papier vastligt vóór we beginnen.',
+    offerIntro: 'Dan kiest u liefst een aannemer die het in één keer juist doet. Wij isoleren daken sinds 2010, luchtdicht en met een vaste prijs vooraf.',
     offer: [
       'Offerte = factuur, ook bij prijsstijgingen',
-      'Gratis dakinspectie met fotorapport: u ziet zelf hoe uw dak erbij ligt',
-      'Sarking buitenop of isolatie tussen de balken, afgestemd op uw dak en uw plannen',
-      'Lager EPC en een merkbaar lagere stookkost',
-      'Luchtdicht afgewerkt met dampscherm, geen koudebruggen of condens',
-      '6% btw waar het kan, en we bekijken of u recht hebt op premie',
+      'Gratis dakinspectie met fotorapport',
+      'Sarking buitenop of tussen de balken',
+      'Lager EPC en een lagere stookkost',
+      'Luchtdicht afgewerkt, geen koudebruggen',
+      '6% btw waar het kan, plus premie-advies',
     ],
     steps: [
-      ['Gratis dakinspectie', 'Een vakman inspecteert uw dak en zolder en adviseert methode en dikte, met foto\'s van wat hij vaststelt.'],
-      ['Vaste offerte', 'U krijgt een bindende prijs op papier, met de verwachte EPC-winst erbij. Dat bedrag is meteen ook uw factuur.'],
-      ['Plaatsing op de afgesproken dag', 'Wij plaatsen de isolatie, werken alles luchtdicht af met dampscherm en laten de zolder netjes achter.'],
+      ['Gratis dakinspectie', 'Een vakman inspecteert uw dak en adviseert methode en dikte, met foto\'s.'],
+      ['Vaste offerte', 'Een bindende prijs op papier, met de verwachte EPC-winst. Dat bedrag is meteen uw factuur.'],
+      ['Plaatsing op de afgesproken dag', 'Isolatie luchtdicht afgewerkt met dampscherm, zolder netjes achtergelaten.'],
     ],
     whatTitle: 'Welke isolatie past bij uw dak?',
     whatIntro: 'Sarking buitenop, isolatie tussen de balken of een geïsoleerde zoldervloer: elk dak vraagt een eigen aanpak. Wij adviseren wat bij uw dak en uw plannen past, en werken alles luchtdicht af.',
@@ -317,9 +317,9 @@ const DIENSTEN: Record<string, Dienst> = {
     whatImg: imgIsol2,
     gallery: [imgIsol2, imgIsolGyproc, imgIsolGestuct, imgIsolSarking, imgIsolKoramic],
     reviews: [
-      { text: 'Ons dak moest toch vernieuwd worden, dus hebben we er meteen sarking op laten leggen. De zolder is nu een volwaardige kamer en de chauffage staat een graad lager dan vorige winter.', name: 'Hilde Declercq', role: 'Sarking bij dakrenovatie' },
-      { text: 'Wij vroegen prijs voor isolatie tussen de balken, maar omdat onze zolder toch enkel berging is, raadden ze de zoldervloer aan. Dat was een stuk goedkoper. En de prijs op de offerte was exact de prijs op de factuur.', name: 'Wim De Backer', role: 'Zoldervloerisolatie' },
-      { text: 'De slaapkamers onder het dak kregen we \'s winters nooit warm. De eerste koude week na de werken voelde je meteen het verschil. Spijtig dat we zo lang gewacht hebben.', name: 'Els Vandenberghe', role: 'Isolatie tussen de balken' },
+      { text: 'Ons dak werd vernieuwd, dus meteen sarking erop. De zolder is nu een volwaardige kamer en de chauffage staat een graad lager.', name: 'Hilde Declercq', role: 'Sarking bij dakrenovatie' },
+      { text: 'Wij vroegen prijs voor isolatie tussen de balken, maar voor onze bergzolder raadden ze de goedkopere zoldervloer aan. Eerlijk advies, en de factuur klopte.', name: 'Wim De Backer', role: 'Zoldervloerisolatie' },
+      { text: 'De slaapkamers onder het dak kregen we \'s winters nooit warm. Na de werken voelde je meteen het verschil.', name: 'Els Vandenberghe', role: 'Isolatie tussen de balken' },
     ],
     faq: [
       ['Wat kost dakisolatie?', 'Dat hangt af van de methode, de oppervlakte en de gewenste isolatiewaarde. U krijgt een vaste prijs na de gratis dakinspectie.'],
@@ -334,7 +334,7 @@ const DIENSTEN: Record<string, Dienst> = {
     finalSub: 'Vragen over sarking, premies of planning? Bel ons even.',
     metaTitle: 'Dakisolatie laten plaatsen met vaste prijs | AB Bouw Groep',
     metaDesc: 'Dakisolatie in Vlaanderen: sarking, tussen de balken of zoldervloer. Lager EPC, lagere stookkost, 6% btw waar het kan. Vaste prijs en gratis dakinspectie.',
-    reviewsH2: 'Wat klanten na de eerste winter zeggen',
+    reviewsH2: 'Klantbeoordelingen',
     quickformH3: 'Snel uw prijs weten?',
     werkwijzeH2: 'In 3 stappen naar een geïsoleerd dak',
     finalH2: 'Tijd voor een warmer huis?',
@@ -348,29 +348,29 @@ const DIENSTEN: Record<string, Dienst> = {
     division: 'ab_dakwerken', typeWerk: 'AB Dakwerken', bronLead: 'ads:platdak',
     eyebrow: 'Platte daken · EPDM en roofing',
     h1: 'Een plat dak dat jaren droog blijft.',
-    sub: 'Platte daken lekken bijna nooit in het midden, wel op de naden en aan de randen. Daarom leggen wij EPDM in één naadloos stuk rubber en werken we de randen en de afvoer strak af. Liever bewezen roofing? Dat kan ook, en het is voordeliger. Voor uw aanbouw, garage of bijgebouw, in heel Vlaanderen.',
+    sub: 'Platte daken lekken op de naden en de randen. Daarom leggen wij EPDM in één naadloos stuk, of voordeligere roofing. Voor aanbouw, garage of bijgebouw, in heel Vlaanderen.',
     subBold: 'En u krijgt 10 jaar garantie op de waterdichtheid',
     heroImg: imgPlatdak,
     certLogo: { src: '/assets/logos/dorken.png', alt: 'Dörken' },
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Vaste prijs, geen verrassingen achteraf'],
     offerEyebrow: 'Over AB Bouw Groep',
     offerH2: 'Een plat dak vergeeft geen half werk',
-    offerIntro: 'Op een hellend dak loopt regen vanzelf weg. Op een plat dak blijft hij liggen, en water vindt vroeg of laat elk zwak punt: een hoek, een doorvoer, de aansluiting met de muur. Wij leggen al meer dan vijftien jaar platte daken, dus die punten kennen we vanbuiten. Daar zetten we 10 jaar garantie op de waterdichtheid tegenover.',
+    offerIntro: 'Op een plat dak blijft water liggen en vindt het elk zwak punt: een hoek, een doorvoer, de muuraansluiting. Wij leggen al meer dan vijftien jaar platte daken en geven er 10 jaar garantie op.',
     offer: [
-      'Uw offerte is uw factuur: vaste prijs, ook als materiaal duurder wordt',
-      'Gratis plaatsbezoek met eerlijk advies, ook als roofing gewoon volstaat',
-      'EPDM wordt verlijmd, niet gebrand: geen open vlam op uw dak',
-      'Meteen geïsoleerd volgens de huidige normen, geen tweede werf later',
-      'Woning ouder dan 10 jaar? Dan factureren wij aan 6% btw',
-      'Oude dakbedekking voeren wij af en de werf blijft proper',
+      'Offerte = factuur, ook bij prijsstijgingen',
+      'Gratis plaatsbezoek met eerlijk advies',
+      'EPDM verlijmd, niet gebrand: geen open vlam',
+      'Meteen geïsoleerd volgens de normen',
+      '6% btw bij een woning ouder dan 10 jaar',
+      'Oude bedekking afgevoerd, werf proper',
     ],
     steps: [
-      ['Gratis plaatsbezoek', 'We komen langs, meten op en bekijken de hele opbouw: bedekking, isolatie, randen en afvoer. U hoort meteen of een herstelling volstaat of dat het dak aan vervanging toe is.'],
-      ['Vaste offerte', 'U krijgt één bindende prijs voor het volledige werk, isolatie en randafwerking inbegrepen. Wat op die offerte staat, is wat u betaalt.'],
-      ['Plaatsing en oplevering', 'We verwijderen de oude lagen waar nodig, isoleren volgens de huidige normen en werken alles waterdicht af tot en met de randen en de afvoer. Een doorsnee garagedak is op één à twee dagen klaar.'],
+      ['Gratis plaatsbezoek', 'We bekijken de hele opbouw: bedekking, isolatie, randen en afvoer. U hoort meteen of herstellen volstaat of vervangen nodig is.'],
+      ['Vaste offerte', 'Eén bindende prijs, isolatie en randafwerking inbegrepen. Wat op de offerte staat, betaalt u.'],
+      ['Plaatsing en oplevering', 'Oude lagen eraf, geïsoleerd en waterdicht afgewerkt tot en met de randen. Een garagedak is doorgaans in één à twee dagen klaar.'],
     ],
     whatTitle: 'EPDM of roofing? Wij leggen allebei.',
-    whatIntro: 'EPDM is een rubbermembraan in één naadloos stuk en gaat doorgaans 40 tot 50 jaar mee. Roofing is de bewezen bitumenlaag: voordeliger, goed voor 15 tot 25 jaar. Wat het slimst is voor uw dak hangt af van de oppervlakte, de opbouw en uw budget. En omdat wij allebei leggen, hebben we geen enkele reden om u het duurste aan te praten.',
+    whatIntro: 'EPDM is een rubbermembraan in één naadloos stuk en gaat 40 tot 50 jaar mee. Roofing is voordeliger en goed voor 15 tot 25 jaar. Omdat wij allebei leggen, praten we u het duurste niet aan.',
     what: [
       ['Nieuw plat dak', 'Volledige opbouw met isolatie, afgewerkt in EPDM of roofing, voor aanbouw, garage of bijgebouw.'],
       ['EPDM of roofing', 'EPDM leggen we naadloos in één stuk; roofing is een bewezen, voordelige bitumenbedekking. U kiest na eerlijk advies.'],
@@ -380,9 +380,9 @@ const DIENSTEN: Record<string, Dienst> = {
     whatImg: imgPdak1,
     gallery: [imgPdak1, imgRoofing, imgPdak2, imgPdak3],
     reviews: [
-      { text: 'Het dak boven onze aanbouw was al twee keer opgelapt en toch kwam die vochtplek in het plafond altijd terug. Ze hebben alles eraf gehaald, nieuwe isolatie gelegd en er één stuk EPDM over getrokken. Twee winters verder is het plafond nog altijd droog.', name: 'Sofie Claes', role: 'EPDM op de aanbouw' },
-      { text: 'Ons garagedak was dertig jaar oud en helemaal op. Alles in twee dagen vernieuwd, isolatie erbij en de randen netjes afgewerkt. De tweede avond konden we de auto er alweer binnenzetten.', name: 'Pieter Lauwers', role: 'Garagedak vernieuwd' },
-      { text: 'Voor het bijgebouw achteraan raadde hun vakman ons gewoon roofing aan, omdat EPDM daar de meerprijs niet waard was. Die eerlijkheid had ik niet verwacht. Strak gelegd, en al de oude roofing hebben ze zelf afgevoerd.', name: 'Marleen Stevens', role: 'Roofing op het bijgebouw' },
+      { text: 'Het dak boven onze aanbouw was al twee keer opgelapt, de vochtplek kwam altijd terug. Alles eraf, nieuwe isolatie, één stuk EPDM erover. Twee winters droog.', name: 'Sofie Claes', role: 'EPDM op de aanbouw' },
+      { text: 'Ons garagedak was dertig jaar oud en helemaal op. In twee dagen vernieuwd, isolatie erbij en de randen netjes afgewerkt.', name: 'Pieter Lauwers', role: 'Garagedak vernieuwd' },
+      { text: 'Voor het bijgebouw raadde hun vakman roofing aan, EPDM was de meerprijs niet waard. Eerlijk, strak gelegd en de oude roofing zelf afgevoerd.', name: 'Marleen Stevens', role: 'Roofing op het bijgebouw' },
     ],
     faq: [
       ['Wat kost een plat dak?', 'Dat hangt af van de oppervlakte, de opbouw, de isolatie en de keuze tussen EPDM of roofing. U krijgt een vaste prijs per m² na het gratis plaatsbezoek. Is uw woning ouder dan 10 jaar, dan valt het werk onder 6% btw; dat papierwerk regelen wij.'],
@@ -395,7 +395,7 @@ const DIENSTEN: Record<string, Dienst> = {
     finalSub: 'Twijfelt u tussen EPDM en roofing? Bel ons, dan denken we mee.',
     metaTitle: 'Plat dak laten leggen: EPDM of roofing, vaste prijs | AB Bouw Groep',
     metaDesc: 'Plat dak voor aanbouw, garage of bijgebouw: EPDM naadloos of bewezen roofing, geïsoleerd en met 10 jaar garantie op de waterdichtheid. Gratis plaatsbezoek.',
-    reviewsH2: 'Klanten, een paar stevige regenbuien later',
+    reviewsH2: 'Klantbeoordelingen',
     quickformH3: 'Uw plat dak laten bekijken?',
     werkwijzeH2: 'Zo pakken we uw dak aan',
     finalH2: 'Nooit meer naar het plafond kijken als het giet',
@@ -819,44 +819,6 @@ export default function LpDienst({ slug }: { slug: string }) {
         </div>
       </section>
 
-      {/* 6. ABOUT / CERTIFIED */}
-      <section className="tr-section" style={{ background: 'var(--bg-tint)' }}>
-        <div className="tr-wrap">
-          <div className="tr-about-grid">
-            <div className="tr-about-media">
-              <div className="tr-about-badges">
-                <span className="tr-about-badge"><img src={d.certLogo.src} alt={d.certLogo.alt} /></span>
-                <span className="tr-about-badge tr-vca">VCA*</span>
-              </div>
-              <div className="tr-about-photo">
-                {d.beforeAfter ? (
-                  <div className="ba-slider" data-ba>
-                    <img className="ba-base" src={d.beforeAfter.after} alt="Gevel na het hervoegen" />
-                    <div className="ba-clip"><img src={d.beforeAfter.before} alt="Gevel voor het hervoegen" /></div>
-                    <div className="ba-handle"><span className="ba-grip" aria-hidden="true">⟷</span></div>
-                    <span className="ba-tag ba-tag-l">Voor</span>
-                    <span className="ba-tag ba-tag-r">Na</span>
-                  </div>
-                ) : (
-                  <img src={d.whatImg} alt="AB Bouw vakman aan het werk" />
-                )}
-              </div>
-            </div>
-            <div className="tr-about-body">
-              
-              <h2>{d.offerH2}</h2>
-              <p className="tr-about-intro">{d.offerIntro}</p>
-              <ul className="tr-checks">
-                {d.offer.map((t, i) => (
-                  <li key={i}><Check />{i === 0 ? <span><b>{t}</b></span> : <span>{t}</span>}</li>
-                ))}
-              </ul>
-              <div className="tr-urgency">{d.urgencyLine ?? 'Gratis plaatsbezoek, meestal binnen 5 werkdagen.'}</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* 7. NUMBERS BAR */}
       <section className="tr-numbers">
         <div className="tr-num"><div className="tr-num-big">{new Date().getFullYear() - 2010} jaar</div><div className="tr-num-lbl">ervaring</div></div>
@@ -882,6 +844,44 @@ export default function LpDienst({ slug }: { slug: string }) {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. ABOUT / CERTIFIED — naar onder verplaatst: eerst bewijs (cijfers + reviews), dan onze beloftes */}
+      <section className="tr-section" style={{ background: 'var(--bg-tint)' }}>
+        <div className="tr-wrap">
+          <div className="tr-about-grid">
+            <div className="tr-about-media">
+              <div className="tr-about-badges">
+                <span className="tr-about-badge"><img src={d.certLogo.src} alt={d.certLogo.alt} /></span>
+                <span className="tr-about-badge tr-vca">VCA*</span>
+              </div>
+              <div className="tr-about-photo">
+                {d.beforeAfter ? (
+                  <div className="ba-slider" data-ba>
+                    <img className="ba-base" src={d.beforeAfter.after} alt="Gevel na het hervoegen" />
+                    <div className="ba-clip"><img src={d.beforeAfter.before} alt="Gevel voor het hervoegen" /></div>
+                    <div className="ba-handle"><span className="ba-grip" aria-hidden="true">⟷</span></div>
+                    <span className="ba-tag ba-tag-l">Voor</span>
+                    <span className="ba-tag ba-tag-r">Na</span>
+                  </div>
+                ) : (
+                  <img src={d.whatImg} alt="AB Bouw vakman aan het werk" />
+                )}
+              </div>
+            </div>
+            <div className="tr-about-body">
+
+              <h2>{d.offerH2}</h2>
+              <p className="tr-about-intro">{d.offerIntro}</p>
+              <ul className="tr-checks">
+                {d.offer.map((t, i) => (
+                  <li key={i}><Check />{i === 0 ? <span><b>{t}</b></span> : <span>{t}</span>}</li>
+                ))}
+              </ul>
+              <div className="tr-urgency">{d.urgencyLine ?? 'Gratis plaatsbezoek, meestal binnen 5 werkdagen.'}</div>
+            </div>
           </div>
         </div>
       </section>

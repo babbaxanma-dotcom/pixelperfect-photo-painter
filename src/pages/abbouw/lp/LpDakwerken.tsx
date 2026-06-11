@@ -436,7 +436,7 @@ const HTML = `
           <span>Sinds 2010</span>
         </div>
         <h1>Dakwerken in heel Vlaanderen: uw dak 10 jaar gegarandeerd waterdicht</h1>
-        <p class="tr-hero-sub">Daklek of toe aan een nieuw dak? Bij een lek staan we snel bij u op het dak. Al de rest begint met een gratis dakinspectie: we fotograferen wat we vinden, zodat u ziet wat wij zien. Zo weet u vooraf wat er moet gebeuren en wat het kost, zwart op wit.</p>
+        <p class="tr-hero-sub">Daklek of toe aan een nieuw dak? Bij een lek staan we snel bij u. Voor de rest: een gratis dakinspectie met fotorapport en een vaste prijs op papier.</p>
         <div class="tr-hero-cta">
           <a href="#lp-form" class="tr-btn">Gratis dakinspectie aanvragen</a>
           <a href="${PHONE_HREF}" class="tr-hero-call">Daklek? Bel direct ${PHONE}</a>
@@ -473,7 +473,7 @@ const HTML = `
         </div>
       </div>
       <div class="tr-hero-testi">
-        <span class="tr-hero-testi-q">Onze rijwoning had nog het dak van 1962 en het lekte op drie plaatsen. Maandag begonnen ze te strippen, vrijdag lag het nieuwe dak erop, isolatie inbegrepen. Eén week werf en sindsdien geen druppel meer binnen.</span>
+        <span class="tr-hero-testi-q">Onze rijwoning had nog het dak van 1962, het lekte op drie plaatsen. Maandag gestript, vrijdag lag het nieuwe dak erop. Sindsdien geen druppel meer binnen.</span>
         <div class="tr-hero-testi-name">Stijn D., Mechelen</div>
       </div>
     </div>
@@ -505,7 +505,30 @@ const HTML = `
     </div>
   </section>
 
-  <!-- 6. ABOUT / CERTIFIED -->
+  <!-- 7. NUMBERS BAR -->
+  <section class="tr-numbers">
+    <div class="tr-num"><div class="tr-num-big">${new Date().getFullYear() - 2010} jaar</div><div class="tr-num-lbl">ervaring</div></div>
+    <div class="tr-num"><div class="tr-num-big">124+</div><div class="tr-num-lbl">daken gerenoveerd</div></div>
+    <div class="tr-num"><div class="tr-num-big">1</div><div class="tr-num-lbl">vast aanspreekpunt</div></div>
+    <div class="tr-num"><div class="tr-num-big">10 jaar</div><div class="tr-num-lbl">garantie</div></div>
+  </section>
+
+  <!-- REVIEWS — naar boven verplaatst (CRO: sociale proof vlak na de cijfers) -->
+  <section class="tr-section tr-reviews" id="reviews">
+    <div class="tr-wrap">
+      <div class="tr-head">
+        <span class="tr-eyebrow">Reviews</span>
+        <h2>Klantbeoordelingen</h2>
+      </div>
+      <div class="tr-rev-grid">
+        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>Natte plek op het plafond, net voor een weekend vol regen. Zaterdag iemand aan de lijn, maandag op het dak, dezelfde week hersteld.</p><div class="tr-rev-foot"><div class="tr-rev-name">Lieve Hermans</div><div class="tr-rev-role">Daklek hersteld, Lier</div></div></div>
+        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>Met EPC-label F kwam er amper volk kijken. Sarking langs buiten geplaatst, label naar C, en de verkoop kwam los.</p><div class="tr-rev-foot"><div class="tr-rev-name">Yusuf Demir</div><div class="tr-rev-role">Sarking dakisolatie, Antwerpen</div></div></div>
+        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>Na de storm lag de helft van onze pannen in de tuin. Dezelfde avond een zeil, twee weken later een nieuw dak. Verzekering door hen geregeld.</p><div class="tr-rev-foot"><div class="tr-rev-name">Davy Janssens</div><div class="tr-rev-role">Stormschade, Sint-Niklaas</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ABOUT / CERTIFIED — naar onder verplaatst: eerst bewijs (cijfers + reviews), dan onze beloftes -->
   <section class="tr-section" style="background:var(--bg-tint);">
     <div class="tr-wrap">
       <div class="tr-about-grid">
@@ -520,40 +543,17 @@ const HTML = `
         <div class="tr-about-body">
           <span class="tr-eyebrow">Over AB Bouw Groep</span>
           <h2>Dakwerkers die doen wat ze zeggen</h2>
-          <p class="tr-about-intro">Wie aan zijn dak laat werken, wil eigenlijk maar drie dingen weten: wie komt er, wanneer is het klaar en wat gaat het kosten. Daarom krijgt u bij ons één projectleider die alles opvolgt, van de eerste inspectie tot de oplevering. Die neemt op als u belt. En als we zeggen dat we maandag starten, dan staan we er maandag.</p>
+          <p class="tr-about-intro">U wilt weten wie er komt, wanneer het klaar is en wat het kost. Daarom krijgt u één vast aanspreekpunt dat opneemt en op de afgesproken dag start.</p>
           <ul class="tr-checks">
-            <li>${icCheck}<span><b>Offerte = factuur. Geen indexatie, geen meerwerken achteraf.</b></span></li>
-            <li>${icCheck}<span>Fotorapport bij de inspectie: u ziet wat uw dak nodig heeft, en wat niet</span></li>
-            <li>${icCheck}<span>Een concrete startdatum in de offerte, niet ‘ergens in het voorjaar’</span></li>
-            <li>${icCheck}<span>10 jaar garantie op waterdichtheid, verzekerd via Federale</span></li>
-            <li>${icCheck}<span>Premies en het 6% btw-tarief: wij zoeken uit waar u recht op hebt en maken het dossier in orde</span></li>
-            <li>${icCheck}<span>Ook voor kleine herstellingen en onderhoud, niet alleen volledige daken</span></li>
+            <li>${icCheck}<span><b>Offerte = factuur, geen meerwerken achteraf</b></span></li>
+            <li>${icCheck}<span>Fotorapport bij elke dakinspectie</span></li>
+            <li>${icCheck}<span>Concrete startdatum in de offerte</span></li>
+            <li>${icCheck}<span>10 jaar garantie op waterdichtheid</span></li>
+            <li>${icCheck}<span>6% btw waar het kan, plus premie-advies</span></li>
+            <li>${icCheck}<span>Ook voor herstellingen en onderhoud</span></li>
           </ul>
           <div class="tr-urgency">Gratis plaatsbezoek, meestal binnen 5 werkdagen.</div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 7. NUMBERS BAR -->
-  <section class="tr-numbers">
-    <div class="tr-num"><div class="tr-num-big">${new Date().getFullYear() - 2010} jaar</div><div class="tr-num-lbl">ervaring</div></div>
-    <div class="tr-num"><div class="tr-num-big">124+</div><div class="tr-num-lbl">daken gerenoveerd</div></div>
-    <div class="tr-num"><div class="tr-num-big">1</div><div class="tr-num-lbl">vast aanspreekpunt</div></div>
-    <div class="tr-num"><div class="tr-num-big">10 jaar</div><div class="tr-num-lbl">garantie</div></div>
-  </section>
-
-  <!-- REVIEWS — naar boven verplaatst (CRO: sociale proof vlak na de cijfers) -->
-  <section class="tr-section tr-reviews" id="reviews">
-    <div class="tr-wrap">
-      <div class="tr-head">
-        <span class="tr-eyebrow">Wat klanten zeggen</span>
-        <h2>Een lek, een verkoop en een storm</h2>
-      </div>
-      <div class="tr-rev-grid">
-        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>Natte plek op het plafond, net voor een weekend vol regen. Zaterdagochtend kreeg ik toch iemand aan de lijn en maandag stonden ze op het dak. Het lood rond de schoorsteen bleek verschoven; dezelfde week was alles hersteld. Geen grote werf, wel iemand die direct kwam toen het nodig was.</p><div class="tr-rev-foot"><div class="tr-rev-name">Lieve Hermans</div><div class="tr-rev-role">Daklek hersteld, Lier</div></div></div>
-        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>We wilden verkopen, maar met EPC-label F kwam er amper volk kijken. De isolatie is langs buiten geplaatst, binnen bleef alles zoals het was. Twee weken werk en het nieuwe attest geeft label C. Dat heeft de verkoop vlotgetrokken.</p><div class="tr-rev-foot"><div class="tr-rev-name">Yusuf Demir</div><div class="tr-rev-role">Sarking dakisolatie, Antwerpen</div></div></div>
-        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>Na de storm in februari lag een deel van onze pannen in de tuin. Nog dezelfde avond kwam er iemand een zeil spannen. Het dossier voor de verzekering hebben zij opgemaakt, foto's en verslag erbij, ik heb daar zelf amper papierwerk aan gehad. Twee weken later lag er een nieuw dak op.</p><div class="tr-rev-foot"><div class="tr-rev-name">Davy Janssens</div><div class="tr-rev-role">Stormschade, Sint-Niklaas</div></div></div>
       </div>
     </div>
   </section>
@@ -692,7 +692,7 @@ const HTML = `
           </div>
         </div>
         <div class="tr-final-testi">
-          <div class="tr-final-testi-q">We stelden de dakvervanging al jaren uit omdat we opzagen tegen de werken. Na goed een week was alles klaar, en de werf lag er elke avond opgeruimd bij.</div>
+          <div class="tr-final-testi-q">We stelden de dakvervanging jaren uit, bang voor de overlast. Na een week was alles klaar, de werf elke avond opgeruimd.</div>
           <div class="tr-final-testi-name">Patrick D., Bornem</div>
         </div>
       </div>
