@@ -528,36 +528,6 @@ const HTML = `
     </div>
   </section>
 
-  <!-- 6. ABOUT / CERTIFIED — naar onder verplaatst: eerst bewijs (cijfers + reviews), dan onze beloftes -->
-  <section class="tr-section" style="background:var(--bg-tint);">
-    <div class="tr-wrap">
-      <div class="tr-about-grid">
-        <div class="tr-about-media">
-          <div class="tr-about-badges">
-            <span class="tr-about-badge"><img src="/assets/logos/koramic.png" alt="Koramic" /></span>
-            <span class="tr-about-badge"><img src="/assets/logos/eternit.png" alt="Eternit" /></span>
-            <span class="tr-about-badge tr-vca">VCA*</span>
-          </div>
-          <div class="tr-about-photo"><img src="${imgVakman}" alt="AB Bouw vakman aan het werk" /></div>
-        </div>
-        <div class="tr-about-body">
-          <span class="tr-eyebrow">Over AB Bouw Groep</span>
-          <h2>Dakwerkers die doen wat ze zeggen</h2>
-          <p class="tr-about-intro">U wilt weten wie er komt, wanneer het klaar is en wat het kost. Daarom krijgt u één vast aanspreekpunt dat opneemt en op de afgesproken dag start.</p>
-          <ul class="tr-checks">
-            <li>${icCheck}<span><b>Offerte = factuur, geen meerwerken achteraf</b></span></li>
-            <li>${icCheck}<span>Fotorapport bij elke dakinspectie</span></li>
-            <li>${icCheck}<span>Concrete startdatum in de offerte</span></li>
-            <li>${icCheck}<span>10 jaar garantie op waterdichtheid</span></li>
-            <li>${icCheck}<span>6% btw waar het kan, plus premie-advies</span></li>
-            <li>${icCheck}<span>Ook voor herstellingen en onderhoud</span></li>
-          </ul>
-          <div class="tr-urgency">Gratis plaatsbezoek, meestal binnen 5 werkdagen.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- 8. SERVICES -->
   <section class="tr-section tr-services" id="diensten">
     <div class="tr-wrap">
@@ -586,6 +556,36 @@ const HTML = `
         <div class="tr-svc-card">
           <div class="tr-svc-img rl-thumb" data-rl-trigger data-rl-photos="[&quot;${imgVelux}&quot;]" data-rl-title="Velux dakramen"><img src="${imgVelux}" alt="Velux dakramen" /><span class="rl-zoom">⤢</span></div>
           <div class="tr-svc-body"><h3>Velux dakramen</h3><p>Plaatsing en vervanging van Velux-dakvensters. Waterdicht ingewerkt, meer daglicht op zolder.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ABOUT / CERTIFIED — onder de converterende secties: aandacht hoog houden voor hook + bewijs + diensten, daarna pas over ons -->
+  <section class="tr-section" style="background:var(--bg-tint);">
+    <div class="tr-wrap">
+      <div class="tr-about-grid">
+        <div class="tr-about-media">
+          <div class="tr-about-badges">
+            <span class="tr-about-badge"><img src="/assets/logos/koramic.png" alt="Koramic" /></span>
+            <span class="tr-about-badge"><img src="/assets/logos/eternit.png" alt="Eternit" /></span>
+            <span class="tr-about-badge tr-vca">VCA*</span>
+          </div>
+          <div class="tr-about-photo"><img src="${imgVakman}" alt="AB Bouw vakman aan het werk" /></div>
+        </div>
+        <div class="tr-about-body">
+          <span class="tr-eyebrow">Over AB Bouw Groep</span>
+          <h2>Dakwerkers die doen wat ze zeggen</h2>
+          <p class="tr-about-intro">U wilt weten wie er komt, wanneer het klaar is en wat het kost. Daarom krijgt u één vast aanspreekpunt dat opneemt en op de afgesproken dag start.</p>
+          <ul class="tr-checks">
+            <li>${icCheck}<span><b>Offerte = factuur, geen meerwerken achteraf</b></span></li>
+            <li>${icCheck}<span>Fotorapport bij elke dakinspectie</span></li>
+            <li>${icCheck}<span>Concrete startdatum in de offerte</span></li>
+            <li>${icCheck}<span>10 jaar garantie op waterdichtheid</span></li>
+            <li>${icCheck}<span>6% btw waar het kan, plus premie-advies</span></li>
+            <li>${icCheck}<span>Ook voor herstellingen en onderhoud</span></li>
+          </ul>
+          <div class="tr-urgency">Gratis plaatsbezoek, meestal binnen 5 werkdagen.</div>
         </div>
       </div>
     </div>

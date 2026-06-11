@@ -848,8 +848,26 @@ export default function LpDienst({ slug }: { slug: string }) {
         </div>
       </section>
 
-      {/* 6. ABOUT / CERTIFIED — naar onder verplaatst: eerst bewijs (cijfers + reviews), dan onze beloftes */}
-      <section className="tr-section" style={{ background: 'var(--bg-tint)' }}>
+      {/* 8. SERVICES / WAT HOUDT HET IN */}
+      <section className="tr-section tr-services" id="diensten">
+        <div className="tr-wrap">
+          <div className="tr-head">
+            
+            <h2>{d.whatTitle}</h2>
+            <p style={{ color: 'rgba(255,255,255,0.84)', fontSize: 15, lineHeight: 1.6, marginTop: 14 }}>{d.whatIntro}</p>
+          </div>
+          <div className="tr-svc-grid">
+            {d.what.map(([t, sub], i) => (
+              <div className="tr-svc-card" key={i}>
+                <div className="tr-svc-body"><h3>{t}</h3><p>{sub}</p></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. ABOUT / CERTIFIED — onder de converterende secties: aandacht hoog houden voor hook + bewijs + diensten, daarna pas over ons */}
+      <section className="tr-section" style={{ background: '#fff' }}>
         <div className="tr-wrap">
           <div className="tr-about-grid">
             <div className="tr-about-media">
@@ -882,24 +900,6 @@ export default function LpDienst({ slug }: { slug: string }) {
               </ul>
               <div className="tr-urgency">{d.urgencyLine ?? 'Gratis plaatsbezoek, meestal binnen 5 werkdagen.'}</div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 8. SERVICES / WAT HOUDT HET IN */}
-      <section className="tr-section tr-services" id="diensten">
-        <div className="tr-wrap">
-          <div className="tr-head">
-            
-            <h2>{d.whatTitle}</h2>
-            <p style={{ color: 'rgba(255,255,255,0.84)', fontSize: 15, lineHeight: 1.6, marginTop: 14 }}>{d.whatIntro}</p>
-          </div>
-          <div className="tr-svc-grid">
-            {d.what.map(([t, sub], i) => (
-              <div className="tr-svc-card" key={i}>
-                <div className="tr-svc-body"><h3>{t}</h3><p>{sub}</p></div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
