@@ -435,10 +435,10 @@ const HTML = `
           <span>124+ daken vernieuwd</span><span class="tr-hero-trust-dot">·</span>
           <span>Sinds 2010</span>
         </div>
-        <h1>Wij noemen pas een prijs als we op uw dak gestaan hebben.</h1>
-        <p class="tr-hero-sub">U krijgt eerst een gratis dakinspectie, met een fotorapport dat u mag houden. Daarna een vaste prijs, en daar blijft het bij.</p>
+        <h1>Een goed dak hoort u niet.</h1>
+        <p class="tr-hero-sub">Het giet buiten en binnen blijft het stil. Hoort u uw dak toch, dan komen we gratis kijken.</p>
         <div class="tr-hero-cta">
-          <a href="#lp-form" class="tr-btn">Gratis dakinspectie aanvragen</a>
+          <a href="#lp-form" class="tr-btn">Laat uw dak gratis nakijken</a>
           <a href="${PHONE_HREF}" class="tr-hero-call">Daklek? Bel direct ${PHONE}</a>
         </div>
         <div class="tr-certs">
