@@ -435,10 +435,10 @@ const HTML = `
           <span>124+ daken vernieuwd</span><span class="tr-hero-trust-dot">·</span>
           <span>Sinds 2010</span>
         </div>
-        <h1>Een goed dak hoort u niet.</h1>
-        <p class="tr-hero-sub">Het giet buiten en binnen blijft het stil. Hoort u uw dak toch, dan komen we gratis kijken.</p>
+        <h1>Dakproblemen of renovatieplannen? Wij regelen het.</h1>
+        <p class="tr-hero-sub">Van daklek en herstelling tot dakisolatie en een volledig nieuw dak: één vast aanspreekpunt, overal in Vlaanderen. We starten met een gratis dakinspectie met fotorapport.</p>
         <div class="tr-hero-cta">
-          <a href="#lp-form" class="tr-btn">Laat uw dak gratis nakijken</a>
+          <a href="#lp-form" class="tr-btn">Gratis dakinspectie aanvragen</a>
           <a href="${PHONE_HREF}" class="tr-hero-call">Daklek? Bel direct ${PHONE}</a>
         </div>
         <div class="tr-certs">
