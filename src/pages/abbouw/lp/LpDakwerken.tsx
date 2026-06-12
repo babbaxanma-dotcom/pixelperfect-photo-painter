@@ -462,8 +462,8 @@ const HTML = `
           <div class="tr-hero-main">
             <div class="tr-hero-trust">
               <span class="tr-hero-trust-stars">${stars}</span>
-              <span><b>4,9/5</b> op Google (184+ reviews)</span><span class="tr-hero-trust-dot">·</span>
-              <span>124+ daken vernieuwd</span><span class="tr-hero-trust-dot">·</span>
+              <span><b>4,9/5</b> op Google (180+ reviews)</span><span class="tr-hero-trust-dot">·</span>
+              <span>120+ daken vernieuwd</span><span class="tr-hero-trust-dot">·</span>
               <span>Sinds 2010</span>
             </div>
             <h1>Dakproblemen of renovatieplannen? <span class="tr-h1-accent">Wij regelen het.</span></h1>
@@ -542,7 +542,7 @@ const HTML = `
   <!-- 7. NUMBERS BAR -->
   <section class="tr-numbers">
     <div class="tr-num"><div class="tr-num-big">${new Date().getFullYear() - 2010} jaar</div><div class="tr-num-lbl">ervaring</div></div>
-    <div class="tr-num"><div class="tr-num-big">124+</div><div class="tr-num-lbl">daken gerenoveerd</div></div>
+    <div class="tr-num"><div class="tr-num-big">120+</div><div class="tr-num-lbl">daken gerenoveerd</div></div>
     <div class="tr-num"><div class="tr-num-big">1</div><div class="tr-num-lbl">vast aanspreekpunt</div></div>
     <div class="tr-num"><div class="tr-num-big">10 jaar</div><div class="tr-num-lbl">garantie</div></div>
   </section>

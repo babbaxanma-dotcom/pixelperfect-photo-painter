@@ -111,9 +111,9 @@ const HTML = (i: Record<string, string>) => `
         <p class="lf-qhero-sub">De prijs ligt zwart op wit vast vóór de eerste werkdag, zonder meerwerk achteraf. Eén vast aanspreekpunt regelt alles, van plaatsbezoek tot oplevering.</p>
         <div class="lf-qhero-trust">
           <span class="lf-qhero-stars" aria-hidden="true">★★★★★</span>
-          <span><strong>4,9/5</strong> op Google (184+ reviews)</span>
+          <span><strong>4,9/5</strong> op Google (180+ reviews)</span>
           <span class="lf-qhero-dot" aria-hidden="true">·</span>
-          <span>124+ woningen gerenoveerd</span>
+          <span>120+ woningen gerenoveerd</span>
           <span class="lf-qhero-dot" aria-hidden="true">·</span>
           <span>10 jaar garantie</span>
         </div>
@@ -178,7 +178,7 @@ const HTML = (i: Record<string, string>) => `
             <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
             <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
           </div>
-          <span class="lf-reviews-count">Gebaseerd op 184+ reviews</span>
+          <span class="lf-reviews-count">Gebaseerd op 180+ reviews</span>
         </div>
       </div>
     </div>

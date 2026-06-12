@@ -174,7 +174,7 @@ ${buildHero({
       </div>
       <div class="rzd-trust-divider"></div>
       <div class="rzd-trust-item">
-        <span class="rzd-trust-num">124+</span>
+        <span class="rzd-trust-num">120+</span>
         <span class="rzd-trust-lbl">tevreden klanten</span>
       </div>
       <div class="rzd-trust-divider"></div>

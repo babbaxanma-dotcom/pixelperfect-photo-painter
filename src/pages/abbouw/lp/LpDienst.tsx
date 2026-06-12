@@ -752,8 +752,8 @@ export default function LpDienst({ slug }: { slug: string }) {
           <div className="tr-wrap">
             <div className="tr-hero-trust">
               <span className="tr-hero-trust-stars">{stars}</span>
-              <span><b>4,9/5</b> op Google (184+ reviews)</span><span className="tr-hero-trust-dot">·</span>
-              <span>124+ realisaties</span><span className="tr-hero-trust-dot">·</span>
+              <span><b>4,9/5</b> op Google (180+ reviews)</span><span className="tr-hero-trust-dot">·</span>
+              <span>120+ realisaties</span><span className="tr-hero-trust-dot">·</span>
               <span>Actief sinds 2010</span>
             </div>
             <h1>{d.h1}</h1>
@@ -823,7 +823,7 @@ export default function LpDienst({ slug }: { slug: string }) {
       <section className="tr-numbers">
         <div className="tr-num"><div className="tr-num-big">{new Date().getFullYear() - 2010} jaar</div><div className="tr-num-lbl">ervaring</div></div>
         <div className="tr-num"><div className="tr-num-big">1</div><div className="tr-num-lbl">vast aanspreekpunt</div></div>
-        <div className="tr-num"><div className="tr-num-big">124+</div><div className="tr-num-lbl">projecten</div></div>
+        <div className="tr-num"><div className="tr-num-big">120+</div><div className="tr-num-lbl">projecten</div></div>
         <div className="tr-num"><div className="tr-num-big">10 jaar</div><div className="tr-num-lbl">garantie</div></div>
       </section>
 
