@@ -130,8 +130,8 @@ const LP_CSS = `
 .tr-hero-bg::after { content: ""; position: absolute; inset: 0;
   background: linear-gradient(90deg, rgba(10,22,40,0.92) 0%, rgba(10,22,40,0.78) 38%, rgba(10,22,40,0.38) 60%, rgba(10,22,40,0.08) 80%, rgba(10,22,40,0) 92%), linear-gradient(180deg, rgba(10,22,40,0) 60%, rgba(10,22,40,0.42) 100%); }
 .tr-hero-inner { position: relative; z-index: 2; text-align: left; padding: clamp(52px,6.5vw,88px) 0 clamp(52px,6.5vw,88px); }
-/* 3-zone hero: hoofdtekst + diensten links, formulier rechts; mobiel main -> form -> svc */
-.tr-hero-grid { display: grid; grid-template-columns: 1fr; grid-template-areas: "main" "form" "svc"; row-gap: 24px; align-items: start; }
+/* 3-zone hero: hoofdtekst + diensten links, formulier rechts; mobiel main -> svc -> form */
+.tr-hero-grid { display: grid; grid-template-columns: 1fr; grid-template-areas: "main" "svc" "form"; row-gap: 24px; align-items: start; }
 .tr-hero-main { grid-area: main; min-width: 0; }
 .tr-hero-svc { grid-area: svc; min-width: 0; }
 .tr-hero-form { grid-area: form; position: relative; z-index: 3; min-width: 0; }
