@@ -128,7 +128,18 @@ const LP_CSS = `
 .tr-hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 62%; }
 .tr-hero-bg::after { content: ""; position: absolute; inset: 0;
   background: linear-gradient(90deg, rgba(10,22,40,0.90) 0%, rgba(10,22,40,0.64) 34%, rgba(10,22,40,0.30) 56%, rgba(10,22,40,0.08) 76%, rgba(10,22,40,0) 92%), linear-gradient(180deg, rgba(10,22,40,0) 60%, rgba(10,22,40,0.42) 100%); }
-.tr-hero-inner { position: relative; z-index: 2; text-align: left; padding: clamp(72px,8vw,112px) 0 clamp(110px,12vw,168px); }
+.tr-hero-inner { position: relative; z-index: 2; text-align: left; padding: clamp(52px,6.5vw,88px) 0 clamp(52px,6.5vw,88px); }
+/* split hero: inhoud + social proof links, formulier rechts */
+.tr-hero-grid { display: grid; grid-template-columns: 1fr; gap: 30px; align-items: start; }
+@media (min-width: 1024px) { .tr-hero-grid { grid-template-columns: minmax(0, 1fr) 416px; gap: clamp(36px, 4vw, 64px); } }
+.tr-hero-main { min-width: 0; }
+.tr-hero-form { position: relative; z-index: 3; }
+.tr-hero-form .tr-quickform { margin: 0; max-width: none; }
+.tr-hero-form .tr-qf-grid { grid-template-columns: 1fr; gap: 11px; }
+.tr-hero-form .tr-quickform h3 { font-size: 22px; margin-bottom: 18px; }
+.tr-qf-foot { margin: 16px 0 0; text-align: center; font-size: 13.5px; color: #525b6b; }
+.tr-qf-foot a { color: ${NAVY}; font-weight: 600; }
+.tr-qf-foot a:hover { color: ${ORANGE}; }
 .tr-hero h1 { font-size: clamp(32px, 4.9vw, 60px); line-height: 1.06; font-weight: 800; letter-spacing: -0.035em; color: #fff; margin: 0 0 22px; max-width: 16ch; text-wrap: balance; }
 .tr-hero-sub { font-size: clamp(15px, 1.45vw, 19px); line-height: 1.6; color: rgba(255,255,255,0.92);
   max-width: 620px; margin: 0 0 32px; }
@@ -178,12 +189,12 @@ const LP_CSS = `
 .tr-qf-thanks h4 { font-size: 21px; color: ${NAVY}; margin: 0 0 6px; }
 .tr-qf-thanks p { font-size: 14.5px; color: #454f60; margin: 0; }
 .tr-quickform.is-success .tr-qf-grid, .tr-quickform.is-success .tr-eyebrow,
-.tr-quickform.is-success h3, .tr-quickform.is-success .tr-qf-error { display: none; }
+.tr-quickform.is-success h3, .tr-quickform.is-success .tr-qf-error, .tr-quickform.is-success .tr-qf-foot { display: none; }
 .tr-quickform.is-success .tr-qf-thanks { display: block; }
-.tr-hero-testi { max-width: 760px; margin: 30px auto 0; text-align: center; padding: 0 16px 8px; }
-.tr-hero-testi-q { font-size: 15.5px; line-height: 1.65; color: #3a4252; font-style: italic;
+.tr-hero-testi { max-width: none; margin: 26px 0 0; text-align: left; padding: 18px 0 0; border-top: 1px solid rgba(255,255,255,0.13); }
+.tr-hero-testi-q { font-size: 14.5px; line-height: 1.6; color: rgba(255,255,255,0.8); font-style: italic;
   display: inline; padding: 0; }
-.tr-hero-testi-name { margin-top: 14px; font-family: var(--font-display); font-weight: 700; color: ${NAVY}; font-size: 14.5px; }
+.tr-hero-testi-name { margin-top: 10px; font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 13.5px; }
 @media (max-width: 720px) {
   .tr-quickform { margin: -52px 20px 0; padding: 26px 22px 28px; }
   .tr-quickform h3 { font-size: 21px; margin-bottom: 18px; }
@@ -424,60 +435,57 @@ const HTML = `
     </nav>
   </header>
 
-  <!-- 3. HERO -->
+  <!-- 3. HERO (split: inhoud + social proof links, formulier rechts) -->
   <section class="tr-hero">
     <div class="tr-hero-bg"><img src="${heroClassic}" alt="Dakwerken Vlaanderen" /></div>
     <div class="tr-hero-inner">
       <div class="tr-wrap">
-        <div class="tr-hero-trust">
-          <span class="tr-hero-trust-stars">${stars}</span>
-          <span><b>4,9/5</b> op Google (184+ reviews)</span><span class="tr-hero-trust-dot">·</span>
-          <span>124+ daken vernieuwd</span><span class="tr-hero-trust-dot">·</span>
-          <span>Sinds 2010</span>
-        </div>
-        <h1>Dakproblemen of renovatieplannen? Wij regelen het.</h1>
-        <p class="tr-hero-sub">Van daklek en herstelling tot dakisolatie en een volledig nieuw dak: één vast aanspreekpunt, overal in Vlaanderen. We starten met een gratis dakinspectie met fotorapport.</p>
-        <div class="tr-hero-cta">
-          <a href="#lp-form" class="tr-btn">Gratis dakinspectie aanvragen</a>
-          <a href="${PHONE_HREF}" class="tr-hero-call">Daklek? Bel direct ${PHONE}</a>
-        </div>
-        <div class="tr-certs">
-          <span class="tr-cert-pill">${icShield}VCA* gecertificeerd</span>
-          <span class="tr-cert-pill">${icCheck.replace('width="20" height="20"','width="15" height="15"')}Lid Bouwunie</span>
-          <span class="tr-cert-pill">${icShield}Verzekerd via Federale</span>
+        <div class="tr-hero-grid">
+          <div class="tr-hero-main">
+            <div class="tr-hero-trust">
+              <span class="tr-hero-trust-stars">${stars}</span>
+              <span><b>4,9/5</b> op Google (184+ reviews)</span><span class="tr-hero-trust-dot">·</span>
+              <span>124+ daken vernieuwd</span><span class="tr-hero-trust-dot">·</span>
+              <span>Sinds 2010</span>
+            </div>
+            <h1>Dakproblemen of renovatieplannen? Wij regelen het.</h1>
+            <p class="tr-hero-sub">Van daklek en herstelling tot dakisolatie en een volledig nieuw dak: één vast aanspreekpunt, overal in Vlaanderen. We starten met een gratis dakinspectie met fotorapport.</p>
+            <div class="tr-certs">
+              <span class="tr-cert-pill">${icShield}VCA* gecertificeerd</span>
+              <span class="tr-cert-pill">${icCheck.replace('width="20" height="20"','width="15" height="15"')}Lid Bouwunie</span>
+              <span class="tr-cert-pill">${icShield}Verzekerd via Federale</span>
+            </div>
+            <div class="tr-hero-testi">
+              <span class="tr-hero-testi-q">Onze rijwoning had nog het dak van 1962, het lekte op drie plaatsen. Maandag gestript, vrijdag lag het nieuwe dak erop. Sindsdien geen druppel meer binnen.</span>
+              <div class="tr-hero-testi-name">Stijn D., Mechelen</div>
+            </div>
+          </div>
+          <aside class="tr-hero-form">
+            <div class="tr-quickform" id="lp-form" data-lp-quick>
+              <span class="tr-eyebrow">Vrijblijvend</span>
+              <h3>Gratis dakinspectie met fotorapport</h3>
+              <form data-lp-quick-form novalidate>
+                <div class="tr-qf-grid">
+                  <input type="text" name="firstName" placeholder="Voornaam *" autocomplete="given-name" required />
+                  <input type="tel" name="phone" placeholder="Telefoonnummer *" autocomplete="tel" required />
+                  <button type="submit" class="tr-btn" data-lp-quick-submit>
+                    <span data-lp-quick-submit-label>Bel mij terug</span>
+                  </button>
+                </div>
+              </form>
+              <div class="tr-qf-error" data-lp-quick-error hidden></div>
+              <p class="tr-qf-foot"><a href="${PHONE_HREF}">Daklek? Bel direct ${PHONE}</a></p>
+              <div class="tr-qf-thanks">
+                <div class="tr-qf-thanks-ic">${icCheck.replace('width="20" height="20"','width="26" height="26"')}</div>
+                <h4>Bedankt, uw aanvraag is ontvangen.</h4>
+                <p>We bellen u zo snel mogelijk terug voor uw gratis dakinspectie.</p>
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- 4. QUICK FORM -->
-  <div class="tr-quickform-shell">
-    <div class="tr-wrap">
-      <div class="tr-quickform" id="lp-form" data-lp-quick>
-        <span class="tr-eyebrow">Vrijblijvend</span>
-        <h3>Gratis dakinspectie met fotorapport</h3>
-        <form data-lp-quick-form novalidate>
-          <div class="tr-qf-grid">
-            <input type="text" name="firstName" placeholder="Voornaam *" autocomplete="given-name" required />
-            <input type="tel" name="phone" placeholder="Telefoonnummer *" autocomplete="tel" required />
-            <button type="submit" class="tr-btn" data-lp-quick-submit>
-              <span data-lp-quick-submit-label>Bel mij terug</span>
-            </button>
-          </div>
-        </form>
-        <div class="tr-qf-error" data-lp-quick-error hidden></div>
-        <div class="tr-qf-thanks">
-          <div class="tr-qf-thanks-ic">${icCheck.replace('width="20" height="20"','width="26" height="26"')}</div>
-          <h4>Bedankt, uw aanvraag is ontvangen.</h4>
-          <p>We bellen u zo snel mogelijk terug voor uw gratis dakinspectie.</p>
-        </div>
-      </div>
-      <div class="tr-hero-testi">
-        <span class="tr-hero-testi-q">Onze rijwoning had nog het dak van 1962, het lekte op drie plaatsen. Maandag gestript, vrijdag lag het nieuwe dak erop. Sindsdien geen druppel meer binnen.</span>
-        <div class="tr-hero-testi-name">Stijn D., Mechelen</div>
-      </div>
-    </div>
-  </div>
 
   <!-- 5. WERKWIJZE / 3 STAPPEN -->
   <section class="tr-section" id="werkwijze">
