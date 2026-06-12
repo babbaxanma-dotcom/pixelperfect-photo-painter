@@ -435,8 +435,8 @@ const HTML = `
           <span>124+ daken vernieuwd</span><span class="tr-hero-trust-dot">·</span>
           <span>Sinds 2010</span>
         </div>
-        <h1>Dakwerken tegen vaste prijs: uw nieuw dak zonder meerwerk achteraf</h1>
-        <p class="tr-hero-sub">Eerst een gratis dakinspectie met fotorapport, daarna uw prijs op papier en 10 jaar garantie op waterdichtheid. We werken in heel Vlaanderen.</p>
+        <h1>Wij noemen pas een prijs als we op uw dak gestaan hebben.</h1>
+        <p class="tr-hero-sub">U krijgt eerst een gratis dakinspectie, met een fotorapport dat u mag houden. Daarna een vaste prijs, en daar blijft het bij.</p>
         <div class="tr-hero-cta">
           <a href="#lp-form" class="tr-btn">Gratis dakinspectie aanvragen</a>
           <a href="${PHONE_HREF}" class="tr-hero-call">Daklek? Bel direct ${PHONE}</a>
@@ -998,8 +998,8 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
 
   const renderedHtml = local
     ? HTML.replace(
-        'We werken in heel Vlaanderen.',
-        `We werken in ${local.name} en heel Vlaanderen.`,
+        '<span>Erkend dakwerker</span>',
+        `<span>Erkend dakwerker in ${local.name}</span>`,
       )
     : HTML;
 
