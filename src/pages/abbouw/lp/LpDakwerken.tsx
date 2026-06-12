@@ -70,6 +70,7 @@ const LP_CSS = `
 .tr-urgency { margin-top: 14px; font-size: 13px; color: #525b6b; font-weight: 600; }
 .tr-section { padding: var(--section-y) 0; }
 .tr-section[id] { scroll-margin-top: 88px; }
+#lp-form { scroll-margin-top: 88px; }
 .tr-section.tr-section--lg { padding: var(--section-y-lg) 0; }
 .tr-section.tr-section--compact { padding: var(--section-y-compact) 0; }
 
@@ -79,9 +80,9 @@ const LP_CSS = `
 .tr-topbar-left { display: inline-flex; align-items: center; gap: 0; flex-wrap: wrap; }
 .tr-topbar-left span { padding: 4px 0; }
 .tr-topbar-left span + span::before { content: "·"; margin: 0 12px; color: rgba(255,255,255,0.4); }
-.tr-topbar-phone { display: inline-flex; align-items: center; gap: 8px; background: ${ORANGE}; color: #fff;
-  font-weight: 700; padding: 7px 16px; border-radius: 999px; white-space: nowrap; }
-.tr-topbar-phone svg { width: 15px; height: 15px; }
+.tr-topbar-phone { display: inline-flex; align-items: center; gap: 8px; color: #fff; font-weight: 600; padding: 10px 0; white-space: nowrap; transition: color .18s; }
+.tr-topbar-phone:hover { color: ${ORANGE}; }
+.tr-topbar-phone svg { width: 15px; height: 15px; color: ${ORANGE}; }
 @media (max-width: 760px) { .tr-topbar-left span:not(:first-child) { display: none; } }
 
 /* 2 — HEADER */
@@ -104,6 +105,7 @@ const LP_CSS = `
   .tr-nav { display: none; }
   .tr-rating { display: none; }
   .tr-headcta { display: none; }
+  .tr-topbar-phone { display: none; }
   .tr-burger { display: flex; }
   .tr-logo { height: 52px; }
   .tr-header .tr-wrap { min-height: 66px; gap: 12px; }
@@ -112,7 +114,7 @@ const LP_CSS = `
   .tr-mobmenu { display: flex; flex-direction: column; gap: 2px; position: fixed; top: 0; right: 0; bottom: 0; width: min(84vw, 360px); background: #fff; box-shadow: -24px 0 60px -24px rgba(0,0,0,0.45); transform: translateX(100%); transition: transform .3s var(--ease-out-quart, ease); z-index: 200; padding: 30px 26px 30px; overflow-y: auto; }
   body.tr-menu-open .tr-mobmenu { transform: translateX(0); }
   body.tr-menu-open { overflow: hidden; }
-  .tr-mobmenu-close { align-self: flex-end; background: none; border: 0; font-size: 34px; line-height: 1; color: ${NAVY}; cursor: pointer; padding: 0 4px 6px; margin-bottom: 6px; }
+  .tr-mobmenu-close { align-self: flex-end; background: none; border: 0; font-size: 34px; line-height: 1; color: ${NAVY}; cursor: pointer; width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0; margin: -6px -12px 6px 0; }
   .tr-mobmenu a:not(.tr-btn) { font-family: var(--font-display); font-weight: 600; font-size: 19px; color: ${NAVY}; padding: 15px 4px; border-bottom: 1px solid #efece5; }
   .tr-mobmenu a:not(.tr-btn):active { color: ${ORANGE}; }
   .tr-mobmenu-cta { margin-top: 22px; justify-content: center; text-align: center; padding: 16px; font-size: 16px; }
@@ -123,57 +125,47 @@ const LP_CSS = `
 
 /* 3 — HERO */
 .tr-hero { position: relative; background: ${NAVY}; color: #fff; overflow: hidden; }
-@media (min-width: 1024px) { .tr-hero { display: flex; align-items: center; min-height: clamp(560px, 64vh, 720px); } .tr-hero-inner { width: 100%; } }
 .tr-hero-bg { position: absolute; inset: 0; }
 .tr-hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 62%; }
 .tr-hero-bg::after { content: ""; position: absolute; inset: 0;
-  background: linear-gradient(90deg, rgba(10,22,40,0.90) 0%, rgba(10,22,40,0.64) 34%, rgba(10,22,40,0.30) 56%, rgba(10,22,40,0.08) 76%, rgba(10,22,40,0) 92%), linear-gradient(180deg, rgba(10,22,40,0) 60%, rgba(10,22,40,0.42) 100%); }
+  background: linear-gradient(90deg, rgba(10,22,40,0.92) 0%, rgba(10,22,40,0.78) 38%, rgba(10,22,40,0.38) 60%, rgba(10,22,40,0.08) 80%, rgba(10,22,40,0) 92%), linear-gradient(180deg, rgba(10,22,40,0) 60%, rgba(10,22,40,0.42) 100%); }
 .tr-hero-inner { position: relative; z-index: 2; text-align: left; padding: clamp(52px,6.5vw,88px) 0 clamp(52px,6.5vw,88px); }
-/* split hero: inhoud + social proof links, formulier rechts */
-.tr-hero-grid { display: grid; grid-template-columns: 1fr; gap: 30px; align-items: start; }
-@media (min-width: 1024px) { .tr-hero-grid { grid-template-columns: minmax(0, 1fr) 416px; gap: clamp(36px, 4vw, 64px); } }
-.tr-hero-main { min-width: 0; }
-.tr-hero-form { position: relative; z-index: 3; }
-.tr-hero-form .tr-quickform { margin: 0; max-width: none; }
-.tr-hero-form .tr-qf-grid { grid-template-columns: 1fr; gap: 11px; }
-.tr-hero-form .tr-quickform h3 { font-size: 22px; margin-bottom: 18px; }
-.tr-qf-foot { margin: 16px 0 0; text-align: center; font-size: 13.5px; color: #525b6b; }
-.tr-qf-foot a { color: ${NAVY}; font-weight: 600; }
-.tr-qf-foot a:hover { color: ${ORANGE}; }
-.tr-hero h1 { font-size: clamp(32px, 4.9vw, 60px); line-height: 1.06; font-weight: 800; letter-spacing: -0.035em; color: #fff; margin: 0 0 22px; max-width: 16ch; text-wrap: balance; }
-.tr-hero-sub { font-size: clamp(15px, 1.45vw, 19px); line-height: 1.6; color: rgba(255,255,255,0.92);
-  max-width: 620px; margin: 0 0 32px; }
-.tr-hero-sub b { color: #fff; }
-.tr-hero-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 22px; margin: 0 0 30px; }
-.tr-hero-call { font-family: var(--font-display); font-weight: 600; font-size: 15px; color: rgba(255,255,255,0.86); text-decoration: none; transition: color .18s; }
-.tr-hero-call:hover { color: ${GOLD}; }
-@media (max-width: 720px) { .tr-hero-cta { justify-content: center; gap: 12px 18px; margin-bottom: 24px; } }
-.tr-hero .tr-eyebrow { color: ${GOLD}; margin-bottom: 18px; }
-.tr-hero .tr-eyebrow::before { background: ${GOLD}; }
-.tr-certs { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 10px; max-width: 620px; margin: 6px 0 0; }
-.tr-cert-pill { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px;
-  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.13); border-radius: var(--tr-r-ui);
-  font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); white-space: nowrap; }
-.tr-cert-pill svg { color: ${GOLD}; flex-shrink: 0; opacity: 0.92; }
-@media (max-width: 720px) { .tr-hero { display: flex; align-items: center; min-height: 76vh; } .tr-hero-inner { width: 100%; padding: 44px 0 116px; text-align: center; } .tr-hero-sub { margin-left: auto; margin-right: auto; } .tr-certs { justify-content: center; gap: 9px 10px; } .tr-cert-pill { height: 36px; padding: 0 13px; font-size: 12px; }
-  .tr-hero-bg::after { background: linear-gradient(180deg, rgba(10,22,40,0.82) 0%, rgba(10,22,40,0.66) 42%, rgba(10,22,40,0.88) 100%); } }
+/* 3-zone hero: hoofdtekst + diensten links, formulier rechts; mobiel main -> form -> svc */
+.tr-hero-grid { display: grid; grid-template-columns: 1fr; grid-template-areas: "main" "form" "svc"; row-gap: 24px; align-items: start; }
+.tr-hero-main { grid-area: main; min-width: 0; }
+.tr-hero-svc { grid-area: svc; min-width: 0; }
+.tr-hero-form { grid-area: form; position: relative; z-index: 3; min-width: 0; }
+@media (min-width: 1024px) {
+  .tr-hero { display: flex; align-items: center; min-height: clamp(600px, 66vh, 740px); }
+  .tr-hero-inner { width: 100%; }
+  .tr-hero-grid { grid-template-columns: minmax(0,1fr) 416px; grid-template-rows: 1fr auto; grid-template-areas: "main form" "svc form"; column-gap: clamp(40px, 4.5vw, 64px); row-gap: 28px; }
+}
+.tr-hero h1 { font-size: clamp(34px, 4.6vw, 54px); line-height: 1.07; font-weight: 800; letter-spacing: -0.035em; color: #fff; margin: 0 0 18px; max-width: 17ch; text-wrap: balance; }
+.tr-h1-accent { display: block; margin-top: 2px; color: ${GOLD}; }
+.tr-hero-sub { font-size: clamp(16px, 1.3vw, 18px); line-height: 1.65; color: rgba(255,255,255,0.88); max-width: 52ch; margin: 0; }
+.tr-hero-sub b { color: #fff; font-weight: 600; }
+/* diensten-zone op de foto: één omrand systeem (de tegels) + stille cert-regel */
+.tr-hero-svc-label { display: block; font-family: var(--font-display); font-size: 11.5px; font-weight: 600; letter-spacing: 0.11em; text-transform: uppercase; color: rgba(255,255,255,0.62); margin: 0 0 10px; }
+.tr-hero-svc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); gap: 10px; max-width: 640px; }
+.tr-svc-tile { display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 10px 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: var(--tr-r-ui); font-family: var(--font-display); font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.92); line-height: 1.3; }
+.tr-svc-tile svg { width: 15px; height: 15px; color: ${GOLD}; flex-shrink: 0; }
+.tr-hero-svc-certs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 24px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); text-shadow: 0 1px 2px rgba(10,22,40,0.45); }
+.tr-hero-svc-certs svg { width: 14px; height: 14px; color: ${GOLD}; flex-shrink: 0; }
 
-/* hero trust-row + sticky-header phone (repositioning, video-2 above-the-fold) */
-.tr-hero-trust { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin:0 0 20px; font-size:14.5px; font-weight:600; color:rgba(255,255,255,0.92); }
-.tr-hero-trust b { color:#fff; }
-.tr-hero-trust-stars { color:${GOLD}; letter-spacing:1px; font-size:15px; }
-.tr-hero-trust-dot { color:rgba(255,255,255,0.4); }
+/* hero trust-row + sticky-header phone */
+.tr-hero-trust { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 18px; font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,0.8); }
+.tr-hero-trust b { color: #fff; font-weight: 700; }
+.tr-hero-trust-stars { color: ${GOLD}; letter-spacing: 1px; font-size: 14px; }
+.tr-hero-trust-dot { color: rgba(255,255,255,0.35); }
 .tr-headphone { display:inline-flex; align-items:center; gap:8px; color:${NAVY}; border:1.5px solid #e0ddd3; background:#fff; font-family:var(--font-display); font-weight:700; font-size:14px; padding:10px 16px; border-radius:999px; white-space:nowrap; transition:border-color .18s, color .18s; }
 .tr-headphone svg { color:${ORANGE}; }
 .tr-headphone:hover { border-color:${ORANGE}; color:${ORANGE}; }
-@media (max-width:980px){ .tr-headphone{ background:${ORANGE}; color:#fff; border-color:${ORANGE}; padding:0; width:42px; height:42px; justify-content:center; gap:0; } .tr-headphone svg{ color:#fff; } .tr-headphone-num{ display:none; } }
-@media (max-width:720px){ .tr-hero-trust{ justify-content:center; font-size:13px; gap:6px 10px; } }
+@media (max-width:980px){ .tr-headphone{ background:${ORANGE}; color:#fff; border-color:${ORANGE}; padding:0; width:44px; height:44px; justify-content:center; gap:0; } .tr-headphone svg{ color:#fff; } .tr-headphone-num{ display:none; } }
 
-/* 4 — QUICK FORM (overlaps hero) */
+/* 4 — QUICK FORM (basis; de hero-kaart hergebruikt deze, scoped via .tr-hero-form) */
 .tr-quickform-shell { background: #fff; }
 .tr-quickform { background: #fff; max-width: 880px; margin: -88px auto 0; position: relative; z-index: 5;
   border: 1px solid #e7e4dd; border-radius: var(--tr-r-card); box-shadow: 0 26px 60px -28px rgba(10,22,40,0.4); padding: 34px 40px 36px; }
-.tr-quickform .tr-eyebrow { text-align: center; display: block; margin-bottom: 6px; }
 .tr-quickform h3 { text-align: center; font-size: 28px; font-weight: 700; letter-spacing: -0.025em; color: ${NAVY}; margin: 0 0 26px; }
 .tr-qf-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; align-items: stretch; }
 .tr-qf-grid input { width: 100%; padding: 15px 16px; border: 1px solid #d3d7dd; border-radius: var(--tr-r-ui); font: inherit;
@@ -181,25 +173,50 @@ const LP_CSS = `
 .tr-qf-grid input::placeholder { color: #8a8f98; }
 .tr-qf-grid input:focus { outline: none; border-color: ${ORANGE}; box-shadow: 0 0 0 3px rgba(217,140,3,0.16); background: #fff; }
 .tr-qf-grid .tr-btn { white-space: nowrap; }
-.tr-qf-error { display: none; margin-top: 12px; font-size: 13.5px; color: #b3261e; background: #fdecea;
+.tr-qf-error { margin-top: 12px; font-size: 13.5px; color: #b3261e; background: #fdecea;
   border: 1px solid rgba(179,38,30,0.2); border-radius: var(--tr-r-ui); padding: 9px 12px; }
 .tr-qf-thanks { display: none; text-align: center; padding: 16px 0 6px; }
 .tr-qf-thanks-ic { width: 54px; height: 54px; border-radius: 50%; background: #eef1f5; color: ${NAVY};
   display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px; }
 .tr-qf-thanks h4 { font-size: 21px; color: ${NAVY}; margin: 0 0 6px; }
 .tr-qf-thanks p { font-size: 14.5px; color: #454f60; margin: 0; }
+
+/* hero-form-kaart: rand weg, schaduw + 4px oranje top, links uitgelijnd, zichtbare labels */
+.tr-hero-form .tr-quickform { margin: 0; max-width: none; position: relative; border: none; border-radius: var(--tr-r-card); padding: 30px 28px 24px; box-shadow: 0 24px 56px -20px rgba(10,22,40,0.55), 0 2px 8px rgba(10,22,40,0.18); overflow: hidden; }
+.tr-hero-form .tr-quickform::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: ${ORANGE}; }
+.tr-hero-form .tr-quickform h3 { text-align: left; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 8px; text-wrap: balance; }
+.tr-qf-note { font-size: 14px; line-height: 1.55; color: #525b6b; margin: 0 0 18px; }
+.tr-hero-form .tr-qf-grid { grid-template-columns: 1fr; gap: 14px; }
+.tr-qf-field label { display: block; font-family: var(--font-display); font-size: 13px; font-weight: 600; color: #41495a; margin: 0 0 6px; }
+.tr-hero-form .tr-qf-grid input { height: 52px; padding: 0 16px; font-size: 16px; border: 1px solid #cfd5dd; }
+.tr-hero-form .tr-qf-grid .tr-btn { height: auto; min-height: 52px; font-size: 16px; margin-top: 4px; white-space: normal; line-height: 1.25; padding: 13px 12px; }
+.tr-qf-foot { margin: 12px 0 0; text-align: center; font-size: 13.5px; color: #525b6b; }
+.tr-qf-foot a { display: inline-block; padding: 11px 8px; margin: -7px 0; color: ${NAVY}; font-weight: 700; }
+.tr-qf-foot a:hover { color: ${ORANGE}; }
+.tr-qf-proof { margin-top: 18px; padding-top: 16px; border-top: 1px solid #eef0f3; }
+.tr-qf-proof-stars { color: ${GOLD}; font-size: 12px; letter-spacing: 1.5px; margin-bottom: 6px; }
+.tr-qf-proof-q { font-size: 13.5px; line-height: 1.55; color: #454f60; margin: 0; }
+.tr-qf-proof-name { margin-top: 6px; font-family: var(--font-display); font-size: 13px; font-weight: 700; color: ${NAVY}; }
 .tr-quickform.is-success .tr-qf-grid, .tr-quickform.is-success .tr-eyebrow,
-.tr-quickform.is-success h3, .tr-quickform.is-success .tr-qf-error, .tr-quickform.is-success .tr-qf-foot { display: none; }
+.tr-quickform.is-success h3, .tr-quickform.is-success .tr-qf-error, .tr-quickform.is-success .tr-qf-foot,
+.tr-quickform.is-success .tr-qf-note, .tr-quickform.is-success .tr-qf-proof { display: none; }
 .tr-quickform.is-success .tr-qf-thanks { display: block; }
-.tr-hero-testi { max-width: none; margin: 26px 0 0; text-align: left; padding: 18px 0 0; border-top: 1px solid rgba(255,255,255,0.13); }
-.tr-hero-testi-q { font-size: 14.5px; line-height: 1.6; color: rgba(255,255,255,0.8); font-style: italic;
-  display: inline; padding: 0; }
-.tr-hero-testi-name { margin-top: 10px; font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 13.5px; }
+
 @media (max-width: 720px) {
-  .tr-quickform { margin: -52px 20px 0; padding: 26px 22px 28px; }
-  .tr-quickform h3 { font-size: 21px; margin-bottom: 18px; }
-  .tr-qf-grid { grid-template-columns: 1fr; gap: 11px; }
-  .tr-hero-testi { margin-top: 26px; }
+  .tr-hero { display: block; min-height: 0; }
+  .tr-hero-inner { padding: 32px 0 64px; text-align: left; }
+  .tr-hero-trust { justify-content: flex-start; font-size: 13px; gap: 6px 10px; }
+  .tr-hero h1 { font-size: 34px; }
+  .tr-hero-sub { margin: 0; }
+  .tr-hero-svc-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
+  .tr-svc-tile { min-height: 42px; font-size: 13px; padding: 9px 12px; }
+  .tr-qf-foot { font-size: 15px; }
+}
+@media (max-width: 1023px) {
+  .tr-hero-bg::after { background: linear-gradient(180deg, rgba(10,22,40,0.84) 0%, rgba(10,22,40,0.7) 42%, rgba(10,22,40,0.88) 100%); }
+}
+@media (min-width: 721px) and (max-width: 1023px) {
+  .tr-hero-form .tr-quickform { max-width: 480px; }
 }
 
 /* 5 — THREE STEPS (orange-bordered box) */
@@ -320,7 +337,7 @@ const LP_CSS = `
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23525b6b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
 .tr-final-card select:invalid { color: #8a8f98; }
 .tr-final-card input:focus, .tr-final-card textarea:focus, .tr-final-card select:focus { outline: none; border-color: ${ORANGE};
-  box-shadow: 0 0 0 3px rgba(10,22,40,0.14); background-color: #fff; }
+  box-shadow: 0 0 0 3px rgba(217,140,3,0.16); background-color: #fff; }
 .tr-final-card textarea { min-height: 92px; resize: vertical; }
 .tr-final-card .tr-btn { margin-top: 4px; width: 100%; }
 .tr-final-err { display: none; margin-top: 10px; font-size: 13.5px; color: #b3261e; background: #fdecea;
@@ -374,6 +391,7 @@ const LP_CSS = `
 /* ── Inline SVG icon set (no external deps) ─────────────────────────────── */
 const icPhone = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`;
 const icCheck = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+const icCheck15 = icCheck.replace('width="20" height="20"','width="15" height="15"');
 const icShield = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`;
 const icPin = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`;
 const icCheckBig = `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
@@ -394,8 +412,8 @@ const HTML = `
   <div class="tr-topbar">
     <div class="tr-wrap">
       <div class="tr-topbar-left">
-        <span>Gratis dakinspectie binnen 5 werkdagen</span>
-        <span>Erkend dakwerker</span>
+        <span>Gratis dakinspectie, meestal binnen 5 werkdagen</span>
+        <span>10 jaar garantie</span>
       </div>
       <a class="tr-topbar-phone" href="${PHONE_HREF}">${icPhone}${PHONE}</a>
     </div>
@@ -416,7 +434,7 @@ const HTML = `
           <span class="tr-rating-score">4,9/5</span>
           <span class="tr-rating-stars">${stars}</span>
         </div>
-        <a class="tr-btn tr-headcta" href="#contact" style="padding:12px 22px;font-size:14px;">Gratis offerte</a>
+        <a class="tr-btn tr-headcta" href="#lp-form" style="padding:12px 22px;font-size:14px;">Gratis dakinspectie</a>
         <a class="tr-headphone" href="${PHONE_HREF}" aria-label="Bel ons">${icPhone}<span class="tr-headphone-num">${PHONE}</span></a>
         <button type="button" class="tr-burger" data-menu-toggle aria-label="Menu" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -431,7 +449,7 @@ const HTML = `
       <a href="#reviews">Reviews</a>
       <a href="#faq">Veelgestelde vragen</a>
       <a href="#contact">Contact</a>
-      <a class="tr-btn tr-mobmenu-cta" href="#contact">Offerte aanvragen</a>
+      <a class="tr-btn tr-mobmenu-cta" href="#lp-form">Plan gratis dakinspectie</a>
     </nav>
   </header>
 
@@ -448,37 +466,45 @@ const HTML = `
               <span>124+ daken vernieuwd</span><span class="tr-hero-trust-dot">·</span>
               <span>Sinds 2010</span>
             </div>
-            <h1>Dakproblemen of renovatieplannen? Wij regelen het.</h1>
-            <p class="tr-hero-sub">Van daklek en herstelling tot dakisolatie en een volledig nieuw dak: één vast aanspreekpunt, overal in Vlaanderen. We starten met een gratis dakinspectie met fotorapport.</p>
-            <div class="tr-certs">
-              <span class="tr-cert-pill">${icShield}VCA* gecertificeerd</span>
-              <span class="tr-cert-pill">${icCheck.replace('width="20" height="20"','width="15" height="15"')}Lid Bouwunie</span>
-              <span class="tr-cert-pill">${icShield}Verzekerd via Federale</span>
+            <h1>Dakproblemen of renovatieplannen? <span class="tr-h1-accent">Wij regelen het.</span></h1>
+            <p class="tr-hero-sub">Eén vast aanspreekpunt voor uw dak, overal in Vlaanderen. Wij noemen pas een prijs als we <b>op uw dak gestaan hebben</b>.</p>
+          </div>
+          <div class="tr-hero-svc">
+            <span class="tr-hero-svc-label">Onze dakdiensten</span>
+            <div class="tr-hero-svc-grid">
+              <span class="tr-svc-tile">${icCheck15}Dakrenovatie</span>
+              <span class="tr-svc-tile">${icCheck15}Nieuw dak</span>
+              <span class="tr-svc-tile">${icCheck15}Dakisolatie</span>
+              <span class="tr-svc-tile">${icCheck15}Herstellingen</span>
+              <span class="tr-svc-tile">${icCheck15}Plat dak (EPDM)</span>
+              <span class="tr-svc-tile">${icCheck15}Velux dakramen</span>
             </div>
-            <div class="tr-hero-testi">
-              <span class="tr-hero-testi-q">Onze rijwoning had nog het dak van 1962, het lekte op drie plaatsen. Maandag gestript, vrijdag lag het nieuwe dak erop. Sindsdien geen druppel meer binnen.</span>
-              <div class="tr-hero-testi-name">Stijn D., Mechelen</div>
-            </div>
+            <div class="tr-hero-svc-certs">${icShield}<span>VCA* gecertificeerd</span><span class="tr-hero-trust-dot">·</span><span>Lid Bouwunie</span><span class="tr-hero-trust-dot">·</span><span>Verzekerd via Federale</span></div>
           </div>
           <aside class="tr-hero-form">
             <div class="tr-quickform" id="lp-form" data-lp-quick>
-              <span class="tr-eyebrow">Vrijblijvend</span>
               <h3>Gratis dakinspectie met fotorapport</h3>
+              <p class="tr-qf-note">Vrijblijvend. We bellen u binnen één werkdag terug om de inspectie in te plannen.</p>
               <form data-lp-quick-form novalidate>
                 <div class="tr-qf-grid">
-                  <input type="text" name="firstName" placeholder="Voornaam *" autocomplete="given-name" required />
-                  <input type="tel" name="phone" placeholder="Telefoonnummer *" autocomplete="tel" required />
+                  <div class="tr-qf-field"><label for="qf-name">Voornaam</label><input id="qf-name" type="text" name="firstName" placeholder="bv. Jan" autocomplete="given-name" required /></div>
+                  <div class="tr-qf-field"><label for="qf-phone">Telefoonnummer</label><input id="qf-phone" type="tel" name="phone" placeholder="bv. 0470 12 34 56" autocomplete="tel" required /></div>
                   <button type="submit" class="tr-btn" data-lp-quick-submit>
-                    <span data-lp-quick-submit-label>Bel mij terug</span>
+                    <span data-lp-quick-submit-label>Plan mijn gratis dakinspectie</span>
                   </button>
                 </div>
               </form>
               <div class="tr-qf-error" data-lp-quick-error hidden></div>
               <p class="tr-qf-foot"><a href="${PHONE_HREF}">Daklek? Bel direct ${PHONE}</a></p>
+              <div class="tr-qf-proof">
+                <div class="tr-qf-proof-stars">★★★★★</div>
+                <p class="tr-qf-proof-q">“Maandag gestript, vrijdag lag het nieuwe dak erop. Sindsdien geen druppel meer binnen.”</p>
+                <div class="tr-qf-proof-name">Stijn D., Mechelen</div>
+              </div>
               <div class="tr-qf-thanks">
                 <div class="tr-qf-thanks-ic">${icCheck.replace('width="20" height="20"','width="26" height="26"')}</div>
                 <h4>Bedankt, uw aanvraag is ontvangen.</h4>
-                <p>We bellen u zo snel mogelijk terug voor uw gratis dakinspectie.</p>
+                <p>We bellen u binnen één werkdag om uw gratis dakinspectie in te plannen.</p>
               </div>
             </div>
           </aside>
@@ -593,7 +619,7 @@ const HTML = `
             <li>${icCheck}<span>6% btw waar het kan, plus premie-advies</span></li>
             <li>${icCheck}<span>Ook voor herstellingen en onderhoud</span></li>
           </ul>
-          <div class="tr-urgency">Gratis plaatsbezoek, meestal binnen 5 werkdagen.</div>
+          <div class="tr-urgency">Gratis dakinspectie, meestal binnen 5 werkdagen.</div>
         </div>
       </div>
     </div>
@@ -649,7 +675,7 @@ const HTML = `
     <div class="tr-wrap">
       <div class="tr-faq-box">
         <h2>Veelgestelde vragen</h2>
-        <details class="tr-faq-item"><summary>Wat kost een nieuw dak?</summary><p>Dat hangt af van de oppervlakte, het type dak en de staat van de constructie. Na een gratis plaatsbezoek krijgt u een bindende prijs op papier.</p></details>
+        <details class="tr-faq-item"><summary>Wat kost een nieuw dak?</summary><p>Dat hangt af van de oppervlakte, het type dak en de staat van de constructie. Na een gratis dakinspectie krijgt u een bindende prijs op papier.</p></details>
         <details class="tr-faq-item"><summary>Hoe lang duurt de plaatsing?</summary><p>Een gemiddeld hellend dak ligt waterdicht in 1 tot 2 weken. U krijgt een concrete startdatum in de offerte.</p></details>
         <details class="tr-faq-item"><summary>Doen jullie de premieaanvraag voor mij?</summary><p>Wij bekijken voor welke voordelen u in aanmerking komt: het 6% BTW-tarief (voor woningen ouder dan 10 jaar) en de Mijn VerbouwLening. Behoort u tot de juiste inkomenscategorie, dan regelen wij ook uw Mijn VerbouwPremie-dossier.</p></details>
         <details class="tr-faq-item"><summary>Wat is jullie garantie?</summary><p>10 jaar op waterdichtheid, plus fabrieksgarantie op de materialen (Koramic, Eternit, Firestone).</p></details>
@@ -696,7 +722,7 @@ const HTML = `
           <div class="tr-final-err" data-lp-form-error></div>
           <div class="tr-final-thanks">
             <h4>Bedankt, uw aanvraag is ontvangen.</h4>
-            <p>We nemen zo snel mogelijk contact met u op.</p>
+            <p>We bellen u binnen één werkdag terug.</p>
           </div>
         </div>
         <div class="tr-final-testi">
@@ -743,16 +769,19 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
       }
       // Mobiel menu: openen/sluiten
       if (target.closest('[data-menu-toggle]')) {
-        document.body.classList.toggle('tr-menu-open');
+        const open = document.body.classList.toggle('tr-menu-open');
+        document.querySelector('.tr-burger')?.setAttribute('aria-expanded', String(open));
         return;
       }
       if (target.closest('[data-menu-close]')) {
         document.body.classList.remove('tr-menu-open');
+        document.querySelector('.tr-burger')?.setAttribute('aria-expanded', 'false');
         return;
       }
       // Klik op een menu-link → menu sluiten (anchor-scroll laat doorgaan)
       if (target.closest('.tr-mobmenu a')) {
         document.body.classList.remove('tr-menu-open');
+        document.querySelector('.tr-burger')?.setAttribute('aria-expanded', 'false');
       }
     };
     document.addEventListener('click', handler);
@@ -766,13 +795,13 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
     const pageUrl = local ? `https://abgroep.be/lokaal/dakwerker-${local.slug}` : 'https://abgroep.be/lp/dakwerken';
     const canonicalUrl = local ? pageUrl : 'https://abgroep.be/dakwerken';
     document.title = local
-      ? `Dakwerker ${local.name} — Pannen, Plat dak EPDM, Sarkingisolatie | AB Bouw Groep`
-      : 'Dakwerker Mechelen & Antwerpen — Pannen, Plat dak, EPDM, Isolatie | AB Bouw Groep';
+      ? `Dakwerker ${local.name}: pannen, plat dak EPDM, sarkingisolatie | AB Bouw Groep`
+      : 'Dakwerker Mechelen & Antwerpen: pannen, plat dak, EPDM, isolatie | AB Bouw Groep';
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', local
-      ? `Erkend dakwerker in ${local.name} (${local.postcode}). Pannendak Koramic, plat dak EPDM, sarkingisolatie, zinkwerk en natuurleien. Vaste prijs op papier, 10 jaar garantie op waterdichtheid via Federale Verzekering, 6% BTW-voordeel. Gratis dakinspectie binnen 5 werkdagen.`
-      : 'Erkend dakwerker in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Pannendak, plat dak EPDM, sarking-isolatie, zinkwerk. Vaste prijs op papier, 10 jaar garantie op waterdichtheid via Federale Verzekering, 6% BTW-voordeel. Gratis dakinspectie binnen 5 werkdagen.');
+      ? `Erkend dakwerker in ${local.name} (${local.postcode}). Pannendak Koramic, plat dak EPDM, sarkingisolatie, zinkwerk en natuurleien. Vaste prijs op papier, 10 jaar garantie op waterdichtheid via Federale Verzekering, 6% BTW-voordeel. Gratis dakinspectie, meestal binnen 5 werkdagen.`
+      : 'Erkend dakwerker in Mechelen, Antwerpen, Lier, Bornem, Sint-Niklaas. Pannendak, plat dak EPDM, sarking-isolatie, zinkwerk. Vaste prijs op papier, 10 jaar garantie op waterdichtheid via Federale Verzekering, 6% BTW-voordeel. Gratis dakinspectie, meestal binnen 5 werkdagen.');
 
     // Open Graph + Twitter
     const setMeta = (prop: string, content: string, isProperty = false) => {
@@ -782,8 +811,8 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
       el.setAttribute('content', content);
     };
     setMeta('og:title', local
-      ? `Dakwerker ${local.name} — Gratis dakinspectie | AB Bouw Groep`
-      : 'Dakwerker Mechelen & Antwerpen — Gratis dakinspectie | AB Bouw Groep', true);
+      ? `Dakwerker ${local.name}: gratis dakinspectie | AB Bouw Groep`
+      : 'Dakwerker Mechelen & Antwerpen: gratis dakinspectie | AB Bouw Groep', true);
     setMeta('og:description', local
       ? `Pannendak, plat dak EPDM en dakisolatie in ${local.name}. Vaste prijs op papier, 10j garantie op waterdichtheid, 6% BTW-voordeel.`
       : 'Nieuw dak, plat dak EPDM, dakisolatie. Vaste prijs op papier, 10j garantie op waterdichtheid, 6% BTW-voordeel.', true);
@@ -852,14 +881,14 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
         },
         {
           '@type': 'Service',
-          name: 'Dakwerken — pannen, plat dak EPDM, dakisolatie',
+          name: 'Dakwerken: pannen, plat dak EPDM, dakisolatie',
           provider: { '@id': 'https://abgroep.be/#organization' },
           areaServed: 'Vlaanderen',
         },
         {
           '@type': 'FAQPage',
           mainEntity: [
-            { '@type': 'Question', name: 'Wat kost een nieuw dak?', acceptedAnswer: { '@type': 'Answer', text: 'Dat hangt af van de oppervlakte, het type dak en de staat van de constructie. Na een gratis plaatsbezoek krijgt u een bindende prijs op papier.' } },
+            { '@type': 'Question', name: 'Wat kost een nieuw dak?', acceptedAnswer: { '@type': 'Answer', text: 'Dat hangt af van de oppervlakte, het type dak en de staat van de constructie. Na een gratis dakinspectie krijgt u een bindende prijs op papier.' } },
             { '@type': 'Question', name: 'Hoe lang duurt de plaatsing?', acceptedAnswer: { '@type': 'Answer', text: 'Een gemiddeld hellend dak ligt waterdicht in 1 tot 2 weken. U krijgt een concrete startdatum in de offerte.' } },
             { '@type': 'Question', name: 'Doen jullie de premieaanvraag voor mij?', acceptedAnswer: { '@type': 'Answer', text: 'Wij bekijken voor welke voordelen u in aanmerking komt: het 6% BTW-tarief (voor woningen ouder dan 10 jaar) en de Mijn VerbouwLening. Behoort u tot de juiste inkomenscategorie, dan regelen wij ook uw Mijn VerbouwPremie-dossier.' } },
             { '@type': 'Question', name: 'Wat is jullie garantie?', acceptedAnswer: { '@type': 'Answer', text: '10 jaar op waterdichtheid, plus fabrieksgarantie op de materialen (Koramic, Eternit, Firestone).' } },
@@ -984,7 +1013,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
         quickWrap?.classList.add('is-success');
       } else {
         if (quickBtn) quickBtn.disabled = false;
-        if (quickBtnLabel) quickBtnLabel.textContent = 'Bel mij terug';
+        if (quickBtnLabel) quickBtnLabel.textContent = 'Plan mijn gratis dakinspectie';
         showError(`Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced}.`);
       }
     };
@@ -1006,8 +1035,8 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
 
   const renderedHtml = local
     ? HTML.replace(
-        '<span>Erkend dakwerker</span>',
-        `<span>Erkend dakwerker in ${local.name}</span>`,
+        'voor uw dak, overal in Vlaanderen',
+        `voor uw dak in ${local.name} en omgeving`,
       )
     : HTML;
 

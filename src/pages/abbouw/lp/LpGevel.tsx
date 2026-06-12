@@ -159,7 +159,7 @@ const LP_CSS = `
 .tr-qf-grid input::placeholder { color: #8a8f98; }
 .tr-qf-grid input:focus { outline: none; border-color: ${ORANGE}; box-shadow: 0 0 0 3px rgba(217,140,3,0.16); background: #fff; }
 .tr-qf-grid .tr-btn { white-space: nowrap; }
-.tr-qf-error { display: none; margin-top: 12px; font-size: 13.5px; color: #b3261e; background: #fdecea;
+.tr-qf-error { margin-top: 12px; font-size: 13.5px; color: #b3261e; background: #fdecea;
   border: 1px solid rgba(179,38,30,0.2); border-radius: var(--tr-r-ui); padding: 9px 12px; }
 .tr-qf-thanks { display: none; text-align: center; padding: 16px 0 6px; }
 .tr-qf-thanks-ic { width: 54px; height: 54px; border-radius: 50%; background: #eef1f5; color: ${NAVY};
