@@ -16,6 +16,7 @@ import imgPlatDak from '@/assets/dak/lp-platdak-1.jpg';
 import imgZinkGoot from '@/assets/dak/lp-zink-goot.jpg';
 import imgComfort from '@/assets/dak/lp-isol-sarking.jpg';
 import imgOnderhoud from '@/assets/dak/lp-dakonderhoud.jpg';
+import imgStappen from '@/assets/dak/lp-stappen-dakwerker.jpg';
 import { initRealisatieLightbox } from './_lightbox';
 import { initLpReveal } from './_reveal';
 import { initLpCallFab } from './_fab';
@@ -219,16 +220,20 @@ const LP_CSS = `
   .tr-hero-form .tr-quickform { max-width: 480px; }
 }
 
-/* 5 — THREE STEPS (orange-bordered box) */
+/* 5 — THREE STEPS + foto (foto naast stappen op desktop, boven op mobiel) */
 .tr-steps-box { padding: clamp(8px, 2vw, 28px) 0 0; max-width: 1040px; margin: 0 auto; }
-.tr-steps-box h2 { text-align: left; max-width: 22ch; font-size: clamp(26px, 3vw, 36px); color: ${NAVY}; font-weight: 700; margin: 0 0 clamp(40px, 4vw, 56px); }
-.tr-steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(36px, 4.5vw, 64px); }
+.tr-steps-box h2 { text-align: left; max-width: 22ch; font-size: clamp(26px, 3vw, 36px); color: ${NAVY}; font-weight: 700; margin: 0 0 clamp(32px, 3.5vw, 48px); }
+.tr-steps-layout { display: grid; grid-template-columns: 1fr; gap: clamp(28px, 4vw, 44px); align-items: center; }
+.tr-steps-photo { border-radius: var(--tr-r-card); overflow: hidden; box-shadow: 0 30px 60px -30px rgba(10,22,40,0.35); }
+.tr-steps-photo img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+.tr-steps-list { display: grid; gap: clamp(22px, 2.6vw, 30px); }
 .tr-step { text-align: left; }
-.tr-step-num { font-family: var(--font-display); font-size: 40px; font-weight: 700; line-height: 1; color: ${NAVY}; margin: 0 auto 16px; letter-spacing: -0.03em; position: relative; display: inline-block; padding-bottom: 12px; }
+.tr-step-num { font-family: var(--font-display); font-size: 40px; font-weight: 700; line-height: 1; color: ${NAVY}; margin: 0 auto 14px; letter-spacing: -0.03em; position: relative; display: inline-block; padding-bottom: 12px; }
 .tr-step-num::after { content: ""; position: absolute; left: 0; bottom: 0; transform: none; width: 24px; height: 3px; background: ${ORANGE}; border-radius: 2px; }
 .tr-step h3 { font-size: 20px; color: ${NAVY}; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 10px; }
 .tr-step p { font-size: 15px; line-height: 1.62; color: #454f60; margin: 0; }
-@media (max-width: 820px) { .tr-steps-grid { grid-template-columns: 1fr; gap: 30px; } .tr-steps-box { padding: 34px 22px 38px; } }
+@media (min-width: 860px) { .tr-steps-layout { grid-template-columns: minmax(0, 432px) 1fr; gap: clamp(44px, 5vw, 72px); } }
+@media (max-width: 859px) { .tr-steps-box { padding: 34px 22px 38px; } }
 
 /* 6 — ABOUT / CERTIFIED */
 .tr-about-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
@@ -518,21 +523,26 @@ const HTML = `
     <div class="tr-wrap">
       <div class="tr-steps-box">
         <h2>In 3 stappen naar uw nieuwe dak</h2>
-        <div class="tr-steps-grid">
-          <div class="tr-step">
-            <div class="tr-step-num">01</div>
-            <h3>Plan uw gratis dakinspectie</h3>
-            <p>Kies een moment dat past. Wij bekijken uw dak ter plaatse en u ontvangt een fotorapport van wat we vinden.</p>
+        <div class="tr-steps-layout">
+          <div class="tr-steps-photo">
+            <img src="${imgStappen}" alt="Dakdekker legt nieuwe dakpannen tijdens een dakrenovatie" loading="lazy" width="860" height="860" />
           </div>
-          <div class="tr-step">
-            <div class="tr-step-num">02</div>
-            <h3>Ontvang uw vaste prijs-offerte</h3>
-            <p>U krijgt heldere opties, materiaalkeuze en een bindende prijs. In de offerte ziet u per post wat er gebeurt en waarom.</p>
-          </div>
-          <div class="tr-step">
-            <div class="tr-step-num">03</div>
-            <h3>Zorgeloze plaatsing van begin tot eind</h3>
-            <p>Wij voeren alles uit, van het strippen tot de afwerking. Strak, proper, op een afgesproken startdatum.</p>
+          <div class="tr-steps-list">
+            <div class="tr-step">
+              <div class="tr-step-num">01</div>
+              <h3>Plan uw gratis dakinspectie</h3>
+              <p>Kies een moment dat past. Wij bekijken uw dak ter plaatse en u ontvangt een fotorapport van wat we vinden.</p>
+            </div>
+            <div class="tr-step">
+              <div class="tr-step-num">02</div>
+              <h3>Ontvang uw vaste prijs-offerte</h3>
+              <p>U krijgt heldere opties, materiaalkeuze en een bindende prijs. In de offerte ziet u per post wat er gebeurt en waarom.</p>
+            </div>
+            <div class="tr-step">
+              <div class="tr-step-num">03</div>
+              <h3>Zorgeloze plaatsing van begin tot eind</h3>
+              <p>Wij voeren alles uit, van het strippen tot de afwerking. Strak, proper, op een afgesproken startdatum.</p>
+            </div>
           </div>
         </div>
       </div>
