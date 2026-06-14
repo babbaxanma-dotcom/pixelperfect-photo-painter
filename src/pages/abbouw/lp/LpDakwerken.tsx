@@ -203,6 +203,50 @@ const LP_CSS = `
 .tr-quickform.is-success .tr-qf-note, .tr-quickform.is-success .tr-qf-proof { display: none; }
 .tr-quickform.is-success .tr-qf-thanks { display: block; }
 
+/* lead-card: klembord-keuze-stack (3 rijen), AB-sober, scoped onder .tr-hero-form */
+.tr-hero-form .tr-quickform.tr-leadcard { padding: 0; overflow: hidden; }
+.tr-leadcard .tr-lc-ic { flex-shrink: 0; width: 44px; height: 44px; border-radius: var(--tr-r-ui); display: inline-flex; align-items: center; justify-content: center; }
+.tr-leadcard .tr-lc-ic svg { display: block; }
+.tr-leadcard .tr-lc-txt { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.tr-leadcard .tr-lc-title { font-family: var(--font-display); font-size: 16px; font-weight: 700; line-height: 1.22; letter-spacing: -0.015em; color: ${NAVY}; }
+.tr-leadcard .tr-lc-sub { font-size: 13px; line-height: 1.45; color: #525b6b; }
+/* RIJ 1 — primair (formulier): oranje icoon-tegel = climax-markering, lichte navy-tint */
+.tr-lc-row--primary { background: #f7f9fc; border-bottom: 1px solid #e7e4dd; padding: 24px 26px 22px; }
+.tr-lc-head { display: flex; align-items: flex-start; gap: 14px; margin: 0 0 16px; }
+.tr-lc-row--primary .tr-lc-ic--accent { background: rgba(217,140,3,0.12); color: ${ORANGE_H}; border: 1px solid rgba(217,140,3,0.28); }
+.tr-lc-row--primary .tr-lc-title { font-size: 18px; line-height: 1.18; }
+.tr-lc-row--primary .tr-qf-grid { grid-template-columns: 1fr; gap: 12px; }
+.tr-lc-row--primary .tr-qf-field label { display: block; font-family: var(--font-display); font-size: 13px; font-weight: 600; color: #41495a; margin: 0 0 6px; }
+.tr-lc-row--primary .tr-qf-grid input { height: 52px; padding: 0 16px; font-size: 16px; border: 1px solid #cfd5dd; background: #fff; }
+.tr-lc-row--primary .tr-qf-grid input:focus { border-color: ${ORANGE}; box-shadow: 0 0 0 3px rgba(217,140,3,0.16); }
+.tr-lc-row--primary .tr-qf-grid .tr-btn { min-height: 52px; font-size: 16px; margin-top: 2px; white-space: normal; line-height: 1.25; padding: 13px 14px; width: 100%; }
+.tr-lc-row--primary .tr-qf-error { margin: 12px 0 0; }
+.tr-lc-proof { margin-top: 16px; padding-top: 14px; border-top: 1px solid #eef0f3; }
+.tr-lc-proof-stars { color: ${GOLD}; font-size: 12px; letter-spacing: 1.5px; margin-bottom: 6px; }
+.tr-lc-proof-q { font-size: 13.5px; line-height: 1.55; color: #454f60; margin: 0; }
+.tr-lc-proof-name { margin-top: 6px; font-family: var(--font-display); font-size: 13px; font-weight: 700; color: ${NAVY}; }
+/* "Of"-scheiding tussen aanbod en alternatieve contactwegen */
+.tr-lc-or { display: flex; align-items: center; gap: 14px; padding: 14px 26px 4px; }
+.tr-lc-or::before, .tr-lc-or::after { content: ''; height: 1px; background: #ece9e1; flex: 1; }
+.tr-lc-or span { font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #8a8f98; }
+/* RIJ 2 & 3 — secundair (klembord-rijen, navy/wit + goud-omrande tegel) */
+.tr-lc-row--alt { display: flex; align-items: center; gap: 14px; padding: 14px 26px; min-height: 60px; text-decoration: none; border-top: 1px solid #f0eee7; -webkit-tap-highlight-color: transparent; transition: background-color .16s ease; }
+.tr-lc-row--alt:first-of-type { border-top: none; }
+.tr-lc-row--alt .tr-lc-ic { background: #fff; color: ${NAVY}; border: 1px solid rgba(198,154,75,0.40); box-shadow: 0 1px 2px rgba(10,22,40,0.06); }
+.tr-lc-row--alt .tr-lc-title { font-size: 15.5px; }
+.tr-lc-chev { flex-shrink: 0; margin-left: auto; color: #8a8f98; display: inline-flex; align-items: center; transition: color .16s ease, transform .16s ease; }
+@media (hover: hover) {
+  .tr-lc-row--alt:hover { background: #f7f9fc; }
+  .tr-lc-row--alt:hover .tr-lc-chev { color: ${NAVY}; transform: translateX(2px); }
+}
+.tr-lc-row--alt:active { background: #f1f3f7; }
+.tr-lc-row--alt:focus-visible { outline: none; box-shadow: inset 0 0 0 2px ${GOLD}; }
+/* succes-state: verberg rijen + scheiding; toon enkel thanks */
+.tr-quickform.is-success .tr-lc-row--primary,
+.tr-quickform.is-success .tr-lc-or,
+.tr-quickform.is-success .tr-lc-row--alt { display: none; }
+.tr-quickform.tr-leadcard.is-success .tr-qf-thanks { display: block; padding: 26px 26px 24px; }
+
 @media (max-width: 720px) {
   .tr-hero { display: block; min-height: 0; }
   .tr-hero-inner { padding: 32px 0 64px; text-align: left; }
@@ -211,7 +255,15 @@ const LP_CSS = `
   .tr-hero-sub { margin: 0; }
   .tr-hero-svc-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
   .tr-svc-tile { min-height: 42px; font-size: 13px; padding: 9px 12px; }
-  .tr-qf-foot { font-size: 15px; }
+  .tr-lc-row--primary { padding: 22px 20px 20px; }
+  .tr-lc-or { padding: 12px 20px 4px; }
+  .tr-lc-row--alt { padding: 13px 20px; min-height: 58px; }
+  .tr-hero-form .tr-quickform.tr-leadcard.is-success .tr-qf-thanks { padding: 24px 20px 22px; }
+}
+@media (max-width: 360px) {
+  .tr-lc-row--primary { padding: 20px 16px 18px; }
+  .tr-lc-or { padding: 12px 16px 4px; }
+  .tr-lc-row--alt { padding: 12px 16px; gap: 12px; }
 }
 @media (max-width: 1023px) {
   .tr-hero-bg::after { background: linear-gradient(180deg, rgba(10,22,40,0.84) 0%, rgba(10,22,40,0.7) 42%, rgba(10,22,40,0.88) 100%); }
@@ -400,6 +452,10 @@ const icCheck15 = icCheck.replace('width="20" height="20"','width="15" height="1
 const icShield = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`;
 const icPin = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`;
 const icCheckBig = `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+const icDoc = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>`;
+const icCalc = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="8" y2="11"/><line x1="12" y1="11" x2="12" y2="11"/><line x1="16" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="8" y2="15"/><line x1="12" y1="15" x2="12" y2="15"/><line x1="16" y1="15" x2="16" y2="19"/></svg>`;
+const icChevron = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`;
+const icPhoneRow = icPhone.replace('width="15" height="15"','width="18" height="18"');
 const stars = '★★★★★';
 
 const PHONE = CONTACT.phone.spaced;
@@ -487,25 +543,58 @@ const HTML = `
             <div class="tr-hero-svc-certs">${icShield}<span>VCA* gecertificeerd</span><span class="tr-hero-trust-dot">·</span><span>Lid Bouwunie</span><span class="tr-hero-trust-dot">·</span><span>Verzekerd via Federale</span></div>
           </div>
           <aside class="tr-hero-form">
-            <div class="tr-quickform" id="lp-form" data-lp-quick>
-              <h3>Gratis dakinspectie met fotorapport</h3>
-              <p class="tr-qf-note">Vrijblijvend. We bellen u binnen één werkdag terug om de inspectie in te plannen.</p>
-              <form data-lp-quick-form novalidate>
-                <div class="tr-qf-grid">
-                  <div class="tr-qf-field"><label for="qf-name">Voornaam</label><input id="qf-name" type="text" name="firstName" placeholder="bv. Jan" autocomplete="given-name" required /></div>
-                  <div class="tr-qf-field"><label for="qf-phone">Telefoonnummer</label><input id="qf-phone" type="tel" name="phone" placeholder="bv. 0470 12 34 56" autocomplete="tel" required /></div>
-                  <button type="submit" class="tr-btn" data-lp-quick-submit>
-                    <span data-lp-quick-submit-label>Plan mijn gratis dakinspectie</span>
-                  </button>
+            <div class="tr-quickform tr-leadcard" id="lp-form" data-lp-quick>
+
+              <!-- RIJ 1 — PRIMAIR: gratis dakinspectie = het echte 2-velden-formulier, opgemaakt als klembord-hoofdrij -->
+              <div class="tr-lc-row tr-lc-row--primary">
+                <div class="tr-lc-head">
+                  <span class="tr-lc-ic tr-lc-ic--accent" aria-hidden="true">${icDoc}</span>
+                  <span class="tr-lc-txt">
+                    <span class="tr-lc-title">Gratis dakinspectie met fotorapport</span>
+                    <span class="tr-lc-sub">Vrijblijvend. We bellen u binnen één werkdag terug om de inspectie in te plannen.</span>
+                  </span>
                 </div>
-              </form>
-              <div class="tr-qf-error" data-lp-quick-error hidden></div>
-              <p class="tr-qf-foot"><a href="${PHONE_HREF}">Daklek? Bel direct ${PHONE}</a></p>
-              <div class="tr-qf-proof">
-                <div class="tr-qf-proof-stars">★★★★★</div>
-                <p class="tr-qf-proof-q">“Maandag gestript, vrijdag lag het nieuwe dak erop. Sindsdien geen druppel meer binnen.”</p>
-                <div class="tr-qf-proof-name">Stijn D., Mechelen</div>
+                <form data-lp-quick-form novalidate>
+                  <div class="tr-qf-grid">
+                    <div class="tr-qf-field"><label for="qf-name">Voornaam</label><input id="qf-name" type="text" name="firstName" placeholder="bv. Jan" autocomplete="given-name" required /></div>
+                    <div class="tr-qf-field"><label for="qf-phone">Telefoonnummer</label><input id="qf-phone" type="tel" name="phone" placeholder="bv. 0470 12 34 56" autocomplete="tel" required /></div>
+                    <button type="submit" class="tr-btn" data-lp-quick-submit>
+                      <span data-lp-quick-submit-label>Plan mijn gratis dakinspectie</span>
+                    </button>
+                  </div>
+                </form>
+                <div class="tr-qf-error" data-lp-quick-error hidden></div>
+                <div class="tr-lc-proof">
+                  <div class="tr-lc-proof-stars">★★★★★</div>
+                  <p class="tr-lc-proof-q">“Maandag gestript, vrijdag lag het nieuwe dak erop. Sindsdien geen druppel meer binnen.”</p>
+                  <div class="tr-lc-proof-name">Stijn D., Mechelen</div>
+                </div>
               </div>
+
+              <!-- SCHEIDING -->
+              <div class="tr-lc-or"><span>Of</span></div>
+
+              <!-- RIJ 2 — SECUNDAIR: calculator (opent CalculatorDak-modal via data-calc-trigger) -->
+              <a class="tr-lc-row tr-lc-row--alt" href="#" data-calc-trigger role="button">
+                <span class="tr-lc-ic" aria-hidden="true">${icCalc}</span>
+                <span class="tr-lc-txt">
+                  <span class="tr-lc-title">Bereken uw prijs</span>
+                  <span class="tr-lc-sub">Meteen een prijsindicatie via onze calculator</span>
+                </span>
+                <span class="tr-lc-chev" aria-hidden="true">${icChevron}</span>
+              </a>
+
+              <!-- RIJ 3 — SECUNDAIR: bellen (tel-link) -->
+              <a class="tr-lc-row tr-lc-row--alt" href="${PHONE_HREF}">
+                <span class="tr-lc-ic" aria-hidden="true">${icPhoneRow}</span>
+                <span class="tr-lc-txt">
+                  <span class="tr-lc-title">Bel ons direct</span>
+                  <span class="tr-lc-sub">Daklek of haast? ${PHONE}</span>
+                </span>
+                <span class="tr-lc-chev" aria-hidden="true">${icChevron}</span>
+              </a>
+
+              <!-- SUCCES-STATE -->
               <div class="tr-qf-thanks">
                 <div class="tr-qf-thanks-ic">${icCheck.replace('width="20" height="20"','width="26" height="26"')}</div>
                 <h4>Bedankt, uw aanvraag is ontvangen.</h4>
