@@ -551,7 +551,7 @@ const HTML = `
               <span>Sinds 2010</span>
             </div>
             <h1>Dakproblemen of renovatieplannen? <span class="tr-h1-accent">Wij regelen het.</span></h1>
-            <p class="tr-hero-sub">Eén vast aanspreekpunt voor uw dak, overal in Vlaanderen. Wij noemen pas een prijs als we <b>op uw dak gestaan hebben</b>.</p>
+            <p class="tr-hero-sub">Eén vast aanspreekpunt voor uw dak, overal in Vlaanderen.</p>
           </div>
           <div class="tr-hero-svc">
             <span class="tr-hero-svc-label">Onze dakdiensten</span>
