@@ -27,7 +27,7 @@ export type CalcOption = {
 
 export type CalcStep =
   | { id: string; kind: 'cards' | 'rows'; q: string; sub: string; summary: string; options: CalcOption[] }
-  | { id: string; kind: 'slider'; q: string; sub: string; summary: string; min: number; max: number; step: number; def: number; unit: string; tip: string; tag: (v: number) => string };
+  | { id: string; kind: 'slider'; q: string; sub: string; summary: string; min: number; max: number; step: number; def: number; unit: string; tip: string; tag: (v: number) => string; skipLabel?: string };
 
 export type CalcConfig = {
   slug: string;
@@ -128,7 +128,7 @@ export default function CalculatorWizard({ config, onClose }: CalculatorWizardPr
     .map((s) => {
       const v = answers[s.id];
       if (v === undefined || v === '') return null;
-      if (s.kind === 'slider') return { label: s.summary, value: `± ${v} ${s.unit}` };
+      if (s.kind === 'slider') return { label: s.summary, value: v === 'onbekend' ? 'Nog op te meten' : `± ${v} ${s.unit}` };
       const opt = s.options.find((o) => o.key === v);
       return opt ? { label: s.summary, value: opt.label } : null;
     })
@@ -175,7 +175,8 @@ export default function CalculatorWizard({ config, onClose }: CalculatorWizardPr
 
   const renderStep = (s: CalcStep) => {
     if (s.kind === 'slider') {
-      const val = Number(answers[s.id] ?? s.def);
+      const raw = answers[s.id];
+      const val = typeof raw === 'number' ? raw : s.def;
       return (
         <div className="calc-step">
           <h2 className="calc-q">{s.q}</h2>
@@ -196,6 +197,9 @@ export default function CalculatorWizard({ config, onClose }: CalculatorWizardPr
             <button type="button" className="calc-btn-ghost" onClick={back}>← Terug</button>
             <button type="button" className="calc-btn-primary" onClick={next}>Volgende →</button>
           </div>
+          {s.skipLabel && (
+            <button type="button" className="calc-skip" onClick={() => { setAnswer(s.id, 'onbekend'); next(); }}>{s.skipLabel}</button>
+          )}
         </div>
       );
     }
@@ -580,6 +584,8 @@ body.is-calc-page .scroll-progress { display: none !important; }
 .calc-slider::-moz-range-thumb { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); cursor: pointer; box-shadow: 0 4px 12px -2px rgba(217,140,3,0.5); border: 3px solid #fff; }
 .calc-slider-range { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--ink-mute); margin-top: 6px; }
 .calc-tip { background: rgba(217,140,3,0.08); border-left: 3px solid var(--accent); padding: 12px 14px; font-size: 13px; color: var(--ink-soft); line-height: 1.5; border-radius: 0 8px 8px 0; margin-bottom: 20px; }
+.calc-skip { display: block; margin: 12px auto 0; background: none; border: none; color: var(--ink-soft); font-size: 13px; text-decoration: underline; cursor: pointer; padding: 4px; }
+.calc-skip:hover { color: var(--navy); }
 
 .calc-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; gap: 12px; }
 .calc-actions-final { flex-direction: column; gap: 10px; align-items: stretch; }

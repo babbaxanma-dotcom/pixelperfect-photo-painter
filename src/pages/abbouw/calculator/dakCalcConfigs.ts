@@ -16,6 +16,7 @@ import imgIsolSarking from '@/assets/dak/lp-isol-sarking.jpg';
 import imgIsolBalken from '@/assets/dak/lp-isol-2.jpg';
 import imgPlatNieuw from '@/assets/dak/lp-plat-dak.jpg';
 import imgPlatVernieuw from '@/assets/dak/lp-platdak-2.jpg';
+import imgPlatLek from '@/assets/dak/lp-platdak-3.jpg';
 import imgEPDM from '@/assets/dak/plat-epdm.jpg';
 import imgRoofing from '@/assets/dak/lp-roofing-1.jpg';
 
@@ -43,7 +44,7 @@ export const DAK_CALC_CONFIGS: Record<string, CalcConfig> = {
         sub: 'Beide kan. Als erkend Velux-plaatser regelen wij het graag mee.',
         options: [
           { key: 'incl', label: 'Leveren én plaatsen', desc: 'Wij regelen het Velux-raam, plaatsing inbegrepen' },
-          { key: 'eigen', label: 'Ik heb het raam al', desc: 'U levert het raam, wij plaatsen het waterdicht' },
+          { key: 'eigen', label: 'Ik heb het raam al', desc: 'U levert het raam, wij plaatsen het waterdicht — met onze plaatsingsgarantie' },
           { key: 'weet', label: 'Weet ik niet', desc: 'We bespreken het bij de gratis opmeting' },
         ],
       },
@@ -84,7 +85,7 @@ export const DAK_CALC_CONFIGS: Record<string, CalcConfig> = {
         sub: 'Niet zeker? Wij adviseren gratis wat bij uw dak past.',
         options: [
           { key: 'sarking', label: 'Sarking, van buitenaf', desc: 'Buitenop de balken, ideaal bij een dakrenovatie', img: imgIsolSarking },
-          { key: 'balken', label: 'Tussen de balken', desc: 'Als het dak intact blijft, met dampscherm', img: imgIsolBalken },
+          { key: 'balken', label: 'Tussen de balken', desc: 'Van binnenuit, wanneer het dak zelf niet vernieuwd wordt', img: imgIsolBalken },
           { key: 'zolder', label: 'Op de zoldervloer', desc: 'Zolder enkel als opslag? Dan volstaat dit' },
           { key: 'weet', label: 'Weet ik niet', desc: 'Wij adviseren op het gratis plaatsbezoek' },
         ],
@@ -95,6 +96,7 @@ export const DAK_CALC_CONFIGS: Record<string, CalcConfig> = {
         sub: 'Een ruwe schatting volstaat, wij meten exact op.',
         min: 10, max: 300, step: 5, def: 60, unit: 'm²',
         tip: 'Niet zeker van de oppervlakte? <span class="calc-em">Geen probleem</span>, wij meten alles op tijdens de <span class="calc-em">gratis dakinspectie</span>.',
+        skipLabel: 'Weet ik niet, meet maar op',
         tag: (v: number) => v < 40 ? 'Kleine zolder' : v < 100 ? 'Gemiddeld dak' : v < 200 ? 'Groot dak' : 'Zeer groot dak',
       },
       {
@@ -125,22 +127,23 @@ export const DAK_CALC_CONFIGS: Record<string, CalcConfig> = {
         options: [
           { key: 'nieuw', label: 'Nieuw plat dak', desc: 'Voor aanbouw, garage of bijgebouw', img: imgPlatNieuw },
           { key: 'vernieuw', label: 'Bestaand dak vernieuwen', desc: 'Oud plat dak vervangen', img: imgPlatVernieuw },
-          { key: 'lek', label: 'Lek herstellen', desc: 'Plaatselijk nazicht en herstelling' },
+          { key: 'lek', label: 'Lek herstellen', desc: 'Plaatselijk nazicht en herstelling', img: imgPlatLek },
           { key: 'weet', label: 'Weet ik niet', desc: 'Wij adviseren ter plaatse' },
         ],
       },
       {
         id: 'oppervlakte', kind: 'slider', summary: 'Oppervlakte',
         q: 'Hoe groot is het dak?',
-        sub: 'Een ruwe schatting volstaat, wij meten exact op.',
+        sub: 'Een ruwe schatting van het dak volstaat. Bij een lek volstaat de zone rond de lekplek.',
         min: 5, max: 200, step: 5, def: 25, unit: 'm²',
         tip: 'Geen idee van de oppervlakte? <span class="calc-em">Wij meten alles op</span> tijdens het <span class="calc-em">gratis plaatsbezoek</span>.',
+        skipLabel: 'Weet ik niet, meet maar op',
         tag: (v: number) => v < 20 ? 'Klein (garage)' : v < 60 ? 'Gemiddeld dak' : v < 120 ? 'Groot dak' : 'Zeer groot dak',
       },
       {
         id: 'bedekking', kind: 'rows', summary: 'Bedekking',
-        q: 'Welke bedekking?',
-        sub: 'Niet zeker? Wij adviseren eerlijk EPDM of roofing.',
+        q: 'Welke bedekking ligt er nu, of wenst u?',
+        sub: 'Niet zeker? Wij adviseren eerlijk EPDM of roofing, en bekijken het ter plaatse.',
         options: [
           { key: 'epdm', label: 'EPDM (rubber, naadloos)', desc: 'Eén stuk, 40 tot 50 jaar levensduur', img: imgEPDM },
           { key: 'roofing', label: 'Roofing (bitumen)', desc: 'Bewezen en voordeliger, 15 tot 25 jaar', img: imgRoofing },
@@ -153,7 +156,7 @@ export const DAK_CALC_CONFIGS: Record<string, CalcConfig> = {
         sub: 'Bij een nieuw of vernieuwd dak isoleren we volgens de normen.',
         options: [
           { key: 'ja', label: 'Ja, isolatie erbij', desc: 'Geïsoleerd volgens de huidige normen' },
-          { key: 'nee', label: 'Nee, enkel de bedekking', desc: 'De isolatie is al in orde' },
+          { key: 'nee', label: 'Nee, enkel de bedekking of het herstel', desc: 'De isolatie is al in orde' },
           { key: 'weet', label: 'Weet ik niet', desc: 'Wij bekijken de opbouw ter plaatse' },
         ],
       },
