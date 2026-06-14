@@ -232,6 +232,15 @@ const LP_CSS = `
 }
 .tr-lc-row--alt:active { background: #f1f3f7; }
 .tr-lc-row--alt:focus-visible { outline: none; box-shadow: inset 0 0 0 2px ${GOLD}; }
+/* calc-rij: titel + 60-sec-badge + clean opening-staat */
+.tr-lc-title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tr-lc-badge { display: inline-flex; align-items: center; font-family: var(--font-display); font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; line-height: 1; padding: 3px 7px; border-radius: 999px; color: ${ORANGE_H}; background: rgba(217,140,3,0.10); border: 1px solid rgba(198,154,75,0.45); white-space: nowrap; }
+.tr-lc-row--calc { transition: background-color .16s ease, transform .12s ease; }
+.tr-lc-row--calc:active { transform: scale(0.985); }
+.tr-lc-row--calc.is-opening { background: #f7f9fc; }
+.tr-lc-row--calc.is-opening .tr-lc-title { color: ${ORANGE_H}; }
+.tr-lc-row--calc.is-opening .tr-lc-chev { color: ${NAVY}; transform: translateX(3px); }
+@media (max-width: 360px) { .tr-lc-badge { margin-top: 1px; } }
 /* succes-state: verberg rijen + scheiding; toon enkel thanks */
 .tr-quickform.is-success .tr-lc-row--primary,
 .tr-quickform.is-success .tr-lc-or,
@@ -566,11 +575,14 @@ const HTML = `
               <div class="tr-lc-or"><span>Of</span></div>
 
               <!-- RIJ 2 — SECUNDAIR: calculator (opent CalculatorDak-modal via data-calc-trigger) -->
-              <button type="button" class="tr-lc-row tr-lc-row--alt" data-calc-trigger>
+              <button type="button" class="tr-lc-row tr-lc-row--alt tr-lc-row--calc" data-calc-trigger>
                 <span class="tr-lc-ic" aria-hidden="true">${icCalc}</span>
                 <span class="tr-lc-txt">
-                  <span class="tr-lc-title">Bereken uw prijs</span>
-                  <span class="tr-lc-sub">Meteen een prijsindicatie via onze calculator</span>
+                  <span class="tr-lc-title-row">
+                    <span class="tr-lc-title">Bereken mijn offerte</span>
+                    <span class="tr-lc-badge">60 sec</span>
+                  </span>
+                  <span class="tr-lc-sub">Prijsindicatie via onze calculator, klaar in 60 seconden</span>
                 </span>
                 <span class="tr-lc-chev" aria-hidden="true">${icChevron}</span>
               </button>
@@ -855,6 +867,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
       const trigger = target.closest('[data-calc-trigger]');
       if (trigger) {
         e.preventDefault();
+        trigger.classList.add('is-opening');
         setCalcOpen(true);
       }
       // Mobiel menu: openen/sluiten
@@ -1137,7 +1150,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
   return (
     <>
       <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />
-      {calcOpen && <CalculatorDak onClose={() => setCalcOpen(false)} />}
+      {calcOpen && <CalculatorDak onClose={() => { setCalcOpen(false); document.querySelector('[data-calc-trigger].is-opening')?.classList.remove('is-opening'); }} />}
     </>
   );
 }

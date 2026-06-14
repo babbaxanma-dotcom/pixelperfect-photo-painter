@@ -62,9 +62,16 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
     document.head.appendChild(style);
     if (!isModal) window.scrollTo(0, 0);
 
-    // Widget-modus: enkel ESC sluiten (geen body scroll-lock — widget is floating)
+    // Modal-modus: body-scroll-lock + ESC sluiten (achtergrond mag niet meescrollen = geen scroll-bug)
     let onEsc: ((e: KeyboardEvent) => void) | null = null;
+    let prevOverflow = '';
+    let prevPaddingRight = '';
     if (isModal) {
+      prevOverflow = document.body.style.overflow;
+      prevPaddingRight = document.body.style.paddingRight;
+      const sbw = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = 'hidden';
+      if (sbw > 0) document.body.style.paddingRight = `${sbw}px`;
       onEsc = (e: KeyboardEvent) => { if (e.key === 'Escape' && onClose) onClose(); };
       window.addEventListener('keydown', onEsc);
     }
@@ -72,7 +79,11 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
     return () => {
       if (!isModal) document.body.className = prev;
       style.remove();
-      if (isModal && onEsc) window.removeEventListener('keydown', onEsc);
+      if (isModal) {
+        document.body.style.overflow = prevOverflow;
+        document.body.style.paddingRight = prevPaddingRight;
+        if (onEsc) window.removeEventListener('keydown', onEsc);
+      }
     };
   }, [isModal, onClose]);
   useAbBouwInteractions();
@@ -177,6 +188,7 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
                 </button>
               )}
             </header>
+            <div className="calc-body">
             <div className="calc-progress-wrap">
               <div className="calc-progress-head">
                 <div className="calc-progress-meta">
@@ -392,13 +404,19 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
                 ))}
               </div>
             )}
+            </div>
     </div>
   );
 
   if (isModal) {
     return (
-      <div className="calc-widget" role="dialog" aria-label="Offerte calculator">
-        {cardJSX}
+      <div
+        className="calc-backdrop"
+        onMouseDown={(e) => { if (e.target === e.currentTarget && onClose) onClose(); }}
+      >
+        <div className="calc-widget" role="dialog" aria-modal="true" aria-label="Offerte calculator">
+          {cardJSX}
+        </div>
       </div>
     );
   }
@@ -423,31 +441,56 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
 }
 
 const CALC_CSS = `
-/* Widget-modus — floating panel rechtsonder, geen backdrop, blokkeert site niet */
+/* Modal-modus — backdrop (tap-buiten = sluiten) + gecentreerde modal / bottom-sheet, header sticky, lichaam scrollt */
+.calc-backdrop {
+  position: fixed; inset: 0; z-index: 8990;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  background: rgba(10,22,40,0.55);
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  animation: calcBackdropIn .25s ease both;
+  -webkit-tap-highlight-color: transparent;
+}
+@keyframes calcBackdropIn { from { opacity: 0; } to { opacity: 1; } }
 .calc-widget {
-  position: fixed;
-  bottom: 24px; right: 24px;
-  width: 420px; max-width: calc(100vw - 32px);
-  max-height: calc(100vh - 48px);
+  position: relative;
+  width: 440px; max-width: 100%;
+  max-height: 90vh;
   z-index: 9000;
-  overflow-y: auto;
+  display: flex; flex-direction: column;
+  overflow: hidden;
   border-radius: 16px;
-  box-shadow:
-    0 24px 64px -16px rgba(10,22,40,0.30),
-    0 8px 20px -8px rgba(10,22,40,0.18);
-  animation: calcSlideUp .35s cubic-bezier(.22,1,.36,1);
   background: #fff;
+  box-shadow: 0 24px 64px -16px rgba(10,22,40,0.45), 0 8px 20px -8px rgba(10,22,40,0.28);
+  animation: calcModalIn .32s cubic-bezier(.22,1,.36,1);
 }
 .calc-widget .calc-card {
-  border: none !important;
-  border-radius: 16px;
-  padding: 20px 22px 24px !important;
-  box-shadow: none;
-  margin: 0;
+  border: none !important; border-radius: 16px;
+  box-shadow: none; margin: 0;
+  padding: 0 !important;
+  display: flex; flex-direction: column;
+  min-height: 0; flex: 1 1 auto; overflow: hidden;
+  opacity: 1 !important; transform: none !important;   /* reveal-init niet laten hangen in fixed modal */
 }
-@keyframes calcSlideUp {
-  from { opacity: 0; transform: translateY(24px) scale(0.97); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes calcModalIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* sticky header — X + Terug altijd in beeld, ongeacht scroll */
+.calc-widget .calc-head {
+  position: sticky; top: 0; z-index: 2;
+  flex-shrink: 0; margin: 0;
+  padding: 16px 22px 14px;
+  background: #fff;
+  border-bottom: 1px solid var(--ink-line-soft);
+}
+.calc-widget .calc-modal-x { width: 38px; height: 38px; }
+/* scrollbaar lichaam — alles onder de header scrollt hierin */
+.calc-widget .calc-body {
+  flex: 1 1 auto; min-height: 0;
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 18px 22px 24px;
 }
 .calc-modal-x {
   background: none; border: 1px solid var(--ink-line-soft);
@@ -460,11 +503,31 @@ const CALC_CSS = `
 .calc-modal-x:hover { border-color: var(--navy); color: var(--navy); background: var(--bg-soft); }
 
 @media (max-width: 720px) {
+  .calc-backdrop { padding: 0; align-items: flex-end; }
   .calc-widget {
-    bottom: 12px; right: 12px; left: 12px;
-    width: auto; max-width: none;
-    max-height: calc(100vh - 24px);
+    width: 100%; max-width: none;
+    max-height: 90vh;
+    max-height: 90dvh;
+    border-radius: 18px 18px 0 0;
+    animation: calcSheetIn .32s cubic-bezier(.22,1,.36,1);
   }
+  .calc-widget .calc-card { border-radius: 18px 18px 0 0; }
+  .calc-widget .calc-head {
+    border-radius: 18px 18px 0 0;
+    padding: 18px 16px 12px;
+  }
+  .calc-widget .calc-head::before {
+    content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+    width: 36px; height: 4px; border-radius: 999px; background: rgba(10,22,40,0.18);
+  }
+  .calc-widget .calc-body { padding: 14px 16px 22px; }
+}
+@keyframes calcSheetIn {
+  from { opacity: 0; transform: translateY(100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .calc-backdrop, .calc-widget { animation: none; }
 }
 
 .calc-section {
