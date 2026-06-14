@@ -30,6 +30,7 @@ type State = {
   bedekking?: 'pannen' | 'leien' | 'epdm' | 'roofing';
   oppervlakte: number;
   isolatie?: 'binnenuit' | 'sarking' | 'zoldervloer' | 'nee';
+  isolatieWil?: boolean;
   asbest?: 'ja' | 'nee' | 'weet-niet';
 };
 
@@ -91,6 +92,11 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
   const set = (patch: Partial<State>) => setState(prev => ({ ...prev, ...patch }));
   const next = () => set({ step: Math.min(TOTAL_STEPS, state.step + 1) });
   const back = () => set({ step: Math.max(1, state.step - 1) });
+  // Stap 4 = twee sub-stappen: eerst ja/nee, daarna (bij ja) de 3 isolatie-types.
+  const goBack = () => {
+    if (state.step === 4 && state.isolatieWil) { set({ isolatieWil: undefined, isolatie: undefined }); }
+    else { back(); }
+  };
   const goTo = (s: number) => set({ step: s });
   const pct = Math.round((state.step / TOTAL_STEPS) * 100);
 
@@ -184,7 +190,7 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
   const cardJSX = (
     <div className="calc-card" data-reveal>
             <header className="calc-head">
-              <button type="button" className="calc-back-link" onClick={() => state.step > 1 ? back() : (isModal ? onClose!() : navigate('/lp/dakwerken'))} aria-label="Terug">
+              <button type="button" className="calc-back-link" onClick={() => (state.step > 1 || state.isolatieWil) ? goBack() : (isModal ? onClose!() : navigate('/lp/dakwerken'))} aria-label="Terug">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
                 <span>{state.step > 1 ? 'Terug' : (isModal ? 'Sluiten' : 'Terug')}</span>
               </button>
@@ -303,44 +309,63 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
               </div>
             )}
 
-            {state.step === 4 && (
+            {state.step === 4 && !state.isolatieWil && (
               <div className="calc-step">
-                <h2 className="calc-q">Welke isolatie past bij uw dak?</h2>
-                <p className="calc-q-sub">Niet zeker welke aanpak? <span className="calc-em">Wij adviseren gratis tijdens het plaatsbezoek</span>. Kies wat het dichtst aanleunt.</p>
+                <h2 className="calc-q">Wilt u ook isoleren?</h2>
+                <p className="calc-q-sub">Niet zeker? <span className="calc-em">We bekijken het samen op het plaatsbezoek</span>.</p>
+                <div className="calc-options calc-options-2col">
+                  <button type="button" className="calc-opt-card" onClick={() => { set({ isolatieWil: true }); }}>
+                    <div className="calc-opt-img"><img src={imgIsolBinnenuit} alt="Dakisolatie"/></div>
+                    <div className="calc-opt-body">
+                      <strong>Ja, graag</strong>
+                      <span>Isolatie erbij</span>
+                    </div>
+                  </button>
+                  <button type="button" className={`calc-opt-card ${state.isolatie === 'nee' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'nee', isolatieWil: false }); setTimeout(next, 220); }}>
+                    <div className="calc-opt-img"><img src={imgPannen} alt="Enkel dakwerken"/></div>
+                    <div className="calc-opt-body">
+                      <strong>Nee, enkel dak</strong>
+                      <span>Niet nodig</span>
+                    </div>
+                  </button>
+                </div>
+                <div className="calc-actions">
+                  <button type="button" className="calc-btn-ghost" onClick={goBack}>← Terug</button>
+                </div>
+              </div>
+            )}
+
+            {state.step === 4 && state.isolatieWil && (
+              <div className="calc-step">
+                <h2 className="calc-q">Welke isolatie?</h2>
+                <p className="calc-q-sub">Niet zeker? <span className="calc-em">Wij adviseren gratis op het plaatsbezoek</span>.</p>
                 <div className="calc-options calc-options-1col">
                   <button type="button" className={`calc-opt-row ${state.isolatie === 'binnenuit' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'binnenuit' }); setTimeout(next, 220); }}>
-                    <div className="calc-opt-row-img"><img src={imgIsolBinnenuit} alt="Isolatie van binnenuit tussen de balken"/></div>
+                    <div className="calc-opt-row-img"><img src={imgIsolBinnenuit} alt="Isolatie van binnenuit"/></div>
                     <div className="calc-opt-row-body">
-                      <strong>Van binnenuit, tussen de balken</strong>
-                      <span>Wanneer het dak intact blijft. Isolatie tussen en onder de balken, met dampscherm.</span>
+                      <strong>Van binnenuit</strong>
+                      <span>Tussen de balken, als het dak intact blijft.</span>
                     </div>
                     <div className="calc-radio" aria-hidden="true"></div>
                   </button>
                   <button type="button" className={`calc-opt-row ${state.isolatie === 'sarking' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'sarking' }); setTimeout(next, 220); }}>
-                    <div className="calc-opt-row-img"><img src={imgIsolSarking} alt="Sarkingisolatie van buitenaf op het dak"/></div>
+                    <div className="calc-opt-row-img"><img src={imgIsolSarking} alt="Sarkingisolatie van buitenaf"/></div>
                     <div className="calc-opt-row-body">
                       <strong>Sarking, van buitenaf</strong>
-                      <span>Isolatie buitenop de balken, ideaal bij een dakrenovatie. U verliest geen zolderhoogte.</span>
+                      <span>Buitenop de balken, bij een nieuw dak.</span>
                     </div>
                     <div className="calc-radio" aria-hidden="true"></div>
                   </button>
                   <button type="button" className={`calc-opt-row calc-opt-row--simple ${state.isolatie === 'zoldervloer' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'zoldervloer' }); setTimeout(next, 220); }}>
                     <div className="calc-opt-row-body">
-                      <strong>Zoldervloerisolatie</strong>
-                      <span>Gebruikt u de zolder enkel als opslag? Dan volstaat isolatie op de zoldervloer. Sneller en voordeliger.</span>
-                    </div>
-                    <div className="calc-radio" aria-hidden="true"></div>
-                  </button>
-                  <button type="button" className={`calc-opt-row calc-opt-row--simple ${state.isolatie === 'nee' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'nee' }); setTimeout(next, 220); }}>
-                    <div className="calc-opt-row-body">
-                      <strong>Nee, geen isolatie nodig</strong>
-                      <span>De isolatie zit er al, of u wenst enkel dakwerken.</span>
+                      <strong>Op de zoldervloer</strong>
+                      <span>Zolder enkel als opslag? Dan volstaat dit.</span>
                     </div>
                     <div className="calc-radio" aria-hidden="true"></div>
                   </button>
                 </div>
                 <div className="calc-actions">
-                  <button type="button" className="calc-btn-ghost" onClick={back}>← Terug</button>
+                  <button type="button" className="calc-btn-ghost" onClick={goBack}>← Terug</button>
                 </div>
               </div>
             )}
@@ -805,7 +830,7 @@ body.is-calc-page .scroll-progress { display: none !important; }
   cursor: pointer; font: inherit; text-align: left;
   transition: border-color .2s, background .2s, transform .2s;
 }
-.calc-opt-row--simple { grid-template-columns: 1fr auto; padding: 18px 20px; }
+.calc-opt-row.calc-opt-row--simple { grid-template-columns: 1fr auto; padding: 16px 18px; }
 .calc-opt-row:hover { border-color: #d98c03; transform: translateX(2px); }
 .calc-opt-row.is-active { border-color: #d98c03; background: #fff; box-shadow: 0 0 0 4px rgba(217,140,3,0.12); }
 .calc-opt-row-img { width: 120px; height: 90px; border-radius: 10px; overflow: hidden; background: var(--bg-soft); }
