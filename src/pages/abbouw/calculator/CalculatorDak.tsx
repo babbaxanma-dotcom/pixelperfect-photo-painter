@@ -19,17 +19,17 @@ import imgPannen from '@/assets/dak/lp-hero-pannendak.jpg';
 import imgLeien from '@/assets/dak/lp-natuurleien.jpg';
 import imgEPDM from '@/assets/dak/plat-epdm.jpg';
 import imgRoofing from '@/assets/dak/bitumen.jpg';
-import imgIsolatieJa from '@/assets/dak/lp-pir-isolatie.jpg';
-import imgIsolatieNee from '@/assets/dak/lp-vakman.jpg';
+import imgIsolBinnenuit from '@/assets/dak/lp-isol-2.jpg';
+import imgIsolSarking from '@/assets/dak/lp-isol-1.jpg';
 import imgAsbestJa from '@/assets/dak/lp-stormschade.jpg';
-import imgAsbestNee from '@/assets/dak/lp-classic-renovatie.jpg';
+import imgAsbestNee from '@/assets/dak/lp-hero-pannendak.jpg';
 
 type State = {
   step: number;
   dakType?: 'plat' | 'hellend';
   bedekking?: 'pannen' | 'leien' | 'epdm' | 'roofing';
   oppervlakte: number;
-  isolatie?: 'ja' | 'nee';
+  isolatie?: 'binnenuit' | 'sarking' | 'zoldervloer' | 'nee';
   asbest?: 'ja' | 'nee' | 'weet-niet';
 };
 
@@ -99,19 +99,26 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
   // ('bijna klaar') + time framing (eerlijke seconden-resterend).
   const STEP_PSYCHOLOGY: Record<number, { msg: string; timeLeft: string }> = {
     1: { msg: 'Net begonnen', timeLeft: '± 60 sec resterend' },
-    2: { msg: 'Goed bezig — nog 4 stappen', timeLeft: '± 50 sec resterend' },
+    2: { msg: 'Goed bezig, nog 4 stappen', timeLeft: '± 50 sec resterend' },
     3: { msg: 'Halverwege', timeLeft: '± 35 sec resterend' },
     4: { msg: 'Nog 2 vraagjes', timeLeft: '± 25 sec resterend' },
     5: { msg: 'Bijna klaar', timeLeft: '± 15 sec resterend' },
-    6: { msg: 'Laatste stap — uw contactgegevens', timeLeft: '± 10 sec resterend' },
+    6: { msg: 'Laatste stap: uw contactgegevens', timeLeft: '± 10 sec resterend' },
   };
   const psych = STEP_PSYCHOLOGY[state.step] ?? STEP_PSYCHOLOGY[1];
 
   const BEDEKKING_LABELS: Record<NonNullable<State['bedekking']>, string> = {
     pannen: 'Pannendak',
     leien: 'Natuurleien',
-    epdm: 'Plat dak — EPDM',
-    roofing: 'Plat dak — bitumen / roofing',
+    epdm: 'Plat dak (EPDM)',
+    roofing: 'Plat dak (bitumen / roofing)',
+  };
+
+  const ISOLATIE_LABELS: Record<NonNullable<State['isolatie']>, string> = {
+    binnenuit: 'Van binnenuit (tussen de balken)',
+    sarking: 'Sarking (buitenaf)',
+    zoldervloer: 'Zoldervloerisolatie',
+    nee: 'Geen isolatie nodig',
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -148,7 +155,7 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
     if (state.dakType) subParts.push(`Type dak: ${state.dakType === 'plat' ? 'Plat dak' : 'Hellend dak'}`);
     if (state.bedekking) subParts.push(`Bedekking: ${BEDEKKING_LABELS[state.bedekking]}`);
     if (state.oppervlakte) subParts.push(`Oppervlakte: ± ${state.oppervlakte} m²`);
-    if (state.isolatie) subParts.push(`Isolatie: ${state.isolatie === 'ja' ? 'gewenst' : 'niet nodig'}`);
+    if (state.isolatie) subParts.push(`Isolatie: ${ISOLATIE_LABELS[state.isolatie]}`);
     if (state.asbest) subParts.push(`Asbest: ${state.asbest === 'ja' ? 'aanwezig' : state.asbest === 'nee' ? 'niet aanwezig' : 'niet zeker'}`);
     const userMsg = ((fd.get('aanvullende_info') as string) || '').trim();
     const combined = `${subParts.join('\n')}${userMsg ? `\n\nAanvullend:\n${userMsg}` : ''}`;
@@ -181,7 +188,7 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
                 <span>{state.step > 1 ? 'Terug' : (isModal ? 'Sluiten' : 'Terug')}</span>
               </button>
-              <span className="calc-head-label">Dakwerken — offerte-wizard</span>
+              <span className="calc-head-label">Dakwerken offerte-wizard</span>
               {isModal && (
                 <button type="button" className="calc-modal-x" onClick={onClose} aria-label="Sluiten">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -219,7 +226,7 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
             {state.step === 1 && (
               <div className="calc-step">
                 <h2 className="calc-q">Welk soort dak heeft u?</h2>
-                <p className="calc-q-sub">Kies wat het meest overeenkomt — <span className="calc-em">we vragen geen technische kennis</span>.</p>
+                <p className="calc-q-sub">Kies wat het meest overeenkomt, <span className="calc-em">we vragen geen technische kennis</span>.</p>
                 <div className="calc-options calc-options-2col">
                   <button type="button" className={`calc-opt-card ${state.dakType === 'plat' ? 'is-active' : ''}`} onClick={() => { set({ dakType: 'plat' }); setTimeout(next, 220); }}>
                     <div className="calc-opt-img"><img src={imgPlatDak} alt="Plat dak"/></div>
@@ -242,14 +249,14 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
             {state.step === 2 && (
               <div className="calc-step">
                 <h2 className="calc-q">Welke dakbedekking wenst u?</h2>
-                <p className="calc-q-sub">Niet zeker? Kies wat u nu hebt — <span className="calc-em">we adviseren tijdens het plaatsbezoek</span>.</p>
+                <p className="calc-q-sub">Niet zeker? Kies wat u nu hebt, <span className="calc-em">we adviseren tijdens het plaatsbezoek</span>.</p>
                 <div className="calc-options calc-options-1col">
                   {(state.dakType === 'plat' ? [
-                    { key: 'epdm' as const, label: 'EPDM', desc: 'Rubber membraan — 25+ jaar levensduur, 10 jaar garantie op uitvoering', img: imgEPDM },
+                    { key: 'epdm' as const, label: 'EPDM', desc: 'Rubber membraan, 25+ jaar levensduur, 10 jaar garantie op uitvoering', img: imgEPDM },
                     { key: 'roofing' as const, label: 'Bitumen / Roofing', desc: 'Klassieke bituminuze afdichting', img: imgRoofing },
                   ] : [
-                    { key: 'pannen' as const, label: 'Pannen (klei of beton)', desc: 'Klassieke keramische pannen — Koramic, Aleonard', img: imgPannen },
-                    { key: 'leien' as const, label: 'Natuurleien', desc: 'Premium uitstraling — levensduur 100+ jaar', img: imgLeien },
+                    { key: 'pannen' as const, label: 'Pannen (klei of beton)', desc: 'Klassieke keramische pannen (Koramic, Aleonard)', img: imgPannen },
+                    { key: 'leien' as const, label: 'Natuurleien', desc: 'Premium uitstraling, levensduur 100+ jaar', img: imgLeien },
                   ]).map(opt => (
                     <button key={opt.key} type="button" className={`calc-opt-row ${state.bedekking === opt.key ? 'is-active' : ''}`} onClick={() => { set({ bedekking: opt.key }); setTimeout(next, 220); }}>
                       <div className="calc-opt-row-img"><img src={opt.img} alt={opt.label}/></div>
@@ -270,7 +277,7 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
             {state.step === 3 && (
               <div className="calc-step">
                 <h2 className="calc-q">Hoe groot is het dak?</h2>
-                <p className="calc-q-sub"><span className="calc-em">Een ruwe schatting volstaat</span> — wij meten ter plaatse nauwkeurig op.</p>
+                <p className="calc-q-sub"><span className="calc-em">Een ruwe schatting volstaat</span>. Wij meten ter plaatse nauwkeurig op.</p>
                 <div className="calc-slider-card">
                   <div className="calc-slider-value">
                     <span className="calc-slider-num">± {state.oppervlakte}</span>
@@ -288,7 +295,7 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
                     <span>300+ m²</span>
                   </div>
                 </div>
-                <div className="calc-tip">Niet zeker van de oppervlakte? <span className="calc-em">Geen probleem</span> — wij meten alles nauwkeurig op bij <span className="calc-em">het gratis plaatsbezoek</span>.</div>
+                <div className="calc-tip">Niet zeker van de oppervlakte? <span className="calc-em">Geen probleem</span>, wij meten alles nauwkeurig op bij <span className="calc-em">het gratis plaatsbezoek</span>.</div>
                 <div className="calc-actions">
                   <button type="button" className="calc-btn-ghost" onClick={back}>← Terug</button>
                   <button type="button" className="calc-btn-primary" onClick={next}>Volgende →</button>
@@ -298,22 +305,38 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
 
             {state.step === 4 && (
               <div className="calc-step">
-                <h2 className="calc-q">Is er isolatie nodig?</h2>
-                <p className="calc-q-sub">Goede dakisolatie verlaagt uw stookkost fors. Verplicht voor renovatieplicht 2028.</p>
-                <div className="calc-options calc-options-2col">
-                  <button type="button" className={`calc-opt-card ${state.isolatie === 'ja' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'ja' }); setTimeout(next, 220); }}>
-                    <div className="calc-opt-img"><img src={imgIsolatieJa} alt="Isolatie plaatsen"/></div>
-                    <div className="calc-opt-body">
-                      <strong>Ja — graag isolatie</strong>
-                      <span>Sarkingisolatie of tussen kepers</span>
+                <h2 className="calc-q">Welke isolatie past bij uw dak?</h2>
+                <p className="calc-q-sub">Niet zeker welke aanpak? <span className="calc-em">Wij adviseren gratis tijdens het plaatsbezoek</span>. Kies wat het dichtst aanleunt.</p>
+                <div className="calc-options calc-options-1col">
+                  <button type="button" className={`calc-opt-row ${state.isolatie === 'binnenuit' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'binnenuit' }); setTimeout(next, 220); }}>
+                    <div className="calc-opt-row-img"><img src={imgIsolBinnenuit} alt="Isolatie van binnenuit tussen de balken"/></div>
+                    <div className="calc-opt-row-body">
+                      <strong>Van binnenuit, tussen de balken</strong>
+                      <span>Wanneer het dak intact blijft. Isolatie tussen en onder de balken, met dampscherm.</span>
                     </div>
+                    <div className="calc-radio" aria-hidden="true"></div>
                   </button>
-                  <button type="button" className={`calc-opt-card ${state.isolatie === 'nee' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'nee' }); setTimeout(next, 220); }}>
-                    <div className="calc-opt-img"><img src={imgIsolatieNee} alt="Enkel dakwerken"/></div>
-                    <div className="calc-opt-body">
-                      <strong>Nee — enkel dakwerken</strong>
-                      <span>Isolatie zit er al of niet nodig</span>
+                  <button type="button" className={`calc-opt-row ${state.isolatie === 'sarking' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'sarking' }); setTimeout(next, 220); }}>
+                    <div className="calc-opt-row-img"><img src={imgIsolSarking} alt="Sarkingisolatie van buitenaf op het dak"/></div>
+                    <div className="calc-opt-row-body">
+                      <strong>Sarking, van buitenaf</strong>
+                      <span>Isolatie buitenop de balken, ideaal bij een dakrenovatie. U verliest geen zolderhoogte.</span>
                     </div>
+                    <div className="calc-radio" aria-hidden="true"></div>
+                  </button>
+                  <button type="button" className={`calc-opt-row calc-opt-row--simple ${state.isolatie === 'zoldervloer' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'zoldervloer' }); setTimeout(next, 220); }}>
+                    <div className="calc-opt-row-body">
+                      <strong>Zoldervloerisolatie</strong>
+                      <span>Gebruikt u de zolder enkel als opslag? Dan volstaat isolatie op de zoldervloer. Sneller en voordeliger.</span>
+                    </div>
+                    <div className="calc-radio" aria-hidden="true"></div>
+                  </button>
+                  <button type="button" className={`calc-opt-row calc-opt-row--simple ${state.isolatie === 'nee' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'nee' }); setTimeout(next, 220); }}>
+                    <div className="calc-opt-row-body">
+                      <strong>Nee, geen isolatie nodig</strong>
+                      <span>De isolatie zit er al, of u wenst enkel dakwerken.</span>
+                    </div>
+                    <div className="calc-radio" aria-hidden="true"></div>
                   </button>
                 </div>
                 <div className="calc-actions">
@@ -325,7 +348,7 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
             {state.step === 5 && (
               <div className="calc-step">
                 <h2 className="calc-q">Is er asbest aanwezig in het dak?</h2>
-                <p className="calc-q-sub">Niet zeker? <span className="calc-em">Geen zorgen</span> — wij zijn <span className="calc-em">erkend asbestverwerker</span> en regelen het volledige dossier.</p>
+                <p className="calc-q-sub">Niet zeker? <span className="calc-em">Geen zorgen</span>, wij zijn <span className="calc-em">erkend asbestverwerker</span> en regelen het volledige dossier.</p>
                 <div className="calc-options calc-options-1col">
                   <button type="button" className={`calc-opt-row ${state.asbest === 'ja' ? 'is-active' : ''}`} onClick={() => { set({ asbest: 'ja' }); setTimeout(next, 220); }}>
                     <div className="calc-opt-row-img"><img src={imgAsbestJa} alt="Asbest aanwezig"/></div>
@@ -359,7 +382,7 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
 
             {state.step === 6 && (
               <div className="calc-step">
-                <h2 className="calc-q">Bijna klaar — waar mogen we u bereiken?</h2>
+                <h2 className="calc-q">Bijna klaar: waar mogen we u bereiken?</h2>
                 <p className="calc-q-sub">U krijgt <span className="calc-em">binnen één werkdag</span> persoonlijk contact met een <span className="calc-em">vrijblijvende offerte op maat</span>.</p>
 
                 <div className="calc-summary" aria-label="Samenvatting van uw aanvraag">
@@ -368,7 +391,7 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
                     {state.dakType && <li><span>Type dak</span><span>{state.dakType === 'plat' ? 'Plat dak' : 'Hellend dak'}</span></li>}
                     {state.bedekking && <li><span>Bedekking</span><span>{BEDEKKING_LABELS[state.bedekking]}</span></li>}
                     <li><span>Oppervlakte</span><span>± {state.oppervlakte} m²</span></li>
-                    {state.isolatie && <li><span>Isolatie</span><span>{state.isolatie === 'ja' ? 'Gewenst' : 'Niet nodig'}</span></li>}
+                    {state.isolatie && <li><span>Isolatie</span><span>{ISOLATIE_LABELS[state.isolatie]}</span></li>}
                     {state.asbest && <li><span>Asbest</span><span>{state.asbest === 'ja' ? 'Aanwezig' : state.asbest === 'nee' ? 'Niet aanwezig' : 'Te bepalen'}</span></li>}
                   </ul>
                 </div>
