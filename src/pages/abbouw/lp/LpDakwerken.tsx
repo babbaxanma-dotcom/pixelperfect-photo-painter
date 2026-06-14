@@ -202,10 +202,19 @@ const LP_CSS = `
 .tr-leadcard .tr-lc-title { margin: 0; font-family: var(--font-display); font-size: 16px; font-weight: 700; line-height: 1.22; letter-spacing: -0.015em; color: ${NAVY}; }
 .tr-leadcard .tr-lc-sub { font-size: 13px; line-height: 1.45; color: #525b6b; }
 /* RIJ 1 — primair (formulier): oranje icoon-tegel = climax-markering, lichte navy-tint */
-.tr-lc-row--primary { background: #f7f9fc; border-bottom: 1px solid #e7e4dd; padding: 24px 26px 22px; }
-.tr-lc-head { display: flex; align-items: flex-start; gap: 14px; margin: 0 0 16px; }
+.tr-lc-row--primary { background: #f7f9fc; border-bottom: 1px solid #e7e4dd; }
+.tr-lc-head { display: flex; align-items: center; gap: 14px; width: 100%; margin: 0; padding: 20px 26px; background: none; border: none; text-align: left; font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.tr-lc-head .tr-lc-chev { flex-shrink: 0; margin-left: auto; color: #8a8f98; display: inline-flex; align-items: center; transition: transform .28s cubic-bezier(.22,1,.36,1), color .16s; }
+.tr-lc-row--primary.is-open .tr-lc-head .tr-lc-chev { transform: rotate(90deg); color: ${NAVY}; }
+@media (hover: hover) { .tr-lc-head:hover .tr-lc-chev { color: ${NAVY}; } }
+.tr-lc-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .32s cubic-bezier(.22,1,.36,1); }
+.tr-lc-row--primary.is-open .tr-lc-panel { grid-template-rows: 1fr; }
+.tr-lc-panel-inner { min-height: 0; overflow: hidden; }
+.tr-lc-panel-pad { padding: 2px 26px 22px; }
 .tr-lc-row--primary .tr-lc-ic--accent { background: rgba(217,140,3,0.12); color: ${ORANGE_H}; border: 1px solid rgba(217,140,3,0.28); }
-.tr-lc-row--primary .tr-lc-title { font-size: 18px; line-height: 1.18; }
+.tr-lc-row--primary .tr-lc-head .tr-lc-txt { flex: 1 1 auto; }
+.tr-lc-row--primary .tr-lc-title { font-size: 18px; line-height: 1.18; text-align: left; }
+.tr-lc-row--primary .tr-lc-sub { text-align: left; }
 .tr-lc-row--primary .tr-qf-grid { grid-template-columns: 1fr; gap: 12px; }
 .tr-lc-row--primary .tr-qf-field label { display: block; font-family: var(--font-display); font-size: 13px; font-weight: 600; color: #41495a; margin: 0 0 6px; }
 .tr-lc-row--primary .tr-qf-grid input { height: 52px; padding: 0 16px; font-size: 16px; border: 1px solid #cfd5dd; background: #fff; }
@@ -255,13 +264,15 @@ const LP_CSS = `
   .tr-hero-sub { margin: 0; }
   .tr-hero-svc-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
   .tr-svc-tile { min-height: 42px; font-size: 13px; padding: 9px 12px; }
-  .tr-lc-row--primary { padding: 22px 20px 20px; }
+  .tr-lc-head { padding: 18px 20px; }
+  .tr-lc-panel-pad { padding: 2px 20px 20px; }
   .tr-lc-or { padding: 12px 20px 4px; }
   .tr-lc-row--alt { padding: 13px 20px; min-height: 58px; }
   .tr-hero-form .tr-quickform.tr-leadcard.is-success .tr-qf-thanks { padding: 24px 20px 22px; }
 }
 @media (max-width: 360px) {
-  .tr-lc-row--primary { padding: 20px 16px 18px; }
+  .tr-lc-head { padding: 16px 16px; }
+  .tr-lc-panel-pad { padding: 2px 16px 18px; }
   .tr-lc-or { padding: 12px 16px 4px; }
   .tr-lc-row--alt { padding: 12px 16px; gap: 12px; }
 }
@@ -545,29 +556,36 @@ const HTML = `
           <aside class="tr-hero-form" aria-label="Plan uw gratis dakinspectie">
             <div class="tr-quickform tr-leadcard" id="lp-form" data-lp-quick>
 
-              <!-- RIJ 1 — PRIMAIR: gratis dakinspectie = het echte 2-velden-formulier, opgemaakt als klembord-hoofdrij -->
+              <!-- RIJ 1 — PRIMAIR: gratis dakinspectie. Dichtgeklapt; vouwt open bij klik. -->
               <div class="tr-lc-row tr-lc-row--primary">
-                <div class="tr-lc-head">
+                <button type="button" class="tr-lc-head" data-lc-toggle aria-expanded="false">
                   <span class="tr-lc-ic tr-lc-ic--accent" aria-hidden="true">${icDoc}</span>
                   <span class="tr-lc-txt">
                     <h3 class="tr-lc-title">Gratis dakinspectie met fotorapport</h3>
-                    <span class="tr-lc-sub">Vrijblijvend. We bellen u binnen één werkdag terug om de inspectie in te plannen.</span>
+                    <span class="tr-lc-sub">Vrijblijvend, met fotorapport dat u mag houden.</span>
                   </span>
-                </div>
-                <form data-lp-quick-form novalidate>
-                  <div class="tr-qf-grid">
-                    <div class="tr-qf-field"><label for="qf-name">Voornaam</label><input id="qf-name" type="text" name="firstName" placeholder="bv. Jan" autocomplete="given-name" required /></div>
-                    <div class="tr-qf-field"><label for="qf-phone">Telefoonnummer</label><input id="qf-phone" type="tel" name="phone" placeholder="bv. 0470 12 34 56" autocomplete="tel" required /></div>
-                    <button type="submit" class="tr-btn" data-lp-quick-submit>
-                      <span data-lp-quick-submit-label>Plan mijn gratis dakinspectie</span>
-                    </button>
+                  <span class="tr-lc-chev" aria-hidden="true">${icChevron}</span>
+                </button>
+                <div class="tr-lc-panel">
+                  <div class="tr-lc-panel-inner">
+                    <div class="tr-lc-panel-pad">
+                      <form data-lp-quick-form novalidate>
+                        <div class="tr-qf-grid">
+                          <div class="tr-qf-field"><label for="qf-name">Voornaam</label><input id="qf-name" type="text" name="firstName" placeholder="bv. Jan" autocomplete="given-name" required /></div>
+                          <div class="tr-qf-field"><label for="qf-phone">Telefoonnummer</label><input id="qf-phone" type="tel" name="phone" placeholder="bv. 0470 12 34 56" autocomplete="tel" required /></div>
+                          <button type="submit" class="tr-btn" data-lp-quick-submit>
+                            <span data-lp-quick-submit-label>Plan mijn gratis dakinspectie</span>
+                          </button>
+                        </div>
+                      </form>
+                      <div class="tr-qf-error" data-lp-quick-error role="alert" hidden></div>
+                      <div class="tr-lc-proof">
+                        <div class="tr-lc-proof-stars">★★★★★</div>
+                        <p class="tr-lc-proof-q">“De prijs op de offerte was ook de prijs op de factuur. Geen meerwerk achteraf, geen discussie. Zeldzaam in deze sector.”</p>
+                        <div class="tr-lc-proof-name">Stijn D., Mechelen</div>
+                      </div>
+                    </div>
                   </div>
-                </form>
-                <div class="tr-qf-error" data-lp-quick-error role="alert" hidden></div>
-                <div class="tr-lc-proof">
-                  <div class="tr-lc-proof-stars">★★★★★</div>
-                  <p class="tr-lc-proof-q">“De prijs op de offerte was ook de prijs op de factuur. Geen meerwerk achteraf, geen discussie. Zeldzaam in deze sector.”</p>
-                  <div class="tr-lc-proof-name">Stijn D., Mechelen</div>
                 </div>
               </div>
 
@@ -869,6 +887,16 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
         e.preventDefault();
         trigger.classList.add('is-opening');
         setCalcOpen(true);
+      }
+      // Lead-card "Gratis dakinspectie": klap het formulier open/dicht.
+      const lcToggle = target.closest('[data-lc-toggle]');
+      if (lcToggle) {
+        const row = lcToggle.closest('.tr-lc-row--primary');
+        if (row) {
+          const open = row.classList.toggle('is-open');
+          lcToggle.setAttribute('aria-expanded', String(open));
+        }
+        return;
       }
       // Mobiel menu: openen/sluiten
       if (target.closest('[data-menu-toggle]')) {

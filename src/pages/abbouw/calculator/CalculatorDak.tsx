@@ -21,6 +21,7 @@ import imgEPDM from '@/assets/dak/plat-epdm.jpg';
 import imgRoofing from '@/assets/dak/bitumen.jpg';
 import imgIsolBinnenuit from '@/assets/dak/lp-isol-2.jpg';
 import imgIsolSarking from '@/assets/dak/lp-isol-1.jpg';
+import imgStappen from '@/assets/dak/lp-stappen-dakwerker.jpg';
 import imgAsbestJa from '@/assets/dak/lp-stormschade.jpg';
 import imgAsbestNee from '@/assets/dak/lp-hero-pannendak.jpg';
 
@@ -322,7 +323,7 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
                     </div>
                   </button>
                   <button type="button" className={`calc-opt-card ${state.isolatie === 'nee' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'nee', isolatieWil: false }); setTimeout(next, 220); }}>
-                    <div className="calc-opt-img"><img src={imgPannen} alt="Enkel dakwerken"/></div>
+                    <div className="calc-opt-img"><img src={imgStappen} alt="Enkel dakwerken"/></div>
                     <div className="calc-opt-body">
                       <strong>Nee, enkel dak</strong>
                       <span>Niet nodig</span>
