@@ -16,6 +16,8 @@ import { initBeforeAfter } from './_beforeafter';
 import { initLpReveal } from './_reveal';
 import { initLpCallFab } from './_fab';
 import { CONTACT } from '@/data/contact';
+import CalculatorWizard from '../calculator/CalculatorWizard';
+import { DAK_CALC_CONFIGS } from '../calculator/dakCalcConfigs';
 import logo from '@/assets/home/logo.png';
 import velux from '@/assets/merken/Velux.png';
 
@@ -533,6 +535,8 @@ const Pin = () => (
 
 export default function LpDienst({ slug }: { slug: string }) {
   const d = DIENSTEN[slug];
+  const calcCfg = DAK_CALC_CONFIGS[slug];
+  const [calcOpen, setCalcOpen] = useState(false);
   const [quickState, setQuickState] = useState<'idle' | 'busy' | 'ok'>('idle');
   const [quickErr, setQuickErr] = useState('');
   const [finalState, setFinalState] = useState<'idle' | 'busy' | 'ok'>('idle');
@@ -699,6 +703,7 @@ export default function LpDienst({ slug }: { slug: string }) {
   };
 
   return (
+    <>
     <div className="tr">
       <style>{LP_CSS}</style>
 
@@ -759,8 +764,15 @@ export default function LpDienst({ slug }: { slug: string }) {
             <h1>{d.h1}</h1>
             <p className="tr-hero-sub">{d.sub} <b>{d.subBold}</b>.</p>
             <div className="tr-hero-cta">
-              <a href="#contact" className="tr-btn">Gratis offerte aanvragen</a>
-              <a href={PHONE_HREF} className="tr-hero-call">of bel {PHONE}</a>
+              {calcCfg
+                ? <>
+                    <button type="button" className="tr-btn" onClick={() => setCalcOpen(true)}>{calcCfg.triggerLabel}</button>
+                    <a href="#contact" className="tr-hero-call">of vraag direct een offerte</a>
+                  </>
+                : <>
+                    <a href="#contact" className="tr-btn">Gratis offerte aanvragen</a>
+                    <a href={PHONE_HREF} className="tr-hero-call">of bel {PHONE}</a>
+                  </>}
             </div>
             <div className="tr-certs">
               <span className="tr-cert-pill"><Shield />VCA* gecertificeerd</span>
@@ -1025,6 +1037,8 @@ export default function LpDienst({ slug }: { slug: string }) {
         </div>
       </footer>
     </div>
+    {calcOpen && calcCfg && <CalculatorWizard config={calcCfg} onClose={() => setCalcOpen(false)} />}
+    </>
   );
 }
 
