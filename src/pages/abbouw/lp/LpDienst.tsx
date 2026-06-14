@@ -59,6 +59,7 @@ import imgRoofing from '@/assets/dak/lp-roofing-1.jpg';
 import imgVx1 from '@/assets/dak/lp-veluxg-1.jpg';
 import imgVx2 from '@/assets/dak/lp-veluxg-2.jpg';
 import imgVx3 from '@/assets/dak/lp-veluxg-3.jpg';
+import imgVeluxStappen from '@/assets/dak/lp-velux-stappen.jpg';
 
 const NAVY = '#0a1628';
 const NAVY2 = '#14233a';
@@ -78,6 +79,8 @@ type Dienst = {
   offerEyebrow: string; offerH2: string; offerIntro: string; offer: string[];
   steps: [string, string][];
   whatTitle: string; whatIntro: string; what: [string, string][]; whatImg: string;
+  /** optionele foto naast de "In 3 stappen"-sectie (dakwerken-stijl photo-layout) */
+  stepsImg?: string;
   /** optionele voor/na sleep-slider die whatImg in de about-sectie vervangt */
   beforeAfter?: { before: string; after: string };
   /** optionele "herkent u dit?" signalen-sectie */
@@ -110,6 +113,7 @@ const DIENSTEN: Record<string, Dienst> = {
     sub: 'Een raam in uw dak moet in één keer goed zitten. Wij plaatsen en vervangen Velux dakramen in heel Vlaanderen, waterdicht ingewerkt en vanbinnen netjes afgewerkt.',
     subBold: 'Eén vaste prijs, plaatsing en binnenafwerking inbegrepen',
     heroImg: imgVx2,
+    stepsImg: imgVeluxStappen,
     certLogo: { src: velux, alt: 'Velux' },
     topbar: ['Gratis opmeting binnen 5 werkdagen', 'Erkend Velux-plaatser'],
     offerEyebrow: 'Over AB Bouw Groep',
@@ -845,17 +849,32 @@ export default function LpDienst({ slug }: { slug: string }) {
         <div className="tr-wrap">
           <div className="tr-steps-box">
             <h2>{d.werkwijzeH2 ?? 'In 3 stappen geregeld'}</h2>
-            <div className="tr-steps-grid">
-              {d.steps.map(([t, sub], i) => {
-                return (
+            {d.stepsImg ? (
+              <div className="tr-steps-layout">
+                <div className="tr-steps-photo">
+                  <img src={d.stepsImg} alt={`${d.breadcrumb ?? 'Werk'} door AB Bouw Groep`} loading="lazy" width="900" height="900" />
+                </div>
+                <div className="tr-steps-list">
+                  {d.steps.map(([t, sub], i) => (
+                    <div className="tr-step" key={i}>
+                      <div className="tr-step-num">{String(i + 1).padStart(2, '0')}</div>
+                      <h3>{t}</h3>
+                      <p>{sub}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="tr-steps-grid">
+                {d.steps.map(([t, sub], i) => (
                   <div className="tr-step" key={i}>
                     <div className="tr-step-num">{String(i + 1).padStart(2, '0')}</div>
                     <h3>{t}</h3>
                     <p>{sub}</p>
                   </div>
-                );
-              })}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -1221,6 +1240,12 @@ const LP_CSS = `
 .tr-steps-box { padding: clamp(8px, 2vw, 28px) 0 0; max-width: 1040px; margin: 0 auto; }
 .tr-steps-box h2 { text-align: left; max-width: 22ch; font-size: clamp(26px, 3vw, 36px); color: ${NAVY}; font-weight: 700; margin: 0 0 clamp(40px, 4vw, 56px); }
 .tr-steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(36px, 4.5vw, 64px); }
+/* photo-layout (dakwerken-stijl): vierkante foto naast de stappenlijst */
+.tr-steps-layout { display: grid; grid-template-columns: 1fr; gap: clamp(28px, 4vw, 44px); align-items: center; }
+.tr-steps-photo { border-radius: var(--tr-r-card); overflow: hidden; box-shadow: 0 30px 60px -30px rgba(10,22,40,0.35); }
+.tr-steps-photo img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+.tr-steps-list { display: grid; gap: clamp(22px, 2.6vw, 30px); }
+@media (min-width: 860px) { .tr-steps-layout { grid-template-columns: minmax(0, 432px) 1fr; gap: clamp(44px, 5vw, 72px); } }
 .tr-step { text-align: left; }
 .tr-step-num { font-family: var(--font-display); font-size: 40px; font-weight: 700; line-height: 1; color: ${NAVY}; margin: 0 auto 16px; letter-spacing: -0.03em; position: relative; display: inline-block; padding-bottom: 12px; }
 .tr-step-num::after { content: ""; position: absolute; left: 0; bottom: 0; transform: none; width: 24px; height: 3px; background: ${ORANGE}; border-radius: 2px; }
