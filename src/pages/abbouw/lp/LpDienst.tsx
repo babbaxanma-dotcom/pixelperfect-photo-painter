@@ -529,6 +529,15 @@ const Check = ({ s = 20 }: { s?: number }) => (
 const Shield = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 12 11 14 15 10" /></svg>
 );
+const Doc = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="9" y1="13" x2="15" y2="13" /><line x1="9" y1="17" x2="13" y2="17" /></svg>
+);
+const Calc = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" /><line x1="8" y1="6" x2="16" y2="6" /><line x1="8" y1="11" x2="8" y2="11" /><line x1="12" y1="11" x2="12" y2="11" /><line x1="16" y1="11" x2="16" y2="11" /><line x1="8" y1="15" x2="8" y2="15" /><line x1="12" y1="15" x2="12" y2="15" /><line x1="16" y1="15" x2="16" y2="19" /></svg>
+);
+const Chevron = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+);
 const Pin = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
 );
@@ -537,6 +546,7 @@ export default function LpDienst({ slug }: { slug: string }) {
   const d = DIENSTEN[slug];
   const calcCfg = DAK_CALC_CONFIGS[slug];
   const [calcOpen, setCalcOpen] = useState(false);
+  const [leadOpen, setLeadOpen] = useState(false);
   const [quickState, setQuickState] = useState<'idle' | 'busy' | 'ok'>('idle');
   const [quickErr, setQuickErr] = useState('');
   const [finalState, setFinalState] = useState<'idle' | 'busy' | 'ok'>('idle');
@@ -755,61 +765,80 @@ export default function LpDienst({ slug }: { slug: string }) {
         <div className="tr-hero-bg"><img src={d.heroImg} alt={d.h1} /></div>
         <div className="tr-hero-inner">
           <div className="tr-wrap">
-            <div className="tr-hero-trust">
-              <span className="tr-hero-trust-stars">{stars}</span>
-              <span><b>4,9/5</b> op Google (180+ reviews)</span><span className="tr-hero-trust-dot">·</span>
-              <span>120+ realisaties</span><span className="tr-hero-trust-dot">·</span>
-              <span>Actief sinds 2010</span>
-            </div>
-            <h1>{d.h1}</h1>
-            <p className="tr-hero-sub">{d.sub} <b>{d.subBold}</b>.</p>
-            <div className="tr-hero-cta">
-              {calcCfg
-                ? <>
-                    <button type="button" className="tr-btn" onClick={() => setCalcOpen(true)}>{calcCfg.triggerLabel}</button>
-                    <a href="#contact" className="tr-hero-call">of vraag direct een offerte</a>
-                  </>
-                : <>
-                    <a href="#contact" className="tr-btn">Gratis offerte aanvragen</a>
-                    <a href={PHONE_HREF} className="tr-hero-call">of bel {PHONE}</a>
-                  </>}
-            </div>
-            <div className="tr-certs">
-              <span className="tr-cert-pill"><Shield />VCA* gecertificeerd</span>
-              <span className="tr-cert-pill"><Check s={15} />Lid Bouwunie</span>
-              <span className="tr-cert-pill"><Shield />Verzekerd via Federale</span>
+            <div className="tr-hero-grid">
+              <div className="tr-hero-main">
+                <div className="tr-hero-trust">
+                  <span className="tr-hero-trust-stars">{stars}</span>
+                  <span><b>4,9/5</b> op Google (180+ reviews)</span><span className="tr-hero-trust-dot">·</span>
+                  <span>120+ realisaties</span><span className="tr-hero-trust-dot">·</span>
+                  <span>Actief sinds 2010</span>
+                </div>
+                <h1>{d.h1}</h1>
+                <p className="tr-hero-sub">{d.sub} <b>{d.subBold}</b>.</p>
+                <div className="tr-certs">
+                  <span className="tr-cert-pill"><Shield />VCA* gecertificeerd</span>
+                  <span className="tr-cert-pill"><Check s={15} />Lid Bouwunie</span>
+                  <span className="tr-cert-pill"><Shield />Verzekerd via Federale</span>
+                </div>
+              </div>
+              <aside className="tr-hero-form" aria-label="Vraag uw gratis afspraak aan">
+                <div className={`tr-quickform tr-leadcard${quickState === 'ok' ? ' is-success' : ''}`} id="lp-form">
+                  <div className={`tr-lc-row tr-lc-row--primary${leadOpen ? ' is-open' : ''}`}>
+                    <button type="button" className="tr-lc-head" onClick={() => setLeadOpen((o) => !o)} aria-expanded={leadOpen}>
+                      <span className="tr-lc-ic tr-lc-ic--accent" aria-hidden="true"><Doc /></span>
+                      <span className="tr-lc-txt">
+                        <h3 className="tr-lc-title">{d.steps[0][0]}</h3>
+                        <span className="tr-lc-sub">Vrijblijvend, geen verplichtingen.</span>
+                      </span>
+                      <span className="tr-lc-chev" aria-hidden="true"><Chevron /></span>
+                    </button>
+                    <div className="tr-lc-panel"><div className="tr-lc-panel-inner"><div className="tr-lc-panel-pad">
+                      <form ref={quickRef} onSubmit={onQuickSubmit} onFocusCapture={() => trackFormStart(`lp:${d.slug}:quick`)} noValidate>
+                        <div className="tr-qf-grid">
+                          <div className="tr-qf-field"><label htmlFor="qf-name">Voornaam</label><input id="qf-name" type="text" name="firstName" placeholder="bv. Jan" autoComplete="given-name" required /></div>
+                          <div className="tr-qf-field"><label htmlFor="qf-phone">Telefoonnummer</label><input id="qf-phone" type="tel" name="phone" placeholder="bv. 0470 12 34 56" autoComplete="tel" required /></div>
+                          <button type="submit" className="tr-btn" disabled={quickState === 'busy'}>{quickState === 'busy' ? 'Even bezig…' : 'Plan mijn afspraak'}</button>
+                        </div>
+                      </form>
+                      <p className="tr-lc-reassure">We bellen u terug binnen één werkdag.</p>
+                      {quickErr && <div className="tr-qf-error" style={{ display: 'block' }}>{quickErr}</div>}
+                      <div className="tr-lc-proof">
+                        <div className="tr-lc-proof-stars">★★★★★</div>
+                        <p className="tr-lc-proof-q">{d.reviews[0].text}</p>
+                        <div className="tr-lc-proof-name">{d.reviews[0].name} · {d.reviews[0].role}</div>
+                      </div>
+                    </div></div></div>
+                  </div>
+                  <div className="tr-lc-or"><span>Of</span></div>
+                  {calcCfg && (
+                    <button type="button" className="tr-lc-row tr-lc-row--alt tr-lc-row--calc" onClick={() => setCalcOpen(true)}>
+                      <span className="tr-lc-ic" aria-hidden="true"><Calc /></span>
+                      <span className="tr-lc-txt">
+                        <span className="tr-lc-title-row"><span className="tr-lc-title">{calcCfg.triggerLabel}</span><span className="tr-lc-badge">60 sec</span></span>
+                        <span className="tr-lc-sub">Prijsindicatie via onze calculator, klaar in 60 seconden</span>
+                      </span>
+                      <span className="tr-lc-chev" aria-hidden="true"><Chevron /></span>
+                    </button>
+                  )}
+                  <a className="tr-lc-row tr-lc-row--alt" href={PHONE_HREF}>
+                    <span className="tr-lc-ic" aria-hidden="true"><Phone /></span>
+                    <span className="tr-lc-txt">
+                      <span className="tr-lc-title">Bel ons direct</span>
+                      <span className="tr-lc-sub">Vragen of haast? {PHONE}</span>
+                    </span>
+                    <span className="tr-lc-chev" aria-hidden="true"><Chevron /></span>
+                  </a>
+                  <div className="tr-qf-thanks">
+                    <div className="tr-qf-thanks-ic"><Check s={26} /></div>
+                    <h4>Bedankt, uw aanvraag is ontvangen.</h4>
+                    <p>{d.quickThanks ?? 'We bellen u zo snel mogelijk terug om uw afspraak in te plannen.'}</p>
+                  </div>
+                </div>
+              </aside>
             </div>
           </div>
         </div>
       </section>
-
-      {/* 4. QUICK FORM */}
-      <div className="tr-quickform-shell">
-        <div className="tr-wrap">
-          <div id="lp-form" className={`tr-quickform${quickState === 'ok' ? ' is-success' : ''}`}>
-            <span className="tr-eyebrow">Vrijblijvend</span><h3>{d.quickformH3 ?? 'Liever dat wij u bellen?'}</h3>
-            <form ref={quickRef} onSubmit={onQuickSubmit} onFocusCapture={() => trackFormStart(`lp:${d.slug}:quick`)} noValidate>
-              <div className="tr-qf-grid">
-                <input type="text" name="firstName" placeholder="Voornaam *" autoComplete="given-name" required />
-                <input type="tel" name="phone" placeholder="Telefoonnummer *" autoComplete="tel" required />
-                <button type="submit" className="tr-btn" disabled={quickState === 'busy'}>
-                  {quickState === 'busy' ? 'Even bezig…' : 'Bel mij terug'}
-                </button>
-              </div>
-            </form>
-            {quickErr && <div className="tr-qf-error" style={{ display: 'block' }}>{quickErr}</div>}
-            <div className="tr-qf-thanks">
-              <div className="tr-qf-thanks-ic"><Check s={26} /></div>
-              <h4>Bedankt, uw aanvraag is ontvangen.</h4>
-              <p>{d.quickThanks ?? 'We bellen u zo snel mogelijk terug om uw afspraak in te plannen.'}</p>
-            </div>
-          </div>
-          <div className="tr-hero-testi">
-            <span className="tr-hero-testi-q">{d.reviews[0].text}</span>
-            <div className="tr-hero-testi-name">{d.reviews[0].name} · {d.reviews[0].role}</div>
-          </div>
-        </div>
-      </div>
 
       {/* 5. WERKWIJZE / 3 STAPPEN */}
       <section className="tr-section" id="werkwijze">
@@ -1342,5 +1371,78 @@ const LP_CSS = `
   .tr-footer-top { align-items: flex-start; margin-bottom: 34px; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.08); }
   .tr-footer-links { gap: 32px; }
   .tr-footer-info { font-size: 14.5px; }
+}
+
+/* ── HERO LEAD-KAART (zelfde premium keuze-stack als /lp/dakwerken) ──────── */
+.tr-hero-grid { display: grid; grid-template-columns: 1fr; grid-template-areas: "main" "form"; row-gap: 26px; align-items: start; }
+.tr-hero-main { grid-area: main; min-width: 0; }
+.tr-hero-form { grid-area: form; position: relative; z-index: 3; min-width: 0; }
+@media (min-width: 1024px) {
+  .tr-hero { display: flex; align-items: center; min-height: clamp(600px, 66vh, 740px); }
+  .tr-hero-inner { width: 100%; }
+  .tr-hero-grid { grid-template-columns: minmax(0,1fr) 416px; grid-template-areas: "main form"; column-gap: clamp(40px, 4.5vw, 64px); align-items: center; }
+}
+.tr-hero-form .tr-quickform { margin: 0; max-width: none; position: relative; z-index: 3; border: none; border-radius: var(--tr-r-card); box-shadow: 0 24px 56px -20px rgba(10,22,40,0.55), 0 2px 8px rgba(10,22,40,0.18); overflow: hidden; padding: 0; }
+.tr-hero-form .tr-quickform::before { content: ''; display: block; height: 3px; background: ${GOLD}; }
+.tr-leadcard .tr-lc-ic { flex-shrink: 0; width: 44px; height: 44px; border-radius: var(--tr-r-ui); display: inline-flex; align-items: center; justify-content: center; }
+.tr-leadcard .tr-lc-ic svg { display: block; }
+.tr-leadcard .tr-lc-txt { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.tr-leadcard .tr-lc-title { margin: 0; font-family: var(--font-display); font-size: 16px; font-weight: 700; line-height: 1.22; letter-spacing: -0.015em; color: ${NAVY}; }
+.tr-leadcard .tr-lc-sub { font-size: 13px; line-height: 1.45; color: #525b6b; }
+.tr-lc-row--primary { background: #f7f9fc; border-bottom: 1px solid #e7e4dd; }
+.tr-lc-head { display: flex; align-items: center; gap: 14px; width: 100%; margin: 0; padding: 20px 26px; background: none; border: none; text-align: left; font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.tr-lc-head .tr-lc-chev { flex-shrink: 0; margin-left: auto; color: #8a8f98; display: inline-flex; align-items: center; transition: transform .28s cubic-bezier(.22,1,.36,1), color .16s; }
+.tr-lc-row--primary.is-open .tr-lc-head .tr-lc-chev { transform: rotate(90deg); color: ${NAVY}; }
+@media (hover: hover) { .tr-lc-head:hover .tr-lc-chev { color: ${NAVY}; } }
+.tr-lc-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .32s cubic-bezier(.22,1,.36,1); }
+.tr-lc-row--primary.is-open .tr-lc-panel { grid-template-rows: 1fr; }
+.tr-lc-panel-inner { min-height: 0; overflow: hidden; }
+.tr-lc-panel-pad { padding: 2px 26px 22px; }
+.tr-lc-row--primary .tr-lc-ic--accent { background: rgba(217,140,3,0.12); color: ${ORANGE_H}; border: 1px solid rgba(217,140,3,0.28); }
+.tr-lc-row--primary .tr-lc-head .tr-lc-txt { flex: 1 1 auto; }
+.tr-lc-row--primary .tr-lc-title { font-size: 18px; line-height: 1.18; text-align: left; }
+.tr-lc-row--primary .tr-lc-sub { text-align: left; }
+.tr-lc-row--primary .tr-qf-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.tr-lc-row--primary .tr-qf-field label { display: block; font-family: var(--font-display); font-size: 13px; font-weight: 600; color: #41495a; margin: 0 0 6px; }
+.tr-lc-row--primary .tr-qf-grid input { width: 100%; height: 52px; padding: 0 16px; font-size: 16px; border: 1px solid #cfd5dd; border-radius: var(--tr-r-ui); background: #fff; color: #1d2733; }
+.tr-lc-row--primary .tr-qf-grid input:focus { outline: none; border-color: ${ORANGE}; box-shadow: 0 0 0 3px rgba(217,140,3,0.16); }
+.tr-lc-row--primary .tr-qf-grid .tr-btn { min-height: 52px; font-size: 16px; margin-top: 2px; white-space: normal; line-height: 1.25; padding: 13px 14px; width: 100%; }
+.tr-lc-reassure { margin: 10px 0 0; font-size: 13px; line-height: 1.45; color: #525b6b; }
+@media (min-width: 1024px) {
+  .tr-lc-row--primary .tr-lc-panel { grid-template-rows: 1fr; }
+  .tr-lc-row--primary .tr-lc-head { cursor: default; pointer-events: none; }
+  .tr-lc-row--primary .tr-lc-chev { display: none; }
+}
+.tr-lc-proof { margin-top: 16px; padding-top: 14px; border-top: 1px solid #ece9e1; }
+.tr-lc-proof-stars { color: ${GOLD}; font-size: 12px; letter-spacing: 1.5px; margin-bottom: 6px; }
+.tr-lc-proof-q { font-size: 13.5px; line-height: 1.55; color: #454f60; margin: 0; font-style: italic; }
+.tr-lc-proof-name { margin-top: 6px; font-family: var(--font-display); font-size: 13px; font-weight: 700; color: ${NAVY}; }
+.tr-lc-or { display: flex; align-items: center; gap: 14px; padding: 14px 26px 4px; }
+.tr-lc-or::before, .tr-lc-or::after { content: ''; height: 1px; background: #ece9e1; flex: 1; }
+.tr-lc-or span { font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #8a8f98; }
+.tr-lc-row--alt { display: flex; align-items: center; gap: 14px; width: 100%; margin: 0; padding: 14px 26px; min-height: 60px; text-align: left; text-decoration: none; font: inherit; color: inherit; background: #fff; border: none; border-top: 1px solid #f0eee7; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color .16s ease; }
+.tr-lc-or + .tr-lc-row--alt { border-top: none; }
+.tr-lc-row--alt .tr-lc-ic { background: #fff; color: ${NAVY}; border: 1px solid rgba(198,154,75,0.40); box-shadow: 0 1px 2px rgba(10,22,40,0.06); }
+.tr-lc-row--alt .tr-lc-title { font-size: 15.5px; }
+.tr-lc-chev { flex-shrink: 0; margin-left: auto; color: #8a8f98; display: inline-flex; align-items: center; transition: color .16s ease, transform .16s ease; }
+@media (hover: hover) { .tr-lc-row--alt:hover { background: #f7f9fc; } .tr-lc-row--alt:hover .tr-lc-chev { color: ${NAVY}; transform: translateX(2px); } }
+.tr-lc-row--alt:active { background: #f1f3f7; }
+.tr-lc-title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tr-lc-badge { display: inline-flex; align-items: center; font-family: var(--font-display); font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; line-height: 1; padding: 3px 7px; border-radius: 999px; color: ${GOLD}; background: rgba(198,154,75,0.10); border: 1px solid rgba(198,154,75,0.45); white-space: nowrap; }
+.tr-lc-row--calc:active { transform: scale(0.985); }
+.tr-leadcard.is-success .tr-lc-row--primary,
+.tr-leadcard.is-success .tr-lc-or,
+.tr-leadcard.is-success .tr-lc-row--alt { display: none; }
+.tr-leadcard .tr-qf-thanks { padding: 26px 26px 24px; }
+@media (max-width: 720px) {
+  .tr-hero { display: block; min-height: 0; }
+  .tr-hero-inner { padding: 30px 0 60px; text-align: left; }
+  .tr-hero-trust { justify-content: flex-start; }
+  .tr-hero-sub { margin-left: 0; margin-right: 0; }
+  .tr-certs { justify-content: flex-start; }
+  .tr-lc-head { padding: 18px 20px; }
+  .tr-lc-panel-pad { padding: 2px 20px 20px; }
+  .tr-lc-or { padding: 12px 20px 4px; }
+  .tr-lc-row--alt { padding: 13px 20px; min-height: 58px; }
 }
 `;
