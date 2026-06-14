@@ -65,6 +65,10 @@ const LP_CSS = `
 .tr-btn:hover { background: ${ORANGE_H}; box-shadow: 0 4px 12px -4px rgba(217,140,3,0.45); }
 .tr-btn:active { box-shadow: inset 0 1px 2px rgba(0,0,0,0.18); }
 .tr-btn:disabled { opacity: .65; cursor: wait; }
+/* Header-CTA = ghost (outline). Houdt oranje schaars: de submit-knop in de hero-kaart
+   is de enige gevulde-oranje magneet boven de vouw. */
+.tr-headcta { background: rgba(217,140,3,0.08); color: ${ORANGE_H}; border: 1.5px solid ${ORANGE}; box-shadow: none; border-radius: 999px; }
+.tr-headcta:hover { background: ${ORANGE}; color: #fff; box-shadow: 0 4px 12px -4px rgba(217,140,3,0.45); }
 .tr-eyebrow { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-display); font-weight: 600; font-size: 12px;
   letter-spacing: 0.08em; text-transform: uppercase; color: #41495a; margin-bottom: 14px; }
 .tr-eyebrow::before { content: ''; width: 26px; height: 3px; border-radius: 2px; background: ${ORANGE}; display: inline-block; flex-shrink: 0; }
@@ -131,8 +135,8 @@ const LP_CSS = `
 .tr-hero-bg::after { content: ""; position: absolute; inset: 0;
   background: linear-gradient(90deg, rgba(10,22,40,0.92) 0%, rgba(10,22,40,0.78) 38%, rgba(10,22,40,0.38) 60%, rgba(10,22,40,0.08) 80%, rgba(10,22,40,0) 92%), linear-gradient(180deg, rgba(10,22,40,0) 60%, rgba(10,22,40,0.42) 100%); }
 .tr-hero-inner { position: relative; z-index: 2; text-align: left; padding: clamp(52px,6.5vw,88px) 0 clamp(52px,6.5vw,88px); }
-/* 3-zone hero: hoofdtekst + diensten links, formulier rechts; mobiel main -> svc -> form */
-.tr-hero-grid { display: grid; grid-template-columns: 1fr; grid-template-areas: "main" "svc" "form"; row-gap: 24px; align-items: start; }
+/* 3-zone hero: hoofdtekst + diensten links, formulier rechts; mobiel main -> form -> svc (CTA hoog) */
+.tr-hero-grid { display: grid; grid-template-columns: 1fr; grid-template-areas: "main" "form" "svc"; row-gap: 24px; align-items: start; }
 .tr-hero-main { grid-area: main; min-width: 0; }
 .tr-hero-svc { grid-area: svc; min-width: 0; }
 .tr-hero-form { grid-area: form; position: relative; z-index: 3; min-width: 0; }
@@ -141,7 +145,7 @@ const LP_CSS = `
   .tr-hero-inner { width: 100%; }
   .tr-hero-grid { grid-template-columns: minmax(0,1fr) 416px; grid-template-rows: 1fr auto; grid-template-areas: "main form" "svc form"; column-gap: clamp(40px, 4.5vw, 64px); row-gap: 28px; }
 }
-.tr-hero h1 { font-size: clamp(34px, 4.6vw, 54px); line-height: 1.07; font-weight: 800; letter-spacing: -0.035em; color: #fff; margin: 0 0 18px; max-width: 17ch; text-wrap: balance; }
+.tr-hero h1 { font-size: clamp(34px, 4.6vw, 54px); line-height: 1.07; font-weight: 800; letter-spacing: -0.035em; color: #fff; margin: 0 0 18px; max-width: 17ch; text-wrap: balance; text-shadow: 0 1px 2px rgba(10,22,40,0.45); }
 .tr-h1-accent { display: block; margin-top: 2px; color: ${GOLD}; }
 .tr-hero-sub { font-size: clamp(16px, 1.3vw, 18px); line-height: 1.65; color: rgba(255,255,255,0.88); max-width: 52ch; margin: 0; }
 .tr-hero-sub b { color: #fff; font-weight: 600; }
@@ -161,7 +165,7 @@ const LP_CSS = `
 .tr-headphone { display:inline-flex; align-items:center; gap:8px; color:${NAVY}; border:1.5px solid #e0ddd3; background:#fff; font-family:var(--font-display); font-weight:700; font-size:14px; padding:10px 16px; border-radius:999px; white-space:nowrap; transition:border-color .18s, color .18s; }
 .tr-headphone svg { color:${ORANGE}; }
 .tr-headphone:hover { border-color:${ORANGE}; color:${ORANGE}; }
-@media (max-width:980px){ .tr-headphone{ background:${ORANGE}; color:#fff; border-color:${ORANGE}; padding:0; width:44px; height:44px; justify-content:center; gap:0; } .tr-headphone svg{ color:#fff; } .tr-headphone-num{ display:none; } }
+@media (max-width:980px){ .tr-headphone{ background:transparent; color:${ORANGE}; border:1.5px solid ${ORANGE}; padding:0; width:44px; height:44px; justify-content:center; gap:0; } .tr-headphone svg{ color:${ORANGE}; } .tr-headphone-num{ display:none; } }
 
 /* 4 — QUICK FORM (basis; de hero-kaart hergebruikt deze, scoped via .tr-hero-form) */
 .tr-quickform-shell { background: #fff; }
@@ -184,7 +188,7 @@ const LP_CSS = `
 
 /* hero-form-kaart: rand weg, schaduw + 4px oranje top, links uitgelijnd, zichtbare labels */
 .tr-hero-form .tr-quickform { margin: 0; max-width: none; position: relative; border: none; border-radius: var(--tr-r-card); padding: 30px 28px 24px; box-shadow: 0 24px 56px -20px rgba(10,22,40,0.55), 0 2px 8px rgba(10,22,40,0.18); overflow: hidden; }
-.tr-hero-form .tr-quickform::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: ${ORANGE}; }
+.tr-hero-form .tr-quickform::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: ${GOLD}; }
 .tr-hero-form .tr-qf-grid { grid-template-columns: 1fr; gap: 14px; }
 .tr-qf-field label { display: block; font-family: var(--font-display); font-size: 13px; font-weight: 600; color: #41495a; margin: 0 0 6px; }
 .tr-hero-form .tr-qf-grid input { height: 52px; padding: 0 16px; font-size: 16px; border: 1px solid #cfd5dd; }
@@ -221,6 +225,14 @@ const LP_CSS = `
 .tr-lc-row--primary .tr-qf-grid input:focus { border-color: ${ORANGE}; box-shadow: 0 0 0 3px rgba(217,140,3,0.16); }
 .tr-lc-row--primary .tr-qf-grid .tr-btn { min-height: 52px; font-size: 16px; margin-top: 2px; white-space: normal; line-height: 1.25; padding: 13px 14px; width: 100%; }
 .tr-lc-row--primary .tr-qf-error { margin: 12px 0 0; }
+.tr-lc-reassure { margin: 10px 0 0; font-size: 13px; line-height: 1.45; color: #525b6b; }
+/* Desktop (eigen 416px-kolom): formulier ALTIJD open — geen klik-friction, geen dode dak-ruimte.
+   Inklappen blijft enkel mobiel/tablet waar het de hero compact houdt. */
+@media (min-width: 1024px) {
+  .tr-lc-row--primary .tr-lc-panel { grid-template-rows: 1fr; }
+  .tr-lc-row--primary .tr-lc-head { cursor: default; pointer-events: none; }
+  .tr-lc-row--primary .tr-lc-chev { display: none; }
+}
 .tr-lc-proof { margin-top: 16px; padding-top: 14px; border-top: 1px solid #ece9e1; }
 .tr-lc-proof-stars { color: ${GOLD}; font-size: 12px; letter-spacing: 1.5px; margin-bottom: 6px; }
 .tr-lc-proof-q { font-size: 13.5px; line-height: 1.55; color: #454f60; margin: 0; }
@@ -243,7 +255,7 @@ const LP_CSS = `
 .tr-lc-row--alt:focus-visible { outline: none; box-shadow: inset 0 0 0 2px ${GOLD}; }
 /* calc-rij: titel + 60-sec-badge + clean opening-staat */
 .tr-lc-title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.tr-lc-badge { display: inline-flex; align-items: center; font-family: var(--font-display); font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; line-height: 1; padding: 3px 7px; border-radius: 999px; color: ${ORANGE_H}; background: rgba(217,140,3,0.10); border: 1px solid rgba(198,154,75,0.45); white-space: nowrap; }
+.tr-lc-badge { display: inline-flex; align-items: center; font-family: var(--font-display); font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; line-height: 1; padding: 3px 7px; border-radius: 999px; color: ${GOLD}; background: rgba(198,154,75,0.10); border: 1px solid rgba(198,154,75,0.45); white-space: nowrap; }
 .tr-lc-row--calc { transition: background-color .16s ease, transform .12s ease; }
 .tr-lc-row--calc:active { transform: scale(0.985); }
 .tr-lc-row--calc.is-opening { background: #f7f9fc; }
@@ -484,7 +496,7 @@ const HTML = `
   <div class="tr-topbar">
     <div class="tr-wrap">
       <div class="tr-topbar-left">
-        <span>Gratis dakinspectie, meestal binnen 5 werkdagen</span>
+        <span>Vlaams dakwerk sinds 2010</span>
         <span>10 jaar garantie</span>
       </div>
       <a class="tr-topbar-phone" href="${PHONE_HREF}">${icPhone}${PHONE}</a>
@@ -574,10 +586,11 @@ const HTML = `
                           <div class="tr-qf-field"><label for="qf-name">Voornaam</label><input id="qf-name" type="text" name="firstName" placeholder="bv. Jan" autocomplete="given-name" required /></div>
                           <div class="tr-qf-field"><label for="qf-phone">Telefoonnummer</label><input id="qf-phone" type="tel" name="phone" placeholder="bv. 0470 12 34 56" autocomplete="tel" required /></div>
                           <button type="submit" class="tr-btn" data-lp-quick-submit>
-                            <span data-lp-quick-submit-label>Plan mijn gratis dakinspectie</span>
+                            <span data-lp-quick-submit-label>Plan mijn inspectie</span>
                           </button>
                         </div>
                       </form>
+                      <p class="tr-lc-reassure">We bellen u terug binnen één werkdag.</p>
                       <div class="tr-qf-error" data-lp-quick-error role="alert" hidden></div>
                       <div class="tr-lc-proof">
                         <div class="tr-lc-proof-stars">★★★★★</div>
