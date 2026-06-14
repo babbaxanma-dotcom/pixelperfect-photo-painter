@@ -185,19 +185,10 @@ const LP_CSS = `
 /* hero-form-kaart: rand weg, schaduw + 4px oranje top, links uitgelijnd, zichtbare labels */
 .tr-hero-form .tr-quickform { margin: 0; max-width: none; position: relative; border: none; border-radius: var(--tr-r-card); padding: 30px 28px 24px; box-shadow: 0 24px 56px -20px rgba(10,22,40,0.55), 0 2px 8px rgba(10,22,40,0.18); overflow: hidden; }
 .tr-hero-form .tr-quickform::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: ${ORANGE}; }
-.tr-hero-form .tr-quickform h3 { text-align: left; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 8px; text-wrap: balance; }
-.tr-qf-note { font-size: 14px; line-height: 1.55; color: #525b6b; margin: 0 0 18px; }
 .tr-hero-form .tr-qf-grid { grid-template-columns: 1fr; gap: 14px; }
 .tr-qf-field label { display: block; font-family: var(--font-display); font-size: 13px; font-weight: 600; color: #41495a; margin: 0 0 6px; }
 .tr-hero-form .tr-qf-grid input { height: 52px; padding: 0 16px; font-size: 16px; border: 1px solid #cfd5dd; }
 .tr-hero-form .tr-qf-grid .tr-btn { height: auto; min-height: 52px; font-size: 16px; margin-top: 4px; white-space: normal; line-height: 1.25; padding: 13px 12px; }
-.tr-qf-foot { margin: 12px 0 0; text-align: center; font-size: 13.5px; color: #525b6b; }
-.tr-qf-foot a { display: inline-block; padding: 11px 8px; margin: -7px 0; color: ${NAVY}; font-weight: 700; }
-.tr-qf-foot a:hover { color: ${ORANGE}; }
-.tr-qf-proof { margin-top: 18px; padding-top: 16px; border-top: 1px solid #eef0f3; }
-.tr-qf-proof-stars { color: ${GOLD}; font-size: 12px; letter-spacing: 1.5px; margin-bottom: 6px; }
-.tr-qf-proof-q { font-size: 13.5px; line-height: 1.55; color: #454f60; margin: 0; }
-.tr-qf-proof-name { margin-top: 6px; font-family: var(--font-display); font-size: 13px; font-weight: 700; color: ${NAVY}; }
 .tr-quickform.is-success .tr-qf-grid, .tr-quickform.is-success .tr-eyebrow,
 .tr-quickform.is-success h3, .tr-quickform.is-success .tr-qf-error, .tr-quickform.is-success .tr-qf-foot,
 .tr-quickform.is-success .tr-qf-note, .tr-quickform.is-success .tr-qf-proof { display: none; }
@@ -208,7 +199,7 @@ const LP_CSS = `
 .tr-leadcard .tr-lc-ic { flex-shrink: 0; width: 44px; height: 44px; border-radius: var(--tr-r-ui); display: inline-flex; align-items: center; justify-content: center; }
 .tr-leadcard .tr-lc-ic svg { display: block; }
 .tr-leadcard .tr-lc-txt { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.tr-leadcard .tr-lc-title { font-family: var(--font-display); font-size: 16px; font-weight: 700; line-height: 1.22; letter-spacing: -0.015em; color: ${NAVY}; }
+.tr-leadcard .tr-lc-title { margin: 0; font-family: var(--font-display); font-size: 16px; font-weight: 700; line-height: 1.22; letter-spacing: -0.015em; color: ${NAVY}; }
 .tr-leadcard .tr-lc-sub { font-size: 13px; line-height: 1.45; color: #525b6b; }
 /* RIJ 1 — primair (formulier): oranje icoon-tegel = climax-markering, lichte navy-tint */
 .tr-lc-row--primary { background: #f7f9fc; border-bottom: 1px solid #e7e4dd; padding: 24px 26px 22px; }
@@ -221,7 +212,7 @@ const LP_CSS = `
 .tr-lc-row--primary .tr-qf-grid input:focus { border-color: ${ORANGE}; box-shadow: 0 0 0 3px rgba(217,140,3,0.16); }
 .tr-lc-row--primary .tr-qf-grid .tr-btn { min-height: 52px; font-size: 16px; margin-top: 2px; white-space: normal; line-height: 1.25; padding: 13px 14px; width: 100%; }
 .tr-lc-row--primary .tr-qf-error { margin: 12px 0 0; }
-.tr-lc-proof { margin-top: 16px; padding-top: 14px; border-top: 1px solid #eef0f3; }
+.tr-lc-proof { margin-top: 16px; padding-top: 14px; border-top: 1px solid #ece9e1; }
 .tr-lc-proof-stars { color: ${GOLD}; font-size: 12px; letter-spacing: 1.5px; margin-bottom: 6px; }
 .tr-lc-proof-q { font-size: 13.5px; line-height: 1.55; color: #454f60; margin: 0; }
 .tr-lc-proof-name { margin-top: 6px; font-family: var(--font-display); font-size: 13px; font-weight: 700; color: ${NAVY}; }
@@ -230,8 +221,8 @@ const LP_CSS = `
 .tr-lc-or::before, .tr-lc-or::after { content: ''; height: 1px; background: #ece9e1; flex: 1; }
 .tr-lc-or span { font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #8a8f98; }
 /* RIJ 2 & 3 — secundair (klembord-rijen, navy/wit + goud-omrande tegel) */
-.tr-lc-row--alt { display: flex; align-items: center; gap: 14px; padding: 14px 26px; min-height: 60px; text-decoration: none; border-top: 1px solid #f0eee7; -webkit-tap-highlight-color: transparent; transition: background-color .16s ease; }
-.tr-lc-row--alt:first-of-type { border-top: none; }
+.tr-lc-row--alt { display: flex; align-items: center; gap: 14px; width: 100%; margin: 0; padding: 14px 26px; min-height: 60px; text-align: left; text-decoration: none; font: inherit; color: inherit; background: #fff; border: none; border-top: 1px solid #f0eee7; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color .16s ease; }
+.tr-lc-or + .tr-lc-row--alt { border-top: none; }
 .tr-lc-row--alt .tr-lc-ic { background: #fff; color: ${NAVY}; border: 1px solid rgba(198,154,75,0.40); box-shadow: 0 1px 2px rgba(10,22,40,0.06); }
 .tr-lc-row--alt .tr-lc-title { font-size: 15.5px; }
 .tr-lc-chev { flex-shrink: 0; margin-left: auto; color: #8a8f98; display: inline-flex; align-items: center; transition: color .16s ease, transform .16s ease; }
@@ -542,7 +533,7 @@ const HTML = `
             </div>
             <div class="tr-hero-svc-certs">${icShield}<span>VCA* gecertificeerd</span><span class="tr-hero-trust-dot">·</span><span>Lid Bouwunie</span><span class="tr-hero-trust-dot">·</span><span>Verzekerd via Federale</span></div>
           </div>
-          <aside class="tr-hero-form">
+          <aside class="tr-hero-form" aria-label="Plan uw gratis dakinspectie">
             <div class="tr-quickform tr-leadcard" id="lp-form" data-lp-quick>
 
               <!-- RIJ 1 — PRIMAIR: gratis dakinspectie = het echte 2-velden-formulier, opgemaakt als klembord-hoofdrij -->
@@ -550,7 +541,7 @@ const HTML = `
                 <div class="tr-lc-head">
                   <span class="tr-lc-ic tr-lc-ic--accent" aria-hidden="true">${icDoc}</span>
                   <span class="tr-lc-txt">
-                    <span class="tr-lc-title">Gratis dakinspectie met fotorapport</span>
+                    <h3 class="tr-lc-title">Gratis dakinspectie met fotorapport</h3>
                     <span class="tr-lc-sub">Vrijblijvend. We bellen u binnen één werkdag terug om de inspectie in te plannen.</span>
                   </span>
                 </div>
@@ -563,7 +554,7 @@ const HTML = `
                     </button>
                   </div>
                 </form>
-                <div class="tr-qf-error" data-lp-quick-error hidden></div>
+                <div class="tr-qf-error" data-lp-quick-error role="alert" hidden></div>
                 <div class="tr-lc-proof">
                   <div class="tr-lc-proof-stars">★★★★★</div>
                   <p class="tr-lc-proof-q">“Maandag gestript, vrijdag lag het nieuwe dak erop. Sindsdien geen druppel meer binnen.”</p>
@@ -575,14 +566,14 @@ const HTML = `
               <div class="tr-lc-or"><span>Of</span></div>
 
               <!-- RIJ 2 — SECUNDAIR: calculator (opent CalculatorDak-modal via data-calc-trigger) -->
-              <a class="tr-lc-row tr-lc-row--alt" href="#" data-calc-trigger role="button">
+              <button type="button" class="tr-lc-row tr-lc-row--alt" data-calc-trigger>
                 <span class="tr-lc-ic" aria-hidden="true">${icCalc}</span>
                 <span class="tr-lc-txt">
                   <span class="tr-lc-title">Bereken uw prijs</span>
                   <span class="tr-lc-sub">Meteen een prijsindicatie via onze calculator</span>
                 </span>
                 <span class="tr-lc-chev" aria-hidden="true">${icChevron}</span>
-              </a>
+              </button>
 
               <!-- RIJ 3 — SECUNDAIR: bellen (tel-link) -->
               <a class="tr-lc-row tr-lc-row--alt" href="${PHONE_HREF}">
@@ -595,7 +586,7 @@ const HTML = `
               </a>
 
               <!-- SUCCES-STATE -->
-              <div class="tr-qf-thanks">
+              <div class="tr-qf-thanks" role="status" aria-live="polite">
                 <div class="tr-qf-thanks-ic">${icCheck.replace('width="20" height="20"','width="26" height="26"')}</div>
                 <h4>Bedankt, uw aanvraag is ontvangen.</h4>
                 <p>We bellen u binnen één werkdag om uw gratis dakinspectie in te plannen.</p>
