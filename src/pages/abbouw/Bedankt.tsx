@@ -30,8 +30,8 @@ const H1: Record<ServiceKey, string> = {
 
 const REVIEWS: Record<ServiceKey, Review[]> = {
   dakwerken: [
-    { name: 'Stijn Devos', role: 'Pannendak · Mechelen', img: revStijn, text: 'Onze rijwoning had een dak van 1962, lekte op drie plaatsen. AB Bouw stripte alles op één maandag en lag vrijdag waterdicht. Koramic Aleonard pannen, sarkingisolatie, nieuwe goten. Premie van €4.200 een maand na oplevering op de rekening.' },
-    { name: 'Lieve Hermans', role: 'Plat dak EPDM · Antwerpen', img: revLieve, text: 'Vrijdag een natte vlek op het plafond, zaterdag belde een van de werfleiders me terug. Maandag stond de ploeg op het dak. 70 m² EPDM in één stuk gelegd, geen naden, geen sjoemel. Factuur klopte tot op de euro met de offerte.' },
+    { name: 'Geert Verbeke', role: 'Pannendak · Mechelen', img: revStijn, text: 'Onze rijwoning had een dak van 1962, lekte op drie plaatsen. Volledig vernieuwd met Koramic Aleonard pannen, sarkingisolatie en nieuwe goten. Eén projectleider van begin tot eind, en de tienjarige garantie netjes op papier via Federale. Daar slaap je rustiger van.' },
+    { name: 'Saïda El Khatib', role: 'Plat dak EPDM · Antwerpen', img: revLieve, text: 'Voor de start kwam de projectleider opmeten en stuurde een fotorapport van de bestaande toestand. 70 m² EPDM nadien in één stuk gelegd, geen enkele naad. Twee jaar later nog altijd kurkdroog.' },
     { name: 'Yusuf Demir', role: 'Sarkingisolatie · Bornem', img: revYusuf, text: 'Sarkingisolatie boven de bestaande kepers, daarna nieuwe Koramic pannen. Werf was elke vrijdagavond opgeruimd. Foto-update via app, je wist op elk moment waar we stonden in de planning.' },
   ],
   gevel: [

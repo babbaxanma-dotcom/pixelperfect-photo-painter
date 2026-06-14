@@ -566,7 +566,7 @@ const HTML = `
                 <div class="tr-qf-error" data-lp-quick-error role="alert" hidden></div>
                 <div class="tr-lc-proof">
                   <div class="tr-lc-proof-stars">★★★★★</div>
-                  <p class="tr-lc-proof-q">“Maandag gestript, vrijdag lag het nieuwe dak erop. Sindsdien geen druppel meer binnen.”</p>
+                  <p class="tr-lc-proof-q">“De prijs op de offerte was ook de prijs op de factuur. Geen meerwerk achteraf, geen discussie. Zeldzaam in deze sector.”</p>
                   <div class="tr-lc-proof-name">Stijn D., Mechelen</div>
                 </div>
               </div>
@@ -657,7 +657,7 @@ const HTML = `
         <h2>Klantbeoordelingen</h2>
       </div>
       <div class="tr-rev-grid">
-        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>Natte plek op het plafond, net voor een weekend vol regen. Zaterdag iemand aan de lijn, maandag op het dak, dezelfde week hersteld.</p><div class="tr-rev-foot"><div class="tr-rev-name">Lieve Hermans</div><div class="tr-rev-role">Daklek hersteld, Lier</div></div></div>
+        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>Natte plek op het plafond, en het bleef maar regenen. Ik belde in paniek, kreeg meteen iemand aan de lijn die rustig uitlegde wat er moest gebeuren. Lek gevonden en hersteld nog dezelfde week.</p><div class="tr-rev-foot"><div class="tr-rev-name">Carine Verstraeten</div><div class="tr-rev-role">Daklek hersteld, Lier</div></div></div>
         <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>Met EPC-label F kwam er amper volk kijken. Sarking langs buiten geplaatst, label naar C, en de verkoop kwam los.</p><div class="tr-rev-foot"><div class="tr-rev-name">Yusuf Demir</div><div class="tr-rev-role">Sarking dakisolatie, Antwerpen</div></div></div>
         <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>Na de storm lag de helft van onze pannen in de tuin. Dezelfde avond een zeil, twee weken later een nieuw dak. Verzekering door hen geregeld.</p><div class="tr-rev-foot"><div class="tr-rev-name">Davy Janssens</div><div class="tr-rev-role">Stormschade, Sint-Niklaas</div></div></div>
       </div>

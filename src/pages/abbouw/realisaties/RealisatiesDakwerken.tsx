@@ -93,7 +93,7 @@ const projects: Project[] = [
     story:
       'Groot deel van het bitumen-dak gescheurd na een windstoot van 130 km/u. Tijdelijke afdichting binnen 4 uur, definitief herstel met 2-laagse APP-bitumen na 48u. Verzekeringsdossier compleet door ons gefactureerd op AG Insurance — klant moest niet zelf bellen.',
     specs: { m2: '65 m²', tijd: '3 werkdagen (incl. spoeddichting binnen 4u)', materiaal: 'APP-bitumen 2-laags met leislag' },
-    quote: { text: 'Vrijdagavond gebeld, zaterdagmiddag was het dak weer dicht. Service zoals het hoort.', name: 'Yusuf B.' },
+    quote: { text: 'Het mooiste was dat zij heel het verzekeringsdossier afhandelden. Ik moest zelf niet bellen of formulieren invullen, dat scheelt in zo een stresssituatie enorm.', name: 'Yusuf B.' },
     filter: 'platdak',
   },
   {
