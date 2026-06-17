@@ -87,6 +87,13 @@ const App = () => {
           <Route path="/lp/platdak" element={<LpDienst slug="platdak" />} />
           <Route path="/lp/crepi" element={<LpDienst slug="crepi" />} />
           <Route path="/lp/steenstrips" element={<LpDienst slug="steenstrips" />} />
+          <Route path="/lp/totaalrenovatie" element={<LpDienst slug="totaalrenovatie" />} />
+          <Route path="/lp/badkamerrenovatie" element={<LpDienst slug="badkamerrenovatie" />} />
+          <Route path="/lp/tegelwerken" element={<LpDienst slug="tegelwerken" />} />
+          <Route path="/lp/pleisterwerk" element={<LpDienst slug="pleisterwerk" />} />
+          <Route path="/lp/terrasaanleg" element={<LpDienst slug="terrasaanleg" />} />
+          <Route path="/lp/oprit" element={<LpDienst slug="oprit" />} />
+          <Route path="/lp/zwembad" element={<LpDienst slug="zwembad" />} />
           <Route path="/lokaal/:slug" element={<LpLokaal />} />
           <Route path="/bedankt" element={<Bedankt />} />
           <Route path="/calculator/dakwerken" element={<CalculatorDak />} />
