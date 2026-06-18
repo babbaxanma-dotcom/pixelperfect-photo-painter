@@ -14,7 +14,7 @@ ${NAV}
       <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span class="current">Algemene voorwaarden</span></div>
       <h1>Algemene Voorwaarden</h1>
       <p class="page-hero-lede">De algemene verkoops- en uitvoeringsvoorwaarden van AB Bouw Groep.</p>
-      <p style="font-size:13px; color: var(--ink-mute); margin-top: 8px;">Van toepassing vanaf januari 2026 · BTW BE 0XXX.XXX.XXX</p>
+      <p style="font-size:13px; color: var(--ink-mute); margin-top: 8px;">Van toepassing vanaf januari 2026 · BTW BE 0712.443.881</p>
     </div>
   </div>
 </section>
@@ -25,7 +25,7 @@ ${NAV}
 
       <div>
         <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 1, Toepassingsgebied</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Deze algemene voorwaarden zijn van toepassing op alle offertes, overeenkomsten en uitvoering van werken door AB Bouw Groep (BTW BE 0XXX.XXX.XXX), gevestigd te ${CONTACT.address.full}. Door het aanvaarden van een offerte aanvaardt de opdrachtgever deze voorwaarden in hun geheel.</p>
+        <p style="color: var(--ink-soft); line-height: 1.7;">Deze algemene voorwaarden zijn van toepassing op alle offertes, overeenkomsten en uitvoering van werken door AB Bouw Groep (BTW BE 0712.443.881), gevestigd te ${CONTACT.address.full}. Door het aanvaarden van een offerte aanvaardt de opdrachtgever deze voorwaarden in hun geheel.</p>
       </div>
 
       <div>

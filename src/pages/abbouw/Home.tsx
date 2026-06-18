@@ -698,7 +698,7 @@ const HTML = (i: Record<string, string>) => `
       <div class="lf-support-card" data-reveal data-reveal-delay="1" data-support-card>
         <div class="lf-support-meta"><span>02</span> Premies</div>
         <h5>Voordelen uitgezocht</h5>
-        <p>Btw 6%, Mijn VerbouwLening en eventuele premies: we checken waar u recht op heeft en regelen de aanvraag.</p>
+        <p>Btw 6% en Mijn VerbouwLening regelen we. Of u recht heeft op premies hangt af van uw inkomen — dat checken we eerlijk vooraf.</p>
       </div>
       <div class="lf-support-card" data-reveal data-reveal-delay="2" data-support-card>
         <div class="lf-support-meta"><span>03</span> Nazorg</div>
