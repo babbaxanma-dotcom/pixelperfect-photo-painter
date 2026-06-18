@@ -65,7 +65,7 @@ const projects: Project[] = [
     story:
       'Onverdeeld dak met koude winters en hete zolders. Sarking-isolatie 24 cm PIR boven op de bestaande dakconstructie geplaatst, oude pannen tijdelijk verwijderd en herplaatst — de foto toont het dak halverwege uitvoering met de nieuwe PIR-platen en dampdichte folie zichtbaar. Premiedossier compleet door ons ingediend bij Fluvius — klant kreeg €6.480 retour.',
     specs: { m2: '165 m² dakvlak', tijd: '11 werkdagen', materiaal: '24 cm PIR sarking + Delta onderdakfolie', premie: '6% btw-tarief' },
-    quote: { text: 'We hebben de eerste winter 38% minder gas verbruikt. De rekening is binnen 8 jaar terugverdiend.', name: 'Annick D.' },
+    quote: { text: 'Veel warmer huis, de eerste winter al merkbaar minder verwarming nodig. Heel tevreden.', name: 'Annick D.' },
     filter: 'sarking',
   },
   {

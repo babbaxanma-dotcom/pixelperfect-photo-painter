@@ -627,8 +627,8 @@ const HTML = `
         <h2>Tevreden klanten in heel Vlaanderen</h2>
       </div>
       <div class="tr-rev-grid">
-        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Volledig pakket: 16 cm EPS + crepi. Merkbaar warmer binnen en een lagere energiefactuur. Alles via één ploeg, papierwerk en 6% BTW geregeld."</p><div class="tr-rev-foot"><div class="tr-rev-name">Joris Vanhove</div><div class="tr-rev-role">ETICS + crepi</div></div></div>
-        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Steenstrips Vandersanden, voegen kaarsrecht, aansluitingen rond ramen vakwerk. Niemand merkt het verschil met echte steen."</p><div class="tr-rev-foot"><div class="tr-rev-name">Marius Ionescu</div><div class="tr-rev-role">Steenstrips voorgevel</div></div></div>
+        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Hele gevel geïsoleerd en afgewerkt met crepi. Het huis voelt merkbaar warmer en de factuur is gezakt. Alles netjes geregeld."</p><div class="tr-rev-foot"><div class="tr-rev-name">Joris Vanhove</div><div class="tr-rev-role">ETICS + crepi</div></div></div>
+        <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Steenstrips op de voorgevel, voegen strak recht. Je ziet echt niet dat het geen volle bakstenen zijn. Mooi werk."</p><div class="tr-rev-foot"><div class="tr-rev-name">Marius Ionescu</div><div class="tr-rev-role">Steenstrips voorgevel</div></div></div>
         <div class="tr-rev-card"><div class="tr-rev-stars">${stars}</div><p>"Marmorino in zachte taupe. Eén van de mannen hielp met de kleurkeuze. Achteraf super blij, het huis straalt karakter uit."</p><div class="tr-rev-foot"><div class="tr-rev-name">Cindy Van Looy</div><div class="tr-rev-role">Sierpleister marmorino</div></div></div>
       </div>
     </div>

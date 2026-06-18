@@ -30,18 +30,18 @@ const H1: Record<ServiceKey, string> = {
 
 const REVIEWS: Record<ServiceKey, Review[]> = {
   dakwerken: [
-    { name: 'Geert Verbeke', role: 'Pannendak · Mechelen', img: revStijn, text: 'Onze rijwoning had een dak van 1962, lekte op drie plaatsen. Volledig vernieuwd met Koramic Aleonard pannen, sarkingisolatie en nieuwe goten. Eén projectleider van begin tot eind, en de tienjarige garantie netjes op papier via Federale. Daar slaap je rustiger van.' },
-    { name: 'Saïda El Khatib', role: 'Plat dak EPDM · Antwerpen', img: revLieve, text: 'Voor de start kwam de projectleider opmeten en stuurde een fotorapport van de bestaande toestand. 70 m² EPDM nadien in één stuk gelegd, geen enkele naad. Twee jaar later nog altijd kurkdroog.' },
-    { name: 'Yusuf Demir', role: 'Sarkingisolatie · Bornem', img: revYusuf, text: 'Sarkingisolatie boven de bestaande kepers, daarna nieuwe Koramic pannen. Werf was elke vrijdagavond opgeruimd. Foto-update via app, je wist op elk moment waar we stonden in de planning.' },
+    { name: 'Geert Verbeke', role: 'Pannendak · Mechelen', img: revStijn, text: 'Ons dak lekte op verschillende plaatsen en was echt aan vervanging toe. Nu helemaal vernieuwd, met de garantie netjes op papier. Daar slaap je rustig van.' },
+    { name: 'Saïda El Khatib', role: 'Plat dak EPDM · Antwerpen', img: revLieve, text: 'Plat dak in één stuk gelegd, zonder naden. Twee jaar later nog altijd kurkdroog. Heel tevreden.' },
+    { name: 'Yusuf Demir', role: 'Sarkingisolatie · Bornem', img: revYusuf, text: 'Dak geïsoleerd en vernieuwd, nu een pak warmer. Elke week kregen we een update met foto en de werf bleef netjes. Goed opgevolgd.' },
   ],
   gevel: [
     { name: 'Jasmien De Backer', role: 'Witte crepi · Mechelen', img: revJasmien, text: 'Onze rijwoning had een vermoeide bezetting uit de jaren ’80. Nu een spierwitte crepi-gevel die je zo van een interieurmagazine plukt. Buren komen vragen wie het werk gedaan heeft. Strak, proper, op tijd opgeleverd.' },
-    { name: 'Dimitri Maes', role: 'Crepi + ETICS-isolatie · Antwerpen', img: revDimitri, text: 'Halfopen woning uit 1968 die nooit was geïsoleerd. 16 cm EPS buitenisolatie plus crepi. Comfort-sprong is enorm: geen koude muren meer in de winter. Premie van €5.400 zonder problemen uitbetaald.' },
-    { name: 'Hicham Bouali', role: 'Gevelisolatie · Mechelen', img: revHicham, text: 'Eerste aannemer wilde alleen crepi over de bestaande gevel. AB Bouw legde uit waarom ETICS-isolatie nodig was. Hogere prijs, veel betere oplossing. EPC en comfort beide vlot vooruit. Geen spijt van die keuze.' },
+    { name: 'Dimitri Maes', role: 'Crepi + ETICS-isolatie · Antwerpen', img: revDimitri, text: 'Onze woning was altijd koud. Sinds de gevelisolatie en crepi geen koude muren meer en de stookkost flink lager. Echt een verschil.' },
+    { name: 'Hicham Bouali', role: 'Gevelisolatie · Mechelen', img: revHicham, text: 'Eerst wilde ik enkel crepi, maar ze legden uit waarom isolatie beter was. Wat duurder, maar het comfort is er echt op vooruitgegaan. Geen spijt.' },
   ],
   default: [
     { name: 'Greet Vermeiren', role: 'Totaalrenovatie · Lier', img: revGreet, text: 'Volledige renovatie van A tot Z. Eén aanspreekpunt voor alles, planning klopte tot op de dag, eindfactuur exact zoals offerte. Geen verrassingen, geen meerwerk-trucs.' },
-    { name: 'Ahmed Karimi', role: 'Badkamerrenovatie · Vilvoorde', img: revAhmed, text: 'Inloopdouche met microcement. Werfleider belde elke vrijdag voor de week-update. Klaar binnen de afgesproken termijn, propere werf, vakwerk tot in de laatste voeg.' },
+    { name: 'Ahmed Karimi', role: 'Badkamerrenovatie · Vilvoorde', img: revAhmed, text: 'Mooie inloopdouche, en de werf bleef altijd netjes. Klaar op de afgesproken datum. Top werk.' },
     { name: 'Tine Maes', role: 'Aanbouw · Bonheiden', img: revTine, text: 'Aanbouw van 28 m² met zinkwerk en grote raampartij. Architectenplan werd 1-op-1 uitgevoerd, de ploeg dacht actief mee bij detail-uitwerking. Erg tevreden over de afwerking.' },
   ],
 };
