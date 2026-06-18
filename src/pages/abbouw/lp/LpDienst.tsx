@@ -327,7 +327,7 @@ const DIENSTEN: Record<string, Dienst> = {
     offer: ['Offerte = factuur, ook bij prijsstijgingen', 'Gratis plaatsbezoek met advies over materiaal en afwatering', 'Stabiele fundering, zodat uw oprit niet verzakt', 'Klinkers, betonklinkers of waterdoorlatende verharding', 'Nette afboording die de oprit op zijn plaats houdt', 'Eigen ploeg, geen onderaannemers'],
     steps: [['Gratis plaatsbezoek', 'Een vakman meet de oprit op, bekijkt de afwatering en bespreekt het materiaal.'], ['Vaste offerte', 'U krijgt een bindende prijs voor de volledige oprit, fundering en afboording inbegrepen. Zo weet u exact waar u aan toe bent.'], ['Aanleg door eigen ploeg', 'Wij graven uit, leggen de fundering en plaatsen de klinkers strak en op niveau.']],
     whatTitle: 'Wat komt er kijken bij een oprit aanleggen?',
-    whatIntro: 'Een oprit is meer dan klinkers leggen. De fundering en de afwatering bepalen of hij na tien jaar nog vlak ligt. Wij verzorgen het volledige werk, van uitgraven tot de laatste voeg.',
+    whatIntro: 'Een oprit is meer dan klinkers leggen. De fundering en de afwatering bepalen of hij na jaren nog vlak ligt. Wij verzorgen het volledige werk, van uitgraven tot de laatste voeg.',
     what: [['Klinkers en betonklinkers', 'Klassieke kleiklinkers of betonklinkers, strak gelegd in het verband naar keuze.'], ['Waterdoorlatende oprit', 'Verharding waar regenwater in de bodem zakt in plaats van naar de straat te lopen.'], ['Fundering en uitgraven', 'Uitgraven en een stabiele onderbouw, zodat uw oprit niet verzakt of golft.'], ['Afboording en afwatering', 'Nette boordstenen en de juiste afschot, zodat water wegloopt en de klinkers op hun plaats blijven.']],
     whatImg: imgOpWhat,
     gallery: [imgOpG1, imgOpG2, imgOpG3],
@@ -418,9 +418,9 @@ const DIENSTEN: Record<string, Dienst> = {
     whatImg: imgVx1,
     gallery: [imgVx1, imgVx2, imgVx3],
     reviews: [
-      { text: 'Twee Velux-ramen op de zolderkamer. \'s Morgens begonnen, tegen de avond alles dicht en de binnenkant mee gepleisterd.', name: 'Bart Wouters', role: 'Twee dakramen op zolder' },
-      { text: 'Ons oud dakraam had condens tussen het glas en lekte bij felle regen. Vervangen door een nieuwe Velux, gootstuk en al. Netjes afgewerkt.', name: 'Katrien De Smet', role: 'Vervanging oud dakraam' },
-      { text: 'De opmeter raadde een kleiner formaat aan, anders moest een keper doorgezaagd worden. Eerlijk advies, op één dag geplaatst.', name: 'Tom Vermeulen', role: 'Nieuw dakraam' },
+      { text: '"Twee Velux-ramen op de zolderkamer. \'s Morgens begonnen, tegen de avond alles dicht en de binnenkant mee gepleisterd."', name: 'Bart Wouters', role: 'Twee dakramen op zolder' },
+      { text: '"Ons oud dakraam had condens tussen het glas en lekte bij felle regen. Vervangen door een nieuwe Velux, gootstuk en al. Netjes afgewerkt."', name: 'Katrien De Smet', role: 'Vervanging oud dakraam' },
+      { text: '"De opmeter raadde een kleiner formaat aan, anders moest een keper doorgezaagd worden. Eerlijk advies, op één dag geplaatst."', name: 'Tom Vermeulen', role: 'Nieuw dakraam' },
     ],
     faq: [
       ['Wat kost een Velux dakraam geplaatst?', 'Dat hangt af van het type, het formaat en de bestaande dakopbouw. Een standaardplaatsing start doorgaans rond €1.250 inclusief plaatsing. U krijgt een vaste prijs na de gratis opmeting.'],
@@ -614,9 +614,9 @@ const DIENSTEN: Record<string, Dienst> = {
     whatImg: imgIsol2,
     gallery: [imgIsol2, imgIsolGyproc, imgIsolGestuct, imgIsolSarking, imgIsolKoramic],
     reviews: [
-      { text: 'Ons dak werd vernieuwd, dus meteen sarking erop. De zolder is nu een volwaardige kamer en de chauffage staat een graad lager.', name: 'Hilde Declercq', role: 'Sarking bij dakrenovatie' },
-      { text: 'Wij vroegen prijs voor isolatie tussen de balken, maar voor onze bergzolder raadden ze de goedkopere zoldervloer aan. Eerlijk advies, en de factuur klopte.', name: 'Wim De Backer', role: 'Zoldervloerisolatie' },
-      { text: 'De slaapkamers onder het dak kregen we \'s winters nooit warm. Na de werken voelde je meteen het verschil.', name: 'Els Vandenberghe', role: 'Isolatie tussen de balken' },
+      { text: '"Ons dak werd vernieuwd, dus meteen sarking erop. De zolder is nu een volwaardige kamer en de chauffage staat een graad lager."', name: 'Hilde Declercq', role: 'Sarking bij dakrenovatie' },
+      { text: '"Wij vroegen prijs voor isolatie tussen de balken, maar voor onze bergzolder raadden ze de goedkopere zoldervloer aan. Eerlijk advies, en de factuur klopte."', name: 'Wim De Backer', role: 'Zoldervloerisolatie' },
+      { text: '"De slaapkamers onder het dak kregen we \'s winters nooit warm. Na de werken voelde je meteen het verschil."', name: 'Els Vandenberghe', role: 'Isolatie tussen de balken' },
     ],
     faq: [
       ['Wat kost dakisolatie?', 'Dat hangt af van de methode, de oppervlakte en de gewenste isolatiewaarde. U krijgt een vaste prijs na de gratis dakinspectie.'],
@@ -677,9 +677,9 @@ const DIENSTEN: Record<string, Dienst> = {
     whatImg: imgPdak1,
     gallery: [imgPdak1, imgRoofing, imgPdak2, imgPdak3],
     reviews: [
-      { text: 'Het dak boven onze aanbouw was al twee keer opgelapt, de vochtplek kwam altijd terug. Alles eraf, nieuwe isolatie, één stuk EPDM erover. Twee winters droog.', name: 'Ann Vervaeke', role: 'EPDM op de aanbouw' },
-      { text: 'Ons garagedak was dertig jaar oud en helemaal op. In twee dagen vernieuwd, isolatie erbij en de randen netjes afgewerkt.', name: 'Pieter Lauwers', role: 'Garagedak vernieuwd' },
-      { text: 'Voor het bijgebouw raadde hun vakman roofing aan, EPDM was de meerprijs niet waard. Eerlijk, strak gelegd en de oude roofing zelf afgevoerd.', name: 'Marleen Stevens', role: 'Roofing op het bijgebouw' },
+      { text: '"Het dak boven onze aanbouw was al twee keer opgelapt, de vochtplek kwam altijd terug. Alles eraf, nieuwe isolatie, één stuk EPDM erover. Twee winters droog."', name: 'Ann Vervaeke', role: 'EPDM op de aanbouw' },
+      { text: '"Ons garagedak was dertig jaar oud en helemaal op. In twee dagen vernieuwd, isolatie erbij en de randen netjes afgewerkt."', name: 'Pieter Lauwers', role: 'Garagedak vernieuwd' },
+      { text: '"Voor het bijgebouw raadde hun vakman roofing aan, EPDM was de meerprijs niet waard. Eerlijk, strak gelegd en de oude roofing zelf afgevoerd."', name: 'Marleen Stevens', role: 'Roofing op het bijgebouw' },
     ],
     faq: [
       ['Wat kost een plat dak?', 'Dat hangt af van de oppervlakte, de opbouw, de isolatie en de keuze tussen EPDM of roofing. U krijgt een vaste prijs per m² na het gratis plaatsbezoek. Is uw woning ouder dan 10 jaar, dan valt het werk onder 6% btw; dat papierwerk regelen wij.'],
