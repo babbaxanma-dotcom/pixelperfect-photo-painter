@@ -28,7 +28,7 @@ const services = [
     id: 'ecologisch', img: svcEco, n: '02', title: 'AB Ecologisch',
     tag: 'Duurzaam bouwen',
     intro: 'Energetische renovaties en bio-ecologisch bouwen. Warmtepomp, dak- en spouwisolatie, kalkpleister, houtskeletbouw en zonnepanelen, alles in één dossier. Wij rekenen vooraf uit op welke steun (6% btw-tarief, Mijn VerbouwLening, en eventueel premie) u recht heeft.',
-    deep: 'Sinds 2022 is AB Ecologisch onze snelst groeiende divisie. De reden is simpel: een goed geïsoleerde woning met warmtepomp betaalt zichzelf terug op vijf tot zeven jaar via de lagere energiefactuur en de Mijn VerbouwPremie. Wij berekenen vooraf het exacte rendement op basis van uw EPC-attest en geven u één offerte voor het volledige pakket.',
+    deep: 'Sinds 2022 is AB Ecologisch onze snelst groeiende divisie. De reden is simpel: een goed geïsoleerde woning met warmtepomp betaalt zichzelf op termijn terug via de lagere energiefactuur. Wij berekenen vooraf het exacte rendement op basis van uw EPC-attest en geven u één offerte voor het volledige pakket.',
     bullets: [
       'Lucht/water-warmtepompen (Daikin, Mitsubishi, Vaillant)',
       'Dakisolatie PIR/PUR/cellulose, K-waarde tot K30',

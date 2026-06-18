@@ -16,7 +16,7 @@ ${buildNav('over')}
 
 ${buildHero({
   bg: hero,
-  eyebrow: '15 jaar ervaring',
+  eyebrow: `${new Date().getFullYear() - 2010} jaar ervaring`,
   title: 'Bouwen aan vertrouwen,<br/>steen voor <span style="color:var(--accent)">steen</span>.',
   lede: 'Wat begon als een eenmanszaak groeide uit tot een Vlaamse bouwgroep met zes specialisaties en 23 vakmensen in vaste dienst, zonder ooit de persoonlijke aanpak te verliezen.',
   primary: { label: 'Plan een kennismaking', href: '/contact' },
@@ -307,10 +307,10 @@ ${FOOTER}
 
 export default function OverOns() {
   useEffect(() => {
-    document.title = "Over ons | AB Bouw Groep | 15 jaar Vlaams vakmanschap";
+    document.title = `Over ons | AB Bouw Groep | ${new Date().getFullYear() - 2010} jaar Vlaams vakmanschap`;
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', "Maak kennis met AB Bouw Groep: 15 jaar ervaring, 6 specialisaties, 23 vakmensen in vaste dienst. VCA*-gecertificeerd familiebedrijf uit Willebroek.");
+    m.setAttribute('content', `Maak kennis met AB Bouw Groep: ${new Date().getFullYear() - 2010} jaar ervaring, 6 specialisaties, 23 vakmensen in vaste dienst. VCA*-gecertificeerd familiebedrijf, actief in heel Vlaanderen.`);
     const prev = document.body.className;
     document.body.className = "";
     const styleEl = document.createElement('style');

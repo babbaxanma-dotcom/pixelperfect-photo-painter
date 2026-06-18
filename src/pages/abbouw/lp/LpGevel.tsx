@@ -523,7 +523,7 @@ const HTML = `
 
   <!-- 7. NUMBERS BAR -->
   <section class="tr-numbers">
-    <div class="tr-num"><div class="tr-num-big">15 jaar</div><div class="tr-num-lbl">ervaring</div></div>
+    <div class="tr-num"><div class="tr-num-big">${new Date().getFullYear() - 2010} jaar</div><div class="tr-num-lbl">ervaring</div></div>
     <div class="tr-num"><div class="tr-num-big">120+</div><div class="tr-num-lbl">gevels gerenoveerd</div></div>
     <div class="tr-num"><div class="tr-num-big">100%</div><div class="tr-num-lbl">eigen ploeg</div></div>
     <div class="tr-num"><div class="tr-num-big">10 jaar</div><div class="tr-num-lbl">garantie</div></div>
