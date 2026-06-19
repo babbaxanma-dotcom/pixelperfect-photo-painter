@@ -1172,6 +1172,11 @@ export default function LpDienst({ slug }: { slug: string }) {
         </div>
       </section>
 
+      {/* inline CTA na werkwijze (links) */}
+      <div className="tr-wrap tr-cta-inline tr-cta--left">
+        <a className="tr-btn" href="#contact">Vraag uw gratis offerte</a>
+      </div>
+
       {/* 7. NUMBERS BAR */}
       <section className="tr-numbers">
         <div className="tr-num"><div className="tr-num-big">{new Date().getFullYear() - 2010} jaar</div><div className="tr-num-lbl">ervaring</div></div>
@@ -1200,6 +1205,11 @@ export default function LpDienst({ slug }: { slug: string }) {
           </div>
         </div>
       </section>
+
+      {/* inline CTA na reviews (rechts) */}
+      <div className="tr-wrap tr-cta-inline tr-cta--right">
+        <a className="tr-btn" href="#contact">Vraag uw gratis offerte</a>
+      </div>
 
       {/* 8. SERVICES / WAT HOUDT HET IN */}
       <section className="tr-section tr-services" id="diensten">
@@ -1257,6 +1267,11 @@ export default function LpDienst({ slug }: { slug: string }) {
         </div>
       </section>
 
+      {/* inline CTA na about (links) */}
+      <div className="tr-wrap tr-cta-inline tr-cta--left">
+        <a className="tr-btn" href="#contact">Vraag uw gratis offerte</a>
+      </div>
+
       {/* 8a. HERKENT U DIT? — signalen */}
       {d.signs && (
         <section className="tr-section" style={{ background: '#fff' }}>
@@ -1305,6 +1320,11 @@ export default function LpDienst({ slug }: { slug: string }) {
           </div>
         </section>
       )}
+
+      {/* inline CTA na realisaties (rechts) */}
+      <div className="tr-wrap tr-cta-inline tr-cta--right">
+        <a className="tr-btn" href="#contact">Vraag uw gratis offerte</a>
+      </div>
 
       {/* 11. FAQ */}
       <section className="tr-section" id="faq">
@@ -1404,6 +1424,11 @@ const LP_CSS = `
 .tr-btn:hover { background: ${ORANGE_H}; box-shadow: 0 4px 12px -4px rgba(217,140,3,0.45); }
 .tr-btn:active { box-shadow: inset 0 1px 2px rgba(0,0,0,0.18); }
 .tr-btn:disabled { opacity: .65; cursor: wait; }
+.tr-cta-inline { display: flex; padding: 6px 0 2px; }
+.tr-cta-inline .tr-btn { padding: 14px 30px; font-size: 15px; }
+.tr-cta--left { justify-content: flex-start; }
+.tr-cta--right { justify-content: flex-end; }
+@media (max-width: 600px) { .tr-cta-inline { justify-content: stretch; padding: 2px 0; } .tr-cta-inline .tr-btn { width: 100%; text-align: center; } }
 .tr-eyebrow { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-display); font-weight: 600; font-size: 12px;
   letter-spacing: 0.08em; text-transform: uppercase; color: #41495a; margin-bottom: 14px; }
 .tr-eyebrow::before { content: ''; width: 26px; height: 3px; border-radius: 2px; background: ${ORANGE}; display: inline-block; flex-shrink: 0; }
