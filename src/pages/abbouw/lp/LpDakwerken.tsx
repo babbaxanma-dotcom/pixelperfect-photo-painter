@@ -65,6 +65,11 @@ const LP_CSS = `
 .tr-btn:hover { background: ${ORANGE_H}; box-shadow: 0 4px 12px -4px rgba(217,140,3,0.45); }
 .tr-btn:active { box-shadow: inset 0 1px 2px rgba(0,0,0,0.18); }
 .tr-btn:disabled { opacity: .65; cursor: wait; }
+.tr-cta-inline { display: flex; padding: 6px 0 2px; }
+.tr-cta-inline .tr-btn { padding: 14px 30px; font-size: 15px; }
+.tr-cta--left { justify-content: flex-start; }
+.tr-cta--right { justify-content: flex-end; }
+@media (max-width: 600px) { .tr-cta-inline { justify-content: stretch; padding: 2px 0; } .tr-cta-inline .tr-btn { width: 100%; text-align: center; } }
 /* Header-CTA = ghost (outline). Houdt oranje schaars: de submit-knop in de hero-kaart
    is de enige gevulde-oranje magneet boven de vouw. */
 .tr-headcta { background: rgba(217,140,3,0.08); color: ${ORANGE_H}; border: 1.5px solid ${ORANGE}; box-shadow: none; border-radius: 999px; }
@@ -672,6 +677,8 @@ const HTML = `
     </div>
   </section>
 
+  <div class="tr-wrap tr-cta-inline tr-cta--left"><a class="tr-btn" href="#contact">Vraag uw gratis offerte</a></div>
+
   <!-- 7. NUMBERS BAR -->
   <section class="tr-numbers">
     <div class="tr-num"><div class="tr-num-big">${new Date().getFullYear() - 2010} jaar</div><div class="tr-num-lbl">ervaring</div></div>
@@ -694,6 +701,8 @@ const HTML = `
       </div>
     </div>
   </section>
+
+  <div class="tr-wrap tr-cta-inline tr-cta--right"><a class="tr-btn" href="#contact">Vraag uw gratis offerte</a></div>
 
   <!-- 8. SERVICES -->
   <section class="tr-section tr-services" id="diensten">
@@ -758,6 +767,8 @@ const HTML = `
     </div>
   </section>
 
+  <div class="tr-wrap tr-cta-inline tr-cta--left"><a class="tr-btn" href="#contact">Vraag uw gratis offerte</a></div>
+
   <!-- 9. WE ALSO OFFER / ONDERHOUD -->
   <section class="tr-section">
     <div class="tr-wrap">
@@ -802,6 +813,8 @@ const HTML = `
       </div>
     </div>
   </section>
+
+  <div class="tr-wrap tr-cta-inline tr-cta--right"><a class="tr-btn" href="#contact">Vraag uw gratis offerte</a></div>
 
   <!-- 12. FAQ -->
   <section class="tr-section" id="faq" style="background:var(--bg-tint)">
