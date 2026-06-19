@@ -231,7 +231,6 @@ const HTML = (i: Record<string, string>) => `
                     <p>${t.text}</p>
                     <div class="lf-testi-divider"></div>
                     <div class="lf-testi-foot">
-                      <img class="lf-testi-avatar" src="${t.img}" alt="${t.name}" loading="lazy" />
                       <div class="lf-testi-meta">
                         <strong>${t.name}</strong>
                         <span>${t.role}</span>
@@ -1204,7 +1203,7 @@ aside.lf-form .lf-form-thanks p { font-size: 14px; color: var(--ink-soft); margi
 
 /* Testimonials */
 .lf-testi-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.lf-testi { background:#fff; padding: 32px; border-radius: 14px; border: 1px solid rgba(20,35,58,0.07); box-shadow: 0 14px 36px -18px rgba(10,22,40,0.18); display:flex; flex-direction:column; }
+.lf-testi { background:#fff; padding: 32px; border-radius: 14px; border: 1px solid var(--ink-line-soft); display:flex; flex-direction:column; }
 .lf-rev-carousel { position: relative; display: flex; align-items: stretch; gap: 10px; }
 .lf-rev-scroll { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; padding: 4px 2px; flex: 1 1 auto; }
 .lf-rev-scroll::-webkit-scrollbar { display: none; }
@@ -1502,7 +1501,7 @@ aside.lf-form .lf-form-thanks p { font-size: 14px; color: var(--ink-soft); margi
 /* Stats counters */
 .lf-stats { padding: var(--section-y-compact) 0; background: var(--bg-tint, #f7f5ef); }
 .lf-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
-.lf-stat-card { background: #fff; border: 1px solid rgba(20,35,58,0.06); border-radius: 22px; padding: 22px; box-shadow: 0 10px 28px -18px rgba(10,22,40,0.14); transition: transform .35s var(--ease), box-shadow .35s var(--ease); position: relative; overflow: hidden; display:flex; flex-direction:column; gap: 18px; }
+.lf-stat-card { background: #fff; border: 1px solid var(--ink-line-soft, #e8e6df); border-radius: 22px; padding: 22px; transition: transform .35s var(--ease), box-shadow .35s var(--ease); position: relative; overflow: hidden; display:flex; flex-direction:column; gap: 18px; }
 .lf-stat-card:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -28px rgba(10,22,40,0.22); }
 .lf-stat-card:hover .lf-stat-photo img { transform: scale(1.06); }
 .lf-stat-photo { position:relative; width:100%; aspect-ratio: 4/3; border-radius: 16px; overflow:hidden; background:#eee; }
@@ -2097,7 +2096,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
 .lf-div-head-cta:hover { gap: 12px; }
 .lf-div-head-cta:hover svg { transform: translateX(3px); }
 
-.lf-div-feature { display: grid; grid-template-columns: 1.15fr 1fr; background: #fff; border: 1px solid rgba(20,35,58,0.06); border-radius: 18px; overflow: hidden; box-shadow: 0 12px 32px -20px rgba(10,22,40,0.16); margin-bottom: 24px; text-decoration: none; color: var(--ink); transition: box-shadow .3s var(--ease), transform .3s var(--ease); }
+.lf-div-feature { display: grid; grid-template-columns: 1.15fr 1fr; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; margin-bottom: 24px; text-decoration: none; color: var(--ink); transition: box-shadow .3s var(--ease), transform .3s var(--ease); }
 .lf-div-feature:hover { transform: translateY(-3px); box-shadow: 0 30px 64px -30px rgba(10,22,40,0.28); }
 .lf-div-feature-img { position: relative; min-height: 360px; overflow: hidden; background: #eef0f2; }
 .lf-div-feature-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.22,1,.36,1); }
@@ -2109,7 +2108,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
 .lf-div-tag.light { background: rgba(255,255,255,0.16); color: #fff; }
 
 .lf-div-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.lf-div-card { display: flex; flex-direction: column; background: #fff; border: 1px solid rgba(20,35,58,0.06); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 28px -18px rgba(10,22,40,0.16); text-decoration: none; color: var(--ink); transition: box-shadow .3s var(--ease), transform .3s var(--ease), border-color .3s var(--ease); }
+.lf-div-card { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 16px; overflow: hidden; text-decoration: none; color: var(--ink); transition: box-shadow .3s var(--ease), transform .3s var(--ease), border-color .3s var(--ease); }
 .lf-div-card:hover { transform: translateY(-4px); box-shadow: 0 26px 52px -28px rgba(10,22,40,0.24); border-color: rgba(217,140,3,0.45); }
 .lf-div-card-img { aspect-ratio: 16/10; overflow: hidden; background: #eef0f2; }
 .lf-div-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.22,1,.36,1); }
