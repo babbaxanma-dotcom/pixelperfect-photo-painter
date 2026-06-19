@@ -65,11 +65,10 @@ const LP_CSS = `
 .tr-btn:hover { background: ${ORANGE_H}; box-shadow: 0 4px 12px -4px rgba(217,140,3,0.45); }
 .tr-btn:active { box-shadow: inset 0 1px 2px rgba(0,0,0,0.18); }
 .tr-btn:disabled { opacity: .65; cursor: wait; }
-.tr-cta-inline { display: flex; padding: 6px 0 2px; }
-.tr-cta-inline .tr-btn { padding: 14px 30px; font-size: 15px; }
-.tr-cta--left { justify-content: flex-start; }
-.tr-cta--right { justify-content: flex-end; }
-@media (max-width: 600px) { .tr-cta-inline { justify-content: stretch; padding: 2px 0; } .tr-cta-inline .tr-btn { width: 100%; text-align: center; } }
+.tr-cta-block { padding: clamp(44px, 6vw, 70px) 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px; }
+.tr-cta-line { font-family: var(--font-display); font-weight: 600; font-size: clamp(20px, 2.5vw, 27px); color: #14233a; margin: 0; max-width: 540px; line-height: 1.3; }
+.tr-cta-block .tr-btn { padding: 15px 34px; font-size: 15px; }
+@media (max-width: 600px) { .tr-cta-block { padding: 40px 0; } .tr-cta-block .tr-btn { width: 100%; max-width: 360px; } }
 /* Header-CTA = ghost (outline). Houdt oranje schaars: de submit-knop in de hero-kaart
    is de enige gevulde-oranje magneet boven de vouw. */
 .tr-headcta { background: rgba(217,140,3,0.08); color: ${ORANGE_H}; border: 1.5px solid ${ORANGE}; box-shadow: none; border-radius: 999px; }
@@ -677,8 +676,6 @@ const HTML = `
     </div>
   </section>
 
-  <div class="tr-wrap tr-cta-inline tr-cta--left"><a class="tr-btn" href="#contact">Vraag uw gratis offerte</a></div>
-
   <!-- 7. NUMBERS BAR -->
   <section class="tr-numbers">
     <div class="tr-num"><div class="tr-num-big">${new Date().getFullYear() - 2010} jaar</div><div class="tr-num-lbl">ervaring</div></div>
@@ -702,7 +699,10 @@ const HTML = `
     </div>
   </section>
 
-  <div class="tr-wrap tr-cta-inline tr-cta--right"><a class="tr-btn" href="#contact">Vraag uw gratis offerte</a></div>
+  <div class="tr-wrap tr-cta-block">
+    <p class="tr-cta-line">Sluit u aan bij honderden tevreden klanten in uw regio.</p>
+    <a class="tr-btn" href="#contact">Vraag uw gratis offerte</a>
+  </div>
 
   <!-- 8. SERVICES -->
   <section class="tr-section tr-services" id="diensten">
@@ -767,7 +767,10 @@ const HTML = `
     </div>
   </section>
 
-  <div class="tr-wrap tr-cta-inline tr-cta--left"><a class="tr-btn" href="#contact">Vraag uw gratis offerte</a></div>
+  <div class="tr-wrap tr-cta-block">
+    <p class="tr-cta-line">Eén aanspreekpunt, een vaste prijs vooraf.</p>
+    <a class="tr-btn" href="#contact">Plan een vrijblijvend plaatsbezoek</a>
+  </div>
 
   <!-- 9. WE ALSO OFFER / ONDERHOUD -->
   <section class="tr-section">
@@ -814,7 +817,10 @@ const HTML = `
     </div>
   </section>
 
-  <div class="tr-wrap tr-cta-inline tr-cta--right"><a class="tr-btn" href="#contact">Vraag uw gratis offerte</a></div>
+  <div class="tr-wrap tr-cta-block">
+    <p class="tr-cta-line">Benieuwd wat uw project kost?</p>
+    <a class="tr-btn" href="#contact">Vraag vrijblijvend uw prijs</a>
+  </div>
 
   <!-- 12. FAQ -->
   <section class="tr-section" id="faq" style="background:var(--bg-tint)">
