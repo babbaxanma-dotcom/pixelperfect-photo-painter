@@ -63,10 +63,6 @@ const LP_CSS = `
 .tr-btn:hover { background: ${ORANGE_H}; box-shadow: 0 4px 12px -4px rgba(217,140,3,0.45); }
 .tr-btn:active { box-shadow: inset 0 1px 2px rgba(0,0,0,0.18); }
 .tr-btn:disabled { opacity: .65; cursor: wait; }
-.tr-cta-block { padding: clamp(44px, 6vw, 70px) 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px; }
-.tr-cta-line { font-family: var(--font-display); font-weight: 600; font-size: clamp(20px, 2.5vw, 27px); color: #14233a; margin: 0; max-width: 540px; line-height: 1.3; }
-.tr-cta-block .tr-btn { padding: 15px 34px; font-size: 15px; }
-@media (max-width: 600px) { .tr-cta-block { padding: 40px 0; } .tr-cta-block .tr-btn { width: 100%; max-width: 360px; } }
 .tr-eyebrow { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-display); font-weight: 600; font-size: 12px;
   letter-spacing: 0.08em; text-transform: uppercase; color: #41495a; margin-bottom: 14px; }
 .tr-eyebrow::before { content: ''; width: 26px; height: 3px; border-radius: 2px; background: ${ORANGE}; display: inline-block; flex-shrink: 0; }
@@ -107,7 +103,7 @@ const LP_CSS = `
 @media (max-width: 980px) {
   .tr-nav { display: none; }
   .tr-rating { display: none; }
-  .tr-headcta { display: none; }
+  .tr-headcta { display: inline-flex; padding: 9px 13px !important; font-size: 12.5px !important; }
   .tr-burger { display: flex; }
   .tr-logo { height: 52px; }
   .tr-header .tr-wrap { min-height: 66px; gap: 12px; }
@@ -561,11 +557,6 @@ const HTML = `
     </div>
   </section>
 
-  <div class="tr-wrap tr-cta-block">
-    <p class="tr-cta-line">Sluit u aan bij honderden tevreden klanten in uw regio.</p>
-    <a class="tr-btn" href="#contact">Vraag uw gratis offerte</a>
-  </div>
-
   <!-- 9. WE ALSO OFFER / ONDERHOUD -->
   <section class="tr-section">
     <div class="tr-wrap">
@@ -628,11 +619,6 @@ const HTML = `
     </div>
   </section>
 
-  <div class="tr-wrap tr-cta-block">
-    <p class="tr-cta-line">Eén aanspreekpunt, een vaste prijs vooraf.</p>
-    <a class="tr-btn" href="#contact">Plan een vrijblijvend plaatsbezoek</a>
-  </div>
-
   <!-- 11. REVIEWS -->
   <section class="tr-section tr-reviews" id="reviews">
     <div class="tr-wrap">
@@ -647,11 +633,6 @@ const HTML = `
       </div>
     </div>
   </section>
-
-  <div class="tr-wrap tr-cta-block">
-    <p class="tr-cta-line">Benieuwd wat uw project kost?</p>
-    <a class="tr-btn" href="#contact">Vraag vrijblijvend uw prijs</a>
-  </div>
 
   <!-- 12. FAQ -->
   <section class="tr-section" id="faq">

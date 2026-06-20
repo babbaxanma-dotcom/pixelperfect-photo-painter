@@ -19,69 +19,27 @@ import { CONTACT } from '@/data/contact';
 import CalculatorWizard from '../calculator/CalculatorWizard';
 import { DAK_CALC_CONFIGS } from '../calculator/dakCalcConfigs';
 import logo from '@/assets/home/logo.png';
-import rTr1a from '@/assets/lp-diensten/realisaties/totaalrenovatie-p1-a.jpg';
-import rTr1b from '@/assets/lp-diensten/realisaties/totaalrenovatie-p1-b.jpg';
-import rTr1c from '@/assets/lp-diensten/realisaties/totaalrenovatie-p1-c.jpg';
-import rTr2a from '@/assets/lp-diensten/realisaties/totaalrenovatie-p2-a.jpg';
-import rTr2b from '@/assets/lp-diensten/realisaties/totaalrenovatie-p2-b.jpg';
-import rTr2c from '@/assets/lp-diensten/realisaties/totaalrenovatie-p2-c.jpg';
-import rTr3a from '@/assets/lp-diensten/realisaties/totaalrenovatie-p3-a.jpg';
-import rTr3b from '@/assets/lp-diensten/realisaties/totaalrenovatie-p3-b.jpg';
-import rTr3c from '@/assets/lp-diensten/realisaties/totaalrenovatie-p3-c.jpg';
-import rBk1a from '@/assets/lp-diensten/realisaties/badkamer-p1-a.jpg';
-import rBk1b from '@/assets/lp-diensten/realisaties/badkamer-p1-b.jpg';
-import rBk1c from '@/assets/lp-diensten/realisaties/badkamer-p1-c.jpg';
-import rBk2a from '@/assets/lp-diensten/realisaties/badkamer-p2-a.jpg';
-import rBk2b from '@/assets/lp-diensten/realisaties/badkamer-p2-b.jpg';
-import rBk2c from '@/assets/lp-diensten/realisaties/badkamer-p2-c.jpg';
-import rBk3a from '@/assets/lp-diensten/realisaties/badkamer-p3-a.jpg';
-import rBk3b from '@/assets/lp-diensten/realisaties/badkamer-p3-b.jpg';
-import rBk3c from '@/assets/lp-diensten/realisaties/badkamer-p3-c.jpg';
-import rTg1a from '@/assets/lp-diensten/realisaties/tegelwerken-p1-a.jpg';
-import rTg1b from '@/assets/lp-diensten/realisaties/tegelwerken-p1-b.jpg';
-import rTg1c from '@/assets/lp-diensten/realisaties/tegelwerken-p1-c.jpg';
-import rTg2a from '@/assets/lp-diensten/realisaties/tegelwerken-p2-a.jpg';
-import rTg2b from '@/assets/lp-diensten/realisaties/tegelwerken-p2-b.jpg';
-import rTg2c from '@/assets/lp-diensten/realisaties/tegelwerken-p2-c.jpg';
-import rTg3a from '@/assets/lp-diensten/realisaties/tegelwerken-p3-a.jpg';
-import rTg3b from '@/assets/lp-diensten/realisaties/tegelwerken-p3-b.jpg';
-import rTg3c from '@/assets/lp-diensten/realisaties/tegelwerken-p3-c.jpg';
-import rPl1a from '@/assets/lp-diensten/realisaties/pleisterwerk-p1-a.jpg';
-import rPl1b from '@/assets/lp-diensten/realisaties/pleisterwerk-p1-b.jpg';
-import rPl1c from '@/assets/lp-diensten/realisaties/pleisterwerk-p1-c.jpg';
-import rPl2a from '@/assets/lp-diensten/realisaties/pleisterwerk-p2-a.jpg';
-import rPl2b from '@/assets/lp-diensten/realisaties/pleisterwerk-p2-b.jpg';
-import rPl2c from '@/assets/lp-diensten/realisaties/pleisterwerk-p2-c.jpg';
-import rPl3a from '@/assets/lp-diensten/realisaties/pleisterwerk-p3-a.jpg';
-import rPl3b from '@/assets/lp-diensten/realisaties/pleisterwerk-p3-b.jpg';
-import rPl3c from '@/assets/lp-diensten/realisaties/pleisterwerk-p3-c.jpg';
-import rTe1a from '@/assets/lp-diensten/realisaties/terras-p1-a.jpg';
-import rTe1b from '@/assets/lp-diensten/realisaties/terras-p1-b.jpg';
-import rTe1c from '@/assets/lp-diensten/realisaties/terras-p1-c.jpg';
-import rTe2a from '@/assets/lp-diensten/realisaties/terras-p2-a.jpg';
-import rTe2b from '@/assets/lp-diensten/realisaties/terras-p2-b.jpg';
-import rTe2c from '@/assets/lp-diensten/realisaties/terras-p2-c.jpg';
-import rTe3a from '@/assets/lp-diensten/realisaties/terras-p3-a.jpg';
-import rTe3b from '@/assets/lp-diensten/realisaties/terras-p3-b.jpg';
-import rTe3c from '@/assets/lp-diensten/realisaties/terras-p3-c.jpg';
-import rOp1a from '@/assets/lp-diensten/realisaties/oprit-p1-a.jpg';
-import rOp1b from '@/assets/lp-diensten/realisaties/oprit-p1-b.jpg';
-import rOp1c from '@/assets/lp-diensten/realisaties/oprit-p1-c.jpg';
-import rOp2a from '@/assets/lp-diensten/realisaties/oprit-p2-a.jpg';
-import rOp2b from '@/assets/lp-diensten/realisaties/oprit-p2-b.jpg';
-import rOp2c from '@/assets/lp-diensten/realisaties/oprit-p2-c.jpg';
-import rOp3a from '@/assets/lp-diensten/realisaties/oprit-p3-a.jpg';
-import rOp3b from '@/assets/lp-diensten/realisaties/oprit-p3-b.jpg';
-import rOp3c from '@/assets/lp-diensten/realisaties/oprit-p3-c.jpg';
-import rZw1a from '@/assets/lp-diensten/realisaties/zwembad-p1-a.jpg';
-import rZw1b from '@/assets/lp-diensten/realisaties/zwembad-p1-b.jpg';
-import rZw1c from '@/assets/lp-diensten/realisaties/zwembad-p1-c.jpg';
-import rZw2a from '@/assets/lp-diensten/realisaties/zwembad-p2-a.jpg';
-import rZw2b from '@/assets/lp-diensten/realisaties/zwembad-p2-b.jpg';
-import rZw2c from '@/assets/lp-diensten/realisaties/zwembad-p2-c.jpg';
-import rZw3a from '@/assets/lp-diensten/realisaties/zwembad-p3-a.jpg';
-import rZw3b from '@/assets/lp-diensten/realisaties/zwembad-p3-b.jpg';
-import rZw3c from '@/assets/lp-diensten/realisaties/zwembad-p3-c.jpg';
+import imgTrG1 from '@/assets/lp-diensten/totaalrenovatie-g1.jpg';
+import imgTrG2 from '@/assets/lp-diensten/totaalrenovatie-g2.jpg';
+import imgTrG3 from '@/assets/lp-diensten/totaalrenovatie-g3.jpg';
+import imgBkG1 from '@/assets/lp-diensten/badkamer-g1.jpg';
+import imgBkG2 from '@/assets/lp-diensten/badkamer-g2.jpg';
+import imgBkG3 from '@/assets/lp-diensten/badkamer-g3.jpg';
+import imgTgG1 from '@/assets/lp-diensten/tegelwerken-g1.jpg';
+import imgTgG2 from '@/assets/lp-diensten/tegelwerken-g2.jpg';
+import imgTgG3 from '@/assets/lp-diensten/tegelwerken-g3.jpg';
+import imgPlG1 from '@/assets/lp-diensten/pleisterwerk-g1.jpg';
+import imgPlG2 from '@/assets/lp-diensten/pleisterwerk-g2.jpg';
+import imgPlG3 from '@/assets/lp-diensten/pleisterwerk-g3.jpg';
+import imgTeG1 from '@/assets/lp-diensten/terras-g1.jpg';
+import imgTeG2 from '@/assets/lp-diensten/terras-g2.jpg';
+import imgTeG3 from '@/assets/lp-diensten/terras-g3.jpg';
+import imgOpG1 from '@/assets/lp-diensten/oprit-g1.jpg';
+import imgOpG2 from '@/assets/lp-diensten/oprit-g2.jpg';
+import imgOpG3 from '@/assets/lp-diensten/oprit-g3.jpg';
+import imgZwG1 from '@/assets/lp-diensten/zwembad-g1.jpg';
+import imgZwG2 from '@/assets/lp-diensten/zwembad-g2.jpg';
+import imgZwG3 from '@/assets/lp-diensten/zwembad-g3.jpg';
 import velux from '@/assets/merken/Velux.png';
 
 import imgVelux from '@/assets/dak/lp-velux-huis.jpg';
@@ -201,7 +159,7 @@ const DIENSTEN: Record<string, Dienst> = {
     whatIntro: 'Een volledige woningrenovatie raakt aan ruwbouw, technieken en afwerking tegelijk. Wij brengen die delen samen onder één coördinatie, zodat u maar met één partij te maken heeft.',
     what: [['Ruwbouw en structuur', 'Muren uitbreken of bijplaatsen, draagstructuur, vloeren en daken aanpassen waar de nieuwe indeling dat vraagt.'], ['Technieken', 'Elektriciteit, sanitair, verwarming en ventilatie volledig vernieuwd, conform de huidige normen.'], ['Isolatie en buitenschil', 'Dak, gevel en ramen waar nodig isoleren en vernieuwen, voor een lager verbruik en meer comfort.'], ['Afwerking', 'Bepleistering, vloeren, keuken, badkamer en schilderwerk, sleutel-op-de-deur opgeleverd.']],
     whatImg: imgTrWhat,
-    gallery: [[rTr1a, rTr1b, rTr1c], [rTr2a, rTr2b, rTr2c], [rTr3a, rTr3b, rTr3c]],
+    gallery: [imgTrG1, imgTrG2, imgTrG3],
     reviews: [{ text: '"We hebben een oude rijwoning volledig laten strippen en heropbouwen. Eén aanspreekpunt voor alles, dat heeft ons enorm veel stress gescheeld. De prijs op de offerte klopte tot op het einde."', name: 'Geert Vandenbussche', role: 'Volledige renovatie rijwoning' }, { text: '"Onze woning uit de jaren zeventig is van binnen helemaal vernieuwd: elektriciteit, sanitair, isolatie en afwerking. Hun eigen ploeg deed het meeste zelf, dat merk je aan de afstemming."', name: 'Annelies Verstraeten', role: 'Totaalrenovatie woning' }, { text: '"Bij het plaatsbezoek kregen we de raad om niet alles ineens te doen, maar de keuken en badkamer een jaar later. Dat scheelde ons een lening. Beide fases liepen volgens de planning die op papier stond."', name: 'Bart Coppens', role: 'Gefaseerde renovatie' }],
     faq: [['Wat kost een totaalrenovatie?', 'Dat hangt sterk af van de staat van de woning, de oppervlakte en de gewenste afwerking. Een totaalrenovatie loopt al snel op, daarom werken wij met een vaste prijs op papier per post. Na het gratis plaatsbezoek weet u exact waar u aan toe bent, en die offerte is meteen uw factuur.'], ['Krijg ik echt één vaste prijs voor alles?', 'Ja. Wij maken één bindende offerte op voor de volledige renovatie, post per post. Wat op de offerte staat, betaalt u, ook als materiaalprijzen ondertussen stijgen. Komen er meerwerken op uw vraag bij, dan bespreken we die vooraf en legt u het vast voor we ze uitvoeren.'], ['Werken jullie met onderaannemers?', 'Het meeste werk doet onze eigen vaste ploeg. Voor zeer specifieke onderdelen werken we soms met vaste partners die we al jaren kennen, maar de coördinatie en het aanspreekpunt blijven altijd bij ons.'], ['Geldt het 6% btw-tarief voor mijn renovatie?', 'Is uw woning ouder dan 10 jaar en blijft ze hoofdzakelijk een privéwoning, dan valt de renovatie via de aannemer doorgaans onder 6% btw op materiaal en arbeid. Wij regelen het bijhorende papierwerk en bekijken bij het plaatsbezoek of u in aanmerking komt.'], ['Hoe lang duurt een totaalrenovatie?', 'Dat verschilt per project, van enkele weken voor een gedeeltelijke renovatie tot enkele maanden voor een volledige woning. Bij de offerte krijgt u een realistische planning, en één aanspreekpunt bewaakt die tijdens de werken.'], ['Kan ik tijdens de werken in mijn woning blijven wonen?', 'Bij een gedeeltelijke renovatie meestal wel. We werken dan per zone en schermen stof zoveel mogelijk af. Bij een volledige renovatie is het vaak praktischer om er even uit te zijn; dat bespreken we eerlijk op het plaatsbezoek, zodat u vooraf weet waar u aan toe bent.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen. Bij het gratis plaatsbezoek bevestigen we meteen de planning.']],
     typeWerkOpties: ['Volledige woning', 'Gedeeltelijke renovatie', 'Sleutel-op-de-deur', 'Anders'],
@@ -235,7 +193,7 @@ const DIENSTEN: Record<string, Dienst> = {
     whatIntro: 'Een badkamer vernieuwen is meer dan tegels en een douche. Wij verzorgen het volledige traject, van de leidingen achter de muur tot de laatste voeg.',
     what: [['Volledige renovatie', 'Uw badkamer van vloer tot plafond vernieuwd: uitbreken, leidingen, tegels, sanitair en afwerking.'], ['Inloopdouche', 'Een ruime inloopdouche op maat, waterdicht ingewerkt en gelijkvloers waar het kan.'], ['Bad vervangen door douche', 'Het oude bad eruit, een moderne douche ervoor in de plaats, leidingen mee aangepast.'], ['Sanitair en leidingen', 'Nieuwe water- en afvoerleidingen, kranen, toilet en meubel, alles correct aangesloten.']],
     whatImg: imgBkWhat,
-    gallery: [[rBk1a, rBk1b, rBk1c], [rBk2a, rBk2b, rBk2c], [rBk3a, rBk3b, rBk3c]],
+    gallery: [imgBkG1, imgBkG2, imgBkG3],
     reviews: [{ text: '"Onze badkamer uit de jaren negentig volledig vernieuwd. Bad eruit, ruime inloopdouche erin. Eén ploeg voor alles, en de prijs klopte met de offerte."', name: 'Greet Janssens', role: 'Volledige badkamerrenovatie' }, { text: '"We twijfelden of we het bad zouden houden, maar ze toonden met de maten dat een douche de kleine ruimte een pak groter laat voelen. Achteraf blij dat we geluisterd hebben. Het toilet schoof mee een halve meter op, alles strak aangesloten."', name: 'Peter Maes', role: 'Bad vervangen door douche' }, { text: '"Vaste prijs vooraf, geen verrassingen achteraf. De leidingen zaten verouderd, ze hebben dat meteen mee opgelost. Heel tevreden."', name: 'Linda Verbeeck', role: 'Inloopdouche op maat' }],
     faq: [['Wat kost een badkamerrenovatie?', 'Dat hangt af van de oppervlakte, het sanitair, de tegels en de staat van de leidingen. Een complete badkamer ligt doorgaans tussen 9.000 en 18.000 euro. U krijgt een vaste prijs na het gratis plaatsbezoek; wat op de offerte staat, betaalt u.'], ['Hoe lang duurt een badkamerrenovatie?', 'Een volledige badkamer is doorgaans in twee tot drie weken klaar, afhankelijk van de omvang en de droogtijden. Bij het plaatsbezoek geven we u een realistische planning.'], ['Doen jullie alles zelf of met onderaannemers?', 'Alles met onze eigen vaste ploeg. Sanitair, tegelwerk en leidingen zitten in één hand, met één aanspreekpunt van begin tot oplevering.'], ['Kan ik mijn bad laten vervangen door een inloopdouche?', 'Ja, dat is een van de meest gevraagde renovaties. Wij halen het bad eruit, passen de leidingen en de afvoer aan en plaatsen een waterdichte inloopdouche.'], ['Betaal ik 6% of 21% btw?', 'Is uw woning ouder dan 10 jaar, dan valt de renovatie inclusief plaatsing meestal onder 6% btw. Wij bekijken of u in aanmerking komt en regelen het papierwerk.'], ['Kan ik mijn badkamer nog gebruiken tijdens de werken?', 'Bij een volledige renovatie ligt de badkamer een aantal dagen stil, van het uitbreken tot het sanitair terug aangesloten is. Heeft u maar één badkamer, zeg dat op het plaatsbezoek: we plannen het toilet en een werkende douche dan als eerste opnieuw aan, zodat u zo weinig mogelijk dagen zonder zit.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen. Bij het gratis plaatsbezoek bevestigen we meteen de planning.']],
     typeWerkOpties: ['Volledige badkamer', 'Inloopdouche', 'Bad vervangen door douche', 'Anders'],
@@ -269,7 +227,7 @@ const DIENSTEN: Record<string, Dienst> = {
     whatIntro: 'Een mooie tegelvloer begint bij een vlakke ondergrond. Wij verzorgen het volledige werk, van voorbereiding tot de laatste voeg.',
     what: [['Vloertegels leggen', 'Keramische tegels of grootformaat, vlak gelegd in badkamer, keuken of woonkamer.'], ['Wandtegels plaatsen', 'Wandtegels strak en waterpas geplaatst, met nette aansluitingen rond kranen en stopcontacten.'], ['Grootformaat en XXL', 'Grote formaten gelijmd in volvlak, zodat er geen holle plekken onder de tegel zitten.'], ['Voegen en afwerking', 'Strak doorgevoegd in de juiste kleur, hoeken en plinten netjes afgewerkt.']],
     whatImg: imgTgWhat,
-    gallery: [[rTg1a, rTg1b, rTg1c], [rTg2a, rTg2b, rTg2c], [rTg3a, rTg3b, rTg3c]],
+    gallery: [imgTgG1, imgTgG2, imgTgG3],
     reviews: [{ text: '"Volledige woonkamer in grootformaat tegels. Kaarsrecht gelegd en strak gevoegd. Mooi resultaat."', name: 'Marc Hermans', role: 'Vloertegels woonkamer' }, { text: '"Badkamer volledig betegeld, vloer en wanden. Netjes afgewerkt rond de kranen en strak doorgevoegd. Heel tevreden."', name: 'Liesbeth Coninckx', role: 'Badkamer betegeld' }, { text: '"Goed advies over het legpatroon, ze hebben echt meegedacht. Keuken en hal in één lijn doorgelegd. Mooi gedaan."', name: 'Patrick Goossens', role: 'Keuken- en vloertegels' }],
     faq: [['Wat kost tegels leggen per m²?', 'Dat hangt af van het formaat, het legpatroon en de staat van de ondergrond. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'], ['Leggen jullie ook grootformaat en XXL-tegels?', 'Ja. Grote formaten lijmen we in volvlak, zodat er geen holle plekken onder de tegel zitten. Dat vraagt een vlakke ondergrond, die bereiden we correct voor.'], ['Moet de ondergrond eerst worden voorbereid?', 'Meestal wel. Een vlakke, draagkrachtige ondergrond is de basis voor een strak resultaat. Bij het plaatsbezoek beoordelen we of egaliseren nodig is.'], ['Geldt het 6% btw-tarief voor tegelwerken?', 'Bij een woning ouder dan 10 jaar valt tegelwerk incl. plaatsing en materiaal via ons onder het 6% renovatietarief. Bij nieuwbouw is dat 21%. Dat papierwerk regelen wij.'], ['Plaatsen jullie ook de tegels die ik zelf gekozen heb?', 'Ja. U kiest de tegels in de showroom, wij verzorgen de plaatsing. We adviseren gerust over formaat en legpatroon zodat alles strak uitkomt.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.']],
     typeWerkOpties: ['Vloertegels', 'Wandtegels', 'Grootformaat / XXL', 'Anders'],
@@ -304,7 +262,7 @@ const DIENSTEN: Record<string, Dienst> = {
     whatIntro: 'Van een ruwe muur naar een vlakke wand: dat is pleisterwerk. Wij doen het natte pleisterwerk én de drogere gyproc-opbouw, zodat uw hele binnenafwerking bij één ploeg ligt.',
     what: [['Wanden pleisteren', 'Bepleistering van bakstenen of betonnen muren, vlak afgewerkt en klaar voor de verf.'], ['Plafonds pleisteren', 'Plafonds strak en egaal pleisteren, zonder zichtbare overgangen of golven.'], ['Gyproc & voorzetwanden', 'Gipsplaten, scheidingswanden en voorzetwanden plaatsen, dichtgezet en uitgevlakt.'], ['Voorbereiding', 'Ondergrond reinigen, uitvlakken en voorstrijken, zodat de pleister blijft zitten en niet scheurt.']],
     whatImg: imgPlWhat,
-    gallery: [[rPl1a, rPl1b, rPl1c], [rPl2a, rPl2b, rPl2c], [rPl3a, rPl3b, rPl3c]],
+    gallery: [imgPlG1, imgPlG2, imgPlG3],
     reviews: [{ text: '"Heel het benedenverdiep opnieuw laten pleisteren. Strak en vlak, geen oneffenheden. En alles netjes afgeplakt voor ze begonnen."', name: 'Wim Heylen', role: 'Wanden en plafonds gepleisterd' }, { text: '"Voor de nieuwe slaapkamers een gyproc voorzetwand laten plaatsen en alles mee gepleisterd. Vaste prijs vooraf, geen verrassingen achteraf."', name: 'Annelies Maes', role: 'Gyproc + pleisterwerk' }, { text: '"Plafond in de living zat vol haarscheuren door de oude pleister. Ze raadden af om er gewoon over te schilderen en hebben het volledig uitgevlakt en herpleisterd. Een halfjaar later nog altijd geen barst te zien."', name: 'Geert Vermeiren', role: 'Plafond pleisteren' }],
     faq: [['Wat kost pleisterwerk per m²?', 'Dat hangt af van de oppervlakte, de staat van de ondergrond en de gewenste afwerking. U krijgt een vaste prijs per m² na het gratis plaatsbezoek. Wat op de offerte staat, betaalt u.'], ['Doen jullie ook gyproc en voorzetwanden?', 'Ja. Wij plaatsen gipsplaten, scheidingswanden en voorzetwanden, en pleisteren ze meteen af. Pleisterwerk en gyproc liggen zo bij dezelfde ploeg.'], ['Valt pleisterwerk onder 6% btw?', 'Bij een woning ouder dan 10 jaar valt pleisterwerk en gyproc onder het 6% renovatietarief. Bij nieuwbouw is dat 21%. Wij regelen het bijhorende papierwerk.'], ['Hoe lang moet de pleister drogen?', 'Vers pleisterwerk droogt doorgaans enkele weken, afhankelijk van de dikte en de ventilatie. Pas daarna schildert u best. Wij zeggen u bij de oplevering wanneer de muur schilderklaar is.'], ['Kan ik er meteen op schilderen?', 'Nee, laat de pleister eerst volledig uitdrogen. Daarna is de wand vlak en klaar voor de verf, zonder extra uitvlakwerk.'], ['Geeft pleisteren veel stof in een bewoond huis?', 'Pleisteren zelf is nat werk en stuift weinig; het stof komt vooral van het opruwen, schuren en uitkappen vooraf. Daarom dekken we de vloer en alles wat blijft staan af en zetten we de werkzone met folie dicht naar de rest van het huis. Op het einde van elke werkdag halen we het grove stof weg. Werken we in een bewoonde woning, ruim de kamer dan zoveel mogelijk leeg; dan blijft het stof beperkt tot die ene ruimte.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.']],
     typeWerkOpties: ['Wanden pleisteren', 'Plafond pleisteren', 'Gyproc / voorzetwand', 'Anders'],
@@ -338,7 +296,7 @@ const DIENSTEN: Record<string, Dienst> = {
     whatIntro: 'Een goed terras begint onder de grond. Wij verzorgen de volledige opbouw, van uitgraven en funderen tot het plaatsen en voegen van uw terras.',
     what: [['Keramische tegels', 'Keramiek op tegeldragers of in een vol bed. Vlekt en verkleurt niet, dweilen volstaat om het schoon te houden.'], ['Natuursteen of blauwsteen', 'Belgische blauwsteen of natuursteen voor een warme, tijdloze terraslook.'], ['Klinkers of hout', 'Klinkers en kasseien voor een klassieke tuin, of hardhout zoals padoek voor een natuurlijk terras.'], ['Fundering en afwatering', 'Een stevige onderbouw en het juiste afschot, zodat regenwater netjes wegloopt.']],
     whatImg: imgTeWhat,
-    gallery: [[rTe1a, rTe1b, rTe1c], [rTe2a, rTe2b, rTe2c], [rTe3a, rTe3b, rTe3c]],
+    gallery: [imgTeG1, imgTeG2, imgTeG3],
     reviews: [{ text: '"Nieuw terras in keramische tegels, mooi vlak. Na een regenbui staat er nergens nog een plas. Proper opgeleverd."', name: 'Dries Luyckx', role: 'Keramisch terras' }, { text: '"Terras in blauwsteen laten aanleggen. Mooi vlak gelegd en het water loopt netjes weg. Heel content met het resultaat."', name: 'Nadine Peeters', role: 'Natuursteen terras' }, { text: '"Oud terras vervangen door een houten terras. Strak gelegd en klaar binnen de afgesproken week. Heel tevreden."', name: 'Wim Claessens', role: 'Houten terras' }],
     faq: [['Wat kost een terras aanleggen per m²?', 'Dat hangt af van het materiaal, de grootte, de ondergrond en de afwatering. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'], ['Welk materiaal kies ik best?', 'Keramiek hoeft u enkel te dweilen, natuursteen leeft mee met uw gevel, klinkers passen bij een landelijke tuin en hout vraagt jaarlijks een olie-beurt. Bij het plaatsbezoek bekijken we samen wat bij uw tuin en budget past.'], ['Leggen jullie ook de fundering en afwatering?', 'Ja. Wij verzorgen het grondwerk, de fundering en het juiste afschot, zodat uw terras vlak ligt en regenwater goed wegloopt.'], ['Kunnen jullie mijn oude terras vervangen?', 'Ja. We breken het oude terras uit, bereiden de ondergrond opnieuw voor en leggen uw nieuwe terras aan.'], ['Geldt het 6% btw-tarief voor mijn terras?', 'Bij een woning ouder dan 10 jaar valt het terras meestal onder 6% btw op arbeid en materiaal. Bij nieuwbouw of een woning jonger dan 10 jaar is dat 21%. We bekijken het samen.'], ['Wat gebeurt er met de uitgegraven grond en het puin?', 'Bij het uitgraven en bij het uitbreken van een oud terras komen grond en puin vrij. Wij voeren dat zelf af; de afvoer en de containers zitten in de offerteprijs. Tijdens de werken stapelen we de materialen op één plek in de tuin, en bij de oplevering harken we de werkzone proper aan.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.']],
     typeWerkOpties: ['Keramisch terras', 'Natuursteen terras', 'Terras in klinkers', 'Houten terras'],
@@ -372,7 +330,7 @@ const DIENSTEN: Record<string, Dienst> = {
     whatIntro: 'Een oprit is meer dan klinkers leggen. De fundering en de afwatering bepalen of hij na jaren nog vlak ligt. Wij verzorgen het volledige werk, van uitgraven tot de laatste voeg.',
     what: [['Klinkers en betonklinkers', 'Klassieke kleiklinkers of betonklinkers, strak gelegd in het verband naar keuze.'], ['Waterdoorlatende oprit', 'Verharding waar regenwater in de bodem zakt in plaats van naar de straat te lopen.'], ['Fundering en uitgraven', 'Uitgraven en een stabiele onderbouw, zodat uw oprit niet verzakt of golft.'], ['Afboording en afwatering', 'Nette boordstenen en de juiste afschot, zodat water wegloopt en de klinkers op hun plaats blijven.']],
     whatImg: imgOpWhat,
-    gallery: [[rOp1a, rOp1b, rOp1c], [rOp2a, rOp2b, rOp2c], [rOp3a, rOp3b, rOp3c]],
+    gallery: [imgOpG1, imgOpG2, imgOpG3],
     reviews: [{ text: '"Onze oude oprit was helemaal verzakt. Alles opnieuw aangelegd en twee winters later ligt er nog geen klinker scheef. Top."', name: 'Bram Verschueren', role: 'Oprit vernieuwd' }, { text: '"Voor waterdoorlatende klinkers gekozen op hun advies. Geen plassen meer en regenwater zakt gewoon weg. Vaste prijs vooraf, nette ploeg."', name: 'Annelies Peeters', role: 'Waterdoorlatende oprit' }, { text: '"Nieuwe oprit in betonklinkers, strak gelegd. Een groot verschil met de oude die overal verzakt was. Heel tevreden."', name: 'Patrick Wouters', role: 'Oprit in betonklinkers' }],
     faq: [['Wat kost een oprit aanleggen?', 'Dat hangt af van de oppervlakte, het materiaal en de bestaande ondergrond. U krijgt een vaste prijs voor de volledige oprit na het gratis plaatsbezoek, fundering en afboording inbegrepen.'], ['Klinkers of waterdoorlatende verharding?', 'Klinkers en betonklinkers zijn strak en onderhoudsarm. Waterdoorlatende verharding laat regenwater in de bodem zakken, wat wateroverlast beperkt. Bij het plaatsbezoek adviseren we wat past bij uw oprit en ondergrond.'], ['Hoe lang gaat een oprit mee?', 'Met een goede fundering en afwatering gaat een oprit doorgaans decennia mee zonder te verzakken. De onderbouw is daarbij belangrijker dan de klinker zelf.'], ['Verzakt een oprit na verloop van tijd?', 'Niet als de fundering klopt. Verzakking komt bijna altijd door een te dunne of slecht aangereden onderbouw. Daarom besteden wij daar de meeste aandacht aan.'], ['Betaal ik 6 of 21% btw op een oprit?', 'Een losstaande oprit valt meestal onder 21% btw. Maakt de oprit deel uit van een renovatie van een woning ouder dan 10 jaar, dan kan 6% gelden. Wij bekijken het tarief samen op het plaatsbezoek.'], ['Kan ik mijn auto kwijt terwijl de oprit openligt?', 'Tijdens het uitgraven en de eerste dagen kunt u niet over de oprit rijden, en pas helemaal op het einde mag u opnieuw op de verse klinkers. Reken op enkele dagen waarin u de wagen elders zet, op straat of bij een buur. We bespreken de planning vooraf, zodat u weet welke dagen het zijn en uw auto niet ingesloten raakt.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.']],
     typeWerkOpties: ['Nieuwe oprit', 'Oprit vernieuwen', 'Waterdoorlatend', 'Anders'],
@@ -406,7 +364,7 @@ const DIENSTEN: Record<string, Dienst> = {
     whatIntro: 'Een inbouwzwembad is meer dan een bad in de grond. Wij verzorgen de volledige opbouw, van de uitgraving tot het afgewerkte terras errond.',
     what: [['Betonnen zwembad', 'Een bouwkundig bad, ter plaatse gestort of gemetst, volledig op maat van uw tuin en afmetingen.'], ['Polyester zwembad', 'Een monoblok bad in één stuk, sneller geplaatst en in vaste modellen en kleuren.'], ['Graafwerk & techniek', 'Uitgraving, fundering, leidingen en de filterinstallatie, correct aangelegd en afgewaterd.'], ['Terras & afwerking', 'Boordstenen, terras en de omgeving errond, strak afgewerkt tot een geheel.']],
     whatImg: imgZwWhat,
-    gallery: [[rZw1a, rZw1b, rZw1c], [rZw2a, rZw2b, rZw2c], [rZw3a, rZw3b, rZw3c]],
+    gallery: [imgZwG1, imgZwG2, imgZwG3],
     reviews: [{ text: '"Inbouwzwembad in beton in onze tuin. Graafwerk, bad en terras errond, alles door dezelfde ploeg. Netjes geregeld van begin tot eind."', name: 'Koen De Coninck', role: 'Betonnen inbouwzwembad' }, { text: '"Wij twijfelden tussen beton en polyester. Eerlijk advies dat een polyester bad voor onze tuin volstond, scheelde flink in prijs. Netjes geplaatst."', name: 'Veerle Cools', role: 'Polyester zwembad' }, { text: '"Vaste prijs voor het hele project vooraf, van uitgraving tot terras. Geen verrassingen achteraf, werf elke dag proper. Heel tevreden."', name: 'Filip Smets', role: 'Zwembad met terras' }],
     faq: [['Wat kost een zwembad aanleggen?', 'Dat hangt af van de afmetingen, het type bad (beton of polyester), de grondsoort en de afwerking errond. Een inbouwzwembad is een groot project; u krijgt een vaste prijs voor het volledige werk na het gratis plaatsbezoek.'], ['Beton of polyester: wat kies ik?', 'Een betonnen bad is volledig op maat en in elke vorm mogelijk. Een polyester bad komt in één stuk en is sneller geplaatst, maar in vaste modellen. Bij het plaatsbezoek adviseren we eerlijk wat past bij uw tuin en budget.'], ['Doen jullie ook het graafwerk en het terras?', 'Ja. Wij verzorgen het volledige project met eigen ploeg: uitgraving, fundering, leidingen, het bad zelf en de afwerking met boordstenen en terras errond.'], ['Hoe lang duurt de aanleg?', 'Dat verschilt per project. Een polyester bad gaat sneller dan een gestort betonnen bad, en de afwerking errond telt mee. Bij de offerte krijgt u een realistische planning op papier.'], ['Welk btw-tarief geldt er?', 'Voor een nieuw zwembad is dat niet automatisch het verlaagde tarief. Bij het plaatsbezoek bekijken we welk btw-tarief in uw situatie van toepassing is, zodat u vooraf weet waar u aan toe bent.'], ['Moet er een graafmachine door mijn tuin, en wat met de schade?', 'Voor de uitgraving moet er inderdaad een kraan tot bij de plek van het bad. Op het plaatsbezoek kijken we eerst hoe we binnen geraken: langs welke kant, of er een poort of haag tijdelijk weg moet, en of we het tuinpad moeten beschermen. Het rijtracé en de stockplek voor de grond rekenen we als onbruikbaar voor de duur van de werken; gazon of beplanting daar herstellen we nadien niet automatisch, dus wat u zelf wil sparen, spreken we vooraf af.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.']],
     typeWerkOpties: ['Betonnen zwembad', 'Polyester zwembad', 'Zwembad met terras', 'Anders'],
@@ -1243,12 +1201,6 @@ export default function LpDienst({ slug }: { slug: string }) {
         </div>
       </section>
 
-      {/* CTA-blok na reviews */}
-      <div className="tr-wrap tr-cta-block">
-        <p className="tr-cta-line">Sluit u aan bij honderden tevreden klanten in uw regio.</p>
-        <a className="tr-btn" href="#contact">Vraag uw gratis offerte</a>
-      </div>
-
       {/* 8. SERVICES / WAT HOUDT HET IN */}
       <section className="tr-section tr-services" id="diensten">
         <div className="tr-wrap">
@@ -1305,12 +1257,6 @@ export default function LpDienst({ slug }: { slug: string }) {
         </div>
       </section>
 
-      {/* CTA-blok na about */}
-      <div className="tr-wrap tr-cta-block">
-        <p className="tr-cta-line">Eén aanspreekpunt, een vaste prijs vooraf.</p>
-        <a className="tr-btn" href="#contact">Plan een vrijblijvend plaatsbezoek</a>
-      </div>
-
       {/* 8a. HERKENT U DIT? — signalen */}
       {d.signs && (
         <section className="tr-section" style={{ background: '#fff' }}>
@@ -1363,12 +1309,6 @@ export default function LpDienst({ slug }: { slug: string }) {
           </div>
         </section>
       )}
-
-      {/* CTA-blok na realisaties */}
-      <div className="tr-wrap tr-cta-block">
-        <p className="tr-cta-line">Benieuwd wat uw project kost?</p>
-        <a className="tr-btn" href="#contact">Vraag vrijblijvend uw prijs</a>
-      </div>
 
       {/* 11. FAQ */}
       <section className="tr-section" id="faq">
@@ -1468,10 +1408,6 @@ const LP_CSS = `
 .tr-btn:hover { background: ${ORANGE_H}; box-shadow: 0 4px 12px -4px rgba(217,140,3,0.45); }
 .tr-btn:active { box-shadow: inset 0 1px 2px rgba(0,0,0,0.18); }
 .tr-btn:disabled { opacity: .65; cursor: wait; }
-.tr-cta-block { padding: clamp(44px, 6vw, 70px) 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px; }
-.tr-cta-line { font-family: var(--font-display); font-weight: 600; font-size: clamp(20px, 2.5vw, 27px); color: #14233a; margin: 0; max-width: 540px; line-height: 1.3; }
-.tr-cta-block .tr-btn { padding: 15px 34px; font-size: 15px; }
-@media (max-width: 600px) { .tr-cta-block { padding: 40px 0; } .tr-cta-block .tr-btn { width: 100%; max-width: 360px; } }
 .tr-eyebrow { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-display); font-weight: 600; font-size: 12px;
   letter-spacing: 0.08em; text-transform: uppercase; color: #41495a; margin-bottom: 14px; }
 .tr-eyebrow::before { content: ''; width: 26px; height: 3px; border-radius: 2px; background: ${ORANGE}; display: inline-block; flex-shrink: 0; }
@@ -1520,7 +1456,7 @@ const LP_CSS = `
 @media (max-width: 980px) {
   .tr-nav { display: none; }
   .tr-rating { display: none; }
-  .tr-headcta { display: none; }
+  .tr-headcta { display: inline-flex; padding: 9px 13px !important; font-size: 12.5px !important; }
   .tr-burger { display: flex; }
   .tr-logo { height: 52px; }
   .tr-header .tr-wrap { min-height: 66px; gap: 12px; }
