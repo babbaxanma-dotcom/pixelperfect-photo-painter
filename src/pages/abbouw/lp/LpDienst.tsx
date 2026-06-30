@@ -37,8 +37,8 @@ import imgTeG3 from '@/assets/realisaties/17_extra_houtskelet-thermowood-bonheid
 import imgOpG1 from '@/assets/realisaties/extra-25_rode-baksteen-villa.jpg';
 import imgOpG2 from '@/assets/construct/nieuwbouw.jpg';
 import imgOpG3 from '@/assets/construct/intro-villa.jpg';
-import imgZwG1 from '@/assets/realisaties/extra-23_beige-balcony.jpg';
-import imgZwG2 from '@/assets/realisaties/extra-27_zonnepaneel-fermette.jpg';
+import imgZwG1 from '@/assets/realisaties/20_extra_tuingevel-schuifraam-bonheiden.jpg';
+import imgZwG2 from '@/assets/realisaties/17_extra_houtskelet-thermowood-bonheiden.jpg';
 import imgZwG3 from '@/assets/realisaties/21_extra_aanbouw-modern_b.jpg';
 import velux from '@/assets/merken/Velux.png';
 
@@ -95,7 +95,7 @@ import imgTeWhat from '@/assets/realisaties/21_extra_aanbouw-modern_a.jpg';
 import imgOpHero from '@/assets/realisaties/extra-24_geel-rijwoning.jpg';
 import imgOpWhat from '@/assets/realisaties/15_extra_garage-renovatie_a.jpg';
 import imgZwHero from '@/assets/construct/aanbouw.jpg';
-import imgZwWhat from '@/assets/realisaties/extra-22_villa-vrijstaand.jpg';
+import imgZwWhat from '@/assets/realisaties/21_extra_aanbouw-modern_a.jpg';
 
 const NAVY = '#0a1628';
 const NAVY2 = '#14233a';
