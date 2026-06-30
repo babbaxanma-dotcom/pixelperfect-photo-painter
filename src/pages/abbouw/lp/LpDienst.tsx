@@ -20,7 +20,7 @@ import CalculatorWizard from '../calculator/CalculatorWizard';
 import { DAK_CALC_CONFIGS } from '../calculator/dakCalcConfigs';
 import logo from '@/assets/home/logo.png';
 import imgTrG1 from '@/assets/interieur/woonkamer-eik.jpg';
-import imgTrG2 from '@/assets/construct/halfopen.jpg';
+import imgTrG2 from '@/assets/gevel/lp-real-reinig-2.jpg';
 import imgTrG3 from '@/assets/interieur/trap-staal-eik.jpg';
 import imgBkG1 from '@/assets/bad/intro.jpg';
 import imgBkG2 from '@/assets/bad/wellness.jpg';
@@ -82,7 +82,7 @@ import imgVx2 from '@/assets/dak/lp-veluxg-2.jpg';
 import imgVx3 from '@/assets/dak/lp-veluxg-3.jpg';
 import imgVeluxStappen from '@/assets/dak/lp-velux-stappen.jpg';
 // ── nieuwe dienst-LP assets (renovatie/interieur/buitenaanleg) ──
-import imgTrHero from '@/assets/construct/totaal.jpg';
+import imgTrHero from '@/assets/gevel/lp-real-crepi-3.jpg';
 import imgTrWhat from '@/assets/interieur/keuken-noten.jpg';
 import imgBkHero from '@/assets/bad/inloopdouche.jpg';
 import imgBkWhat from '@/assets/bad/sanitair.jpg';
