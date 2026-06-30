@@ -37,9 +37,9 @@ import imgTeG3 from '@/assets/realisaties/03_extra_aanbouw-bonheiden.jpg';
 import imgOpG1 from '@/assets/realisaties/extra-25_rode-baksteen-villa.jpg';
 import imgOpG2 from '@/assets/construct/nieuwbouw.jpg';
 import imgOpG3 from '@/assets/realisaties/01_extra_villa-modern-mechelen.jpg';
-import imgZwG1 from '@/assets/lp-diensten/zwembad-g1.jpg';
-import imgZwG2 from '@/assets/lp-diensten/zwembad-g2.jpg';
-import imgZwG3 from '@/assets/lp-diensten/zwembad-g3.jpg';
+import imgZwG1 from '@/assets/realisaties/20_extra_tuingevel-schuifraam_b.jpg';
+import imgZwG2 from '@/assets/realisaties/21_extra_aanbouw-modern_a.jpg';
+import imgZwG3 from '@/assets/realisaties/03_extra_aanbouw-bonheiden.jpg';
 import velux from '@/assets/merken/Velux.png';
 
 import imgVelux from '@/assets/dak/lp-velux-huis.jpg';
@@ -94,8 +94,8 @@ import imgTeHero from '@/assets/realisaties/20_extra_tuingevel-schuifraam-bonhei
 import imgTeWhat from '@/assets/realisaties/21_extra_aanbouw-modern_a.jpg';
 import imgOpHero from '@/assets/realisaties/extra-24_geel-rijwoning.jpg';
 import imgOpWhat from '@/assets/realisaties/15_extra_garage-renovatie_a.jpg';
-import imgZwHero from '@/assets/lp-diensten/zwembad-hero.jpg';
-import imgZwWhat from '@/assets/lp-diensten/zwembad-what.jpg';
+import imgZwHero from '@/assets/realisaties/17_extra_houtskelet-thermowood-bonheiden.jpg';
+import imgZwWhat from '@/assets/construct/aanbouw.jpg';
 
 const NAVY = '#0a1628';
 const NAVY2 = '#14233a';
