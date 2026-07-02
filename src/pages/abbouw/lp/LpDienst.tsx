@@ -22,12 +22,8 @@ import logo from '@/assets/home/logo.png';
 import imgTrG1 from '@/assets/interieur/woonkamer-eik.jpg';
 import imgTrG2 from '@/assets/construct/halfopen.jpg';
 import imgTrG3 from '@/assets/interieur/trap-staal-eik.jpg';
-import imgBkG1 from '@/assets/bad/intro.jpg';
+import imgBkG1 from '@/assets/realisaties/bad-gastentoilet.jpg';
 import imgBkG2 from '@/assets/bad/wellness.jpg';
-import imgBkG3 from '@/assets/realisaties/bad-gastentoilet.jpg';
-import imgTgG1 from '@/assets/bad/inloopdouche.jpg';
-import imgTgG2 from '@/assets/bad/wellness.jpg';
-import imgTgG3 from '@/assets/bad/sanitair.jpg';
 import imgPlG1 from '@/assets/interieur/hero.jpg';
 import imgPlG2 from '@/assets/interieur/droom.jpg';
 import imgPlG3 from '@/assets/interieur/gietvloer.jpg';
@@ -77,8 +73,8 @@ import imgTrHero from '@/assets/gevel/lp-real-crepi-3.jpg';
 import imgTrWhat from '@/assets/interieur/keuken-noten.jpg';
 import imgBkHero from '@/assets/bad/inloopdouche.jpg';
 import imgBkWhat from '@/assets/bad/sanitair.jpg';
-import imgTgHero from '@/assets/bad/intro.jpg';
-import imgTgWhat from '@/assets/realisaties/bad-gastentoilet.jpg';
+import imgTgHero from '@/assets/realisaties/bad-gastentoilet.jpg';
+import imgTgWhat from '@/assets/bad/inloopdouche.jpg';
 import imgPlHero from '@/assets/interieur/binnendeuren.jpg';
 import imgPlWhat from '@/assets/interieur/plafonds.jpg';
 import imgTeHero from '@/assets/construct/aanbouw.jpg';
@@ -184,7 +180,7 @@ const DIENSTEN: Record<string, Dienst> = {
     whatIntro: 'Een badkamer vernieuwen is meer dan tegels en een douche. Wij verzorgen het volledige traject, van de leidingen achter de muur tot de laatste voeg.',
     what: [['Volledige renovatie', 'Uw badkamer van vloer tot plafond vernieuwd: uitbreken, leidingen, tegels, sanitair en afwerking.'], ['Inloopdouche', 'Een ruime inloopdouche op maat, waterdicht ingewerkt en gelijkvloers waar het kan.'], ['Bad vervangen door douche', 'Het oude bad eruit, een moderne douche ervoor in de plaats, leidingen mee aangepast.'], ['Sanitair en leidingen', 'Nieuwe water- en afvoerleidingen, kranen, toilet en meubel, alles correct aangesloten.']],
     whatImg: imgBkWhat,
-    gallery: [imgBkG1, imgBkG2, imgBkG3],
+    gallery: [imgBkG1, imgBkG2],
     reviews: [{ text: '"Onze badkamer uit de jaren negentig volledig vernieuwd. Bad eruit, ruime inloopdouche erin. Eén ploeg voor alles, en de prijs klopte met de offerte."', name: 'Greet Janssens', role: 'Volledige badkamerrenovatie' }, { text: '"We twijfelden of we het bad zouden houden, maar ze toonden met de maten dat een douche de kleine ruimte een pak groter laat voelen. Achteraf blij dat we geluisterd hebben. Het toilet schoof mee een halve meter op, alles strak aangesloten."', name: 'Peter Maes', role: 'Bad vervangen door douche' }, { text: '"Vaste prijs vooraf, geen verrassingen achteraf. De leidingen zaten verouderd, ze hebben dat meteen mee opgelost. Heel tevreden."', name: 'Linda Verbeeck', role: 'Inloopdouche op maat' }],
     faq: [['Wat kost een badkamerrenovatie?', 'Dat hangt af van de oppervlakte, het sanitair, de tegels en de staat van de leidingen. Een complete badkamer ligt doorgaans tussen 9.000 en 18.000 euro. U krijgt een vaste prijs na het gratis plaatsbezoek; wat op de offerte staat, betaalt u.'], ['Hoe lang duurt een badkamerrenovatie?', 'Een volledige badkamer is doorgaans in twee tot drie weken klaar, afhankelijk van de omvang en de droogtijden. Bij het plaatsbezoek geven we u een realistische planning.'], ['Doen jullie alles zelf of met onderaannemers?', 'Alles met onze eigen vaste ploeg. Sanitair, tegelwerk en leidingen zitten in één hand, met één aanspreekpunt van begin tot oplevering.'], ['Kan ik mijn bad laten vervangen door een inloopdouche?', 'Ja, dat is een van de meest gevraagde renovaties. Wij halen het bad eruit, passen de leidingen en de afvoer aan en plaatsen een waterdichte inloopdouche.'], ['Betaal ik 6% of 21% btw?', 'Is uw woning ouder dan 10 jaar, dan valt de renovatie inclusief plaatsing meestal onder 6% btw. Wij bekijken of u in aanmerking komt en regelen het papierwerk.'], ['Kan ik mijn badkamer nog gebruiken tijdens de werken?', 'Bij een volledige renovatie ligt de badkamer een aantal dagen stil, van het uitbreken tot het sanitair terug aangesloten is. Heeft u maar één badkamer, zeg dat op het plaatsbezoek: we plannen het toilet en een werkende douche dan als eerste opnieuw aan, zodat u zo weinig mogelijk dagen zonder zit.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen. Bij het gratis plaatsbezoek bevestigen we meteen de planning.']],
     typeWerkOpties: ['Volledige badkamer', 'Inloopdouche', 'Bad vervangen door douche', 'Anders'],
@@ -218,7 +214,7 @@ const DIENSTEN: Record<string, Dienst> = {
     whatIntro: 'Een mooie tegelvloer begint bij een vlakke ondergrond. Wij verzorgen het volledige werk, van voorbereiding tot de laatste voeg.',
     what: [['Vloertegels leggen', 'Keramische tegels of grootformaat, vlak gelegd in badkamer, keuken of woonkamer.'], ['Wandtegels plaatsen', 'Wandtegels strak en waterpas geplaatst, met nette aansluitingen rond kranen en stopcontacten.'], ['Grootformaat en XXL', 'Grote formaten gelijmd in volvlak, zodat er geen holle plekken onder de tegel zitten.'], ['Voegen en afwerking', 'Strak doorgevoegd in de juiste kleur, hoeken en plinten netjes afgewerkt.']],
     whatImg: imgTgWhat,
-    gallery: [imgTgG1, imgTgG2, imgTgG3],
+    gallery: [],
     reviews: [{ text: '"Volledige woonkamer in grootformaat tegels. Kaarsrecht gelegd en strak gevoegd. Mooi resultaat."', name: 'Marc Hermans', role: 'Vloertegels woonkamer' }, { text: '"Badkamer volledig betegeld, vloer en wanden. Netjes afgewerkt rond de kranen en strak doorgevoegd. Heel tevreden."', name: 'Liesbeth Coninckx', role: 'Badkamer betegeld' }, { text: '"Goed advies over het legpatroon, ze hebben echt meegedacht. Keuken en hal in één lijn doorgelegd. Mooi gedaan."', name: 'Patrick Goossens', role: 'Keuken- en vloertegels' }],
     faq: [['Wat kost tegels leggen per m²?', 'Dat hangt af van het formaat, het legpatroon en de staat van de ondergrond. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'], ['Leggen jullie ook grootformaat en XXL-tegels?', 'Ja. Grote formaten lijmen we in volvlak, zodat er geen holle plekken onder de tegel zitten. Dat vraagt een vlakke ondergrond, die bereiden we correct voor.'], ['Moet de ondergrond eerst worden voorbereid?', 'Meestal wel. Een vlakke, draagkrachtige ondergrond is de basis voor een strak resultaat. Bij het plaatsbezoek beoordelen we of egaliseren nodig is.'], ['Geldt het 6% btw-tarief voor tegelwerken?', 'Bij een woning ouder dan 10 jaar valt tegelwerk incl. plaatsing en materiaal via ons onder het 6% renovatietarief. Bij nieuwbouw is dat 21%. Dat papierwerk regelen wij.'], ['Plaatsen jullie ook de tegels die ik zelf gekozen heb?', 'Ja. U kiest de tegels in de showroom, wij verzorgen de plaatsing. We adviseren gerust over formaat en legpatroon zodat alles strak uitkomt.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.']],
     typeWerkOpties: ['Vloertegels', 'Wandtegels', 'Grootformaat / XXL', 'Anders'],
