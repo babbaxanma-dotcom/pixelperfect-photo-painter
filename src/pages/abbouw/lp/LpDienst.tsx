@@ -20,26 +20,17 @@ import CalculatorWizard from '../calculator/CalculatorWizard';
 import { DAK_CALC_CONFIGS } from '../calculator/dakCalcConfigs';
 import logo from '@/assets/home/logo.png';
 import imgTrG1 from '@/assets/interieur/woonkamer-eik.jpg';
-import imgTrG2 from '@/assets/gevel/lp-real-reinig-2.jpg';
+import imgTrG2 from '@/assets/construct/halfopen.jpg';
 import imgTrG3 from '@/assets/interieur/trap-staal-eik.jpg';
 import imgBkG1 from '@/assets/bad/intro.jpg';
 import imgBkG2 from '@/assets/bad/wellness.jpg';
 import imgBkG3 from '@/assets/realisaties/bad-gastentoilet.jpg';
-import imgTgG1 from '@/assets/interieur/droom.jpg';
-import imgTgG2 from '@/assets/interieur/woonkamer-eik.jpg';
-import imgTgG3 from '@/assets/bad/inloopdouche.jpg';
-import imgPlG1 from '@/assets/interieur/intro-overview.jpg';
-import imgPlG2 from '@/assets/interieur/hero.jpg';
-import imgPlG3 from '@/assets/interieur/maatkasten.jpg';
-import imgTeG1 from '@/assets/construct/aanbouw.jpg';
-import imgTeG2 from '@/assets/realisaties/21_extra_aanbouw-modern_b.jpg';
-import imgTeG3 from '@/assets/realisaties/17_extra_houtskelet-thermowood-bonheiden.jpg';
-import imgOpG1 from '@/assets/realisaties/extra-25_rode-baksteen-villa.jpg';
-import imgOpG2 from '@/assets/construct/nieuwbouw.jpg';
-import imgOpG3 from '@/assets/construct/intro-villa.jpg';
-import imgZwG1 from '@/assets/realisaties/20_extra_tuingevel-schuifraam-bonheiden.jpg';
-import imgZwG2 from '@/assets/realisaties/17_extra_houtskelet-thermowood-bonheiden.jpg';
-import imgZwG3 from '@/assets/realisaties/21_extra_aanbouw-modern_b.jpg';
+import imgTgG1 from '@/assets/bad/inloopdouche.jpg';
+import imgTgG2 from '@/assets/bad/wellness.jpg';
+import imgTgG3 from '@/assets/bad/sanitair.jpg';
+import imgPlG1 from '@/assets/interieur/hero.jpg';
+import imgPlG2 from '@/assets/interieur/droom.jpg';
+import imgPlG3 from '@/assets/interieur/gietvloer.jpg';
 import velux from '@/assets/merken/Velux.png';
 
 import imgVelux from '@/assets/dak/lp-velux-huis.jpg';
@@ -86,16 +77,16 @@ import imgTrHero from '@/assets/gevel/lp-real-crepi-3.jpg';
 import imgTrWhat from '@/assets/interieur/keuken-noten.jpg';
 import imgBkHero from '@/assets/bad/inloopdouche.jpg';
 import imgBkWhat from '@/assets/bad/sanitair.jpg';
-import imgTgHero from '@/assets/interieur/gietvloer.jpg';
-import imgTgWhat from '@/assets/interieur/parket.jpg';
+import imgTgHero from '@/assets/bad/intro.jpg';
+import imgTgWhat from '@/assets/realisaties/bad-gastentoilet.jpg';
 import imgPlHero from '@/assets/interieur/binnendeuren.jpg';
 import imgPlWhat from '@/assets/interieur/plafonds.jpg';
-import imgTeHero from '@/assets/realisaties/20_extra_tuingevel-schuifraam-bonheiden.jpg';
-import imgTeWhat from '@/assets/realisaties/21_extra_aanbouw-modern_a.jpg';
-import imgOpHero from '@/assets/realisaties/extra-24_geel-rijwoning.jpg';
-import imgOpWhat from '@/assets/realisaties/15_extra_garage-renovatie_a.jpg';
-import imgZwHero from '@/assets/construct/aanbouw.jpg';
-import imgZwWhat from '@/assets/realisaties/21_extra_aanbouw-modern_a.jpg';
+import imgTeHero from '@/assets/construct/aanbouw.jpg';
+import imgTeWhat from '@/assets/interieur/droom.jpg';
+import imgOpHero from '@/assets/construct/intro-villa.jpg';
+import imgOpWhat from '@/assets/construct/nieuwbouw.jpg';
+import imgZwHero from '@/assets/bad/wellness.jpg';
+import imgZwWhat from '@/assets/construct/aanbouw.jpg';
 
 const NAVY = '#0a1628';
 const NAVY2 = '#14233a';
@@ -296,7 +287,7 @@ const DIENSTEN: Record<string, Dienst> = {
     whatIntro: 'Een goed terras begint onder de grond. Wij verzorgen de volledige opbouw, van uitgraven en funderen tot het plaatsen en voegen van uw terras.',
     what: [['Keramische tegels', 'Keramiek op tegeldragers of in een vol bed. Vlekt en verkleurt niet, dweilen volstaat om het schoon te houden.'], ['Natuursteen of blauwsteen', 'Belgische blauwsteen of natuursteen voor een warme, tijdloze terraslook.'], ['Klinkers of hout', 'Klinkers en kasseien voor een klassieke tuin, of hardhout zoals padoek voor een natuurlijk terras.'], ['Fundering en afwatering', 'Een stevige onderbouw en het juiste afschot, zodat regenwater netjes wegloopt.']],
     whatImg: imgTeWhat,
-    gallery: [imgTeG1, imgTeG2, imgTeG3],
+    gallery: [],
     reviews: [{ text: '"Nieuw terras in keramische tegels, mooi vlak. Na een regenbui staat er nergens nog een plas. Proper opgeleverd."', name: 'Dries Luyckx', role: 'Keramisch terras' }, { text: '"Terras in blauwsteen laten aanleggen. Mooi vlak gelegd en het water loopt netjes weg. Heel content met het resultaat."', name: 'Nadine Peeters', role: 'Natuursteen terras' }, { text: '"Oud terras vervangen door een houten terras. Strak gelegd en klaar binnen de afgesproken week. Heel tevreden."', name: 'Wim Claessens', role: 'Houten terras' }],
     faq: [['Wat kost een terras aanleggen per m²?', 'Dat hangt af van het materiaal, de grootte, de ondergrond en de afwatering. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'], ['Welk materiaal kies ik best?', 'Keramiek hoeft u enkel te dweilen, natuursteen leeft mee met uw gevel, klinkers passen bij een landelijke tuin en hout vraagt jaarlijks een olie-beurt. Bij het plaatsbezoek bekijken we samen wat bij uw tuin en budget past.'], ['Leggen jullie ook de fundering en afwatering?', 'Ja. Wij verzorgen het grondwerk, de fundering en het juiste afschot, zodat uw terras vlak ligt en regenwater goed wegloopt.'], ['Kunnen jullie mijn oude terras vervangen?', 'Ja. We breken het oude terras uit, bereiden de ondergrond opnieuw voor en leggen uw nieuwe terras aan.'], ['Geldt het 6% btw-tarief voor mijn terras?', 'Bij een woning ouder dan 10 jaar valt het terras meestal onder 6% btw op arbeid en materiaal. Bij nieuwbouw of een woning jonger dan 10 jaar is dat 21%. We bekijken het samen.'], ['Wat gebeurt er met de uitgegraven grond en het puin?', 'Bij het uitgraven en bij het uitbreken van een oud terras komen grond en puin vrij. Wij voeren dat zelf af; de afvoer en de containers zitten in de offerteprijs. Tijdens de werken stapelen we de materialen op één plek in de tuin, en bij de oplevering harken we de werkzone proper aan.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.']],
     typeWerkOpties: ['Keramisch terras', 'Natuursteen terras', 'Terras in klinkers', 'Houten terras'],
@@ -330,7 +321,7 @@ const DIENSTEN: Record<string, Dienst> = {
     whatIntro: 'Een oprit is meer dan klinkers leggen. De fundering en de afwatering bepalen of hij na jaren nog vlak ligt. Wij verzorgen het volledige werk, van uitgraven tot de laatste voeg.',
     what: [['Klinkers en betonklinkers', 'Klassieke kleiklinkers of betonklinkers, strak gelegd in het verband naar keuze.'], ['Waterdoorlatende oprit', 'Verharding waar regenwater in de bodem zakt in plaats van naar de straat te lopen.'], ['Fundering en uitgraven', 'Uitgraven en een stabiele onderbouw, zodat uw oprit niet verzakt of golft.'], ['Afboording en afwatering', 'Nette boordstenen en de juiste afschot, zodat water wegloopt en de klinkers op hun plaats blijven.']],
     whatImg: imgOpWhat,
-    gallery: [imgOpG1, imgOpG2, imgOpG3],
+    gallery: [],
     reviews: [{ text: '"Onze oude oprit was helemaal verzakt. Alles opnieuw aangelegd en twee winters later ligt er nog geen klinker scheef. Top."', name: 'Bram Verschueren', role: 'Oprit vernieuwd' }, { text: '"Voor waterdoorlatende klinkers gekozen op hun advies. Geen plassen meer en regenwater zakt gewoon weg. Vaste prijs vooraf, nette ploeg."', name: 'Annelies Peeters', role: 'Waterdoorlatende oprit' }, { text: '"Nieuwe oprit in betonklinkers, strak gelegd. Een groot verschil met de oude die overal verzakt was. Heel tevreden."', name: 'Patrick Wouters', role: 'Oprit in betonklinkers' }],
     faq: [['Wat kost een oprit aanleggen?', 'Dat hangt af van de oppervlakte, het materiaal en de bestaande ondergrond. U krijgt een vaste prijs voor de volledige oprit na het gratis plaatsbezoek, fundering en afboording inbegrepen.'], ['Klinkers of waterdoorlatende verharding?', 'Klinkers en betonklinkers zijn strak en onderhoudsarm. Waterdoorlatende verharding laat regenwater in de bodem zakken, wat wateroverlast beperkt. Bij het plaatsbezoek adviseren we wat past bij uw oprit en ondergrond.'], ['Hoe lang gaat een oprit mee?', 'Met een goede fundering en afwatering gaat een oprit doorgaans decennia mee zonder te verzakken. De onderbouw is daarbij belangrijker dan de klinker zelf.'], ['Verzakt een oprit na verloop van tijd?', 'Niet als de fundering klopt. Verzakking komt bijna altijd door een te dunne of slecht aangereden onderbouw. Daarom besteden wij daar de meeste aandacht aan.'], ['Betaal ik 6 of 21% btw op een oprit?', 'Een losstaande oprit valt meestal onder 21% btw. Maakt de oprit deel uit van een renovatie van een woning ouder dan 10 jaar, dan kan 6% gelden. Wij bekijken het tarief samen op het plaatsbezoek.'], ['Kan ik mijn auto kwijt terwijl de oprit openligt?', 'Tijdens het uitgraven en de eerste dagen kunt u niet over de oprit rijden, en pas helemaal op het einde mag u opnieuw op de verse klinkers. Reken op enkele dagen waarin u de wagen elders zet, op straat of bij een buur. We bespreken de planning vooraf, zodat u weet welke dagen het zijn en uw auto niet ingesloten raakt.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.']],
     typeWerkOpties: ['Nieuwe oprit', 'Oprit vernieuwen', 'Waterdoorlatend', 'Anders'],
@@ -364,7 +355,7 @@ const DIENSTEN: Record<string, Dienst> = {
     whatIntro: 'Een inbouwzwembad is meer dan een bad in de grond. Wij verzorgen de volledige opbouw, van de uitgraving tot het afgewerkte terras errond.',
     what: [['Betonnen zwembad', 'Een bouwkundig bad, ter plaatse gestort of gemetst, volledig op maat van uw tuin en afmetingen.'], ['Polyester zwembad', 'Een monoblok bad in één stuk, sneller geplaatst en in vaste modellen en kleuren.'], ['Graafwerk & techniek', 'Uitgraving, fundering, leidingen en de filterinstallatie, correct aangelegd en afgewaterd.'], ['Terras & afwerking', 'Boordstenen, terras en de omgeving errond, strak afgewerkt tot een geheel.']],
     whatImg: imgZwWhat,
-    gallery: [imgZwG1, imgZwG2, imgZwG3],
+    gallery: [],
     reviews: [{ text: '"Inbouwzwembad in beton in onze tuin. Graafwerk, bad en terras errond, alles door dezelfde ploeg. Netjes geregeld van begin tot eind."', name: 'Koen De Coninck', role: 'Betonnen inbouwzwembad' }, { text: '"Wij twijfelden tussen beton en polyester. Eerlijk advies dat een polyester bad voor onze tuin volstond, scheelde flink in prijs. Netjes geplaatst."', name: 'Veerle Cools', role: 'Polyester zwembad' }, { text: '"Vaste prijs voor het hele project vooraf, van uitgraving tot terras. Geen verrassingen achteraf, werf elke dag proper. Heel tevreden."', name: 'Filip Smets', role: 'Zwembad met terras' }],
     faq: [['Wat kost een zwembad aanleggen?', 'Dat hangt af van de afmetingen, het type bad (beton of polyester), de grondsoort en de afwerking errond. Een inbouwzwembad is een groot project; u krijgt een vaste prijs voor het volledige werk na het gratis plaatsbezoek.'], ['Beton of polyester: wat kies ik?', 'Een betonnen bad is volledig op maat en in elke vorm mogelijk. Een polyester bad komt in één stuk en is sneller geplaatst, maar in vaste modellen. Bij het plaatsbezoek adviseren we eerlijk wat past bij uw tuin en budget.'], ['Doen jullie ook het graafwerk en het terras?', 'Ja. Wij verzorgen het volledige project met eigen ploeg: uitgraving, fundering, leidingen, het bad zelf en de afwerking met boordstenen en terras errond.'], ['Hoe lang duurt de aanleg?', 'Dat verschilt per project. Een polyester bad gaat sneller dan een gestort betonnen bad, en de afwerking errond telt mee. Bij de offerte krijgt u een realistische planning op papier.'], ['Welk btw-tarief geldt er?', 'Voor een nieuw zwembad is dat niet automatisch het verlaagde tarief. Bij het plaatsbezoek bekijken we welk btw-tarief in uw situatie van toepassing is, zodat u vooraf weet waar u aan toe bent.'], ['Moet er een graafmachine door mijn tuin, en wat met de schade?', 'Voor de uitgraving moet er inderdaad een kraan tot bij de plek van het bad. Op het plaatsbezoek kijken we eerst hoe we binnen geraken: langs welke kant, of er een poort of haag tijdelijk weg moet, en of we het tuinpad moeten beschermen. Het rijtracé en de stockplek voor de grond rekenen we als onbruikbaar voor de duur van de werken; gazon of beplanting daar herstellen we nadien niet automatisch, dus wat u zelf wil sparen, spreken we vooraf af.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.']],
     typeWerkOpties: ['Betonnen zwembad', 'Polyester zwembad', 'Zwembad met terras', 'Anders'],
