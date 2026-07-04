@@ -31,14 +31,15 @@ import { CONTACT } from '@/data/contact';
 import CalculatorWizard from '../calculator/CalculatorWizard';
 import { DAK_CALC_CONFIGS } from '../calculator/dakCalcConfigs';
 import logo from '@/assets/home/logo.png';
-import imgTrG1 from '@/assets/interieur/woonkamer-eik.jpg';
-import imgTrG2 from '@/assets/construct/halfopen.jpg';
-import imgTrG3 from '@/assets/interieur/trap-staal-eik.jpg';
-import imgBkG1 from '@/assets/realisaties/bad-gastentoilet.jpg';
-import imgBkG2 from '@/assets/bad/wellness.jpg';
-import imgPlG1 from '@/assets/interieur/hero.jpg';
-import imgPlG2 from '@/assets/interieur/droom.jpg';
-import imgPlG3 from '@/assets/interieur/gietvloer.jpg';
+import imgTrG1 from '@/assets/lp-diensten/totaalrenovatie-g1.jpg';
+import imgTrG2 from '@/assets/lp-diensten/totaalrenovatie-g2.jpg';
+import imgTrG3 from '@/assets/lp-diensten/totaalrenovatie-g3.jpg';
+import imgBkG1 from '@/assets/lp-diensten/badkamer-g1.jpg';
+import imgBkG2 from '@/assets/lp-diensten/badkamer-g2.jpg';
+import imgBkG3 from '@/assets/lp-diensten/badkamer-g3.jpg';
+import imgPlG1 from '@/assets/lp-diensten/pleisterwerk-g1.jpg';
+import imgPlG2 from '@/assets/lp-diensten/pleisterwerk-g2.jpg';
+import imgPlG3 from '@/assets/lp-diensten/pleisterwerk-g3.jpg';
 import velux from '@/assets/merken/Velux.png';
 
 import imgVelux from '@/assets/dak/lp-velux-huis.jpg';
@@ -81,14 +82,14 @@ import imgVx2 from '@/assets/dak/lp-veluxg-2.jpg';
 import imgVx3 from '@/assets/dak/lp-veluxg-3.jpg';
 import imgVeluxStappen from '@/assets/dak/lp-velux-stappen.jpg';
 // ── nieuwe dienst-LP assets (renovatie/interieur/buitenaanleg) ──
-import imgTrHero from '@/assets/gevel/lp-real-crepi-3.jpg';
-import imgTrWhat from '@/assets/interieur/keuken-noten.jpg';
-import imgBkHero from '@/assets/bad/inloopdouche.jpg';
-import imgBkWhat from '@/assets/bad/sanitair.jpg';
+import imgTrHero from '@/assets/lp-diensten/totaalrenovatie-hero.jpg';
+import imgTrWhat from '@/assets/lp-diensten/totaalrenovatie-what.jpg';
+import imgBkHero from '@/assets/lp-diensten/badkamer-hero.jpg';
+import imgBkWhat from '@/assets/lp-diensten/badkamer-what.jpg';
 import imgTgHero from '@/assets/lp-diensten/tegelwerken-hero.jpg';
 import imgTgWhat from '@/assets/lp-diensten/tegelwerken-what.jpg';
-import imgPlHero from '@/assets/interieur/binnendeuren.jpg';
-import imgPlWhat from '@/assets/interieur/plafonds.jpg';
+import imgPlHero from '@/assets/lp-diensten/pleisterwerk-hero.jpg';
+import imgPlWhat from '@/assets/lp-diensten/pleisterwerk-what.jpg';
 import imgTeHero from '@/assets/lp-diensten/terras-hero.jpg';
 import imgTeWhat from '@/assets/lp-diensten/terras-what.jpg';
 import imgOpHero from '@/assets/lp-diensten/oprit-hero.jpg';
@@ -192,7 +193,7 @@ const DIENSTEN: Record<string, Dienst> = {
     whatIntro: 'Een badkamer vernieuwen is meer dan tegels en een douche. Wij verzorgen het volledige traject, van de leidingen achter de muur tot de laatste voeg.',
     what: [['Volledige renovatie', 'Uw badkamer van vloer tot plafond vernieuwd: uitbreken, leidingen, tegels, sanitair en afwerking.'], ['Inloopdouche', 'Een ruime inloopdouche op maat, waterdicht ingewerkt en gelijkvloers waar het kan.'], ['Bad vervangen door douche', 'Het oude bad eruit, een moderne douche ervoor in de plaats, leidingen mee aangepast.'], ['Sanitair en leidingen', 'Nieuwe water- en afvoerleidingen, kranen, toilet en meubel, alles correct aangesloten.']],
     whatImg: imgBkWhat,
-    gallery: [imgBkG1, imgBkG2],
+    gallery: [imgBkG1, imgBkG2, imgBkG3],
     reviews: [{ text: '"Onze badkamer uit de jaren negentig volledig vernieuwd. Bad eruit, ruime inloopdouche erin. Eén ploeg voor alles, en de prijs klopte met de offerte."', name: 'Greet Janssens', role: 'Volledige badkamerrenovatie' }, { text: '"We twijfelden of we het bad zouden houden, maar ze toonden met de maten dat een douche de kleine ruimte een pak groter laat voelen. Achteraf blij dat we geluisterd hebben. Het toilet schoof mee een halve meter op, alles strak aangesloten."', name: 'Peter Maes', role: 'Bad vervangen door douche' }, { text: '"Vaste prijs vooraf, geen verrassingen achteraf. De leidingen zaten verouderd, ze hebben dat meteen mee opgelost. Heel tevreden."', name: 'Linda Verbeeck', role: 'Inloopdouche op maat' }],
     faq: [['Wat kost een badkamerrenovatie?', 'Dat hangt af van de oppervlakte, het sanitair, de tegels en de staat van de leidingen. Een complete badkamer ligt doorgaans tussen 9.000 en 18.000 euro. U krijgt een vaste prijs na het gratis plaatsbezoek; wat op de offerte staat, betaalt u.'], ['Hoe lang duurt een badkamerrenovatie?', 'Een volledige badkamer is doorgaans in twee tot drie weken klaar, afhankelijk van de omvang en de droogtijden. Bij het plaatsbezoek geven we u een realistische planning.'], ['Doen jullie alles zelf of met onderaannemers?', 'Alles met onze eigen vaste ploeg. Sanitair, tegelwerk en leidingen zitten in één hand, met één aanspreekpunt van begin tot oplevering.'], ['Kan ik mijn bad laten vervangen door een inloopdouche?', 'Ja, dat is een van de meest gevraagde renovaties. Wij halen het bad eruit, passen de leidingen en de afvoer aan en plaatsen een waterdichte inloopdouche.'], ['Betaal ik 6% of 21% btw?', 'Is uw woning ouder dan 10 jaar, dan valt de renovatie inclusief plaatsing meestal onder 6% btw. Wij bekijken of u in aanmerking komt en regelen het papierwerk.'], ['Kan ik mijn badkamer nog gebruiken tijdens de werken?', 'Bij een volledige renovatie ligt de badkamer een aantal dagen stil, van het uitbreken tot het sanitair terug aangesloten is. Heeft u maar één badkamer, zeg dat op het plaatsbezoek: we plannen het toilet en een werkende douche dan als eerste opnieuw aan, zodat u zo weinig mogelijk dagen zonder zit.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen. Bij het gratis plaatsbezoek bevestigen we meteen de planning.']],
     typeWerkOpties: ['Volledige badkamer', 'Inloopdouche', 'Bad vervangen door douche', 'Anders'],
