@@ -1206,8 +1206,11 @@ export default function LpDienst({ slug }: { slug: string }) {
                 <div className="tr-rev-stars">{stars}</div>
                 <p>{r.text}</p>
                 <div className="tr-rev-foot">
-                  <div className="tr-rev-name">{r.name}</div>
-                  <div className="tr-rev-role">{r.role}</div>
+                  <div className="tr-rev-ava" aria-hidden="true">{r.name.split(' ').map((w) => w[0]).slice(0, 2).join('')}</div>
+                  <div>
+                    <div className="tr-rev-name">{r.name}</div>
+                    <div className="tr-rev-role">{r.role}</div>
+                  </div>
                 </div>
               </div>
             ))}
@@ -1607,10 +1610,10 @@ const LP_CSS = `
 .tr-services .tr-head { text-align: left; max-width: 680px; margin: 0 0 clamp(44px, 5vw, 72px); }
 .tr-services .tr-head h2 { font-size: clamp(27px, 4.4vw, 52px); color: #fff; font-weight: 700; letter-spacing: -0.02em; line-height: 1.06; margin: 0; }
 .tr-svc-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
-.tr-svc-card { background: #15263f; border: 1px solid rgba(255,255,255,0.18); border-radius: var(--tr-r-card);
+.tr-svc-card { background: #182b47; border: 1px solid rgba(255,255,255,0.22); border-radius: var(--tr-r-card);
   display: flex; flex-direction: column; height: 100%; transition: border-color .2s ease; }
-.tr-svc-card:hover { border-color: rgba(255,255,255,0.32); }
-.tr-svc-body { padding: 24px 24px 28px; flex: 1 1 auto; display: flex; flex-direction: column; }
+.tr-svc-card:hover { border-color: rgba(255,255,255,0.38); }
+.tr-svc-body { padding: 28px 26px 30px; flex: 1 1 auto; display: flex; flex-direction: column; }
 .tr-svc-body::before { content: ""; width: 28px; height: 2px; background: ${GOLD}; margin: 2px 0 16px; flex: none; }
 .tr-svc-body h3 { font-size: 19px; color: #fff; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 9px; }
 .tr-svc-body p { font-size: 15px; line-height: 1.65; color: rgba(255,255,255,0.84); margin: 0; }
@@ -1622,12 +1625,15 @@ const LP_CSS = `
 .tr-reviews { background: #fff; }
 .tr-reviews .tr-head { text-align: left; max-width: 680px; margin: 0 0 clamp(44px, 5vw, 72px); }
 .tr-reviews .tr-head h2 { font-size: clamp(27px, 3.2vw, 40px); color: ${NAVY}; font-weight: 700; margin: 0; }
-.tr-rev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 380px)); justify-content: center; gap: clamp(24px, 2.4vw, 34px); align-items: stretch; }
-.tr-rev-card { background: #fff; border: 1px solid #e7e4dd; border-radius: var(--tr-r-card); padding: 28px 26px 26px;
-  display: flex; flex-direction: column; }
+.tr-rev-grid { display: grid; grid-template-columns: repeat(2, minmax(300px, 500px)); justify-content: center; gap: clamp(24px, 2.4vw, 34px); align-items: stretch; }
+.tr-rev-card { background: #faf9f5; border: 1px solid #ddd6c8; border-radius: var(--tr-r-card); padding: 32px 30px 28px;
+  box-shadow: 0 10px 30px -14px rgba(16,24,40,0.10); display: flex; flex-direction: column; }
 .tr-rev-stars { color: ${GOLD}; font-size: 15px; letter-spacing: 2px; margin-bottom: 14px; }
-.tr-rev-card p { font-size: 14.5px; line-height: 1.65; color: #3a4252; margin: 0 0 20px; flex: 1; }
-.tr-rev-foot { border-top: 1px solid #eeede4; padding-top: 16px; }
+.tr-rev-card p { font-size: 15px; line-height: 1.68; color: #333c4d; margin: 0 0 20px; flex: 1; }
+.tr-rev-foot { border-top: 1px solid #e8e4d8; padding-top: 16px; display: flex; align-items: center; gap: 12px; }
+.tr-rev-ava { width: 42px; height: 42px; border-radius: 50%; background: #15263f; color: #fff; display: flex;
+  align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 14px;
+  letter-spacing: 0.5px; flex: none; }
 .tr-rev-name { font-family: var(--font-display); font-weight: 600; color: ${NAVY}; font-size: 14.5px; }
 .tr-rev-role { font-size: 12.5px; color: #525b6b; font-weight: 600; margin-top: 2px; }
 @media (max-width: 980px) { .tr-rev-grid { grid-template-columns: 1fr 1fr; } }
