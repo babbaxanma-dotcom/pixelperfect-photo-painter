@@ -14,7 +14,7 @@ ${buildHero({
   eyebrow: 'Contact',
   title: 'Laten we<br/>kennismaken.',
   lede: 'Vertel ons kort over uw project, we reageren binnen één werkdag en plannen indien gewenst een gratis plaatsbezoek.',
-  primary: { label: 'Bel ${CONTACT.phone.spaced}', href: '${CONTACT.phone.href}' },
+  primary: { label: `Bel ${CONTACT.phone.spaced}`, href: CONTACT.phone.href },
   secondary: { label: 'info@abgroep.be →', href: 'mailto:info@abgroep.be' },
 })}
 
