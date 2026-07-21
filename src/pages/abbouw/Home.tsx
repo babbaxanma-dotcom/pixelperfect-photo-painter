@@ -107,8 +107,8 @@ const HTML = (i: Record<string, string>) => `
           <span class="lf-hero-eyebrow-dot" aria-hidden="true"></span>
           Heel Vlaanderen en Brussel · sinds 2010
         </span>
-        <h1 class="lf-qhero-h1">Uw offerte is uw <span class="lf-qhero-accent">factuur</span>. Eén aannemer voor dak, gevel en totaalrenovatie.</h1>
-        <p class="lf-qhero-sub">De prijs ligt zwart op wit vast vóór de eerste werkdag, zonder meerwerk achteraf. Eén vast aanspreekpunt regelt alles, van plaatsbezoek tot oplevering.</p>
+        <h1 class="lf-qhero-h1">Renovatie- of bouwplannen?<br/><span class="lf-qhero-accent">Wij regelen het.</span></h1>
+        <p class="lf-qhero-sub">Eén aannemer voor dak, gevel en totaalrenovatie. Uw offerte is uw factuur: de prijs ligt zwart op wit vast vóór de eerste werkdag, zonder meerwerk achteraf.</p>
         <div class="lf-qhero-trust">
           <span class="lf-qhero-stars" aria-hidden="true">★★★★★</span>
           <span><strong>4,9/5</strong> op Google (180+ reviews)</span>
