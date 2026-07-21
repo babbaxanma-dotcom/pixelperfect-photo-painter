@@ -299,7 +299,7 @@ const DIENSTEN: Record<string, Dienst> = {
     heroImg: imgTeHero,
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Eigen ploeg, geen onderaannemers'],
     offerEyebrow: 'Over AB Bouw Groep',
-    offerH2: 'Uw terrasaannemer in heel Vlaanderen',
+    offerH2: 'Een terras ligt pas goed als het water weg kan.',
     offerIntro: 'AB Bouw Groep legt uw terras aan met een eigen vaste ploeg, van grondwerk tot de laatste voeg. We bekijken samen welk materiaal bij uw tuin en budget past.',
     offer: ['Offerte = factuur, ook bij prijsstijgingen', 'Gratis plaatsbezoek met advies over materiaal en afwatering', 'Keuze uit keramische tegels, natuursteen, klinkers of hout', 'Stevige fundering en een terras dat correct afwatert', '6% btw bij een woning ouder dan 10 jaar, papierwerk regelen wij', 'Eigen ploeg, geen onderaannemers'],
     steps: [['Gratis plaatsbezoek', 'Een vakman bekijkt uw tuin, de ondergrond en de afwatering, en adviseert over het materiaal.'], ['Vaste offerte', 'U krijgt een bindende prijs per m². Zo weet u exact waar u aan toe bent.'], ['Aanleg door eigen ploeg', 'Wij verzorgen grondwerk, fundering, afwatering en plaatsing tot het terras volledig af is.']],
@@ -406,7 +406,7 @@ const DIENSTEN: Record<string, Dienst> = {
     certLogo: { src: velux, alt: 'Velux' },
     topbar: ['Gratis opmeting binnen 5 werkdagen', 'Erkend Velux-plaatser'],
     offerEyebrow: 'Over AB Bouw Groep',
-    offerH2: 'Een dakraam is dakwerk. En dakwerk is ons vak.',
+    offerH2: 'Geplaatst door dakwerkers, niet door een montageploeg.',
     offerIntro: 'Het raam is Velux-kwaliteit; of het over twintig jaar nog waterdicht zit, hangt af van wie het plaatst. Wij renoveren daken sinds 2010 en geven 10 jaar garantie op de waterdichtheid.',
     offer: [
       'Eén vaste prijs, plaatsing en afwerking inbegrepen',
@@ -467,7 +467,7 @@ const DIENSTEN: Record<string, Dienst> = {
     certLogo: { src: '/assets/logos/caparol.png', alt: 'Caparol' },
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Eigen ploeg'],
     offerEyebrow: 'Over AB Bouw Groep',
-    offerH2: 'Uw erkende gevelspecialist in heel Vlaanderen',
+    offerH2: 'Reinigen zonder schade vraagt kennis van uw steen.',
     offerIntro: 'AB Bouw Groep werkt met een eigen vaste ploeg. Wij reinigen uw gevel met de juiste methode, zonder de steen te beschadigen.',
     offer: [
       'Offerte = factuur, ook bij prijsstijgingen',
@@ -528,7 +528,7 @@ const DIENSTEN: Record<string, Dienst> = {
     certLogo: { src: '/assets/logos/eternit.png', alt: 'Eternit' },
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Eigen ploeg'],
     offerEyebrow: 'Over AB Bouw Groep',
-    offerH2: 'Uw erkende voegspecialist in heel Vlaanderen',
+    offerH2: 'Hervoegen is maatwerk: de mortel moet bij uw steen passen.',
     offerIntro: 'AB Bouw Groep werkt met een eigen vaste ploeg. Wij slijpen oude voegen uit en voegen opnieuw in de juiste kleur en techniek.',
     offer: [
       'Offerte = factuur, ook bij prijsstijgingen',
@@ -726,7 +726,7 @@ const DIENSTEN: Record<string, Dienst> = {
     certLogo: { src: '/assets/logos/caparol.png', alt: 'Caparol' },
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Eigen ploeg'],
     offerEyebrow: 'Over AB Bouw Groep',
-    offerH2: 'Uw erkende crepi-specialist in heel Vlaanderen',
+    offerH2: 'Crepi is zo goed als de voorbereiding eronder.',
     offerIntro: 'AB Bouw Groep werkt met een eigen vaste ploeg. Wij brengen crepi egaal en strak aan, in de kleur en korrel die u kiest.',
     offer: [
       'Offerte = factuur, ook bij prijsstijgingen',
@@ -780,7 +780,7 @@ const DIENSTEN: Record<string, Dienst> = {
     certLogo: { src: wienerberger, alt: 'Wienerberger' },
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Eigen ploeg'],
     offerEyebrow: 'Over AB Bouw Groep',
-    offerH2: 'Uw erkende steenstrips-specialist in heel Vlaanderen',
+    offerH2: 'Steenstrips vragen een vlakke, geïsoleerde ondergrond.',
     offerIntro: 'AB Bouw Groep werkt met een eigen vaste ploeg. Wij plaatsen steenstrips kaarsrecht, met voegen zoals echt metselwerk.',
     offer: [
       'Offerte = factuur, ook bij prijsstijgingen',
@@ -1207,6 +1207,7 @@ export default function LpDienst({ slug }: { slug: string }) {
             <div className="tr-rev-list">
               {d.reviews.slice(1).map((r, i) => (
                 <div className="tr-rev-row" key={i}>
+                  <div className="tr-rev-row-stars" aria-hidden="true">{stars}</div>
                   <p>{r.text}</p>
                   <div className="tr-rev-attr"><span className="tr-rev-dash" aria-hidden="true">&mdash;</span> <span className="tr-rev-name">{r.name}</span> <span className="tr-rev-role">&middot; {r.role}</span></div>
                 </div>
@@ -1280,9 +1281,9 @@ export default function LpDienst({ slug }: { slug: string }) {
               <h2 style={{ fontSize: 'clamp(26px, 3vw, 36px)', color: NAVY, fontWeight: 700, margin: 0 }}>{d.signs.title}</h2>
               <p style={{ fontSize: 15, lineHeight: 1.6, color: '#454f60', marginTop: 10 }}>{d.signs.intro}</p>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 14 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', columnGap: 48, rowGap: 0, maxWidth: 900 }}>
               {d.signs.items.map((t, i) => (
-                <div key={i} style={{ display: 'flex', gap: 12, padding: '16px 18px', background: 'var(--bg-tint)', borderRadius: 10, border: '1px solid var(--tr-line)', fontSize: 14.5, lineHeight: 1.5, color: '#2b3543' }}>
+                <div key={i} style={{ display: 'flex', gap: 12, padding: '13px 0', borderBottom: '1px solid var(--tr-line)', fontSize: 14.5, lineHeight: 1.5, color: '#2b3543' }}>
                   <span style={{ color: ORANGE, flexShrink: 0, fontWeight: 700, fontSize: 18, lineHeight: 1.2 }}>›</span><span>{t}</span>
                 </div>
               ))}
@@ -1633,6 +1634,7 @@ const LP_CSS = `
 .tr-rev-row { padding: 26px 0; }
 .tr-rev-row + .tr-rev-row { border-top: 1px solid var(--tr-keyline); }
 .tr-rev-row:first-child { padding-top: 6px; }
+.tr-rev-row-stars { color: ${GOLD}; font-size: 13px; letter-spacing: 2px; margin: 0 0 10px; }
 .tr-rev-row p { font-size: 15px; line-height: 1.68; color: #2b3543; margin: 0 0 14px; }
 .tr-rev-attr { font-size: 14.5px; }
 .tr-rev-dash { color: ${GOLD}; }
