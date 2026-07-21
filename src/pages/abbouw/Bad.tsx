@@ -168,7 +168,7 @@ ${buildHero({
           <li>Week 4: kranen, silicone, oplevering</li>
         </ul>
       </div>
-      <div data-reveal data-reveal-delay="1"><img src="${imgRuwbouw}" alt="Badkamer in ruwbouwfase" loading="lazy" style="width:100%; border-radius: 16px; aspect-ratio: 4/3; object-fit: cover;"/></div>
+      <div data-reveal data-reveal-delay="1"><img src="${imgRuwbouw}" alt="Badkamer gestript, nieuwe leidingen liggen klaar" loading="lazy" style="width:100%; border-radius: 16px; aspect-ratio: 4/3; object-fit: cover;"/></div>
     </div>
   </div>
 </section>

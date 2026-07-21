@@ -52,6 +52,11 @@ import rzRenoHoek from '@/assets/realisaties/reno-hoekwoning.jpg';
 import rzBadGast from '@/assets/realisaties/bad-gastentoilet.jpg';
 import rzIntDressing from '@/assets/realisaties/int-dressing-eik.jpg';
 import rzStadswoningBrussel from '@/assets/realisaties/stadswoning-brussel.jpg';
+import rzBadEnsuite from '@/assets/realisaties/bad-ensuite.jpg';
+import rzBadGroen from '@/assets/realisaties/bad-inloopdouche-groen.jpg';
+import rzNbStad from '@/assets/realisaties/nieuwbouw-stadswoning.jpg';
+import rzGevelLariks from '@/assets/realisaties/gevel-lariks-aanbouw.jpg';
+import rzGevelHervoegd from '@/assets/realisaties/gevel-hervoegd-rijwoning.jpg';
 // realisaties — nieuwe portfolio uitbreidingen mei 2026
 import rzVillaMechelen from '@/assets/realisaties/01_extra_villa-modern-mechelen.jpg';
 import rzVillaVrij from '@/assets/realisaties/extra-22_villa-vrijstaand.jpg';
@@ -73,16 +78,6 @@ const dakwerken: Card[] = [
   { img: dakRaam, tag: 'Dakramen', t: 'VELUX-set', d: 'Drie nieuwe VELUX-ramen met aansluiting op bestaande pannen.' },
   { img: dakBitumen, tag: 'Bitumen', t: 'Plat dak garage', d: 'APP-bitumen 2-laags met grijze leislag, klaar in 2 dagen.' },
   { img: dakIntro, tag: 'Dakrenovatie', t: 'Volledige dakvernieuwing', d: 'Strip & rebuild dak: nieuwe spanten, isolatie en pannen.' },
-  { img: dakPannen, tag: 'Hellend dak', t: 'Pannendak', d: 'Vervanging keramische pannen Wienerberger met onderdakfolie en tengellatten.' },
-  { img: dakEpdm, tag: 'Plat dak', t: 'EPDM dakkapel', d: 'EPDM Firestone op nieuwe OSB-onderlaag met aluminium daktrim.' },
-  { img: dakIso, tag: 'Dakisolatie', t: 'PUR zoldervloer', d: 'Geprojecteerde PUR 16 cm op de zoldervloer, naadloos rond alle leidingen.' },
-  { img: dakZink, tag: 'Zinkwerk', t: 'Mastgoten villa', d: 'Zinken mastgoten op verborgen consoles, koperen regenpijpen op maat.' },
-  { img: dakLeien, tag: 'Leien', t: 'Leiendak pastorij', d: 'Restauratie leiendak met behoud originele dakkapellen en koperen kielgoten.' },
-  { img: dakRaam, tag: 'Dakramen', t: 'Lichtkoepel', d: 'Twee VELUX-koepels op plat dak met opstanden en EPDM-aansluiting.' },
-  { img: dakBitumen, tag: 'Bitumen', t: 'Bitumen platdak', d: 'Tweelaagse bitumen op nieuwe PIR-isolatie, 110 m² in 4 dagen.' },
-  { img: dakIntro, tag: 'Dakrenovatie', t: 'Strip & rebuild', d: 'Volledige strip van bestaand dak, nieuwe gordingen en pannenlat.' },
-  { img: dakEpdm, tag: 'Plat dak', t: 'EPDM dakterras', d: 'EPDM met composiet terrasplanken op tegeldragers, inclusief leuning.' },
-  { img: dakIso, tag: 'Dakisolatie', t: 'Hellingsisolatie', d: 'PIR tussen kepers + onderdakfolie, behoud zichtbare dakstoel binnen.' },
 ];
 
 const renovatie: Card[] = [
@@ -90,15 +85,9 @@ const renovatie: Card[] = [
   { img: rzRenoHoek, tag: 'Energetische renovatie', t: 'Hoekwoning', d: 'Naisolatie, nieuw schrijnwerk, warmtepomp en zonnepanelen. EPC C → A.' },
   { img: cAanbouw, tag: 'Aanbouw', t: 'Achterbouw', d: 'Aanbouw met plat dak, openslaande deuren en gietvloer. 10 weken.' },
   { img: rzStadswoningBrussel, tag: 'Renovatie', t: 'Stadswoning', d: 'Volledige binnenrenovatie met behoud van originele cement-tegels.' },
-  { img: rzRenoHoek, tag: 'Gevelrestauratie', t: 'Burgerwoning', d: 'Originele gevel gereinigd en hervoegd, nieuwe ramen met dunne profielen.' },
   { img: about, tag: 'Gevelrenovatie', t: 'Halfopen', d: 'Reiniging, nieuw voegwerk en geïsoleerde steenstrips. 4 weken.' },
   { img: projUtil, tag: 'Bedrijfspand', t: 'Kantoorrenovatie', d: 'Volledige interieurrenovatie met nieuwe technieken en glaswanden. 12 weken.' },
   { img: cVilla, tag: 'Villarenovatie', t: 'Villa', d: 'Behoud authentieke gevel, volledig nieuwe binneninrichting en buitenisolatie.' },
-  { img: cVilla, tag: 'Karakterwoning', t: 'Herenhuis', d: 'Restauratie originele lambrisering en pleisterprofielen, modern comfort.' },
-  { img: projReno, tag: 'Stadsrenovatie', t: 'Burgerwoning', d: 'Volledige binnenrenovatie met behoud authentieke voorgevel. 16 weken.' },
-  { img: cAanbouw, tag: 'Uitbreiding', t: 'Keukenuitbouw', d: 'Aanbouw met grote schuifpui, gietvloer en doorzonkeuken. 8 weken.' },
-  { img: rzRenoHoek, tag: 'Energierenovatie', t: 'Fermette', d: 'Na-isolatie, nieuw schrijnwerk en warmtepomp. EPC F → B.' },
-  { img: projUtil, tag: 'Bedrijfspand', t: 'Loods-renovatie', d: 'Strip & rebuild loods naar kantoorruimte met dakisolatie en ramen.' },
   { img: cAfwerking, tag: 'Renovatie', t: 'Rijwoning', d: 'Open keuken-leefruimte gecreëerd door dragende muur weg te halen.' },
   { img: rzGevelStrips, tag: 'Gevel + interieur', t: 'Hoekhuis', d: 'Nieuwe steenstrips-gevel gecombineerd met volledige binnenrenovatie.' },
   { img: rzGeelRij, tag: 'Gevelrestauratie', t: 'Rijwoning', d: 'Originele gele baksteen gereinigd en hervoegd, slim antraciet schrijnwerk vervangt oude PVC. 6 weken.' },
@@ -106,18 +95,11 @@ const renovatie: Card[] = [
 ];
 
 const nieuwbouw: Card[] = [
-  { img: cVilla, tag: 'Vrijstaand', t: 'Open bebouwing', d: 'Sleutel-op-de-deur, E-peil 30, klassiek met gevelsteen. 11 maanden.' },
   { img: cHalfopen, tag: 'Halfopen', t: 'HOB', d: 'Ruwbouw winddicht in 14 weken, oplevering casco+. Eigen ploegen op alle loten.' },
   { img: rzNbVrij, tag: 'Vrijstaand modern', t: 'Vrijstaand', d: 'Moderne nieuwbouw met witte crepi en lariks-accent rond de inkom.' },
   { img: projVilla, tag: 'BEN-bouw', t: 'BEN-villa', d: 'Bijna-energieneutraal met warmtepomp, ventilatie D en 24 PV-panelen.' },
   { img: cRuwbouw, tag: 'Ruwbouw', t: 'Ruwbouw', d: 'Ruwbouw winddicht met houtskeletwanden op betonnen plint. 16 weken.' },
-  { img: rzGevelCrepi, tag: 'Stadswoning', t: 'Nieuwbouw', d: 'Smalle stadskavel, drie bouwlagen met dakterras en patio.' },
-  { img: rzNbVrij, tag: 'Vrijstaand', t: 'Villa', d: 'Hedendaagse villa met crepi en houten gevelaccenten, BEN-norm.' },
-  { img: cAfwerking, tag: 'Sleutel-op-de-deur', t: 'SOD-woning', d: 'Volledige sleutel-op-de-deur met afwerking en keuken inbegrepen.' },
-  { img: projVilla, tag: 'BEN-bouw', t: 'BEN-villa', d: 'Bijna-energieneutrale villa met geothermische warmtepomp.' },
-  { img: cVilla, tag: 'Klassiek', t: 'Klassieke villa', d: 'Klassieke vrijstaande woning in gevelsteen met zadeldak en dakkapel.' },
-  { img: rzGevelCrepi, tag: 'Halfopen', t: 'HOB', d: 'Halfopen nieuwbouw in antraciet crepi met zwart aluminium schrijnwerk.' },
-  { img: cHalfopen, tag: 'Halfopen', t: 'HOB', d: 'Halfopen bebouwing met klassieke gevelsteen en hellend pannendak.' },
+  { img: rzNbStad, tag: 'Stadswoning', t: 'Nieuwbouw', d: 'Smalle stadskavel, drie bouwlagen met dakterras tussen bestaande gevels.' },
   { img: rzVillaMechelen, tag: 'Hedendaagse villa', t: 'Villa Mechelen-Oost', d: 'Strakke witte crepi met zwart aluminium schrijnwerk, BEN-norm en warmtepomp. 13 maanden.' },
   { img: rzVillaVrij, tag: 'Vrijstaand', t: 'Vrijstaand', d: 'Klassieke vrijstaande woning met crepi en handvorm gevelsteenplint. 12 maanden.' },
   { img: rzBeigeBalcony, tag: 'Modern', t: 'Open bebouwing', d: 'Modern volume in lichtbeige gevelsteen met antraciet balkonleuning en groot raamoppervlak. 11 maanden.' },
@@ -131,37 +113,20 @@ const interieur: Card[] = [
   { img: intTrap, tag: 'Trappen', t: 'Stalen trap', d: 'Maatwerktrap in zwart staal met massieve eiken treden.' },
   { img: eKalk, tag: 'Kalkpleister', t: 'Cottage', d: 'Natuurlijke kalkpleister in alle leefruimtes, ademend en mat.' },
   { img: rzIntDressing, tag: 'Maatkasten', t: 'Maatkasten', d: 'Inbouw-dressing met geïntegreerde verlichting in licht eikenfineer.' },
-  { img: intWoonkamer, tag: 'Loft-afwerking', t: 'Stadsappartement', d: 'Open-plan met lichtkoven, eiken vloer en mat-witte gepleisterde wanden.' },
-  { img: intKeuken, tag: 'Open keuken', t: 'Open keuken', d: 'Kookeiland in noten met zicht op tuin via grote schuifpui.' },
-  { img: intTrap, tag: 'Trappenhal', t: 'Trappenhal', d: 'Open trappenhal met zwart staal, eiken treden en glazen leuning.' },
-  { img: svcInterieur, tag: 'Bibliotheek', t: 'Maatbibliotheek', d: 'Vloer-tot-plafond bibliotheek in eik met geïntegreerde verlichting.' },
-  { img: intWoonkamer, tag: 'Living', t: 'Living', d: 'Strakke living met gepleisterde lichtkoof en visgraat eiken vloer.' },
-  { img: eKalk, tag: 'Pleisterwerk', t: 'Pleisterwerk', d: 'Velours-pleisterwerk in alle leefruimtes met fijne profielen.' },
-  { img: rzIntDressing, tag: 'TV-wand', t: 'TV-wand', d: 'Inbouw TV-wand in licht eikenfineer met indirecte LED en boekenvitrine.' },
 ];
 
 const badkamer: Card[] = [
   { img: svcBad, tag: 'Inloopdouche', t: 'Inloopdouche', d: 'Walk-in douche met grootformaat tegels en zwart matte kraanwerk. 3 weken.' },
   { img: rzBadGast, tag: 'Compact', t: 'Gastenbadkamer', d: 'Volledige strip & rebuild op 4 m² met zwevend meubel. 10 dagen.' },
-  { img: svcBad, tag: 'Master', t: 'Master ensuite', d: 'Vrijstaand bad, dubbele inloopdouche en walk-in dressing. 5 weken.' },
-  { img: eKalk, tag: 'Microcement', t: 'Microcementbadkamer', d: 'Naadloze microcement-afwerking op wanden en vloer, mat en warm.' },
-  { img: svcBad, tag: 'Inloopdouche', t: 'Inloopdouche', d: 'XL-inloopdouche met grootformaat tegels en zwart matte kraanwerk.' },
-  { img: rzBadGast, tag: 'Gastentoilet', t: 'Gastentoilet', d: 'Compact gastentoilet met fineer-meubel en mat zwart sanitair.' },
-  { img: svcBad, tag: 'Wellness', t: 'Sauna-suite', d: 'Master ensuite met inbouwsauna en vrijstaand bad in microcement.' },
-  { img: rzBadGast, tag: 'Microcement', t: 'Powderroom', d: 'Microcementwanden in greige met fineer-meubel en mat zwart sanitair.' },
+  { img: rzBadEnsuite, tag: 'Master', t: 'Master ensuite', d: 'Dubbel wastafelmeubel in eik, microcementwanden en inloopdouche achter geribbeld glas. 5 weken.' },
+  { img: rzBadGroen, tag: 'Inloopdouche', t: 'Douche met accentwand', d: 'Inloopdouche met groene accentstrook, verlichte nis en terrazzo-look vloer.' },
 ];
 
 const gevel: Card[] = [
   { img: svcGevel, tag: 'Witte crepi', t: 'HOB', d: 'Geïsoleerde gevel met witte siliconen-crepi. 4 weken.' },
   { img: rzGevelCrepi, tag: 'Grijze crepi', t: 'Nieuwbouw', d: 'Antraciet siliconen-crepi met zwart aluminium schrijnwerk en magnolia voortuin.' },
-  { img: rzGevelStrips, tag: 'Steenstrips', t: 'Steenstrips', d: 'Geïsoleerde steenstrips Wienerberger met crepi-accent boven de inkom.' },
-  { img: about, tag: 'Houten gevel', t: 'Lariks', d: 'Ventileerde gevelbekleding in onbehandeld lariks, vergrijst natuurlijk.' },
-  { img: svcGevel, tag: 'Composiet', t: 'Trespa', d: 'Composiet gevelplaten Trespa Meteon op aluminium onderconstructie.' },
-  { img: rzGevelStrips, tag: 'Renovatie', t: 'Gevelrenovatie', d: 'Reiniging, hervoegen en accent in steenstrips boven inkom.' },
-  { img: rzGevelCrepi, tag: 'Strip & crepi', t: 'Naïsolatie', d: 'Volledige na-isolatie met EPS en mat-grijze siliconen-crepi.' },
-  { img: about, tag: 'Lariks', t: 'Lariks-aanbouw', d: 'Verticale lariks-bekleding op aanbouw, ventileerd op aluminium rails.' },
-  { img: rzGevelCrepi, tag: 'Antraciet crepi', t: 'Halfopen', d: 'Antraciet siliconen-crepi met diepe raamomkadering en plat dak.' },
-  { img: rzGevelStrips, tag: 'Steenstrips', t: 'Steenstrips', d: 'Handvorm-steenstrips in warm rood-bruin, met witte crepi rond de inkom.' },
+  { img: rzGevelLariks, tag: 'Houten gevel', t: 'Lariks-aanbouw', d: 'Verticale lariks-bekleding op de uitbouw, vergrijst natuurlijk van boven naar onder.' },
+  { img: rzGevelHervoegd, tag: 'Hervoegen', t: 'Rijwoning', d: 'Gevel gereinigd en hervoegd met kalkmortel, nieuwe blauwe hardsteen dorpels.' },
 ];
 
 const ecologisch: Card[] = [
@@ -170,26 +135,23 @@ const ecologisch: Card[] = [
   { img: eZon, tag: 'Zonnepanelen', t: 'PV-installatie', d: '24 panelen oost-west met hybride omvormer en thuisbatterij.' },
   { img: eIso, tag: 'Isolatie', t: 'Houtvezel', d: 'Volledig na-isolatieproject met natuurlijke houtvezelplaten.' },
   { img: eVent, tag: 'Ventilatie D', t: 'Systeem D', d: 'Balansventilatie met warmteterugwinning, 92% rendement.' },
-  { img: eKalk, tag: 'Kalkpleister', t: 'Bio-renovatie', d: 'Natuurlijke kalkpleister op leemstrobouw, dampopen en gezond.' },
-  { img: eZon, tag: 'PV + batterij', t: 'Zonneproject', d: '18 PV-panelen met thuisbatterij 10 kWh en EV-laadpunt.' },
-  { img: eHout, tag: 'Houtbouw', t: 'Houtskelet', d: 'Houtskeletbouw met houtvezelisolatie en gevel in lariks.' },
-  { img: eWarmte, tag: 'Geothermie', t: 'Bodemwarmtepomp', d: 'Verticale boringen met geothermische warmtepomp en vloerverwarming.' },
-  { img: eIso, tag: 'Bio-isolatie', t: 'Hennepisolatie', d: 'Hennep- en houtvezelplaten in dakvlak van karakterwoning.' },
-  { img: rzRenoHoek, tag: 'Energierenovatie', t: 'EPC-sprong', d: 'Volledige energetische upgrade: isolatie, schrijnwerk, warmtepomp en PV.' },
   { img: rzZonFermette, tag: 'Zonnepanelen', t: 'Fermette', d: '22 zwarte PV-panelen op het zuid-zadeldak van een gerenoveerde fermette met witte crepi. Met hybride omvormer.' },
 ];
+
+/* "Alle projecten" round-robin uit alle categorieën: nooit vaste indexen
+   (die crashten zodra een categorie kromp) en automatisch elk beeld uniek. */
+const CATEGORIEEN: Card[][] = [nieuwbouw, renovatie, interieur, dakwerken, badkamer, gevel, ecologisch];
+const alleKaarten: Card[] = [];
+for (let rij = 0; rij < Math.max(...CATEGORIEEN.map(c => c.length)); rij++) {
+  for (const cat of CATEGORIEEN) {
+    if (cat[rij]) alleKaarten.push(cat[rij]);
+  }
+}
 
 const filters: Filter[] = [
   { key: 'alle', label: 'Alle projecten',
     imgs: [projReno, dakPannen, svcInterieur, svcBad],
-    cards: [
-      nieuwbouw[0], renovatie[0], interieur[0], dakwerken[0],
-      badkamer[0], gevel[0], ecologisch[0], nieuwbouw[2],
-      renovatie[1], interieur[1], dakwerken[2], badkamer[4],
-      gevel[1], ecologisch[2], nieuwbouw[3], renovatie[3],
-      interieur[2], dakwerken[4], badkamer[2], gevel[3],
-      ecologisch[1], nieuwbouw[5], renovatie[5], interieur[5],
-    ],
+    cards: alleKaarten,
   },
   { key: 'dakwerken', label: 'Dakwerken',
     imgs: [dakPannen, dakEpdm, dakLeien, dakZink], cards: dakwerken },
