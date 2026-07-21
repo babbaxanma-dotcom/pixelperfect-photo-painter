@@ -1197,23 +1197,21 @@ export default function LpDienst({ slug }: { slug: string }) {
       {/* 9. REVIEWS — naar boven verplaatst (CRO: sociale proof vlak na de cijfers) */}
       <section className="tr-section tr-reviews" id="reviews">
         <div className="tr-wrap">
-          <div className="tr-head">
-            <h2>{d.reviewsH2 ?? 'Wat onze klanten vertellen'}</h2>
-          </div>
-          <div className="tr-rev-grid">
-            {d.reviews.slice(1).map((r, i) => (
-              <div className="tr-rev-card" key={i}>
-                <div className="tr-rev-stars">{stars}</div>
-                <p>{r.text}</p>
-                <div className="tr-rev-foot">
-                  <div className="tr-rev-ava" aria-hidden="true">{r.name.split(' ').map((w) => w[0]).slice(0, 2).join('')}</div>
-                  <div>
-                    <div className="tr-rev-name">{r.name}</div>
-                    <div className="tr-rev-role">{r.role}</div>
-                  </div>
+          <div className="tr-rev-layout">
+            <div className="tr-rev-rail">
+              <h2>{d.reviewsH2 ?? 'Klantbeoordelingen'}</h2>
+              <div className="tr-rev-score">4,9/5</div>
+              <div className="tr-rev-rail-stars" aria-hidden="true">{stars}</div>
+              <p className="tr-rev-rail-sub">gebaseerd op 180+ Google-reviews</p>
+            </div>
+            <div className="tr-rev-list">
+              {d.reviews.slice(1).map((r, i) => (
+                <div className="tr-rev-row" key={i}>
+                  <p>{r.text}</p>
+                  <div className="tr-rev-attr"><span className="tr-rev-dash" aria-hidden="true">&mdash;</span> <span className="tr-rev-name">{r.name}</span> <span className="tr-rev-role">&middot; {r.role}</span></div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -1229,7 +1227,7 @@ export default function LpDienst({ slug }: { slug: string }) {
           <div className="tr-svc-grid">
             {d.what.map(([t, sub], i) => (
               <div className="tr-svc-card" key={i}>
-                <div className="tr-svc-body"><h3>{t}</h3><p>{sub}</p></div>
+                <div className="tr-svc-body"><span className="tr-svc-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><h3>{t}</h3><p>{sub}</p></div>
               </div>
             ))}
           </div>
@@ -1297,7 +1295,7 @@ export default function LpDienst({ slug }: { slug: string }) {
       {d.gallery && d.gallery.length > 0 && (
         <section className="tr-section" style={{ background: 'var(--bg-tint)' }}>
           <div className="tr-wrap">
-            <div className="tr-head" style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 44px' }}>
+            <div className="tr-head" style={{ textAlign: 'left', maxWidth: 720, margin: '0 0 44px' }}>
               <span className="tr-eyebrow">Recente realisaties</span>
               <h2 style={{ fontSize: 'clamp(27px, 3.2vw, 38px)', color: NAVY, fontWeight: 600, margin: 0 }}>Ons werk in beeld</h2>
             </div>
@@ -1313,7 +1311,7 @@ export default function LpDienst({ slug }: { slug: string }) {
                   data-rl-index={Array.isArray(item) ? 0 : i}
                   data-rl-photos={JSON.stringify(photos)}
                   data-rl-title={`${d.galleryNoun ?? d.typeWerk} realisatie`}
-                  style={{ borderRadius: 4, overflow: 'hidden', boxShadow: '0 30px 60px -30px rgba(10,22,40,0.35)', aspectRatio: '4 / 3', position: 'relative' }}
+                  style={{ borderRadius: 8, overflow: 'hidden', boxShadow: '0 30px 60px -30px rgba(10,22,40,0.35)', aspectRatio: '4 / 3', position: 'relative' }}
                 >
                   <img src={cover} alt={`${d.galleryNoun ?? d.typeWerk}, realisatie ${i + 1}`} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   <span className="rl-zoom" aria-hidden="true">
@@ -1405,7 +1403,7 @@ export default function LpDienst({ slug }: { slug: string }) {
 }
 
 const LP_CSS = `
-.tr { font-family: var(--font-body); color: #1d2733; --tr-r-photo: 8px; --tr-r-ui: 8px; --tr-r-card: 12px; --wrap: 1180px; --bg-tint: #f3f1ea; --tr-line: #e7e3d8; }
+.tr { font-family: var(--font-body); color: #1d2733; --tr-r-photo: 8px; --tr-r-ui: 8px; --tr-r-card: 12px; --wrap: 1180px; --bg-tint: #f3f1ea; --tr-line: #e7e3d8; --tr-keyline: rgba(198,154,75,0.28); }
 .tr { --section-y: clamp(72px, 8.5vw, 128px); --section-y-lg: clamp(104px, 11vw, 168px); --section-y-compact: clamp(48px, 5.5vw, 84px); }
 .tr * { box-sizing: border-box; }
 .tr .tr-wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 clamp(24px, 5vw, 56px); }
@@ -1606,38 +1604,41 @@ const LP_CSS = `
 @media (max-width: 720px) { .tr-numbers { grid-template-columns: 1fr 1fr; } .tr-num + .tr-num::before { display: none; } .tr-num { padding: 34px 20px; } }
 
 /* 8 — SERVICES (dark, tekst-only cards: randen i.p.v. schaduw, gouden keyline-accent, leesbaar voor 45-65j) */
-.tr-services { background: ${NAVY}; color: #fff; border-top: 1px solid rgba(255,255,255,0.07); }
+.tr-services { background: ${NAVY}; color: #fff; border-top: 3px solid ${GOLD}; }
 .tr-services .tr-head { text-align: left; max-width: 680px; margin: 0 0 clamp(44px, 5vw, 72px); }
 .tr-services .tr-head h2 { font-size: clamp(27px, 4.4vw, 52px); color: #fff; font-weight: 700; letter-spacing: -0.02em; line-height: 1.06; margin: 0; }
-.tr-svc-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
-.tr-svc-card { background: #182b47; border: 1px solid rgba(255,255,255,0.22); border-radius: var(--tr-r-card);
-  display: flex; flex-direction: column; height: 100%; transition: border-color .2s ease; }
-.tr-svc-card:hover { border-color: rgba(255,255,255,0.38); }
-.tr-svc-body { padding: 28px 26px 30px; flex: 1 1 auto; display: flex; flex-direction: column; }
-.tr-svc-body::before { content: ""; width: 28px; height: 2px; background: ${GOLD}; margin: 2px 0 16px; flex: none; }
+/* open kolommen op de navy grond, gescheiden door gouden keylines (stats-band-taal);
+   geen dozen: de #182b47-vulling op #0a1628 was 1,27:1 = de "grauwe" plane-failure */
+.tr-svc-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(28px, 3vw, 44px); align-items: start; }
+.tr-svc-card { display: flex; flex-direction: column; }
+.tr-svc-card + .tr-svc-card { border-left: 1px solid var(--tr-keyline); padding-left: clamp(20px, 2vw, 28px); }
+.tr-svc-body { display: flex; flex-direction: column; }
+.tr-svc-num { font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 3vw, 40px); line-height: 1; color: rgba(198,154,75,0.32); margin: 0 0 12px; }
 .tr-svc-body h3 { font-size: 19px; color: #fff; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 9px; }
 .tr-svc-body p { font-size: 15px; line-height: 1.65; color: rgba(255,255,255,0.84); margin: 0; }
-@media (max-width: 1040px) { .tr-svc-grid { grid-template-columns: 1fr 1fr; gap: 18px; } }
-@media (max-width: 560px) { .tr-svc-grid { grid-template-columns: 1fr; } .tr-svc-body { padding: 22px 20px 24px; } }
+@media (max-width: 1040px) { .tr-svc-grid { grid-template-columns: 1fr 1fr; row-gap: 34px; } .tr-svc-card + .tr-svc-card { border-left: none; padding-left: 0; } }
+@media (max-width: 560px) { .tr-svc-grid { grid-template-columns: 1fr; row-gap: 28px; } }
 
 
 /* 11 — REVIEWS */
-.tr-reviews { background: #fff; }
-.tr-reviews .tr-head { text-align: left; max-width: 680px; margin: 0 0 clamp(44px, 5vw, 72px); }
-.tr-reviews .tr-head h2 { font-size: clamp(27px, 3.2vw, 40px); color: ${NAVY}; font-weight: 700; margin: 0; }
-.tr-rev-grid { display: grid; grid-template-columns: repeat(2, minmax(300px, 500px)); justify-content: center; gap: clamp(24px, 2.4vw, 34px); align-items: stretch; }
-.tr-rev-card { background: #faf9f5; border: 1px solid #ddd6c8; border-radius: var(--tr-r-card); padding: 32px 30px 28px;
-  box-shadow: 0 10px 30px -14px rgba(16,24,40,0.10); display: flex; flex-direction: column; }
-.tr-rev-stars { color: ${GOLD}; font-size: 15px; letter-spacing: 2px; margin-bottom: 14px; }
-.tr-rev-card p { font-size: 15px; line-height: 1.68; color: #333c4d; margin: 0 0 20px; flex: 1; }
-.tr-rev-foot { border-top: 1px solid #e8e4d8; padding-top: 16px; display: flex; align-items: center; gap: 12px; }
-.tr-rev-ava { width: 42px; height: 42px; border-radius: 50%; background: #15263f; color: #fff; display: flex;
-  align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 14px;
-  letter-spacing: 0.5px; flex: none; }
+/* reviews: asymmetrische editorial (rail + open rijen) op crème; geen dozen,
+   geen initiaal-avatars — de crème-doos-op-wit was 1,03:1 en de avatar de #1 tell */
+.tr-reviews { background: var(--bg-tint); }
+.tr-rev-layout { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(40px, 5vw, 72px); align-items: start; }
+.tr-rev-rail h2 { font-size: clamp(24px, 2.6vw, 34px); color: ${NAVY}; font-weight: 700; margin: 0 0 22px; }
+.tr-rev-score { font-family: var(--font-display); font-weight: 700; font-size: clamp(40px, 5vw, 56px); line-height: 1; color: ${GOLD}; }
+.tr-rev-rail-stars { color: ${GOLD}; font-size: 16px; letter-spacing: 2px; margin-top: 10px; }
+.tr-rev-rail-sub { font-size: 13px; color: #525b6b; margin: 10px 0 0; }
+.tr-rev-list { min-width: 0; }
+.tr-rev-row { padding: 26px 0; }
+.tr-rev-row + .tr-rev-row { border-top: 1px solid var(--tr-keyline); }
+.tr-rev-row:first-child { padding-top: 6px; }
+.tr-rev-row p { font-size: 15px; line-height: 1.68; color: #2b3543; margin: 0 0 14px; }
+.tr-rev-attr { font-size: 14.5px; }
+.tr-rev-dash { color: ${GOLD}; }
 .tr-rev-name { font-family: var(--font-display); font-weight: 600; color: ${NAVY}; font-size: 14.5px; }
-.tr-rev-role { font-size: 12.5px; color: #525b6b; font-weight: 600; margin-top: 2px; }
-@media (max-width: 980px) { .tr-rev-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 620px) { .tr-rev-grid { grid-template-columns: 1fr; } }
+.tr-rev-role { font-size: 13px; color: #525b6b; font-weight: 600; }
+@media (max-width: 820px) { .tr-rev-layout { grid-template-columns: 1fr; gap: 30px; } }
 
 /* 12 — FAQ */
 .tr-faq-box { border-top: 1px solid #ece9e1; padding: 12px 0 0; max-width: 760px; margin: 0 auto; }
@@ -1684,14 +1685,14 @@ const LP_CSS = `
 @media (max-width: 900px) { .tr-final-grid { grid-template-columns: 1fr; gap: 34px; } .tr-final-row { grid-template-columns: 1fr; } }
 
 /* 14 — FOOTER */
-.tr-footer { background: ${NAVY}; color: rgba(255,255,255,0.7); padding: 48px 0 36px; border-top: 1px solid rgba(255,255,255,0.08); }
+.tr-footer { background: ${NAVY}; color: rgba(255,255,255,0.7); padding: 48px 0 36px; border-top: 1px solid var(--tr-keyline); }
 .tr-footer-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; margin-bottom: 26px; }
 .tr-footer-wordmark { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: #fff; letter-spacing: -0.01em; }
 .tr-footer-links { display: flex; flex-wrap: wrap; gap: 22px; }
 .tr-footer-links a { color: rgba(255,255,255,0.72); font-size: 14px; }
 .tr-footer-links a:hover { color: #fff; }
 .tr-footer-info { font-size: 14px; color: rgba(255,255,255,0.70); line-height: 1.6; }
-.tr-footer-copy { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08);
+.tr-footer-copy { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--tr-keyline);
   font-size: 12.5px; color: rgba(255,255,255,0.62); }
 
 /* === REALISATIES-GALERIJ + REVIEWS + FOOTER — desktop-robuustheid (additief) === */
