@@ -8,19 +8,10 @@ import realisatiesImg from '@/assets/home/hero-realisaties.jpg';
 import werkwijzeImg from '@/assets/home/hero-werkwijze.jpg';
 import premieImg from '@/assets/home/blog-trends-2026.jpg';
 
-import revStijn from '@/assets/reviews/stijn.jpg';
-import revLieve from '@/assets/reviews/lieve.jpg';
-import revYusuf from '@/assets/reviews/yusuf.jpg';
-import revJasmien from '@/assets/reviews/jasmien.jpg';
-import revDimitri from '@/assets/reviews/dimitri.jpg';
-import revHicham from '@/assets/reviews/hicham.jpg';
-import revGreet from '@/assets/reviews/greet.jpg';
-import revAhmed from '@/assets/reviews/ahmed.jpg';
-import revTine from '@/assets/reviews/tine.jpg';
 
 type ServiceKey = 'dakwerken' | 'gevel' | 'default';
 
-type Review = { name: string; role: string; img: string; text: string };
+type Review = { name: string; role: string; text: string };
 
 const H1: Record<ServiceKey, string> = {
   dakwerken: 'Bedankt — uw <span class="ab-mark">dakwerken</span>-aanvraag is goed aangekomen.',
@@ -30,19 +21,19 @@ const H1: Record<ServiceKey, string> = {
 
 const REVIEWS: Record<ServiceKey, Review[]> = {
   dakwerken: [
-    { name: 'Geert Verbeke', role: 'Pannendak · Mechelen', img: revStijn, text: 'Ons dak lekte op verschillende plaatsen en was echt aan vervanging toe. Nu helemaal vernieuwd, met de garantie netjes op papier. Daar slaap je rustig van.' },
-    { name: 'Saïda El Khatib', role: 'Plat dak EPDM · Antwerpen', img: revLieve, text: 'Plat dak in één stuk gelegd, zonder naden. Twee jaar later nog altijd kurkdroog. Heel tevreden.' },
-    { name: 'Yusuf Demir', role: 'Sarkingisolatie · Bornem', img: revYusuf, text: 'Dak geïsoleerd en vernieuwd, nu een pak warmer. Elke week kregen we een update met foto en de werf bleef netjes. Goed opgevolgd.' },
+    { name: 'Geert Verbeke', role: 'Pannendak · Mechelen', text: 'Ons dak lekte op verschillende plaatsen en was echt aan vervanging toe. Nu helemaal vernieuwd, met de garantie netjes op papier. Daar slaap je rustig van.' },
+    { name: 'Saïda El Khatib', role: 'Plat dak EPDM · Antwerpen', text: 'Plat dak in één stuk gelegd, zonder naden. Twee jaar later nog altijd kurkdroog. Heel tevreden.' },
+    { name: 'Yusuf Demir', role: 'Sarkingisolatie · Bornem', text: 'Dak geïsoleerd en vernieuwd, nu een pak warmer. Elke week kregen we een update met foto en de werf bleef netjes. Goed opgevolgd.' },
   ],
   gevel: [
-    { name: 'Jasmien De Backer', role: 'Witte crepi · Mechelen', img: revJasmien, text: 'Onze rijwoning had een vermoeide bezetting uit de jaren ’80. Nu een spierwitte crepi-gevel die je zo van een interieurmagazine plukt. Buren komen vragen wie het werk gedaan heeft. Strak, proper, op tijd opgeleverd.' },
-    { name: 'Dimitri Maes', role: 'Crepi + ETICS-isolatie · Antwerpen', img: revDimitri, text: 'Onze woning was altijd koud. Sinds de gevelisolatie en crepi geen koude muren meer en de stookkost flink lager. Echt een verschil.' },
-    { name: 'Hicham Bouali', role: 'Gevelisolatie · Mechelen', img: revHicham, text: 'Eerst wilde ik enkel crepi, maar ze legden uit waarom isolatie beter was. Wat duurder, maar het comfort is er echt op vooruitgegaan. Geen spijt.' },
+    { name: 'Jasmien De Backer', role: 'Witte crepi · Mechelen', text: 'Onze rijwoning had een vermoeide bezetting uit de jaren ’80. Nu een spierwitte crepi-gevel die je zo van een interieurmagazine plukt. Buren komen vragen wie het werk gedaan heeft. Strak, proper, op tijd opgeleverd.' },
+    { name: 'Dimitri Maes', role: 'Crepi + ETICS-isolatie · Antwerpen', text: 'Onze woning was altijd koud. Sinds de gevelisolatie en crepi geen koude muren meer en de stookkost flink lager. Echt een verschil.' },
+    { name: 'Hicham Bouali', role: 'Gevelisolatie · Mechelen', text: 'Eerst wilde ik enkel crepi, maar ze legden uit waarom isolatie beter was. Wat duurder, maar het comfort is er echt op vooruitgegaan. Geen spijt.' },
   ],
   default: [
-    { name: 'Greet Vermeiren', role: 'Totaalrenovatie · Lier', img: revGreet, text: 'Volledige renovatie van A tot Z. Eén aanspreekpunt voor alles, planning klopte tot op de dag, eindfactuur exact zoals offerte. Geen verrassingen, geen meerwerk-trucs.' },
-    { name: 'Ahmed Karimi', role: 'Badkamerrenovatie · Vilvoorde', img: revAhmed, text: 'Mooie inloopdouche, en de werf bleef altijd netjes. Klaar op de afgesproken datum. Top werk.' },
-    { name: 'Tine Maes', role: 'Aanbouw · Bonheiden', img: revTine, text: 'Aanbouw van 28 m² met zinkwerk en grote raampartij. Architectenplan werd 1-op-1 uitgevoerd, de ploeg dacht actief mee bij detail-uitwerking. Erg tevreden over de afwerking.' },
+    { name: 'Greet Vermeiren', role: 'Totaalrenovatie · Lier', text: 'Volledige renovatie van A tot Z. Eén aanspreekpunt voor alles, planning klopte tot op de dag, eindfactuur exact zoals offerte. Geen verrassingen, geen meerwerk-trucs.' },
+    { name: 'Ahmed Karimi', role: 'Badkamerrenovatie · Vilvoorde', text: 'Mooie inloopdouche, en de werf bleef altijd netjes. Klaar op de afgesproken datum. Top werk.' },
+    { name: 'Tine Maes', role: 'Aanbouw · Bonheiden', text: 'Aanbouw van 28 m² met zinkwerk en grote raampartij. Architectenplan werd 1-op-1 uitgevoerd, de ploeg dacht actief mee bij detail-uitwerking. Erg tevreden over de afwerking.' },
   ],
 };
 
@@ -149,7 +140,6 @@ ${buildNav('home')}
           </div>
           <p>${r.text}</p>
           <div class="ab-bedankt-rev-foot">
-            <img src="${r.img}" alt="${r.name}" loading="lazy"/>
             <div>
               <strong>${r.name}</strong>
               <span>${r.role}</span>
@@ -164,7 +154,7 @@ ${buildNav('home')}
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="ab-quote" data-reveal>
-      "Een goede renovatie begint met luisteren. Daarom plannen we eerst een rustig telefoontje en pas dan een plaatsbezoek. Geen verkoperstrucs, geen drukte — gewoon kijken wat u nodig heeft en of wij dat correct voor u kunnen uitvoeren."
+      "Een goede renovatie begint met luisteren. Daarom plannen we eerst een rustig telefoontje en pas dan een plaatsbezoek. We kijken rustig wat u nodig heeft, en of wij dat correct voor u kunnen uitvoeren."
       <footer>De ploeg van AB Bouw Groep</footer>
     </div>
   </div>

@@ -1,0 +1,420 @@
+{
+ "batches": [
+  [
+   {
+    "pad": "src/assets/project-renovatie.jpg",
+    "oordeel": "slecht",
+    "prioriteit": "hoog",
+    "gebruik": "Realisaties.tsx – LEAD-beeld van 'Alle projecten' + lead van filter 'Renovatie' + kaart 'Totaalrenovatie · Rijwoning · strip & rebuild, 18 weken'",
+    "tells": "Dead-frontaal, kraakhelder en pijnlijk symmetrisch bakstenen rijhuisfront met DUBBELE identieke voordeuren, repetitieve identieke traveeën en identieke flankerende buren — exact de gestempelde 'te perfecte symmetrie / du",
+    "aspect": "3:2",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing from the opposite pavement, slightly off-centre: one fully renovated Belgian brownish-red brick rijwoning (single terraced house) in a Flemish village street, freshly repointed brickwork, new anthracite aluminium windows and one new anthracite front door, blue hardstone (blauwe hardsteen) plinth and doorstep, new zinc gutter, dark grey ceramic tiled roof with one VELUX and a modest chimney; flanked by two ordinary, visibly un-renovated older brick neighbours (weathered pointing, older PVC windows, roller shutters); parked cars along a wet klinker/cobbled street, a Belgian yellow plate turned away and unreadable; soft overcast grey Flemish daylight, believable grey sky, no HDR, no dramatic sky; a couple of background roofs carry solar panels; small realism details like a downpipe stain, a wheelie bin and a satellite dish. Natural imperfect symmetry, one modest façade, not a showroom, no repeated identical bays."
+   },
+   {
+    "pad": "src/assets/home/svc-construct.jpg",
+    "oordeel": "slecht",
+    "prioriteit": "hoog",
+    "gebruik": "AB Construct-divisiebeeld: Home.tsx:342 + Diensten.tsx:14 dienst-tegel + Construct.tsx:4 hero; byte-identiek (MD5 3B84D19C…) aan realisaties/01_extra_villa-mode",
+    "tells": "AI/CGI dream-villa render: kersenbloesem-tak die exact de linkerbovenhoek inkadert (klassieke AI-framing), vlekkeloos uniforme zandkleurige baksteen zonder echte kleur/voegvariatie, showroom-perfecte staging (siergrassen",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing. A real, recently built Belgian detached family home (nieuwbouw HOB): sand-coloured facing brick, flat or low roof, anthracite aluminium windows, a sober wooden front door. Ordinary block-paved driveway, a modest young garden, a plain slightly older brick neighbour partly visible, one background roof with solar panels. Soft overcast grey Flemish sky, grey believable sky, no HDR, no golden hour, no blossom framing. Straight believable handheld street view with minor real-world imperfections (a hose reel, a downpipe, a wheelie bin). NB: gebruik een APART, uniek beeld voor de Mechelen-realisatie — nooit hetzelfde bestand voor divisie-tegel én specifieke realisatie."
+   },
+   {
+    "pad": "src/assets/realisaties/01_extra_villa-modern-mechelen.jpg",
+    "oordeel": "slecht",
+    "prioriteit": "hoog",
+    "gebruik": "grep bevestigd: Realisaties.tsx r61 + RealisatiesGevel.tsx r13 (imgVillaMod, geclaimde realisatie 'nieuwbouw villa Mechelen, 312 m²')",
+    "tells": "AI-render gepresenteerd als specifieke geclaimde realisatie. Bloesemtak die precies de linkerbovenhoek inkadert, te uniforme/vlekkeloze beige steen, licht vervormde buurwoning rechts, te perfecte staging (grassen, geen m",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing. A newly built modern two-storey cube villa in Mechelen, cream-beige facing brick with a flat roof, large black aluminium windows and one slim glass juliet balcony, warm wooden front door, brick-paver driveway with ornamental grasses. A plain, slightly older brick neighbour house sits beside it and a normal Flemish street runs past. Flat soft overcast daylight, grey believable sky, NO cherry-blossom branch framing, no cinematic sky, brickwork with natural colour variation and honest small imperfections, no HDR, slight handheld angle."
+   },
+   {
+    "pad": "src/assets/home/proj3.jpg",
+    "oordeel": "slecht",
+    "prioriteit": "hoog",
+    "gebruik": "Home.tsx r588 realisaties-tegel cat:'interieur', titel 'Interieur · Brussel'",
+    "tells": "Twee fouten. (1) Tegel is getagd 'interieur / Brussel' maar toont een volledige EXTERIEUR-gevel (houtbekleding + crepi). (2) Leest als AI-render: te perfecte grindtuin, symmetrische buxus/topiary, perfect gecentreerde po",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing of a renovated interior in a Brussels townhouse: restored herringbone oak floor, high ceiling with a preserved plaster cornice, freshly painted off-white walls, a tall Belgian window with a deep reveal letting in soft grey overcast daylight. A cast-iron radiator, a paint tin and roller just at the edge of frame, subtle real-world imperfections. Warm, lived-in, authentic — no staging-perfect symmetry, no HDR. 4:3."
+   }
+  ],
+  [
+   {
+    "pad": "src/assets/realisaties/04_extra_stadswoning-brussel.jpg",
+    "oordeel": "slecht",
+    "prioriteit": "hoog",
+    "gebruik": "RealisatiesGevel.tsx project 'Stadswoning-restauratie 1908 · originele bepleistering hervoegd'",
+    "tells": "AI-render met harde tells: winkel-signage links is wartaal ('ctib Citeb / stib'), de nummerplaat van de zwarte Audi is vervormd/onleesbaar-gebrabbeld, en over de hele gevel lopen vreemde verticale 'regen'-krasstrepen. On",
+    "aspect": "3:2",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld straight-on framing of a restored Brussels burgerwoning facade from 1908: plastered facade repainted in period blue-grey, restored moulded window surrounds and a cornice, a classic panelled front door, a blue-stone doorstep. Wet cobbled Brussels street after rain, one ordinary parked car with a plain non-readable plate, neighbouring brick facades. Soft grey overcast daylight, no HDR, absolutely no readable signage, shop text or logos anywhere. Realistic, slightly imperfect, 3:2."
+   },
+   {
+    "pad": "src/assets/realisaties/14_extra_dakkapel-zink-lier.jpg",
+    "oordeel": "slecht",
+    "prioriteit": "hoog",
+    "gebruik": "RealisatiesDakwerken kaart 'Uitbreiding zolder · dakkapel in zink VMZinc Anthra'",
+    "tells": "HARDE AI-tell: verhaspeld watermerk '© iPhnetoxgrann' rechtsboven EN rechtsonder — klassiek diffusie-tekstartefact (mislukte 'iPhone'/copyright-render). Bovendien nep-candid 'door de autoruit' met zijspiegel in beeld. Ge",
+    "aspect": "3:2",
+    "prompt": "Full-frame documentary photograph, no interface elements, absolutely no watermark, text or copyright overlay, handheld framing from the garden. A newly built dormer (dakkapel) clad in VMZinc Anthra-Zinc standing-seam panels with a black-framed window and a small EPDM flat roof, set into the existing dark clay-tiled pitched roof of a Belgian house. Soft overcast daylight, grey believable Flemish sky, no golden hour, no HDR. A red-tiled neighbour roof and a brick chimney beside it, solar panels on about one in three background roofs. Realistic zinc seam texture and subtle matte reflections, natural handheld perspective."
+   },
+   {
+    "pad": "src/assets/home/hero-realisaties.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "hoog",
+    "gebruik": "grep bevestigd: Realisaties.tsx r4 (hero-achtergrond) + Bedankt.tsx r7",
+    "tells": "Droomvilla + cinematische schemer-lucht met warme gloed = exact de gemelde flux-look/tonale foutklasse. Witgeschilderde baksteen-architectenvilla met zwart staand-fels zinken dak, olijfboom in grind, gestileerde siergras",
+    "aspect": "3:2",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing. A recently finished Belgian renovation seen from the street: a half-open (halfopen) 1970s brick home with fresh anthracite aluminium windows, a new grey ceramic-tiled roof and a clean new front door, an older brick neighbour house attached on one side, a car on the brick-paver driveway and a normal Flemish streetscape behind (one of the background roofs carries black PV panels). Soft overcast Vlaams daylight, grey believable sky, faintly wet pavement, no cinematic glow, no golden hour, no HDR, natural muted colours, slight handheld angle."
+   }
+  ],
+  [
+   {
+    "pad": "src/assets/project-utiliteit.jpg",
+    "oordeel": "slecht",
+    "prioriteit": "middel",
+    "gebruik": "Realisaties.tsx:89 kaart tag 'Bedrijfspand', title 'Kantoorrenovatie', desc 'Volledige interieurrenovatie met nieuwe technieken en glaswanden. 12 weken.'",
+    "tells": "Harde AI-tell: onleesbare/gebrabbelde reclametekst op het gevelbord — 'UNIDER  Q5 43', 'Eiffecy Dwin Likiitten', 'Alumoenturr in Edeichen' (nonsens-letters, dé AI-signatuur). Bovendien onderwerp-mismatch: het toont een d",
+    "aspect": "3:2",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing. A freshly renovated Belgian office interior in a converted commercial building (bedrijfspand): new glass partition walls with slim black aluminium frames dividing meeting rooms, light grey carpet tiles, a white acoustic ceiling with recessed LED, exposed new ventilation ducts along one bay, a few desks with chairs. Daylight from large windows. Absolutely no signage, no logos, no lettering, no readable or garbled text anywhere. Soft neutral interior light, no HDR. Natural handheld perspective, believable proportions."
+   },
+   {
+    "pad": "src/assets/bad/tegelwerk.jpg",
+    "oordeel": "slecht",
+    "prioriteit": "middel",
+    "gebruik": "Bad.tsx dienstkaart 'Tegelwerk & vloeren' (id tegelwerk, tag Afwerking)",
+    "tells": "Ruwe werffoto als dienst-showcase: man knielt tegels te lijmen, mortelemmer, verspreide rode nivelleerclips, stof over de vloer, bouwlamp. Staat onder de kaart 'Tegelwerk & vloeren' met tag 'Afwerking' (Bad.tsx) — beloof",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing. A freshly finished Belgian bathroom, large-format matte anthracite porcelain wall tiles laid seamlessly with thin dark grout and clean aluminium corner trim profiles, a walk-in shower zone with a slim linear drain, light grey keramische floor tiles, blauwe hardsteen windowsill. Soft overcast daylight from a frosted side window, no HDR, subtle believable reflections, neutral slightly cool white-balance. Small honest details: a fresh silicone joint line in the corner, a folded microfibre cloth on the sill. Interior of a modern renovated rijwoning, no people, no tools, no dust, no boxes."
+   },
+   {
+    "pad": "src/assets/eco/intro.jpg",
+    "oordeel": "slecht",
+    "prioriteit": "middel",
+    "gebruik": "Ecologisch.tsx:150 intro-split (eerste groot in-content beeld, alt 'Ecologische woning')",
+    "tells": "Flux-render: te perfecte grindtuin met symmetrische buxushaagjes en perfect gecentreerde topiary-bol vóór de glaspui, vlakke schaduwloze belichting, gestileerd generiek interieur achter het hoekglas, uniforme houtlat-tex",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing. A real Belgian eco-renovated half-open woning with vertical thermally-modified larch cladding weathering to grey and a lower band of siliconenhars-crepi, an air-source warmtepomp outdoor unit on the side, timber-framed windows, a modest gravel border with ordinary mixed planting (not manicured) and a normal lawn. An older brick neighbour house partly visible, one distant roof with solar panels. Soft overcast Flemish daylight, grey believable sky, no HDR, cool white-balance. Small honest details: a garden hose reel, a stack of houtvezel insulation boards leaning against the wall. No symmetric topiary, no staging."
+   },
+   {
+    "pad": "src/assets/gevel/lp-anatomy-l2.jpg",
+    "oordeel": "slecht",
+    "prioriteit": "middel",
+    "gebruik": "CalculatorGevel.tsx:24 stap 3 optiekaart 'Ja — ETICS isolatie'",
+    "tells": "Zwevende witte CGI/render van een geperforeerde isolatieplaat op volledig witte achtergrond (anatomy-asset, 1024x572). Als optie-thumbnail 'Ja — ETICS isolatie' (16:9 cover-crop) wordt het een bijna leeg wit strookje; le",
+    "aspect": "16:9",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing. Close three-quarter view of a Belgian rijwoning facade freshly finished with light-grey siliconenhars-crepi over ETICS buitenisolatie, crisp render edges around a white PVC window and a new aluminium windowsill, subtle hand-troweled texture. A short aluminium scaffolding pole at the frame edge as an honest detail. Soft overcast daylight, sliver of grey believable sky, no HDR, cool neutral tones, matte finish, no people."
+   }
+  ],
+  [
+   {
+    "pad": "src/assets/eco/isolatie.jpg",
+    "oordeel": "slecht",
+    "prioriteit": "middel",
+    "gebruik": "grep bevestigd: Ecologisch.tsx kaart 'Natuurlijke isolatie — Cellulose, houtvezel' (r33-48) EN Realisaties.tsx r136 kaart 'Isolatie/Houtvezel — natuurlijke hout",
+    "tells": "Materiaal-tegenspraak (NIET gefixt sinds vorige audit): de foto toont SYNTHETISCHE gele glaswol tussen de kepers, terwijl beide gebruiksplekken letterlijk 'Cellulose/houtvezel' en 'natuurlijke houtvezelplaten' claimen. B",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing. Interior of a Belgian attic (interbellum rijwoning) being insulated with NATURAL wood-fibre boards: honey-brown rigid houtvezel/wood-fibre panels neatly fitted tight between dark timber rafters, a completed airtight membrane cleanly taped along the ridge, tidy roof slope with one VELUX roof window letting in soft grey overcast daylight. Warm natural material tones, clean but real jobsite (a folding rule and a taped seam, a little wood-fibre dust on fresh OSB floor), absolutely no yellow synthetic glass wool. Neutral colour, soft overcast light, grey believable sky through the window, no HDR, slight handheld tilt."
+   },
+   {
+    "pad": "src/assets/home/blog-gevel-houten.jpg",
+    "oordeel": "slecht",
+    "prioriteit": "middel",
+    "gebruik": "grep bevestigd: blogs.ts r555, cover van artikel 'Houten gevelbekleding: thermowood, lariks of vergrijzen?'",
+    "tells": "Onderwerp-mismatch: het artikel gaat volledig over HOUTEN gevelbekleding (lariks/thermowood), maar de foto toont een doodgewone GELE BAKSTEEN-woning zonder één plank hout. Leest bovendien AI-render: licht golvend/smelten",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing. Belgian house facade clad in vertical Siberian larch (lariks) timber boards: warm honey-brown planks on one part already weathering toward silver-grey on the sun-exposed part, visible plank joints and fixing screws, framing a black aluminium window and a modern front door. A modest Flemish home with a plain older brick neighbour just visible at the edge. Soft overcast daylight, grey believable sky, natural wood tones, no HDR, no staged perfection, no blossom branch, slight handheld framing."
+   }
+  ],
+  [
+   {
+    "pad": "src/assets/eco/kalk.jpg",
+    "oordeel": "slecht",
+    "prioriteit": "middel",
+    "gebruik": "Ecologisch.tsx kaart 'Kalkpleister & natuurlijke afwerking' + Realisaties.tsx ecologisch-grid",
+    "tells": "Werf-in-uitvoering als portfolio: half opgezette wand met een vuile, aangekoekte pleisterspaan ertegen, mortelresten op vloer/vensterbank en een kale ruwe rechterrand. Copy verkoopt net de AFGEWERKTE matte look — botst f",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing of a fully finished natural lime-plaster (kalkpleister) wall in a renovated Belgian interbellum home. Soft matte mineral texture in warm off-white, gentle raking window light revealing the subtle hand-troweled relief, a simple oak windowsill with a plain ceramic vase. Completely finished — no tools, no trowel, no debris, no exposed brick edge. Calm, warm, honest atmosphere. Soft grey overcast daylight through a Belgian tilt window, no HDR. Realistic, slightly imperfect, 4:3."
+   },
+   {
+    "pad": "src/assets/realisaties/extra-26_gele-villa-zijaanzicht.jpg",
+    "oordeel": "slecht",
+    "prioriteit": "middel",
+    "gebruik": "Realisaties nieuwbouw-kaart 'BEN-woning' + RealisatiesGevel 'gele villa'",
+    "tells": "Render/CGI-signatuur: te gladde, uniforme gele baksteen, te-perfect gestylde symmetrische beplanting (potten flankeren de deur), doorgebrande witte lucht en die 'architectuurviz'-hoek. Leest AI/render tussen de echte gsm",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld three-quarter view from the driveway. A recently completed Belgian near-energy-neutral (BEN) detached house in yellow Flemish facing brick with a dark ceramic gabled roof, anthracite aluminium windows and a dark front door. A modest array of black solar panels covers part of the roof; an air-source heat-pump unit sits discreetly against the side wall. Soft overcast daylight, grey believable Flemish sky, no blown-out white, no CGI smoothness, no HDR. Slightly irregular brick coursing with real mortar texture, a block-paved drive, an ordinary timber garden fence and slightly older neighbouring houses. Natural handheld perspective."
+   },
+   {
+    "pad": "src/assets/construct/halfopen.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "Construct.tsx kaart 'Casco bouwen' + Realisaties-raster",
+    "tells": "Toont een volledig AFGEWERKTE gerenoveerde halfopen woning naast een vervallen pand met verkoop-/notarisbord — geen casco/winddichte ruwbouw. Botst met de kaartclaim 'Casco bouwen' (Construct.tsx:70, tag 'Casco'). De fot",
+    "aspect": "3:2",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing from the street. A Belgian half-open (halfopen) house delivered as a wind- and watertight casco shell: bare red-brick facade with fresh mortar joints, brand-new anthracite ceramic pantile roof fully laid, zinc gutters and downpipes fitted, black-framed windows installed but zero interior finishing, a pallet of leftover facing bricks and a heap of sand against the gable, churned earth where the driveway will come. Attached neighbour is an ordinary slightly older brick house. Soft overcast grey Flemish sky, no HDR, cool diffuse daylight, wet pavement, one background roof carrying solar panels. Realistic imperfect brick coursing. No people, no readable license plates, no text."
+   },
+   {
+    "pad": "src/assets/dak/dakraam.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "Dakwerken.tsx:132 kaart 'Dakvensters & dakkapellen' + Realisaties.tsx",
+    "tells": "Nieuwe antracietzinken dakkapel zit in een zwaar verweerd, afbladderend, vlekkerig leiendak dat het hele beeld domineert; oogt goedkoop/onafgewerkt en trekt de aandacht weg van het nieuwe product. Echte foto (geen AI), m",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing looking up at a roof. A freshly installed modern dakkapel (dormer) with anthracite zinc standing-seam cheeks and a white-framed double window, set into an EVEN, well-kept dark ceramic pantile roof — clean uniform tiles, no flaking, no lichen. New zinc flashing and zinc eaves gutter, a brick chimney nearby. Soft overcast grey Flemish sky, cool diffuse daylight, no HDR. Small real details: a faint water trail on the zinc, one neighbouring roof with solar panels in the background. Belgian residential typology. No people, no text, no readable numbers."
+   }
+  ],
+  [
+   {
+    "pad": "src/assets/lp-diensten/oprit-what.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "LpDienst.tsx:96 (oprit-dienst, 'wat is een oprit'-uitlegbeeld)",
+    "tells": "Buitenlandse (UK) typologie als Belgisch dienstbeeld: witte uPVC-erker-bungalow, Britse close-board houten schutting met betonnen tussenplaten en sleufpalen, ligusterhaag - komt in Vlaanderen vrijwel niet voor. De klinke",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, low handheld angle along a freshly laid Belgian oprit in grey betonklinkers (concrete block paving) with a contrasting keiformaat-band and a blauwe hardsteen kantstrook, in a typical Vlaamse verkaveling. An ordinary Belgian half-open red-brick house behind, a low beukenhaag or gemetste tuinmuur, a normal Flemish streetscape with a bit of wet asphalt. Soft overcast light, grey believable sky, fresh voegzand in the joints, no HDR, no British close-board timber fence, no bungalow bay window, no readable number plates, believable minor imperfections."
+   },
+   {
+    "pad": "src/assets/dak/intro-overview.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "Dakwerken.tsx intro-split ('Overzicht dak') + Realisaties.tsx dakkaart 'Volledige dakvernieuwing / strip & rebuild'",
+    "tells": "Roofscape leest niet-Belgisch (rijen hoge terracotta schoorsteenpotten + antennes = UK/Deens gevoel); linker rode dak lijkt in diagonaal/visgraat gelegd (onlogisch voor pannen); klein zwevend plaatje met half-leesbare te",
+    "aspect": "16:9",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing low from the street: a just-renovated pitched roof on a Belgian half-open (HOB) brick house, new dark anthracite ceramic interlocking tiles (keramische pannen) laid in straight even rows, fresh zinc ridge, valley, gutter and downpipe, one small VELUX roof window, a plastered chimney with neat zinc flashing; ordinary older neighbouring roofs left and right, solar panels on roughly one in three background roofs; a bare late-winter tree; soft overcast grey Flemish sky, no HDR, no golden hour, no signage or readable text anywhere; realistic weathering, believable Vlaamse straat."
+   },
+   {
+    "pad": "src/assets/eco/houtskelet.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "Ecologisch.tsx:51 kaart 'Houtskelet & CLT' (OK) + Realisaties.tsx:133 realisatie 'CLT-woning' desc 'Massief houtbouw (CLT) met houtvezel-isolatie en kalkpleiste",
+    "tells": "Authentieke, echte CLT-structuurfoto (geen AI) — prima voor de Ecologisch structuurkaart. Maar als REALISATIE-portfoliokaart 'CLT-woning' is het een kale casco zonder ramen, dak of afwerking (werf-als-portfolio) en botst",
+    "aspect": "4:3",
+    "prompt": "Houd houtskelet.jpg enkel voor de Ecologisch 'Houtskelet & CLT' structuurkaart. Voor de Realisaties 'CLT-woning'-kaart een AFGEWERKT huis: Full-frame documentary photograph, no interface elements, handheld framing. A finished, inhabited Belgian CLT / timber-frame home (HOB) fully clad: natural larch vertical cladding combined with white lime render (kalkpleister), anthracite aluminium windows, low-pitch tiled roof. Front garden with young planting, a bicycle by the door. Plain slightly older brick neighbours, roughly one in three background roofs with solar panels. Soft overcast grey Flemish daylight, grey believable sky, no HDR. Natural handheld street-level perspective, believable proportions."
+   },
+   {
+    "pad": "src/assets/gevel/intro.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "Gevel.tsx:5 intro-split (1e content-beeld, alt 'Gevelisolatie in uitvoering') + CalculatorGevel.tsx:25 kaart 'Nee — enkel afwerking' + LpGevel.tsx:576 'Gevelond",
+    "tells": "Echte foto, maar leest als opruim-/werfrommel: vuile zwarte mortelkuip + bezem + puin op de voorgrond, geen showpiece. Alt op Gevel-pagina liegt ('gevelisolatie in uitvoering' — geen isolatie te zien). Als calculatorkaar",
+    "aspect": "4:3",
+    "prompt": "Corrigeer eerst de alt-tekst. Voor de intro/'enkel afwerking'-plek een nette, afgewerkte gevel: Full-frame documentary photograph, no interface elements, handheld framing. A freshly repointed and cleaned Belgian brick facade of a 1930s interbellum rijwoning: crisp new light-grey pointing between warm red-brown bricks, fully finished with no tools, no mortar tub, no rubble in frame. Shot slightly along the wall from the pavement, a plain older brick neighbour visible, wet cobbles. Soft overcast grey Flemish sky, grey believable sky, no HDR. Believable handheld angle."
+   }
+  ],
+  [
+   {
+    "pad": "src/assets/gevel/sierpleister.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "Gevel.tsx:71 kaart 'Sierpleister' (redelijk OK) + CalculatorGevel.tsx:319 'Marmorino — kunst-look' + RealisatiesGevel.tsx:61 'Modern volume · witte sierpleister",
+    "tells": "Echte foto, maar het is een gewone beige gespoten crepi-topgevel — geen decoratieve/handgeschilderde sierpleister, niet wit, en zonder de geclaimde zwarte/anthraciet horizontale cladding-plint. Dekt de RealisatiesGevel-s",
+    "aspect": "4:3",
+    "prompt": "Voor de RealisatiesGevel/calculator-claim: Full-frame documentary photograph, no interface elements, handheld framing. A modern Belgian detached house with a strong graphic contrast: a crisp white hand-worked decorative render (sierpleister) upper volume above an anthracite horizontal cladding plint (Eternit Equitone look), flat roof with hidden composite trim, anthracite aluminium windows, bluestone doorstep, young landscaping. Plain older brick neighbour on one side. Soft overcast grey Flemish daylight, grey believable sky, no HDR. Natural handheld street-level perspective, believable proportions."
+   },
+   {
+    "pad": "src/assets/dak/lp-classic-renovatie.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "RealisatiesDakwerken.tsx:16 projectkaart 'Classic renovatie'",
+    "tells": "Echte foto, mooi vernieuwd pannendak, maar het is een BRITSE woning: Engelse baksteen-semi met erker en composietdeur met ovaal glas, groene wheelie-bin, en een LEESBARE UK-nummerplaat (gele achterplaat) op de VW Golf. S",
+    "aspect": "16:9",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing from across the street. A Belgian interbellum half-open woning (HOB) with a freshly renewed pitched roof in matte anthracite keramische pannen, new zinc box gutter and downpipe, a modest brick chimney, restored white bargeboards. Ordinary slightly older neighbouring brick houses on both sides, one background roof with a few solar panels. Grey believable overcast Flemish sky, wet grey asphalt street with a strip of natural klinkers, no HDR, cool daylight. No readable number plates, no people, honest slightly imperfect framing."
+   },
+   {
+    "pad": "src/assets/home/hero-over.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "OverOns.tsx:4 pagina-hero",
+    "tells": "Geen harde AI-tell (reflecties in nat plaveisel consistent, leien/schouw geloofwaardig — waarschijnlijk echte pro-twilightfoto), maar cinematische schemer-droomvilla met warme raamgloed en corten-plantbakken botst met de",
+    "aspect": "3:2",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing. A small Belgian construction crew of three in ordinary workwear without visible brand logos, standing relaxed in front of a just-finished half-open woning with anthracite keramische pannen and light-grey crepi; a company van at the curb with rear doors open and materials inside, aluminium scaffolding partly dismantled. Ordinary older brick neighbours, one roof with solar panels, wet grey klinker driveway. Soft overcast Flemish daylight, grey believable sky, no HDR, cool daylight. Relaxed but not sharply identifiable faces, documentary and honest, no staging."
+   },
+   {
+    "pad": "src/assets/realisaties/int-dressing-eik.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "Realisaties, interieur-kaart 'dressing eik'",
+    "tells": "Render-achtige perfectie (ook in vorige audit gemeld): impossibly nette, gelijkmatig gestapelde truien in elk vak, te egale/warme LED-gloed, generieke showroom-sfeer, spiegel-reflectie. Geen harde artefacten, maar mist d",
+    "aspect": "3:2",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing. A custom oak walk-in dressing room in a Belgian home: floor-to-ceiling light oak veneer cabinets with open shelving and a hanging rail, a few genuinely folded jumpers and shirts that are slightly uneven, a full-length mirror and a linen upholstered bench on a matte oak plank floor, soft grey overcast daylight from a side window. Natural even lighting with subtle real shadows, a little lived-in imperfection, no showroom perfection, no over-bright LED glow, no HDR, handheld framing."
+   }
+  ],
+  [
+   {
+    "pad": "src/assets/construct/aanbouw.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "Construct.tsx kaart 'Aan- en uitbouw' + Realisaties.tsx aanbouw-kaart",
+    "tells": "Echte foto maar onmiskenbaar Britse woning: verticale Engelse schuiframen met 'horns', Crittall-stalen pui, York-stone terras, Britse rijwoning-buren. Buitenlands stockgevoel op een Vlaamse aanbouw-kaart; een geïnformeer",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing from the back garden of a Belgian half-open woning (HOB) in Vlaanderen. A modern single-storey rear extension (aanbouw) clad in dark zinc standing-seam and anthracite aluminium sliding doors (Reynaers), grafted onto an existing 1970s red-brick house with a black ceramic tiled roof. Blue-stone (arduin) terrace tiles still wet from earlier rain, a boxwood border, a garden shed and older brick gable with a TV aerial just next door. Soft grey overcast Flemish daylight, believable flat sky, no HDR. Natural imperfections, moss between terrace joints. Realistic handheld snapshot, 4:3."
+   },
+   {
+    "pad": "src/assets/gevel/witte-crepi.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "Gevel-hero, LpGevel-hero, CalculatorGevel crepi-optie, LpDienst crepi, blog-cover EN RealisatiesGevel.tsx project[0]",
+    "tells": "Foto zelf is prima (echte, Vlaamse sobere witte-crepi rijwoning) en werkt goed als generiek crepi-voorbeeld. MAAR op RealisatiesGevel claimt de kaart 'Hedendaagse VRIJSTAANDE villa · witte crepi MET westerse cederlat-acc",
+    "aspect": "16:9",
+    "prompt": "Beste fix: houd deze goede foto voor de generieke crepi-plekken en herschrijf de RealisatiesGevel-kaart naar een sobere witte-crepi rijwoning. Wil je toch het beeld matchen aan de huidige claim: Full-frame documentary photograph, no interface elements, handheld framing of a contemporary DETACHED Flemish villa with a crisp white silicone-resin crepi facade (Sto Lotusan), warm western red cedar cladding accents framing the front entrance and window bays, anthracite aluminium joinery and blue-stone (arduin) sills. Grey overcast Belgian daylight, believable flat sky, wet clay-paver driveway, an ordinary slightly older brick neighbour with solar panels partly visible. No HDR, natural imperfections, 16:9."
+   },
+   {
+    "pad": "src/assets/home/blog-trends-2026.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "blogs.ts cover 'Renovatietrends 2026' + Bedankt.tsx premie-beeld",
+    "tells": "Echte foto, thematisch on-topic (renovatie), maar leest als rommelige onafgewerkte bouwplaats: blootliggende baksteen, nat pleisterwerk, isolatierollen en losse latten op kale betonvloer, rondslingerend gereedschap. Voor",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing of a tastefully finished Flemish renovation interior that signals 2026 trends: a warm lime-plaster wall, a section of neatly restored exposed brick, a triple-glazed anthracite window, light oak floor and a tidy stack of wood-fibre insulation boards in the corner. A calm, representative, mostly finished space — a clean work-in-progress, not a messy site. Soft grey overcast daylight through the window, no HDR. Realistic, 4:3."
+   }
+  ],
+  [
+   {
+    "pad": "src/assets/lp-diensten/pleisterwerk-steps.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "LpDienst.tsx stepsImg voor 'Pleisterwerk & gyproc' (stappen-sectie)",
+    "tells": "Leest als AI-render: te gladde/denoised vlakken, zacht-schilderachtige lichtvlekken die niet helemaal met het raam kloppen, licht 'smeltende' geometrie van de deuropening/dagkant, geen enkel realistisch detail (geen plin",
+    "aspect": "1:1",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing of a freshly plastered empty room in a Belgian home, ready for paint: smooth grey-beige gypsum plaster walls with faint trowel marks still drying, a Belgian tilt window casting soft raking daylight, a bare screed floor, a doorway to the hallway with a real reveal. Genuine construction-finish moment with natural tonal variation and slight imperfections in the plaster. Soft overcast light, no HDR, not a render, 1:1."
+   },
+   {
+    "pad": "src/assets/dak/dakisolatie.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "RealisatiesDakwerken sarking-kaart + Dakwerken dienstkaart + Realisaties gevel-thumbnail + blog 'dakisolatie-renovatieplicht'",
+    "tells": "Beeld zelf is authentiek en prima als blog-/dienstbeeld, MAAR wordt in RealisatiesDakwerken als 'recent afgewerkt dak' portfoliokaart (filter sarking) gebruikt terwijl het een half-gestript dak halverwege uitvoering toon",
+    "aspect": "3:2",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing from garden level. A Belgian half-open brick house after a COMPLETED sarking roof renovation: the original red-brown clay tiles re-laid over the new 24 cm PIR sarking build-up, crisp new zinc ridge and chimney flashings, Delta underlay only just visible at the eaves detail. Soft overcast daylight, grey believable Flemish sky, no golden hour, no HDR. A folded aluminium scaffold tower still leans against the gable and a small material trailer sits on the driveway as real-work details. Slightly older neighbouring houses, solar panels on roughly one in three background roofs. Realistic brick and tile texture, natural handheld perspective."
+   },
+   {
+    "pad": "src/assets/dak/lp-geel-nieuwbouw.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "RealisatiesDakwerken kaart 'Gele baksteenwoning · nieuw antraciet pannendak'",
+    "tells": "Warme cinematische golden-hour gloed en te-perfecte symmetrische, gestylde gevel — de flux-'beautyshot'-signatuur die eerder al is aangewezen. Staat als 'echte' realisatiekaart (pannendak antraciet) op een pagina die 'we",
+    "aspect": "16:9",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing from the pavement. A contemporary Belgian detached house in warm yellow Flemish facing brick with a brand-new anthracite ceramic tiled roof (Koramic-style flat interlocking tiles), grey-blue aluminium window frames and a wooden front door. Flat soft overcast light, grey believable Flemish sky, no golden hour, no cinematic glow, no HDR. Slightly asymmetric composition, zinc gutter and downpipe detail, low beech hedge, block-paved driveway still a little wet. Ordinary slightly older neighbouring houses left and right, solar panels on about one in three background roofs. Realistic brick and tile texture, natural handheld perspective."
+   },
+   {
+    "pad": "src/assets/home/proj4.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "middel",
+    "gebruik": "Home realisaties-tegel 'Dakwerken · Lier'",
+    "tells": "Foto zelf authentiek (zwart-zinken aanbouw/gevel), maar de Home-realisatietegel is getagd cat:'dakwerken' + titel 'Dakwerken · Lier' terwijl het dakwerk NIET het onderwerp is — gevel/aanbouw domineert. Content-mismatch o",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing from the street in Lier. Close, roof-focused view of a completed Belgian roof renovation: a hipped roof re-covered with fresh dark ceramic pantiles, a crisp new zinc valley and ridge, a zinc box gutter and downpipe along the eaves, one Velux roof window. Soft overcast daylight, grey believable Flemish sky, no HDR. The roof clearly fills the upper two thirds of the frame; ordinary slightly older brick neighbours behind, solar panels on about one in three background roofs. Natural handheld perspective, realistic tile and zinc texture."
+   }
+  ],
+  [
+   {
+    "pad": "src/assets/home/blog-gevel-etics.jpg",
+    "oordeel": "slecht",
+    "prioriteit": "laag",
+    "gebruik": "blogs.ts:32 blogGevelEtics — cover archiefkaart 'ETICS buitengevelisolatie'",
+    "tells": "Architectuur-render/AI: brandschone wit-gepleisterde bovenbouw + zwarte baksteen, dramatisch verlicht gestyled design-interieur bij schemer achter de pui, perfect visgraat-klinkerwerk, te perfecte grassen. AI-batch-afmet",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing. A Belgian half-open woning mid-renovation wrapped in aluminium scaffolding: grey EPS ETICS boards with visible plastic rondel fixings on part of the facade, first base-coat with reinforcing mesh on another part, and a finished light-grey crepi section near the entrance. A mortar bucket and a notched trowel on the scaffold plank. Ordinary older brick neighbour, one background roof with solar panels. Soft overcast Flemish light, grey believable sky, no HDR, cool daylight, no identifiable faces. Documentary, honest."
+   },
+   {
+    "pad": "src/assets/home/blog5-houtskelet.jpg",
+    "oordeel": "slecht",
+    "prioriteit": "laag",
+    "gebruik": "blogs.ts:10 blogHoutskelet — cover archiefkaart houtskelet/houten gevel",
+    "tells": "Waarschijnlijk Flux-render: deelt exact de AI-batch-afmeting 1184x880 met bevestigde renders (eco/intro, blog-gevel-etics), zeer strak/staged compositie, uniforme houtlat- en grastextuur, geen enkele echtheids-onregelmat",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing. A Belgian houtskelet new-build with a ventilated houten gevelbekleding in vertical lariks slats showing natural colour variation and a few visible fixing screws, black aluminium window frames, a lower plint in red brick. An ordinary older brick neighbour house and one background roof with solar panels. Soft overcast Flemish daylight, grey believable sky, no HDR, slightly cool tones. Small honest details: a scaffolding tube leaning at the gable, sawdust and offcuts on the ground. No perfect staging."
+   }
+  ],
+  [
+   {
+    "pad": "src/assets/home/hero-2.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "laag",
+    "gebruik": "Home.tsx import, niet in template gerenderd",
+    "tells": "Cinematisch, magazine-perfect design-interieur zonder Belgisch anker; leest als render/te perfecte staging (flux-look risico). Geen hard AI-artefact aanwijsbaar, maar past niet bij de documentaire echtheidsstandaard. NB:",
+    "aspect": "16:9",
+    "prompt": "Full-frame documentary interior photograph, no interface elements, handheld framing. A completed Belgian renovation living room in a rijwoning: matte lime-plastered off-white walls, engineered oak floor, black-framed sliding doors onto a small city garden with a hedge under soft overcast light. Understated real furniture (a grey linen sofa, an oak table), no over-styling, a few lived-in details (a folded throw, a book, a plant on the floor). Cool diffuse daylight from the garden, no HDR, no cinematic glow, realistic slightly uneven surfaces. Belgian residential scale, not a design-magazine villa. No people, no text."
+   },
+   {
+    "pad": "src/assets/home/hero4.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "laag",
+    "gebruik": "Home.tsx import, niet in template gerenderd",
+    "tells": "Gepolijste 'droomvilla' met warm goud-licht en geschilderd-ogende dappled boomschaduw op de gevel, terwijl de lucht vlak grijs/bewolkt is — die licht-inconsistentie (overcast geeft geen harde schaduwen) is een render/AI-",
+    "aspect": "3:2",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing from the front garden. A recently built Belgian modern villa (schuurwoning/pastorij style): light nuanced facing-brick facade, black glazed ceramic pantile roof with a zinc-clad dormer, black sectional garage door, cobblestone (kassei) driveway. Soft overcast grey Flemish sky with even diffuse light — no golden-hour glow, no hard dappled shadows, no HDR. Ordinary mature planting, a corten steel border, a mailbox, one neighbouring roof in the background with solar panels. Realistic imperfect brickwork and paving. No people, no readable license plates, no text."
+   },
+   {
+    "pad": "src/assets/home/hero-3.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "laag",
+    "gebruik": "Home.tsx (dode import - niet gerenderd)",
+    "tells": "Cinematische blauwe lucht met dramatische cumulus (flux-look), te perfect geidealiseerde wit-gepleisterde pastorijstijl-woning met vlekkeloze crepi en golden-backlit siergrassen; leest als architectuur-render/beautyshot ",
+    "aspect": "3:2",
+    "prompt": "Full-frame documentary architectural photograph, no interface elements, wide 3:2 handheld framing shot from across the street. A renovated Flemish half-open home in pastorij/landelijke stijl with fresh warm-white siliconenhars-crepi and a re-tiled roof in matte anthracite keramische pannen, anthracite aluminium windows, sober low planting. Flat overcast Flemish sky, soft grey diffuse light, no dramatic clouds, no golden glow, no HDR. Wet asphalt street in front, an ordinary slightly older red-brick neighbour house at the edge of frame, a modest gravel front garden. Natural muted colours, believable minor imperfections, no people, no readable number plates or signage."
+   },
+   {
+    "pad": "src/assets/home/hero5.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "laag",
+    "gebruik": "Home.tsx (dode import - niet gerenderd)",
+    "tells": "Hyper-gestylede designerkeuken (Calacatta-Viola marmer waterval-eiland + backsplash, drie perfect uitgelijnde pendels, gestylde broodplank/citroenen, wishbone-stoelen): leest als magazine/stock/render i.p.v. echte AB-rea",
+    "aspect": "3:2",
+    "prompt": "Full-frame documentary interior photograph, no interface elements, handheld 3:2 framing of a just-finished Belgian new-build kitchen in a real family home. Handleless matte cabinets, a modest quartz-composite island with a black tap and induction hob, oak-veneer tall units, herringbone oak floor, an ordinary window with soft overcast daylight and a grey believable sky visible outside. No styling props, no staged bread or fruit bowls. Even natural light, no HDR, no studio lighting, slight reflections and ordinary minor imperfections. Residential scale, not a showroom or magazine set."
+   },
+   {
+    "pad": "src/assets/home/team2.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "laag",
+    "gebruik": "Home.tsx + OverOns.tsx (dode import - niet gerenderd)",
+    "tells": "Environmental portret van een 'craftsman' in gestript interbellum-interieur: cinematische ondiepe DOF, licht te-gestyleerd bestofte jas en enigszins incoherente houten schraag/werkbank op de achtergrond = veelvoorkomend ",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary environmental portrait, no interface elements, vertical 4:5 handheld framing. A real Flemish construction team member, man in his 40s-50s, wearing a plain company polo or a dusty work jacket, standing relaxed in a genuine Belgian renovation interior (stripped interbellum brick, plaster dust, a real sawhorse and hand tools). Soft overcast daylight from a nearby window, grey believable tone, no cinematic colour grade, no moody backlight, natural calm expression looking at camera. Realistic skin with pores and stubble, believable slightly messy background, coherent tools, no logos or readable text on clothing."
+   }
+  ],
+  [
+   {
+    "pad": "src/assets/werkwijze/03-offerte.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "laag",
+    "gebruik": "Werkwijze.tsx – stap 03 'Offerte op maat'",
+    "tells": "Geen AI-tell — authentieke documentaire foto. Maar inhoud past niet bij de fase: laserafstandsmeter (met rode meetlijn) + rolmeter tonen een OPMETING/plaatsbezoek (stap 02), niet de offerte-/uitwerkfase die stap 03 claim",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld over-the-shoulder framing: a Belgian contractor in a dark polo at a kitchen table with a middle-aged couple, walking through a printed itemised quotation / meetstaat on paper next to a laptop showing a line-item offer, pen pointing at the total, a folder with garantie-documenten and coffee mugs; explicitly NO laser meter and NO tape measure in view (this is the quote/offer stage, not the site survey); ordinary Flemish brick houses through the window, soft overcast daylight, believable grey sky, natural realism, documents not sharply readable. Alternatief: wissel het beeld van stap 02 (plaatsbezoek) en stap 03 (offerte) om, zodat het opmeten bij stap 02 hoort."
+   },
+   {
+    "pad": "src/assets/construct/ruwbouw.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "laag",
+    "gebruik": "Realisaties.tsx:101 kaart 'Ruwbouw' — desc 'Ruwbouw winddicht met houtskeletwanden op betonnen plint. 16 weken.'",
+    "tells": "Foto zelf is authentiek en goed (mist, steigers, brik-neighbours). Maar botst met eigen bijschrift: het is een KLASSIEKE metselwerk-ruwbouw met OPEN houten spanten (dus NIET winddicht) en GEEN houtskeletwanden. Puin/pall",
+    "aspect": "4:3",
+    "prompt": "Goedkoopste fix = bijschrift corrigeren naar 'Traditionele metselwerk-ruwbouw, dak in opbouw'. Wil je het beeld écht laten kloppen met 'winddicht houtskelet': Full-frame documentary photograph, no interface elements, handheld framing. A Belgian new-build house shell (ruwbouw) that is wind- and watertight: timber-frame (houtskelet) walls already sheathed with OSB and a black wind-barrier membrane on a concrete plinth, roof fully covered with underlay membrane and battens, window openings closed with temporary film. Muddy building plot with a stack of prefab timber wall panels and a scaffold. Ordinary slightly older brick neighbours left and right, one background roof with solar panels. Soft overcast grey Flemish sky, grey believable sky, no HDR, no dramatic light. Natural handheld perspective, believable proportions."
+   },
+   {
+    "pad": "src/assets/home/vakman-interieur.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "laag",
+    "gebruik": "OverOns.tsx:51 pijler 01 'Vakmanschap in vaste dienst'",
+    "tells": "Echte pleisteraar-in-actie (geen AI), maar leest als rauwe half-gestripte renovatie (blootliggende baksteen rond raam, half opgezet plamuur, plastic op de vloer) i.p.v. strak vakmanschap; man in profiel licht herkenbaar.",
+    "aspect": "4:5 (staand)",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld vertical framing. A Belgian plasterer in clean workwear without brand logos applying a smooth finishing coat of gipspleister with a stainless steel trowel, seen from behind/side so the face is not identifiable, the already-plastered wall smooth and matte, a clean drop sheet and a hawk with fresh plaster. Soft overcast daylight from a nearby PVC window, no HDR, neutral cool tones. Tidy interior of a renovated rijwoning, no rubble, no exposed-brick chaos. Documentary, focused on craftsmanship. (Corrigeer ook de alt-tekst naar wat te zien is.)"
+   },
+   {
+    "pad": "src/assets/eco/ventilatie.jpg",
+    "oordeel": "twijfel",
+    "prioriteit": "laag",
+    "gebruik": "Ecologisch 'Ventilatie D' + Realisaties ecologisch-kaart 'Systeem D' + blog",
+    "tells": "Authentieke WTW-unit, geen AI-tell, maar kale stoffige betonvloer + wat rommelig gebundelde flex-kanalen lezen als onafgewerkte techniekruimte, terwijl de kaart 'Systeem D · balansventilatie, 92% rendement / strakke inte",
+    "aspect": "4:3",
+    "prompt": "Full-frame documentary photograph, no interface elements, handheld framing. A FINISHED technical utility room in a Belgian home: a white MVHR heat-recovery unit (ventilation system D) neatly wall-mounted, insulated round ducts routed tidily along the ceiling into a clean plasterboard bulkhead, condensate pipe run cleanly to a floor drain. Finished epoxy or tiled floor (not bare dusty concrete), painted walls, a labelled electrical box beside it. Soft even indoor daylight, no HDR, realistic textures, a coil of spare duct tape on a small shelf as a real detail."
+   }
+  ]
+ ],
+ "zonderPrompt": [],
+ "totaal": 43,
+ "metPrompt": 43,
+ "schatting_generaties": 56,
+ "notitie": "reviews/*-portretten NIET hergenereren: nep-klantgezichten = verboden testimonial-klasse; opgelost in code met platte attributie (Bedankt). Echtheid van marc/nathalie/e.a. + alle reviewteksten en namen = openstaande vraag Mohammed."
+}
