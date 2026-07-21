@@ -832,7 +832,7 @@ const EXTRA_STYLE = `
 .tr-hero-main { grid-area: main; min-width: 0; }
 .tr-hero-form { grid-area: form; position: relative; z-index: 3; min-width: 0; }
 @media (min-width: 1024px) {
-  .tr-hero { display: flex; align-items: center; min-height: clamp(600px, 66vh, 740px); }
+  .tr-hero { display: flex; align-items: center; min-height: min(100svh, 1080px); }
   .tr-hero-inner { width: 100%; }
   .tr-hero-grid { grid-template-columns: minmax(0,1fr) 416px; grid-template-areas: "main form"; column-gap: clamp(40px, 4.5vw, 64px); align-items: center; }
 }
