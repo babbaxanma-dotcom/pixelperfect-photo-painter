@@ -885,7 +885,7 @@ const EXTRA_STYLE = `
 /* ===== Quote-hero: offerte-form in de hero (split, Fable-spec) ===== */
 .lf-qhero .lf-hero-bg img { width:100%; height:100%; object-fit:cover; object-position:62% 38%; }
 .lf-qhero .lf-hero-bg::after { content:''; position:absolute; inset:0; background: linear-gradient(92deg, rgba(10,22,40,0.86) 0%, rgba(10,22,40,0.60) 48%, rgba(10,22,40,0.28) 80%, rgba(10,22,40,0.36) 100%); }
-.lf-qhero .lf-hero-wrap { display:block; }
+.lf-qhero .lf-hero-wrap { display:block !important; position:relative !important; inset:auto !important; pointer-events:auto !important; } /* ab-bouw.css .lf-hero-wrap zet absolute+pointer-events:none met !important (voor de mini-hero-variant); zonder deze override is de hele Home-ATF onklikbaar */
 .lf-hero.lf-qhero { overflow: visible; }
 .lf-qhero-grid { display:grid; grid-template-columns: minmax(0,1fr) 408px; gap: clamp(40px, 5vw, 80px); align-items:center; }
 .lf-qhero-left { max-width: 640px; }
