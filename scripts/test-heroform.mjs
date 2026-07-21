@@ -31,7 +31,7 @@ p.on("request", (r) => {
     r.continue();
   }
 });
-p.on("console", (m) => { if (m.type() === "error") console.log("CONSOLE:", m.text().slice(0, 200)); });
+p.on("console", (m) => { if (["error","warning","warn"].includes(m.type())) console.log("CONSOLE:", m.text().slice(0, 200)); });
 p.on("pageerror", (e) => console.log("PAGEERROR:", String(e).slice(0, 300)));
 
 await p.goto("http://localhost:4180/", { waitUntil: "networkidle0" });
@@ -60,11 +60,9 @@ try {
   await p.click("#qh-name");
   await p.type("#qh-name", "Test Testeling", { delay: 15 });
   await p.type("#qh-phone", "0470123456", { delay: 15 });
-  await p.select("#qh-dienst", "Dak");
   const getypt = await p.evaluate(() => ({
     naam: document.querySelector("#qh-name")?.value,
     tel: document.querySelector("#qh-phone")?.value,
-    dienst: document.querySelector("#qh-dienst")?.value,
   }));
   console.log("NA TYPEN:", JSON.stringify(getypt));
   await p.click("[data-hero-submit]");
