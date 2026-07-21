@@ -7,16 +7,16 @@ import logo from '@/assets/home/logo.png';
 // Hero + project photos — alle geverifieerd qua match met story-tekst
 import heroBg from '@/assets/realisaties-new/dak-hero.jpg';
 import imgGeelPannen from '@/assets/dak/lp-geel-nieuwbouw.jpg';
-import imgEpdmHero from '@/assets/realisaties-new/dak-epdm-modern.jpg';      // NEW FLUX — moderne villa zonnedak + plat-dak gevelvolume
+import imgEpdmHero from '@/assets/realisaties-new/dak-epdm-modern.jpg';
 import imgLeien from '@/assets/realisaties-new/dak-leien-villa.jpg';
 import imgVelux from '@/assets/dak/lp-velux.jpg';
 import imgZink from '@/assets/dak/lp-zink-goot.jpg';
 import imgSarking from '@/assets/dak/dakisolatie.jpg';
-import imgStorm from '@/assets/realisaties-new/dak-storm-v2.jpg';            // NEW FLUX v2 — clean afgewerkt bitumen plat dak na storm-reparatie
+import imgStorm from '@/assets/realisaties-new/dak-storm-v2.jpg';
 import imgClassic from '@/assets/dak/lp-classic-renovatie.jpg';
-import imgPannen from '@/assets/realisaties-new/dak-rijwoning.jpg';          // NEW FLUX — rijwoning 1990s nieuw rood-bruin pannendak
+import imgPannen from '@/assets/realisaties-new/dak-rijwoning.jpg';
 import imgBitumen from '@/assets/dak/bitumen.jpg';
-import imgDakopbouw from '@/assets/realisaties-new/dak-opbouw-v2.jpg';       // NEW FLUX v2 — volledig zink-volume tussen klassieke rijwoningen
+import imgDakopbouw from '@/assets/realisaties-new/dak-opbouw-v2.jpg';
 import imgDakkapelZink from '@/assets/realisaties/14_extra_dakkapel-zink-lier.jpg';
 
 type Project = {
