@@ -513,7 +513,7 @@ export const BLOGS: BlogPost[] = [
       <h3>1. Basis crepi op bestaande gevel (€ 45 - 60/m²)</h3>
       <p>Reinigen, gronderen, één laag siliconenhars-pleister 2 mm. Geen stelling apart gerekend bij rijwoningen onder 8 m hoogte. Geschikt als de gevel structureel gezond is en u enkel een verfrissing wil.</p>
       <h3>2. Crepi met isolatie buitenkant — ETICS (€ 110 - 150/m²)</h3>
-      <p>EPS- of rockwool-isolatie 12-16 cm + wapeningsnet + crepi-afwerking. Geeft u meteen een R-waarde van 4,5+ en u recupereert via de Mijn VerbouwPremie (€ 30-45/m²). Beste lange-termijn investering.</p>
+      <p>EPS- of rockwool-isolatie 12-16 cm + wapeningsnet + crepi-afwerking. Geeft u meteen een R-waarde van 4,5+, en bij renovatie geldt doorgaans het verlaagde btw-tarief van 6%. Let op: de Mijn VerbouwPremie voor buitenmuurisolatie is sinds 1 maart 2026 enkel nog beschikbaar voor de laagste inkomenscategorieën en verhuurders via een SVK; wij checken bij het plaatsbezoek wat er in uw situatie geldt. Beste lange-termijn investering.</p>
       <h3>3. Stelling: vaak verborgen post</h3>
       <p>Een halfopen woning van 120 m² gevel vraagt 7-10 stelling-dagen. Stelling huren + opzetten kost € 1.800-3.200 voor zo'n project. Goedkope offertes "vergeten" deze post.</p>
       <h3>4. Welke korrel kiezen?</h3>
@@ -521,7 +521,7 @@ export const BLOGS: BlogPost[] = [
       <h3>5. Welke kleur in 2026?</h3>
       <p>De top-3 in Vlaanderen: gebroken wit (RAL 9001), licht-warmgrijs (NCS S 2000-N), en taupe-beige. Heldere kleuren (geel, rood) vragen UV-stabiele pigmenten — meerprijs € 4-6/m².</p>
       <h3>Ons advies</h3>
-      <p>Combineer crepi altijd met isolatie als uw woning ouder is dan 1995 — anders betaalt u tweemaal voor één stelling. Vraag offertes met geïntegreerd premiedossier; dat scheelt al snel € 3.000-6.000 op een gemiddelde gevel.</p>
+      <p>Combineer crepi altijd met isolatie als uw woning ouder is dan 1995, anders betaalt u tweemaal voor één stelling. Komt u nog in aanmerking voor een premie of de Mijn VerbouwLening, dan nemen wij het dossier mee op in de offerte.</p>
     `,
   },
   {
@@ -531,15 +531,15 @@ export const BLOGS: BlogPost[] = [
     day: '05', month: 'mei', date: '5 mei 2026',
     author: 'Tom Verhaegen', readTime: '7 min',
     title: 'ETICS buitengevelisolatie: premie, prijs en valkuilen',
-    excerpt: 'Buitenisolatie is de duurste maar meest effectieve manier om uw EPC te verbeteren. In 2026 is de premie verhoogd, maar de uitvoering is complexer dan ooit.',
+    excerpt: 'Buitenisolatie is de duurste maar meest effectieve manier om uw EPC te verbeteren. De premieregels zijn in 2026 sterk veranderd; de uitvoering blijft complexer dan ooit.',
     body: `
       <p class="lf-lede">External Thermal Insulation Composite System — kortweg ETICS — is technisch geen renovatie meer maar een herinrichting van uw woningschil. Hier is wat u moet weten vóór u tekent.</p>
       <h3>1. Wat is ETICS precies?</h3>
       <p>Een gelaagd systeem: lijmlaag op de bestaande gevel + isolatieplaat (12-20 cm EPS, rotswol of PIR) + glasvezelweefsel + grondlaag + decoratieve crepi-afwerking. Totale dikte: 14-22 cm extra op uw gevel.</p>
       <h3>2. R-waarde en EPC-impact</h3>
       <p>Een goed uitgevoerd ETICS-systeem haalt R 4,5-5,5 m²K/W. Voor een doorsnee rijwoning betekent dat een EPC-sprong van 80-120 punten — voldoende om van label F naar C te springen, of van D naar B.</p>
-      <h3>3. Mijn VerbouwPremie 2026</h3>
-      <p>Buitenisolatie buitenkant: € 30/m² (hoogste inkomenscategorie) tot € 45/m² (laagste inkomenscategorie). Voor een gemiddelde rijwoning van 120 m² gevel: € 3.600 - 5.400 premie. Wij dienen het dossier integraal mee in.</p>
+      <h3>3. Premies en btw in 2026</h3>
+      <p>Belangrijk: sinds 1 maart 2026 is de Mijn VerbouwPremie voor buitenmuurisolatie weggevallen voor de meeste eigenaars; enkel de laagste inkomenscategorieën en verhuurders via een SVK komen nog in aanmerking. Wat wél voor bijna iedereen geldt: 6% btw bij renovatie van woningen ouder dan 10 jaar, en de renteloze Mijn VerbouwLening voor wie aan de voorwaarden voldoet. Komt u in aanmerking, dan dienen wij het premiedossier mee in.</p>
       <h3>4. Valkuilen: dakoversteken en raamdorpels</h3>
       <p>Uw gevel wordt 16 cm dikker. Bestaande dakoversteken moeten verlengd, raamdorpels vernieuwd, regenpijpen verlegd. Dat is 15-25% van uw totale ETICS-budget — niet vergeten in te calculeren.</p>
       <h3>5. Welke isolatieplaat?</h3>

@@ -33,3 +33,7 @@ google-ads-assets/*/portrait/
 *.njsproj
 *.sln
 *.sw?
+
+# sessie-scratch
+__*.js
+audit/

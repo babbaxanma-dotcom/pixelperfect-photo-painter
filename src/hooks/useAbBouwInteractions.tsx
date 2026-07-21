@@ -395,6 +395,9 @@ export function useAbBouwInteractions() {
     document.querySelectorAll<HTMLElement>('.lf-section > .wrap > *:not([data-reveal]), .ab-sub > .wrap > *:not([data-reveal])').forEach((el, idx) => {
       if (el.closest('.footer') || el.matches('script, style')) return;
       if (el.hasAttribute('data-svc-stack') || el.querySelector('[data-svc-stack]')) return;
+      // schermhoge containers (grids) nooit als geheel verbergen: threshold
+      // haalt het nooit en de kern van de pagina blijft dan onzichtbaar
+      if (el.offsetHeight > window.innerHeight * 0.9) return;
       el.dataset.reveal = idx % 2 ? 'left' : 'right';
       el.dataset.revealDelay = String(Math.min(idx % 4, 3));
     });
@@ -403,6 +406,8 @@ export function useAbBouwInteractions() {
     reveals.forEach((el) => {
       const delay = Number(el.dataset.revealDelay || 0);
       if (delay > 0) el.style.setProperty('--reveal-delay', `${Math.min(delay, 6) * 95}ms`);
+      // ook expliciet getagde elementen: hoger dan het scherm = direct tonen
+      if (el.offsetHeight > window.innerHeight * 0.9) el.classList.add('revealed');
     });
     const io = new IntersectionObserver(
       (entries) => {
@@ -413,9 +418,19 @@ export function useAbBouwInteractions() {
           }
         });
       },
-      { threshold: 0.12 },
+      // threshold 0: elk zichtbaar deel telt; -8% rootMargin houdt het gevoel
+      // van "verschijnt bij inscrollen" zonder dat iets onthuld kan blijven
+      { threshold: 0, rootMargin: '0px 0px -8% 0px' },
     );
     reveals.forEach((el) => io.observe(el));
+
+    // noodrem: wat na 3s in beeld staat maar nooit onthuld raakte, toch tonen
+    const noodrem = window.setTimeout(() => {
+      document.querySelectorAll<HTMLElement>('[data-reveal]:not(.revealed)').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('revealed');
+      });
+    }, 3000);
 
     // ── Offerte form: continuous calm pulse until user engages ──
     const formEl = document.querySelector<HTMLElement>('.lf-form#contact-form');
@@ -928,6 +943,7 @@ export function useAbBouwInteractions() {
     onTocScroll();
 
     return () => {
+      window.clearTimeout(noodrem);
       document.body.classList.remove('is-page-leaving');
       document.removeEventListener('click', onClick, true);
       projTabs?.removeEventListener('click', onProjFilter);

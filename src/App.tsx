@@ -1,6 +1,6 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import PageTransition from "./components/PageTransition";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
@@ -42,6 +42,29 @@ const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
 
+/* Canonical per route. index.html levert een statische canonical naar de
+   homepage; zonder deze update canonicaliseert elke organische pagina naar
+   "/" (SEO-killer). LP-/lokaal-routes beheren hun eigen (soms bewust
+   afwijkende) canonical en worden hier overgeslagen. */
+const CanonicalUpdater = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    if (pathname.startsWith("/lp/") || pathname.startsWith("/lokaal/")) return;
+    const pad = pathname === "/index" ? "/" : pathname;
+    const url = `https://abgroep.be${pad === "/" ? "/" : pad.replace(/\/$/, "")}`;
+    let el = document.querySelector('link[rel="canonical"]:not([hreflang])');
+    if (!el) {
+      el = document.createElement("link");
+      el.setAttribute("rel", "canonical");
+      document.head.appendChild(el);
+    }
+    el.setAttribute("href", url);
+    const og = document.querySelector('meta[property="og:url"]');
+    if (og) og.setAttribute("content", url);
+  }, [pathname]);
+  return null;
+};
+
 // Minimal loading state — geen spinner, gewoon achtergrond zodat layout-shift minimaal blijft
 const RouteLoading = () => (
   <div style={{ minHeight: "60vh", background: "var(--bg, #faf9f7)" }} aria-hidden="true" />
@@ -55,6 +78,7 @@ const App = () => {
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <CanonicalUpdater />
         <PageTransition>
         <Suspense fallback={<RouteLoading />}>
         <Routes>
