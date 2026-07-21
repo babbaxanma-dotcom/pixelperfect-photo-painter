@@ -46,7 +46,6 @@ const projects: Project[] = [
     story:
       'Architecturale villa met asymmetrisch zadeldak — volledig bedekt met geïntegreerde PV-panelen op anthraciet pannen. Plat dak boven de inkom + grote schuifpui in EPDM Firestone met crepi-gevelvolume eronder. Cederlat-accent rondom de inkom. Wij hebben dak + PV-integratie + plat-dak details simultaan uitgevoerd zodat niets dubbel hoefde te worden gefactureerd.',
     specs: { m2: '142 m² hoofddak + 36 m² plat dak', tijd: '14 werkdagen', materiaal: 'Pannen + JinkoSolar PV + Firestone EPDM' },
-    quote: { text: 'De ploeg werkte super proper, elke avond was de werf schoon. Zelfs onze hond merkte niets.', name: 'Bart V.' },
     filter: 'platdak',
   },
   {
@@ -65,7 +64,6 @@ const projects: Project[] = [
     story:
       'Onverdeeld dak met koude winters en hete zolders. Sarking-isolatie 24 cm PIR boven op de bestaande dakconstructie geplaatst, oude pannen tijdelijk verwijderd en herplaatst — de foto toont het dak halverwege uitvoering met de nieuwe PIR-platen en dampdichte folie zichtbaar. Premiedossier compleet door ons ingediend bij Fluvius — klant kreeg €6.480 retour.',
     specs: { m2: '165 m² dakvlak', tijd: '11 werkdagen', materiaal: '24 cm PIR sarking + Delta onderdakfolie', premie: '6% btw-tarief' },
-    quote: { text: 'Veel warmer huis, de eerste winter al merkbaar minder verwarming nodig. Heel tevreden.', name: 'Annick D.' },
     filter: 'sarking',
   },
   {
@@ -93,7 +91,6 @@ const projects: Project[] = [
     story:
       'Groot deel van het bitumen-dak gescheurd na een windstoot van 130 km/u. Tijdelijke afdichting binnen 4 uur, definitief herstel met 2-laagse APP-bitumen na 48u. Verzekeringsdossier compleet door ons gefactureerd op AG Insurance — klant moest niet zelf bellen.',
     specs: { m2: '65 m²', tijd: '3 werkdagen (incl. spoeddichting binnen 4u)', materiaal: 'APP-bitumen 2-laags met leislag' },
-    quote: { text: 'Het mooiste was dat zij heel het verzekeringsdossier afhandelden. Ik moest zelf niet bellen of formulieren invullen, dat scheelt in zo een stresssituatie enorm.', name: 'Yusuf B.' },
     filter: 'platdak',
   },
   {
@@ -130,7 +127,6 @@ const projects: Project[] = [
     story:
       'Vrijstaande woning waar de originele dakstructuur niet meer voldeed aan moderne isolatie-normen. Strip-and-rebuild: kepers waar nodig vervangen, dampscherm opnieuw geplaatst, 22 cm PIR-isolatie en onderdakfolie. Twee Velux-dakvensters meegenomen. Finaal afgewerkt met Koramic Tempest in warme rood-oranje tint die past bij de baksteengevel.',
     specs: { m2: '220 m²', tijd: '18 werkdagen', materiaal: 'Koramic Tempest rood-oranje + 22 cm PIR' },
-    quote: { text: 'Drie offertes ontvangen. Bij AB Bouw was het meteen duidelijk: prijs vooraf vast, werkdocumenten compleet. Heel anders dan de twee andere.', name: 'Stijn V.' },
     filter: 'pannendak',
   },
   {
@@ -250,8 +246,8 @@ ${buildHero({
   <div class="wrap">
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Recente projecten</span>
-      <h2 class="lf-h2">Elk project op deze pagina<br/>is écht. Met naam, plaats, m².</h2>
-      <p class="lf-lede" style="max-width: 700px; margin: 12px auto 0;">Geen stock-foto's, geen verzonnen ervaringen. Filtreer op type werk om te zien wat we voor uw situatie hebben gedaan.</p>
+      <h2 class="lf-h2">Recent dakwerk, met materiaal,<br/>oppervlakte en doorlooptijd.</h2>
+      <p class="lf-lede" style="max-width: 700px; margin: 12px auto 0;">Elk project hieronder is werk van onze eigen ploegen, met materiaal, oppervlakte en doorlooptijd erbij. Filter op type werk om te zien wat we voor uw situatie hebben gedaan.</p>
     </div>
 
     <div class="rzd-filter-wrap" data-reveal>
@@ -682,7 +678,7 @@ const PAGE_STYLE = `
 
 export default function RealisatiesDakwerken() {
   useEffect(() => {
-    document.title = "Dakwerken realisaties — 48.325 m² in 16 jaar | AB Bouw Groep";
+    document.title = "Dakwerken realisaties — pannen, EPDM, zink en leien | AB Bouw Groep";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name','description'); document.head.appendChild(m); }
     m.setAttribute('content', 'Recente dakwerken in Mechelen, Antwerpen, Lier en omstreken — pannendak Koramic, plat dak EPDM, sarking-isolatie, Velux, zinkwerk en natuurleien. 12 echte projecten met m², doorlooptijd, materiaal en klant-quotes.');

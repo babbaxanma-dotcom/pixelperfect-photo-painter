@@ -107,7 +107,7 @@ const HTML = (i: Record<string, string>) => `
           <span class="lf-hero-eyebrow-dot" aria-hidden="true"></span>
           Heel Vlaanderen en Brussel · sinds 2010
         </span>
-        <h1 class="lf-qhero-h1">Uw offerte is uw <span class="lf-qhero-accent">factuur</span>: één aannemer voor dak, gevel en totaalrenovatie</h1>
+        <h1 class="lf-qhero-h1">Uw offerte is uw <span class="lf-qhero-accent">factuur</span>. Eén aannemer voor dak, gevel en totaalrenovatie.</h1>
         <p class="lf-qhero-sub">De prijs ligt zwart op wit vast vóór de eerste werkdag, zonder meerwerk achteraf. Eén vast aanspreekpunt regelt alles, van plaatsbezoek tot oplevering.</p>
         <div class="lf-qhero-trust">
           <span class="lf-qhero-stars" aria-hidden="true">★★★★★</span>
@@ -658,7 +658,7 @@ const HTML = (i: Record<string, string>) => `
     <div class="lf-newsletter-card" data-reveal>
       <div class="lf-newsletter-text">
         <span class="lf-eyebrow">Nieuwsbrief</span>
-        <h2 class="lf-h2">Schrijf je in voor onze nieuwsbrief.</h2>
+        <h2 class="lf-h2">Schrijf u in voor onze nieuwsbrief.</h2>
         <p class="lf-newsletter-sub">Eén keer per maand: praktische bouwtips, nieuwe premies en realisaties uit Vlaanderen. Geen spam, alleen wat u écht kan gebruiken.</p>
       </div>
       <div class="lf-newsletter-embed" data-reveal data-reveal-delay="1">

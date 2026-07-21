@@ -52,7 +52,7 @@ ${buildHero({
         <div class="ab-pillar-body">
           <span class="ab-pillar-num">01</span>
           <h3>Vakmanschap in vaste dienst</h3>
-          <p>23 vakmensen die elkaar kennen, dezelfde standaarden delen en al jaren samen op de werf staan. Geen wisselende ploegen, geen taalbarrières, geen afgeschoven verantwoordelijkheid.</p>
+          <p>23 vakmensen die elkaar kennen, dezelfde standaarden delen en al jaren samen op de werf staan. U ziet dezelfde ploeg van de eerste tot de laatste werkdag.</p>
         </div>
       </article>
       <article class="ab-pillar" data-reveal data-reveal-delay="1">
@@ -68,7 +68,7 @@ ${buildHero({
         <div class="ab-pillar-body">
           <span class="ab-pillar-num">03</span>
           <h3>Eén aanspreekpunt</h3>
-          <p>U krijgt één werfleider die uw dossier kent, van het plaatsbezoek tot de oplevering. Geen rondgestuurde mails, geen drie nummers om te bellen. Eén gezicht, eén mens.</p>
+          <p>U krijgt één werfleider die uw dossier kent, van het plaatsbezoek tot de oplevering. Eén nummer volstaat, voor elke vraag over uw werf.</p>
         </div>
       </article>
     </div>
@@ -82,7 +82,7 @@ ${buildHero({
       <div class="ab-mv-card ab-mv-mission" data-reveal>
         <div class="ab-mv-tag">Missie</div>
         <h3>Bouwen wat we zelf zouden willen kopen.</h3>
-        <p>Elke woning, elke renovatie, elke badkamer leveren we op met de standaard die we voor onze eigen familie zouden eisen. Geen onafgewerkte hoekjes, geen verstopte gebreken, geen excuses achteraf.</p>
+        <p>We leveren elke werf op met de standaard die we voor onze eigen familie zouden eisen, tot in de hoeken afgewerkt.</p>
       </div>
       <div class="ab-mv-card ab-mv-vision" data-reveal data-reveal-delay="1">
         <div class="ab-mv-tag">Visie</div>
@@ -115,7 +115,7 @@ ${buildHero({
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Hoe wij werken</span>
       <h2 class="lf-h2">Acht afspraken die wij<br/>met onszelf maken.</h2>
-      <p class="lf-lede" style="margin: 0 auto;">Geen loze beloftes. Klik door de acht punten die in elke offerte staan.</p>
+      <p class="lf-lede" style="margin: 0 auto;">Klik door de acht punten die letterlijk in elke offerte staan.</p>
     </div>
 
     <div class="ab-promise" data-promise>

@@ -100,7 +100,7 @@ const nieuwbouw: Card[] = [
   { img: projVilla, tag: 'BEN-bouw', t: 'BEN-villa', d: 'Bijna-energieneutraal met warmtepomp, ventilatie D en 24 PV-panelen.' },
   { img: cRuwbouw, tag: 'Ruwbouw', t: 'Ruwbouw', d: 'Ruwbouw winddicht met houtskeletwanden op betonnen plint. 16 weken.' },
   { img: rzNbStad, tag: 'Stadswoning', t: 'Nieuwbouw', d: 'Smalle stadskavel, drie bouwlagen met dakterras tussen bestaande gevels.' },
-  { img: rzVillaMechelen, tag: 'Hedendaagse villa', t: 'Villa Mechelen-Oost', d: 'Strakke witte crepi met zwart aluminium schrijnwerk, BEN-norm en warmtepomp. 13 maanden.' },
+  { img: rzVillaMechelen, tag: 'Hedendaagse villa', t: 'Hedendaagse villa', d: 'Strakke witte crepi met zwart aluminium schrijnwerk, BEN-norm en warmtepomp.' },
   { img: rzVillaVrij, tag: 'Vrijstaand', t: 'Vrijstaand', d: 'Klassieke vrijstaande woning met crepi en handvorm gevelsteenplint. 12 maanden.' },
   { img: rzBeigeBalcony, tag: 'Modern', t: 'Open bebouwing', d: 'Modern volume in lichtbeige gevelsteen met antraciet balkonleuning en groot raamoppervlak. 11 maanden.' },
   { img: rzGeleVillaZij, tag: 'BEN-villa', t: 'BEN-woning', d: 'Bijna-energieneutrale woning in gele Vlaamse gevelsteen, met PV en geothermische warmtepomp.' },

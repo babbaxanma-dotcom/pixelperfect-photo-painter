@@ -45,7 +45,7 @@ const types = [
       'Bewoonbaarheidsplan: in welke fase u kunt blijven',
       'Asbestinventaris en sanering inbegrepen',
       'Indien nodig: stabiliteitsstudie',
-      'EPC-sprong gemiddeld 2 labels',
+      'Sterke EPC-verbetering na renovatie',
     ],
   },
   {
@@ -92,8 +92,8 @@ ${buildNav('diensten')}
 ${buildHero({
   bg: heroImg,
   eyebrow: '01 · Algemene aanneming',
-  title: 'Coördineren, bouwen,<br/><span style="color:var(--accent)">realiseren</span>.',
-  lede: 'AB Construct neemt de <span class="ab-hl" data-hl-delay="0">volledige coördinatie</span> van uw bouw of renovatie op zich. <span class="ab-hl" data-hl-delay="1">Eén projectleider, één planning, één eindfactuur</span>.',
+  title: 'Eén aannemer voor uw<br/><span style="color:var(--accent)">volledige</span> bouw of renovatie.',
+  lede: 'AB Construct neemt de <span class="ab-hl" data-hl-delay="0">volledige coördinatie</span> op zich: u heeft <span class="ab-hl" data-hl-delay="1">één projectleider</span> en één eindfactuur, van plaatsbezoek tot oplevering.',
   primary: { label: 'Vraag plaatsbezoek aan', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}

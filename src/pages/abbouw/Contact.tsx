@@ -82,7 +82,7 @@ ${buildHero({
           <div class="lf-form-thanks-circle">
             <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
-          <h3>Bedankt voor je offerte.</h3>
+          <h3>Bedankt voor uw aanvraag.</h3>
           <p>We bekijken uw aanvraag en nemen binnen één werkdag contact met u op.</p>
         </div>
       </div>
@@ -116,7 +116,7 @@ ${buildHero({
       </div>
       <div class="ab-map ab-map--photo" data-reveal data-reveal-delay="1" style="background-image: linear-gradient(180deg, rgba(11,18,32,0) 35%, rgba(11,18,32,0.85) 100%), url('${regionImg}');">
         <h4>Onze regio in beeld</h4>
-        <p>Vlaamse rooftops, velden en kanalen, van Antwerpen en Mechelen tot Brussel en Gent. Hier rijden onze ploegen wekelijks rond.</p>
+        <p>Vlaamse daken, velden en kanalen, van Antwerpen en Mechelen tot Brussel en Gent. Hier rijden onze ploegen wekelijks rond.</p>
       </div>
     </div>
   </div>
@@ -147,8 +147,8 @@ ${buildHero({
       </div>
       <div class="lf-support-card" data-reveal data-reveal-delay="3">
         <div class="lf-support-meta"><span>04</span> Pers / partnerschappen</div>
-        <h5>Tom Verheyden</h5>
-        <p>Voor pers, samenwerkingen, leveranciers of vacatures: tom@abgroep.be of vraag rechtstreeks naar Tom op het algemene nummer.</p>
+        <h5>Pers &amp; samenwerkingen</h5>
+        <p>Voor pers, samenwerkingen, leveranciers of vacatures: info@abgroep.be of bel het algemene nummer.</p>
       </div>
     </div>
   </div>
@@ -165,7 +165,7 @@ ${buildHero({
       <details data-reveal><summary>Is een plaatsbezoek echt gratis?</summary><div class="ab-faq-body"><p>Ja, volledig gratis en vrijblijvend. Wij zien een plaatsbezoek niet als een verkoopgesprek maar als een wederzijdse kennismaking. We willen weten of het project bij ons past, en u wilt weten of wij bij u passen. Pas na het plaatsbezoek beslissen we samen of we een offerte maken.</p></div></details>
       <details data-reveal><summary>Welke info moet ik klaar hebben voor het eerste gesprek?</summary><div class="ab-faq-body"><p>Niets verplicht. Handig als u dit wel weet: type woning (open / halfopen / rij), bouwjaar, bewoonbare oppervlakte, of er reeds plannen of een architect zijn, en een ruwe budgetindicatie. Geen budget? Geen probleem, we helpen het mee inschatten.</p></div></details>
       <details data-reveal><summary>Hoe snel kan ik een plaatsbezoek krijgen?</summary><div class="ab-faq-body"><p>Doorgaans binnen 5 tot 10 werkdagen. In drukke periodes (voorjaar, na het bouwsalon Batibouw) kan dit oplopen tot 3 weken. Spoedoplossingen voor lekkende daken of stormschade krijgen voorrang, bel dan rechtstreeks.</p></div></details>
-      <details data-reveal><summary>Werken jullie ook voor B2B / bedrijven?</summary><div class="ab-faq-body"><p>Ja. Ongeveer een kwart van onze omzet is B2B: kantoorgebouwen, kleine winkels, horecazaken, magazijnen en logistieke ruimtes. We werken op factuur met betaaltermijn 30 dagen einde maand voor erkende ondernemingen.</p></div></details>
+      <details data-reveal><summary>Werken jullie ook voor B2B / bedrijven?</summary><div class="ab-faq-body"><p>Ja. We werken ook voor bedrijven: kantoorgebouwen, kleine winkels, horecazaken, magazijnen en logistieke ruimtes. We werken op factuur met betaaltermijn 30 dagen einde maand voor erkende ondernemingen.</p></div></details>
       <details data-reveal><summary>Mag ik bestaande klanten bellen om referentie te vragen?</summary><div class="ab-faq-body"><p>Heel graag. Vermeld bij uw aanvraag dat u referenties wenst en we bezorgen u 2 of 3 contactpersonen van vergelijkbare projecten, uiteraard met hun toestemming.</p></div></details>
     </div>
   </div>

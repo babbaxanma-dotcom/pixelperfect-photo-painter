@@ -168,7 +168,7 @@ ${buildHero({
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Merkbaar lagere stookkost na isolatie</li>
           <li>Geen koudebruggen meer aan ramen</li>
-          <li>EPC-sprong gemiddeld 60–100 punten</li>
+          <li>Merkbaar betere EPC-score na isolatie</li>
           <li>6% BTW-tarief, plus Mijn VerbouwLening waar u recht op heeft</li>
         </ul>
       </div>

@@ -35,7 +35,6 @@ const projects: Project[] = [
     story:
       "Hedendaagse vrijstaande villa met strakke witte siliconencrepi-gevel, accenten in westerse cederlat rond de inkom en raampartijen. ETICS-buitenisolatie 14 cm EPS, afgewerkt met Sto Lotusan in helder wit. Anthraciet aluminium schrijnwerk Reynaers MasterLine, dorpels in arduin. Een gevel die clean leest van de straat en warm wordt door de houten accenten.",
     specs: { m2: '186 m² gevelvlak', tijd: '6 weken', materiaal: '14 cm EPS + Sto Lotusan + ceder accenten', premie: '6% btw-tarief' },
-    quote: { text: 'De architect kwam zelf na de oplevering een rondje doen. Hij zei: "dit is geen pleisterwerk, dit is precisie-werk."', name: 'Annick D.' },
     filter: 'etics',
   },
   {
@@ -54,7 +53,6 @@ const projects: Project[] = [
     story:
       'Tuinzijde-aanbouw met grote schuifpui die uitkijkt op het terras. Volume bekleed met handvorm-steenstrips in zwart-anthraciet (Vandersanden Black Diamond) — modern karakter dat contrasteert met de witgekalkte hoofdgevel. Onderhoudsvrij voor 30+ jaar.',
     specs: { m2: '64 m² aanbouwgevel', tijd: '4 weken', materiaal: 'Vandersanden Black Diamond handvorm-steenstrips' },
-    quote: { text: 'We hebben gekozen voor zwart steen i.p.v. crepi omdat we de tuin wilden laten "lezen" tegen iets sterks. Goeie keuze gebleken.', name: 'Stijn V.' },
     filter: 'steenstrips',
   },
   {
@@ -82,7 +80,6 @@ const projects: Project[] = [
     story:
       'Strakke moderne villa met als gevraagd materiaal: traditionele Vlaamse handvorm-gevelsteen in zacht beige-roze, met diepe voegen voor schaduwwerking en grote zwarte aluminium raamopeningen. Eigen metselploeg — geen losse onderaannemer — om ritme en voegdiepte over de volledige 312 m² consistent te houden.',
     specs: { m2: '312 m² gevelvlak', tijd: '8 weken', materiaal: 'Vandersanden handvorm beige + Reynaers schrijnwerk' },
-    quote: { text: 'De voegen lopen overal even diep, ook achter de balkons en in de dakranden. Dat is bij andere bouwers nooit het geval.', name: 'Patrick H.' },
     filter: 'crepi',
   },
   {
@@ -110,7 +107,6 @@ const projects: Project[] = [
     story:
       'Beschermd stadszicht, geen ETICS toegestaan. We hebben de originele bepleistering uit 1908 gerestaureerd: losse delen vervangen door kalkmortel volgens recept van Brusselse monumentenzorg, geverfd in originele blauw-grijze RAL. Behoud van profileringen rond ramen en kornisen.',
     specs: { m2: '104 m² zijgevel', tijd: '7 weken', materiaal: 'Kalkmortel + Keim siliconaatverf' },
-    quote: { text: 'De stedelijke monumentenzorg gaf zelfs een complimentje. Dat is bij hen zeldzaam.', name: 'Mariam K.' },
     filter: 'renovatie',
   },
   {
@@ -158,7 +154,7 @@ ${buildNav('realisaties')}
 ${buildHero({
   bg: heroBg,
   eyebrow: 'Realisaties · gevelwerken',
-  title: '63.112 m² gevel.<br/>16 jaar. Vakwerk dat blijft.',
+  title: 'Ruim 60.000 m² gevel.<br/>16 jaar. Vakwerk dat blijft.',
   lede: '12 recente gevelprojecten uit Mechelen, Antwerpen, Lier en omstreken. Crepi, ETICS-buitenisolatie, steenstrips, sierpleister en renovatie van karaktergevels. Eigen vakmensen — m²-aantallen, materiaal en doorlooptijd per project.',
   primary: { label: 'Plan uw gratis gevel-offerte', href: '/lp/gevel#lp-form' },
   secondary: { label: 'Naar gevelwerken-pagina →', href: '/gevel' },
@@ -169,7 +165,7 @@ ${buildHero({
   <div class="wrap">
     <div class="rzd-trust" data-reveal>
       <div class="rzd-trust-item">
-        <span class="rzd-trust-num">63.112</span>
+        <span class="rzd-trust-num">60.000+</span>
         <span class="rzd-trust-lbl">m² gevel afgewerkt</span>
       </div>
       <div class="rzd-trust-divider"></div>
@@ -195,7 +191,7 @@ ${buildHero({
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="ab-quote" data-reveal>
-      "Een gevel staat 30 jaar in weer en wind. We gebruiken bewust premium materialen: Sto, Wienerberger, Reynaers. Goedkoper kan altijd — maar dan ben je over 8 jaar terug aan het beginnen. Onze klanten kiezen ons omdat ze maar één keer willen renoveren."
+      "Een gevel staat 30 jaar in weer en wind. We gebruiken bewust premium materialen: Sto, Wienerberger, Reynaers. Goedkoper kan altijd — maar dan bent u over 8 jaar opnieuw begonnen. Onze klanten kiezen ons omdat ze maar één keer willen renoveren."
       <footer>Zaakvoerder AB Bouw Groep</footer>
     </div>
   </div>
@@ -239,7 +235,7 @@ ${buildHero({
     <div class="lf-section-head centered" data-reveal>
       <span class="lf-eyebrow">Recente projecten</span>
       <h2 class="lf-h2">Echte gevels op echte huizen.<br/>Met m², materiaal en eerlijke verhalen.</h2>
-      <p class="lf-lede" style="max-width: 700px; margin: 12px auto 0;">Geen stockfoto's. Geen gestreamlinde portfolio. Filtreer per type werk om te zien wat we voor uw situatie hebben gedaan.</p>
+      <p class="lf-lede" style="max-width: 700px; margin: 12px auto 0;">Elk project hieronder is werk van onze eigen ploeg, met de werkelijke oppervlakte, het materiaal en de doorlooptijd. Filter per type werk om te zien wat we voor uw situatie hebben gedaan.</p>
     </div>
 
     <div class="rzd-filter-wrap" data-reveal>
@@ -539,7 +535,7 @@ const PAGE_STYLE = `
 
 export default function RealisatiesGevel() {
   useEffect(() => {
-    document.title = "Gevel realisaties — 63.112 m² in 16 jaar | AB Bouw Groep";
+    document.title = "Gevel realisaties — crepi, steenstrips en voegwerk | AB Bouw Groep";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name','description'); document.head.appendChild(m); }
     m.setAttribute('content', 'Recente gevelrenovaties in Mechelen, Antwerpen, Lier en omstreken — crepi, ETICS-buitenisolatie, steenstrips, sierpleister en gevelreiniging. 12 echte projecten met m², doorlooptijd, materiaal en klant-quotes.');

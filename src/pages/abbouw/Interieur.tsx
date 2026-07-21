@@ -99,7 +99,7 @@ const types = [
       ['Beslag', 'Blum, Hettich, soft-close'],
       ['Verlichting', 'LED-strip of spots inbouw'],
       ['Greep', 'Push-to-open of geïntegreerde greep'],
-      ['Productie', 'Eigen atelier in Mol'],
+      ['Productie', 'Eigen schrijnwerk-atelier'],
       ['Doorlooptijd', '3 tot 5 weken levertijd'],
     ],
     bullets: [
@@ -189,7 +189,7 @@ ${buildHero({
         <h2 class="lf-h2">Een ruwbouw kan<br/><span class="ab-mark">iedereen leveren</span>.</h2>
         <p class="lf-lede">Een woning die <span class="ab-hl" data-hl-delay="0">klopt tot in elke hoek</span> vraagt vakmensen die wéken aan dezelfde werf staan en oog hebben voor <span class="ab-hl" data-hl-delay="1">het detail dat niemand opmerkt</span>, behalve uzelf, elke dag.</p>
         <ul class="ab-checks" style="margin-top:18px;">
-          <li>Eigen schrijnwerker met eigen atelier in Mol</li>
+          <li>Eigen schrijnwerker met eigen atelier</li>
           <li>Eén vaste interieurploeg, geen wisselende onderaannemers</li>
           <li>Stofarme werf met Festool afzuiging</li>
           <li>Eindcontrole tot in de plint, schaduwvoeg en silicone</li>
@@ -249,8 +249,8 @@ ${buildHero({
     <div class="lf-split">
       <div data-reveal>
         <span class="lf-eyebrow">Samen uw droom</span>
-        <h2 class="lf-h2">Uw woning,<br/>uw stijl, uw <span class="ab-mark">handtekening</span>.</h2>
-        <p class="lf-lede">Een interieur is geen catalogus. Het is <span class="ab-hl" data-hl-delay="0">uw thuis, uw smaak, uw manier van leven</span>. Daarom beginnen we niet met materialen, maar <span class="ab-hl" data-hl-delay="1">met een gesprek</span>. We luisteren naar hoe u woont, wat u mooi vindt en wat absoluut niet, en vertalen dat in <span class="ab-hl" data-hl-delay="2">een ontwerp dat helemaal van u is</span>.</p>
+        <h2 class="lf-h2">Interieur dat naar<br/>uw manier van wonen is <span class="ab-mark">gemaakt</span>.</h2>
+        <p class="lf-lede">We beginnen niet met materialen maar <span class="ab-hl" data-hl-delay="0">met een gesprek</span>. We luisteren naar hoe u woont, wat u mooi vindt en wat absoluut niet, en vertalen dat in <span class="ab-hl" data-hl-delay="1">een ontwerp op maat van uw huis</span>.</p>
         <ul class="ab-droom-list">
           <li><span class="ab-droom-num">01</span><div><strong>Persoonlijk moodboard</strong><span>Materialen, kleuren en sfeer, samengesteld op uw smaak.</span></div></li>
           <li><span class="ab-droom-num">02</span><div><strong>3D-visualisatie vooraf</strong><span>U ziet uw interieur écht voordat de eerste plank wordt gezaagd.</span></div></li>

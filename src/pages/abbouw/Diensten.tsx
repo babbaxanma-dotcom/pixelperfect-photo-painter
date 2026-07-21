@@ -14,7 +14,7 @@ const services = [
     id: 'construct', img: svcConstruct, n: '01', title: 'AB Construct',
     tag: 'Algemene aanneming',
     intro: 'Onze hoofddivisie voor nieuwbouwwoningen, totaalrenovaties en aanbouwen. Wij coördineren alle bouwfases, van vergunning tot oplevering, met eigen metselaars en een vaste projectleider.',
-    deep: 'AB Construct is verantwoordelijk voor circa 60% van onze omzet. We werken voor particulieren die hun gezinswoning bouwen, jonge gezinnen die een rijwoning kopen om volledig te strippen, en eigenaars die een waardevolle woning grondig willen aanpakken zonder de charme te verliezen. Onze projectleider blijft uw contactpersoon van het allereerste plaatsbezoek tot één jaar na oplevering.',
+    deep: 'AB Construct is onze hoofddivisie voor nieuwbouw en totaalrenovatie. We werken voor particulieren die hun gezinswoning bouwen, jonge gezinnen die een rijwoning kopen om volledig te strippen, en eigenaars die een waardevolle woning grondig willen aanpakken zonder de charme te verliezen. Onze projectleider blijft uw contactpersoon van het allereerste plaatsbezoek tot één jaar na oplevering.',
     bullets: [
       'Sleutel-op-de-deur woningen vanaf 180 m²',
       'Totaalrenovaties tot op de ruwe muren',
