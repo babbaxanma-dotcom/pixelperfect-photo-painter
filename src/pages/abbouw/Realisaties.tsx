@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
-import { buildNav, buildHero, buildCta, FOOTER, SHELL_STYLE } from './_shell';
+import '@/styles/roofpro.css';
+import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
+import { CONTACT } from '@/data/contact';
 import hero from '@/assets/home/hero-realisaties.jpg';
 import logo from '@/assets/home/logo.png';
 import svcBad from '@/assets/home/svc-bad.jpg';
@@ -169,269 +170,175 @@ const filters: Filter[] = [
     imgs: [eHout, eWarmte, eZon, eIso], cards: ecologisch },
 ];
 
-const HTML = `
-${buildNav('realisaties')}
+const HTML = () => `<div class="rp">
+${rpNav('/realisaties')}
 
-${buildHero({
-  bg: hero,
-  eyebrow: 'Realisaties',
-  title: 'Projecten die de tand<br/>des tijds doorstaan.',
-  lede: 'Een greep uit ons recent werk. Elke realisatie is gebouwd door onze eigen vakmensen, opgevolgd door één projectleider en opgeleverd op de afgesproken datum.',
-  primary: { label: 'Start uw project', href: '/contact' },
-  secondary: { label: 'Onze diensten →', href: '/diensten' },
-})}
+<section class="rp-phero">
+  <div class="rp-wrap">
+    <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Realisaties</span></nav>
+    <span class="rp-eyebrow">${ic.mark} Realisaties</span>
+    <h1 class="rp-phero__t">Werk dat wij<span class="rp-dim">opgeleverd hebben</span></h1>
+    <p class="rp-phero__lede">Een greep uit onze projecten, per vak gerangschikt. Klik een foto aan om ze groot te bekijken.</p>
+  </div>
+</section>
 
-<!-- STATS -->
-<section class="lf-stats">
-  <div class="wrap">
-    <div class="lf-section-head centered">
-      <span class="lf-eyebrow">In cijfers</span>
-      <h2 class="lf-h2">Realisaties die zich<br/>laten tellen.</h2>
+<div class="rp-hero__photo">
+  <img src="${hero}" alt="Gerenoveerde woning van AB Bouw Groep" width="1600" height="440" fetchpriority="high" decoding="async"/>
+</div>
+
+<section class="rp-section">
+  <div class="rp-wrap">
+    <div class="rp-tabs" role="tablist" aria-label="Filter realisaties op vak">
+      ${filters.map((f, n) => `<button class="rp-tab${n === 0 ? ' is-active' : ''}" type="button" role="tab" aria-selected="${n === 0}" data-filter="${f.key}">${f.label}</button>`).join('')}
     </div>
-    <div class="lf-stats-grid">
-      <div class="lf-stat-card">
-        <div class="lf-stat-photo"><img src="${svcDak}" alt="" loading="lazy"/></div>
-        <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span>16</span><span class="lf-stat-suffix">jaar</span></div>
-          <div class="lf-stat-label">Ervaring in de bouw</div>
-        </div>
+    <div class="rp-galerij" data-galerij>
+      ${alleKaarten.map((k, n) => {
+        const cats = filters.filter((f) => f.key !== 'alle' && f.cards.includes(k)).map((f) => f.key).join(' ');
+        return `
+      <button class="rp-gcard" type="button" data-cat="${cats}" data-index="${n}" aria-label="Bekijk ${k.t} groot">
+        <span class="rp-gcard__img"><img src="${k.img}" alt="${k.t}, ${k.tag}" width="420" height="240" loading="lazy" decoding="async"/></span>
+        <span class="rp-gcard__body">
+          <span class="rp-gcard__tag">${k.tag}</span>
+          <span class="rp-gcard__t">${k.t}</span>
+          <span class="rp-gcard__d">${k.d}</span>
+        </span>
+      </button>`;
+      }).join('')}
+    </div>
+    <p class="rp-leeg" data-leeg hidden>Geen projecten in dit vak.</p>
+  </div>
+</section>
+
+<section class="rp-cta">
+  <div class="rp-wrap">
+    <div class="rp-cta__box" style="min-height:270px">
+      <div class="rp-cta__bg" aria-hidden="true">
+        <img src="${hero}" alt="" width="1200" height="420" loading="lazy" decoding="async"/>
+        <span class="rp-cta__veil"></span>
       </div>
-      <div class="lf-stat-card">
-        <div class="lf-stat-photo"><img src="${svcGevel}" alt="" loading="lazy"/></div>
-        <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span>120</span><span class="lf-stat-suffix">+</span></div>
-          <div class="lf-stat-label">Woningen gerenoveerd</div>
-        </div>
-      </div>
-      <div class="lf-stat-card">
-        <div class="lf-stat-photo"><img src="${svcConstruct}" alt="" loading="lazy"/></div>
-        <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span>10</span><span class="lf-stat-suffix">jaar</span></div>
-          <div class="lf-stat-label">Garantie op ons werk</div>
-        </div>
-      </div>
-      <div class="lf-stat-card lf-stat-card--nophoto">
-        <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span>6</span></div>
-          <div class="lf-stat-label">Vakdisciplines onder één dak</div>
+      <div class="rp-cta__inner">
+        <h2 class="rp-cta__t">Zoiets voor uw woning?</h2>
+        <p class="rp-cta__p">Zeg ons welk project u aansprak, dan bekijken we bij het plaatsbezoek wat er bij u mogelijk is.</p>
+        <div style="margin-top:26px;display:flex;flex-wrap:wrap;gap:12px">
+          <a class="rp-btn rp-btn--primary" href="/contact">Plan een plaatsbezoek</a>
+          <a class="rp-btn rp-btn--ghost" href="${CONTACT.phone.href}" style="color:#fff;border-color:rgba(255,255,255,.34)">${ic.phone(17)} ${CONTACT.phone.display}</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="lf-section lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-section-head centered">
-      <span class="lf-eyebrow" id="rzCardsEyebrow">Recent werk</span>
-      <h2 class="lf-h2" id="rzCardsTitle">Een greep uit onze projecten,<br/>één kwaliteitsstandaard.</h2>
-    </div>
-    <div class="lf-proj-tabs-wrap">
-      <div class="lf-proj-tabs" id="rzFilters">
-        ${filters.map((f, i) => `
-          <button class="lf-proj-chip${i === 0 ? ' active' : ''}" data-rz="${f.key}">
-            ${i === 0 ? '<span class="lf-chip-dot"></span>' : ''}${f.label}
-          </button>`).join('')}
-      </div>
-    </div>
-    ${filters.map(f => `
-      <div class="rz-grid rz-panel${f.key === 'alle' ? ' active' : ''}" data-rz-panel="${f.key}" style="${f.key === 'alle' ? '' : 'display:none;'}">
-        ${f.cards.map(p => `
-          <a class="rz-proj-card" href="/contact" aria-label="${p.t}">
-            <div class="rz-proj-img"><img src="${p.img}" alt="${p.t}" loading="lazy"/></div>
-            <div class="rz-proj-foot">
-              <div class="rz-proj-meta">
-                <span class="rz-proj-tag">${p.tag}</span>
-                <span class="rz-proj-loc">${p.t}</span>
-              </div>
-              <span class="rz-proj-arrow" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
-              </span>
-            </div>
-          </a>`).join('')}
-      </div>`).join('')}
-  </div>
-</section>
+${rpFooter()}
 
-${buildCta('Uw project op deze pagina?', 'Een sterk resultaat begint bij een goed gesprek. We luisteren en denken vrijblijvend met u mee.')}
-
-${FOOTER}
-`;
-
-const FILTER_DATA = filters.reduce<Record<string, { imgs: string[]; label: string }>>((acc, f) => {
-  acc[f.key] = { imgs: f.imgs, label: f.label };
-  return acc;
-}, {});
+<div class="rp-lightbox" data-lightbox hidden role="dialog" aria-modal="true" aria-label="Projectfoto">
+  <button class="rp-lightbox__sluit" type="button" data-lb-sluit aria-label="Sluiten">${ic.close}</button>
+  <button class="rp-lightbox__nav rp-lightbox__nav--prev" type="button" data-lb-prev aria-label="Vorige foto">${ic.left}</button>
+  <button class="rp-lightbox__nav rp-lightbox__nav--next" type="button" data-lb-next aria-label="Volgende foto">${ic.right}</button>
+  <figure class="rp-lightbox__fig">
+    <img data-lb-img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""/>
+    <figcaption class="rp-lightbox__cap"><b data-lb-titel></b><span data-lb-tekst></span></figcaption>
+  </figure>
+</div>
+</div>`;
 
 export default function Realisaties() {
   useEffect(() => {
-    document.title = "Realisaties | AB Bouw Groep";
-    let m = document.querySelector('meta[name="description"]');
-    if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', "Een greep uit recente bouw- en renovatieprojecten van AB Bouw Groep in Vlaanderen en Brussel.");
-    const prev = document.body.className;
-    document.body.className = "";
-    const styleEl = document.createElement('style');
-    styleEl.textContent = SHELL_STYLE + `
-      .rz-grid--preview { margin-top: 8px; }
+    document.title = 'Realisaties — AB Bouw Groep';
+    window.scrollTo(0, 0);
+    const opruimers: Array<() => void> = [wireMobielMenu()];
 
-      /* Project cards — locatie + pijl stijl */
-      .rz-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 28px;
-      }
-      @media (max-width: 720px) {
-        .rz-grid { grid-template-columns: 1fr; gap: 20px; }
-      }
-      .rz-proj-card {
-        position: relative;
-        display: block;
-        background: #fff;
-        border-radius: 18px;
-        overflow: hidden;
-        text-decoration: none;
-        color: inherit;
-        box-shadow: 0 1px 2px rgba(15,23,42,.04), 0 12px 28px -18px rgba(15,23,42,.18);
-        transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
-      }
-      .rz-proj-card:hover {
-        box-shadow: 0 1px 2px rgba(15,23,42,.06), 0 28px 50px -22px rgba(15,23,42,.28);
-      }
-      .rz-proj-img {
-        position: relative;
-        aspect-ratio: 4 / 3;
-        overflow: hidden;
-        background: #eef0f3;
-      }
-      .rz-proj-img img {
-        width: 100%; height: 100%;
-        object-fit: cover;
-        display: block;
-        transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
-      }
-      .rz-proj-card:hover .rz-proj-img img { }
-      .rz-proj-foot {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 18px 22px 20px;
-      }
-      .rz-proj-meta { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-      .rz-proj-tag {
-        font-size: 11px;
-        letter-spacing: .14em;
-        text-transform: uppercase;
-        color: #64748b;
-        font-weight: 600;
-      }
-      .rz-proj-loc {
-        font-size: 19px;
-        font-weight: 600;
-        color: #0f172a;
-        letter-spacing: -.01em;
-        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      }
-      .rz-proj-arrow {
-        flex: 0 0 auto;
-        width: 40px; height: 40px;
-        border-radius: 999px;
-        display: inline-flex; align-items: center; justify-content: center;
-        color: #0f172a;
-        background: transparent;
-        transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
-      }
-      .rz-proj-card:hover .rz-proj-arrow {
-        background: #0f172a; color: #fff;
-      }
+    /* ── filters ─────────────────────────────────────────────────────── */
+    const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+    const kaarten = Array.from(document.querySelectorAll<HTMLElement>('[data-galerij] .rp-gcard'));
+    const leeg = document.querySelector<HTMLElement>('[data-leeg]');
+    let zichtbaar: HTMLElement[] = kaarten.slice();
 
-      /* Stats — strakker, foto naast cijfer */
-      .lf-stats { padding: 90px 0 110px; }
-      .lf-stats .lf-section-head .lf-eyebrow { color: rgba(255,255,255,.72); }
-      .lf-stats .lf-section-head .lf-h2 { color: #fff; }
-      .lf-stats-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-        margin-top: 48px;
-      }
-      @media (max-width: 980px) { .lf-stats-grid { grid-template-columns: repeat(2, 1fr); } }
-      @media (max-width: 520px) { .lf-stats-grid { grid-template-columns: 1fr; } }
-      .lf-stat-card {
-        background: #fff;
-        border: 1px solid rgba(15,23,42,.08);
-        border-radius: 16px;
-        padding: 18px;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        box-shadow: 0 10px 24px -20px rgba(15,23,42,.25);
-      }
-      .lf-stat-photo {
-        flex: 0 0 auto;
-        width: 72px; height: 72px;
-        border-radius: 12px;
-        overflow: hidden;
-        background: #eef0f3;
-      }
-      .lf-stat-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-      .lf-stat-card--nophoto .lf-stat-photo { display: none; }
-      .lf-stat-body { min-width: 0; }
-      .lf-stat-num {
-        display: flex; align-items: baseline; gap: 6px;
-        font-size: 30px; font-weight: 700; color: #0f172a; letter-spacing: -.02em;
-        line-height: 1;
-      }
-      .lf-stat-suffix { font-size: 16px; font-weight: 600; color: #475569; }
-      .lf-stat-label { margin-top: 8px; font-size: 13px; color: #64748b; letter-spacing: .02em; }
-      .lf-stat-dot { display: none; }
-    `;
-    document.head.appendChild(styleEl);
-
-    const chips = document.querySelectorAll<HTMLButtonElement>('#rzFilters .lf-proj-chip');
-    const panels = document.querySelectorAll<HTMLElement>('.rz-panel');
-    const handlers: Array<[HTMLButtonElement, () => void]> = [];
-
-    chips.forEach((chip) => {
-      const h = () => {
-        const key = chip.getAttribute('data-rz') || 'alle';
-        const data = FILTER_DATA[key];
-        if (!data) return;
-        chips.forEach(c => {
-          c.classList.toggle('active', c === chip);
-          const isActive = c === chip;
-          const hasDot = c.querySelector('.lf-chip-dot');
-          if (isActive && !hasDot) {
-            const d = document.createElement('span');
-            d.className = 'lf-chip-dot';
-            c.insertBefore(d, c.firstChild);
-          } else if (!isActive && hasDot) {
-            hasDot.remove();
-          }
-        });
-        panels.forEach(p => {
-          const match = p.getAttribute('data-rz-panel') === key;
-          p.style.display = match ? '' : 'none';
-          p.classList.toggle('active', match);
-        });
-        const eb = document.getElementById('rzCardsEyebrow');
-        const tt = document.getElementById('rzCardsTitle');
-        if (eb) eb.textContent = key === 'alle' ? 'Recent werk' : data.label;
-        if (tt) tt.innerHTML = key === 'alle'
-          ? 'Een greep uit onze projecten,<br/>één kwaliteitsstandaard.'
-          : `Recent werk, <span style="color:var(--accent)">${data.label}</span>`;
-      };
-      chip.addEventListener('click', h);
-      handlers.push([chip, h]);
+    const maakFilter = (b: HTMLButtonElement) => () => {
+      const f = b.dataset.filter || 'alle';
+      tabs.forEach((t) => {
+        const actief = t === b;
+        t.classList.toggle('is-active', actief);
+        t.setAttribute('aria-selected', String(actief));
+      });
+      zichtbaar = [];
+      kaarten.forEach((k) => {
+        const toon = f === 'alle' || (k.dataset.cat || '').split(' ').includes(f);
+        k.style.display = toon ? '' : 'none';
+        if (toon) zichtbaar.push(k);
+      });
+      if (leeg) leeg.hidden = zichtbaar.length > 0;
+    };
+    tabs.forEach((b) => {
+      const h = maakFilter(b);
+      b.addEventListener('click', h);
+      opruimers.push(() => b.removeEventListener('click', h));
     });
 
-    return () => {
-      document.body.className = prev;
-      styleEl.remove();
-      handlers.forEach(([el, h]) => el.removeEventListener('click', h));
+    /* ── lichtbak ────────────────────────────────────────────────────── */
+    const lb = document.querySelector<HTMLElement>('[data-lightbox]');
+    const lbImg = document.querySelector<HTMLImageElement>('[data-lb-img]');
+    const lbTitel = document.querySelector<HTMLElement>('[data-lb-titel]');
+    const lbTekst = document.querySelector<HTMLElement>('[data-lb-tekst]');
+    let huidig = 0;
+
+    const toon = (i: number) => {
+      if (!zichtbaar.length || !lbImg) return;
+      huidig = (i + zichtbaar.length) % zichtbaar.length;
+      const kaart = zichtbaar[huidig];
+      const img = kaart.querySelector('img');
+      lbImg.src = img?.currentSrc || img?.src || '';
+      lbImg.alt = img?.alt || '';
+      if (lbTitel) lbTitel.textContent = kaart.querySelector('.rp-gcard__t')?.textContent || '';
+      if (lbTekst) lbTekst.textContent = kaart.querySelector('.rp-gcard__d')?.textContent || '';
     };
+    const open = (i: number) => {
+      if (!lb) return;
+      toon(i);
+      lb.hidden = false;
+      lb.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    };
+    const sluit = () => {
+      if (!lb) return;
+      lb.hidden = true;
+      lb.classList.remove('is-open');
+      document.body.style.overflow = '';
+    };
+
+    kaarten.forEach((k) => {
+      const h = () => open(zichtbaar.indexOf(k));
+      k.addEventListener('click', h);
+      opruimers.push(() => k.removeEventListener('click', h));
+    });
+
+    const prev = document.querySelector<HTMLButtonElement>('[data-lb-prev]');
+    const next = document.querySelector<HTMLButtonElement>('[data-lb-next]');
+    const dicht = document.querySelector<HTMLButtonElement>('[data-lb-sluit]');
+    const onPrev = () => toon(huidig - 1);
+    const onNext = () => toon(huidig + 1);
+    const onAchtergrond = (e: MouseEvent) => { if (e.target === lb) sluit(); };
+    const onToets = (e: KeyboardEvent) => {
+      if (lb?.hidden) return;
+      if (e.key === 'Escape') sluit();
+      if (e.key === 'ArrowLeft') onPrev();
+      if (e.key === 'ArrowRight') onNext();
+    };
+    prev?.addEventListener('click', onPrev);
+    next?.addEventListener('click', onNext);
+    dicht?.addEventListener('click', sluit);
+    lb?.addEventListener('click', onAchtergrond);
+    document.addEventListener('keydown', onToets);
+    opruimers.push(() => {
+      prev?.removeEventListener('click', onPrev);
+      next?.removeEventListener('click', onNext);
+      dicht?.removeEventListener('click', sluit);
+      lb?.removeEventListener('click', onAchtergrond);
+      document.removeEventListener('keydown', onToets);
+      document.body.style.overflow = '';
+    });
+
+    return () => opruimers.forEach((f) => f());
   }, []);
-  useAbBouwInteractions();
-  return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
+
+  return <div dangerouslySetInnerHTML={{ __html: HTML() }} />;
 }
