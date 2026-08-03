@@ -203,24 +203,14 @@ export default function CalcPopup() {
           border-radius: 14px;
           box-shadow: 0 24px 60px -16px rgba(15,23,42,0.28), 0 8px 20px -8px rgba(15,23,42,0.10);
           z-index: 9998;
-          font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+          font-family: 'Inter', system-ui, -apple-system, sans-serif;
           overflow: hidden;
         }
         .calc-popup-card.is-open {
-          animation: calcPopupIn 0.36s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
         .calc-popup-card.is-closing {
-          animation: calcPopupOut 0.22s ease forwards;
         }
-        @keyframes calcPopupIn {
-          from { opacity: 0; transform: translateY(20px) scale(0.97); }
-          to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        @keyframes calcPopupOut {
-          from { opacity: 1; transform: translateY(0) scale(1); }
-          to { opacity: 0; transform: translateY(8px) scale(0.98); }
-        }
-
+                
         /* Close — groot, hoog-contrast navy circle. Geen mistake mogelijk. */
         .calc-popup-close {
           position: absolute;
@@ -231,11 +221,11 @@ export default function CalcPopup() {
           color: #ffffff;
           border: none; cursor: pointer;
           display: flex; align-items: center; justify-content: center;
-          transition: background 0.2s, transform 0.15s;
+          transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
           z-index: 2;
           padding: 0;
         }
-        .calc-popup-close:hover { background: #1a2c4a; transform: scale(1.05); }
+        .calc-popup-close:hover { background: #1a2c4a; }
         .calc-popup-close:focus-visible {
           outline: 2px solid #d98c03; outline-offset: 2px;
         }
@@ -325,7 +315,7 @@ export default function CalcPopup() {
           font-weight: 600;
           letter-spacing: -0.01em;
           cursor: pointer;
-          transition: background 0.15s, transform 0.15s;
+          transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
           font-family: inherit;
           white-space: nowrap;
         }
@@ -371,7 +361,7 @@ export default function CalcPopup() {
 
         @media (prefers-reduced-motion: reduce) {
           .calc-popup-card.is-open,
-          .calc-popup-card.is-closing { animation: none; }
+          .calc-popup-card.is-closing { }
         }
       `}</style>
     </>

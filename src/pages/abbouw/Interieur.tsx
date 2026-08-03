@@ -175,7 +175,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '03 · Interieurwerken',
   title: 'Strak afgewerkt<br/>tot in de <span style="color:var(--accent)">plint</span>.',
-  lede: 'Gyproc, pleisterwerk, vloeren, maatkasten en schrijnwerk. Onze interieurploeg zet de <span class="ab-hl" data-hl-delay="0">finale toets</span> op uw woning, daar waar het <span class="ab-hl" data-hl-delay="1">verschil zichtbaar wordt</span>.',
+  lede: 'Gyproc, pleisterwerk, vloeren, maatkasten en schrijnwerk. Onze interieurploeg zet de <span class="ab-hl">finale toets</span> op uw woning, daar waar het <span class="ab-hl">verschil zichtbaar wordt</span>.',
   primary: { label: 'Vraag interieuradvies', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
@@ -184,10 +184,10 @@ ${buildHero({
 <section class="lf-section">
   <div class="wrap">
     <div class="lf-split">
-      <div data-reveal>
+      <div>
         <span class="lf-eyebrow">AB Interieurwerken</span>
         <h2 class="lf-h2">Een ruwbouw kan<br/><span class="ab-mark">iedereen leveren</span>.</h2>
-        <p class="lf-lede">Een woning die <span class="ab-hl" data-hl-delay="0">klopt tot in elke hoek</span> vraagt vakmensen die wéken aan dezelfde werf staan en oog hebben voor <span class="ab-hl" data-hl-delay="1">het detail dat niemand opmerkt</span>, behalve uzelf, elke dag.</p>
+        <p class="lf-lede">Een woning die <span class="ab-hl">klopt tot in elke hoek</span> vraagt vakmensen die wéken aan dezelfde werf staan en oog hebben voor <span class="ab-hl">het detail dat niemand opmerkt</span>, behalve uzelf, elke dag.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen schrijnwerker met eigen atelier</li>
           <li>Eén vaste interieurploeg, geen wisselende onderaannemers</li>
@@ -195,7 +195,7 @@ ${buildHero({
           <li>Eindcontrole tot in de plint, schaduwvoeg en silicone</li>
         </ul>
       </div>
-      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgIntro}" alt="Overzicht interieurafwerking" loading="lazy"/></div>
+      <div class="lf-split-img"><img src="${imgIntro}" alt="Overzicht interieurafwerking" loading="lazy"/></div>
     </div>
   </div>
 </section>
@@ -203,7 +203,7 @@ ${buildHero({
 <!-- TOC -->
 <section class="lf-section" style="padding: 12px 0 12px;">
   <div class="wrap">
-    <div class="ab-toc-head" data-reveal>
+    <div class="ab-toc-head">
       <h3 class="ab-toc-title">Spring direct naar een type interieurwerk</h3>
       <p class="ab-toc-sub">Klik op een onderwerp om er meteen naartoe te scrollen.</p>
     </div>
@@ -220,7 +220,7 @@ ${buildHero({
   <div class="wrap">
     <div class="dak-grid">
       ${types.map(t => `
-        <article class="dak-card" id="${t.id}" data-reveal>
+        <article class="dak-card" id="${t.id}">
           <div class="dak-card-img"><img src="${t.img}" alt="${t.title.replace('&amp;', '&')}" loading="lazy"/><span class="dak-card-tag">${t.tag}</span></div>
           <div class="dak-card-body">
             <h3>${t.title}</h3>
@@ -247,10 +247,10 @@ ${buildHero({
 <section class="lf-section ab-droom">
   <div class="wrap">
     <div class="lf-split">
-      <div data-reveal>
+      <div>
         <span class="lf-eyebrow">Samen uw droom</span>
         <h2 class="lf-h2">Interieur dat naar<br/>uw manier van wonen is <span class="ab-mark">gemaakt</span>.</h2>
-        <p class="lf-lede">We beginnen niet met materialen maar <span class="ab-hl" data-hl-delay="0">met een gesprek</span>. We luisteren naar hoe u woont, wat u mooi vindt en wat absoluut niet, en vertalen dat in <span class="ab-hl" data-hl-delay="1">een ontwerp op maat van uw huis</span>.</p>
+        <p class="lf-lede">We beginnen niet met materialen maar <span class="ab-hl">met een gesprek</span>. We luisteren naar hoe u woont, wat u mooi vindt en wat absoluut niet, en vertalen dat in <span class="ab-hl">een ontwerp op maat van uw huis</span>.</p>
         <ul class="ab-droom-list">
           <li><span class="ab-droom-num">01</span><div><strong>Persoonlijk moodboard</strong><span>Materialen, kleuren en sfeer, samengesteld op uw smaak.</span></div></li>
           <li><span class="ab-droom-num">02</span><div><strong>3D-visualisatie vooraf</strong><span>U ziet uw interieur écht voordat de eerste plank wordt gezaagd.</span></div></li>
@@ -258,7 +258,7 @@ ${buildHero({
           <li><span class="ab-droom-num">04</span><div><strong>Vrijheid &amp; advies</strong><span>U kiest wat u wil, wij adviseren waar u het wenst.</span></div></li>
         </ul>
       </div>
-      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgDroom}" alt="Afgewerkte woonkamer met eikenfineer kasten en haard" loading="lazy"/></div>
+      <div class="lf-split-img"><img src="${imgDroom}" alt="Afgewerkte woonkamer met eikenfineer kasten en haard" loading="lazy"/></div>
     </div>
   </div>
 </section>
@@ -267,7 +267,7 @@ ${buildHero({
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="lf-split">
-      <div data-reveal>
+      <div>
         <span class="lf-eyebrow">Werken in een bewoonde woning</span>
         <h2 class="lf-h2">U blijft wonen,<br/>wij houden het proper.</h2>
         <p class="lf-lede">Renoveren met het gezin nog in huis? Geen probleem. We werken zone per zone, met stofschotten, dagelijkse opkuis en duidelijke afspraken over water, elektriciteit en de keukenpauze.</p>
@@ -278,7 +278,7 @@ ${buildHero({
           </a>
         </div>
       </div>
-      <div data-reveal data-reveal-delay="1">
+      <div>
         <table class="ab-spec">
           <thead><tr><th>Maatregel</th><th>Wat houdt het in</th></tr></thead>
           <tbody>
@@ -297,15 +297,15 @@ ${buildHero({
 <!-- PROCES -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Hoe we te werk gaan</span>
       <h2 class="lf-h2">Van moodboard tot<br/>silicone-voeg.</h2>
     </div>
     <div class="ab-flow">
-      <div class="ab-flow-card" data-reveal><div class="ab-flow-num">STAP 01</div><h5>Plaatsbezoek</h5><p>Opmeten, luisteren naar uw smaak, fotorapport van de bestaande toestand.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="1"><div class="ab-flow-num">STAP 02</div><h5>Moodboard &amp; offerte</h5><p>Materialen, kleuren en 3D-schets. Vaste prijs, geen verrassingen.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="2"><div class="ab-flow-num">STAP 03</div><h5>Productie &amp; planning</h5><p>Maatwerk in eigen atelier. Heldere weekplanning aan u bezorgd.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="3"><div class="ab-flow-num">STAP 04</div><h5>Plaatsing &amp; oplevering</h5><p>Eén doorlopende werf, eindcontrole tot in de plint en silicone-voeg.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 01</div><h5>Plaatsbezoek</h5><p>Opmeten, luisteren naar uw smaak, fotorapport van de bestaande toestand.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 02</div><h5>Moodboard &amp; offerte</h5><p>Materialen, kleuren en 3D-schets. Vaste prijs, geen verrassingen.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 03</div><h5>Productie &amp; planning</h5><p>Maatwerk in eigen atelier. Heldere weekplanning aan u bezorgd.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 04</div><h5>Plaatsing &amp; oplevering</h5><p>Eén doorlopende werf, eindcontrole tot in de plint en silicone-voeg.</p></div>
     </div>
   </div>
 </section>
@@ -313,12 +313,12 @@ ${buildHero({
 <!-- WAT INBEGREPEN -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Bij elk interieurproject</span>
       <h2 class="lf-h2">Wat altijd in onze prijs zit.</h2>
     </div>
     <div class="ab-incl ab-incl-single">
-      <div class="ab-incl-card yes" data-reveal>
+      <div class="ab-incl-card yes">
         <h4>Standaard inbegrepen</h4>
         <ul>
           <li>Plaatsbezoek &amp; opmeting met digitale lasermeting</li>
@@ -338,16 +338,16 @@ ${buildHero({
 <!-- FAQ -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Veelgestelde vragen</span>
       <h2 class="lf-h2">Over interieurwerken.</h2>
     </div>
     <div class="ab-faq">
-      <details data-reveal><summary>Hoe lang duurt een volledige interieurrenovatie?</summary><div class="ab-faq-body"><p>Een woonkamer doen we in 2 tot 3 weken, een volledig appartement in 6 tot 10 weken, een woning casco-tot-sleutel in 12 tot 20 weken. We bezorgen vooraf een dag-per-dag planning.</p></div></details>
-      <details data-reveal><summary>Doen jullie ook keukens en badkamers?</summary><div class="ab-faq-body"><p>Ja. Maatwerkkeukens komen uit ons eigen atelier of via onze vaste keukenpartner. Voor badkamers werken we samen met AB Bad &amp; Wellness, met één contactpersoon voor de hele werf.</p></div></details>
-      <details data-reveal><summary>Kan ik blijven wonen tijdens de werken?</summary><div class="ab-faq-body"><p>Bij de meeste renovaties wel. We werken zone per zone met stofschotten, dagelijkse opkuis en plastic loopzones. Water of stroom wordt steeds 24u vooraf aangekondigd.</p></div></details>
-      <details data-reveal><summary>Welke vloer past bij vloerverwarming?</summary><div class="ab-faq-body"><p>Microcement (Beal Mortex), tegels en gietvloer geven het hoogste rendement. Parket kan, mits meerlaagse uitvoering met lage thermische weerstand (Rλ &lt; 0,15). We bespreken het bij plaatsbezoek.</p></div></details>
-      <details data-reveal><summary>Wat is V3- of V4-afwerking bij gyproc?</summary><div class="ab-faq-body"><p>Dat zijn de Belgische normen voor afwerkingsgraad. V2 is standaard (klaar voor verf), V3 is extra geschuurd en geplamuurd voor satijnverf, V4 is volledig vlak gepleisterd voor strijklicht en hoogglans.</p></div></details>
+      <details><summary>Hoe lang duurt een volledige interieurrenovatie?</summary><div class="ab-faq-body"><p>Een woonkamer doen we in 2 tot 3 weken, een volledig appartement in 6 tot 10 weken, een woning casco-tot-sleutel in 12 tot 20 weken. We bezorgen vooraf een dag-per-dag planning.</p></div></details>
+      <details><summary>Doen jullie ook keukens en badkamers?</summary><div class="ab-faq-body"><p>Ja. Maatwerkkeukens komen uit ons eigen atelier of via onze vaste keukenpartner. Voor badkamers werken we samen met AB Bad &amp; Wellness, met één contactpersoon voor de hele werf.</p></div></details>
+      <details><summary>Kan ik blijven wonen tijdens de werken?</summary><div class="ab-faq-body"><p>Bij de meeste renovaties wel. We werken zone per zone met stofschotten, dagelijkse opkuis en plastic loopzones. Water of stroom wordt steeds 24u vooraf aangekondigd.</p></div></details>
+      <details><summary>Welke vloer past bij vloerverwarming?</summary><div class="ab-faq-body"><p>Microcement (Beal Mortex), tegels en gietvloer geven het hoogste rendement. Parket kan, mits meerlaagse uitvoering met lage thermische weerstand (Rλ &lt; 0,15). We bespreken het bij plaatsbezoek.</p></div></details>
+      <details><summary>Wat is V3- of V4-afwerking bij gyproc?</summary><div class="ab-faq-body"><p>Dat zijn de Belgische normen voor afwerkingsgraad. V2 is standaard (klaar voor verf), V3 is extra geschuurd en geplamuurd voor satijnverf, V4 is volledig vlak gepleisterd voor strijklicht en hoogglans.</p></div></details>
     </div>
   </div>
 </section>
@@ -358,13 +358,13 @@ ${FOOTER}
 
 <style>
 .dak-grid { display: grid; grid-template-columns: 1fr; gap: 36px; }
-.dak-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; display: grid; grid-template-columns: 1fr 1.2fr; align-items: start; box-shadow: 0 14px 40px -28px rgba(10,22,40,0.18); transition: box-shadow 0.3s, transform 0.3s; }
-.dak-card:hover { box-shadow: 0 24px 60px -28px rgba(10,22,40,0.28); transform: translateY(-2px); }
+.dak-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; display: grid; grid-template-columns: 1fr 1.2fr; align-items: start; box-shadow: 0 14px 40px -28px rgba(10,22,40,0.18); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.dak-card:hover { box-shadow: 0 24px 60px -28px rgba(10,22,40,0.28); }
 .dak-card:nth-child(even) { grid-template-columns: 1.2fr 1fr; }
 .dak-card:nth-child(even) .dak-card-img { order: 2; }
 .dak-card-img { position: relative; aspect-ratio: 4/3; overflow: hidden; }
-.dak-card-img img { width:100%; height:100%; object-fit: cover; display:block; transition: transform 0.6s var(--ease); }
-.dak-card:hover .dak-card-img img { transform: scale(1.04); }
+.dak-card-img img { width:100%; height:100%; object-fit: cover; display:block; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.dak-card:hover .dak-card-img img { }
 .dak-card-tag { position: absolute; top: 18px; left: 18px; padding: 6px 12px; background: #fff; color: var(--navy); border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; box-shadow: 0 6px 16px -4px rgba(10,22,40,0.25); }
 .dak-card-body { padding: 36px 40px; display:flex; flex-direction:column; }
 .dak-card-body h3 { font-family: var(--font-display); font-size: clamp(22px, 2.4vw, 28px); color: var(--navy); margin-bottom: 12px; font-weight: 600; letter-spacing: -0.01em; }
@@ -382,24 +382,14 @@ ${FOOTER}
   .dak-card-body { padding: 28px 24px; }
 }
 .ab-mark { position: relative; display: inline-block; color: var(--navy); white-space: nowrap; }
-.ab-mark::after { content: ''; position: absolute; left: -2%; right: -2%; bottom: 4%; height: 38%; background: var(--accent); opacity: 0.28; border-radius: 3px; transform-origin: left center; transform: scaleX(0); transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s; z-index: -1; }
-[data-reveal].revealed .ab-mark::after { transform: scaleX(1); }
+.ab-mark::after { content: ''; position: absolute; left: -2%; right: -2%; bottom: 4%; height: 38%; background: var(--accent); opacity: 0.28; border-radius: 3px; z-index: -1; }
 
-/* Highlighter sweep on key phrases */
-.ab-hl { position: relative; display: inline; background-image: linear-gradient(120deg, rgba(217,140,3,0.22) 0%, rgba(217,140,3,0.22) 100%); background-repeat: no-repeat; background-size: 0% 60%; background-position: 0 88%; padding: 0 2px; transition: background-size 0.9s cubic-bezier(0.22, 1, 0.36, 1); transition-delay: calc(0.5s + var(--hl-i, 0) * 0.35s); color: var(--navy); font-weight: 500; }
-[data-reveal].revealed .ab-hl { background-size: 100% 60%; }
-.ab-hl[data-hl-delay="0"] { --hl-i: 0; }
-.ab-hl[data-hl-delay="1"] { --hl-i: 1; }
-.ab-hl[data-hl-delay="2"] { --hl-i: 2; }
+/* Statische highlight op kernzinnen */
+.ab-hl { position: relative; display: inline; background-image: linear-gradient(120deg, rgba(217,140,3,0.22) 0%, rgba(217,140,3,0.22) 100%); background-repeat: no-repeat; background-size: 100% 60%; background-position: 0 88%; padding: 0 2px; color: var(--navy); font-weight: 500; }
 
 /* Numbered scannable list for fast readers */
 .ab-droom-list { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 14px; }
-.ab-droom-list li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; padding: 14px 16px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 12px; opacity: 0; transform: translateY(10px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), border-color 0.25s, box-shadow 0.25s; }
-[data-reveal].revealed .ab-droom-list li { opacity: 1; transform: translateY(0); }
-[data-reveal].revealed .ab-droom-list li:nth-child(1) { transition-delay: 0.15s; }
-[data-reveal].revealed .ab-droom-list li:nth-child(2) { transition-delay: 0.3s; }
-[data-reveal].revealed .ab-droom-list li:nth-child(3) { transition-delay: 0.45s; }
-[data-reveal].revealed .ab-droom-list li:nth-child(4) { transition-delay: 0.6s; }
+.ab-droom-list li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; padding: 14px 16px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 12px; transition: border-color .15s ease, box-shadow .15s ease; }
 .ab-droom-list li:hover { border-color: var(--accent); box-shadow: 0 12px 30px -18px rgba(217,140,3,0.45); }
 .ab-droom-num { display:inline-flex; align-items:center; justify-content:center; width: 38px; height: 38px; border-radius: 10px; background: var(--accent); color:#fff; font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.04em; }
 .ab-droom-list strong { display:block; font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 2px; letter-spacing: -0.005em; }

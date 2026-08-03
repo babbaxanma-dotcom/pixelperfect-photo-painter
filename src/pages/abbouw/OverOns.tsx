@@ -27,13 +27,13 @@ ${buildHero({
 <section class="lf-section">
   <div class="wrap">
     <div class="lf-split">
-      <div data-reveal>
+      <div>
         <span class="lf-eyebrow">Wie we zijn</span>
         <h2 class="lf-h2">Een familiebedrijf<br/>met vakmensen in dienst.</h2>
         <p class="lf-lede">AB Bouw Groep werkt niet met een wisselende keten van onderaannemers. Onze metselaars, dakdekkers, tegelzetters en schrijnwerkers staan op onze eigen loonlijst. Daardoor kunnen we instaan voor één planning, één prijs en één kwaliteitsstandaard, van de eerste schop tot de laatste plint.</p>
         <p class="lf-lede">Onze klanten zijn particulieren die hun gezinswoning bouwen of grondig renoveren, architecten die een uitvoerder zoeken die meedenkt, en kleine ondernemers die hun zaak laten verbouwen zonder de zaak stil te leggen. Wat ze gemeen hebben: ze willen één aanspreekpunt en een resultaat dat lang meegaat.</p>
       </div>
-      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${about}" alt="AB Bouw Groep ploeg op de werf in Willebroek" loading="lazy"/></div>
+      <div class="lf-split-img"><img src="${about}" alt="AB Bouw Groep ploeg op de werf in Willebroek" loading="lazy"/></div>
     </div>
   </div>
 </section>
@@ -41,13 +41,13 @@ ${buildHero({
 <!-- PIJLERS / WAARDEN -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Onze pijlers</span>
       <h2 class="lf-h2">Drie principes die elke<br/>werf bij ons vorm geven.</h2>
       <p class="lf-lede" style="margin: 0 auto;">Drie principes die al vijftien jaar onze werkwijze bepalen, en waarom klanten ons aanbevelen aan hun buren.</p>
     </div>
     <div class="ab-pillars">
-      <article class="ab-pillar" data-reveal>
+      <article class="ab-pillar">
         <div class="ab-pillar-img"><img src="${vakmanInterieur}" alt="Werfleider en opdrachtgevers bespreken het bouwplan op de werf" loading="lazy"/></div>
         <div class="ab-pillar-body">
           <span class="ab-pillar-num">01</span>
@@ -55,7 +55,7 @@ ${buildHero({
           <p>23 vakmensen die elkaar kennen, dezelfde standaarden delen en al jaren samen op de werf staan. U ziet dezelfde ploeg van de eerste tot de laatste werkdag.</p>
         </div>
       </article>
-      <article class="ab-pillar" data-reveal data-reveal-delay="1">
+      <article class="ab-pillar">
         <div class="ab-pillar-img"><img src="${vakmanDak}" alt="Dakdekker plaatst keramische dakpannen op een hellend dak" loading="lazy"/></div>
         <div class="ab-pillar-body">
           <span class="ab-pillar-num">02</span>
@@ -63,7 +63,7 @@ ${buildHero({
           <p>Onze offertes zijn gedetailleerd en bindend. Materialen, uurloon en planning, alles uitgesplitst. Wat we afspreken, dat bouwen we, voor de prijs die op papier staat.</p>
         </div>
       </article>
-      <article class="ab-pillar" data-reveal data-reveal-delay="2">
+      <article class="ab-pillar">
         <div class="ab-pillar-img"><img src="${skills}" alt="Werfleider overlegt met opdrachtgever" loading="lazy"/></div>
         <div class="ab-pillar-body">
           <span class="ab-pillar-num">03</span>
@@ -79,12 +79,12 @@ ${buildHero({
 <section class="lf-section">
   <div class="wrap">
     <div class="ab-mv-grid">
-      <div class="ab-mv-card ab-mv-mission" data-reveal>
+      <div class="ab-mv-card ab-mv-mission">
         <div class="ab-mv-tag">Missie</div>
         <h3>Bouwen wat we zelf zouden willen kopen.</h3>
         <p>We leveren elke werf op met de standaard die we voor onze eigen familie zouden eisen, tot in de hoeken afgewerkt.</p>
       </div>
-      <div class="ab-mv-card ab-mv-vision" data-reveal data-reveal-delay="1">
+      <div class="ab-mv-card ab-mv-vision">
         <div class="ab-mv-tag">Visie</div>
         <h3>Het bouwbedrijf waar mensen blijven werken.</h3>
         <p>Goede werven beginnen bij goede vakmensen. We investeren in opleiding, modern materieel en een correcte verloning, zodat onze ploegen blijven, en onze klanten dezelfde gezichten op hun werf zien, jaar na jaar.</p>
@@ -96,15 +96,15 @@ ${buildHero({
 <!-- IN CIJFERS -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">In cijfers</span>
       <h2 class="lf-h2">Een groep die rustig<br/>maar gestaag groeit.</h2>
     </div>
     <div class="ab-facts">
-      <div class="ab-fact" data-reveal><div class="ab-fact-num">16</div><div class="ab-fact-lbl">Jaar ervaring</div></div>
-      <div class="ab-fact" data-reveal data-reveal-delay="1"><div class="ab-fact-num">23</div><div class="ab-fact-lbl">Vakmensen in vaste dienst</div></div>
-      <div class="ab-fact" data-reveal data-reveal-delay="2"><div class="ab-fact-num">120+</div><div class="ab-fact-lbl">Woningen gerenoveerd</div></div>
-      <div class="ab-fact" data-reveal data-reveal-delay="3"><div class="ab-fact-num">6</div><div class="ab-fact-lbl">Specialisaties onder één dak</div></div>
+      <div class="ab-fact"><div class="ab-fact-num">16</div><div class="ab-fact-lbl">Jaar ervaring</div></div>
+      <div class="ab-fact"><div class="ab-fact-num">23</div><div class="ab-fact-lbl">Vakmensen in vaste dienst</div></div>
+      <div class="ab-fact"><div class="ab-fact-num">120+</div><div class="ab-fact-lbl">Woningen gerenoveerd</div></div>
+      <div class="ab-fact"><div class="ab-fact-num">6</div><div class="ab-fact-lbl">Specialisaties onder één dak</div></div>
     </div>
   </div>
 </section>
@@ -112,7 +112,7 @@ ${buildHero({
 <!-- HOE WIJ WERKEN -->
 <section class="lf-section lf-tone-soft ab-rules-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Hoe wij werken</span>
       <h2 class="lf-h2">Acht afspraken die wij<br/>met onszelf maken.</h2>
       <p class="lf-lede" style="margin: 0 auto;">Klik door de acht punten die letterlijk in elke offerte staan.</p>
@@ -155,7 +155,6 @@ ${buildHero({
             </div>
           </article>
         `).join('')}
-        <div class="ab-promise-progress" data-promise-progress><i></i></div>
       </div>
     </div>
   </div>
@@ -165,8 +164,8 @@ ${buildHero({
 <section class="lf-section ab-story lf-tone-soft">
   <div class="wrap">
     <div class="lf-split">
-      <div class="lf-split-img" data-reveal><img src="${why}" alt="Werf AB Bouw Groep in uitvoering" loading="lazy"/></div>
-      <div data-reveal data-reveal-delay="1">
+      <div class="lf-split-img"><img src="${why}" alt="Werf AB Bouw Groep in uitvoering" loading="lazy"/></div>
+      <div>
         <span class="lf-eyebrow">Onze werkregio</span>
         <h2 class="lf-h2">Vlaams gebouwd,<br/>lokaal verankerd.</h2>
         <p class="lf-lede">Vanuit ons kantoor in Willebroek bedienen we Antwerpen, Mechelen, Boom, Bonheiden, Lier, Brussel en omliggende gemeenten. Onze vaste leveranciers zitten in dezelfde driehoek, waardoor materiaal nooit ver moet komen en wij u snel kunnen helpen, ook bij dringende interventies.</p>
@@ -180,12 +179,12 @@ ${buildHero({
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="lf-split">
-      <div data-reveal>
+      <div>
         <span class="lf-eyebrow">Erkenningen</span>
         <h2 class="lf-h2">Officieel erkend,<br/>verzekerd en gecertificeerd.</h2>
         <p class="lf-lede">Werken met een erkende aannemer is geen luxe. Het is uw garantie dat de wettelijke verplichtingen, de tienjarige aansprakelijkheid en de verzekeringen écht in orde zijn.</p>
       </div>
-      <div class="ab-certs" data-reveal data-reveal-delay="1">
+      <div class="ab-certs">
         <div class="ab-cert"><strong>VCA*</strong><span>Veiligheidscertificering aannemers, jaarlijks geauditeerd</span></div>
         <div class="ab-cert"><strong>10-jarige aansprakelijkheid</strong><span>Polis stabiliteit &amp; waterdichtheid bij Federale Verzekering</span></div>
         <div class="ab-cert"><strong>BTW &amp; KBO geregistreerd</strong><span>BE 0712.443.881 · lid Bouwunie</span></div>
@@ -217,11 +216,11 @@ ${FOOTER}
 .ab-mv-vision p { color: var(--ink-soft); }
 
 .ab-pillars { display:grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
-.ab-pillar { background:#fff; border-radius: 16px; overflow: hidden; border: 1px solid var(--ink-line-soft); display:flex; flex-direction:column; transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
-.ab-pillar:hover { transform: translateY(-4px); box-shadow: 0 28px 50px -28px rgba(15,17,21,.22); }
+.ab-pillar { background:#fff; border-radius: 16px; overflow: hidden; border: 1px solid var(--ink-line-soft); display:flex; flex-direction:column; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.ab-pillar:hover { box-shadow: 0 28px 50px -28px rgba(15,17,21,.22); }
 .ab-pillar-img { aspect-ratio: 4/3; overflow: hidden; }
-.ab-pillar-img img { width:100%; height:100%; object-fit:cover; transition: transform .6s var(--ease); }
-.ab-pillar:hover .ab-pillar-img img { transform: scale(1.04); }
+.ab-pillar-img img { width:100%; height:100%; object-fit:cover; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.ab-pillar:hover .ab-pillar-img img { }
 .ab-pillar-body { padding: 26px 26px 30px; position:relative; }
 .ab-pillar-num { font-family: var(--font-display); font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: .12em; }
 .ab-pillar h3 { font-family: var(--font-display); font-size: 19px; color: var(--navy); margin: 8px 0 10px; line-height: 1.3; }
@@ -244,15 +243,15 @@ ${FOOTER}
 
 .ab-promise { margin-top: 36px; display: grid; grid-template-columns: 320px 1fr; gap: 28px; align-items: stretch; }
 .ab-promise-tabs { display: flex; flex-direction: column; gap: 6px; }
-.ab-promise-tab { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: transparent; border: none; border-left: 3px solid transparent; border-radius: 10px; cursor: pointer; text-align: left; transition: background .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease); font-family: inherit; }
-.ab-promise-tab:hover { background: rgba(255,255,255,.65); transform: translateX(2px); }
+.ab-promise-tab { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: transparent; border: none; border-left: 3px solid transparent; border-radius: 10px; cursor: pointer; text-align: left; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; font-family: inherit; }
+.ab-promise-tab:hover { background: rgba(255,255,255,.65); }
 .ab-promise-tab.is-active { background: #fff; border-left-color: var(--accent); box-shadow: 0 18px 40px -28px rgba(15,17,21,.22); }
 .ab-promise-tab-num { font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .12em; min-width: 26px; }
 .ab-promise-tab-title { font-family: var(--font-display); font-size: 14.5px; color: var(--navy); font-weight: 600; line-height: 1.3; }
 
 .ab-promise-stage { position: relative; background: #fff; border-radius: 18px; border: 1px solid var(--ink-line-soft); padding: 44px 48px 56px; min-height: 360px; overflow: hidden; box-shadow: 0 30px 60px -40px rgba(15,17,21,.18); }
-.ab-promise-panel { position: absolute; inset: 44px 48px 56px; display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: start; opacity: 0; transform: translateY(14px); pointer-events: none; transition: opacity .5s var(--ease), transform .5s var(--ease); }
-.ab-promise-panel.is-active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.ab-promise-panel { display: none; grid-template-columns: auto 1fr; gap: 36px; align-items: start; }
+.ab-promise-panel.is-active { display: grid; }
 .ab-promise-bignum { font-family: var(--font-display); font-size: 120px; font-weight: 700; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px var(--accent); letter-spacing: -0.04em; margin-top: -8px; }
 .ab-promise-body { max-width: 520px; }
 .ab-promise-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
@@ -261,8 +260,6 @@ ${FOOTER}
 .ab-promise-bullets { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
 .ab-promise-bullets li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--navy); font-weight: 500; }
 .ab-promise-bullets svg { color: var(--accent); flex-shrink: 0; }
-.ab-promise-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(0,0,0,.04); overflow: hidden; }
-.ab-promise-progress i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .15s linear; }
 
 .ab-timeline { display:grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1100px; margin: 0 auto; }
 .ab-tl { background:#fff; border:1px solid var(--ink-line-soft); border-radius: 14px; padding: 24px 24px 26px; border-top: 3px solid var(--accent); }
@@ -322,42 +319,19 @@ export default function OverOns() {
     if (promise) {
       const tabs = Array.from(promise.querySelectorAll<HTMLButtonElement>('[data-promise-tab]'));
       const panels = Array.from(promise.querySelectorAll<HTMLElement>('[data-promise-panel]'));
-      const progress = promise.querySelector<HTMLElement>('[data-promise-progress] i');
-      let active = 0;
-      let raf = 0;
-      let start = performance.now();
-      let paused = false;
-      const DURATION = 5000;
-      const setActive = (i: number, resetTimer = true) => {
-        active = (i + panels.length) % panels.length;
+      const setActive = (i: number) => {
+        const active = (i + panels.length) % panels.length;
         tabs.forEach((t, k) => t.classList.toggle('is-active', k === active));
         panels.forEach((p, k) => p.classList.toggle('is-active', k === active));
-        if (resetTimer) start = performance.now();
       };
-      const tick = (now: number) => {
-        if (!paused) {
-          const pct = Math.min(1, (now - start) / DURATION);
-          if (progress) progress.style.width = `${pct * 100}%`;
-          if (pct >= 1) setActive(active + 1);
-        }
-        raf = requestAnimationFrame(tick);
-      };
-      raf = requestAnimationFrame(tick);
       const handlers: Array<[HTMLButtonElement, () => void]> = [];
       tabs.forEach((tab, i) => {
         const h = () => setActive(i);
         tab.addEventListener('click', h);
         handlers.push([tab, h]);
       });
-      const onEnter = () => { paused = true; };
-      const onLeave = () => { paused = false; start = performance.now(); };
-      promise.addEventListener('mouseenter', onEnter);
-      promise.addEventListener('mouseleave', onLeave);
       cleanupPromise = () => {
-        cancelAnimationFrame(raf);
         handlers.forEach(([el, h]) => el.removeEventListener('click', h));
-        promise.removeEventListener('mouseenter', onEnter);
-        promise.removeEventListener('mouseleave', onLeave);
       };
     }
 

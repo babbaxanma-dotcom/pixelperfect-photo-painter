@@ -5,8 +5,6 @@ import PageTransition from "./components/PageTransition";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { useLenis } from "@/hooks/useLenis";
-import "lenis/dist/lenis.css";
 import "./styles/ab-bouw.css";
 
 // LAZY-LOAD alle routes — initial bundle van 1MB -> ~150KB
@@ -71,7 +69,6 @@ const RouteLoading = () => (
 );
 
 const App = () => {
-  useLenis();
   return (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>

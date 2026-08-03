@@ -95,7 +95,7 @@ ${buildNav('home' as any)}
 
   <section class="lf-section" style="padding: 24px 0 56px;">
     <div class="wrap">
-      <div class="ab-article-cta" data-reveal>
+      <div class="ab-article-cta">
         <div class="ab-article-cta-text">
           <span class="lf-eyebrow">Hulp nodig voor uw project?</span>
           <h3>Vraag een <strong>gratis plaatsbezoek</strong> aan</h3>
@@ -119,13 +119,13 @@ ${buildNav('home' as any)}
 
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Lees ook</span>
       <h2 class="lf-h2">Andere artikels</h2>
     </div>
     <div class="lf-blog-grid">
       ${others.map(b => `
-        <article class="lf-blog-card" data-reveal>
+        <article class="lf-blog-card">
           <div class="lf-blog-img">
             <img src="${b.img}" alt="${b.title}" loading="lazy"/>
             <span class="lf-blog-tag">${b.tag}</span>
@@ -155,8 +155,8 @@ ${FOOTER}
 .ab-article-hero-overlay { position:absolute; inset:0; background: linear-gradient(180deg, rgba(10,22,40,0.35) 0%, rgba(10,22,40,0.85) 100%); }
 .ab-article-hero-inner { position: relative; z-index: 2; height: 100%; display:flex; flex-direction:column; justify-content:flex-end; padding-bottom: 56px; color:#fff; }
 .ab-article-hero-inner h1 { font-family: var(--font-display); font-size: clamp(28px, 4vw, 48px); line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; color: #fff; margin: 16px 0 16px; max-width: 880px; }
-.ab-article-back { display:inline-flex; align-items:center; gap:8px; color: rgba(255,255,255,0.85); font-size: 13px; margin-bottom: 18px; text-decoration: none; transition: color 0.2s, transform 0.2s; }
-.ab-article-back svg { transition: transform 0.2s; }
+.ab-article-back { display:inline-flex; align-items:center; gap:8px; color: rgba(255,255,255,0.85); font-size: 13px; margin-bottom: 18px; text-decoration: none; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.ab-article-back svg { transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
 .ab-article-back:hover { color: var(--accent); }
 .ab-article-back:hover svg { transform: translateX(-3px); }
 .ab-article-meta { display:flex; gap:8px; flex-wrap:wrap; font-size: 13px; color: rgba(255,255,255,0.85); letter-spacing: 0.02em; }
@@ -194,9 +194,9 @@ ${FOOTER}
   background: rgba(255,255,255,0.10); color: #fff; text-decoration: none;
   font-family: var(--font-display); font-weight: 500; font-size: 13.5px;
   border: 1px solid rgba(255,255,255,0.18);
-  transition: background .2s ease, transform .15s ease;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
 }
-.ab-article-cta-phone:hover { background: rgba(255,255,255,0.16); transform: translateY(-1px); color: #fff; }
+.ab-article-cta-phone:hover { background: rgba(255,255,255,0.16); color: #fff; }
 @media (max-width: 760px) {
   .ab-article-cta { grid-template-columns: 1fr; padding: 28px 24px; gap: 22px; }
 }
@@ -220,15 +220,11 @@ ${FOOTER}
     font-size: 13.5px; font-weight: 600;
     text-decoration: none;
     box-shadow: 0 14px 32px -6px rgba(217,140,3,0.55);
-    transition: transform .15s ease;
+    transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
   }
-  .ab-blog-sticky-cta:hover { transform: translateY(-1px); }
+  .ab-blog-sticky-cta:hover { }
   .ab-blog-sticky-cta strong { font-weight: 700; }
-  body.is-scrolled .ab-blog-sticky-cta { animation: ab-blog-cta-in .3s ease; }
-}
-@keyframes ab-blog-cta-in {
-  from { transform: translateY(120%); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  body.is-scrolled .ab-blog-sticky-cta { }
 }
 </style>
 `;

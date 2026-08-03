@@ -126,7 +126,7 @@ ${buildHero({
     <div class="ab-svc-track" id="abSvcTrack">
       ${services.map((s, i) => `
         <div class="ab-sub ab-svc-slide" id="${s.id}">
-          <div class="ab-deep ${i % 2 === 1 ? 'reverse' : ''}" data-reveal>
+          <div class="ab-deep ${i % 2 === 1 ? 'reverse' : ''}">
             <div>
               <span class="ab-deep-tag">${s.tag} · ${s.n}</span>
               <h3>${s.title}</h3>
@@ -195,13 +195,13 @@ ${buildHero({
 <!-- WHAT'S ALWAYS INCLUDED -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Bij elke opdracht</span>
       <h2 class="lf-h2">Wat altijd inbegrepen is.</h2>
       
     </div>
     <div class="ab-incl ab-incl-single">
-      <div class="ab-incl-card yes" data-reveal>
+      <div class="ab-incl-card yes">
         <h4>Standaard inbegrepen</h4>
         <ul>
           <li>Plaatsbezoek en offerte op maat</li>
@@ -223,22 +223,22 @@ ${buildHero({
 <!-- SUPPORT TRIPLE -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Ondersteuning van A tot Z</span>
       <h2 class="lf-h2">Wij nemen u álles uit handen,<br/>ook wat niet zichtbaar is.</h2>
     </div>
     <div class="lf-support-grid" style="grid-template-columns: 1fr; max-width: 720px; margin: 0 auto; gap: 16px;">
-      <div class="lf-support-card" data-reveal>
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>01</span> Vergunningen</div>
         <h5>Stedenbouwkundige vergunning</h5>
         <p>Wij stellen het dossier op en volgen het op tot goedkeuring.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="1">
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>02</span> Financieel voordeel</div>
         <h5>Btw 6%, lening &amp; premie-check</h5>
         <p>Wij rekenen uit op welke steun u recht heeft en regelen de aanvraag.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="2">
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>03</span> Nazorg</div>
         <h5>Service na oplevering</h5>
         <p>Gratis nacontrole na 1 jaar. Reactie binnen 48 uur.</p>
@@ -250,18 +250,18 @@ ${buildHero({
 <!-- FAQ -->
 <section class="lf-section lf-tone-soft" id="faq">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Veelgestelde vragen</span>
       <h2 class="lf-h2">Wat klanten ons<br/>vooraf vragen.</h2>
     </div>
     <div class="ab-faq">
-      <details data-reveal><summary>Werken jullie ook samen met mijn eigen architect?</summary><div class="ab-faq-body"><p>Ja, in ongeveer 70% van onze projecten werken we met de architect van de klant. We coördineren de uitvoeringsplannen, plannen werfvergaderingen mee en bezorgen de architect alle documenten voor de oplevering. Heeft u nog geen architect, dan kunnen we onze huisarchitect voorstellen.</p></div></details>
-      <details data-reveal><summary>Hoe lang op voorhand moet ik reserveren?</summary><div class="ab-faq-body"><p>Voor een badkamer- of interieurproject rekenen we doorgaans 4 tot 8 weken tussen contracttekening en start werf. Voor totaalrenovaties of nieuwbouw rekenen we 3 tot 5 maanden, omdat vergunning, materiaalbestelling en planning meer tijd vergen. Spoedopdrachten kunnen we soms tussenschuiven, vraag het bij uw plaatsbezoek.</p></div></details>
-      <details data-reveal><summary>Krijg ik één prijs voor het volledige project?</summary><div class="ab-faq-body"><p>Ja. Wij geven één bindende offerte met meetstaat, ook als meerdere divisies betrokken zijn. U krijgt geen aparte rekeningen van metselaar, dakwerker en tegelzetter, alles loopt via AB Bouw Groep, met één factuur per fase.</p></div></details>
-      <details data-reveal><summary>Wat als er onverwachte problemen opduiken tijdens de werf?</summary><div class="ab-faq-body"><p>Bij renovaties is dat soms onvermijdelijk: een verrotte balk, asbest in de oude vloer, een oude septische put. Wij stoppen dan de werf, documenteren het probleem met foto's, en geven u binnen 48 uur een aparte offerte voor het meerwerk. U beslist of we het meenemen of niet, pas na uw goedkeuring gaan we verder.</p></div></details>
-      <details data-reveal><summary>Mag ik tijdens de werf op de werf komen?</summary><div class="ab-faq-body"><p>Uiteraard. We organiseren elke twee weken een werfvergadering waarop u welkom bent. Daarbuiten kan u na afspraak met de projectleider altijd langs. Veiligheidsschoenen en helm hebben we voor u klaar liggen.</p></div></details>
-      <details data-reveal><summary>Wat als ik niet tevreden ben met een afgewerkt detail?</summary><div class="ab-faq-body"><p>Bij de oplevering maken we een lijst van eventuele punten ("verfopstoot in hoek", "deur sluit niet vlot"). Die punten lossen we op vóór de eindfactuur. Daarna geldt de wettelijke 10-jarige aansprakelijkheid op stabiliteit en waterdichtheid, plus 2 jaar op afwerking.</p></div></details>
-      <details data-reveal><summary>Werken jullie ook in Brussel en buiten Vlaanderen?</summary><div class="ab-faq-body"><p>We bedienen heel Vlaanderen en het Brussels Hoofdstedelijk Gewest. Voor projecten in Wallonië maken we een uitzondering bij grote opdrachten (>€250k) of voor terugkerende klanten. Vraag het na bij uw plaatsbezoek.</p></div></details>
+      <details><summary>Werken jullie ook samen met mijn eigen architect?</summary><div class="ab-faq-body"><p>Ja, in ongeveer 70% van onze projecten werken we met de architect van de klant. We coördineren de uitvoeringsplannen, plannen werfvergaderingen mee en bezorgen de architect alle documenten voor de oplevering. Heeft u nog geen architect, dan kunnen we onze huisarchitect voorstellen.</p></div></details>
+      <details><summary>Hoe lang op voorhand moet ik reserveren?</summary><div class="ab-faq-body"><p>Voor een badkamer- of interieurproject rekenen we doorgaans 4 tot 8 weken tussen contracttekening en start werf. Voor totaalrenovaties of nieuwbouw rekenen we 3 tot 5 maanden, omdat vergunning, materiaalbestelling en planning meer tijd vergen. Spoedopdrachten kunnen we soms tussenschuiven, vraag het bij uw plaatsbezoek.</p></div></details>
+      <details><summary>Krijg ik één prijs voor het volledige project?</summary><div class="ab-faq-body"><p>Ja. Wij geven één bindende offerte met meetstaat, ook als meerdere divisies betrokken zijn. U krijgt geen aparte rekeningen van metselaar, dakwerker en tegelzetter, alles loopt via AB Bouw Groep, met één factuur per fase.</p></div></details>
+      <details><summary>Wat als er onverwachte problemen opduiken tijdens de werf?</summary><div class="ab-faq-body"><p>Bij renovaties is dat soms onvermijdelijk: een verrotte balk, asbest in de oude vloer, een oude septische put. Wij stoppen dan de werf, documenteren het probleem met foto's, en geven u binnen 48 uur een aparte offerte voor het meerwerk. U beslist of we het meenemen of niet, pas na uw goedkeuring gaan we verder.</p></div></details>
+      <details><summary>Mag ik tijdens de werf op de werf komen?</summary><div class="ab-faq-body"><p>Uiteraard. We organiseren elke twee weken een werfvergadering waarop u welkom bent. Daarbuiten kan u na afspraak met de projectleider altijd langs. Veiligheidsschoenen en helm hebben we voor u klaar liggen.</p></div></details>
+      <details><summary>Wat als ik niet tevreden ben met een afgewerkt detail?</summary><div class="ab-faq-body"><p>Bij de oplevering maken we een lijst van eventuele punten ("verfopstoot in hoek", "deur sluit niet vlot"). Die punten lossen we op vóór de eindfactuur. Daarna geldt de wettelijke 10-jarige aansprakelijkheid op stabiliteit en waterdichtheid, plus 2 jaar op afwerking.</p></div></details>
+      <details><summary>Werken jullie ook in Brussel en buiten Vlaanderen?</summary><div class="ab-faq-body"><p>We bedienen heel Vlaanderen en het Brussels Hoofdstedelijk Gewest. Voor projecten in Wallonië maken we een uitzondering bij grote opdrachten (>€250k) of voor terugkerende klanten. Vraag het na bij uw plaatsbezoek.</p></div></details>
     </div>
   </div>
 </section>

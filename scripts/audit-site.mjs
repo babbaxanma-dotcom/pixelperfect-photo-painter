@@ -11,7 +11,7 @@ import puppeteer from "puppeteer-core";
 const CHROME = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const UIT = path.join(ROOT, "audit");
-const BASIS = "http://localhost:4180";
+const BASIS = process.env.AUDIT_BASE || "http://localhost:4180";
 
 const ROUTES = [
   "/", "/over", "/diensten", "/realisaties", "/realisaties/dakwerken",
@@ -25,7 +25,7 @@ const filter = process.argv[2];
 const routes = filter ? ROUTES.filter((r) => r.includes(filter)) : ROUTES;
 
 fs.mkdirSync(UIT, { recursive: true });
-const browser = await puppeteer.launch({ executablePath: CHROME, headless: "new" });
+const browser = await puppeteer.launch({ executablePath: CHROME, headless: "new", userDataDir: "E:/pptr/audit" });
 const rapport = [];
 
 for (const route of routes) {

@@ -71,7 +71,7 @@ ${buildNav('home')}
 <section class="ab-bedankt-hero">
   <div class="ab-bedankt-hero-bg" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="ab-bedankt-card" data-reveal>
+    <div class="ab-bedankt-card">
       <div class="ab-bedankt-check" aria-hidden="true">
         <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
       </div>
@@ -93,27 +93,27 @@ ${buildNav('home')}
 
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Wat gebeurt er nu</span>
       <h2 class="lf-h2">Stap voor stap,<br/>geen verrassingen.</h2>
     </div>
     <div class="ab-flow">
-      <div class="ab-flow-card" data-reveal>
+      <div class="ab-flow-card">
         <div class="ab-flow-num">FASE 01</div>
         <h5>Bevestiging</h5>
         <p>Vandaag, binnen één uur. Een mail met de samenvatting van uw aanvraag en onze contactgegevens.</p>
       </div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="1">
+      <div class="ab-flow-card">
         <div class="ab-flow-num">FASE 02</div>
         <h5>Telefonische intake</h5>
         <p>Eerstvolgende werkdag. Een kort gesprek (10 à 15 min) waarin we luisteren naar uw plannen en eerlijk aangeven wat haalbaar is.</p>
       </div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="2">
+      <div class="ab-flow-card">
         <div class="ab-flow-num">FASE 03</div>
         <h5>Plaatsbezoek</h5>
         <p>Binnen vijf werkdagen. Onze projectleider komt langs, meet op, neemt foto's en bespreekt opties. Vrijblijvend, geen verplichting.</p>
       </div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="3">
+      <div class="ab-flow-card">
         <div class="ab-flow-num">FASE 04</div>
         <h5>Offerte op maat</h5>
         <p>Vijf à tien dagen later. Vaste prijs, geldig 30 dagen, fotorapport van het plaatsbezoek en premie-dossier voorbereid.</p>
@@ -124,13 +124,13 @@ ${buildNav('home')}
 
 <section class="lf-section ab-bedankt-rev-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Recent over ons</span>
       <h2 class="lf-h2">Wat klanten zeggen<br/>na hun project.</h2>
     </div>
     <div class="ab-bedankt-rev-grid">
       ${reviews.map((r, i) => `
-        <article class="ab-bedankt-rev" data-reveal data-reveal-delay="${i}">
+        <article class="ab-bedankt-rev">
           <div class="ab-bedankt-rev-stars" aria-label="5 van 5 sterren">
             <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
             <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
@@ -153,7 +153,7 @@ ${buildNav('home')}
 
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="ab-quote" data-reveal>
+    <div class="ab-quote">
       "Een goede renovatie begint met luisteren. Daarom plannen we eerst een rustig telefoontje en pas dan een plaatsbezoek. We kijken rustig wat u nodig heeft, en of wij dat correct voor u kunnen uitvoeren."
       <footer>De ploeg van AB Bouw Groep</footer>
     </div>
@@ -162,27 +162,27 @@ ${buildNav('home')}
 
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Schriftelijk vastgelegd</span>
       <h2 class="lf-h2">Vier zekerheden voor u<br/>als opdrachtgever.</h2>
     </div>
     <div class="lf-support-grid" style="grid-template-columns: repeat(4, 1fr);">
-      <div class="lf-support-card" data-reveal>
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>01</span> Prijs</div>
         <h5>Vaste prijs, bindend</h5>
         <p>Geen meerwerk tenzij u zelf wijzigingen vraagt. Eindfactuur klopt tot op de euro met de offerte.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="1">
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>02</span> Ploeg</div>
         <h5>Eigen vakmensen</h5>
         <p>Eigen dakdekkers, gevelploegen, tegelzetters. Geen onderaannemers, geen losse contracten met dagloners.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="2">
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>03</span> Garantie</div>
         <h5>10 jaar via Federale</h5>
         <p>Wettelijke 10-jarige aansprakelijkheid op stabiliteit en waterdichtheid. Plus 2 jaar op afwerking.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="3">
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>04</span> Aanspreekpunt</div>
         <h5>Eén projectleider</h5>
         <p>Dezelfde persoon doet uw plaatsbezoek, offerte, werf en oplevering. Geen carrousel van wisselende contacten.</p>
@@ -193,12 +193,12 @@ ${buildNav('home')}
 
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Even tijd te doden?</span>
       <h2 class="lf-h2">Wat u ondertussen<br/>al kan bekijken.</h2>
     </div>
     <div class="lf-blog-grid">
-      <a href="/realisaties" class="lf-blog-card" data-reveal>
+      <a href="/realisaties" class="lf-blog-card">
         <div class="lf-blog-img"><img src="${realisatiesImg}" alt="Realisaties AB Bouw Groep" loading="lazy"/></div>
         <div class="lf-blog-body">
           <span class="lf-blog-tag">Realisaties</span>
@@ -206,7 +206,7 @@ ${buildNav('home')}
           <p>Echte huizen, echte klanten, echte fotorapporten. Van klassieke dakrenovaties tot volledige totaalrenovaties.</p>
         </div>
       </a>
-      <a href="/blog/mijn-verbouwpremie-2026" class="lf-blog-card" data-reveal data-reveal-delay="1">
+      <a href="/blog/mijn-verbouwpremie-2026" class="lf-blog-card">
         <div class="lf-blog-img"><img src="${premieImg}" alt="Mijn VerbouwPremie 2026" loading="lazy"/></div>
         <div class="lf-blog-body">
           <span class="lf-blog-tag">Premie-gids</span>
@@ -214,7 +214,7 @@ ${buildNav('home')}
           <p>Mijn VerbouwPremie in mensentaal — wat in 2026 nog kan, wat het 6% BTW-tarief oplevert, en wat wij voor u regelen.</p>
         </div>
       </a>
-      <a href="/werkwijze" class="lf-blog-card" data-reveal data-reveal-delay="2">
+      <a href="/werkwijze" class="lf-blog-card">
         <div class="lf-blog-img"><img src="${werkwijzeImg}" alt="Onze werkwijze" loading="lazy"/></div>
         <div class="lf-blog-body">
           <span class="lf-blog-tag">Werkwijze</span>
@@ -257,11 +257,6 @@ const BEDANKT_CSS = `
   box-shadow:
     0 0 0 8px rgba(46,164,102,0.12),
     0 16px 36px -12px rgba(46,164,102,0.45);
-  animation: bedanktPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-@keyframes bedanktPop {
-  0%   { transform: scale(0.3); opacity: 0; }
-  100% { transform: scale(1);   opacity: 1; }
 }
 .ab-bedankt-h1 { margin-top: 14px; }
 .ab-bedankt-lede { margin: 20px auto 30px; max-width: 620px; }
@@ -283,10 +278,9 @@ const BEDANKT_CSS = `
   border-radius: 16px;
   padding: 28px 26px;
   display: flex; flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
 }
 .ab-bedankt-rev:hover {
-  transform: translateY(-3px);
   box-shadow: 0 16px 32px -16px rgba(10,22,40,0.14);
 }
 .ab-bedankt-rev-stars {

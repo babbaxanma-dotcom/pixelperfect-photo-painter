@@ -163,7 +163,7 @@ ${buildHero({
 <!-- TRUST STRIP -->
 <section class="lf-section rzd-trust-section">
   <div class="wrap">
-    <div class="rzd-trust" data-reveal>
+    <div class="rzd-trust">
       <div class="rzd-trust-item">
         <span class="rzd-trust-num">60.000+</span>
         <span class="rzd-trust-lbl">m² gevel afgewerkt</span>
@@ -190,7 +190,7 @@ ${buildHero({
 <!-- QUOTE -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="ab-quote" data-reveal>
+    <div class="ab-quote">
       "Een gevel staat 30 jaar in weer en wind. We gebruiken bewust premium materialen: Sto, Wienerberger, Reynaers. Goedkoper kan altijd — maar dan bent u over 8 jaar opnieuw begonnen. Onze klanten kiezen ons omdat ze maar één keer willen renoveren."
       <footer>Zaakvoerder AB Bouw Groep</footer>
     </div>
@@ -200,27 +200,27 @@ ${buildHero({
 <!-- WERKMETHODE — 4 stappen mini -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Onze werkmethode</span>
       <h2 class="lf-h2">Vier fases — kleurkeuze<br/>en monsters vóór akkoord.</h2>
     </div>
     <div class="ab-flow">
-      <div class="ab-flow-card" data-reveal>
+      <div class="ab-flow-card">
         <div class="ab-flow-num">FASE 01</div>
         <h5>Gratis plaatsbezoek</h5>
         <p>Binnen 5 werkdagen ter plaatse. Bestaande gevel beoordeeld, m² opgemeten, foto-rapport van knelpunten.</p>
       </div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="1">
+      <div class="ab-flow-card">
         <div class="ab-flow-num">FASE 02</div>
         <h5>Kleurkeuze + monsters</h5>
         <p>Kleurstaal-stukken op uw gevel uitgevoerd, 1m² echt materiaal, zodat u in echt licht kiest — niet uit een kleurenkaart.</p>
       </div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="2">
+      <div class="ab-flow-card">
         <div class="ab-flow-num">FASE 03</div>
         <h5>Uitvoering eigen ploeg</h5>
         <p>14 vaste vakmensen in dienst. Stelling, isolatie, finish — alles door dezelfde ploeg, niet onderverdeeld.</p>
       </div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="3">
+      <div class="ab-flow-card">
         <div class="ab-flow-num">FASE 04</div>
         <h5>Oplevering + 10j garantie</h5>
         <p>Officiële oplevering met fotorapport. 10 jaar Federale Verzekering. Onderhoudsadvies per materiaal meegegeven.</p>
@@ -232,13 +232,13 @@ ${buildHero({
 <!-- FILTER + PROJECT GRID -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Recente projecten</span>
       <h2 class="lf-h2">Echte gevels op echte huizen.<br/>Met m², materiaal en eerlijke verhalen.</h2>
       <p class="lf-lede" style="max-width: 700px; margin: 12px auto 0;">Elk project hieronder is werk van onze eigen ploeg, met de werkelijke oppervlakte, het materiaal en de doorlooptijd. Filter per type werk om te zien wat we voor uw situatie hebben gedaan.</p>
     </div>
 
-    <div class="rzd-filter-wrap" data-reveal>
+    <div class="rzd-filter-wrap">
       <div class="rzd-filter" id="rzgFilters">
         ${filters.map((f, i) => `
           <button type="button" class="rzd-chip${i === 0 ? ' active' : ''}" data-rzg-filter="${f.key}">
@@ -249,7 +249,7 @@ ${buildHero({
 
     <div class="rzd-grid" id="rzgGrid">
       ${projects.map((p) => `
-        <article class="rzd-card" data-rzg-card="${p.filter}" data-reveal>
+        <article class="rzd-card" data-rzg-card="${p.filter}">
           <div class="rzd-card-img">
             <img src="${p.img}" alt="${p.tag}" loading="lazy"/>
             <span class="rzd-card-tag">${p.tag}</span>
@@ -278,22 +278,22 @@ ${buildHero({
 <!-- GARANTIE / WAARBORG -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Schriftelijk vastgelegd</span>
       <h2 class="lf-h2">Drie garanties voor uw gevel.</h2>
     </div>
     <div class="lf-support-grid" style="grid-template-columns: repeat(3, 1fr);">
-      <div class="lf-support-card" data-reveal>
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>01</span> Aansprakelijkheid</div>
         <h5>10 jaar Federale Verzekering</h5>
         <p>Wettelijke 10-jarige aansprakelijkheid op stabiliteit en waterdichtheid van de gevel, gedekt door polis bij Federale Verzekering.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="1">
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>02</span> Materialen</div>
         <h5>10-25j fabrieksgarantie</h5>
         <p>Sto siliconencrepi 10 jaar kleur- en vorm-vastheid, Wienerberger steenstrips 20 jaar, Reynaers schrijnwerk 25 jaar. Garantiedocumenten bij oplevering.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="2">
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>03</span> Erkenningen</div>
         <h5>VCA* + Lid Bouwunie</h5>
         <p>VCA*-certificaat voor werken op hoogte en met stelling. Lid Bouwunie — kwaliteitscontrole en bemiddeling bij geschillen via de sector-organisatie.</p>
@@ -305,17 +305,17 @@ ${buildHero({
 <!-- FAQ -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Veelgestelde vragen</span>
       <h2 class="lf-h2">Over gevelwerken specifiek.</h2>
     </div>
     <div class="ab-faq">
-      <details data-reveal><summary>Hoe lang duurt een gevelrenovatie?</summary><div class="ab-faq-body"><p>Een rijwoning-gevel (~120 m²) duurt gemiddeld 4-6 weken inclusief stelling. Halfopen of vrijstaand (200-300 m²) loopt op tot 7-10 weken. Tijd hangt vooral af van uithardingstijd van de mortel — die kunnen we niet versnellen. Wachttijd tussen offerte-akkoord en start werf: typisch 6-10 weken afhankelijk van seizoen.</p></div></details>
-      <details data-reveal><summary>Wat met Mijn VerbouwPremie voor gevelisolatie?</summary><div class="ab-faq-body"><p>De regels zijn sinds 1 maart 2026 sterk veranderd: de premie voor buitenmuurisolatie geldt enkel nog voor de laagste inkomenscategorieën en voor verhuurders via een SVK. Voor de meeste eigenaars vervalt de premie, maar het verlaagde btw-tarief van 6% (woning ouder dan 10 jaar) en de renteloze Mijn VerbouwLening blijven wél bestaan. We bekijken bij het plaatsbezoek wat er in uw situatie geldt, en komt u in aanmerking, dan regelen wij het volledige dossier.</p></div></details>
-      <details data-reveal><summary>Welk materiaal is beter: crepi, steenstrips of sierpleister?</summary><div class="ab-faq-body"><p>Crepi (siliconencrepi van Sto, Caparol, Marmolit) — goed voor strakke moderne uitstraling, 8-12 onderhoudsvrije jaren. Steenstrips (Wienerberger, Vandersanden) — authentieke baksteenlook, 30+ jaar onderhoudsvrij. Sierpleister (marmorino, kalkpleister) — premium ambachtelijk afwerking voor karaktergevels. Wij raden aan op basis van uw woning, niet op basis van wat we het liefst verkopen. Bij plaatsbezoek tonen we de drie opties met monsters op uw gevel.</p></div></details>
-      <details data-reveal><summary>Mag ik mijn gevel zomaar laten isoleren — heb ik een vergunning nodig?</summary><div class="ab-faq-body"><p>Voor de meeste gevelisolatie-werken in Vlaanderen geldt vrijstelling (geen vergunning), op voorwaarde dat: de gevel grenst niet aan een beschermd zicht, de isolatie-dikte ≤14 cm blijft, en de kleur niet drastisch verandert van het straatbeeld. Bij twijfel — vooral binnenstad Mechelen, Antwerpen, Brussel — vragen wij de stedenbouwkundige stempel aan vóór start werf. Onze projectleider weet welke uitzonderingen waar gelden.</p></div></details>
-      <details data-reveal><summary>Wat is het verschil tussen Sto en goedkopere crepi-merken?</summary><div class="ab-faq-body"><p>Sto Lotusan (en gelijkaardige Caparol AmphiSilan) heeft een siliconen-resin-basis die zelfreinigend werkt — regen spoelt vuil mee. Goedkopere crepi (acryl-basis) vraagt elke 5-7 jaar reiniging en herschildering. Het prijsverschil per m² is €4-6 — over 20 jaar bekeken levert de premium-keuze een netto besparing op door uitgespaard onderhoud.</p></div></details>
-      <details data-reveal><summary>Krijg ik een fotorapport van het werk?</summary><div class="ab-faq-body"><p>Ja, standaard. Foto's van de bestaande staat bij offerte. Wekelijkse foto-update tijdens uitvoering. Bij oplevering een eindrapport per gevelvlak — inclusief detail-foto's rond ramen, dorpels en aansluitingen — digitaal bezorgd. Garantiedocumenten en kleurcode-fiches voor latere bijwerk-doeleinden.</p></div></details>
+      <details><summary>Hoe lang duurt een gevelrenovatie?</summary><div class="ab-faq-body"><p>Een rijwoning-gevel (~120 m²) duurt gemiddeld 4-6 weken inclusief stelling. Halfopen of vrijstaand (200-300 m²) loopt op tot 7-10 weken. Tijd hangt vooral af van uithardingstijd van de mortel — die kunnen we niet versnellen. Wachttijd tussen offerte-akkoord en start werf: typisch 6-10 weken afhankelijk van seizoen.</p></div></details>
+      <details><summary>Wat met Mijn VerbouwPremie voor gevelisolatie?</summary><div class="ab-faq-body"><p>De regels zijn sinds 1 maart 2026 sterk veranderd: de premie voor buitenmuurisolatie geldt enkel nog voor de laagste inkomenscategorieën en voor verhuurders via een SVK. Voor de meeste eigenaars vervalt de premie, maar het verlaagde btw-tarief van 6% (woning ouder dan 10 jaar) en de renteloze Mijn VerbouwLening blijven wél bestaan. We bekijken bij het plaatsbezoek wat er in uw situatie geldt, en komt u in aanmerking, dan regelen wij het volledige dossier.</p></div></details>
+      <details><summary>Welk materiaal is beter: crepi, steenstrips of sierpleister?</summary><div class="ab-faq-body"><p>Crepi (siliconencrepi van Sto, Caparol, Marmolit) — goed voor strakke moderne uitstraling, 8-12 onderhoudsvrije jaren. Steenstrips (Wienerberger, Vandersanden) — authentieke baksteenlook, 30+ jaar onderhoudsvrij. Sierpleister (marmorino, kalkpleister) — premium ambachtelijk afwerking voor karaktergevels. Wij raden aan op basis van uw woning, niet op basis van wat we het liefst verkopen. Bij plaatsbezoek tonen we de drie opties met monsters op uw gevel.</p></div></details>
+      <details><summary>Mag ik mijn gevel zomaar laten isoleren — heb ik een vergunning nodig?</summary><div class="ab-faq-body"><p>Voor de meeste gevelisolatie-werken in Vlaanderen geldt vrijstelling (geen vergunning), op voorwaarde dat: de gevel grenst niet aan een beschermd zicht, de isolatie-dikte ≤14 cm blijft, en de kleur niet drastisch verandert van het straatbeeld. Bij twijfel — vooral binnenstad Mechelen, Antwerpen, Brussel — vragen wij de stedenbouwkundige stempel aan vóór start werf. Onze projectleider weet welke uitzonderingen waar gelden.</p></div></details>
+      <details><summary>Wat is het verschil tussen Sto en goedkopere crepi-merken?</summary><div class="ab-faq-body"><p>Sto Lotusan (en gelijkaardige Caparol AmphiSilan) heeft een siliconen-resin-basis die zelfreinigend werkt — regen spoelt vuil mee. Goedkopere crepi (acryl-basis) vraagt elke 5-7 jaar reiniging en herschildering. Het prijsverschil per m² is €4-6 — over 20 jaar bekeken levert de premium-keuze een netto besparing op door uitgespaard onderhoud.</p></div></details>
+      <details><summary>Krijg ik een fotorapport van het werk?</summary><div class="ab-faq-body"><p>Ja, standaard. Foto's van de bestaande staat bij offerte. Wekelijkse foto-update tijdens uitvoering. Bij oplevering een eindrapport per gevelvlak — inclusief detail-foto's rond ramen, dorpels en aansluitingen — digitaal bezorgd. Garantiedocumenten en kleurcode-fiches voor latere bijwerk-doeleinden.</p></div></details>
     </div>
   </div>
 </section>
@@ -395,7 +395,7 @@ const PAGE_STYLE = `
   color: var(--ink-soft);
   font-family: inherit;
   cursor: pointer;
-  transition: all 0.18s var(--ease);
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
   white-space: nowrap;
 }
 .rzd-chip:hover { color: var(--navy); background: rgba(10,31,68,0.04); }
@@ -425,13 +425,12 @@ const PAGE_STYLE = `
   overflow: hidden;
   border: 1px solid var(--ink-line-soft);
   box-shadow: 0 1px 3px rgba(15,23,42,0.04), 0 18px 36px -22px rgba(15,23,42,0.16);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
   display: flex;
   flex-direction: column;
 }
 .rzd-card[hidden] { display: none !important; }
 .rzd-card:hover {
-  transform: translateY(-4px);
   box-shadow: 0 1px 3px rgba(15,23,42,0.06), 0 28px 52px -22px rgba(15,23,42,0.24);
 }
 .rzd-card-img {
@@ -443,16 +442,14 @@ const PAGE_STYLE = `
 .rzd-card-img img {
   width: 100%; height: 100%;
   object-fit: cover;
-  transition: transform 0.9s cubic-bezier(.2,.7,.2,1);
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
 }
-.rzd-card:hover .rzd-card-img img { transform: scale(1.04); }
+.rzd-card:hover .rzd-card-img img { }
 .rzd-card-tag {
   position: absolute;
   bottom: 14px; left: 14px;
   padding: 7px 14px;
   background: rgba(10,22,40,0.88);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   color: #fff;
   font-size: 11.5px;
   font-weight: 600;

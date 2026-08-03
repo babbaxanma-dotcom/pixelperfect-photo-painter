@@ -183,7 +183,7 @@ ${buildHero({
 
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-proj-tabs-wrap" data-reveal>
+    <div class="lf-proj-tabs-wrap">
       <div class="lf-proj-tabs" id="rzFilters">
         ${filters.map((f, i) => `
           <button class="lf-proj-chip${i === 0 ? ' active' : ''}" data-rz="${f.key}">
@@ -191,7 +191,7 @@ ${buildHero({
           </button>`).join('')}
       </div>
     </div>
-    <div class="rz-grid rz-grid--preview" data-reveal id="rzCollage">
+    <div class="rz-grid rz-grid--preview" id="rzCollage">
       ${[0,1,2,3].map(i => {
         const p = filters[0].cards[i] || filters[0].cards[0];
         return `
@@ -215,33 +215,33 @@ ${buildHero({
 <!-- STATS -->
 <section class="lf-stats">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">In cijfers</span>
       <h2 class="lf-h2">Realisaties die zich<br/>laten tellen.</h2>
     </div>
     <div class="lf-stats-grid">
-      <div class="lf-stat-card" data-reveal>
+      <div class="lf-stat-card">
         <div class="lf-stat-photo"><img src="${svcDak}" alt="" loading="lazy"/></div>
         <div class="lf-stat-body">
           <div class="lf-stat-num"><span class="lf-stat-dot"></span><span>16</span><span class="lf-stat-suffix">jaar</span></div>
           <div class="lf-stat-label">Ervaring in de bouw</div>
         </div>
       </div>
-      <div class="lf-stat-card" data-reveal data-reveal-delay="1">
+      <div class="lf-stat-card">
         <div class="lf-stat-photo"><img src="${svcGevel}" alt="" loading="lazy"/></div>
         <div class="lf-stat-body">
           <div class="lf-stat-num"><span class="lf-stat-dot"></span><span>120</span><span class="lf-stat-suffix">+</span></div>
           <div class="lf-stat-label">Woningen gerenoveerd</div>
         </div>
       </div>
-      <div class="lf-stat-card" data-reveal data-reveal-delay="2">
+      <div class="lf-stat-card">
         <div class="lf-stat-photo"><img src="${svcConstruct}" alt="" loading="lazy"/></div>
         <div class="lf-stat-body">
           <div class="lf-stat-num"><span class="lf-stat-dot"></span><span>10</span><span class="lf-stat-suffix">jaar</span></div>
           <div class="lf-stat-label">Garantie op ons werk</div>
         </div>
       </div>
-      <div class="lf-stat-card lf-stat-card--nophoto" data-reveal data-reveal-delay="3">
+      <div class="lf-stat-card lf-stat-card--nophoto">
         <div class="lf-stat-body">
           <div class="lf-stat-num"><span class="lf-stat-dot"></span><span>6</span><span class="lf-stat-suffix"></span></div>
           <div class="lf-stat-label">Vakdisciplines onder één dak</div>
@@ -253,14 +253,14 @@ ${buildHero({
 
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow" id="rzCardsEyebrow">Recent werk</span>
       <h2 class="lf-h2" id="rzCardsTitle">Een greep uit onze projecten,<br/>één kwaliteitsstandaard.</h2>
     </div>
     ${filters.map(f => `
       <div class="rz-grid rz-panel${f.key === 'alle' ? ' active' : ''}" data-rz-panel="${f.key}" style="${f.key === 'alle' ? '' : 'display:none;'}">
         ${f.cards.map(p => `
-          <a class="rz-proj-card" data-reveal href="/contact" aria-label="${p.t}">
+          <a class="rz-proj-card" href="/contact" aria-label="${p.t}">
             <div class="rz-proj-img"><img src="${p.img}" alt="${p.t}" loading="lazy"/></div>
             <div class="rz-proj-foot">
               <div class="rz-proj-meta">
@@ -296,8 +296,6 @@ export default function Realisaties() {
     document.body.className = "";
     const styleEl = document.createElement('style');
     styleEl.textContent = SHELL_STYLE + `
-      .rz-proj-card img { transition: opacity .35s ease; }
-      .rz-proj-card.swap img { opacity: 0; }
       .rz-grid--preview { margin-top: 8px; }
 
       /* Project cards — locatie + pijl stijl */
@@ -318,10 +316,9 @@ export default function Realisaties() {
         text-decoration: none;
         color: inherit;
         box-shadow: 0 1px 2px rgba(15,23,42,.04), 0 12px 28px -18px rgba(15,23,42,.18);
-        transition: transform .35s ease, box-shadow .35s ease;
+        transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
       }
       .rz-proj-card:hover {
-        transform: translateY(-4px);
         box-shadow: 0 1px 2px rgba(15,23,42,.06), 0 28px 50px -22px rgba(15,23,42,.28);
       }
       .rz-proj-img {
@@ -334,9 +331,9 @@ export default function Realisaties() {
         width: 100%; height: 100%;
         object-fit: cover;
         display: block;
-        transition: transform .9s cubic-bezier(.2,.7,.2,1);
+        transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
       }
-      .rz-proj-card:hover .rz-proj-img img { transform: scale(1.04); }
+      .rz-proj-card:hover .rz-proj-img img { }
       .rz-proj-foot {
         display: flex;
         align-items: center;
@@ -366,10 +363,10 @@ export default function Realisaties() {
         display: inline-flex; align-items: center; justify-content: center;
         color: #0f172a;
         background: transparent;
-        transition: background .25s ease, color .25s ease, transform .35s ease;
+        transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
       }
       .rz-proj-card:hover .rz-proj-arrow {
-        background: #0f172a; color: #fff; transform: translateX(4px);
+        background: #0f172a; color: #fff;
       }
 
       /* Stats — strakker, foto naast cijfer */
@@ -449,16 +446,12 @@ export default function Realisaties() {
             hasDot.remove();
           }
         });
-        previewCards.forEach(c => c?.classList.add('swap'));
-        window.setTimeout(() => {
-          [0, 1, 2, 3].forEach(i => {
-            const p = cardData[i] || cardData[0];
-            if (previewImgs[i] && p) { previewImgs[i]!.src = p.img; previewImgs[i]!.alt = p.t; }
-            if (previewTags[i] && p) previewTags[i]!.textContent = p.tag;
-            if (previewLocs[i] && p) previewLocs[i]!.textContent = p.t;
-          });
-          previewCards.forEach(c => c?.classList.remove('swap'));
-        }, 280);
+        [0, 1, 2, 3].forEach(i => {
+          const p = cardData[i] || cardData[0];
+          if (previewImgs[i] && p) { previewImgs[i]!.src = p.img; previewImgs[i]!.alt = p.t; }
+          if (previewTags[i] && p) previewTags[i]!.textContent = p.tag;
+          if (previewLocs[i] && p) previewLocs[i]!.textContent = p.t;
+        });
         panels.forEach(p => {
           const match = p.getAttribute('data-rz-panel') === key;
           p.style.display = match ? '' : 'none';

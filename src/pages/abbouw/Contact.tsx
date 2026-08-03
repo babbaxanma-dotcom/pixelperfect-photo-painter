@@ -22,7 +22,7 @@ ${buildHero({
 <section class="lf-section">
   <div class="wrap">
     <div class="lf-contact-grid">
-      <div data-reveal>
+      <div>
         <span class="lf-eyebrow">Direct contact</span>
         <h2 class="lf-h2">Liever direct<br/>bellen?</h2>
         <p class="lf-lede">Voor dringende vragen of snel telefonisch overleg, we zijn bereikbaar tijdens de kantooruren. 's Avonds en in het weekend kan u inspreken; we bellen de eerste werkdag terug.</p>
@@ -47,7 +47,7 @@ ${buildHero({
       </div>
 
       <div class="lf-form-wrapper" data-form-wrapper>
-        <form class="lf-form" id="contact-form" data-reveal data-reveal-delay="1" data-form-anim novalidate>
+        <form class="lf-form" id="contact-form" data-form-anim novalidate>
           <h3>Vraag uw plaatsbezoek aan</h3>
           <p>Vul het formulier in en we contacteren u binnen één werkdag.</p>
           <div class="lf-form-row">
@@ -93,13 +93,13 @@ ${buildHero({
 <!-- WERKGEBIED -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head" data-reveal>
+    <div class="lf-section-head">
       <span class="lf-eyebrow">Ons werkgebied</span>
       <h2 class="lf-h2">Heel Vlaanderen<br/>en Brussel.</h2>
       <p class="lf-lede">Vanuit ons kantoor in Willebroek bedienen we klanten in een straal van circa 80 km. Voor grote projecten (>€250k) kijken we ook over de gewestgrenzen heen.</p>
     </div>
     <div class="ab-coverage">
-      <div class="ab-coverage-list" data-reveal>
+      <div class="ab-coverage-list">
         <h4>Kernregio's waar we wekelijks actief zijn</h4>
         <div class="ab-coverage-cols">
           <span>Antwerpen stad</span><span>Mechelen</span>
@@ -114,7 +114,7 @@ ${buildHero({
           <span>Gent (op aanvraag)</span><span>Hasselt (op aanvraag)</span>
         </div>
       </div>
-      <div class="ab-map ab-map--photo" data-reveal data-reveal-delay="1" style="background-image: linear-gradient(180deg, rgba(11,18,32,0) 35%, rgba(11,18,32,0.85) 100%), url('${regionImg}');">
+      <div class="ab-map ab-map--photo" style="background-image: linear-gradient(180deg, rgba(11,18,32,0) 35%, rgba(11,18,32,0.85) 100%), url('${regionImg}');">
         <h4>Onze regio in beeld</h4>
         <p>Vlaamse daken, velden en kanalen, van Antwerpen en Mechelen tot Brussel en Gent. Hier rijden onze ploegen wekelijks rond.</p>
       </div>
@@ -125,27 +125,27 @@ ${buildHero({
 <!-- ALTERNATIEVEN -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Andere manieren om ons te bereiken</span>
       <h2 class="lf-h2">Via welk kanaal u ook contacteert,<br/>één werkdag responstijd.</h2>
     </div>
     <div class="lf-support-grid" style="grid-template-columns: repeat(4, 1fr);">
-      <div class="lf-support-card" data-reveal>
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>01</span> WhatsApp</div>
         <h5>${CONTACT.phone.spaced}</h5>
         <p>Stuur een berichtje, eventueel met foto van wat u laat doen. Praktisch voor korte vragen of een snelle prijsindicatie.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="1">
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>02</span> E-mail</div>
         <h5>info@abgroep.be</h5>
         <p>Algemene vragen of offerteaanvragen. Bezorg ons gerust foto's of plannen, we komen binnen 24u terug.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="2">
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>03</span> Bezoek</div>
         <h5>Toon ons uw plaats</h5>
         <p>Geen budget om langs te komen? Stuur ons een korte video van wat u wilt veranderen, we maken een eerste prijsindicatie op afstand.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="3">
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>04</span> Pers / partnerschappen</div>
         <h5>Pers &amp; samenwerkingen</h5>
         <p>Voor pers, samenwerkingen, leveranciers of vacatures: info@abgroep.be of bel het algemene nummer.</p>
@@ -157,16 +157,16 @@ ${buildHero({
 <!-- FAQ -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Voor u contacteert</span>
       <h2 class="lf-h2">Vaak gestelde vragen<br/>over een eerste contact.</h2>
     </div>
     <div class="ab-faq">
-      <details data-reveal><summary>Is een plaatsbezoek echt gratis?</summary><div class="ab-faq-body"><p>Ja, volledig gratis en vrijblijvend. Wij zien een plaatsbezoek niet als een verkoopgesprek maar als een wederzijdse kennismaking. We willen weten of het project bij ons past, en u wilt weten of wij bij u passen. Pas na het plaatsbezoek beslissen we samen of we een offerte maken.</p></div></details>
-      <details data-reveal><summary>Welke info moet ik klaar hebben voor het eerste gesprek?</summary><div class="ab-faq-body"><p>Niets verplicht. Handig als u dit wel weet: type woning (open / halfopen / rij), bouwjaar, bewoonbare oppervlakte, of er reeds plannen of een architect zijn, en een ruwe budgetindicatie. Geen budget? Geen probleem, we helpen het mee inschatten.</p></div></details>
-      <details data-reveal><summary>Hoe snel kan ik een plaatsbezoek krijgen?</summary><div class="ab-faq-body"><p>Doorgaans binnen 5 tot 10 werkdagen. In drukke periodes (voorjaar, na het bouwsalon Batibouw) kan dit oplopen tot 3 weken. Spoedoplossingen voor lekkende daken of stormschade krijgen voorrang, bel dan rechtstreeks.</p></div></details>
-      <details data-reveal><summary>Werken jullie ook voor B2B / bedrijven?</summary><div class="ab-faq-body"><p>Ja. We werken ook voor bedrijven: kantoorgebouwen, kleine winkels, horecazaken, magazijnen en logistieke ruimtes. We werken op factuur met betaaltermijn 30 dagen einde maand voor erkende ondernemingen.</p></div></details>
-      <details data-reveal><summary>Mag ik bestaande klanten bellen om referentie te vragen?</summary><div class="ab-faq-body"><p>Heel graag. Vermeld bij uw aanvraag dat u referenties wenst en we bezorgen u 2 of 3 contactpersonen van vergelijkbare projecten, uiteraard met hun toestemming.</p></div></details>
+      <details><summary>Is een plaatsbezoek echt gratis?</summary><div class="ab-faq-body"><p>Ja, volledig gratis en vrijblijvend. Wij zien een plaatsbezoek niet als een verkoopgesprek maar als een wederzijdse kennismaking. We willen weten of het project bij ons past, en u wilt weten of wij bij u passen. Pas na het plaatsbezoek beslissen we samen of we een offerte maken.</p></div></details>
+      <details><summary>Welke info moet ik klaar hebben voor het eerste gesprek?</summary><div class="ab-faq-body"><p>Niets verplicht. Handig als u dit wel weet: type woning (open / halfopen / rij), bouwjaar, bewoonbare oppervlakte, of er reeds plannen of een architect zijn, en een ruwe budgetindicatie. Geen budget? Geen probleem, we helpen het mee inschatten.</p></div></details>
+      <details><summary>Hoe snel kan ik een plaatsbezoek krijgen?</summary><div class="ab-faq-body"><p>Doorgaans binnen 5 tot 10 werkdagen. In drukke periodes (voorjaar, na het bouwsalon Batibouw) kan dit oplopen tot 3 weken. Spoedoplossingen voor lekkende daken of stormschade krijgen voorrang, bel dan rechtstreeks.</p></div></details>
+      <details><summary>Werken jullie ook voor B2B / bedrijven?</summary><div class="ab-faq-body"><p>Ja. We werken ook voor bedrijven: kantoorgebouwen, kleine winkels, horecazaken, magazijnen en logistieke ruimtes. We werken op factuur met betaaltermijn 30 dagen einde maand voor erkende ondernemingen.</p></div></details>
+      <details><summary>Mag ik bestaande klanten bellen om referentie te vragen?</summary><div class="ab-faq-body"><p>Heel graag. Vermeld bij uw aanvraag dat u referenties wenst en we bezorgen u 2 of 3 contactpersonen van vergelijkbare projecten, uiteraard met hun toestemming.</p></div></details>
     </div>
   </div>
 </section>
@@ -181,11 +181,7 @@ const FORM_ANIM_CSS = `
   position: relative;
 }
 .lf-form-wrapper .lf-form {
-  transition:
-    opacity 0.55s cubic-bezier(.22,.61,.36,1),
-    transform 0.65s cubic-bezier(.22,.61,.36,1),
-    max-height 0.7s cubic-bezier(.22,.61,.36,1),
-    filter 0.5s cubic-bezier(.22,.61,.36,1);
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
   max-height: 1600px;
   overflow: hidden;
 }
@@ -196,7 +192,6 @@ const FORM_ANIM_CSS = `
 }
 .lf-form-wrapper.is-success .lf-form {
   opacity: 0;
-  transform: translateY(-12px) scale(0.985);
   max-height: 0;
   margin: 0;
   padding: 0;
@@ -220,9 +215,7 @@ const FORM_ANIM_CSS = `
   opacity: 0;
   transform: translateY(14px) scale(0.985);
   pointer-events: none;
-  transition:
-    opacity 0.6s cubic-bezier(.22,.61,.36,1) 0.15s,
-    transform 0.6s cubic-bezier(.22,.61,.36,1) 0.15s;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
 }
 .lf-form-wrapper.is-success .lf-form-thanks {
   position: relative;
@@ -255,9 +248,7 @@ const FORM_ANIM_CSS = `
   box-shadow: 0 12px 32px -8px rgba(217,140,3,0.55);
   transform: scale(0.6);
   opacity: 0;
-  transition:
-    transform 0.55s cubic-bezier(.34,1.56,.64,1) 0.25s,
-    opacity 0.45s ease 0.25s;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
 }
 .lf-form-wrapper.is-success .lf-form-thanks-circle {
   transform: scale(1);

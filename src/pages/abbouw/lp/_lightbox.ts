@@ -16,22 +16,18 @@ const CSS = `
 .rl-thumb { cursor: pointer; position: relative; }
 .rl-thumb::after {
   content: ""; position: absolute; inset: 0; background: rgba(10,22,40,0);
-  transition: background .25s ease; pointer-events: none;
+  transition: background .15s ease; pointer-events: none;
 }
-.rl-thumb:hover::after { background: rgba(10,22,40,0.16); }
 .rl-thumb .rl-zoom {
   position: absolute; right: 12px; bottom: 12px; width: 38px; height: 38px;
   display: flex; align-items: center; justify-content: center;
   background: rgba(10,22,40,0.55); color: #fff; border-radius: 999px;
-  opacity: 0; transform: translateY(6px); transition: opacity .25s ease, transform .25s ease;
-  backdrop-filter: blur(2px); pointer-events: none;
+  opacity: 1; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; pointer-events: none;
 }
-.rl-thumb:hover .rl-zoom { opacity: 1; transform: translateY(0); }
 
 .rl-overlay {
   position: fixed; inset: 0; z-index: 4000; display: flex; flex-direction: column;
-  background: rgba(8,16,30,0.94); opacity: 0; transition: opacity .28s ease;
-  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  background: rgba(8,16,30,0.94);
 }
 .rl-overlay.is-open { opacity: 1; }
 .rl-bar {
@@ -45,7 +41,7 @@ const CSS = `
   width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.22);
   background: rgba(255,255,255,0.06); color: #fff; font-size: 22px; line-height: 1;
   display: flex; align-items: center; justify-content: center; cursor: pointer;
-  transition: background .2s ease;
+  transition: background .15s ease;
 }
 .rl-close:hover { background: rgba(255,255,255,0.16); }
 .rl-scroll {
@@ -65,8 +61,7 @@ const CSS = `
   border: 1px solid rgba(255,255,255,0.28); background: rgba(20,32,52,0.55);
   color: #fff; cursor: pointer; padding: 0;
   display: flex; align-items: center; justify-content: center;
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-  transition: background .2s ease, opacity .2s ease, transform .2s ease;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
 }
 .rl-nav svg { width: 26px; height: 26px; }
 .rl-nav:hover { background: rgba(40,56,84,0.85); }
@@ -75,9 +70,9 @@ const CSS = `
 .rl-nav:disabled { opacity: 0; pointer-events: none; }
 
 .rl-dots { display: flex; justify-content: center; gap: 9px; padding: 0 0 18px; flex-shrink: 0; position: relative; z-index: 3; }
-.rl-dot { width: 9px; height: 9px; border-radius: 999px; background: rgba(255,255,255,0.3); border: 0; padding: 0; cursor: pointer; transition: background .2s ease, transform .2s ease; }
+.rl-dot { width: 9px; height: 9px; border-radius: 999px; background: rgba(255,255,255,0.3); border: 0; padding: 0; cursor: pointer; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
 .rl-dot:hover { background: rgba(255,255,255,0.6); }
-.rl-dot.is-active { background: rgba(255,255,255,0.95); transform: scale(1.15); }
+.rl-dot.is-active { background: rgba(255,255,255,0.95); }
 body.rl-open { overflow: hidden; }
 @media (max-width: 720px) {
   .rl-bar { padding: 14px 16px; }

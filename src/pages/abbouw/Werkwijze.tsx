@@ -69,7 +69,7 @@ ${buildHero({
 <!-- INTRO -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="ab-quote" data-reveal>
+    <div class="ab-quote">
       "In vijftien jaar hebben we gemerkt dat de meeste problemen op een werf ontstaan door slechte communicatie, niet door slechte uitvoering. Daarom investeren we evenveel in onze werkwijze als in onze vakmensen."
       <footer>Zaakvoerder AB Bouw Groep</footer>
     </div>
@@ -79,15 +79,15 @@ ${buildHero({
 <!-- HORIZONTAL FLOW SUMMARY -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">In één oogopslag</span>
       <h2 class="lf-h2">Het traject van offerte<br/>tot oplevering.</h2>
     </div>
     <div class="ab-flow">
-      <div class="ab-flow-card" data-reveal><div class="ab-flow-num">FASE 01</div><h5>Plaatsbezoek</h5><p>Gratis &amp; vrijblijvend, binnen één week na uw aanvraag.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="1"><div class="ab-flow-num">FASE 02</div><h5>Offerte</h5><p>Bindend, gedetailleerd, mondeling toegelicht in een gesprek.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="2"><div class="ab-flow-num">FASE 03</div><h5>Werf</h5><p>Vaste projectleider, eigen ploegen, wekelijks rapport.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="3"><div class="ab-flow-num">FASE 04</div><h5>Oplevering &amp; nazorg</h5><p>Officiële oplevering en gratis nacontrole na één jaar.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">FASE 01</div><h5>Plaatsbezoek</h5><p>Gratis &amp; vrijblijvend, binnen één week na uw aanvraag.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">FASE 02</div><h5>Offerte</h5><p>Bindend, gedetailleerd, mondeling toegelicht in een gesprek.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">FASE 03</div><h5>Werf</h5><p>Vaste projectleider, eigen ploegen, wekelijks rapport.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">FASE 04</div><h5>Oplevering &amp; nazorg</h5><p>Officiële oplevering en gratis nacontrole na één jaar.</p></div>
     </div>
   </div>
 </section>
@@ -95,13 +95,13 @@ ${buildHero({
 <!-- 8-STEP WITH PHOTOS (alternating) -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Acht stappen, in detail</span>
       <h2 class="lf-h2">Wat er gebeurt,<br/>wanneer het gebeurt.</h2>
     </div>
     <div class="ab-steps ab-steps--seq">
       ${stages.map((s, i) => `
-        <article class="ab-step ${i % 2 === 1 ? 'reverse' : ''}" data-step-reveal style="--step-i:${i};">
+        <article class="ab-step ${i % 2 === 1 ? 'reverse' : ''}">
           <div class="ab-step-media">
             <img src="${s.img}" alt="${s.title}" loading="lazy"/>
             <span class="ab-step-num">${s.n}</span>
@@ -124,27 +124,27 @@ ${buildHero({
 <!-- WHAT YOU GET / GUARANTEES -->
 <section class="lf-section lf-tone-soft ab-zek-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Schriftelijk vastgelegd</span>
       <h2 class="lf-h2">Vier zekerheden voor u<br/>als opdrachtgever.</h2>
     </div>
     <div class="lf-support-grid ab-zek-grid" style="grid-template-columns: repeat(4, 1fr);">
-      <div class="lf-support-card ab-zek-card" data-zek-reveal style="--zek-i:0;">
+      <div class="lf-support-card ab-zek-card">
         <div class="lf-support-meta"><span>01</span> Prijs</div>
         <h5>Vaste prijs, bindend</h5>
         <p>Geen meerwerk tenzij u zelf wijzigingen vraagt, en dan eerst goedgekeurd, nooit verrast op de eindfactuur.</p>
       </div>
-      <div class="lf-support-card ab-zek-card" data-zek-reveal style="--zek-i:1;">
+      <div class="lf-support-card ab-zek-card">
         <div class="lf-support-meta"><span>02</span> Planning</div>
         <h5>Wekelijks werfrapport</h5>
         <p>Elke vrijdag een korte update met foto's, voortgang en planning voor de week erop. Vertraging? U weet het meteen, niet pas na drie weken.</p>
       </div>
-      <div class="lf-support-card ab-zek-card" data-zek-reveal style="--zek-i:2;">
+      <div class="lf-support-card ab-zek-card">
         <div class="lf-support-meta"><span>03</span> Garantie</div>
         <h5>10 jaar aansprakelijkheid</h5>
         <p>Wettelijke 10-jarige aansprakelijkheid op stabiliteit en waterdichtheid, plus 2 jaar garantie op afwerking. Verzekerd via een erkende verzekeraar.</p>
       </div>
-      <div class="lf-support-card ab-zek-card" data-zek-reveal style="--zek-i:3;">
+      <div class="lf-support-card ab-zek-card">
         <div class="lf-support-meta"><span>04</span> Aanspreekpunt</div>
         <h5>Eén projectleider</h5>
         <p>Dezelfde projectleider doet uw plaatsbezoek, levert de offerte op, leidt de werf en doet de oplevering. Geen carrousel van wisselende contactpersonen.</p>
@@ -156,16 +156,16 @@ ${buildHero({
 <!-- FAQ -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Veelgestelde vragen</span>
       <h2 class="lf-h2">Over het traject.</h2>
     </div>
     <div class="ab-faq">
-      <details data-reveal><summary>Hoe snel na het plaatsbezoek krijg ik een offerte?</summary><div class="ab-faq-body"><p>Voor een eenvoudige opdracht (badkamer, dak, gevel) binnen 7 werkdagen. Voor totaalrenovaties of nieuwbouw rekenen we 10 tot 15 werkdagen omdat we voorafgaand de planken en hoeveelheden grondig opmeten en met onze leveranciers prijzen aftoetsen.</p></div></details>
-      <details data-reveal><summary>Wat als ik tijdens de werf van gedacht verander?</summary><div class="ab-faq-body"><p>Dat kan altijd. Een wijziging tot vóór de start van die specifieke fase brengen we kosteloos in de planning aan. Wijzigingen tijdens de uitvoering zijn meestal mogelijk, maar brengen meerprijs. U krijgt vooraf altijd een geschreven prijsofferte voor de wijziging.</p></div></details>
-      <details data-reveal><summary>Wat als de werf vertraging oploopt?</summary><div class="ab-faq-body"><p>Wij melden vertragingen onmiddellijk bij ontdekking, met foto en uitleg, in het wekelijkse rapport. Bij een vertraging van meer dan 4 weken die door ons toedoen ontstaat, is een compensatieregeling voorzien in onze algemene voorwaarden.</p></div></details>
-      <details data-reveal><summary>Krijg ik een vast aanspreekpunt?</summary><div class="ab-faq-body"><p>U krijgt één vaste projectleider voor het volledige traject. Bij ziekte of vakantie neemt zijn back-up over, en die is op voorhand op uw dossier ingelezen.</p></div></details>
-      <details data-reveal><summary>Hoe werkt jullie klantenportaal?</summary><div class="ab-faq-body"><p>U krijgt een persoonlijke login na contracttekening. Daar vindt u: contract en offertes, vergunning- en premiedossier, alle facturen, het wekelijks werfrapport met foto's, materialen en kleurkeuzes ter goedkeuring, en het opleveringsverslag.</p></div></details>
+      <details><summary>Hoe snel na het plaatsbezoek krijg ik een offerte?</summary><div class="ab-faq-body"><p>Voor een eenvoudige opdracht (badkamer, dak, gevel) binnen 7 werkdagen. Voor totaalrenovaties of nieuwbouw rekenen we 10 tot 15 werkdagen omdat we voorafgaand de planken en hoeveelheden grondig opmeten en met onze leveranciers prijzen aftoetsen.</p></div></details>
+      <details><summary>Wat als ik tijdens de werf van gedacht verander?</summary><div class="ab-faq-body"><p>Dat kan altijd. Een wijziging tot vóór de start van die specifieke fase brengen we kosteloos in de planning aan. Wijzigingen tijdens de uitvoering zijn meestal mogelijk, maar brengen meerprijs. U krijgt vooraf altijd een geschreven prijsofferte voor de wijziging.</p></div></details>
+      <details><summary>Wat als de werf vertraging oploopt?</summary><div class="ab-faq-body"><p>Wij melden vertragingen onmiddellijk bij ontdekking, met foto en uitleg, in het wekelijkse rapport. Bij een vertraging van meer dan 4 weken die door ons toedoen ontstaat, is een compensatieregeling voorzien in onze algemene voorwaarden.</p></div></details>
+      <details><summary>Krijg ik een vast aanspreekpunt?</summary><div class="ab-faq-body"><p>U krijgt één vaste projectleider voor het volledige traject. Bij ziekte of vakantie neemt zijn back-up over, en die is op voorhand op uw dossier ingelezen.</p></div></details>
+      <details><summary>Hoe werkt jullie klantenportaal?</summary><div class="ab-faq-body"><p>U krijgt een persoonlijke login na contracttekening. Daar vindt u: contract en offertes, vergunning- en premiedossier, alle facturen, het wekelijks werfrapport met foto's, materialen en kleurkeuzes ter goedkeuring, en het opleveringsverslag.</p></div></details>
     </div>
   </div>
 </section>
@@ -176,59 +176,7 @@ ${FOOTER}
 `;
 
 const STEP_REVEAL_CSS = `
-/* Per-step scroll-driven reveal — each card stays hidden until you scroll to it */
-.ab-steps--seq [data-step-reveal] {
-  opacity: 0;
-  transform: translateY(64px) scale(0.965);
-  filter: blur(6px);
-  transition:
-    opacity .9s cubic-bezier(.2,.7,.2,1),
-    transform 1.05s cubic-bezier(.2,.75,.2,1),
-    filter .9s cubic-bezier(.2,.7,.2,1);
-  will-change: opacity, transform, filter;
-}
-.ab-steps--seq [data-step-reveal] .ab-step-media {
-  transform: translateY(28px) scale(0.98);
-  transition: transform 1.1s cubic-bezier(.2,.75,.2,1);
-  transition-delay: .08s;
-}
-.ab-steps--seq [data-step-reveal] .ab-step-body > * {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.75,.2,1);
-}
-.ab-steps--seq [data-step-reveal] .ab-step-body > *:nth-child(1) { transition-delay: .15s; }
-.ab-steps--seq [data-step-reveal] .ab-step-body > *:nth-child(2) { transition-delay: .22s; }
-.ab-steps--seq [data-step-reveal] .ab-step-body > *:nth-child(3) { transition-delay: .29s; }
-.ab-steps--seq [data-step-reveal] .ab-step-body > *:nth-child(4) { transition-delay: .36s; }
-
-.ab-steps--seq [data-step-reveal].is-in {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0);
-}
-.ab-steps--seq [data-step-reveal].is-in .ab-step-media { transform: translateY(0) scale(1); }
-.ab-steps--seq [data-step-reveal].is-in .ab-step-body > * { opacity: 1; transform: translateY(0); }
-
-/* (reduced-motion override voor stap-reveal bewust verwijderd) */
-
-/* "Vier zekerheden" — staggered scroll-driven reveal */
-.ab-zek-card[data-zek-reveal] {
-  opacity: 0;
-  transform: translateY(56px) scale(0.94);
-  filter: blur(8px);
-  transition:
-    opacity .85s cubic-bezier(.2,.7,.2,1),
-    transform 1s cubic-bezier(.2,.75,.2,1),
-    filter .85s cubic-bezier(.2,.7,.2,1);
-  transition-delay: calc(var(--zek-i, 0) * 110ms);
-  will-change: opacity, transform, filter;
-}
-.ab-zek-card[data-zek-reveal].is-in {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0);
-}
+/* Robuust-overhaul: stappen en zekerheden staan er direct, geen scroll-reveal */
 .ab-zek-section .lf-section-head { margin-bottom: 36px; }
 .ab-zek-grid { grid-template-columns: repeat(4, 1fr); }
 @media (max-width: 900px) { .ab-zek-grid[style] { grid-template-columns: 1fr 1fr !important; } }
@@ -250,49 +198,6 @@ export default function Werkwijze() {
     return () => { document.body.className = prev; styleEl.remove(); };
   }, []);
   useAbBouwInteractions();
-
-  useEffect(() => {
-    const steps = Array.from(document.querySelectorAll<HTMLElement>('.ab-steps--seq [data-step-reveal]'));
-    if (!steps.length) return;
-    const reduced = false; // opdrachtgever: animaties voor iedereen
-    if (reduced) {
-      steps.forEach((s) => s.classList.add('is-in'));
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            (e.target as HTMLElement).classList.add('is-in');
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.22, rootMargin: '0px 0px -12% 0px' },
-    );
-    steps.forEach((s) => io.observe(s));
-    return () => io.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-zek-reveal]'));
-    if (!cards.length) return;
-    const reduced = false; // opdrachtgever: animaties voor iedereen
-    if (reduced) { cards.forEach((c) => c.classList.add('is-in')); return; }
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            (e.target as HTMLElement).classList.add('is-in');
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.25, rootMargin: '0px 0px -10% 0px' },
-    );
-    cards.forEach((c) => io.observe(c));
-    return () => io.disconnect();
-  }, []);
 
   return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
 }

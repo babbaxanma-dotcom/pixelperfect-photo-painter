@@ -95,7 +95,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '06 · Gevels & bekleding',
   title: 'Een nieuwe gevel<br/>verandert <span style="color:var(--accent)">alles</span>.',
-  lede: 'Witte of grijze crepi, sierpleister of steenstrips. Vaak gecombineerd met <span class="ab-hl" data-hl-delay="0">esthetiek én energieprestatie</span>, zodat uw gevel niet alleen mooier maar ook <span class="ab-hl" data-hl-delay="1">energetisch klopt</span>.',
+  lede: 'Witte of grijze crepi, sierpleister of steenstrips. Vaak gecombineerd met <span class="ab-hl">esthetiek én energieprestatie</span>, zodat uw gevel niet alleen mooier maar ook <span class="ab-hl">energetisch klopt</span>.',
   primary: { label: 'Vraag plaatsbezoek aan', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
@@ -104,10 +104,10 @@ ${buildHero({
 <section class="lf-section">
   <div class="wrap">
     <div class="lf-split">
-      <div data-reveal>
+      <div>
         <span class="lf-eyebrow">AB Gevelbekleding</span>
         <h2 class="lf-h2"><span class="ab-mark">Esthetiek</span> én<br/>energieprestatie.</h2>
-        <p class="lf-lede">Een gevelrenovatie is hét moment om in één werf ook gevelisolatie aan te pakken. We rekenen vooraf de <span class="ab-hl" data-hl-delay="0">E-peil-winst en uw voordelen</span> door — het 6% BTW-tarief en eventuele premies — zodat u weet wat de <span class="ab-hl" data-hl-delay="1">investering oplevert</span>.</p>
+        <p class="lf-lede">Een gevelrenovatie is hét moment om in één werf ook gevelisolatie aan te pakken. We rekenen vooraf de <span class="ab-hl">E-peil-winst en uw voordelen</span> door — het 6% BTW-tarief en eventuele premies — zodat u weet wat de <span class="ab-hl">investering oplevert</span>.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen ploeg gevelwerkers, geen onderaanneming</li>
           <li>Stelling en buurtbescherming inbegrepen</li>
@@ -115,7 +115,7 @@ ${buildHero({
           <li>6% BTW-tarief en premie-check regelen wij voor u</li>
         </ul>
       </div>
-      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgIntro}" alt="Gevelisolatie in uitvoering" loading="lazy"/></div>
+      <div class="lf-split-img"><img src="${imgIntro}" alt="Gevelisolatie in uitvoering" loading="lazy"/></div>
     </div>
   </div>
 </section>
@@ -136,7 +136,7 @@ ${buildHero({
   <div class="wrap">
     <div class="dak-grid">
       ${types.map(t => `
-        <article class="dak-card" id="${t.id}" data-reveal>
+        <article class="dak-card" id="${t.id}">
           <div class="dak-card-img"><img src="${t.img}" alt="${t.title}" loading="lazy"/><span class="dak-card-tag">${t.tag}</span></div>
           <div class="dak-card-body">
             <h3>${t.title}</h3>
@@ -161,10 +161,10 @@ ${buildHero({
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="lf-split">
-      <div data-reveal>
+      <div>
         <span class="lf-eyebrow">Buitenisolatie + crepi</span>
         <h2 class="lf-h2"><span class="ab-mark">Twee vliegen</span>,<br/>één stelling.</h2>
-        <p class="lf-lede">Een gevel openleggen is duur. Maak van die ene werf meteen een <span class="ab-hl" data-hl-delay="0">energetische upgrade</span>: EPS- of minerale isolatieplaten op de bestaande gevel, daarna pas een <span class="ab-hl" data-hl-delay="1">nieuwe crepi-laag</span>.</p>
+        <p class="lf-lede">Een gevel openleggen is duur. Maak van die ene werf meteen een <span class="ab-hl">energetische upgrade</span>: EPS- of minerale isolatieplaten op de bestaande gevel, daarna pas een <span class="ab-hl">nieuwe crepi-laag</span>.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Merkbaar lagere stookkost na isolatie</li>
           <li>Geen koudebruggen meer aan ramen</li>
@@ -172,7 +172,7 @@ ${buildHero({
           <li>6% BTW-tarief, plus Mijn VerbouwLening waar u recht op heeft</li>
         </ul>
       </div>
-      <div data-reveal data-reveal-delay="1"><img src="${imgStelling}" alt="Stelling rond gevelrenovatie" loading="lazy" style="width:100%; border-radius: 16px; aspect-ratio: 4/3; object-fit: cover;"/></div>
+      <div><img src="${imgStelling}" alt="Stelling rond gevelrenovatie" loading="lazy" style="width:100%; border-radius: 16px; aspect-ratio: 4/3; object-fit: cover;"/></div>
     </div>
   </div>
 </section>
@@ -180,15 +180,15 @@ ${buildHero({
 <!-- PROCES -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Hoe we te werk gaan</span>
       <h2 class="lf-h2">Van inspectie tot<br/>laatste streek.</h2>
     </div>
     <div class="ab-flow">
-      <div class="ab-flow-card" data-reveal><div class="ab-flow-num">STAP 01</div><h5>Gevelinspectie</h5><p>We controleren ondergrond, vocht en eventueel oude bezetting.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="1"><div class="ab-flow-num">STAP 02</div><h5>Materiaalkeuze</h5><p>Stalen vergelijken op de werf, in het echte daglicht.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="2"><div class="ab-flow-num">STAP 03</div><h5>Stelling &amp; isolatie</h5><p>Stelling, isolatieplaten, wapeningsmortel en hoekprofielen.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="3"><div class="ab-flow-num">STAP 04</div><h5>Afwerking</h5><p>Spuitwerk in één doorlopende baan, controle, oplevering.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 01</div><h5>Gevelinspectie</h5><p>We controleren ondergrond, vocht en eventueel oude bezetting.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 02</div><h5>Materiaalkeuze</h5><p>Stalen vergelijken op de werf, in het echte daglicht.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 03</div><h5>Stelling &amp; isolatie</h5><p>Stelling, isolatieplaten, wapeningsmortel en hoekprofielen.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 04</div><h5>Afwerking</h5><p>Spuitwerk in één doorlopende baan, controle, oplevering.</p></div>
     </div>
   </div>
 </section>
@@ -196,12 +196,12 @@ ${buildHero({
 <!-- WAT INBEGREPEN -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Bij elk gevelproject</span>
       <h2 class="lf-h2">Wat altijd in onze prijs zit.</h2>
     </div>
     <div class="ab-incl ab-incl-single">
-      <div class="ab-incl-card yes" data-reveal>
+      <div class="ab-incl-card yes">
         <h4>Standaard inbegrepen</h4>
         <ul>
           <li>Plaatsbezoek met fotorapport en advies</li>
@@ -222,15 +222,15 @@ ${buildHero({
 <!-- FAQ -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Veelgestelde vragen</span>
       <h2 class="lf-h2">Over gevelwerken.</h2>
     </div>
     <div class="ab-faq">
-      <details data-reveal><summary>Welke gevelafwerking is het meest onderhoudsvrij?</summary><div class="ab-faq-body"><p>Siliconen-crepi en steenstrips vragen het minst onderhoud. Een goede crepi gaat 25 jaar mee zonder herschilderen.</p></div></details>
-      <details data-reveal><summary>Krijg ik premie voor gevelisolatie?</summary><div class="ab-faq-body"><p>De premievoorwaarden zijn in 2026 gewijzigd. Afhankelijk van uw inkomenscategorie en de R-waarde (minstens 3,0 m²K/W) kan er nog premie zijn. Wij bekijken of u in aanmerking komt en regelen sowieso het 6% BTW-tarief (woning ouder dan 10 jaar) en, indien gewenst, de Mijn VerbouwLening.</p></div></details>
-      <details data-reveal><summary>Kan crepi op elke gevel?</summary><div class="ab-faq-body"><p>Op de meeste gevels wel. Bij sterk vervuilde of vochtige muren komt eerst een sanering. Dat zien we bij het plaatsbezoek meteen.</p></div></details>
-      <details data-reveal><summary>Hoe lang duurt een gevelrenovatie?</summary><div class="ab-faq-body"><p>Een doorsnee gezinswoning: 2 tot 4 weken voor enkel crepi, 4 tot 6 weken inclusief buitenisolatie. We werken weersafhankelijk.</p></div></details>
+      <details><summary>Welke gevelafwerking is het meest onderhoudsvrij?</summary><div class="ab-faq-body"><p>Siliconen-crepi en steenstrips vragen het minst onderhoud. Een goede crepi gaat 25 jaar mee zonder herschilderen.</p></div></details>
+      <details><summary>Krijg ik premie voor gevelisolatie?</summary><div class="ab-faq-body"><p>De premievoorwaarden zijn in 2026 gewijzigd. Afhankelijk van uw inkomenscategorie en de R-waarde (minstens 3,0 m²K/W) kan er nog premie zijn. Wij bekijken of u in aanmerking komt en regelen sowieso het 6% BTW-tarief (woning ouder dan 10 jaar) en, indien gewenst, de Mijn VerbouwLening.</p></div></details>
+      <details><summary>Kan crepi op elke gevel?</summary><div class="ab-faq-body"><p>Op de meeste gevels wel. Bij sterk vervuilde of vochtige muren komt eerst een sanering. Dat zien we bij het plaatsbezoek meteen.</p></div></details>
+      <details><summary>Hoe lang duurt een gevelrenovatie?</summary><div class="ab-faq-body"><p>Een doorsnee gezinswoning: 2 tot 4 weken voor enkel crepi, 4 tot 6 weken inclusief buitenisolatie. We werken weersafhankelijk.</p></div></details>
     </div>
   </div>
 </section>
@@ -241,13 +241,13 @@ ${FOOTER}
 
 <style>
 .dak-grid { display: grid; grid-template-columns: 1fr; gap: 36px; }
-.dak-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; display: grid; grid-template-columns: 1fr 1.2fr; align-items: start; box-shadow: 0 14px 40px -28px rgba(10,22,40,0.18); transition: box-shadow 0.3s, transform 0.3s; }
-.dak-card:hover { box-shadow: 0 24px 60px -28px rgba(10,22,40,0.28); transform: translateY(-2px); }
+.dak-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; display: grid; grid-template-columns: 1fr 1.2fr; align-items: start; box-shadow: 0 14px 40px -28px rgba(10,22,40,0.18); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.dak-card:hover { box-shadow: 0 24px 60px -28px rgba(10,22,40,0.28); }
 .dak-card:nth-child(even) { grid-template-columns: 1.2fr 1fr; }
 .dak-card:nth-child(even) .dak-card-img { order: 2; }
 .dak-card-img { position: relative; aspect-ratio: 4/3; overflow: hidden; }
-.dak-card-img img { width:100%; height:100%; object-fit: cover; display:block; transition: transform 0.6s var(--ease); }
-.dak-card:hover .dak-card-img img { transform: scale(1.04); }
+.dak-card-img img { width:100%; height:100%; object-fit: cover; display:block; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.dak-card:hover .dak-card-img img { }
 .dak-card-tag { position: absolute; top: 18px; left: 18px; padding: 6px 12px; background: #fff; color: var(--navy); border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; box-shadow: 0 6px 16px -4px rgba(10,22,40,0.25); }
 .dak-card-body { padding: 36px 40px; display:flex; flex-direction:column; }
 .dak-card-body h3 { font-family: var(--font-display); font-size: clamp(22px, 2.4vw, 28px); color: var(--navy); margin-bottom: 12px; font-weight: 600; letter-spacing: -0.01em; }

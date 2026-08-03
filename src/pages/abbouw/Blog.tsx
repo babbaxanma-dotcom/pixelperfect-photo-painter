@@ -14,22 +14,13 @@ const HTML = `
 ${buildNav('blog')}
 
 
-<!-- HERO met roterende blog-cover-foto's + extra-donkere overlay zoals andere subpages -->
+<!-- HERO met statische blog-cover-foto + extra-donkere overlay zoals andere subpages -->
 <section class="lf-hero lf-hero--blog">
-  <div class="lf-hero-bg lf-hero-bg--slides" data-hero-slides>
+  <div class="lf-hero-bg lf-hero-bg--slides">
     <img src="${heroPics[0]}" alt="Bouwblog AB Bouw Groep — renovatie en vakkennis in Vlaanderen" class="is-active" />
-    <img src="${heroPics[1]}" alt="" loading="lazy" />
-    <img src="${heroPics[2]}" alt="" loading="lazy" />
-    <img src="${heroPics[3]}" alt="" loading="lazy" />
   </div>
-  <button type="button" class="lf-hero-arrow lf-hero-arrow--prev" data-hero-prev aria-label="Vorige foto">
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-  </button>
-  <button type="button" class="lf-hero-arrow lf-hero-arrow--next" data-hero-next aria-label="Volgende foto">
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-  </button>
   <div class="wrap lf-hero-wrap">
-    <div class="lf-hero-card" data-reveal>
+    <div class="lf-hero-card">
       <span class="lf-eyebrow">Bouwblog</span>
       <h1>Vakkennis en inzichten<br/>uit de Vlaamse bouwpraktijk.</h1>
       <p>Analyses, technische dossiers en praktijkervaringen van onze projectleiders, vakmensen en interieurarchitecten. Onderbouwde antwoorden op de vragen die u zich stelt vóór, tijdens en na de werken.</p>
@@ -49,13 +40,13 @@ ${buildNav('blog')}
 
 <section class="lf-section lf-blog-editorial">
   <div class="wrap">
-    <div class="lf-blog-section-head" data-reveal>
+    <div class="lf-blog-section-head">
       <span class="lf-eyebrow">Uitgelicht</span>
       <h2 class="lf-h2">Eerst lezen als u <span class="ab-mark">slim wil bouwen</span>.</h2>
     </div>
 
     <div class="lf-blog-magazine">
-      <article class="lf-blog-feature" data-reveal="right">
+      <article class="lf-blog-feature">
         <a class="lf-blog-feature-img" href="/blog/${featured.slug}">
           <img src="${featured.img}" alt="${featured.title}" loading="eager"/>
           <span class="lf-blog-tag">${featured.tag}</span>
@@ -63,7 +54,7 @@ ${buildNav('blog')}
         <div class="lf-blog-feature-body">
           <div class="lf-blog-feature-date"><strong>${featured.day}</strong><em>${featured.month}</em></div>
           <h2><a href="/blog/${featured.slug}">${featured.title}</a></h2>
-          <p>${featured.excerpt} <span class="ab-hl" data-hl-delay="1">Concreet, nuchter en toepasbaar</span> op Vlaamse werven.</p>
+          <p>${featured.excerpt} <span class="ab-hl">Concreet, nuchter en toepasbaar</span> op Vlaamse werven.</p>
           <div class="lf-blog-foot">
             <a href="/blog/${featured.slug}" class="lf-blog-btn">Lees analyse
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -73,10 +64,10 @@ ${buildNav('blog')}
         </div>
       </article>
 
-      <aside class="lf-blog-latest" data-reveal="left" data-reveal-delay="1">
+      <aside class="lf-blog-latest">
         <span class="lf-blog-aside-label">Meest relevant</span>
         ${latest.map((b, idx) => `
-          <a class="lf-blog-latest-item" href="/blog/${b.slug}" data-reveal data-reveal-delay="${idx + 1}">
+          <a class="lf-blog-latest-item" href="/blog/${b.slug}">
             <img src="${b.img}" alt="${b.title}" loading="lazy"/>
             <span><em>${b.tag} · ${b.readTime}</em><strong>${b.title}</strong></span>
           </a>
@@ -88,7 +79,7 @@ ${buildNav('blog')}
 
 <section class="lf-section lf-tone-soft lf-blog-library">
   <div class="wrap">
-    <div class="lf-blog-library-head" data-reveal>
+    <div class="lf-blog-library-head">
       <div>
         <span class="lf-eyebrow">Alle artikels</span>
         <h2 class="lf-h2">Bouwadvies per onderwerp.</h2>
@@ -100,7 +91,7 @@ ${buildNav('blog')}
     <div class="ab-scroll-hint lf-blog-mobile-hint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg> Swipe zijwaarts</div>
     <div class="lf-blog-grid lf-blog-grid--archive" data-x-rail>
       ${archive.map((b, idx) => `
-        <article class="lf-blog-card" data-reveal data-reveal-delay="${idx % 4}" data-blog-tag="${b.tag}">
+        <article class="lf-blog-card" data-blog-tag="${b.tag}">
           <div class="lf-blog-img">
             <img src="${b.img}" alt="${b.title}" loading="lazy"/>
             <span class="lf-blog-tag">${b.tag}</span>
@@ -216,14 +207,14 @@ const BLOG_STYLE = `
 .lf-blog-hero-copy h1 { font-family: var(--font-display); font-size: clamp(44px, 7vw, 88px); line-height: .96; font-weight: 650; color: #fff; letter-spacing: -0.035em; margin: 0 0 24px; text-wrap: balance; }
 .lf-blog-hero-copy p { max-width: 610px; color: rgba(255,255,255,0.82); font-size: clamp(16px, 1.4vw, 19px); line-height: 1.65; margin: 0; }
 .lf-blog-hero-meta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
-.lf-blog-hero-meta span { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; color: rgba(255,255,255,.76); font-size: 13px; backdrop-filter: blur(12px); }
+.lf-blog-hero-meta span { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; color: rgba(255,255,255,.76); font-size: 13px; }
 .lf-blog-hero-meta strong { color: #fff; font-family: var(--font-display); }
 .lf-blog-section-head { max-width: 820px; margin-bottom: 34px; }
 .lf-blog-magazine { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(320px, .74fr); gap: 28px; align-items: stretch; }
 .lf-blog-feature { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(330px, .82fr); min-height: 520px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; box-shadow: 0 30px 80px -44px rgba(10,22,40,.28); }
 .lf-blog-feature-img { position: relative; display: block; min-height: 100%; overflow: hidden; }
-.lf-blog-feature-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .9s var(--ease-out-quart); }
-.lf-blog-feature:hover .lf-blog-feature-img img { transform: scale(1.035); }
+.lf-blog-feature-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.lf-blog-feature:hover .lf-blog-feature-img img { }
 .lf-blog-feature-body { padding: clamp(30px, 4vw, 54px); display: flex; flex-direction: column; justify-content: center; }
 .lf-blog-feature-date { width: 62px; height: 62px; border-radius: 12px; background: var(--navy); color: #fff; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; margin-bottom: 22px; }
 .lf-blog-feature-date strong { font-family: var(--font-display); font-size: 24px; }
@@ -233,8 +224,8 @@ const BLOG_STYLE = `
 .lf-blog-feature-body p { color: var(--ink-soft); font-size: 15.5px; line-height: 1.75; margin: 0 0 22px; }
 .lf-blog-latest { background: var(--navy); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
 .lf-blog-aside-label { color: rgba(255,255,255,.62); font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 4px; }
-.lf-blog-latest-item { display: grid; grid-template-columns: 92px 1fr; gap: 14px; padding: 12px; border-radius: 12px; color: #fff; text-decoration: none; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.08); transition: transform .3s var(--ease-out-quart), background .3s var(--ease-out-quart), border-color .3s var(--ease-out-quart); }
-.lf-blog-latest-item:hover { transform: translateY(-2px); background: rgba(255,255,255,.105); border-color: rgba(255,255,255,.2); }
+.lf-blog-latest-item { display: grid; grid-template-columns: 92px 1fr; gap: 14px; padding: 12px; border-radius: 12px; color: #fff; text-decoration: none; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.08); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.lf-blog-latest-item:hover { background: rgba(255,255,255,.105); border-color: rgba(255,255,255,.2); }
 .lf-blog-latest-item img { width: 92px; height: 78px; object-fit: cover; border-radius: 9px; }
 .lf-blog-latest-item span { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
 .lf-blog-latest-item em { font-style: normal; color: rgba(255,255,255,.55); font-size: 11.5px; margin-bottom: 6px; }
@@ -242,8 +233,8 @@ const BLOG_STYLE = `
 .lf-blog-library-head { display: flex; align-items: end; justify-content: space-between; gap: 28px; margin-bottom: 28px; }
 .lf-blog-library-head .lf-h2 { margin-bottom: 0; }
 .lf-blog-topic-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
-.lf-blog-topic { display: inline-flex; padding: 10px 16px; border-radius: 999px; background: #fff; border: 1px solid var(--ink-line-soft); color: var(--ink-soft); font-size: 13px; font-weight: 700; white-space: nowrap; transition: transform .3s var(--ease-out-quart), background .3s var(--ease-out-quart), color .3s var(--ease-out-quart); }
-.lf-blog-topic.is-active { background: var(--navy); color: #fff; transform: translateY(-2px); }
+.lf-blog-topic { display: inline-flex; padding: 10px 16px; border-radius: 999px; background: #fff; border: 1px solid var(--ink-line-soft); color: var(--ink-soft); font-size: 13px; font-weight: 700; white-space: nowrap; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.lf-blog-topic.is-active { background: var(--navy); color: #fff; }
 .lf-blog-grid--archive { align-items: stretch; }
 .lf-blog-grid--archive .lf-blog-card { border-radius: 16px; }
 .lf-blog-mobile-hint { display: none; }
@@ -264,21 +255,21 @@ const BLOG_STYLE = `
   .lf-blog-latest { margin: 0 -18px; border-radius: 0; padding: 22px 18px; overflow-x: auto; overflow-y: hidden; flex-direction: row; scroll-snap-type: x mandatory; scrollbar-width: none; }
   .lf-blog-latest::-webkit-scrollbar { display: none; }
   .lf-blog-aside-label { position: absolute; opacity: 0; pointer-events: none; }
-  .lf-blog-latest-item { flex: 0 0 82vw; grid-template-columns: 96px 1fr; scroll-snap-align: center; transform: scale(.96); opacity: .72; }
+  .lf-blog-latest-item { flex: 0 0 82vw; grid-template-columns: 96px 1fr; scroll-snap-align: center; opacity: .72; }
   .lf-blog-latest-item.is-x-active { transform: scale(1); opacity: 1; background: rgba(255,255,255,.105); border-color: rgba(255,255,255,.2); }
   .lf-blog-library-head { margin-bottom: 16px; }
   .lf-blog-topic-row { width: calc(100% + 36px); margin: 0 -18px; padding: 2px 18px 12px; overflow-x: auto; overflow-y: hidden; flex-wrap: nowrap; scroll-snap-type: x proximity; scrollbar-width: none; }
   .lf-blog-topic-row::-webkit-scrollbar { display: none; }
   .lf-blog-topic { scroll-snap-align: start; }
-  .lf-blog-topic.is-x-active { background: var(--navy); color: #fff; transform: translateY(-2px); }
+  .lf-blog-topic.is-x-active { background: var(--navy); color: #fff; }
   .lf-blog-mobile-hint { display: flex; margin: -2px 0 12px; }
   .lf-blog-grid--archive { display: flex !important; grid-template-columns: none !important; gap: 14px; overflow-x: auto; overflow-y: hidden; margin: 0 -18px; padding: 6px 18px 24px; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .lf-blog-grid--archive::-webkit-scrollbar { display: none; }
-  .lf-blog-grid--archive .lf-blog-card { flex: 0 0 84vw; scroll-snap-align: center; transform: scale(.955); opacity: .7; transition: opacity .38s var(--ease-out-quart), transform .38s var(--ease-out-quart), box-shadow .3s var(--ease-out-quart), border-color .3s var(--ease-out-quart); }
+  .lf-blog-grid--archive .lf-blog-card { flex: 0 0 84vw; scroll-snap-align: center; opacity: .7; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
   .lf-blog-grid--archive .lf-blog-card.is-x-active { opacity: 1; transform: scale(1); }
   .lf-blog-foot { flex-direction: column; align-items: flex-start; }
 }
 .lf-blog-topic { font-family: inherit; cursor: pointer; appearance: none; border: 1px solid var(--ink-line-soft); -webkit-tap-highlight-color: transparent; }
-.lf-blog-topic:hover { background: var(--navy); color: #fff; transform: translateY(-2px); }
+.lf-blog-topic:hover { background: var(--navy); color: #fff; }
 .lf-blog-topic:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 `;

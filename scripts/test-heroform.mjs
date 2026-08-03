@@ -1,4 +1,4 @@
-/* Interactieve test van het hero-offerteformulier op de homepage.
+﻿/* Interactieve test van het hero-offerteformulier op de homepage.
    Onderschept alle uitgaande lead-requests (er vertrekt NIETS echt).
    Gebruik: node scripts/test-heroform.mjs */
 
@@ -34,7 +34,7 @@ p.on("request", (r) => {
 p.on("console", (m) => { if (["error","warning","warn"].includes(m.type())) console.log("CONSOLE:", m.text().slice(0, 200)); });
 p.on("pageerror", (e) => console.log("PAGEERROR:", String(e).slice(0, 300)));
 
-await p.goto("http://localhost:4180/", { waitUntil: "networkidle0" });
+await p.goto("http://localhost:4300/", { waitUntil: "networkidle0" });
 
 const status = await p.evaluate(() => {
   const form = document.querySelector("[data-hero-form]");
@@ -68,9 +68,9 @@ try {
   await p.click("[data-hero-submit]");
   await new Promise((r) => setTimeout(r, 2500));
   const na = await p.evaluate(() => ({
-    success: !!document.querySelector(".lf-qcard.is-success"),
+    success: !!document.querySelector(".tr-leadcard.is-success, .lf-qcard.is-success"),
     fout: document.querySelector("[data-hero-error]")?.textContent || "",
-    foutZichtbaar: document.querySelector("[data-hero-error]")?.hidden === false,
+    foutZichtbaar: (document.querySelector("[data-hero-error]")?.style.display || "none") !== "none",
   }));
   console.log("NA SUBMIT:", JSON.stringify(na));
 } catch (e) {
@@ -78,3 +78,5 @@ try {
 }
 console.log("ONDERSCHEPTE LEAD-REQUESTS:", JSON.stringify(onderschept, null, 1));
 await b.close();
+
+

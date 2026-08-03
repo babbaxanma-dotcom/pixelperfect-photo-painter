@@ -128,7 +128,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '02 · Duurzaam bouwen',
   title: 'Slim isoleren,<br/><span style="color:var(--accent)">duurzaam wonen</span>.',
-  lede: 'AB Ecologisch bundelt <span class="ab-hl" data-hl-delay="0">isolatie, warmtepomp en ventilatie</span> in één <span class="ab-hl" data-hl-delay="1">logisch totaalplan</span>.',
+  lede: 'AB Ecologisch bundelt <span class="ab-hl">isolatie, warmtepomp en ventilatie</span> in één <span class="ab-hl">logisch totaalplan</span>.',
   primary: { label: 'Vraag plaatsbezoek aan', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
@@ -136,10 +136,10 @@ ${buildHero({
 <section class="lf-section">
   <div class="wrap">
     <div class="lf-split">
-      <div data-reveal>
+      <div>
         <span class="lf-eyebrow">AB Ecologisch</span>
         <h2 class="lf-h2">Bouwen voor<br/>de <span class="ab-mark">volgende generatie</span>.</h2>
-        <p class="lf-lede">Een ecologische woning is in de eerste plaats een <span class="ab-hl" data-hl-delay="0">slimmer totaalpakket</span>: betere schil, <span class="ab-hl" data-hl-delay="1">lagere energiefactuur</span> en een <span class="ab-hl" data-hl-delay="2">gezonder binnenklimaat</span>.</p>
+        <p class="lf-lede">Een ecologische woning is in de eerste plaats een <span class="ab-hl">slimmer totaalpakket</span>: betere schil, <span class="ab-hl">lagere energiefactuur</span> en een <span class="ab-hl">gezonder binnenklimaat</span>.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eén plan voor isolatie, technieken en afwerking</li>
           <li>E-peil en premie-impact vooraf besproken</li>
@@ -147,7 +147,7 @@ ${buildHero({
           <li>Praktisch advies, gericht op comfort en rendement</li>
         </ul>
       </div>
-      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgIntro}" alt="Ecologische woning" loading="lazy"/></div>
+      <div class="lf-split-img"><img src="${imgIntro}" alt="Ecologische woning" loading="lazy"/></div>
     </div>
   </div>
 </section>
@@ -166,7 +166,7 @@ ${buildHero({
   <div class="wrap">
     <div class="dak-grid">
       ${types.map(t => `
-        <article class="dak-card" id="${t.id}" data-reveal>
+        <article class="dak-card" id="${t.id}">
           <div class="dak-card-img"><img src="${t.img}" alt="${t.title}" loading="lazy"/><span class="dak-card-tag">${t.tag}</span></div>
           <div class="dak-card-body">
             <h3>${t.title}</h3>
@@ -189,27 +189,27 @@ ${buildHero({
 
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Hoe we denken</span>
       <h2 class="lf-h2">Eerst de schil,<br/>dan de technieken.</h2>
     </div>
     <div class="ab-flow">
-      <div class="ab-flow-card" data-reveal><div class="ab-flow-num">STAP 01</div><h5>Audit</h5><p>We bekijken warmteverlies, huidige opbouw en renovatiepotentieel.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="1"><div class="ab-flow-num">STAP 02</div><h5>Plan</h5><p>We bepalen welke combinatie van isolatie en technieken echt rendeert.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="2"><div class="ab-flow-num">STAP 03</div><h5>Uitvoering</h5><p>Schil, ventilatie, warmtepomp en afwerking worden op elkaar afgestemd.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="3"><div class="ab-flow-num">STAP 04</div><h5>Nazorg</h5><p>EPB, premieaanvraag en afregeling worden mee opgevolgd.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 01</div><h5>Audit</h5><p>We bekijken warmteverlies, huidige opbouw en renovatiepotentieel.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 02</div><h5>Plan</h5><p>We bepalen welke combinatie van isolatie en technieken echt rendeert.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 03</div><h5>Uitvoering</h5><p>Schil, ventilatie, warmtepomp en afwerking worden op elkaar afgestemd.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 04</div><h5>Nazorg</h5><p>EPB, premieaanvraag en afregeling worden mee opgevolgd.</p></div>
     </div>
   </div>
 </section>
 
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Bij elk ecologisch traject</span>
       <h2 class="lf-h2">Wat altijd in onze prijs zit.</h2>
     </div>
     <div class="ab-incl ab-incl-single">
-      <div class="ab-incl-card yes" data-reveal>
+      <div class="ab-incl-card yes">
         <h4>Standaard inbegrepen</h4>
         <ul>
           <li>Plaatsbezoek en intakegesprek</li>
@@ -228,15 +228,15 @@ ${buildHero({
 
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Veelgestelde vragen</span>
       <h2 class="lf-h2">Over ecologisch bouwen.</h2>
     </div>
     <div class="ab-faq">
-      <details data-reveal><summary>Is ecologisch bouwen veel duurder?</summary><div class="ab-faq-body"><p>Niet altijd. Sommige keuzes zijn duurder in aankoop, maar leveren meer comfort en een lagere energiefactuur op. Wij tonen vooraf waar het verschil echt zit.</p></div></details>
-      <details data-reveal><summary>Werken jullie ook met houtskelet?</summary><div class="ab-faq-body"><p>Ja. Voor nieuwbouw, opbouw en uitbreidingen is houtskelet of CLT vaak een heel slimme keuze.</p></div></details>
-      <details data-reveal><summary>Kan dit ook bij renovatie?</summary><div class="ab-faq-body"><p>Zeker. Bij renovatie is de juiste volgorde het belangrijkst: eerst de schil verbeteren, daarna technieken vervangen.</p></div></details>
-      <details data-reveal><summary>Welke premies zijn er?</summary><div class="ab-faq-body"><p>Dat hangt af van inkomen, woningtype en gekozen werken. Wij geven vooraf een realistische inschatting en nemen het dossier mee op.</p></div></details>
+      <details><summary>Is ecologisch bouwen veel duurder?</summary><div class="ab-faq-body"><p>Niet altijd. Sommige keuzes zijn duurder in aankoop, maar leveren meer comfort en een lagere energiefactuur op. Wij tonen vooraf waar het verschil echt zit.</p></div></details>
+      <details><summary>Werken jullie ook met houtskelet?</summary><div class="ab-faq-body"><p>Ja. Voor nieuwbouw, opbouw en uitbreidingen is houtskelet of CLT vaak een heel slimme keuze.</p></div></details>
+      <details><summary>Kan dit ook bij renovatie?</summary><div class="ab-faq-body"><p>Zeker. Bij renovatie is de juiste volgorde het belangrijkst: eerst de schil verbeteren, daarna technieken vervangen.</p></div></details>
+      <details><summary>Welke premies zijn er?</summary><div class="ab-faq-body"><p>Dat hangt af van inkomen, woningtype en gekozen werken. Wij geven vooraf een realistische inschatting en nemen het dossier mee op.</p></div></details>
     </div>
   </div>
 </section>
@@ -247,13 +247,13 @@ ${FOOTER}
 
 <style>
 .dak-grid { display: grid; grid-template-columns: 1fr; gap: 36px; }
-.dak-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; display: grid; grid-template-columns: 1fr 1.2fr; align-items: start; box-shadow: 0 14px 40px -28px rgba(10,22,40,0.18); transition: box-shadow 0.3s, transform 0.3s; }
-.dak-card:hover { box-shadow: 0 24px 60px -28px rgba(10,22,40,0.28); transform: translateY(-2px); }
+.dak-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; display: grid; grid-template-columns: 1fr 1.2fr; align-items: start; box-shadow: 0 14px 40px -28px rgba(10,22,40,0.18); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.dak-card:hover { box-shadow: 0 24px 60px -28px rgba(10,22,40,0.28); }
 .dak-card:nth-child(even) { grid-template-columns: 1.2fr 1fr; }
 .dak-card:nth-child(even) .dak-card-img { order: 2; }
 .dak-card-img { position: relative; aspect-ratio: 4/3; overflow: hidden; }
-.dak-card-img img { width:100%; height:100%; object-fit: cover; display:block; transition: transform 0.6s var(--ease); }
-.dak-card:hover .dak-card-img img { transform: scale(1.04); }
+.dak-card-img img { width:100%; height:100%; object-fit: cover; display:block; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.dak-card:hover .dak-card-img img { }
 .dak-card-tag { position: absolute; top: 18px; left: 18px; padding: 6px 12px; background: #fff; color: var(--navy); border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; box-shadow: 0 6px 16px -4px rgba(10,22,40,0.25); }
 .dak-card-body { padding: 36px 40px; display:flex; flex-direction:column; }
 .dak-card-body h3 { font-family: var(--font-display); font-size: clamp(22px, 2.4vw, 28px); color: var(--navy); margin-bottom: 12px; font-weight: 600; letter-spacing: -0.01em; }

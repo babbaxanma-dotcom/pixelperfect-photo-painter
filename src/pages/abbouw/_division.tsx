@@ -38,7 +38,7 @@ ${buildHero({
 <section class="lf-section">
   <div class="wrap">
     <div class="lf-split">
-      <div data-reveal>
+      <div>
         <span class="lf-eyebrow">${c.title}</span>
         <h2 class="lf-h2">${c.storyTitle}</h2>
         <p class="lf-lede">${c.storyLede}</p>
@@ -48,7 +48,7 @@ ${buildHero({
             <div><h4>${f.t}</h4><p>${f.d}</p></div>
           </div>`).join('')}
       </div>
-      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${c.storyImg}" alt="${c.title}" loading="lazy"/></div>
+      <div class="lf-split-img"><img src="${c.storyImg}" alt="${c.title}" loading="lazy"/></div>
     </div>
   </div>
 </section>
@@ -56,13 +56,13 @@ ${buildHero({
 <!-- WHAT WE DO -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Wat we doen</span>
       <h2 class="lf-h2">Specialistisch werk,<br/>door eigen mensen.</h2>
     </div>
     <div class="lf-support-grid">
       ${c.whatWeDo.map((w, i) => `
-        <div class="lf-support-card" data-reveal data-reveal-delay="${i}">
+        <div class="lf-support-card">
           <div class="lf-support-meta"><span>${w.n}</span> ${c.eyebrow}</div>
           <h5>${w.t}</h5>
           <p>${w.d}</p>
@@ -74,14 +74,14 @@ ${buildHero({
 <!-- PROCESS -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Onze werkwijze</span>
       <h2 class="lf-h2">Van offerte tot oplevering.</h2>
     </div>
     <div class="lf-process">
       <div class="lf-process-line"></div>
       ${c.process.map((s, i) => `
-        <div class="lf-process-step" data-reveal data-reveal-delay="${i}">
+        <div class="lf-process-step">
           <div class="lf-process-num">${s.n}</div>
           <h5>${s.t}</h5>
           <p>${s.d}</p>
@@ -95,7 +95,7 @@ ${buildHero({
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="lf-faq-grid">
-      <div class="lf-faq-side" data-reveal>
+      <div class="lf-faq-side">
         <span class="lf-eyebrow">Veelgestelde vragen</span>
         <h2 class="lf-h2">Antwoorden op<br/>uw vragen.</h2>
         <p class="lf-lede">Staat uw vraag er niet tussen? Bel <a href="${CONTACT.phone.href}" style="color:var(--accent);font-weight:600;">${CONTACT.phone.spaced}</a>. U krijgt binnen 24 uur antwoord van een vakmens.</p>
@@ -104,7 +104,7 @@ ${buildHero({
           <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </a>
       </div>
-      <div class="lf-faq-list" data-reveal data-reveal-delay="1">
+      <div class="lf-faq-list">
         ${c.faqs.map((f, i) => `
           <div class="faq-item${i === 0 ? ' open' : ''}">
             <button class="faq-q" type="button">

@@ -91,7 +91,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '05 · Badkamers & wellness',
   title: 'Sleutel-op-de-deur badkamers,<br/>klaar in <span style="color:var(--accent)">vier weken</span>.',
-  lede: 'Premium tegels, sanitair en maatkasten, geplaatst door <span class="ab-hl" data-hl-delay="0">één vaste ploeg</span>. Van strip tot eerste douche: <span class="ab-hl" data-hl-delay="1">één coördinatie, één eindfactuur</span>.',
+  lede: 'Premium tegels, sanitair en maatkasten, geplaatst door <span class="ab-hl">één vaste ploeg</span>. Van strip tot eerste douche: <span class="ab-hl">één coördinatie, één eindfactuur</span>.',
   primary: { label: 'Vraag plaatsbezoek aan', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
@@ -100,10 +100,10 @@ ${buildHero({
 <section class="lf-section">
   <div class="wrap">
     <div class="lf-split">
-      <div data-reveal>
+      <div>
         <span class="lf-eyebrow">AB Bad &amp; Wellness</span>
         <h2 class="lf-h2">Eén ploeg,<br/><span class="ab-mark">één eindresultaat</span>.</h2>
-        <p class="lf-lede">In een badkamer komen alle vakgebieden samen: loodgieterij, elektriciteit, tegelwerk, schrijnwerk en sanitair. <span class="ab-hl" data-hl-delay="0">Wij houden alles in eigen hand</span>. Daardoor staat uw badkamer er <span class="ab-hl" data-hl-delay="1">na vier weken</span>, niet na vier maanden.</p>
+        <p class="lf-lede">In een badkamer komen alle vakgebieden samen: loodgieterij, elektriciteit, tegelwerk, schrijnwerk en sanitair. <span class="ab-hl">Wij houden alles in eigen hand</span>. Daardoor staat uw badkamer er <span class="ab-hl">na vier weken</span>, niet na vier maanden.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen tegelzetter, loodgieter en elektricien</li>
           <li>Vaste prijs op basis van 3D-ontwerp</li>
@@ -111,7 +111,7 @@ ${buildHero({
           <li>10 jaar garantie waterdichtheid</li>
         </ul>
       </div>
-      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgIntro}" alt="Afgewerkte moderne badkamer" loading="lazy"/></div>
+      <div class="lf-split-img"><img src="${imgIntro}" alt="Afgewerkte moderne badkamer" loading="lazy"/></div>
     </div>
   </div>
 </section>
@@ -132,7 +132,7 @@ ${buildHero({
   <div class="wrap">
     <div class="dak-grid">
       ${types.map(t => `
-        <article class="dak-card" id="${t.id}" data-reveal>
+        <article class="dak-card" id="${t.id}">
           <div class="dak-card-img"><img src="${t.img}" alt="${t.title.replace('&amp;', '&')}" loading="lazy"/><span class="dak-card-tag">${t.tag}</span></div>
           <div class="dak-card-body">
             <h3>${t.title}</h3>
@@ -157,7 +157,7 @@ ${buildHero({
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="lf-split">
-      <div data-reveal>
+      <div>
         <span class="lf-eyebrow">Hoe lukt 4 weken?</span>
         <h2 class="lf-h2">Omdat alle vakken<br/>onder één dak zitten.</h2>
         <p class="lf-lede">Een gemiddelde badkamerrenovatie duurt bij een algemene aannemer 8 tot 12 weken, omdat elke vakman op zijn beurt moet wachten. Bij ons werken loodgieter, tegelzetter en elektricien parallel, met dagelijkse afstemming op de werf.</p>
@@ -168,7 +168,7 @@ ${buildHero({
           <li>Week 4: kranen, silicone, oplevering</li>
         </ul>
       </div>
-      <div data-reveal data-reveal-delay="1"><img src="${imgRuwbouw}" alt="Badkamer gestript, nieuwe leidingen liggen klaar" loading="lazy" style="width:100%; border-radius: 16px; aspect-ratio: 4/3; object-fit: cover;"/></div>
+      <div><img src="${imgRuwbouw}" alt="Badkamer gestript, nieuwe leidingen liggen klaar" loading="lazy" style="width:100%; border-radius: 16px; aspect-ratio: 4/3; object-fit: cover;"/></div>
     </div>
   </div>
 </section>
@@ -176,15 +176,15 @@ ${buildHero({
 <!-- PROCES -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Hoe we te werk gaan</span>
       <h2 class="lf-h2">Van plaatsbezoek<br/>tot eerste douche.</h2>
     </div>
     <div class="ab-flow">
-      <div class="ab-flow-card" data-reveal><div class="ab-flow-num">STAP 01</div><h5>Plaatsbezoek</h5><p>Opmeten met laser, wensen en budget bespreken.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="1"><div class="ab-flow-num">STAP 02</div><h5>3D-ontwerp</h5><p>Visualisatie van uw nieuwe badkamer, inclusief kleurstaal.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="2"><div class="ab-flow-num">STAP 03</div><h5>Materialen</h5><p>Tegels en sanitair gekozen in showroom of via uw keuze.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="3"><div class="ab-flow-num">STAP 04</div><h5>Werf 4 weken</h5><p>Eén doorlopende werf, dagelijkse opkuis, eindcontrole.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 01</div><h5>Plaatsbezoek</h5><p>Opmeten met laser, wensen en budget bespreken.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 02</div><h5>3D-ontwerp</h5><p>Visualisatie van uw nieuwe badkamer, inclusief kleurstaal.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 03</div><h5>Materialen</h5><p>Tegels en sanitair gekozen in showroom of via uw keuze.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 04</div><h5>Werf 4 weken</h5><p>Eén doorlopende werf, dagelijkse opkuis, eindcontrole.</p></div>
     </div>
   </div>
 </section>
@@ -192,12 +192,12 @@ ${buildHero({
 <!-- WAT INBEGREPEN -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Bij elke badkamer</span>
       <h2 class="lf-h2">Wat altijd in onze prijs zit.</h2>
     </div>
     <div class="ab-incl ab-incl-single">
-      <div class="ab-incl-card yes" data-reveal>
+      <div class="ab-incl-card yes">
         <h4>Standaard inbegrepen</h4>
         <ul>
           <li>Plaatsbezoek en opmeting met laser</li>
@@ -217,15 +217,15 @@ ${buildHero({
 <!-- FAQ -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Veelgestelde vragen</span>
       <h2 class="lf-h2">Over badkamers.</h2>
     </div>
     <div class="ab-faq">
-      <details data-reveal><summary>Echt klaar in 4 weken?</summary><div class="ab-faq-body"><p>Ja, omdat alle disciplines (loodgieter, elektricien, tegelzetter) bij ons in huis zitten en parallel werken. We bezorgen vooraf een dag-per-dag planning.</p></div></details>
-      <details data-reveal><summary>Wat kost een gemiddelde badkamer?</summary><div class="ab-faq-body"><p>Vanaf €15.000 voor een standaard renovatie. Premium uitvoering loopt op tot €40.000+. Bij plaatsbezoek krijgt u een vaste prijs op basis van 3D-ontwerp.</p></div></details>
-      <details data-reveal><summary>Mag ik mijn eigen tegels of sanitair kiezen?</summary><div class="ab-faq-body"><p>Uiteraard. We adviseren onze partners maar u bent vrij om bij eender welke leverancier te kopen. Wij plaatsen het.</p></div></details>
-      <details data-reveal><summary>Welke garantie krijg ik?</summary><div class="ab-faq-body"><p>10 jaar waterdichtheid, 2 jaar afwerking, plus de fabrieksgarantie op sanitair (vaak 5 tot 10 jaar).</p></div></details>
+      <details><summary>Echt klaar in 4 weken?</summary><div class="ab-faq-body"><p>Ja, omdat alle disciplines (loodgieter, elektricien, tegelzetter) bij ons in huis zitten en parallel werken. We bezorgen vooraf een dag-per-dag planning.</p></div></details>
+      <details><summary>Wat kost een gemiddelde badkamer?</summary><div class="ab-faq-body"><p>Vanaf €15.000 voor een standaard renovatie. Premium uitvoering loopt op tot €40.000+. Bij plaatsbezoek krijgt u een vaste prijs op basis van 3D-ontwerp.</p></div></details>
+      <details><summary>Mag ik mijn eigen tegels of sanitair kiezen?</summary><div class="ab-faq-body"><p>Uiteraard. We adviseren onze partners maar u bent vrij om bij eender welke leverancier te kopen. Wij plaatsen het.</p></div></details>
+      <details><summary>Welke garantie krijg ik?</summary><div class="ab-faq-body"><p>10 jaar waterdichtheid, 2 jaar afwerking, plus de fabrieksgarantie op sanitair (vaak 5 tot 10 jaar).</p></div></details>
     </div>
   </div>
 </section>
@@ -236,13 +236,13 @@ ${FOOTER}
 
 <style>
 .dak-grid { display: grid; grid-template-columns: 1fr; gap: 36px; }
-.dak-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; display: grid; grid-template-columns: 1fr 1.2fr; align-items: start; box-shadow: 0 14px 40px -28px rgba(10,22,40,0.18); transition: box-shadow 0.3s, transform 0.3s; }
-.dak-card:hover { box-shadow: 0 24px 60px -28px rgba(10,22,40,0.28); transform: translateY(-2px); }
+.dak-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; display: grid; grid-template-columns: 1fr 1.2fr; align-items: start; box-shadow: 0 14px 40px -28px rgba(10,22,40,0.18); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.dak-card:hover { box-shadow: 0 24px 60px -28px rgba(10,22,40,0.28); }
 .dak-card:nth-child(even) { grid-template-columns: 1.2fr 1fr; }
 .dak-card:nth-child(even) .dak-card-img { order: 2; }
 .dak-card-img { position: relative; aspect-ratio: 4/3; overflow: hidden; }
-.dak-card-img img { width:100%; height:100%; object-fit: cover; display:block; transition: transform 0.6s var(--ease); }
-.dak-card:hover .dak-card-img img { transform: scale(1.04); }
+.dak-card-img img { width:100%; height:100%; object-fit: cover; display:block; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.dak-card:hover .dak-card-img img { }
 .dak-card-tag { position: absolute; top: 18px; left: 18px; padding: 6px 12px; background: #fff; color: var(--navy); border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; box-shadow: 0 6px 16px -4px rgba(10,22,40,0.25); }
 .dak-card-body { padding: 36px 40px; display:flex; flex-direction:column; }
 .dak-card-body h3 { font-family: var(--font-display); font-size: clamp(22px, 2.4vw, 28px); color: var(--navy); margin-bottom: 12px; font-weight: 600; letter-spacing: -0.01em; }

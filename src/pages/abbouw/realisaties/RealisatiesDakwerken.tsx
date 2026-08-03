@@ -175,7 +175,7 @@ ${buildHero({
 <!-- TRUST STRIP — bewijs in plaats van marketing-getallen -->
 <section class="lf-section rzd-trust-section">
   <div class="wrap">
-    <div class="rzd-trust" data-reveal>
+    <div class="rzd-trust">
       <div class="rzd-trust-item">
         <span class="rzd-trust-num">10 jaar</span>
         <span class="rzd-trust-lbl">aansprakelijkheid via Federale</span>
@@ -202,7 +202,7 @@ ${buildHero({
 <!-- QUOTE — story-driven, geen herhaling van trust-stats -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="ab-quote" data-reveal>
+    <div class="ab-quote">
       "De vraag is niet 'wie legt mijn dak'. De vraag is: 'wie staat er nog binnen tien jaar als er iets is'. Dat antwoord is voor ons hetzelfde gebleven — een eigen dakdekker met een naam, een gsm-nummer en een polis bij Federale. Geen onderaannemer-keten waar niemand zich verantwoordelijk voelt."
       <footer>Zaakvoerder AB Bouw Groep</footer>
     </div>
@@ -212,27 +212,27 @@ ${buildHero({
 <!-- WERKMETHODE — 4 stappen mini -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Onze werkmethode</span>
       <h2 class="lf-h2">Vier fases — vaste prijs<br/>vóór één pan beweegt.</h2>
     </div>
     <div class="ab-flow">
-      <div class="ab-flow-card" data-reveal>
+      <div class="ab-flow-card">
         <div class="ab-flow-num">FASE 01</div>
         <h5>Gratis dakinspectie</h5>
         <p>Binnen 5 werkdagen ter plaatse. Foto-rapport van de bestaande staat, met meting van oppervlak en hoogte.</p>
       </div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="1">
+      <div class="ab-flow-card">
         <div class="ab-flow-num">FASE 02</div>
         <h5>Bindende offerte</h5>
         <p>Materiaal per m², uurloon transparant, premie-dossier inbegrepen. Vaste prijs voor 60 dagen geldig.</p>
       </div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="2">
+      <div class="ab-flow-card">
         <div class="ab-flow-num">FASE 03</div>
         <h5>Uitvoering door eigen ploeg</h5>
         <p>Onze 6 vaste dakdekkers. Geen onderaannemers. Werfopruim elke dag, foto-update per week.</p>
       </div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="3">
+      <div class="ab-flow-card">
         <div class="ab-flow-num">FASE 04</div>
         <h5>Oplevering + 10j garantie</h5>
         <p>Officiële oplevering met fotorapport. 10 jaar Federale Verzekering + fabrieksgarantie tot 50j op materialen.</p>
@@ -244,13 +244,13 @@ ${buildHero({
 <!-- FILTER + PROJECT GRID -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Recente projecten</span>
       <h2 class="lf-h2">Recent dakwerk, met materiaal,<br/>oppervlakte en doorlooptijd.</h2>
       <p class="lf-lede" style="max-width: 700px; margin: 12px auto 0;">Elk project hieronder is werk van onze eigen ploegen, met materiaal, oppervlakte en doorlooptijd erbij. Filter op type werk om te zien wat we voor uw situatie hebben gedaan.</p>
     </div>
 
-    <div class="rzd-filter-wrap" data-reveal>
+    <div class="rzd-filter-wrap">
       <div class="rzd-filter" id="rzdFilters">
         ${filters.map((f, i) => `
           <button type="button" class="rzd-chip${i === 0 ? ' active' : ''}" data-rzd-filter="${f.key}">
@@ -261,7 +261,7 @@ ${buildHero({
 
     <div class="rzd-grid" id="rzdGrid">
       ${projects.map((p) => `
-        <article class="rzd-card" data-rzd-card="${p.filter}" data-reveal>
+        <article class="rzd-card" data-rzd-card="${p.filter}">
           <div class="rzd-card-img">
             <img src="${p.img}" alt="${p.tag}" loading="lazy"/>
             <span class="rzd-card-tag">${p.tag}</span>
@@ -290,22 +290,22 @@ ${buildHero({
 <!-- GARANTIE / WAARBORG SECTIE -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Schriftelijk vastgelegd</span>
       <h2 class="lf-h2">Drie garanties<br/>die u zwart op wit krijgt.</h2>
     </div>
     <div class="lf-support-grid" style="grid-template-columns: repeat(3, 1fr);">
-      <div class="lf-support-card" data-reveal>
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>01</span> Aansprakelijkheid</div>
         <h5>10 jaar Federale Verzekering</h5>
         <p>Wettelijke 10-jarige aansprakelijkheid op waterdichtheid en stabiliteit, gedekt door polis bij Federale Verzekering. Polis-nummer staat op uw factuur.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="1">
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>02</span> Materialen</div>
         <h5>Tot 50j fabrieksgarantie</h5>
         <p>Koramic-pannen 30 jaar, Firestone EPDM 20 jaar, VMZinc 50 jaar. Originele garantiedocumenten worden bij oplevering met uw dossier overhandigd.</p>
       </div>
-      <div class="lf-support-card" data-reveal data-reveal-delay="2">
+      <div class="lf-support-card">
         <div class="lf-support-meta"><span>03</span> Erkenningen</div>
         <h5>VCA* + Lid Bouwunie</h5>
         <p>VCA*-veiligheidscertificaat voor werken op hoogte. Lid Bouwunie sinds 2014 — kwaliteitscontroles en bemiddeling bij geschillen via de sector-organisatie.</p>
@@ -317,17 +317,17 @@ ${buildHero({
 <!-- FAQ -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Veelgestelde vragen</span>
       <h2 class="lf-h2">Over dakwerken specifiek.</h2>
     </div>
     <div class="ab-faq">
-      <details data-reveal><summary>Hoe snel kunnen jullie een dak vernieuwen?</summary><div class="ab-faq-body"><p>Een standaard pannendak van 150 m² duurt 10-14 werkdagen, een plat dak EPDM van 80 m² ongeveer 8 werkdagen. Wachttijd tussen offerte-akkoord en start werf is gemiddeld 4-8 weken — afhankelijk van seizoen. Spoed-interventies bij lekkage of stormschade: binnen 48 uur ter plaatse.</p></div></details>
-      <details data-reveal><summary>Wie betaalt bij stormschade — verzekering of klant?</summary><div class="ab-faq-body"><p>Wij factureren rechtstreeks op uw woningverzekeraar (AG, AXA, Ethias, KBC, etc.) wanneer er een schadedossier loopt. U hoeft niets voor te schieten. Wij sturen het schaderapport mét fotoreportage rechtstreeks naar de expert van de verzekering.</p></div></details>
-      <details data-reveal><summary>Wat met Mijn VerbouwPremie 2026?</summary><div class="ab-faq-body"><p>De premievoorwaarden wijzigden op 1 maart 2026: voor inkomenscategorie 1 en 2 (de meeste eigenaars) verviel de dakisolatiepremie. Behoort u tot een lagere inkomenscategorie, dan kan er nog Mijn VerbouwPremie zijn (tot €40/m²) — wij checken dit en regelen het dossier. Het 6% BTW-tarief geldt sowieso voor woningen ouder dan 10 jaar. Pure dakvervanging zonder isolatie kwam ook voordien al niet in aanmerking.</p></div></details>
-      <details data-reveal><summary>Werken jullie ook bij regen of in de winter?</summary><div class="ab-faq-body"><p>Op een hellend pannendak werken we tot temperaturen van −2°C. Plat dak EPDM en bitumen tot 5°C minimum. Bij hevige regen of windstoten boven 60 km/u verleggen we de werkdag — daarom planning altijd met buffer. We laten een dak nooit half open eindigen, ook niet als dat een dag uitloopt.</p></div></details>
-      <details data-reveal><summary>Krijg ik een fotorapport van het werk?</summary><div class="ab-faq-body"><p>Ja, standaard. Bij de offerte een foto-inspectie van de bestaande situatie. Tijdens de werf wekelijks een foto-update via WhatsApp of e-mail. Bij oplevering een eindrapport met foto's van elk dakvlak, detail-aansluitingen en garantiedocumenten — digitaal bezorgd, papieren kopie op aanvraag.</p></div></details>
-      <details data-reveal><summary>Doen jullie ook kleinere werken zoals een dakgoot of een lek?</summary><div class="ab-faq-body"><p>Ja. We hebben een aparte interventie-ploeg voor herstellingen onder de €5.000 — sneller plannen, geen plaatsbezoek nodig voor offerte (we werken op uurregie of vaste prijs vooraf op basis van foto's). Bel of mail voor een snelle prijsindicatie.</p></div></details>
+      <details><summary>Hoe snel kunnen jullie een dak vernieuwen?</summary><div class="ab-faq-body"><p>Een standaard pannendak van 150 m² duurt 10-14 werkdagen, een plat dak EPDM van 80 m² ongeveer 8 werkdagen. Wachttijd tussen offerte-akkoord en start werf is gemiddeld 4-8 weken — afhankelijk van seizoen. Spoed-interventies bij lekkage of stormschade: binnen 48 uur ter plaatse.</p></div></details>
+      <details><summary>Wie betaalt bij stormschade — verzekering of klant?</summary><div class="ab-faq-body"><p>Wij factureren rechtstreeks op uw woningverzekeraar (AG, AXA, Ethias, KBC, etc.) wanneer er een schadedossier loopt. U hoeft niets voor te schieten. Wij sturen het schaderapport mét fotoreportage rechtstreeks naar de expert van de verzekering.</p></div></details>
+      <details><summary>Wat met Mijn VerbouwPremie 2026?</summary><div class="ab-faq-body"><p>De premievoorwaarden wijzigden op 1 maart 2026: voor inkomenscategorie 1 en 2 (de meeste eigenaars) verviel de dakisolatiepremie. Behoort u tot een lagere inkomenscategorie, dan kan er nog Mijn VerbouwPremie zijn (tot €40/m²) — wij checken dit en regelen het dossier. Het 6% BTW-tarief geldt sowieso voor woningen ouder dan 10 jaar. Pure dakvervanging zonder isolatie kwam ook voordien al niet in aanmerking.</p></div></details>
+      <details><summary>Werken jullie ook bij regen of in de winter?</summary><div class="ab-faq-body"><p>Op een hellend pannendak werken we tot temperaturen van −2°C. Plat dak EPDM en bitumen tot 5°C minimum. Bij hevige regen of windstoten boven 60 km/u verleggen we de werkdag — daarom planning altijd met buffer. We laten een dak nooit half open eindigen, ook niet als dat een dag uitloopt.</p></div></details>
+      <details><summary>Krijg ik een fotorapport van het werk?</summary><div class="ab-faq-body"><p>Ja, standaard. Bij de offerte een foto-inspectie van de bestaande situatie. Tijdens de werf wekelijks een foto-update via WhatsApp of e-mail. Bij oplevering een eindrapport met foto's van elk dakvlak, detail-aansluitingen en garantiedocumenten — digitaal bezorgd, papieren kopie op aanvraag.</p></div></details>
+      <details><summary>Doen jullie ook kleinere werken zoals een dakgoot of een lek?</summary><div class="ab-faq-body"><p>Ja. We hebben een aparte interventie-ploeg voor herstellingen onder de €5.000 — sneller plannen, geen plaatsbezoek nodig voor offerte (we werken op uurregie of vaste prijs vooraf op basis van foto's). Bel of mail voor een snelle prijsindicatie.</p></div></details>
     </div>
   </div>
 </section>
@@ -335,7 +335,7 @@ ${buildHero({
 <!-- CALCULATOR-CTA banner — zelfde patroon als /lp/dakwerken -->
 <section class="lf-section rzd-calc-cta-section">
   <div class="wrap">
-    <a href="/calculator/dakwerken" class="rzd-calc-cta" data-reveal>
+    <a href="/calculator/dakwerken" class="rzd-calc-cta">
       <div class="rzd-calc-cta-icon" aria-hidden="true">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="4" y="2" width="16" height="20" rx="2"/>
@@ -367,7 +367,7 @@ ${buildHero({
 <!-- FINAL CTA — beide knoppen naar LP-form -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-cta lf-cta--simple" data-reveal>
+    <div class="lf-cta lf-cta--simple">
       <div class="lf-cta-text">
         <h2>Klaar voor uw eigen project?</h2>
         <p>Plan een gratis plaatsbezoek. Binnen 5 werkdagen ter plaatse — antwoord op uw vraag binnen één werkdag.</p>
@@ -408,9 +408,9 @@ const PAGE_STYLE = `
   padding: 10px 18px; border-radius: 999px;
   background: var(--navy); color: #fff !important;
   font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
-  text-decoration: none; transition: background .2s ease, transform .2s ease;
+  text-decoration: none; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
 }
-.lp-mini-phone:hover { background: #08213d; transform: translateY(-1px); }
+.lp-mini-phone:hover { background: #08213d; }
 .lp-mini-phone svg { flex-shrink: 0; }
 @media (max-width: 720px) {
   .lp-mini-header-inner { padding: 14px 0; }
@@ -429,10 +429,9 @@ const PAGE_STYLE = `
   border: 1.5px solid rgba(217,140,3,0.32); border-radius: 18px;
   padding: 22px 28px; text-decoration: none;
   box-shadow: 0 10px 32px -14px rgba(217,140,3,0.25);
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
 }
-.rzd-calc-cta:hover {
-  transform: translateY(-3px); border-color: #d98c03;
+.rzd-calc-cta:hover { border-color: #d98c03;
   box-shadow: 0 16px 40px -16px rgba(217,140,3,0.45);
 }
 .rzd-calc-cta-icon {
@@ -460,9 +459,9 @@ const PAGE_STYLE = `
   width: 44px; height: 44px; border-radius: 50%;
   background: #d98c03; color: #fff;
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; transition: transform .25s ease;
+  flex-shrink: 0; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
 }
-.rzd-calc-cta:hover .rzd-calc-cta-arrow { transform: translateX(4px); }
+.rzd-calc-cta:hover .rzd-calc-cta-arrow { }
 @media (max-width: 720px) {
   .rzd-calc-cta { grid-template-columns: auto 1fr; padding: 18px 20px; }
   .rzd-calc-cta-arrow { display: none; }
@@ -538,7 +537,7 @@ const PAGE_STYLE = `
   color: var(--ink-soft);
   font-family: inherit;
   cursor: pointer;
-  transition: all 0.18s var(--ease);
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
   white-space: nowrap;
 }
 .rzd-chip:hover { color: var(--navy); background: rgba(10,31,68,0.04); }
@@ -568,13 +567,12 @@ const PAGE_STYLE = `
   overflow: hidden;
   border: 1px solid var(--ink-line-soft);
   box-shadow: 0 1px 3px rgba(15,23,42,0.04), 0 18px 36px -22px rgba(15,23,42,0.16);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
   display: flex;
   flex-direction: column;
 }
 .rzd-card[hidden] { display: none !important; }
 .rzd-card:hover {
-  transform: translateY(-4px);
   box-shadow: 0 1px 3px rgba(15,23,42,0.06), 0 28px 52px -22px rgba(15,23,42,0.24);
 }
 .rzd-card-img {
@@ -586,16 +584,14 @@ const PAGE_STYLE = `
 .rzd-card-img img {
   width: 100%; height: 100%;
   object-fit: cover;
-  transition: transform 0.9s cubic-bezier(.2,.7,.2,1);
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
 }
-.rzd-card:hover .rzd-card-img img { transform: scale(1.04); }
+.rzd-card:hover .rzd-card-img img { }
 .rzd-card-tag {
   position: absolute;
   bottom: 14px; left: 14px;
   padding: 7px 14px;
   background: rgba(10,22,40,0.88);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   color: #fff;
   font-size: 11.5px;
   font-weight: 600;

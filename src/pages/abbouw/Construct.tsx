@@ -93,7 +93,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '01 · Algemene aanneming',
   title: 'Eén aannemer voor uw<br/><span style="color:var(--accent)">volledige</span> bouw of renovatie.',
-  lede: 'AB Construct neemt de <span class="ab-hl" data-hl-delay="0">volledige coördinatie</span> op zich: u heeft <span class="ab-hl" data-hl-delay="1">één projectleider</span> en één eindfactuur, van plaatsbezoek tot oplevering.',
+  lede: 'AB Construct neemt de <span class="ab-hl">volledige coördinatie</span> op zich: u heeft <span class="ab-hl">één projectleider</span> en één eindfactuur, van plaatsbezoek tot oplevering.',
   primary: { label: 'Vraag plaatsbezoek aan', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
@@ -102,10 +102,10 @@ ${buildHero({
 <section class="lf-section">
   <div class="wrap">
     <div class="lf-split">
-      <div data-reveal>
+      <div>
         <span class="lf-eyebrow">AB Construct</span>
         <h2 class="lf-h2">Eén contract,<br/><span class="ab-mark">één resultaat</span>.</h2>
-        <p class="lf-lede">U tekent met <span class="ab-hl" data-hl-delay="0">één partij</span>. Wij coördineren ruwbouw, technieken en afwerking met <span class="ab-hl" data-hl-delay="1">eigen ploegen</span>.</p>
+        <p class="lf-lede">U tekent met <span class="ab-hl">één partij</span>. Wij coördineren ruwbouw, technieken en afwerking met <span class="ab-hl">eigen ploegen</span>.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Bindende offerte met meetstaat</li>
           <li>10 jaar wettelijke aansprakelijkheid</li>
@@ -113,7 +113,7 @@ ${buildHero({
           <li>Meerwerk enkel na schriftelijke goedkeuring</li>
         </ul>
       </div>
-      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgIntro}" alt="Vrijstaande nieuwbouw" loading="lazy"/></div>
+      <div class="lf-split-img"><img src="${imgIntro}" alt="Vrijstaande nieuwbouw" loading="lazy"/></div>
     </div>
   </div>
 </section>
@@ -134,7 +134,7 @@ ${buildHero({
   <div class="wrap">
     <div class="dak-grid">
       ${types.map(t => `
-        <article class="dak-card" id="${t.id}" data-reveal>
+        <article class="dak-card" id="${t.id}">
           <div class="dak-card-img"><img src="${t.img}" alt="${t.title}" loading="lazy"/><span class="dak-card-tag">${t.tag}</span></div>
           <div class="dak-card-body">
             <h3>${t.title}</h3>
@@ -160,12 +160,12 @@ ${buildHero({
 <!-- DRIE FASES VAN DE WERF -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">De werf in 3 fases</span>
       <h2 class="lf-h2">Van funderingsplaat<br/>tot oplevering.</h2>
     </div>
     <div class="dak-grid">
-      <article class="dak-card" data-reveal>
+      <article class="dak-card">
         <div class="dak-card-img"><img src="${imgRuwbouw}" alt="Ruwbouw" loading="lazy"/><span class="dak-card-tag">Fase 1</span></div>
         <div class="dak-card-body">
           <h3>Ruwbouw winddicht</h3>
@@ -177,7 +177,7 @@ ${buildHero({
           </tbody></table>
         </div>
       </article>
-      <article class="dak-card" data-reveal>
+      <article class="dak-card">
         <div class="dak-card-img"><img src="${imgTechnieken}" alt="Technieken" loading="lazy"/><span class="dak-card-tag">Fase 2</span></div>
         <div class="dak-card-body">
           <h3>Technieken &amp; isolatie</h3>
@@ -189,7 +189,7 @@ ${buildHero({
           </tbody></table>
         </div>
       </article>
-      <article class="dak-card" data-reveal>
+      <article class="dak-card">
         <div class="dak-card-img"><img src="${imgAfwerking}" alt="Afwerking" loading="lazy"/><span class="dak-card-tag">Fase 3</span></div>
         <div class="dak-card-body">
           <h3>Afwerking &amp; oplevering</h3>
@@ -208,15 +208,15 @@ ${buildHero({
 <!-- PROCES -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Hoe we te werk gaan</span>
       <h2 class="lf-h2">Van plaatsbezoek tot<br/>nazorg.</h2>
     </div>
     <div class="ab-flow">
-      <div class="ab-flow-card" data-reveal><div class="ab-flow-num">STAP 01</div><h5>Plaatsbezoek</h5><p>Gratis intake binnen 5 werkdagen, met eerste haalbaarheidscheck.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="1"><div class="ab-flow-num">STAP 02</div><h5>Offerte &amp; planning</h5><p>Bindende offerte met meetstaat en kalender per fase.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="2"><div class="ab-flow-num">STAP 03</div><h5>Vergunning</h5><p>Wij regelen architect, EPB-verslaggever en omgevingsdossier.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="3"><div class="ab-flow-num">STAP 04</div><h5>Werf</h5><p>Eigen ploegen, wekelijks fotoverslag, vaste contactpersoon.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 01</div><h5>Plaatsbezoek</h5><p>Gratis intake binnen 5 werkdagen, met eerste haalbaarheidscheck.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 02</div><h5>Offerte &amp; planning</h5><p>Bindende offerte met meetstaat en kalender per fase.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 03</div><h5>Vergunning</h5><p>Wij regelen architect, EPB-verslaggever en omgevingsdossier.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 04</div><h5>Werf</h5><p>Eigen ploegen, wekelijks fotoverslag, vaste contactpersoon.</p></div>
     </div>
   </div>
 </section>
@@ -224,12 +224,12 @@ ${buildHero({
 <!-- WAT INBEGREPEN -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Bij elk Construct-project</span>
       <h2 class="lf-h2">Wat altijd in onze prijs zit.</h2>
     </div>
     <div class="ab-incl ab-incl-single">
-      <div class="ab-incl-card yes" data-reveal>
+      <div class="ab-incl-card yes">
         <h4>Standaard inbegrepen</h4>
         <ul>
           <li>Plaatsbezoek en offertegesprek</li>
@@ -249,16 +249,16 @@ ${buildHero({
 <!-- FAQ -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Veelgestelde vragen</span>
       <h2 class="lf-h2">Over algemene aanneming.</h2>
     </div>
     <div class="ab-faq">
-      <details data-reveal><summary>Hoe lang duurt een totaalrenovatie?</summary><div class="ab-faq-body"><p>Een rijwoning gemiddeld 4 tot 6 maanden, een grotere woning 6 tot 8 maanden. U krijgt vooraf een gedetailleerde kalender met opleverdatum.</p></div></details>
-      <details data-reveal><summary>Wat kost een plaatsbezoek?</summary><div class="ab-faq-body"><p>Niets. Het eerste plaatsbezoek én de offerte zijn gratis en vrijblijvend.</p></div></details>
-      <details data-reveal><summary>Krijg ik een vaste prijs?</summary><div class="ab-faq-body"><p>Ja. U krijgt een bindende offerte met gedetailleerde meetstaat. Meerwerk wordt enkel uitgevoerd na uw schriftelijke goedkeuring.</p></div></details>
-      <details data-reveal><summary>Welke garantie krijg ik?</summary><div class="ab-faq-body"><p>10 jaar wettelijke aansprakelijkheid op stabiliteit en waterdichtheid, verzekerd via Federale Verzekering.</p></div></details>
-      <details data-reveal><summary>Welke premies en voordelen zijn er?</summary><div class="ab-faq-body"><p>Wij bekijken voor welke voordelen u in aanmerking komt: het 6% BTW-tarief (voor woningen ouder dan 10 jaar) en de Mijn VerbouwLening. Behoort u tot de juiste inkomenscategorie, dan regelen wij ook uw Mijn VerbouwPremie-dossier.</p></div></details>
+      <details><summary>Hoe lang duurt een totaalrenovatie?</summary><div class="ab-faq-body"><p>Een rijwoning gemiddeld 4 tot 6 maanden, een grotere woning 6 tot 8 maanden. U krijgt vooraf een gedetailleerde kalender met opleverdatum.</p></div></details>
+      <details><summary>Wat kost een plaatsbezoek?</summary><div class="ab-faq-body"><p>Niets. Het eerste plaatsbezoek én de offerte zijn gratis en vrijblijvend.</p></div></details>
+      <details><summary>Krijg ik een vaste prijs?</summary><div class="ab-faq-body"><p>Ja. U krijgt een bindende offerte met gedetailleerde meetstaat. Meerwerk wordt enkel uitgevoerd na uw schriftelijke goedkeuring.</p></div></details>
+      <details><summary>Welke garantie krijg ik?</summary><div class="ab-faq-body"><p>10 jaar wettelijke aansprakelijkheid op stabiliteit en waterdichtheid, verzekerd via Federale Verzekering.</p></div></details>
+      <details><summary>Welke premies en voordelen zijn er?</summary><div class="ab-faq-body"><p>Wij bekijken voor welke voordelen u in aanmerking komt: het 6% BTW-tarief (voor woningen ouder dan 10 jaar) en de Mijn VerbouwLening. Behoort u tot de juiste inkomenscategorie, dan regelen wij ook uw Mijn VerbouwPremie-dossier.</p></div></details>
     </div>
   </div>
 </section>
@@ -269,13 +269,13 @@ ${FOOTER}
 
 <style>
 .dak-grid { display: grid; grid-template-columns: 1fr; gap: 36px; }
-.dak-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; display: grid; grid-template-columns: 1fr 1.2fr; align-items: start; box-shadow: 0 14px 40px -28px rgba(10,22,40,0.18); transition: box-shadow 0.3s, transform 0.3s; }
-.dak-card:hover { box-shadow: 0 24px 60px -28px rgba(10,22,40,0.28); transform: translateY(-2px); }
+.dak-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; display: grid; grid-template-columns: 1fr 1.2fr; align-items: start; box-shadow: 0 14px 40px -28px rgba(10,22,40,0.18); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.dak-card:hover { box-shadow: 0 24px 60px -28px rgba(10,22,40,0.28); }
 .dak-card:nth-child(even) { grid-template-columns: 1.2fr 1fr; }
 .dak-card:nth-child(even) .dak-card-img { order: 2; }
 .dak-card-img { position: relative; aspect-ratio: 4/3; overflow: hidden; }
-.dak-card-img img { width:100%; height:100%; object-fit: cover; display:block; transition: transform 0.6s var(--ease); }
-.dak-card:hover .dak-card-img img { transform: scale(1.04); }
+.dak-card-img img { width:100%; height:100%; object-fit: cover; display:block; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.dak-card:hover .dak-card-img img { }
 .dak-card-tag { position: absolute; top: 18px; left: 18px; padding: 6px 12px; background: #fff; color: var(--navy); border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; box-shadow: 0 6px 16px -4px rgba(10,22,40,0.25); }
 .dak-card-body { padding: 36px 40px; display:flex; flex-direction:column; }
 .dak-card-body h3 { font-family: var(--font-display); font-size: clamp(22px, 2.4vw, 28px); color: var(--navy); margin-bottom: 12px; font-weight: 600; letter-spacing: -0.01em; }

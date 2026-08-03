@@ -156,7 +156,7 @@ ${buildHero({
   bg: heroImg,
   eyebrow: '04 · Daken & isolatie',
   title: 'Hellende en platte daken,<br/>door <span style="color:var(--accent)">eigen dakdekkers</span>.',
-  lede: 'Volledige dakvervanging, dakisolatie, zinkwerk en dakgoten. Onze <span class="ab-hl" data-hl-delay="0">vaste dakploeg</span> staat <span class="ab-hl" data-hl-delay="1">12 maanden per jaar</span> op de werf, zonder wachtlijsten van weken.',
+  lede: 'Volledige dakvervanging, dakisolatie, zinkwerk en dakgoten. Onze <span class="ab-hl">vaste dakploeg</span> staat <span class="ab-hl">12 maanden per jaar</span> op de werf, zonder wachtlijsten van weken.',
   primary: { label: 'Vraag dakinspectie aan', href: '/contact' },
   secondary: { label: 'Bekijk realisaties →', href: '/realisaties' },
 })}
@@ -165,10 +165,10 @@ ${buildHero({
 <section class="lf-section">
   <div class="wrap">
     <div class="lf-split">
-      <div data-reveal>
+      <div>
         <span class="lf-eyebrow">AB Dakwerken</span>
         <h2 class="lf-h2">Een dak is geen<br/><span class="ab-mark">quick fix</span>.</h2>
-        <p class="lf-lede">We bekijken uw dak als <span class="ab-hl" data-hl-delay="0">systeem</span>, niet als losse pannen. <span class="ab-hl" data-hl-delay="1">Eerlijk advies</span> over wat écht nodig is. Actief in Mechelen, Antwerpen, Lier, Bornem en heel Vlaanderen.</p>
+        <p class="lf-lede">We bekijken uw dak als <span class="ab-hl">systeem</span>, niet als losse pannen. <span class="ab-hl">Eerlijk advies</span> over wat écht nodig is. Actief in Mechelen, Antwerpen, Lier, Bornem en heel Vlaanderen.</p>
         <ul class="ab-checks" style="margin-top:18px;">
           <li>Eigen ploeg van 6 vaste dakdekkers</li>
           <li>Gratis dakinspectie met fotorapport</li>
@@ -176,7 +176,7 @@ ${buildHero({
           <li>Premie- en VerbouwLening-check op uw situatie</li>
         </ul>
       </div>
-      <div class="lf-split-img" data-reveal data-reveal-delay="1"><img src="${imgIntro}" alt="Overzicht dak" loading="lazy"/></div>
+      <div class="lf-split-img"><img src="${imgIntro}" alt="Overzicht dak" loading="lazy"/></div>
     </div>
   </div>
 </section>
@@ -197,7 +197,7 @@ ${buildHero({
   <div class="wrap">
     <div class="dak-grid">
       ${types.map(t => `
-        <article class="dak-card" id="${t.id}" data-reveal>
+        <article class="dak-card" id="${t.id}">
           <div class="dak-card-img"><img src="${t.img}" alt="${t.title}" loading="lazy"/><span class="dak-card-tag">${t.tag}</span></div>
           <div class="dak-card-body">
             <h3>${t.title}</h3>
@@ -224,7 +224,7 @@ ${buildHero({
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="lf-split">
-      <div data-reveal>
+      <div>
         <span class="lf-eyebrow">Spoed &amp; lekkage</span>
         <h2 class="lf-h2">Lek vandaag?<br/>Wij vandaag.</h2>
         <p class="lf-lede">Bij stormschade of acute lekkage werken we met voorrang. Binnen 24 uur een tijdelijke waterdichting, daarna plannen we de definitieve herstelling rustig in.</p>
@@ -235,7 +235,7 @@ ${buildHero({
           </a>
         </div>
       </div>
-      <div data-reveal data-reveal-delay="1">
+      <div>
         <table class="ab-spec">
           <thead><tr><th>Type schade</th><th>Reactie</th></tr></thead>
           <tbody>
@@ -254,15 +254,15 @@ ${buildHero({
 <!-- PROCES -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Hoe we te werk gaan</span>
       <h2 class="lf-h2">Van inspectie tot<br/>oplevering.</h2>
     </div>
     <div class="ab-flow">
-      <div class="ab-flow-card" data-reveal><div class="ab-flow-num">STAP 01</div><h5>Dakinspectie</h5><p>Gratis bezoek met fotorapport en een eerlijke diagnose van de staat van uw dak.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="1"><div class="ab-flow-num">STAP 02</div><h5>Offerte &amp; advies</h5><p>Vaste prijs met opties: enkel herstellen vs. volledige renovatie.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="2"><div class="ab-flow-num">STAP 03</div><h5>Werf weersafhankelijk</h5><p>Planning met buffer voor regen. Dak nooit langer dan 24u open.</p></div>
-      <div class="ab-flow-card" data-reveal data-reveal-delay="3"><div class="ab-flow-num">STAP 04</div><h5>Oplevering</h5><p>Lekvrij verklaard, garantieattesten in orde en — indien van toepassing — uw premie- of VerbouwLening-dossier.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 01</div><h5>Dakinspectie</h5><p>Gratis bezoek met fotorapport en een eerlijke diagnose van de staat van uw dak.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 02</div><h5>Offerte &amp; advies</h5><p>Vaste prijs met opties: enkel herstellen vs. volledige renovatie.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 03</div><h5>Werf weersafhankelijk</h5><p>Planning met buffer voor regen. Dak nooit langer dan 24u open.</p></div>
+      <div class="ab-flow-card"><div class="ab-flow-num">STAP 04</div><h5>Oplevering</h5><p>Lekvrij verklaard, garantieattesten in orde en — indien van toepassing — uw premie- of VerbouwLening-dossier.</p></div>
     </div>
   </div>
 </section>
@@ -270,12 +270,12 @@ ${buildHero({
 <!-- WAT INBEGREPEN -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Bij elk dakproject</span>
       <h2 class="lf-h2">Wat altijd in onze prijs zit.</h2>
     </div>
     <div class="ab-incl ab-incl-single">
-      <div class="ab-incl-card yes" data-reveal>
+      <div class="ab-incl-card yes">
         <h4>Standaard inbegrepen</h4>
         <ul>
           <li>Gratis vooronderzoek met fotorapport</li>
@@ -295,15 +295,15 @@ ${buildHero({
 <!-- FAQ -->
 <section class="lf-section">
   <div class="wrap">
-    <div class="lf-section-head centered" data-reveal>
+    <div class="lf-section-head centered">
       <span class="lf-eyebrow">Veelgestelde vragen</span>
       <h2 class="lf-h2">Over dakwerken.</h2>
     </div>
     <div class="ab-faq">
-      <details data-reveal><summary>Hoe lang duurt een volledige dakvervanging?</summary><div class="ab-faq-body"><p>Een gemiddelde gezinswoning (ca. 100 m²) doen we in 8 tot 14 werkdagen. Bij regen werken we niet aan een open dak, daarom plannen we 2 tot 3 reservedagen in.</p></div></details>
-      <details data-reveal><summary>Krijg ik nog premie voor dakisolatie?</summary><div class="ab-faq-body"><p>Sinds 1 maart 2026 is de isolatiepremie via Mijn VerbouwPremie afgebouwd voor de meeste inkomenscategorieën. Voor wie nog in aanmerking komt, dienen wij het dossier in (R-waarde minstens 4,5 m²K/W). Komt u niet in aanmerking, dan blijft het 6%-BTW-tarief gelden en kunt u een renteloze Mijn VerbouwLening aanvragen. Wij checken uw concrete situatie vooraf.</p></div></details>
-      <details data-reveal><summary>Wat als ik enkel een lekkage heb?</summary><div class="ab-faq-body"><p>Geen probleem. Ongeveer 30% van onze dakopdrachten zijn herstellingen, met dezelfde garantie als grotere werken.</p></div></details>
-      <details data-reveal><summary>Hoe lang gaat een nieuw dak mee?</summary><div class="ab-faq-body"><p>Keramische pannen 50–80 jaar, natuurleien 60–100 jaar, EPDM 50+ jaar, bitumen 25–35 jaar, natuurzink 60–80 jaar.</p></div></details>
+      <details><summary>Hoe lang duurt een volledige dakvervanging?</summary><div class="ab-faq-body"><p>Een gemiddelde gezinswoning (ca. 100 m²) doen we in 8 tot 14 werkdagen. Bij regen werken we niet aan een open dak, daarom plannen we 2 tot 3 reservedagen in.</p></div></details>
+      <details><summary>Krijg ik nog premie voor dakisolatie?</summary><div class="ab-faq-body"><p>Sinds 1 maart 2026 is de isolatiepremie via Mijn VerbouwPremie afgebouwd voor de meeste inkomenscategorieën. Voor wie nog in aanmerking komt, dienen wij het dossier in (R-waarde minstens 4,5 m²K/W). Komt u niet in aanmerking, dan blijft het 6%-BTW-tarief gelden en kunt u een renteloze Mijn VerbouwLening aanvragen. Wij checken uw concrete situatie vooraf.</p></div></details>
+      <details><summary>Wat als ik enkel een lekkage heb?</summary><div class="ab-faq-body"><p>Geen probleem. Ongeveer 30% van onze dakopdrachten zijn herstellingen, met dezelfde garantie als grotere werken.</p></div></details>
+      <details><summary>Hoe lang gaat een nieuw dak mee?</summary><div class="ab-faq-body"><p>Keramische pannen 50–80 jaar, natuurleien 60–100 jaar, EPDM 50+ jaar, bitumen 25–35 jaar, natuurzink 60–80 jaar.</p></div></details>
     </div>
   </div>
 </section>
@@ -314,13 +314,13 @@ ${FOOTER}
 
 <style>
 .dak-grid { display: grid; grid-template-columns: 1fr; gap: 36px; }
-.dak-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; display: grid; grid-template-columns: 1fr 1.2fr; align-items: start; box-shadow: 0 14px 40px -28px rgba(10,22,40,0.18); transition: box-shadow 0.3s, transform 0.3s; }
-.dak-card:hover { box-shadow: 0 24px 60px -28px rgba(10,22,40,0.28); transform: translateY(-2px); }
+.dak-card { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; display: grid; grid-template-columns: 1fr 1.2fr; align-items: start; box-shadow: 0 14px 40px -28px rgba(10,22,40,0.18); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.dak-card:hover { box-shadow: 0 24px 60px -28px rgba(10,22,40,0.28); }
 .dak-card:nth-child(even) { grid-template-columns: 1.2fr 1fr; }
 .dak-card:nth-child(even) .dak-card-img { order: 2; }
 .dak-card-img { position: relative; aspect-ratio: 4/3; overflow: hidden; }
-.dak-card-img img { width:100%; height:100%; object-fit: cover; display:block; transition: transform 0.6s var(--ease); }
-.dak-card:hover .dak-card-img img { transform: scale(1.04); }
+.dak-card-img img { width:100%; height:100%; object-fit: cover; display:block; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.dak-card:hover .dak-card-img img { }
 .dak-card-tag { position: absolute; top: 18px; left: 18px; padding: 6px 12px; background: #fff; color: var(--navy); border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; box-shadow: 0 6px 16px -4px rgba(10,22,40,0.25); }
 .dak-card-body { padding: 36px 40px; display:flex; flex-direction:column; }
 .dak-card-body h3 { font-family: var(--font-display); font-size: clamp(22px, 2.4vw, 28px); color: var(--navy); margin-bottom: 12px; font-weight: 600; letter-spacing: -0.01em; }

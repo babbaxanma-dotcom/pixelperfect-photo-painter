@@ -97,9 +97,7 @@ const BANNER_CSS = `
   box-shadow: 0 24px 60px -18px rgba(10,22,40,0.35);
   font-family: var(--font-body, system-ui, sans-serif);
   font-size: 14.5px; line-height: 1.55;
-  animation: abc-in 0.45s cubic-bezier(.22,.61,.36,1);
 }
-@keyframes abc-in { from { transform: translateY(20px); opacity: 0; } to { transform: none; opacity: 1; } }
 .abc-banner-inner {
   display: grid; grid-template-columns: 1fr auto; gap: 20px;
   padding: 18px 22px; align-items: center;
@@ -112,9 +110,9 @@ const BANNER_CSS = `
 .abc-btn {
   font: inherit; cursor: pointer; padding: 11px 18px;
   border-radius: 999px; border: 1px solid transparent;
-  white-space: nowrap; transition: background 0.2s, border-color 0.2s, transform 0.1s;
+  white-space: nowrap; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
 }
-.abc-btn:active { transform: scale(0.97); }
+.abc-btn:active { }
 .abc-btn-ghost {
   background: transparent; color: #0f1115;
   border-color: rgba(15,17,21,0.18);
