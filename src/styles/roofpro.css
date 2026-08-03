@@ -848,6 +848,48 @@
   .rp-artikel__body h2, .rp-artikel__body h3 { font-size: 21px; margin-top: 30px; }
 }
 
+/* ══ SCROLL-AANZET ═════════════════════════════════════════════════════
+   Klein en rustig onderaan de hero: geeft richting zonder de aandacht te
+   vangen, zodat de bezoeker doorleest in plaats van te blijven staan. */
+.rp-scrollcue {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 26px;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--rp-mute);
+  transition: color 0.2s var(--rp-ease), gap 0.2s var(--rp-ease);
+}
+.rp-scrollcue:hover { color: var(--rp-ink); gap: 13px; }
+.rp-scrollcue__ring {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 1.5px solid var(--rp-line);
+  display: grid; place-items: center;
+  color: var(--rp-ink);
+  background: #fff;
+}
+
+/* klein bewijsplaatje pal naast de actie, niet ergens hoog op de pagina */
+.rp-proofchip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.rp-proofchip--licht {
+  background: #fff;
+  border-color: var(--rp-line);
+  box-shadow: var(--rp-shadow-card);
+}
+.rp-proofchip__sterren { display: inline-flex; gap: 2px; color: var(--rp-accent); }
+.rp-proofchip__t { font-size: 13.5px; font-weight: 700; color: #fff; }
+.rp-proofchip--licht .rp-proofchip__t { color: var(--rp-ink); }
+
 /* ══ FOTO-PLACEHOLDER ══════════════════════════════════════════════════
    Bewust zichtbaar maar rustig: markeert waar nog een échte foto moet komen,
    met de gewenste verhouding en onderwerp erbij. Vervangen = <img> erin. */

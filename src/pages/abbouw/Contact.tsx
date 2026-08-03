@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 import '@/styles/roofpro.css';
-import hero from '@/assets/home/hero-contact.jpg';
 import { submitLead, divisieKey } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
 import { CONTACT } from '@/data/contact';
-import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
+import { ic, rpNav, rpFooter, wireMobielMenu, fotoPlaats } from './_rp';
 
 const DIVISIE_OPTIES = [
   'Algemene aanneming (Construct)',
@@ -56,20 +55,25 @@ ${rpNav('/contact')}
                 <input id="cf-tel" type="tel" name="phone" autocomplete="tel" inputmode="tel" required/>
               </div>
             </div>
-            <div class="rp-veld">
-              <label for="cf-straat">Straat en nummer</label>
-              <input id="cf-straat" type="text" name="straat" autocomplete="street-address"/>
-            </div>
-            <div class="rp-form__rij">
-              <div class="rp-veld">
-                <label for="cf-postcode">Postcode</label>
-                <input id="cf-postcode" type="text" name="postcode" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{4}" maxlength="4"/>
+            <details class="rp-faq__item" style="border-radius:8px">
+              <summary class="rp-faq__q" style="padding:14px 16px;font-size:15px">Adres van het project <span style="font-weight:600;color:var(--rp-mute)">&nbsp;— optioneel</span>${ic.plus}</summary>
+              <div style="padding:0 16px 16px;display:grid;gap:16px">
+                <div class="rp-veld">
+                  <label for="cf-straat">Straat en nummer</label>
+                  <input id="cf-straat" type="text" name="straat" autocomplete="street-address"/>
+                </div>
+                <div class="rp-form__rij">
+                  <div class="rp-veld">
+                    <label for="cf-postcode">Postcode</label>
+                    <input id="cf-postcode" type="text" name="postcode" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{4}" maxlength="4"/>
+                  </div>
+                  <div class="rp-veld">
+                    <label for="cf-gemeente">Gemeente</label>
+                    <input id="cf-gemeente" type="text" name="gemeente" autocomplete="address-level2"/>
+                  </div>
+                </div>
               </div>
-              <div class="rp-veld">
-                <label for="cf-gemeente">Gemeente</label>
-                <input id="cf-gemeente" type="text" name="gemeente" autocomplete="address-level2"/>
-              </div>
-            </div>
+            </details>
             <div class="rp-veld">
               <label for="cf-werk">Om welk werk gaat het? *</label>
               <select id="cf-werk" name="type_werk" required>
@@ -83,6 +87,13 @@ ${rpNav('/contact')}
             </div>
             <p class="rp-fout" data-form-fout hidden></p>
             <button class="rp-btn rp-btn--primary rp-btn--block" type="submit" data-form-btn>Verstuur aanvraag</button>
+            <p class="rp-form__klein" style="text-align:center">Wij bellen u terug om een moment af te spreken. U zit nergens aan vast.</p>
+            <div style="display:flex;justify-content:center">
+              <span class="rp-proofchip rp-proofchip--licht">
+                <span class="rp-proofchip__sterren" aria-hidden="true">${ic.star(13).repeat(5)}</span>
+                <span class="rp-proofchip__t">4,9 op Google</span>
+              </span>
+            </div>
             <p class="rp-form__klein">Wij gebruiken uw gegevens enkel om uw aanvraag te behandelen. Zie onze <a href="/privacy" style="color:var(--rp-accent-text);text-decoration:underline">privacyverklaring</a>.</p>
           </form>
           <div data-form-ok hidden>
@@ -106,8 +117,13 @@ ${rpNav('/contact')}
           <div class="rp-hours__row"><span class="rp-hours__d">Zaterdag</span><span>Op afspraak</span></div>
           <div class="rp-hours__row"><span class="rp-hours__d">Zondag</span><span>Gesloten</span></div>
         </div>
-        <div class="rp-split__media" style="margin-top:28px">
-          <img src="${hero}" alt="Werfleider van AB Bouw Groep tijdens een plaatsbezoek" width="560" height="300" style="height:300px" loading="lazy" decoding="async"/>
+        <div style="margin-top:28px">
+          ${fotoPlaats({
+            titel: 'Portret van wie terugbelt',
+            toelichting: 'Een gezicht bij de naam maakt bellen makkelijker. Liefst de werfleider of wie de telefoon opneemt, op de werf of voor de bestelwagen.',
+            maat: 'liggend 4:3 · min. 900 px breed',
+            hoogte: '300px',
+          })}
         </div>
       </div>
     </div>

@@ -123,6 +123,10 @@ const HTML = (i: Record<string, string>) => {
       </div>
       <div class="rp-hero__aside">
         <p class="rp-hero__lede">AB Bouw Groep verbouwt woningen in heel Vlaanderen. Dak, gevel, badkamer, interieur of alles samen: zes vakken die wij zelf uitvoeren en op elkaar afstemmen.</p>
+        <a class="rp-scrollcue" href="#diensten">
+          <span class="rp-scrollcue__ring" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></span>
+          Bekijk wat wij doen
+        </a>
       </div>
     </div>
   </div>
@@ -407,6 +411,12 @@ const HTML = (i: Record<string, string>) => {
           <button class="rp-btn rp-btn--primary" type="submit" data-cta-btn>Bel mij terug</button>
         </form>
         <p class="rp-cta__note" data-cta-note>Of bel zelf: <a href="${CONTACT.phone.href}" style="color:#fff;font-weight:700">${CONTACT.phone.display}</a></p>
+        <div style="margin-top:20px">
+          <span class="rp-proofchip">
+            <span class="rp-proofchip__sterren" aria-hidden="true">${ic.star(13).repeat(5)}</span>
+            <span class="rp-proofchip__t">4,9 op Google &middot; 120+ woningen gerenoveerd</span>
+          </span>
+        </div>
       </div>
     </div>
   </div>
