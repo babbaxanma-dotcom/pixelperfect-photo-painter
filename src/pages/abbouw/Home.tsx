@@ -126,8 +126,8 @@ const HTML = (i: Record<string, string>) => {
   <div class="rp-wrap rp-hero2__grid">
     <div>
       <span class="rp-hero2__eyebrow">${ic.mark} Bouw en renovatie</span>
-      <h1 class="rp-hero2__t">Van jaren 70<span class="rp-dim2">naar instapklaar</span></h1>
-      <p class="rp-hero2__lede">Dak, gevel, isolatie, badkamer en interieur onder één contract. Elke post staat vooraf op papier en dat bedrag blijft staan tot de oplevering.</p>
+      <h1 class="rp-hero2__t">Stoken en toch koud?<span class="rp-dim2">Straks overal warm</span></h1>
+      <p class="rp-hero2__lede">Dak, muren en vloer geïsoleerd, ramen en ventilatie mee vernieuwd. Eén aannemer voor uw hele woning, met de prijs vooraf op papier.</p>
       <div class="rp-hero2__punten">
         <span class="rp-hero2__punt">${vinkje} 4,9 op Google</span>
         <span class="rp-hero2__punt">${vinkje} 120+ woningen gerenoveerd</span>
