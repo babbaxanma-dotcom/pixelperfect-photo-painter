@@ -92,7 +92,7 @@ const REVIEWS = [
 ];
 
 const STAPPEN = [
-  { n: '01', t: 'Plaatsbezoek', img: stap2, d: 'We komen langs, meten op en luisteren wat u wil. Kosteloos en zonder verplichting.' },
+  { n: '01', t: 'Plaatsbezoek', img: stap2, d: 'We komen langs, meten op en luisteren wat u van plan bent. Het bezoek is vrijblijvend.' },
   { n: '02', t: 'Offerte', img: stap3, d: 'U krijgt een gedetailleerde prijs per post. Elke lijn is uitgesplitst, zodat u ziet waarvoor u betaalt.' },
   { n: '03', t: 'Uitvoering', img: stap5, d: 'Eén werfleider volgt uw project op. U weet wie er komt en wanneer.' },
   { n: '04', t: 'Oplevering', img: stap7, d: 'We lopen samen alles na en werken de laatste punten af. Pas dan is het klaar.' },
@@ -125,9 +125,9 @@ const HTML = (i: Record<string, string>) => {
   </div>
   <div class="rp-wrap rp-hero2__grid">
     <div>
-      <span class="rp-hero2__eyebrow">${ic.mark} Bouw en renovatie</span>
-      <h1 class="rp-hero2__t">Stoken en toch koud?<span class="rp-dim2">Straks overal warm</span></h1>
-      <p class="rp-hero2__lede">Dak, muren en vloer geïsoleerd, ramen en ventilatie mee vernieuwd. Eén aannemer voor uw hele woning, met de prijs vooraf op papier.</p>
+      <span class="rp-hero2__eyebrow">${ic.mark} AB Bouw Groep</span>
+      <h1 class="rp-hero2__t">Bouwen en renoveren<span class="rp-dim2">in Vlaanderen en Brussel</span></h1>
+      <p class="rp-hero2__lede">AB Bouw Groep werkt met zes afdelingen: ruwbouw, dak, gevel, badkamer, interieur en energiewerken. Van één ingreep tot een woning die volledig op de schop gaat.</p>
       <div class="rp-hero2__punten">
         <span class="rp-hero2__punt">${vinkje} 4,9 op Google</span>
         <span class="rp-hero2__punt">${vinkje} 120+ woningen gerenoveerd</span>
@@ -162,7 +162,7 @@ const HTML = (i: Record<string, string>) => {
         <p class="rp-fout" data-hero-fout hidden></p>
         <button class="rp-btn rp-btn--primary rp-btn--block" type="submit" data-hero-btn>Bel mij terug</button>
       </form>
-      <p class="rp-aanvraag__vt">${vinkje} U zit nergens aan vast &middot; 4,9 op Google</p>
+      <p class="rp-aanvraag__vt">${vinkje} Vrijblijvend &middot; 4,9 op Google</p>
       <div class="rp-aanvraag__ok" data-hero-ok hidden>
         <span class="rp-aanvraag__ok-ic" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
         <h2 class="rp-aanvraag__t">Bedankt, wij bellen u terug</h2>
@@ -262,7 +262,7 @@ const HTML = (i: Record<string, string>) => {
     <div>
       <span class="rp-eyebrow">${ic.mark} Waarom AB Bouw Groep</span>
       <h2 class="rp-why__title">Weten waar u<span class="rp-dim">aan toe bent</span></h2>
-      <p class="rp-why__p">De meeste ergernis in een verbouwing komt niet van het werk zelf, maar van niet weten wanneer er iemand komt en wat het uiteindelijk kost. Daar zetten wij onze afspraken tegenover: een offerte per post uitgesplitst, een planning die u vooraf krijgt, en één werfleider die u kan bellen.</p>
+      <p class="rp-why__p">Wat een verbouwing zwaar maakt, is meestal de onzekerheid: wanneer komt er iemand, en waar eindigt de rekening. Daarom leggen wij dat vooraf vast. Uw offerte splitst elke post apart uit, de planning krijgt u voor de start, en tijdens de werken heeft u één vast nummer.</p>
       <p class="rp-why__p">Loopt er iets anders dan gepland, dan hoort u dat van ons voor u het zelf merkt.</p>
       <div class="rp-why__cta"><a class="rp-btn rp-btn--primary" href="/werkwijze">Zo werken wij</a></div>
     </div>

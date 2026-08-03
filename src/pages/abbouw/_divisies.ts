@@ -87,7 +87,7 @@ export const DIVISIES: Record<string, DivisionConfig> = {
   bad: {
     slug: 'bad', num: '05', title: 'Badkamer en wellness', eyebrow: 'Badkamers',
     heroTitle: 'Eén ploeg voor<br/>uw hele badkamer',
-    heroLede: 'Sanitair, tegelwerk, vloerverwarming en elektriciteit door dezelfde mensen. U hoeft niet zelf tussen een loodgieter en een tegelzetter te bemiddelen.',
+    heroLede: 'Sanitair, tegelwerk, vloerverwarming en elektriciteit komen van dezelfde ploeg, in één planning. Zo blijft de afstemming tussen de vakken bij ons liggen.',
     heroBg: badHero,
     storyTitle: 'Eerst zien,<br/>dan bestellen',
     storyLede: 'U krijgt een 3D-ontwerp ter goedkeuring voordat er iets besteld wordt. Zo ontdekt u niet halverwege dat het meubel net te breed is of de deur tegen de douchewand komt.',

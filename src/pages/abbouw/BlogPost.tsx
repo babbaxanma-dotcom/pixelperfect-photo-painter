@@ -82,7 +82,7 @@ ${rpNav('/blog')}
     <div class="rp-cta__box" style="min-height:270px">
       <div class="rp-cta__inner">
         <h2 class="rp-cta__t">Geldt dit ook voor uw woning?</h2>
-        <p class="rp-cta__p">Bij een plaatsbezoek zeggen we wat er in uw situatie van toepassing is, en wat het kost. Kosteloos en zonder verplichting.</p>
+        <p class="rp-cta__p">Bij een plaatsbezoek zeggen we wat er in uw situatie van toepassing is, en wat het kost. Het bezoek is vrijblijvend.</p>
         <div style="margin-top:26px;display:flex;flex-wrap:wrap;gap:12px">
           <a class="rp-btn rp-btn--primary" href="/contact">Plan een plaatsbezoek</a>
           <a class="rp-btn rp-btn--ghost" href="${CONTACT.phone.href}" style="color:#fff;border-color:rgba(255,255,255,.34)">${ic.phone(17)} ${CONTACT.phone.display}</a>

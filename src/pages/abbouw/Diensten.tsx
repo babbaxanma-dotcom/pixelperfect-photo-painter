@@ -144,7 +144,7 @@ ${rpNav('/diensten')}
     <div class="rp-cta__box" style="min-height:270px">
       <div class="rp-cta__inner">
         <h2 class="rp-cta__t">Weten wat uw plan kost?</h2>
-        <p class="rp-cta__p">We komen langs, meten op en bezorgen u een offerte waarin elke post apart staat. Kosteloos en zonder verplichting.</p>
+        <p class="rp-cta__p">We komen langs, meten op en bezorgen u een offerte waarin elke post apart staat. Het plaatsbezoek is vrijblijvend.</p>
         <div style="margin-top:26px;display:flex;flex-wrap:wrap;gap:12px">
           <a class="rp-btn rp-btn--primary" href="/contact">Plan een plaatsbezoek</a>
           <a class="rp-btn rp-btn--ghost" href="${CONTACT.phone.href}" style="color:#fff;border-color:rgba(255,255,255,.34)">${ic.phone(17)} ${CONTACT.phone.display}</a>

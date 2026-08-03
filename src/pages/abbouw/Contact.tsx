@@ -87,7 +87,7 @@ ${rpNav('/contact')}
             </div>
             <p class="rp-fout" data-form-fout hidden></p>
             <button class="rp-btn rp-btn--primary rp-btn--block" type="submit" data-form-btn>Verstuur aanvraag</button>
-            <p class="rp-form__klein" style="text-align:center">Wij bellen u terug om een moment af te spreken. U zit nergens aan vast.</p>
+            <p class="rp-form__klein" style="text-align:center">Wij bellen u terug om een moment af te spreken.</p>
             <div style="display:flex;justify-content:center">
               <span class="rp-proofchip rp-proofchip--licht">
                 <span class="rp-proofchip__sterren" aria-hidden="true">${ic.star(13).repeat(5)}</span>
