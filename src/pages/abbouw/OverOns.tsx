@@ -1,342 +1,197 @@
 import { useEffect } from 'react';
-import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
-import { buildNav, buildHero, buildCta, FOOTER, SHELL_STYLE } from './_shell';
+import '@/styles/roofpro.css';
 import hero from '@/assets/home/hero-over.jpg';
 import about from '@/assets/home/about.jpg';
 import why from '@/assets/home/why.jpg';
-import skills from '@/assets/home/skills.jpg';
-import vakmanDak from '@/assets/home/vakman-dak.jpg';
-import vakmanInterieur from '@/assets/home/vakman-interieur.jpg';
-import team1 from '@/assets/home/team1.jpg';
-import team2 from '@/assets/home/team2.jpg';
-import team3 from '@/assets/home/team3.jpg';
+import { CONTACT } from '@/data/contact';
+import { ic, rpNav, rpFooter, wireMobielMenu, fotoPlaats } from './_rp';
 
-const HTML = `
-${buildNav('over')}
+const vink = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
 
-${buildHero({
-  bg: hero,
-  eyebrow: `${new Date().getFullYear() - 2010} jaar ervaring`,
-  title: 'Bouwen aan vertrouwen,<br/>steen voor <span style="color:var(--accent)">steen</span>.',
-  lede: 'Wat begon als een eenmanszaak groeide uit tot een Vlaamse bouwgroep met zes specialisaties en 23 vakmensen in vaste dienst, zonder ooit de persoonlijke aanpak te verliezen.',
-  primary: { label: 'Plan een kennismaking', href: '/contact' },
-  secondary: { label: 'Bekijk ons werk →', href: '/realisaties' },
-})}
+const CIJFERS = [
+  { n: '16', l: 'jaar ervaring in de bouw' },
+  { n: '23', l: 'vakmensen in vaste dienst' },
+  { n: '120+', l: 'woningen gerenoveerd' },
+  { n: '6', l: 'vakdisciplines onder één dak' },
+];
 
-<!-- INTRO + PORTRAIT -->
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-split">
+const PRINCIPES = [
+  {
+    n: '01', t: 'Vakmensen in vaste dienst',
+    d: 'Onze metselaars, dakdekkers, tegelzetters en schrijnwerkers staan op onze eigen loonlijst. Daardoor werkt op uw werf iedere dag dezelfde ploeg, met dezelfde standaarden.',
+  },
+  {
+    n: '02', t: 'Eén prijs, uitgesplitst',
+    d: 'De offerte zet elke post apart: afbraak, materiaal, uitvoering en afvoer. Meerwerk gaat pas door na uw schriftelijke akkoord op een aparte prijs.',
+  },
+  {
+    n: '03', t: 'Eén werfleider',
+    d: 'U krijgt één nummer dat u belt. Die persoon kent uw dossier, kent de planning en blijft uw aanspreekpunt tot een jaar na de oplevering.',
+  },
+];
+
+const AFSPRAKEN = [
+  'Plaatsbezoek binnen vijf werkdagen',
+  'Offerte binnen zeven werkdagen',
+  'Vaste startdatum in het contract',
+  'Wekelijks een werfrapport',
+  'Eén factuur per afgeronde fase',
+  'Werf elke vrijdag opgeruimd',
+  'Premiedossier dienen wij mee in',
+  'Nazorg tot twaalf maanden na oplevering',
+];
+
+const ERKENNINGEN = [
+  { t: 'VCA', d: 'Veiligheidscertificaat aannemers, jaarlijks gecontroleerd.' },
+  { t: 'BTW en KBO geregistreerd', d: 'Ondernemingsnummer opvraagbaar; staat op elke offerte en factuur.' },
+  { t: '6% btw bij renovatie', d: 'Voor woningen ouder dan tien jaar, en de Mijn VerbouwLening waar u aan de voorwaarden voldoet.' },
+  { t: 'Tienjarige aansprakelijkheid', d: 'Polis stabiliteit en waterdichtheid bij een federale verzekeraar.' },
+  { t: 'EPB-verslaggever in huis', d: 'Voor renovaties en nieuwbouw waar een verslag verplicht is.' },
+  { t: 'Eigen ploegen', d: 'Mensen op de loonlijst, met correcte verloning; geen schijnconstructies.' },
+];
+
+const HTML = () => `<div class="rp">
+${rpNav('/over')}
+
+<section class="rp-phero">
+  <div class="rp-wrap">
+    <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Over ons</span></nav>
+    <span class="rp-eyebrow">${ic.mark} Over AB Bouw Groep</span>
+    <h1 class="rp-phero__t">Een bouwbedrijf<span class="rp-dim">met mensen in dienst</span></h1>
+    <p class="rp-phero__lede">AB Bouw Groep telt zes afdelingen: ruwbouw, dak, gevel, badkamer, interieur en energiewerken. De vakmensen die op uw werf staan, staan bij ons op de loonlijst.</p>
+  </div>
+</section>
+
+<div class="rp-hero__photo">
+  <img src="${hero}" alt="Gerenoveerde woning van AB Bouw Groep" width="1600" height="440" fetchpriority="high" decoding="async"/>
+</div>
+
+<section class="rp-section">
+  <div class="rp-wrap rp-about__stats" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+    ${CIJFERS.map((c) => `<div><div class="rp-stat__n">${c.n}</div><div class="rp-stat__l">${c.l}</div></div>`).join('')}
+  </div>
+</section>
+
+<section class="rp-section" style="padding-top:0">
+  <div class="rp-wrap">
+    <div class="rp-split">
+      <div class="rp-split__media">
+        <img src="${about}" alt="Woning in uitvoering bij AB Bouw Groep" width="560" height="420" loading="lazy" decoding="async"/>
+      </div>
       <div>
-        <span class="lf-eyebrow">Wie we zijn</span>
-        <h2 class="lf-h2">Een familiebedrijf<br/>met vakmensen in dienst.</h2>
-        <p class="lf-lede">AB Bouw Groep werkt niet met een wisselende keten van onderaannemers. Onze metselaars, dakdekkers, tegelzetters en schrijnwerkers staan op onze eigen loonlijst. Daardoor kunnen we instaan voor één planning, één prijs en één kwaliteitsstandaard, van de eerste schop tot de laatste plint.</p>
-        <p class="lf-lede">Onze klanten zijn particulieren die hun gezinswoning bouwen of grondig renoveren, architecten die een uitvoerder zoeken die meedenkt, en kleine ondernemers die hun zaak laten verbouwen zonder de zaak stil te leggen. Wat ze gemeen hebben: ze willen één aanspreekpunt en een resultaat dat lang meegaat.</p>
-      </div>
-      <div class="lf-split-img"><img src="${about}" alt="AB Bouw Groep ploeg op de werf in Willebroek" loading="lazy"/></div>
-    </div>
-  </div>
-</section>
-
-<!-- PIJLERS / WAARDEN -->
-<section class="lf-section lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-section-head centered">
-      <span class="lf-eyebrow">Onze pijlers</span>
-      <h2 class="lf-h2">Drie principes die elke<br/>werf bij ons vorm geven.</h2>
-      <p class="lf-lede" style="margin: 0 auto;">Drie principes die al vijftien jaar onze werkwijze bepalen, en waarom klanten ons aanbevelen aan hun buren.</p>
-    </div>
-    <div class="ab-pillars">
-      <article class="ab-pillar">
-        <div class="ab-pillar-img"><img src="${vakmanInterieur}" alt="Werfleider en opdrachtgevers bespreken het bouwplan op de werf" loading="lazy"/></div>
-        <div class="ab-pillar-body">
-          <span class="ab-pillar-num">01</span>
-          <h3>Vakmanschap in vaste dienst</h3>
-          <p>23 vakmensen die elkaar kennen, dezelfde standaarden delen en al jaren samen op de werf staan. U ziet dezelfde ploeg van de eerste tot de laatste werkdag.</p>
-        </div>
-      </article>
-      <article class="ab-pillar">
-        <div class="ab-pillar-img"><img src="${vakmanDak}" alt="Dakdekker plaatst keramische dakpannen op een hellend dak" loading="lazy"/></div>
-        <div class="ab-pillar-body">
-          <span class="ab-pillar-num">02</span>
-          <h3>Eén prijs, geen verrassingen</h3>
-          <p>Onze offertes zijn gedetailleerd en bindend. Materialen, uurloon en planning, alles uitgesplitst. Wat we afspreken, dat bouwen we, voor de prijs die op papier staat.</p>
-        </div>
-      </article>
-      <article class="ab-pillar">
-        <div class="ab-pillar-img"><img src="${skills}" alt="Werfleider overlegt met opdrachtgever" loading="lazy"/></div>
-        <div class="ab-pillar-body">
-          <span class="ab-pillar-num">03</span>
-          <h3>Eén aanspreekpunt</h3>
-          <p>U krijgt één werfleider die uw dossier kent, van het plaatsbezoek tot de oplevering. Eén nummer volstaat, voor elke vraag over uw werf.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- MISSIE & VISIE -->
-<section class="lf-section">
-  <div class="wrap">
-    <div class="ab-mv-grid">
-      <div class="ab-mv-card ab-mv-mission">
-        <div class="ab-mv-tag">Missie</div>
-        <h3>Bouwen wat we zelf zouden willen kopen.</h3>
-        <p>We leveren elke werf op met de standaard die we voor onze eigen familie zouden eisen, tot in de hoeken afgewerkt.</p>
-      </div>
-      <div class="ab-mv-card ab-mv-vision">
-        <div class="ab-mv-tag">Visie</div>
-        <h3>Het bouwbedrijf waar mensen blijven werken.</h3>
-        <p>Goede werven beginnen bij goede vakmensen. We investeren in opleiding, modern materieel en een correcte verloning, zodat onze ploegen blijven, en onze klanten dezelfde gezichten op hun werf zien, jaar na jaar.</p>
+        <span class="rp-eyebrow">${ic.mark} Wie we zijn</span>
+        <h2 class="rp-split__t">Voor wie wij<span class="rp-dim">werken</span></h2>
+        <p class="rp-split__lede">Onze klanten zijn particulieren die hun woning grondig aanpakken: een gezinswoning die op de schop gaat, een rijwoning die tot op de muren gestript wordt, of een dak dat na dertig jaar aan vervanging toe is.</p>
+        <p class="rp-split__lede">We plannen per werf één ploeg in en nemen er maar zoveel aan als we met eigen mensen kunnen bemannen.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- IN CIJFERS -->
-<section class="lf-section lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-section-head centered">
-      <span class="lf-eyebrow">In cijfers</span>
-      <h2 class="lf-h2">Een groep die rustig<br/>maar gestaag groeit.</h2>
-    </div>
-    <div class="ab-facts">
-      <div class="ab-fact"><div class="ab-fact-num">16</div><div class="ab-fact-lbl">Jaar ervaring</div></div>
-      <div class="ab-fact"><div class="ab-fact-num">23</div><div class="ab-fact-lbl">Vakmensen in vaste dienst</div></div>
-      <div class="ab-fact"><div class="ab-fact-num">120+</div><div class="ab-fact-lbl">Woningen gerenoveerd</div></div>
-      <div class="ab-fact"><div class="ab-fact-num">6</div><div class="ab-fact-lbl">Specialisaties onder één dak</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- HOE WIJ WERKEN -->
-<section class="lf-section lf-tone-soft ab-rules-section">
-  <div class="wrap">
-    <div class="lf-section-head centered">
-      <span class="lf-eyebrow">Hoe wij werken</span>
-      <h2 class="lf-h2">Acht afspraken die wij<br/>met onszelf maken.</h2>
-      <p class="lf-lede" style="margin: 0 auto;">Klik door de acht punten die letterlijk in elke offerte staan.</p>
-    </div>
-
-    <div class="ab-promise" data-promise>
-      <div class="ab-promise-tabs" data-promise-tabs>
-        ${[
-          ['01','Plaatsbezoek binnen 5 werkdagen'],
-          ['02','Offerte in 7 werkdagen'],
-          ['03','Vaste startdatum op contract'],
-          ['04','Wekelijks werfrapport'],
-          ['05','Eén factuur per fase'],
-          ['06','Werf opgeruimd op vrijdag'],
-          ['07','Premiedossier door ons'],
-          ['08','Nacontrole na 1 jaar'],
-        ].map(([n,t], i) => `<button type="button" class="ab-promise-tab${i===0?' is-active':''}" data-promise-tab="${i}"><span class="ab-promise-tab-num">${n}</span><span class="ab-promise-tab-title">${t}</span></button>`).join('')}
-      </div>
-
-      <div class="ab-promise-stage" data-promise-stage>
-        ${[
-          ['01','Plaatsbezoek binnen 5 werkdagen','U belt of mailt, wij komen binnen de week ter plaatse. Geen tussenpersonen, gewoon de werfleider die uw project zal opvolgen.','Reactie binnen 24 u·Werfleider zelf ter plaatse·Vrijblijvend & gratis'],
-          ['02','Offerte in 7 werkdagen','Een gedetailleerde meetstaat, geen ronde forfaits. U weet exact wat materiaal kost, wat uurloon kost en wat de marge is.','Post per post uitgesplitst·Bindende prijs·Mondeling toegelicht'],
-          ['03','Vaste startdatum op contract','Bij ondertekening krijgt u een planning met start- én opleveringsdatum. Verschuift het, dan hoort u dat minstens twee weken vooraf.','Start- & einddatum zwart op wit·Boeteclausule bij vertraging·Geen open einde'],
-          ['04','Wekelijks werfrapport','Elke vrijdag krijgt u een korte mail met foto\\u2019s, gewerkte uren en de planning voor de volgende week. U weet altijd waar we staan.','Foto\\u2019s van de week·Gewerkte uren per fase·Planning vooruit'],
-          ['05','Eén factuur per fase','Geen losse rekeningen van metselaar, dakwerker en tegelzetter. Eén schijf per fase, telkens nadat u die fase samen met ons heeft opgeleverd.','Eén aanspreekpunt voor facturatie·Schijf na oplevering fase·Geen voorschotten zonder werk'],
-          ['06','Werf opgeruimd op vrijdag','Standaard inbegrepen. Vloeren afgedekt, materiaal gestapeld, container leeg. U gebruikt uw woning gewoon door tijdens de werken.','Stof­schotten & vloerbescherming·Container wekelijks geleegd·Sanitair blijft bruikbaar'],
-          ['07','Premies & financiering geregeld','Wij rekenen het 6%-BTW-tarief correct toe waar u recht op heeft en bekijken samen of u in aanmerking komt voor de Mijn VerbouwLening of een resterende premie. Onze EPB-verslaggever dient een eventueel dossier voor u in.','6%-BTW waar van toepassing·Mijn VerbouwLening bekeken·Premie-check op uw situatie'],
-          ['08','Nacontrole na 1 jaar','Krimpscheuren, deuren bijregelen, voegen nakijken. Eén jaar na oplevering komen we gratis langs voor een eindcontrole.','Gratis nacontrole·Bijregelen inbegrepen·10 jaar aansprakelijkheid'],
-        ].map(([n,t,d,b], i) => `
-          <article class="ab-promise-panel${i===0?' is-active':''}" data-promise-panel="${i}">
-            <div class="ab-promise-bignum">${n}</div>
-            <div class="ab-promise-body">
-              <h3>${t}</h3>
-              <p>${d}</p>
-              <ul class="ab-promise-bullets">
-                ${(b as string).split('·').map(x => `<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>${x.trim()}</span></li>`).join('')}
-              </ul>
-            </div>
-          </article>
-        `).join('')}
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- VERHAAL / FOTO BAND -->
-<section class="lf-section ab-story lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-split">
-      <div class="lf-split-img"><img src="${why}" alt="Werf AB Bouw Groep in uitvoering" loading="lazy"/></div>
+<section class="rp-section rp-section--soft">
+  <div class="rp-wrap">
+    <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
       <div>
-        <span class="lf-eyebrow">Onze werkregio</span>
-        <h2 class="lf-h2">Vlaams gebouwd,<br/>lokaal verankerd.</h2>
-        <p class="lf-lede">Vanuit ons kantoor in Willebroek bedienen we Antwerpen, Mechelen, Boom, Bonheiden, Lier, Brussel en omliggende gemeenten. Onze vaste leveranciers zitten in dezelfde driehoek, waardoor materiaal nooit ver moet komen en wij u snel kunnen helpen, ook bij dringende interventies.</p>
-        <p class="lf-lede">We blijven bewust een Vlaamse familiale bouwgroep. Groot genoeg om uw volledig project zelf te dragen, klein genoeg om u bij naam te kennen en jaren later nog op te bellen om te vragen hoe het ermee gaat.</p>
+        <span class="rp-eyebrow">${ic.mark} Onze principes</span>
+        <h2 class="rp-head__title">Hoe wij<span class="rp-dim">werken</span></h2>
       </div>
+    </div>
+    <div class="rp-why__tiles rp-tiles-3">
+      ${PRINCIPES.map((p) => `
+      <div class="rp-tile">
+        <div class="rp-split__n">${p.n}</div>
+        <h3 class="rp-tile__t">${p.t}</h3>
+        <p class="rp-tile__d">${p.d}</p>
+      </div>`).join('')}
     </div>
   </div>
 </section>
 
-<!-- ERKENNINGEN / CERTIFICATEN -->
-<section class="lf-section lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-split">
+<section class="rp-section">
+  <div class="rp-wrap">
+    <div class="rp-split rp-split--om">
+      <div class="rp-split__media">
+        <img src="${why}" alt="Vakman van AB Bouw Groep aan het werk" width="560" height="420" loading="lazy" decoding="async"/>
+      </div>
       <div>
-        <span class="lf-eyebrow">Erkenningen</span>
-        <h2 class="lf-h2">Officieel erkend,<br/>verzekerd en gecertificeerd.</h2>
-        <p class="lf-lede">Werken met een erkende aannemer is geen luxe. Het is uw garantie dat de wettelijke verplichtingen, de tienjarige aansprakelijkheid en de verzekeringen écht in orde zijn.</p>
-      </div>
-      <div class="ab-certs">
-        <div class="ab-cert"><strong>VCA*</strong><span>Veiligheidscertificering aannemers, jaarlijks geauditeerd</span></div>
-        <div class="ab-cert"><strong>10-jarige aansprakelijkheid</strong><span>Polis stabiliteit &amp; waterdichtheid bij Federale Verzekering</span></div>
-        <div class="ab-cert"><strong>BTW &amp; KBO geregistreerd</strong><span>BE 0712.443.881 · lid Bouwunie</span></div>
-        <div class="ab-cert"><strong>EPB-verslaggever in huis</strong><span>Voor renovatie- en nieuwbouwdossiers</span></div>
-        <div class="ab-cert"><strong>6%-BTW &amp; Mijn VerbouwLening</strong><span>Correcte tarieftoepassing en begeleiding bij financiering</span></div>
-        <div class="ab-cert"><strong>Eigen ploegen, geen schijnzelfstandigen</strong><span>Alle vakmensen in vaste dienst, RSZ in orde</span></div>
+        <span class="rp-eyebrow">${ic.mark} Wat wij vastleggen</span>
+        <h2 class="rp-split__t">Acht afspraken<span class="rp-dim">die in het contract staan</span></h2>
+        <p class="rp-split__lede">Deze acht punten staan in uw offerte en in de overeenkomst.</p>
+        <ul class="rp-lijst">
+          ${AFSPRAKEN.map((a) => `<li>${vink}<span>${a}</span></li>`).join('')}
+        </ul>
+        <div class="rp-split__cta"><a class="rp-btn rp-btn--primary" href="/werkwijze">Zo verloopt een project ${ic.arrowUpRight()}</a></div>
       </div>
     </div>
   </div>
 </section>
 
-${buildCta('Een eerste gesprek is altijd vrijblijvend.', 'Bel ons of plan een kennismaking. We luisteren naar uw plannen, geven onze eerlijke kijk en bekijken samen of we de juiste partner zijn.')}
+<section class="rp-section rp-section--soft">
+  <div class="rp-wrap">
+    <div class="rp-split">
+      <div>
+        <span class="rp-eyebrow">${ic.mark} Het team</span>
+        <h2 class="rp-split__t">De mensen die<span class="rp-dim">bij u over de vloer komen</span></h2>
+        <p class="rp-split__lede">Op de werf staan een werfleider die de planning opvolgt en de vakmensen van de betrokken afdelingen. Bij een totaalrenovatie wisselen die afdelingen elkaar af volgens de planning die u vooraf krijgt.</p>
+        <p class="rp-split__lede">De werfleider is ook de persoon die u belt tijdens de werken.</p>
+      </div>
+      ${fotoPlaats({
+        titel: 'Groepsfoto van het team',
+        toelichting: 'De echte ploeg, bij voorkeur op een werf of voor de bestelwagens. Werkkledij zonder logo\'s van derden. Geen gestileerde studiofoto.',
+        maat: 'liggend 4:3 · min. 1600 px breed',
+        hoogte: '420px',
+      })}
+    </div>
+  </div>
+</section>
 
-${FOOTER}
+<section class="rp-section">
+  <div class="rp-wrap">
+    <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
+      <div>
+        <span class="rp-eyebrow">${ic.mark} Erkenningen</span>
+        <h2 class="rp-head__title">Officieel erkend<span class="rp-dim">en verzekerd</span></h2>
+      </div>
+    </div>
+    <div class="rp-why__tiles rp-tiles-3">
+      ${ERKENNINGEN.map((e) => `
+      <div class="rp-tile">
+        <div class="rp-tile__ic" aria-hidden="true">${vink}</div>
+        <h3 class="rp-tile__t">${e.t}</h3>
+        <p class="rp-tile__d">${e.d}</p>
+      </div>`).join('')}
+    </div>
+  </div>
+</section>
 
-<style>
-.ab-mv-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-.ab-mv-card { padding: 44px 38px; border-radius: 18px; }
-.ab-mv-mission { background: var(--navy); color: #fff; }
-.ab-mv-vision { background: #fff; border: 1px solid var(--ink-line-soft); }
-.ab-mv-tag { display:inline-flex; align-items:center; gap:9px; padding:0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 18px; }
-.ab-mv-tag::before { content:''; width:26px; height:3px; border-radius:2px; background: var(--accent); flex-shrink:0; }
-.ab-mv-mission .ab-mv-tag { color: rgba(255,255,255,0.85); }
-.ab-mv-vision .ab-mv-tag { color: #41495a; }
-.ab-mv-card h3 { font-family: var(--font-display); font-size: 24px; line-height: 1.25; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 14px; }
-.ab-mv-mission h3 { color: #fff; }
-.ab-mv-vision h3 { color: var(--navy); }
-.ab-mv-card p { font-size: 15px; line-height: 1.7; margin: 0; }
-.ab-mv-mission p { color: rgba(255,255,255,0.82); }
-.ab-mv-vision p { color: var(--ink-soft); }
+<section class="rp-cta">
+  <div class="rp-wrap">
+    <div class="rp-cta__box" style="min-height:270px">
+      <div class="rp-cta__bg" aria-hidden="true">
+        <img src="${hero}" alt="" width="1200" height="420" loading="lazy" decoding="async"/>
+        <span class="rp-cta__veil"></span>
+      </div>
+      <div class="rp-cta__inner">
+        <h2 class="rp-cta__t">Een eerste gesprek kost u niets</h2>
+        <p class="rp-cta__p">We komen langs, luisteren wat u wil en zeggen eerlijk wat haalbaar is binnen uw budget.</p>
+        <div style="margin-top:26px;display:flex;flex-wrap:wrap;gap:12px">
+          <a class="rp-btn rp-btn--primary" href="/contact">Plan een plaatsbezoek</a>
+          <a class="rp-btn rp-btn--ghost" href="${CONTACT.phone.href}" style="color:#fff;border-color:rgba(255,255,255,.34)">${ic.phone(17)} ${CONTACT.phone.display}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-.ab-pillars { display:grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
-.ab-pillar { background:#fff; border-radius: 16px; overflow: hidden; border: 1px solid var(--ink-line-soft); display:flex; flex-direction:column; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.ab-pillar:hover { box-shadow: 0 28px 50px -28px rgba(15,17,21,.22); }
-.ab-pillar-img { aspect-ratio: 4/3; overflow: hidden; }
-.ab-pillar-img img { width:100%; height:100%; object-fit:cover; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.ab-pillar:hover .ab-pillar-img img { }
-.ab-pillar-body { padding: 26px 26px 30px; position:relative; }
-.ab-pillar-num { font-family: var(--font-display); font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: .12em; }
-.ab-pillar h3 { font-family: var(--font-display); font-size: 19px; color: var(--navy); margin: 8px 0 10px; line-height: 1.3; }
-.ab-pillar p { font-size: 14.5px; line-height: 1.65; color: var(--ink-soft); margin: 0; }
-
-.ab-facts { display:grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-.ab-fact { background:#fff; padding: 36px 24px; border-radius: 14px; border: 1px solid var(--ink-line-soft); text-align: center; }
-.ab-fact-num { font-family: var(--font-display); font-size: 44px; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 10px; }
-.ab-fact-lbl { font-size: 13px; color: var(--ink-soft); font-weight: 500; }
-
-.ab-team { display:grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
-.ab-team-card { background:#fff; border-radius: 16px; overflow: hidden; border: 1px solid var(--ink-line-soft); padding-bottom: 26px; }
-.ab-team-photo { aspect-ratio: 4/5; overflow: hidden; background: var(--ink-line-soft); }
-.ab-team-photo img { width:100%; height:100%; object-fit:cover; filter: saturate(.95); }
-.ab-team-card h4 { font-family: var(--font-display); font-size: 18px; color: var(--navy); margin: 22px 26px 4px; }
-.ab-team-role { display:block; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0 26px 12px; }
-.ab-team-card p { font-size: 14px; line-height: 1.65; color: var(--ink-soft); margin: 0 26px; }
-
-.ab-story .lf-split-img img { border-radius: 16px; }
-
-.ab-promise { margin-top: 36px; display: grid; grid-template-columns: 320px 1fr; gap: 28px; align-items: stretch; }
-.ab-promise-tabs { display: flex; flex-direction: column; gap: 6px; }
-.ab-promise-tab { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: transparent; border: none; border-left: 3px solid transparent; border-radius: 10px; cursor: pointer; text-align: left; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; font-family: inherit; }
-.ab-promise-tab:hover { background: rgba(255,255,255,.65); }
-.ab-promise-tab.is-active { background: #fff; border-left-color: var(--accent); box-shadow: 0 18px 40px -28px rgba(15,17,21,.22); }
-.ab-promise-tab-num { font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .12em; min-width: 26px; }
-.ab-promise-tab-title { font-family: var(--font-display); font-size: 14.5px; color: var(--navy); font-weight: 600; line-height: 1.3; }
-
-.ab-promise-stage { position: relative; background: #fff; border-radius: 18px; border: 1px solid var(--ink-line-soft); padding: 44px 48px 56px; min-height: 360px; overflow: hidden; box-shadow: 0 30px 60px -40px rgba(15,17,21,.18); }
-.ab-promise-panel { display: none; grid-template-columns: auto 1fr; gap: 36px; align-items: start; }
-.ab-promise-panel.is-active { display: grid; }
-.ab-promise-bignum { font-family: var(--font-display); font-size: 120px; font-weight: 700; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px var(--accent); letter-spacing: -0.04em; margin-top: -8px; }
-.ab-promise-body { max-width: 520px; }
-.ab-promise-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
-.ab-promise-body h3 { font-family: var(--font-display); font-size: 26px; line-height: 1.2; color: var(--navy); margin: 0 0 14px; letter-spacing: -0.01em; }
-.ab-promise-body p { font-size: 15px; line-height: 1.65; color: var(--ink-soft); margin: 0 0 22px; }
-.ab-promise-bullets { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
-.ab-promise-bullets li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--navy); font-weight: 500; }
-.ab-promise-bullets svg { color: var(--accent); flex-shrink: 0; }
-
-.ab-timeline { display:grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1100px; margin: 0 auto; }
-.ab-tl { background:#fff; border:1px solid var(--ink-line-soft); border-radius: 14px; padding: 24px 24px 26px; border-top: 3px solid var(--accent); }
-.ab-tl-year { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--navy); letter-spacing: -0.02em; margin-bottom: 10px; }
-.ab-tl-body h5 { font-family: var(--font-display); font-size: 15.5px; color: var(--navy); margin: 0 0 6px; }
-.ab-tl-body p { font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); margin: 0; }
-
-.ab-certs { display:grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.ab-cert { background: #fff; padding: 18px 20px; border-radius: 10px; border: 1px solid var(--ink-line-soft); border-left: 3px solid var(--accent); }
-.ab-cert strong { display:block; font-family: var(--font-display); font-size: 14.5px; color: var(--navy); margin-bottom: 4px; }
-.ab-cert span { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
-
-@media (max-width: 1100px) {
-  .ab-promise { grid-template-columns: 1fr; }
-  /* nummer + titel blijven samen leesbaar; tabs wrappen in rijen */
-  .ab-promise-tabs { flex-direction: row; flex-wrap: wrap; gap: 8px; }
-  .ab-promise-tab { flex: 0 0 auto; border-left: none; border: 1px solid var(--ink-line-soft); background: #fff; border-radius: 999px; padding: 9px 14px; gap: 8px; }
-  .ab-promise-tab.is-active { border-color: var(--accent); box-shadow: none; }
-  .ab-promise-tab-title { font-size: 13px; }
-  .ab-promise-tab-num { font-size: 12px; min-width: auto; }
-}
-@media (max-width: 960px) {
-  .ab-pillars { grid-template-columns: 1fr; }
-  .ab-team { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; }
-  .ab-timeline { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 760px) {
-  .ab-mv-grid { grid-template-columns: 1fr; }
-  .ab-mv-card { padding: 30px 24px; }
-  .ab-facts { grid-template-columns: 1fr 1fr; gap: 14px; }
-  .ab-fact { padding: 24px 14px; }
-  .ab-fact-num { font-size: 32px; }
-  .ab-certs { grid-template-columns: 1fr; }
-  .ab-timeline { grid-template-columns: 1fr; }
-  .ab-promise-stage { padding: 28px 22px 40px; min-height: 420px; }
-  .ab-promise-panel { inset: 28px 22px 40px; grid-template-columns: 1fr; gap: 6px; }
-  .ab-promise-bignum { font-size: 72px; }
-  .ab-promise-body h3 { font-size: 21px; }
-}
-</style>
-`;
+${rpFooter()}
+</div>`;
 
 export default function OverOns() {
   useEffect(() => {
-    document.title = `Over ons | AB Bouw Groep | ${new Date().getFullYear() - 2010} jaar Vlaams vakmanschap`;
-    let m = document.querySelector('meta[name="description"]');
-    if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', `Maak kennis met AB Bouw Groep: ${new Date().getFullYear() - 2010} jaar ervaring, 6 specialisaties, 23 vakmensen in vaste dienst. VCA*-gecertificeerd familiebedrijf, actief in heel Vlaanderen.`);
-    const prev = document.body.className;
-    document.body.className = "";
-    const styleEl = document.createElement('style');
-    styleEl.textContent = SHELL_STYLE;
-    document.head.appendChild(styleEl);
-
-    const promise = document.querySelector<HTMLElement>('[data-promise]');
-    let cleanupPromise = () => {};
-    if (promise) {
-      const tabs = Array.from(promise.querySelectorAll<HTMLButtonElement>('[data-promise-tab]'));
-      const panels = Array.from(promise.querySelectorAll<HTMLElement>('[data-promise-panel]'));
-      const setActive = (i: number) => {
-        const active = (i + panels.length) % panels.length;
-        tabs.forEach((t, k) => t.classList.toggle('is-active', k === active));
-        panels.forEach((p, k) => p.classList.toggle('is-active', k === active));
-      };
-      const handlers: Array<[HTMLButtonElement, () => void]> = [];
-      tabs.forEach((tab, i) => {
-        const h = () => setActive(i);
-        tab.addEventListener('click', h);
-        handlers.push([tab, h]);
-      });
-      cleanupPromise = () => {
-        handlers.forEach(([el, h]) => el.removeEventListener('click', h));
-      };
-    }
-
-    return () => { document.body.className = prev; styleEl.remove(); cleanupPromise(); };
+    document.title = 'Over ons — AB Bouw Groep';
+    window.scrollTo(0, 0);
+    const op = wireMobielMenu();
+    return () => op();
   }, []);
-  useAbBouwInteractions();
-  return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
+  return <div dangerouslySetInnerHTML={{ __html: HTML() }} />;
 }
