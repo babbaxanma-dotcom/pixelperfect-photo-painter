@@ -366,6 +366,87 @@
   display: block;
 }
 
+/* ══ HERO v2: foto eronder, tekst erop, aanvraagkaart ernaast ══════════ */
+.rp-hero2 {
+  position: relative;
+  overflow: hidden;
+  background: var(--rp-dark);
+}
+.rp-hero2__bg { position: absolute; inset: 0; }
+.rp-hero2__bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 58%; }
+/* Sluier moet donker genoeg zijn over de HELE tekstkolom: gemeten op de echte
+   pixels haalde de grijze kopregel eerst maar 1,17:1 omdat de foto daar oplichtte. */
+.rp-hero2__veil {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(6,11,19,0.92) 0%, rgba(6,11,19,0.84) 42%, rgba(6,11,19,0.52) 68%, rgba(6,11,19,0.18) 100%),
+    linear-gradient(180deg, rgba(6,11,19,0.55) 0%, rgba(6,11,19,0) 30%);
+}
+.rp-hero2__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 430px;
+  gap: 60px;
+  align-items: center;
+  padding-block: clamp(56px, 7vw, 96px);
+  min-height: clamp(520px, 72vh, 720px);
+}
+.rp-hero2__eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+  color: #f0c67a;
+  margin-bottom: 20px;
+}
+.rp-hero2__t {
+  font-size: clamp(34px, 4.4vw, 58px);
+  line-height: 1.03;
+  letter-spacing: -0.035em;
+  color: #fff;
+  font-weight: 800;
+}
+.rp-hero2__t .rp-dim2 { display: block; color: #c2cbd8; }
+.rp-hero2__lede {
+  margin-top: 22px;
+  max-width: 52ch;
+  font-size: 17px;
+  line-height: 1.62;
+  color: #d3d9e2;
+}
+.rp-hero2__punten { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px 26px; }
+.rp-hero2__punt { display: inline-flex; align-items: center; gap: 9px; font-size: 14.5px; font-weight: 600; color: #e7ebf1; }
+.rp-hero2__punt svg { color: var(--rp-accent); flex: none; }
+
+/* aanvraagkaart */
+.rp-aanvraag {
+  background: #fff;
+  border-radius: var(--rp-r-card);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.34);
+  padding: 28px 26px 24px;
+}
+.rp-aanvraag__t { font-size: 21px; }
+.rp-aanvraag__s { margin-top: 7px; font-size: 14.5px; line-height: 1.5; }
+.rp-aanvraag form { margin-top: 20px; display: grid; gap: 13px; }
+.rp-aanvraag__vt {
+  margin-top: 14px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-size: 12.5px; color: var(--rp-mute);
+}
+.rp-aanvraag__vt svg { color: var(--rp-accent-text); flex: none; }
+.rp-aanvraag__ok { display: grid; gap: 10px; text-align: center; padding: 12px 0 6px; }
+.rp-aanvraag__ok-ic {
+  width: 52px; height: 52px; border-radius: 50%; margin-inline: auto;
+  display: grid; place-items: center;
+  background: #e7f7ee; color: #067647;
+}
+
+@media (max-width: 1000px) {
+  .rp-hero2__grid { grid-template-columns: minmax(0, 1fr); gap: 34px; min-height: 0; }
+  .rp-hero2__veil {
+    background: linear-gradient(180deg, rgba(7,13,22,0.86) 0%, rgba(7,13,22,0.80) 55%, rgba(7,13,22,0.92) 100%);
+  }
+  .rp-hero2__lede { max-width: none; }
+}
+
 /* ══ BAND met disciplines (statisch — geen auto-scroll gimmick) ════════ */
 .rp-band {
   background: var(--rp-ink);

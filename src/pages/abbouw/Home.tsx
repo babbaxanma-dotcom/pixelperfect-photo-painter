@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import '@/styles/roofpro.css';
-import { submitLead } from '@/lib/leads';
+import { submitLead, divisieKey } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
 import { CONTACT } from '@/data/contact';
 import { BLOGS } from '@/data/blogs';
@@ -114,24 +114,59 @@ const FAQ = [
 ];
 
 const HTML = (i: Record<string, string>) => {
+  const vinkje = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
   const hero = `
-<section class="rp-hero">
-  <div class="rp-wrap rp-hero__top">
-    <div class="rp-hero__grid">
-      <div class="rp-hero__main">
-        <h1 class="rp-hero__display">Bouw en<span class="rp-hero__l2">renovatie</span></h1>
-      </div>
-      <div class="rp-hero__aside">
-        <p class="rp-hero__lede">AB Bouw Groep verbouwt woningen in heel Vlaanderen. Dak, gevel, badkamer, interieur of alles samen: zes vakken die wij zelf uitvoeren en op elkaar afstemmen.</p>
-        <a class="rp-scrollcue" href="#diensten">
-          <span class="rp-scrollcue__ring" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></span>
-          Bekijk wat wij doen
-        </a>
+<section class="rp-hero2">
+  <div class="rp-hero2__bg" aria-hidden="true">
+    <img src="${i.heroPhoto}" alt="" width="1920" height="760" fetchpriority="high" decoding="async"/>
+    <span class="rp-hero2__veil"></span>
+  </div>
+  <div class="rp-wrap rp-hero2__grid">
+    <div>
+      <span class="rp-hero2__eyebrow">${ic.mark} Bouw en renovatie in heel Vlaanderen</span>
+      <h1 class="rp-hero2__t">Uw woning verbouwd<span class="rp-dim2">door één vaste ploeg</span></h1>
+      <p class="rp-hero2__lede">Dak, gevel, badkamer, interieur of alles samen. Zes vakken die wij zelf uitvoeren, met één werfleider die uw planning bewaakt.</p>
+      <div class="rp-hero2__punten">
+        <span class="rp-hero2__punt">${vinkje} Plaatsbezoek en offerte kosteloos</span>
+        <span class="rp-hero2__punt">${vinkje} Prijs per post uitgesplitst</span>
+        <span class="rp-hero2__punt">${vinkje} 10 jaar garantie op ons werk</span>
       </div>
     </div>
-  </div>
-  <div class="rp-hero__photo">
-    <img src="${i.heroPhoto}" alt="Vernieuwd hellend dak met dakkapellen op een woning in Vlaanderen" width="1600" height="620" fetchpriority="high" decoding="async"/>
+
+    <div class="rp-aanvraag">
+      <h2 class="rp-aanvraag__t">Vraag een plaatsbezoek aan</h2>
+      <p class="rp-aanvraag__s">Laat uw nummer achter, dan bellen wij u terug om een moment af te spreken.</p>
+      <form data-hero-form novalidate>
+        <div class="rp-veld">
+          <label for="hf-naam">Voornaam</label>
+          <input id="hf-naam" type="text" name="firstName" autocomplete="given-name" required/>
+        </div>
+        <div class="rp-veld">
+          <label for="hf-tel">Telefoonnummer</label>
+          <input id="hf-tel" type="tel" name="phone" inputmode="tel" autocomplete="tel" required/>
+        </div>
+        <div class="rp-veld">
+          <label for="hf-werk">Om welk werk gaat het?</label>
+          <select id="hf-werk" name="type_werk">
+            <option value="">Weet ik nog niet</option>
+            <option value="Dakwerken">Dakwerken</option>
+            <option value="Gevelbekleding">Gevelrenovatie</option>
+            <option value="Badkamer / wellness">Badkamer</option>
+            <option value="Interieurwerken">Interieurwerken</option>
+            <option value="Algemene aanneming (Construct)">Totaalrenovatie of nieuwbouw</option>
+            <option value="Ecologisch / duurzaam">Isolatie of warmtepomp</option>
+          </select>
+        </div>
+        <p class="rp-fout" data-hero-fout hidden></p>
+        <button class="rp-btn rp-btn--primary rp-btn--block" type="submit" data-hero-btn>Bel mij terug</button>
+      </form>
+      <p class="rp-aanvraag__vt">${vinkje} U zit nergens aan vast &middot; 4,9 op Google</p>
+      <div class="rp-aanvraag__ok" data-hero-ok hidden>
+        <span class="rp-aanvraag__ok-ic" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+        <h2 class="rp-aanvraag__t">Bedankt, wij bellen u terug</h2>
+        <p class="rp-aanvraag__s">Meestal binnen één werkdag. Liever meteen iemand spreken? Bel <a href="${CONTACT.phone.href}" style="color:var(--rp-accent-text);font-weight:700">${CONTACT.phone.display}</a>.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -498,6 +533,64 @@ export default function Home() {
         prev?.removeEventListener('click', onPrev);
         next?.removeEventListener('click', onNext);
       });
+    });
+
+    /* ── aanvraagkaart in de hero ────────────────────────────────────── */
+    const hForm = document.querySelector<HTMLFormElement>('[data-hero-form]');
+    const hBtn = document.querySelector<HTMLButtonElement>('[data-hero-btn]');
+    const hFout = document.querySelector<HTMLElement>('[data-hero-fout]');
+    const hOk = document.querySelector<HTMLElement>('[data-hero-ok]');
+    const hFocus = () => trackFormStart('home-hero');
+    hForm?.addEventListener('focusin', hFocus, { once: true });
+
+    const hSubmit = async (e: Event) => {
+      e.preventDefault();
+      if (!hForm) return;
+      if (hFout) hFout.hidden = true;
+      const fd = new FormData(hForm);
+      const naam = ((fd.get('firstName') as string) || '').trim();
+      const tel = ((fd.get('phone') as string) || '').trim();
+      const cijfers = tel.replace(/\D/g, '');
+      if (!naam) {
+        if (hFout) { hFout.textContent = 'Vul uw voornaam in.'; hFout.hidden = false; }
+        hForm.querySelector<HTMLInputElement>('[name="firstName"]')?.focus();
+        return;
+      }
+      if (cijfers.length < 8) {
+        if (hFout) { hFout.textContent = 'Vul een geldig telefoonnummer in.'; hFout.hidden = false; }
+        hForm.querySelector<HTMLInputElement>('[name="phone"]')?.focus();
+        return;
+      }
+      if (hBtn) { hBtn.disabled = true; hBtn.textContent = 'Versturen…'; }
+      const werk = ((fd.get('type_werk') as string) || '').trim();
+      const result = await submitLead({
+        source: 'contact_form',
+        page_path: window.location.pathname,
+        firstName: naam,
+        phone: tel,
+        // telefoon-only lead: zelfde synthetische e-mail als de andere korte formulieren
+        email: `lead-${cijfers}@abgroep.be`,
+        type_werk: divisieKey(werk),
+        aanvullende_info: 'Aanvraag via hero-formulier homepage',
+        bron_lead: 'website:home:hero',
+      });
+      if (result.ok) {
+        hForm.hidden = true;
+        const vt = document.querySelector<HTMLElement>('.rp-aanvraag__vt');
+        if (vt) vt.hidden = true;
+        if (hOk) hOk.hidden = false;
+      } else {
+        if (hBtn) { hBtn.disabled = false; hBtn.textContent = 'Bel mij terug'; }
+        if (hFout) {
+          hFout.textContent = `Er ging iets mis. Bel ons gerust op ${CONTACT.phone.display}.`;
+          hFout.hidden = false;
+        }
+      }
+    };
+    hForm?.addEventListener('submit', hSubmit);
+    opruimers.push(() => {
+      hForm?.removeEventListener('submit', hSubmit);
+      hForm?.removeEventListener('focusin', hFocus);
     });
 
     /* ── terugbel-formulier ──────────────────────────────────────────── */
