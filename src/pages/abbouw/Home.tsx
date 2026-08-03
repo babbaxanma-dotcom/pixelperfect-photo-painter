@@ -123,13 +123,13 @@ const HTML = (i: Record<string, string>) => {
   </div>
   <div class="rp-wrap rp-hero2__grid">
     <div>
-      <span class="rp-hero2__eyebrow">${ic.mark} Bouw en renovatie in heel Vlaanderen</span>
-      <h1 class="rp-hero2__t">Uw woning verbouwd<span class="rp-dim2">door één vaste ploeg</span></h1>
-      <p class="rp-hero2__lede">Dak, gevel, badkamer, interieur of alles samen. Zes vakken die wij zelf uitvoeren, met één werfleider die uw planning bewaakt.</p>
+      <span class="rp-hero2__eyebrow">${ic.mark} Bouw en renovatie</span>
+      <h1 class="rp-hero2__t">Uw huis af,<span class="rp-dim2">voor de prijs van de offerte</span></h1>
+      <p class="rp-hero2__lede">Van een nieuw dak tot een woning die volledig op de schop gaat. Elke post staat vooraf op papier, en dat bedrag blijft staan tot de oplevering.</p>
       <div class="rp-hero2__punten">
-        <span class="rp-hero2__punt">${vinkje} Plaatsbezoek en offerte kosteloos</span>
-        <span class="rp-hero2__punt">${vinkje} Prijs per post uitgesplitst</span>
-        <span class="rp-hero2__punt">${vinkje} 10 jaar garantie op ons werk</span>
+        <span class="rp-hero2__punt">${vinkje} 4,9 op Google</span>
+        <span class="rp-hero2__punt">${vinkje} 120+ woningen gerenoveerd</span>
+        <span class="rp-hero2__punt">${vinkje} VCA-gecertificeerd</span>
       </div>
     </div>
 
