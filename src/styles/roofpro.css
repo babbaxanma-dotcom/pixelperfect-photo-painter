@@ -591,8 +591,18 @@
 /* vier tegels naast elkaar — als klasse, niet inline, anders overleeft het de
    responsive regels niet en knijp je de tegels op mobiel tot 78px */
 .rp-tiles-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-@media (max-width: 1000px) { .rp-tiles-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 680px) { .rp-tiles-4 { grid-template-columns: minmax(0, 1fr); } }
+.rp-tiles-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1000px) {
+  .rp-tiles-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rp-tiles-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 680px) {
+  .rp-tiles-4, .rp-tiles-3 { grid-template-columns: minmax(0, 1fr); }
+}
+.rp-step__tijd {
+  margin-top: 12px; font-size: 13px; font-weight: 700;
+  color: var(--rp-accent-text);
+}
 .rp-tile {
   background: var(--rp-bg-soft);
   border: 1px solid transparent;
@@ -838,6 +848,78 @@
   .rp-artikel__body h2, .rp-artikel__body h3 { font-size: 21px; margin-top: 30px; }
 }
 
+/* ══ FOTO-PLACEHOLDER ══════════════════════════════════════════════════
+   Bewust zichtbaar maar rustig: markeert waar nog een échte foto moet komen,
+   met de gewenste verhouding en onderwerp erbij. Vervangen = <img> erin. */
+.rp-ph {
+  position: relative;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 26px;
+  border-radius: var(--rp-r-img);
+  background:
+    repeating-linear-gradient(135deg, #eef1f5 0 12px, #e8ecf1 12px 24px);
+  border: 1.5px dashed #c3cad4;
+  color: var(--rp-mute);
+  min-height: 200px;
+}
+.rp-ph__ic { color: #aab2be; margin-bottom: 10px; }
+.rp-ph__t { font-size: 14.5px; font-weight: 800; color: #5a6270; }
+.rp-ph__d { margin-top: 5px; font-size: 13px; line-height: 1.5; max-width: 34ch; }
+.rp-ph__maat {
+  margin-top: 10px;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #d7dde5;
+  font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em;
+  color: #6b7382;
+}
+
+/* ══ FORMULIER ═════════════════════════════════════════════════════════ */
+.rp-form { display: grid; gap: 16px; }
+.rp-form__rij { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.rp-veld { display: grid; gap: 7px; }
+.rp-veld > label { font-size: 13.5px; font-weight: 700; color: var(--rp-ink); }
+.rp-veld input, .rp-veld select, .rp-veld textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 15.5px;
+  color: var(--rp-ink);
+  background: #fff;
+  border: 1.5px solid var(--rp-line);
+  border-radius: 8px;
+  padding: 13px 14px;
+  transition: border-color 0.18s var(--rp-ease), box-shadow 0.18s var(--rp-ease);
+}
+.rp-veld textarea { min-height: 118px; resize: vertical; }
+.rp-veld input:hover, .rp-veld select:hover, .rp-veld textarea:hover { border-color: #cfd4dc; }
+.rp-veld input:focus, .rp-veld select:focus, .rp-veld textarea:focus {
+  outline: none;
+  border-color: var(--rp-accent);
+  box-shadow: 0 0 0 3px rgba(217, 140, 3, 0.18);
+}
+.rp-veld input[aria-invalid='true'], .rp-veld select[aria-invalid='true'] { border-color: #b42318; }
+.rp-fout { font-size: 13.5px; color: #b42318; font-weight: 600; }
+.rp-form__melding { font-size: 14.5px; }
+.rp-form__melding--ok { color: #067647; font-weight: 700; }
+.rp-form__melding--fout { color: #b42318; font-weight: 700; }
+.rp-form__klein { font-size: 13px; color: var(--rp-mute); }
+
+.rp-formkaart {
+  background: #fff;
+  border: 1px solid var(--rp-line);
+  border-radius: var(--rp-r-card);
+  box-shadow: var(--rp-shadow-card);
+  padding: 32px;
+}
+@media (max-width: 680px) {
+  .rp-form__rij { grid-template-columns: minmax(0, 1fr); }
+  .rp-formkaart { padding: 22px 18px; }
+}
+
 /* ══ SPLIT-BLOK (beeld naast tekst, om en om) ══════════════════════════ */
 .rp-split {
   display: grid;
@@ -859,6 +941,7 @@
   color: var(--rp-accent-text); margin-bottom: 12px;
 }
 .rp-split__t { font-size: clamp(26px, 2.6vw, 34px); }
+.rp-split__t .rp-dim { display: block; color: var(--rp-ink-2); }
 .rp-split__lede { margin-top: 16px; font-size: 16px; line-height: 1.66; }
 .rp-lijst { margin-top: 22px; display: grid; gap: 11px; }
 .rp-lijst li { display: flex; gap: 11px; font-size: 15px; line-height: 1.52; }

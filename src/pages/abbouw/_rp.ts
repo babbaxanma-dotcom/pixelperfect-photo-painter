@@ -25,6 +25,18 @@ export const ic = {
   info: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>',
 };
 
+/** Zichtbare plek voor een foto die nog moet komen. `hoogte` in px of een
+ *  CSS-waarde, `maat` = de gewenste verhouding/resolutie. */
+export const fotoPlaats = (opts: { titel: string; toelichting: string; maat: string; hoogte?: string }) => `
+<div class="rp-ph" style="min-height:${opts.hoogte || '260px'}" role="img" aria-label="Plek voor foto: ${opts.titel}">
+  <div>
+    <div class="rp-ph__ic" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2l1.4-2h7.2L17 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="12.5" r="3.5"/></svg></div>
+    <div class="rp-ph__t">${opts.titel}</div>
+    <div class="rp-ph__d">${opts.toelichting}</div>
+    <span class="rp-ph__maat">${opts.maat}</span>
+  </div>
+</div>`;
+
 export const DIENST_LINKS = [
   { t: 'Dakwerken', href: '/dakwerken' },
   { t: 'Gevelrenovatie', href: '/gevel' },
@@ -49,7 +61,7 @@ export const rpNav = (actief: string) => `
 <header class="rp-nav">
   <div class="rp-wrap rp-nav__inner">
     <a class="rp-nav__logo" href="/" aria-label="AB Bouw Groep, naar de startpagina">
-      <img src="${LOGO}" alt="AB Bouw Groep" width="146" height="42" decoding="async"/>
+      <img src="${LOGO}" alt="AB Bouw Groep" width="147" height="42" decoding="async"/>
     </a>
     <nav class="rp-nav__links" aria-label="Hoofdmenu">
       ${NAV_LINKS.map((l) => l.sub
@@ -69,7 +81,7 @@ export const rpNav = (actief: string) => `
 <div class="rp-mob" id="rp-mob" data-mob hidden>
   <div class="rp-wrap" style="padding:0">
     <div class="rp-mob__top">
-      <img src="${LOGO}" alt="AB Bouw Groep" width="125" height="36" decoding="async" style="height:36px;width:auto"/>
+      <img src="${LOGO}" alt="AB Bouw Groep" width="126" height="36" decoding="async" style="height:36px;width:auto"/>
       <button class="rp-mob__close" type="button" data-mob-close aria-label="Menu sluiten">${ic.close}</button>
     </div>
     <nav class="rp-mob__list" aria-label="Mobiel menu">
@@ -89,7 +101,7 @@ export const rpFooter = () => `
   <div class="rp-wrap">
     <div class="rp-foot__grid">
       <div>
-        <a class="rp-foot__logo" href="/" aria-label="AB Bouw Groep"><img src="${LOGO}" alt="AB Bouw Groep" width="160" height="46" loading="lazy" decoding="async"/></a>
+        <a class="rp-foot__logo" href="/" aria-label="AB Bouw Groep"><img src="${LOGO}" alt="AB Bouw Groep" width="161" height="46" loading="lazy" decoding="async"/></a>
         <p class="rp-foot__about">Bouw- en renovatiebedrijf met eigen ploegen voor dak, gevel, badkamer, interieur, ruwbouw en energiewerken. Actief in heel Vlaanderen en Brussel.</p>
         <div class="rp-foot__rows">
           <span class="rp-foot__row">${ic.phone(17)}<a href="${CONTACT.phone.href}">${CONTACT.phone.display}</a></span>

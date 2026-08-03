@@ -1,373 +1,197 @@
 import { useEffect } from 'react';
-import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
-import { buildNav, buildHero, FOOTER, SHELL_STYLE } from './_shell';
+import '@/styles/roofpro.css';
 import hero from '@/assets/home/hero-contact.jpg';
-import regionImg from '@/assets/home/region-coverage.jpg';
 import { submitLead, divisieKey } from '@/lib/leads';
+import { trackFormStart } from '@/lib/tracking';
 import { CONTACT } from '@/data/contact';
+import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
-const HTML = `
-${buildNav('contact')}
+const DIVISIE_OPTIES = [
+  'Algemene aanneming (Construct)',
+  'Ecologisch / duurzaam',
+  'Interieurwerken',
+  'Dakwerken',
+  'Badkamer / wellness',
+  'Gevelbekleding',
+  'Combinatie / weet ik niet',
+];
 
-${buildHero({
-  bg: hero,
-  eyebrow: 'Contact',
-  title: 'Laten we<br/>kennismaken.',
-  lede: 'Vertel ons kort over uw project, we reageren binnen één werkdag en plannen indien gewenst een gratis plaatsbezoek.',
-  primary: { label: `Bel ${CONTACT.phone.spaced}`, href: CONTACT.phone.href },
-  secondary: { label: 'info@abgroep.be →', href: 'mailto:info@abgroep.be' },
-})}
+const HTML = () => `<div class="rp">
+${rpNav('/contact')}
 
-<!-- CONTACT GRID + FORMULIER -->
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-contact-grid">
+<section class="rp-phero">
+  <div class="rp-wrap">
+    <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Contact</span></nav>
+    <span class="rp-eyebrow">${ic.mark} Contact</span>
+    <h1 class="rp-phero__t">Vertel ons<span class="rp-dim">wat u van plan bent</span></h1>
+    <p class="rp-phero__lede">Laat uw gegevens achter, dan bellen wij u terug om een plaatsbezoek in te plannen. Dat bezoek en de offerte erna zijn kosteloos en verplichten u tot niets.</p>
+  </div>
+</section>
+
+<section class="rp-section">
+  <div class="rp-wrap">
+    <div class="rp-split" style="align-items:start;gap:56px">
       <div>
-        <span class="lf-eyebrow">Direct contact</span>
-        <h2 class="lf-h2">Liever direct<br/>bellen?</h2>
-        <p class="lf-lede">Voor dringende vragen of snel telefonisch overleg, we zijn bereikbaar tijdens de kantooruren. 's Avonds en in het weekend kan u inspreken; we bellen de eerste werkdag terug.</p>
-        <div class="lf-contact-info">
-          <div class="lf-contact-info-item">
-            <div class="lf-contact-info-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-            <div class="lf-contact-info-text"><strong>TELEFOON</strong><a href="${CONTACT.phone.href}">${CONTACT.phone.spaced}</a></div>
-          </div>
-          <div class="lf-contact-info-item">
-            <div class="lf-contact-info-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></div>
-            <div class="lf-contact-info-text"><strong>E-MAIL</strong><a href="mailto:info@abgroep.be">info@abgroep.be</a></div>
-          </div>
-          <div class="lf-contact-info-item">
-            <div class="lf-contact-info-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-            <div class="lf-contact-info-text"><strong>KANTOORUREN</strong><span>Ma t.e.m. vr · 8u tot 18u · Za op afspraak</span></div>
-          </div>
-          <div class="lf-contact-info-item">
-            <div class="lf-contact-info-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-            <div class="lf-contact-info-text"><strong>KANTOOR</strong><span>${CONTACT.address.street} · ${CONTACT.address.postcode} ${CONTACT.address.city}</span></div>
+        <div class="rp-formkaart">
+          <h2 class="rp-split__t" style="font-size:24px">Uw aanvraag</h2>
+          <p class="rp-split__lede" style="margin-top:10px;font-size:15px">Velden met een sterretje zijn verplicht.</p>
+          <form class="rp-form" style="margin-top:24px" data-contact-form novalidate>
+            <div class="rp-form__rij">
+              <div class="rp-veld">
+                <label for="cf-voornaam">Voornaam *</label>
+                <input id="cf-voornaam" type="text" name="firstName" autocomplete="given-name" required/>
+              </div>
+              <div class="rp-veld">
+                <label for="cf-naam">Familienaam *</label>
+                <input id="cf-naam" type="text" name="lastName" autocomplete="family-name" required/>
+              </div>
+            </div>
+            <div class="rp-form__rij">
+              <div class="rp-veld">
+                <label for="cf-email">E-mailadres *</label>
+                <input id="cf-email" type="email" name="email" autocomplete="email" required/>
+              </div>
+              <div class="rp-veld">
+                <label for="cf-tel">Telefoonnummer *</label>
+                <input id="cf-tel" type="tel" name="phone" autocomplete="tel" inputmode="tel" required/>
+              </div>
+            </div>
+            <div class="rp-veld">
+              <label for="cf-straat">Straat en nummer</label>
+              <input id="cf-straat" type="text" name="straat" autocomplete="street-address"/>
+            </div>
+            <div class="rp-form__rij">
+              <div class="rp-veld">
+                <label for="cf-postcode">Postcode</label>
+                <input id="cf-postcode" type="text" name="postcode" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{4}" maxlength="4"/>
+              </div>
+              <div class="rp-veld">
+                <label for="cf-gemeente">Gemeente</label>
+                <input id="cf-gemeente" type="text" name="gemeente" autocomplete="address-level2"/>
+              </div>
+            </div>
+            <div class="rp-veld">
+              <label for="cf-werk">Om welk werk gaat het? *</label>
+              <select id="cf-werk" name="type_werk" required>
+                <option value="">Maak een keuze</option>
+                ${DIVISIE_OPTIES.map((o) => `<option value="${o}">${o}</option>`).join('')}
+              </select>
+            </div>
+            <div class="rp-veld">
+              <label for="cf-info">Kort over uw project</label>
+              <textarea id="cf-info" name="aanvullende_info" placeholder="Bijvoorbeeld: dak van 90 m², pannen uit 1978, één lek boven de badkamer."></textarea>
+            </div>
+            <p class="rp-fout" data-form-fout hidden></p>
+            <button class="rp-btn rp-btn--primary rp-btn--block" type="submit" data-form-btn>Verstuur aanvraag</button>
+            <p class="rp-form__klein">Wij gebruiken uw gegevens enkel om uw aanvraag te behandelen. Zie onze <a href="/privacy" style="color:var(--rp-accent-text);text-decoration:underline">privacyverklaring</a>.</p>
+          </form>
+          <div data-form-ok hidden>
+            <h2 class="rp-split__t" style="font-size:24px">Bedankt, uw aanvraag is verstuurd</h2>
+            <p class="rp-split__lede">Wij nemen binnen één werkdag contact met u op. Liever meteen iemand spreken? Bel <a href="${CONTACT.phone.href}" style="color:var(--rp-accent-text);font-weight:700">${CONTACT.phone.display}</a>.</p>
           </div>
         </div>
       </div>
 
-      <div class="lf-form-wrapper" data-form-wrapper>
-        <form class="lf-form" id="contact-form" data-form-anim novalidate>
-          <h3>Vraag uw plaatsbezoek aan</h3>
-          <p>Vul het formulier in en we contacteren u binnen één werkdag.</p>
-          <div class="lf-form-row">
-            <input type="text" name="firstName" autocomplete="given-name" placeholder="Voornaam" required />
-            <input type="text" name="lastName" autocomplete="family-name" placeholder="Familienaam" required />
-          </div>
-          <input type="email" name="email" autocomplete="email" placeholder="E-mailadres" required />
-          <input type="tel" name="phone" autocomplete="tel" placeholder="Telefoonnummer" required />
-          <input type="text" name="straat" autocomplete="street-address" placeholder="Straat en nummer" />
-          <div class="lf-form-row">
-            <input type="text" name="postcode" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="Postcode" />
-            <input type="text" name="gemeente" autocomplete="address-level2" placeholder="Gemeente" />
-          </div>
-          <select name="type_werk" class="lf-native-select" required>
-            <option value="">Type werk *</option>
-            <option value="Algemene aanneming (Construct)">Algemene aanneming (Construct)</option>
-            <option value="Ecologisch / duurzaam">Ecologisch / duurzaam</option>
-            <option value="Interieurwerken">Interieurwerken</option>
-            <option value="Dakwerken">Dakwerken</option>
-            <option value="Badkamer / wellness">Badkamer / wellness</option>
-            <option value="Gevelbekleding">Gevelbekleding</option>
-            <option value="Combinatie / weet ik niet">Combinatie / weet ik niet</option>
-          </select>
-          <textarea name="aanvullende_info" placeholder="Vertel kort over uw project (optioneel)"></textarea>
-          <button type="submit" class="lf-cta-pill" data-submit-btn>
-            <span data-submit-label>Verstuur aanvraag</span>
-            <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-          </button>
-          <p class="lf-form-error" data-form-error aria-live="polite" hidden></p>
-        </form>
-        <div class="lf-form-thanks" data-form-thanks aria-hidden="true">
-          <div class="lf-form-thanks-circle">
-            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <h3>Bedankt voor uw aanvraag.</h3>
-          <p>We bekijken uw aanvraag en nemen binnen één werkdag contact met u op.</p>
+      <div>
+        <span class="rp-eyebrow">${ic.mark} Rechtstreeks</span>
+        <h2 class="rp-split__t">Liever meteen<span class="rp-dim">iemand aan de lijn?</span></h2>
+        <p class="rp-split__lede">Bellen gaat sneller dan een formulier. Tijdens de kantooruren neemt er iemand op die uw dossier kan inkijken.</p>
+        <div class="rp-foot__rows" style="margin-top:26px">
+          <span class="rp-foot__row">${ic.phone(17)}<a href="${CONTACT.phone.href}" style="font-weight:700">${CONTACT.phone.display}</a></span>
+          <span class="rp-foot__row">${ic.mail}<a href="mailto:${CONTACT.email}">${CONTACT.email}</a></span>
+          <span class="rp-foot__row">${ic.pin}<span>${CONTACT.address.full}</span></span>
+        </div>
+        <div class="rp-hours" style="margin-top:28px">
+          <div class="rp-hours__row"><span class="rp-hours__d">Ma&ndash;vr</span><span>08:00 &ndash; 18:00</span></div>
+          <div class="rp-hours__row"><span class="rp-hours__d">Zaterdag</span><span>Op afspraak</span></div>
+          <div class="rp-hours__row"><span class="rp-hours__d">Zondag</span><span>Gesloten</span></div>
+        </div>
+        <div class="rp-split__media" style="margin-top:28px">
+          <img src="${hero}" alt="Werfleider van AB Bouw Groep tijdens een plaatsbezoek" width="560" height="300" style="height:300px" loading="lazy" decoding="async"/>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- WERKGEBIED -->
-<section class="lf-section lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-section-head">
-      <span class="lf-eyebrow">Ons werkgebied</span>
-      <h2 class="lf-h2">Heel Vlaanderen<br/>en Brussel.</h2>
-      <p class="lf-lede">Vanuit ons kantoor in Willebroek bedienen we klanten in een straal van circa 80 km. Voor grote projecten (>€250k) kijken we ook over de gewestgrenzen heen.</p>
-    </div>
-    <div class="ab-coverage">
-      <div class="ab-coverage-list">
-        <h4>Kernregio's waar we wekelijks actief zijn</h4>
-        <div class="ab-coverage-cols">
-          <span>Antwerpen stad</span><span>Mechelen</span>
-          <span>Willebroek</span><span>Boom &amp; Rupelstreek</span>
-          <span>Klein-Brabant</span><span>Puurs-Sint-Amands</span>
-          <span>Bornem</span><span>Sint-Niklaas</span>
-          <span>Lier</span><span>Heist-op-den-Berg</span>
-          <span>Brussel-stad</span><span>Vilvoorde</span>
-          <span>Asse &amp; Pajottenland</span><span>Aalst</span>
-          <span>Dendermonde</span><span>Halle</span>
-          <span>Leuven</span><span>Tienen</span>
-          <span>Gent (op aanvraag)</span><span>Hasselt (op aanvraag)</span>
-        </div>
-      </div>
-      <div class="ab-map ab-map--photo" style="background-image: linear-gradient(180deg, rgba(11,18,32,0) 35%, rgba(11,18,32,0.85) 100%), url('${regionImg}');">
-        <h4>Onze regio in beeld</h4>
-        <p>Vlaamse daken, velden en kanalen, van Antwerpen en Mechelen tot Brussel en Gent. Hier rijden onze ploegen wekelijks rond.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ALTERNATIEVEN -->
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-section-head centered">
-      <span class="lf-eyebrow">Andere manieren om ons te bereiken</span>
-      <h2 class="lf-h2">Via welk kanaal u ook contacteert,<br/>één werkdag responstijd.</h2>
-    </div>
-    <div class="lf-support-grid" style="grid-template-columns: repeat(4, 1fr);">
-      <div class="lf-support-card">
-        <div class="lf-support-meta"><span>01</span> WhatsApp</div>
-        <h5>${CONTACT.phone.spaced}</h5>
-        <p>Stuur een berichtje, eventueel met foto van wat u laat doen. Praktisch voor korte vragen of een snelle prijsindicatie.</p>
-      </div>
-      <div class="lf-support-card">
-        <div class="lf-support-meta"><span>02</span> E-mail</div>
-        <h5>info@abgroep.be</h5>
-        <p>Algemene vragen of offerteaanvragen. Bezorg ons gerust foto's of plannen, we komen binnen 24u terug.</p>
-      </div>
-      <div class="lf-support-card">
-        <div class="lf-support-meta"><span>03</span> Bezoek</div>
-        <h5>Toon ons uw plaats</h5>
-        <p>Geen budget om langs te komen? Stuur ons een korte video van wat u wilt veranderen, we maken een eerste prijsindicatie op afstand.</p>
-      </div>
-      <div class="lf-support-card">
-        <div class="lf-support-meta"><span>04</span> Pers / partnerschappen</div>
-        <h5>Pers &amp; samenwerkingen</h5>
-        <p>Voor pers, samenwerkingen, leveranciers of vacatures: info@abgroep.be of bel het algemene nummer.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="lf-section lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-section-head centered">
-      <span class="lf-eyebrow">Voor u contacteert</span>
-      <h2 class="lf-h2">Vaak gestelde vragen<br/>over een eerste contact.</h2>
-    </div>
-    <div class="ab-faq">
-      <details><summary>Is een plaatsbezoek echt gratis?</summary><div class="ab-faq-body"><p>Ja, volledig gratis en vrijblijvend. Wij zien een plaatsbezoek niet als een verkoopgesprek maar als een wederzijdse kennismaking. We willen weten of het project bij ons past, en u wilt weten of wij bij u passen. Pas na het plaatsbezoek beslissen we samen of we een offerte maken.</p></div></details>
-      <details><summary>Welke info moet ik klaar hebben voor het eerste gesprek?</summary><div class="ab-faq-body"><p>Niets verplicht. Handig als u dit wel weet: type woning (open / halfopen / rij), bouwjaar, bewoonbare oppervlakte, of er reeds plannen of een architect zijn, en een ruwe budgetindicatie. Geen budget? Geen probleem, we helpen het mee inschatten.</p></div></details>
-      <details><summary>Hoe snel kan ik een plaatsbezoek krijgen?</summary><div class="ab-faq-body"><p>Doorgaans binnen 5 tot 10 werkdagen. In drukke periodes (voorjaar, na het bouwsalon Batibouw) kan dit oplopen tot 3 weken. Spoedoplossingen voor lekkende daken of stormschade krijgen voorrang, bel dan rechtstreeks.</p></div></details>
-      <details><summary>Werken jullie ook voor B2B / bedrijven?</summary><div class="ab-faq-body"><p>Ja. We werken ook voor bedrijven: kantoorgebouwen, kleine winkels, horecazaken, magazijnen en logistieke ruimtes. We werken op factuur met betaaltermijn 30 dagen einde maand voor erkende ondernemingen.</p></div></details>
-      <details><summary>Mag ik bestaande klanten bellen om referentie te vragen?</summary><div class="ab-faq-body"><p>Heel graag. Vermeld bij uw aanvraag dat u referenties wenst en we bezorgen u 2 of 3 contactpersonen van vergelijkbare projecten, uiteraard met hun toestemming.</p></div></details>
-    </div>
-  </div>
-</section>
-
-${FOOTER}
-`;
-
-const FORM_ANIM_CSS = `
-/* Post-submit animatie: het formulier vouwt elegant samen en de
-   bedankboodschap fade-in't met een lichte schaal- en lift-beweging. */
-.lf-form-wrapper {
-  position: relative;
-}
-.lf-form-wrapper .lf-form {
-  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
-  max-height: 1600px;
-  overflow: hidden;
-}
-.lf-form-wrapper.is-submitting .lf-form {
-  pointer-events: none;
-  filter: blur(0.5px);
-  opacity: 0.55;
-}
-.lf-form-wrapper.is-success .lf-form {
-  opacity: 0;
-  max-height: 0;
-  margin: 0;
-  padding: 0;
-  border: none;
-  pointer-events: none;
-}
-
-.lf-form-thanks {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 48px 28px;
-  background: #fff;
-  border: 1px solid var(--ink-line-soft);
-  border-radius: 14px;
-  box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 30px 60px -32px rgba(15,17,21,.18);
-  opacity: 0;
-  transform: translateY(14px) scale(0.985);
-  pointer-events: none;
-  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
-}
-.lf-form-wrapper.is-success .lf-form-thanks {
-  position: relative;
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
-}
-.lf-form-thanks h3 {
-  font-family: var(--font-display, inherit);
-  font-size: clamp(22px, 2.4vw, 28px);
-  color: var(--navy);
-  margin: 16px 0 8px;
-}
-.lf-form-thanks p {
-  font-size: 14.5px;
-  color: var(--ink-soft);
-  max-width: 360px;
-  margin: 0;
-  line-height: 1.55;
-}
-.lf-form-thanks-circle {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: var(--accent, #d98c03);
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 12px 32px -8px rgba(217,140,3,0.55);
-  transform: scale(0.6);
-  opacity: 0;
-  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
-}
-.lf-form-wrapper.is-success .lf-form-thanks-circle {
-  transform: scale(1);
-  opacity: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .lf-form-wrapper .lf-form,
-  .lf-form-thanks,
-  .lf-form-thanks-circle { transition: none; }
-}
-
-.lf-form-error {
-  margin: 8px 0 0;
-  padding: 12px 14px;
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: #b3261e;
-  background: #fdecea;
-  border: 1px solid rgba(179,38,30,0.18);
-  border-radius: 10px;
-}
-`;
+${rpFooter()}
+</div>`;
 
 export default function Contact() {
   useEffect(() => {
-    document.title = "Contact | AB Bouw Groep | Plaatsbezoek aanvragen";
-    let m = document.querySelector('meta[name="description"]');
-    if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', "Plan een gratis plaatsbezoek of stel uw vraag. Reactie binnen één werkdag. Kantoor in Willebroek, actief in heel Vlaanderen en Brussel.");
-    const prev = document.body.className;
-    document.body.className = "";
-    const styleEl = document.createElement('style');
-    styleEl.textContent = SHELL_STYLE + FORM_ANIM_CSS;
-    document.head.appendChild(styleEl);
+    document.title = 'Contact — AB Bouw Groep';
+    window.scrollTo(0, 0);
+    const opruimers: Array<() => void> = [wireMobielMenu()];
 
-    // Form submit handler — POST naar GHL Inbound Webhook, dan UI switch
-    const wrapper = document.querySelector<HTMLElement>('[data-form-wrapper]');
-    const form = document.querySelector<HTMLFormElement>('[data-form-anim]');
-    const errBox = document.querySelector<HTMLElement>('[data-form-error]');
-    const btn = document.querySelector<HTMLButtonElement>('[data-submit-btn]');
-    const btnLabel = document.querySelector<HTMLElement>('[data-submit-label]');
+    const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+    const btn = document.querySelector<HTMLButtonElement>('[data-form-btn]');
+    const fout = document.querySelector<HTMLElement>('[data-form-fout]');
+    const ok = document.querySelector<HTMLElement>('[data-form-ok]');
 
-    const onSubmit = async (e: SubmitEvent) => {
+    const onFocus = () => trackFormStart('contact');
+    form?.addEventListener('focusin', onFocus, { once: true });
+
+    const toonFout = (tekst: string, veld?: HTMLElement | null) => {
+      if (fout) { fout.textContent = tekst; fout.hidden = false; }
+      veld?.setAttribute('aria-invalid', 'true');
+      (veld as HTMLInputElement | null)?.focus();
+    };
+
+    const onSubmit = async (e: Event) => {
       e.preventDefault();
-      if (!form || !wrapper) return;
-
-      // Native HTML5 validation triggeren (we hebben novalidate aan voor custom dd)
-      const requiredFields = form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[required]');
-      for (const inp of Array.from(requiredFields)) {
-        if (!inp.checkValidity()) {
-          inp.reportValidity();
-          return;
-        }
-      }
-      const sel = form.querySelector<HTMLSelectElement>('select[name="type_werk"]');
-      if (sel && !sel.value) {
-        if (errBox) {
-          errBox.hidden = false;
-          errBox.textContent = 'Selecteer een type werk.';
-        }
-        sel.focus();
-        return;
-      }
+      if (!form) return;
+      form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+      if (fout) fout.hidden = true;
 
       const fd = new FormData(form);
-      const emailV = ((fd.get('email') as string) || '').trim();
-      const phoneV = ((fd.get('phone') as string) || '').trim();
-      if (!emailV || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailV)) {
-        if (errBox) { errBox.hidden = false; errBox.textContent = 'Vul een geldig e-mailadres in.'; }
-        form.querySelector<HTMLInputElement>('input[name="email"]')?.focus();
-        return;
+      const email = ((fd.get('email') as string) || '').trim();
+      const phone = ((fd.get('phone') as string) || '').trim();
+      const werk = ((fd.get('type_werk') as string) || '').trim();
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+        return toonFout('Vul een geldig e-mailadres in.', form.querySelector('[name="email"]'));
       }
-      if (!phoneV || phoneV.replace(/\D/g, '').length < 8) {
-        if (errBox) { errBox.hidden = false; errBox.textContent = 'Vul een geldig telefoonnummer in (minstens 8 cijfers).'; }
-        form.querySelector<HTMLInputElement>('input[name="phone"]')?.focus();
-        return;
+      if (phone.replace(/\D/g, '').length < 8) {
+        return toonFout('Vul een geldig telefoonnummer in.', form.querySelector('[name="phone"]'));
+      }
+      if (!werk) {
+        return toonFout('Kies om welk werk het gaat.', form.querySelector('[name="type_werk"]'));
       }
 
-      if (errBox) { errBox.hidden = true; errBox.textContent = ''; }
-      wrapper.classList.add('is-submitting');
-      if (btn) btn.disabled = true;
-      if (btnLabel) btnLabel.textContent = 'Even bezig…';
-
+      if (btn) { btn.disabled = true; btn.textContent = 'Versturen…'; }
       const result = await submitLead({
         source: 'contact_form',
         page_path: window.location.pathname,
         firstName: (fd.get('firstName') as string) || undefined,
         lastName: (fd.get('lastName') as string) || undefined,
-        email: emailV,
-        phone: phoneV,
+        email,
+        phone,
         straat: (fd.get('straat') as string) || undefined,
         postcode: (fd.get('postcode') as string) || undefined,
         gemeente: (fd.get('gemeente') as string) || undefined,
-        type_werk: divisieKey(fd.get('type_werk') as string),
+        type_werk: divisieKey(werk),
         aanvullende_info: (fd.get('aanvullende_info') as string) || undefined,
+        bron_lead: 'website:contact',
       });
 
-      wrapper.classList.remove('is-submitting');
-
       if (result.ok) {
-        wrapper.classList.add('is-success');
+        form.hidden = true;
+        if (ok) ok.hidden = false;
+        ok?.scrollIntoView({ block: 'center', behavior: 'smooth' });
       } else {
-        if (btn) btn.disabled = false;
-        if (btnLabel) btnLabel.textContent = 'Verstuur aanvraag';
-        if (errBox) {
-          errBox.hidden = false;
-          errBox.textContent = `Er ging iets mis bij het versturen. Bel ons gerust op ${CONTACT.phone.spaced} of mail naar ${CONTACT.email}.`;
-        }
+        if (btn) { btn.disabled = false; btn.textContent = 'Verstuur aanvraag'; }
+        toonFout(`Er ging iets mis bij het versturen. Bel ons gerust op ${CONTACT.phone.display}.`);
       }
     };
-    form?.addEventListener('submit', onSubmit);
 
-    return () => {
-      document.body.className = prev;
-      styleEl.remove();
+    form?.addEventListener('submit', onSubmit);
+    opruimers.push(() => {
       form?.removeEventListener('submit', onSubmit);
-    };
+      form?.removeEventListener('focusin', onFocus);
+    });
+
+    return () => opruimers.forEach((f) => f());
   }, []);
-  useAbBouwInteractions();
-  return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
+
+  return <div dangerouslySetInnerHTML={{ __html: HTML() }} />;
 }
