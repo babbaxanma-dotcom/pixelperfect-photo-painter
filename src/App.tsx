@@ -2,9 +2,6 @@ import { lazy, Suspense, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import PageTransition from "./components/PageTransition";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import "./styles/ab-bouw.css";
 
 // LAZY-LOAD alle routes — initial bundle van 1MB -> ~150KB
@@ -71,9 +68,6 @@ const RouteLoading = () => (
 const App = () => {
   return (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
       <BrowserRouter>
         <CanonicalUpdater />
         <PageTransition>
@@ -124,7 +118,6 @@ const App = () => {
         </Suspense>
         </PageTransition>
       </BrowserRouter>
-    </TooltipProvider>
   </QueryClientProvider>
   );
 };

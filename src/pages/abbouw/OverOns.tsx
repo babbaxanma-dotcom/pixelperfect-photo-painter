@@ -146,7 +146,6 @@ ${buildHero({
           <article class="ab-promise-panel${i===0?' is-active':''}" data-promise-panel="${i}">
             <div class="ab-promise-bignum">${n}</div>
             <div class="ab-promise-body">
-              <span class="ab-promise-eyebrow">Afspraak ${n}</span>
               <h3>${t}</h3>
               <p>${d}</p>
               <ul class="ab-promise-bullets">
@@ -205,9 +204,10 @@ ${FOOTER}
 .ab-mv-card { padding: 44px 38px; border-radius: 18px; }
 .ab-mv-mission { background: var(--navy); color: #fff; }
 .ab-mv-vision { background: #fff; border: 1px solid var(--ink-line-soft); }
-.ab-mv-tag { display:inline-block; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 18px; }
-.ab-mv-mission .ab-mv-tag { background: var(--accent); color: #fff; }
-.ab-mv-vision .ab-mv-tag { background: rgba(217,140,3,0.10); color: var(--accent); }
+.ab-mv-tag { display:inline-flex; align-items:center; gap:9px; padding:0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 18px; }
+.ab-mv-tag::before { content:''; width:26px; height:3px; border-radius:2px; background: var(--accent); flex-shrink:0; }
+.ab-mv-mission .ab-mv-tag { color: rgba(255,255,255,0.85); }
+.ab-mv-vision .ab-mv-tag { color: #41495a; }
 .ab-mv-card h3 { font-family: var(--font-display); font-size: 24px; line-height: 1.25; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 14px; }
 .ab-mv-mission h3 { color: #fff; }
 .ab-mv-vision h3 { color: var(--navy); }
@@ -274,12 +274,12 @@ ${FOOTER}
 
 @media (max-width: 1100px) {
   .ab-promise { grid-template-columns: 1fr; }
-  .ab-promise-tabs { flex-direction: row; overflow-x: auto; gap: 8px; padding-bottom: 4px; scrollbar-width: none; }
-  .ab-promise-tabs::-webkit-scrollbar { display: none; }
-  .ab-promise-tab { flex: 0 0 auto; border-left: none; border-bottom: 3px solid transparent; padding: 10px 14px; }
-  .ab-promise-tab.is-active { border-left-color: transparent; border-bottom-color: var(--accent); }
-  .ab-promise-tab-title { display: none; }
-  .ab-promise-tab-num { font-size: 14px; }
+  /* nummer + titel blijven samen leesbaar; tabs wrappen in rijen */
+  .ab-promise-tabs { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+  .ab-promise-tab { flex: 0 0 auto; border-left: none; border: 1px solid var(--ink-line-soft); background: #fff; border-radius: 999px; padding: 9px 14px; gap: 8px; }
+  .ab-promise-tab.is-active { border-color: var(--accent); box-shadow: none; }
+  .ab-promise-tab-title { font-size: 13px; }
+  .ab-promise-tab-num { font-size: 12px; min-width: auto; }
 }
 @media (max-width: 960px) {
   .ab-pillars { grid-template-columns: 1fr; }

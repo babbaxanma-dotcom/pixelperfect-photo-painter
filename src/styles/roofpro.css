@@ -1,20 +1,22 @@
-/* ═══════════════════════════════════════════════════════════════════════════
-   AB BOUW GROEP — v6 designsysteem, replica van de RoofPro-referentie
+﻿/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   AB BOUW GROEP â€” v6 designsysteem, replica van de RoofPro-referentie
    Eigen namespace rp-* : botst niet met de oude lf-/ab-/tr-regels.
    Maten afgeleid van de referentie (1920-ontwerp) x0,75 naar onze 1440-basis.
-   ═══════════════════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 :root {
   /* --- kleuren: neutralen 1:1 uit de referentie gemeten, rood -> AB-goud --- */
-  --rp-accent: #d98c03;
-  --rp-accent-deep: #b87502;
+  --rp-accent: #d98c03;            /* vlakken/knoppen/randen â€” NOOIT als tekstkleur op licht */
+  --rp-accent-deep: #b87502;       /* hover-vlak */
   --rp-accent-ink: #0a1628;        /* tekst OP goud: 6,65:1 (wit zou 2,73:1 zijn = zakt door AA) */
+  /* goud als TEKST op licht: #b87502 haalt maar 3,53:1 op #f6f8fa. Deze haalt 4,99:1. */
+  --rp-accent-text: #915e02;
   --rp-accent-tint: #fdf4e3;
 
   --rp-ink: #0a1628;               /* koppen */
   --rp-ink-2: #6b7280;             /* tweede kopregel, grijs */
-  --rp-body: #52525b;              /* lopende tekst */
-  --rp-mute: #8b8f98;
+  --rp-body: #52525b;              /* lopende tekst â€” 7,7:1 op wit */
+  --rp-mute: #5f636c;              /* fijndruk â€” 5,45:1 op #f6f8fa (was #8b8f98 = 2,93:1) */
 
   --rp-bg: #ffffff;
   --rp-bg-soft: #f6f8fa;           /* gemeten sectiegrijs */
@@ -42,7 +44,7 @@
   --rp-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* ── basis ─────────────────────────────────────────────────────────────── */
+/* â”€â”€ basis â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .rp {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   color: var(--rp-body);
@@ -74,6 +76,18 @@
   border-radius: 4px;
 }
 
+/* alleen voor schermlezers */
+.rp-sr {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 .rp-wrap {
   width: 100%;
   max-width: calc(var(--rp-container) + var(--rp-gutter) * 2);
@@ -84,7 +98,7 @@
 .rp-section { padding-block: var(--rp-section-y); }
 .rp-section--soft { background: var(--rp-bg-soft); }
 
-/* ── sectiekop: eyebrow + tweekleurige kop + knop rechts ───────────────── */
+/* â”€â”€ sectiekop: eyebrow + tweekleurige kop + knop rechts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .rp-eyebrow {
   display: inline-flex;
   align-items: center;
@@ -93,7 +107,7 @@
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--rp-accent-deep);
+  color: var(--rp-accent-text);
   margin-bottom: 18px;
 }
 .rp-eyebrow svg { flex: none; }
@@ -109,7 +123,7 @@
 .rp-head__title .rp-dim { display: block; color: var(--rp-ink-2); font-weight: 700; }
 .rp-head__lede { margin-top: 16px; max-width: 56ch; font-size: 16px; }
 
-/* ── knoppen ───────────────────────────────────────────────────────────── */
+/* â”€â”€ knoppen â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .rp-btn {
   display: inline-flex;
   align-items: center;
@@ -131,7 +145,8 @@
   color: var(--rp-accent-ink);
   box-shadow: 0 1px 2px rgba(16, 24, 40, 0.08);
 }
-.rp-btn--primary:hover { background: var(--rp-accent-deep); color: #fff; }
+/* tekst blijft navy bij hover: wit op #b87502 haalt maar 3,58:1 */
+.rp-btn--primary:hover { background: var(--rp-accent-deep); color: var(--rp-accent-ink); }
 .rp-btn--ghost {
   background: transparent;
   color: var(--rp-ink);
@@ -153,11 +168,11 @@
   transition: color 0.2s var(--rp-ease), gap 0.2s var(--rp-ease);
 }
 .rp-more svg { transition: transform 0.2s var(--rp-ease); }
-.rp-more:hover { color: var(--rp-accent-deep); gap: 11px; }
+.rp-more:hover { color: var(--rp-accent-text); gap: 11px; }
 .rp-more:hover svg { transform: translate(2px, -2px); }
-.rp-more--accent { color: var(--rp-accent-deep); }
+.rp-more--accent { color: var(--rp-accent-text); }
 
-/* ══ NAV ═══════════════════════════════════════════════════════════════ */
+/* â•â• NAV â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .rp-nav {
   position: sticky;
   top: 0;
@@ -191,7 +206,7 @@
   padding-block: 8px;
   transition: color 0.2s var(--rp-ease);
 }
-.rp-nav__link:hover, .rp-nav__link[aria-current='page'] { color: var(--rp-accent-deep); }
+.rp-nav__link:hover, .rp-nav__link[aria-current='page'] { color: var(--rp-accent-text); }
 .rp-nav__link[aria-current='page']::after {
   content: '';
   position: absolute;
@@ -202,7 +217,7 @@
 }
 .rp-nav__chev { transition: transform 0.2s var(--rp-ease); }
 
-/* dropdown — werkt zonder JS via :hover/:focus-within */
+/* dropdown â€” werkt zonder JS via :hover/:focus-within */
 .rp-dd { position: relative; }
 .rp-dd__panel {
   position: absolute;
@@ -230,7 +245,7 @@
   color: var(--rp-ink);
   transition: background-color 0.15s var(--rp-ease), color 0.15s var(--rp-ease);
 }
-.rp-dd__item:hover { background: var(--rp-bg-soft); color: var(--rp-accent-deep); }
+.rp-dd__item:hover { background: var(--rp-bg-soft); color: var(--rp-accent-text); }
 
 .rp-nav__cta {
   flex: none;
@@ -245,16 +260,16 @@
   font-size: 15px;
   transition: background-color 0.2s var(--rp-ease), color 0.2s var(--rp-ease);
 }
-.rp-nav__cta:hover { background: var(--rp-accent-deep); color: #fff; }
+.rp-nav__cta:hover { background: var(--rp-accent-deep); color: var(--rp-accent-ink); }
 .rp-nav__cta-ic {
   width: 30px; height: 30px;
   display: grid; place-items: center;
   border-radius: 50%;
   background: #fff;
-  color: var(--rp-accent-deep);
+  color: var(--rp-accent-text);
   flex: none;
 }
-.rp-nav__cta:hover .rp-nav__cta-ic { color: var(--rp-accent-deep); }
+.rp-nav__cta:hover .rp-nav__cta-ic { color: var(--rp-accent-text); }
 
 .rp-burger {
   display: none;
@@ -293,7 +308,7 @@
 .rp-mob__sub a { font-size: 15.5px; font-weight: 600; color: var(--rp-body); }
 .rp-mob__cta { margin-top: 22px; display: grid; gap: 10px; }
 
-/* ══ HERO ══════════════════════════════════════════════════════════════ */
+/* â•â• HERO â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .rp-hero { position: relative; overflow: hidden; background: #fbfbfc; }
 .rp-hero__top { position: relative; padding-top: 56px; }
 .rp-hero__grid {
@@ -353,7 +368,7 @@
   display: block;
 }
 
-/* ══ BAND met disciplines (statisch — geen auto-scroll gimmick) ════════ */
+/* â•â• BAND met disciplines (statisch â€” geen auto-scroll gimmick) â•â•â•â•â•â•â•â• */
 .rp-band {
   background: var(--rp-ink);
   color: #fff;
@@ -373,7 +388,7 @@
 }
 .rp-band__sep { color: var(--rp-accent); font-size: 13px; }
 
-/* ══ ABOUT ═════════════════════════════════════════════════════════════ */
+/* â•â• ABOUT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .rp-about__grid {
   display: grid;
   grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
@@ -452,11 +467,11 @@
 
 .rp-about__foot { display: flex; align-items: center; gap: 26px; margin-top: 38px; flex-wrap: wrap; }
 .rp-about__call { display: flex; align-items: center; gap: 12px; }
-.rp-about__call-ic { color: var(--rp-accent-deep); flex: none; }
+.rp-about__call-ic { color: var(--rp-accent-text); flex: none; }
 .rp-about__call-l { font-size: 13px; color: var(--rp-body); }
 .rp-about__call-n { font-size: 16px; font-weight: 800; color: var(--rp-ink); }
 
-/* ══ CAROUSEL (diensten + reviews) ═════════════════════════════════════ */
+/* â•â• CAROUSEL (diensten + reviews) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .rp-carousel { position: relative; }
 .rp-track {
   display: grid;
@@ -496,7 +511,7 @@
 .rp-arrow[disabled] { opacity: 0.4; cursor: default; }
 .rp-arrow[disabled]:hover { background: #fff; color: var(--rp-ink); border-color: var(--rp-line); }
 
-/* ══ DIENSTKAARTEN ═════════════════════════════════════════════════════ */
+/* â•â• DIENSTKAARTEN â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .rp-svc {
   background: #fff;
   border-radius: var(--rp-r-card);
@@ -507,7 +522,7 @@
   transition: box-shadow 0.24s var(--rp-ease), transform 0.24s var(--rp-ease);
 }
 .rp-svc:hover { box-shadow: var(--rp-shadow-lift); transform: translateY(-4px); }
-/* GEEN overflow:hidden op __img zelf — dan knipt hij het icooncirkeltje af dat
+/* GEEN overflow:hidden op __img zelf â€” dan knipt hij het icooncirkeltje af dat
    bewust over de rand hangt. De zoom wordt geclipt door de binnenste __clip. */
 .rp-svc__img { position: relative; }
 .rp-svc__clip { display: block; overflow: hidden; }
@@ -532,7 +547,7 @@
 .rp-svc__text { margin-top: 12px; font-size: 15px; line-height: 1.6; flex: 1; }
 .rp-svc__foot { margin-top: 22px; }
 
-/* ══ WAAROM (2 kolommen + 2x2 tegels) ══════════════════════════════════ */
+/* â•â• WAAROM (2 kolommen + 2x2 tegels) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .rp-why__grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
@@ -565,12 +580,12 @@
   transition: background-color 0.24s var(--rp-ease), color 0.24s var(--rp-ease);
 }
 .rp-tile--feat .rp-tile__ic, .rp-tile:hover .rp-tile__ic {
-  background: var(--rp-accent); color: var(--rp-accent-ink); border-bottom-color: var(--rp-accent-deep);
+  background: var(--rp-accent); color: var(--rp-accent-ink); border-bottom-color: var(--rp-accent-text);
 }
 .rp-tile__t { font-size: 18px; }
 .rp-tile__d { margin-top: 10px; font-size: 14.5px; line-height: 1.58; }
 
-/* ══ REALISATIES (3 beelden, midden uitgelicht) ════════════════════════ */
+/* â•â• REALISATIES (3 beelden, midden uitgelicht) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .rp-proj__grid {
   display: grid;
   grid-template-columns: 0.72fr 1.36fr 0.72fr;
@@ -593,7 +608,7 @@
   padding: 20px 22px 22px;
   box-shadow: var(--rp-shadow-lift);
 }
-.rp-proj__eyebrow { font-size: 13px; font-weight: 800; color: var(--rp-accent-deep); }
+.rp-proj__eyebrow { font-size: 13px; font-weight: 800; color: var(--rp-accent-text); }
 .rp-proj__t { margin-top: 8px; font-size: 20px; line-height: 1.28; }
 .rp-proj__arrow {
   position: absolute;
@@ -606,7 +621,7 @@
 }
 .rp-proj__arrow:hover { background: var(--rp-ink); color: #fff; transform: translateY(-2px); }
 
-/* ══ WERKWIJZE (vervangt de team-sectie) ═══════════════════════════════ */
+/* â•â• WERKWIJZE (vervangt de team-sectie) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .rp-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
 .rp-step {
   background: #fff;
@@ -630,7 +645,7 @@
 .rp-step__t { font-size: 18px; }
 .rp-step__d { margin-top: 9px; font-size: 14.5px; line-height: 1.58; }
 
-/* ══ REVIEWS ═══════════════════════════════════════════════════════════ */
+/* â•â• REVIEWS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .rp-rev {
   background: #fff;
   border-radius: var(--rp-r-card);
@@ -654,7 +669,7 @@
 .rp-rev__role { font-size: 13px; color: var(--rp-body); }
 .rp-rev__g { flex: none; }
 
-/* ══ MERKEN (vervangt coupons) ═════════════════════════════════════════ */
+/* â•â• MERKEN (vervangt coupons) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .rp-brands { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 26px 56px; }
 .rp-brands img {
   height: 40px; width: auto; object-fit: contain;
@@ -663,7 +678,7 @@
 }
 .rp-brands img:hover { filter: grayscale(0); opacity: 1; }
 
-/* ══ FAQ (vervangt pricing) ════════════════════════════════════════════ */
+/* â•â• FAQ (vervangt pricing) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .rp-faq { display: grid; gap: 12px; max-width: 860px; margin-inline: auto; }
 .rp-faq__item {
   background: #fff;
@@ -682,11 +697,11 @@
   font-size: 16.5px; font-weight: 700; color: var(--rp-ink);
 }
 .rp-faq__q::-webkit-details-marker { display: none; }
-.rp-faq__ic { flex: none; color: var(--rp-accent-deep); transition: transform 0.2s var(--rp-ease); }
+.rp-faq__ic { flex: none; color: var(--rp-accent-text); transition: transform 0.2s var(--rp-ease); }
 .rp-faq__item[open] .rp-faq__ic { transform: rotate(45deg); }
 .rp-faq__a { padding: 0 22px 22px; font-size: 15.5px; line-height: 1.66; }
 
-/* ══ BLOG ══════════════════════════════════════════════════════════════ */
+/* â•â• BLOG â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .rp-blogs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; }
 .rp-blog { position: relative; }
 .rp-blog__img { border-radius: var(--rp-r-img); overflow: hidden; }
@@ -704,10 +719,94 @@
 .rp-blog__meta span { display: inline-flex; align-items: center; gap: 7px; }
 .rp-blog__meta svg { color: var(--rp-mute); flex: none; }
 .rp-blog__t { margin-top: 14px; font-size: 21px; line-height: 1.3; }
-.rp-blog:hover .rp-blog__t { color: var(--rp-accent-deep); }
+.rp-blog:hover .rp-blog__t { color: var(--rp-accent-text); }
 .rp-blog__foot { margin-top: 20px; }
 
-/* ══ DONKERE CTA-BAND ══════════════════════════════════════════════════ */
+/* â•â• PAGINAKOP (subpagina's) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.rp-phero {
+  background: var(--rp-bg-soft);
+  padding: 66px 0 72px;
+  border-bottom: 1px solid var(--rp-line-soft);
+}
+.rp-crumbs { font-size: 13.5px; color: var(--rp-mute); margin-bottom: 18px; }
+.rp-crumbs a:hover { color: var(--rp-accent-text); }
+.rp-phero__t { font-size: clamp(32px, 4.3vw, 58px); }
+.rp-phero__t .rp-dim { display: block; color: var(--rp-ink-2); }
+.rp-phero__lede { margin-top: 20px; max-width: 62ch; font-size: 16.5px; line-height: 1.66; }
+
+/* â•â• FILTERTABS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.rp-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+.rp-tab {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1.5px solid var(--rp-line);
+  background: #fff;
+  font-size: 14.5px; font-weight: 700; color: var(--rp-ink);
+  cursor: pointer;
+  transition: background-color 0.2s var(--rp-ease), color 0.2s var(--rp-ease), border-color 0.2s var(--rp-ease);
+}
+.rp-tab:hover { border-color: var(--rp-ink); }
+.rp-tab.is-active {
+  background: var(--rp-accent); border-color: var(--rp-accent); color: var(--rp-accent-ink);
+}
+.rp-leeg { padding: 40px 0; font-size: 16px; color: var(--rp-body); }
+
+/* â•â• BLOG-OVERZICHT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.rp-bloggrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px 28px; }
+.rp-bloggrid .rp-blog__img img { height: 240px; }
+.rp-bloggrid .rp-blog__card { margin: -72px 16px 0; padding: 18px 20px 20px; }
+.rp-bloggrid .rp-blog__t { font-size: 18.5px; margin-top: 12px; }
+/* gelijke kaarthoogtes: anders wordt de onderrand van elke rij rafelig */
+.rp-bloggrid .rp-blog { display: flex; flex-direction: column; }
+.rp-bloggrid .rp-blog__card { flex: 1; display: flex; flex-direction: column; }
+.rp-bloggrid .rp-blog__foot { margin-top: auto; padding-top: 16px; }
+.rp-bloggrid .rp-blog__t,
+.rp-bloggrid .rp-blog__ex {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.rp-bloggrid .rp-blog__t { -webkit-line-clamp: 2; }
+.rp-bloggrid .rp-blog__ex { -webkit-line-clamp: 3; }
+.rp-blog__tag {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--rp-accent-tint);
+  color: var(--rp-accent-text);
+  font-size: 12px; font-weight: 800; letter-spacing: 0.03em;
+}
+.rp-blog__ex { margin-top: 10px; font-size: 14.5px; line-height: 1.58; }
+
+@media (max-width: 1100px) { .rp-bloggrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px) {
+  .rp-bloggrid { grid-template-columns: minmax(0, 1fr); }
+  .rp-phero { padding: 44px 0 48px; }
+}
+
+/* â•â• ARTIKELPAGINA â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.rp-artikel { max-width: 780px; margin-inline: auto; }
+.rp-artikel__cover { border-radius: var(--rp-r-img); overflow: hidden; margin-bottom: 38px; }
+.rp-artikel__cover img { width: 100%; height: 420px; object-fit: cover; }
+.rp-artikel__body { font-size: 17px; line-height: 1.72; color: var(--rp-body); }
+.rp-artikel__body p { margin-bottom: 20px; }
+.rp-artikel__body h2, .rp-artikel__body h3 {
+  margin: 38px 0 14px; font-size: 24px; color: var(--rp-ink); line-height: 1.25;
+}
+.rp-artikel__body ul, .rp-artikel__body ol { margin: 0 0 20px 22px; padding: 0; list-style: disc; }
+.rp-artikel__body ol { list-style: decimal; }
+.rp-artikel__body li { margin-bottom: 9px; }
+.rp-artikel__body a { color: var(--rp-accent-text); text-decoration: underline; }
+.rp-artikel__body .lf-lede { font-size: 19px; line-height: 1.62; color: var(--rp-ink); font-weight: 500; }
+.rp-artikel__body img { border-radius: var(--rp-r-img); margin: 8px 0 22px; }
+@media (max-width: 720px) {
+  .rp-artikel__cover img { height: 230px; }
+  .rp-artikel__body { font-size: 16px; }
+  .rp-artikel__body h2, .rp-artikel__body h3 { font-size: 21px; margin-top: 30px; }
+}
+
+/* â•â• DONKERE CTA-BAND â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .rp-cta { padding-block: var(--rp-section-y); }
 .rp-cta__box {
   position: relative;
@@ -747,7 +846,7 @@
 .rp-cta__note { margin-top: 12px; font-size: 12.5px; color: #98a0ac; }
 .rp-cta__ok { margin-top: 18px; font-size: 15.5px; font-weight: 700; color: #7ee2a8; }
 
-/* ══ FOOTER ════════════════════════════════════════════════════════════ */
+/* â•â• FOOTER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .rp-foot { background: var(--rp-bg-soft); padding-top: 74px; }
 .rp-foot__grid {
   display: grid;
@@ -759,11 +858,11 @@
 .rp-foot__rows { margin-top: 26px; display: grid; gap: 15px; }
 .rp-foot__row { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: var(--rp-body); }
 .rp-foot__row svg { flex: none; margin-top: 3px; color: var(--rp-ink); }
-.rp-foot__row a:hover { color: var(--rp-accent-deep); }
+.rp-foot__row a:hover { color: var(--rp-accent-text); }
 .rp-foot__h { font-size: 19px; margin-bottom: 22px; }
 .rp-foot__links { display: grid; gap: 14px; }
 .rp-foot__links a { font-size: 15px; color: var(--rp-body); transition: color 0.18s var(--rp-ease); }
-.rp-foot__links a:hover { color: var(--rp-accent-deep); }
+.rp-foot__links a:hover { color: var(--rp-accent-text); }
 
 .rp-hours {
   background: #fff;
@@ -787,7 +886,7 @@
   display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
 }
 .rp-foot__copy { font-size: 14px; color: var(--rp-body); }
-.rp-foot__copy a:hover { color: var(--rp-accent-deep); }
+.rp-foot__copy a:hover { color: var(--rp-accent-text); }
 .rp-socials { display: flex; gap: 10px; }
 .rp-socials a {
   width: 38px; height: 38px; border-radius: 50%;
@@ -798,7 +897,7 @@
 }
 .rp-socials a:hover { background: var(--rp-accent); color: var(--rp-accent-ink); border-color: var(--rp-accent); }
 
-/* ══ FAB (mobiel bellen) ═══════════════════════════════════════════════ */
+/* â•â• FAB (mobiel bellen) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .rp-fab {
   position: fixed;
   right: 16px; bottom: 16px;
@@ -813,7 +912,7 @@
 }
 .rp-fab:hover { background: var(--rp-accent); color: var(--rp-accent-ink); }
 
-/* ══ RESPONSIEF ════════════════════════════════════════════════════════ */
+/* â•â• RESPONSIEF â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 @media (max-width: 1100px) {
   .rp-about__grid { gap: 44px; }
   .rp-why__grid { gap: 44px; }

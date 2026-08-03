@@ -90,18 +90,18 @@ const BANNER_HTML = `
 
 const BANNER_CSS = `
 .abc-banner {
-  position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 999;
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: 12px; z-index: 999;
+  width: calc(100% - 24px); max-width: 760px;
   background: #fff; color: #0f1115;
   border: 1px solid rgba(15,17,21,0.10);
-  border-radius: 16px;
+  border-radius: 14px;
   box-shadow: 0 24px 60px -18px rgba(10,22,40,0.35);
   font-family: var(--font-body, system-ui, sans-serif);
-  font-size: 14.5px; line-height: 1.55;
+  font-size: 14px; line-height: 1.5;
 }
 .abc-banner-inner {
-  display: grid; grid-template-columns: 1fr auto; gap: 20px;
-  padding: 18px 22px; align-items: center;
-  max-width: 1140px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto; gap: 16px;
+  padding: 14px 18px; align-items: center;
 }
 .abc-banner-text strong { display: block; font-size: 15px; margin-bottom: 4px; }
 .abc-banner-text p { margin: 0; color: rgba(15,17,21,0.72); }
@@ -119,14 +119,17 @@ const BANNER_CSS = `
 }
 .abc-btn-ghost:hover { background: rgba(15,17,21,0.04); }
 .abc-btn-primary {
-  background: var(--accent, #d98c03); color: #fff; border-color: var(--accent, #d98c03);
-  font-weight: 600;
+  /* navy op goud = 6,65:1; wit op goud haalde maar 2,73:1 en zakte door AA */
+  background: #d98c03; color: #0a1628; border-color: #d98c03;
+  font-weight: 700;
 }
-.abc-btn-primary:hover { background: var(--accent-hover, #b87502); border-color: var(--accent-hover, #b87502); }
+.abc-btn-primary:hover { background: #b87502; border-color: #b87502; color: #0a1628; }
 @media (max-width: 720px) {
-  .abc-banner-inner { grid-template-columns: 1fr; gap: 14px; }
-  .abc-banner-actions { flex-direction: column-reverse; }
-  .abc-btn { width: 100%; }
+  .abc-banner { font-size: 13px; }
+  .abc-banner-inner { grid-template-columns: 1fr; gap: 10px; padding: 12px 14px; }
+  .abc-banner-text strong { font-size: 14px; margin-bottom: 2px; }
+  .abc-banner-actions { flex-direction: row; }
+  .abc-btn { flex: 1; padding: 10px 12px; }
 }
 `;
 

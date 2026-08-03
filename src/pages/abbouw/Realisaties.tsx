@@ -181,37 +181,6 @@ ${buildHero({
   secondary: { label: 'Onze diensten →', href: '/diensten' },
 })}
 
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-proj-tabs-wrap">
-      <div class="lf-proj-tabs" id="rzFilters">
-        ${filters.map((f, i) => `
-          <button class="lf-proj-chip${i === 0 ? ' active' : ''}" data-rz="${f.key}">
-            ${i === 0 ? '<span class="lf-chip-dot"></span>' : ''}${f.label}
-          </button>`).join('')}
-      </div>
-    </div>
-    <div class="rz-grid rz-grid--preview" id="rzCollage">
-      ${[0,1,2,3].map(i => {
-        const p = filters[0].cards[i] || filters[0].cards[0];
-        return `
-        <a class="rz-proj-card" href="/contact" aria-label="${p.t}" data-rz-preview="${i}">
-          <div class="rz-proj-img"><img id="rzImg${i}" src="${p.img}" alt="${p.t}" loading="lazy"/></div>
-          <div class="rz-proj-foot">
-            <div class="rz-proj-meta">
-              <span class="rz-proj-tag" id="rzTag${i}">${p.tag}</span>
-              <span class="rz-proj-loc" id="rzLoc${i}">${p.t}</span>
-            </div>
-            <span class="rz-proj-arrow" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
-            </span>
-          </div>
-        </a>`;
-      }).join('')}
-    </div>
-  </div>
-</section>
-
 <!-- STATS -->
 <section class="lf-stats">
   <div class="wrap">
@@ -243,7 +212,7 @@ ${buildHero({
       </div>
       <div class="lf-stat-card lf-stat-card--nophoto">
         <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span>6</span><span class="lf-stat-suffix"></span></div>
+          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span>6</span></div>
           <div class="lf-stat-label">Vakdisciplines onder één dak</div>
         </div>
       </div>
@@ -256,6 +225,14 @@ ${buildHero({
     <div class="lf-section-head centered">
       <span class="lf-eyebrow" id="rzCardsEyebrow">Recent werk</span>
       <h2 class="lf-h2" id="rzCardsTitle">Een greep uit onze projecten,<br/>één kwaliteitsstandaard.</h2>
+    </div>
+    <div class="lf-proj-tabs-wrap">
+      <div class="lf-proj-tabs" id="rzFilters">
+        ${filters.map((f, i) => `
+          <button class="lf-proj-chip${i === 0 ? ' active' : ''}" data-rz="${f.key}">
+            ${i === 0 ? '<span class="lf-chip-dot"></span>' : ''}${f.label}
+          </button>`).join('')}
+      </div>
     </div>
     ${filters.map(f => `
       <div class="rz-grid rz-panel${f.key === 'alle' ? ' active' : ''}" data-rz-panel="${f.key}" style="${f.key === 'alle' ? '' : 'display:none;'}">
@@ -400,13 +377,6 @@ export default function Realisaties() {
       }
       .lf-stat-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
       .lf-stat-card--nophoto .lf-stat-photo { display: none; }
-      .lf-stat-card--nophoto::before {
-        content: '';
-        flex: 0 0 auto;
-        width: 72px; height: 72px;
-        border-radius: 12px;
-        background: linear-gradient(135deg, #0f172a, #1e293b);
-      }
       .lf-stat-body { min-width: 0; }
       .lf-stat-num {
         display: flex; align-items: baseline; gap: 6px;
@@ -420,11 +390,6 @@ export default function Realisaties() {
     document.head.appendChild(styleEl);
 
     const chips = document.querySelectorAll<HTMLButtonElement>('#rzFilters .lf-proj-chip');
-    const previewCards = [0, 1, 2, 3].map(i => document.querySelector<HTMLElement>(`[data-rz-preview="${i}"]`));
-    const previewImgs = [0, 1, 2, 3].map(i => document.getElementById('rzImg' + i) as HTMLImageElement | null);
-    const previewTags = [0, 1, 2, 3].map(i => document.getElementById('rzTag' + i));
-    const previewLocs = [0, 1, 2, 3].map(i => document.getElementById('rzLoc' + i));
-    const FILTER_CARDS = filters.reduce<Record<string, typeof filters[0]['cards']>>((acc, f) => { acc[f.key] = f.cards; return acc; }, {});
     const panels = document.querySelectorAll<HTMLElement>('.rz-panel');
     const handlers: Array<[HTMLButtonElement, () => void]> = [];
 
@@ -432,8 +397,7 @@ export default function Realisaties() {
       const h = () => {
         const key = chip.getAttribute('data-rz') || 'alle';
         const data = FILTER_DATA[key];
-        const cardData = FILTER_CARDS[key];
-        if (!data || !cardData) return;
+        if (!data) return;
         chips.forEach(c => {
           c.classList.toggle('active', c === chip);
           const isActive = c === chip;
@@ -445,12 +409,6 @@ export default function Realisaties() {
           } else if (!isActive && hasDot) {
             hasDot.remove();
           }
-        });
-        [0, 1, 2, 3].forEach(i => {
-          const p = cardData[i] || cardData[0];
-          if (previewImgs[i] && p) { previewImgs[i]!.src = p.img; previewImgs[i]!.alt = p.t; }
-          if (previewTags[i] && p) previewTags[i]!.textContent = p.tag;
-          if (previewLocs[i] && p) previewLocs[i]!.textContent = p.t;
         });
         panels.forEach(p => {
           const match = p.getAttribute('data-rz-panel') === key;

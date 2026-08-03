@@ -495,7 +495,7 @@ const HTML = (i: Record<string, string>) => {
         <h2 class="rp-cta__t">Plannen voor uw woning?<br/>Laat uw nummer achter</h2>
         <p class="rp-cta__p">Wij bellen u terug om een plaatsbezoek in te plannen. Dat bezoek en de offerte erna zijn kosteloos.</p>
         <form class="rp-cta__form" data-cta-form novalidate>
-          <label class="rp-sr" for="rp-cta-phone" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Uw telefoonnummer</label>
+          <label class="rp-sr" for="rp-cta-phone">Uw telefoonnummer</label>
           <input class="rp-cta__input" id="rp-cta-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
                  placeholder="Uw telefoonnummer" required minlength="8"/>
           <button class="rp-btn rp-btn--primary" type="submit" data-cta-btn>Bel mij terug</button>

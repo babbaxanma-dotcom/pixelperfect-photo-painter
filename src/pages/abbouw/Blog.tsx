@@ -1,275 +1,102 @@
 import { useEffect } from 'react';
-import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
-import { buildNav, FOOTER, SHELL_STYLE } from './_shell';
+import '@/styles/roofpro.css';
 import { BLOGS } from '@/data/blogs';
-// Hero-rotatie gebruikt de cover-foto's van de eerste 4 blog-posts
-const heroPics = BLOGS.slice(0, 4).map(b => b.img);
+import { CONTACT } from '@/data/contact';
+import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
-const featured = BLOGS[0];
-const latest = BLOGS.slice(1, 4);
-const archive = BLOGS.slice(1);
-const topics = ['Alle', 'Renovatie', 'Energie', 'Bad & Wellness', 'Gevel', 'Interieur', 'Trends 2026'];
+const TAGS = ['Alles', ...Array.from(new Set(BLOGS.map((b) => b.tag)))];
 
-const HTML = `
-${buildNav('blog')}
-
-
-<!-- HERO met statische blog-cover-foto + extra-donkere overlay zoals andere subpages -->
-<section class="lf-hero lf-hero--blog">
-  <div class="lf-hero-bg lf-hero-bg--slides">
-    <img src="${heroPics[0]}" alt="Bouwblog AB Bouw Groep — renovatie en vakkennis in Vlaanderen" class="is-active" />
+const kaart = (p: (typeof BLOGS)[number]) => `
+<a class="rp-blog" href="/blog/${p.slug}" data-tag="${p.tag}">
+  <div class="rp-blog__img">
+    <img src="${p.img}" alt="${p.title}" width="420" height="240" loading="lazy" decoding="async"/>
   </div>
-  <div class="wrap lf-hero-wrap">
-    <div class="lf-hero-card">
-      <span class="lf-eyebrow">Bouwblog</span>
-      <h1>Vakkennis en inzichten<br/>uit de Vlaamse bouwpraktijk.</h1>
-      <p>Analyses, technische dossiers en praktijkervaringen van onze projectleiders, vakmensen en interieurarchitecten. Onderbouwde antwoorden op de vragen die u zich stelt vóór, tijdens en na de werken.</p>
-      <div class="lf-hero-actions">
-        <a href="/contact#contact-form" data-route="/contact#contact-form" class="lf-cta-pill">
-          <span>Vraag een plaatsbezoek aan</span>
-          <span class="lf-cta-pill-arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </span>
-        </a>
-        <a href="/diensten" data-route="/diensten" class="lf-btn-ghost">Onze diensten →</a>
-      </div>
+  <div class="rp-blog__card">
+    <span class="rp-blog__tag">${p.tag}</span>
+    <div class="rp-blog__meta">
+      <span>${ic.cal} ${p.date}</span>
+      <span>${ic.user} AB Bouw Groep</span>
     </div>
+    <h2 class="rp-blog__t">${p.title}</h2>
+    <p class="rp-blog__ex">${p.excerpt}</p>
+    <div class="rp-blog__foot"><span class="rp-more">Lees het artikel ${ic.arrowUpRight()}</span></div>
+  </div>
+</a>`;
+
+const HTML = () => `<div class="rp">
+${rpNav('/blog')}
+
+<section class="rp-phero">
+  <div class="rp-wrap">
+    <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Blog</span></nav>
+    <span class="rp-eyebrow">${ic.mark} Blog en nieuws</span>
+    <h1 class="rp-phero__t">Uit de praktijk<span class="rp-dim">uitleg en achtergrond</span></h1>
+    <p class="rp-phero__lede">Wat we tijdens plaatsbezoeken het vaakst uitleggen, hier op papier: regelgeving, materiaalkeuzes en wat een ingreep in de praktijk oplevert.</p>
   </div>
 </section>
 
-
-<section class="lf-section lf-blog-editorial">
-  <div class="wrap">
-    <div class="lf-blog-section-head">
-      <span class="lf-eyebrow">Uitgelicht</span>
-      <h2 class="lf-h2">Eerst lezen als u <span class="ab-mark">slim wil bouwen</span>.</h2>
+<section class="rp-section">
+  <div class="rp-wrap">
+    <div class="rp-tabs" role="tablist" aria-label="Filter artikels op onderwerp">
+      ${TAGS.map((t, n) => `<button class="rp-tab${n === 0 ? ' is-active' : ''}" type="button" role="tab" aria-selected="${n === 0}" data-filter="${t}">${t}</button>`).join('')}
     </div>
+    <div class="rp-bloggrid" data-blog-grid>
+      ${BLOGS.map(kaart).join('')}
+    </div>
+    <p class="rp-leeg" data-leeg hidden>Geen artikels in dit onderwerp.</p>
+  </div>
+</section>
 
-    <div class="lf-blog-magazine">
-      <article class="lf-blog-feature">
-        <a class="lf-blog-feature-img" href="/blog/${featured.slug}">
-          <img src="${featured.img}" alt="${featured.title}" loading="eager"/>
-          <span class="lf-blog-tag">${featured.tag}</span>
-        </a>
-        <div class="lf-blog-feature-body">
-          <div class="lf-blog-feature-date"><strong>${featured.day}</strong><em>${featured.month}</em></div>
-          <h2><a href="/blog/${featured.slug}">${featured.title}</a></h2>
-          <p>${featured.excerpt} <span class="ab-hl">Concreet, nuchter en toepasbaar</span> op Vlaamse werven.</p>
-          <div class="lf-blog-foot">
-            <a href="/blog/${featured.slug}" class="lf-blog-btn">Lees analyse
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-            <span class="lf-blog-author">${featured.author} · ${featured.readTime}</span>
-          </div>
+<section class="rp-cta">
+  <div class="rp-wrap">
+    <div class="rp-cta__box" style="min-height:270px">
+      <div class="rp-cta__inner">
+        <h2 class="rp-cta__t">Een vraag over uw eigen woning?</h2>
+        <p class="rp-cta__p">Een artikel geeft de algemene lijn. Wat bij u van toepassing is, zien we het snelst ter plaatse.</p>
+        <div style="margin-top:26px;display:flex;flex-wrap:wrap;gap:12px">
+          <a class="rp-btn rp-btn--primary" href="/contact">Plan een plaatsbezoek</a>
+          <a class="rp-btn rp-btn--ghost" href="${CONTACT.phone.href}" style="color:#fff;border-color:rgba(255,255,255,.34)">${ic.phone(17)} ${CONTACT.phone.display}</a>
         </div>
-      </article>
-
-      <aside class="lf-blog-latest">
-        <span class="lf-blog-aside-label">Meest relevant</span>
-        ${latest.map((b, idx) => `
-          <a class="lf-blog-latest-item" href="/blog/${b.slug}">
-            <img src="${b.img}" alt="${b.title}" loading="lazy"/>
-            <span><em>${b.tag} · ${b.readTime}</em><strong>${b.title}</strong></span>
-          </a>
-        `).join('')}
-      </aside>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="lf-section lf-tone-soft lf-blog-library">
-  <div class="wrap">
-    <div class="lf-blog-library-head">
-      <div>
-        <span class="lf-eyebrow">Alle artikels</span>
-        <h2 class="lf-h2">Bouwadvies per onderwerp.</h2>
-      </div>
-      <div class="lf-blog-topic-row" data-x-rail role="tablist">
-        ${topics.map((topic, idx) => `<button type="button" class="lf-blog-topic${idx === 0 ? ' is-active' : ''}" data-topic-filter="${topic}" role="tab" aria-selected="${idx === 0 ? 'true' : 'false'}">${topic}</button>`).join('')}
-      </div>
-    </div>
-    <div class="ab-scroll-hint lf-blog-mobile-hint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg> Swipe zijwaarts</div>
-    <div class="lf-blog-grid lf-blog-grid--archive" data-x-rail>
-      ${archive.map((b, idx) => `
-        <article class="lf-blog-card" data-blog-tag="${b.tag}">
-          <div class="lf-blog-img">
-            <img src="${b.img}" alt="${b.title}" loading="lazy"/>
-            <span class="lf-blog-tag">${b.tag}</span>
-            <span class="lf-blog-date-badge"><strong>${b.day}</strong><em>${b.month}</em></span>
-          </div>
-          <div class="lf-blog-body">
-            <h4><a href="/blog/${b.slug}">${b.title}</a></h4>
-            <p>${b.excerpt}</p>
-            <div class="lf-blog-foot">
-              <a href="/blog/${b.slug}" class="lf-blog-btn">Lees meer
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </a>
-              <span class="lf-blog-author">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                ${b.author} · ${b.readTime}
-              </span>
-            </div>
-          </div>
-        </article>
-      `).join('')}
-    </div>
-  </div>
-</section>
-
-${FOOTER}
-`;
+${rpFooter()}
+</div>`;
 
 export default function Blog() {
   useEffect(() => {
-    document.title = 'Bouwblog | AB Bouw Groep';
-    const prevClass = document.body.className;
-    document.body.className = 'ab-body';
-    const styleEl = document.createElement('style');
-    styleEl.textContent = SHELL_STYLE + BLOG_STYLE;
-    document.head.appendChild(styleEl);
-    return () => { document.body.className = prevClass; styleEl.remove(); };
-  }, []);
-  useAbBouwInteractions();
+    document.title = 'Blog en nieuws — AB Bouw Groep';
+    const opruimers: Array<() => void> = [wireMobielMenu()];
 
-  useEffect(() => {
-    const root = document.querySelector('.lf-blog-library');
-    if (!root) return;
-    const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-topic-filter]'));
-    const cards = Array.from(root.querySelectorAll<HTMLElement>('.lf-blog-card[data-blog-tag]'));
-    if (!buttons.length || !cards.length) return;
+    const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+    const kaarten = Array.from(document.querySelectorAll<HTMLElement>('[data-blog-grid] .rp-blog'));
+    const leeg = document.querySelector<HTMLElement>('[data-leeg]');
 
-    const apply = (filter: string) => {
-      cards.forEach((card) => {
-        const tag = card.getAttribute('data-blog-tag') || '';
-        const show = filter === 'Alle' || tag === filter;
-        card.style.display = show ? '' : 'none';
+    const maakHandler = (b: HTMLButtonElement) => () => {
+      const f = b.dataset.filter || 'Alles';
+      tabs.forEach((t) => {
+        const actief = t === b;
+        t.classList.toggle('is-active', actief);
+        t.setAttribute('aria-selected', String(actief));
       });
-      buttons.forEach((b) => {
-        const active = b.getAttribute('data-topic-filter') === filter;
-        b.classList.toggle('is-active', active);
-        b.setAttribute('aria-selected', active ? 'true' : 'false');
+      let zichtbaar = 0;
+      kaarten.forEach((k) => {
+        const toon = f === 'Alles' || k.dataset.tag === f;
+        k.style.display = toon ? '' : 'none';
+        if (toon) zichtbaar++;
       });
+      if (leeg) leeg.hidden = zichtbaar > 0;
     };
-
-    const handlers: Array<[HTMLButtonElement, (e: Event) => void]> = [];
-    buttons.forEach((btn) => {
-      const fn = (e: Event) => {
-        e.preventDefault();
-        const filter = btn.getAttribute('data-topic-filter') || 'Alle';
-        apply(filter);
-        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      };
-      btn.addEventListener('click', fn);
-      handlers.push([btn, fn]);
+    tabs.forEach((b) => {
+      const h = maakHandler(b);
+      b.addEventListener('click', h);
+      opruimers.push(() => b.removeEventListener('click', h));
     });
 
-    return () => { handlers.forEach(([b, fn]) => b.removeEventListener('click', fn)); };
+    return () => opruimers.forEach((f) => f());
   }, []);
 
-  return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
+  return <div dangerouslySetInnerHTML={{ __html: HTML() }} />;
 }
-
-const BLOG_STYLE = `
-/* Donkerdere overlay specifiek op blog-hero zodat tekst contrast pakt over
-   wisselende blog-cover-foto's (sommige zijn licht/wit-crepi). We doen 2 dingen:
-   (1) filter: brightness/saturation op de slide-images zelf, kan niet
-       overschreven worden door bestaande ::after !important rules;
-   (2) een tweede dark layer via een eigen ::before pseudo. */
-.lf-hero--blog .lf-hero-bg--slides img {
-  filter: brightness(0.55) saturate(0.85) !important;
-}
-/* Mobile: blog-hero compacter — niet fullscreen, gewoon een korte "kop". */
-@media (max-width: 900px) {
-  .lf-hero--blog { min-height: 360px !important; }
-  .lf-hero--blog .lf-hero-arrow { width: 40px; height: 40px; }
-  .lf-hero--blog .lf-hero-wrap { padding-top: 90px; padding-bottom: 30px; }
-  .lf-hero--blog .lf-hero-card { padding: 22px 22px 22px; }
-  .lf-hero--blog .lf-hero-card h1 { font-size: clamp(22px, 6vw, 28px); line-height: 1.2; }
-  .lf-hero--blog .lf-hero-card p { font-size: 13.5px; line-height: 1.55; }
-  .lf-hero--blog .lf-hero-actions { gap: 8px; }
-  .lf-hero--blog .lf-cta-pill { padding: 11px 18px; font-size: 13px; }
-}
-.lf-hero--blog .lf-hero-bg--slides::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(5,9,18,0.10) 0%, rgba(5,9,18,0.55) 100%),
-    radial-gradient(ellipse at center, rgba(5,9,18,0.10) 0%, rgba(5,9,18,0.55) 100%);
-}
-.lf-blog-hero { min-height: 100vh; min-height: 100svh; align-items: flex-end; }
-.lf-blog-hero .lf-hero-bg::after { background: linear-gradient(90deg, rgba(10,18,32,0.88) 0%, rgba(10,18,32,0.58) 46%, rgba(10,18,32,0.22) 100%) !important; }
-.lf-blog-hero-wrap { position: relative; z-index: 2; width: 100%; padding: 160px clamp(24px, 6vw, 96px) 110px; }
-.lf-blog-hero-copy { max-width: 790px; color: #fff; }
-.lf-blog-kicker { display: inline-block; margin-bottom: 18px; padding: 6px 14px; background: var(--accent); color: #fff; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
-.lf-blog-hero-copy h1 { font-family: var(--font-display); font-size: clamp(44px, 7vw, 88px); line-height: .96; font-weight: 650; color: #fff; letter-spacing: -0.035em; margin: 0 0 24px; text-wrap: balance; }
-.lf-blog-hero-copy p { max-width: 610px; color: rgba(255,255,255,0.82); font-size: clamp(16px, 1.4vw, 19px); line-height: 1.65; margin: 0; }
-.lf-blog-hero-meta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
-.lf-blog-hero-meta span { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; color: rgba(255,255,255,.76); font-size: 13px; }
-.lf-blog-hero-meta strong { color: #fff; font-family: var(--font-display); }
-.lf-blog-section-head { max-width: 820px; margin-bottom: 34px; }
-.lf-blog-magazine { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(320px, .74fr); gap: 28px; align-items: stretch; }
-.lf-blog-feature { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(330px, .82fr); min-height: 520px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; box-shadow: 0 30px 80px -44px rgba(10,22,40,.28); }
-.lf-blog-feature-img { position: relative; display: block; min-height: 100%; overflow: hidden; }
-.lf-blog-feature-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-blog-feature:hover .lf-blog-feature-img img { }
-.lf-blog-feature-body { padding: clamp(30px, 4vw, 54px); display: flex; flex-direction: column; justify-content: center; }
-.lf-blog-feature-date { width: 62px; height: 62px; border-radius: 12px; background: var(--navy); color: #fff; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; margin-bottom: 22px; }
-.lf-blog-feature-date strong { font-family: var(--font-display); font-size: 24px; }
-.lf-blog-feature-date em { font-style: normal; margin-top: 4px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.68); }
-.lf-blog-feature h2 { font-family: var(--font-display); font-size: clamp(30px, 3.2vw, 46px); line-height: 1.08; letter-spacing: -0.025em; color: var(--navy); margin: 0 0 18px; }
-.lf-blog-feature h2 a { color: inherit; text-decoration: none; }
-.lf-blog-feature-body p { color: var(--ink-soft); font-size: 15.5px; line-height: 1.75; margin: 0 0 22px; }
-.lf-blog-latest { background: var(--navy); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
-.lf-blog-aside-label { color: rgba(255,255,255,.62); font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 4px; }
-.lf-blog-latest-item { display: grid; grid-template-columns: 92px 1fr; gap: 14px; padding: 12px; border-radius: 12px; color: #fff; text-decoration: none; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.08); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-blog-latest-item:hover { background: rgba(255,255,255,.105); border-color: rgba(255,255,255,.2); }
-.lf-blog-latest-item img { width: 92px; height: 78px; object-fit: cover; border-radius: 9px; }
-.lf-blog-latest-item span { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
-.lf-blog-latest-item em { font-style: normal; color: rgba(255,255,255,.55); font-size: 11.5px; margin-bottom: 6px; }
-.lf-blog-latest-item strong { color: #fff; font-size: 14px; line-height: 1.35; }
-.lf-blog-library-head { display: flex; align-items: end; justify-content: space-between; gap: 28px; margin-bottom: 28px; }
-.lf-blog-library-head .lf-h2 { margin-bottom: 0; }
-.lf-blog-topic-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
-.lf-blog-topic { display: inline-flex; padding: 10px 16px; border-radius: 999px; background: #fff; border: 1px solid var(--ink-line-soft); color: var(--ink-soft); font-size: 13px; font-weight: 700; white-space: nowrap; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-blog-topic.is-active { background: var(--navy); color: #fff; }
-.lf-blog-grid--archive { align-items: stretch; }
-.lf-blog-grid--archive .lf-blog-card { border-radius: 16px; }
-.lf-blog-mobile-hint { display: none; }
-@media (max-width: 980px) {
-  .lf-blog-magazine, .lf-blog-feature { grid-template-columns: 1fr; }
-  .lf-blog-feature { min-height: 0; }
-  .lf-blog-feature-img { aspect-ratio: 16 / 10; }
-  .lf-blog-library-head { align-items: flex-start; flex-direction: column; }
-  .lf-blog-topic-row { justify-content: flex-start; }
-}
-@media (max-width: 720px) {
-  .lf-blog-hero { min-height: 76svh !important; align-items: flex-end !important; }
-  .lf-blog-hero-wrap { padding: 112px 18px 70px !important; }
-  .lf-blog-hero-copy h1 { font-size: 38px; line-height: 1; }
-  .lf-blog-hero-meta { gap: 8px; margin-top: 24px; }
-  .lf-blog-hero-meta span { font-size: 12px; padding: 9px 12px; }
-  .lf-blog-editorial { padding-bottom: 40px; }
-  .lf-blog-latest { margin: 0 -18px; border-radius: 0; padding: 22px 18px; overflow-x: auto; overflow-y: hidden; flex-direction: row; scroll-snap-type: x mandatory; scrollbar-width: none; }
-  .lf-blog-latest::-webkit-scrollbar { display: none; }
-  .lf-blog-aside-label { position: absolute; opacity: 0; pointer-events: none; }
-  .lf-blog-latest-item { flex: 0 0 82vw; grid-template-columns: 96px 1fr; scroll-snap-align: center; opacity: .72; }
-  .lf-blog-latest-item.is-x-active { transform: scale(1); opacity: 1; background: rgba(255,255,255,.105); border-color: rgba(255,255,255,.2); }
-  .lf-blog-library-head { margin-bottom: 16px; }
-  .lf-blog-topic-row { width: calc(100% + 36px); margin: 0 -18px; padding: 2px 18px 12px; overflow-x: auto; overflow-y: hidden; flex-wrap: nowrap; scroll-snap-type: x proximity; scrollbar-width: none; }
-  .lf-blog-topic-row::-webkit-scrollbar { display: none; }
-  .lf-blog-topic { scroll-snap-align: start; }
-  .lf-blog-topic.is-x-active { background: var(--navy); color: #fff; }
-  .lf-blog-mobile-hint { display: flex; margin: -2px 0 12px; }
-  .lf-blog-grid--archive { display: flex !important; grid-template-columns: none !important; gap: 14px; overflow-x: auto; overflow-y: hidden; margin: 0 -18px; padding: 6px 18px 24px; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-  .lf-blog-grid--archive::-webkit-scrollbar { display: none; }
-  .lf-blog-grid--archive .lf-blog-card { flex: 0 0 84vw; scroll-snap-align: center; opacity: .7; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-  .lf-blog-grid--archive .lf-blog-card.is-x-active { opacity: 1; transform: scale(1); }
-  .lf-blog-foot { flex-direction: column; align-items: flex-start; }
-}
-.lf-blog-topic { font-family: inherit; cursor: pointer; appearance: none; border: 1px solid var(--ink-line-soft); -webkit-tap-highlight-color: transparent; }
-.lf-blog-topic:hover { background: var(--navy); color: #fff; }
-.lf-blog-topic:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-`;
