@@ -102,7 +102,7 @@ export const rpFooter = () => `
     <div class="rp-foot__grid">
       <div>
         <a class="rp-foot__logo" href="/" aria-label="AB Bouw Groep"><img src="${LOGO}" alt="AB Bouw Groep" width="161" height="46" loading="lazy" decoding="async"/></a>
-        <p class="rp-foot__about">Bouw- en renovatiebedrijf met eigen ploegen voor dak, gevel, badkamer, interieur, ruwbouw en energiewerken. Actief in heel Vlaanderen en Brussel.</p>
+        <p class="rp-foot__about">Bouw- en renovatiebedrijf voor dak, gevel, badkamer, interieur, ruwbouw en energiewerken. Actief in Vlaanderen en Brussel.</p>
         <div class="rp-foot__rows">
           <span class="rp-foot__row">${ic.phone(17)}<a href="${CONTACT.phone.href}">${CONTACT.phone.display}</a></span>
           <span class="rp-foot__row">${ic.mail}<a href="mailto:${CONTACT.email}">${CONTACT.email}</a></span>

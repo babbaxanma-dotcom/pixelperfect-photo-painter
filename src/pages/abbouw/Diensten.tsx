@@ -83,7 +83,7 @@ const DIENSTEN = [
 
 const INBEGREPEN = [
   { t: 'Plaatsbezoek en offerte', d: 'Kosteloos, en de offerte splitst elke post apart uit.' },
-  { t: 'Eén werfleider', d: 'Eén nummer dat u belt, die uw dossier kent.' },
+  { t: 'Startdatum op contract', d: 'De dag waarop wij beginnen staat vast voor u tekent.' },
   { t: 'Werf opgeruimd', d: 'Elke vrijdag opgeruimd achtergelaten, afvoer inbegrepen.' },
   { t: '10 jaar garantie', d: 'Op de uitvoering, schriftelijk vastgelegd in de offerte.' },
 ];
@@ -96,7 +96,7 @@ ${rpNav('/diensten')}
     <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Diensten</span></nav>
     <span class="rp-eyebrow">${ic.mark} Onze diensten</span>
     <h1 class="rp-phero__t">Van ruwbouw<span class="rp-dim">tot afwerking</span></h1>
-    <p class="rp-phero__lede">Zes afdelingen met eigen vakmensen. U kunt er één inschakelen, of ze allemaal: loopt uw project over meerdere vakken, dan stemmen wij die onderling af.</p>
+    <p class="rp-phero__lede">Zes afdelingen. U kunt er één inschakelen of ze allemaal: loopt uw project over meerdere vakken, dan stemmen wij die onderling af.</p>
   </div>
 </section>
 

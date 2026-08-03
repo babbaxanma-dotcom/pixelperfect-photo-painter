@@ -98,11 +98,13 @@ const STAPPEN = [
   { n: '04', t: 'Oplevering', img: stap7, d: 'We lopen samen alles na en werken de laatste punten af. Pas dan is het klaar.' },
 ];
 
+// Tegels = argumentpositie, dus concrete dingen die de klant kan natrekken in zijn
+// eigen offerte of contract. Geen zelflof zoals "eigen ploeg" (POEP, zie ATF-spec).
 const TEGELS = [
-  { ic: ICONS.ploeg, t: 'Eigen vakmensen', d: 'Geen wisselende onderaannemers: dezelfde mensen van start tot oplevering.' },
+  { ic: ICONS.papier, t: 'Prijs per post', d: 'Afbraak, materiaal, uitvoering en afvoer staan als aparte lijnen in uw offerte.' },
   { ic: ICONS.shield, t: '10 jaar garantie', d: 'Op de uitvoering van ons werk, schriftelijk vastgelegd in de offerte.', feat: true },
-  { ic: ICONS.planning, t: 'Eén werfleider', d: 'Eén nummer dat u belt. Die persoon kent uw dossier en volgt de planning op.' },
-  { ic: ICONS.papier, t: 'Papierwerk geregeld', d: 'Premies, attesten en EPB regelen wij mee, zodat u niets hoeft na te zoeken.' },
+  { ic: ICONS.planning, t: 'Startdatum op contract', d: 'De dag waarop wij beginnen staat zwart op wit, voor u tekent.' },
+  { ic: ICONS.ploeg, t: 'Premies en attesten', d: 'Wij dienen het premiedossier mee in en leveren de attesten die u nodig heeft.' },
 ];
 
 const FAQ = [
@@ -124,8 +126,8 @@ const HTML = (i: Record<string, string>) => {
   <div class="rp-wrap rp-hero2__grid">
     <div>
       <span class="rp-hero2__eyebrow">${ic.mark} Bouw en renovatie</span>
-      <h1 class="rp-hero2__t">Uw huis af,<span class="rp-dim2">voor de prijs van de offerte</span></h1>
-      <p class="rp-hero2__lede">Van een nieuw dak tot een woning die volledig op de schop gaat. Elke post staat vooraf op papier, en dat bedrag blijft staan tot de oplevering.</p>
+      <h1 class="rp-hero2__t">Van jaren 70<span class="rp-dim2">naar instapklaar</span></h1>
+      <p class="rp-hero2__lede">Dak, gevel, isolatie, badkamer en interieur onder één contract. Elke post staat vooraf op papier en dat bedrag blijft staan tot de oplevering.</p>
       <div class="rp-hero2__punten">
         <span class="rp-hero2__punt">${vinkje} 4,9 op Google</span>
         <span class="rp-hero2__punt">${vinkje} 120+ woningen gerenoveerd</span>
