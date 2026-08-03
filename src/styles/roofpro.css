@@ -1,12 +1,12 @@
-﻿/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   AB BOUW GROEP â€” v6 designsysteem, replica van de RoofPro-referentie
+/* ═══════════════════════════════════════════════════════════════════════════
+   AB BOUW GROEP — v6 designsysteem, replica van de RoofPro-referentie
    Eigen namespace rp-* : botst niet met de oude lf-/ab-/tr-regels.
    Maten afgeleid van de referentie (1920-ontwerp) x0,75 naar onze 1440-basis.
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ═══════════════════════════════════════════════════════════════════════════ */
 
 :root {
   /* --- kleuren: neutralen 1:1 uit de referentie gemeten, rood -> AB-goud --- */
-  --rp-accent: #d98c03;            /* vlakken/knoppen/randen â€” NOOIT als tekstkleur op licht */
+  --rp-accent: #d98c03;            /* vlakken/knoppen/randen — NOOIT als tekstkleur op licht */
   --rp-accent-deep: #b87502;       /* hover-vlak */
   --rp-accent-ink: #0a1628;        /* tekst OP goud: 6,65:1 (wit zou 2,73:1 zijn = zakt door AA) */
   /* goud als TEKST op licht: #b87502 haalt maar 3,53:1 op #f6f8fa. Deze haalt 4,99:1. */
@@ -15,8 +15,8 @@
 
   --rp-ink: #0a1628;               /* koppen */
   --rp-ink-2: #6b7280;             /* tweede kopregel, grijs */
-  --rp-body: #52525b;              /* lopende tekst â€” 7,7:1 op wit */
-  --rp-mute: #5f636c;              /* fijndruk â€” 5,45:1 op #f6f8fa (was #8b8f98 = 2,93:1) */
+  --rp-body: #52525b;              /* lopende tekst — 7,7:1 op wit */
+  --rp-mute: #5f636c;              /* fijndruk — 5,45:1 op #f6f8fa (was #8b8f98 = 2,93:1) */
 
   --rp-bg: #ffffff;
   --rp-bg-soft: #f6f8fa;           /* gemeten sectiegrijs */
@@ -44,7 +44,7 @@
   --rp-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* â”€â”€ basis â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── basis ─────────────────────────────────────────────────────────────── */
 .rp {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   color: var(--rp-body);
@@ -98,7 +98,7 @@
 .rp-section { padding-block: var(--rp-section-y); }
 .rp-section--soft { background: var(--rp-bg-soft); }
 
-/* â”€â”€ sectiekop: eyebrow + tweekleurige kop + knop rechts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── sectiekop: eyebrow + tweekleurige kop + knop rechts ───────────────── */
 .rp-eyebrow {
   display: inline-flex;
   align-items: center;
@@ -123,7 +123,7 @@
 .rp-head__title .rp-dim { display: block; color: var(--rp-ink-2); font-weight: 700; }
 .rp-head__lede { margin-top: 16px; max-width: 56ch; font-size: 16px; }
 
-/* â”€â”€ knoppen â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── knoppen ───────────────────────────────────────────────────────────── */
 .rp-btn {
   display: inline-flex;
   align-items: center;
@@ -172,7 +172,7 @@
 .rp-more:hover svg { transform: translate(2px, -2px); }
 .rp-more--accent { color: var(--rp-accent-text); }
 
-/* â•â• NAV â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ NAV ═══════════════════════════════════════════════════════════════ */
 .rp-nav {
   position: sticky;
   top: 0;
@@ -217,7 +217,7 @@
 }
 .rp-nav__chev { transition: transform 0.2s var(--rp-ease); }
 
-/* dropdown â€” werkt zonder JS via :hover/:focus-within */
+/* dropdown — werkt zonder JS via :hover/:focus-within */
 .rp-dd { position: relative; }
 .rp-dd__panel {
   position: absolute;
@@ -308,14 +308,14 @@
 .rp-mob__sub a { font-size: 15.5px; font-weight: 600; color: var(--rp-body); }
 .rp-mob__cta { margin-top: 22px; display: grid; gap: 10px; }
 
-/* â•â• HERO â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ HERO ══════════════════════════════════════════════════════════════ */
 .rp-hero { position: relative; overflow: hidden; background: #fbfbfc; }
-.rp-hero__top { position: relative; padding-top: 56px; }
+.rp-hero__top { position: relative; padding-top: 68px; padding-bottom: 4px; }
 .rp-hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 340px;
-  gap: 40px;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) 350px;
+  gap: 48px;
+  align-items: center;
 }
 .rp-hero__display {
   font-size: clamp(46px, 8.2vw, 118px);
@@ -324,12 +324,10 @@
   font-weight: 800;
   text-transform: uppercase;
   margin: 0;
-  padding-left: 152px;            /* ruimte voor de ronde materiaaluitsnede links */
 }
 /* tweede regel springt naar rechts, zoals de trapsgewijze kop in de referentie */
-.rp-hero__display .rp-hero__l2 { display: block; color: #8d9099; margin-left: 19%; }
-.rp-hero__ground { margin-top: 30px; padding-left: 152px; }
-.rp-hero__aside { padding-top: 8px; }
+.rp-hero__display .rp-hero__l2 { display: block; color: #8d9099; margin-left: 22%; }
+.rp-hero__aside { padding-top: 6px; }
 .rp-hero__badge-ic {
   width: 44px; height: 44px; border-radius: 50%;
   background: var(--rp-ink); color: #fff;
@@ -359,16 +357,16 @@
 }
 .rp-hero__mark img { width: 100%; height: 100%; object-fit: cover; }
 
-.rp-hero__photo { position: relative; margin-top: 34px; }
+.rp-hero__photo { position: relative; margin-top: 42px; }
 .rp-hero__photo img {
   width: 100%;
-  height: clamp(260px, 30vw, 430px);
+  height: clamp(280px, 36vw, 520px);
   object-fit: cover;
   object-position: center 62%;   /* dak in beeld, minder lucht */
   display: block;
 }
 
-/* â•â• BAND met disciplines (statisch â€” geen auto-scroll gimmick) â•â•â•â•â•â•â•â• */
+/* ══ BAND met disciplines (statisch — geen auto-scroll gimmick) ════════ */
 .rp-band {
   background: var(--rp-ink);
   color: #fff;
@@ -388,7 +386,7 @@
 }
 .rp-band__sep { color: var(--rp-accent); font-size: 13px; }
 
-/* â•â• ABOUT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ ABOUT ═════════════════════════════════════════════════════════════ */
 .rp-about__grid {
   display: grid;
   grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
@@ -471,7 +469,7 @@
 .rp-about__call-l { font-size: 13px; color: var(--rp-body); }
 .rp-about__call-n { font-size: 16px; font-weight: 800; color: var(--rp-ink); }
 
-/* â•â• CAROUSEL (diensten + reviews) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ CAROUSEL (diensten + reviews) ═════════════════════════════════════ */
 .rp-carousel { position: relative; }
 .rp-track {
   display: grid;
@@ -486,6 +484,9 @@
 }
 .rp-track::-webkit-scrollbar { display: none; }
 .rp-track > * { scroll-snap-align: start; }
+/* twee per beeld (blogkaarten zijn breder dan dienstkaarten) */
+.rp-track--2 { grid-auto-columns: calc((100% - 26px) / 2); }
+@media (max-width: 900px) { .rp-track--2 { grid-auto-columns: 88%; } }
 
 .rp-dots { display: flex; align-items: center; justify-content: center; gap: 9px; margin-top: 34px; }
 .rp-dot {
@@ -508,10 +509,36 @@
   transition: background-color 0.2s var(--rp-ease), color 0.2s var(--rp-ease), border-color 0.2s var(--rp-ease);
 }
 .rp-arrow:hover { background: var(--rp-accent); border-color: var(--rp-accent); color: var(--rp-accent-ink); }
-.rp-arrow[disabled] { opacity: 0.4; cursor: default; }
+.rp-arrow[disabled] { opacity: 0.35; cursor: default; }
 .rp-arrow[disabled]:hover { background: #fff; color: var(--rp-ink); border-color: var(--rp-line); }
 
-/* â•â• DIENSTKAARTEN â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* zwevende pijlen op de rand van de rail */
+.rp-arrow--zweef {
+  position: absolute;
+  top: var(--rp-arrow-top, 116px);
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 50px; height: 50px;
+  background: #fff;
+  border-color: transparent;
+  box-shadow: var(--rp-shadow-lift);
+}
+.rp-arrow--zweef.rp-arrow--prev { left: -22px; }
+.rp-arrow--zweef.rp-arrow--next { right: -22px; }
+.rp-arrow--zweef[disabled] { opacity: 0; pointer-events: none; }
+
+/* binnen de rail zetten zodra er buiten de container geen ruimte meer is */
+@media (max-width: 1340px) {
+  .rp-arrow--zweef.rp-arrow--prev { left: 8px; }
+  .rp-arrow--zweef.rp-arrow--next { right: 8px; }
+}
+@media (max-width: 680px) {
+  .rp-arrow--zweef { width: 42px; height: 42px; }
+  .rp-arrow--zweef.rp-arrow--prev { left: 2px; }
+  .rp-arrow--zweef.rp-arrow--next { right: 2px; }
+}
+
+/* ══ DIENSTKAARTEN ═════════════════════════════════════════════════════ */
 .rp-svc {
   background: #fff;
   border-radius: var(--rp-r-card);
@@ -522,7 +549,7 @@
   transition: box-shadow 0.24s var(--rp-ease), transform 0.24s var(--rp-ease);
 }
 .rp-svc:hover { box-shadow: var(--rp-shadow-lift); transform: translateY(-4px); }
-/* GEEN overflow:hidden op __img zelf â€” dan knipt hij het icooncirkeltje af dat
+/* GEEN overflow:hidden op __img zelf — dan knipt hij het icooncirkeltje af dat
    bewust over de rand hangt. De zoom wordt geclipt door de binnenste __clip. */
 .rp-svc__img { position: relative; }
 .rp-svc__clip { display: block; overflow: hidden; }
@@ -547,7 +574,7 @@
 .rp-svc__text { margin-top: 12px; font-size: 15px; line-height: 1.6; flex: 1; }
 .rp-svc__foot { margin-top: 22px; }
 
-/* â•â• WAAROM (2 kolommen + 2x2 tegels) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ WAAROM (2 kolommen + 2x2 tegels) ══════════════════════════════════ */
 .rp-why__grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
@@ -561,6 +588,11 @@
 .rp-why__cta { margin-top: 32px; }
 
 .rp-why__tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+/* vier tegels naast elkaar — als klasse, niet inline, anders overleeft het de
+   responsive regels niet en knijp je de tegels op mobiel tot 78px */
+.rp-tiles-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1000px) { .rp-tiles-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 680px) { .rp-tiles-4 { grid-template-columns: minmax(0, 1fr); } }
 .rp-tile {
   background: var(--rp-bg-soft);
   border: 1px solid transparent;
@@ -585,7 +617,7 @@
 .rp-tile__t { font-size: 18px; }
 .rp-tile__d { margin-top: 10px; font-size: 14.5px; line-height: 1.58; }
 
-/* â•â• REALISATIES (3 beelden, midden uitgelicht) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ REALISATIES (3 beelden, midden uitgelicht) ════════════════════════ */
 .rp-proj__grid {
   display: grid;
   grid-template-columns: 0.72fr 1.36fr 0.72fr;
@@ -621,7 +653,7 @@
 }
 .rp-proj__arrow:hover { background: var(--rp-ink); color: #fff; transform: translateY(-2px); }
 
-/* â•â• WERKWIJZE (vervangt de team-sectie) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ WERKWIJZE (vervangt de team-sectie) ═══════════════════════════════ */
 .rp-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
 .rp-step {
   background: #fff;
@@ -645,7 +677,7 @@
 .rp-step__t { font-size: 18px; }
 .rp-step__d { margin-top: 9px; font-size: 14.5px; line-height: 1.58; }
 
-/* â•â• REVIEWS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ REVIEWS ═══════════════════════════════════════════════════════════ */
 .rp-rev {
   background: #fff;
   border-radius: var(--rp-r-card);
@@ -669,7 +701,7 @@
 .rp-rev__role { font-size: 13px; color: var(--rp-body); }
 .rp-rev__g { flex: none; }
 
-/* â•â• MERKEN (vervangt coupons) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ MERKEN (vervangt coupons) ═════════════════════════════════════════ */
 .rp-brands { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 26px 56px; }
 .rp-brands img {
   height: 40px; width: auto; object-fit: contain;
@@ -678,7 +710,7 @@
 }
 .rp-brands img:hover { filter: grayscale(0); opacity: 1; }
 
-/* â•â• FAQ (vervangt pricing) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ FAQ (vervangt pricing) ════════════════════════════════════════════ */
 .rp-faq { display: grid; gap: 12px; max-width: 860px; margin-inline: auto; }
 .rp-faq__item {
   background: #fff;
@@ -701,7 +733,7 @@
 .rp-faq__item[open] .rp-faq__ic { transform: rotate(45deg); }
 .rp-faq__a { padding: 0 22px 22px; font-size: 15.5px; line-height: 1.66; }
 
-/* â•â• BLOG â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ BLOG ══════════════════════════════════════════════════════════════ */
 .rp-blogs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; }
 .rp-blog { position: relative; }
 .rp-blog__img { border-radius: var(--rp-r-img); overflow: hidden; }
@@ -722,7 +754,7 @@
 .rp-blog:hover .rp-blog__t { color: var(--rp-accent-text); }
 .rp-blog__foot { margin-top: 20px; }
 
-/* â•â• PAGINAKOP (subpagina's) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ PAGINAKOP (subpagina's) ═══════════════════════════════════════════ */
 .rp-phero {
   background: var(--rp-bg-soft);
   padding: 66px 0 72px;
@@ -734,7 +766,7 @@
 .rp-phero__t .rp-dim { display: block; color: var(--rp-ink-2); }
 .rp-phero__lede { margin-top: 20px; max-width: 62ch; font-size: 16.5px; line-height: 1.66; }
 
-/* â•â• FILTERTABS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ FILTERTABS ════════════════════════════════════════════════════════ */
 .rp-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
 .rp-tab {
   padding: 10px 18px;
@@ -751,7 +783,7 @@
 }
 .rp-leeg { padding: 40px 0; font-size: 16px; color: var(--rp-body); }
 
-/* â•â• BLOG-OVERZICHT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ BLOG-OVERZICHT ════════════════════════════════════════════════════ */
 .rp-bloggrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px 28px; }
 .rp-bloggrid .rp-blog__img img { height: 240px; }
 .rp-bloggrid .rp-blog__card { margin: -72px 16px 0; padding: 18px 20px 20px; }
@@ -785,7 +817,7 @@
   .rp-phero { padding: 44px 0 48px; }
 }
 
-/* â•â• ARTIKELPAGINA â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ ARTIKELPAGINA ═════════════════════════════════════════════════════ */
 .rp-artikel { max-width: 780px; margin-inline: auto; }
 .rp-artikel__cover { border-radius: var(--rp-r-img); overflow: hidden; margin-bottom: 38px; }
 .rp-artikel__cover img { width: 100%; height: 420px; object-fit: cover; }
@@ -806,7 +838,41 @@
   .rp-artikel__body h2, .rp-artikel__body h3 { font-size: 21px; margin-top: 30px; }
 }
 
-/* â•â• DONKERE CTA-BAND â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ SPLIT-BLOK (beeld naast tekst, om en om) ══════════════════════════ */
+.rp-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 58px;
+  align-items: center;
+}
+.rp-split + .rp-split { margin-top: 86px; }
+.rp-split--om .rp-split__media { order: 2; }
+.rp-split__media { border-radius: var(--rp-r-img); overflow: hidden; }
+.rp-split__media img {
+  width: 100%; height: 420px; object-fit: cover;
+  transition: transform 0.5s var(--rp-ease);
+}
+.rp-split:hover .rp-split__media img { transform: scale(1.03); }
+.rp-split__n {
+  display: inline-block;
+  font-size: 13px; font-weight: 800; letter-spacing: 0.1em;
+  color: var(--rp-accent-text); margin-bottom: 12px;
+}
+.rp-split__t { font-size: clamp(26px, 2.6vw, 34px); }
+.rp-split__lede { margin-top: 16px; font-size: 16px; line-height: 1.66; }
+.rp-lijst { margin-top: 22px; display: grid; gap: 11px; }
+.rp-lijst li { display: flex; gap: 11px; font-size: 15px; line-height: 1.52; }
+.rp-lijst svg { flex: none; margin-top: 3px; color: var(--rp-accent-text); }
+.rp-split__cta { margin-top: 28px; }
+
+@media (max-width: 900px) {
+  .rp-split { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .rp-split + .rp-split { margin-top: 56px; }
+  .rp-split--om .rp-split__media { order: 0; }
+  .rp-split__media img { height: 260px; }
+}
+
+/* ══ DONKERE CTA-BAND ══════════════════════════════════════════════════ */
 .rp-cta { padding-block: var(--rp-section-y); }
 .rp-cta__box {
   position: relative;
@@ -846,7 +912,7 @@
 .rp-cta__note { margin-top: 12px; font-size: 12.5px; color: #98a0ac; }
 .rp-cta__ok { margin-top: 18px; font-size: 15.5px; font-weight: 700; color: #7ee2a8; }
 
-/* â•â• FOOTER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ FOOTER ════════════════════════════════════════════════════════════ */
 .rp-foot { background: var(--rp-bg-soft); padding-top: 74px; }
 .rp-foot__grid {
   display: grid;
@@ -897,7 +963,7 @@
 }
 .rp-socials a:hover { background: var(--rp-accent); color: var(--rp-accent-ink); border-color: var(--rp-accent); }
 
-/* â•â• FAB (mobiel bellen) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ FAB (mobiel bellen) ═══════════════════════════════════════════════ */
 .rp-fab {
   position: fixed;
   right: 16px; bottom: 16px;
@@ -912,7 +978,7 @@
 }
 .rp-fab:hover { background: var(--rp-accent); color: var(--rp-accent-ink); }
 
-/* â•â• RESPONSIEF â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══ RESPONSIEF ════════════════════════════════════════════════════════ */
 @media (max-width: 1100px) {
   .rp-about__grid { gap: 44px; }
   .rp-why__grid { gap: 44px; }

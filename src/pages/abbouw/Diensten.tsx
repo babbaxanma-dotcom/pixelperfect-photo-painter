@@ -1,356 +1,167 @@
 import { useEffect } from 'react';
-import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
-import { buildNav, buildHero, buildCta, FOOTER, SHELL_STYLE } from './_shell';
-import hero from '@/assets/home/hero-diensten.jpg';
+import '@/styles/roofpro.css';
+import { CONTACT } from '@/data/contact';
+import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
+
 import svcConstruct from '@/assets/home/svc-construct.jpg';
 import svcEco from '@/assets/home/svc-eco.jpg';
 import svcInterieur from '@/assets/home/svc-interieur.jpg';
-import svcDak from '@/assets/home/svc-dak.jpg';
+import svcDak from '@/assets/dak/lp-veluxg-3.jpg';
 import svcBad from '@/assets/home/svc-bad.jpg';
 import svcGevel from '@/assets/home/svc-gevel.jpg';
 
-const services = [
+const vink = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+
+const DIENSTEN = [
   {
-    id: 'construct', img: svcConstruct, n: '01', title: 'AB Construct',
-    tag: 'Algemene aanneming',
-    intro: 'Onze hoofddivisie voor nieuwbouwwoningen, totaalrenovaties en aanbouwen. Wij coördineren alle bouwfases, van vergunning tot oplevering, met eigen metselaars en een vaste projectleider.',
-    deep: 'AB Construct is onze hoofddivisie voor nieuwbouw en totaalrenovatie. We werken voor particulieren die hun gezinswoning bouwen, jonge gezinnen die een rijwoning kopen om volledig te strippen, en eigenaars die een waardevolle woning grondig willen aanpakken zonder de charme te verliezen. Onze projectleider blijft uw contactpersoon van het allereerste plaatsbezoek tot één jaar na oplevering.',
-    bullets: [
+    n: '01', t: 'Totaalrenovatie en nieuwbouw', kort: 'totaalrenovatie', href: '/construct', img: svcConstruct,
+    lede: 'Onze grootste afdeling. Een woning die volledig op de schop gaat, een aanbouw, of bouwen van nul. Wij coördineren alle vakken en houden één planning bij, zodat het ene werk niet op het andere staat te wachten.',
+    punten: [
       'Sleutel-op-de-deur woningen vanaf 180 m²',
-      'Totaalrenovaties tot op de ruwe muren',
-      'Aanbouwen, dakopbouwen en kelderuitbreidingen',
-      'Coördinatie met uw architect of via onze huisarchitect',
+      'Totaalrenovatie tot op de ruwe muren',
+      'Aanbouw, dakopbouw en kelderuitbreiding',
+      'Samenwerking met uw architect of die van ons',
       'Vergunning, EPB-verslag en oplevering inbegrepen',
     ],
-    href: '/construct',
   },
   {
-    id: 'ecologisch', img: svcEco, n: '02', title: 'AB Ecologisch',
-    tag: 'Duurzaam bouwen',
-    intro: 'Energetische renovaties en bio-ecologisch bouwen. Warmtepomp, dak- en spouwisolatie, kalkpleister, houtskeletbouw en zonnepanelen, alles in één dossier. Wij rekenen vooraf uit op welke steun (6% btw-tarief, Mijn VerbouwLening, en eventueel premie) u recht heeft.',
-    deep: 'Sinds 2022 is AB Ecologisch onze snelst groeiende divisie. De reden is simpel: een goed geïsoleerde woning met warmtepomp betaalt zichzelf op termijn terug via de lagere energiefactuur. Wij berekenen vooraf het exacte rendement op basis van uw EPC-attest en geven u één offerte voor het volledige pakket.',
-    bullets: [
+    n: '02', t: 'Ecologisch en energetisch', kort: 'energetisch renoveren', href: '/ecologisch', img: svcEco,
+    lede: 'Isolatie, warmtepomp, ventilatie en zonnepanelen in één dossier. We rekenen vooraf uit wat elke ingreep u aan verbruik scheelt, zodat u kunt kiezen wat u wel en niet doet.',
+    punten: [
       'Lucht/water-warmtepompen (Daikin, Mitsubishi, Vaillant)',
-      'Dakisolatie PIR/PUR/cellulose, K-waarde tot K30',
-      'Spouwmuurisolatie en na-isolatie buitengevels',
-      'Houtskeletbouw en strobalenbouw op aanvraag',
-      'Voordeeldossier: 6% btw, Mijn VerbouwLening, Fluvius en premie-check',
+      'Dakisolatie in PIR, PUR of cellulose tot K30',
+      'Spouwmuurisolatie en na-isolatie van buitengevels',
+      'Houtskeletbouw op aanvraag',
+      'Wij checken uw premierecht en dienen het dossier mee in',
     ],
-    href: '/ecologisch',
   },
   {
-    id: 'interieur', img: svcInterieur, n: '03', title: 'AB Interieurwerken',
-    tag: 'Afwerking & maatwerk',
-    intro: 'De afwerkingsdivisie. Gyprocwanden en -plafonds, parket en laminaat, binnendeuren, trappen en maatwerkmeubilair. Strak afgewerkt, met onzichtbare aansluitingen.',
-    deep: 'Een ruwbouw is pas een woning na de afwerking. Onze plaatsers werken al meer dan tien jaar samen en kennen elkaars kwaliteitsstandaard. Wij plaatsen geen vloer over een ondergrond die niet vlak is, en geen gyproc op een wand die niet recht staat, als de basis niet klopt, lossen we het eerst op in plaats van het te verbergen.',
-    bullets: [
-      'Gyproc enkele en dubbele wanden, akoestisch geïsoleerd',
+    n: '03', t: 'Interieurwerken', kort: 'interieurwerken', href: '/interieur', img: svcInterieur,
+    lede: 'De afwerking waar u dagelijks tegenaan kijkt: wanden, plafonds, vloeren en maatwerk. Onze eigen schrijnwerker maakt de kasten, dus wat getekend is, past ook.',
+    punten: [
+      'Gyproc wanden, ook akoestisch geïsoleerd',
       'Verlaagde plafonds met inbouwspots en ledstrips',
-      'Parket: massief, meerlaags, visgraat, kuierplank',
-      'Maatwerk: dressings, inbouwkasten, TV-meubels',
-      'Binnendeuren in stomp of opdek, eigen schrijnwerker',
+      'Parket: massief, meerlaags, visgraat of kuierplank',
+      'Maatwerk: dressings, inbouwkasten, tv-meubels',
+      'Binnendeuren stomp of opdek, door eigen schrijnwerker',
     ],
-    href: '/interieur',
   },
   {
-    id: 'dakwerken', img: svcDak, n: '04', title: 'AB Dakwerken',
-    tag: 'Dak & isolatie',
-    intro: 'Hellende daken (pannen, leien, zink), platte daken (EPDM, bitumen, roofing), dakisolatie en zinkwerk, uitgevoerd door onze eigen dakploeg.',
-    deep: 'Een dak is zichtbaar pas na vijftien jaar of bij de eerste lekkage, dan moet het werk dat veertien jaar eerder geleverd werd, het bewijs zijn. Wij werken uitsluitend met merken die wij ook onder onze eigen verzekeringspolis durven plaatsen: Wienerberger en Koramic voor pannen, Firestone en Carlisle voor EPDM, VMZinc voor zinkwerk.',
-    bullets: [
-      'Volledig vernieuwen van pannendaken',
-      'Plaatsen platte daken in EPDM één stuk (geen lassen)',
-      'Dakisolatie tot K-peil <K30 (premiegerechtigd)',
-      'Zinkwerk: dakgoten, mastgoten, kilgoten, slabben',
-      'Dakvensters Velux & Fakro, dakkapellen op maat',
+    n: '04', t: 'Dakwerken', kort: 'dakwerken', href: '/dakwerken', img: svcDak,
+    lede: 'Van een lek dat hersteld moet worden tot een dak dat volledig vernieuwd wordt. Bij een plaatsbezoek zeggen we eerlijk of herstellen volstaat, ook als dat ons minder oplevert.',
+    punten: [
+      'Pannendaken volledig vernieuwen',
+      'Platte daken in EPDM uit één stuk, dus zonder lasnaden',
+      'Dakisolatie tot onder K30',
+      'Zinkwerk: dakgoten, mastgoten, kilgoten en slabben',
+      'Dakvensters Velux en Fakro, dakkapellen op maat',
     ],
-    href: '/dakwerken',
   },
   {
-    id: 'bad', img: svcBad, n: '05', title: 'AB Bad & Wellness',
-    tag: 'Sleutel-op-de-deur badkamer',
-    intro: 'Sleutel-op-de-deur badkamers. Sloop, leidingwerk, vloerverwarming, tegels, sanitair en verlichting, door één coördinator, klaar in vier tot zes weken.',
-    deep: 'De badkamer is het meest gebruikte luxe-element van de woning. Een goed ontworpen badkamer maakt elke ochtend prettiger; een slecht ontworpen badkamer ergert u tien jaar lang. Wij beginnen met een 3D-ontwerp waarin u de afmetingen, materialen en lichtval kunt zien voor er één tegel besteld wordt.',
-    bullets: [
-      '3D-ontwerp voor goedkeuring vóór bestelling',
+    n: '05', t: 'Badkamer en wellness', kort: 'badkamers', href: '/bad', img: svcBad,
+    lede: 'Eén ploeg voor sanitair, tegelwerk en vloerverwarming. U ziet het ontwerp in 3D voor er iets besteld wordt, zodat u niet achteraf ontdekt dat het meubel net te breed is.',
+    punten: [
+      '3D-ontwerp ter goedkeuring vóór de bestelling',
       'Vloerverwarming standaard inbegrepen',
-      'Tegels: keramiek, natuursteen, microcement',
+      'Tegels in keramiek, natuursteen of microcement',
       'Inloopdouches, vrijstaande baden, regendouches',
-      'Sanitair Villeroy & Boch, Hansgrohe, Geberit',
+      'Sanitair van Villeroy & Boch, Hansgrohe en Geberit',
     ],
-    href: '/bad',
   },
   {
-    id: 'gevel', img: svcGevel, n: '06', title: 'AB Gevelbekleding',
-    tag: 'Gevels & buitenmuren',
-    intro: 'Gevelrenovatie en -bekleding. Crepi, steenstrips, hout, composiet, vezelcement of natuursteen. Met of zonder bijkomende buitenisolatie (na-isolatie).',
-    deep: 'Een gerenoveerde gevel verhoogt direct de waarde en de uitstraling van uw woning. Combineer dit met buitenisolatie (ETICS) en u behaalt vaak in één werk een hogere energieklasse plus een nieuwe esthetiek. Wij begeleiden ook de stedenbouwkundige aanvraag wanneer de gevel zichtbaar wijzigt.',
-    bullets: [
-      'Crepi (mineraal, silicaat, siliconen) op isolatie of muur',
-      'Steenstrips (keramiek of klei) ter vervanging van metselwerk',
+    n: '06', t: 'Gevelrenovatie', kort: 'gevelrenovatie', href: '/gevel', img: svcGevel,
+    lede: 'Een nieuwe gevel is het moment om er buitenisolatie achter te zetten: de stelling staat er toch. Dat scheelt later een tweede werf.',
+    punten: [
+      'Crepi in mineraal, silicaat of siliconen',
+      'Steenstrips in keramiek of klei',
       'Houten gevels in lariks, ceder of thermohout',
-      'Composietplaten (Trespa, Rockpanel, Eternit)',
-      'Buitenisolatie ETICS, energieklasse-stijging',
+      'Composietplaten zoals Trespa, Rockpanel en Eternit',
+      'Buitenisolatie volgens ETICS',
     ],
-    href: '/gevel',
   },
 ];
 
-const HTML = `
-${buildNav('diensten')}
+const INBEGREPEN = [
+  { t: 'Plaatsbezoek en offerte', d: 'Kosteloos, en de offerte splitst elke post apart uit.' },
+  { t: 'Eén werfleider', d: 'Eén nummer dat u belt, die uw dossier kent.' },
+  { t: 'Werf opgeruimd', d: 'Elke vrijdag opgeruimd achtergelaten, afvoer inbegrepen.' },
+  { t: '10 jaar garantie', d: 'Op de uitvoering, schriftelijk vastgelegd in de offerte.' },
+];
 
-${buildHero({
-  bg: hero,
-  eyebrow: 'Onze diensten',
-  title: 'Zes specialisaties.<br/>Eén bouwpartner.',
-  lede: "Zes vakploegen, één projectleider. Klik door per divisie voor details en realisaties.",
-  primary: { label: 'Vraag een plaatsbezoek aan', href: '/contact' },
-  secondary: { label: 'Onze werkwijze →', href: '/werkwijze' },
-})}
+const HTML = () => `<div class="rp">
+${rpNav('/diensten')}
 
-<!-- TOC -->
-<section class="lf-section" style="padding: 36px 0 0;">
-  <div class="wrap">
-    <div class="ab-toc-wrap">
-      <nav class="ab-toc" aria-label="Diensten overzicht">
-        ${services.map(s => `<a href="#${s.id}">${s.title}</a>`).join('')}
-        <a href="#faq">Veelgestelde vragen</a>
-      </nav>
-    </div>
+<section class="rp-phero">
+  <div class="rp-wrap">
+    <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Diensten</span></nav>
+    <span class="rp-eyebrow">${ic.mark} Onze diensten</span>
+    <h1 class="rp-phero__t">Van ruwbouw<span class="rp-dim">tot afwerking</span></h1>
+    <p class="rp-phero__lede">Zes afdelingen met eigen vakmensen. U kunt er één inschakelen, of ze allemaal: loopt uw project over meerdere vakken, dan stemmen wij die onderling af.</p>
   </div>
 </section>
 
-<!-- DEEP SERVICE BLOCKS -->
-<section class="lf-section ab-svc-section" style="padding-top: 24px;">
-  <div class="wrap">
-    <div class="ab-svc-track" id="abSvcTrack">
-      ${services.map((s, i) => `
-        <div class="ab-sub ab-svc-slide" id="${s.id}">
-          <div class="ab-deep ${i % 2 === 1 ? 'reverse' : ''}">
-            <div>
-              <span class="ab-deep-tag">${s.tag} · ${s.n}</span>
-              <h3>${s.title}</h3>
-              <p>${s.intro}</p>
-              <details class="ab-more">
-                <summary>Meer details</summary>
-                <p>${s.deep}</p>
-                <ul class="ab-checks">
-                  ${s.bullets.map(b => `<li>${b}</li>`).join('')}
-                </ul>
-              </details>
-              <div style="margin-top: 24px;">
-                <a href="${s.href}" class="lf-cta-pill">
-                  <span>Meer over ${s.title}</span>
-                  <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-                </a>
-              </div>
-            </div>
-            <div class="ab-deep-img"><img src="${s.img}" alt="${s.title}" loading="lazy"/></div>
-          </div>
-        </div>
-      `).join('')}
-    </div>
-  </div>
-</section>
-
-<style>
-/* Diensten op mobiel: gewoon onder elkaar (zig-zag valt op smal scherm samen tot
-   stapelkaartjes — geen zijwaartse swipe meer). */
-@media (max-width: 768px) {
-  .ab-toc-wrap { display: none !important; }
-  .ab-svc-section { padding-top: 12px !important; }
-  .ab-svc-track { display: block; padding: 4px 0 4px; }
-  .ab-svc-track > .ab-svc-slide {
-    display: block;
-    margin: 0 0 18px !important;
-    padding: 0 !important;
-    scroll-margin-top: 96px;
-  }
-  .ab-svc-track > .ab-svc-slide:last-child { margin-bottom: 0 !important; }
-  .ab-svc-track .ab-deep,
-  .ab-svc-track .ab-deep.reverse {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 12px !important;
-    background: #fff;
-    border-radius: 14px;
-    padding: 14px;
-    box-shadow: 0 8px 24px -16px rgba(10,22,40,0.18);
-    min-width: 0;
-  }
-  .ab-svc-track .ab-deep > div:first-child { order: 2; }
-  .ab-svc-track .ab-deep-img,
-  .ab-svc-track .ab-deep.reverse .ab-deep-img { order: 1; aspect-ratio: auto; box-shadow: none; border-radius: 10px; }
-  .ab-svc-track .ab-deep-img img { width: 100%; height: auto; aspect-ratio: 16/10; object-fit: cover; border-radius: 10px; display: block; }
-  .ab-svc-track .ab-deep h3 { font-size: 19px !important; line-height: 1.2 !important; margin: 6px 0 4px !important; }
-  .ab-svc-track .ab-deep p { font-size: 13.5px !important; line-height: 1.55 !important; margin: 0 !important; }
-  .ab-svc-track .ab-deep-tag { font-size: 10.5px !important; }
-  .ab-svc-track .ab-more { margin-top: 8px !important; }
-  .ab-svc-track .ab-more summary { font-size: 12.5px !important; }
-  .ab-svc-track .ab-more p, .ab-svc-track .ab-checks li { font-size: 12.5px !important; }
-  .ab-svc-track .lf-cta-pill { font-size: 13px !important; padding: 9px 14px !important; }
-}
-</style>
-
-<!-- WHAT'S ALWAYS INCLUDED -->
-<section class="lf-section lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-section-head centered">
-      <span class="lf-eyebrow">Bij elke opdracht</span>
-      <h2 class="lf-h2">Wat altijd inbegrepen is.</h2>
-      
-    </div>
-    <div class="ab-incl ab-incl-single">
-      <div class="ab-incl-card yes">
-        <h4>Standaard inbegrepen</h4>
-        <ul>
-          <li>Plaatsbezoek en offerte op maat</li>
-          <li>Vaste projectleider als aanspreekpunt</li>
-          <li>Werfopruim op vrijdagavond</li>
-          <li>Wekelijks werfrapport met foto's</li>
-          <li>Stortkosten en afvalcontainer</li>
-          <li>Beschermingsmateriaal (vloeren, meubilair)</li>
-          <li>Steun- en premie-check (btw 6%, Mijn VerbouwLening, Fluvius)</li>
-          <li>10-jarige aansprakelijkheid &amp; verzekering</li>
-          <li>Oplevering met opleveringsverslag</li>
-          <li>Nacontrole 1 jaar na oplevering</li>
+<section class="rp-section">
+  <div class="rp-wrap">
+    ${DIENSTEN.map((d, n) => `
+    <div class="rp-split${n % 2 ? ' rp-split--om' : ''}">
+      <div class="rp-split__media">
+        <img src="${d.img}" alt="${d.t} door AB Bouw Groep" width="560" height="420" loading="lazy" decoding="async"/>
+      </div>
+      <div>
+        <span class="rp-split__n">${d.n}</span>
+        <h2 class="rp-split__t">${d.t}</h2>
+        <p class="rp-split__lede">${d.lede}</p>
+        <ul class="rp-lijst">
+          ${d.punten.map((p) => `<li>${vink}<span>${p}</span></li>`).join('')}
         </ul>
+        <div class="rp-split__cta"><a class="rp-btn rp-btn--primary" href="${d.href}">Meer over ${d.kort} ${ic.arrowUpRight()}</a></div>
+      </div>
+    </div>`).join('')}
+  </div>
+</section>
+
+<section class="rp-section rp-section--soft">
+  <div class="rp-wrap">
+    <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
+      <div>
+        <span class="rp-eyebrow">${ic.mark} Bij elke opdracht</span>
+        <h2 class="rp-head__title">Wat er altijd<span class="rp-dim">inbegrepen zit</span></h2>
+      </div>
+    </div>
+    <div class="rp-why__tiles rp-tiles-4">
+      ${INBEGREPEN.map((t) => `
+      <div class="rp-tile">
+        <div class="rp-tile__ic" aria-hidden="true">${vink}</div>
+        <h3 class="rp-tile__t">${t.t}</h3>
+        <p class="rp-tile__d">${t.d}</p>
+      </div>`).join('')}
+    </div>
+  </div>
+</section>
+
+<section class="rp-cta">
+  <div class="rp-wrap">
+    <div class="rp-cta__box" style="min-height:270px">
+      <div class="rp-cta__inner">
+        <h2 class="rp-cta__t">Weten wat uw plan kost?</h2>
+        <p class="rp-cta__p">We komen langs, meten op en bezorgen u een offerte waarin elke post apart staat. Kosteloos en zonder verplichting.</p>
+        <div style="margin-top:26px;display:flex;flex-wrap:wrap;gap:12px">
+          <a class="rp-btn rp-btn--primary" href="/contact">Plan een plaatsbezoek</a>
+          <a class="rp-btn rp-btn--ghost" href="${CONTACT.phone.href}" style="color:#fff;border-color:rgba(255,255,255,.34)">${ic.phone(17)} ${CONTACT.phone.display}</a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SUPPORT TRIPLE -->
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-section-head centered">
-      <span class="lf-eyebrow">Ondersteuning van A tot Z</span>
-      <h2 class="lf-h2">Wij nemen u álles uit handen,<br/>ook wat niet zichtbaar is.</h2>
-    </div>
-    <div class="lf-support-grid" style="grid-template-columns: 1fr; max-width: 720px; margin: 0 auto; gap: 16px;">
-      <div class="lf-support-card">
-        <div class="lf-support-meta"><span>01</span> Vergunningen</div>
-        <h5>Stedenbouwkundige vergunning</h5>
-        <p>Wij stellen het dossier op en volgen het op tot goedkeuring.</p>
-      </div>
-      <div class="lf-support-card">
-        <div class="lf-support-meta"><span>02</span> Financieel voordeel</div>
-        <h5>Btw 6%, lening &amp; premie-check</h5>
-        <p>Wij rekenen uit op welke steun u recht heeft en regelen de aanvraag.</p>
-      </div>
-      <div class="lf-support-card">
-        <div class="lf-support-meta"><span>03</span> Nazorg</div>
-        <h5>Service na oplevering</h5>
-        <p>Gratis nacontrole na 1 jaar. Reactie binnen 48 uur.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="lf-section lf-tone-soft" id="faq">
-  <div class="wrap">
-    <div class="lf-section-head centered">
-      <span class="lf-eyebrow">Veelgestelde vragen</span>
-      <h2 class="lf-h2">Wat klanten ons<br/>vooraf vragen.</h2>
-    </div>
-    <div class="ab-faq">
-      <details><summary>Werken jullie ook samen met mijn eigen architect?</summary><div class="ab-faq-body"><p>Ja, in ongeveer 70% van onze projecten werken we met de architect van de klant. We coördineren de uitvoeringsplannen, plannen werfvergaderingen mee en bezorgen de architect alle documenten voor de oplevering. Heeft u nog geen architect, dan kunnen we onze huisarchitect voorstellen.</p></div></details>
-      <details><summary>Hoe lang op voorhand moet ik reserveren?</summary><div class="ab-faq-body"><p>Voor een badkamer- of interieurproject rekenen we doorgaans 4 tot 8 weken tussen contracttekening en start werf. Voor totaalrenovaties of nieuwbouw rekenen we 3 tot 5 maanden, omdat vergunning, materiaalbestelling en planning meer tijd vergen. Spoedopdrachten kunnen we soms tussenschuiven, vraag het bij uw plaatsbezoek.</p></div></details>
-      <details><summary>Krijg ik één prijs voor het volledige project?</summary><div class="ab-faq-body"><p>Ja. Wij geven één bindende offerte met meetstaat, ook als meerdere divisies betrokken zijn. U krijgt geen aparte rekeningen van metselaar, dakwerker en tegelzetter, alles loopt via AB Bouw Groep, met één factuur per fase.</p></div></details>
-      <details><summary>Wat als er onverwachte problemen opduiken tijdens de werf?</summary><div class="ab-faq-body"><p>Bij renovaties is dat soms onvermijdelijk: een verrotte balk, asbest in de oude vloer, een oude septische put. Wij stoppen dan de werf, documenteren het probleem met foto's, en geven u binnen 48 uur een aparte offerte voor het meerwerk. U beslist of we het meenemen of niet, pas na uw goedkeuring gaan we verder.</p></div></details>
-      <details><summary>Mag ik tijdens de werf op de werf komen?</summary><div class="ab-faq-body"><p>Uiteraard. We organiseren elke twee weken een werfvergadering waarop u welkom bent. Daarbuiten kan u na afspraak met de projectleider altijd langs. Veiligheidsschoenen en helm hebben we voor u klaar liggen.</p></div></details>
-      <details><summary>Wat als ik niet tevreden ben met een afgewerkt detail?</summary><div class="ab-faq-body"><p>Bij de oplevering maken we een lijst van eventuele punten ("verfopstoot in hoek", "deur sluit niet vlot"). Die punten lossen we op vóór de eindfactuur. Daarna geldt de wettelijke 10-jarige aansprakelijkheid op stabiliteit en waterdichtheid, plus 2 jaar op afwerking.</p></div></details>
-      <details><summary>Werken jullie ook in Brussel en buiten Vlaanderen?</summary><div class="ab-faq-body"><p>We bedienen heel Vlaanderen en het Brussels Hoofdstedelijk Gewest. Voor projecten in Wallonië maken we een uitzondering bij grote opdrachten (>€250k) of voor terugkerende klanten. Vraag het na bij uw plaatsbezoek.</p></div></details>
-    </div>
-  </div>
-</section>
-
-${buildCta('Niet zeker welke divisie u nodig heeft?', 'Bel ons of vraag een gratis plaatsbezoek aan. Wij adviseren eerlijk welke ploegen het best aansluiten bij uw plannen, ook als dat betekent dat u maar één divisie nodig heeft.')}
-
-${FOOTER}
-`;
+${rpFooter()}
+</div>`;
 
 export default function Diensten() {
   useEffect(() => {
-    document.title = "Diensten | AB Bouw Groep | 6 bouwspecialisaties onder één dak";
-    let m = document.querySelector('meta[name="description"]');
-    if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', "Construct, Ecologisch, Interieur, Dakwerken, Bad & Wellness, Gevelbekleding, alles onder één projectleider, één offerte, één factuur.");
-    const prev = document.body.className;
-    document.body.className = "";
-    const styleEl = document.createElement('style');
-    styleEl.textContent = SHELL_STYLE;
-    document.head.appendChild(styleEl);
-    return () => { document.body.className = prev; styleEl.remove(); };
+    document.title = 'Onze diensten — AB Bouw Groep';
+    const op = wireMobielMenu();
+    return () => op();
   }, []);
-  useAbBouwInteractions();
-
-  useEffect(() => {
-    const track = document.getElementById('abSvcTrack');
-    if (!track) return;
-    const dots: HTMLButtonElement[] = [];
-    const slides = Array.from(track.querySelectorAll<HTMLElement>('.ab-svc-slide'));
-    if (!slides.length) return;
-
-    const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
-
-    const setActive = (_i: number) => { /* no-op: numbered pills removed */ };
-
-    let raf = 0;
-    const onScroll = () => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        raf = 0;
-        if (!isMobile()) return;
-        const center = track.scrollLeft + track.clientWidth / 2;
-        let best = 0;
-        let bestDist = Infinity;
-        slides.forEach((s, k) => {
-          const c = s.offsetLeft + s.offsetWidth / 2;
-          const d = Math.abs(c - center);
-          if (d < bestDist) { bestDist = d; best = k; }
-        });
-        setActive(best);
-      });
-    };
-
-    track.addEventListener('scroll', onScroll, { passive: true });
-
-    const onDotClick = (e: Event) => {
-      const btn = (e.currentTarget as HTMLButtonElement);
-      const i = Number(btn.dataset.i || 0);
-      const s = slides[i];
-      if (!s) return;
-      const left = s.offsetLeft - (track.clientWidth - s.offsetWidth) / 2;
-      track.scrollTo({ left, behavior: 'smooth' });
-    };
-    dots.forEach(d => d.addEventListener('click', onDotClick));
-
-    // Hijack TOC clicks on mobile so anchor links scroll the carousel instead of the page
-    const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.ab-toc a'));
-    const onTocClick = (e: Event) => {
-      if (!isMobile()) return;
-      const a = e.currentTarget as HTMLAnchorElement;
-      const href = a.getAttribute('href') || '';
-      if (!href.startsWith('#')) return;
-      const id = href.slice(1);
-      const idx = slides.findIndex(s => s.id === id);
-      if (idx < 0) return;
-      e.preventDefault();
-      const s = slides[idx];
-      const left = s.offsetLeft - (track.clientWidth - s.offsetWidth) / 2;
-      track.scrollTo({ left, behavior: 'smooth' });
-      track.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-    tocLinks.forEach(a => a.addEventListener('click', onTocClick));
-
-    return () => {
-      track.removeEventListener('scroll', onScroll);
-      dots.forEach(d => d.removeEventListener('click', onDotClick));
-      tocLinks.forEach(a => a.removeEventListener('click', onTocClick));
-    };
-  }, []);
-
-  return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
+  return <div dangerouslySetInnerHTML={{ __html: HTML() }} />;
 }

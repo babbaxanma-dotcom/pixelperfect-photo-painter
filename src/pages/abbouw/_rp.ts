@@ -124,11 +124,7 @@ export const rpFooter = () => `
     </div>
     <div class="rp-foot__bar">
       <span class="rp-foot__copy">&copy; ${new Date().getFullYear()} AB Bouw Groep &middot; <a href="/privacy">Privacy</a> &middot; <a href="/voorwaarden">Voorwaarden</a> &middot; <a href="/cookies">Cookies</a></span>
-      <span class="rp-socials">
-        <a href="https://www.facebook.com/" aria-label="AB Bouw Groep op Facebook" rel="noopener noreferrer" target="_blank"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.25-1.5 1.55-1.5H16.7V4.6A22 22 0 0 0 14.3 4.5c-2.4 0-4 1.45-4 4.1v2.3H7.6V14h2.7v8z"/></svg></a>
-        <a href="https://www.instagram.com/" aria-label="AB Bouw Groep op Instagram" rel="noopener noreferrer" target="_blank"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
-        <a href="https://www.linkedin.com/" aria-label="AB Bouw Groep op LinkedIn" rel="noopener noreferrer" target="_blank"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.2c0-1.24-.02-2.84-1.9-2.84-1.9 0-2.2 1.35-2.2 2.75V21h-4z"/></svg></a>
-      </span>
+      <span class="rp-foot__copy"><a href="${CONTACT.phone.href}">${CONTACT.phone.display}</a> &middot; <a href="mailto:${CONTACT.email}">${CONTACT.email}</a></span>
     </div>
   </div>
 </footer>

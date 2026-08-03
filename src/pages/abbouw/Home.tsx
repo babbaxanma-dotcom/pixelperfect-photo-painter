@@ -4,8 +4,8 @@ import { submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
 import { CONTACT } from '@/data/contact';
 import { BLOGS } from '@/data/blogs';
+import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
-import logo from '@/assets/home/logo-trim.png';
 import heroPhoto from '@/assets/home/hero-3.jpg';
 import aboutPhoto from '@/assets/home/about.jpg';
 // svc-dak.jpg toont een werkman; deze sectie moet mensvrij zijn -> dakvlak zonder mensen
@@ -43,26 +43,6 @@ import revFilip from '@/assets/reviews/filip.jpg';
 import revInge from '@/assets/reviews/inge.jpg';
 import revKarim from '@/assets/reviews/karim.jpg';
 import revHilde from '@/assets/reviews/hilde.jpg';
-
-/* ── iconen ──────────────────────────────────────────────────────────── */
-const ic = {
-  chev: '<svg class="rp-nav__chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>',
-  phone: (s = 18) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`,
-  mail: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>',
-  pin: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>',
-  arrowUpRight: (s = 14) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>`,
-  star: (s = 15) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>`,
-  google: '<svg width="21" height="21" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5a5.6 5.6 0 0 1-2.4 3.6v3h3.9c2.3-2.1 3.5-5.2 3.5-8.8z"/><path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.9-3c-1.1.7-2.4 1.2-4 1.2-3.1 0-5.7-2.1-6.6-4.9H1.4v3.1A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.4 14.4a7.2 7.2 0 0 1 0-4.6V6.7H1.4a12 12 0 0 0 0 10.8l4-3.1z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.4 6.7l4 3.1C6.3 7 8.9 4.8 12 4.8z"/></svg>',
-  cal: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
-  user: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
-  plus: '<svg class="rp-faq__ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>',
-  mark: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 2h9v9H2z"/><path d="M13 13h9v9h-9z"/><path d="M13 2h9v9h-9z" opacity=".45"/></svg>',
-  burger: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>',
-  close: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>',
-  left: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>',
-  right: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>',
-  info: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>',
-};
 
 const svcIcon = (d: string) =>
   `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
@@ -134,92 +114,14 @@ const FAQ = [
 ];
 
 const HTML = (i: Record<string, string>) => {
-  const navLinks = [
-    { t: 'Home', href: '/' },
-    { t: 'Over ons', href: '/over' },
-    {
-      t: 'Diensten', href: '/diensten', sub: [
-        { t: 'Dakwerken', href: '/dakwerken' },
-        { t: 'Gevelrenovatie', href: '/gevel' },
-        { t: 'Badkamer en wellness', href: '/bad' },
-        { t: 'Interieurwerken', href: '/interieur' },
-        { t: 'Totaalrenovatie en nieuwbouw', href: '/construct' },
-        { t: 'Ecologisch bouwen', href: '/ecologisch' },
-      ],
-    },
-    { t: 'Realisaties', href: '/realisaties' },
-    { t: 'Werkwijze', href: '/werkwijze' },
-    { t: 'Blog', href: '/blog' },
-    { t: 'Contact', href: '/contact' },
-  ];
-
-  const nav = `
-<header class="rp-nav">
-  <div class="rp-wrap rp-nav__inner">
-    <a class="rp-nav__logo" href="/" aria-label="AB Bouw Groep, naar de startpagina">
-      <img src="${i.logo}" alt="AB Bouw Groep" width="146" height="42" decoding="async"/>
-    </a>
-    <nav class="rp-nav__links" aria-label="Hoofdmenu">
-      ${navLinks.map((l) => l.sub
-        ? `<div class="rp-dd">
-             <a class="rp-nav__link" href="${l.href}">${l.t}${ic.chev}</a>
-             <div class="rp-dd__panel">${l.sub.map((s) => `<a class="rp-dd__item" href="${s.href}">${s.t}</a>`).join('')}</div>
-           </div>`
-        : `<a class="rp-nav__link" href="${l.href}"${l.href === '/' ? ' aria-current="page"' : ''}>${l.t}</a>`).join('')}
-    </nav>
-    <a class="rp-nav__cta" href="${CONTACT.phone.href}">
-      <span class="rp-nav__cta-ic" aria-hidden="true">${ic.phone(16)}</span>${CONTACT.phone.display}
-    </a>
-    <button class="rp-burger" type="button" data-mob-open aria-label="Menu openen" aria-expanded="false" aria-controls="rp-mob">${ic.burger}</button>
-  </div>
-</header>
-
-<div class="rp-mob" id="rp-mob" data-mob hidden>
-  <div class="rp-wrap" style="padding:0">
-    <div class="rp-mob__top">
-      <img src="${i.logo}" alt="AB Bouw Groep" width="125" height="36" decoding="async" style="height:36px;width:auto"/>
-      <button class="rp-mob__close" type="button" data-mob-close aria-label="Menu sluiten">${ic.close}</button>
-    </div>
-    <nav class="rp-mob__list" aria-label="Mobiel menu">
-      ${navLinks.map((l) => l.sub
-        ? `<a class="rp-mob__link" href="${l.href}">${l.t}</a><div class="rp-mob__sub">${l.sub.map((s) => `<a href="${s.href}">${s.t}</a>`).join('')}</div>`
-        : `<a class="rp-mob__link" href="${l.href}">${l.t}</a>`).join('')}
-    </nav>
-    <div class="rp-mob__cta">
-      <a class="rp-btn rp-btn--primary rp-btn--block" href="${CONTACT.phone.href}">${ic.phone(17)} ${CONTACT.phone.display}</a>
-      <a class="rp-btn rp-btn--ghost rp-btn--block" href="/contact">Vraag een offerte</a>
-    </div>
-  </div>
-</div>`;
-
   const hero = `
 <section class="rp-hero">
   <div class="rp-wrap rp-hero__top">
-    <div class="rp-hero__mark" aria-hidden="true"><img src="${i.dakTextuur}" alt="" width="122" height="122" decoding="async"/></div>
     <div class="rp-hero__grid">
       <div class="rp-hero__main">
         <h1 class="rp-hero__display">Bouw en<span class="rp-hero__l2">renovatie</span></h1>
-        <div class="rp-hero__ground">
-          <div class="rp-hero__proof">
-            <div class="rp-hero__avatars" aria-hidden="true">
-              <img src="${i.revMarc}" alt="" width="42" height="42" loading="lazy" decoding="async"/>
-              <img src="${i.revEllen}" alt="" width="42" height="42" loading="lazy" decoding="async"/>
-              <img src="${i.revKatrien}" alt="" width="42" height="42" loading="lazy" decoding="async"/>
-              <img src="${i.revDirk}" alt="" width="42" height="42" loading="lazy" decoding="async"/>
-            </div>
-            <div>
-              <div class="rp-hero__proof-num">120+</div>
-              <div class="rp-hero__proof-lbl">woningen gerenoveerd</div>
-            </div>
-          </div>
-          <div class="rp-hero__actions">
-            <a class="rp-btn rp-btn--primary" href="/contact">Vraag een offerte</a>
-            <a class="rp-btn rp-btn--ghost" href="/realisaties">Bekijk realisaties</a>
-          </div>
-        </div>
       </div>
       <div class="rp-hero__aside">
-        <div class="rp-hero__badge-ic" aria-hidden="true">${ic.info}</div>
         <p class="rp-hero__lede">AB Bouw Groep verbouwt woningen in heel Vlaanderen. Dak, gevel, badkamer, interieur of alles samen: zes vakken die wij zelf uitvoeren en op elkaar afstemmen.</p>
       </div>
     </div>
@@ -289,7 +191,9 @@ const HTML = (i: Record<string, string>) => {
       </div>
       <a class="rp-btn rp-btn--primary" href="/diensten">Alle diensten</a>
     </div>
-    <div class="rp-carousel" data-car="svc">
+    <div class="rp-carousel" data-car="svc" style="--rp-arrow-top:116px">
+      <button class="rp-arrow rp-arrow--zweef rp-arrow--prev" type="button" data-car-prev="svc" aria-label="Vorige diensten">${ic.left}</button>
+      <button class="rp-arrow rp-arrow--zweef rp-arrow--next" type="button" data-car-next="svc" aria-label="Volgende diensten">${ic.right}</button>
       <div class="rp-track" data-car-track tabindex="0" role="region" aria-label="Diensten, horizontaal schuifbaar">
         ${DIENSTEN.map((d, n) => `
         <article class="rp-svc${n === 1 ? ' rp-svc--feat' : ''}">
@@ -393,14 +297,11 @@ const HTML = (i: Record<string, string>) => {
         <span class="rp-eyebrow">${ic.mark} Beoordelingen</span>
         <h2 class="rp-head__title">Wat klanten zeggen<span class="rp-dim">over hun verbouwing</span></h2>
       </div>
-      <div style="display:flex;align-items:center;gap:14px">
-        <div class="rp-arrows">
-          <button class="rp-arrow" type="button" data-car-prev="rev" aria-label="Vorige beoordelingen">${ic.left}</button>
-          <button class="rp-arrow" type="button" data-car-next="rev" aria-label="Volgende beoordelingen">${ic.right}</button>
-        </div>
-      </div>
+      <a class="rp-btn rp-btn--primary" href="/realisaties">Bekijk realisaties</a>
     </div>
-    <div class="rp-carousel" data-car="rev">
+    <div class="rp-carousel" data-car="rev" style="--rp-arrow-top:140px">
+      <button class="rp-arrow rp-arrow--zweef rp-arrow--prev" type="button" data-car-prev="rev" aria-label="Vorige beoordelingen">${ic.left}</button>
+      <button class="rp-arrow rp-arrow--zweef rp-arrow--next" type="button" data-car-next="rev" aria-label="Volgende beoordelingen">${ic.right}</button>
       <div class="rp-track" data-car-track tabindex="0" role="region" aria-label="Beoordelingen, horizontaal schuifbaar">
         ${REVIEWS.map((r, n) => `
         <article class="rp-rev">
@@ -453,7 +354,7 @@ const HTML = (i: Record<string, string>) => {
   </div>
 </section>`;
 
-  const posts = BLOGS.slice(0, 2);
+  const posts = BLOGS.slice(0, 6);
   const blog = `
 <section class="rp-section">
   <div class="rp-wrap">
@@ -464,7 +365,10 @@ const HTML = (i: Record<string, string>) => {
       </div>
       <a class="rp-btn rp-btn--primary" href="/blog">Alle artikels</a>
     </div>
-    <div class="rp-blogs">
+    <div class="rp-carousel" data-car="blog" style="--rp-arrow-top:170px">
+      <button class="rp-arrow rp-arrow--zweef rp-arrow--prev" type="button" data-car-prev="blog" aria-label="Vorige artikels">${ic.left}</button>
+      <button class="rp-arrow rp-arrow--zweef rp-arrow--next" type="button" data-car-next="blog" aria-label="Volgende artikels">${ic.right}</button>
+      <div class="rp-track rp-track--2" data-car-track tabindex="0" role="region" aria-label="Artikels, horizontaal schuifbaar">
       ${posts.map((p, n) => `
       <a class="rp-blog" href="/blog/${p.slug}">
         <div class="rp-blog__img">
@@ -479,6 +383,8 @@ const HTML = (i: Record<string, string>) => {
           <div class="rp-blog__foot"><span class="rp-btn ${n === 1 ? 'rp-btn--primary' : 'rp-btn--ghost'}">Lees het artikel ${ic.arrowUpRight()}</span></div>
         </div>
       </a>`).join('')}
+      </div>
+      <div class="rp-dots" data-car-dots></div>
     </div>
   </div>
 </section>`;
@@ -506,63 +412,7 @@ const HTML = (i: Record<string, string>) => {
   </div>
 </section>`;
 
-  const footer = `
-<footer class="rp-foot">
-  <div class="rp-wrap">
-    <div class="rp-foot__grid">
-      <div>
-        <a class="rp-foot__logo" href="/" aria-label="AB Bouw Groep"><img src="${i.logo}" alt="AB Bouw Groep" width="160" height="46" loading="lazy" decoding="async"/></a>
-        <p class="rp-foot__about">Bouw- en renovatiebedrijf met eigen ploegen voor dak, gevel, badkamer, interieur, ruwbouw en energiewerken. Actief in heel Vlaanderen en Brussel.</p>
-        <div class="rp-foot__rows">
-          <span class="rp-foot__row">${ic.phone(17)}<a href="${CONTACT.phone.href}">${CONTACT.phone.display}</a></span>
-          <span class="rp-foot__row">${ic.mail}<a href="mailto:${CONTACT.email}">${CONTACT.email}</a></span>
-          <span class="rp-foot__row">${ic.pin}<span>${CONTACT.address.full}</span></span>
-        </div>
-      </div>
-      <div>
-        <h3 class="rp-foot__h">Snel naar</h3>
-        <div class="rp-foot__links">
-          <a href="/over">Over ons</a>
-          <a href="/werkwijze">Werkwijze</a>
-          <a href="/realisaties">Realisaties</a>
-          <a href="/blog">Blog</a>
-          <a href="/contact">Contact</a>
-        </div>
-      </div>
-      <div>
-        <h3 class="rp-foot__h">Onze diensten</h3>
-        <div class="rp-foot__links">
-          <a href="/dakwerken">Dakwerken</a>
-          <a href="/gevel">Gevelrenovatie</a>
-          <a href="/bad">Badkamer en wellness</a>
-          <a href="/interieur">Interieurwerken</a>
-          <a href="/construct">Totaalrenovatie</a>
-          <a href="/ecologisch">Ecologisch bouwen</a>
-        </div>
-      </div>
-      <div class="rp-foot__hours-col">
-        <h3 class="rp-foot__h">Bereikbaarheid</h3>
-        <div class="rp-hours">
-          <div class="rp-hours__row"><span class="rp-hours__d">Ma&ndash;vr</span><span>08:00 &ndash; 18:00</span></div>
-          <div class="rp-hours__row"><span class="rp-hours__d">Zaterdag</span><span>Op afspraak</span></div>
-          <div class="rp-hours__row"><span class="rp-hours__d">Zondag</span><span>Gesloten</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="rp-foot__bar">
-      <span class="rp-foot__copy">&copy; ${new Date().getFullYear()} AB Bouw Groep &middot; <a href="/privacy">Privacy</a> &middot; <a href="/voorwaarden">Voorwaarden</a> &middot; <a href="/cookies">Cookies</a></span>
-      <span class="rp-socials">
-        <a href="https://www.facebook.com/" aria-label="AB Bouw Groep op Facebook" rel="noopener noreferrer" target="_blank"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.25-1.5 1.55-1.5H16.7V4.6A22 22 0 0 0 14.3 4.5c-2.4 0-4 1.45-4 4.1v2.3H7.6V14h2.7v8z"/></svg></a>
-        <a href="https://www.instagram.com/" aria-label="AB Bouw Groep op Instagram" rel="noopener noreferrer" target="_blank"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
-        <a href="https://www.linkedin.com/" aria-label="AB Bouw Groep op LinkedIn" rel="noopener noreferrer" target="_blank"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.2c0-1.24-.02-2.84-1.9-2.84-1.9 0-2.2 1.35-2.2 2.75V21h-4z"/></svg></a>
-      </span>
-    </div>
-  </div>
-</footer>
-
-<a class="rp-fab" href="${CONTACT.phone.href}" aria-label="Bel AB Bouw Groep">${ic.phone(22)}</a>`;
-
-  return `<div class="rp">${nav}${hero}${about}${diensten}${waarom}${realisaties}${werkwijze}${reviews}${merken}${faq}${blog}${cta}${footer}</div>`;
+  return `<div class="rp">${rpNav('/')}${hero}${about}${diensten}${waarom}${realisaties}${werkwijze}${reviews}${merken}${faq}${blog}${cta}${rpFooter()}</div>`;
 };
 
 export default function Home() {
@@ -570,30 +420,8 @@ export default function Home() {
     document.title = 'AB Bouw Groep — bouw en renovatie in heel Vlaanderen';
     const opruimers: Array<() => void> = [];
 
-    /* ── mobiel menu ─────────────────────────────────────────────────── */
-    const mob = document.querySelector<HTMLElement>('[data-mob]');
-    const openBtn = document.querySelector<HTMLButtonElement>('[data-mob-open]');
-    const closeBtn = document.querySelector<HTMLButtonElement>('[data-mob-close]');
-    const zetMenu = (open: boolean) => {
-      if (!mob) return;
-      mob.classList.toggle('is-open', open);
-      mob.hidden = !open;
-      openBtn?.setAttribute('aria-expanded', String(open));
-      document.body.style.overflow = open ? 'hidden' : '';
-    };
-    const onOpen = () => zetMenu(true);
-    const onClose = () => zetMenu(false);
-    const onEsc = (e: KeyboardEvent) => { if (e.key === 'Escape') zetMenu(false); };
-    openBtn?.addEventListener('click', onOpen);
-    closeBtn?.addEventListener('click', onClose);
-    document.addEventListener('keydown', onEsc);
-    mob?.querySelectorAll('a').forEach((a) => a.addEventListener('click', onClose));
-    opruimers.push(() => {
-      openBtn?.removeEventListener('click', onOpen);
-      closeBtn?.removeEventListener('click', onClose);
-      document.removeEventListener('keydown', onEsc);
-      document.body.style.overflow = '';
-    });
+    const opruimersMenu = wireMobielMenu();
+    opruimers.push(opruimersMenu);
 
     /* ── carousels: dots + pijlen, gesynchroniseerd met de echte scroll ── */
     document.querySelectorAll<HTMLElement>('[data-car]').forEach((car) => {
@@ -715,15 +543,14 @@ export default function Home() {
   }, []);
 
   const beelden: Record<string, string> = {
-    logo, heroPhoto, aboutPhoto, ctaPhoto, svcDak, dakTextuur, leiTextuur,
+    heroPhoto, aboutPhoto, ctaPhoto, svcDak, dakTextuur, leiTextuur,
     proj1, proj3, proj4,
     mKoramic, mVelux, mWienerberger, mRockpanel,
-    revMarc, revEllen, revKatrien, revDirk,
   };
   DIENSTEN.forEach((d, n) => { beelden['svc' + n] = d.img; });
   STAPPEN.forEach((s, n) => { beelden['stap' + n] = s.img; });
   REVIEWS.forEach((r, n) => { beelden['rev' + n] = r.img; });
-  BLOGS.slice(0, 2).forEach((p, n) => { beelden['blog' + n] = p.img; });
+  BLOGS.slice(0, 6).forEach((p, n) => { beelden['blog' + n] = p.img; });
 
   return <div dangerouslySetInnerHTML={{ __html: HTML(beelden) }} />;
 }
