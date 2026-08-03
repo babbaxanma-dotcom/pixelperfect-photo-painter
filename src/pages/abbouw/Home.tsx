@@ -126,7 +126,7 @@ const HTML = (i: Record<string, string>) => {
   <div class="rp-wrap rp-hero2__grid">
     <div>
       <span class="rp-hero2__eyebrow">${ic.mark} AB Bouw Groep</span>
-      <h1 class="rp-hero2__t">Bouwen en renoveren<span class="rp-dim2">in Vlaanderen en Brussel</span></h1>
+      <h1 class="rp-hero2__t">Bouwen en renoveren</h1>
       <p class="rp-hero2__lede">AB Bouw Groep werkt met zes afdelingen: ruwbouw, dak, gevel, badkamer, interieur en energiewerken. Van één ingreep tot een woning die volledig op de schop gaat.</p>
       <div class="rp-hero2__punten">
         <span class="rp-hero2__punt">${vinkje} 4,9 op Google</span>

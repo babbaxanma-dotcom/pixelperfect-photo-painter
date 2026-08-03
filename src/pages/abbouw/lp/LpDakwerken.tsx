@@ -40,10 +40,10 @@ const NAVY = '#0a1628';
 const NAVY2 = '#14233a';
 const ORANGE = '#d98c03';
 const ORANGE_H = '#b87502';
-const GOLD = '#c69a4b';
+const GOLD = '#915e02';
 
 const LP_CSS = `
-.tr { font-family: var(--font-body); color: #1d2733; --tr-r-photo: 8px; --tr-r-ui: 8px; --tr-r-card: 12px; --wrap: 1180px; --bg-tint: #f3f1ea; --tr-line: #e7e3d8; }
+.tr { font-family: var(--font-body); color: #1d2733; --tr-r-photo: 12px; --tr-r-ui: 6px; --tr-r-card: 14px; --wrap: 1200px; --bg-tint: #f6f8fa; --tr-line: #e6e8ec; }
 .tr { --section-y: clamp(72px, 8.5vw, 128px); --section-y-lg: clamp(104px, 11vw, 168px); --section-y-compact: clamp(48px, 5.5vw, 84px); }
 .tr * { box-sizing: border-box; }
 .tr .tr-wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 clamp(24px, 5vw, 56px); }
@@ -55,7 +55,7 @@ const LP_CSS = `
 /* CTA buttons (always orange) */
 .tr-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-  background: ${ORANGE}; color: #fff; border: none; cursor: pointer;
+  background: ${ORANGE}; color: #0a1628; border: none; cursor: pointer;
   font-family: var(--font-display); font-weight: 700; font-size: 15px;
   letter-spacing: 0.01em; padding: 15px 30px; border-radius: var(--tr-r-ui);
   transition: background .18s ease, box-shadow .18s ease;
@@ -66,7 +66,7 @@ const LP_CSS = `
 .tr-btn:disabled { opacity: .65; cursor: wait; }
 /* Header-CTA = ghost (outline). Houdt oranje schaars: de submit-knop in de hero-kaart
    is de enige gevulde-oranje magneet boven de vouw. */
-.tr-headcta { background: rgba(217,140,3,0.08); color: ${ORANGE_H}; border: 1.5px solid ${ORANGE}; box-shadow: none; border-radius: 999px; }
+.tr-headcta { background: rgba(217,140,3,0.08); color: #915e02; border: 1.5px solid ${ORANGE}; box-shadow: none; border-radius: 999px; }
 .tr-headcta:hover { background: ${ORANGE}; color: #fff; box-shadow: 0 4px 12px -4px rgba(217,140,3,0.45); }
 .tr-eyebrow { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-display); font-weight: 600; font-size: 12px;
   letter-spacing: 0.08em; text-transform: uppercase; color: #41495a; margin-bottom: 14px; }
@@ -83,7 +83,7 @@ const LP_CSS = `
 .tr-topbar .tr-wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 40px; }
 .tr-topbar-left { display: inline-flex; align-items: center; gap: 0; flex-wrap: wrap; }
 .tr-topbar-left span { padding: 4px 0; }
-.tr-topbar-left span + span::before { content: "·"; margin: 0 12px; color: rgba(255,255,255,0.4); }
+.tr-topbar-left span + span::before { content: "·"; margin: 0 12px; color: rgba(255,255,255,0.62); }
 .tr-topbar-phone { display: inline-flex; align-items: center; gap: 8px; color: #fff; font-weight: 600; padding: 10px 0; white-space: nowrap; transition: color .18s; }
 .tr-topbar-phone:hover { color: ${ORANGE}; }
 .tr-topbar-phone svg { width: 15px; height: 15px; color: ${ORANGE}; }
@@ -159,7 +159,7 @@ const LP_CSS = `
 /* hero trust-row + sticky-header phone */
 .tr-hero-trust { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 18px; font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,0.8); }
 .tr-hero-trust b { color: #fff; font-weight: 700; }
-.tr-hero-trust-stars { color: ${GOLD}; letter-spacing: 1px; font-size: 14px; }
+.tr-hero-trust-stars { color: #e0a83c; letter-spacing: 1px; font-size: 14px; }
 .tr-hero-trust-dot { color: rgba(255,255,255,0.35); }
 .tr-headphone { display:inline-flex; align-items:center; gap:8px; color:${NAVY}; border:1.5px solid #e0ddd3; background:#fff; font-family:var(--font-display); font-weight:700; font-size:14px; padding:10px 16px; border-radius:999px; white-space:nowrap; transition:border-color .18s, color .18s; }
 .tr-headphone svg { color:${ORANGE}; }
@@ -174,7 +174,7 @@ const LP_CSS = `
 .tr-qf-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; align-items: stretch; }
 .tr-qf-grid input { width: 100%; padding: 15px 16px; border: 1px solid #d3d7dd; border-radius: var(--tr-r-ui); font: inherit;
   font-size: 15px; color: #1d2733; background: #fff; transition: border-color .18s, box-shadow .18s; }
-.tr-qf-grid input::placeholder { color: #8a8f98; }
+.tr-qf-grid input::placeholder { color: #5f636c; }
 .tr-qf-grid input:focus { outline: none; border-color: ${ORANGE}; box-shadow: 0 0 0 3px rgba(217,140,3,0.16); background: #fff; }
 .tr-qf-grid .tr-btn { white-space: nowrap; }
 .tr-qf-error { margin-top: 12px; font-size: 13.5px; color: #b3261e; background: #fdecea;
@@ -207,7 +207,7 @@ const LP_CSS = `
 /* RIJ 1 — primair (formulier): oranje icoon-tegel = climax-markering, lichte navy-tint */
 .tr-lc-row--primary { background: #f7f9fc; border-bottom: 1px solid #e7e4dd; }
 .tr-lc-head { display: flex; align-items: center; gap: 14px; width: 100%; margin: 0; padding: 20px 26px; background: none; border: none; text-align: left; font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.tr-lc-head .tr-lc-chev { flex-shrink: 0; margin-left: auto; color: #8a8f98; display: inline-flex; align-items: center; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.tr-lc-head .tr-lc-chev { flex-shrink: 0; margin-left: auto; color: #5f636c; display: inline-flex; align-items: center; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
 .tr-lc-row--primary.is-open .tr-lc-head .tr-lc-chev { transform: rotate(90deg); color: ${NAVY}; }
 @media (hover: hover) { .tr-lc-head:hover .tr-lc-chev { color: ${NAVY}; } }
 .tr-lc-panel { display: grid; grid-template-rows: 0fr;  }
@@ -239,13 +239,13 @@ const LP_CSS = `
 /* "Of"-scheiding tussen aanbod en alternatieve contactwegen */
 .tr-lc-or { display: flex; align-items: center; gap: 14px; padding: 14px 26px 4px; }
 .tr-lc-or::before, .tr-lc-or::after { content: ''; height: 1px; background: #ece9e1; flex: 1; }
-.tr-lc-or span { font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #8a8f98; }
+.tr-lc-or span { font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #5f636c; }
 /* RIJ 2 & 3 — secundair (klembord-rijen, navy/wit + goud-omrande tegel) */
 .tr-lc-row--alt { display: flex; align-items: center; gap: 14px; width: 100%; margin: 0; padding: 14px 26px; min-height: 60px; text-align: left; text-decoration: none; font: inherit; color: inherit; background: #fff; border: none; border-top: 1px solid #f0eee7; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color .16s ease; }
 .tr-lc-or + .tr-lc-row--alt { border-top: none; }
 .tr-lc-row--alt .tr-lc-ic { background: #fff; color: ${NAVY}; border: 1px solid rgba(198,154,75,0.40); box-shadow: 0 1px 2px rgba(10,22,40,0.06); }
 .tr-lc-row--alt .tr-lc-title { font-size: 15.5px; }
-.tr-lc-chev { flex-shrink: 0; margin-left: auto; color: #8a8f98; display: inline-flex; align-items: center; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
+.tr-lc-chev { flex-shrink: 0; margin-left: auto; color: #5f636c; display: inline-flex; align-items: center; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
 @media (hover: hover) {
   .tr-lc-row--alt:hover { background: #f7f9fc; }
   .tr-lc-row--alt:hover .tr-lc-chev { color: ${NAVY}; }
@@ -414,7 +414,7 @@ const LP_CSS = `
   border-radius: var(--tr-r-ui); font: inherit; font-size: 15px; color: #1d2733; background: #fbfaf7; }
 .tr-final-card select { appearance: none; -webkit-appearance: none; cursor: pointer;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23525b6b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
-.tr-final-card select:invalid { color: #8a8f98; }
+.tr-final-card select:invalid { color: #5f636c; }
 .tr-final-card input:focus, .tr-final-card textarea:focus, .tr-final-card select:focus { outline: none; border-color: ${ORANGE};
   box-shadow: 0 0 0 3px rgba(217,140,3,0.16); background-color: #fff; }
 .tr-final-card textarea { min-height: 92px; resize: vertical; }
