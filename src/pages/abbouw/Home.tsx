@@ -1,36 +1,35 @@
 import { useEffect } from 'react';
-import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
-import { submitLead, divisieKey } from '@/lib/leads';
+import '@/styles/roofpro.css';
+import { submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
 import { CONTACT } from '@/data/contact';
+import { BLOGS } from '@/data/blogs';
 
-import hero from '@/assets/home/hero.jpg';
-import hero2 from '@/assets/home/hero-2.jpg';
-import hero3 from '@/assets/home/hero-3.jpg';
-import hero4 from '@/assets/home/hero4.jpg';
-import hero5 from '@/assets/home/hero5.jpg';
-import about from '@/assets/home/about.jpg';
-import skills from '@/assets/home/skills.jpg';
-import vakmanDak from '@/assets/home/vakmanschap-2.jpg';
-import vakmanInterieur from '@/assets/home/vakmanschap-1.jpg';
-import why from '@/assets/home/why.jpg';
+import logo from '@/assets/home/logo-trim.png';
+import heroPhoto from '@/assets/home/hero-3.jpg';
+import aboutPhoto from '@/assets/home/about.jpg';
+// svc-dak.jpg toont een werkman; deze sectie moet mensvrij zijn -> dakvlak zonder mensen
+import svcDak from '@/assets/dak/lp-veluxg-3.jpg';
+import dakTextuur from '@/assets/dak/lp-hero-pannendak.jpg';
+import leiTextuur from '@/assets/dak/lp-natuurleien.jpg';
+import svcGevel from '@/assets/home/svc-gevel.jpg';
+import svcBad from '@/assets/home/svc-bad.jpg';
+import svcInterieur from '@/assets/home/svc-interieur.jpg';
 import svcConstruct from '@/assets/home/svc-construct.jpg';
 import svcEco from '@/assets/home/svc-eco.jpg';
-import svcInterieur from '@/assets/home/svc-interieur.jpg';
-import svcDak from '@/assets/home/svc-dak.jpg';
-import svcBad from '@/assets/home/svc-bad.jpg';
-import svcGevel from '@/assets/home/svc-gevel.jpg';
 import proj1 from '@/assets/home/proj1.jpg';
-import proj2 from '@/assets/home/proj2.jpg';
 import proj3 from '@/assets/home/proj3.jpg';
 import proj4 from '@/assets/home/proj4.jpg';
-import team1 from '@/assets/home/team1.jpg';
-import team2 from '@/assets/home/team2.jpg';
-import team3 from '@/assets/home/team3.jpg';
-import ctaMan from '@/assets/home/cta-expert.png';
-import { BLOGS } from '@/data/blogs';
-import logo from '@/assets/home/logo.png';
-import logoHero from '@/assets/home/logo-hero.png';
+import stap2 from '@/assets/werkwijze/02-plaatsbezoek.jpg';
+import stap3 from '@/assets/werkwijze/03-offerte.jpg';
+import stap5 from '@/assets/werkwijze/05-uitvoering.jpg';
+import stap7 from '@/assets/werkwijze/07-oplevering.jpg';
+import ctaPhoto from '@/assets/home/hero-roof.jpg';
+import mKoramic from '@/assets/merken/Koramic.png';
+import mVelux from '@/assets/merken/Velux.png';
+import mWienerberger from '@/assets/merken/Wienerberger.png';
+import mRockpanel from '@/assets/merken/rockpanel.png';
+
 import revMarc from '@/assets/reviews/marc.jpg';
 import revEllen from '@/assets/reviews/ellen.jpg';
 import revKatrien from '@/assets/reviews/katrien.jpg';
@@ -45,2650 +44,686 @@ import revInge from '@/assets/reviews/inge.jpg';
 import revKarim from '@/assets/reviews/karim.jpg';
 import revHilde from '@/assets/reviews/hilde.jpg';
 
-const HTML = (i: Record<string, string>) => `
+/* ── iconen ──────────────────────────────────────────────────────────── */
+const ic = {
+  chev: '<svg class="rp-nav__chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>',
+  phone: (s = 18) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`,
+  mail: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>',
+  pin: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+  arrowUpRight: (s = 14) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>`,
+  star: (s = 15) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>`,
+  google: '<svg width="21" height="21" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5a5.6 5.6 0 0 1-2.4 3.6v3h3.9c2.3-2.1 3.5-5.2 3.5-8.8z"/><path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.9-3c-1.1.7-2.4 1.2-4 1.2-3.1 0-5.7-2.1-6.6-4.9H1.4v3.1A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.4 14.4a7.2 7.2 0 0 1 0-4.6V6.7H1.4a12 12 0 0 0 0 10.8l4-3.1z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.4 6.7l4 3.1C6.3 7 8.9 4.8 12 4.8z"/></svg>',
+  cal: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
+  user: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+  plus: '<svg class="rp-faq__ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>',
+  mark: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 2h9v9H2z"/><path d="M13 13h9v9h-9z"/><path d="M13 2h9v9h-9z" opacity=".45"/></svg>',
+  burger: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>',
+  close: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+  left: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>',
+  right: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>',
+  info: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>',
+};
 
+const svcIcon = (d: string) =>
+  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
 
-<!-- NAV (floating white pill over hero) -->
-<nav class="lf-nav" id="nav">
-  <div class="wrap lf-nav-inner">
-    <a class="lf-brand" href="/">
-      <img src="${i.logo}" alt="AB Bouw Groep" class="lf-brand-logo" />
+const ICONS = {
+  dak: svcIcon('<path d="M3 11.5 12 4l9 7.5"/><path d="M5 10.8V20h14v-9.2"/><path d="M9.5 20v-5h5v5"/>'),
+  gevel: svcIcon('<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M4 9h16M4 15h16M10 3v6M14 9v6M10 15v6"/>'),
+  bad: svcIcon('<path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M6 12V6a2 2 0 0 1 4 0"/><path d="M6 19v2M18 19v2"/>'),
+  interieur: svcIcon('<path d="M4 20v-6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v6"/><path d="M6 11V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M4 17h16"/>'),
+  construct: svcIcon('<path d="m3 21 9-18 9 18z"/><path d="M8.5 12h7M6 16.5h12"/>'),
+  eco: svcIcon('<path d="M12 21c5-2 8-6 8-11V5l-8-2-8 2v5c0 5 3 9 8 11z"/><path d="M12 12v5M12 12c0-2 1.5-3.5 3.5-3.5M12 12c0-2-1.5-3.5-3.5-3.5"/>'),
+  ploeg: svcIcon('<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'),
+  shield: svcIcon('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>'),
+  planning: svcIcon('<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 15 2 2 4-4"/>'),
+  papier: svcIcon('<path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6M9 17h4"/>'),
+};
+
+const DIENSTEN = [
+  { t: 'Dakwerken', img: svcDak, ic: ICONS.dak, href: '/dakwerken',
+    d: 'Nieuwe pannen, leien of een plat dak in EPDM. Inclusief isolatie, dakgoten en het opruimen achteraf.' },
+  { t: 'Gevelrenovatie', img: svcGevel, ic: ICONS.gevel, href: '/gevel',
+    d: 'Crepi, steenstrips, houten bekleding of gevelreiniging. Met buitenisolatie als de gevel toch openligt.' },
+  { t: 'Badkamer en wellness', img: svcBad, ic: ICONS.bad, href: '/bad',
+    d: 'Van inloopdouche tot volledige badkamer. Sanitair, tegelwerk en vloerverwarming door dezelfde ploeg.' },
+  { t: 'Interieurwerken', img: svcInterieur, ic: ICONS.interieur, href: '/interieur',
+    d: 'Maatkasten, keukens, gietvloeren en pleisterwerk. Afgewerkt tot in de plinten en de deurlijsten.' },
+  { t: 'Totaalrenovatie en nieuwbouw', img: svcConstruct, ic: ICONS.construct, href: '/construct',
+    d: 'Ruwbouw, uitbreiding of een woning die volledig op de schop gaat. Wij coördineren alle vakken.' },
+  { t: 'Ecologisch bouwen', img: svcEco, ic: ICONS.eco, href: '/ecologisch',
+    d: 'Isolatie, ventilatie, warmtepomp en zonnepanelen. We rekenen vooraf uit wat het oplevert.' },
+];
+
+const REVIEWS = [
+  { name: 'Marc Van den Broeck', role: 'Dakrenovatie · Mechelen', img: revMarc, text: 'Alles verliep netjes zoals afgesproken, geen verrassingen achteraf. Het dak ligt er strak bij. Echt tevreden.' },
+  { name: 'Ellen De Smet', role: 'Totaalrenovatie · Leuven', img: revEllen, text: 'We hebben drie aannemers vergeleken. AB Bouw was de enige die alle vragen grondig beantwoordde en ook de volledige papierwinkel voor ons regelde.' },
+  { name: 'Katrien Peeters', role: 'Badkamer · Antwerpen', img: revKatrien, text: 'Van begin tot eind dezelfde ploeg, dat voel je aan het resultaat. Alles strak en netjes afgewerkt. Heel content.' },
+  { name: 'Mehmet Yıldız', role: 'Nieuwbouw · Bornem', img: revMehmet, text: 'Eerlijk en stipt. We konden altijd terecht met vragen en kregen de sleutel exact op de afgesproken dag. Zeldzaam in deze sector.' },
+  { name: 'Sofie Vermeulen', role: 'Gevelrenovatie · Sint-Niklaas', img: revSofie, text: 'De gevel ligt er strak bij, alle buren komen vragen wie het werk gedaan heeft. Aanrader voor wie kwaliteit en stiptheid belangrijk vindt.' },
+  { name: 'Dirk Maes', role: 'Plat dak · Antwerpen', img: revDirk, text: 'Ik dacht aan een nieuw dak, maar na hun bezoek bleek herstellen genoeg. Ze hadden me makkelijk meer kunnen aansmeren. Dat noem ik eerlijk werken.' },
+  { name: 'Ana Popescu', role: 'Interieur · Mechelen', img: revAna, text: 'Maatkeuken en dressing prachtig uitgevoerd, alles past perfect. En we werden overal goed in meegenomen. Heel content.' },
+  { name: 'Tim Verbeeck', role: 'Carport en oprit · Lier', img: revTim, text: 'Carport en oprit klaar op tijd, geen vertraging. Elke vrijdag was de werf opgeruimd, fijn met kleine kinderen in huis.' },
+  { name: 'Nathalie Aerts', role: 'Energetische renovatie · Bonheiden', img: revNathalie, text: 'Isolatie, dak en ramen in één keer aangepakt. Veel warmer nu, en zij regelden het hele papierwerk. Echt ontzorgd.' },
+  { name: 'Filip Wouters', role: 'Hellend dak · Puurs', img: revFilip, text: 'Dak helemaal vernieuwd, mooi afgewerkt. De werfleider kwam elke ochtend even langs, dat gaf een gerust gevoel.' },
+  { name: 'Inge Vermeiren', role: 'Badkamer en toilet · Kontich', img: revInge, text: 'Vier weken stof, en dan een prachtige badkamer. Inloopdouche, zwevend meubel, vloerverwarming. De tegelzetter heeft hier echt zijn handtekening gezet.' },
+  { name: 'Karim El Amrani', role: 'Aanbouw · Willebroek', img: revKarim, text: 'Aanbouw netjes opgeleverd, precies zoals we het wilden. Eén aanspreekpunt voor alles, dat maakte het veel makkelijker.' },
+  { name: 'Hilde Goossens', role: 'Gevelisolatie · Boom', img: revHilde, text: 'Witte crepi op buitenisolatie. Onze stookkost is bijna gehalveerd deze winter. Net en proper gewerkt, ook bij de buren bedankjes achtergelaten.' },
+];
+
+const STAPPEN = [
+  { n: '01', t: 'Plaatsbezoek', img: stap2, d: 'We komen langs, meten op en luisteren wat u wil. Kosteloos en zonder verplichting.' },
+  { n: '02', t: 'Offerte', img: stap3, d: 'U krijgt een gedetailleerde prijs per post. Elke lijn is uitgesplitst, zodat u ziet waarvoor u betaalt.' },
+  { n: '03', t: 'Uitvoering', img: stap5, d: 'Eén werfleider volgt uw project op. U weet wie er komt en wanneer.' },
+  { n: '04', t: 'Oplevering', img: stap7, d: 'We lopen samen alles na en werken de laatste punten af. Pas dan is het klaar.' },
+];
+
+const TEGELS = [
+  { ic: ICONS.ploeg, t: 'Eigen vakmensen', d: 'Geen wisselende onderaannemers: dezelfde mensen van start tot oplevering.' },
+  { ic: ICONS.shield, t: '10 jaar garantie', d: 'Op de uitvoering van ons werk, schriftelijk vastgelegd in de offerte.', feat: true },
+  { ic: ICONS.planning, t: 'Eén werfleider', d: 'Eén nummer dat u belt. Die persoon kent uw dossier en volgt de planning op.' },
+  { ic: ICONS.papier, t: 'Papierwerk geregeld', d: 'Premies, attesten en EPB regelen wij mee, zodat u niets hoeft na te zoeken.' },
+];
+
+const FAQ = [
+  { q: 'Werken jullie in heel Vlaanderen?', a: 'Ja. We werken in heel Vlaanderen en in Brussel. Voor een plaatsbezoek maken we een afspraak die past, ook in de vooravond.' },
+  { q: 'Wat kost een plaatsbezoek en een offerte?', a: 'Niets. We komen langs, meten op en bezorgen u een gedetailleerde offerte. Daar zijn geen kosten aan verbonden en u bent tot niets verplicht.' },
+  { q: 'Kan ik één ding laten doen, of moet het een volledige renovatie zijn?', a: 'Beide kan. Alleen een dak of alleen een badkamer is prima. Loopt uw project over meerdere vakken, dan coördineren wij die onderling.' },
+  { q: 'Hoe zit het met premies?', a: 'We bekijken bij het plaatsbezoek welke premies op uw situatie van toepassing zijn en leveren de attesten aan die u nodig heeft. De premievoorwaarden wijzigen geregeld, dus we toetsen ze per dossier opnieuw.' },
+  { q: 'Hoe lang op voorhand moet ik boeken?', a: 'Dat hangt af van het vak en het seizoen. Bij het plaatsbezoek zeggen we meteen welke startperiode realistisch is, en die zetten we in de offerte.' },
+];
+
+const HTML = (i: Record<string, string>) => {
+  const navLinks = [
+    { t: 'Home', href: '/' },
+    { t: 'Over ons', href: '/over' },
+    {
+      t: 'Diensten', href: '/diensten', sub: [
+        { t: 'Dakwerken', href: '/dakwerken' },
+        { t: 'Gevelrenovatie', href: '/gevel' },
+        { t: 'Badkamer en wellness', href: '/bad' },
+        { t: 'Interieurwerken', href: '/interieur' },
+        { t: 'Totaalrenovatie en nieuwbouw', href: '/construct' },
+        { t: 'Ecologisch bouwen', href: '/ecologisch' },
+      ],
+    },
+    { t: 'Realisaties', href: '/realisaties' },
+    { t: 'Werkwijze', href: '/werkwijze' },
+    { t: 'Blog', href: '/blog' },
+    { t: 'Contact', href: '/contact' },
+  ];
+
+  const nav = `
+<header class="rp-nav">
+  <div class="rp-wrap rp-nav__inner">
+    <a class="rp-nav__logo" href="/" aria-label="AB Bouw Groep, naar de startpagina">
+      <img src="${i.logo}" alt="AB Bouw Groep" width="146" height="42" decoding="async"/>
     </a>
-    <ul class="lf-menu">
-      <li><a href="/" class="active">Home</a></li>
-      <li><a href="/over">Over ons</a></li>
-      <li><a href="/diensten">Diensten</a></li>
-      <li><a href="/werkwijze">Werkwijze</a></li>
-      <li><a href="/realisaties">Realisaties</a></li>
-      <li><a href="/blog">Blog</a></li>
-      <li><a href="/contact">Contact</a></li>
-    </ul>
-    <a href="${CONTACT.phone.href}" class="lf-nav-phone">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      ${CONTACT.phone.spaced}
+    <nav class="rp-nav__links" aria-label="Hoofdmenu">
+      ${navLinks.map((l) => l.sub
+        ? `<div class="rp-dd">
+             <a class="rp-nav__link" href="${l.href}">${l.t}${ic.chev}</a>
+             <div class="rp-dd__panel">${l.sub.map((s) => `<a class="rp-dd__item" href="${s.href}">${s.t}</a>`).join('')}</div>
+           </div>`
+        : `<a class="rp-nav__link" href="${l.href}"${l.href === '/' ? ' aria-current="page"' : ''}>${l.t}</a>`).join('')}
+    </nav>
+    <a class="rp-nav__cta" href="${CONTACT.phone.href}">
+      <span class="rp-nav__cta-ic" aria-hidden="true">${ic.phone(16)}</span>${CONTACT.phone.display}
     </a>
-    <button class="mobile-toggle lf-mobile-toggle" onclick="toggleMobileMenu()" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <button class="rp-burger" type="button" data-mob-open aria-label="Menu openen" aria-expanded="false" aria-controls="rp-mob">${ic.burger}</button>
   </div>
-</nav>
+</header>
 
-<div class="mobile-menu" id="mobileMenu">
-  <button class="mm-close" id="mobileMenuClose" type="button" aria-label="Sluit menu">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-  </button>
-  <div class="mm-section">
-    <a href="/">Home</a><a href="/over">Over ons</a><a href="/diensten">Diensten</a>
-    <a href="/werkwijze">Werkwijze</a><a href="/realisaties">Realisaties</a><a href="/blog">Blog</a><a href="/contact">Contact</a>
+<div class="rp-mob" id="rp-mob" data-mob hidden>
+  <div class="rp-wrap" style="padding:0">
+    <div class="rp-mob__top">
+      <img src="${i.logo}" alt="AB Bouw Groep" width="125" height="36" decoding="async" style="height:36px;width:auto"/>
+      <button class="rp-mob__close" type="button" data-mob-close aria-label="Menu sluiten">${ic.close}</button>
+    </div>
+    <nav class="rp-mob__list" aria-label="Mobiel menu">
+      ${navLinks.map((l) => l.sub
+        ? `<a class="rp-mob__link" href="${l.href}">${l.t}</a><div class="rp-mob__sub">${l.sub.map((s) => `<a href="${s.href}">${s.t}</a>`).join('')}</div>`
+        : `<a class="rp-mob__link" href="${l.href}">${l.t}</a>`).join('')}
+    </nav>
+    <div class="rp-mob__cta">
+      <a class="rp-btn rp-btn--primary rp-btn--block" href="${CONTACT.phone.href}">${ic.phone(17)} ${CONTACT.phone.display}</a>
+      <a class="rp-btn rp-btn--ghost rp-btn--block" href="/contact">Vraag een offerte</a>
+    </div>
   </div>
-  <div class="mm-footer">
-    <a href="${CONTACT.phone.href}" class="mm-foot-link">
-      <span class="mm-foot-ico" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      </span>
-      <span>${CONTACT.phone.spaced}</span>
-    </a>
-    <a href="mailto:info@abgroep.be" class="mm-foot-link">
-      <span class="mm-foot-ico" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
-      </span>
-      <span>info@abgroep.be</span>
-    </a>
-  </div>
-</div>
+</div>`;
 
-<!-- HERO: 1-op-1 LP-structuur (tr-*) op vraag van Mohammed: kopieer wat de landingspagina heeft -->
-<section class="tr-hero">
-  <div class="tr-hero-bg"><img src="${i.hero}" alt="Afgewerkte gevelrenovatie door AB Bouw Groep" fetchpriority="high" width="1920" height="1080" /></div>
-  <div class="tr-hero-inner">
-    <div class="tr-wrap">
-      <div class="tr-hero-grid">
-        <div class="tr-hero-main">
-          <div class="tr-hero-trust">
-            <span class="tr-hero-trust-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-            <span><b>4,9/5</b> op Google (180+ reviews)</span><span class="tr-hero-trust-dot">&#183;</span>
-            <span>120+ woningen gerenoveerd</span><span class="tr-hero-trust-dot">&#183;</span>
-            <span>Actief sinds 2010</span>
-          </div>
-          <h1>Renovatie- of bouwplannen? Wij regelen het.</h1>
-          <p class="tr-hero-sub">E&eacute;n aannemer voor dak, gevel en totaalrenovatie, in heel Vlaanderen en Brussel. <b>Uw offerte is uw factuur: vaste prijs v&oacute;&oacute;r de eerste werkdag, zonder meerwerk.</b></p>
-          <div class="tr-certs">
-            <span class="tr-cert-pill"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>VCA* gecertificeerd</span>
-            <span class="tr-cert-pill"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Lid Bouwunie</span>
-            <span class="tr-cert-pill"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Verzekerd via Federale</span>
-          </div>
-        </div>
-        <aside class="tr-hero-form" aria-label="Vraag uw gratis plaatsbezoek aan">
-          <div class="tr-quickform tr-leadcard" id="contact-form">
-            <div class="tr-lc-row tr-lc-row--primary is-open">
-              <button type="button" class="tr-lc-head" data-lc-toggle aria-expanded="true">
-                <span class="tr-lc-ic tr-lc-ic--accent" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/></svg></span>
-                <span class="tr-lc-txt">
-                  <h3 class="tr-lc-title">Gratis plaatsbezoek</h3>
-                  <span class="tr-lc-sub">Vrijblijvend, geen verplichtingen.</span>
-                </span>
-                <span class="tr-lc-chev" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
-              </button>
-              <div class="tr-lc-panel"><div class="tr-lc-panel-inner"><div class="tr-lc-panel-pad">
-                <form data-hero-form novalidate>
-                  <div class="tr-qf-grid">
-                    <div class="tr-qf-field"><label for="qh-name">Voornaam</label><input id="qh-name" type="text" name="firstName" placeholder="bv. Jan" autocomplete="given-name" /></div>
-                    <div class="tr-qf-field"><label for="qh-phone">Telefoonnummer</label><input id="qh-phone" type="tel" name="phone" inputmode="tel" placeholder="bv. 0470 12 34 56" autocomplete="tel" /></div>
-                    <button type="submit" class="tr-btn" data-hero-submit><span data-hero-submit-label>Plan mijn afspraak</span></button>
-                  </div>
-                </form>
-                <p class="tr-lc-reassure">We bellen u terug binnen &eacute;&eacute;n werkdag.</p>
-                <div class="tr-qf-error" data-hero-error role="alert" aria-live="polite" style="display:none"></div>
-                <div class="tr-lc-proof">
-                  <div class="tr-lc-proof-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                  <p class="tr-lc-proof-q">&ldquo;Alles verliep netjes zoals afgesproken, geen verrassingen achteraf.&rdquo;</p>
-                  <div class="tr-lc-proof-name">Klantreview &#183; via Google</div>
-                </div>
-              </div></div></div>
+  const hero = `
+<section class="rp-hero">
+  <div class="rp-wrap rp-hero__top">
+    <div class="rp-hero__mark" aria-hidden="true"><img src="${i.dakTextuur}" alt="" width="122" height="122" decoding="async"/></div>
+    <div class="rp-hero__grid">
+      <div class="rp-hero__main">
+        <h1 class="rp-hero__display">Bouw en<span class="rp-hero__l2">renovatie</span></h1>
+        <div class="rp-hero__ground">
+          <div class="rp-hero__proof">
+            <div class="rp-hero__avatars" aria-hidden="true">
+              <img src="${i.revMarc}" alt="" width="42" height="42" loading="lazy" decoding="async"/>
+              <img src="${i.revEllen}" alt="" width="42" height="42" loading="lazy" decoding="async"/>
+              <img src="${i.revKatrien}" alt="" width="42" height="42" loading="lazy" decoding="async"/>
+              <img src="${i.revDirk}" alt="" width="42" height="42" loading="lazy" decoding="async"/>
             </div>
-            <div class="tr-lc-or"><span>Of</span></div>
-            <a class="tr-lc-row tr-lc-row--alt" href="${CONTACT.phone.href}">
-              <span class="tr-lc-ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-              <span class="tr-lc-txt">
-                <span class="tr-lc-title">Bel ons direct</span>
-                <span class="tr-lc-sub">Vragen of haast? ${CONTACT.phone.spaced}</span>
-              </span>
-              <span class="tr-lc-chev" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
-            </a>
-            <div class="tr-qf-thanks">
-              <div class="tr-qf-thanks-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <h4>Bedankt, uw aanvraag is verstuurd.</h4>
-              <p>Wij bellen u binnen &eacute;&eacute;n werkdag voor uw gratis plaatsbezoek.</p>
-            </div>
-          </div>
-        </aside>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS — direct onder hero, eerste sociale proof -->
-<section class="lf-section lf-tone-soft lf-reviews-section" style="padding: var(--section-y-compact) 0;">
-  <div class="wrap">
-    <div class="lf-section-head centered lf-reviews-head" style="margin-bottom: 24px;">
-      <span class="lf-eyebrow">Wat klanten zeggen</span>
-      <div class="lf-reviews-rating">
-        <span class="lf-reviews-score">4,9</span>
-        <span class="lf-reviews-divider" aria-hidden="true"></span>
-        <div class="lf-reviews-meta">
-          <div class="lf-reviews-stars" aria-label="4.9 van 5 sterren">
-            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
-            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
-            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
-            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
-            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
-          </div>
-          <span class="lf-reviews-count">Gebaseerd op 180+ reviews</span>
-        </div>
-      </div>
-    </div>
-    <div class="lf-rev-carousel">
-      <button type="button" class="lf-rev-arrow lf-rev-prev" data-rev-prev aria-label="Vorige reviews"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-      <div class="lf-rev-scroll" data-rev-scroll>
-          ${(() => {
-            const reviews = [
-              { name: 'Marc Van den Broeck', role: 'Dakrenovatie · Mechelen', img: revMarc, text: 'Alles verliep netjes zoals afgesproken, geen verrassingen achteraf. Het dak ligt er strak bij. Echt tevreden.', highlights: ['zoals afgesproken', 'strak', 'tevreden'] },
-              { name: 'Ellen De Smet', role: 'Totaalrenovatie · Leuven', img: revEllen, text: 'We hebben drie aannemers vergeleken. AB Bouw was de enige die alle vragen grondig beantwoordde en ook de volledige papierwinkel voor ons regelde. Eén aanspreekpunt van begin tot eind.', highlights: ['grondig beantwoordde', 'volledige papierwinkel', 'Eén aanspreekpunt'] },
-              { name: 'Katrien Peeters', role: 'Badkamer · Antwerpen', img: revKatrien, text: 'Van begin tot eind dezelfde ploeg, dat voel je aan het resultaat. Alles strak en netjes afgewerkt. Heel content.', highlights: ['dezelfde ploeg', 'netjes afgewerkt'] },
-              { name: 'Mehmet Yıldız', role: 'Nieuwbouw · Bornem', img: revMehmet, text: 'Eerlijk en stipt. We konden altijd terecht met vragen en kregen de sleutel exact op de afgesproken dag. Zeldzaam in deze sector.', highlights: ['Eerlijk en stipt', 'exact op de afgesproken dag'] },
-              { name: 'Sofie Vermeulen', role: 'Gevelrenovatie · Sint-Niklaas', img: revSofie, text: 'De gevel ligt er strak bij, alle buren komen vragen wie het werk gedaan heeft. Aanrader voor wie kwaliteit en stiptheid belangrijk vindt.', highlights: ['strak', 'kwaliteit en stiptheid'] },
-              { name: 'Dirk Maes', role: 'Plat dak · Antwerpen', img: revDirk, text: 'Ik dacht aan een nieuw dak, maar na hun bezoek bleek herstellen genoeg. Ze hadden me makkelijk meer kunnen aansmeren. Dat noem ik eerlijk werken.', highlights: ['herstellen genoeg', 'eerlijk werken'] },
-              { name: 'Ana Popescu', role: 'Interieur · Mechelen', img: revAna, text: 'Maatkeuken en dressing prachtig uitgevoerd, alles past perfect. En we werden overal goed in meegenomen. Heel content.', highlights: ['prachtig uitgevoerd', 'alles past perfect'] },
-              { name: 'Tim Verbeeck', role: 'Carport & oprit · Lier', img: revTim, text: 'Carport en oprit klaar op tijd, geen vertraging. Elke vrijdag was de werf opgeruimd, fijn met kleine kinderen in huis.', highlights: ['klaar op tijd', 'werf opgeruimd'] },
-              { name: 'Nathalie Aerts', role: 'Energetische renovatie · Bonheiden', img: revNathalie, text: 'Isolatie, dak en ramen in één keer aangepakt. Veel warmer nu, en zij regelden het hele papierwerk. Echt ontzorgd.', highlights: ['in één keer', 'veel warmer', 'ontzorgd'] },
-              { name: 'Filip Wouters', role: 'Hellend dak · Puurs', img: revFilip, text: 'Dak helemaal vernieuwd, mooi afgewerkt. De werfleider kwam elke ochtend even langs, dat gaf een gerust gevoel.', highlights: ['helemaal vernieuwd', 'gerust gevoel'] },
-              { name: 'Inge Vermeiren', role: 'Badkamer & toilet · Kontich', img: revInge, text: 'Vier weken stof, en dan een prachtige badkamer. Inloopdouche, zwevend meubel, vloerverwarming. De tegelzetter heeft hier echt zijn handtekening gezet.', highlights: ['prachtige badkamer', 'echt zijn handtekening gezet'] },
-              { name: 'Karim El Amrani', role: 'Aanbouw · Willebroek', img: revKarim, text: 'Aanbouw netjes opgeleverd, precies zoals we het wilden. Eén aanspreekpunt voor alles, dat maakte het veel makkelijker.', highlights: ['netjes opgeleverd', 'Eén aanspreekpunt'] },
-              { name: 'Hilde Goossens', role: 'Gevelisolatie · Boom', img: revHilde, text: 'Witte crepi op buitenisolatie. Onze stookkost is bijna gehalveerd deze winter. Net en proper gewerkt, ook bij de buren bedankjes achtergelaten.', highlights: ['bijna gehalveerd', 'Net en proper'] },
-            ];
-            const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            const wrapWords = (phrase: string, baseI: number) => {
-              const words = phrase.split(/(\s+)/);
-              let wi = 0;
-              return words.map((w) => {
-                if (/^\s+$/.test(w)) return w;
-                const idx = baseI + wi;
-                wi += 1;
-                return `<span class="lf-hl-word" style="--hl-i:${idx}">${w}</span>`;
-              }).join('');
-            };
-            const highlight = (text: string, terms: string[]) => {
-              let out = text;
-              let wordOffset = 0;
-              terms.forEach((term) => {
-                const re = new RegExp(escapeRe(term), 'i');
-                out = out.replace(re, (m) => {
-                  const wrapped = `<mark class="lf-hl">${wrapWords(m, wordOffset)}</mark>`;
-                  wordOffset += m.trim().split(/\s+/).length;
-                  return wrapped;
-                });
-              });
-              return out;
-            };
-            return reviews.map((t) => `
-                  <article class="lf-testi">
-                    <div class="lf-testi-stars">★★★★★</div>
-                    <p>${t.text}</p>
-                    <div class="lf-testi-divider"></div>
-                    <div class="lf-testi-foot">
-                      <div class="lf-testi-meta">
-                        <strong>${t.name}</strong>
-                        <span>${t.role}</span>
-                      </div>
-                    </div>
-                  </article>
-                `).join('');
-          })()}
-      </div>
-      <button type="button" class="lf-rev-arrow lf-rev-next" data-rev-next aria-label="Volgende reviews"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
-    </div>
-  </div>
-</section>
-
-
-
-<!-- OFFERTE FORM + TRUST BULLETS -->
-<section class="lf-section lf-offerte-section">
-  <div class="wrap">
-    <div class="lf-offerte-head">
-      <span class="lf-eyebrow">100% vrijblijvend</span>
-      <h2 class="lf-h2">Gratis offerte of<br/>plaatsbezoek aanvragen.</h2>
-      <p class="lf-lede">Binnen 24u persoonlijk contact met een ervaren vakman. Eerlijk advies en een vaste, transparante prijs.</p>
-    </div>
-
-    <aside class="lf-form lf-form-compact">
-      <form data-home-form novalidate>
-        <div class="lf-form-row">
-          <input type="text" name="firstName" placeholder="Voornaam *" autocomplete="given-name" required />
-          <input type="text" name="lastName" placeholder="Achternaam *" autocomplete="family-name" required />
-        </div>
-        <div class="lf-form-row">
-          <input type="email" name="email" placeholder="E-mailadres *" autocomplete="email" required />
-          <input type="tel" name="phone" placeholder="Telefoonnummer *" autocomplete="tel" required />
-        </div>
-        <select name="type_werk" class="lf-native-select" required>
-          <option value="">Welke dienst interesseert u? *</option>
-          <option value="Algemene aanneming (Construct)">Algemene aanneming (Construct)</option>
-          <option value="Dakwerken">Dakwerken</option>
-          <option value="Interieurwerken">Interieurwerken</option>
-          <option value="Badkamer / wellness">Badkamer / wellness</option>
-          <option value="Gevelbekleding">Gevelbekleding</option>
-          <option value="Ecologisch / duurzaam">Ecologisch / duurzaam</option>
-          <option value="Combinatie / weet ik niet">Combinatie / weet ik niet</option>
-        </select>
-        <button type="submit" class="lf-cta-pill lf-cta-pill-block" data-home-submit style="background:#d98c03 !important; color:#fff !important;">
-          <span data-home-submit-label>Vraag mijn gratis offerte aan</span>
-          <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-        </button>
-        <p class="lf-form-error" data-home-error aria-live="polite" hidden></p>
-        <p class="lf-form-foot">Of bel direct <a href="${CONTACT.phone.href}">${CONTACT.phone.spaced}</a></p>
-      </form>
-      <div class="lf-form-thanks" data-home-thanks aria-hidden="true">
-        <div class="lf-form-thanks-circle">
-          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <h3>Bedankt voor uw aanvraag.</h3>
-        <p>We nemen binnen één werkdag persoonlijk contact met u op.</p>
-      </div>
-    </aside>
-
-    <div class="lf-mini-bullets">
-      <div class="lf-mini-bullet">
-        <div class="lf-mini-bullet-num">01</div>
-        <div>
-          <h4>Eigen vakmensen</h4>
-          <p>23 vaste medewerkers in eigen dienst. Geen onderaannemers.</p>
-        </div>
-      </div>
-      <div class="lf-mini-bullet">
-        <div class="lf-mini-bullet-num">02</div>
-        <div>
-          <h4>Vaste prijs, schriftelijk</h4>
-          <p>Bindende offerte. Geen verrassingen op de eindfactuur.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICES GRID -->
-<section class="lf-section lf-divisies">
-  <div class="wrap">
-    <div class="lf-div-head">
-      <div class="lf-div-head-left">
-        <span class="lf-eyebrow">Onze divisies</span>
-        <h2 class="lf-h2">Zes specialisaties,<br>één bouwpartner.</h2>
-        <p class="lf-lede">Van ruwbouw tot afwerking — elke divisie met eigen vakmensen, één projectleider en één planning. U heeft maar één aanspreekpunt nodig.</p>
-      </div>
-      <a class="lf-div-head-cta" href="/diensten">Bekijk alle diensten
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-    </div>
-    ${(() => {
-      // Inline SVG iconen per divisie — strakke 2px outline stroke voor een
-      // consistente "blueprint" look op de orange badge.
-      const icons = {
-        construct: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M10 21v-6h4v6"/></svg>`,
-        eco: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>`,
-        interieur: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M2 11v5a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v2H6v-2a2 2 0 0 0-4 0z"/><path d="M4 18v2"/><path d="M20 18v2"/></svg>`,
-        dakwerken: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 12 10-8 10 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>`,
-        bad: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.5 3 4 3.4 4 4v9"/><path d="M2 13h20"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/><path d="m4 21 1-1.5"/><path d="m20 21-1-1.5"/></svg>`,
-        gevel: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v6"/><path d="M15 9v6"/><path d="M9 15v6"/></svg>`,
-      };
-      const services = [
-        { img: i.svcConstruct, n: '01', title: 'AB Construct', short: 'Construct', desc: 'Nieuwbouw en totaalrenovatie sleutel-op-de-deur. Eén contract, één planning, één resultaat.', href: '/construct', icon: icons.construct },
-        { img: i.svcEco, n: '02', title: 'AB Ecologisch', short: 'Ecologisch', desc: 'Duurzaam bouwen met natuurlijke materialen. Lager E-peil, lagere energiefactuur.', href: '/ecologisch', icon: icons.eco },
-        { img: i.svcInterieur, n: '03', title: 'AB Interieurwerken', short: 'Interieur', desc: 'Maatwerk in gyproc, vloeren, schrijnwerk en plafonds. Strak afgewerkt tot in de plint.', href: '/interieur', icon: icons.interieur },
-        { img: i.svcDak, n: '04', title: 'AB Dakwerken', short: 'Dakwerken', desc: 'Hellende en platte daken, dakisolatie en zinkwerk. Door eigen dakdekkers geplaatst.', href: '/dakwerken', icon: icons.dakwerken },
-        { img: i.svcBad, n: '05', title: 'AB Bad &amp; Wellness', short: 'Bad &amp; Wellness', desc: 'Sleutel-op-de-deur badkamers met premium tegels en sanitair. Klaar in vier weken.', href: '/bad', icon: icons.bad },
-        { img: i.svcGevel, n: '06', title: 'AB Gevelbekleding', short: 'Gevel', desc: 'Witte of grijze crepi, sierpleister of steenstrips. Tijdloos én onderhoudsarm.', href: '/gevel', icon: icons.gevel },
-      ];
-      const feat = services[0];
-      const rest = services.slice(1);
-      return `
-      <a class="lf-div-feature" href="${feat.href}">
-        <div class="lf-div-feature-img"><img src="${feat.img}" alt="${feat.title}" loading="lazy" /></div>
-        <div class="lf-div-feature-body">
-          <span class="lf-div-tag">Onze hoofddivisie</span>
-          <h3>${feat.title}</h3>
-          <p>${feat.desc} Van vergunning en EPB tot de laatste verflaag — alles in eigen beheer, onder één projectleider.</p>
-          <span class="lf-div-link">Ontdek ${feat.title}
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </span>
-        </div>
-      </a>
-      <div class="lf-div-grid">
-        ${rest.map((s) => `
-          <a class="lf-div-card" href="${s.href}">
-            <div class="lf-div-card-img"><img src="${s.img}" alt="${s.title}" loading="lazy" /></div>
-            <div class="lf-div-card-body">
-              <h4>${s.title}</h4>
-              <p>${s.desc}</p>
-              <span class="lf-div-link">Lees meer
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </span>
-            </div>
-          </a>
-        `).join('')}
-        <a class="lf-div-cta-card" href="/contact">
-          <div class="lf-div-cta-inner">
-            <span class="lf-div-tag light">Advies nodig?</span>
-            <h4>Niet zeker welke divisie u nodig heeft?</h4>
-            <p>Eén gesprek en wij wijzen u meteen de juiste richting — volledig vrijblijvend.</p>
-            <span class="lf-div-link light">Vraag gratis advies
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </span>
-          </div>
-        </a>
-      </div>`;
-    })()}
-  </div>
-</section>
-
-<!-- PARTNER LOGOS -->
-<section class="lf-partners">
-  <div class="wrap">
-    <div class="lf-partners-head">
-      <span class="lf-partners-eyebrow">Onze partners</span>
-      <p>Wij verwerken enkel materialen van fabrikanten die voldoen aan de strengste Belgische bouwnormen.</p>
-    </div>
-    <div class="lf-marquee">
-      <div class="lf-marquee-track">
-        ${Array.from({ length: 1 }).map(() => `
-          <div class="lf-marquee-set">
-            <img src="/assets/logos/dorken.png" alt="Dörken" loading="lazy" />
-            <img src="/assets/logos/eternit.png" alt="Eternit" loading="lazy" />
-            <img src="/assets/logos/isoproc.png" alt="Isoproc" loading="lazy" />
-            <img src="/assets/logos/isover.png" alt="Isover" loading="lazy" />
-            <img src="/assets/logos/knauf.png" alt="Knauf" loading="lazy" />
-            <img src="/assets/logos/koramic.png" alt="Koramic" loading="lazy" />
-            <img src="/assets/logos/mato.png" alt="Mato" loading="lazy" />
-            <img src="/assets/logos/rectic.png" alt="Recticel" loading="lazy" />
-            <img src="/assets/logos/caparol.png" alt="Caparol" loading="lazy" />
-          </div>`).join('')}
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- STATS COUNTERS -->
-<section class="lf-stats">
-  <div class="wrap">
-    <div class="lf-section-head centered">
-      <span class="lf-eyebrow">In cijfers</span>
-      <h2 class="lf-h2">Vakmanschap dat<br>zich laat tellen.</h2>
-    </div>
-     <div class="lf-stats-pin" data-hpin>
-      <div class="lf-stats-grid">
-       <div class="lf-stat-card">
-        <div class="lf-stat-photo"><img src="${i.svcDak}" alt="" loading="lazy"/></div>
-        <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span>16</span><span class="lf-stat-suffix">jaar</span></div>
-          <div class="lf-stat-label">Ervaring in de bouw</div>
-        </div>
-      </div>
-      <div class="lf-stat-card">
-        <div class="lf-stat-photo"><img src="${i.svcGevel}" alt="" loading="lazy"/></div>
-        <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span>120</span><span class="lf-stat-suffix">+</span></div>
-          <div class="lf-stat-label">Woningen gerenoveerd</div>
-        </div>
-      </div>
-      <div class="lf-stat-card">
-        <div class="lf-stat-photo"><img src="${i.svcConstruct}" alt="" loading="lazy"/></div>
-        <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span>10</span><span class="lf-stat-suffix">jaar</span></div>
-          <div class="lf-stat-label">Garantie op ons werk</div>
-        </div>
-      </div>
-      <div class="lf-stat-card lf-stat-card--nophoto">
-        <div class="lf-stat-body">
-          <div class="lf-stat-num"><span class="lf-stat-dot"></span><span>6</span><span class="lf-stat-suffix"></span></div>
-          <div class="lf-stat-label">Vakdisciplines onder één dak</div>
-        </div>
-      </div>
-      </div>
-     </div>
-  </div>
-</section>
-
-<!-- WHY US, collage -->
-<section class="lf-section lf-tone-soft lf-section-compact-stack lf-why-section-tight">
-  <div class="wrap">
-    <div class="lf-section-head centered">
-      <span class="lf-eyebrow">Waarom AB Bouw Groep</span>
-      <h2 class="lf-h2">De bouwpartner waar u<br><span class="ab-mark">écht op kan rekenen</span>.</h2>
-    </div>
-    <div class="lf-why-collage lf-why-stack lf-why-no-photo" data-why-seq data-why-stack>
-      <div class="lf-why-stack-left">
-        <div class="lf-why-slot" data-why-slot>
-          <div class="lf-why-tile" data-why-step="0" data-why-card style="--why-i:0;--why-total:4">
-            <div class="lf-why-meta"><span class="lf-why-num">01</span><span class="lf-why-label">Ontzorging</span></div>
-            <h5>Wij regelen ook de papierwinkel</h5>
-            <p>Stedenbouwkundige vergunning, EPB-verslag, premie- en financieringscheck en oplevering bij de architect. <span class="ab-hl" data-hl-delay="0">U tekent, wij regelen</span>.</p>
-          </div>
-        </div>
-        <div class="lf-why-slot" data-why-slot>
-          <div class="lf-why-tile" data-why-step="1" data-why-card style="--why-i:1;--why-total:4">
-            <div class="lf-why-meta"><span class="lf-why-num">02</span><span class="lf-why-label">Planning</span></div>
-            <h5>Wekelijks werfrapport in uw mailbox</h5>
-            <p>Elke vrijdag een korte update met foto's, voortgang en planning voor de week erop. <span class="ab-hl" data-hl-delay="0">Vertraging? U weet het meteen</span>, niet pas op de opleveringsdag.</p>
-          </div>
-        </div>
-        <div class="lf-why-slot" data-why-slot>
-          <div class="lf-why-tile" data-why-step="2" data-why-card style="--why-i:2;--why-total:4">
-            <div class="lf-why-meta"><span class="lf-why-num">03</span><span class="lf-why-label">Garantie</span></div>
-            <h5>10-jarige aansprakelijkheid, wettelijk verzekerd</h5>
-            <p><span class="ab-hl" data-hl-delay="0">VCA*-gecertificeerd</span>, aangesloten bij Bouwunie. Polis stabiliteit en waterdichtheid via Federale Verzekering.</p>
-          </div>
-        </div>
-        <div class="lf-why-slot" data-why-slot>
-          <div class="lf-why-tile" data-why-step="3" data-why-card style="--why-i:3;--why-total:4">
-            <div class="lf-why-meta"><span class="lf-why-num">04</span><span class="lf-why-label">Vaste ploeg</span></div>
-            <h5>Eigen ploegen op uw werf</h5>
-            <p><span class="ab-hl" data-hl-delay="0">23 mensen in vaste dienst</span>, metselaars, dakdekkers, tegelzetters, schrijnwerkers. Eén verantwoordelijkheid, één kwaliteitsstandaard.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="lf-trust-strip" data-trust-strip>
-      <div class="lf-trust-item" data-trust-i="0"><strong>VCA*-gecertificeerd</strong><span>Veiligheid op de werf</span></div>
-      <div class="lf-trust-divider"></div>
-      <div class="lf-trust-item" data-trust-i="1"><strong>Lid Bouwunie</strong><span>Vlaamse Confederatie Bouw</span></div>
-      <div class="lf-trust-divider"></div>
-      <div class="lf-trust-item" data-trust-i="2"><strong>BE 0712.443.881</strong><span>Federale Verzekering · polis 24/0089</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS / CRAFTSMANSHIP -->
-<section class="lf-section">
-  <div class="wrap lf-skills-grid">
-    <div class="lf-skills-text">
-      <span class="lf-eyebrow">Onze expertise</span>
-      <h2 class="lf-h2">Vakmanschap dat<br>het verschil maakt.</h2>
-      <p class="lf-lede">Onze vakmensen werken al meer dan een decennium samen op de werf. Die ervaring zit in elk detail: van de eerste fundering tot de laatste verfstreek.</p>
-      <a href="/over" class="lf-btn-pri lf-btn-sm"><span>Lees meer</span></a>
-    </div>
-    <div class="lf-skills-collage">
-      <img class="lf-skills-img1" src="${i.vakmanInterieur}" alt="Dakwerker bevestigt dakshingles met spijkerpistool" loading="lazy"/>
-      <img class="lf-skills-img2" src="${i.vakmanDak}" alt="Dakwerker werkt aan keramische pannen rond schouw" loading="lazy"/>
-    </div>
-  </div>
-</section>
-
-<!-- PROCESS / WERKWIJZE -->
-<section class="lf-section lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-section-head centered">
-      <span class="lf-eyebrow">Onze werkwijze</span>
-      <h2 class="lf-h2">Van eerste gesprek tot<br>sleutel op de deur.</h2>
-      <p class="lf-lede" style="margin: 0 auto;">Eén transparant traject in vijf stappen. U weet vooraf precies wat er wanneer gebeurt, en wie u aanspreekt voor elke vraag.</p>
-    </div>
-    <div class="lf-process" data-process-stack>
-      <div class="lf-process-line"></div>
-      <div class="lf-process-step" data-process-card style="--proc-i:0;--proc-total:5">
-        <div class="lf-process-num">01</div>
-        <h5>Kennismaking &amp; plaatsbezoek</h5>
-        <p>Binnen 5 werkdagen langs voor een gratis plaatsbezoek. We luisteren, meten alles op, en geven u meteen een eerste richtprijs op basis van wat we zien.</p>
-        <span class="lf-process-time">Week 1</span>
-      </div>
-      <div class="lf-process-step" data-process-card style="--proc-i:1;--proc-total:5">
-        <div class="lf-process-num">02</div>
-        <h5>Offerte op maat</h5>
-        <p>Bindende offerte met gedetailleerde meetstaat. Materialen, uurloon en timing, alles uitgesplitst, niets verborgen.</p>
-        <span class="lf-process-time">Week 2–3</span>
-      </div>
-      <div class="lf-process-step" data-process-card style="--proc-i:2;--proc-total:5">
-        <div class="lf-process-num">03</div>
-        <h5>Vergunning &amp; planning</h5>
-        <p>Wij regelen vergunning, premies en architectencoördinatie. U krijgt een gedeeld werfdossier in onze klantenportaal.</p>
-        <span class="lf-process-time">Week 4–14</span>
-      </div>
-      <div class="lf-process-step" data-process-card style="--proc-i:3;--proc-total:5">
-        <div class="lf-process-num">04</div>
-        <h5>Uitvoering op de werf</h5>
-        <p>Vaste projectleider, eigen ploegen, wekelijks rapport. Vaste werfopruim op vrijdagavond, ook tijdens uw afwezigheid.</p>
-        <span class="lf-process-time">Variabel</span>
-      </div>
-      <div class="lf-process-step" data-process-card style="--proc-i:4;--proc-total:5">
-        <div class="lf-process-num">05</div>
-        <h5>Oplevering &amp; nazorg</h5>
-        <p>Gezamenlijke rondgang met opleveringsverslag. Eén jaar later komen we gratis terug voor een nacontrole.</p>
-        <span class="lf-process-time">Sleutelmoment</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-section-head centered">
-      <span class="lf-eyebrow">Realisaties</span>
-      <h2 class="lf-h2">Projecten die de tand<br>des tijds doorstaan.</h2>
-    </div>
-    <div class="lf-proj-tabs-wrap">
-      <div class="lf-proj-tabs" data-proj-tabs>
-        <button class="lf-proj-chip active" data-proj-filter="all"><span class="lf-chip-dot"></span>Alle projecten</button>
-        <button class="lf-proj-chip" data-proj-filter="dakwerken">Dakwerken</button>
-        <button class="lf-proj-chip" data-proj-filter="renovatie">Renovatie</button>
-        <button class="lf-proj-chip" data-proj-filter="nieuwbouw">Nieuwbouw</button>
-        <button class="lf-proj-chip" data-proj-filter="interieur">Interieur</button>
-      </div>
-    </div>
-    <div class="lf-proj-collage" data-proj-collage>
-      ${[
-        { img: 'proj1', cat: 'nieuwbouw', title: 'Nieuwbouw', place: 'Antwerpen' },
-        { img: 'proj2', cat: 'renovatie', title: 'Renovatie', place: 'Mechelen' },
-        { img: 'proj3', cat: 'interieur', title: 'Interieur', place: 'Brussel' },
-        { img: 'proj4', cat: 'dakwerken', title: 'Dakwerken', place: 'Lier' },
-      ].map(p => `
-        <a href="/realisaties" class="lf-proj-cell" data-proj-cat="${p.cat}">
-          <div class="lf-proj-img"><img src="${(i as any)[p.img]}" alt="${p.title} ${p.place}" loading="lazy"/></div>
-          <div class="lf-proj-cap">
             <div>
-              <span class="lf-proj-cap-cat">${p.title}</span>
-              <strong>${p.place}</strong>
+              <div class="rp-hero__proof-num">120+</div>
+              <div class="rp-hero__proof-lbl">woningen gerenoveerd</div>
             </div>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </div>
-        </a>
-      `).join('')}
-    </div>
-  </div>
-</section>
-
-
-<!-- BLOG -->
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-section-head centered">
-      <span class="lf-eyebrow">Bouwblog 2026</span>
-      <h2 class="lf-h2">Inzichten uit de praktijk<br>op de werf van vandaag.</h2>
-      <p class="lf-lede" style="margin: 0 auto;">Tips, trends en technieken, geschreven door onze eigen experts. Zo maakt u onderbouwde keuzes voor uw woning.</p>
-    </div>
-    <div class="lf-blog-carousel">
-      <button type="button" class="lf-blog-arrow lf-blog-arrow-prev" data-blog-prev aria-label="Vorig artikel">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <div class="lf-blog-scroller" data-blog-scroller>
-        <div class="lf-blog-track" data-blog-track>
-          ${BLOGS.map(b => `
-            <article class="lf-blog-card" data-blog-card>
-              <div class="lf-blog-img">
-                <img src="${b.img}" alt="${b.title}" loading="lazy"/>
-                <span class="lf-blog-tag">${b.tag}</span>
-                <span class="lf-blog-date-badge"><strong>${b.day}</strong><em>${b.month}</em></span>
-              </div>
-              <div class="lf-blog-body">
-                <h4><a href="/blog/${b.slug}">${b.title}</a></h4>
-                <p>${b.excerpt}</p>
-                <div class="lf-blog-foot">
-                  <a href="/blog/${b.slug}" class="lf-blog-btn">Lees meer
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                  </a>
-                  <span class="lf-blog-author">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    ${b.author}
-                  </span>
-                </div>
-              </div>
-            </article>
-          `).join('')}
+          <div class="rp-hero__actions">
+            <a class="rp-btn rp-btn--primary" href="/contact">Vraag een offerte</a>
+            <a class="rp-btn rp-btn--ghost" href="/realisaties">Bekijk realisaties</a>
+          </div>
         </div>
       </div>
-      <button type="button" class="lf-blog-arrow lf-blog-arrow-next" data-blog-next aria-label="Volgend artikel">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
-    </div>
-    <div class="lf-blog-indicator">
-      <div class="lf-blog-dots" data-blog-dots>
-        ${BLOGS.map((_, idx) => `<button type="button" class="lf-blog-dot${idx === 0 ? ' is-active' : ''}" data-blog-dot="${idx}" aria-label="Ga naar artikel ${idx + 1}"></button>`).join('')}
+      <div class="rp-hero__aside">
+        <div class="rp-hero__badge-ic" aria-hidden="true">${ic.info}</div>
+        <p class="rp-hero__lede">AB Bouw Groep verbouwt woningen in heel Vlaanderen. Dak, gevel, badkamer, interieur of alles samen: zes vakken die wij zelf uitvoeren en op elkaar afstemmen.</p>
       </div>
-      <p class="lf-blog-more-text">Meer praktijkverhalen en bouwadvies. <a href="/blog">Bekijk alle artikels →</a></p>
     </div>
+  </div>
+  <div class="rp-hero__photo">
+    <img src="${i.heroPhoto}" alt="Vernieuwd hellend dak met dakkapellen op een woning in Vlaanderen" width="1600" height="620" fetchpriority="high" decoding="async"/>
   </div>
 </section>
 
-<!-- NEWSLETTER SIGNUP -->
-<section class="lf-section lf-newsletter">
-  <div class="wrap">
-    <div class="lf-newsletter-card">
-      <div class="lf-newsletter-text">
-        <span class="lf-eyebrow">Nieuwsbrief</span>
-        <h2 class="lf-h2">Schrijf u in voor onze nieuwsbrief.</h2>
-        <p class="lf-newsletter-sub">Eén keer per maand: praktische bouwtips, nieuwe premies en realisaties uit Vlaanderen. Geen spam, alleen wat u écht kan gebruiken.</p>
+<div class="rp-band">
+  <div class="rp-wrap rp-band__row">
+    ${['Dakwerken', 'Gevelrenovatie', 'Badkamers', 'Interieurwerken', 'Totaalrenovatie', 'Nieuwbouw']
+      .map((t, n) => `${n ? '<span class="rp-band__sep" aria-hidden="true">&#10038;</span>' : ''}<span>${t}</span>`).join('')}
+  </div>
+</div>`;
+
+  const about = `
+<section class="rp-section" id="over">
+  <div class="rp-wrap rp-about__grid">
+    <div class="rp-about__media">
+      <div class="rp-about__circle">
+        <img src="${i.aboutPhoto}" alt="Gerenoveerde woning van AB Bouw Groep" width="560" height="560" loading="lazy" decoding="async"/>
       </div>
-      <div class="lf-newsletter-embed">
-        <!-- GOHIGHLEVEL_NEWSLETTER_EMBED_CODE_HERE -->
-        <form class="lf-newsletter-form" data-newsletter-form>
-          <label class="lf-newsletter-input">
-            <span class="sr-only">E-mailadres</span>
-            <input type="email" name="email" autocomplete="email" placeholder="uw@e-mailadres.be" required />
-          </label>
-          <button type="submit" class="lf-cta-pill lf-newsletter-btn">
-            <span>Inschrijven</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </button>
-          <p class="lf-newsletter-success">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Bedankt — u staat ingeschreven.
-          </p>
+      <div class="rp-about__inset" aria-hidden="true">
+        <img src="${i.leiTextuur}" alt="" width="92" height="92" loading="lazy" decoding="async"/>
+      </div>
+      <div class="rp-about__chip">
+        <span aria-hidden="true">${ic.google}</span>
+        <span>
+          <span class="rp-about__chip-t">Klanten tevreden</span>
+          <span class="rp-about__chip-s">${ic.star(13)} 4,9 op Google</span>
+        </span>
+      </div>
+      <div class="rp-about__badge"><b>16</b><span>jaar<br/>ervaring</span></div>
+    </div>
+    <div>
+      <span class="rp-eyebrow">${ic.mark} Over AB Bouw Groep</span>
+      <h2 class="rp-about__title">Zes vakken<span class="rp-dim">onder één dak</span></h2>
+      <p class="rp-about__text">Wij zijn een Vlaams bouw- en renovatiebedrijf met eigen ploegen voor dakwerken, gevel, badkamer, interieur, ruwbouw en energiewerken. Omdat die vakken bij ons onder hetzelfde dak zitten, moet u niet zelf tussen aannemers bemiddelen wanneer het ene werk op het andere wacht.</p>
+      <p class="rp-about__text">U krijgt een gedetailleerde offerte waarin elke post apart staat, en tijdens de werken één werfleider die uw dossier kent.</p>
+      <div class="rp-about__stats">
+        <div><div class="rp-stat__n">16</div><div class="rp-stat__l">jaar ervaring in de bouw</div></div>
+        <div><div class="rp-stat__n">120+</div><div class="rp-stat__l">woningen gerenoveerd</div></div>
+        <div><div class="rp-stat__n">10</div><div class="rp-stat__l">jaar garantie op ons werk</div></div>
+      </div>
+      <div class="rp-about__foot">
+        <a class="rp-btn rp-btn--primary" href="/over">Meer over ons</a>
+        <span class="rp-about__call">
+          <span class="rp-about__call-ic" aria-hidden="true">${ic.phone(26)}</span>
+          <span>
+            <span class="rp-about__call-l">Rechtstreeks bellen</span><br/>
+            <a class="rp-about__call-n" href="${CONTACT.phone.href}">${CONTACT.phone.display}</a>
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>`;
+
+  const diensten = `
+<section class="rp-section rp-section--soft" id="diensten">
+  <div class="rp-wrap">
+    <div class="rp-head">
+      <div>
+        <span class="rp-eyebrow">${ic.mark} Onze diensten</span>
+        <h2 class="rp-head__title">Wat wij uitvoeren<span class="rp-dim">aan uw woning</span></h2>
+      </div>
+      <a class="rp-btn rp-btn--primary" href="/diensten">Alle diensten</a>
+    </div>
+    <div class="rp-carousel" data-car="svc">
+      <div class="rp-track" data-car-track tabindex="0" role="region" aria-label="Diensten, horizontaal schuifbaar">
+        ${DIENSTEN.map((d, n) => `
+        <article class="rp-svc${n === 1 ? ' rp-svc--feat' : ''}">
+          <div class="rp-svc__img">
+            <span class="rp-svc__clip"><img src="${i['svc' + n]}" alt="${d.t} door AB Bouw Groep" width="420" height="232" loading="lazy" decoding="async"/></span>
+            <span class="rp-svc__ic" aria-hidden="true">${d.ic}</span>
+          </div>
+          <div class="rp-svc__body">
+            <h3 class="rp-svc__title">${d.t}</h3>
+            <p class="rp-svc__text">${d.d}</p>
+            <div class="rp-svc__foot">
+              <a class="rp-more${n === 1 ? ' rp-more--accent' : ''}" href="${d.href}">Meer info ${ic.arrowUpRight()}</a>
+            </div>
+          </div>
+        </article>`).join('')}
+      </div>
+      <div class="rp-dots" data-car-dots></div>
+    </div>
+  </div>
+</section>`;
+
+  const waarom = `
+<section class="rp-section">
+  <div class="rp-wrap rp-why__grid">
+    <div>
+      <span class="rp-eyebrow">${ic.mark} Waarom AB Bouw Groep</span>
+      <h2 class="rp-why__title">Weten waar u<span class="rp-dim">aan toe bent</span></h2>
+      <p class="rp-why__p">De meeste ergernis in een verbouwing komt niet van het werk zelf, maar van niet weten wanneer er iemand komt en wat het uiteindelijk kost. Daar zetten wij onze afspraken tegenover: een offerte per post uitgesplitst, een planning die u vooraf krijgt, en één werfleider die u kan bellen.</p>
+      <p class="rp-why__p">Loopt er iets anders dan gepland, dan hoort u dat van ons voor u het zelf merkt.</p>
+      <div class="rp-why__cta"><a class="rp-btn rp-btn--primary" href="/werkwijze">Zo werken wij</a></div>
+    </div>
+    <div class="rp-why__tiles">
+      ${TEGELS.map((t) => `
+      <div class="rp-tile${t.feat ? ' rp-tile--feat' : ''}">
+        <div class="rp-tile__ic" aria-hidden="true">${t.ic}</div>
+        <h3 class="rp-tile__t">${t.t}</h3>
+        <p class="rp-tile__d">${t.d}</p>
+      </div>`).join('')}
+    </div>
+  </div>
+</section>`;
+
+  const realisaties = `
+<section class="rp-section rp-section--soft">
+  <div class="rp-wrap">
+    <div class="rp-head">
+      <div>
+        <span class="rp-eyebrow">${ic.mark} Realisaties</span>
+        <h2 class="rp-head__title">Werk dat wij<span class="rp-dim">opgeleverd hebben</span></h2>
+      </div>
+      <a class="rp-btn rp-btn--primary" href="/realisaties">Alle realisaties</a>
+    </div>
+    <div class="rp-proj__grid">
+      <a class="rp-proj__item" href="/realisaties">
+        <img src="${i.proj1}" alt="Gerenoveerde gevel van een woning" width="380" height="430" loading="lazy" decoding="async"/>
+      </a>
+      <div class="rp-proj__item rp-proj__item--main">
+        <img src="${i.proj3}" alt="Woning met houten gevelbekleding na totaalrenovatie" width="700" height="470" loading="lazy" decoding="async"/>
+        <div class="rp-proj__card">
+          <a class="rp-proj__arrow" href="/realisaties" aria-label="Naar alle realisaties">${ic.arrowUpRight(18)}</a>
+          <div class="rp-proj__eyebrow">Totaalrenovatie</div>
+          <h3 class="rp-proj__t">Van verouderde woning tot afgewerkt geheel, in één traject</h3>
+        </div>
+      </div>
+      <a class="rp-proj__item" href="/realisaties">
+        <img src="${i.proj4}" alt="Woning met nieuwe aanbouw en dakwerken" width="380" height="430" loading="lazy" decoding="async"/>
+      </a>
+    </div>
+  </div>
+</section>`;
+
+  const werkwijze = `
+<section class="rp-section">
+  <div class="rp-wrap">
+    <div class="rp-head">
+      <div>
+        <span class="rp-eyebrow">${ic.mark} Werkwijze</span>
+        <h2 class="rp-head__title">Van eerste telefoon<span class="rp-dim">tot oplevering</span></h2>
+      </div>
+      <a class="rp-btn rp-btn--primary" href="/werkwijze">Volledige werkwijze</a>
+    </div>
+    <div class="rp-steps">
+      ${STAPPEN.map((s, n) => `
+      <article class="rp-step">
+        <div class="rp-step__img"><img src="${i['stap' + n]}" alt="${s.t}" width="300" height="168" loading="lazy" decoding="async"/></div>
+        <div class="rp-step__body">
+          <div class="rp-step__n">${s.n}</div>
+          <h3 class="rp-step__t">${s.t}</h3>
+          <p class="rp-step__d">${s.d}</p>
+        </div>
+      </article>`).join('')}
+    </div>
+  </div>
+</section>`;
+
+  const reviews = `
+<section class="rp-section rp-section--soft">
+  <div class="rp-wrap">
+    <div class="rp-head">
+      <div>
+        <span class="rp-eyebrow">${ic.mark} Beoordelingen</span>
+        <h2 class="rp-head__title">Wat klanten zeggen<span class="rp-dim">over hun verbouwing</span></h2>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <div class="rp-arrows">
+          <button class="rp-arrow" type="button" data-car-prev="rev" aria-label="Vorige beoordelingen">${ic.left}</button>
+          <button class="rp-arrow" type="button" data-car-next="rev" aria-label="Volgende beoordelingen">${ic.right}</button>
+        </div>
+      </div>
+    </div>
+    <div class="rp-carousel" data-car="rev">
+      <div class="rp-track" data-car-track tabindex="0" role="region" aria-label="Beoordelingen, horizontaal schuifbaar">
+        ${REVIEWS.map((r, n) => `
+        <article class="rp-rev">
+          <div class="rp-rev__stars" aria-label="5 van 5 sterren">${ic.star().repeat(5)}</div>
+          <p class="rp-rev__text">${r.text}</p>
+          <div class="rp-rev__foot">
+            <img class="rp-rev__av" src="${i['rev' + n]}" alt="" width="46" height="46" loading="lazy" decoding="async"/>
+            <span class="rp-rev__who">
+              <span class="rp-rev__name">${r.name}</span><br/>
+              <span class="rp-rev__role">${r.role}</span>
+            </span>
+            <span class="rp-rev__g" aria-label="Google-beoordeling">${ic.google}</span>
+          </div>
+        </article>`).join('')}
+      </div>
+      <div class="rp-dots" data-car-dots></div>
+    </div>
+  </div>
+</section>`;
+
+  const merken = `
+<section class="rp-section" style="padding-block:var(--rp-section-y-sm)">
+  <div class="rp-wrap">
+    <p style="text-align:center;font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--rp-mute);margin-bottom:30px">Materialen waarmee wij werken</p>
+    <div class="rp-brands">
+      <img src="${i.mWienerberger}" alt="Wienerberger" height="40" loading="lazy" decoding="async"/>
+      <img src="${i.mKoramic}" alt="Koramic" height="40" loading="lazy" decoding="async"/>
+      <img src="${i.mVelux}" alt="Velux" height="40" loading="lazy" decoding="async"/>
+      <img src="${i.mRockpanel}" alt="Rockpanel" height="40" loading="lazy" decoding="async"/>
+    </div>
+  </div>
+</section>`;
+
+  const faq = `
+<section class="rp-section rp-section--soft">
+  <div class="rp-wrap">
+    <div class="rp-head" style="justify-content:center;text-align:center;flex-direction:column;align-items:center">
+      <div>
+        <span class="rp-eyebrow">${ic.mark} Veelgestelde vragen</span>
+        <h2 class="rp-head__title">Wat klanten ons<span class="rp-dim">het vaakst vragen</span></h2>
+      </div>
+    </div>
+    <div class="rp-faq">
+      ${FAQ.map((f, n) => `
+      <details class="rp-faq__item"${n === 0 ? ' open' : ''}>
+        <summary class="rp-faq__q">${f.q}${ic.plus}</summary>
+        <div class="rp-faq__a">${f.a}</div>
+      </details>`).join('')}
+    </div>
+  </div>
+</section>`;
+
+  const posts = BLOGS.slice(0, 2);
+  const blog = `
+<section class="rp-section">
+  <div class="rp-wrap">
+    <div class="rp-head">
+      <div>
+        <span class="rp-eyebrow">${ic.mark} Blog en nieuws</span>
+        <h2 class="rp-head__title">Uit de praktijk<span class="rp-dim">uitleg en achtergrond</span></h2>
+      </div>
+      <a class="rp-btn rp-btn--primary" href="/blog">Alle artikels</a>
+    </div>
+    <div class="rp-blogs">
+      ${posts.map((p, n) => `
+      <a class="rp-blog" href="/blog/${p.slug}">
+        <div class="rp-blog__img">
+          <img src="${i['blog' + n]}" alt="${p.title}" width="600" height="340" loading="lazy" decoding="async"/>
+        </div>
+        <div class="rp-blog__card">
+          <div class="rp-blog__meta">
+            <span>${ic.cal} ${p.date}</span>
+            <span>${ic.user} AB Bouw Groep</span>
+          </div>
+          <h3 class="rp-blog__t">${p.title}</h3>
+          <div class="rp-blog__foot"><span class="rp-btn ${n === 1 ? 'rp-btn--primary' : 'rp-btn--ghost'}">Lees het artikel ${ic.arrowUpRight()}</span></div>
+        </div>
+      </a>`).join('')}
+    </div>
+  </div>
+</section>`;
+
+  const cta = `
+<section class="rp-cta">
+  <div class="rp-wrap">
+    <div class="rp-cta__box">
+      <div class="rp-cta__bg" aria-hidden="true">
+        <img src="${i.ctaPhoto}" alt="" width="1200" height="420" loading="lazy" decoding="async"/>
+        <span class="rp-cta__veil"></span>
+      </div>
+      <div class="rp-cta__inner">
+        <h2 class="rp-cta__t">Plannen voor uw woning?<br/>Laat uw nummer achter</h2>
+        <p class="rp-cta__p">Wij bellen u terug om een plaatsbezoek in te plannen. Dat bezoek en de offerte erna zijn kosteloos.</p>
+        <form class="rp-cta__form" data-cta-form novalidate>
+          <label class="rp-sr" for="rp-cta-phone" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Uw telefoonnummer</label>
+          <input class="rp-cta__input" id="rp-cta-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+                 placeholder="Uw telefoonnummer" required minlength="8"/>
+          <button class="rp-btn rp-btn--primary" type="submit" data-cta-btn>Bel mij terug</button>
         </form>
+        <p class="rp-cta__note" data-cta-note>Of bel zelf: <a href="${CONTACT.phone.href}" style="color:#fff;font-weight:700">${CONTACT.phone.display}</a></p>
       </div>
     </div>
   </div>
-</section>
+</section>`;
 
-<!-- SUPPORT TILES -->
-<section class="lf-section lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-section-head centered">
-      <span class="lf-eyebrow">Ondersteuning van A tot Z</span>
-      <h2 class="lf-h2">Wij nemen u álles uit handen,<br>ook wat niet zichtbaar is.</h2>
-    </div>
-    <div class="lf-support-grid">
-      <div class="lf-support-card" data-support-card>
-        <div class="lf-support-meta"><span>01</span> Vergunningen</div>
-        <h5>Vergunning geregeld</h5>
-        <p>Dossier, indiening en opvolging via Omgevingsloket. Wij regelen alles.</p>
+  const footer = `
+<footer class="rp-foot">
+  <div class="rp-wrap">
+    <div class="rp-foot__grid">
+      <div>
+        <a class="rp-foot__logo" href="/" aria-label="AB Bouw Groep"><img src="${i.logo}" alt="AB Bouw Groep" width="160" height="46" loading="lazy" decoding="async"/></a>
+        <p class="rp-foot__about">Bouw- en renovatiebedrijf met eigen ploegen voor dak, gevel, badkamer, interieur, ruwbouw en energiewerken. Actief in heel Vlaanderen en Brussel.</p>
+        <div class="rp-foot__rows">
+          <span class="rp-foot__row">${ic.phone(17)}<a href="${CONTACT.phone.href}">${CONTACT.phone.display}</a></span>
+          <span class="rp-foot__row">${ic.mail}<a href="mailto:${CONTACT.email}">${CONTACT.email}</a></span>
+          <span class="rp-foot__row">${ic.pin}<span>${CONTACT.address.full}</span></span>
+        </div>
       </div>
-      <div class="lf-support-card" data-support-card>
-        <div class="lf-support-meta"><span>02</span> Premies</div>
-        <h5>Voordelen uitgezocht</h5>
-        <p>Btw 6% en Mijn VerbouwLening regelen we. Of u recht heeft op premies hangt af van uw inkomen — dat checken we eerlijk vooraf.</p>
+      <div>
+        <h3 class="rp-foot__h">Snel naar</h3>
+        <div class="rp-foot__links">
+          <a href="/over">Over ons</a>
+          <a href="/werkwijze">Werkwijze</a>
+          <a href="/realisaties">Realisaties</a>
+          <a href="/blog">Blog</a>
+          <a href="/contact">Contact</a>
+        </div>
       </div>
-      <div class="lf-support-card" data-support-card>
-        <div class="lf-support-meta"><span>03</span> Nazorg</div>
-        <h5>Service na oplevering</h5>
-        <p>Gratis nacontrole na 1 jaar. Reactie binnen 48 uur in garantie.</p>
+      <div>
+        <h3 class="rp-foot__h">Onze diensten</h3>
+        <div class="rp-foot__links">
+          <a href="/dakwerken">Dakwerken</a>
+          <a href="/gevel">Gevelrenovatie</a>
+          <a href="/bad">Badkamer en wellness</a>
+          <a href="/interieur">Interieurwerken</a>
+          <a href="/construct">Totaalrenovatie</a>
+          <a href="/ecologisch">Ecologisch bouwen</a>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA BANNER -->
-<section class="lf-section">
-  <div class="wrap">
-    <div class="lf-cta lf-cta--simple">
-      <div class="lf-cta-text">
-        <h2>Bespreek vandaag nog<br>uw bouwproject met ons.</h2>
-        <p>Een sterk, duurzaam resultaat begint bij een goed gesprek. Van eerste advies tot oplevering — wij denken mee, plannen mee, voeren zelf uit.</p>
-        <div class="lf-cta-actions">
-          <a href="/contact#contact-form" class="lf-btn-light">Start uw project</a>
-          <a href="/contact#contact-form" class="lf-btn-outline">Contacteer ons</a>
+      <div class="rp-foot__hours-col">
+        <h3 class="rp-foot__h">Bereikbaarheid</h3>
+        <div class="rp-hours">
+          <div class="rp-hours__row"><span class="rp-hours__d">Ma&ndash;vr</span><span>08:00 &ndash; 18:00</span></div>
+          <div class="rp-hours__row"><span class="rp-hours__d">Zaterdag</span><span>Op afspraak</span></div>
+          <div class="rp-hours__row"><span class="rp-hours__d">Zondag</span><span>Gesloten</span></div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="lf-section lf-tone-soft">
-  <div class="wrap">
-    <div class="lf-faq-grid">
-      <div class="lf-faq-side">
-        <span class="lf-eyebrow">Veelgestelde vragen</span>
-        <h2 class="lf-h2">Antwoorden op de<br>vragen die u nu heeft.</h2>
-        <p class="lf-lede">Staat uw vraag er niet tussen? Bel <a href="${CONTACT.phone.href}" style="color: var(--accent); font-weight:600;">${CONTACT.phone.spaced}</a> of mail <a href="mailto:info@abgroep.be" style="color: var(--accent); font-weight:600;">info@abgroep.be</a>. U krijgt binnen 24 uur antwoord van een vakmens, geen callcenter.</p>
-        <a href="/contact" class="lf-cta-pill">
-          <span>Stel uw vraag</span>
-          <span class="lf-cta-pill-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-        </a>
-      </div>
-      <div class="lf-faq-list">
-        ${[
-          { q: 'Hoe lang duurt een gemiddelde renovatie?', a: 'Een totaalrenovatie van een rijwoning duurt gemiddeld 4 tot 6 maanden, afhankelijk van de omvang. Een dakrenovatie is meestal klaar binnen 2 weken, een badkamer binnen 4 weken. U krijgt vooraf een gedetailleerde planning met opleverdatum.' },
-          { q: 'Wat kost een plaatsbezoek?', a: 'Niets. Het eerste plaatsbezoek en het opmaken van een offerte zijn volledig gratis en vrijblijvend. U bent tot niets verplicht, pas bij ondertekening van het contract gaan we van start.' },
-          { q: 'Wie staat er op mijn werf?', a: 'Onze 23 vakmensen, metselaars, dakdekkers, tegelzetters en schrijnwerkers, zijn allemaal in vaste dienst. Enkel zeer gespecialiseerd werk (zoals liftinstallatie of zwembadtechniek) besteden we uit aan vaste partners die wij sinds jaren kennen.' },
-          { q: 'Welke premies of voordelen kan ik krijgen?', a: 'Voor renovatie van een woning ouder dan tien jaar geldt sowieso het verlaagde btw-tarief van 6%, en u kunt een Mijn VerbouwLening (0%) aanvragen. Sinds 1 maart 2026 is de premie voor dak- en gevelisolatie voor de meeste eigenaars (inkomenscategorie 1 en 2) weggevallen; of u nog recht heeft op Mijn VerbouwPremie of Fluvius-premies hangt af van uw inkomenscategorie. Wij checken dit vooraf en dienen het dossier in als u in aanmerking komt.' },
-          { q: 'Krijg ik garantie op het werk?', a: 'Ja. U krijgt de wettelijke 10-jarige aansprakelijkheid op stabiliteit en waterdichtheid (verzekerd via Federale Verzekering, polis 24/0089), én 2 jaar garantie op afwerking. Defect binnen de garantieperiode? Wij staan binnen 48 uur op uw stoep.' },
-          { q: 'Kunnen jullie ook met mijn architect samenwerken?', a: 'Zeker. We werken vaak samen met de architect die u zelf gekozen heeft. Heeft u nog geen architect? Wij brengen u in contact met drie architecten uit ons partnernetwerk waarmee we al jaren samenwerken.' },
-        ].map((f, i) => `
-          <div class="faq-item${i === 0 ? ' open' : ''}">
-            <button class="faq-q" type="button">
-              <span>${f.q}</span>
-              <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
-            <div class="faq-a"><p>${f.a}</p></div>
-          </div>
-        `).join('')}
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="wrap">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a class="nav-brand" href="/"><img src="${i.logo}" alt="AB Bouw Groep" class="footer-logo" /></a>
-        <p>Vlaams bouw- en renovatiebedrijf met gespecialiseerde ploegen. Actief in heel Vlaanderen en Brussel sinds 2010.</p>
-      </div>
-      <div class="footer-col"><h5>Divisies</h5><ul>
-        <li><a href="/construct">AB Construct</a></li>
-        <li><a href="/ecologisch">AB Ecologisch</a></li>
-        <li><a href="/interieur">AB Interieurwerken</a></li>
-        <li><a href="/dakwerken">AB Dakwerken</a></li>
-        <li><a href="/bad">AB Bad &amp; Wellness</a></li>
-        <li><a href="/gevel">AB Gevelbekleding</a></li>
-      </ul></div>
-      <div class="footer-col"><h5>Bedrijf</h5><ul>
-        <li><a href="/over">Over ons</a></li>
-        <li><a href="/werkwijze">Werkwijze</a></li>
-        <li><a href="/realisaties">Realisaties</a></li>
-        <li><a href="/blog">Blog</a></li>
-        <li><a href="/contact">Contact</a></li>
-      </ul></div>
-      <div class="footer-col"><h5>Contact</h5><ul>
-        <li><a href="${CONTACT.phone.href}">${CONTACT.phone.spaced}</a></li>
-        <li><a href="mailto:info@abgroep.be">info@abgroep.be</a></li>
-        <li><a>Willebroek, België</a></li>
-        <li><a>Ma t.e.m. vr · 8u tot 18u</a></li>
-      </ul></div>
-    </div>
-    <div class="footer-bottom">
-      <div>© 2026 AB Bouw Groep · Willebroek, België</div>
-      <div class="footer-bottom-links">
-        <a href="/privacy">Privacy</a><a href="/voorwaarden">Algemene voorwaarden</a><a href="/cookies">Cookies</a>
-      </div>
+    <div class="rp-foot__bar">
+      <span class="rp-foot__copy">&copy; ${new Date().getFullYear()} AB Bouw Groep &middot; <a href="/privacy">Privacy</a> &middot; <a href="/voorwaarden">Voorwaarden</a> &middot; <a href="/cookies">Cookies</a></span>
+      <span class="rp-socials">
+        <a href="https://www.facebook.com/" aria-label="AB Bouw Groep op Facebook" rel="noopener noreferrer" target="_blank"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.25-1.5 1.55-1.5H16.7V4.6A22 22 0 0 0 14.3 4.5c-2.4 0-4 1.45-4 4.1v2.3H7.6V14h2.7v8z"/></svg></a>
+        <a href="https://www.instagram.com/" aria-label="AB Bouw Groep op Instagram" rel="noopener noreferrer" target="_blank"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.linkedin.com/" aria-label="AB Bouw Groep op LinkedIn" rel="noopener noreferrer" target="_blank"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.2c0-1.24-.02-2.84-1.9-2.84-1.9 0-2.2 1.35-2.2 2.75V21h-4z"/></svg></a>
+      </span>
     </div>
   </div>
 </footer>
 
-<!-- Floating mobile call button -->
-<a href="${CONTACT.phone.href}" class="lf-fab-call" aria-label="Bel ons">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-  <span>Bel ons</span>
-</a>
-`;
+<a class="rp-fab" href="${CONTACT.phone.href}" aria-label="Bel AB Bouw Groep">${ic.phone(22)}</a>`;
 
-const EXTRA_STYLE = `
-/* ===== tr-hero: 1-op-1 gekopieerd uit de LP's (constanten ingevuld: navy #0a1628, oranje #d98c03/#b87502, goud #c69a4b) ===== */
-.tr-wrap { max-width: 1180px; margin: 0 auto; padding: 0 clamp(24px, 5vw, 56px); }
-.tr-hero { position: relative; background: #0a1628; color: #fff; overflow: hidden; }
-.tr-hero-bg { position: absolute; inset: 0; }
-.tr-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
-.tr-hero-bg::after { content: ""; position: absolute; inset: 0;
-  background: linear-gradient(90deg, rgba(10,22,40,0.90) 0%, rgba(10,22,40,0.64) 34%, rgba(10,22,40,0.30) 56%, rgba(10,22,40,0.08) 76%, rgba(10,22,40,0) 92%), linear-gradient(180deg, rgba(10,22,40,0) 60%, rgba(10,22,40,0.42) 100%); }
-.tr-hero-inner { position: relative; z-index: 2; text-align: left; padding: clamp(72px,8vw,112px) 0 clamp(72px,8vw,110px); }
-.tr-hero h1 { font-family: var(--font-display); font-size: clamp(32px, 4.9vw, 60px); line-height: 1.06; font-weight: 800; letter-spacing: -0.035em; color: #fff; margin: 0 0 22px; max-width: 16ch; text-wrap: balance; }
-.tr-hero-sub { font-size: clamp(15px, 1.45vw, 19px); line-height: 1.6; color: rgba(255,255,255,0.92); max-width: 620px; margin: 0 0 32px; }
-.tr-hero-sub b { color: #fff; }
-.tr-hero-trust { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin:0 0 20px; font-size:14.5px; font-weight:600; color:rgba(255,255,255,0.92); }
-.tr-hero-trust b { color:#fff; }
-.tr-hero-trust-stars { color:#c69a4b; letter-spacing:1px; font-size:15px; }
-.tr-hero-trust-dot { color:rgba(255,255,255,0.4); }
-.tr-certs { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; max-width: 620px; margin: 6px 0 0; }
-.tr-cert-pill { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.13); border-radius: 8px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); white-space: nowrap; }
-.tr-cert-pill svg { color: #c69a4b; flex-shrink: 0; opacity: 0.92; }
-.tr-hero-grid { display: grid; grid-template-columns: 1fr; grid-template-areas: "main" "form"; row-gap: 26px; align-items: start; }
-.tr-hero-main { grid-area: main; min-width: 0; }
-.tr-hero-form { grid-area: form; position: relative; z-index: 3; min-width: 0; }
-@media (min-width: 1024px) {
-  .tr-hero { display: flex; align-items: center; min-height: min(100svh, 1080px); }
-  .tr-hero-inner { width: 100%; }
-  .tr-hero-grid { grid-template-columns: minmax(0,1fr) 416px; grid-template-areas: "main form"; column-gap: clamp(40px, 4.5vw, 64px); align-items: center; }
-}
-.tr-btn { display:inline-flex; align-items:center; justify-content:center; font-family: var(--font-display); font-weight:700; font-size:15px; color:#fff; background:#d98c03; border:none; cursor:pointer; letter-spacing:0.01em; padding:15px 30px; border-radius:8px; transition: background .18s; }
-.tr-btn:hover { background:#b87502; }
-.tr-btn[disabled] { opacity:0.6; cursor:default; }
-.tr-hero-form .tr-quickform { margin: 0; max-width: none; position: relative; z-index: 3; background:#fff; border: none; border-radius: 12px; box-shadow: 0 24px 56px -20px rgba(10,22,40,0.55), 0 2px 8px rgba(10,22,40,0.18); overflow: hidden; padding: 0; }
-.tr-hero-form .tr-quickform::before { content: ''; display: block; height: 3px; background: #c69a4b; }
-.tr-leadcard .tr-lc-ic { flex-shrink: 0; width: 44px; height: 44px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; }
-.tr-leadcard .tr-lc-txt { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.tr-leadcard .tr-lc-title { margin: 0; font-family: var(--font-display); font-size: 16px; font-weight: 700; line-height: 1.22; letter-spacing: -0.015em; color: #0a1628; }
-.tr-leadcard .tr-lc-sub { font-size: 13px; line-height: 1.45; color: #525b6b; }
-.tr-lc-row--primary { background: #f7f9fc; border-bottom: 1px solid #e7e4dd; }
-.tr-lc-head { display: flex; align-items: center; gap: 14px; width: 100%; margin: 0; padding: 20px 26px; background: none; border: none; text-align: left; font: inherit; color: inherit; cursor: pointer; }
-.tr-lc-head .tr-lc-chev { flex-shrink: 0; margin-left: auto; color: #8a8f98; display: inline-flex; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.tr-lc-row--primary.is-open .tr-lc-head .tr-lc-chev { transform: rotate(90deg); color: #0a1628; }
-.tr-lc-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .15s cubic-bezier(.22,1,.36,1); }
-.tr-lc-row--primary.is-open .tr-lc-panel { grid-template-rows: 1fr; }
-.tr-lc-panel-inner { min-height: 0; overflow: hidden; }
-.tr-lc-panel-pad { padding: 2px 26px 22px; }
-.tr-lc-row--primary .tr-lc-ic--accent { background: rgba(217,140,3,0.12); color: #b87502; border: 1px solid rgba(217,140,3,0.28); }
-.tr-lc-row--primary .tr-lc-head .tr-lc-txt { flex: 1 1 auto; }
-.tr-lc-row--primary .tr-lc-title { font-size: 18px; line-height: 1.18; }
-.tr-lc-row--primary .tr-qf-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-.tr-qf-field label { display: block; font-family: var(--font-display); font-size: 13px; font-weight: 600; color: #41495a; margin: 0 0 6px; }
-.tr-qf-grid input { width: 100%; height: 52px; padding: 0 16px; font-size: 16px; border: 1px solid #cfd5dd; border-radius: 8px; background: #fff; color: #1d2733; }
-.tr-qf-grid input:focus { outline: none; border-color: #d98c03; box-shadow: 0 0 0 3px rgba(217,140,3,0.16); }
-.tr-qf-grid .tr-btn { min-height: 52px; font-size: 16px; margin-top: 2px; white-space: normal; line-height: 1.25; padding: 13px 14px; width: 100%; }
-.tr-lc-reassure { margin: 10px 0 0; font-size: 13px; line-height: 1.45; color: #525b6b; }
-@media (min-width: 1024px) {
-  .tr-lc-row--primary .tr-lc-panel { grid-template-rows: 1fr; }
-  .tr-lc-row--primary .tr-lc-head { cursor: default; pointer-events: none; }
-  .tr-lc-row--primary .tr-lc-chev { display: none; }
-}
-.tr-lc-proof { margin-top: 16px; padding-top: 14px; border-top: 1px solid #ece9e1; }
-.tr-lc-proof-stars { color: #c69a4b; font-size: 12px; letter-spacing: 1.5px; margin-bottom: 6px; }
-.tr-lc-proof-q { font-size: 13.5px; line-height: 1.55; color: #454f60; margin: 0; font-style: italic; }
-.tr-lc-proof-name { margin-top: 6px; font-family: var(--font-display); font-size: 13px; font-weight: 700; color: #0a1628; }
-.tr-lc-or { display: flex; align-items: center; gap: 14px; padding: 14px 26px 4px; }
-.tr-lc-or::before, .tr-lc-or::after { content: ''; height: 1px; background: #ece9e1; flex: 1; }
-.tr-lc-or span { font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #8a8f98; }
-.tr-lc-row--alt { display: flex; align-items: center; gap: 14px; width: 100%; margin: 0; padding: 14px 26px; min-height: 60px; text-align: left; text-decoration: none; font: inherit; color: inherit; background: #fff; border: none; border-top: 1px solid #f0eee7; cursor: pointer; transition: background-color .16s ease; }
-.tr-lc-or + .tr-lc-row--alt { border-top: none; }
-.tr-lc-row--alt .tr-lc-ic { background: #fff; color: #0a1628; border: 1px solid rgba(198,154,75,0.40); box-shadow: 0 1px 2px rgba(10,22,40,0.06); }
-.tr-lc-row--alt .tr-lc-title { font-size: 15.5px; }
-.tr-lc-chev { flex-shrink: 0; margin-left: auto; color: #8a8f98; display: inline-flex; }
-.tr-qf-error { margin-top: 12px; font-size: 13.5px; color: #b3261e; background: #fdecea; border: 1px solid rgba(179,38,30,0.2); border-radius: 8px; padding: 9px 12px; }
-.tr-qf-thanks { display: none; text-align: center; padding: 26px 26px 24px; }
-.tr-qf-thanks-ic { width: 54px; height: 54px; border-radius: 50%; background: #eef1f5; color: #0a1628; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px; }
-.tr-qf-thanks h4 { font-family: var(--font-display); font-size: 21px; color: #0a1628; margin: 0 0 6px; }
-.tr-qf-thanks p { font-size: 14.5px; color: #454f60; margin: 0; }
-.tr-leadcard.is-success .tr-lc-row--primary, .tr-leadcard.is-success .tr-lc-or, .tr-leadcard.is-success .tr-lc-row--alt { display: none; }
-.tr-leadcard.is-success .tr-qf-thanks { display: block; }
-@media (max-width: 720px) {
-  .tr-hero-inner { padding: 52px 0 64px; }
-  .tr-hero-main { text-align: center; }
-  .tr-hero-main h1 { margin-left: auto; margin-right: auto; }
-  .tr-hero-sub { margin-left: auto; margin-right: auto; }
-  .tr-certs { justify-content: center; gap: 9px 10px; }
-  .tr-cert-pill { height: 36px; padding: 0 13px; font-size: 12px; }
-  .tr-hero-trust { justify-content: center; font-size: 13px; gap: 6px 10px; }
-  .tr-hero-bg::after { background: linear-gradient(180deg, rgba(10,22,40,0.82) 0%, rgba(10,22,40,0.66) 42%, rgba(10,22,40,0.88) 100%); }
-}
-
-
-/* ───── Lafarge-style premium home ───── */
-
-/* Floating white pill nav over hero */
-.lf-nav { position: fixed; top: 18px; left: 0; right: 0; z-index: 50; background: transparent; border: none; pointer-events: none; transition: top 0.15s var(--ease); }
-.lf-nav-inner { pointer-events: auto; display:flex; align-items:center; gap:28px; padding: 10px 20px 10px 16px; max-width: min(1140px, calc(100% - 80px)); margin: 0 auto; background: #fff; border-radius: 999px; box-shadow: 0 12px 40px -12px rgba(10,22,40,0.18); transition: box-shadow 0.15s var(--ease), padding 0.15s var(--ease); }
-.lf-nav.scrolled { top: 10px; }
-.lf-nav.scrolled .lf-nav-inner { box-shadow: 0 16px 50px -10px rgba(10,22,40,0.28); }
-.lf-brand { display:flex; align-items:center; gap:10px; font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--ink); }
-.lf-brand-logo { height: 58px; width: auto; display:block; }
-.lf-brand-mark { flex-shrink:0; width:38px; height:38px; display:inline-flex; align-items:center; justify-content:center; background: var(--accent) !important; color:#fff !important; font-weight:800; font-size:13px; border-radius: 999px; letter-spacing: 0.02em; }
-.lf-brand-text em { font-style: normal; color: var(--accent); font-weight: 500; }
-.lf-menu { display:flex; gap:24px; list-style:none; margin:0 auto; }
-.lf-menu a { font-size: 14.5px; font-weight: 500; color: var(--ink-soft); transition: color 0.2s; padding: 8px 0; position: relative; }
-.lf-menu a:hover, .lf-menu a.active { color: var(--accent); }
-.lf-menu a.active::after { content:''; position:absolute; left:0; right:0; bottom:-2px; height:2px; background: var(--accent); }
-.lf-nav-phone { display:inline-flex; align-items:center; gap:8px; padding: 12px 20px; background: var(--accent); color:#fff !important; border-radius: 999px; font-weight: 600; font-size: 14px; transition: background 0.2s; }
-.lf-nav-phone:hover { background: var(--accent-hover); }
-.lf-mobile-toggle { display:none; }
-
-@media (max-width: 900px) {
-  .lf-menu { display:none; }
-  .lf-nav-phone { display:none; }
-  .lf-mobile-toggle { display:inline-flex; margin-left:auto; font-size:24px; padding:6px 10px; }
-  .lf-topbar-left { display:none; }
-}
-
-/* Buttons */
-.lf-btn-pri { display:inline-flex; align-items:center; gap:10px; padding: 14px 26px; background: var(--accent); color:#fff !important; border-radius: 999px; font-weight: 600; font-size: 14px; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; border:none; cursor:pointer; }
-.lf-btn-pri:hover { background: var(--accent-hover); }
-.lf-btn-sm { padding: 10px 20px; font-size: 13px; }
-.lf-btn-block { width: 100%; justify-content: center; padding: 15px; font-size: 14.5px; }
-.lf-btn-light { display:inline-flex; align-items:center; gap:8px; padding: 14px 26px; background: #fff; color: var(--navy) !important; border-radius: 999px; font-weight:600; font-size:14px; }
-.lf-btn-outline { display:inline-flex; align-items:center; gap:8px; padding: 14px 26px; background: transparent; color: #fff !important; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 999px; font-weight:600; font-size:14px; }
-.lf-btn-outline:hover { border-color: #fff; background: #fff; color: var(--navy) !important; }
-
-.lf-eyebrow { display:inline-flex; align-items:center; gap:9px; padding:0; background:none; border-radius:0; color:#41495a; font-family:var(--font-display); font-weight:600; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom: 16px; }
-.lf-eyebrow::before { content:''; width:26px; height:3px; border-radius:2px; background:#d98c03; display:inline-block; flex-shrink:0; }
-.lf-h2 { font-family: var(--font-display); font-size: clamp(28px, 3.4vw, 44px); line-height:1.15; font-weight:700; letter-spacing:-0.028em; color: var(--navy); margin-bottom: 18px; text-wrap: balance; }
-.lf-section { padding: var(--section-y) 0; }
-.lf-section.lf-section-compact-stack { padding-bottom: 22px; }
-.lf-section.lf-section-compact-stack + .lf-section { padding-top: var(--section-y-compact); }
-.lf-section.lf-section-compact-stack .lf-section-head { margin-bottom: 44px; }
-.lf-section.lf-section-compact-stack .lf-section-head.centered { margin-bottom: 44px; }
-.lf-section.lf-why-section-tight { padding-bottom: 0; }
-.lf-section.lf-why-section-tight + .lf-section { padding-top: var(--section-y-compact); }
-.lf-why-section-tight .lf-trust-strip { margin-top: 0; }
-.lf-tone-soft { background: var(--bg-tint); }
-.lf-section-head { max-width: 720px; margin-bottom: 56px; }
-.lf-section-head.centered { margin: 0 auto 56px; text-align:center; max-width: 820px; }
-.lf-cta.lf-cta--simple { max-width: 920px; margin: 0 auto; text-align: center; padding: 56px 48px; }
-.lf-cta--simple .lf-cta-text { max-width: none; margin: 0 auto; }
-.lf-cta--simple .lf-cta-text p { margin-left: auto; margin-right: auto; }
-.lf-cta--simple .lf-cta-actions { justify-content: center; }
-.lf-section-head.centered .lf-eyebrow { flex-direction: column; gap: 8px; align-items: center; }
-.lf-lede { font-size: 16px; color: var(--ink-soft); line-height:1.7; max-width: 560px; margin-bottom: 28px; }
-
-/* HERO */
-.lf-hero { position: relative; min-height: 720px; display:flex; align-items:center; overflow:hidden; margin-top: 0; }
-.lf-hero-bg { position:absolute; inset:0; }
-.lf-hero-bg img { width:100%; height:100%; object-fit: cover; }
-/* Alleen voor de oude single-image hero-variant. De slideshow (.lf-hero-bg--slides)
-   heeft een eigen, lichtere overlay in ab-bouw.css — die mag deze NIET overschrijven. */
-.lf-hero-bg:not(.lf-hero-bg--slides)::after { content:''; position:absolute; inset:0; background: linear-gradient(90deg, rgba(10,22,40,0.55) 0%, rgba(10,22,40,0.15) 60%, transparent 100%); }
-.lf-hero-wrap { position: relative; z-index:2; padding-top: 160px; padding-bottom: 100px; display:block; max-width: none !important; margin: 0 !important; padding-left: clamp(24px, 6vw, 96px) !important; padding-right: clamp(24px, 6vw, 96px) !important; }
-.lf-hero-card { background: rgba(255,255,255,0.96); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.6); padding: 48px 44px; border-radius: 18px; width: 540px; max-width: 100%; box-shadow: 0 30px 80px -30px rgba(10,22,40,0.45); margin: 0 !important; }
-.lf-hero-card h1 { font-family: var(--font-display); font-size: clamp(30px, 3.6vw, 44px); line-height:1.15; font-weight:700; letter-spacing:-0.02em; color: var(--navy); margin-bottom: 18px; }
-.lf-hero-card p { font-size: 15px; color: var(--ink-soft); line-height:1.7; margin-bottom: 28px; }
-
-/* Pill CTA — yellow square, no arrow */
-.lf-cta-pill { display:inline-flex; align-items:center; justify-content:center; gap:0; padding: 15px 30px; background: #d98c03 !important; color: #fff !important; border-radius: var(--r-md); font-weight: 700; font-size: 15px; letter-spacing: 0.01em; text-transform: none; border:none; cursor:pointer; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; text-decoration:none; line-height:1; box-shadow: 0 1px 2px rgba(10,22,40,0.10); -webkit-tap-highlight-color: transparent; }
-.lf-cta-pill:hover, .lf-cta-pill:focus, .lf-cta-pill:focus-visible { background: #c47e02 !important; color: #fff !important; outline: none; }
-.lf-cta-pill:active { background: #a86b01 !important; }
-.lf-cta-pill-arrow { display: none !important; }
-.lf-cta-pill-block { width:100%; }
-
-/* ===== Quote-hero: offerte-form in de hero (split, Fable-spec) ===== */
-.lf-qhero .lf-hero-bg img { width:100%; height:100%; object-fit:cover; object-position:62% 38%; }
-.lf-qhero .lf-hero-bg::after { content:''; position:absolute; inset:0; background: linear-gradient(92deg, rgba(10,22,40,0.86) 0%, rgba(10,22,40,0.60) 48%, rgba(10,22,40,0.28) 80%, rgba(10,22,40,0.36) 100%); }
-.lf-qhero .lf-hero-wrap { display:block !important; position:relative !important; inset:auto !important; pointer-events:auto !important; } /* ab-bouw.css .lf-hero-wrap zet absolute+pointer-events:none met !important (voor de mini-hero-variant); zonder deze override is de hele Home-ATF onklikbaar */
-.lf-hero.lf-qhero { overflow: visible; }
-.lf-qhero-grid { display:grid; grid-template-columns: minmax(0,1fr) 408px; gap: clamp(40px, 5vw, 80px); align-items:center; }
-.lf-qhero-left { max-width: 640px; }
-.lf-qhero-left .lf-hero-eyebrow { opacity:1 !important; }
-.lf-qhero-h1 { font-family: var(--font-display); font-weight:700; font-size: clamp(32px, 3.3vw, 46px); line-height:1.12; letter-spacing:-0.02em; color:#fff; margin:14px 0 0; max-width:26ch; text-shadow:0 2px 22px rgba(10,15,28,0.42); }
-.lf-qhero-accent { color:#c69a4b; }
-.lf-qhero-sub { margin:18px 0 0; font-size:17px; line-height:1.65; color:rgba(255,255,255,0.92); max-width:56ch; text-shadow:0 1px 14px rgba(10,15,28,0.5); }
-.lf-qhero-trust { margin:22px 0 0; display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px; font-size:15px; color:#fff; text-shadow:0 1px 12px rgba(10,15,28,0.5); }
-.lf-qhero-trust strong { font-weight:700; }
-.lf-qhero-stars { color:#c69a4b; letter-spacing:1px; }
-.lf-qhero-dot { color:rgba(255,255,255,0.45); }
-.lf-qhero-phone { margin:26px 0 0; display:inline-flex; align-items:center; gap:12px; min-height:52px; color:#fff; text-decoration:none; font-size:18px; font-weight:600; }
-.lf-qhero-phone-ic { width:40px; height:40px; border-radius:50%; background:#d98c03; color:#fff; display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; }
-.lf-qhero-phone strong { font-weight:700; }
-.lf-qhero-phone:hover strong { text-decoration:underline; }
-
-/* form card rechts */
-.lf-qcard { background:#fff; border-radius:14px; border-top:4px solid #d98c03; padding:28px 28px 22px; box-shadow:0 30px 80px -30px rgba(10,22,40,0.55); width:408px; max-width:100%; }
-.lf-qcard-eyebrow { display:block; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#8a5a02; margin-bottom:6px; }
-.lf-qcard-title { font-family: var(--font-display); font-weight:700; font-size:22px; line-height:1.2; color: var(--navy); margin:0 0 4px; }
-.lf-qcard-subline { font-size:14px; color: var(--ink-soft); margin:0 0 18px; }
-.lf-qcard-label { display:block; font-size:14px; font-weight:600; color: var(--navy); margin:0 0 6px; }
-.lf-qcard form input, .lf-qcard form select { width:100%; height:52px; font-size:16px; border:1px solid #cfd4dc; border-radius:10px; padding:0 14px; margin-bottom:16px; color: var(--ink); background-color:#fff; font-family:inherit; }
-.lf-qcard form input:focus, .lf-qcard form select:focus { outline:none; border-color: #d98c03; box-shadow:0 0 0 3px rgba(217,140,3,0.16); }
-.lf-qcard-select { appearance:none; -webkit-appearance:none; -moz-appearance:none; cursor:pointer; padding-right:40px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23525b6b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; }
-.lf-qcard-select:invalid { color: var(--ink-mute); }
-.lf-qcard-err { margin:-6px 0 12px; font-size:14px; line-height:1.4; color:#b3261e; }
-.lf-qcard-btn { width:100%; min-height:56px; border:0; border-radius:999px; background: #d98c03; color:#fff; font-size:17px; font-weight:600; cursor:pointer; font-family:inherit; transition: background 0.18s var(--ease); }
-.lf-qcard-btn:hover { background: #b87502; }
-.lf-qcard-btn:disabled { opacity:0.7; cursor:wait; }
-.lf-qcard-micro { text-align:center; font-size:13.5px; color: var(--ink-mute); margin:12px 0 0; }
-.lf-qcard-micro2 { text-align:center; font-size:14px; margin:6px 0 0; color: var(--ink-soft); }
-.lf-qcard-micro2 a { color: var(--navy); font-weight:600; text-decoration:underline; }
-.lf-qcard-thanks { display:none; text-align:center; padding:24px 8px; min-height:300px; flex-direction:column; align-items:center; justify-content:center; }
-.lf-qcard.is-success .lf-qcard-body { display:none; }
-.lf-qcard.is-success .lf-qcard-thanks { display:flex; }
-.lf-qcard-thanks-ic { width:60px; height:60px; border-radius:50%; background:#2ea466; color:#fff; display:inline-flex; align-items:center; justify-content:center; margin-bottom:14px; }
-.lf-qcard-thanks h3 { font-family: var(--font-display); font-size:22px; color: var(--navy); margin:0 0 8px; }
-.lf-qcard-thanks p { font-size:14.5px; color: var(--ink-soft); margin:0; max-width:34ch; }
-
-@media (max-width: 1079px) {
-  .lf-hero.lf-qhero { align-items: flex-start; min-height: auto; }
-  .lf-qhero-grid { grid-template-columns: 1fr; gap:28px; justify-items:start; }
-  .lf-qcard { width:100%; max-width:520px; margin:0 auto; }
-  .lf-qhero-left { max-width:640px; }
-}
-@media (max-width: 767px) {
-  .lf-qhero .lf-hero-bg::after { background: rgba(10,22,40,0.72); }
-  .lf-qhero .lf-hero-wrap { padding-top:104px !important; padding-bottom:48px !important; }
-  .lf-qhero-h1 { font-size:28px; line-height:1.18; }
-  .lf-qhero-sub { font-size:15.5px; }
-  .lf-qcard { padding:24px 18px; }
-}
-
-/* About + Form */
-.lf-about-grid { display:grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: start; }
-.lf-feature { display:flex; gap:18px; padding: 4px 0 18px; border-bottom: 1px solid var(--ink-line-soft); margin-bottom: 16px; }
-.lf-feature:last-of-type { border-bottom: none; }
-.lf-feature-num { flex-shrink:0; font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; line-height: 1; padding-top: 2px; min-width: 36px; }
-.lf-feature h4 { font-size: 15px; color: var(--navy); margin-bottom:4px; }
-.lf-feature p { font-size: 13.5px; color: var(--ink-soft); margin:0; }
-.lf-form { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; padding: 36px; box-shadow: 0 24px 60px -28px rgba(10,22,40,0.18); position: relative; overflow: hidden; z-index: 2; }
-.lf-form::before { content:''; position:absolute; top:0; left:0; right:0; height: 4px; background: linear-gradient(90deg, #d98c03, #0A1F44); border-top-left-radius: 18px; border-top-right-radius: 18px; }
-.lf-form-header { margin-bottom: 22px; padding-bottom: 22px; border-bottom: 1px solid var(--ink-line-soft); }
-.lf-form-eyebrow { display:inline-flex; align-items:center; gap:6px; padding: 5px 12px; background: rgba(245,197,24,0.18); color: #8a6a00; border-radius: 999px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
-.lf-form-header h3 { font-family: var(--font-display); font-size: 24px; line-height:1.2; font-weight:700; color: var(--navy); margin-bottom: 6px; letter-spacing:-0.01em; }
-.lf-form-header p { font-size: 13.5px; color: var(--ink-soft); line-height:1.5; margin:0; }
-.lf-form-row { display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.lf-form-row > input { margin-bottom: 12px; }
-.lf-form input, .lf-form select, .lf-form textarea { width:100%; padding: 13px 16px; border: 1px solid var(--ink-line); border-radius: 10px; background: #fff; margin-bottom: 12px; font-size: 14px; color: var(--ink); font-family: inherit; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-form input:focus, .lf-form select:focus, .lf-form textarea:focus { outline:none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(10,31,68,0.08); }
-.lf-form textarea { resize: vertical; min-height: 80px; }
-.lf-select-wrap { position:relative; }
-.lf-select-wrap select { appearance:none; -webkit-appearance:none; -moz-appearance:none; padding-right: 40px; cursor:pointer; background-image:none; }
-.lf-select-caret { position:absolute; right:16px; top:16px; color: var(--ink-soft); pointer-events:none; }
-.lf-form button { margin-top: 10px; }
-
-/* Compact offerte section: heading top, form middle, two bullets below */
-.lf-offerte-section { padding: 88px 0; }
-.lf-offerte-head { text-align: center; max-width: 720px; margin: 0 auto 36px; }
-.lf-offerte-head .lf-h2 { margin-bottom: 14px; }
-.lf-offerte-head .lf-lede { margin: 0 auto; }
-.lf-form-compact { max-width: 680px; margin: 0 auto; padding: 28px 28px 24px; border-radius: 16px; }
-/* Success-state Home form */
-aside.lf-form.is-success > form { display: none; }
-aside.lf-form .lf-form-thanks { display: none; text-align: center; padding: 20px 0; }
-aside.lf-form.is-success .lf-form-thanks { display: block; }
-aside.lf-form .lf-form-thanks-circle { width: 64px; height: 64px; border-radius: 50%; background: #2ea466; color: #fff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px; }
-aside.lf-form .lf-form-thanks h3 { font-size: 22px; color: var(--navy); margin: 0 0 8px; font-family: var(--font-display); }
-aside.lf-form .lf-form-thanks p { font-size: 14px; color: var(--ink-soft); margin: 0; }
-.lf-form-error { font-size: 13px; color: #c4523f; padding: 8px 12px; background: #fcebe5; border-radius: 8px; margin: 8px 0 0; }
-.lf-form-compact .lf-form-row { gap: 10px; }
-.lf-form-compact input, .lf-form-compact textarea, .lf-form-compact .lf-dd-toggle { padding: 12px 14px; font-size: 14px; margin-bottom: 10px; }
-.lf-form-foot { text-align: center; margin: 14px 0 0; font-size: 13px; color: var(--ink-soft); }
-.lf-form-foot a { color: var(--navy); font-weight: 700; text-decoration: none; border-bottom: 1.5px solid var(--accent); }
-.lf-mini-bullets { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 760px; margin: 32px auto 0; }
-.lf-mini-bullet { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 14px; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-mini-bullet:hover { box-shadow: 0 14px 30px -16px rgba(10,22,40,0.18); border-color: var(--accent); }
-.lf-mini-bullet-num { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--accent); line-height: 1; flex-shrink: 0; }
-.lf-mini-bullet h4 { font-size: 14px; color: var(--navy); margin: 0 0 4px; font-weight: 700; letter-spacing: -0.005em; }
-.lf-mini-bullet p { font-size: 12.5px; color: var(--ink-soft); margin: 0; line-height: 1.45; }
-@media (max-width: 760px) {
-  .lf-offerte-section { padding: 56px 0 48px; }
-  .lf-form-compact { padding: 22px 18px 20px; border-radius: 14px; }
-  .lf-form-compact .lf-form-row { grid-template-columns: 1fr; }
-  .lf-form-compact .lf-dd-list { max-height: min(240px, 45vh); }
-  .lf-mini-bullets { grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
-  .lf-mini-bullet { padding: 14px 16px; }
-}
-
-/* Services Nav (pill bar above the stacking cards) */
-.lf-svc-nav {
-  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
-  max-width: 880px; margin: 0 auto 32px; padding: 8px;
-  background: #fff; border: 1px solid var(--ink-line-soft);
-  border-radius: 999px;
-  box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 18px 40px -28px rgba(15,17,21,.18);
-  position: sticky; top: 88px; z-index: 5;
-  backdrop-filter: saturate(140%) blur(8px);
-}
-.lf-svc-pill {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 10px 16px; border: none; background: transparent;
-  border-radius: 999px; cursor: pointer; color: var(--ink-soft);
-  font: 600 13px/1 inherit; letter-spacing: .01em;
-  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
-}
-.lf-svc-pill:hover { color: var(--navy); background: rgba(15,17,21,.04); }
-.lf-svc-pill.is-active { background: var(--navy); color: #fff; }
-.lf-svc-pill.is-active .lf-svc-pill-num { color: var(--accent); }
-.lf-svc-pill-num { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: .04em; }
-.lf-svc-pill-label { white-space: nowrap; }
-@media (max-width: 720px) {
-  .lf-svc-nav { border-radius: 16px; padding: 6px; gap: 4px; }
-  .lf-svc-pill { padding: 8px 12px; font-size: 12px; }
-  .lf-svc-pill-num { display: none; }
-}
-
-/* Services Grid */
-.lf-svc-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-.lf-svc-card { display:flex; flex-direction:column; background:#fff; border-radius: 14px; overflow:hidden; border: 1px solid var(--ink-line-soft); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; color: var(--ink); }
-.lf-svc-card:hover { box-shadow: 0 20px 40px -20px rgba(10,22,40,0.18); border-color: var(--accent); }
-
-/* Stacking-card scroll — canonical "share-one-parent" sticky pattern.
-   All cards are sticky children of the SAME tall parent (.lf-svc-grid).
-   They use display:contents on the slot wrappers so the cards become
-   direct flex/block siblings inside the grid. Each card has a slightly
-   higher sticky-top than the previous → they stack at top of viewport
-   in a clean staircase as you scroll past each one. */
-.lf-services .lf-svc-grid[data-svc-stack] {
-  display: block;
-  position: relative;
-  max-width: 920px;
-  margin: 0 auto;
-  padding: 0 16px 80px;
-  transform: none !important;
-  opacity: 1 !important;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot {
-  display: contents;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
-  position: sticky;
-  top: calc(96px + var(--svc-i, 0) * 18px);
-  display: block;
-  width: 100%;
-  margin: 0 auto 28px;
-  border-radius: 20px;
-  background: #fff;
-  border: 1px solid var(--ink-line-soft);
-  box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 30px 80px -28px rgba(15,17,21,.28);
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:last-child .lf-svc-card {
-  margin-bottom: 0;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover {
-  box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 40px 100px -28px rgba(15,17,21,.4);
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot:last-child .lf-svc-card {
-  margin-bottom: 0;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 21/9; }
-.lf-svc-img { position:relative; aspect-ratio: 4/3; overflow:hidden; }
-.lf-svc-img img { width:100%; height:100%; object-fit:cover; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-svc-card:hover .lf-svc-img img { }
-.lf-svc-num { position:absolute; left:16px; bottom:16px; width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center; background: var(--accent); color:#fff; font-weight:700; font-size:14px; border-radius: 6px; box-shadow: 0 6px 16px rgba(217,140,3,0.4); }
-.lf-svc-body { padding: 24px; }
-.lf-svc-body h4 { font-size: 18px; color: var(--navy); margin-bottom: 8px; }
-.lf-svc-body p { font-size: 14px; line-height:1.6; color: var(--ink-soft); margin-bottom:16px; }
-.lf-svc-link { display:inline-flex; align-items:center; gap:6px; color: var(--accent); font-weight:600; font-size:13px; }
-
-/* Why us collage */
-.lf-why-collage { display:grid; grid-template-columns: 1fr 1.2fr 1fr; grid-template-rows: 1fr 1fr; gap: 24px; max-width: 1100px; margin: 0 auto; }
-.lf-why-tile { background:#fff; padding: 28px 26px; border-radius: 12px; border: 1px solid var(--ink-line-soft); position: relative; }
-.lf-why-tile h5 { font-size: 15.5px; color: var(--navy); margin-bottom: 8px; line-height: 1.3; margin-top: 14px; }
-.lf-why-tile p { font-size: 13.5px; line-height:1.65; color: var(--ink-soft); margin: 0; }
-.lf-why-meta { display:flex; align-items:center; gap:14px; padding-bottom: 14px; border-bottom: 1px solid var(--ink-line-soft); }
-.lf-why-num { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--accent); letter-spacing: 0.05em; line-height: 1; }
-.lf-why-label { font-size: 10.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-mute); line-height: 1; }
-
-/* Trust strip, certifications & legal */
-.lf-trust-strip { margin-top: 14px; padding: 24px 34px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 12px; display:grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items:center; gap: 26px; }
-.lf-trust-item { display:flex; flex-direction:column; gap: 4px; min-width: 0; }
-.lf-trust-item strong { font-size: 13.5px; color: var(--navy); font-weight: 700; letter-spacing: -0.005em; display:block; margin-bottom: 2px; }
-.lf-trust-item span { font-size: 11.5px; color: var(--ink-mute); letter-spacing: 0.01em; display:block; }
-.lf-trust-divider { width: 1px; height: 32px; background: var(--ink-line-soft); }
-@media (max-width: 900px) { .lf-trust-strip { grid-template-columns: 1fr; gap: 18px; padding: 22px 24px; } .lf-trust-divider { display:none; } }
-.lf-why-photo { grid-row: 1 / 3; grid-column: 2; border-radius: 14px; overflow:hidden; }
-.lf-why-photo img { width:100%; height:100%; object-fit:cover; }
-.lf-why-tl { grid-area: 1 / 1; }
-.lf-why-tr { grid-area: 1 / 3; }
-.lf-why-bl { grid-area: 2 / 1; }
-.lf-why-br { grid-area: 2 / 3; }
-
-/* ── Why-us as scroll-stack: all tiles sticky in the SAME left column → real pile-up */
-.lf-why-collage.lf-why-stack { display:grid; grid-template-columns: 1fr 1.05fr; gap: 34px; align-items: stretch; max-width: 1180px; margin: 0 auto; }
-.lf-why-collage.lf-why-stack.lf-why-no-photo { grid-template-columns: 1fr; max-width: 820px; gap: 0; margin-bottom: 0; }
-.lf-why-no-photo .lf-why-stack-left { gap: 0; }
-.lf-why-no-photo .lf-why-tile { padding: 22px 28px; }
-.lf-why-stack .lf-why-stack-left { display:flex; flex-direction: column; gap: 0; }
-.lf-why-stack .lf-why-slot { display: block; margin-bottom: 14px; }
-.lf-why-stack .lf-why-slot:last-child { margin-bottom: 0; }
-/* Reveal-transform op de slots breekt offsetTop-math van de JS sticky-stack.
-   In stack-mode reveal-effect uitschakelen — JS doet de animatie. */
-.lf-why-collage[data-why-stack] [data-reveal] {
-  opacity: 1 !important;
-  transform: none !important;
-  transition: none;
-}
-.lf-why-stack .lf-why-tile { position: static; width: 100%; padding: 20px 24px; margin: 0; background:#fff; border-radius: 16px; border: 1px solid var(--ink-line-soft); box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 18px 40px -28px rgba(15,17,21,.18); }
-.lf-why-stack .lf-why-photo { position: relative; top: auto; height: 100%; align-self: stretch; max-height: 520px; min-height: 0; grid-row: auto; grid-column: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -36px rgba(15,17,21,.32); }
-.lf-why-stack .lf-why-photo img { width:100%; height:100%; object-fit: cover; }
-
-.lf-svc-nav-cta { display:flex; justify-content:center; margin: 0 0 36px; }
-.lf-svc-all-btn, .lf-svc-all-btn:link, .lf-svc-all-btn:visited { display:inline-flex; align-items:center; gap:10px; padding: 14px 26px; background: var(--navy) !important; color:#fff !important; border-radius: 999px; font: 700 13px/1 inherit; letter-spacing: .04em; text-transform: uppercase; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; box-shadow: 0 14px 32px -16px rgba(10,22,40,.45); text-decoration: none; }
-.lf-svc-all-btn:hover, .lf-svc-all-btn:focus { background: #d98c03 !important; color:#fff !important; box-shadow: 0 20px 40px -18px rgba(10,22,40,.55); }
-.lf-svc-all-btn svg { transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; color:#fff; }
-.lf-svc-all-btn:hover svg { transform: translateX(4px); color:#fff; }
-
-/* Trust-strip: highlight items in cascade as the strip enters viewport */
-
-
-
-/* Skills */
-.lf-skills-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items:center; }
-.lf-bars { margin-bottom: 28px; }
-.lf-bar { margin-bottom: 26px; }
-.lf-bar-head { display:flex; justify-content:space-between; align-items:center; font-size: 14px; font-weight:600; color: var(--navy); margin-bottom: 10px; }
-.lf-bar-pct { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--navy); display:inline-flex; align-items: baseline; gap:1px; }
-.lf-bar-pct em { font-style:normal; font-size: 12px; color: var(--accent); font-weight: 700; margin-left: 2px; }
-.lf-bar-track { position:relative; height: 10px; background: var(--ink-line-soft); border-radius: 999px; overflow: hidden; }
-.lf-bar-track i { display:block; height:100%; background: var(--navy); border-radius:999px; position:relative; box-shadow: 0 2px 8px -2px rgba(10,22,40,0.35); }
-.lf-bar-knob { display:none; }
-.lf-skills-collage { display:grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 12px 0; position: relative; }
-.lf-skills-img1, .lf-skills-img2 { width:100%; height: 420px; object-fit:cover; display:block; filter: drop-shadow(0 24px 30px rgba(15,17,21,0.28)) drop-shadow(0 6px 12px rgba(15,17,21,0.18)); }
-/* Left photo: bottom-right corner clipped diagonally (point on the right side) */
-.lf-skills-img1 { clip-path: polygon(22% 0, 100% 0, 100% 78%, 78% 100%, 0 100%, 0 22%); }
-/* Right photo: bottom-left corner clipped diagonally (point on the bottom) */
-.lf-skills-img2 { clip-path: polygon(0 0, 78% 0, 100% 22%, 100% 100%, 22% 100%, 0 78%); }
-/* hover animation removed */
-
-/* Team */
-.lf-team-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 1080px; margin: 0 auto; }
-.lf-team-card { text-align:center; }
-.lf-team-img { aspect-ratio: 4/4; border-radius: 12px; overflow:hidden; margin-bottom: 16px; position:relative; }
-.lf-team-img::before { content:''; position:absolute; right:-1px; bottom:-1px; width:42px; height:42px; background: var(--accent); clip-path: polygon(100% 0, 100% 100%, 0 100%); z-index:2; }
-.lf-team-img img { width:100%; height:100%; object-fit:cover; }
-.lf-team-card h5 { font-size: 17px; color: var(--navy); margin-bottom: 4px; }
-.lf-team-card span { font-size: 13px; color: var(--ink-mute); }
-
-/* Projects */
-.lf-proj-tabs-wrap { display:flex; justify-content:center; margin-bottom: 40px; }
-.lf-proj-tabs { display:inline-flex; justify-content:center; gap:6px; flex-wrap:wrap; padding: 6px; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 999px; box-shadow: 0 8px 24px -16px rgba(10,22,40,0.18); }
-.lf-proj-chip { display:inline-flex; align-items:center; gap:8px; padding: 10px 20px; background: transparent; border-radius: 999px; font-size: 13px; font-weight:600; color: var(--ink-soft); border: none; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; cursor:pointer; font-family: inherit; letter-spacing: -0.005em; }
-.lf-proj-chip:hover { color: var(--navy); background: var(--bg-tint); }
-.lf-proj-chip.active { background: var(--navy); color:#fff; box-shadow: 0 6px 16px -6px rgba(10,31,68,0.45); }
-.lf-chip-dot { width:6px; height:6px; border-radius:50%; background: var(--accent); display:inline-block; }
-.lf-proj-chip:not(.active) .lf-chip-dot { background: var(--ink-line); }
-.lf-proj-collage { display:grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.lf-proj-cell { position:relative; display:flex; flex-direction:column; background:#fff; border:1px solid var(--ink-line-soft); border-radius: 16px; overflow:hidden; text-decoration:none; color:var(--ink); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-proj-cell:hover { box-shadow: 0 22px 44px -22px rgba(10,22,40,0.22); border-color: var(--accent); }
-.lf-proj-cell.is-hidden { display: none; }
-.lf-proj-img { position:relative; aspect-ratio: 4/3; overflow:hidden; }
-.lf-proj-img img { width:100%; height:100%; object-fit:cover; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; display:block; }
-.lf-proj-cell:hover .lf-proj-img img { }
-.lf-proj-cap { display:flex; align-items:center; justify-content:space-between; gap:12px; padding: 16px 18px; }
-.lf-proj-cap-cat { display:block; font-size: 11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color: var(--accent); margin-bottom: 4px; }
-.lf-proj-cap strong { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--navy); letter-spacing:-0.01em; line-height:1.2; display:block; }
-.lf-proj-cap svg { color: var(--navy); flex-shrink: 0; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-proj-cell:hover .lf-proj-cap svg { transform: translateX(4px); color: var(--accent); }
-
-/* Custom clean dropdown */
-.lf-dd { position: relative; margin-bottom: 12px; z-index: 1; }
-.lf-dd-toggle { width:100%; display:flex; align-items:center; justify-content:space-between; padding: 13px 16px; border: 1px solid var(--ink-line); border-radius: 10px; background: #fff; font-size: 14px; color: var(--ink-soft); font-family: inherit; cursor: pointer; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; text-align:left; }
-.lf-dd-toggle:hover { border-color: #c9d1de; }
-.lf-dd.open .lf-dd-toggle { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(10,31,68,0.08); }
-.lf-dd-label.has-value { color: var(--ink); font-weight:500; }
-.lf-dd-caret { color: var(--ink-soft); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; flex-shrink:0; }
-.lf-dd.open .lf-dd-caret { transform: rotate(180deg); }
-.lf-dd-list { position:absolute; top: calc(100% + 6px); left:0; right:0; background:#fff; border:1px solid var(--ink-line-soft); border-radius: 12px; box-shadow: 0 18px 40px -18px rgba(10,22,40,0.22); list-style:none; margin:0; padding:6px; z-index: 9999; max-height: min(360px, 60vh); overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; touch-action: pan-y; opacity:0; pointer-events:none; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-dd.open { z-index: 80; }
-.lf-dd.open .lf-dd-list { opacity:1; transform: translateY(0); pointer-events:auto; }
-.lf-dd-list li { padding: 11px 14px; font-size: 14px; color: var(--ink); border-radius: 8px; cursor:pointer; transition: background 0.15s; }
-.lf-dd-list li:hover { background: var(--bg-tint); }
-.lf-dd-list li.selected { background: rgba(10,31,68,0.06); color: var(--navy); font-weight:600; }
-
-/* Testimonials */
-.lf-testi-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.lf-testi { background:#fff; padding: 32px; border-radius: 14px; border: 1px solid var(--ink-line-soft); display:flex; flex-direction:column; }
-.lf-rev-carousel { position: relative; display: flex; align-items: stretch; gap: 10px; }
-.lf-rev-scroll { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; padding: 4px 2px; flex: 1 1 auto; }
-.lf-rev-scroll::-webkit-scrollbar { display: none; }
-.lf-rev-scroll .lf-testi { flex: 0 0 calc((100% - 40px) / 3); scroll-snap-align: start; box-sizing: border-box; }
-.lf-rev-arrow { flex: 0 0 auto; align-self: center; width: 46px; height: 46px; border-radius: 999px; border: 1px solid rgba(10,22,40,0.12); background: #fff; color: var(--ab-ink, #0a1628); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 28px -14px rgba(10,22,40,0.35); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-rev-arrow:hover { background: var(--ab-accent, #d98c03); color: #fff; }
-.lf-rev-arrow:disabled { opacity: 0.32; cursor: default; box-shadow: none; }
-.lf-rev-arrow:disabled:hover { background: #fff; color: var(--ab-ink, #0a1628); transform: none; }
-@media (max-width: 920px) { .lf-rev-scroll .lf-testi { flex: 0 0 calc((100% - 20px) / 2); } }
-@media (max-width: 600px) { .lf-rev-carousel { gap: 6px; } .lf-rev-scroll .lf-testi { flex: 0 0 86%; } .lf-rev-arrow { width: 40px; height: 40px; } }
-.lf-testi-stars { color: #F5B400; font-size: 18px; letter-spacing: 3px; margin-bottom: 18px; }
-.lf-testi p { font-size: 14.5px; line-height:1.7; color: var(--ink-soft); margin-bottom: 22px; flex:1; }
-.lf-testi-divider { height:1px; background: var(--ink-line-soft); margin-bottom: 18px; }
-.lf-testi-foot { display:flex; align-items:center; gap:14px; }
-.lf-testi-avatar { width:44px; height:44px; border-radius:50%; object-fit:cover; flex-shrink:0; }
-.lf-testi-meta { display:flex; flex-direction:column; gap:2px; flex:1; min-width:0; }
-.lf-testi-foot strong { font-size:14.5px; color: var(--navy); font-weight:700; }
-.lf-testi-foot span { font-size:12.5px; color: var(--ink-mute); }
-.lf-testi-google { flex-shrink:0; }
-
-/* CTA — compacte navy box, identiek aan subpages (geen foto erin) */
-.lf-cta { background: var(--navy); border-radius: 18px; padding: 48px 56px; display:grid; grid-template-columns: 1fr; gap: 0; align-items:center; position:relative; overflow:hidden; }
-.lf-cta::before { content:''; position:absolute; right: -120px; top: 50%; transform:translateY(-50%); width: 380px; height: 380px; border-radius:50%; background: var(--accent); opacity: 0.10; filter: blur(40px); pointer-events: none; }
-.lf-cta-text { color:#fff; position:relative; z-index:2; max-width: 720px; }
-.lf-cta-text h2 { color:#fff; font-family: var(--font-display); font-size: clamp(26px, 3vw, 38px); line-height:1.15; margin-bottom: 14px; letter-spacing:-0.02em; }
-.lf-cta-text p { color: rgba(255,255,255,0.78); font-size: 15px; margin-bottom: 26px; max-width: 560px; line-height: 1.6; }
-.lf-cta-actions { display:flex; gap:12px; flex-wrap:wrap; }
-
-/* Blog */
-.lf-blog-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-.lf-blog-card { display:flex; flex-direction:column; background:#fff; border-radius: 14px; overflow:hidden; border: 1px solid var(--ink-line-soft); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; color: var(--ink); }
-.lf-blog-card:hover { box-shadow: 0 20px 40px -20px rgba(10,22,40,0.18); border-color: var(--accent); }
-.lf-blog-img { position:relative; aspect-ratio: 16/10; overflow:hidden; }
-.lf-blog-img img { width:100%; height:100%; object-fit:cover; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-blog-card:hover .lf-blog-img img { }
-.lf-blog-tag { position:absolute; top:14px; left:14px; padding: 6px 12px; background: var(--accent); color:#fff; border-radius: 4px; font-size:10.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; }
-.lf-blog-date-badge { position:absolute; right:14px; bottom:14px; min-width:54px; padding: 8px 10px; background:#fff; border-radius:8px; box-shadow: 0 8px 20px -8px rgba(10,22,40,0.25); display:flex; flex-direction:column; align-items:center; line-height:1; }
-.lf-blog-date-badge strong { font-family: var(--font-display); font-size: 18px; color: var(--navy); font-weight: 700; }
-.lf-blog-date-badge em { font-style:normal; font-size: 10.5px; color: var(--ink-mute); text-transform:uppercase; letter-spacing:0.08em; margin-top:3px; font-weight:600; }
-.lf-blog-body { padding: 24px; display:flex; flex-direction:column; gap:10px; }
-.lf-blog-body h4 { font-size: 18px; line-height:1.35; color: var(--navy); }
-.lf-blog-body h4 a { color: inherit; transition: color 0.2s; }
-.lf-blog-body h4 a:hover { color: var(--accent); }
-.lf-blog-body p { font-size: 14px; line-height:1.65; color: var(--ink-soft); margin-bottom: 6px; }
-.lf-blog-foot { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--ink-line-soft); }
-.lf-blog-btn { display:inline-flex; align-items:center; gap:8px; padding: 10px 18px; background: #d98c03; color:#fff !important; border-radius: 999px; font-size: 12.5px; font-weight: 700; letter-spacing:0.04em; text-transform:uppercase; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; box-shadow: none; }
-.lf-blog-btn:hover { background: var(--accent-hover); box-shadow: none; }
-.lf-blog-author { display:inline-flex; align-items:center; gap:6px; font-size:13px; color: var(--ink-soft); font-weight:500; }
-.lf-blog-author svg { color: var(--accent); }
-.lf-blog-more { margin-top: 36px; display:flex; flex-direction:column; align-items:center; gap:14px; }
-.lf-blog-indicator { margin-top: 32px; display:flex; flex-direction:column; align-items:center; gap:14px; }
-.lf-blog-dots { display:inline-flex; gap:10px; align-items:center; }
-.lf-blog-dot { width:18px; height:3px; padding:0; border:0; border-radius:2px; background: rgba(10,22,40,0.18); cursor: pointer; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-blog-dot:hover { background: rgba(10,22,40,0.4); }
-.lf-blog-dot.is-active { background: var(--navy); width: 36px; }
-.lf-blog-more-text { font-size: 13.5px; color: var(--ink-soft); margin: 0; }
-.lf-blog-more-text a { color: var(--accent); font-weight: 700; }
-
-/* Newsletter — clean minimal, fade-in op scroll */
-.lf-newsletter { padding: 72px 0; }
-.lf-newsletter-card {
-  max-width: 1040px;
-  margin: 0 auto;
-  background: #fff;
-  border: 1px solid var(--ink-line-soft);
-  border-radius: 18px;
-  padding: 56px 56px;
-  display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  gap: 48px;
-  align-items: center;
-  box-shadow: 0 1px 2px rgba(15,17,21,.04), 0 24px 60px -32px rgba(15,17,21,.18);
-}
-.lf-newsletter-text .lf-eyebrow { margin-bottom: 14px; }
-.lf-newsletter-text .lf-h2 { font-size: clamp(26px, 3vw, 34px); line-height: 1.15; margin-bottom: 14px; color: var(--navy); }
-.lf-newsletter-sub { font-size: 15px; line-height: 1.65; color: var(--ink-soft); margin: 0; max-width: 380px; }
-.lf-newsletter-embed { min-height: 120px; display: flex; align-items: center; justify-content: center; }
-.lf-newsletter-embed:empty::after {
-  content: 'Embed-veld klaar voor GoHighLevel formulier';
-  display: block;
-  padding: 28px;
-  border: 1.5px dashed var(--ink-line-soft);
-  border-radius: 12px;
-  color: var(--ink-mute);
-  font-size: 12.5px;
-  text-align: center;
-  letter-spacing: 0.04em;
-  width: 100%;
-}
-/* Default fallback formulier — wordt zichtbaar tot je een GHL embed plakt */
-.lf-newsletter-form {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 10px;
-  width: 100%;
-  position: relative;
-}
-.lf-newsletter-input { display: block; position: relative; }
-.lf-newsletter-input .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-.lf-newsletter-input input {
-  width: 100%;
-  padding: 15px 18px;
-  font: inherit;
-  font-size: 14.5px;
-  color: var(--ink);
-  background: #fff;
-  border: 1.5px solid var(--ink-line-soft);
-  border-radius: 999px;
-  outline: none;
-  transition: border-color 0.25s cubic-bezier(.22,.61,.36,1),
-              box-shadow 0.25s cubic-bezier(.22,.61,.36,1);
-}
-.lf-newsletter-input input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(217,140,3,0.14);
-}
-.lf-newsletter-btn {
-  white-space: nowrap;
-  padding: 14px 22px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.lf-newsletter-success {
-  grid-column: 1 / -1;
-  display: none;
-  align-items: center;
-  gap: 8px;
-  margin: 6px 0 0;
-  font-size: 14px;
-  color: #047857;
-  background: #ecfdf5;
-  border: 1px solid #a7f3d0;
-  border-radius: 999px;
-  padding: 10px 18px;
-}
-.lf-newsletter-form.is-success .lf-newsletter-success { display: inline-flex; }
-.lf-newsletter-form.is-success .lf-newsletter-input,
-.lf-newsletter-form.is-success .lf-newsletter-btn { opacity: 0.4; pointer-events: none; }
-@media (max-width: 540px) {
-  .lf-newsletter-form { grid-template-columns: 1fr; }
-}
-@media (max-width: 720px) {
-  .lf-newsletter-card { grid-template-columns: 1fr; padding: 36px 24px; gap: 28px; }
-}
-
-/* Controlled blog carousel */
-.lf-blog-carousel { position: relative; }
-.lf-blog-scroller { --blog-gap: 28px; --blog-card-width: 340px; --blog-side-pad: 0px; --blog-offset: 0px; position: relative; overflow: hidden; padding: 30px 0; touch-action: pan-y; }
-.lf-blog-track { display: flex; align-items: stretch; gap: var(--blog-gap); width: max-content; padding: 8px var(--blog-side-pad) 28px; transform: translate3d(calc(var(--blog-offset) * -1), 0, 0); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-blog-track .lf-blog-card { flex: 0 0 var(--blog-card-width); min-width: 0; opacity: 0.62; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; transform-origin: center center; }
-.lf-blog-track .lf-blog-card.is-current { transform: scale(1); opacity: 1; box-shadow: 0 30px 60px -25px rgba(10,22,40,0.28); z-index: 2; }
-.lf-blog-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; width: 48px; height: 48px; border-radius: 50%; background: #fff; border: 1px solid var(--ink-line-soft); color: var(--navy); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 12px 28px -10px rgba(10,22,40,0.25); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-blog-arrow:hover { background: var(--navy); color: #fff; transform: translateY(-50%); }
-.lf-blog-arrow:disabled { opacity: 0.35; cursor: not-allowed; }
-.lf-blog-arrow-prev { left: -22px; }
-.lf-blog-arrow-next { right: -22px; }
-@media (max-width: 900px) {
-  .lf-blog-arrow { display: none; }
-  .lf-blog-scroller { --blog-gap: 14px; padding: 16px 0; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; touch-action: pan-x pan-y; scrollbar-width: none; }
-  .lf-blog-scroller::-webkit-scrollbar { display: none; }
-  .lf-blog-track { width: max-content; transform: none !important; transition: none; padding: 8px 16px 28px; }
-  .lf-blog-track .lf-blog-card { flex: 0 0 82%; max-width: 340px; transform: none; opacity: 1; scroll-snap-align: center; }
-  .lf-blog-track .lf-blog-card.is-current { transform: none; box-shadow: 0 20px 40px -20px rgba(10,22,40,0.18); }
-}
-
-@media (max-width: 900px) {
-  .lf-section { padding: 60px 0; }
-  .lf-section.lf-section-compact-stack { padding-bottom: 18px; }
-  .lf-section.lf-why-section-tight { padding-bottom: 0; }
-  .lf-section.lf-why-section-tight + .lf-section { padding-top: 34px; }
-  .lf-why-section-tight .lf-trust-strip { margin-top: 0; }
-  .lf-section.lf-section-compact-stack .lf-section-head,
-  .lf-section.lf-section-compact-stack .lf-section-head.centered { margin-bottom: 24px; }
-  .lf-about-grid, .lf-skills-grid { grid-template-columns: 1fr; gap: 40px; }
-  .lf-team-grid, .lf-testi-grid { grid-template-columns: 1fr; }
-  .lf-why-collage { grid-template-columns: 1fr 1fr; }
-  .lf-why-photo { grid-row: 2; grid-column: 1 / 3; height: 220px; }
-  .lf-why-tl { grid-area: 1 / 1; } .lf-why-tr { grid-area: 1 / 2; }
-  .lf-why-bl { grid-area: 3 / 1; } .lf-why-br { grid-area: 3 / 2; }
-  /* Disable scroll-stack on small screens — back to a normal stacked column */
-  .lf-why-collage.lf-why-stack { display: block; }
-  .lf-why-stack .lf-why-stack-left { display: grid; gap: 16px; }
-  .lf-why-stack .lf-why-slot { height: auto; display: block; position: static; }
-  .lf-why-stack .lf-why-tile { position: static; transform: none !important; margin: 0; box-shadow: none; top: 0 !important; }
-  .lf-why-stack .lf-why-photo { position: static; height: 220px; min-height: 0; margin-top: 14px; }
-
-  /* Services: clean horizontal swipe carousel on mobile (overrides desktop sticky stack) */
-  .lf-services .lf-svc-grid,
-  .lf-services .lf-svc-grid[data-svc-stack] {
-    display: flex !important;
-    flex-wrap: nowrap;
-    gap: 14px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    padding: 4px 16px 22px;
-    margin: 0 -16px;
-    scrollbar-width: none;
-  }
-  .lf-services .lf-svc-grid::-webkit-scrollbar { display: none; }
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot {
-    position: static !important;
-    height: auto !important;
-    display: block;
-    padding: 0;
-    flex: 0 0 82%;
-    max-width: 320px;
-    scroll-snap-align: center;
-  }
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
-    position: static !important;
-    top: 0 !important;
-    margin: 0;
-    transform-origin: 50% 50%;
-    transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
-    box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 12px 28px -18px rgba(15,17,21,.18);
-    width: 100%;
-    max-width: none;
-  }
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot.is-snapped .lf-svc-card {
-    transform: scale(1);
-    box-shadow: 0 1px 2px rgba(15,17,21,.06), 0 28px 60px -22px rgba(15,17,21,.32);
-  }
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 16/10; }
-
-  .lf-proj-collage { grid-template-columns: 1fr; gap: 14px; }
-  .lf-skills-img1, .lf-skills-img2 { height: 320px; }
-  .lf-cta { padding: 40px 28px; grid-template-columns: 1fr; }
-  .lf-cta-img { display:none; }
-  .lf-hero-card { padding: 32px 24px; }
-  .lf-blog-foot { flex-direction: column; align-items: flex-start; }
-
-  .lf-services .lf-section-head { text-align: center; }
-  .lf-reviews-section .lf-reviews-head { text-align: center; }
-}
-
-/* Footer, clean white with black text (matches site) */
-.footer { background: #fff !important; color: var(--ink) !important; border-top: 1px solid var(--ink-line) !important; }
-.footer .nav-brand { color: var(--navy) !important; }
-.footer-logo { height: 64px; width: auto; display: block; margin-bottom: 8px; }
-.footer .nav-brand .nav-brand-mark { background: var(--accent) !important; color:#fff !important; }
-.footer .nav-brand em { color: var(--accent); font-style: normal; font-weight: 500; }
-.footer-brand p { color: var(--ink-soft) !important; }
-.footer-col h5 { color: var(--navy) !important; }
-.footer-col a { color: var(--ink-soft) !important; }
-.footer-col a:hover { color: var(--accent) !important; }
-.footer-bottom { color: var(--ink-mute) !important; border-top: 1px solid var(--ink-line-soft) !important; }
-.footer-bottom-links a { color: var(--ink-soft) !important; }
-.footer-bottom-links a:hover { color: var(--accent) !important; }
-
-/* Stats strip under hero */
-.lf-stats { background: var(--navy); padding: 38px 0; }
-.lf-stats-inner { display:grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items:center; gap: 36px; }
-.lf-stat { display:flex; flex-direction:column; align-items:flex-start; gap: 6px; }
-.lf-stat strong { font-family: var(--font-display); font-size: clamp(28px, 3vw, 40px); font-weight: 700; color: #fff; line-height: 1; letter-spacing: -0.02em; display:block; }
-.lf-stat strong em { font-style:normal; font-size: 0.55em; color: var(--accent); font-weight: 700; margin-left: 2px; }
-.lf-stat span { font-size: 12.5px; color: rgba(255,255,255,0.65); letter-spacing: 0.01em; line-height: 1.4; }
-.lf-stats-divider { width: 1px; height: 42px; background: rgba(255,255,255,0.14); }
-@media (max-width: 900px) { .lf-stats-inner { grid-template-columns: 1fr 1fr; gap: 24px; } .lf-stats-divider { display:none; } }
-
-/* Partners */
-.lf-partners { padding: 64px 0; background: #fff; border-bottom: 1px solid var(--ink-line-soft); }
-.lf-hero-trust { background: transparent; padding: 28px 0 8px; }
-.lf-hero-trust-row { display: flex; justify-content: center; align-items: stretch; gap: 14px; flex-wrap: wrap; }
-.lf-trust-pill { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 14px 24px; background: #fff; border: 1px solid var(--ink-line-soft, #e8e6df); border-radius: 999px; box-shadow: 0 6px 20px -10px rgba(10,22,40,0.18); min-width: 170px; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-trust-pill:hover { box-shadow: 0 12px 28px -12px rgba(10,22,40,0.22); }
-.lf-trust-pill strong { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--navy, #0a1628); letter-spacing: -0.01em; line-height: 1; }
-.lf-trust-pill .lf-trust-unit { font-style: normal; font-size: 14px; font-weight: 600; color: var(--ink-soft, #5b6472); margin-left: 2px; }
-.lf-trust-pill .lf-trust-sub { font-size: 11.5px; color: var(--ink-soft, #5b6472); letter-spacing: 0.04em; text-transform: uppercase; margin-top: 2px; }
-.lf-trust-stars { color: #f5b301; font-size: 13px; letter-spacing: 2px; line-height: 1; margin-bottom: 2px; }
-@media (max-width: 720px) { .lf-trust-pill { min-width: 46%; padding: 12px 16px; } .lf-trust-pill strong { font-size: 19px; } }
-.lf-partners-head { text-align:center; max-width: 600px; margin: 0 auto 36px; }
-.lf-partners-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); display:block; margin-bottom: 10px; }
-.lf-partners-head p { font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin: 0; }
-.lf-partners-row { display:grid; grid-template-columns: repeat(8, 1fr); align-items:center; gap: 24px; }
-.lf-partners-row img { width: 100%; height: 38px; object-fit: contain; filter: grayscale(1) opacity(0.55); transition: filter 0.25s var(--ease); }
-.lf-partners-row img:hover { filter: grayscale(0) opacity(1); }
-@media (max-width: 900px) { .lf-partners-row { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
-
-/* Partner-logo's — statische, gecentreerde strip (premium/robuust i.p.v. scrollende marquee) */
-.lf-marquee { overflow: hidden; position: relative; padding: 8px 0; }
-.lf-marquee-track { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; width: auto; gap: 26px 54px; }
-.lf-marquee-set { display: contents; }
-.lf-marquee-set img { height: 40px; width: auto; max-width: 150px; object-fit: contain; filter: grayscale(1) opacity(0.5); transition: filter 0.15s var(--ease); }
-.lf-marquee-set img:hover { filter: grayscale(0) opacity(1); }
-
-/* Stats counters */
-.lf-stats { padding: var(--section-y-compact) 0; background: var(--bg-tint, #f7f5ef); }
-.lf-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
-.lf-stat-card { background: #fff; border: 1px solid var(--ink-line-soft, #e8e6df); border-radius: 22px; padding: 22px; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; position: relative; overflow: hidden; display:flex; flex-direction:column; gap: 18px; }
-.lf-stat-card:hover { box-shadow: 0 30px 60px -28px rgba(10,22,40,0.22); }
-.lf-stat-card:hover .lf-stat-photo img { }
-.lf-stat-photo { position:relative; width:100%; aspect-ratio: 4/3; border-radius: 16px; overflow:hidden; background:#eee; }
-.lf-stat-photo img { width:100%; height:100%; object-fit:cover; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; display:block; }
-.lf-stat-body { padding: 4px 6px 8px; }
-.lf-stat-card .lf-stat-num { font-family: var(--font-display); font-size: clamp(30px, 3.6vw, 46px); font-weight: 700; color: var(--navy, #0a1628); letter-spacing: -0.02em; line-height: 1; display: flex; align-items: baseline; gap: 8px; }
-.lf-stat-card .lf-stat-dot { display:inline-block; width:8px; height:8px; border-radius:999px; background: var(--accent, #c9a24a); align-self:center; }
-.lf-stat-card .lf-stat-suffix { font-size: 0.55em; font-weight: 600; color: var(--ink-soft, #5b6472); }
-.lf-stat-card .lf-stat-label { margin-top: 10px; font-size: 14px; color: var(--ink-soft, #5b6472); letter-spacing: 0.01em; }
-.lf-stat-card--nophoto { justify-content: center; align-items: flex-start; min-height: 100%; background: linear-gradient(140deg, #0a1628 0%, #142540 100%); color:#fff; }
-.lf-stat-card--nophoto .lf-stat-num { color:#fff; font-size: clamp(40px, 5vw, 64px); }
-.lf-stat-card--nophoto .lf-stat-suffix { color: var(--accent, #c9a24a); }
-.lf-stat-card--nophoto .lf-stat-label { color: rgba(255,255,255,0.72); font-size:15px; text-transform:uppercase; letter-spacing:0.12em; }
-@media (max-width: 900px) { .lf-stats-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 480px) { .lf-stats-grid { grid-template-columns: 1fr; } }
-
-/* Support tiles */
-.lf-support-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.lf-support-card { background:#fff; padding: 28px 24px; border-radius: 14px; border: 1px solid rgba(10,22,40,0.10); box-shadow: 0 1px 2px rgba(10,22,40,0.04), 0 18px 38px -28px rgba(10,22,40,0.16); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; position:relative; }
-.lf-support-card:hover { box-shadow: 0 18px 36px -20px rgba(10,22,40,0.18); border-color: var(--accent); }
-.lf-support-card.is-active { border-color: var(--accent); box-shadow: 0 18px 40px -22px rgba(10,22,40,0.22); background: #fff; }
-.lf-support-card.is-active .lf-support-meta span { color: var(--accent); }
-.lf-support-meta span { display:inline-block; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-support-meta { display:flex; align-items:center; gap: 10px; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--ink-line-soft); }
-.lf-support-meta span { font-family: var(--font-display); font-size: 14px; color: var(--accent); letter-spacing: 0.04em; }
-.lf-support-card h5 { font-size: 16px; color: var(--navy); margin-bottom: 8px; line-height: 1.3; }
-.lf-support-card p { font-size: 13.5px; line-height: 1.65; color: var(--ink-soft); margin: 0; }
-@media (max-width: 900px) { .lf-support-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 600px) { .lf-support-grid { grid-template-columns: 1fr; } }
-html, body { overflow-x: hidden; max-width: 100%; }
-
-/* Process / werkwijze */
-/* Process: verticale sticky-stack op desktop (zoals services + why),
-   timeline-strook op mobile. */
-.lf-process { position: relative; display: block; max-width: 880px; margin: 20px auto 0; padding: 0 16px; }
-.lf-process-line { display: none; }
-.lf-process[data-process-stack] { padding-bottom: 80px; transform: none !important; opacity: 1 !important; }
-.lf-process-step {
-  position: relative; z-index: 1;
-  display: grid; grid-template-columns: 72px 1fr; gap: 6px 24px;
-  background: #fff;
-  border: 1px solid var(--ink-line-soft);
-  border-radius: 18px;
-  padding: 28px 32px;
-  margin: 0 auto 28px;
-  box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 30px 80px -28px rgba(15,17,21,.18);
-  text-align: left;
-}
-.lf-process-step:last-child { margin-bottom: 0; }
-.lf-process-num { grid-row: 1 / 4; width: 56px; height: 56px; border-radius: 50%; background: #fff; border: 2px solid var(--accent); color: var(--accent); display:inline-flex; align-items:center; justify-content:center; font-family: var(--font-display); font-size: 17px; font-weight: 700; margin-bottom: 0; box-shadow: 0 6px 18px -6px rgba(217,140,3,0.35); letter-spacing: -0.01em; }
-.lf-process-step h5 { font-size: 16px; color: var(--navy); margin-bottom: 8px; line-height: 1.3; }
-.lf-process-step p { font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); margin: 0 0 10px; }
-.lf-process-time { display:inline-block; padding: 4px 10px; background: rgba(217,140,3,0.10); color: var(--accent); border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
-@media (max-width: 900px) {
-  .lf-process { padding: 0; }
-  .lf-process[data-process-stack] { padding-bottom: 0; }
-  .lf-process-step { padding: 18px 20px; margin-bottom: 16px; box-shadow: none; }
-}
-
-/* FAQ */
-.lf-faq-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 64px; align-items: start; }
-.lf-faq-side .lf-cta-pill { margin-top: 12px; }
-.lf-faq-list .faq-item { background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 10px; margin-bottom: 12px; overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; }
-.lf-faq-list .faq-item:hover { border-color: #c9d1de; }
-.lf-faq-list .faq-item.open { border-color: var(--accent); box-shadow: 0 12px 28px -16px rgba(217,140,3,0.25); }
-.lf-faq-list .faq-q { width: 100%; display:flex; align-items:center; justify-content:space-between; gap: 18px; padding: 20px 24px; background: transparent; border: none; cursor: pointer; text-align: left; font-family: inherit; font-size: 15px; font-weight: 600; color: var(--navy); letter-spacing: -0.005em; }
-.lf-faq-list .faq-icon { color: var(--accent); flex-shrink: 0; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-faq-list .faq-item.open .faq-icon { transform: rotate(45deg); }
-.lf-faq-list .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.15s var(--ease); }
-.lf-faq-list .faq-item.open .faq-a { max-height: 400px; }
-.lf-faq-list .faq-a p { padding: 0 24px 22px; font-size: 14px; line-height: 1.7; color: var(--ink-soft); margin: 0; }
-@media (max-width: 900px) { .lf-faq-grid { grid-template-columns: 1fr; gap: 36px; } }
-
-/* ─── Floating mobile call button (FAB) ─── */
-.lf-fab-call { display: none; }
-@media (max-width: 760px) {
-  .lf-fab-call {
-    position: fixed;
-    right: 14px;
-    bottom: calc(16px + env(safe-area-inset-bottom));
-    z-index: 60;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    width: 52px;
-    height: 52px;
-    padding: 0;
-    background: #0a1628;
-    color: #fff !important;
-    text-decoration: none;
-    border-radius: 50%;
-    border: 2px solid #fff;
-    box-shadow: 0 12px 28px -10px rgba(10,22,40,0.55), 0 4px 12px rgba(10,22,40,0.25);
-    opacity: 1;
-    pointer-events: auto;
-  }
-  .lf-fab-call span { display: none; }
-  .lf-fab-call svg { width: 22px; height: 22px; }
-}
-
-/* ─── Mobile-specific polish (≤760px) ─── */
-@media (max-width: 760px) {
-  .wrap { padding-left: 18px !important; padding-right: 18px !important; }
-  .lf-section { padding: 56px 0; }
-  .lf-section-head { margin-bottom: 32px; }
-  .lf-section-head.centered { margin-bottom: 32px; }
-  .lf-h2 { font-size: 26px; line-height: 1.2; }
-  .lf-eyebrow { font-size: 10px; padding: 5px 11px; margin-bottom: 14px; }
-  .lf-lede { font-size: 14.5px; line-height: 1.6; }
-
-  /* Hero */
-  .lf-hero { min-height: 560px; }
-  .lf-hero-wrap { padding-top: 110px !important; padding-bottom: 60px !important; padding-left: 20px !important; padding-right: 20px !important; }
-  .lf-hero-card { padding: 28px 22px; border-radius: 14px; }
-  .lf-hero-card h1 { font-size: 28px; line-height: 1.18; margin-bottom: 12px; }
-  .lf-hero-card p { font-size: 14px; margin-bottom: 20px; }
-
-  /* Stats, 2x2 with thin dividers */
-  .lf-stats { padding: 26px 0; }
-  .lf-stats-inner { grid-template-columns: 1fr 1fr; gap: 22px 18px; padding: 0 6px; }
-  .lf-stat strong { font-size: 26px; }
-  .lf-stat span { font-size: 11.5px; }
-
-  /* Partners, compact 4-col */
-  .lf-partners { padding: 40px 0; }
-  .lf-partners-head { margin-bottom: 24px; }
-  .lf-partners-head p { font-size: 13px; }
-  .lf-partners-row { grid-template-columns: repeat(4, 1fr); gap: 18px 14px; }
-  .lf-partners-row img { height: 28px; }
-
-  /* About + form */
-  .lf-about-grid { gap: 32px; }
-  .lf-form { padding: 24px 20px; border-radius: 14px; }
-  .lf-form-header h3 { font-size: 20px; }
-
-  /* Services stack on mobile: shorter slot so it doesn't feel sluggish on phones */
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot { height: 90vh; }
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card { max-width: 460px; border-radius: 16px; box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 30px 60px -28px rgba(15,17,21,.28); }
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 16/10; }
-  .lf-svc-body { padding: 18px; }
-  .lf-svc-body h4 { font-size: 16px; }
-  .lf-blog-body { padding: 16px; gap: 8px; }
-  .lf-blog-body h4 { font-size: 16px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .lf-blog-body p { font-size: 13px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-  .lf-blog-img { aspect-ratio: 16/11; }
-  .lf-blog-grid { gap: 16px; }
-
-  /* Support: 2x2 */
-  .lf-support-grid { grid-template-columns: 1fr; gap: 12px; }
-  .lf-support-card { padding: 18px 18px; display: flex; gap: 14px; align-items: flex-start; }
-  .lf-support-card > div:first-child { flex-shrink: 0; padding: 0; margin: 0; border: none; flex-direction: column; align-items: center; min-width: 44px; }
-  .lf-support-card .lf-support-meta { padding: 0; margin: 0; border: none; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 56px; }
-  .lf-support-card .lf-support-meta span { font-size: 22px; color: var(--accent); }
-  .lf-support-card h5 { font-size: 14.5px; margin-bottom: 4px; }
-  .lf-support-card p { font-size: 12.5px; line-height: 1.55; }
-
-  /* Why-us: stacked but compact 2-col grid where possible */
-  .lf-why-collage { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto auto; gap: 12px; }
-  .lf-why-photo { grid-row: 2; grid-column: 1 / 3; height: 200px; border-radius: 12px; }
-  .lf-why-tl { grid-area: 1 / 1; } .lf-why-tr { grid-area: 1 / 2; }
-  .lf-why-bl { grid-area: 3 / 1; } .lf-why-br { grid-area: 3 / 2; }
-  .lf-why-tile { padding: 18px 14px; }
-  .lf-why-tile h5 { font-size: 13.5px; margin-top: 10px; }
-  .lf-why-tile p { font-size: 12.5px; }
-  .lf-why-meta { gap: 10px; padding-bottom: 10px; }
-
-  /* Trust strip stays 1-col but tighter */
-  .lf-trust-strip { padding: 18px 18px; gap: 12px; margin-top: 14px; }
-  .lf-why-section-tight .lf-trust-strip { margin-top: 0; }
-
-  /* Skills */
-  .lf-skills-grid { gap: 32px; }
-  .lf-skills-collage { grid-template-columns: 1fr; gap: 12px; }
-  .lf-skills-img1, .lf-skills-img2 { height: 240px; }
-
-  /* Process: vertical timeline with line on left */
-  .lf-process { grid-template-columns: 1fr; gap: 0; padding-left: 8px; }
-  .lf-process-line { display: block; left: 35px; right: auto; top: 28px; bottom: 28px; width: 2px; height: auto; background: var(--ink-line); }
-  .lf-process-step { display: grid; grid-template-columns: 56px 1fr; gap: 0 18px; padding: 14px 0 18px 0; }
-  .lf-process-num { margin-bottom: 0; grid-row: 1 / 4; }
-  .lf-process-step h5 { margin-top: 14px; }
-
-  /* Projects */
-  .lf-proj-tabs-wrap { margin-bottom: 28px; }
-  .lf-proj-tabs { padding: 4px; gap: 2px; }
-  .lf-proj-chip { padding: 8px 14px; font-size: 12px; }
-  .lf-proj-cap strong { font-size: 15px; }
-
-  /* Testimonials, horizontal swipe */
-  .lf-testi-grid { display: flex; grid-template-columns: none; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 18px 12px; margin: 0 -18px; -webkit-overflow-scrolling: touch; }
-  .lf-testi-grid::-webkit-scrollbar { display: none; }
-  .lf-testi { flex: 0 0 86%; scroll-snap-align: start; padding: 24px; }
-
-  /* CTA banner */
-  .lf-cta { padding: 32px 22px; border-radius: 14px; }
-  .lf-cta-text h2 { font-size: 24px; }
-
-  /* FAQ */
-  .lf-faq-grid { gap: 28px; }
-  .lf-faq-list .faq-q { padding: 16px 18px; font-size: 14px; gap: 12px; }
-  .lf-faq-list .faq-a p { padding: 0 18px 18px; font-size: 13.5px; }
-}
-
-/* AB highlight & marker — gele scroll-in markeringen */
-.ab-mark { position: relative; display: inline-block; color: var(--navy); white-space: nowrap; }
-.ab-mark::after { content:''; position:absolute; left:-2%; right:-2%; bottom:4%; height:38%; background: var(--accent); opacity:.28; border-radius:3px; transform-origin:left center; transform: scaleX(1); z-index:-1; }
-.ab-hl { position: relative; display: inline; background-image: linear-gradient(120deg, rgba(217,140,3,0.22) 0%, rgba(217,140,3,0.22) 100%); background-repeat: no-repeat; background-size: 100% 60%; background-position: 0 88%; padding: 0 2px; color: var(--navy); font-weight:500; }
-.ab-hl[data-hl-delay="0"] { --hl-i: 0; } .ab-hl[data-hl-delay="1"] { --hl-i: 1; } .ab-hl[data-hl-delay="2"] { --hl-i: 2; }
-/* (reduced-motion override voor highlight-sweep bewust verwijderd — animaties voor iedereen) */
-
-/* =====================================================================
-   PROFESSIONELE STATIC LAYOUTS — vervangt de stuiterige sticky-stack
-   animaties voor Zes specialisaties, Vier zekerheden en Werkwijze.
-   ===================================================================== */
-
-/* Zes specialisaties — 3-koloms grid op desktop, zijwaarts swipe op mobile */
-.lf-services .lf-svc-grid[data-svc-stack] {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 32px !important;
-  max-width: 1200px !important;
-  margin: 0 auto !important;
-  padding: 0 !important;
-}
-@media (max-width: 900px) {
-  .lf-services .lf-svc-grid[data-svc-stack] {
-    display: flex !important;
-    grid-template-columns: none !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
-    padding: 0 20px 14px !important;
-    margin: 0 -20px !important;
-    gap: 14px !important;
-    scrollbar-width: none;
-  }
-  .lf-services .lf-svc-grid[data-svc-stack]::-webkit-scrollbar { display: none; }
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot {
-    flex: 0 0 82% !important;
-    max-width: 82% !important;
-    scroll-snap-align: start !important;
-  }
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
-    aspect-ratio: 3/4 !important;
-    height: auto !important;
-  }
-  /* Op mobile: body altijd zichtbaar (geen hover beschikbaar) */
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-body p {
-    max-height: 100px !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-link {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-  /* Mobiel: titel + tekst staan altijd zichtbaar, dus overlay sterker houden */
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img::after {
-    height: 86% !important;
-    background: linear-gradient(180deg, rgba(10,15,28,0) 0%, rgba(10,15,28,0.35) 35%, rgba(10,15,28,0.88) 100%) !important;
-  }
-  /* Swipe-hint: subtiele dot indicator onder de carousel */
-  .lf-svc-grid-wrapper { position: relative; }
-}
-/* Dot indicators voor mobile carousel */
-.lf-svc-swipe-hint {
-  display: none;
-}
-@media (max-width: 900px) {
-  .lf-svc-swipe-hint {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin-top: 18px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-  }
-  .lf-svc-swipe-hint svg {
-    color: var(--accent);
-    opacity: .75;
-  }
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-slot {
-  display: block !important;
-  position: static !important;
-  height: auto !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  transform: none !important;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
-  position: static !important;
-  top: auto !important;
-  transform: none !important;
-  margin: 0 !important;
-  max-width: none !important;
-  width: 100% !important;
-  z-index: auto !important;
-  display: flex !important;
-  flex-direction: column !important;
-  height: 100% !important;
-  border-radius: 16px !important;
-  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover {
-  transform: none !important;
-  box-shadow: none !important;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover h4 {
-  color: var(--accent) !important;
-  transition: color .25s ease;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 4/3 !important; }
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-body { flex: 1; display:flex; flex-direction:column; }
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-body .lf-svc-link { margin-top: auto; }
-@media (max-width: 900px) {
-  .lf-services .lf-svc-grid[data-svc-stack] {
-    grid-template-columns: 1fr !important;
-    gap: 18px !important;
-  }
-  .lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img { aspect-ratio: 16/10 !important; }
-}
-
-/* Vier zekerheden — editorial layout met dominante typografische cijfers.
-   Niet zomaar 4 cards, maar redactionele blokken met 01/02/03/04 als
-   visueel anker (display-font, accent-kleur, groot). */
-.lf-why-collage.lf-why-stack[data-why-stack] {
-  display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-  grid-template-rows: auto !important;
-  gap: 40px 64px !important;
-  max-width: 1200px !important;
-  margin: 0 auto 72px !important;  /* extra ruimte naar trust-strip onder */
-}
-.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-stack-left {
-  display: contents !important;
-}
-.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-slot {
-  display: block !important;
-  position: static !important;
-  margin: 0 !important;
-}
-/* Editorial-stijl tile: geen omkadering. Het GROTE nummer is de afgrenzing. */
-.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-tile {
-  position: static !important;
-  top: auto !important;
-  transform: none !important;
-  margin: 0 !important;
-  padding: 0 0 0 88px !important;
-  background: transparent !important;
-  border: none !important;
-  border-radius: 0 !important;
-  border-left: none !important;
-  height: 100%;
-  position: relative !important;
-}
-.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-meta {
-  border: none !important;
-  padding: 0 !important;
-  margin: 0 0 14px !important;
-  align-items: baseline;
-  gap: 12px;
-  position: relative;
-}
-.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-num {
-  position: static !important;
-  display: inline-flex !important;
-  width: 26px; height: 26px;
-  border-radius: 6px !important;
-  background: var(--navy) !important;
-  color: #fff !important;
-  font-family: var(--font-display) !important;
-  font-style: normal !important;
-  font-weight: 700 !important;
-  font-size: 12px !important;
-  line-height: 1 !important;
-  letter-spacing: 0 !important;
-  align-items: center !important;
-  justify-content: center !important;
-  flex-shrink: 0;
-}
-.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-label {
-  font-size: 11px !important;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-mute) !important;
-}
-.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-tile h5 {
-  font-family: var(--font-display);
-  font-size: clamp(20px, 2.2vw, 26px) !important;
-  font-weight: 700 !important;
-  color: var(--navy) !important;
-  line-height: 1.2 !important;
-  margin: 0 0 10px !important;
-  letter-spacing: -0.015em;
-}
-.lf-why-collage.lf-why-stack[data-why-stack] .lf-why-tile p {
-  font-size: 14.5px !important;
-  line-height: 1.65 !important;
-  color: var(--ink-soft) !important;
-  margin: 0 !important;
-  max-width: 440px;
-}
-@media (max-width: 720px) {
-  .lf-why-collage.lf-why-stack[data-why-stack] {
-    grid-template-columns: 1fr !important;
-    gap: 30px !important;
-    margin-bottom: 40px !important;
-  }
-  .lf-why-collage.lf-why-stack[data-why-stack] .lf-why-tile {
-    padding-left: 60px !important;
-  }
-  .lf-why-collage.lf-why-stack[data-why-stack] .lf-why-num {
-    left: -60px !important;
-    font-size: 44px !important;
-    top: -6px;
-  }
-}
-
-/* Trust strip: duidelijke breathing room boven (was geen spacing) */
-.lf-why-section-tight .lf-trust-strip {
-  margin-top: 24px !important;
-}
-
-/* Werkwijze — editorial blueprint stijl. Geen cirkel-clichés meer.
-   Het GROTE serif-cijfer (Instrument Serif italic) is het anker.
-   Subtiele dunne horizontale lijn verbindt de stappen als blauwdruk. */
-.lf-process[data-process-stack] {
-  display: grid !important;
-  grid-template-columns: repeat(5, 1fr) !important;
-  gap: 16px !important;
-  max-width: 1200px !important;
-  margin: 0 auto !important;
-  padding: 0 !important;
-  position: relative !important;
-}
-/* Hairline-baseline tussen de stappen, op de hoogte van waar de titel begint */
-.lf-process[data-process-stack]::before {
-  content: '';
-  position: absolute;
-  top: 132px;
-  left: 16px;
-  right: 16px;
-  height: 1px;
-  background: rgba(15,17,21,0.08);
-  z-index: 0;
-}
-.lf-process[data-process-stack] .lf-process-step {
-  position: relative !important;
-  top: auto !important;
-  transform: none !important;
-  opacity: 1 !important;
-  background: transparent !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 0 18px 28px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 14px !important;
-  z-index: 1;
-}
-
-/* Clean navy-box cijfer — vervangt het serif-cursief stempel */
-.lf-process[data-process-stack] .lf-process-num {
-  position: static !important;
-  display: inline-flex !important;
-  width: 32px !important;
-  height: 32px !important;
-  border-radius: 8px !important;
-  background: var(--navy) !important;
-  color: #fff !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  margin: 0 0 12px !important;
-  font-family: var(--font-display) !important;
-  font-style: normal !important;
-  font-weight: 700 !important;
-  font-size: 13px !important;
-  line-height: 1 !important;
-  letter-spacing: 0 !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-.lf-process[data-process-stack] .lf-process-num::after { content: none !important; }
-.lf-process[data-process-stack] .lf-process-step h5 {
-  font-family: var(--font-display);
-  font-size: clamp(15px, 1.2vw, 17px) !important;
-  color: var(--navy) !important;
-  margin: 0 !important;
-  line-height: 1.3 !important;
-  font-weight: 600;
-  letter-spacing: -0.005em;
-}
-.lf-process[data-process-stack] .lf-process-step p {
-  font-size: 13.5px !important;
-  line-height: 1.6 !important;
-  color: var(--ink-soft) !important;
-  margin: 0 !important;
-}
-.lf-process[data-process-stack] .lf-process-time {
-  font-family: 'DM Sans', 'Plus Jakarta Sans', sans-serif !important;
-  font-size: 10.5px !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.18em !important;
-  text-transform: uppercase !important;
-  color: var(--ink-mute) !important;
-  margin-top: 6px !important;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.lf-process[data-process-stack] .lf-process-time::before {
-  content: '';
-  width: 18px;
-  height: 1px;
-  background: var(--accent);
-  display: inline-block;
-}
-.lf-process[data-process-stack] .lf-process-line { display: none !important; }
-@media (max-width: 900px) {
-  .lf-process[data-process-stack] {
-    grid-template-columns: 1fr !important;
-    gap: 36px !important;
-  }
-  .lf-process[data-process-stack]::before {
-    top: 0;
-    bottom: 0;
-    left: 16px;
-    right: auto;
-    width: 1px;
-    height: auto;
-  }
-  .lf-process[data-process-stack] .lf-process-step {
-    padding-left: 90px !important;
-    position: relative !important;
-  }
-  .lf-process[data-process-stack] .lf-process-num {
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
-    font-size: 56px !important;
-  }
-}
-
-/* ── Divisies (premium herbouw: editorial kop + feature-tegel + content-cards) ── */
-.lf-divisies { padding: var(--section-y) 0; }
-.lf-div-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-bottom: 44px; }
-.lf-div-head-left { max-width: 640px; }
-.lf-div-head-left .lf-h2 { margin-bottom: 16px; }
-.lf-div-head-left .lf-lede { margin-bottom: 0; max-width: 600px; }
-.lf-div-head-cta { flex-shrink: 0; display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--navy); border-bottom: 2px solid var(--accent); padding-bottom: 6px; white-space: nowrap; transition: gap .25s ease; }
-.lf-div-head-cta svg { transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-div-head-cta:hover { gap: 12px; }
-.lf-div-head-cta:hover svg { transform: translateX(3px); }
-
-.lf-div-feature { display: grid; grid-template-columns: 1.15fr 1fr; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 18px; overflow: hidden; margin-bottom: 24px; text-decoration: none; color: var(--ink); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-div-feature:hover { box-shadow: 0 30px 64px -30px rgba(10,22,40,0.28); }
-.lf-div-feature-img { position: relative; min-height: 360px; overflow: hidden; background: #eef0f2; }
-.lf-div-feature-img img { width: 100%; height: 100%; object-fit: cover; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-div-feature:hover .lf-div-feature-img img { }
-.lf-div-feature-body { padding: 48px; display: flex; flex-direction: column; justify-content: center; }
-.lf-div-feature-body h3 { font-family: var(--font-display); font-size: clamp(26px, 2.6vw, 34px); font-weight: 700; color: var(--navy); margin: 14px 0; letter-spacing: -0.02em; line-height: 1.1; }
-.lf-div-feature-body p { font-size: 15px; line-height: 1.7; color: var(--ink-soft); margin: 0 0 26px; max-width: 44ch; }
-.lf-div-tag { display: inline-flex; align-self: flex-start; padding: 5px 13px; background: rgba(217,140,3,0.12); color: #a8690a; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
-.lf-div-tag.light { background: rgba(255,255,255,0.16); color: #fff; }
-
-.lf-div-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.lf-div-card { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--ink-line-soft); border-radius: 16px; overflow: hidden; text-decoration: none; color: var(--ink); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-div-card:hover { box-shadow: 0 26px 52px -28px rgba(10,22,40,0.24); border-color: rgba(217,140,3,0.45); }
-.lf-div-card-img { aspect-ratio: 16/10; overflow: hidden; background: #eef0f2; }
-.lf-div-card-img img { width: 100%; height: 100%; object-fit: cover; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-div-card:hover .lf-div-card-img img { }
-.lf-div-card-body { padding: 24px 24px 26px; display: flex; flex-direction: column; flex: 1; }
-.lf-div-card-body h4 { font-family: var(--font-display); font-size: 19px; font-weight: 700; color: var(--navy); margin: 0 0 9px; letter-spacing: -0.01em; }
-.lf-div-card-body p { font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); margin: 0 0 20px; flex: 1; }
-.lf-div-link { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); margin-top: auto; }
-.lf-div-link.light { color: #fff; }
-.lf-div-link svg { transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-div-card:hover .lf-div-link svg, .lf-div-feature:hover .lf-div-link svg { transform: translateX(4px); }
-
-.lf-div-cta-card { background: linear-gradient(150deg, #0a1628 0%, #15294a 100%); border-radius: 16px; text-decoration: none; display: flex; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; }
-.lf-div-cta-card:hover { box-shadow: 0 26px 52px -28px rgba(10,22,40,0.4); }
-.lf-div-cta-inner { padding: 28px 26px 30px; display: flex; flex-direction: column; justify-content: center; }
-.lf-div-cta-card h4 { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff; margin: 14px 0 9px; line-height: 1.2; }
-.lf-div-cta-card p { font-size: 13.5px; line-height: 1.6; color: rgba(255,255,255,0.78); margin: 0 0 20px; }
-
-@media (max-width: 920px) {
-  .lf-div-head { flex-direction: column; align-items: flex-start; gap: 18px; margin-bottom: 32px; }
-  .lf-div-feature { grid-template-columns: 1fr; }
-  .lf-div-feature-img { min-height: 0; aspect-ratio: 16/10; }
-  .lf-div-feature-body { padding: 28px 24px 30px; }
-  .lf-div-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-}
-@media (max-width: 600px) {
-  .lf-div-grid { grid-template-columns: 1fr; }
-}
-
-/* Zes specialisaties — fotografische tiles met overlay-titels (BESIX/DBM
-   aannemers-website stijl). Foto dominanteren, alles in 1 klik bereikbaar. */
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card {
-  position: relative !important;
-  display: block !important;
-  background: var(--navy) !important;
-  border: none !important;
-  border-radius: 0 !important;
-  overflow: hidden !important;
-  text-decoration: none;
-  aspect-ratio: 4/5 !important;
-  height: auto !important;
-  animation: none;
-}
-
-/* Foto vult de hele card, gradient-overlay onderaan voor leesbaarheid */
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img {
-  position: absolute !important;
-  inset: 0 !important;
-  aspect-ratio: auto !important;
-  overflow: hidden;
-  border-radius: 0 !important;
-  z-index: 1;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover .lf-svc-img img {
-}
-/* Lichtere gradient: de foto domineert, alleen de titel onderaan blijft leesbaar.
-   Op hover wordt de overlay sterker zodat de onthulde tekst leesbaar blijft. */
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-img::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 62%;
-  background: linear-gradient(180deg, rgba(10,15,28,0) 0%, rgba(10,15,28,0.28) 50%, rgba(10,15,28,0.80) 100%);
-  z-index: 1;
-  pointer-events: none;
-  transition: height .15s ease, background .15s ease;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover .lf-svc-img::after {
-  height: 100%;
-  background: linear-gradient(180deg, rgba(10,15,28,0) 0%, rgba(10,15,28,0.50) 42%, rgba(10,15,28,0.90) 100%);
-}
-/* Badge in top-right hoek met oranje icoon — discreet maar herkenbaar */
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-badge {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 44px;
-  height: 44px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(8px);
-  color: var(--accent);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3;
-  box-shadow: 0 6px 18px -8px rgba(0,0,0,0.45);
-  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-badge svg {
-  width: 22px;
-  height: 22px;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-card:hover .lf-svc-badge {
-  background: var(--accent);
-  color: #fff;
-}
-/* Nummer als label top-left — discreet */
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-num {
-  position: absolute;
-  top: 24px;
-  left: 24px;
-  padding: 0;
-  background: transparent;
-  color: rgba(255,255,255,0.92);
-  font-family: 'DM Sans', sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 13px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  box-shadow: none;
-  backdrop-filter: none;
-  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
-  z-index: 3;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-num::before {
-  content: '';
-  display: inline-block;
-  width: 22px;
-  height: 1px;
-  background: var(--accent);
-  vertical-align: middle;
-  margin-right: 10px;
-  margin-bottom: 2px;
-}
-/* Body zit OVER de foto, onderaan, met witte tekst op gradient */
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-body {
-  position: absolute !important;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 28px !important;
-  display: flex !important;
-  flex-direction: column;
-  gap: 8px;
-  z-index: 3;
-  color: #fff;
-  transform: translateY(0);
-  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-body h4 {
-  font-family: var(--font-display) !important;
-  font-size: clamp(20px, 1.8vw, 24px) !important;
-  color: #fff !important;
-  margin: 0 !important;
-  font-weight: 700 !important;
-  letter-spacing: -0.018em;
-  line-height: 1.15;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-body p {
-  font-size: 13.5px !important;
-  line-height: 1.55 !important;
-  color: rgba(255,255,255,0.85) !important;
-  margin: 0 !important;
-}
-.lf-services .lf-svc-grid[data-svc-stack] .lf-svc-link {
-  margin-top: 12px !important;
-  padding-top: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  text-decoration: none;
-  width: fit-content;
-}
-
-/* Projecten die de tand des tijds doorstaan — verbeter de grid */
-.lf-proj-collage {
-  gap: 24px !important;
-}
-.lf-proj-cell {
-  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
-}
-.lf-proj-cell:hover {
-  box-shadow: 0 1px 2px rgba(15,17,21,.05), 0 30px 60px -22px rgba(15,17,21,0.30);
-}
-/* Op mobile: zijwaarts swipe ipv onder elkaar stacken (zelfde patroon als services) */
-@media (max-width: 900px) {
-  .lf-proj-collage {
-    display: flex !important;
-    grid-template-columns: none !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
-    padding: 0 20px 14px !important;
-    margin: 0 -20px !important;
-    gap: 14px !important;
-    scrollbar-width: none;
-  }
-  .lf-proj-collage::-webkit-scrollbar { display: none; }
-  .lf-proj-cell {
-    flex: 0 0 82% !important;
-    max-width: 82% !important;
-    scroll-snap-align: start !important;
-  }
-}
-`;
+  return `<div class="rp">${nav}${hero}${about}${diensten}${waarom}${realisaties}${werkwijze}${reviews}${merken}${faq}${blog}${cta}${footer}</div>`;
+};
 
 export default function Home() {
   useEffect(() => {
-    document.title = "AB Bouw Groep, Vakkundige bouw en renovatie in Vlaanderen";
-    let m = document.querySelector('meta[name="description"]');
-    if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', "AB Bouw Groep: Vlaams familiebedrijf voor bouw en renovatie sinds 2010. Eigen vakmensen, vaste projectleider, vaste prijs.");
-    const prevClass = document.body.className;
-    document.body.className = "";
-    const styleEl = document.createElement('style');
-    styleEl.textContent = EXTRA_STYLE;
-    document.head.appendChild(styleEl);
+    document.title = 'AB Bouw Groep — bouw en renovatie in heel Vlaanderen';
+    const opruimers: Array<() => void> = [];
 
-    // Sticky-stack en svc-nav zijn verwijderd (robuust-overhaul): secties zijn statische grids.
-    const stickyCleanup = () => {};
-
-    const svcNavCleanup = () => {};
-
-    // Blog carousel: controlled transform, no browser scroll-snap jumps
-    const blogCarouselSetup = () => {
-      const scroller = document.querySelector<HTMLElement>('[data-blog-scroller]');
-      const track = document.querySelector<HTMLElement>('[data-blog-track]');
-      const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-blog-dot]'));
-      const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-blog-card]'));
-      const prevBtn = document.querySelector<HTMLButtonElement>('[data-blog-prev]');
-      const nextBtn = document.querySelector<HTMLButtonElement>('[data-blog-next]');
-      if (!scroller || !track || !dots.length || !cards.length) return () => {};
-      const isMobile = () => window.innerWidth <= 900;
-      let currentIdx = 0;
-      let startX = 0;
-      let pointerDown = false;
-      const getVisible = () => (window.innerWidth <= 1100 ? 2 : 3);
-      const sizeCarousel = () => {
-        if (isMobile()) {
-          scroller.style.removeProperty('--blog-card-width');
-          scroller.style.removeProperty('--blog-side-pad');
-          scroller.style.removeProperty('--blog-offset');
-          return;
-        }
-        const gap = 28;
-        const visible = getVisible();
-        const cardWidth = Math.max(0, (scroller.clientWidth - gap * (visible - 1)) / visible);
-        scroller.style.setProperty('--blog-gap', `${gap}px`);
-        scroller.style.setProperty('--blog-card-width', `${cardWidth}px`);
-        scroller.style.setProperty('--blog-side-pad', `0px`);
-      };
-      const setActive = (i: number) => {
-        currentIdx = Math.max(0, Math.min(cards.length - 1, i));
-        if (!isMobile()) {
-          const cardW = cards[0].offsetWidth;
-          const gap = parseFloat(getComputedStyle(track).gap || '0');
-          const step = cardW + gap;
-          // Center the active card, but clamp so we never scroll past either edge
-          const ideal = currentIdx * step - (scroller.clientWidth - cardW) / 2;
-          const totalTrackW = cards.length * cardW + gap * (cards.length - 1);
-          const maxOffset = Math.max(0, totalTrackW - scroller.clientWidth);
-          const clamped = Math.max(0, Math.min(maxOffset, ideal));
-          scroller.style.setProperty('--blog-offset', `${clamped}px`);
-        }
-        dots.forEach((d, k) => d.classList.toggle('is-active', k === currentIdx));
-        cards.forEach((c, k) => c.classList.toggle('is-current', k === currentIdx));
-        if (prevBtn) prevBtn.disabled = currentIdx === 0;
-        if (nextBtn) nextBtn.disabled = currentIdx === cards.length - 1;
-      };
-      const scrollTo = (idx: number) => {
-        const clamped = Math.max(0, Math.min(cards.length - 1, idx));
-        if (isMobile()) {
-          const target = cards[clamped];
-          if (target) {
-            const left = target.offsetLeft - (scroller.clientWidth - target.offsetWidth) / 2;
-            scroller.scrollTo({ left, behavior: 'smooth' });
-          }
-        }
-        setActive(clamped);
-      };
-      const onResize = () => { sizeCarousel(); setActive(currentIdx); };
-      const onPointerDown = (e: PointerEvent) => { if (isMobile()) return; pointerDown = true; startX = e.clientX; };
-      const onPointerUp = (e: PointerEvent) => {
-        if (!pointerDown) return;
-        pointerDown = false;
-        const delta = e.clientX - startX;
-        if (Math.abs(delta) > 45) scrollTo(currentIdx + (delta < 0 ? 1 : -1));
-      };
-      let scrollRaf = 0;
-      const onScroll = () => {
-        if (!isMobile()) return;
-        if (scrollRaf) cancelAnimationFrame(scrollRaf);
-        scrollRaf = requestAnimationFrame(() => {
-          const center = scroller.scrollLeft + scroller.clientWidth / 2;
-          let bestIdx = 0;
-          let bestDist = Infinity;
-          cards.forEach((c, k) => {
-            const cCenter = c.offsetLeft + c.offsetWidth / 2;
-            const d = Math.abs(cCenter - center);
-            if (d < bestDist) { bestDist = d; bestIdx = k; }
-          });
-          if (bestIdx !== currentIdx) {
-            currentIdx = bestIdx;
-            dots.forEach((d, k) => d.classList.toggle('is-active', k === currentIdx));
-            cards.forEach((c, k) => c.classList.toggle('is-current', k === currentIdx));
-          }
-        });
-      };
-      window.addEventListener('resize', onResize);
-      scroller.addEventListener('pointerdown', onPointerDown, { passive: true });
-      scroller.addEventListener('pointerup', onPointerUp, { passive: true });
-      scroller.addEventListener('pointercancel', () => { pointerDown = false; }, { passive: true });
-      scroller.addEventListener('scroll', onScroll, { passive: true });
-      const dotHandlers: Array<[HTMLButtonElement, () => void]> = [];
-      dots.forEach((dot, idx) => {
-        const h = () => scrollTo(idx);
-        dot.addEventListener('click', h);
-        dotHandlers.push([dot, h]);
-      });
-      const prevH = () => scrollTo(Math.max(0, currentIdx - 1));
-      const nextH = () => scrollTo(Math.min(cards.length - 1, currentIdx + 1));
-      prevBtn?.addEventListener('click', prevH);
-      nextBtn?.addEventListener('click', nextH);
-      // initial
-      sizeCarousel();
-      setActive(0);
-      return () => {
-        window.removeEventListener('resize', onResize);
-        scroller.removeEventListener('pointerdown', onPointerDown);
-        scroller.removeEventListener('pointerup', onPointerUp);
-        scroller.removeEventListener('scroll', onScroll);
-        dotHandlers.forEach(([el, h]) => el.removeEventListener('click', h));
-        prevBtn?.removeEventListener('click', prevH);
-        nextBtn?.removeEventListener('click', nextH);
-      };
+    /* ── mobiel menu ─────────────────────────────────────────────────── */
+    const mob = document.querySelector<HTMLElement>('[data-mob]');
+    const openBtn = document.querySelector<HTMLButtonElement>('[data-mob-open]');
+    const closeBtn = document.querySelector<HTMLButtonElement>('[data-mob-close]');
+    const zetMenu = (open: boolean) => {
+      if (!mob) return;
+      mob.classList.toggle('is-open', open);
+      mob.hidden = !open;
+      openBtn?.setAttribute('aria-expanded', String(open));
+      document.body.style.overflow = open ? 'hidden' : '';
     };
-    const blogCleanup = blogCarouselSetup();
-
-    // ── Reviews carousel — 3 zichtbaar, handmatige pijltjes (geen auto-scroll) ──
-    const revScroll = document.querySelector<HTMLElement>('[data-rev-scroll]');
-    const revPrevBtn = document.querySelector<HTMLButtonElement>('[data-rev-prev]');
-    const revNextBtn = document.querySelector<HTMLButtonElement>('[data-rev-next]');
-    const revStep = () => {
-      const card = revScroll?.querySelector<HTMLElement>('.lf-testi');
-      return card ? card.offsetWidth + 20 : 320;
-    };
-    const revSync = () => {
-      if (!revScroll) return;
-      const max = revScroll.scrollWidth - revScroll.clientWidth - 4;
-      if (revPrevBtn) revPrevBtn.disabled = revScroll.scrollLeft <= 4;
-      if (revNextBtn) revNextBtn.disabled = revScroll.scrollLeft >= max;
-    };
-    const revPrevH = () => revScroll?.scrollBy({ left: -revStep(), behavior: 'smooth' });
-    const revNextH = () => revScroll?.scrollBy({ left: revStep(), behavior: 'smooth' });
-    revPrevBtn?.addEventListener('click', revPrevH);
-    revNextBtn?.addEventListener('click', revNextH);
-    revScroll?.addEventListener('scroll', revSync);
-    window.addEventListener('resize', revSync);
-    revSync();
-
-    // Newsletter form — POST naar GHL Inbound Webhook met bron_lead='newsletter'
-    const newsletterForm = document.querySelector<HTMLFormElement>('[data-newsletter-form]');
-    const onNewsletterSubmit = async (e: SubmitEvent) => {
-      e.preventDefault();
-      if (!newsletterForm) return;
-      const emailInput = newsletterForm.querySelector<HTMLInputElement>('input[type="email"]');
-      const submitBtn = newsletterForm.querySelector<HTMLButtonElement>('button[type="submit"]');
-      if (!emailInput || !emailInput.checkValidity()) {
-        emailInput?.reportValidity();
-        return;
-      }
-      if (submitBtn) submitBtn.disabled = true;
-      const result = await submitLead({
-        source: 'newsletter',
-        page_path: window.location.pathname,
-        email: emailInput.value,
-        bron_lead: 'website_newsletter',
-        aanvullende_info: 'Inschrijving via nieuwsbrief-formulier op homepage',
-      });
-      if (submitBtn) submitBtn.disabled = false;
-      if (result.ok) {
-        newsletterForm.classList.add('is-success');
-        emailInput.value = '';
-      } else {
-        newsletterForm.classList.add('is-success'); // soft fallback: toon thank-you, error logt al via console
-      }
-    };
-    newsletterForm?.addEventListener('submit', onNewsletterSubmit);
-
-    // ── Home offerte-form submit handler ──
-    const homeForm = document.querySelector<HTMLFormElement>('[data-home-form]');
-    const homeAside = homeForm?.closest<HTMLElement>('aside.lf-form');
-    const homeBtn = document.querySelector<HTMLButtonElement>('[data-home-submit]');
-    const homeBtnLabel = document.querySelector<HTMLElement>('[data-home-submit-label]');
-    const homeErr = document.querySelector<HTMLElement>('[data-home-error]');
-    const onHomeSubmit = async (e: SubmitEvent) => {
-      e.preventDefault();
-      if (!homeForm) return;
-      const required = homeForm.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[required]');
-      for (const inp of Array.from(required)) {
-        if (!inp.checkValidity()) { inp.reportValidity(); return; }
-      }
-      const sel = homeForm.querySelector<HTMLSelectElement>('select[name="type_werk"]');
-      if (sel && !sel.value) {
-        if (homeErr) { homeErr.hidden = false; homeErr.textContent = 'Selecteer een dienst.'; }
-        sel.focus();
-        return;
-      }
-      const fd = new FormData(homeForm);
-      const emailV = ((fd.get('email') as string) || '').trim();
-      const phoneV = ((fd.get('phone') as string) || '').trim();
-      if (!emailV || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailV)) {
-        if (homeErr) { homeErr.hidden = false; homeErr.textContent = 'Vul een geldig e-mailadres in.'; }
-        homeForm.querySelector<HTMLInputElement>('input[name="email"]')?.focus();
-        return;
-      }
-      if (!phoneV || phoneV.replace(/\D/g, '').length < 8) {
-        if (homeErr) { homeErr.hidden = false; homeErr.textContent = 'Vul een geldig telefoonnummer in (minstens 8 cijfers).'; }
-        homeForm.querySelector<HTMLInputElement>('input[name="phone"]')?.focus();
-        return;
-      }
-      if (homeErr) { homeErr.hidden = true; homeErr.textContent = ''; }
-      if (homeBtn) homeBtn.disabled = true;
-      if (homeBtnLabel) homeBtnLabel.textContent = 'Even bezig…';
-
-      const result = await submitLead({
-        source: 'contact_form',
-        page_path: window.location.pathname,
-        firstName: (fd.get('firstName') as string) || undefined,
-        lastName: (fd.get('lastName') as string) || undefined,
-        email: emailV,
-        phone: phoneV,
-        type_werk: divisieKey(fd.get('type_werk') as string),
-        aanvullende_info: 'Via Home-pagina offerte-form',
-        bron_lead: 'website:home',
-      });
-
-      if (result.ok) {
-        homeAside?.classList.add('is-success');
-      } else {
-        if (homeBtn) homeBtn.disabled = false;
-        if (homeBtnLabel) homeBtnLabel.textContent = 'Vraag mijn gratis offerte aan';
-        if (homeErr) { homeErr.hidden = false; homeErr.textContent = `Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced}.`; }
-      }
-    };
-    homeForm?.addEventListener('submit', onHomeSubmit);
-
-    // ── Hero offerte-form submit handler (korte 3-veld lead-form in de hero) ──
-    const heroForm = document.querySelector<HTMLFormElement>('[data-hero-form]');
-    const heroCard = heroForm?.closest<HTMLElement>('.tr-leadcard');
-    const heroBtn = document.querySelector<HTMLButtonElement>('[data-hero-submit]');
-    const heroBtnLabel = document.querySelector<HTMLElement>('[data-hero-submit-label]');
-    const heroErr = document.querySelector<HTMLElement>('[data-hero-error]');
-    let heroStarted = false;
-    heroForm?.addEventListener('focusin', () => { if (!heroStarted) { heroStarted = true; trackFormStart('home:hero'); } });
-    const onHeroSubmit = async (e: SubmitEvent) => {
-      e.preventDefault();
-      if (!heroForm) return;
-      const fd = new FormData(heroForm);
-      const name = ((fd.get('firstName') as string) || '').trim();
-      const phone = ((fd.get('phone') as string) || '').trim();
-      const showErr = (msg: string, sel?: string) => {
-        if (heroErr) { heroErr.style.display = 'block'; heroErr.textContent = msg; }
-        if (sel) heroForm.querySelector<HTMLElement>(sel)?.focus();
-      };
-      if (name.length < 2) return showErr('Vul uw voornaam in.', 'input[name="firstName"]');
-      if (phone.replace(/\D/g, '').length < 8) return showErr('Vul een geldig telefoonnummer in (minstens 8 cijfers).', 'input[name="phone"]');
-      if (heroErr) { heroErr.style.display = 'none'; heroErr.textContent = ''; }
-      if (heroBtn) heroBtn.disabled = true;
-      if (heroBtnLabel) heroBtnLabel.textContent = 'Even bezig…';
-      const sp = name.indexOf(' ');
-      const firstName = sp > 0 ? name.slice(0, sp) : name;
-      const lastName = sp > 0 ? name.slice(sp + 1) : undefined;
-      const digits = phone.replace(/\D/g, '');
-      const result = await submitLead({
-        source: 'contact_form',
-        page_path: window.location.pathname,
-        firstName,
-        lastName,
-        email: `lead-${digits}@abgroep.be`,
-        phone,
-        type_werk: divisieKey(''),
-        aanvullende_info: 'Hero-form homepage — dienst nog onbekend; e-mail telefonisch opvragen',
-        bron_lead: 'website:home:hero',
-      });
-      if (result.ok) {
-        heroCard?.classList.add('is-success');
-      } else {
-        if (heroBtn) heroBtn.disabled = false;
-        if (heroBtnLabel) heroBtnLabel.textContent = 'Plan mijn afspraak';
-        showErr(`Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced}.`);
-      }
-    };
-    heroForm?.addEventListener('submit', onHeroSubmit);
-    // mobiel: leadcard-kop klapt het formulier open/dicht (desktop altijd open via CSS)
-    const lcToggle = document.querySelector<HTMLElement>('[data-lc-toggle]');
-    const lcRow = lcToggle?.closest<HTMLElement>('.tr-lc-row--primary');
-    lcToggle?.addEventListener('click', () => {
-      const open = lcRow?.classList.toggle('is-open');
-      lcToggle.setAttribute('aria-expanded', String(!!open));
+    const onOpen = () => zetMenu(true);
+    const onClose = () => zetMenu(false);
+    const onEsc = (e: KeyboardEvent) => { if (e.key === 'Escape') zetMenu(false); };
+    openBtn?.addEventListener('click', onOpen);
+    closeBtn?.addEventListener('click', onClose);
+    document.addEventListener('keydown', onEsc);
+    mob?.querySelectorAll('a').forEach((a) => a.addEventListener('click', onClose));
+    opruimers.push(() => {
+      openBtn?.removeEventListener('click', onOpen);
+      closeBtn?.removeEventListener('click', onClose);
+      document.removeEventListener('keydown', onEsc);
+      document.body.style.overflow = '';
     });
 
-    return () => {
-      document.body.className = prevClass;
-      styleEl.remove();
-      svcNavCleanup();
-      blogCleanup();
-      stickyCleanup();
-      revPrevBtn?.removeEventListener('click', revPrevH);
-      revNextBtn?.removeEventListener('click', revNextH);
-      revScroll?.removeEventListener('scroll', revSync);
-      window.removeEventListener('resize', revSync);
-      newsletterForm?.removeEventListener('submit', onNewsletterSubmit);
-      homeForm?.removeEventListener('submit', onHomeSubmit);
+    /* ── carousels: dots + pijlen, gesynchroniseerd met de echte scroll ── */
+    document.querySelectorAll<HTMLElement>('[data-car]').forEach((car) => {
+      const naam = car.dataset.car || '';
+      const track = car.querySelector<HTMLElement>('[data-car-track]');
+      const dots = car.querySelector<HTMLElement>('[data-car-dots]');
+      if (!track) return;
+      const items = Array.from(track.children) as HTMLElement[];
+      if (!items.length) return;
+
+      const perView = () => {
+        const b = track.getBoundingClientRect().width;
+        const w = items[0].getBoundingClientRect().width;
+        return Math.max(1, Math.round(b / (w + 26)));
+      };
+      const stap = () => items[0].getBoundingClientRect().width + 26;
+      // paginagewijs (per zichtbare groep), niet per kaart: anders krijg je 11 stipjes
+      const paginaBreedte = () => stap() * perView();
+      const paginas = () => Math.max(1, Math.ceil(items.length / perView()));
+
+      const bouwDots = () => {
+        if (!dots) return;
+        dots.innerHTML = '';
+        const n = paginas();
+        if (n < 2) return;
+        for (let p = 0; p < n; p++) {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'rp-dot';
+          b.setAttribute('aria-label', `Ga naar groep ${p + 1} van ${n}`);
+          b.addEventListener('click', () => {
+            track.scrollTo({ left: p * paginaBreedte(), behavior: 'smooth' });
+          });
+          dots.appendChild(b);
+        }
+      };
+      bouwDots();
+
+      const prev = document.querySelector<HTMLButtonElement>(`[data-car-prev="${naam}"]`);
+      const next = document.querySelector<HTMLButtonElement>(`[data-car-next="${naam}"]`);
+      const onPrev = () => track.scrollBy({ left: -paginaBreedte(), behavior: 'smooth' });
+      const onNext = () => track.scrollBy({ left: paginaBreedte(), behavior: 'smooth' });
+      prev?.addEventListener('click', onPrev);
+      next?.addEventListener('click', onNext);
+
+      const sync = () => {
+        const idx = Math.round(track.scrollLeft / paginaBreedte());
+        dots?.querySelectorAll('.rp-dot').forEach((d, n) => {
+          const actief = n === idx;
+          d.classList.toggle('is-active', actief);
+          d.setAttribute('aria-current', actief ? 'true' : 'false');
+        });
+        const eind = track.scrollWidth - track.clientWidth - 2;
+        if (prev) prev.disabled = track.scrollLeft <= 2;
+        if (next) next.disabled = track.scrollLeft >= eind;
+      };
+      sync();
+      track.addEventListener('scroll', sync, { passive: true });
+      const onResize = () => { bouwDots(); sync(); };
+      window.addEventListener('resize', onResize);
+      opruimers.push(() => {
+        track.removeEventListener('scroll', sync);
+        window.removeEventListener('resize', onResize);
+        prev?.removeEventListener('click', onPrev);
+        next?.removeEventListener('click', onNext);
+      });
+    });
+
+    /* ── terugbel-formulier ──────────────────────────────────────────── */
+    const form = document.querySelector<HTMLFormElement>('[data-cta-form]');
+    const note = document.querySelector<HTMLElement>('[data-cta-note]');
+    const btn = document.querySelector<HTMLButtonElement>('[data-cta-btn]');
+    const input = form?.querySelector<HTMLInputElement>('input[name="phone"]');
+    const onFocus = () => trackFormStart('home-cta');
+    input?.addEventListener('focus', onFocus, { once: true });
+
+    const onSubmit = async (e: Event) => {
+      e.preventDefault();
+      const tel = (input?.value || '').trim();
+      if (tel.replace(/\D/g, '').length < 8) {
+        if (note) { note.textContent = 'Vul een geldig telefoonnummer in, dan bellen wij u terug.'; note.style.color = '#ffb4b4'; }
+        input?.focus();
+        return;
+      }
+      if (btn) { btn.disabled = true; btn.textContent = 'Versturen…'; }
+      const digits = tel.replace(/\D/g, '');
+      const result = await submitLead({
+        source: 'contact_form',
+        page_path: window.location.pathname,
+        phone: tel,
+        // telefoon-only lead: zelfde synthetische e-mail als het hero-formulier,
+        // zodat de lead nooit op een ontbrekend e-mailveld blijft hangen
+        email: `lead-${digits}@abgroep.be`,
+        type_werk: 'nog_te_bepalen',
+        aanvullende_info: 'Terugbelverzoek via CTA-band homepage — dienst nog onbekend',
+        bron_lead: 'website:home:cta-band',
+      });
+      if (result.ok) {
+        form?.remove();
+        if (note) {
+          note.className = 'rp-cta__ok';
+          note.textContent = 'Bedankt. Wij bellen u zo snel mogelijk terug.';
+        }
+      } else {
+        if (btn) { btn.disabled = false; btn.textContent = 'Bel mij terug'; }
+        if (note) {
+          note.innerHTML = `Er ging iets mis. Bel ons gerust op <a href="${CONTACT.phone.href}" style="color:#fff;font-weight:700">${CONTACT.phone.display}</a>.`;
+          note.style.color = '#ffb4b4';
+        }
+      }
     };
+    form?.addEventListener('submit', onSubmit);
+    opruimers.push(() => {
+      form?.removeEventListener('submit', onSubmit);
+      input?.removeEventListener('focus', onFocus);
+    });
+
+    return () => opruimers.forEach((f) => f());
   }, []);
 
-  useAbBouwInteractions();
+  const beelden: Record<string, string> = {
+    logo, heroPhoto, aboutPhoto, ctaPhoto, svcDak, dakTextuur, leiTextuur,
+    proj1, proj3, proj4,
+    mKoramic, mVelux, mWienerberger, mRockpanel,
+    revMarc, revEllen, revKatrien, revDirk,
+  };
+  DIENSTEN.forEach((d, n) => { beelden['svc' + n] = d.img; });
+  STAPPEN.forEach((s, n) => { beelden['stap' + n] = s.img; });
+  REVIEWS.forEach((r, n) => { beelden['rev' + n] = r.img; });
+  BLOGS.slice(0, 2).forEach((p, n) => { beelden['blog' + n] = p.img; });
 
-  const html = HTML({
-    hero, hero2, hero3, hero4, hero5, about, skills, why, vakmanDak, vakmanInterieur,
-    svcConstruct, svcEco, svcInterieur, svcDak, svcBad, svcGevel,
-    proj1, proj2, proj3, proj4,
-    team1, team2, team3, ctaMan,
-    logo, logoHero,
-  });
-
-  return <div dangerouslySetInnerHTML={{ __html: html }} />;
+  return <div dangerouslySetInnerHTML={{ __html: HTML(beelden) }} />;
 }
