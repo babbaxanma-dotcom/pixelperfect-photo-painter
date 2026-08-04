@@ -693,15 +693,35 @@
 .bf-card__body { padding: 20px 22px 24px; display: flex; flex-direction: column; flex: 1; }
 .bf-card__t { font-size: 20px; letter-spacing: -0.02em; }
 .bf-card__d { margin-top: 10px; font-size: 15px; line-height: 1.55; flex: 1; }
-/* korte accentstreep onderaan de rustende kaarten */
+
+/* In rust toont de kaart een korte accentstreep. Bij hover of toetsenbordfocus
+   wisselt die naar de knop. De ruimte is vast gereserveerd, zodat de kaart niet
+   verspringt op het moment dat de muis erover komt. */
+.bf-card__actie { position: relative; height: 48px; margin-top: 18px; }
 .bf-card__bar {
+  position: absolute; left: 0; top: 21px;
   display: block; width: 148px; height: 6px; border-radius: 3px;
-  background: var(--rp-accent); margin-top: 20px;
+  background: var(--rp-accent);
+  transition: opacity 0.22s var(--rp-ease), transform 0.22s var(--rp-ease);
 }
-/* de uitgelichte kaart toont een knop in plaats van de streep */
-.bf-card--uit { box-shadow: var(--rp-shadow-lift); }
-.bf-card--uit .bf-card__img img { height: 196px; }
-.bf-card--uit .bf-card__knop { margin-top: 20px; align-self: flex-start; }
+.bf-card__knop {
+  position: absolute; left: 0; top: 0;
+  opacity: 0; transform: translateY(8px); pointer-events: none;
+  transition: opacity 0.22s var(--rp-ease), transform 0.22s var(--rp-ease);
+}
+.bf-card:hover .bf-card__bar,
+.bf-card:focus-within .bf-card__bar { opacity: 0; transform: translateY(-6px); }
+.bf-card:hover .bf-card__knop,
+.bf-card:focus-within .bf-card__knop { opacity: 1; transform: none; pointer-events: auto; }
+
+/* op aanraakschermen bestaat hover niet: daar staat de knop gewoon aan */
+@media (hover: none) {
+  .bf-card__bar { display: none; }
+  .bf-card__knop { opacity: 1; transform: none; pointer-events: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bf-card__bar, .bf-card__knop { transition: none; }
+}
 
 .bf__onder { display: flex; justify-content: center; margin-top: 34px; }
 .bf__onder span {

@@ -61,17 +61,17 @@ const ICONS = {
 };
 
 const DIENSTEN = [
-  { t: 'Dakwerken', img: svcDak, ic: ICONS.dak, href: '/dakwerken',
+  { t: 'Dakwerken', kort: 'dakwerken', img: svcDak, ic: ICONS.dak, href: '/dakwerken',
     d: 'Nieuwe pannen, leien of een plat dak in EPDM. Inclusief isolatie, dakgoten en het opruimen achteraf.' },
-  { t: 'Gevelrenovatie', img: svcGevel, ic: ICONS.gevel, href: '/gevel',
+  { t: 'Gevelrenovatie', kort: 'gevelrenovatie', img: svcGevel, ic: ICONS.gevel, href: '/gevel',
     d: 'Crepi, steenstrips, houten bekleding of gevelreiniging. Met buitenisolatie als de gevel toch openligt.' },
-  { t: 'Badkamer en wellness', img: svcBad, ic: ICONS.bad, href: '/bad',
+  { t: 'Badkamer en wellness', kort: 'badkamers', img: svcBad, ic: ICONS.bad, href: '/bad',
     d: 'Van inloopdouche tot volledige badkamer. Sanitair, tegelwerk en vloerverwarming door dezelfde ploeg.' },
-  { t: 'Interieurwerken', img: svcInterieur, ic: ICONS.interieur, href: '/interieur',
+  { t: 'Interieurwerken', kort: 'interieurwerken', img: svcInterieur, ic: ICONS.interieur, href: '/interieur',
     d: 'Maatkasten, keukens, gietvloeren en pleisterwerk. Afgewerkt tot in de plinten en de deurlijsten.' },
-  { t: 'Totaalrenovatie en nieuwbouw', img: svcConstruct, ic: ICONS.construct, href: '/construct',
+  { t: 'Totaalrenovatie en nieuwbouw', kort: 'totaalrenovatie', img: svcConstruct, ic: ICONS.construct, href: '/construct',
     d: 'Ruwbouw, uitbreiding of een woning die volledig op de schop gaat. Wij coördineren alle vakken.' },
-  { t: 'Ecologisch bouwen', img: svcEco, ic: ICONS.eco, href: '/ecologisch',
+  { t: 'Ecologisch bouwen', kort: 'energiewerken', img: svcEco, ic: ICONS.eco, href: '/ecologisch',
     d: 'Isolatie, ventilatie, warmtepomp en zonnepanelen. We rekenen vooraf uit wat het oplevert.' },
 ];
 
@@ -239,16 +239,17 @@ const HTML = (i: Record<string, string>) => {
     <div class="rp-carousel" data-car="svc">
       <div class="bf__rail" data-car-track tabindex="0" role="region" aria-label="Diensten, horizontaal schuifbaar">
         ${DIENSTEN.map((d, n) => `
-        <article class="bf-card${n === 1 ? ' bf-card--uit' : ''}">
+        <article class="bf-card">
           <div class="bf-card__img">
             <img src="${i['svc' + n]}" alt="${d.t} door AB Bouw Groep" width="368" height="250" loading="lazy" decoding="async"/>
           </div>
           <div class="bf-card__body">
             <h3 class="bf-card__t">${d.t}</h3>
             <p class="bf-card__d">${d.d}</p>
-            ${n === 1
-              ? `<a class="rp-btn rp-btn--primary bf-card__knop" href="${d.href}">Meer info ${ic.arrowUpRight()}</a>`
-              : `<a href="${d.href}" aria-label="Meer over ${d.t}"><span class="bf-card__bar"></span></a>`}
+            <div class="bf-card__actie">
+              <span class="bf-card__bar" aria-hidden="true"></span>
+              <a class="rp-btn rp-btn--primary bf-card__knop" href="${d.href}">Meer over ${d.kort} ${ic.arrowUpRight()}</a>
+            </div>
           </div>
         </article>`).join('')}
       </div>
