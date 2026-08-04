@@ -1,26 +1,23 @@
 import { useEffect } from 'react';
-import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
-import { buildNav, FOOTER, SHELL_STYLE } from './_shell';
+import '@/styles/roofpro.css';
+import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
 import { CONTACT } from '@/data/contact';
 
-const NAV = buildNav('home');
 
-const HTML = `
-${NAV}
+const HTML = `<div class="rp">
+${rpNav('')}
 
-<section class="page-hero" style="min-height: 0; padding-bottom: 60px;">
-  <div class="wrap">
-    <div style="max-width: 800px;">
-      <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span class="current">Algemene voorwaarden</span></div>
-      <h1>Algemene Voorwaarden</h1>
-      <p class="page-hero-lede">De algemene verkoops- en uitvoeringsvoorwaarden van AB Bouw Groep.</p>
-      <p style="font-size:13px; color: var(--ink-mute); margin-top: 8px;">Van toepassing vanaf januari 2026 · BTW BE 0712.443.881</p>
-    </div>
+<section class="rp-phero">
+  <div class="rp-wrap">
+    <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Algemene voorwaarden</span></nav>
+    <span class="rp-eyebrow">${ic.mark} Juridisch</span>
+    <h1 class="rp-phero__t">Algemene voorwaarden</h1>
+    <p class="rp-phero__lede">De voorwaarden die gelden bij een offerte en een opdracht van AB Bouw Groep.</p>
   </div>
 </section>
 
-<section class="section" style="padding-top: 0;">
-  <div class="wrap">
+<section class="rp-section">
+  <div class="rp-wrap rp-artikel__body" style="max-width:820px;margin-inline:auto">
     <div style="max-width: 760px; display: flex; flex-direction: column; gap: 40px;">
 
       <div>
@@ -87,10 +84,9 @@ ${NAV}
   </div>
 </section>
 
-${FOOTER}
-`;
+${rpFooter()}
+</div>`;
 
-const EXTRA_STYLE = SHELL_STYLE + ``;
 
 export default function Voorwaarden() {
   useEffect(() => {
@@ -99,21 +95,9 @@ export default function Voorwaarden() {
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', "Algemene voorwaarden AB Bouw Groep voor bouw- en renovatieprojecten in Vlaanderen. Offerte-, uitvoerings- en betalingsvoorwaarden.");
 
-    const prevClass = document.body.className;
-    document.body.className = "";
-    let styleEl: HTMLStyleElement | null = null;
-    if (EXTRA_STYLE) {
-      styleEl = document.createElement('style');
-      styleEl.textContent = EXTRA_STYLE;
-      document.head.appendChild(styleEl);
-    }
-    return () => {
-      document.body.className = prevClass;
-      if (styleEl) styleEl.remove();
-    };
+    const op = wireMobielMenu();
+    return () => op();
   }, []);
-
-  useAbBouwInteractions();
 
   return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
 }
