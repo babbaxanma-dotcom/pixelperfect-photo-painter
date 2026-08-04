@@ -46,7 +46,7 @@
 
 /* ── basis ─────────────────────────────────────────────────────────────── */
 .rp {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   color: var(--rp-body);
   background: var(--rp-bg);
   font-size: 16px;
@@ -617,6 +617,115 @@
   .rp-arrow--zweef { width: 42px; height: 42px; }
   .rp-arrow--zweef.rp-arrow--prev { left: 2px; }
   .rp-arrow--zweef.rp-arrow--next { right: 2px; }
+}
+
+/* ══ DIENSTENSECTIE naar de Barfi-referentie ═══════════════════════════
+   Maten afgeleid van een 1920-ontwerp x0,75. Paars uit de referentie is
+   vervangen door ons goud; inkt door navy. */
+.bf { background: #edeff3; padding-block: clamp(56px, 6.5vw, 92px); overflow: hidden; }
+.bf__head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 28px; margin-bottom: 38px;
+}
+.bf__pill {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: #fff; border-radius: 999px;
+  padding: 9px 18px 9px 12px;
+  font-size: 13.5px; font-weight: 700; color: var(--rp-ink);
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+}
+.bf__pill-ic {
+  width: 22px; height: 22px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--rp-accent-tint); color: var(--rp-accent-text);
+}
+.bf__t {
+  margin-top: 18px;
+  font-size: clamp(28px, 3.1vw, 42px);
+  line-height: 1.14;
+  letter-spacing: -0.03em;
+  color: var(--rp-ink);
+}
+.bf__t span { display: block; }
+.bf__arrows { display: flex; gap: 12px; flex: none; padding-bottom: 4px; }
+.bf__arrow {
+  width: 54px; height: 54px; border-radius: 50%;
+  border: 0; cursor: pointer;
+  display: grid; place-items: center;
+  background: #fff; color: var(--rp-ink);
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.10);
+  transition: background-color 0.2s var(--rp-ease), color 0.2s var(--rp-ease), transform 0.2s var(--rp-ease);
+}
+.bf__arrow:hover { transform: translateY(-2px); }
+.bf__arrow--vol { background: var(--rp-accent); color: var(--rp-accent-ink); }
+.bf__arrow--vol:hover { background: var(--rp-accent-deep); }
+.bf__arrow[disabled] { opacity: 0.4; cursor: default; transform: none; }
+
+/* de rail loopt bewust door tot voorbij de rechterrand: dat toont dat er meer is */
+.bf__rail {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 368px;
+  gap: 28px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  margin-right: calc(50% - 50vw);
+  padding-bottom: 4px;
+}
+.bf__rail::-webkit-scrollbar { display: none; }
+.bf__rail > * { scroll-snap-align: start; }
+
+.bf-card {
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: box-shadow 0.24s var(--rp-ease), transform 0.24s var(--rp-ease);
+}
+.bf-card:hover { transform: translateY(-4px); box-shadow: var(--rp-shadow-lift); }
+.bf-card__img { overflow: hidden; padding: 10px 10px 0; }
+.bf-card__img img {
+  width: 100%; height: 250px; object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.5s var(--rp-ease);
+}
+.bf-card:hover .bf-card__img img { transform: scale(1.04); }
+.bf-card__body { padding: 20px 22px 24px; display: flex; flex-direction: column; flex: 1; }
+.bf-card__t { font-size: 20px; letter-spacing: -0.02em; }
+.bf-card__d { margin-top: 10px; font-size: 15px; line-height: 1.55; flex: 1; }
+/* korte accentstreep onderaan de rustende kaarten */
+.bf-card__bar {
+  display: block; width: 148px; height: 6px; border-radius: 3px;
+  background: var(--rp-accent); margin-top: 20px;
+}
+/* de uitgelichte kaart toont een knop in plaats van de streep */
+.bf-card--uit { box-shadow: var(--rp-shadow-lift); }
+.bf-card--uit .bf-card__img img { height: 196px; }
+.bf-card--uit .bf-card__knop { margin-top: 20px; align-self: flex-start; }
+
+.bf__onder { display: flex; justify-content: center; margin-top: 34px; }
+.bf__onder span {
+  background: #fff; border-radius: 999px;
+  padding: 13px 26px;
+  font-size: 15px; color: var(--rp-body);
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.07);
+}
+.bf__onder a {
+  color: var(--rp-accent-text); font-weight: 800;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.bf__onder a:hover { color: var(--rp-ink); }
+
+@media (max-width: 900px) {
+  .bf__head { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .bf__arrows { padding-bottom: 0; }
+  .bf__rail { grid-auto-columns: 300px; gap: 18px; }
+  .bf-card__img img { height: 200px; }
+  .bf-card--uit .bf-card__img img { height: 170px; }
+}
+@media (max-width: 520px) {
+  .bf__rail { grid-auto-columns: 82%; }
+  .bf__onder span { font-size: 14px; padding: 12px 18px; text-align: center; }
 }
 
 /* ══ DIENSTKAARTEN ═════════════════════════════════════════════════════ */

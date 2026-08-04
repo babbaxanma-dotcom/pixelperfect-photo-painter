@@ -223,35 +223,39 @@ const HTML = (i: Record<string, string>) => {
 </section>`;
 
   const diensten = `
-<section class="rp-section rp-section--soft" id="diensten">
+<section class="bf" id="diensten">
   <div class="rp-wrap">
-    <div class="rp-head">
+    <div class="bf__head">
       <div>
-        <span class="rp-eyebrow">${ic.mark} Onze diensten</span>
-        <h2 class="rp-head__title">Wat wij uitvoeren<span class="rp-dim">aan uw woning</span></h2>
+        <span class="bf__pill"><span class="bf__pill-ic" aria-hidden="true">${ic.mark}</span> Onze diensten</span>
+        <h2 class="bf__t">Dak, gevel en interieur<span>bij één aannemer</span></h2>
       </div>
-      <a class="rp-btn rp-btn--primary" href="/diensten">Alle diensten</a>
+      <div class="bf__arrows">
+        <button class="bf__arrow" type="button" data-car-prev="svc" aria-label="Vorige diensten">${ic.left}</button>
+        <button class="bf__arrow bf__arrow--vol" type="button" data-car-next="svc" aria-label="Volgende diensten">${ic.right}</button>
+      </div>
     </div>
-    <div class="rp-carousel" data-car="svc" style="--rp-arrow-top:116px">
-      <button class="rp-arrow rp-arrow--zweef rp-arrow--prev" type="button" data-car-prev="svc" aria-label="Vorige diensten">${ic.left}</button>
-      <button class="rp-arrow rp-arrow--zweef rp-arrow--next" type="button" data-car-next="svc" aria-label="Volgende diensten">${ic.right}</button>
-      <div class="rp-track" data-car-track tabindex="0" role="region" aria-label="Diensten, horizontaal schuifbaar">
+
+    <div class="rp-carousel" data-car="svc">
+      <div class="bf__rail" data-car-track tabindex="0" role="region" aria-label="Diensten, horizontaal schuifbaar">
         ${DIENSTEN.map((d, n) => `
-        <article class="rp-svc${n === 1 ? ' rp-svc--feat' : ''}">
-          <div class="rp-svc__img">
-            <span class="rp-svc__clip"><img src="${i['svc' + n]}" alt="${d.t} door AB Bouw Groep" width="420" height="232" loading="lazy" decoding="async"/></span>
-            <span class="rp-svc__ic" aria-hidden="true">${d.ic}</span>
+        <article class="bf-card${n === 1 ? ' bf-card--uit' : ''}">
+          <div class="bf-card__img">
+            <img src="${i['svc' + n]}" alt="${d.t} door AB Bouw Groep" width="368" height="250" loading="lazy" decoding="async"/>
           </div>
-          <div class="rp-svc__body">
-            <h3 class="rp-svc__title">${d.t}</h3>
-            <p class="rp-svc__text">${d.d}</p>
-            <div class="rp-svc__foot">
-              <a class="rp-more${n === 1 ? ' rp-more--accent' : ''}" href="${d.href}">Meer info ${ic.arrowUpRight()}</a>
-            </div>
+          <div class="bf-card__body">
+            <h3 class="bf-card__t">${d.t}</h3>
+            <p class="bf-card__d">${d.d}</p>
+            ${n === 1
+              ? `<a class="rp-btn rp-btn--primary bf-card__knop" href="${d.href}">Meer info ${ic.arrowUpRight()}</a>`
+              : `<a href="${d.href}" aria-label="Meer over ${d.t}"><span class="bf-card__bar"></span></a>`}
           </div>
         </article>`).join('')}
       </div>
-      <div class="rp-dots" data-car-dots></div>
+    </div>
+
+    <div class="bf__onder">
+      <span>Benieuwd wat er bij u mogelijk is? <a href="/diensten">Bekijk alle diensten</a></span>
     </div>
   </div>
 </section>`;
@@ -479,12 +483,14 @@ export default function Home() {
       const items = Array.from(track.children) as HTMLElement[];
       if (!items.length) return;
 
+      // tussenruimte uit de CSS lezen, niet hardcoderen: rails verschillen per sectie
+      const gat = () => parseFloat(getComputedStyle(track).columnGap || '0') || 0;
       const perView = () => {
         const b = track.getBoundingClientRect().width;
         const w = items[0].getBoundingClientRect().width;
-        return Math.max(1, Math.round(b / (w + 26)));
+        return Math.max(1, Math.round(b / (w + gat())));
       };
-      const stap = () => items[0].getBoundingClientRect().width + 26;
+      const stap = () => items[0].getBoundingClientRect().width + gat();
       // paginagewijs (per zichtbare groep), niet per kaart: anders krijg je 11 stipjes
       const paginaBreedte = () => stap() * perView();
       const paginas = () => Math.max(1, Math.ceil(items.length / perView()));
