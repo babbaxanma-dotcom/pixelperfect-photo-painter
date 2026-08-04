@@ -908,7 +908,9 @@
   transition: box-shadow 0.24s var(--rp-ease), transform 0.24s var(--rp-ease);
 }
 .rp-rev:hover { box-shadow: var(--rp-shadow-lift); transform: translateY(-3px); }
-.rp-rev__stars { display: flex; gap: 4px; color: var(--rp-star); margin-bottom: 16px; }
+/* sterren als tekstglyph: dan geldt de tekstnorm, dus de diepere goudtint */
+.rp-rev__stars { display: flex; gap: 4px; color: var(--rp-accent-text); margin-bottom: 16px; }
+.rp-rev__stars svg { color: var(--rp-star); }
 .rp-rev__text { font-size: 15.5px; line-height: 1.66; color: var(--rp-body); flex: 1; }
 .rp-rev__foot {
   display: flex; align-items: center; gap: 13px;
@@ -1350,6 +1352,22 @@
 .rp-cta__form:focus-within { border-color: var(--rp-accent); }
 .rp-cta__note { margin-top: 12px; font-size: 12.5px; color: #98a0ac; }
 .rp-cta__ok { margin-top: 18px; font-size: 15.5px; font-weight: 700; color: #7ee2a8; }
+
+/* ══ SLOTBLOK LANDINGSPAGINA: tekst links, formulier rechts ════════════ */
+.rp-lpfinal {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 48px;
+  align-items: center;
+  max-width: none;
+  width: 100%;
+}
+.rp-lpfinal__contact { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; }
+.rp-lpfinal__kaart { padding: 26px 24px 24px; }
+.rp-lpfinal__kaart .rp-aanvraag__t { font-size: 20px; }
+@media (max-width: 1000px) {
+  .rp-lpfinal { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+}
 
 /* ══ FOOTER ════════════════════════════════════════════════════════════ */
 .rp-foot { background: var(--rp-bg-soft); padding-top: 74px; }
