@@ -1,10 +1,90 @@
 import { useEffect } from 'react';
 import '@/styles/roofpro.css';
-import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
 import { CONTACT } from '@/data/contact';
+import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
+type Artikel = { n: string; t: string; p: string[] };
 
-const HTML = `<div class="rp">
+const ARTIKELEN: Artikel[] = [
+  {
+    n: 'Artikel 1', t: 'Waarop deze voorwaarden van toepassing zijn',
+    p: [
+      `Deze voorwaarden gelden voor elke offerte, overeenkomst en uitvoering van werken door AB Bouw Groep, BTW BE 0712.443.881, met zetel te ${CONTACT.address.full}.`,
+      'Wie een offerte aanvaardt, aanvaardt daarmee ook deze voorwaarden in hun geheel.',
+    ],
+  },
+  {
+    n: 'Artikel 2', t: 'Offertes en bestellingen',
+    p: [
+      'Een offerte is vrijblijvend en blijft dertig kalenderdagen geldig vanaf de datum van uitgifte, tenzij er iets anders op vermeld staat.',
+      'De overeenkomst komt tot stand zodra u de offerte schriftelijk aanvaardt én wij die aanvaarding bevestigen.',
+      'De prijs op de offerte is een vaste prijs. Vraagt u tijdens de werken extra werk, dan bevestigen wij dat eerst schriftelijk met een aparte prijs. Pas na uw akkoord voeren wij het uit en factureren wij het aan de dan geldende dagprijs.',
+    ],
+  },
+  {
+    n: 'Artikel 3', t: 'Uitvoering van de werken',
+    p: [
+      'Wij voeren de werken uit volgens de regels van goed vakmanschap en de geldende normen, waaronder de STS-voorschriften en het bestek.',
+      'De termijnen die wij opgeven zijn een inschatting. Loopt het werk vertraging op door overmacht, weersomstandigheden, leveringsproblemen of wijzigingen die u aanvraagt, dan geeft dat geen recht op schadevergoeding.',
+      'U zorgt dat de werf vrij toegankelijk is, dat er water en elektriciteit beschikbaar zijn, en dat persoonlijke bezittingen voor de start uit de werkzone verwijderd zijn.',
+    ],
+  },
+  {
+    n: 'Artikel 4', t: 'Betaling',
+    p: [
+      'Facturen betaalt u binnen veertien kalenderdagen na factuurdatum, tenzij wij samen iets anders afspreken.',
+      'Blijft een factuur openstaan na die termijn, dan sturen wij u een herinnering. Betaalt u daarna nog steeds niet, dan rekenen wij een forfaitaire kostenvergoeding aan van veertig euro voor de administratieve opvolging, en mogen wij de werken opschorten tot de openstaande factuur voldaan is. Wij rekenen geen intrest aan.',
+      'Standaard betalingsschema: dertig procent bij ondertekening, veertig procent bij de start van de afwerking, en dertig procent bij oplevering.',
+    ],
+  },
+  {
+    n: 'Artikel 5', t: 'Oplevering en aanvaarding',
+    p: [
+      'De oplevering gebeurt samen met u en wordt vastgelegd in een opleveringsdocument.',
+      'Zichtbare gebreken noteert u op dat document. Staat er niets op, dan gelden de werken als aanvaard. Verborgen gebreken meldt u binnen acht dagen nadat u ze ontdekt.',
+    ],
+  },
+  {
+    n: 'Artikel 6', t: 'Garantie',
+    p: [
+      'Wij geven een commerciële garantie van vijftien jaar op de werken die wij zelf uitvoeren. Dat is ruimer dan de wettelijke tienjarige aansprakelijkheid uit artikel 1792 van het Burgerlijk Wetboek.',
+      'Eén jaar na de oplevering komen wij vrijblijvend een inspectieronde doen.',
+      'De garantie vervalt bij onoordeelkundig gebruik, bij wijzigingen door derden, of zolang er facturen openstaan.',
+    ],
+  },
+  {
+    n: 'Artikel 7', t: 'Aansprakelijkheid',
+    p: [
+      'Onze aansprakelijkheid blijft beperkt tot het bedrag van de uitgevoerde werken, en tot maximaal de bedragen die onze verzekering dekt.',
+      'Voor onrechtstreekse schade, gevolgschade of schade door overmacht zijn wij niet aansprakelijk.',
+    ],
+  },
+  {
+    n: 'Artikel 8', t: 'Annulatie',
+    p: [
+      'Annuleert u nadat de overeenkomst getekend is, dan is een forfaitaire schadevergoeding verschuldigd van twintig procent van de aanneemsom.',
+      'Ligt onze werkelijke schade hoger en kunnen wij dat aantonen, dan mogen wij dat hogere bedrag vorderen.',
+    ],
+  },
+  {
+    n: 'Artikel 9', t: 'Beeldmateriaal op onze website',
+    p: [
+      'Op onze website en in ons reclamemateriaal gebruiken wij beelden die geheel of gedeeltelijk met artificiële intelligentie gemaakt of bewerkt zijn. Het gaat onder meer om sfeerbeelden van woningen en gevels, technische doorsnedes, dakopbouwen en voor-en-na-visualisaties.',
+      'Die beelden dienen om een type werk, een materiaal of een afwerking te tonen. Ze zijn geen weergave van een specifiek bestaand project of een specifieke klant. Echte projecten staan apart en zijn duidelijk aangeduid als realisatie, met locatie, uitvoeringsdatum en projectgegevens.',
+      'Conform artikel 50 van Verordening (EU) 2024/1689, de AI-verordening, voorzien wij AI-gegenereerd beeldmateriaal waar dat technisch haalbaar is van een machinaal leesbare markering. Getuigenissen kunnen vereenvoudigd of geanonimiseerd zijn om de privacy van de opdrachtgever te beschermen; de inhoud van het achterliggende project blijft correct.',
+      `Heeft u een vraag over een bepaalde afbeelding, of wilt u een verifieerbare foto of het dossier van een project inzien, mail dan naar <a href="mailto:${CONTACT.email}">${CONTACT.email}</a>.`,
+    ],
+  },
+  {
+    n: 'Artikel 10', t: 'Toepasselijk recht en bevoegde rechtbank',
+    p: [
+      'Op onze overeenkomsten is het Belgisch recht van toepassing.',
+      'Bij een geschil zijn uitsluitend de rechtbanken van het arrondissement Mechelen bevoegd.',
+    ],
+  },
+];
+
+const HTML = () => `<div class="rp">
 ${rpNav('')}
 
 <section class="rp-phero">
@@ -12,74 +92,23 @@ ${rpNav('')}
     <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Algemene voorwaarden</span></nav>
     <span class="rp-eyebrow">${ic.mark} Juridisch</span>
     <h1 class="rp-phero__t">Algemene voorwaarden</h1>
-    <p class="rp-phero__lede">De voorwaarden die gelden bij een offerte en een opdracht van AB Bouw Groep.</p>
+    <p class="rp-phero__lede">De afspraken die gelden zodra u een offerte van ons aanvaardt. Laatste aanpassing: augustus 2026.</p>
   </div>
 </section>
 
 <section class="rp-section">
-  <div class="rp-wrap rp-artikel__body" style="max-width:820px;margin-inline:auto">
-    <div style="max-width: 760px; display: flex; flex-direction: column; gap: 40px;">
+  <div class="rp-wrap">
+    <div class="rp-artikel" style="max-width:820px">
+      <div class="rp-artikel__body">
+        ${ARTIKELEN.map((a) => `
+        <h2 style="font-size:21px;margin-top:36px">${a.n} &middot; ${a.t}</h2>
+        ${a.p.map((t) => `<p>${t}</p>`).join('')}`).join('')}
 
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 1, Toepassingsgebied</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Deze algemene voorwaarden zijn van toepassing op alle offertes, overeenkomsten en uitvoering van werken door AB Bouw Groep (BTW BE 0712.443.881), gevestigd te ${CONTACT.address.full}. Door het aanvaarden van een offerte aanvaardt de opdrachtgever deze voorwaarden in hun geheel.</p>
+        <div class="rp-formkaart" style="margin-top:44px">
+          <h2 style="font-size:19px;margin:0 0 8px">Een vraag over deze voorwaarden?</h2>
+          <p style="margin:0">Bel <a href="${CONTACT.phone.href}">${CONTACT.phone.display}</a> of mail naar <a href="mailto:${CONTACT.email}">${CONTACT.email}</a>.</p>
+        </div>
       </div>
-
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 2, Offertes en bestellingen</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Alle offertes zijn vrijblijvend en geldig gedurende 30 kalenderdagen na datum van uitgifte, tenzij anders vermeld. Een overeenkomst komt tot stand na schriftelijke aanvaarding van de offerte door de opdrachtgever én bevestiging door AB Bouw Groep.</p>
-        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">De in de offerte vermelde prijs is een vaste prijs. Meerwerken die door de opdrachtgever worden aangevraagd, worden steeds schriftelijk bevestigd vóór uitvoering en gefactureerd aan de geldende dagprijs.</p>
-      </div>
-
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 3, Uitvoering van werken</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">AB Bouw Groep verbindt er zich toe de werken uit te voeren volgens de regels van goed vakmanschap en de geldende normen (STS, bestek, …). De opgegeven uitvoeringstermijnen zijn indicatief. Vertragingen te wijten aan overmacht, weersinvloeden, leveringsproblemen of wijzigingen door de opdrachtgever geven geen recht op schadevergoeding.</p>
-        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">De opdrachtgever zorgt voor vrije toegang tot de werf, aanwezigheid van water en elektriciteit, en verwijdert persoonlijke bezittingen uit de werkzone vóór aanvang van de werken.</p>
-      </div>
-
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 4, Betaling</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Facturen zijn betaalbaar binnen 14 kalenderdagen na factuurdatum, tenzij anders overeengekomen. Bij niet-tijdige betaling is van rechtswege en zonder voorafgaande ingebrekestelling een verwijlintrest van 10% per jaar verschuldigd, met een minimum van €50 administratiekosten. Bij aanhoudende niet-betaling behoudt AB Bouw Groep het recht de werken op te schorten.</p>
-        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Standaard betalingsschema: 30% bij ondertekening · 40% bij ruwbouw/aanvang afwerking · 30% bij oplevering.</p>
-      </div>
-
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 5, Oplevering en aanvaarding</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">De oplevering geschiedt gezamenlijk en wordt schriftelijk vastgelegd in een opleveringsdocument. Zichtbare gebreken dienen op dit document vermeld te worden; bij afwezigheid hiervan worden de werken geacht aanvaard te zijn. Verborgen gebreken dienen gemeld te worden binnen 8 dagen na ontdekking.</p>
-      </div>
-
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 6, Garantie</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">AB Bouw Groep verleent een commerciële garantie van 15 jaar op alle door haar uitgevoerde werken, ruimschoots boven de wettelijke tienjarige aansprakelijkheid (art. 1792 B.W.). Na 1 jaar na oplevering volgt een vrijblijvende inspectieronde. De garantie vervalt bij onoordeelkundig gebruik, wijzigingen door derden, of niet-betaling van openstaande facturen.</p>
-      </div>
-
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 7, Aansprakelijkheid</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">De aansprakelijkheid van AB Bouw Groep is beperkt tot het bedrag van de uitgevoerde werken, met een maximum van de verzekerde bedragen. AB Bouw Groep is niet aansprakelijk voor onrechtstreekse schade, gevolgschade of schade door overmacht.</p>
-      </div>
-
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 8, Annulatie</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Bij annulatie door de opdrachtgever na ondertekening van de overeenkomst is een forfaitaire schadevergoeding verschuldigd van 20% van het totale aanneemsom, onverminderd het recht van AB Bouw Groep om hogere bewezen schade te vorderen.</p>
-      </div>
-
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 9, Beeldmateriaal, visualisaties en gegenereerde content</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">AB Bouw Groep maakt op haar website, in marketingcommunicatie en op alle digitale uitingen gebruik van beeldmateriaal dat geheel of gedeeltelijk tot stand is gekomen door middel van artificiële-intelligentiesystemen, waaronder maar niet beperkt tot tekst-naar-beeld generatieve modellen, beeldbewerkingsalgoritmen, isometrische renderings en samengestelde visualisaties. Dergelijk beeldmateriaal kan onder meer betreffen: sfeerbeelden van woningen en gevels, technische cross-section illustraties, dakopbouw renders, klantenportretten ter illustratie van getuigenissen, voor- en na-renders, en sfeerbeelden van afgewerkte projecten.</p>
-        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Deze gegenereerde of AI-bewerkte beelden dienen uitsluitend ter illustratie van type-werkzaamheden, materialen, afwerkingen, stijlvoorkeuren of typische resultaten en vormen geen exacte weergave van een specifiek bestaand project, klant of locatie. Klantenportretten naast getuigenissen kunnen gegenereerd zijn ter bescherming van de privacy van werkelijke klanten of ter illustratie van het klantenprofiel. Werkelijke projecten worden afzonderlijk en duidelijk gemarkeerd als "realisatie" met locatie, uitvoeringsdatum en projectdetails.</p>
-        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">In overeenstemming met Artikel 50 van Verordening (EU) 2024/1689 (de AI-verordening) en de bijhorende uitvoeringsmaatregelen voorzien wij AI-gegenereerd beeldmateriaal van een machinaal leesbare markering waar technisch haalbaar, en streven wij naar transparantie omtrent de herkomst van visuele content. Getuigenissen, citaten en namen kunnen vereenvoudigd, samengevoegd of geanonimiseerd zijn ter bescherming van de persoonlijke levenssfeer van de werkelijke opdrachtgever. De inhoudelijke waarheidsgetrouwheid van het achterliggende project blijft te allen tijde gewaarborgd.</p>
-        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Voor specifieke vragen over een afbeelding, voor een verifieerbare realisatiefoto, of voor inzage in een specifiek projectdossier kunt u contact opnemen via <a href="mailto:info@abgroep.be" style="color: var(--accent);">info@abgroep.be</a>.</p>
-      </div>
-
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">Artikel 10, Toepasselijk recht en bevoegde rechtbank</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Alle overeenkomsten met AB Bouw Groep worden beheerst door het Belgisch recht. Bij geschillen zijn uitsluitend de rechtbanken van het arrondissement Mechelen bevoegd.</p>
-      </div>
-
-      <div style="background: var(--bg-soft); border-radius: var(--r-md); padding: 28px;">
-        <p style="color: var(--ink-soft); font-size: 13.5px; line-height: 1.7;"><strong>Vragen over deze voorwaarden?</strong> Neem contact op via <a href="mailto:info@abgroep.be" style="color: var(--accent);">info@abgroep.be</a> of <a href="${CONTACT.phone.href}" style="color: var(--accent);">${CONTACT.phone.spaced}</a>.</p>
-      </div>
-
     </div>
   </div>
 </section>
@@ -87,17 +116,15 @@ ${rpNav('')}
 ${rpFooter()}
 </div>`;
 
-
 export default function Voorwaarden() {
   useEffect(() => {
-    document.title = "Algemene Voorwaarden | AB Bouw Groep";
+    document.title = 'Algemene voorwaarden — AB Bouw Groep';
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', "Algemene voorwaarden AB Bouw Groep voor bouw- en renovatieprojecten in Vlaanderen. Offerte-, uitvoerings- en betalingsvoorwaarden.");
-
+    m.setAttribute('content', 'De algemene voorwaarden van AB Bouw Groep: offertes, uitvoering, betaling, oplevering, garantie en aansprakelijkheid.');
+    window.scrollTo(0, 0);
     const op = wireMobielMenu();
     return () => op();
   }, []);
-
-  return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
+  return <div dangerouslySetInnerHTML={{ __html: HTML() }} />;
 }

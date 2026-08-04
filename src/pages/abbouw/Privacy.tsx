@@ -1,10 +1,76 @@
 import { useEffect } from 'react';
 import '@/styles/roofpro.css';
-import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
 import { CONTACT } from '@/data/contact';
+import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
+type Blok = { n: string; t: string; p?: string[]; lijst?: string[]; na?: string[] };
 
-const HTML = `<div class="rp">
+const BLOKKEN: Blok[] = [
+  {
+    n: '1', t: 'Wie wij zijn',
+    p: [
+      `AB Bouw Groep is een bouw- en renovatiebedrijf met zetel te ${CONTACT.address.full}. Wij zijn verantwoordelijk voor de verwerking van de persoonsgegevens die in dit beleid beschreven staan.`,
+      `U bereikt ons op <a href="mailto:${CONTACT.email}">${CONTACT.email}</a> of <a href="${CONTACT.phone.href}">${CONTACT.phone.display}</a>.`,
+    ],
+  },
+  {
+    n: '2', t: 'Welke gegevens wij bijhouden',
+    p: ['Neemt u contact op of vraagt u een offerte aan, dan houden wij bij:'],
+    lijst: [
+      'uw naam en voornaam',
+      'uw e-mailadres en telefoonnummer',
+      'het adres van het pand waar de werken plaatsvinden',
+      'een beschrijving van uw project',
+      'de berichten die u ons stuurt via het contactformulier',
+    ],
+  },
+  {
+    n: '3', t: 'Waarvoor wij ze gebruiken',
+    p: ['Uw gegevens gebruiken wij uitsluitend om:'],
+    lijst: [
+      'een offerte op te maken en op te volgen',
+      'de werken in te plannen en uit te voeren',
+      'te factureren en de administratie te voeren',
+      'met u te communiceren over uw lopende project',
+      'te voldoen aan wettelijke verplichtingen rond btw, verzekering en garantie',
+    ],
+    na: ['Wij verkopen uw gegevens niet door en gebruiken ze niet voor reclame van derden zonder uw uitdrukkelijke toestemming.'],
+  },
+  {
+    n: '4', t: 'Hoe lang wij ze bewaren',
+    p: [
+      'Een projectdossier bewaren wij zolang de garantie op de uitgevoerde werken loopt.',
+      'Boekhoudkundige gegevens houden wij zeven jaar bij, zoals de Belgische wetgeving voorschrijft. Offerteaanvragen die niet tot een opdracht leiden, verwijderen wij na maximaal twee jaar.',
+    ],
+  },
+  {
+    n: '5', t: 'Uw rechten',
+    p: ['De AVG geeft u het recht om:'],
+    lijst: [
+      'uw persoonsgegevens in te kijken',
+      'onjuiste gegevens te laten verbeteren',
+      'uw gegevens te laten wissen, het recht op vergetelheid',
+      'bezwaar te maken tegen de verwerking',
+      'uw gegevens te laten overdragen',
+    ],
+    na: [`Stuur uw vraag naar <a href="mailto:${CONTACT.email}">${CONTACT.email}</a>. Wij antwoorden binnen dertig dagen.`],
+  },
+  {
+    n: '6', t: 'Cookies',
+    p: [
+      'Onze website plaatst functionele cookies die nodig zijn om de site te laten werken, en met uw toestemming ook cookies om bezoek te meten en advertenties op te volgen. In ons <a href="/cookies">cookiebeleid</a> leest u precies welke dat zijn.',
+    ],
+  },
+  {
+    n: '7', t: 'Klachten',
+    p: [
+      'Bent u niet tevreden over hoe wij met uw gegevens omgaan, laat het ons dan eerst weten. Meestal lossen we het snel op.',
+      'U heeft daarnaast altijd het recht een klacht in te dienen bij de Gegevensbeschermingsautoriteit via <a href="https://www.gegevensbeschermingsautoriteit.be" rel="noopener noreferrer" target="_blank">gegevensbeschermingsautoriteit.be</a>.',
+    ],
+  },
+];
+
+const HTML = () => `<div class="rp">
 ${rpNav('')}
 
 <section class="rp-phero">
@@ -12,73 +78,25 @@ ${rpNav('')}
     <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Privacybeleid</span></nav>
     <span class="rp-eyebrow">${ic.mark} Juridisch</span>
     <h1 class="rp-phero__t">Privacybeleid</h1>
-    <p class="rp-phero__lede">Hoe AB Bouw Groep uw persoonsgegevens verzamelt, gebruikt en beschermt.</p>
+    <p class="rp-phero__lede">Wat wij met uw gegevens doen, waarom, en hoe lang wij ze bijhouden. Laatste aanpassing: augustus 2026.</p>
   </div>
 </section>
 
 <section class="rp-section">
-  <div class="rp-wrap rp-artikel__body" style="max-width:820px;margin-inline:auto">
-    <div style="max-width: 760px; display: flex; flex-direction: column; gap: 40px;">
+  <div class="rp-wrap">
+    <div class="rp-artikel" style="max-width:820px">
+      <div class="rp-artikel__body">
+        ${BLOKKEN.map((b) => `
+        <h2 style="font-size:21px;margin-top:36px">${b.n}. ${b.t}</h2>
+        ${(b.p || []).map((t) => `<p>${t}</p>`).join('')}
+        ${b.lijst ? `<ul>${b.lijst.map((l) => `<li>${l}</li>`).join('')}</ul>` : ''}
+        ${(b.na || []).map((t) => `<p>${t}</p>`).join('')}`).join('')}
 
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">1. Wie zijn wij?</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">AB Bouw Groep (hierna "wij", "ons" of "AB Bouw") is een bouw- en renovatiebedrijf gevestigd te ${CONTACT.address.full}, België. Wij zijn verantwoordelijk voor de verwerking van uw persoonsgegevens zoals beschreven in dit privacybeleid.</p>
-        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Contactgegevens: <a href="mailto:info@abgroep.be" style="color: var(--accent);">info@abgroep.be</a> · <a href="${CONTACT.phone.href}" style="color: var(--accent);">${CONTACT.phone.spaced}</a></p>
+        <div class="rp-formkaart" style="margin-top:44px">
+          <h2 style="font-size:19px;margin:0 0 8px">Een vraag over uw gegevens?</h2>
+          <p style="margin:0">Bel <a href="${CONTACT.phone.href}">${CONTACT.phone.display}</a> of mail naar <a href="mailto:${CONTACT.email}">${CONTACT.email}</a>.</p>
+        </div>
       </div>
-
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">2. Welke gegevens verzamelen wij?</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Wij verzamelen de volgende persoonsgegevens wanneer u contact met ons opneemt of een offerte aanvraagt:</p>
-        <ul style="color: var(--ink-soft); line-height: 1.8; padding-left: 20px; margin-top: 10px;">
-          <li>Naam en voornaam</li>
-          <li>E-mailadres en telefoonnummer</li>
-          <li>Adres van het te renoveren pand</li>
-          <li>Beschrijving van uw project en wensen</li>
-          <li>Correspondentie en berichten via ons contactformulier</li>
-        </ul>
-      </div>
-
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">3. Waarvoor gebruiken wij uw gegevens?</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Uw persoonsgegevens worden uitsluitend gebruikt voor:</p>
-        <ul style="color: var(--ink-soft); line-height: 1.8; padding-left: 20px; margin-top: 10px;">
-          <li>Het opmaken en opvolgen van offertes en contracten</li>
-          <li>Het plannen en uitvoeren van bouwwerken</li>
-          <li>Facturatie en administratie</li>
-          <li>Communicatie over uw lopend project</li>
-          <li>Wettelijke verplichtingen (btw, verzekering, garanties)</li>
-        </ul>
-        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Wij verkopen uw gegevens nooit aan derden en gebruiken ze niet voor direct marketing zonder uw uitdrukkelijke toestemming.</p>
-      </div>
-
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">4. Hoe lang bewaren wij uw gegevens?</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Projectdossiers worden bewaard gedurende de looptijd van onze 15-jarige garantie. Boekhoudkundige gegevens worden 7 jaar bewaard conform de Belgische wetgeving. Gegevens van niet-gerealiseerde offerteaanvragen worden maximaal 2 jaar bewaard.</p>
-      </div>
-
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">5. Uw rechten</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Conform de AVG (Algemene Verordening Gegevensbescherming) heeft u het recht om:</p>
-        <ul style="color: var(--ink-soft); line-height: 1.8; padding-left: 20px; margin-top: 10px;">
-          <li>Inzage te vragen in uw persoonsgegevens</li>
-          <li>Onjuiste gegevens te laten corrigeren</li>
-          <li>Uw gegevens te laten verwijderen ("recht op vergetelheid")</li>
-          <li>Bezwaar te maken tegen verwerking</li>
-          <li>Uw gegevens over te laten dragen</li>
-        </ul>
-        <p style="color: var(--ink-soft); line-height: 1.7; margin-top: 10px;">Stuur uw verzoek per e-mail naar <a href="mailto:info@abgroep.be" style="color: var(--accent);">info@abgroep.be</a>. Wij reageren binnen 30 dagen.</p>
-      </div>
-
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">6. Cookies</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Onze website maakt gebruik van functionele cookies die noodzakelijk zijn voor het goed functioneren van de site. Wij gebruiken geen tracking- of advertentiecookies. Raadpleeg ons <a href="/cookies" style="color: var(--accent);">cookiebeleid</a> voor meer informatie.</p>
-      </div>
-
-      <div>
-        <h2 style="font-size: 20px; margin-bottom: 12px;">7. Klachten</h2>
-        <p style="color: var(--ink-soft); line-height: 1.7;">Bent u niet tevreden over hoe wij uw gegevens verwerken? U heeft het recht een klacht in te dienen bij de Gegevensbeschermingsautoriteit (GBA): <a href="https://www.gegevensbeschermingsautoriteit.be" target="_blank" style="color: var(--accent);">www.gegevensbeschermingsautoriteit.be</a></p>
-      </div>
-
     </div>
   </div>
 </section>
@@ -86,17 +104,15 @@ ${rpNav('')}
 ${rpFooter()}
 </div>`;
 
-
 export default function Privacy() {
   useEffect(() => {
-    document.title = "Privacybeleid | AB Bouw Groep";
+    document.title = 'Privacybeleid — AB Bouw Groep';
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', "Privacybeleid van AB Bouw Groep. Hoe wij uw persoonsgegevens verwerken conform GDPR. Renovatie- en bouwbedrijf in Vlaanderen.");
-
+    m.setAttribute('content', 'Privacybeleid van AB Bouw Groep: welke persoonsgegevens wij verwerken, waarvoor, hoe lang wij ze bewaren en welke rechten u heeft.');
+    window.scrollTo(0, 0);
     const op = wireMobielMenu();
     return () => op();
   }, []);
-
-  return <div dangerouslySetInnerHTML={{ __html: HTML }} />;
+  return <div dangerouslySetInnerHTML={{ __html: HTML() }} />;
 }
