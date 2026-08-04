@@ -78,7 +78,7 @@ export const DIVISIES: Record<string, DivisionConfig> = {
     faqs: [
       { q: 'Kan crepi op elke gevel?', a: 'Bijna. De ondergrond moet droog en draagkrachtig zijn. Bij optrekkend vocht of loszittend metselwerk pakken we dat eerst aan, anders komt het probleem door de afwerking heen.' },
       { q: 'Wordt mijn woning dan dikker?', a: 'Met buitenisolatie komt de gevel doorgaans 14 tot 20 cm naar buiten. Dat heeft gevolgen voor dakoversteek, raamdorpels en soms de rooilijn. We meten dat op en zeggen vooraf wat het betekent.' },
-      { q: 'Hoe zit het met de premie voor gevelisolatie?', a: 'De voorwaarden zijn de laatste jaren verschillende keren gewijzigd en hangen af van uw inkomenscategorie. We toetsen uw situatie bij het plaatsbezoek in plaats van een bedrag te beloven dat later niet blijkt te kloppen.' },
+      { q: 'Hoe zit het met de premie voor gevelisolatie?', a: 'De voorwaarden zijn de laatste jaren verschillende keren gewijzigd en hangen af van uw inkomenscategorie. We toetsen uw situatie bij het plaatsbezoek, zodat u een bedrag hoort dat op uw dossier van toepassing is.' },
       { q: 'Hoelang gaat crepi mee?', a: 'Een goed uitgevoerde crepi op isolatie gaat vlot 25 jaar mee. Reinigen om de tien jaar houdt de kleur egaal.' },
     ],
     meta: 'Gevelrenovatie door AB Bouw Groep: crepi, steenstrips, houten en composiet gevelbekleding, met buitenisolatie volgens ETICS.',
@@ -209,7 +209,7 @@ export const DIVISIES: Record<string, DivisionConfig> = {
     ],
     faqs: [
       { q: 'Moet ik alles in één keer doen?', a: 'Nee. We maken een volgorde waarin elke stap op zichzelf zinvol is, zodat u kunt faseren zonder later werk te moeten afbreken.' },
-      { q: 'Op welke premies heb ik recht?', a: 'Dat hangt af van uw inkomenscategorie, het bouwjaar en de ingreep, en de regels wijzigen geregeld. We toetsen uw dossier bij het plaatsbezoek in plaats van vooraf een bedrag te noemen.' },
+      { q: 'Op welke premies heb ik recht?', a: 'Dat hangt af van uw inkomenscategorie, het bouwjaar en de ingreep, en de regels wijzigen geregeld. We toetsen uw dossier bij het plaatsbezoek en zeggen u dan waar u recht op heeft.' },
       { q: 'Werkt een warmtepomp met mijn bestaande radiatoren?', a: 'Soms wel, soms niet. Het hangt af van de watertemperatuur die uw radiatoren nodig hebben. We rekenen dat door en zeggen het eerlijk als vloerverwarming of grotere radiatoren nodig zijn.' },
       { q: 'Doen jullie ook enkel zonnepanelen?', a: 'Ja, dat kan als losse opdracht. We zeggen er wel bij of isoleren in uw situatie meer oplevert per geïnvesteerde euro.' },
     ],
