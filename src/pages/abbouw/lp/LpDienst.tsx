@@ -1283,7 +1283,7 @@ export default function LpDienst({ slug }: { slug: string }) {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', columnGap: 48, rowGap: 0, maxWidth: 900 }}>
               {d.signs.items.map((t, i) => (
                 <div key={i} style={{ display: 'flex', gap: 12, padding: '13px 0', borderBottom: '1px solid var(--tr-line)', fontSize: 14.5, lineHeight: 1.5, color: '#2b3543' }}>
-                  <span style={{ color: ORANGE, flexShrink: 0, fontWeight: 700, fontSize: 18, lineHeight: 1.2 }}>›</span><span>{t}</span>
+                  <span aria-hidden="true" style={{ color: '#915e02', flexShrink: 0, fontWeight: 700, fontSize: 18, lineHeight: 1.2 }}>›</span><span>{t}</span>
                 </div>
               ))}
             </div>
