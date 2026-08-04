@@ -40,6 +40,7 @@ import imgPlG1 from '@/assets/lp-diensten/pleisterwerk-g1.jpg';
 import imgPlG2 from '@/assets/lp-diensten/pleisterwerk-g2.jpg';
 import imgPlG3 from '@/assets/lp-diensten/pleisterwerk-g3.jpg';
 import velux from '@/assets/merken/Velux.png';
+import { LP_V6_CSS } from './_v6';
 
 import imgVelux from '@/assets/dak/lp-velux-huis.jpg';
 import imgGevelReinig from '@/assets/gevel/lp-gevelreiniging.jpg';
@@ -1024,7 +1025,7 @@ export default function LpDienst({ slug }: { slug: string }) {
   return (
     <>
     <div className="tr">
-      <style>{LP_CSS}</style>
+      <style>{LP_CSS + LP_V6_CSS}</style>
 
       {/* 1. TOP BAR */}
       <div className="tr-topbar">

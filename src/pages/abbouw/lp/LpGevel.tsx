@@ -3,6 +3,7 @@ import { submitLead } from '@/lib/leads';
 import type { Gemeente } from '@/data/gemeentes';
 import { CONTACT } from '@/data/contact';
 import logo from '@/assets/home/logo.png';
+import { LP_V6_CSS } from './_v6';
 
 // Hero + section photos (gevel-realisaties).
 import heroWitte from '@/assets/gevel/witte-crepi.jpg';
@@ -848,7 +849,7 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
     document.body.className = 'lp-page is-subpage';
     try { sessionStorage.setItem('ab_last_lp', local ? `/lokaal/gevelrenovatie-${local.slug}` : '/lp/gevel'); } catch {}
     const style = document.createElement('style');
-    style.textContent = LP_CSS;
+    style.textContent = LP_CSS + LP_V6_CSS;
     document.head.appendChild(style);
     // Hash-deeplink (bv. Google-sitelink /lp/...#werkwijze): scroll naar de sectie i.p.v. naar boven.
     if (window.location.hash && window.location.hash.length > 1) {

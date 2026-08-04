@@ -6,6 +6,7 @@ import { CONTACT } from '@/data/contact';
 import CalculatorDak from '../calculator/CalculatorDak';
 import logo from '@/assets/home/logo.png';
 import velux from '@/assets/merken/Velux.png';
+import { LP_V6_CSS } from './_v6';
 
 // Hero + section photos (reused asset set — Belgian residential roofing).
 import heroClassic from '@/assets/dak/lp-hero-pannendak.jpg';
@@ -1042,7 +1043,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
     document.body.className = 'lp-page is-subpage';
     try { sessionStorage.setItem('ab_last_lp', local ? `/lokaal/dakwerker-${local.slug}` : '/lp/dakwerken'); } catch {}
     const style = document.createElement('style');
-    style.textContent = LP_CSS;
+    style.textContent = LP_CSS + LP_V6_CSS;
     document.head.appendChild(style);
     // Hash-deeplink (bv. Google-sitelink /lp/...#werkwijze): scroll naar de sectie i.p.v. naar boven.
     if (window.location.hash && window.location.hash.length > 1) {
