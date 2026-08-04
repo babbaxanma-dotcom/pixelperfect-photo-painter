@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import '@/styles/roofpro.css';
-import hero from '@/assets/home/hero-werkwijze.jpg';
+// hero-werkwijze.jpg was een geposeerde stockfoto (twee mannen die omhoog wijzen)
+import hero from '@/assets/home/hero-diensten.jpg';
 import s1 from '@/assets/werkwijze/01-contact.jpg';
 import s2 from '@/assets/werkwijze/02-plaatsbezoek.jpg';
 import s3 from '@/assets/werkwijze/03-offerte.jpg';
@@ -34,7 +35,11 @@ const STAPPEN = [
 const HTML = () => `<div class="rp">
 ${rpNav('/werkwijze')}
 
-<section class="rp-phero">
+<section class="rp-phero rp-phero--foto">
+  <div class="rp-phero__bg" aria-hidden="true">
+    <img src="${hero}" alt="" width="1920" height="620" fetchpriority="high" decoding="async"/>
+    <span class="rp-phero__veil"></span>
+  </div>
   <div class="rp-wrap">
     <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Werkwijze</span></nav>
     <span class="rp-eyebrow">${ic.mark} Werkwijze</span>
@@ -47,9 +52,6 @@ ${rpNav('/werkwijze')}
   </div>
 </section>
 
-<div class="rp-hero__photo">
-  <img src="${hero}" alt="Werf van AB Bouw Groep in uitvoering" width="1600" height="440" fetchpriority="high" decoding="async"/>
-</div>
 
 <section class="rp-section">
   <div class="rp-wrap">

@@ -34,7 +34,11 @@ export function buildDivisionPage(c: DivisionConfig) {
   return `<div class="rp">
 ${rpNav('/diensten')}
 
-<section class="rp-phero">
+<section class="rp-phero rp-phero--foto">
+  <div class="rp-phero__bg" aria-hidden="true">
+    <img src="${c.heroBg}" alt="" width="1920" height="620" fetchpriority="high" decoding="async"/>
+    <span class="rp-phero__veil"></span>
+  </div>
   <div class="rp-wrap">
     <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <a href="/diensten">Diensten</a> &rsaquo; <span>${c.eyebrow}</span></nav>
     <span class="rp-eyebrow">${ic.mark} ${c.eyebrow}</span>
@@ -47,9 +51,6 @@ ${rpNav('/diensten')}
   </div>
 </section>
 
-<div class="rp-hero__photo">
-  <img src="${c.heroBg}" alt="${c.title}" width="1600" height="460" fetchpriority="high" decoding="async"/>
-</div>
 
 <section class="rp-section">
   <div class="rp-wrap">

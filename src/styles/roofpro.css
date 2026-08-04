@@ -851,6 +851,36 @@
   padding: 66px 0 72px;
   border-bottom: 1px solid var(--rp-line-soft);
 }
+/* Variant met de foto ACHTER de kop in plaats van als losse strook eronder.
+   Die losse strook gaf een zichtbare naad tussen twee blokken. */
+.rp-phero--foto {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 0;
+  background: var(--rp-dark);
+  padding: clamp(60px, 6.5vw, 98px) 0 clamp(68px, 7.5vw, 108px);
+}
+.rp-phero__bg { position: absolute; inset: 0; }
+.rp-phero__bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 56%; }
+.rp-phero__veil {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(6,11,19,0.93) 0%, rgba(6,11,19,0.87) 44%, rgba(6,11,19,0.62) 72%, rgba(6,11,19,0.34) 100%),
+    linear-gradient(180deg, rgba(6,11,19,0.5) 0%, rgba(6,11,19,0) 28%);
+}
+.rp-phero--foto > .rp-wrap { position: relative; }
+.rp-phero--foto .rp-crumbs { color: #aab4c2; }
+.rp-phero--foto .rp-crumbs a:hover { color: #e0a83c; }
+.rp-phero--foto .rp-eyebrow { color: #f0c67a; }
+.rp-phero--foto .rp-phero__t { color: #fff; }
+.rp-phero--foto .rp-phero__t .rp-dim { color: #c2cbd8; }
+.rp-phero--foto .rp-phero__lede { color: #d3d9e2; }
+.rp-phero--foto .rp-blog__tag { background: rgba(240,198,122,0.16); color: #f0c67a; }
+.rp-phero--foto .rp-blog__meta { color: #c2cbd8; }
+.rp-phero--foto .rp-blog__meta svg { color: #8f9aab; }
+.rp-phero--foto .rp-btn--ghost { color: #fff; border-color: rgba(255,255,255,0.34); }
+.rp-phero--foto .rp-btn--ghost:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+
 .rp-crumbs { font-size: 13.5px; color: var(--rp-mute); margin-bottom: 18px; }
 .rp-crumbs a:hover { color: var(--rp-accent-text); }
 .rp-phero__t { font-size: clamp(32px, 4.3vw, 58px); }
