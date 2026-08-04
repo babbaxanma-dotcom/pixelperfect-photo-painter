@@ -25,10 +25,10 @@ import stap3 from '@/assets/werkwijze/03-offerte.jpg';
 import stap5 from '@/assets/werkwijze/05-uitvoering.jpg';
 import stap7 from '@/assets/werkwijze/07-oplevering.jpg';
 import ctaPhoto from '@/assets/home/hero-roof.jpg';
-import mKoramic from '@/assets/merken/Koramic.png';
-import mVelux from '@/assets/merken/Velux.png';
-import mWienerberger from '@/assets/merken/Wienerberger.png';
-import mRockpanel from '@/assets/merken/rockpanel.png';
+import mKoramic from '@/assets/merken/Koramic-donker.png';
+import mVelux from '@/assets/merken/Velux-donker.png';
+import mWienerberger from '@/assets/merken/Wienerberger-donker.png';
+import mRockpanel from '@/assets/merken/rockpanel-donker.png';
 
 import revMarc from '@/assets/reviews/marc.jpg';
 import revEllen from '@/assets/reviews/ellen.jpg';

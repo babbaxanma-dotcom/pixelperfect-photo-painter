@@ -39,10 +39,8 @@ import imgBkG3 from '@/assets/lp-diensten/badkamer-g3.jpg';
 import imgPlG1 from '@/assets/lp-diensten/pleisterwerk-g1.jpg';
 import imgPlG2 from '@/assets/lp-diensten/pleisterwerk-g2.jpg';
 import imgPlG3 from '@/assets/lp-diensten/pleisterwerk-g3.jpg';
-import velux from '@/assets/merken/Velux.png';
+import velux from '@/assets/merken/Velux-donker.png';
 import { LP_V6_CSS } from './_v6';
-import { rpNav, rpFooter, wireMobielMenu } from '../_rp';
-import '@/styles/roofpro.css';
 
 import imgVelux from '@/assets/dak/lp-velux-huis.jpg';
 import imgGevelReinig from '@/assets/gevel/lp-gevelreiniging.jpg';
@@ -976,8 +974,6 @@ export default function LpDienst({ slug }: { slug: string }) {
     return () => { document.getElementById(schemaId)?.remove(); };
   }, [d]);
 
-  // hamburger van de gedeelde sitenavigatie
-  useEffect(() => wireMobielMenu(), []);
   // Realisatie-lightbox: klik op een galerij-foto -> 3 foto's groot, scrollbaar
   useEffect(() => initRealisatieLightbox(), []);
   useEffect(() => initBeforeAfter(), []);
@@ -1026,221 +1022,302 @@ export default function LpDienst({ slug }: { slug: string }) {
     else { setFinalState('idle'); setFinalErr(`Er ging iets mis. Bel ons gerust op ${PHONE}.`); }
   };
 
-  const Vink = ({ s = 17 }: { s?: number }) => (
-    <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
-  );
-  const Pijl = () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
-  );
-  const Plus = () => (
-    <svg className="rp-faq__ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
-  );
-  const Merk = () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 2h9v9H2z" /><path d="M13 13h9v9h-9z" /><path d="M13 2h9v9h-9z" opacity=".45" /></svg>
-  );
-
   return (
     <>
-    <div className="rp">
-      <div dangerouslySetInnerHTML={{ __html: rpNav('') }} />
+    <div className="tr">
+      <style>{LP_CSS + LP_V6_CSS}</style>
 
-      {/* ── hero: foto eronder, tekst erop, aanvraagkaart ernaast ── */}
-      <section className="rp-hero2" id="top">
-        <div className="rp-hero2__bg" aria-hidden="true">
-          <img src={d.heroImg} alt="" width={1920} height={760} decoding="async" />
-          <span className="rp-hero2__veil" />
+      {/* 1. TOP BAR */}
+      <div className="tr-topbar">
+        <div className="tr-wrap">
+          <div className="tr-topbar-left">
+            {d.topbar.map((t, i) => <span key={i}>{t}</span>)}
+          </div>
+          <a className="tr-topbar-phone" href={PHONE_HREF}><Phone />{PHONE}</a>
         </div>
-        <div className="rp-wrap rp-hero2__grid">
-          <div>
-            <span className="rp-hero2__eyebrow"><Merk /> {d.eyebrow}</span>
-            <h1 className="rp-hero2__t">{d.h1}</h1>
-            <p className="rp-hero2__lede">{d.sub} <strong style={{ color: '#fff' }}>{d.subBold}</strong></p>
-            <div className="rp-hero2__punten">
-              <span className="rp-hero2__punt"><Vink s={16} /> 4,9 op Google</span>
-              <span className="rp-hero2__punt"><Vink s={16} /> 120+ realisaties</span>
-              <span className="rp-hero2__punt"><Vink s={16} /> VCA-gecertificeerd</span>
+      </div>
+
+      {/* 2. HEADER */}
+      <header className="tr-header">
+        <div className="tr-wrap">
+          <a href="#" aria-label="AB Bouw Groep"><img className="tr-logo" src={logo} alt="AB Bouw Groep" /></a>
+          <nav className="tr-nav">
+            <a href="#diensten">Diensten</a>
+            <a href="#werkwijze">Werkwijze</a>
+            <a href="#reviews">Reviews</a>
+            <a href="#contact">Contact</a>
+          </nav>
+          <div className="tr-header-right">
+            <div className="tr-rating">
+              <span className="tr-rating-score">4,9/5</span>
+              <span className="tr-rating-stars">{stars}</span>
+            </div>
+            <a className="tr-btn tr-headcta" href="#contact" style={{ padding: '12px 22px', fontSize: 14 }}>Gratis offerte</a>
+            <a className="tr-headphone" href={PHONE_HREF} aria-label="Bel ons"><Phone /><span className="tr-headphone-num">{PHONE}</span></a>
+            <button type="button" className="tr-burger" data-menu-toggle aria-label="Menu" aria-expanded="false">
+              <span /><span /><span />
+            </button>
+          </div>
+        </div>
+        <div className="tr-mobmenu-overlay" data-menu-close />
+        <nav className="tr-mobmenu" aria-label="Mobiel menu">
+          <button type="button" className="tr-mobmenu-close" data-menu-close aria-label="Sluiten">&times;</button>
+          <a href="#diensten">Diensten</a>
+          <a href="#werkwijze">Werkwijze</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#contact">Contact</a>
+          <a className="tr-btn tr-mobmenu-cta" href="#contact">Offerte aanvragen</a>
+        </nav>
+      </header>
+
+      {/* 3. HERO */}
+      <section className="tr-hero">
+        <div className="tr-hero-bg"><img src={d.heroImg} alt={d.h1} /></div>
+        <div className="tr-hero-inner">
+          <div className="tr-wrap">
+            <div className="tr-hero-grid">
+              <div className="tr-hero-main">
+                <div className="tr-hero-trust">
+                  <span className="tr-hero-trust-stars">{stars}</span>
+                  <span><b>4,9/5</b> op Google (180+ reviews)</span><span className="tr-hero-trust-dot">·</span>
+                  <span>120+ realisaties</span><span className="tr-hero-trust-dot">·</span>
+                  <span>Actief sinds 2010</span>
+                </div>
+                <h1>{d.h1}</h1>
+                <p className="tr-hero-sub">{d.sub} <b>{d.subBold}</b>.</p>
+                <div className="tr-certs">
+                  <span className="tr-cert-pill"><Shield />VCA* gecertificeerd</span>
+                  <span className="tr-cert-pill"><Check s={15} />Lid Bouwunie</span>
+                  <span className="tr-cert-pill"><Shield />Verzekerd via Federale</span>
+                </div>
+              </div>
+              <aside className="tr-hero-form" aria-label="Vraag uw gratis afspraak aan">
+                <div className={`tr-quickform tr-leadcard${quickState === 'ok' ? ' is-success' : ''}`} id="lp-form">
+                  <div className={`tr-lc-row tr-lc-row--primary${leadOpen ? ' is-open' : ''}`}>
+                    <button type="button" className="tr-lc-head" onClick={() => setLeadOpen((o) => !o)} aria-expanded={leadOpen}>
+                      <span className="tr-lc-ic tr-lc-ic--accent" aria-hidden="true"><Doc /></span>
+                      <span className="tr-lc-txt">
+                        <h3 className="tr-lc-title">{d.steps[0][0]}</h3>
+                        <span className="tr-lc-sub">Vrijblijvend, geen verplichtingen.</span>
+                      </span>
+                      <span className="tr-lc-chev" aria-hidden="true"><Chevron /></span>
+                    </button>
+                    <div className="tr-lc-panel"><div className="tr-lc-panel-inner"><div className="tr-lc-panel-pad">
+                      <form ref={quickRef} onSubmit={onQuickSubmit} onFocusCapture={() => trackFormStart(`lp:${d.slug}:quick`)} noValidate>
+                        <div className="tr-qf-grid">
+                          <div className="tr-qf-field"><label htmlFor="qf-name">Voornaam</label><input id="qf-name" type="text" name="firstName" placeholder="bv. Jan" autoComplete="given-name" required /></div>
+                          <div className="tr-qf-field"><label htmlFor="qf-phone">Telefoonnummer</label><input id="qf-phone" type="tel" name="phone" placeholder="bv. 0470 12 34 56" autoComplete="tel" required /></div>
+                          <button type="submit" className="tr-btn" disabled={quickState === 'busy'}>{quickState === 'busy' ? 'Even bezig…' : 'Plan mijn afspraak'}</button>
+                        </div>
+                      </form>
+                      <p className="tr-lc-reassure">We bellen u terug binnen één werkdag.</p>
+                      {quickErr && <div className="tr-qf-error" style={{ display: 'block' }}>{quickErr}</div>}
+                      <div className="tr-lc-proof">
+                        <div className="tr-lc-proof-stars">★★★★★</div>
+                        <p className="tr-lc-proof-q">{d.reviews[0].text}</p>
+                        <div className="tr-lc-proof-name">{d.reviews[0].name} · {d.reviews[0].role}</div>
+                      </div>
+                    </div></div></div>
+                  </div>
+                  <div className="tr-lc-or"><span>Of</span></div>
+                  {calcCfg && (
+                    <button type="button" className="tr-lc-row tr-lc-row--alt tr-lc-row--calc" onClick={() => setCalcOpen(true)}>
+                      <span className="tr-lc-ic" aria-hidden="true"><Calc /></span>
+                      <span className="tr-lc-txt">
+                        <span className="tr-lc-title-row"><span className="tr-lc-title">{calcCfg.triggerLabel}</span><span className="tr-lc-badge">60 sec</span></span>
+                        <span className="tr-lc-sub">Prijsindicatie via onze calculator, klaar in 60 seconden</span>
+                      </span>
+                      <span className="tr-lc-chev" aria-hidden="true"><Chevron /></span>
+                    </button>
+                  )}
+                  <a className="tr-lc-row tr-lc-row--alt" href={PHONE_HREF}>
+                    <span className="tr-lc-ic" aria-hidden="true"><Phone /></span>
+                    <span className="tr-lc-txt">
+                      <span className="tr-lc-title">Bel ons direct</span>
+                      <span className="tr-lc-sub">Vragen of haast? {PHONE}</span>
+                    </span>
+                    <span className="tr-lc-chev" aria-hidden="true"><Chevron /></span>
+                  </a>
+                  <div className="tr-qf-thanks">
+                    <div className="tr-qf-thanks-ic"><Check s={26} /></div>
+                    <h4>Bedankt, uw aanvraag is ontvangen.</h4>
+                    <p>{d.quickThanks ?? 'We bellen u zo snel mogelijk terug om uw afspraak in te plannen.'}</p>
+                  </div>
+                </div>
+              </aside>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="rp-aanvraag" id="contact-kort">
-            {quickState === 'ok' ? (
-              <div className="rp-aanvraag__ok">
-                <span className="rp-aanvraag__ok-ic" aria-hidden="true">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                </span>
-                <h2 className="rp-aanvraag__t">Bedankt, wij bellen u terug</h2>
-                <p className="rp-aanvraag__s">{d.quickThanks ?? 'Meestal binnen één werkdag. Liever meteen iemand spreken?'} <a href={PHONE_HREF} style={{ color: 'var(--rp-accent-text)', fontWeight: 700 }}>{PHONE}</a></p>
+      {/* 5. WERKWIJZE / 3 STAPPEN */}
+      <section className="tr-section" id="werkwijze">
+        <div className="tr-wrap">
+          <div className="tr-steps-box">
+            <h2>{d.werkwijzeH2 ?? 'In 3 stappen geregeld'}</h2>
+            {d.stepsImg ? (
+              <div className="tr-steps-layout">
+                <div className="tr-steps-photo">
+                  <img src={d.stepsImg} alt={`${d.breadcrumb ?? 'Werk'} door AB Bouw Groep`} loading="lazy" width="900" height="900" />
+                </div>
+                <div className="tr-steps-list">
+                  {d.steps.map(([t, sub], i) => (
+                    <div className="tr-step" key={i}>
+                      <div className="tr-step-num">{String(i + 1).padStart(2, '0')}</div>
+                      <h3>{t}</h3>
+                      <p>{sub}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             ) : (
-              <>
-                <h2 className="rp-aanvraag__t">{d.quickformH3 ?? 'Vraag een plaatsbezoek aan'}</h2>
-                <p className="rp-aanvraag__s">Laat uw nummer achter, dan bellen wij u terug om een moment af te spreken.</p>
-                <form onSubmit={onQuickSubmit} noValidate onFocus={() => trackFormStart(`lp:${d.slug}:quick`)}>
-                  <div className="rp-veld">
-                    <label htmlFor="lpq-naam">Voornaam</label>
-                    <input id="lpq-naam" name="firstName" type="text" autoComplete="given-name" required />
+              <div className="tr-steps-grid">
+                {d.steps.map(([t, sub], i) => (
+                  <div className="tr-step" key={i}>
+                    <div className="tr-step-num">{String(i + 1).padStart(2, '0')}</div>
+                    <h3>{t}</h3>
+                    <p>{sub}</p>
                   </div>
-                  <div className="rp-veld">
-                    <label htmlFor="lpq-tel">Telefoonnummer</label>
-                    <input id="lpq-tel" name="phone" type="tel" inputMode="tel" autoComplete="tel" required />
-                  </div>
-                  {quickErr && <p className="rp-fout">{quickErr}</p>}
-                  <button className="rp-btn rp-btn--primary rp-btn--block" type="submit" disabled={quickState === 'busy'}>
-                    {quickState === 'busy' ? 'Versturen…' : 'Bel mij terug'}
-                  </button>
-                </form>
-                <p className="rp-aanvraag__vt"><Vink s={15} /> Vrijblijvend &middot; 4,9 op Google</p>
-              </>
+                ))}
+              </div>
             )}
           </div>
         </div>
       </section>
 
-      {/* ── band met de belangrijkste punten ── */}
-      <div className="rp-band">
-        <div className="rp-wrap rp-band__row">
-          {d.topbar.map((t, n) => (
-            <span key={t} style={{ display: 'contents' }}>
-              {n > 0 && <span className="rp-band__sep" aria-hidden="true">&#10038;</span>}
-              <span>{t}</span>
-            </span>
-          ))}
-        </div>
-      </div>
+      {/* 7. NUMBERS BAR */}
+      <section className="tr-numbers">
+        <div className="tr-num"><div className="tr-num-big">{new Date().getFullYear() - 2010} jaar</div><div className="tr-num-lbl">ervaring</div></div>
+        <div className="tr-num"><div className="tr-num-big">1</div><div className="tr-num-lbl">vast aanspreekpunt</div></div>
+        <div className="tr-num"><div className="tr-num-big">120+</div><div className="tr-num-lbl">realisaties</div></div>
+        <div className="tr-num">{d.division === 'ab_dakwerken' ? (<><div className="tr-num-big">10 jaar</div><div className="tr-num-lbl">garantie</div></>) : (<><div className="tr-num-big">Gratis</div><div className="tr-num-lbl">plaatsbezoek</div></>)}</div>
+      </section>
 
-      {/* ── wat u krijgt ── */}
-      <section className="rp-section">
-        <div className="rp-wrap">
-          <div className="rp-split">
-            <div className="rp-split__media">
-              <img src={d.whatImg} alt={d.whatTitle} width={560} height={420} loading="lazy" decoding="async" />
+      {/* 9. REVIEWS — naar boven verplaatst (CRO: sociale proof vlak na de cijfers) */}
+      <section className="tr-section tr-reviews" id="reviews">
+        <div className="tr-wrap">
+          <div className="tr-rev-layout">
+            <div className="tr-rev-rail">
+              <h2>{d.reviewsH2 ?? 'Klantbeoordelingen'}</h2>
+              <div className="tr-rev-score">4,9/5</div>
+              <div className="tr-rev-rail-stars" aria-hidden="true">{stars}</div>
+              <p className="tr-rev-rail-sub">gebaseerd op 180+ Google-reviews</p>
             </div>
-            <div>
-              <span className="rp-eyebrow"><Merk /> {d.offerEyebrow}</span>
-              <h2 className="rp-split__t">{d.offerH2}</h2>
-              <p className="rp-split__lede">{d.offerIntro}</p>
-              <ul className="rp-lijst">
-                {d.offer.map((o) => (
-                  <li key={o}><Vink /><span>{o}</span></li>
+            <div className="tr-rev-list">
+              {d.reviews.slice(1).map((r, i) => (
+                <div className="tr-rev-row" key={i}>
+                  <div className="tr-rev-row-stars" aria-hidden="true">{stars}</div>
+                  <p>{r.text}</p>
+                  <div className="tr-rev-attr"><span className="tr-rev-dash" aria-hidden="true">&mdash;</span> <span className="tr-rev-name">{r.name}</span> <span className="tr-rev-role">&middot; {r.role}</span></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. SERVICES / WAT HOUDT HET IN */}
+      <section className="tr-section tr-services" id="diensten">
+        <div className="tr-wrap">
+          <div className="tr-head">
+            
+            <h2>{d.whatTitle}</h2>
+            <p style={{ color: 'rgba(255,255,255,0.84)', fontSize: 15, lineHeight: 1.6, marginTop: 14 }}>{d.whatIntro}</p>
+          </div>
+          <div className="tr-svc-grid">
+            {d.what.map(([t, sub], i) => (
+              <div className="tr-svc-card" key={i}>
+                <div className="tr-svc-body"><span className="tr-svc-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><h3>{t}</h3><p>{sub}</p></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. ABOUT / CERTIFIED — onder de converterende secties: aandacht hoog houden voor hook + bewijs + diensten, daarna pas over ons */}
+      <section className="tr-section" style={{ background: '#fff' }}>
+        <div className="tr-wrap">
+          <div className="tr-about-grid">
+            <div className="tr-about-media">
+              <div className="tr-about-badges">
+                {d.certLogo && <span className="tr-about-badge"><img src={d.certLogo.src} alt={d.certLogo.alt} /></span>}
+                <span className="tr-about-badge tr-vca">VCA*</span>
+              </div>
+              <div className="tr-about-photo">
+                {d.beforeAfter ? (
+                  <div className="ba-slider" data-ba>
+                    <img className="ba-base" src={d.beforeAfter.after} alt="Gevel na het hervoegen" />
+                    <div className="ba-clip"><img src={d.beforeAfter.before} alt="Gevel voor het hervoegen" /></div>
+                    <div className="ba-handle"><span className="ba-grip" aria-hidden="true">⟷</span></div>
+                    <span className="ba-tag ba-tag-l">Voor</span>
+                    <span className="ba-tag ba-tag-r">Na</span>
+                  </div>
+                ) : (
+                  <img src={d.whatImg} alt="AB Bouw vakman aan het werk" />
+                )}
+              </div>
+            </div>
+            <div className="tr-about-body">
+
+              <h2>{d.offerH2}</h2>
+              <p className="tr-about-intro">{d.offerIntro}</p>
+              <ul className="tr-checks">
+                {d.offer.map((t, i) => (
+                  <li key={i}><Check />{i === 0 ? <span><b>{t}</b></span> : <span>{t}</span>}</li>
                 ))}
               </ul>
-              <div className="rp-split__cta">
-                <a className="rp-btn rp-btn--primary" href="#contact">Vraag uw offerte <Pijl /></a>
-              </div>
+              <div className="tr-urgency">{d.urgencyLine ?? 'Gratis plaatsbezoek, meestal binnen 5 werkdagen.'}</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── in stappen geregeld ── */}
-      <section className="rp-section rp-section--soft">
-        <div className="rp-wrap">
-          <div className="rp-head" style={{ flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-            <div>
-              <span className="rp-eyebrow"><Merk /> Werkwijze</span>
-              <h2 className="rp-head__title">{d.werkwijzeH2 ?? 'In drie stappen geregeld'}</h2>
-            </div>
-          </div>
-          <div className="rp-steps" style={{ gridTemplateColumns: `repeat(${Math.min(d.steps.length, 4)}, minmax(0, 1fr))` }}>
-            {d.steps.map(([t, tekst], n) => (
-              <article className="rp-step" key={t}>
-                <div className="rp-step__body">
-                  <div className="rp-step__n">{String(n + 1).padStart(2, '0')}</div>
-                  <h3 className="rp-step__t">{t}</h3>
-                  <p className="rp-step__d">{tekst}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── cijfers ── */}
-      <section className="rp-section" style={{ paddingBlock: 'var(--rp-section-y-sm)' }}>
-        <div className="rp-wrap rp-about__stats" style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', marginTop: 0 }}>
-          <div><div className="rp-stat__n">{new Date().getFullYear() - 2010}</div><div className="rp-stat__l">jaar ervaring</div></div>
-          <div><div className="rp-stat__n">120+</div><div className="rp-stat__l">realisaties</div></div>
-          <div><div className="rp-stat__n">4,9</div><div className="rp-stat__l">op Google</div></div>
-          <div><div className="rp-stat__n">{d.division === 'ab_dakwerken' ? '10' : 'VCA'}</div><div className="rp-stat__l">{d.division === 'ab_dakwerken' ? 'jaar garantie' : 'gecertificeerd'}</div></div>
-        </div>
-      </section>
-
-      {/* ── wat wij doen ── */}
-      <section className="rp-section rp-section--soft">
-        <div className="rp-wrap">
-          <div className="rp-head" style={{ flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-            <div>
-              <span className="rp-eyebrow"><Merk /> {d.typeWerk}</span>
-              <h2 className="rp-head__title">{d.whatTitle}</h2>
-              <p className="rp-head__lede" style={{ marginInline: 'auto' }}>{d.whatIntro}</p>
-            </div>
-          </div>
-          <div className="rp-why__tiles rp-tiles-3">
-            {d.what.map(([t, tekst], n) => (
-              <div className="rp-tile" key={t}>
-                <div className="rp-split__n">{String(n + 1).padStart(2, '0')}</div>
-                <h3 className="rp-tile__t">{t}</h3>
-                <p className="rp-tile__d">{tekst}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── herkent u dit ── */}
+      {/* 8a. HERKENT U DIT? — signalen */}
       {d.signs && (
-        <section className="rp-section">
-          <div className="rp-wrap">
-            <div className="rp-split rp-split--om">
-              <div className="rp-split__media">
-                <img src={d.stepsImg ?? d.whatImg} alt={d.signs.title} width={560} height={420} loading="lazy" decoding="async" />
-              </div>
-              <div>
-                <span className="rp-eyebrow"><Merk /> Herkent u dit?</span>
-                <h2 className="rp-split__t">{d.signs.title}</h2>
-                <p className="rp-split__lede">{d.signs.intro}</p>
-                <ul className="rp-lijst">
-                  {d.signs.items.map((s) => (<li key={s}><Vink /><span>{s}</span></li>))}
-                </ul>
-              </div>
+        <section className="tr-section" style={{ background: '#fff' }}>
+          <div className="tr-wrap">
+            <div className="tr-head" style={{ textAlign: 'left', maxWidth: 760, margin: '0 0 30px' }}>
+              <h2 style={{ fontSize: 'clamp(26px, 3vw, 36px)', color: NAVY, fontWeight: 700, margin: 0 }}>{d.signs.title}</h2>
+              <p style={{ fontSize: 15, lineHeight: 1.6, color: '#454f60', marginTop: 10 }}>{d.signs.intro}</p>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', columnGap: 48, rowGap: 0, maxWidth: 900 }}>
+              {d.signs.items.map((t, i) => (
+                <div key={i} style={{ display: 'flex', gap: 12, padding: '13px 0', borderBottom: '1px solid var(--tr-line)', fontSize: 14.5, lineHeight: 1.5, color: '#2b3543' }}>
+                  <span style={{ color: ORANGE, flexShrink: 0, fontWeight: 700, fontSize: 18, lineHeight: 1.2 }}>›</span><span>{t}</span>
+                </div>
+              ))}
             </div>
           </div>
         </section>
       )}
 
-      {/* ── realisaties ── */}
+      {/* 8b. RECENTE REALISATIES (galerij) */}
       {d.gallery && d.gallery.length > 0 && (
-        <section className="rp-section rp-section--soft" id="realisaties">
-          <div className="rp-wrap">
-            <div className="rp-head">
-              <div>
-                <span className="rp-eyebrow"><Merk /> Realisaties</span>
-                <h2 className="rp-head__title">Werk dat wij<span className="rp-dim">opgeleverd hebben</span></h2>
-              </div>
-              <a className="rp-btn rp-btn--primary" href="#contact">Vraag uw offerte</a>
+        <section className="tr-section" style={{ background: 'var(--bg-tint)' }}>
+          <div className="tr-wrap">
+            <div className="tr-head" style={{ textAlign: 'left', maxWidth: 720, margin: '0 0 44px' }}>
+              <span className="tr-eyebrow">Recente realisaties</span>
+              <h2 style={{ fontSize: 'clamp(27px, 3.2vw, 38px)', color: NAVY, fontWeight: 600, margin: 0 }}>Ons werk in beeld</h2>
             </div>
-            <div className="rp-galerij">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 18 }}>
               {d.gallery.map((item, i) => {
-                const photos = Array.isArray(item) ? item : [item];
+                const photos = Array.isArray(item) ? item : (d.gallery as string[]);
+                const cover = Array.isArray(item) ? item[0] : item;
                 return (
-                  <button
-                    className="rp-gcard"
-                    type="button"
-                    key={i}
-                    data-rl-trigger
-                    data-rl-index={Array.isArray(item) ? 0 : i}
-                    data-rl-photos={JSON.stringify(photos)}
-                    data-rl-title={`${d.galleryNoun ?? d.typeWerk} realisatie`}
-                    aria-label={`Bekijk ${d.galleryNoun ?? d.typeWerk} realisatie groot`}
-                  >
-                    <span className="rp-gcard__img">
-                      <img src={photos[0]} alt={`${d.galleryNoun ?? d.typeWerk} realisatie`} width={420} height={240} loading="lazy" decoding="async" />
-                    </span>
-                    <span className="rp-gcard__body">
-                      <span className="rp-gcard__tag">{d.galleryNoun ?? d.typeWerk}</span>
-                      <span className="rp-gcard__t">Realisatie {i + 1}</span>
-                    </span>
-                  </button>
+                <div
+                  key={i}
+                  className="rl-thumb"
+                  data-rl-trigger
+                  data-rl-index={Array.isArray(item) ? 0 : i}
+                  data-rl-photos={JSON.stringify(photos)}
+                  data-rl-title={`${d.galleryNoun ?? d.typeWerk} realisatie`}
+                  style={{ borderRadius: 8, overflow: 'hidden', boxShadow: '0 30px 60px -30px rgba(10,22,40,0.35)', aspectRatio: '4 / 3', position: 'relative' }}
+                >
+                  <img src={cover} alt={`${d.galleryNoun ?? d.typeWerk}, realisatie ${i + 1}`} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <span className="rl-zoom" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /><line x1="11" y1="8" x2="11" y2="14" /><line x1="8" y1="11" x2="14" y2="11" /></svg>
+                  </span>
+                </div>
                 );
               })}
             </div>
@@ -1248,122 +1325,77 @@ export default function LpDienst({ slug }: { slug: string }) {
         </section>
       )}
 
-      {/* ── beoordelingen ── */}
-      <section className="rp-section" id="reviews">
-        <div className="rp-wrap">
-          <div className="rp-head" style={{ flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-            <div>
-              <span className="rp-eyebrow"><Merk /> Beoordelingen</span>
-              <h2 className="rp-head__title">{d.reviewsH2 ?? 'Wat onze klanten vertellen'}</h2>
-            </div>
-          </div>
-          <div className="rp-why__tiles rp-tiles-3">
-            {d.reviews.map((r) => (
-              <article className="rp-rev" key={r.name}>
-                <div className="rp-rev__stars" aria-label="5 van 5 sterren">{stars}</div>
-                <p className="rp-rev__text">{r.text}</p>
-                <div className="rp-rev__foot">
-                  <span className="rp-rev__who">
-                    <span className="rp-rev__name">{r.name}</span><br />
-                    <span className="rp-rev__role">{r.role}</span>
-                  </span>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── veelgestelde vragen ── */}
-      <section className="rp-section rp-section--soft">
-        <div className="rp-wrap">
-          <div className="rp-head" style={{ flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-            <div>
-              <span className="rp-eyebrow"><Merk /> Veelgestelde vragen</span>
-              <h2 className="rp-head__title">Wat klanten ons<span className="rp-dim">het vaakst vragen</span></h2>
-            </div>
-          </div>
-          <div className="rp-faq">
+      {/* 11. FAQ */}
+      <section className="tr-section" id="faq">
+        <div className="tr-wrap">
+          <div className="tr-faq-box">
+            <h2>Veelgestelde vragen</h2>
             {d.faq.map(([q, a], i) => (
-              <details className="rp-faq__item" key={q} open={i === 0}>
-                <summary className="rp-faq__q">{q}<Plus /></summary>
-                <div className="rp-faq__a">{a}</div>
+              <details className="tr-faq-item" key={i}>
+                <summary>{q}</summary>
+                <p>{a}</p>
               </details>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── slotblok met het volledige formulier ── */}
-      <section className="rp-cta" id="contact">
-        <div className="rp-wrap">
-          <div className="rp-cta__box" id="lp-final" style={{ alignItems: 'stretch' }}>
-            <div className="rp-cta__bg" aria-hidden="true">
-              <img src={d.heroImg} alt="" width={1200} height={520} loading="lazy" decoding="async" />
-              <span className="rp-cta__veil" />
+      {/* 12. FINAL CTA */}
+      <section className="tr-section tr-final" id="contact">
+        <div className="tr-wrap">
+          <h2>{d.finalH2 ?? 'Klaar om te starten?'}</h2>
+          <div className="tr-final-grid">
+            <div className="tr-final-contact">
+              <h3>Neem contact op</h3>
+              <div className="tr-big">{d.finalSub}</div>
+              <div className="tr-line"><Pin /><span>{ADDRESS}</span></div>
+              <div className="tr-line"><Phone /><span>Telefoon: <a href={PHONE_HREF}>{PHONE}</a></span></div>
             </div>
-            <div className="rp-cta__inner rp-lpfinal">
-              <div>
-                <h2 className="rp-cta__t">{d.finalH2 ?? 'Klaar om te starten?'}</h2>
-                <p className="rp-cta__p">{d.finalSub}</p>
-                <div className="rp-lpfinal__contact">
-                  <a className="rp-btn rp-btn--ghost" href={PHONE_HREF} style={{ color: '#fff', borderColor: 'rgba(255,255,255,.34)' }}>{PHONE}</a>
+            <div id="lp-final" className={`tr-final-card${finalState === 'ok' ? ' is-success' : ''}${finalErr ? ' is-error' : ''}`}>
+              <h3>Vraag uw gratis offerte</h3>
+              <div className="tr-safe"><Shield />Vrijblijvend. We bellen u terug binnen één werkdag</div>
+              <form ref={finalRef} onSubmit={onFinalSubmit} onFocusCapture={() => trackFormStart(`lp:${d.slug}:final`)} noValidate>
+                <div className="tr-final-row">
+                  <input type="text" name="firstName" placeholder="Voornaam *" autoComplete="given-name" required />
+                  <input type="tel" name="phone" placeholder="Telefoonnummer *" autoComplete="tel" required />
                 </div>
-              </div>
-
-              <div className="rp-formkaart rp-lpfinal__kaart" id="lp-form">
-                {finalState === 'ok' ? (
-                  <div className="rp-aanvraag__ok">
-                    <span className="rp-aanvraag__ok-ic" aria-hidden="true">
-                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                    </span>
-                    <h3 className="rp-aanvraag__t">Bedankt, uw aanvraag is verstuurd</h3>
-                    <p className="rp-aanvraag__s">Wij nemen binnen één werkdag contact met u op.</p>
-                  </div>
-                ) : (
-                  <>
-                    <h3 className="rp-aanvraag__t">Vraag uw offerte aan</h3>
-                    <p className="rp-aanvraag__s">Vrijblijvend. We bellen u terug binnen één werkdag.</p>
-                    <form className="rp-form" style={{ marginTop: 20 }} onSubmit={onFinalSubmit} noValidate onFocus={() => trackFormStart(`lp:${d.slug}:final`)}>
-                      <div className="rp-form__rij">
-                        <div className="rp-veld">
-                          <label htmlFor="lpf-naam">Voornaam *</label>
-                          <input id="lpf-naam" name="firstName" type="text" autoComplete="given-name" required />
-                        </div>
-                        <div className="rp-veld">
-                          <label htmlFor="lpf-tel">Telefoonnummer *</label>
-                          <input id="lpf-tel" name="phone" type="tel" inputMode="tel" autoComplete="tel" required />
-                        </div>
-                      </div>
-                      <div className="rp-veld">
-                        <label htmlFor="lpf-mail">E-mailadres</label>
-                        <input id="lpf-mail" name="email" type="email" autoComplete="email" />
-                      </div>
-                      <div className="rp-veld">
-                        <label htmlFor="lpf-werk">Type werk</label>
-                        <select id="lpf-werk" name="typeWerkSel" defaultValue="">
-                          <option value="">Maak een keuze</option>
-                          {d.typeWerkOpties.map((o) => (<option key={o} value={o}>{o}</option>))}
-                        </select>
-                      </div>
-                      <div className="rp-veld">
-                        <label htmlFor="lpf-info">Korte omschrijving</label>
-                        <textarea id="lpf-info" name="aanvullende_info" />
-                      </div>
-                      {finalErr && <p className="rp-fout">{finalErr}</p>}
-                      <button className="rp-btn rp-btn--primary rp-btn--block" type="submit" disabled={finalState === 'busy'}>
-                        {finalState === 'busy' ? 'Versturen…' : 'Vraag gratis offerte'}
-                      </button>
-                    </form>
-                  </>
-                )}
+                <input type="email" name="email" placeholder="E-mail (optioneel)" autoComplete="email" />
+                <select name="typeWerkSel" defaultValue="" required>
+                  <option value="" disabled>Type werk</option>
+                  {d.typeWerkOpties.map((o) => <option key={o} value={o}>{o}</option>)}
+                </select>
+                <textarea name="aanvullende_info" placeholder="Korte omschrijving" />
+                <button type="submit" className="tr-btn" disabled={finalState === 'busy'}>
+                  {finalState === 'busy' ? 'Even bezig…' : 'Vraag gratis offerte'}
+                </button>
+              </form>
+              {finalErr && <div className="tr-final-err">{finalErr}</div>}
+              <div className="tr-final-thanks">
+                <h4>Bedankt, uw aanvraag is ontvangen.</h4>
+                <p>We nemen zo snel mogelijk contact met u op.</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <div dangerouslySetInnerHTML={{ __html: rpFooter() }} />
+      {/* 13. FOOTER */}
+      <footer className="tr-footer">
+        <div className="tr-wrap">
+          <div className="tr-footer-top">
+            <span className="tr-footer-wordmark">AB Bouw Groep</span>
+            <div className="tr-footer-links">
+              <a href="#diensten">Diensten</a>
+              <a href="#werkwijze">Werkwijze</a>
+              <a href="#reviews">Reviews</a>
+              <a href="#contact">Contact</a>
+              <a href={PHONE_HREF}>{PHONE}</a>
+            </div>
+          </div>
+          <div className="tr-footer-info">AB Bouw Groep · {ADDRESS} · {PHONE}</div>
+          <div className="tr-footer-copy">© {new Date().getFullYear()} AB Bouw Groep · Erkend bouw- en renovatiebedrijf in Vlaanderen. Alle rechten voorbehouden.{' · '}<a href="/voorwaarden" style={{ color: 'rgba(255,255,255,0.72)', textDecoration: 'underline' }}>Gebruiksvoorwaarden</a>{' · '}<a href="/privacy" style={{ color: 'rgba(255,255,255,0.72)', textDecoration: 'underline' }}>Privacybeleid</a>{' · '}<a href="/cookies" style={{ color: 'rgba(255,255,255,0.72)', textDecoration: 'underline' }}>Cookiebeleid</a></div>
+        </div>
+      </footer>
     </div>
     {calcOpen && calcCfg && <CalculatorWizard config={calcCfg} onClose={() => setCalcOpen(false)} />}
     </>

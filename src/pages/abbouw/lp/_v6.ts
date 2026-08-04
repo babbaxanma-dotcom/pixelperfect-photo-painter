@@ -94,8 +94,29 @@ export const LP_V6_CSS = `
 }
 .tr .tr-final h2 { margin-bottom: 34px; }
 
-/* ── cijferband ──────────────────────────────────────────────────────── */
-.tr .tr-num + .tr-num::before { background: rgba(255,255,255,0.14); }
+/* ── cijferband: licht met navy cijfers, zoals de statistiekrij op de site.
+      Goud op licht haalt bij 42px maar 2,73:1 en zakt door de norm. ──────── */
+.tr .tr-numbers { background: ${TINT}; border-top: 0; box-shadow: none; }
+/* elke cel heeft in LP_CSS een eigen navy vlak dat over de band heen ligt */
+.tr .tr-num:nth-child(odd), .tr .tr-num:nth-child(even) { background: transparent; }
+.tr .tr-num { color: ${NAVY}; }
+.tr .tr-num-big { color: ${NAVY}; font-weight: 800; letter-spacing: -0.03em; }
+.tr .tr-num-lbl { color: #52525b; }
+.tr .tr-num + .tr-num::before { background: ${LIJN}; top: 28%; bottom: 28%; }
+
+/* ── beoordelingen als kaarten in plaats van kale rijen ──────────────── */
+.tr .tr-rev-list { display: grid; gap: 14px; }
+.tr .tr-rev-row {
+  background: #fff;
+  border: 1px solid ${LIJN};
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-shadow: 0 1px 2px rgba(16,24,40,0.04), 0 8px 24px rgba(16,24,40,0.06);
+  transition: box-shadow .24s cubic-bezier(.25,.46,.45,.94), transform .24s cubic-bezier(.25,.46,.45,.94);
+}
+.tr .tr-rev-row:hover { transform: translateY(-3px); box-shadow: 0 4px 10px rgba(16,24,40,0.06), 0 18px 44px rgba(16,24,40,0.10); }
+.tr .tr-rev-row + .tr-rev-row { border-top: 1px solid ${LIJN}; margin-top: 0; padding-top: 22px; }
+.tr .tr-rev-score { letter-spacing: -0.03em; }
 
 /* ── zichtbare focus, zoals site-breed ───────────────────────────────── */
 .tr :focus-visible { outline: 3px solid ${GOUD}; outline-offset: 3px; border-radius: 4px; }
