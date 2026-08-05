@@ -29,7 +29,7 @@ import { initLpCallFab } from './_fab';
 import { CONTACT } from '@/data/contact';
 import CalculatorWizard from '../calculator/CalculatorWizard';
 import { DAK_CALC_CONFIGS } from '../calculator/dakCalcConfigs';
-import logo from '@/assets/home/logo.png';
+import logo from '@/assets/home/logo-trim.png';
 import imgTrG1 from '@/assets/lp-diensten/totaalrenovatie-g1.jpg';
 import imgTrG2 from '@/assets/lp-diensten/totaalrenovatie-g2.jpg';
 import imgTrG3 from '@/assets/lp-diensten/totaalrenovatie-g3.jpg';

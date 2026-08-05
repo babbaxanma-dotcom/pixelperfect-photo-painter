@@ -4,7 +4,7 @@ import { trackFormStart } from '@/lib/tracking';
 import type { Gemeente } from '@/data/gemeentes';
 import { CONTACT } from '@/data/contact';
 import CalculatorDak from '../calculator/CalculatorDak';
-import logo from '@/assets/home/logo.png';
+import logo from '@/assets/home/logo-trim.png';
 import velux from '@/assets/merken/Velux.png';
 import { LP_V6_CSS } from './_v6';
 

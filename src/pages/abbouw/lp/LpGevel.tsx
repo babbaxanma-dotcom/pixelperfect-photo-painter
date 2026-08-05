@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { submitLead } from '@/lib/leads';
 import type { Gemeente } from '@/data/gemeentes';
 import { CONTACT } from '@/data/contact';
-import logo from '@/assets/home/logo.png';
+import logo from '@/assets/home/logo-trim.png';
 import { LP_V6_CSS } from './_v6';
 
 // Hero + section photos (gevel-realisaties).
