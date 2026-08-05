@@ -209,8 +209,28 @@ export const LP_V6_CSS = `
 .tr .tr-step h3 { font-size: 18px; }
 .tr .tr-step p { font-size: 14.5px; line-height: 1.58; color: ${TEKST}; }
 
+/* ══ uitlegsectie: zelfde split-blok als op de homepage ══════════════
+   Was 0,85/1,15 met een kleine foto en een strakke opsomming; de homepage
+   gebruikt gelijke kolommen, een grote afgeronde foto en meer lucht. */
+.tr .tr-about-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 58px;
+  align-items: center;
+}
+.tr .tr-about-photo { border-radius: 12px; box-shadow: none; overflow: hidden; }
+.tr .tr-about-photo img { width: 100%; height: 420px; object-fit: cover; display: block; transition: transform .5s ${EASE}; }
+.tr .tr-about-grid:hover .tr-about-photo img { transform: scale(1.03); }
+.tr .tr-about-badges { gap: 10px; margin-bottom: 16px; }
+.tr .tr-about-intro { font-size: 16px; line-height: 1.66; color: ${TEKST}; margin: 0 0 22px; }
+.tr .tr-urgency { font-size: 13px; color: ${MUTE}; font-weight: 600; margin-top: 18px; }
+@media (max-width: 900px) {
+  .tr .tr-about-grid { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .tr .tr-about-photo img { height: 260px; }
+}
+
 /* ══ vinkjeslijsten ══════════════════════════════════════════════════ */
-.tr .tr-checks li { font-size: 15px; line-height: 1.52; }
+.tr .tr-checks { display: grid; gap: 11px; margin: 0 0 4px; }
+.tr .tr-checks li { font-size: 15px; line-height: 1.52; gap: 11px; }
 .tr .tr-checks svg { color: ${GOUD_TEKST}; }
 
 /* ══ badges ══════════════════════════════════════════════════════════ */

@@ -43,6 +43,7 @@ import velux from '@/assets/merken/Velux-donker.png';
 import { LP_V6_CSS } from './_v6';
 
 import imgVelux from '@/assets/dak/lp-velux-huis.jpg';
+import imgVeluxZolder from '@/assets/dak/lp-velux.jpg';
 import imgGevelReinig from '@/assets/gevel/lp-gevelreiniging.jpg';
 import imgHervoegen from '@/assets/gevel/lp-hervoegen.jpg';
 import imgSarking from '@/assets/dak/lp-sarking-zolder.jpg';
@@ -429,8 +430,8 @@ const DIENSTEN: Record<string, Dienst> = {
       ['Isolatie & gootstuk', 'Correcte aansluiting met isolatie en gootstuk, zodat er geen koudebrug of condens ontstaat.'],
       ['Binnenafwerking', 'De binnenkant netjes afgewerkt en gepleisterd, klaar voor gebruik.'],
     ],
-    whatImg: imgVx1,
-    gallery: [imgVx1, imgVx2, imgVx3],
+    whatImg: imgVeluxZolder,
+    gallery: [imgVelux, imgVx2, imgVx3],
     reviews: [
       { text: '"Twee Velux-ramen op de zolderkamer. \'s Morgens begonnen, tegen de avond alles dicht en de binnenkant mee gepleisterd."', name: 'Bart Wouters', role: 'Twee dakramen op zolder' },
       { text: '"Ons oud dakraam had condens tussen het glas en lekte bij felle regen. Vervangen door een nieuwe Velux, gootstuk en al. Netjes afgewerkt."', name: 'Katrien De Smet', role: 'Vervanging oud dakraam' },
