@@ -115,10 +115,52 @@ export const LP_V6_CSS = `
   outline: none; border-color: ${GOUD}; box-shadow: 0 0 0 3px rgba(217,140,3,0.18);
 }
 
+/* de gouden streep boven de kaart en boven de secties hoort niet bij de
+   nieuwe stijl: daar dragen vlak, radius en schaduw het onderscheid */
+.tr .tr-hero-form .tr-quickform::before { display: none; }
+.tr .tr-hero-form .tr-quickform { border-radius: 14px; box-shadow: 0 18px 60px rgba(0,0,0,0.34); }
+.tr .tr-numbers, .tr .tr-services { border-top: 0; }
+
+/* kaartkop: zelfde verhoudingen als de aanvraagkaart op de homepage */
+.tr .tr-leadcard .tr-lc-ic { width: 38px; height: 38px; border-radius: 10px; }
+.tr .tr-leadcard .tr-lc-title { font-size: 21px; letter-spacing: -0.02em; }
+.tr .tr-leadcard .tr-lc-sub { font-size: 14.5px; color: ${TEKST}; }
+.tr .tr-lc-head { padding: 26px 26px 4px; gap: 12px; }
+.tr .tr-lc-reassure { font-size: 13px; color: ${MUTE}; }
+/* label en veld met dezelfde lucht als op de homepage */
+.tr .tr-qf-grid { gap: 14px; }
+.tr .tr-qf-field { display: grid; gap: 7px; }
+.tr .tr-qf-field label { font-size: 13.5px; font-weight: 700; color: ${NAVY}; }
+/* titel en badge op één regel houden, en het nummer niet laten afbreken */
+.tr .tr-lc-txt { gap: 3px; }
+.tr .tr-lc-row:not(.tr-lc-row--primary) .tr-lc-title { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tr .tr-lc-sub { text-wrap: pretty; }
+
+/* het "Of"-scheidingsblok en de keuzerijen in het rustige register */
+.tr .tr-lc-or { color: ${MUTE}; font-size: 12.5px; letter-spacing: 0.08em; }
+.tr .tr-lc-or::before, .tr .tr-lc-or::after { background: ${LIJN}; }
+.tr .tr-lc-row:not(.tr-lc-row--primary) { border-top: 1px solid ${LIJN_ZACHT}; transition: background-color .18s ease; }
+.tr .tr-lc-row:not(.tr-lc-row--primary):hover { background: ${TINT}; }
+.tr .tr-lc-proof { border-top: 1px solid ${LIJN_ZACHT}; }
+.tr .tr-lc-proof-stars { color: ${GOUD_TEKST}; }
+.tr .tr-lc-badge { background: ${TINT}; color: ${GOUD_TEKST}; border-radius: 999px; }
+
+/* de certificaatregel krijgt hetzelfde vinkje als de homepage-hero */
+.tr .tr-cert-pill svg, .tr .tr-cert-pill img { display: none; }
+.tr .tr-cert-pill::before {
+  content: ''; flex: none; width: 16px; height: 16px; background: ${GOUD};
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
 /* ══ sectieritme: rustige tint, geen haarlijnen ══════════════════════ */
 .tr .tr-section + .tr-section { border-top: 0; }
 .tr .tr-steps { background: ${TINT}; }
 .tr .tr-section { padding: clamp(64px, 7vw, 96px) 0; }
+/* wit/tint-ritme zoals op de homepage; per inhoud gericht, niet via nth-of-type,
+   want de donkere secties mogen hier niet in meegenomen worden */
+.tr .tr-section:has(.tr-steps-box) { background: ${TINT}; }
+.tr .tr-section:has(.tr-faq-box) { background: ${TINT}; }
 
 /* ══ stappen als kaarten, zoals de werkwijzekaarten op de site ═══════ */
 .tr .tr-steps-grid { gap: 22px; }
@@ -173,7 +215,9 @@ export const LP_V6_CSS = `
 .tr .rl-thumb:hover { transform: translateY(-4px); box-shadow: ${SCHADUW_OP}; }
 
 /* ══ FAQ als losse kaartjes ══════════════════════════════════════════ */
-.tr .tr-faq-box { display: grid; gap: 12px; max-width: 860px; margin-inline: auto; }
+/* de haarlijn boven de FAQ-kop hoort niet bij de nieuwe stijl */
+.tr .tr-faq-box { display: grid; gap: 12px; max-width: 860px; margin-inline: auto; border-top: 0; padding-top: 0; }
+.tr .tr-faq-box h2 { grid-column: 1 / -1; }
 .tr .tr-faq-item {
   background: #fff; border: 1px solid ${LIJN}; border-radius: 12px; overflow: hidden;
   transition: border-color .2s ease, box-shadow .2s ease;
