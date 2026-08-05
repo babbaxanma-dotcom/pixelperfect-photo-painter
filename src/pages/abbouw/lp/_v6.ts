@@ -73,12 +73,40 @@ export const LP_V6_CSS = `
 .tr .tr-final .tr-eyebrow,
 .tr .tr-services .tr-eyebrow { color: ${GOUD_LICHT}; }
 
-/* ══ hero: zelfde opbouw als de homepage-hero ════════════════════════ */
-.tr .tr-hero h1 { font-size: clamp(34px, 4.4vw, 58px); line-height: 1.03; letter-spacing: -0.035em; }
-.tr .tr-hero-sub { font-size: 17px; line-height: 1.62; color: #d3d9e2; }
+/* ══ hero: zelfde hiërarchie als de homepage-hero ════════════════════
+   Was één lange tekstslab: trustregel, kop, alinea en certificaten allemaal
+   even zwaar. De homepage bouwt op: dunne eyebrow -> kop -> korte lede ->
+   vinkjes. Dat ritme maken we hier na. */
+
+/* de trustregel neemt de plaats en het gewicht van de eyebrow in */
+.tr .tr-hero-trust {
+  font-size: 11.5px; font-weight: 700; letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: ${GOUD_LICHT};
+  gap: 5px 9px; margin: 0 0 20px;
+  flex-wrap: nowrap; white-space: nowrap;
+}
+.tr .tr-hero-trust-stars { font-size: 10.5px; letter-spacing: 1.2px; color: ${GOUD_LICHT}; }
+@media (max-width: 1180px) {
+  .tr .tr-hero-trust { flex-wrap: wrap; white-space: normal; }
+}
+.tr .tr-hero-trust-dot { color: rgba(255,255,255,0.4); font-weight: 400; }
+
+/* kop: zelfde maat en tracking als de homepage */
+.tr .tr-hero h1 {
+  font-size: clamp(34px, 4.4vw, 58px); line-height: 1.03;
+  letter-spacing: -0.04em; margin: 0 0 20px; max-width: 20ch;
+}
+
+/* lede: smalle kolom in plaats van een volle regelbreedte */
+.tr .tr-hero-sub {
+  font-size: 17px; line-height: 1.62; color: #d3d9e2;
+  max-width: 52ch; margin: 0 0 28px;
+}
 .tr .tr-hero-sub b { color: #fff; font-weight: 700; }
-.tr .tr-hero-trust { font-size: 14.5px; color: #e7ebf1; }
-.tr .tr-hero-trust-stars { color: ${GOUD_LICHT}; }
+
+/* de certificaten worden de vinkjesrij van de homepage: één regel, geen blok */
+.tr .tr-certs { gap: 10px 26px; margin: 0; }
 
 /* de certificaat-chips krijgen de vorm van de vinkjesrij op de homepage */
 .tr .tr-certs { gap: 10px 26px; }
