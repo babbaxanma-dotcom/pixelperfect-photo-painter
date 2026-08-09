@@ -1,13 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
-  "buildCommand": "npm run build",
+  "buildCommand": "npm run build && cp dist/onderhoud.html dist/index.html",
   "outputDirectory": "dist",
-  "redirects": [
-    { "source": "/index.html", "destination": "/", "permanent": false }
-  ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/onderhoud.html" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
     {
