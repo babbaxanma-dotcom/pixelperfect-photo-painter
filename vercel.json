@@ -3,7 +3,6 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "_onderhoud": "TIJDELIJK OFFLINE (8 aug 2026, op vraag van Mohammed). Terug online = deze commit reverten: rewrites terug naar /index.html en de /index.html-redirect weg.",
   "redirects": [
     { "source": "/index.html", "destination": "/", "permanent": false }
   ],
