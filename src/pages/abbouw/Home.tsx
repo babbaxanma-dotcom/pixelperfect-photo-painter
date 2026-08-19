@@ -20,29 +20,16 @@ import svcEco from '@/assets/home/svc-eco.jpg';
 import proj1 from '@/assets/home/proj1.jpg';
 import proj3 from '@/assets/home/proj3.jpg';
 import proj4 from '@/assets/home/proj4.jpg';
-import stap2 from '@/assets/werkwijze/02-plaatsbezoek.jpg';
-import stap3 from '@/assets/werkwijze/03-offerte.jpg';
-import stap5 from '@/assets/werkwijze/05-uitvoering.jpg';
-import stap7 from '@/assets/werkwijze/07-oplevering.jpg';
+// De vier stapfoto's uit werkwijze/ zijn eruit (aug 2026): AI-beelden met mensen.
 import ctaPhoto from '@/assets/home/hero-roof.jpg';
 import mKoramic from '@/assets/merken/Koramic-donker.png';
 import mVelux from '@/assets/merken/Velux-donker.png';
 import mWienerberger from '@/assets/merken/Wienerberger-donker.png';
 import mRockpanel from '@/assets/merken/rockpanel-donker.png';
 
-import revMarc from '@/assets/reviews/marc.jpg';
-import revEllen from '@/assets/reviews/ellen.jpg';
-import revKatrien from '@/assets/reviews/katrien.jpg';
-import revMehmet from '@/assets/reviews/mehmet.jpg';
-import revSofie from '@/assets/reviews/sofie.jpg';
-import revDirk from '@/assets/reviews/dirk.jpg';
-import revAna from '@/assets/reviews/ana.jpg';
-import revTim from '@/assets/reviews/tim.jpg';
-import revNathalie from '@/assets/reviews/nathalie.jpg';
-import revFilip from '@/assets/reviews/filip.jpg';
-import revInge from '@/assets/reviews/inge.jpg';
-import revKarim from '@/assets/reviews/karim.jpg';
-import revHilde from '@/assets/reviews/hilde.jpg';
+// De dertien review-avatars zijn eruit (aug 2026, op vraag van Mohammed):
+// gegenereerde gezichten van klanten die niet bestaan. Nu initialen.
+
 
 const svcIcon = (d: string) =>
   `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
@@ -75,27 +62,32 @@ const DIENSTEN = [
     d: 'Isolatie, ventilatie, warmtepomp en zonnepanelen. We rekenen vooraf uit wat het oplevert.' },
 ];
 
+// Initialen i.p.v. een avatarfoto: een gegenereerd gezicht bij een naam is de
+// zwaarste AI-tell die er is, en bij een getuigenis ook de minst eerlijke.
+const initialen = (naam: string) => naam.trim().split(/\s+/).filter((w) => w.length > 2)
+  .map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+
 const REVIEWS = [
-  { name: 'Marc Van den Broeck', role: 'Dakrenovatie · Mechelen', img: revMarc, text: 'Alles verliep netjes zoals afgesproken, geen verrassingen achteraf. Het dak ligt er strak bij. Echt tevreden.' },
-  { name: 'Ellen De Smet', role: 'Totaalrenovatie · Leuven', img: revEllen, text: 'We hebben drie aannemers vergeleken. AB Bouw was de enige die alle vragen grondig beantwoordde en ook de volledige papierwinkel voor ons regelde.' },
-  { name: 'Katrien Peeters', role: 'Badkamer · Antwerpen', img: revKatrien, text: 'Van begin tot eind dezelfde ploeg, dat voel je aan het resultaat. Alles strak en netjes afgewerkt. Heel content.' },
-  { name: 'Mehmet Yıldız', role: 'Nieuwbouw · Bornem', img: revMehmet, text: 'Eerlijk en stipt. We konden altijd terecht met vragen en kregen de sleutel exact op de afgesproken dag. Zeldzaam in deze sector.' },
-  { name: 'Sofie Vermeulen', role: 'Gevelrenovatie · Sint-Niklaas', img: revSofie, text: 'De gevel ligt er strak bij, alle buren komen vragen wie het werk gedaan heeft. Aanrader voor wie kwaliteit en stiptheid belangrijk vindt.' },
-  { name: 'Dirk Maes', role: 'Plat dak · Antwerpen', img: revDirk, text: 'Ik dacht aan een nieuw dak, maar na hun bezoek bleek herstellen genoeg. Ze hadden me makkelijk meer kunnen aansmeren. Dat noem ik eerlijk werken.' },
-  { name: 'Ana Popescu', role: 'Interieur · Mechelen', img: revAna, text: 'Maatkeuken en dressing prachtig uitgevoerd, alles past perfect. En we werden overal goed in meegenomen. Heel content.' },
-  { name: 'Tim Verbeeck', role: 'Carport en oprit · Lier', img: revTim, text: 'Carport en oprit klaar op tijd, geen vertraging. Elke vrijdag was de werf opgeruimd, fijn met kleine kinderen in huis.' },
-  { name: 'Nathalie Aerts', role: 'Energetische renovatie · Bonheiden', img: revNathalie, text: 'Isolatie, dak en ramen in één keer aangepakt. Veel warmer nu, en zij regelden het hele papierwerk. Echt ontzorgd.' },
-  { name: 'Filip Wouters', role: 'Hellend dak · Puurs', img: revFilip, text: 'Dak helemaal vernieuwd, mooi afgewerkt. De werfleider kwam elke ochtend even langs, dat gaf een gerust gevoel.' },
-  { name: 'Inge Vermeiren', role: 'Badkamer en toilet · Kontich', img: revInge, text: 'Vier weken stof, en dan een prachtige badkamer. Inloopdouche, zwevend meubel, vloerverwarming. De tegelzetter heeft hier echt zijn handtekening gezet.' },
-  { name: 'Karim El Amrani', role: 'Aanbouw · Willebroek', img: revKarim, text: 'Aanbouw netjes opgeleverd, precies zoals we het wilden. Eén aanspreekpunt voor alles, dat maakte het veel makkelijker.' },
-  { name: 'Hilde Goossens', role: 'Gevelisolatie · Boom', img: revHilde, text: 'Witte crepi op buitenisolatie. Onze stookkost is bijna gehalveerd deze winter. Net en proper gewerkt, ook bij de buren bedankjes achtergelaten.' },
+  { name: 'Marc Van den Broeck', role: 'Dakrenovatie · Mechelen', text: 'Alles verliep netjes zoals afgesproken, geen verrassingen achteraf. Het dak ligt er strak bij. Echt tevreden.' },
+  { name: 'Ellen De Smet', role: 'Totaalrenovatie · Leuven', text: 'We hebben drie aannemers vergeleken. AB Bouw was de enige die alle vragen grondig beantwoordde en ook de volledige papierwinkel voor ons regelde.' },
+  { name: 'Katrien Peeters', role: 'Badkamer · Antwerpen', text: 'Van begin tot eind dezelfde ploeg, dat voel je aan het resultaat. Alles strak en netjes afgewerkt. Heel content.' },
+  { name: 'Mehmet Yıldız', role: 'Nieuwbouw · Bornem', text: 'Eerlijk en stipt. We konden altijd terecht met vragen en kregen de sleutel exact op de afgesproken dag. Zeldzaam in deze sector.' },
+  { name: 'Sofie Vermeulen', role: 'Gevelrenovatie · Sint-Niklaas', text: 'De gevel ligt er strak bij, alle buren komen vragen wie het werk gedaan heeft. Aanrader voor wie kwaliteit en stiptheid belangrijk vindt.' },
+  { name: 'Dirk Maes', role: 'Plat dak · Antwerpen', text: 'Ik dacht aan een nieuw dak, maar na hun bezoek bleek herstellen genoeg. Ze hadden me makkelijk meer kunnen aansmeren. Dat noem ik eerlijk werken.' },
+  { name: 'Ana Popescu', role: 'Interieur · Mechelen', text: 'Maatkeuken en dressing prachtig uitgevoerd, alles past perfect. En we werden overal goed in meegenomen. Heel content.' },
+  { name: 'Tim Verbeeck', role: 'Carport en oprit · Lier', text: 'Carport en oprit klaar op tijd, geen vertraging. Elke vrijdag was de werf opgeruimd, fijn met kleine kinderen in huis.' },
+  { name: 'Nathalie Aerts', role: 'Energetische renovatie · Bonheiden', text: 'Isolatie, dak en ramen in één keer aangepakt. Veel warmer nu, en zij regelden het hele papierwerk. Echt ontzorgd.' },
+  { name: 'Filip Wouters', role: 'Hellend dak · Puurs', text: 'Dak helemaal vernieuwd, mooi afgewerkt. De werfleider kwam elke ochtend even langs, dat gaf een gerust gevoel.' },
+  { name: 'Inge Vermeiren', role: 'Badkamer en toilet · Kontich', text: 'Vier weken stof, en dan een prachtige badkamer. Inloopdouche, zwevend meubel, vloerverwarming. De tegelzetter heeft hier echt zijn handtekening gezet.' },
+  { name: 'Karim El Amrani', role: 'Aanbouw · Willebroek', text: 'Aanbouw netjes opgeleverd, precies zoals we het wilden. Eén aanspreekpunt voor alles, dat maakte het veel makkelijker.' },
+  { name: 'Hilde Goossens', role: 'Gevelisolatie · Boom', text: 'Witte crepi op buitenisolatie. Onze stookkost is bijna gehalveerd deze winter. Net en proper gewerkt, ook bij de buren bedankjes achtergelaten.' },
 ];
 
 const STAPPEN = [
-  { n: '01', t: 'Plaatsbezoek', img: stap2, d: 'We komen langs, meten op en luisteren wat u van plan bent. Het bezoek is vrijblijvend.' },
-  { n: '02', t: 'Offerte', img: stap3, d: 'U krijgt een gedetailleerde prijs per post. Elke lijn is uitgesplitst, zodat u ziet waarvoor u betaalt.' },
-  { n: '03', t: 'Uitvoering', img: stap5, d: 'Eén werfleider volgt uw project op. U weet wie er komt en wanneer.' },
-  { n: '04', t: 'Oplevering', img: stap7, d: 'We lopen samen alles na en werken de laatste punten af. Pas dan is het klaar.' },
+  { n: '01', t: 'Plaatsbezoek', d: 'We komen langs, meten op en luisteren wat u van plan bent. Het bezoek is vrijblijvend.' },
+  { n: '02', t: 'Offerte', d: 'U krijgt een gedetailleerde prijs per post. Elke lijn is uitgesplitst, zodat u ziet waarvoor u betaalt.' },
+  { n: '03', t: 'Uitvoering', d: 'Eén werfleider volgt uw project op. U weet wie er komt en wanneer.' },
+  { n: '04', t: 'Oplevering', d: 'We lopen samen alles na en werken de laatste punten af. Pas dan is het klaar.' },
 ];
 
 // Tegels = argumentpositie, dus concrete dingen die de klant kan natrekken in zijn
@@ -322,9 +314,8 @@ const HTML = (i: Record<string, string>) => {
       <a class="rp-btn rp-btn--primary" href="/werkwijze">Volledige werkwijze</a>
     </div>
     <div class="rp-steps">
-      ${STAPPEN.map((s, n) => `
-      <article class="rp-step">
-        <div class="rp-step__img"><img src="${i['stap' + n]}" alt="${s.t}" width="300" height="168" loading="lazy" decoding="async"/></div>
+      ${STAPPEN.map((s) => `
+      <article class="rp-step rp-step--tekst">
         <div class="rp-step__body">
           <div class="rp-step__n">${s.n}</div>
           <h3 class="rp-step__t">${s.t}</h3>
@@ -349,12 +340,12 @@ const HTML = (i: Record<string, string>) => {
       <button class="rp-arrow rp-arrow--zweef rp-arrow--prev" type="button" data-car-prev="rev" aria-label="Vorige beoordelingen">${ic.left}</button>
       <button class="rp-arrow rp-arrow--zweef rp-arrow--next" type="button" data-car-next="rev" aria-label="Volgende beoordelingen">${ic.right}</button>
       <div class="rp-track" data-car-track tabindex="0" role="region" aria-label="Beoordelingen, horizontaal schuifbaar">
-        ${REVIEWS.map((r, n) => `
+        ${REVIEWS.map((r) => `
         <article class="rp-rev">
           <div class="rp-rev__stars" aria-label="5 van 5 sterren">${ic.star().repeat(5)}</div>
           <p class="rp-rev__text">${r.text}</p>
           <div class="rp-rev__foot">
-            <img class="rp-rev__av" src="${i['rev' + n]}" alt="" width="46" height="46" loading="lazy" decoding="async"/>
+            <span class="rp-rev__av" aria-hidden="true">${initialen(r.name)}</span>
             <span class="rp-rev__who">
               <span class="rp-rev__name">${r.name}</span><br/>
               <span class="rp-rev__role">${r.role}</span>
@@ -660,8 +651,6 @@ export default function Home() {
     mKoramic, mVelux, mWienerberger, mRockpanel,
   };
   DIENSTEN.forEach((d, n) => { beelden['svc' + n] = d.img; });
-  STAPPEN.forEach((s, n) => { beelden['stap' + n] = s.img; });
-  REVIEWS.forEach((r, n) => { beelden['rev' + n] = r.img; });
   BLOGS.slice(0, 6).forEach((p, n) => { beelden['blog' + n] = p.img; });
 
   return <div dangerouslySetInnerHTML={{ __html: HTML(beelden) }} />;

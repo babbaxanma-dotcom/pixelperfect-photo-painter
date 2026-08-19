@@ -4,7 +4,7 @@ import hero from '@/assets/home/hero-over.jpg';
 import about from '@/assets/home/about.jpg';
 import why from '@/assets/home/why.jpg';
 import { CONTACT } from '@/data/contact';
-import { ic, rpNav, rpFooter, wireMobielMenu, fotoPlaats } from './_rp';
+import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
 const vink = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
 
@@ -129,19 +129,16 @@ ${rpNav('/over')}
 
 <section class="rp-section rp-section--soft">
   <div class="rp-wrap">
-    <div class="rp-split">
-      <div>
+    <!-- De groepsfoto-plaatshouder is eruit (aug 2026, op vraag van Mohammed).
+         Zonder tweede kolom bleef de tekst in de linkerhelft hangen, dus dit is
+         nu een gecentreerd tekstblok in plaats van een rp-split. -->
+    <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
+      <div style="max-width:760px">
         <span class="rp-eyebrow">${ic.mark} Het team</span>
-        <h2 class="rp-split__t">De mensen die<span class="rp-dim">bij u over de vloer komen</span></h2>
+        <h2 class="rp-head__title">De mensen die<span class="rp-dim">bij u over de vloer komen</span></h2>
         <p class="rp-split__lede">Op de werf staan een werfleider die de planning opvolgt en de vakmensen van de betrokken afdelingen. Bij een totaalrenovatie wisselen die afdelingen elkaar af volgens de planning die u vooraf krijgt.</p>
         <p class="rp-split__lede">De werfleider is ook de persoon die u belt tijdens de werken.</p>
       </div>
-      ${fotoPlaats({
-        titel: 'Groepsfoto van het team',
-        toelichting: 'De echte ploeg, bij voorkeur op een werf of voor de bestelwagens. Werkkledij zonder logo\'s van derden. Geen gestileerde studiofoto.',
-        maat: 'liggend 4:3 · min. 1600 px breed',
-        hoogte: '420px',
-      })}
     </div>
   </div>
 </section>

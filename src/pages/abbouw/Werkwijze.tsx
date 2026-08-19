@@ -2,33 +2,28 @@ import { useEffect } from 'react';
 import '@/styles/roofpro.css';
 // hero-werkwijze.jpg was een geposeerde stockfoto (twee mannen die omhoog wijzen)
 import hero from '@/assets/home/hero-diensten.jpg';
-import s1 from '@/assets/werkwijze/01-contact.jpg';
-import s2 from '@/assets/werkwijze/02-plaatsbezoek.jpg';
-import s3 from '@/assets/werkwijze/03-offerte.jpg';
-import s4 from '@/assets/werkwijze/04-voorbereiding.jpg';
-import s5 from '@/assets/werkwijze/05-uitvoering.jpg';
-import s6 from '@/assets/werkwijze/06-voorop.jpg';
-import s7 from '@/assets/werkwijze/07-oplevering.jpg';
-import s8 from '@/assets/werkwijze/08-nazorg.jpg';
+// De acht stapfoto's zijn eruit (aug 2026, op vraag van Mohammed): AI-beelden
+// met mensen erop, en mensen overtuigend genereren lukt niet. De stapkaarten
+// zijn nu tekst; het nummer draagt de kaart.
 import { CONTACT } from '@/data/contact';
 import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
 const STAPPEN = [
-  { n: '01', t: 'Eerste contact', tag: 'Dag 1 tot 2', img: s1,
+  { n: '01', t: 'Eerste contact', tag: 'Dag 1 tot 2',
     d: 'U belt of vult het formulier in. We bellen terug om te horen wat u van plan bent en spreken een moment af voor het plaatsbezoek.' },
-  { n: '02', t: 'Plaatsbezoek', tag: 'Week 1', img: s2,
+  { n: '02', t: 'Plaatsbezoek', tag: 'Week 1',
     d: 'We komen langs, meten op en fotograferen de bestaande toestand. U hoort ter plaatse al welke aanpak realistisch is.' },
-  { n: '03', t: 'Offerte', tag: 'Week 2 tot 3', img: s3,
+  { n: '03', t: 'Offerte', tag: 'Week 2 tot 3',
     d: 'U krijgt een offerte waarin elke post apart staat: afbraak, materiaal, uitvoering en afvoer. We nemen ze samen door.' },
-  { n: '04', t: 'Voorbereiding', tag: 'Week 3 en verder', img: s4,
+  { n: '04', t: 'Voorbereiding', tag: 'Week 3 en verder',
     d: 'Materiaal bestellen, ploegen inplannen en waar nodig vergunning en EPB regelen. U krijgt de startdatum op papier.' },
-  { n: '05', t: 'Uitvoering', tag: 'Duur hangt af van het werk', img: s5,
+  { n: '05', t: 'Uitvoering', tag: 'Duur hangt af van het werk',
     d: 'De werfleider volgt de planning op en stuurt wekelijks een werfrapport. De werf gaat elke vrijdag opgeruimd het weekend in.' },
-  { n: '06', t: 'Voor-oplevering', tag: 'Laatste week', img: s6,
+  { n: '06', t: 'Voor-oplevering', tag: 'Laatste week',
     d: 'We lopen samen rond en zetten de laatste punten op een lijst. Die werken we af voor de officiële oplevering.' },
-  { n: '07', t: 'Oplevering', tag: 'Sleuteldag', img: s7,
+  { n: '07', t: 'Oplevering', tag: 'Sleuteldag',
     d: 'Rondgang, sleuteloverdracht en het dossier: garanties, attesten en de gegevens van de gebruikte materialen.' },
-  { n: '08', t: 'Nazorg', tag: 'Twaalf maanden', img: s8,
+  { n: '08', t: 'Nazorg', tag: 'Twaalf maanden',
     d: 'Merkt u in het eerste jaar iets op, dan komen we kijken. Uw werfleider blijft in die periode uw aanspreekpunt.' },
 ];
 
@@ -57,8 +52,7 @@ ${rpNav('/werkwijze')}
   <div class="rp-wrap">
     <div class="rp-steps">
       ${STAPPEN.map((s) => `
-      <article class="rp-step">
-        <div class="rp-step__img"><img src="${s.img}" alt="${s.t}" width="300" height="168" loading="lazy" decoding="async"/></div>
+      <article class="rp-step rp-step--tekst">
         <div class="rp-step__body">
           <div class="rp-step__n">${s.n}</div>
           <h2 class="rp-step__t">${s.t}</h2>

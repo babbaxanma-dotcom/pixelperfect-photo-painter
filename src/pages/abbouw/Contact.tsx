@@ -3,7 +3,7 @@ import '@/styles/roofpro.css';
 import { submitLead, divisieKey } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
 import { CONTACT } from '@/data/contact';
-import { ic, rpNav, rpFooter, wireMobielMenu, fotoPlaats } from './_rp';
+import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
 const DIVISIE_OPTIES = [
   'Algemene aanneming (Construct)',
@@ -117,13 +117,9 @@ ${rpNav('/contact')}
           <div class="rp-hours__row"><span class="rp-hours__d">Zaterdag</span><span>Op afspraak</span></div>
           <div class="rp-hours__row"><span class="rp-hours__d">Zondag</span><span>Gesloten</span></div>
         </div>
-        <div style="margin-top:28px">
-          ${fotoPlaats({
-            titel: 'Portret van wie terugbelt',
-            toelichting: 'Een gezicht bij de naam maakt bellen makkelijker. Liefst de werfleider of wie de telefoon opneemt, op de werf of voor de bestelwagen.',
-            maat: 'liggend 4:3 · min. 900 px breed',
-            hoogte: '300px',
-          })}
+        <!-- Portret-plaatshouder eruit (aug 2026): zelfde soort als de groepsfoto
+             op /over, namelijk een foto van een persoon. -->
+        <div hidden></div>
         </div>
       </div>
     </div>
