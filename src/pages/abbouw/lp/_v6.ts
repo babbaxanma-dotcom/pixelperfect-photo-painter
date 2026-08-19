@@ -295,4 +295,128 @@ export const LP_V6_CSS = `
 
 /* ══ zichtbare focus ═════════════════════════════════════════════════ */
 .tr :focus-visible { outline: 3px solid ${GOUD}; outline-offset: 3px; border-radius: 4px; }
+
+/* ══ kleurenschaal gelijktrekken met de homepage ══════════════════════
+   Gemeten verschil met de homepage: koppen stonden op rgb(43,53,67) i.p.v.
+   navy, lopende tekst op rgb(69,79,96) i.p.v. #52525b, navigatielinks op
+   rgb(29,39,51), het stapnummer op een verwassen rgba(214,170,90,.62) en de
+   cert-pil op rgb(231,235,241). Los van elkaar klein, samen leest de pagina
+   als een andere huisstijl dan de homepage.
+   LET OP regel 2 en 4 hierboven: koppen op DONKERE secties blijven wit, en
+   goud als tekst houdt zijn twee waarden. */
+.tr .tr-section h2, .tr .tr-section h3,
+.tr .tr-steps-box h2, .tr .tr-steps-box h3,
+.tr .tr-reviews h2, .tr .tr-faq-box h2 { color: ${NAVY}; }
+.tr .tr-services h2, .tr .tr-services h3,
+.tr .tr-final h2, .tr .tr-hero h1, .tr .tr-hero h2 { color: #fff; }
+
+.tr .tr-section p, .tr .tr-steps-box p, .tr .tr-faq-box p,
+.tr .tr-step-txt, .tr .tr-lc-txt { color: ${TEKST}; }
+.tr .tr-services p, .tr .tr-final p { color: rgba(255,255,255,.86); }
+
+.tr .tr-nav a { color: ${NAVY}; }
+.tr .tr-nav a:hover { color: ${GOUD_TEKST}; }
+
+/* stapnummer: vol goud met navy cijfer, zoals de homepage. Wit op goud haalt
+   maar 2,73:1 en zakt door AA; navy op goud haalt 6,65:1. */
+.tr .tr-svc-num, .tr .tr-step-num {
+  color: ${NAVY};
+  background: ${GOUD};
+  opacity: 1;
+}
+/* zelfde reden als op de homepage: het gouden opschriftje boven een sectie
+   is een vibe-coded tell en gaat er bij Mohammed altijd uit. */
+.tr .tr-eyebrow { display: none; }
+/* De cert-vinkjes staan in de HERO, en die heeft een donkere foto als
+   achtergrond. Mijn blanket grijs maakte ze onleesbaar (82,82,91 op donker):
+   dezelfde fout als waarschuwing 2 en 4 bovenaan dit bestand, nu voor de
+   vierde keer. Kleur dus per achtergrond. */
+.tr .tr-hero .tr-cert-pill,
+.tr .tr-services .tr-cert-pill,
+.tr .tr-final .tr-cert-pill { color: #e7ebf1; }
+.tr .tr-section .tr-cert-pill { color: ${TEKST}; }
+
+/* ══ OUDE CHROME ERUIT, HOMEPAGE-CHROME EROVER ════════════════════════
+   Naast elkaar gezet leken het twee websites: de LP had een grijze strook
+   boven de balk, en in de balk een sterrenscore plus een gouden knop plus een
+   telefoonnummer. De homepage heeft logo, menu, een knop. Rust.
+   Dit is opmaak, geen werking: de velden, de calculator en het belnummer
+   blijven allemaal bestaan en bereikbaar. */
+.tr .tr-topbar { display: none; }
+.tr .tr-header { border-bottom: 1px solid ${LIJN}; }
+.tr .tr-header .tr-wrap { min-height: 100px; }
+.tr .tr-header-right { gap: 18px; }
+/* de losse sterrenscore hoort in de pagina, niet in de navigatiebalk */
+.tr .tr-header-right .tr-hdr-rating,
+.tr .tr-header-right [class*="rating"],
+.tr .tr-header-right .tr-hero-trust-stars { display: none; }
+/* telefoonnummer blijft, maar als gewone link naast de ene gouden knop */
+.tr .tr-headphone {
+  background: none; border: 0; padding: 0;
+  color: ${NAVY}; font-weight: 700; font-size: 15px;
+}
+.tr .tr-headphone:hover { color: ${GOUD_TEKST}; }
+
+/* ── formulierkaart: één ding per blok, zoals thuis ────────────────── */
+.tr .tr-leadcard {
+  background: #fff; border: 1px solid ${LIJN}; border-radius: 14px;
+  box-shadow: ${SCHADUW}; padding: 26px 24px 24px; overflow: visible;
+}
+/* de kaart klapte open en dicht als een accordeon; het formulier staat nu
+   gewoon open, want een bezoeker van een advertentie moet niet eerst klikken */
+.tr .tr-leadcard .tr-lc-row--primary { border: 0; background: none; padding: 0; }
+.tr .tr-leadcard .tr-lc-head { pointer-events: none; padding: 0 0 4px; background: none; border: 0; }
+.tr .tr-leadcard .tr-lc-ic, .tr .tr-leadcard .tr-lc-chev { display: none; }
+.tr .tr-leadcard .tr-lc-title { font-size: 20px; font-weight: 800; color: ${NAVY}; }
+.tr .tr-leadcard .tr-lc-sub { font-size: 14.5px; color: ${TEKST}; }
+.tr .tr-leadcard .tr-lc-panel { max-height: none !important; opacity: 1 !important; overflow: visible !important; }
+.tr .tr-leadcard .tr-lc-panel-pad { padding: 16px 0 0; }
+/* de getuigenis hoort bij de reviews-sectie, niet in het formulier */
+.tr .tr-leadcard .tr-lc-proof { display: none; }
+.tr .tr-leadcard .tr-lc-reassure { margin-top: 12px; font-size: 13.5px; color: ${MUTE}; text-align: center; }
+/* de twee vervolgrijen worden rustige tekstlinks in plaats van blokken */
+.tr .tr-leadcard .tr-lc-or { margin: 18px 0 10px; }
+.tr .tr-leadcard .tr-lc-row--alt {
+  border: 1px solid ${LIJN}; border-radius: 10px; background: #fff;
+  box-shadow: none; padding: 12px 14px;
+}
+.tr .tr-leadcard .tr-lc-row--alt:hover { border-color: ${GOUD}; background: ${TINT}; }
+.tr .tr-leadcard .tr-lc-row--alt .tr-lc-title { font-size: 15px; font-weight: 700; }
+.tr .tr-leadcard .tr-lc-row--alt .tr-lc-sub { font-size: 13px; }
+
+/* ══ reviewsectie: hetzelfde blok als op de homepage ══════════════════
+   Was een kolom met "4,9/5" naast twee cursieve citaten met een em-dash
+   ervoor. De homepage zet drie kaarten naast elkaar met sterren, citaat,
+   initialen en het Google-merk. Nu identiek. */
+.tr .tr-rev-head { display: block; margin-bottom: 34px; }
+.tr .tr-rev-head h2 { font-size: clamp(30px, 3.1vw, 44px); font-weight: 700; color: ${NAVY}; line-height: 1.12; }
+.tr .tr-rev-head .tr-dim { display: block; color: ${INKT2}; font-weight: 700; }
+
+.tr .tr-rev-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+@media (max-width: 900px) { .tr .tr-rev-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.tr .tr-rev-card {
+  background: #fff; border-radius: 14px; box-shadow: ${SCHADUW};
+  padding: 28px 28px 24px; display: flex; flex-direction: column;
+}
+.tr .tr-rev-card-stars { color: ${GOUD}; font-size: 14px; letter-spacing: 2px; }
+.tr .tr-rev-card-text { margin-top: 14px; font-size: 15px; line-height: 1.62; color: ${TEKST}; flex: 1; }
+.tr .tr-rev-card-foot {
+  display: flex; align-items: center; gap: 13px;
+  margin-top: 22px; padding-top: 20px; border-top: 1px solid ${LIJN_ZACHT};
+}
+/* initialen, geen gegenereerd gezicht. Navy op lichtgrijs haalt ruim AA. */
+.tr .tr-rev-card-av {
+  width: 46px; height: 46px; border-radius: 50%; flex: none;
+  display: grid; place-items: center;
+  background: ${TINT}; border: 1px solid ${LIJN}; color: ${NAVY};
+  font-size: 14.5px; font-weight: 800; letter-spacing: .02em;
+}
+.tr .tr-rev-card-who { flex: 1; min-width: 0; display: grid; }
+.tr .tr-rev-card-name { font-size: 15.5px; font-weight: 800; color: ${NAVY}; }
+.tr .tr-rev-card-role { font-size: 13px; color: ${TEKST} !important; }
+/* de kaartkop krijgt de knop rechtsboven, zoals op de homepage */
+.tr .tr-rev-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+@media (max-width: 760px) { .tr .tr-rev-head { display: block; } }
+.tr .tr-rev-card-g { flex: none; display: inline-flex; }
 `;

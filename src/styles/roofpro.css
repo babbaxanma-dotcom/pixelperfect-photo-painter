@@ -1512,3 +1512,10 @@
   }
   .rp-track { scroll-behavior: auto; }
 }
+
+/* ══ SECTIE-OPSCHRIFTJES WEG ═══════════════════════════════════════════
+   Mohammed 19 aug: het kleine gouden opschrift in hoofdletters boven een
+   sectie ("RECENTE REALISATIES", "BEOORDELINGEN") is een vibe-coded
+   website-tell en moet er bij hem ALTIJD uit. Stond zeven keer op de
+   homepage en op de landingspaginas. De kop eronder draagt de sectie zelf. */
+.rp-eyebrow { display: none; }

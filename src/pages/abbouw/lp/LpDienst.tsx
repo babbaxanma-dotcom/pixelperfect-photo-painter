@@ -153,7 +153,7 @@ const DIENSTEN: Record<string, Dienst> = {
     slug: 'totaalrenovatie',
     division: 'ab_construct', typeWerk: 'AB Construct', bronLead: 'ads:totaalrenovatie',
     eyebrow: 'Totaalrenovatie · sleutel-op-de-deur · heel Vlaanderen',
-    h1: 'Uw woning volledig renoveren met één aannemer.',
+    h1: 'Uw woning volledig gerenoveerd, van ruwbouw tot afwerking.',
     sub: 'Van casco tot afwerking. Wij maken de planning van uw totaalrenovatie en sturen alle vaklui aan tot aan de oplevering.',
     subBold: 'Vaste prijs vooraf, offerte = factuur',
     heroImg: imgTrHero,
@@ -225,7 +225,7 @@ const DIENSTEN: Record<string, Dienst> = {
     eyebrow: 'Tegelwerken · vloer- en wandtegels · heel Vlaanderen',
     h1: 'Strak gelegde tegels, tot in de hoek correct.',
     sub: 'Vloer- en wandtegels in badkamer, keuken of woonkamer, ook grootformaat. Vlak gelegd, met voegen die kloppen, in heel Vlaanderen.',
-    subBold: 'Eigen ploeg, vaste prijs per m²',
+    subBold: 'Vaste prijs per m², voegwerk inbegrepen',
     heroImg: imgTgHero,
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'VCA-gecertificeerd en verzekerd'],
     offerEyebrow: 'Over AB Bouw Groep',
@@ -260,7 +260,7 @@ const DIENSTEN: Record<string, Dienst> = {
     eyebrow: 'Pleisterwerk & gyproc · heel Vlaanderen',
     h1: 'Strakke wanden en plafonds, klaar om te schilderen.',
     sub: 'Pleisterwerk, bepleistering en gyproc in Mechelen, Antwerpen, Lier en heel Vlaanderen. Wij pleisteren uw wanden en plafonds vlak en strak, klaar voor de verf.',
-    subBold: 'Vaste prijs vooraf, eigen ploeg',
+    subBold: 'Vaste prijs vooraf, stofvrij afgeschermd',
     heroImg: imgPlHero,
     certLogo: { src: '/assets/logos/knauf.png', alt: 'Knauf' },
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', '120+ realisaties'],
@@ -366,7 +366,7 @@ const DIENSTEN: Record<string, Dienst> = {
     eyebrow: 'Zwembad aanleggen · heel Vlaanderen',
     h1: 'Een zwembad in uw eigen tuin, vakkundig aangelegd.',
     sub: 'Een inbouwzwembad laat u maar één keer aanleggen. Wij verzorgen het volledige werk, van het graafwerk tot het bad en het terras errond, in heel Vlaanderen.',
-    subBold: 'Eigen ploeg, vaste prijs vooraf',
+    subBold: 'Vaste prijs vooraf, inclusief techniek en afwerking',
     heroImg: imgZwHero,
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', '120+ realisaties'],
     offerEyebrow: 'Over AB Bouw Groep',
@@ -831,6 +831,17 @@ const PHONE_HREF = CONTACT.phone.href;
 const ADDRESS = CONTACT.address.full;
 const stars = '★★★★★';
 
+// Initialen i.p.v. een avatarfoto, net als op de homepage: een gegenereerd
+// gezicht bij de naam van een klant is de zwaarste AI-tell die er is.
+const initialen = (naam: string) => naam.trim().split(/\s+/).filter((w) => w.length > 2)
+  .map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+
+/* De reviewteksten in de data staan tussen aanhalingstekens; de kaart op de
+   homepage zet die niet, dus hier weghalen in plaats van de bron aanpassen. */
+const zonderAanhaling = (t: string) => t.trim().replace(/^["'“”]+|["'“”]+$/g, '');
+
+const GOOGLE_MARK = '<svg width="21" height="21" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5a5.6 5.6 0 0 1-2.4 3.6v3h3.9c2.3-2.1 3.5-5.2 3.5-8.8z"/><path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.9-3c-1.1.7-2.4 1.2-4 1.2-3.1 0-5.7-2.1-6.6-4.9H1.4v3.1A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.4 14.4a7.2 7.2 0 0 1 0-4.6V6.7H1.4a12 12 0 0 0 0 10.8l4-3.1z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.4 6.7l4 3.1C6.3 7 8.9 4.8 12 4.8z"/></svg>';
+
 /* ── Inline SVG iconen (geen externe deps) ──────────────────────────────── */
 const Phone = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
@@ -1078,18 +1089,17 @@ export default function LpDienst({ slug }: { slug: string }) {
           <div className="tr-wrap">
             <div className="tr-hero-grid">
               <div className="tr-hero-main">
-                <div className="tr-hero-trust">
-                  <span className="tr-hero-trust-stars">{stars}</span>
-                  <span><b>4,9/5</b> op Google (180+ reviews)</span><span className="tr-hero-trust-dot">·</span>
-                  <span>120+ realisaties</span><span className="tr-hero-trust-dot">·</span>
-                  <span>Actief sinds 2010</span>
-                </div>
+                {/* De hero had TWEE bewijsregels: een piepklein gouden regeltje
+                    boven de kop en schild-pillen eronder. De homepage heeft er
+                    één: drie vinkjes onder de lede, goud vinkje en bijna-witte
+                    tekst. Zo nu ook hier. "Verzekerd via Federale" is weg;
+                    Federale zegt een bezoeker niets. */}
                 <h1>{d.h1}</h1>
-                <p className="tr-hero-sub">{d.sub} <b>{d.subBold}</b>.</p>
+                <p className="tr-hero-sub">{d.sub} {d.subBold}.</p>
                 <div className="tr-certs">
-                  <span className="tr-cert-pill"><Shield />VCA* gecertificeerd</span>
-                  <span className="tr-cert-pill"><Check s={15} />Lid Bouwunie</span>
-                  <span className="tr-cert-pill"><Shield />Verzekerd via Federale</span>
+                  <span className="tr-cert-pill"><Check s={15} />4,9 op Google</span>
+                  <span className="tr-cert-pill"><Check s={15} />120+ realisaties</span>
+                  <span className="tr-cert-pill"><Check s={15} />VCA-gecertificeerd</span>
                 </div>
               </div>
               <aside className="tr-hero-form" aria-label="Vraag uw gratis afspraak aan">
@@ -1197,22 +1207,28 @@ export default function LpDienst({ slug }: { slug: string }) {
       {/* 9. REVIEWS — naar boven verplaatst (CRO: sociale proof vlak na de cijfers) */}
       <section className="tr-section tr-reviews" id="reviews">
         <div className="tr-wrap">
-          <div className="tr-rev-layout">
-            <div className="tr-rev-rail">
-              <h2>{d.reviewsH2 ?? 'Klantbeoordelingen'}</h2>
-              <div className="tr-rev-score">4,9/5</div>
-              <div className="tr-rev-rail-stars" aria-hidden="true">{stars}</div>
-              <p className="tr-rev-rail-sub">gebaseerd op 180+ Google-reviews</p>
-            </div>
-            <div className="tr-rev-list">
-              {d.reviews.slice(1).map((r, i) => (
-                <div className="tr-rev-row" key={i}>
-                  <div className="tr-rev-row-stars" aria-hidden="true">{stars}</div>
-                  <p>{r.text}</p>
-                  <div className="tr-rev-attr"><span className="tr-rev-dash" aria-hidden="true">&mdash;</span> <span className="tr-rev-name">{r.name}</span> <span className="tr-rev-role">&middot; {r.role}</span></div>
+          {/* Zelfde blok als op de homepage: kop met tweede regel gedimd, dan
+              kaarten naast elkaar met sterren, citaat, initialen en het
+              Google-merk. Was een kolom met "4,9/5" plus twee cursieve citaten
+              met een em-dash ervoor; dat leek in niets op de homepage. */}
+          <div className="tr-head tr-rev-head">
+            <h2>Wat klanten zeggen<span className="tr-dim">over hun verbouwing</span></h2>
+          </div>
+          <div className="tr-rev-grid">
+            {d.reviews.slice(0, 3).map((r, i) => (
+              <article className="tr-rev-card" key={i}>
+                <div className="tr-rev-card-stars" aria-hidden="true">{stars}</div>
+                <p className="tr-rev-card-text">{zonderAanhaling(r.text)}</p>
+                <div className="tr-rev-card-foot">
+                  <span className="tr-rev-card-av" aria-hidden="true">{initialen(r.name)}</span>
+                  <span className="tr-rev-card-who">
+                    <span className="tr-rev-card-name">{r.name}</span>
+                    <span className="tr-rev-card-role">{r.role}</span>
+                  </span>
+                  <span className="tr-rev-card-g" aria-label="Google-beoordeling" dangerouslySetInnerHTML={{ __html: GOOGLE_MARK }} />
                 </div>
-              ))}
-            </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
