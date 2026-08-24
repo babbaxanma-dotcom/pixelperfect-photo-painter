@@ -153,8 +153,8 @@ const DIENSTEN: Record<string, Dienst> = {
     slug: 'totaalrenovatie',
     division: 'ab_construct', typeWerk: 'AB Construct', bronLead: 'ads:totaalrenovatie',
     eyebrow: 'Totaalrenovatie · sleutel-op-de-deur · heel Vlaanderen',
-    h1: 'Uw woning volledig gerenoveerd, van ruwbouw tot afwerking.',
-    sub: 'Van casco tot afwerking. Wij maken de planning van uw totaalrenovatie en sturen alle vaklui aan tot aan de oplevering.',
+    h1: 'Uw woning volledig gerenoveerd.',
+    sub: 'Ruwbouw, technieken, chape, pleisterwerk, vloeren en afwerking.',
     subBold: 'Vaste prijs vooraf, offerte = factuur',
     heroImg: imgTrHero,
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'Eén aanspreekpunt, eigen ploeg'],
@@ -221,10 +221,10 @@ const DIENSTEN: Record<string, Dienst> = {
   },
   tegelwerken: {
     slug: 'tegelwerken',
-    division: 'ab_interieurwerken', typeWerk: 'AB Interieurwerken', bronLead: 'ads:tegelwerken',
+    division: 'ab_interieurwerken', typeWerk: 'AB Archivoieurwerken', bronLead: 'ads:tegelwerken',
     eyebrow: 'Tegelwerken · vloer- en wandtegels · heel Vlaanderen',
     h1: 'Strak gelegde tegels, tot in de hoek correct.',
-    sub: 'Vloer- en wandtegels in badkamer, keuken of woonkamer, ook grootformaat. Vlak gelegd, met voegen die kloppen, in heel Vlaanderen.',
+    sub: 'Vloer- en wandtegels in badkamer, keuken en woonkamer, ook grootformaat. Inclusief voorbereiding van de ondergrond.',
     subBold: 'Vaste prijs per m², voegwerk inbegrepen',
     heroImg: imgTgHero,
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'VCA-gecertificeerd en verzekerd'],
@@ -256,10 +256,10 @@ const DIENSTEN: Record<string, Dienst> = {
   },
   pleisterwerk: {
     slug: 'pleisterwerk',
-    division: 'ab_interieurwerken', typeWerk: 'AB Interieurwerken', bronLead: 'ads:pleisterwerk',
+    division: 'ab_interieurwerken', typeWerk: 'AB Archivoieurwerken', bronLead: 'ads:pleisterwerk',
     eyebrow: 'Pleisterwerk & gyproc · heel Vlaanderen',
-    h1: 'Strakke wanden en plafonds, klaar om te schilderen.',
-    sub: 'Pleisterwerk, bepleistering en gyproc in Mechelen, Antwerpen, Lier en heel Vlaanderen. Wij pleisteren uw wanden en plafonds vlak en strak, klaar voor de verf.',
+    h1: 'Strakke wanden en plafonds.',
+    sub: 'Bepleistering en gyproc op wanden en plafonds, vlak afgewerkt en klaar voor de verf.',
     subBold: 'Vaste prijs vooraf, stofvrij afgeschermd',
     heroImg: imgPlHero,
     certLogo: { src: '/assets/logos/knauf.png', alt: 'Knauf' },
@@ -1083,83 +1083,80 @@ export default function LpDienst({ slug }: { slug: string }) {
       </header>
 
       {/* 3. HERO */}
-      <section className="tr-hero">
-        <div className="tr-hero-bg"><img src={d.heroImg} alt={d.h1} /></div>
-        <div className="tr-hero-inner">
-          <div className="tr-wrap">
-            <div className="tr-hero-grid">
-              <div className="tr-hero-main">
-                {/* De hero had TWEE bewijsregels: een piepklein gouden regeltje
-                    boven de kop en schild-pillen eronder. De homepage heeft er
-                    één: drie vinkjes onder de lede, goud vinkje en bijna-witte
-                    tekst. Zo nu ook hier. "Verzekerd via Federale" is weg;
-                    Federale zegt een bezoeker niets. */}
-                <h1>{d.h1}</h1>
-                <p className="tr-hero-sub">{d.sub} {d.subBold}.</p>
-                <div className="tr-certs">
-                  <span className="tr-cert-pill"><Check s={15} />4,9 op Google</span>
-                  <span className="tr-cert-pill"><Check s={15} />120+ realisaties</span>
-                  <span className="tr-cert-pill"><Check s={15} />VCA-gecertificeerd</span>
-                </div>
+      {/* LETTERLIJK de hero van de homepage. Mohammed 19 aug: "hoe de hero is op
+          de home page letterlijk zetten op de lps". Dus niet nabouwen met
+          tr-klassen maar dezelfde rp-hero2 gebruiken; de wrapper .rp zorgt dat
+          de regels uit roofpro.css hier ook gelden. Inhoud en formulier blijven
+          van deze landingspagina, want die voeden de juiste lead-tag. */}
+      <div className="rp">
+        <section className="rp-hero2">
+          <div className="rp-hero2__bg" aria-hidden="true">
+            <img src={d.heroImg} alt="" width="1920" height="760" fetchPriority="high" decoding="async" />
+            <span className="rp-hero2__veil" />
+          </div>
+          <div className="rp-wrap rp-hero2__grid">
+            <div>
+              <h1 className="rp-hero2__t">{d.h1}</h1>
+              <p className="rp-hero2__lede">{d.sub}</p>
+              <div className="rp-hero2__punten">
+                <span className="rp-hero2__punt"><Check s={15} /> 4,9 op Google</span>
+                <span className="rp-hero2__punt"><Check s={15} /> 120+ realisaties</span>
+                <span className="rp-hero2__punt"><Check s={15} /> VCA-gecertificeerd</span>
               </div>
-              <aside className="tr-hero-form" aria-label="Vraag uw gratis afspraak aan">
-                <div className={`tr-quickform tr-leadcard${quickState === 'ok' ? ' is-success' : ''}`} id="lp-form">
-                  <div className={`tr-lc-row tr-lc-row--primary${leadOpen ? ' is-open' : ''}`}>
-                    <button type="button" className="tr-lc-head" onClick={() => setLeadOpen((o) => !o)} aria-expanded={leadOpen}>
-                      <span className="tr-lc-ic tr-lc-ic--accent" aria-hidden="true"><Doc /></span>
-                      <span className="tr-lc-txt">
-                        <h3 className="tr-lc-title">{d.steps[0][0]}</h3>
-                        <span className="tr-lc-sub">Vrijblijvend, geen verplichtingen.</span>
-                      </span>
-                      <span className="tr-lc-chev" aria-hidden="true"><Chevron /></span>
-                    </button>
-                    <div className="tr-lc-panel"><div className="tr-lc-panel-inner"><div className="tr-lc-panel-pad">
-                      <form ref={quickRef} onSubmit={onQuickSubmit} onFocusCapture={() => trackFormStart(`lp:${d.slug}:quick`)} noValidate>
-                        <div className="tr-qf-grid">
-                          <div className="tr-qf-field"><label htmlFor="qf-name">Voornaam</label><input id="qf-name" type="text" name="firstName" placeholder="bv. Jan" autoComplete="given-name" required /></div>
-                          <div className="tr-qf-field"><label htmlFor="qf-phone">Telefoonnummer</label><input id="qf-phone" type="tel" name="phone" placeholder="bv. 0470 12 34 56" autoComplete="tel" required /></div>
-                          <button type="submit" className="tr-btn" disabled={quickState === 'busy'}>{quickState === 'busy' ? 'Even bezig…' : 'Plan mijn afspraak'}</button>
-                        </div>
-                      </form>
-                      <p className="tr-lc-reassure">We bellen u terug binnen één werkdag.</p>
-                      {quickErr && <div className="tr-qf-error" style={{ display: 'block' }}>{quickErr}</div>}
-                      <div className="tr-lc-proof">
-                        <div className="tr-lc-proof-stars">★★★★★</div>
-                        <p className="tr-lc-proof-q">{d.reviews[0].text}</p>
-                        <div className="tr-lc-proof-name">{d.reviews[0].name} · {d.reviews[0].role}</div>
-                      </div>
-                    </div></div></div>
-                  </div>
-                  <div className="tr-lc-or"><span>Of</span></div>
-                  {calcCfg && (
-                    <button type="button" className="tr-lc-row tr-lc-row--alt tr-lc-row--calc" onClick={() => setCalcOpen(true)}>
-                      <span className="tr-lc-ic" aria-hidden="true"><Calc /></span>
-                      <span className="tr-lc-txt">
-                        <span className="tr-lc-title-row"><span className="tr-lc-title">{calcCfg.triggerLabel}</span><span className="tr-lc-badge">60 sec</span></span>
-                        <span className="tr-lc-sub">Prijsindicatie via onze calculator, klaar in 60 seconden</span>
-                      </span>
-                      <span className="tr-lc-chev" aria-hidden="true"><Chevron /></span>
-                    </button>
-                  )}
-                  <a className="tr-lc-row tr-lc-row--alt" href={PHONE_HREF}>
-                    <span className="tr-lc-ic" aria-hidden="true"><Phone /></span>
-                    <span className="tr-lc-txt">
-                      <span className="tr-lc-title">Bel ons direct</span>
-                      <span className="tr-lc-sub">Vragen of haast? {PHONE}</span>
-                    </span>
-                    <span className="tr-lc-chev" aria-hidden="true"><Chevron /></span>
-                  </a>
-                  <div className="tr-qf-thanks">
-                    <div className="tr-qf-thanks-ic"><Check s={26} /></div>
-                    <h4>Bedankt, uw aanvraag is ontvangen.</h4>
-                    <p>{d.quickThanks ?? 'We bellen u zo snel mogelijk terug om uw afspraak in te plannen.'}</p>
-                  </div>
+            </div>
+
+            <div className={`rp-aanvraag${quickState === 'ok' ? ' is-success' : ''}`} id="lp-form">
+              <h2 className="rp-aanvraag__t">Vraag een plaatsbezoek aan</h2>
+              <p className="rp-aanvraag__s">Laat uw nummer achter, dan bellen wij u terug om een moment af te spreken.</p>
+              <form ref={quickRef} onSubmit={onQuickSubmit} onFocusCapture={() => trackFormStart(`lp:${d.slug}:quick`)} noValidate>
+                <div className="rp-veld">
+                  <label htmlFor="qf-name">Voornaam</label>
+                  <input id="qf-name" type="text" name="firstName" autoComplete="given-name" required />
                 </div>
-              </aside>
+                <div className="rp-veld">
+                  <label htmlFor="qf-phone">Telefoonnummer</label>
+                  <input id="qf-phone" type="tel" name="phone" inputMode="tel" autoComplete="tel" required />
+                </div>
+                {quickErr && <p className="rp-fout">{quickErr}</p>}
+                <button className="rp-btn rp-btn--primary rp-btn--block" type="submit" disabled={quickState === 'busy'}>
+                  {quickState === 'busy' ? 'Even bezig…' : 'Plan mijn afspraak'}
+                </button>
+              </form>
+              <p className="rp-aanvraag__vt"><Check s={13} /> Vrijblijvend &middot; 4,9 op Google</p>
+              {/* De calculator en het belnummer blijven bereikbaar, maar als
+                  rustige regels onder de kaart in plaats van als twee blokken
+                  erin. */}
+              {calcCfg && (
+                <p className="rp-aanvraag__alt">
+                  <button type="button" className="rp-aanvraag__link" onClick={() => setCalcOpen(true)}>
+                    {calcCfg.triggerLabel} in 60 seconden
+                  </button>
+                </p>
+              )}
+              {/* Het nummer is een eigen element, geen staart onder de knop.
+                  "Liever bellen? <nummer>" is dezelfde vorm als "of bel
+                  <nummer>", en die is meermaals afgekeurd. */}
+              <a className="rp-aanvraag__tel" href={PHONE_HREF}>{PHONE}</a>
+              <div className="rp-aanvraag__ok" hidden={quickState !== 'ok'}>
+                <span className="rp-aanvraag__ok-ic" aria-hidden="true"><Check s={26} /></span>
+                <h2 className="rp-aanvraag__t">Bedankt, uw aanvraag is ontvangen.</h2>
+                <p className="rp-aanvraag__s">{d.quickThanks ?? 'We bellen u zo snel mogelijk terug om uw afspraak in te plannen.'}</p>
+              </div>
             </div>
           </div>
+        </section>
+
+        <div className="rp-band">
+          <div className="rp-wrap rp-band__row">
+            {['Dakwerken', 'Gevelrenovatie', 'Badkamers', 'Interieurwerken', 'Totaalrenovatie', 'Nieuwbouw'].map((t, n) => (
+              <span key={t} style={{ display: 'contents' }}>
+                {n > 0 && <span className="rp-band__sep" aria-hidden="true">&#10038;</span>}
+                <span>{t}</span>
+              </span>
+            ))}
+          </div>
         </div>
-      </section>
+      </div>
 
       {/* 5. WERKWIJZE / 3 STAPPEN */}
       <section className="tr-section" id="werkwijze">
@@ -1512,7 +1509,7 @@ const LP_CSS = `
 .tr-hero-bg { position: absolute; inset: 0; }
 .tr-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
 .tr-hero-bg::after { content: ""; position: absolute; inset: 0;
-  background: linear-gradient(90deg, rgba(10,22,40,0.90) 0%, rgba(10,22,40,0.64) 34%, rgba(10,22,40,0.30) 56%, rgba(10,22,40,0.08) 76%, rgba(10,22,40,0) 92%), linear-gradient(180deg, rgba(10,22,40,0) 60%, rgba(10,22,40,0.42) 100%); }
+  background: linear-gradient(90deg, rgba(10,22,40,0.82) 0%, rgba(10,22,40,0.54) 34%, rgba(10,22,40,0.20) 56%, rgba(10,22,40,0.04) 76%, rgba(10,22,40,0) 92%), linear-gradient(180deg, rgba(10,22,40,0) 60%, rgba(10,22,40,0.30) 100%); }
 .tr-hero-inner { position: relative; z-index: 2; text-align: left; padding: clamp(72px,8vw,112px) 0 clamp(110px,12vw,168px); }
 .tr-hero h1 { font-size: clamp(32px, 4.9vw, 60px); line-height: 1.06; font-weight: 800; letter-spacing: -0.035em; color: #fff; margin: 0 0 22px; max-width: 16ch; text-wrap: balance; }
 .tr-hero-sub { font-size: clamp(15px, 1.45vw, 19px); line-height: 1.6; color: rgba(255,255,255,0.92);
