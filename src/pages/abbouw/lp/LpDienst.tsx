@@ -194,7 +194,7 @@ export const DIENSTEN: Record<string, Dienst> = {
     division: 'ab_bad__wellness', typeWerk: 'AB Bad & Wellness', bronLead: 'ads:badkamerrenovatie',
     eyebrow: 'Badkamerrenovatie · heel Vlaanderen',
     h1: 'Een nieuwe badkamer, in één keer goed.',
-    sub: 'Wij vernieuwen uw badkamer volledig: sanitair, tegels, douche en leidingen. Eén ploeg, één vaste prijs, in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
+    sub: 'Sanitair, tegels, douche en leidingen, vernieuwd door één ploeg. De prijs ligt vast voor de werken beginnen.',
     subBold: 'Vaste prijs vooraf',
     heroImg: imgBkHero,
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'VCA-gecertificeerd en verzekerd'],

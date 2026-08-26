@@ -28,6 +28,12 @@ import imgTgWand from '@/assets/lp-diensten/tegelkaart-wandtegel.jpg';
 import imgPlWand from '@/assets/lp-diensten/pleisterkaart-wand.jpg';
 import imgPlPlafond from '@/assets/lp-diensten/pleisterkaart-plafond.jpg';
 import imgPlGyproc from '@/assets/lp-diensten/pleisterkaart-gyproc.jpg';
+/* Badkamer-kaarten: de hele ruimte voor een volledige renovatie, de douchecabine
+   voor de inloopdouche, en de inloopdouche onder het hellend dak voor de klant
+   die zijn bad laat vervangen. Alle drie zijn 4:3, net als de duimnagel. */
+import imgBkVolledig from '@/assets/lp-diensten/badkamer-hero.jpg';
+import imgBkDouche from '@/assets/lp-diensten/badkamer-what.jpg';
+import imgBkBad from '@/assets/lp-diensten/badkamer-g2.jpg';
 
 export const CALC_CONFIGS: Record<string, CalcConfig> = {
   velux: {
@@ -269,6 +275,62 @@ export const CALC_CONFIGS: Record<string, CalcConfig> = {
           { key: 'ruw', label: 'Nieuwe of ruwe ondergrond', desc: 'Snelbouw of beton dat nog niet gepleisterd is' },
           { key: 'oud', label: 'Oud pleisterwerk met scheuren of oneffenheden', desc: 'Wij vlakken uit en herpleisteren waar nodig' },
           { key: 'weet', label: 'Weet ik niet', desc: 'Wij beoordelen de ondergrond ter plaatse' },
+        ],
+      },
+    ],
+  },
+
+  /* Badkamer is AB Bad & Wellness, niet interieurwerken. De stappen volgen de
+     typeWerkOpties van de LP (r_bk), zodat de calculator-lead in GHL dezelfde
+     taal spreekt als het gewone formulier. De laatste stap komt uit de FAQ:
+     wie maar één badkamer heeft, krijgt toilet en douche als eerste terug aan.
+     Dat is planningsinfo die AB echt gebruikt, geen verzonnen vraag. */
+  badkamerrenovatie: {
+    slug: 'badkamerrenovatie',
+    label: 'Badkamer aanvraag',
+    triggerLabel: 'Bereken uw badkamer',
+    division: 'ab_bad__wellness',
+    bronLead: 'calculator:badkamerrenovatie',
+    contactSub: 'We bellen u <span class="calc-em">binnen één werkdag</span> om het gratis plaatsbezoek in te plannen. Daarna volgt uw vaste prijs op papier.',
+    formHint: 'We bellen u binnen 1 werkdag om het gratis plaatsbezoek in te plannen. Daarna volgt uw vaste prijs op papier.',
+    steps: [
+      {
+        id: 'werk', kind: 'rows', summary: 'Werk',
+        q: 'Wat wilt u laten doen?',
+        sub: 'Nog niet zeker? Wij denken mee bij het gratis plaatsbezoek.',
+        options: [
+          { key: 'volledig', label: 'Volledige badkamer renoveren', desc: 'Van vloer tot plafond: uitbreken, leidingen, tegels, sanitair en afwerking', img: imgBkVolledig },
+          { key: 'inloopdouche', label: 'Inloopdouche plaatsen', desc: 'Een ruime inloopdouche op maat, waterdicht ingewerkt', img: imgBkDouche },
+          { key: 'bad-naar-douche', label: 'Bad vervangen door douche', desc: 'Het oude bad eruit, de leidingen en de afvoer mee aangepast', img: imgBkBad },
+          { key: 'weet', label: 'Iets anders of advies nodig', desc: 'Wij bekijken het samen bij het gratis plaatsbezoek' },
+        ],
+      },
+      {
+        id: 'oppervlakte', kind: 'slider', summary: 'Oppervlakte',
+        q: 'Hoe groot is de badkamer ongeveer?',
+        sub: 'Een ruwe schatting volstaat, wij meten exact op.',
+        min: 2, max: 20, step: 1, def: 6, unit: 'm²',
+        tip: 'Niet zeker van de oppervlakte? <span class="calc-em">Geen probleem</span>, wij meten alles op bij het <span class="calc-em">gratis plaatsbezoek</span>.',
+        skipLabel: 'Weet ik niet, meet maar op',
+        tag: (v: number) => v < 5 ? 'Kleine badkamer' : v < 9 ? 'Gemiddelde badkamer' : v < 14 ? 'Ruime badkamer' : 'Grote badkamer',
+      },
+      {
+        id: 'leidingen', kind: 'rows', summary: 'Leidingen',
+        q: 'Moeten de leidingen mee vernieuwd worden?',
+        sub: 'Dit bepaalt mee hoeveel voorbereidend werk er is.',
+        options: [
+          { key: 'vernieuwen', label: 'Ja, alles mag vernieuwd', desc: 'Nieuwe water- en afvoerleidingen, kranen en toilet correct aangesloten' },
+          { key: 'behouden', label: 'Nee, die zijn nog in orde', desc: 'Dan sluiten wij aan op de leidingen die er liggen' },
+          { key: 'weet', label: 'Weet ik niet', desc: 'Wij beoordelen de leidingen ter plaatse' },
+        ],
+      },
+      {
+        id: 'enige', kind: 'rows', summary: 'Badkamers',
+        q: 'Is dit uw enige badkamer?',
+        sub: 'Bij een volledige renovatie ligt de badkamer een aantal dagen stil.',
+        options: [
+          { key: 'enige', label: 'Ja, dit is de enige', desc: 'Dan sluiten wij het toilet en een werkende douche als eerste opnieuw aan' },
+          { key: 'tweede', label: 'Nee, er is nog een tweede', desc: 'Dan hebben wij wat meer speling in de planning' },
         ],
       },
     ],
