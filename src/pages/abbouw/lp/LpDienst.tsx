@@ -158,7 +158,7 @@ type Dienst = {
 /* De LP's waar betaalde advertenties op landen. Die krijgen een strakkere
    bovenkant: geen opsomming van alle zes de AB-diensten onder de hero, want die
    leidt weg van de dienst waarvoor iemand net geklikt heeft. */
-const ADS_LPS = new Set(['totaalrenovatie', 'pleisterwerk', 'tegelwerken']);
+const ADS_LPS = new Set(['totaalrenovatie', 'pleisterwerk', 'tegelwerken', 'badkamerrenovatie']);
 
 /* Lijnicoontjes voor de feitenstrip. Inline, want het zijn er drie en een
    icoonpakket erbij halen voor drie paden weegt niet op tegen de laadtijd. */
@@ -221,17 +221,17 @@ export const DIENSTEN: Record<string, Dienst> = {
     division: 'ab_bad__wellness', typeWerk: 'AB Bad & Wellness', bronLead: 'ads:badkamerrenovatie',
     eyebrow: 'Badkamerrenovatie · heel Vlaanderen',
     h1: 'Een nieuwe badkamer, in één keer goed.',
-    sub: 'Sanitair, tegels, douche en leidingen, vernieuwd door één ploeg. De prijs ligt vast voor de werken beginnen.',
+    sub: 'Sanitair, tegels, douche en leidingen, vernieuwd door één ploeg.',
     subBold: 'Vaste prijs vooraf',
     heroImg: imgBkHero,
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', 'VCA-gecertificeerd en verzekerd'],
     offerEyebrow: 'Over AB Bouw Groep',
     offerH2: 'Een badkamer renoveert u maar eens in de twintig jaar',
-    offerIntro: 'Dan kiest u liefst een ploeg die het van A tot Z in handen neemt. Wij coördineren sanitair, tegels en afwerking zelf, met één aanspreekpunt en een prijs die op voorhand vastligt.',
-    offer: ['Offerte = factuur, ook bij prijsstijgingen', 'Gratis plaatsbezoek met eerlijk advies', 'Eén ploeg voor sanitair, tegels en leidingen', 'Eén aanspreekpunt van plan tot oplevering', '6% btw bij een woning ouder dan 10 jaar', 'Eigen vaste ploeg, geen onderaannemers'],
-    steps: [['Gratis plaatsbezoek', 'Een vakman bekijkt uw badkamer, neemt de maten en bespreekt wat u in gedachten hebt.'], ['Vaste offerte', 'U krijgt een bindende prijs voor het volledige werk. Wat op de offerte staat, betaalt u.'], ['Uitvoering door eigen ploeg', 'Wij breken uit, leggen leidingen, tegelen en plaatsen het sanitair. Eén ploeg, nette werf.']],
+    offerIntro: 'Dan doet u het liefst in één keer goed. Sanitair, tegels en afwerking zitten bij ons in dezelfde ploeg, dus niemand staat op iemand anders te wachten en u belt maar één nummer.',
+    offer: ['Eén ploeg voor sanitair, tegels en leidingen', 'Eén aanspreekpunt, van het plaatsbezoek tot de oplevering', 'Eigen mensen, geen onderaannemers', '6% btw als uw woning ouder is dan tien jaar', 'Heeft u maar één badkamer? Toilet en douche gaan als eerste terug open'],
+    steps: [['Gratis plaatsbezoek', 'Een vakman komt langs, meet op en vraagt door. Wat blijft, wat gaat eruit, en waar zit nu het probleem.'], ['Vaste offerte', 'Eén prijs voor het geheel. Stijgen de materialen daarna nog, dan is dat onze zorg.'], ['Uitvoering', 'Uitbreken, leidingen, chape, tegels, sanitair. Twee tot drie weken, en elke avond gaat de werf schoon achter ons dicht.']],
     whatTitle: 'Wat komt er kijken bij een badkamerrenovatie?',
-    whatIntro: 'Een badkamer vernieuwen is meer dan tegels en een douche. Wij verzorgen het volledige traject, van de leidingen achter de muur tot de laatste voeg.',
+    whatIntro: 'Het meeste werk zit achter de muur. Leidingen, afvoer, waterdichting en chape bepalen of uw badkamer er over tien jaar nog goed bij ligt. De tegels gaan er als laatste op.',
     what: [['Volledige renovatie', 'Uw badkamer van vloer tot plafond vernieuwd: uitbreken, leidingen, tegels, sanitair en afwerking.'], ['Inloopdouche', 'Een ruime inloopdouche op maat, waterdicht ingewerkt en gelijkvloers waar het kan.'], ['Bad vervangen door douche', 'Het oude bad eruit, een moderne douche ervoor in de plaats, leidingen mee aangepast.'], ['Sanitair en leidingen', 'Nieuwe water- en afvoerleidingen, kranen, toilet en meubel, alles correct aangesloten.']],
     whatImg: imgBkWhat,
     stepsImg: imgBkSteps,
@@ -241,15 +241,13 @@ export const DIENSTEN: Record<string, Dienst> = {
        die toch niet gaan tekenen, en dat is bij een klein advertentiebudget
        precies wat je wil. */
     feiten: [
-      { icoon: 'euro', label: 'Wat het kost', kop: '€9.000 tot €18.000',
-        sub: 'Voor een volledige badkamer. Uw vaste prijs volgt na het gratis plaatsbezoek en is meteen de eindfactuur.' },
-      { icoon: 'klok', label: 'Hoe lang het duurt', kop: 'Twee tot drie weken',
-        sub: 'Van uitbreken tot de laatste voeg. Heeft u maar één badkamer, dan sluiten wij toilet en douche als eerste opnieuw aan.' },
-      { icoon: 'agenda', label: 'Wanneer wij langskomen', kop: 'Binnen vijf werkdagen',
-        sub: 'Een vakman meet op, bespreekt wat u in gedachten heeft en geeft eerlijk advies. Daar hangt geen prijs aan vast.' },
+      { icoon: 'klok', label: '', kop: 'Twee tot drie weken',
+        sub: 'Van uitbreken tot de laatste voeg. Heeft u maar één badkamer, dan gaan toilet en douche als eerste terug open.' },
+      { icoon: 'agenda', label: '', kop: 'Plaatsbezoek binnen vijf werkdagen',
+        sub: 'Een vakman meet op en zegt eerlijk wat er kan. Daar hangt geen prijskaartje aan.' },
     ],
     gallery: [imgBkG1, imgBkG2, imgBkG3],
-    reviews: [{ text: '"Onze badkamer uit de jaren negentig volledig vernieuwd. Bad eruit, ruime inloopdouche erin. Eén ploeg voor alles, en de prijs klopte met de offerte."', name: 'Greet Janssens', role: 'Volledige badkamerrenovatie' }, { text: '"We twijfelden of we het bad zouden houden, maar ze toonden met de maten dat een douche de kleine ruimte een pak groter laat voelen. Achteraf blij dat we geluisterd hebben. Het toilet schoof mee een halve meter op, alles strak aangesloten."', name: 'Peter Maes', role: 'Bad vervangen door douche' }, { text: '"Vaste prijs vooraf, geen verrassingen achteraf. De leidingen zaten verouderd, ze hebben dat meteen mee opgelost. Heel tevreden."', name: 'Linda Verbeeck', role: 'Inloopdouche op maat' }],
+    reviews: [{ text: '"Bad eruit, inloopdouche erin. De afvoer moest verlegd worden, dat was meerwerk, maar het stond op voorhand op papier. Netjes gewerkt en op tijd klaar."', name: 'Greet Janssens', role: 'Bad vervangen door douche · Mechelen' }, { text: '"We twijfelden of we het bad zouden houden, maar ze toonden met de maten dat een douche de kleine ruimte een pak groter laat voelen. Achteraf blij dat we geluisterd hebben. Het toilet schoof mee een halve meter op, alles strak aangesloten."', name: 'Peter Maes', role: 'Volledige renovatie · Willebroek' }, { text: '"We hebben lang getwijfeld over de indeling. De projectleider heeft het twee keer opnieuw ingetekend tot het klopte. Dat siert hen."', name: 'Linda Verbeeck', role: 'Badkamer op zolder · Bornem' }],
     faq: [['Wat kost een badkamerrenovatie?', 'Dat hangt af van de oppervlakte, het sanitair, de tegels en de staat van de leidingen. Een complete badkamer ligt doorgaans tussen 9.000 en 18.000 euro. U krijgt een vaste prijs na het gratis plaatsbezoek; wat op de offerte staat, betaalt u.'], ['Hoe lang duurt een badkamerrenovatie?', 'Een volledige badkamer is doorgaans in twee tot drie weken klaar, afhankelijk van de omvang en de droogtijden. Bij het plaatsbezoek geven we u een realistische planning.'], ['Doen jullie alles zelf of met onderaannemers?', 'Alles met onze eigen vaste ploeg. Sanitair, tegelwerk en leidingen zitten in één hand, met één aanspreekpunt van begin tot oplevering.'], ['Kan ik mijn bad laten vervangen door een inloopdouche?', 'Ja, dat is een van de meest gevraagde renovaties. Wij halen het bad eruit, passen de leidingen en de afvoer aan en plaatsen een waterdichte inloopdouche.'], ['Betaal ik 6% of 21% btw?', 'Is uw woning ouder dan 10 jaar, dan valt de renovatie inclusief plaatsing meestal onder 6% btw. Wij bekijken of u in aanmerking komt en regelen het papierwerk.'], ['Kan ik mijn badkamer nog gebruiken tijdens de werken?', 'Bij een volledige renovatie ligt de badkamer een aantal dagen stil, van het uitbreken tot het sanitair terug aangesloten is. Heeft u maar één badkamer, zeg dat op het plaatsbezoek: we plannen het toilet en een werkende douche dan als eerste opnieuw aan, zodat u zo weinig mogelijk dagen zonder zit.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen. Bij het gratis plaatsbezoek bevestigen we meteen de planning.']],
     typeWerkOpties: ['Volledige badkamer renoveren', 'Inloopdouche plaatsen', 'Bad vervangen door douche', 'Iets anders / advies nodig'],
     finalSub: 'Liever eerst iemand aan de lijn? Bel gerust.',
@@ -260,7 +258,7 @@ export const DIENSTEN: Record<string, Dienst> = {
     werkwijzeH2: 'In 3 stappen naar uw nieuwe badkamer',
     finalH2: 'Klaar voor een nieuwe badkamer?',
     urgencyLine: 'Gratis plaatsbezoek, meestal binnen 5 werkdagen.',
-    quickThanks: 'We bellen u terug om uw gratis plaatsbezoek in te plannen. Daarna volgt uw vaste prijs op papier.',
+    quickThanks: 'We bellen u terug om het plaatsbezoek in te plannen. Daarna krijgt u uw prijs op papier.',
     breadcrumb: 'Badkamerrenovatie',
     galleryNoun: 'Badkamerrenovatie',
   },
@@ -1198,11 +1196,22 @@ export default function LpDienst({ slug }: { slug: string }) {
         <div className="rp-band">
           <div className="rp-wrap rp-band__row">
             {ADS_LPS.has(slug) ? (
-              <>
-                <span className="rp-band__sep" aria-hidden="true">&#10038;</span>
-                <span>Realisaties</span>
-                <span className="rp-band__sep" aria-hidden="true">&#10038;</span>
-              </>
+              /* Was eerst een opsomming van alle zes de AB-diensten, daarna het
+                 woord "Realisaties" tussen twee sterretjes. Allebei fout: de
+                 opsomming leidt weg van de dienst waarvoor iemand net klikte,
+                 en "Realisaties" is een label, geen uitnodiging. Wat een groot
+                 bouwbedrijf hier zet is een rustige aanwijzing die ook echt
+                 doorscrollt. */
+              <button
+                type="button"
+                className="rp-band__scroll"
+                onClick={() => document.getElementById('werkwijze')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+              >
+                <span>Bekijk onze werkwijze</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M6 9.5l6 6 6-6" />
+                </svg>
+              </button>
             ) : (
               ['Dakwerken', 'Gevelrenovatie', 'Badkamers', 'Interieurwerken', 'Totaalrenovatie', 'Nieuwbouw'].map((t, n) => (
                 <span key={t} style={{ display: 'contents' }}>
@@ -1255,13 +1264,14 @@ export default function LpDienst({ slug }: { slug: string }) {
         <section className="tr-feiten" aria-label="Wat u vooraf wil weten">
           <div className="tr-wrap tr-feiten-grid">
             {d.feiten.map((f, i) => (
+              /* Het kleine vetgedrukte opschrift boven de kop is eruit. Dat
+                 label-boven-kop-boven-uitleg is precies het patroon dat op elke
+                 gegenereerde website staat, en Mohammed herkent het meteen.
+                 Wat overblijft is het icoon, het antwoord en één zin. */
               <div className="tr-feit" key={i}>
                 <span className="tr-feit-ic" aria-hidden="true">{FEIT_ICONEN[f.icoon]}</span>
-                <div>
-                  <div className="tr-feit-label">{f.label}</div>
-                  <div className="tr-feit-kop">{f.kop}</div>
-                  <p className="tr-feit-sub">{f.sub}</p>
-                </div>
+                <div className="tr-feit-kop">{f.kop}</div>
+                <p className="tr-feit-sub">{f.sub}</p>
               </div>
             ))}
           </div>
@@ -1359,8 +1369,12 @@ export default function LpDienst({ slug }: { slug: string }) {
               <h2>{d.offerH2}</h2>
               <p className="tr-about-intro">{d.offerIntro}</p>
               <ul className="tr-checks">
+                {/* Vinkjes met het eerste punt vetgedrukt eruit: dat eerste-punt-
+                    dikker is dezelfde vorm als het vette opschrift boven een kop,
+                    en het suggereert een rangorde die er niet is. Nu gewone
+                    bolletjes, alle punten even zwaar. */}
                 {d.offer.map((t, i) => (
-                  <li key={i}><Check />{i === 0 ? <span><b>{t}</b></span> : <span>{t}</span>}</li>
+                  <li key={i} className="tr-bol"><span>{t}</span></li>
                 ))}
               </ul>
               <div className="tr-urgency">{d.urgencyLine ?? 'Gratis plaatsbezoek, meestal binnen 5 werkdagen.'}</div>
@@ -1711,20 +1725,65 @@ const LP_CSS = `
 
 /* Feitenstrip. Mobiel één kolom met het icoon links, zodat het oog één lijn
    volgt in plaats van vier losse blokjes te moeten scannen. */
-.tr-feiten { background: ${NAVY}; border-top: 3px solid ${GOLD}; padding: clamp(38px, 4.5vw, 60px) 0; }
-.tr-feiten-grid { display: grid; grid-template-columns: 1fr; gap: 26px; }
-.tr-feit { display: grid; grid-template-columns: 46px 1fr; gap: 16px; align-items: start; }
-.tr-feit-ic { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
-  background: rgba(198,154,75,0.14); border: 1px solid rgba(198,154,75,0.4); color: ${GOLD}; }
+/* Gecentreerd, icoon boven de kop. Eerst stond het icoon links en een klein
+   vet opschrift boven de kop; dat drieluik label/kop/uitleg is de vorm die op
+   elke gegenereerde site staat. Nu: icoon, antwoord, één zin. */
+.tr-feiten { background: ${NAVY}; border-top: 3px solid ${GOLD}; padding: clamp(40px, 5vw, 66px) 0; }
+.tr-feiten-grid { display: grid; grid-template-columns: 1fr; gap: 34px; justify-items: center; }
+.tr-feit { display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 340px; }
+.tr-feit-ic { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(198,154,75,0.13); border: 1px solid rgba(198,154,75,0.38); color: ${GOLD}; margin-bottom: 16px; }
 .tr-feit-ic svg { width: 23px; height: 23px; }
-.tr-feit-label { font-size: 11.5px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: ${GOLD}; }
-.tr-feit-kop { font-family: var(--font-display); font-weight: 600; font-size: clamp(21px, 2.4vw, 27px);
-  line-height: 1.15; color: #fff; margin-top: 5px; }
-.tr-feit-sub { font-size: 13.5px; line-height: 1.55; color: rgba(255,255,255,0.72); margin: 7px 0 0; }
-@media (min-width: 860px) {
-  .tr-feiten-grid { grid-template-columns: repeat(3, 1fr); gap: 34px; }
-  .tr-feit + .tr-feit { padding-left: 34px; border-left: 1px solid rgba(198,154,75,0.26); }
+.tr-feit-kop { font-family: var(--font-display); font-weight: 600; font-size: clamp(20px, 2.2vw, 25px);
+  line-height: 1.2; color: #fff; }
+.tr-feit-sub { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.74); margin: 9px 0 0; }
+@media (min-width: 760px) {
+  .tr-feiten-grid { grid-template-columns: repeat(2, minmax(0, 320px)); gap: 56px; justify-content: center; }
 }
+
+/* Bolletjes in het aanbodblok. Waren vinkjes met het eerste punt vetgedrukt.
+   De lijst is een flexrij, dus het bolletje is hier ook een flex-item; een
+   absoluut geplaatst bolletje ging over de tekst heen. */
+.tr-bol::before {
+  content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%;
+  background: ${GOLD}; margin-top: 0.58em;
+}
+
+/* Hero: de calculator en het nummer stonden als twee grijze tekstregels onder
+   de kaart en zagen er daardoor dood uit. Ze zijn nu allebei een element met
+   eigen vorm: de calculator een tweede knop met rand, het nummer een eigen
+   regel met een icoon ervoor. Ze concurreren niet met de hoofdknop, want die
+   blijft de enige gevulde knop. */
+.rp-aanvraag { --tel-ic: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27black%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 1.9.6 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.8.6a2 2 0 0 1 1.7 2Z%27/%3E%3C/svg%3E"); }
+.rp-aanvraag__alt { margin-top: 14px !important; text-align: center; }
+.rp-aanvraag__link {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px; width: 100%;
+  padding: 12px 18px; border: 1.5px solid rgba(198,154,75,0.55); border-radius: 10px;
+  background: rgba(198,154,75,0.06); color: ${NAVY}; font-weight: 650; font-size: 15px;
+  cursor: pointer; text-decoration: none;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+}
+.rp-aanvraag__link:hover { background: rgba(198,154,75,0.14); border-color: ${GOLD}; }
+.rp-aanvraag__link:active { transform: translateY(1px); }
+.rp-aanvraag__tel {
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  margin-top: 12px; padding-top: 13px; border-top: 1px solid rgba(15,26,46,0.1);
+  font-weight: 650; font-size: 16px; color: ${NAVY}; text-decoration: none; letter-spacing: 0.01em;
+}
+.rp-aanvraag__tel::before {
+  content: ""; width: 16px; height: 16px; flex: none; background: currentColor;
+  -webkit-mask: var(--tel-ic) center / contain no-repeat; mask: var(--tel-ic) center / contain no-repeat;
+}
+.rp-aanvraag__tel:hover { color: ${GOLD}; }
+
+/* Scroll-aanwijzing onder de hero op de advertentiepagina's. */
+.rp-band__scroll { display: inline-flex; align-items: center; gap: 9px; background: none; border: 0;
+  cursor: pointer; font: inherit; font-size: 14px; font-weight: 600; letter-spacing: 0.01em;
+  color: inherit; opacity: 0.9; padding: 2px 4px; transition: opacity 0.18s ease; }
+.rp-band__scroll:hover { opacity: 1; }
+.rp-band__scroll svg { width: 17px; height: 17px; animation: rp-wip 2.4s ease-in-out infinite; }
+@keyframes rp-wip { 0%, 72%, 100% { transform: translateY(0); } 84% { transform: translateY(3px); } }
+@media (prefers-reduced-motion: reduce) { .rp-band__scroll svg { animation: none; } }
 
 /* Beeld in de dienstensectie. Die stond als een blok tekst op een donkere
    achtergrond zonder één afbeelding; op mobiel las dat als een muur. */
