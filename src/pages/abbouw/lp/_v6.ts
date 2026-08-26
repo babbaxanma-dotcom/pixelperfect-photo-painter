@@ -324,6 +324,17 @@ export const LP_V6_CSS = `
   background: ${GOUD};
   opacity: 1;
 }
+/* Het cijfer in de dienstenkaart is een flex-item in een kolom, dus het gouden
+   vlak rekte over de volle breedte: een markeerstiftbalk over de hele kaart.
+   De kleuren blijven zoals hierboven, want die staan er om het contrast; alleen
+   krimpt het vlak nu tot het cijfer zelf. */
+.tr .tr-svc-num {
+  align-self: flex-start;
+  padding: 3px 12px 4px;
+  border-radius: 7px;
+  font-size: clamp(20px, 2.1vw, 26px);
+  letter-spacing: 0.01em;
+}
 /* zelfde reden als op de homepage: het gouden opschriftje boven een sectie
    is een vibe-coded tell en gaat er bij Mohammed altijd uit. */
 .tr .tr-eyebrow { display: none; }

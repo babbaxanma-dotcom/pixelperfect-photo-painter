@@ -123,6 +123,13 @@ type Dienst = {
   offerEyebrow: string; offerH2: string; offerIntro: string; offer: string[];
   steps: [string, string][];
   whatTitle: string; whatIntro: string; what: [string, string][]; whatImg: string;
+  /** Optionele feitenstrip die de cijferbalk vervangt.
+   *  De cijferbalk toont "16 jaar ervaring" en "1 vast aanspreekpunt": cijfers
+   *  over ons, niet over zijn verbouwing. Wie een offerte overweegt wil eerst
+   *  drie andere dingen weten: wat kost het, hoe lang lig ik eruit, en wanneer
+   *  kan er iemand komen kijken. Elk antwoord hieronder komt uit de FAQ van de
+   *  pagina zelf, dus er wordt niets nieuws beloofd. */
+  feiten?: { icoon: 'euro' | 'klok' | 'agenda'; kop: string; label: string; sub: string }[];
   /** optionele foto naast de "In 3 stappen"-sectie (dakwerken-stijl photo-layout) */
   stepsImg?: string;
   /** optionele voor/na sleep-slider die whatImg in de about-sectie vervangt */
@@ -153,6 +160,26 @@ type Dienst = {
    leidt weg van de dienst waarvoor iemand net geklikt heeft. */
 const ADS_LPS = new Set(['totaalrenovatie', 'pleisterwerk', 'tegelwerken']);
 
+/* Lijnicoontjes voor de feitenstrip. Inline, want het zijn er drie en een
+   icoonpakket erbij halen voor drie paden weegt niet op tegen de laadtijd. */
+const FEIT_ICONEN: Record<'euro' | 'klok' | 'agenda', JSX.Element> = {
+  euro: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M16.5 6.5A6 6 0 0 0 7 11m9.5 6.5A6 6 0 0 1 7 13" /><path d="M4 10.5h8M4 13.5h8" />
+    </svg>
+  ),
+  klok: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 1.8" />
+    </svg>
+  ),
+  agenda: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3.5" y="5" width="17" height="15" rx="2" /><path d="M3.5 9.5h17M8 3.5V6.5M16 3.5V6.5" /><path d="M8.5 14l2.2 2.2 4.3-4.3" />
+    </svg>
+  ),
+};
+
 export const DIENSTEN: Record<string, Dienst> = {
   totaalrenovatie: {
     slug: 'totaalrenovatie',
@@ -178,8 +205,8 @@ export const DIENSTEN: Record<string, Dienst> = {
     faq: [['Wat kost een totaalrenovatie?', 'Dat hangt sterk af van de staat van de woning, de oppervlakte en de gewenste afwerking. Een totaalrenovatie loopt al snel op, daarom werken wij met een vaste prijs op papier per post. Na het gratis plaatsbezoek weet u exact waar u aan toe bent, en die offerte is meteen uw factuur.'], ['Krijg ik echt één vaste prijs voor alles?', 'Ja. Wij maken één bindende offerte op voor de volledige renovatie, post per post. Wat op de offerte staat, betaalt u, ook als materiaalprijzen ondertussen stijgen. Komen er meerwerken op uw vraag bij, dan bespreken we die vooraf en legt u het vast voor we ze uitvoeren.'], ['Werken jullie met onderaannemers?', 'Het meeste werk doet onze eigen vaste ploeg. Voor zeer specifieke onderdelen werken we soms met vaste partners die we al jaren kennen, maar de coördinatie en het aanspreekpunt blijven altijd bij ons.'], ['Geldt het 6% btw-tarief voor mijn renovatie?', 'Is uw woning ouder dan 10 jaar en blijft ze hoofdzakelijk een privéwoning, dan valt de renovatie via de aannemer doorgaans onder 6% btw op materiaal en arbeid. Wij regelen het bijhorende papierwerk en bekijken bij het plaatsbezoek of u in aanmerking komt.'], ['Hoe lang duurt een totaalrenovatie?', 'Dat verschilt per project, van enkele weken voor een gedeeltelijke renovatie tot enkele maanden voor een volledige woning. Bij de offerte krijgt u een realistische planning, en één aanspreekpunt bewaakt die tijdens de werken.'], ['Kan ik tijdens de werken in mijn woning blijven wonen?', 'Bij een gedeeltelijke renovatie meestal wel. We werken dan per zone en schermen stof zoveel mogelijk af. Bij een volledige renovatie is het vaak praktischer om er even uit te zijn; dat bespreken we eerlijk op het plaatsbezoek, zodat u vooraf weet waar u aan toe bent.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen. Bij het gratis plaatsbezoek bevestigen we meteen de planning.']],
     typeWerkOpties: ['Volledige woning renoveren', 'Enkele ruimtes renoveren', 'Renovatie met uitbreiding', 'Iets anders / advies nodig'],
     finalSub: 'Liever eerst overleggen over uw plannen? Bel gerust, dan denken we mee.',
-    metaTitle: 'Totaalrenovatie aan vaste prijs | AB Bouw Groep',
-    metaDesc: 'Uw woning volledig renoveren met één aannemer, één vaste prijs. Casco tot afwerking, eigen ploeg, 6% btw waar het kan. Gratis plaatsbezoek.',
+    metaTitle: 'Totaalrenovatie van casco tot oplevering | AB Bouw Groep',
+    metaDesc: 'Casco tot afwerking door één aannemer: ruwbouw, technieken, chape, pleisterwerk en vloeren. Eén planning, één aanspreekpunt, gratis plaatsbezoek in Vlaanderen.',
     reviewsH2: 'Klantbeoordelingen',
     quickformH3: 'Liever dat wij u bellen?',
     werkwijzeH2: 'In 3 stappen naar uw vernieuwde woning',
@@ -208,13 +235,26 @@ export const DIENSTEN: Record<string, Dienst> = {
     what: [['Volledige renovatie', 'Uw badkamer van vloer tot plafond vernieuwd: uitbreken, leidingen, tegels, sanitair en afwerking.'], ['Inloopdouche', 'Een ruime inloopdouche op maat, waterdicht ingewerkt en gelijkvloers waar het kan.'], ['Bad vervangen door douche', 'Het oude bad eruit, een moderne douche ervoor in de plaats, leidingen mee aangepast.'], ['Sanitair en leidingen', 'Nieuwe water- en afvoerleidingen, kranen, toilet en meubel, alles correct aangesloten.']],
     whatImg: imgBkWhat,
     stepsImg: imgBkSteps,
+    /* Alle drie de antwoorden staan letterlijk in de FAQ en de topbar van deze
+       pagina; hier wordt niets nieuws beloofd. De prijs staat er bewust bij:
+       bij een aankoop van deze grootte filtert een eerlijk bedrag de mensen weg
+       die toch niet gaan tekenen, en dat is bij een klein advertentiebudget
+       precies wat je wil. */
+    feiten: [
+      { icoon: 'euro', label: 'Wat het kost', kop: '€9.000 tot €18.000',
+        sub: 'Voor een volledige badkamer. Uw vaste prijs volgt na het gratis plaatsbezoek en is meteen de eindfactuur.' },
+      { icoon: 'klok', label: 'Hoe lang het duurt', kop: 'Twee tot drie weken',
+        sub: 'Van uitbreken tot de laatste voeg. Heeft u maar één badkamer, dan sluiten wij toilet en douche als eerste opnieuw aan.' },
+      { icoon: 'agenda', label: 'Wanneer wij langskomen', kop: 'Binnen vijf werkdagen',
+        sub: 'Een vakman meet op, bespreekt wat u in gedachten heeft en geeft eerlijk advies. Daar hangt geen prijs aan vast.' },
+    ],
     gallery: [imgBkG1, imgBkG2, imgBkG3],
     reviews: [{ text: '"Onze badkamer uit de jaren negentig volledig vernieuwd. Bad eruit, ruime inloopdouche erin. Eén ploeg voor alles, en de prijs klopte met de offerte."', name: 'Greet Janssens', role: 'Volledige badkamerrenovatie' }, { text: '"We twijfelden of we het bad zouden houden, maar ze toonden met de maten dat een douche de kleine ruimte een pak groter laat voelen. Achteraf blij dat we geluisterd hebben. Het toilet schoof mee een halve meter op, alles strak aangesloten."', name: 'Peter Maes', role: 'Bad vervangen door douche' }, { text: '"Vaste prijs vooraf, geen verrassingen achteraf. De leidingen zaten verouderd, ze hebben dat meteen mee opgelost. Heel tevreden."', name: 'Linda Verbeeck', role: 'Inloopdouche op maat' }],
     faq: [['Wat kost een badkamerrenovatie?', 'Dat hangt af van de oppervlakte, het sanitair, de tegels en de staat van de leidingen. Een complete badkamer ligt doorgaans tussen 9.000 en 18.000 euro. U krijgt een vaste prijs na het gratis plaatsbezoek; wat op de offerte staat, betaalt u.'], ['Hoe lang duurt een badkamerrenovatie?', 'Een volledige badkamer is doorgaans in twee tot drie weken klaar, afhankelijk van de omvang en de droogtijden. Bij het plaatsbezoek geven we u een realistische planning.'], ['Doen jullie alles zelf of met onderaannemers?', 'Alles met onze eigen vaste ploeg. Sanitair, tegelwerk en leidingen zitten in één hand, met één aanspreekpunt van begin tot oplevering.'], ['Kan ik mijn bad laten vervangen door een inloopdouche?', 'Ja, dat is een van de meest gevraagde renovaties. Wij halen het bad eruit, passen de leidingen en de afvoer aan en plaatsen een waterdichte inloopdouche.'], ['Betaal ik 6% of 21% btw?', 'Is uw woning ouder dan 10 jaar, dan valt de renovatie inclusief plaatsing meestal onder 6% btw. Wij bekijken of u in aanmerking komt en regelen het papierwerk.'], ['Kan ik mijn badkamer nog gebruiken tijdens de werken?', 'Bij een volledige renovatie ligt de badkamer een aantal dagen stil, van het uitbreken tot het sanitair terug aangesloten is. Heeft u maar één badkamer, zeg dat op het plaatsbezoek: we plannen het toilet en een werkende douche dan als eerste opnieuw aan, zodat u zo weinig mogelijk dagen zonder zit.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen. Bij het gratis plaatsbezoek bevestigen we meteen de planning.']],
     typeWerkOpties: ['Volledige badkamer renoveren', 'Inloopdouche plaatsen', 'Bad vervangen door douche', 'Iets anders / advies nodig'],
     finalSub: 'Liever eerst iemand aan de lijn? Bel gerust.',
-    metaTitle: 'Badkamerrenovatie aan vaste prijs | AB Bouw Groep',
-    metaDesc: 'Badkamer laten renoveren in Vlaanderen: sanitair, tegels, douche en leidingen door één ploeg. Vaste prijs vooraf, 6% btw waar het kan. Gratis plaatsbezoek.',
+    metaTitle: 'Badkamerrenovatie door één vaste ploeg | AB Bouw Groep',
+    metaDesc: 'Sanitair, tegels, douche en leidingen door dezelfde ploeg. Een volledige badkamer staat er in twee tot drie weken. Bereken uw badkamer in 60 seconden.',
     reviewsH2: 'Klantbeoordelingen',
     quickformH3: 'Liever dat wij u bellen?',
     werkwijzeH2: 'In 3 stappen naar uw nieuwe badkamer',
@@ -248,8 +288,8 @@ export const DIENSTEN: Record<string, Dienst> = {
     faq: [['Wat kost tegels leggen per m²?', 'Dat hangt af van het formaat, het legpatroon en de staat van de ondergrond. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'], ['Leggen jullie ook grootformaat en XXL-tegels?', 'Ja. Grote formaten lijmen we in volvlak, zodat er geen holle plekken onder de tegel zitten. Dat vraagt een vlakke ondergrond, die bereiden we correct voor.'], ['Moet de ondergrond eerst worden voorbereid?', 'Meestal wel. Een vlakke, draagkrachtige ondergrond is de basis voor een strak resultaat. Bij het plaatsbezoek beoordelen we of egaliseren nodig is.'], ['Geldt het 6% btw-tarief voor tegelwerken?', 'Bij een woning ouder dan 10 jaar valt tegelwerk incl. plaatsing en materiaal via ons onder het 6% renovatietarief. Bij nieuwbouw is dat 21%. Dat papierwerk regelen wij.'], ['Plaatsen jullie ook de tegels die ik zelf gekozen heb?', 'Ja. U kiest de tegels in de showroom, wij verzorgen de plaatsing. We adviseren gerust over formaat en legpatroon zodat alles strak uitkomt.'], ['Leggen jullie ook terrastegels buiten?', 'Ja. Een terras vraagt daarnaast een correcte fundering en afwatering, dus dat valt bij ons onder terrasaanleg. Vraag het gerust bij uw plaatsbezoek, dan bekijken we het samen.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.']],
     typeWerkOpties: ['Vloertegels leggen', 'Wandtegels plaatsen', 'Grootformaat tegels (60x60 of groter)', 'Iets anders / advies nodig'],
     finalSub: 'Praat met één van onze projectleiders.',
-    metaTitle: 'Tegels laten leggen aan vaste prijs | AB Bouw Groep',
-    metaDesc: 'Vloer- en wandtegels laten leggen in Vlaanderen, ook grootformaat. Vlak gelegd, strak gevoegd, vaste prijs per m². Eigen ploeg. Gratis plaatsbezoek.',
+    metaTitle: 'Tegels laten leggen, ondergrond inbegrepen | AB Bouw Groep',
+    metaDesc: 'Vloer- en wandtegels in badkamer, keuken en woonkamer, ook grootformaat. Wij vlakken de ondergrond eerst uit, zodat de tegels vlak liggen en strak uitkomen.',
     reviewsH2: 'Klantbeoordelingen',
     quickformH3: 'Liever dat wij u bellen?',
     werkwijzeH2: 'In 3 stappen een strakke tegelvloer',
@@ -284,8 +324,8 @@ export const DIENSTEN: Record<string, Dienst> = {
     faq: [['Wat kost pleisterwerk per m²?', 'Dat hangt af van de oppervlakte, de staat van de ondergrond en de gewenste afwerking. U krijgt een vaste prijs per m² na het gratis plaatsbezoek. Wat op de offerte staat, betaalt u.'], ['Doen jullie ook gyproc en voorzetwanden?', 'Ja. Wij plaatsen gipsplaten, scheidingswanden en voorzetwanden, en pleisteren ze meteen af. Pleisterwerk en gyproc liggen zo bij dezelfde ploeg.'], ['Valt pleisterwerk onder 6% btw?', 'Bij een woning ouder dan 10 jaar valt pleisterwerk en gyproc onder het 6% renovatietarief. Bij nieuwbouw is dat 21%. Wij regelen het bijhorende papierwerk.'], ['Hoe lang moet de pleister drogen?', 'Vers pleisterwerk droogt doorgaans enkele weken, afhankelijk van de dikte en de ventilatie. Pas daarna schildert u best. Wij zeggen u bij de oplevering wanneer de muur schilderklaar is.'], ['Kan ik er meteen op schilderen?', 'Nee, laat de pleister eerst volledig uitdrogen. Daarna is de wand vlak en klaar voor de verf, zonder extra uitvlakwerk.'], ['Geeft pleisteren veel stof in een bewoond huis?', 'Pleisteren zelf is nat werk en stuift weinig; het stof komt vooral van het opruwen, schuren en uitkappen vooraf. Daarom dekken we de vloer en alles wat blijft staan af en zetten we de werkzone met folie dicht naar de rest van het huis. Op het einde van elke werkdag halen we het grove stof weg. Werken we in een bewoonde woning, ruim de kamer dan zoveel mogelijk leeg; dan blijft het stof beperkt tot die ene ruimte.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.']],
     typeWerkOpties: ['Wanden pleisteren', 'Plafond pleisteren', 'Gyproc- of voorzetwand plaatsen', 'Iets anders / advies nodig'],
     finalSub: 'Praat met één van onze projectleiders.',
-    metaTitle: 'Pleisterwerk & gyproc, vaste prijs | AB Bouw Groep',
-    metaDesc: 'Pleisterwerk en gyproc in Vlaanderen. Wanden en plafonds vlak afgewerkt, vaste prijs per m², eigen ploeg. 6% btw waar het kan. Gratis plaatsbezoek.',
+    metaTitle: 'Pleisterwerk en gyproc, schilderklaar | AB Bouw Groep',
+    metaDesc: 'Bepleistering en gyproc op wanden en plafonds, schilderklaar opgeleverd. Wij controleren eerst de ondergrond, want die bepaalt of de wand vlak blijft.',
     reviewsH2: 'Klantbeoordelingen',
     quickformH3: 'Liever dat wij u bellen?',
     werkwijzeH2: 'In 3 stappen geregeld',
@@ -300,7 +340,7 @@ export const DIENSTEN: Record<string, Dienst> = {
     division: 'ab_construct', typeWerk: 'AB Construct', bronLead: 'ads:terrasaanleg',
     eyebrow: 'Terrasaanleg · heel Vlaanderen',
     h1: 'Een terras dat vlak ligt en jaren goed blijft afwateren.',
-    sub: 'Terras aanleggen in keramische tegels, natuursteen, klinkers of hout. In Mechelen, Antwerpen, Lier en heel Vlaanderen, met een correcte fundering en afwatering.',
+    sub: 'Terras aanleggen in keramische tegels, natuursteen, klinkers of hout. Met een stabiele fundering en het juiste afschot, zodat er nergens water blijft staan.',
     subBold: 'Vaste prijs vooraf',
     heroImg: imgTeHero,
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', '120+ realisaties'],
@@ -319,8 +359,8 @@ export const DIENSTEN: Record<string, Dienst> = {
     faq: [['Wat kost een terras aanleggen per m²?', 'Dat hangt af van het materiaal, de grootte, de ondergrond en de afwatering. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'], ['Welk materiaal kies ik best?', 'Keramiek hoeft u enkel te dweilen, natuursteen leeft mee met uw gevel, klinkers passen bij een landelijke tuin en hout vraagt jaarlijks een olie-beurt. Bij het plaatsbezoek bekijken we samen wat bij uw tuin en budget past.'], ['Leggen jullie ook de fundering en afwatering?', 'Ja. Wij verzorgen het grondwerk, de fundering en het juiste afschot, zodat uw terras vlak ligt en regenwater goed wegloopt.'], ['Kunnen jullie mijn oude terras vervangen?', 'Ja. We breken het oude terras uit, bereiden de ondergrond opnieuw voor en leggen uw nieuwe terras aan.'], ['Geldt het 6% btw-tarief voor mijn terras?', 'Bij een woning ouder dan 10 jaar valt het terras meestal onder 6% btw op arbeid en materiaal. Bij nieuwbouw of een woning jonger dan 10 jaar is dat 21%. We bekijken het samen.'], ['Wat gebeurt er met de uitgegraven grond en het puin?', 'Bij het uitgraven en bij het uitbreken van een oud terras komen grond en puin vrij. Wij voeren dat zelf af; de afvoer en de containers zitten in de offerteprijs. Tijdens de werken stapelen we de materialen op één plek in de tuin, en bij de oplevering harken we de werkzone proper aan.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.']],
     typeWerkOpties: ['Keramisch terras', 'Terras in natuursteen', 'Terras in klinkers of hout', 'Iets anders / advies nodig'],
     finalSub: 'Praat met één van onze projectleiders.',
-    metaTitle: 'Terras aanleggen — vaste prijs | AB Bouw Groep',
-    metaDesc: 'Terras aanleggen in keramiek, natuursteen, klinkers of hout. Correcte fundering en afwatering. Vaste prijs per m², eigen ploeg. Gratis plaatsbezoek.',
+    metaTitle: 'Terras aanleggen met correcte afwatering | AB Bouw Groep',
+    metaDesc: 'Terras in keramiek, natuursteen, klinkers of hout. Wij leggen eerst een stabiele fundering met het juiste afschot, zodat er nergens water blijft staan.',
     reviewsH2: 'Klantbeoordelingen',
     quickformH3: 'Vraag uw vaste prijs voor uw terras',
     werkwijzeH2: 'Zo leggen wij uw terras aan',
@@ -335,7 +375,7 @@ export const DIENSTEN: Record<string, Dienst> = {
     division: 'ab_construct', typeWerk: 'AB Construct', bronLead: 'ads:oprit',
     eyebrow: 'Oprit aanleggen · heel Vlaanderen',
     h1: 'Een oprit die jaren strak blijft liggen.',
-    sub: 'Oprit aanleggen of vernieuwen in klinkers, betonklinkers of waterdoorlatende verharding. Met de juiste fundering en afboording, in Mechelen, Antwerpen, Lier en heel Vlaanderen.',
+    sub: 'Oprit aanleggen of vernieuwen in klinkers, betonklinkers of waterdoorlatende verharding. Met een fundering die het gewicht van uw wagen draagt en een strakke afboording.',
     subBold: 'Fundering en afboording in de offerte',
     heroImg: imgOpHero,
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', '120+ realisaties'],
@@ -354,8 +394,8 @@ export const DIENSTEN: Record<string, Dienst> = {
     faq: [['Wat kost een oprit aanleggen?', 'Dat hangt af van de oppervlakte, het materiaal en de bestaande ondergrond. U krijgt een vaste prijs voor de volledige oprit na het gratis plaatsbezoek, fundering en afboording inbegrepen.'], ['Klinkers of waterdoorlatende verharding?', 'Klinkers en betonklinkers zijn strak en onderhoudsarm. Waterdoorlatende verharding laat regenwater in de bodem zakken, wat wateroverlast beperkt. Bij het plaatsbezoek adviseren we wat past bij uw oprit en ondergrond.'], ['Hoe lang gaat een oprit mee?', 'Met een goede fundering en afwatering gaat een oprit doorgaans decennia mee zonder te verzakken. De onderbouw is daarbij belangrijker dan de klinker zelf.'], ['Verzakt een oprit na verloop van tijd?', 'Niet als de fundering klopt. Verzakking komt bijna altijd door een te dunne of slecht aangereden onderbouw. Daarom besteden wij daar de meeste aandacht aan.'], ['Betaal ik 6 of 21% btw op een oprit?', 'Een losstaande oprit valt meestal onder 21% btw. Maakt de oprit deel uit van een renovatie van een woning ouder dan 10 jaar, dan kan 6% gelden. Wij bekijken het tarief samen op het plaatsbezoek.'], ['Kan ik mijn auto kwijt terwijl de oprit openligt?', 'Tijdens het uitgraven en de eerste dagen kunt u niet over de oprit rijden, en pas helemaal op het einde mag u opnieuw op de verse klinkers. Reken op enkele dagen waarin u de wagen elders zet, op straat of bij een buur. We bespreken de planning vooraf, zodat u weet welke dagen het zijn en uw auto niet ingesloten raakt.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.']],
     typeWerkOpties: ['Nieuwe oprit aanleggen', 'Bestaande oprit vernieuwen', 'Waterdoorlatende oprit', 'Iets anders / advies nodig'],
     finalSub: 'Praat met één van onze projectleiders.',
-    metaTitle: 'Oprit aanleggen — vaste prijs | AB Bouw Groep',
-    metaDesc: 'Oprit aanleggen of vernieuwen in Vlaanderen: klinkers, betonklinkers of waterdoorlatend, stabiele fundering. Vaste prijs, eigen ploeg. Gratis plaatsbezoek.',
+    metaTitle: 'Oprit aanleggen in klinkers of beton | AB Bouw Groep',
+    metaDesc: 'Oprit in klinkers, betonklinkers of waterdoorlatende verharding. Stabiele fundering en strakke kantopsluiting, zodat de oprit niet verzakt onder uw wagen.',
     reviewsH2: 'Klantbeoordelingen',
     quickformH3: 'Liever dat wij u bellen?',
     werkwijzeH2: 'In 3 stappen geregeld',
@@ -370,7 +410,7 @@ export const DIENSTEN: Record<string, Dienst> = {
     division: 'ab_construct', typeWerk: 'AB Construct', bronLead: 'ads:zwembad',
     eyebrow: 'Zwembad aanleggen · heel Vlaanderen',
     h1: 'Een zwembad in uw eigen tuin, vakkundig aangelegd.',
-    sub: 'Een inbouwzwembad laat u maar één keer aanleggen. Wij verzorgen het volledige werk, van het graafwerk tot het bad en het terras errond, in heel Vlaanderen.',
+    sub: 'Van het graafwerk tot het bad en het terras errond, door dezelfde ploeg. Grondwerk, betonwerk en waterhuishouding zitten in één planning.',
     subBold: 'Vaste prijs vooraf, inclusief techniek en afwerking',
     heroImg: imgZwHero,
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', '120+ realisaties'],
@@ -389,8 +429,8 @@ export const DIENSTEN: Record<string, Dienst> = {
     faq: [['Wat kost een zwembad aanleggen?', 'Dat hangt af van de afmetingen, het type bad (beton of polyester), de grondsoort en de afwerking errond. Een inbouwzwembad is een groot project; u krijgt een vaste prijs voor het volledige werk na het gratis plaatsbezoek.'], ['Beton of polyester: wat kies ik?', 'Een betonnen bad is volledig op maat en in elke vorm mogelijk. Een polyester bad komt in één stuk en is sneller geplaatst, maar in vaste modellen. Bij het plaatsbezoek adviseren we eerlijk wat past bij uw tuin en budget.'], ['Doen jullie ook het graafwerk en het terras?', 'Ja. Wij verzorgen het volledige project met eigen ploeg: uitgraving, fundering, leidingen, het bad zelf en de afwerking met boordstenen en terras errond.'], ['Hoe lang duurt de aanleg?', 'Dat verschilt per project. Een polyester bad gaat sneller dan een gestort betonnen bad, en de afwerking errond telt mee. Bij de offerte krijgt u een realistische planning op papier.'], ['Welk btw-tarief geldt er?', 'Voor een nieuw zwembad is dat niet automatisch het verlaagde tarief. Bij het plaatsbezoek bekijken we welk btw-tarief in uw situatie van toepassing is, zodat u vooraf weet waar u aan toe bent.'], ['Moet er een graafmachine door mijn tuin, en wat met de schade?', 'Voor de uitgraving moet er inderdaad een kraan tot bij de plek van het bad. Op het plaatsbezoek kijken we eerst hoe we binnen geraken: langs welke kant, of er een poort of haag tijdelijk weg moet, en of we het tuinpad moeten beschermen. Het rijtracé en de stockplek voor de grond rekenen we als onbruikbaar voor de duur van de werken; gazon of beplanting daar herstellen we nadien niet automatisch, dus wat u zelf wil sparen, spreken we vooraf af.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.']],
     typeWerkOpties: ['Betonnen zwembad (op maat)', 'Polyester zwembad (monoblok)', 'Zwembad met terras errond', 'Iets anders / advies nodig'],
     finalSub: 'Vragen over beton, polyester of de planning? Bel ons even.',
-    metaTitle: 'Zwembad laten aanleggen aan vaste prijs | AB Bouw Groep',
-    metaDesc: 'Inbouwzwembad laten aanleggen in Vlaanderen: beton of polyester, graafwerk tot afwerking, terras errond. Vaste prijs, eigen ploeg. Gratis plaatsbezoek.',
+    metaTitle: 'Zwembad laten aanleggen in uw tuin | AB Bouw Groep',
+    metaDesc: 'Inbouwzwembad in beton of polyester, van graafwerk tot afwerking, met het terras errond. Eén ploeg voor het geheel en een planning die op voorhand vastligt.',
     reviewsH2: 'Klantbeoordelingen',
     quickformH3: 'Uw tuin laten bekijken?',
     werkwijzeH2: 'Zo leggen we uw zwembad aan',
@@ -452,8 +492,8 @@ export const DIENSTEN: Record<string, Dienst> = {
     ],
     typeWerkOpties: ['Nieuw dakraam plaatsen', 'Bestaand dakraam vervangen', 'Meerdere dakramen', 'Iets anders / advies nodig'],
     finalSub: 'Liever eerst iemand aan de lijn? Bel gerust.',
-    metaTitle: 'Velux dakraam laten plaatsen aan vaste prijs | AB Bouw Groep',
-    metaDesc: 'Velux dakramen plaatsen en vervangen in Vlaanderen. Vaste prijs incl. plaatsing en binnenafwerking, 10 jaar garantie op waterdichtheid. Gratis opmeting.',
+    metaTitle: 'Velux dakraam waterdicht geplaatst | AB Bouw Groep',
+    metaDesc: 'Dakramen plaatsen of vervangen, waterdicht ingewerkt in de dakbedekking, met de binnenafwerking mee. Erkend Velux-plaatser, tien jaar garantie op de plaatsing.',
     reviewsH2: 'Klantbeoordelingen',
     quickformH3: 'Liever dat wij u bellen?',
     finalH2: 'Klaar voor meer licht op zolder?',
@@ -467,7 +507,7 @@ export const DIENSTEN: Record<string, Dienst> = {
     division: 'ab_gevelbekleding', typeWerk: 'AB Gevelbekleding', bronLead: 'ads:gevelreiniging',
     eyebrow: 'Gevelreiniging · heel Vlaanderen',
     h1: 'Uw gevel als nieuw, zonder schade.',
-    sub: 'Professionele gevelreiniging in Mechelen, Antwerpen, Lier en heel Vlaanderen. De juiste methode voor uw gevelsteen.',
+    sub: 'Gevelreiniging met lagedruk, hogedruk of nevelstraal, afhankelijk van uw gevelsteen. De voegen blijven intact.',
     subBold: 'Methode afgestemd op uw gevelsteen',
     heroImg: imgGevelReinig,
     certLogo: { src: '/assets/logos/caparol.png', alt: 'Caparol' },
@@ -512,8 +552,8 @@ export const DIENSTEN: Record<string, Dienst> = {
     ],
     typeWerkOpties: ['Gevel laten reinigen', 'Reinigen en impregneren (beschermlaag)', 'Mos en groene aanslag verwijderen', 'Iets anders / advies nodig'],
     finalSub: 'Praat met één van onze projectleiders.',
-    metaTitle: 'Gevelreiniging — zonder schade aan uw gevel | AB Bouw Groep',
-    metaDesc: 'Professionele gevelreiniging in Vlaanderen. Juiste methode per gevelsteen, geen schade aan de voegen, optioneel impregneren. Gratis plaatsbezoek.',
+    metaTitle: 'Gevelreiniging afgestemd op uw steensoort | AB Bouw Groep',
+    metaDesc: 'Gevel reinigen met de methode die bij uw gevelsteen past: lagedruk, hogedruk of nevelstraal. De voegen blijven intact, met optioneel een beschermlaag erna.',
     reviewsH2: 'Klantbeoordelingen',
     quickformH3: 'Liever dat wij u bellen?',
     werkwijzeH2: 'Zo reinigen we uw gevel',
@@ -528,7 +568,7 @@ export const DIENSTEN: Record<string, Dienst> = {
     division: 'ab_gevelbekleding', typeWerk: 'AB Gevelbekleding', bronLead: 'ads:hervoegen',
     eyebrow: 'Gevelrenovatie · heel Vlaanderen',
     h1: 'Uw gevel opnieuw voegen.',
-    sub: 'Uitslijpen en hervoegen van uw gevel in Mechelen, Antwerpen, Lier en heel Vlaanderen. Lossende of verweerde voegen vakkundig vervangen.',
+    sub: 'Lossende of verweerde voegen uitslijpen en opnieuw voegen, in de juiste kleur en hardheid voor uw gevelsteen.',
     subBold: 'Voegkleur afgestemd op uw steen',
     heroImg: imgHervoegen,
     certLogo: { src: '/assets/logos/eternit.png', alt: 'Eternit' },
@@ -586,8 +626,8 @@ export const DIENSTEN: Record<string, Dienst> = {
     ],
     typeWerkOpties: ['Volledige gevel hervoegen', 'Deel van de gevel hervoegen', 'Beschadigde voegen herstellen', 'Iets anders / advies nodig'],
     finalSub: 'Praat met één van onze projectleiders.',
-    metaTitle: 'Gevel hervoegen — uitslijpen en voegen | AB Bouw Groep',
-    metaDesc: 'Gevel laten hervoegen in Vlaanderen. Oude voegen uitslijpen, opnieuw voegen in de juiste kleur. Vaste prijs per m², eigen ploeg. Gratis plaatsbezoek.',
+    metaTitle: 'Gevel hervoegen in de juiste voegkleur | AB Bouw Groep',
+    metaDesc: 'Oude voegen uitslijpen en opnieuw voegen in de juiste kleur en hardheid. Dat houdt vocht buiten de muur en geeft de gevel meteen weer een strak beeld.',
     reviewsH2: 'Klantbeoordelingen',
     quickformH3: 'Liever dat wij u bellen?',
     werkwijzeH2: 'Van uitslijpen tot nieuwe voeg',
@@ -649,8 +689,8 @@ export const DIENSTEN: Record<string, Dienst> = {
     ],
     typeWerkOpties: ['Dak isoleren langs buiten (sarking)', 'Dak isoleren langs binnen', 'Zoldervloer isoleren', 'Iets anders / advies nodig'],
     finalSub: 'Vragen over sarking, premies of planning? Bel ons even.',
-    metaTitle: 'Dakisolatie laten plaatsen met vaste prijs | AB Bouw Groep',
-    metaDesc: 'Dakisolatie in Vlaanderen: sarking, tussen de balken of zoldervloer. Lager EPC, lagere stookkost, 6% btw waar het kan. Vaste prijs en gratis dakinspectie.',
+    metaTitle: 'Dakisolatie volgens de huidige normen | AB Bouw Groep',
+    metaDesc: 'Sarking, tussen de balken of op de zoldervloer. Wij isoleren volgens de huidige normen, wat uw EPC-label verbetert en de stookkost merkbaar drukt.',
     reviewsH2: 'Klantbeoordelingen',
     quickformH3: 'Snel uw prijs weten?',
     werkwijzeH2: 'In 3 stappen naar een geïsoleerd dak',
@@ -710,8 +750,8 @@ export const DIENSTEN: Record<string, Dienst> = {
     ],
     typeWerkOpties: ['Nieuw plat dak plaatsen', 'Bestaand plat dak vernieuwen', 'Plat dak vernieuwen met isolatie', 'Iets anders / advies nodig'],
     finalSub: 'Twijfelt u tussen EPDM en roofing? Bel ons, dan denken we mee.',
-    metaTitle: 'Plat dak laten leggen — EPDM of roofing | AB Bouw Groep',
-    metaDesc: 'Plat dak voor aanbouw, garage of bijgebouw: EPDM naadloos of bewezen roofing, geïsoleerd en met 10 jaar garantie op de waterdichtheid. Gratis plaatsbezoek.',
+    metaTitle: 'Plat dak leggen in EPDM of roofing | AB Bouw Groep',
+    metaDesc: 'Plat dak voor aanbouw, garage of bijgebouw, in EPDM zonder naden of in roofing. Geïsoleerd volgens de normen, met tien jaar garantie op de uitvoering.',
     reviewsH2: 'Klantbeoordelingen',
     quickformH3: 'Uw plat dak laten bekijken?',
     werkwijzeH2: 'Zo pakken we uw dak aan',
@@ -726,7 +766,7 @@ export const DIENSTEN: Record<string, Dienst> = {
     division: 'ab_gevelbekleding', typeWerk: 'AB Gevelbekleding', bronLead: 'ads:crepi',
     eyebrow: 'Crepi & sierpleister · heel Vlaanderen',
     h1: 'Een strakke crepi-gevel die jaren mooi blijft.',
-    sub: 'Crepi en sierpleister in elke kleur, in Mechelen, Antwerpen, Lier en heel Vlaanderen. Egaal, duurzaam en onderhoudsarm.',
+    sub: 'Crepi en sierpleister in elke kleur, egaal aangebracht op de gevel of rechtstreeks op buitenisolatie.',
     subBold: 'Egaal, zonder zichtbare overgangen',
     heroImg: imgCrepiWit,
     certLogo: { src: '/assets/logos/caparol.png', alt: 'Caparol' },
@@ -771,8 +811,8 @@ export const DIENSTEN: Record<string, Dienst> = {
     ],
     typeWerkOpties: ['Crepi op de gevel', 'Crepi met gevelisolatie', 'Bestaande crepi vernieuwen', 'Iets anders / advies nodig'],
     finalSub: 'Praat met één van onze projectleiders.',
-    metaTitle: 'Crepi laten plaatsen — vaste prijs | AB Bouw Groep',
-    metaDesc: 'Crepi en sierpleister in Vlaanderen, in elke kleur. Egaal aangebracht op gevel of buitenisolatie. Vaste prijs per m², eigen ploeg. Gratis plaatsbezoek.',
+    metaTitle: 'Crepi plaatsen op gevel of buitenisolatie | AB Bouw Groep',
+    metaDesc: 'Crepi en sierpleister in elke kleur, egaal aangebracht op de gevel of op buitenisolatie. Wij bereiden de ondergrond voor, zodat de pleister blijft hechten.',
     breadcrumb: 'Crepi',
   },
   steenstrips: {
@@ -780,7 +820,7 @@ export const DIENSTEN: Record<string, Dienst> = {
     division: 'ab_gevelbekleding', typeWerk: 'AB Gevelbekleding', bronLead: 'ads:steenstrips',
     eyebrow: 'Steenstrips · heel Vlaanderen',
     h1: 'Steenstrips met een authentieke baksteen-look.',
-    sub: 'Steenstrips en gevelbekleding in Mechelen, Antwerpen, Lier en heel Vlaanderen. De look van baksteen, zonder het gewicht.',
+    sub: 'Steenstrips geven uw gevel het beeld van baksteen, kaarsrecht gevoegd en licht genoeg voor buitenisolatie.',
     subBold: 'Baksteenlook zonder het gewicht',
     heroImg: imgSteenstripsLp,
     certLogo: { src: wienerberger, alt: 'Wienerberger' },
@@ -825,8 +865,8 @@ export const DIENSTEN: Record<string, Dienst> = {
     ],
     typeWerkOpties: ['Steenstrips op de gevel', 'Steenstrips met gevelisolatie', 'Andere gevelbekleding', 'Iets anders / advies nodig'],
     finalSub: 'Praat met één van onze projectleiders.',
-    metaTitle: 'Steenstrips laten plaatsen — baksteen-look | AB Bouw Groep',
-    metaDesc: 'Steenstrips in Vlaanderen: authentieke baksteen-look, kaarsrecht gevoegd, ideaal op buitenisolatie. Vaste prijs per m², eigen ploeg. Gratis plaatsbezoek.',
+    metaTitle: 'Steenstrips voor een baksteengevel | AB Bouw Groep',
+    metaDesc: 'Steenstrips geven uw gevel een baksteenbeeld zonder te metselen. Kaarsrecht gevoegd, en ook rechtstreeks op buitenisolatie te plaatsen.',
     breadcrumb: 'Steenstrips',
   },
 };
@@ -1210,13 +1250,30 @@ export default function LpDienst({ slug }: { slug: string }) {
         </div>
       </section>
 
-      {/* 7. NUMBERS BAR */}
-      <section className="tr-numbers">
-        <div className="tr-num"><div className="tr-num-big">{new Date().getFullYear() - 2010} jaar</div><div className="tr-num-lbl">ervaring</div></div>
-        <div className="tr-num"><div className="tr-num-big">1</div><div className="tr-num-lbl">vast aanspreekpunt</div></div>
-        <div className="tr-num"><div className="tr-num-big">120+</div><div className="tr-num-lbl">realisaties</div></div>
-        <div className="tr-num">{d.division === 'ab_dakwerken' ? (<><div className="tr-num-big">10 jaar</div><div className="tr-num-lbl">garantie</div></>) : (<><div className="tr-num-big">Gratis</div><div className="tr-num-lbl">plaatsbezoek</div></>)}</div>
-      </section>
+      {/* 7. FEITEN of NUMBERS BAR */}
+      {d.feiten ? (
+        <section className="tr-feiten" aria-label="Wat u vooraf wil weten">
+          <div className="tr-wrap tr-feiten-grid">
+            {d.feiten.map((f, i) => (
+              <div className="tr-feit" key={i}>
+                <span className="tr-feit-ic" aria-hidden="true">{FEIT_ICONEN[f.icoon]}</span>
+                <div>
+                  <div className="tr-feit-label">{f.label}</div>
+                  <div className="tr-feit-kop">{f.kop}</div>
+                  <p className="tr-feit-sub">{f.sub}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : (
+        <section className="tr-numbers">
+          <div className="tr-num"><div className="tr-num-big">{new Date().getFullYear() - 2010} jaar</div><div className="tr-num-lbl">ervaring</div></div>
+          <div className="tr-num"><div className="tr-num-big">1</div><div className="tr-num-lbl">vast aanspreekpunt</div></div>
+          <div className="tr-num"><div className="tr-num-big">120+</div><div className="tr-num-lbl">realisaties</div></div>
+          <div className="tr-num">{d.division === 'ab_dakwerken' ? (<><div className="tr-num-big">10 jaar</div><div className="tr-num-lbl">garantie</div></>) : (<><div className="tr-num-big">Gratis</div><div className="tr-num-lbl">plaatsbezoek</div></>)}</div>
+        </section>
+      )}
 
       {/* 9. REVIEWS — naar boven verplaatst (CRO: sociale proof vlak na de cijfers) */}
       <section className="tr-section tr-reviews" id="reviews">
@@ -1255,12 +1312,21 @@ export default function LpDienst({ slug }: { slug: string }) {
             <h2>{d.whatTitle}</h2>
             <p style={{ color: 'rgba(255,255,255,0.84)', fontSize: 15, lineHeight: 1.6, marginTop: 14 }}>{d.whatIntro}</p>
           </div>
-          <div className="tr-svc-grid">
-            {d.what.map(([t, sub], i) => (
-              <div className="tr-svc-card" key={i}>
-                <div className="tr-svc-body"><span className="tr-svc-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><h3>{t}</h3><p>{sub}</p></div>
+          <div className={d.feiten ? 'tr-svc-split' : undefined}>
+            {/* Bij de campagnepagina staat het werk hier ook in beeld: vier
+                genummerde tekstkaarten op donker leest anders als een muur. */}
+            {d.feiten && (
+              <div className="tr-svc-foto">
+                <img src={d.whatImg} alt={d.whatTitle} loading="lazy" decoding="async" />
               </div>
-            ))}
+            )}
+            <div className="tr-svc-grid">
+              {d.what.map(([t, sub], i) => (
+                <div className="tr-svc-card" key={i}>
+                  <div className="tr-svc-body"><span className="tr-svc-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><h3>{t}</h3><p>{sub}</p></div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -1642,6 +1708,32 @@ const LP_CSS = `
 .tr-num-big { font-family: var(--font-display); font-weight: 600; font-size: clamp(26px, 3.4vw, 42px); line-height: 1; color: ${GOLD}; }
 .tr-num-lbl { margin-top: 12px; font-size: 14px; font-weight: 600; letter-spacing: 0.02em; color: rgba(255,255,255,0.88); }
 @media (max-width: 720px) { .tr-numbers { grid-template-columns: 1fr 1fr; } .tr-num + .tr-num::before { display: none; } .tr-num { padding: 34px 20px; } }
+
+/* Feitenstrip. Mobiel één kolom met het icoon links, zodat het oog één lijn
+   volgt in plaats van vier losse blokjes te moeten scannen. */
+.tr-feiten { background: ${NAVY}; border-top: 3px solid ${GOLD}; padding: clamp(38px, 4.5vw, 60px) 0; }
+.tr-feiten-grid { display: grid; grid-template-columns: 1fr; gap: 26px; }
+.tr-feit { display: grid; grid-template-columns: 46px 1fr; gap: 16px; align-items: start; }
+.tr-feit-ic { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(198,154,75,0.14); border: 1px solid rgba(198,154,75,0.4); color: ${GOLD}; }
+.tr-feit-ic svg { width: 23px; height: 23px; }
+.tr-feit-label { font-size: 11.5px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: ${GOLD}; }
+.tr-feit-kop { font-family: var(--font-display); font-weight: 600; font-size: clamp(21px, 2.4vw, 27px);
+  line-height: 1.15; color: #fff; margin-top: 5px; }
+.tr-feit-sub { font-size: 13.5px; line-height: 1.55; color: rgba(255,255,255,0.72); margin: 7px 0 0; }
+@media (min-width: 860px) {
+  .tr-feiten-grid { grid-template-columns: repeat(3, 1fr); gap: 34px; }
+  .tr-feit + .tr-feit { padding-left: 34px; border-left: 1px solid rgba(198,154,75,0.26); }
+}
+
+/* Beeld in de dienstensectie. Die stond als een blok tekst op een donkere
+   achtergrond zonder één afbeelding; op mobiel las dat als een muur. */
+.tr-svc-foto { border-radius: 14px; overflow: hidden; margin: 0 0 28px; aspect-ratio: 16 / 10; }
+.tr-svc-foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (min-width: 980px) {
+  .tr-svc-split { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 46px; align-items: start; }
+  .tr-svc-foto { margin: 0; position: sticky; top: 96px; aspect-ratio: 4 / 5; }
+}
 
 /* 8 — SERVICES (dark, tekst-only cards: randen i.p.v. schaduw, gouden keyline-accent, leesbaar voor 45-65j) */
 .tr-services { background: ${NAVY}; color: #fff; border-top: 3px solid ${GOLD}; }

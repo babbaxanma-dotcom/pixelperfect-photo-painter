@@ -85,6 +85,14 @@ const ledes = velden('sub');
    exact de onthullingsconstructie die uit de lede moest. Een guard die maar de
    helft van de copy leest geeft groen zonder iets te bewijzen. */
 const aanbodkoppen = velden('offerH2');
+/* DERDE CORRECTIE, 26 aug 2026: "alle website hebben ... aan vaste prijs, ik zei
+   toch niet die domme copy". De metaTitle is de kop in de zoekresultaten, dus
+   dat is de hook-positie bij uitstek, en daar stond op 10 van de 14 pagina's
+   dezelfde staart. In de metaDesc was het 12 van de 14. Deze guard las alleen
+   h1, sub en offerH2 en meldde daarom "schoon" terwijl de stempel er stond.
+   Een guard die de helft van de copy niet leest, bewijst niets. */
+const metatitels = velden('metaTitle');
+const metadescs = velden('metaDesc');
 
 /* lege meting = ongeldige meting */
 const MINIMUM = 10;
@@ -123,6 +131,20 @@ for (let i = 0; i < ledes.length; i++) {
   if (koppen[i]) kijk(slug, 'h1', koppen[i]);
   kijk(slug, 'sub', ledes[i]);
   if (aanbodkoppen[i]) kijk(slug, 'offerH2', aanbodkoppen[i]);
+  if (metatitels[i]) kijk(slug, 'metaTitle', metatitels[i]);
+  if (metadescs[i]) kijk(slug, 'metaDesc', metadescs[i]);
+}
+
+/* Lengte van de zoekresultaat-kop. Boven 60 tekens kapt Google hem af, en dan
+   valt net het stuk weg dat de klik moet verdienen. */
+for (let i = 0; i < metatitels.length; i++) {
+  if (metatitels[i].length > 60) {
+    bevindingen.push({
+      slug: slugs[i] || `#${i + 1}`, waar: 'metaTitle', regel: 'te lang voor Google',
+      uitleg: `${metatitels[i].length} tekens; boven 60 wordt hij afgekapt`,
+      tekst: metatitels[i],
+    });
+  }
 }
 
 /* ── de telpoort ─────────────────────────────────────────────────────────────
@@ -134,24 +156,38 @@ const KERNFRASES = ['vaste prijs', 'offerte', 'plaatsbezoek', 'werkdag',
   'eigen ploeg', '6% btw', 'heel Vlaanderen'];
 const MAX_SETS = 3;
 
-for (let i = 0; i < ledes.length; i++) {
-  const slug = slugs[i] || `#${i + 1}`;
-  const tekst = `${koppen[i] || ''} ${ledes[i] || ''}`;
-  for (const f of KERNFRASES) {
-    if (tekst.toLowerCase().includes(f.toLowerCase())) {
-      (telling[f] || (telling[f] = [])).push(slug);
+/* De telpoort draait nu over DRIE velden apart. Eerst liep hij alleen over
+   h1 + sub, en juist daardoor bleef de stempel in metaTitle en metaDesc staan:
+   elke losse titel was op zichzelf in orde, alleen stonden ze alle tien
+   hetzelfde te zeggen. */
+const POORTEN = [
+  { naam: 'hero', velden: [koppen, ledes] },
+  { naam: 'metaTitle', velden: [metatitels] },
+  { naam: 'metaDesc', velden: [metadescs] },
+];
+
+for (const poort of POORTEN) {
+  const teller = {};
+  for (let i = 0; i < ledes.length; i++) {
+    const slug = slugs[i] || `#${i + 1}`;
+    const tekst = poort.velden.map((v) => v[i] || '').join(' ');
+    for (const f of KERNFRASES) {
+      if (tekst.toLowerCase().includes(f.toLowerCase())) {
+        (teller[f] || (teller[f] = [])).push(slug);
+      }
     }
   }
-}
-for (const [f, waar] of Object.entries(telling)) {
-  if (waar.length > MAX_SETS) {
-    bevindingen.push({
-      slug: `${waar.length} pagina's`,
-      waar: 'telpoort',
-      regel: `kernfrase "${f}" gestempeld`,
-      uitleg: `mag in maximaal ${MAX_SETS} hero's staan; nu in ${waar.slice(0, 6).join(', ')}${waar.length > 6 ? '...' : ''}`,
-      tekst: f,
-    });
+  for (const [f, waar] of Object.entries(teller)) {
+    telling[`${poort.naam}:${f}`] = waar;
+    if (waar.length > MAX_SETS) {
+      bevindingen.push({
+        slug: `${waar.length} pagina's`,
+        waar: `telpoort ${poort.naam}`,
+        regel: `kernfrase "${f}" gestempeld`,
+        uitleg: `mag in maximaal ${MAX_SETS} van de ${poort.naam}-velden staan; nu in ${waar.slice(0, 6).join(', ')}${waar.length > 6 ? '...' : ''}`,
+        tekst: f,
+      });
+    }
   }
 }
 
