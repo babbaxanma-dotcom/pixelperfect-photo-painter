@@ -35,15 +35,37 @@ const FASES = [
   { n: '01', t: 'Bevestiging', tijd: 'Vandaag, binnen het uur', d: 'Een mail met de samenvatting van uw aanvraag en onze contactgegevens.' },
   { n: '02', t: 'Telefonische intake', tijd: 'Eerstvolgende werkdag', d: 'Een gesprek van tien à vijftien minuten waarin we uw plannen doornemen en aangeven wat haalbaar is.' },
   { n: '03', t: 'Plaatsbezoek', tijd: 'Binnen vijf werkdagen', d: 'De projectleider komt langs, meet op, neemt foto\'s en bespreekt de opties met u.' },
-  { n: '04', t: 'Offerte', tijd: 'Vijf à tien dagen later', d: 'Vaste prijs, dertig dagen geldig, met een fotorapport van het plaatsbezoek en het premiedossier voorbereid.' },
+  /* Geen premiedossier in de gedeelde fase-tekst: deze pagina krijgt ook
+     tegelwerk- en pleisterwerk-leads, en daar bestaat geen premie voor. De
+     premie-belofte staat alleen nog in de dakwerken-variant hieronder. */
+  { n: '04', t: 'Offerte', tijd: 'Vijf à tien dagen later', d: 'Vaste prijs, dertig dagen geldig, met een fotorapport van het plaatsbezoek.' },
 ];
 
-const ZEKERHEDEN = [
+/* Vier zekerheden per dienst. De kop zegt letterlijk "Vier", dus elke variant
+   telt er vier. Beloof per dienst alleen wat die dienst waarmaakt: de tienjarige
+   garantie en het premiedossier gelden bij AB voor dakwerken, niet voor interieur
+   (LpDienst toont die garantie zelf ook enkel bij ab_dakwerken). */
+const ZEKERHEDEN_BASIS = [
   { t: 'Vaste prijs, bindend', d: 'De offerte is de eindfactuur. Meerwerk gaat pas door na uw schriftelijke akkoord.' },
   { t: 'Startdatum op contract', d: 'De dag waarop wij beginnen staat vast voor u tekent.' },
-  { t: '10 jaar garantie', d: 'Op de uitvoering van ons werk, schriftelijk vastgelegd in de offerte.' },
-  { t: 'Premies en attesten', d: 'Wij dienen het premiedossier mee in en leveren de attesten die u nodig heeft.' },
 ];
+const ZEKERHEDEN: Record<DienstSleutel, { t: string; d: string }[]> = {
+  dakwerken: [
+    ...ZEKERHEDEN_BASIS,
+    { t: '10 jaar garantie', d: 'Op de uitvoering van ons werk, schriftelijk vastgelegd in de offerte.' },
+    { t: 'Premies en attesten', d: 'Wij dienen het premiedossier mee in en leveren de attesten die u nodig heeft.' },
+  ],
+  gevel: [
+    ...ZEKERHEDEN_BASIS,
+    { t: 'Eigen vaste ploeg', d: 'Uw werf wordt uitgevoerd door onze eigen mensen, niet doorgegeven aan onderaannemers.' },
+    { t: '6% btw waar het kan', d: 'Is uw woning ouder dan tien jaar, dan rekenen wij 6% btw. Het papierwerk regelen wij.' },
+  ],
+  default: [
+    ...ZEKERHEDEN_BASIS,
+    { t: 'Eigen vaste ploeg', d: 'Uw werf wordt uitgevoerd door onze eigen mensen, niet doorgegeven aan onderaannemers.' },
+    { t: '6% btw waar het kan', d: 'Is uw woning ouder dan tien jaar, dan rekenen wij 6% btw. Het papierwerk regelen wij.' },
+  ],
+};
 
 const vink = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
 
@@ -121,7 +143,7 @@ ${rpNav('')}
       </div>
     </div>
     <div class="rp-why__tiles rp-tiles-4">
-      ${ZEKERHEDEN.map((z) => `
+      ${ZEKERHEDEN[sleutel].map((z) => `
       <div class="rp-tile">
         <div class="rp-tile__ic" aria-hidden="true">${vink}</div>
         <h3 class="rp-tile__t">${z.t}</h3>

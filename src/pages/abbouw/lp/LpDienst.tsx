@@ -28,7 +28,7 @@ import { initBeforeAfter } from './_beforeafter';
 import { initLpCallFab } from './_fab';
 import { CONTACT } from '@/data/contact';
 import CalculatorWizard from '../calculator/CalculatorWizard';
-import { DAK_CALC_CONFIGS } from '../calculator/dakCalcConfigs';
+import { CALC_CONFIGS } from '../calculator/calcConfigs';
 import logo from '@/assets/home/logo-trim.png';
 import imgTrG1 from '@/assets/lp-diensten/totaalrenovatie-g1.jpg';
 import imgTrG2 from '@/assets/lp-diensten/totaalrenovatie-g2.jpg';
@@ -148,7 +148,12 @@ type Dienst = {
   galleryNoun?: string;   // publieke dienstnaam voor lightbox/alt (default d.typeWerk)
 };
 
-const DIENSTEN: Record<string, Dienst> = {
+/* De LP's waar betaalde advertenties op landen. Die krijgen een strakkere
+   bovenkant: geen opsomming van alle zes de AB-diensten onder de hero, want die
+   leidt weg van de dienst waarvoor iemand net geklikt heeft. */
+const ADS_LPS = new Set(['totaalrenovatie', 'pleisterwerk', 'tegelwerken']);
+
+export const DIENSTEN: Record<string, Dienst> = {
   totaalrenovatie: {
     slug: 'totaalrenovatie',
     division: 'ab_construct', typeWerk: 'AB Construct', bronLead: 'ads:totaalrenovatie',
@@ -221,7 +226,7 @@ const DIENSTEN: Record<string, Dienst> = {
   },
   tegelwerken: {
     slug: 'tegelwerken',
-    division: 'ab_interieurwerken', typeWerk: 'AB Archivoieurwerken', bronLead: 'ads:tegelwerken',
+    division: 'ab_interieurwerken', typeWerk: 'AB Interieurwerken', bronLead: 'ads:tegelwerken',
     eyebrow: 'Tegelwerken · vloer- en wandtegels · heel Vlaanderen',
     h1: 'Strak gelegde tegels, tot in de hoek correct.',
     sub: 'Vloer- en wandtegels in badkamer, keuken en woonkamer, ook grootformaat. Inclusief voorbereiding van de ondergrond.',
@@ -240,7 +245,7 @@ const DIENSTEN: Record<string, Dienst> = {
     stepsImg: imgTgSteps,
     gallery: [imgTgG1, imgTgG2, imgTgG3],
     reviews: [{ text: '"Volledige woonkamer in grootformaat tegels. Kaarsrecht gelegd en strak gevoegd. Mooi resultaat."', name: 'Marc Hermans', role: 'Vloertegels woonkamer' }, { text: '"Badkamer volledig betegeld, vloer en wanden. Netjes afgewerkt rond de kranen en strak doorgevoegd. Heel tevreden."', name: 'Liesbeth Coninckx', role: 'Badkamer betegeld' }, { text: '"Goed advies over het legpatroon, ze hebben echt meegedacht. Keuken en hal in één lijn doorgelegd. Mooi gedaan."', name: 'Patrick Goossens', role: 'Keuken- en vloertegels' }],
-    faq: [['Wat kost tegels leggen per m²?', 'Dat hangt af van het formaat, het legpatroon en de staat van de ondergrond. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'], ['Leggen jullie ook grootformaat en XXL-tegels?', 'Ja. Grote formaten lijmen we in volvlak, zodat er geen holle plekken onder de tegel zitten. Dat vraagt een vlakke ondergrond, die bereiden we correct voor.'], ['Moet de ondergrond eerst worden voorbereid?', 'Meestal wel. Een vlakke, draagkrachtige ondergrond is de basis voor een strak resultaat. Bij het plaatsbezoek beoordelen we of egaliseren nodig is.'], ['Geldt het 6% btw-tarief voor tegelwerken?', 'Bij een woning ouder dan 10 jaar valt tegelwerk incl. plaatsing en materiaal via ons onder het 6% renovatietarief. Bij nieuwbouw is dat 21%. Dat papierwerk regelen wij.'], ['Plaatsen jullie ook de tegels die ik zelf gekozen heb?', 'Ja. U kiest de tegels in de showroom, wij verzorgen de plaatsing. We adviseren gerust over formaat en legpatroon zodat alles strak uitkomt.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.']],
+    faq: [['Wat kost tegels leggen per m²?', 'Dat hangt af van het formaat, het legpatroon en de staat van de ondergrond. U krijgt een vaste prijs per m² na het gratis plaatsbezoek.'], ['Leggen jullie ook grootformaat en XXL-tegels?', 'Ja. Grote formaten lijmen we in volvlak, zodat er geen holle plekken onder de tegel zitten. Dat vraagt een vlakke ondergrond, die bereiden we correct voor.'], ['Moet de ondergrond eerst worden voorbereid?', 'Meestal wel. Een vlakke, draagkrachtige ondergrond is de basis voor een strak resultaat. Bij het plaatsbezoek beoordelen we of egaliseren nodig is.'], ['Geldt het 6% btw-tarief voor tegelwerken?', 'Bij een woning ouder dan 10 jaar valt tegelwerk incl. plaatsing en materiaal via ons onder het 6% renovatietarief. Bij nieuwbouw is dat 21%. Dat papierwerk regelen wij.'], ['Plaatsen jullie ook de tegels die ik zelf gekozen heb?', 'Ja. U kiest de tegels in de showroom, wij verzorgen de plaatsing. We adviseren gerust over formaat en legpatroon zodat alles strak uitkomt.'], ['Leggen jullie ook terrastegels buiten?', 'Ja. Een terras vraagt daarnaast een correcte fundering en afwatering, dus dat valt bij ons onder terrasaanleg. Vraag het gerust bij uw plaatsbezoek, dan bekijken we het samen.'], ['Werken jullie in mijn regio?', 'Wij werken in Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.']],
     typeWerkOpties: ['Vloertegels leggen', 'Wandtegels plaatsen', 'Grootformaat tegels (60x60 of groter)', 'Iets anders / advies nodig'],
     finalSub: 'Praat met één van onze projectleiders.',
     metaTitle: 'Tegels laten leggen aan vaste prijs | AB Bouw Groep',
@@ -256,7 +261,7 @@ const DIENSTEN: Record<string, Dienst> = {
   },
   pleisterwerk: {
     slug: 'pleisterwerk',
-    division: 'ab_interieurwerken', typeWerk: 'AB Archivoieurwerken', bronLead: 'ads:pleisterwerk',
+    division: 'ab_interieurwerken', typeWerk: 'AB Interieurwerken', bronLead: 'ads:pleisterwerk',
     eyebrow: 'Pleisterwerk & gyproc · heel Vlaanderen',
     h1: 'Strakke wanden en plafonds.',
     sub: 'Bepleistering en gyproc op wanden en plafonds, vlak afgewerkt en klaar voor de verf.',
@@ -265,8 +270,8 @@ const DIENSTEN: Record<string, Dienst> = {
     certLogo: { src: '/assets/logos/knauf.png', alt: 'Knauf' },
     topbar: ['Gratis plaatsbezoek binnen 5 werkdagen', '120+ realisaties'],
     offerEyebrow: 'Over AB Bouw Groep',
-    offerH2: 'Een vlakke muur ziet u pas als de verf erop zit.',
-    offerIntro: 'Een goede pleisterlaag valt niet op, een slechte des te meer: golven, scheuren of uitzakkers zie je voor de rest van de tijd. Wij werken met een eigen vaste ploeg en leveren wanden en plafonds strak en vlak op.',
+    offerH2: 'Bij pleisterwerk bepaalt de ondergrond het eindresultaat',
+    offerIntro: 'Een pleisterlaag is zo vlak als de ondergrond eronder. Wij controleren de muur, brengen waar nodig eerst een hechtlaag aan en pleisteren dan in de juiste dikte, zodat de wand na het drogen strak blijft. Wanden en plafonds leveren wij schilderklaar op.',
     offer: ['Offerte = factuur, ook bij prijsstijgingen', 'Gratis plaatsbezoek met opmeting en eerlijk advies', 'Vlakke, strakke afwerking, klaar om te schilderen', 'Pleisterwerk en gyproc door dezelfde ploeg', '6% btw bij een woning ouder dan 10 jaar', 'VCA-gecertificeerd en verzekerd'],
     steps: [['Gratis plaatsbezoek', 'Een vakman meet de wanden en plafonds op en bespreekt de afwerking.'], ['Vaste offerte', 'U krijgt een bindende prijs per m² voor pleisterwerk of gyproc. Zo weet u exact waar u aan toe bent.'], ['Uitvoering door eigen ploeg', 'Wij bereiden de ondergrond voor en pleisteren uw wanden en plafonds vlak en strak.']],
     whatTitle: 'Wat houdt pleisterwerk in?',
@@ -867,7 +872,7 @@ const Pin = () => (
 
 export default function LpDienst({ slug }: { slug: string }) {
   const d = DIENSTEN[slug];
-  const calcCfg = DAK_CALC_CONFIGS[slug];
+  const calcCfg = CALC_CONFIGS[slug];
   const [calcOpen, setCalcOpen] = useState(false);
   const [leadOpen, setLeadOpen] = useState(true);
   const [quickState, setQuickState] = useState<'idle' | 'busy' | 'ok'>('idle');
@@ -1146,14 +1151,26 @@ export default function LpDienst({ slug }: { slug: string }) {
           </div>
         </section>
 
+        {/* De balk onder de hero somde op elke LP alle zes AB-diensten op. Op een
+            advertentiepagina leidt dat af: iemand klikt op tegels en ziet meteen
+            vijf andere diensten. Op de LP's waar ads op draaien staat er daarom
+            één woord tussen de sterretjes, als scroll-hint naar de realisaties. */}
         <div className="rp-band">
           <div className="rp-wrap rp-band__row">
-            {['Dakwerken', 'Gevelrenovatie', 'Badkamers', 'Interieurwerken', 'Totaalrenovatie', 'Nieuwbouw'].map((t, n) => (
-              <span key={t} style={{ display: 'contents' }}>
-                {n > 0 && <span className="rp-band__sep" aria-hidden="true">&#10038;</span>}
-                <span>{t}</span>
-              </span>
-            ))}
+            {ADS_LPS.has(slug) ? (
+              <>
+                <span className="rp-band__sep" aria-hidden="true">&#10038;</span>
+                <span>Realisaties</span>
+                <span className="rp-band__sep" aria-hidden="true">&#10038;</span>
+              </>
+            ) : (
+              ['Dakwerken', 'Gevelrenovatie', 'Badkamers', 'Interieurwerken', 'Totaalrenovatie', 'Nieuwbouw'].map((t, n) => (
+                <span key={t} style={{ display: 'contents' }}>
+                  {n > 0 && <span className="rp-band__sep" aria-hidden="true">&#10038;</span>}
+                  <span>{t}</span>
+                </span>
+              ))
+            )}
           </div>
         </div>
       </div>
@@ -1315,7 +1332,16 @@ export default function LpDienst({ slug }: { slug: string }) {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 18 }}>
               {d.gallery.map((item, i) => {
-                const photos = Array.isArray(item) ? item : (d.gallery as string[]);
+                /* Een galerij is ofwel één project (platte lijst, klikken opent
+                   de hele reeks) ofwel meerdere projecten (geneste arrays). Bij
+                   een MENGSEL kreeg een losse foto vroeger de hele galerij mee,
+                   inclusief de geneste arrays, en die werden in de lightbox tot
+                   "url1,url2,url3" in één src geplakt: kapotte afbeelding. Een
+                   losse foto in een gemengde galerij staat daarom op zichzelf. */
+                const alleenLos = d.gallery.every((x) => !Array.isArray(x));
+                const photos = Array.isArray(item)
+                  ? item
+                  : (alleenLos ? (d.gallery as string[]) : [item]);
                 const cover = Array.isArray(item) ? item[0] : item;
                 return (
                 <div

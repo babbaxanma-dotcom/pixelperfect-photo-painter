@@ -13,7 +13,8 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "check:ads": "node scripts/check-ads-negatives.cjs",
-    "verify": "npm run typecheck && npm run check:ads && npm run test",
+    "verify": "npm run typecheck && npm run check:ads && npm run check:tekst && npm run test",
+    "check:tekst": "node scripts/check-tekstcorruptie.cjs",
     "check:contrast": "node scripts/check-contrast.mjs",
     "check:copy": "node scripts/check-lp-copy.cjs"
   },

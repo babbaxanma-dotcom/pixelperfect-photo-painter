@@ -1,7 +1,7 @@
 /**
- * dakCalcConfigs — dienst-specifieke vraag-flows voor de CalculatorWizard.
+ * calcConfigs — dienst-specifieke vraag-flows voor de CalculatorWizard.
  *
- * Per dak-dienst-LP (velux, dakisolatie, platdak) een EIGEN, relevante set
+ * Per dienst-LP (velux, dakisolatie, platdak, tegelwerken, pleisterwerk) een EIGEN, relevante set
  * vragen i.p.v. één blanket-calculator. Sober Vlaams, mobiel-first, en elke
  * moeilijke vraag heeft een "weet ik niet"-uitweg die naar het gratis
  * plaatsbezoek leidt. Geen premie-beloftes (regels 2026 gewijzigd).
@@ -19,8 +19,17 @@ import imgPlatVernieuw from '@/assets/dak/lp-platdak-2.jpg';
 import imgPlatLek from '@/assets/dak/lp-platdak-3.jpg';
 import imgEPDM from '@/assets/dak/plat-epdm.jpg';
 import imgRoofing from '@/assets/dak/lp-roofing-1.jpg';
+/* Interieur-kaartbeelden. Elk beeld is visueel gecontroleerd op wat het ECHT
+   toont. De tegel-kaarten zijn uitsnedes die het TEGELVLAK tonen (scratch/
+   tegelkaarten.mjs); een center-crop toonde daar het meubel in plaats van de tegel. */
+import imgTgGroot from '@/assets/lp-diensten/tegelkaart-grootformaat.jpg';
+import imgTgParket from '@/assets/lp-diensten/tegelkaart-parket.jpg';
+import imgTgWand from '@/assets/lp-diensten/tegelkaart-wandtegel.jpg';
+import imgPlWand from '@/assets/lp-diensten/pleisterkaart-wand.jpg';
+import imgPlPlafond from '@/assets/lp-diensten/pleisterkaart-plafond.jpg';
+import imgPlGyproc from '@/assets/lp-diensten/pleisterkaart-gyproc.jpg';
 
-export const DAK_CALC_CONFIGS: Record<string, CalcConfig> = {
+export const CALC_CONFIGS: Record<string, CalcConfig> = {
   velux: {
     slug: 'velux',
     label: 'Dakraam prijs-indicatie',
@@ -158,6 +167,108 @@ export const DAK_CALC_CONFIGS: Record<string, CalcConfig> = {
           { key: 'ja', label: 'Ja, isolatie erbij', desc: 'Geïsoleerd volgens de huidige normen' },
           { key: 'nee', label: 'Nee, enkel de bedekking of het herstel', desc: 'De isolatie is al in orde' },
           { key: 'weet', label: 'Weet ik niet', desc: 'Wij bekijken de opbouw ter plaatse' },
+        ],
+      },
+    ],
+  },
+
+  /* ── Interieur ────────────────────────────────────────────────────────────
+   * Tegelwerk en pleisterwerk zijn geen dakwerk: division ab_interieurwerken.
+   * Geen prijs en geen prijsindicatie in de flow — de LP belooft een vaste
+   * prijs per m² NA het gratis plaatsbezoek, en de calculator mag niet meer
+   * beloven dan de pagina eronder. Elke stap heeft de weet-ik-niet-uitweg.
+   */
+  tegelwerken: {
+    slug: 'tegelwerken',
+    label: 'Tegelwerk aanvraag',
+    triggerLabel: 'Bereken uw tegelwerk',
+    division: 'ab_interieurwerken',
+    bronLead: 'calculator:tegelwerken',
+    contactSub: 'We bellen u <span class="calc-em">binnen één werkdag</span> om het gratis plaatsbezoek in te plannen. Daarna volgt uw vaste prijs per m² op papier.',
+    formHint: 'We bellen u binnen 1 werkdag om het gratis plaatsbezoek in te plannen. Daarna volgt uw vaste prijs per m² op papier.',
+    steps: [
+      {
+        id: 'tegel', kind: 'rows', summary: 'Tegel',
+        q: 'Welke tegel heeft u in gedachten?',
+        sub: 'Nog niet gekozen? Geen probleem, wij adviseren over tegel en legpatroon.',
+        options: [
+          { key: 'grootformaat', label: 'Grootformaat betonlook', desc: 'Keramiek van 60x60 of groter, gelijmd in volvlak', img: imgTgGroot },
+          { key: 'houtlook', label: 'Keramisch parket (houtlook)', desc: 'Recht, halfsteens of in visgraat gelegd', img: imgTgParket },
+          { key: 'klassiek', label: 'Klassiek formaat of wandtegel', desc: 'Voor badkamer, keuken of toilet, strak doorgevoegd', img: imgTgWand },
+          { key: 'weet', label: 'Ik weet het nog niet', desc: 'Wij helpen kiezen bij het gratis plaatsbezoek' },
+        ],
+      },
+      {
+        id: 'ruimte', kind: 'rows', summary: 'Ruimte',
+        q: 'Waar moeten de tegels komen?',
+        sub: 'Meerdere ruimtes kan ook, dan bekijken we het geheel.',
+        options: [
+          { key: 'badkamer', label: 'Badkamer', desc: 'Vloer of wanden, netjes afgewerkt rond kranen' },
+          { key: 'keuken', label: 'Keuken', desc: 'Keukenvloer of keukenwand' },
+          { key: 'woonkamer', label: 'Woonkamer of hal', desc: 'Vloertegels, eventueel in één lijn doorgelegd' },
+          { key: 'meerdere', label: 'Meerdere ruimtes of iets anders', desc: 'Wij bekijken het geheel bij het gratis plaatsbezoek' },
+        ],
+      },
+      {
+        id: 'oppervlakte', kind: 'slider', summary: 'Oppervlakte',
+        q: 'Hoeveel vierkante meter ongeveer?',
+        sub: 'Een ruwe schatting volstaat, wij meten exact op.',
+        min: 5, max: 150, step: 5, def: 30, unit: 'm²',
+        tip: 'Niet zeker van de oppervlakte? <span class="calc-em">Geen probleem</span>, wij meten alles op bij het <span class="calc-em">gratis plaatsbezoek</span>.',
+        skipLabel: 'Weet ik niet, meet maar op',
+        tag: (v: number) => v < 15 ? 'Kleine ruimte' : v < 45 ? 'Eén ruimte' : v < 90 ? 'Meerdere ruimtes' : 'Groot project',
+      },
+      {
+        id: 'levering', kind: 'rows', summary: 'Tegelkeuze',
+        q: 'Heeft u de tegels al gekozen?',
+        sub: 'U kiest de tegels in de showroom, wij verzorgen de plaatsing.',
+        options: [
+          { key: 'gekozen', label: 'Ja, al gekozen', desc: 'U levert de tegels, wij plaatsen ze vlak en strak doorgevoegd' },
+          { key: 'nog-niet', label: 'Nog niet gekozen', desc: 'Wij adviseren over formaat en legpatroon, zodat alles strak uitkomt' },
+        ],
+      },
+    ],
+  },
+
+  pleisterwerk: {
+    slug: 'pleisterwerk',
+    label: 'Pleisterwerk aanvraag',
+    triggerLabel: 'Bereken uw pleisterwerk',
+    division: 'ab_interieurwerken',
+    bronLead: 'calculator:pleisterwerk',
+    contactSub: 'We bellen u <span class="calc-em">binnen één werkdag</span> om het gratis plaatsbezoek in te plannen. Daarna volgt uw vaste prijs per m² op papier.',
+    formHint: 'We bellen u binnen 1 werkdag om het gratis plaatsbezoek in te plannen. Daarna volgt uw vaste prijs per m² op papier.',
+    steps: [
+      {
+        id: 'werk', kind: 'rows', summary: 'Werk',
+        q: 'Wat moet er gebeuren?',
+        sub: 'Pleisterwerk en gyproc doen wij met dezelfde ploeg.',
+        options: [
+          { key: 'wanden', label: 'Wanden pleisteren', desc: 'Bepleistering van bakstenen of betonnen muren, klaar voor de verf', img: imgPlWand },
+          { key: 'plafond', label: 'Plafond pleisteren', desc: 'Strak en egaal, zonder zichtbare overgangen of golven', img: imgPlPlafond },
+          { key: 'gyproc', label: 'Gyproc- of voorzetwand', desc: 'Gipsplaten, scheidingswanden en voorzetwanden, dichtgezet en uitgevlakt', img: imgPlGyproc },
+          { key: 'weet', label: 'Meerdere dingen of weet ik niet', desc: 'Wij adviseren bij het gratis plaatsbezoek' },
+        ],
+      },
+      {
+        id: 'omvang', kind: 'rows', summary: 'Omvang',
+        q: 'Over hoeveel ruimtes gaat het?',
+        sub: 'Een inschatting volstaat.',
+        options: [
+          { key: 'een', label: 'Eén ruimte', desc: 'Bijvoorbeeld één kamer of één plafond' },
+          { key: 'meerdere', label: 'Meerdere ruimtes', desc: 'Bijvoorbeeld enkele kamers of een verdieping' },
+          { key: 'woning', label: 'Een hele verdieping of woning', desc: 'Zoals een volledig benedenverdiep' },
+          { key: 'weet', label: 'Weet ik nog niet', desc: 'We bepalen de omvang samen bij het gratis plaatsbezoek' },
+        ],
+      },
+      {
+        id: 'situatie', kind: 'rows', summary: 'Situatie',
+        q: 'Wat is de staat van de muur of het plafond?',
+        sub: 'Dit bepaalt mee de voorbereiding.',
+        options: [
+          { key: 'ruw', label: 'Nieuwe of ruwe ondergrond', desc: 'Snelbouw of beton dat nog niet gepleisterd is' },
+          { key: 'oud', label: 'Oud pleisterwerk met scheuren of oneffenheden', desc: 'Wij vlakken uit en herpleisteren waar nodig' },
+          { key: 'weet', label: 'Weet ik niet', desc: 'Wij beoordelen de ondergrond ter plaatse' },
         ],
       },
     ],

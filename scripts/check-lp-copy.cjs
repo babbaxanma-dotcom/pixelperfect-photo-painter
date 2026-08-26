@@ -80,6 +80,11 @@ const velden = (naam) => [...src.matchAll(new RegExp(`^\\s*${naam}: '((?:[^'\\\\
 const slugs = velden('slug');
 const koppen = velden('h1');
 const ledes = velden('sub');
+/* offerH2 is de kop boven het aanbodblok. Die stond eerst niet in deze guard,
+   en daardoor bleef "Een vlakke muur ziet u pas als de verf erop zit" staan:
+   exact de onthullingsconstructie die uit de lede moest. Een guard die maar de
+   helft van de copy leest geeft groen zonder iets te bewijzen. */
+const aanbodkoppen = velden('offerH2');
 
 /* lege meting = ongeldige meting */
 const MINIMUM = 10;
@@ -117,6 +122,7 @@ for (let i = 0; i < ledes.length; i++) {
   const slug = slugs[i] || `#${i + 1}`;
   if (koppen[i]) kijk(slug, 'h1', koppen[i]);
   kijk(slug, 'sub', ledes[i]);
+  if (aanbodkoppen[i]) kijk(slug, 'offerH2', aanbodkoppen[i]);
 }
 
 /* ── de telpoort ─────────────────────────────────────────────────────────────

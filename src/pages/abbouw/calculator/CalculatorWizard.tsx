@@ -3,11 +3,12 @@
  *
  * Zelfde lead-magnet patroon als CalculatorDak (Recotex-style: meerdere stappen,
  * contactform pas op het einde → sunk-cost + reciprocity → hogere CVR), maar
- * de vraag-flow komt uit een per-dienst config (zie dakCalcConfigs.ts). Zo krijgt
- * elke dienst-LP (velux, dakisolatie, platdak) zijn EIGEN, dienst-specifieke vragen
- * i.p.v. één blanket-calculator. CalculatorDak blijft ongemoeid (live).
+ * de vraag-flow komt uit een per-dienst config (zie calcConfigs.ts). Zo krijgt
+ * elke dienst-LP (velux, dakisolatie, platdak, tegelwerken, pleisterwerk) zijn
+ * EIGEN, dienst-specifieke vragen i.p.v. één blanket-calculator. CalculatorDak
+ * blijft ongemoeid (live).
  *
- * Submit → zelfde submitLead() (GHL-webhook + Ads-conversie) → /bedankt?service=<slug>.
+ * Submit → zelfde submitLead() (GHL-webhook + Ads-conversie) → /bedankt?dienst=<slug>.
  */
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -16,6 +17,7 @@ import { useAbBouwInteractions } from '@/hooks/useAbBouwInteractions';
 import { buildNav, FOOTER, SHELL_STYLE } from '../_shell';
 import { CONTACT } from '@/data/contact';
 import { submitLead, type Divisie } from '@/lib/leads';
+import { trackFormStart } from '@/lib/tracking';
 
 export type CalcOption = {
   key: string;
@@ -37,6 +39,8 @@ export type CalcConfig = {
   bronLead: string;       // bv. 'calculator:velux'
   steps: CalcStep[];      // vraag-stappen (de contact-stap wordt generiek toegevoegd)
   contactSub: string;
+  /** kleine regel onder de contactvelden; default = de dak-formulering */
+  formHint?: string;
   /** redirect-service-param na submit (default = slug) */
   thanksService?: string;
 };
@@ -63,6 +67,10 @@ export default function CalculatorWizard({ config, onClose }: CalculatorWizardPr
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
+    /* Wie de wizard opent is aan het invullen begonnen. Zonder dit signaal
+       staat in GA4 wél generate_lead maar geen form_start voor de calculator,
+       en is de drop-off binnen de flow onzichtbaar. Dedupe zit in tracking.ts. */
+    trackFormStart(`lp:${config.slug}:calc`);
     if (!isModal) {
       document.title = `${config.label} | AB Bouw Groep`;
       let m = document.querySelector('meta[name="robots"]');
@@ -167,7 +175,10 @@ export default function CalculatorWizard({ config, onClose }: CalculatorWizardPr
     setSubmitting(false);
 
     if (result.ok) {
-      navigate(`/bedankt?service=${config.thanksService ?? config.slug}`);
+      /* Bedankt.tsx leest de param `dienst` (niet `service`). Zolang hier
+         `service` stond, kwam elke calculator-lead op de algemene variant uit
+         en deed thanksService niets. */
+      navigate(`/bedankt?dienst=${config.thanksService ?? config.slug}`);
     } else {
       setSubmitError(`Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced} of mail naar ${CONTACT.email}.`);
     }
@@ -294,7 +305,7 @@ export default function CalculatorWizard({ config, onClose }: CalculatorWizardPr
               <input type="text" name="firstName" placeholder="Voornaam *" required autoComplete="given-name" />
               <input type="tel" name="phone" placeholder="Telefoonnummer *" required autoComplete="tel" inputMode="tel" />
               <input type="email" name="email" placeholder="E-mailadres *" required autoComplete="email" inputMode="email" />
-              <p className="calc-form-hint">We bellen u binnen 1 werkdag voor een vrijblijvende prijsindicatie en sturen de offerte na per e-mail.</p>
+              <p className="calc-form-hint">{config.formHint ?? 'We bellen u binnen 1 werkdag voor een vrijblijvende prijsindicatie en sturen de offerte na per e-mail.'}</p>
 
               {submitError && <p className="calc-error">{submitError}</p>}
 
