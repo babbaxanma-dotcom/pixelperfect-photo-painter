@@ -99,6 +99,7 @@ import imgZwHero from '@/assets/lp-diensten/zwembad-hero.jpg';
 import imgZwWhat from '@/assets/lp-diensten/zwembad-what.jpg';
 import imgTrSteps from '@/assets/lp-diensten/totaalrenovatie-steps.jpg';
 import imgBkSteps from '@/assets/lp-diensten/badkamer-steps.jpg';
+import imgBkServices from '@/assets/lp-diensten/badkamer-services.jpg';
 import imgTgSteps from '@/assets/lp-diensten/tegelwerken-steps.jpg';
 import imgPlSteps from '@/assets/lp-diensten/pleisterwerk-steps.jpg';
 import imgTeSteps from '@/assets/lp-diensten/terras-steps.jpg';
@@ -123,6 +124,12 @@ type Dienst = {
   offerEyebrow: string; offerH2: string; offerIntro: string; offer: string[];
   steps: [string, string][];
   whatTitle: string; whatIntro: string; what: [string, string][]; whatImg: string;
+  /** Eigen beeld voor de dienstensectie.
+   *  Die sectie leende eerst whatImg, en die staat een sectie lager al in de
+   *  about-blok: dezelfde foto rendert dan twee keer vlak onder elkaar. Met de
+   *  stepsfoto uit dezelfde badkamer erboven gaf dat drie bijna gelijke beelden
+   *  op rij. Een eigen veld dwingt af dat het een andere foto is. */
+  servicesImg?: string;
   /** Optionele feitenstrip die de cijferbalk vervangt.
    *  De cijferbalk toont "16 jaar ervaring" en "1 vast aanspreekpunt": cijfers
    *  over ons, niet over zijn verbouwing. Wie een offerte overweegt wil eerst
@@ -235,6 +242,7 @@ export const DIENSTEN: Record<string, Dienst> = {
     what: [['Volledige renovatie', 'Uw badkamer van vloer tot plafond vernieuwd: uitbreken, leidingen, tegels, sanitair en afwerking.'], ['Inloopdouche', 'Een ruime inloopdouche op maat, waterdicht ingewerkt en gelijkvloers waar het kan.'], ['Bad vervangen door douche', 'Het oude bad eruit, een moderne douche ervoor in de plaats, leidingen mee aangepast.'], ['Sanitair en leidingen', 'Nieuwe water- en afvoerleidingen, kranen, toilet en meubel, alles correct aangesloten.']],
     whatImg: imgBkWhat,
     stepsImg: imgBkSteps,
+    servicesImg: imgBkServices,
     /* Alle drie de antwoorden staan letterlijk in de FAQ en de topbar van deze
        pagina; hier wordt niets nieuws beloofd. De prijs staat er bewust bij:
        bij een aankoop van deze grootte filtert een eerlijk bedrag de mensen weg
@@ -474,7 +482,7 @@ export const DIENSTEN: Record<string, Dienst> = {
       ['Binnenafwerking', 'De binnenkant netjes afgewerkt en gepleisterd, klaar voor gebruik.'],
     ],
     whatImg: imgVeluxZolder,
-    gallery: [imgVelux, imgVx2, imgVx3],
+    gallery: [imgVelux, imgVx1, imgVx3],
     reviews: [
       { text: '"Twee Velux-ramen op de zolderkamer. \'s Morgens begonnen, tegen de avond alles dicht en de binnenkant mee gepleisterd."', name: 'Bart Wouters', role: 'Twee dakramen op zolder' },
       { text: '"Ons oud dakraam had condens tussen het glas en lekte bij felle regen. Vervangen door een nieuwe Velux, gootstuk en al. Netjes afgewerkt."', name: 'Katrien De Smet', role: 'Vervanging oud dakraam' },
@@ -535,7 +543,7 @@ export const DIENSTEN: Record<string, Dienst> = {
       ['Veilig werken', 'Met stelling of hoogwerker waar nodig, netjes afgeschermd en proper opgeruimd.'],
     ],
     whatImg: imgReinig1,
-    gallery: [imgReinig1, imgReinig2, imgReinig3],
+    gallery: [imgReinig2, imgReinig3],
     reviews: [
       { text: '"Gevel vol groene aanslag, na de reiniging zag de woning er weer als nieuw uit. Geen schade aan de voegen, alles netjes opgeruimd."', name: 'Nele Peeters', role: 'Gevelreiniging' },
       { text: '"Vakman koos bewust voor lagedruk omdat onze steen poreus is. Eerlijk advies en een nette werf. Meteen ook laten impregneren."', name: 'Sofie Claes', role: 'Reiniging + impregneren' },
@@ -609,7 +617,7 @@ export const DIENSTEN: Record<string, Dienst> = {
         'Witte kalkuitslag (uitbloei) op het metselwerk',
       ],
     },
-    gallery: [imgHervoeg1, imgHervoeg2, imgHervoeg3],
+    gallery: [imgHervoeg2, imgHervoeg3],
     reviews: [
       { text: '"Onze voegen brokkelden af en lieten vocht door. Alles uitgeslepen en opnieuw gevoegd in de juiste kleur. Gevel ziet er weer strak uit."', name: 'Dirk Van Damme', role: 'Volledige gevel hervoegd' },
       { text: '"Maar één gevel was aangetast. Ze raadden af om de rest mee te doen. Eerlijk advies, nette mensen."', name: 'Inge Mertens', role: 'Gedeeltelijk hervoegen' },
@@ -670,7 +678,7 @@ export const DIENSTEN: Record<string, Dienst> = {
       ['Luchtdicht afwerken', 'Correct dampscherm en aansluitingen, zodat er geen condens of koudebrug ontstaat.'],
     ],
     whatImg: imgIsol2,
-    gallery: [imgIsol2, imgIsolGyproc, imgIsolGestuct, imgIsolSarking, imgIsolKoramic],
+    gallery: [imgIsolGyproc, imgIsolGestuct, imgIsolSarking, imgIsolKoramic],
     reviews: [
       { text: '"Ons dak werd vernieuwd, dus meteen sarking erop. De zolder is nu een volwaardige kamer en de chauffage staat een graad lager."', name: 'Hilde Declercq', role: 'Sarking bij dakrenovatie' },
       { text: '"Wij vroegen prijs voor isolatie tussen de balken, maar voor onze bergzolder raadden ze de goedkopere zoldervloer aan. Eerlijk advies, en de factuur klopte."', name: 'Wim De Backer', role: 'Zoldervloerisolatie' },
@@ -733,7 +741,7 @@ export const DIENSTEN: Record<string, Dienst> = {
       ['Randen & afvoer', 'Strakke randprofielen en een correcte waterafvoer, netjes afgewerkt.'],
     ],
     whatImg: imgPdak1,
-    gallery: [imgPdak1, imgRoofing, imgPdak2, imgPdak3],
+    gallery: [imgRoofing, imgPdak2, imgPdak3],
     reviews: [
       { text: '"Het dak boven onze aanbouw was al twee keer opgelapt, de vochtplek kwam altijd terug. Alles eraf, nieuwe isolatie, één stuk EPDM erover. Twee winters droog."', name: 'Ann Vervaeke', role: 'EPDM op de aanbouw' },
       { text: '"Ons garagedak was dertig jaar oud en helemaal op. In twee dagen vernieuwd, isolatie erbij en de randen netjes afgewerkt."', name: 'Pieter Lauwers', role: 'Garagedak vernieuwd' },
@@ -848,7 +856,7 @@ export const DIENSTEN: Record<string, Dienst> = {
       ['Strak voegwerk', 'Voegen op lijn doorgetrokken, in de gekozen voegkleur bijgewerkt tot het gevelvlak gelijk ligt.'],
     ],
     whatImg: imgSteen1,
-    gallery: [imgSteen1, imgSteen2, imgSteen3],
+    gallery: [imgSteen2, imgSteen3],
     reviews: [
       { text: '"Gevel in antraciet steenstrips, meteen op isolatie. Strak gevoegd, mooie baksteen-look. Heel tevreden met het resultaat."', name: 'An Verhoeven', role: 'Steenstrips op ETICS' },
       { text: '"Roodbruine steenstrips op de voorgevel. Voegen kaarsrecht, mooi resultaat."', name: 'Luc Segers', role: 'Steenstrips' },
@@ -1322,12 +1330,13 @@ export default function LpDienst({ slug }: { slug: string }) {
             <h2>{d.whatTitle}</h2>
             <p style={{ color: 'rgba(255,255,255,0.84)', fontSize: 15, lineHeight: 1.6, marginTop: 14 }}>{d.whatIntro}</p>
           </div>
-          <div className={d.feiten ? 'tr-svc-split' : undefined}>
+          <div className={d.servicesImg ? 'tr-svc-split' : undefined}>
             {/* Bij de campagnepagina staat het werk hier ook in beeld: vier
-                genummerde tekstkaarten op donker leest anders als een muur. */}
-            {d.feiten && (
+                genummerde tekstkaarten op donker leest anders als een muur.
+                Eigen foto, niet whatImg: die staat een sectie lager al. */}
+            {d.servicesImg && (
               <div className="tr-svc-foto">
-                <img src={d.whatImg} alt={d.whatTitle} loading="lazy" decoding="async" />
+                <img src={d.servicesImg} alt={d.whatTitle} loading="lazy" decoding="async" />
               </div>
             )}
             <div className="tr-svc-grid">

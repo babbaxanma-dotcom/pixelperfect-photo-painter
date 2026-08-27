@@ -192,6 +192,57 @@ const kijk = (slug, waar, tekst) => {
     if (r.test(tekst)) bevindingen.push({ slug, waar, regel: r.naam, uitleg: r.uitleg, tekst });
   }
 };
+/* ── foto's: geen enkele twee keer op dezelfde pagina ─────────────────────────
+ * ZESDE CORRECTIE, 27 aug 2026: "je hebt bij badkamerrenovatie nu weer 3
+ * dezelfde fotos onder elkaar, dezelfde fout maak je opnieuw".
+ *
+ * Wat er misging: de dienstensectie leende whatImg, terwijl de about-sectie een
+ * stuk lager dezelfde foto al toonde. Dat beeld rendert dan twee keer vlak
+ * onder elkaar. Ik had gecontroleerd op MD5-hashes van de bestanden en daaruit
+ * geconcludeerd dat alles uniek was; die meting bewees alleen dat de bestanden
+ * verschillen, niet dat de PAGINA geen dubbels toont. Deze guard telt de
+ * verwijzingen per dienst, en dat is wel wat de bezoeker ziet.
+ */
+const BEELDVELDEN = ['heroImg', 'whatImg', 'stepsImg', 'servicesImg'];
+const blokken = [...src.matchAll(/^  ([a-z-]+): \{$/gm)];
+let gecontroleerd = 0;
+for (let i = 0; i < blokken.length; i++) {
+  const start = blokken[i].index;
+  const eind = i + 1 < blokken.length ? blokken[i + 1].index : src.length;
+  const blok = src.slice(start, eind);
+  const slug = blokken[i][1];
+
+  const gebruikt = [];
+  for (const veld of BEELDVELDEN) {
+    const m = blok.match(new RegExp(`${veld}: (img[A-Za-z0-9]+)`));
+    if (m) gebruikt.push([veld, m[1]]);
+  }
+  const gal = blok.match(/gallery: \[([^\]]+)\]/);
+  if (gal) {
+    gal[1].split(',').map((x) => x.trim()).filter((x) => /^img/.test(x))
+      .forEach((x, n) => gebruikt.push([`gallery[${n}]`, x]));
+  }
+  if (!gebruikt.length) continue;
+  gecontroleerd++;
+
+  const tel = {};
+  gebruikt.forEach(([veld, img]) => (tel[img] || (tel[img] = [])).push(veld));
+  for (const [img, waar] of Object.entries(tel)) {
+    if (waar.length > 1) {
+      bevindingen.push({
+        slug, waar: 'foto\'s', regel: `${img} staat ${waar.length}x op de pagina`,
+        uitleg: `dezelfde foto in ${waar.join(' en ')}; de bezoeker ziet hetzelfde beeld twee keer`,
+        tekst: img,
+      });
+    }
+  }
+}
+if (gecontroleerd < 10) {
+  console.error(`FOUT: maar ${gecontroleerd} dienstblokken met beelden gevonden; geen geldige meting.`);
+  process.exit(1);
+}
+
+
 for (let i = 0; i < ledes.length; i++) {
   const slug = slugs[i] || `#${i + 1}`;
   if (koppen[i]) kijk(slug, 'h1', koppen[i]);
