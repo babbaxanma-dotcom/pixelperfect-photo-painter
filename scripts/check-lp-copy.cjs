@@ -118,6 +118,39 @@ for (const r of REGELS) {
   }
 }
 
+/* ── reviews: klanttaal, geen bedrijfstaal ────────────────────────────────────
+ * VIERDE CORRECTIE, 27 aug 2026: "alsof de eigenaar het typt, echt dingen uit
+ * het bedrijf". Gemeten: 13 van de 42 reviews gebruikten woorden die een klant
+ * nooit typt, of herhaalden letterlijk een verkoopargument van AB. Een review
+ * die "de offerte klopte met de eindafrekening" zegt, is het bedrijf dat door
+ * de klant heen praat. Dat leest als verzonnen, ook als hij echt is.
+ */
+const KLANT_ZEGT_NIET = [
+  'meerwerk', 'offerte', 'projectleider', 'oplevering', 'plaatsbezoek', 'vaste prijs',
+  'aanspreekpunt', 'op papier', 'grootformaat', 'geen verrassingen', 'zoals afgesproken',
+  'zoals gezegd', 'eigen ploeg', 'onderaannemer',
+];
+const reviews = [...src.matchAll(/text: '"([^"]+)"'/g)].map((m) => m[1]);
+if (reviews.length < 20) {
+  console.error(`FOUT: maar ${reviews.length} reviews gevonden; dat is geen geldige meting.`);
+  process.exit(1);
+}
+/* positieve controle */
+if (!KLANT_ZEGT_NIET.some((w) => 'De offerte klopte met de eindafrekening.'.toLowerCase().includes(w))) {
+  console.error('FOUT: positieve controle faalt voor de reviewregel.');
+  process.exit(1);
+}
+for (const r of reviews) {
+  const raak = KLANT_ZEGT_NIET.filter((w) => r.toLowerCase().includes(w));
+  if (raak.length) {
+    bevindingen.push({
+      slug: 'review', waar: 'reviews', regel: `bedrijfstaal in de mond van de klant: ${raak.join(', ')}`,
+      uitleg: 'een klant typt dit niet; zo leest de review als door het bedrijf geschreven',
+      tekst: r,
+    });
+  }
+}
+
 /* ── de meting ───────────────────────────────────────────────────────────── */
 const bevindingen = [];
 const telling = {};
