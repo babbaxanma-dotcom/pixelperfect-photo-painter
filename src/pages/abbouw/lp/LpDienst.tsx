@@ -1087,7 +1087,7 @@ export default function LpDienst({ slug }: { slug: string }) {
 
   return (
     <>
-    <div className="tr">
+    <div className={ADS_LPS.has(slug) ? 'tr tr-lp' : 'tr'}>
       <style>{LP_CSS + LP_V6_CSS}</style>
 
       {/* 1. TOP BAR */}
@@ -1294,7 +1294,7 @@ export default function LpDienst({ slug }: { slug: string }) {
       )}
 
       {/* 9. REVIEWS — naar boven verplaatst (CRO: sociale proof vlak na de cijfers) */}
-      <section className="tr-section tr-reviews" id="reviews">
+      <section className={'tr-section tr-reviews' + (ADS_LPS.has(slug) ? ' tr-compact' : '')} id="reviews">
         <div className="tr-wrap">
           {/* Zelfde blok als op de homepage: kop met tweede regel gedimd, dan
               kaarten naast elkaar met sterren, citaat, initialen en het
@@ -1322,6 +1322,14 @@ export default function LpDienst({ slug }: { slug: string }) {
         </div>
       </section>
 
+      {/* Beeldband. Gemeten: onze pagina haalde 22% beeldoppervlak, sites die
+          clean ogen zitten op 55%. Eén breed beeld zonder kader tilt dat cijfer
+          en breekt de eindeloze reeks kaarten-op-wit. */}
+      {ADS_LPS.has(slug) && d.stepsImg && (
+        <div className="tr-band">
+          <img src={d.stepsImg} alt={`${d.galleryNoun ?? d.typeWerk} door AB Bouw Groep`} loading="lazy" decoding="async" />
+        </div>
+      )}
       {/* 8. SERVICES / WAT HOUDT HET IN */}
       <section className="tr-section tr-services" id="diensten">
         <div className="tr-wrap">
@@ -1413,13 +1421,23 @@ export default function LpDienst({ slug }: { slug: string }) {
 
       {/* 8b. RECENTE REALISATIES (galerij) */}
       {d.gallery && d.gallery.length > 0 && (
-        <section className="tr-section" style={{ background: 'var(--bg-tint)' }}>
-          <div className="tr-wrap">
+        <section className={ADS_LPS.has(slug) ? 'tr-section tr-gal-bleed' : 'tr-section'} style={{ background: 'var(--bg-tint)' }}>
+          <div className={ADS_LPS.has(slug) ? 'tr-gal-kop' : 'tr-wrap'}>
             <div className="tr-head" style={{ textAlign: 'left', maxWidth: 720, margin: '0 0 44px' }}>
               <span className="tr-eyebrow">Recente realisaties</span>
-              <h2 style={{ fontSize: 'clamp(27px, 3.2vw, 38px)', color: NAVY, fontWeight: 600, margin: 0 }}>Ons werk in beeld</h2>
+              {/* Gemeten: de galerij was met 529px de KLEINSTE inhoudssectie van
+                  de pagina, terwijl sites die clean ogen 55% beeldoppervlak halen
+                  en wij 22%. Op de advertentiepagina's loopt hij daarom van rand
+                  tot rand en krijgt hij de grootste kop van de pagina na de hero. */}
+              <h2 className={ADS_LPS.has(slug) ? 'tr-anker-kop' : undefined}
+                  style={ADS_LPS.has(slug) ? { color: NAVY, margin: 0 } : { fontSize: 'clamp(27px, 3.2vw, 38px)', color: NAVY, fontWeight: 600, margin: 0 }}>
+                Ons werk in beeld
+              </h2>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 18 }}>
+          </div>
+          <div className={ADS_LPS.has(slug) ? 'tr-gal-rij' : 'tr-wrap'}>
+            <div style={ADS_LPS.has(slug) ? undefined : { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 18 }}
+                 className={ADS_LPS.has(slug) ? 'tr-gal-grid' : undefined}>
               {d.gallery.map((item, i) => {
                 /* Een galerij is ofwel één project (platte lijst, klikken opent
                    de hele reeks) ofwel meerdere projecten (geneste arrays). Bij
@@ -1440,7 +1458,9 @@ export default function LpDienst({ slug }: { slug: string }) {
                   data-rl-index={Array.isArray(item) ? 0 : i}
                   data-rl-photos={JSON.stringify(photos)}
                   data-rl-title={`${d.galleryNoun ?? d.typeWerk} realisatie`}
-                  style={{ borderRadius: 8, overflow: 'hidden', boxShadow: '0 30px 60px -30px rgba(10,22,40,0.35)', aspectRatio: '4 / 3', position: 'relative' }}
+                  style={ADS_LPS.has(slug)
+                    ? { overflow: 'hidden', aspectRatio: '3 / 4', position: 'relative' }
+                    : { borderRadius: 8, overflow: 'hidden', boxShadow: '0 30px 60px -30px rgba(10,22,40,0.35)', aspectRatio: '4 / 3', position: 'relative' }}
                 >
                   <img src={cover} alt={`${d.galleryNoun ?? d.typeWerk}, realisatie ${i + 1}`} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   <span className="rl-zoom" aria-hidden="true">
@@ -1455,7 +1475,7 @@ export default function LpDienst({ slug }: { slug: string }) {
       )}
 
       {/* 11. FAQ */}
-      <section className="tr-section" id="faq">
+      <section className={'tr-section' + (ADS_LPS.has(slug) ? ' tr-compact' : '')} id="faq">
         <div className="tr-wrap">
           <div className="tr-faq-box">
             <h2>Veelgestelde vragen</h2>
@@ -1470,7 +1490,14 @@ export default function LpDienst({ slug }: { slug: string }) {
       </section>
 
       {/* 12. FINAL CTA */}
-      <section className="tr-section tr-final" id="contact">
+      {/* Gemeten: dit blok was 852px hoog voor 59 woorden en nul beeld, en
+          samen met de FAQ erboven 1643px zonder één foto. Op de
+          advertentiepagina's staat het werk er nu achter, met een donkere sluier
+          eroverheen zodat de tekst zijn contrast houdt. */}
+      <section className={ADS_LPS.has(slug) ? 'tr-section tr-final tr-final-foto' : 'tr-section tr-final'} id="contact">
+        {ADS_LPS.has(slug) && (
+          <img className="tr-final-bg" src={d.heroImg} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        )}
         <div className="tr-wrap">
           <h2>{d.finalH2 ?? 'Klaar om te starten?'}</h2>
           <div className="tr-final-grid">
@@ -1750,6 +1777,64 @@ const LP_CSS = `
   .tr-feiten-grid { grid-template-columns: repeat(2, minmax(0, 320px)); gap: 56px; justify-content: center; }
 }
 
+/* GEMETEN, 27 aug 2026. Mohammed: "ik vind de website echt niet clean en modern
+   maar meer een blok tekst met wat fotos". Dat bleek een meetbaar feit:
+     onze LP        22,0% beeldoppervlak   6808px hoog   1 kopmaat (39,7px)
+     bature.be      55,3%                  3479px        1
+     rinovato.be    55,2%                  8500px        4 (44/36/28/24)
+     victorrenoveert 85,2%                 6475px        1
+   We zaten op de laagste beeldwaarde van alle gemeten sites. Bature is half zo
+   lang met dubbel zoveel beeld. Onderstaande blokken duwen het beeldaandeel
+   omhoog en zetten hiërarchie in de koppen; ze gelden alleen op de
+   advertentiepagina's, zodat de andere elf ongemoeid blijven. */
+
+/* Galerij van rand tot rand: het grootste visuele moment van de pagina. */
+.tr-gal-bleed { padding-top: clamp(56px, 6vw, 92px); padding-bottom: 0; }
+.tr-gal-kop { max-width: 1180px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 40px); }
+.tr-gal-rij { width: 100%; }
+.tr-gal-grid { display: grid; grid-template-columns: 1fr; gap: 4px; }
+@media (min-width: 700px) { .tr-gal-grid { grid-template-columns: repeat(3, 1fr); } }
+.tr-gal-grid .rl-thumb { border-radius: 0 !important; box-shadow: none !important; }
+.tr-gal-grid .rl-thumb img { transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+.tr-gal-grid .rl-thumb:hover img { transform: scale(1.035); }
+
+/* Tweede kopmaat: ankersecties groter dan steunsecties. Er was er maar één maat
+   voor alle sectiekoppen. De selector moet zwaarder wegen dan die in _v6.ts,
+   anders wint die en blijft alles op 40px staan. */
+.tr .tr-head h2.tr-anker-kop { font-family: var(--font-display); font-weight: 600;
+  letter-spacing: -0.015em; font-size: clamp(32px, 4.4vw, 52px); line-height: 1.06; }
+/* Derde maat: de steunsecties krimpen, zodat er echt hiërarchie ontstaat. */
+.tr-compact .tr-head h2 { font-size: clamp(24px, 2.4vw, 30px) !important; }
+
+/* De werkwijzefoto was 432px breed en vierkant in een sectie van 937px hoog:
+   187k px² beeld op 1,2M px² sectie. Op de advertentiepagina's krijgt hij de
+   halve breedte en een staand kader, zodat hij de tekst ernaast in evenwicht
+   houdt in plaats van als bijschriftje te hangen. */
+.tr-lp .tr-steps-photo img { aspect-ratio: 4 / 5; }
+@media (min-width: 860px) {
+  .tr-lp .tr-steps-layout { grid-template-columns: minmax(0, 46%) 1fr; align-items: stretch; }
+  .tr-lp .tr-steps-photo { display: flex; }
+  .tr-lp .tr-steps-photo img { height: 100%; aspect-ratio: auto; min-height: 480px; }
+}
+
+/* Eindblok met het werk erachter. De sluier houdt de tekst op AA-contrast:
+   navy op 0,80 over een lichte foto blijft ruim boven 4,5:1 voor wit. */
+.tr-final-foto { position: relative; isolation: isolate; }
+.tr-final-bg { position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: -2; }
+.tr-final-foto::before { content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(10,22,40,0.90) 0%, rgba(10,22,40,0.84) 100%); }
+
+/* Full-bleed beeldband. Eén breed beeld zonder kader; dat tilt het
+   beeldaandeel en breekt de eindeloze reeks kaarten-op-wit. */
+.tr-band { width: 100%; overflow: hidden; line-height: 0; }
+.tr-band img { width: 100%; height: clamp(280px, 38vw, 520px); object-fit: cover; display: block; }
+
+/* Ritme: op de advertentiepagina's stond elke sectie op exact 89,6px boven en
+   onder. Alles even zwaar leest als een lijst, niet als een pagina. */
+.tr-lp .tr-section { padding-top: clamp(48px, 5.2vw, 76px); padding-bottom: clamp(48px, 5.2vw, 76px); }
+.tr-lp .tr-compact { padding-top: clamp(36px, 3.6vw, 52px); padding-bottom: clamp(36px, 3.6vw, 52px); }
+
 /* Bolletjes in het aanbodblok. Waren vinkjes met het eerste punt vetgedrukt.
    De lijst is een flexrij, dus het bolletje is hier ook een flex-item; een
    absoluut geplaatst bolletje ging over de tekst heen. */
@@ -1799,8 +1884,15 @@ const LP_CSS = `
 .tr-svc-foto { border-radius: 14px; overflow: hidden; margin: 0 0 28px; aspect-ratio: 16 / 10; }
 .tr-svc-foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
 @media (min-width: 980px) {
-  .tr-svc-split { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 46px; align-items: start; }
+  .tr-svc-split { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(36px, 4vw, 56px); align-items: start; }
   .tr-svc-foto { margin: 0; position: sticky; top: 96px; aspect-ratio: 4 / 5; }
+  /* Vier kaarten naast elkaar naast een foto geeft kolommen van ~150px: de
+     tekst brak daar om de twee woorden. Naast de foto dus twee bij twee. */
+  .tr-svc-split .tr-svc-grid { grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: clamp(26px, 3vw, 38px); }
+  .tr-svc-split .tr-svc-card + .tr-svc-card { border-left: none; padding-left: 0; }
+  .tr-svc-split .tr-svc-card:nth-child(even) { padding-left: clamp(20px, 2vw, 30px);
+    border-left: 1px solid var(--tr-keyline); }
 }
 
 /* 8 — SERVICES (dark, tekst-only cards: randen i.p.v. schaduw, gouden keyline-accent, leesbaar voor 45-65j) */
