@@ -140,12 +140,45 @@ if (!KLANT_ZEGT_NIET.some((w) => 'De offerte klopte met de eindafrekening.'.toLo
   console.error('FOUT: positieve controle faalt voor de reviewregel.');
   process.exit(1);
 }
+/* VIJFDE CORRECTIE, zelfde dag: "en zijn niet blijven plakken???? even serieus,
+ * je genereert enkel AI slop". Toen ik de bedrijfstaal wegnam schreef ik er
+ * geforceerd-volkse taal voor in de plaats: krachtzinnetjes en pointes. Een
+ * echte Google-review is kort, feitelijk en een beetje saai; hij eindigt op
+ * "Heel tevreden", niet op een wending. Daarom ook een lengtegrens: de
+ * gemiddelde echte review hier is 117 tekens, en alles boven 190 bleek een
+ * verhaaltje van mij te zijn. */
+const KRACHTZIN = [
+  'blijven plakken', 'zei wel iets', 'siert hen', 'niet aan gedacht', 'doorbijten',
+  'mag er zijn', 'buurvrouw', 'wat ik het meest', 'daar moet je op voorbereid',
+  'dat scheelt een hoop', 'ook van dichtbij',
+];
+const MAX_REVIEW = 190;
+/* positieve controle op allebei de regels */
+if (!KRACHTZIN.some((w) => 'zijn niet blijven plakken'.includes(w))) {
+  console.error('FOUT: positieve controle faalt voor de krachtzin-regel.');
+  process.exit(1);
+}
 for (const r of reviews) {
-  const raak = KLANT_ZEGT_NIET.filter((w) => r.toLowerCase().includes(w));
-  if (raak.length) {
+  const zakelijk = KLANT_ZEGT_NIET.filter((w) => r.toLowerCase().includes(w));
+  if (zakelijk.length) {
     bevindingen.push({
-      slug: 'review', waar: 'reviews', regel: `bedrijfstaal in de mond van de klant: ${raak.join(', ')}`,
+      slug: 'review', waar: 'reviews', regel: `bedrijfstaal in de mond van de klant: ${zakelijk.join(', ')}`,
       uitleg: 'een klant typt dit niet; zo leest de review als door het bedrijf geschreven',
+      tekst: r,
+    });
+  }
+  const pointe = KRACHTZIN.filter((w) => r.toLowerCase().includes(w));
+  if (pointe.length) {
+    bevindingen.push({
+      slug: 'review', waar: 'reviews', regel: `bedacht krachtzinnetje: ${pointe.join(', ')}`,
+      uitleg: 'echte reviews eindigen plat, niet op een pointe',
+      tekst: r,
+    });
+  }
+  if (r.length > MAX_REVIEW) {
+    bevindingen.push({
+      slug: 'review', waar: 'reviews', regel: `te lang: ${r.length} tekens`,
+      uitleg: `boven ${MAX_REVIEW} tekens wordt het een verhaaltje; echte reviews hier zijn gemiddeld 117`,
       tekst: r,
     });
   }
