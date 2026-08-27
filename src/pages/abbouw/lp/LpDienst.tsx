@@ -1173,7 +1173,10 @@ export default function LpDienst({ slug }: { slug: string }) {
                   {quickState === 'busy' ? 'Even bezig…' : 'Plan mijn afspraak'}
                 </button>
               </form>
-              <p className="rp-aanvraag__vt"><Check s={13} /> Vrijblijvend &middot; 4,9 op Google</p>
+              {/* "4,9 op Google" stond hier én in de certificatenrij boven de
+                  kaart: twee keer hetzelfde bewijs in één hero. De rij erboven
+                  draagt het cijfer, hier blijft alleen de belofte. */}
+              <p className="rp-aanvraag__vt"><Check s={13} /> Vrijblijvend, u zit nergens aan vast</p>
               {/* De calculator en het belnummer blijven bereikbaar, maar als
                   rustige regels onder de kaart in plaats van als twee blokken
                   erin. */}
@@ -1776,6 +1779,50 @@ const LP_CSS = `
 @media (min-width: 760px) {
   .tr-feiten-grid { grid-template-columns: repeat(2, minmax(0, 320px)); gap: 56px; justify-content: center; }
 }
+
+/* ── ENS-VORM IN AB-KLEUREN ───────────────────────────────────────────────────
+ * Mohammed vroeg de stijl van de ENS-site. Die stond op E:\ens-website van de
+ * oude pc, maar de sessie is meegekomen: stijl.css (26.739 tekens) is uit het
+ * transcript gehaald en dat is de bron hieronder. Alleen de VORM wordt
+ * overgenomen, de kleuren blijven AB, want dat was zijn expliciete correctie.
+ *
+ * Wat ENS anders deed dan wij, gemeten uit die CSS:
+ *   knop      padding 13x22, 0,92rem, weight 600, radius 8, GEEN schaduw,
+ *             hover alleen kleur, transitie .18s
+ *   wij       padding 15x26 en 15x30, 15px, weight 700, radius 6, schaduw plus
+ *             een gloed bij hover
+ *   schaduw   0 2px 6px /.04 + 0 18px 44px -22px /.16  (twee lagen, heel zacht)
+ *   tekst     15px op regelhoogte 1,65, alinea's maximaal 64ch breed
+ * De kaartradius was al gelijk aan die van ENS (14px), dus die blijft.
+ */
+.tr-lp { --tr-r-ui: 8px; }
+/* Let op de dubbele klasse op de wortel: _v6.ts definieert .tr .tr-btn, dus even
+   zwaar als .tr-lp .tr-btn, en dat bestand laadt later. Daardoor kregen alleen
+   de rp-knoppen de nieuwe vorm en hielden de nav- en formulierknoppen de oude:
+   twee knopstijlen op een pagina. .tr.tr-lp weegt zwaarder.
+   (Geen backticks in dit commentaar: deze CSS staat in een template-literal en
+   een backtick sluit die string.) */
+.tr.tr-lp .tr-btn,
+.tr.tr-lp .rp-btn {
+  padding: 13px 22px;
+  font-size: 14.7px;
+  font-weight: 600;
+  letter-spacing: 0;
+  border-radius: 8px;
+  box-shadow: none;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.tr.tr-lp .tr-btn:hover,
+.tr.tr-lp .rp-btn--primary:hover { box-shadow: none; }
+.tr.tr-lp .rp-btn--ghost { border-width: 1.5px; }
+/* De zachte tweelaagse schaduw van ENS, in AB-navy in plaats van ENS-inkt. */
+.tr-lp { --tr-schaduw: 0 2px 6px rgba(10,22,40,0.04), 0 18px 44px -22px rgba(10,22,40,0.16); }
+.tr-lp .tr-svc-foto, .tr-lp .tr-steps-photo, .tr-lp .tr-rev, .tr-lp .tr-faq-box,
+.tr-lp .rp-aanvraag { box-shadow: var(--tr-schaduw) !important; }
+/* Leesmaat: alinea's liepen over de volle kolombreedte, ENS kapt op 64ch. Dat
+   is precies wat "een blok tekst" van gewone tekst onderscheidt. */
+.tr-lp p { max-width: 64ch; }
+.tr-lp .tr-svc-body p, .tr-lp .tr-rev p { max-width: none; }
 
 /* GEMETEN, 27 aug 2026. Mohammed: "ik vind de website echt niet clean en modern
    maar meer een blok tekst met wat fotos". Dat bleek een meetbaar feit:
