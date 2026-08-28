@@ -16,7 +16,8 @@
     "verify": "npm run typecheck && npm run check:ads && npm run check:tekst && npm run check:copy && npm run test",
     "check:tekst": "node scripts/check-tekstcorruptie.cjs",
     "check:contrast": "node scripts/check-contrast.mjs",
-    "check:copy": "node scripts/check-lp-copy.cjs"
+    "check:copy": "node scripts/check-lp-copy.cjs",
+    "check:replica": "node scripts/check-replica.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
