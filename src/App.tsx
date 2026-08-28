@@ -106,6 +106,7 @@ const App = () => {
           {/* Totaalrenovatie draait op de replica-opzet; de andere dertien
               pagina's blijven op LpDienst. */}
           <Route path="/lp/totaalrenovatie" element={<LpReplica />} />
+          <Route path="/totaalrenovatie" element={<LpReplica />} />
           <Route path="/lp/badkamerrenovatie" element={<LpDienst slug="badkamerrenovatie" />} />
           <Route path="/lp/tegelwerken" element={<LpDienst slug="tegelwerken" />} />
           <Route path="/lp/pleisterwerk" element={<LpDienst slug="pleisterwerk" />} />
