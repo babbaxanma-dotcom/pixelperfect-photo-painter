@@ -152,7 +152,8 @@ export const REPLICA_CSS = `
    Hero: 812px hoog. Links een gebroken wit paneel tot x=636 (53%),
    rechts de foto die tot de paginarand doorloopt.
    ───────────────────────────────────────────────────────────── */
-.pc-hero { position: relative; height: 812px; background: var(--pc-cream); overflow: hidden; }
+.pc-hero { position: relative; height: min(812px, calc(100vh - 168px));
+  min-height: 520px; background: var(--pc-cream); overflow: hidden; }
 .pc-hero-foto { position: absolute; top: 0; right: 0; bottom: 0; left: 53%; }
 .pc-hero-foto img { width: 100%; height: 100%; object-fit: cover; }
 .pc-hero-sluier { position: absolute; top: 0; right: 0; left: 53%; height: 160px; z-index: 2;
@@ -338,10 +339,8 @@ export const REPLICA_CSS = `
 .pc-aanbod { background: #fff; padding: 79px 0 82px; overflow: hidden; min-height: 812px; }
 .pcx .pc-h2--midden { font-size: 37px; font-weight: 600; line-height: 44px;
   letter-spacing: -0.01em; text-align: center; }
-.pc-aanbod-sub { font-size: 16px; line-height: 22px; text-align: center;
-  max-width: 320px; margin: 11px auto 0; }
 
-.pc-spoor { display: flex; gap: 25px; margin-top: 49px; overflow-x: auto; scroll-behavior: smooth;
+.pc-spoor { display: flex; gap: 25px; margin-top: 82px; overflow-x: auto; scroll-behavior: smooth;
   scrollbar-width: none;
   padding-left: max(20px, calc((100% - var(--pc-container)) / 2)); }
 .pc-spoor::-webkit-scrollbar { display: none; }
@@ -422,21 +421,101 @@ export const REPLICA_CSS = `
    ───────────────────────────────────────────────────────────── */
 .pc-werk { background: var(--pc-cream); padding: 80px 0 81px; }
 .pcx .pc-werk .pc-h2--midden { line-height: 41px; }
-.pc-tabs { display: inline-flex; gap: 14px; padding: 14px; border-radius: 10px;
-  background: #fff; margin: 23px auto 0; }
-.pc-tabs button { width: 141px; height: 50px; border-radius: 10px; background: var(--pc-cream);
-  font-size: 17px; font-weight: 600; color: var(--pc-ink);
-  transition: background-color .18s ease, color .18s ease; }
-.pc-tabs button:hover { background: #eceae5; }
-.pcx .pc-tabs button[aria-selected="true"] { background: var(--pc-accent); color: var(--pc-dark); }
+/* Eén spoor met even grote vierkante tegels. De vaste breedte (geen 1fr) houdt
+   elke tegel exact even groot, ook als er een foto bijkomt; aspect-ratio 1/1
+   met object-fit cover snijdt elke verhouding tot hetzelfde vierkant. */
+.pc-werk-spoor { display: flex; gap: 24px; margin-top: 50px; overflow-x: auto;
+  scroll-behavior: smooth; scrollbar-width: none; padding-bottom: 4px; }
+.pc-werk-spoor::-webkit-scrollbar { display: none; }
+.pc-werk-foto { flex: 0 0 309px; margin: 0; }
+.pc-werk-foto img { width: 100%; aspect-ratio: 1 / 1; height: auto; object-fit: cover;
+  border-radius: 14px; display: block; }
+/* De vullijn: vier seconden vol, dan schuift het spoor een tegel op. Met
+   transform in plaats van width, zodat de browser er geen layout voor hoeft
+   te herberekenen en de lijn ook op een telefoon vloeiend loopt. */
+.pc-werk-lijn { height: 3px; border-radius: 999px; background: rgba(10, 22, 40, .10);
+  margin-top: 22px; overflow: hidden; }
+.pc-werk-vul { display: block; height: 100%; width: 100%; border-radius: inherit;
+  background: var(--pc-accent); transform-origin: left center;
+  animation: pc-werk-vullen 4s linear infinite; }
+.pc-werk-vul--stil { animation-play-state: paused; }
+@keyframes pc-werk-vullen { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) { .pc-werk-lijn { display: none; } }
 
-.pc-werk-rij1 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 50px; }
-.pc-werk-rij1 img { width: 100%; height: 250px; object-fit: cover; border-radius: 14px; }
-.pc-werk-rij2 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 24px; }
-.pc-werk-groot { grid-column: span 2; }
-.pc-werk-groot img { width: 100%; height: 376px; object-fit: cover; border-radius: 14px; }
-.pc-werk-klein { display: grid; gap: 24px; }
-.pc-werk-klein img { width: 100%; height: 176px; object-fit: cover; border-radius: 14px; }
+/* Voor/na-schuif. De bediening is een onzichtbare range over het hele beeld:
+   slepen, tikken en de pijltjestoetsen werken daardoor alle drie, en de
+   focusring hangt aan de greep zodat toetsenbordgebruik zichtbaar blijft. */
+.pc-vgl { margin: 44px 0 8px; }
+.pc-vgl-vat { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden;
+  background: var(--pc-dark); touch-action: pan-y; }
+.pc-vgl-vat img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pc-vgl-bedien { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; padding: 0;
+  opacity: 0; cursor: ew-resize; -webkit-appearance: none; appearance: none; background: none; }
+.pc-vgl-bedien::-webkit-slider-thumb { -webkit-appearance: none; width: 56px; height: 100%; }
+.pc-vgl-bedien::-moz-range-thumb { width: 56px; height: 100%; border: 0; background: none; }
+.pc-vgl-lijn { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px;
+  background: #fff; box-shadow: 0 0 0 1px rgba(10, 22, 40, .18); pointer-events: none; }
+.pc-vgl-greep { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 46px; height: 46px; border-radius: 50%; background: #fff; color: var(--pc-dark);
+  display: flex; align-items: center; justify-content: center; gap: 2px;
+  box-shadow: 0 6px 20px rgba(10, 22, 40, .3); }
+.pc-vgl-bedien:focus-visible ~ .pc-vgl-lijn .pc-vgl-greep { outline: 3px solid var(--pc-accent); outline-offset: 3px; }
+.pc-vgl-label { position: absolute; bottom: 16px; padding: 7px 14px; border-radius: 999px;
+  font-size: 13px; line-height: 16px; font-weight: 600; color: #fff;
+  background: rgba(10, 22, 40, .72); pointer-events: none; }
+.pc-vgl-label--l { left: 16px; }
+.pc-vgl-label--r { right: 16px; }
+.pc-vgl figcaption { margin-top: 14px; font-size: 14px; line-height: 20px; color: #575757; text-align: center; }
+
+/* Richtprijs-calculator onder de balk in de hero. Zelfde taal als de rest:
+   witte kaart, 14px radius, accentknop. Eén vraag per scherm, want acht velden
+   onder elkaar leest als huiswerk. */
+.pc-calc-vat { margin-top: 10px; }
+
+/* Prijsindicatie-wizard. De kaart is wit op een witte band, dus de rand moet
+   het werk doen: een zichtbare lijn plus een accentrand bovenaan. Zonder die
+   twee loopt het kaartvlak over in de pagina en scrolt de bezoeker er langs —
+   precies wat er gebeurde. */
+.pc-calc { background: #fff; border: 1px solid #ddd8cf; border-top: 3px solid var(--pc-accent);
+  border-radius: 14px; padding: 26px 30px 28px; box-shadow: 0 14px 34px rgba(10, 22, 40, .09); }
+.pc-calc--dicht { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.pc-calc-badge { display: inline-block; padding: 5px 11px; border-radius: 999px;
+  background: #f6f1e4; color: var(--pc-dark); font-size: 12px; line-height: 15px; font-weight: 600; }
+.pc-calc--dicht h2 { margin-top: 10px; font-size: 23px; line-height: 29px; font-weight: 600; }
+.pc-calc--dicht p { margin-top: 5px; font-size: 14px; line-height: 20px; color: #565656; }
+.pc-calc-kop { display: flex; align-items: center; justify-content: space-between; }
+.pc-calc-tel { font-size: 13px; line-height: 16px; font-weight: 600; color: #565656; }
+.pc-calc-terug { display: inline-flex; align-items: center; gap: 6px; padding: 8px 4px;
+  min-height: 44px; background: none; border: 0; cursor: pointer;
+  font-size: 13px; font-weight: 600; color: var(--pc-dark); }
+.pc-calc-balk { margin-top: 10px; height: 4px; border-radius: 999px; background: #eceae5; overflow: hidden; }
+.pc-calc-balk i { display: block; height: 100%; background: var(--pc-accent); transition: width .25s ease; }
+.pc-calc-vraag h2, .pc-calc-uitkomst h2 { margin-top: 20px; font-size: 24px; line-height: 31px; font-weight: 600; }
+.pc-calc-keuzes { margin-top: 16px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.pc-calc-keuzes button { display: block; min-height: 62px; padding: 13px 18px; text-align: left; cursor: pointer;
+  background: #f6f4f0; border: 1px solid #e4e1da; border-radius: 12px;
+  transition: border-color .15s ease, background .15s ease; }
+.pc-calc-keuzes strong { display: block; font-size: 15px; line-height: 21px; font-weight: 600; color: var(--pc-ink); }
+.pc-calc-keuzes span { display: block; margin-top: 2px; font-size: 13px; line-height: 18px; color: #6d6d6d; }
+.pc-calc-keuzes button:hover { background: #fff; border-color: var(--pc-accent); }
+.pc-calc-keuzes button:focus-visible { outline: 3px solid var(--pc-accent); outline-offset: 2px; }
+.pc-calc-gerust strong { font-weight: 600; color: var(--pc-ink); }
+.pc-calc-gerust { margin-top: 14px; font-size: 13px; line-height: 19px; color: #767676; }
+.pc-calc-samenvatting { margin-top: 14px; padding: 0; list-style: none;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 4px 22px; }
+.pc-calc-samenvatting li { display: flex; justify-content: space-between; gap: 12px;
+  padding: 7px 0; border-bottom: 1px solid #efece6; font-size: 13px; line-height: 19px; }
+.pc-calc-samenvatting li span:first-child { color: #767676; }
+.pc-calc-samenvatting li span:last-child { font-weight: 600; color: var(--pc-ink); text-align: right; }
+.pc-calc-uitkomst form { margin-top: 18px; display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 12px; align-items: center; }
+.pc-calc-fout { margin-top: 10px; font-size: 13px; color: #a8321e; }
+
+@media (max-width: 760px) {
+  .pc-calc { padding: 20px 18px 22px; }
+  .pc-calc-keuzes { grid-template-columns: 1fr; }
+  .pc-calc-vraag h2, .pc-calc-uitkomst h2 { font-size: 21px; line-height: 28px; }
+  .pc-calc-uitkomst form { grid-template-columns: 1fr; }
+}
 
 /* ─────────────────────────────────────────────────────────────
    Keurmerken: kop, twee regels tekst en de merkenrail.
@@ -688,16 +767,11 @@ export const REPLICA_CSS = `
   .pc-stappen-rij, .pc-stappen-rij--twee { grid-template-columns: 1fr; gap: 32px; width: 100%; margin-top: 32px; }
   .pc-boog { display: none; }
   .pc-werk { padding: 44px 0 48px; }
-  .pc-tabs { flex-wrap: wrap; justify-content: center; margin-top: 22px; padding: 10px; gap: 8px; }
-  .pc-tabs button { width: auto; padding: 0 16px; height: 42px; font-size: 15px; }
-  /* Twee kolommen op mobiel: acht foto's onder elkaar is een kolom van 1700px. */
-  .pc-werk-rij1 { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 24px; }
-  .pc-werk-rij2 { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-  .pc-werk-groot { grid-column: span 2; }
-  .pc-werk-klein { gap: 10px; }
-  .pc-werk-rij1 img { height: 120px; }
-  .pc-werk-groot img { height: 200px; }
-  .pc-werk-klein img { height: 120px; }
+  /* Eén tegel bijna beeldvullend, met een streep van de volgende ernaast: dat
+     is het teken dat er zijwaarts nog meer staat. */
+  .pc-werk-spoor { gap: 12px; margin-top: 24px; padding-right: 40px; }
+  .pc-werk-foto { flex: 0 0 78%; }
+  .pc-werk-lijn { margin-top: 16px; }
   .pc-merken { padding: 44px 0 48px; }
   .pc-merkenrail { height: 96px; margin-top: 28px; }
   .pc-merkenrail-rij { gap: 40px; padding-right: 40px; }
@@ -730,5 +804,52 @@ export const REPLICA_CSS = `
   .pcx .pc-h1 { font-size: 29px; line-height: 34px; }
   .pcx .pc-h2--donker, .pcx .pc-h2--midden, .pcx .pc-h2--groot { font-size: 24px; line-height: 30px; }
   .pcx .pc-h2 { font-size: 24px; line-height: 30px; }
+}
+
+@media (max-width: 820px) {
+  /* Boven de vouw hoort op een landingspagina het formulier te staan, niet de
+     hele kop. Op 390x700 vulden de gestapelde koponderdelen 323px en de
+     herofoto nog eens 300px; samen duwden die het formulier en de calculator
+     eruit. Alles wat niet helpt om contact op te nemen wordt hier compact of
+     verdwijnt: de links staan ook in de voettekst en in de pagina zelf. */
+  /* de regel voor 1000px zet deze kop in een kolom; op de compacte stand moet
+     hij juist op één rij, anders kost hij drie regels hoogte */
+  .pc-kop-vat { display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 10px; padding-block: 8px; height: auto; }
+  .pc-kop-logo, .pc-kop-midden, .pc-kop-tel { flex: 0 0 auto; }
+  .pc-kop-streep, .pc-nav, .pc-kop-rij1, .pc-tellabel { display: none; }
+  .pc-kop-logo a { display: flex; align-items: center; min-height: 44px; }
+  .pc-kop-logo img { max-height: 34px; width: auto; }
+  .pc-kop-midden { margin-left: auto; }
+  .pc-kop-midden { display: none; }
+  .pc-kop-tel { display: flex; align-items: center; gap: 8px; }
+  .pc-kop-tel .pc-teltegel { width: 36px; height: 36px; }
+  .pc-telnr { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; }
+  /* de herofoto duwt het formulier onder de vouw */
+  .pc-hero { min-height: 0; }
+  .pc-hero-foto { display: none; }
+  .pc-hero-vat { padding-block: 12px 16px; }
+  .pc-hero-vat > .pc-chip { display: none; }
+  .pcx .pc-h1 { font-size: 27px; line-height: 32px; }
+  /* twee velden naast elkaar in plaats van vier onder elkaar */
+  .pc-balk form { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; }
+  .pc-balk form > .pc-knop { grid-column: 1 / -1; }
+  .pc-balk .pc-veld { min-height: 42px; }
+  .pc-balk .pc-veld input { padding-block: 10px; }
+  /* De dichte calculator is boven de vouw een knop met een belofte, geen blok
+     tekst: de uitleg staat een tik later toch op het eerste vraagscherm. */
+  .pc-calc { padding: 12px 14px 14px; }
+  .pc-calc--dicht { gap: 10px; }
+  .pc-calc-badge { display: none; }
+  .pc-calc--dicht h2 { margin-top: 0; font-size: 18px; line-height: 24px; }
+  .pc-calc--dicht p { display: none; }
+  .pc-calc--dicht .pc-knop { width: 100%; justify-content: center; }
+}
+
+/* Korte telefoonschermen (een iPhone SE is 640px hoog). Daar past de knop in de
+   hero er niet meer bij, en die is ook de enige die niets toevoegt: het
+   formulier eronder doet hetzelfde en staat al in beeld. */
+@media (max-width: 820px) and (max-height: 740px) {
+  .pc-hero-vat > .pc-knop { display: none; }
+  .pcx .pc-h1 { font-size: 25px; line-height: 30px; }
 }
 `;

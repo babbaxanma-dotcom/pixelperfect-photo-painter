@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CONTACT } from '@/data/contact';
 import { submitLead } from '@/lib/leads';
+import Calculator from './Calculator';
 import { trackFormStart } from '@/lib/tracking';
 import { DIENSTEN } from '../LpDienst';
 import { REPLICA_CSS } from './stijl';
@@ -30,11 +31,13 @@ import glyph2 from '@/assets/lp-diensten/realisaties/totaalrenovatie-p1-b.jpg';
 import glyph3 from '@/assets/lp-diensten/realisaties/totaalrenovatie-p2-a.jpg';
 import glyph4 from '@/assets/lp-diensten/realisaties/totaalrenovatie-p2-b.jpg';
 import dienstenBg from '@/assets/lp-diensten/totaalrenovatie-g2.jpg';
-import kaartRuwbouw from '@/assets/bad/ruwbouw.jpg';
-import kaartTechnieken from '@/assets/construct/technieken.jpg';
-import kaartPleister from '@/assets/interieur/gyproc.jpg';
-import kaartTegel from '@/assets/bad/tegelwerk.jpg';
-import kaartSanitair from '@/assets/bad/sanitair.jpg';
+import kaartRuwbouw from '@/assets/lp-diensten/kaart-ruwbouw.jpg';
+import kaartTechnieken from '@/assets/lp-diensten/kaart-technieken.jpg';
+import kaartPleister from '@/assets/lp-diensten/kaart-pleisterwerk.jpg';
+import kaartTegel from '@/assets/lp-diensten/kaart-vloeren.jpg';
+import kaartSanitair from '@/assets/lp-diensten/kaart-badkamer.jpg';
+import dakVoor from '@/assets/lp-diensten/dak-voor.jpg';
+import dakNa from '@/assets/lp-diensten/dak-na.jpg';
 import aanbod1 from '@/assets/lp-diensten/totaalrenovatie-steps.jpg';
 import aanbod2 from '@/assets/lp-diensten/terras-g1.jpg';
 import aanbod3 from '@/assets/lp-diensten/pleisterwerk-g2.jpg';
@@ -104,19 +107,19 @@ type Dienstkaart = { titel: string; tekst: string; foto: string; alt: string; hr
 const DIENSTKAARTEN: Dienstkaart[] = [
   { titel: 'Afbraak en ruwbouw', href: '#contact',
     tekst: 'Muren weg, nieuwe openingen, oude vloer eruit. Wat blijft staan wordt eerst ondersteund.',
-    foto: kaartRuwbouw, alt: 'Gestripte ruimte tijdens de afbraak, leidingen zichtbaar' },
+    foto: kaartRuwbouw, alt: 'Nieuwe brede doorgang tussen leefruimte en keuken na het wegbreken van de muur' },
   { titel: 'Technieken', href: '#contact',
     tekst: 'Water, afvoer en elektriciteit gaan de muur in voordat er gepleisterd wordt.',
-    foto: kaartTechnieken, alt: 'Nieuwe leidingen ingewerkt in de muur' },
+    foto: kaartTechnieken, alt: 'Verdeler voor vloerverwarming, netjes aangesloten in een ingebouwde kast' },
   { titel: 'Pleisterwerk en gyproc', href: '#contact',
     tekst: 'Wanden en plafonds vlak en recht, klaar om te schilderen.',
-    foto: kaartPleister, alt: 'Ruimte met geplaatste gyprocwanden, klaar om te pleisteren' },
+    foto: kaartPleister, alt: 'Strak gepleisterde wanden met een scherpe hoek en vlak plafond' },
   { titel: 'Vloeren en tegelwerk', href: '#contact',
-    tekst: 'Eerst een vlakke, droge ondergrond. Tegels die daar niet op liggen, komen later los.',
-    foto: kaartTegel, alt: 'Tegelzetter aan het werk' },
+    tekst: 'Van chape tot voeg: strak gelegd, recht in lijn en netjes afgewerkt.',
+    foto: kaartTegel, alt: 'Grootformaat vloertegels in een afgewerkte leefruimte' },
   { titel: 'Badkamer en sanitair', href: '#contact',
     tekst: 'Douche, bad, kranen en alles wat erachter zit.',
-    foto: kaartSanitair, alt: 'Afgewerkte badkamer met nieuw sanitair' },
+    foto: kaartSanitair, alt: 'Afgewerkte badkamer met wastafel op eiken meubel' },
 ];
 
 type Aanbodkaart = { badge: [string, string]; titel: string; tekst: string; foto: string; alt: string; knop: string; href: string };
@@ -161,25 +164,39 @@ const beeld = (naam: string) => {
 };
 
 /**
- * De vier tabbladen boven het fotoraster. Ze filteren op DEEL VAN DE WONING,
- * niet op dienst: "Renovatie" als tabblad naast "Badkamer" leest weer als een
- * menu van losse opdrachten, en dat is precies wat deze pagina niet is.
- * Elk tabblad heeft acht eigen werffoto's — geen enkele foto komt twee keer op
- * de pagina voor, ook niet in de cijfers of de cirkels hierboven.
+ * De foto's in het spoor: vier per soort werk, op volgorde om en om gezet.
+ *
+ * Waarom om en om en niet per soort gegroepeerd: er passen er vier tegelijk in
+ * beeld, dus bij groeperen ziet de bezoeker in het eerste scherm alleen
+ * badkamers. Zo staat er op elke scrollpositie een woning, een badkamer, een
+ * tegelvloer en een terras naast elkaar, en staan twee gelijkaardige foto's
+ * nooit naast elkaar.
+ *
+ * Alleen ECHTE werffoto's. Elke gegenereerde foto die hier stond werd herkend
+ * als AI — negen pogingen over drie rondes, allemaal afgekeurd. Van bijna
+ * dezelfde opname (zelfde ruimte, zelfde hoek) staat alleen de beste hier.
  */
-const WERK_TABS = [
-  { label: 'Hele woning', alt: 'Volledig gerenoveerde woning door AB Bouw Groep', beelden: [
-    'totaalrenovatie-p3-a', 'totaalrenovatie-p1-c', 'totaalrenovatie-p3-b', 'totaalrenovatie-p2-c',
-    'totaalrenovatie-p3-c', 'pleisterwerk-p1-a', 'pleisterwerk-p1-b', 'pleisterwerk-p2-a'] },
-  { label: 'Badkamer', alt: 'Uitgevoerde badkamerrenovatie door AB Bouw Groep', beelden: [
-    'badkamer-p1-a', 'badkamer-p1-b', 'badkamer-p1-c', 'badkamer-p2-a',
-    'badkamer-p2-b', 'badkamer-p2-c', 'badkamer-p3-a', 'badkamer-p3-b'] },
-  { label: 'Tegelwerk', alt: 'Uitgevoerd tegelwerk door AB Bouw Groep', beelden: [
-    'tegelwerken-p1-a', 'tegelwerken-p1-b', 'tegelwerken-p1-c', 'tegelwerken-p2-a',
-    'tegelwerken-p2-b', 'tegelwerken-p2-c', 'tegelwerken-p3-a', 'tegelwerken-p3-b'] },
-  { label: 'Terras', alt: 'Uitgevoerde terrasaanleg door AB Bouw Groep', beelden: [
-    'terras-p1-a', 'terras-p1-b', 'terras-p1-c', 'terras-p2-a',
-    'terras-p2-b', 'terras-p2-c', 'terras-p3-a', 'terras-p3-b'] },
+const WERK_FOTOS: { naam: string; alt: string; pos?: string }[] = [
+  { naam: 'badkamer-p4-a', alt: 'Badkamer met marmerlook-tegels en zwevend meubel, door AB Bouw Groep' },
+  { naam: 'totaalrenovatie-p5-a', alt: 'Open keuken met eethoek na totaalrenovatie, door AB Bouw Groep' },
+  { naam: 'badkamer-p3-b', alt: 'Badkamer in antraciet met zwevend wastafelmeubel, door AB Bouw Groep' },
+  { naam: 'terras-p3-c', alt: 'Aangelegd terras met grijze tegels tegen de gevel, door AB Bouw Groep' },
+  { naam: 'tegelwerken-p2-a', alt: 'Gelegde tegelvloer met doorlopende plint, door AB Bouw Groep' },
+  { naam: 'badkamer-p4-b', alt: 'Badkamer met microcement wanden, bad en toilet, door AB Bouw Groep' },
+  { naam: 'totaalrenovatie-p6-a', alt: 'Keukeneiland met barkrukken na renovatie, door AB Bouw Groep' },
+  { naam: 'badkamer-p1-a', alt: 'Badkamer met inloopdouche in betonlook, door AB Bouw Groep' },
+  { naam: 'terras-p4-b', alt: 'Terrasaanleg met lijngoot en nivelleerclips rond een vijver, door AB Bouw Groep' },
+  { naam: 'tegelwerken-p1-a', alt: 'Grijze vloertegels in een gerenoveerde ruimte, door AB Bouw Groep' },
+  { naam: 'badkamer-p3-a', alt: 'Donkere badkamer met inloopdouche en lavabomeubel, door AB Bouw Groep' },
+  /* Het interessante van dit beeld — de glaspui en de straat — zit rechts;
+     bij een midden-crop blijft er kale muur over. Vandaar de eigen uitsnede. */
+  { naam: 'totaalrenovatie-p6-b', alt: 'Afgewerkte handelsruimte met glaspui en tegelvloer, door AB Bouw Groep', pos: '72% center' },
+  { naam: 'badkamer-p1-c', alt: 'Inloopdouche met glazen wand, door AB Bouw Groep' },
+  { naam: 'terras-p3-a', alt: 'Terras in grote betontegels achter een woning, door AB Bouw Groep' },
+  { naam: 'tegelwerken-p2-c', alt: 'Antracieten vloertegels in een gerenoveerde ruimte, door AB Bouw Groep' },
+  { naam: 'badkamer-p3-c', alt: 'Inloopdouche met donkere tegels en glaswand, door AB Bouw Groep' },
+  { naam: 'tegelwerken-p4-a', alt: 'Tegelvloer in houtlook op de verdieping, door AB Bouw Groep' },
+  { naam: 'badkamer-p1-b', alt: 'Badkamer met hangtoilet en wastafelmeubel, door AB Bouw Groep' },
 ];
 
 /**
@@ -229,25 +246,204 @@ const BALKVELDEN = [
   { naam: 'bericht', plaats: 'Bericht', type: 'text', icoon: IcBericht, autoComplete: 'off' },
 ] as const;
 
+/**
+ * Voor/na-schuif van één echte werf: hetzelfde dak met de pannen eraf en er weer
+ * op. De bediening is een <input type="range"> over het hele beeld, zodat
+ * slepen met de muis, vegen op een telefoon én de pijltjestoetsen alle drie
+ * werken zonder eigen sleepcode — en een schermlezer krijgt een echte regelaar.
+ */
+function DakSchuif() {
+  const [deel, setDeel] = useState(50);
+  return (
+    <figure className="pc-vgl">
+      <div className="pc-vgl-vat">
+        <img src={dakVoor} alt="Het dak van dezelfde woning met de pannen eraf: alleen het houten gebint staat er nog" />
+        <img src={dakNa} alt="Hetzelfde dak na de werken, met nieuwe pannen en dakvensters"
+          style={{ clipPath: `inset(0 0 0 ${deel}%)` }} />
+        <input type="range" min={0} max={100} step={1} value={deel} className="pc-vgl-bedien"
+          aria-label="Sleep om het dak voor en na de werken te vergelijken"
+          onChange={(e) => setDeel(Number(e.target.value))} />
+        <span className="pc-vgl-lijn" style={{ left: `${deel}%` }} aria-hidden="true">
+          <span className="pc-vgl-greep"><IcChevron richting="links" /><IcChevron richting="rechts" /></span>
+        </span>
+        <span className="pc-vgl-label pc-vgl-label--l" aria-hidden="true">Dak eraf</span>
+        <span className="pc-vgl-label pc-vgl-label--r" aria-hidden="true">Dak erop</span>
+      </div>
+    </figure>
+  );
+}
+
 export default function LpReplica() {
   const navigate = useNavigate();
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
   const startGemeld = useRef(false);
-  const [tab, setTab] = useState(0);
   const reviewSpoor = useRef<HTMLDivElement>(null);
   const aanbodSpoor = useRef<HTMLDivElement>(null);
+  const werkSpoor = useRef<HTMLDivElement>(null);
   const [reviewPos, setReviewPos] = useState({ links: 0, max: 1 });
   const [aanbodPos, setAanbodPos] = useState({ links: 0, max: 1 });
-  /** Hoeveel er per klik opschuift: de breedte van één kaart plus de goot. */
-  const stapVan = (el: HTMLElement) => (el.firstElementChild?.getBoundingClientRect().width ?? 300) + 25;
+  const [werkPos, setWerkPos] = useState({ links: 0, max: 1 });
+  /* Het fotospoor schuift zelf op. Zodra iemand er met de muis, de vinger of
+     het toetsenbord aan komt, stopt dat: een spoor dat doorloopt terwijl je
+     kijkt of sleept, vecht met de bezoeker. Na een aanraking wacht het zes
+     seconden voor het weer verder gaat, zodat het niet onder je vinger
+     wegschuift. */
+  const [werkStil, setWerkStil] = useState(false);
+  /* Teller die alleen omhoog gaat als er een NIEUWE foto begint. Hij is de
+     sleutel van de vullijn: React hangt er een vers element aan op, dus de
+     animatie start op nul. Zou de sleutel op de pauze staan, dan zou de lijn
+     bij het minste hoveren terugspringen naar leeg in plaats van te bevriezen
+     op de stand die hij had — precies wat de eerste keuring liet zien. */
+  const [lijnRonde, setLijnRonde] = useState(0);
+  const nieuweRonde = () => setLijnRonde((r) => r + 1);
+  const werkIndex = useRef(0);
+  const werkAnimeert = useRef(0);
+  const hervatKlok = useRef<number>();
+  const pauzeerWerk = (hervatNa = 0) => {
+    window.clearTimeout(hervatKlok.current);
+    setWerkStil(true);
+    if (hervatNa > 0) hervatKlok.current = window.setTimeout(() => { setWerkStil(false); nieuweRonde(); }, hervatNa);
+  };
+  const hervatWerk = () => { window.clearTimeout(hervatKlok.current); setWerkStil(false); nieuweRonde(); };
+  /** Hoeveel er per klik opschuift: de afstand van tegel 1 naar tegel 2, uit
+      de DOM gelezen. Niet 'breedte + 25': de goot is 24px op de brede stand en
+      12px op de smalle, dus die schatting liet het spoor per stap wegkruipen
+      (gemeten 13px per stap op 390px, waardoor de lus na 18 stappen niet meer
+      op dezelfde foto uitkwam). */
+  const stapVan = (el: HTMLElement) => {
+    const k = el.children;
+    /* getBoundingClientRect en niet offsetLeft: op de smalle stand is een tegel
+       78% breed en dus geen heel aantal pixels. offsetLeft rondt af, en die
+       halve pixel per stap telde over één reeks op tot 7px scheefstand. */
+    const een = k[0]?.getBoundingClientRect().left;
+    const twee = k[1]?.getBoundingClientRect().left;
+    if (een !== undefined && twee !== undefined && twee > een) return twee - een;
+    return (el.firstElementChild?.getBoundingClientRect().width ?? 300) + 25;
+  };
+  /** Verzet het spoor ZONDER animatie.
+      Het spoor heeft scroll-behavior: smooth in de stijl, dus een gewone
+      toewijzing aan scrollLeft wordt zelf geanimeerd en meteen door de
+      volgende scrollTo overschreven. Gevolg: bij een klik op "vorige" vanaf
+      positie nul bleef het spoor op nul staan — precies de muur die er niet
+      mocht zijn. Even op auto, springen, terugzetten. */
+  const springDirect = (el: HTMLElement, naar: number) => {
+    const bewaar = el.style.scrollBehavior;
+    el.style.scrollBehavior = 'auto';
+    el.scrollLeft = naar;
+    void el.scrollLeft;
+    el.style.scrollBehavior = bewaar;
+  };
+  /** Eén tegel verder of terug in een spoor dat rondloopt. Zowel de pijlen als
+      de klok van vier seconden lopen hier doorheen, zodat er maar één versie
+      van deze rekensom bestaat.
+      Niet relatief stappen maar naar de EXACTE positie van een tegel springen:
+      relatief optellen laat elke stap de fractie liggen die de browser van
+      scrollLeft afrondt, en over achttien tegels was dat 4 tot 7px scheef —
+      dan sluit de lus niet meer en verspringt het beeld. */
+  const stapLus = (el: HTMLElement, richting: -1 | 1) => {
+    const tegels = Array.from(el.children) as HTMLElement[];
+    const helft = Math.floor(tegels.length / 2);
+    if (!helft) return;
+    /* offsetLeft telt vanaf de offsetParent, niet vanaf het spoor: op een breed
+       scherm staat de container gecentreerd en zit er 113px marge in dat getal.
+       Rechtstreeks als scrollstand gebruiken zet het spoor dus precies die
+       marge scheef. Alles wordt daarom gemeten vanaf de eerste tegel. */
+    const nul = tegels[0].offsetLeft;
+    const stand = (i: number) => tegels[i].offsetLeft - nul;
+    /* De index wordt GETELD, niet afgelezen. Onze eigen scroll is smooth, dus
+       tijdens de animatie ligt scrollLeft tussen twee tegels in; wie dan
+       opnieuw klikt, kiest de verkeerde "huidige" tegel en de uitlijning kruipt
+       weg — gemeten 113px over één reeks. Handmatig scrollen stelt de teller
+       bij via synchroniseerWerkIndex, maar niet zolang onze animatie loopt. */
+    let index = Math.min(Math.max(werkIndex.current, 0), tegels.length - 1);
+    /* Zelfcorrectie. Verzet iets anders dan deze functie de positie — een veeg,
+       een sprong van buitenaf — dan klopt de teller niet meer met wat er staat.
+       De grens is één hele tegel: tijdens onze eigen animatie is het verschil
+       altijd kleiner dan dat, dus dan blijft de teller leidend; is het groter,
+       dan is er echt iets anders gebeurd en wint de DOM. */
+    const stapBreedte = (tegels[1]?.offsetLeft ?? 0) - (tegels[0]?.offsetLeft ?? 0);
+    if (stapBreedte > 0 && Math.abs(tegels[index].offsetLeft - el.scrollLeft) > stapBreedte) {
+      let dichtst = Infinity;
+      tegels.forEach((t, i) => {
+        const afstand = Math.abs(t.offsetLeft - el.scrollLeft);
+        if (afstand < dichtst) { dichtst = afstand; index = i; }
+      });
+    }
+    /* Staat het spoor al in de tweede reeks, zet het dan onzichtbaar terug naar
+       dezelfde tegel in de eerste. Zo blijft de index begrensd en is er in geen
+       van beide richtingen ooit een eind. */
+    if (index >= helft) { index -= helft; springDirect(el, stand(index)); }
+    let doel = index + richting;
+    if (doel < 0) { index += helft; springDirect(el, stand(index)); doel = index - 1; }
+    werkIndex.current = doel;
+    werkAnimeert.current = Date.now() + 450;
+    el.scrollTo({ left: stand(doel), behavior: 'smooth' });
+  };
   const schuif = (ref: React.RefObject<HTMLDivElement>, richting: -1 | 1) => {
     const el = ref.current;
     if (!el) return;
-    el.scrollTo({ left: Math.max(0, el.scrollLeft + richting * stapVan(el)) });
+    /* Wie zelf op een pijl klikt, neemt het over: de autoplay stopt zes
+       seconden. Zonder dit vecht de tik van vier seconden met de klik en lijkt
+       de pijl niets te doen — precies wat de bedieningstest aan het eind van
+       het spoor betrapte. Hoveren alleen volstaat niet: een klik vanuit een
+       test of een toetsenbord stuurt geen pointerenter. */
+    if (ref === werkSpoor) { pauzeerWerk(6000); nieuweRonde(); }
+    const stap = stapVan(el);
+    if (el.dataset.lus) {
+      /* Oneindig spoor: de reeks staat twee keer in de DOM, dus een sprong van
+         precies één reeksbreedte laat exact hetzelfde beeld staan. Die sprong
+         gebeurt ZONDER animatie vlak voor het schuiven, waarna de gewone
+         beweging volgt — je ziet de omslag daardoor niet. */
+      stapLus(el, richting);
+      volgStand(el, setWerkPos);
+      return;
+    }
+    const max = Math.max(0, el.scrollWidth - el.clientWidth);
+    const doel = Math.min(max, Math.max(0, el.scrollLeft + richting * stap));
+    el.scrollTo({ left: doel, behavior: 'smooth' });
+    /* Meteen zelf bijwerken: op een spoor dat al aan het eind staat vuurt er
+       geen scroll-event meer, en dan bleef de knopstand hangen. */
+    volgStand(el, ref === reviewSpoor ? setReviewPos : ref === werkSpoor ? setWerkPos : setAanbodPos);
   };
   const volgStand = (el: HTMLElement, zet: (p: { links: number; max: number }) => void) =>
     zet({ links: el.scrollLeft, max: Math.max(1, el.scrollWidth - el.clientWidth) });
+
+  /* De sporen één keer opmeten zodra ze bestaan, en opnieuw bij elke maatwijziging.
+     Zonder deze meting staat max op de beginwaarde 1, is "pos.links >= pos.max - 2"
+     al waar en is de knop "volgende" uitgeschakeld tot je met de hand scrolt —
+     dat is de pijl die "soms niet werkt". Beelden laden later, dus een
+     ResizeObserver op het spoor vangt ook de breedte na het laden op. */
+  useEffect(() => {
+    const paren: [React.RefObject<HTMLDivElement>, (p: { links: number; max: number }) => void][] =
+      [[reviewSpoor, setReviewPos], [aanbodSpoor, setAanbodPos], [werkSpoor, setWerkPos]];
+    const meet = () => paren.forEach(([r, zet]) => { if (r.current) volgStand(r.current, zet); });
+    meet();
+    const ro = new ResizeObserver(meet);
+    paren.forEach(([r]) => { if (r.current) { ro.observe(r.current); Array.from(r.current.children).forEach((k) => ro.observe(k)); } });
+    window.addEventListener('resize', meet);
+    const t = window.setTimeout(meet, 800);
+    return () => { ro.disconnect(); window.removeEventListener('resize', meet); window.clearTimeout(t); };
+  }, []);
+
+  /* Het spoor schuift elke vier seconden één tegel op en springt aan het eind
+     terug naar het begin. Vier seconden is de tijd die de vullijn eronder
+     nodig heeft, zodat de bezoeker de volgende foto ziet aankomen in plaats
+     van erdoor verrast te worden. Staat het tabblad op de achtergrond, dan
+     stopt het: anders loopt de teller door en verspringt alles ineens bij
+     terugkomst. Wie "minder beweging" heeft ingesteld, krijgt geen autoplay. */
+  useEffect(() => {
+    const el = werkSpoor.current;
+    if (!el || werkStil) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const tik = () => {
+      if (document.hidden) return;
+      stapLus(el, 1);
+      nieuweRonde();
+    };
+    const id = window.setInterval(tik, 4000);
+    return () => window.clearInterval(id);
+  }, [werkStil]);
 
   useEffect(() => { document.title = 'Totaalrenovatie in heel Vlaanderen — AB Bouw Groep'; }, []);
 
@@ -411,15 +607,13 @@ export default function LpReplica() {
         {fout && <p className="pc-balk-fout">{fout}</p>}
       </div>
 
+      {/* ── Richtprijs-calculator, direct onder de balk ── */}
+      <div className="pc-vat pc-calc-vat"><Calculator /></div>
+
       {/* ── Over ons ── */}
       <section className="pc-over" id="over">
         <div className="pc-vat pc-over-grid">
           <div>
-            {/* De referentie zet 'About Us ›' boven de kop. Een opschrift dat
-                alleen navertelt waar het blok over gaat is de AI-tell die
-                Mohammed al eerder aanwees; de chip houdt zijn vorm en krijgt
-                een getal dat ergens over gaat. */}
-            <span className="pc-chip--vlak">6 divisies<IcChevron richting="rechts" /></span>
             <h2 className="pc-h2">Eén vaste ploeg voor uw<br />hele renovatie</h2>
             <a className="pc-knop pc-knop--accent pc-over-knop" href={CONTACT.phone.href}>
               Bel {CONTACT.phone.display}<IcPijl />
@@ -471,7 +665,6 @@ export default function LpReplica() {
         </div>
         <div className="pc-vat">
           <div className="pc-midden">
-            <span className="pc-chip--donker">5 onderdelen<IcChevron richting="rechts" /></span>
             <h2 className="pc-h2--donker">Wat er in een<br />totaalrenovatie zit</h2>
           </div>
 
@@ -498,18 +691,6 @@ export default function LpReplica() {
       </section>
 
       {/* ── Aanbod: kaartenspoor dat rechts uit beeld loopt ── */}
-      <section className="pc-aanbod">
-        <div className="pc-vat">
-          <h2 className="pc-h2--midden">Wat er nu geldt</h2>
-          <p className="pc-aanbod-sub">Vier dingen die vastliggen voordat u tekent.</p>
-        </div>
-        <div className="pc-spoor" ref={aanbodSpoor}
-          onScroll={(e) => volgStand(e.currentTarget, setAanbodPos)}>
-          {AANBOD.map((k, i) => <SpoorKaart key={k.titel} {...k} gevuld={i === 0} />)}
-        </div>
-        <Bediening spoor={aanbodSpoor} pos={aanbodPos} schuif={schuif} wat="kaart" />
-      </section>
-
       {/* ── Marquee-band. De referentie herhaalt hier een telefoonoproep;
            het spoor staat twee keer in de DOM zodat de lus naadloos is. ── */}
       <div className="pc-marquee" aria-hidden="true">
@@ -531,7 +712,6 @@ export default function LpReplica() {
       {/* ── Werkwijze: vijf stappen in 3 + 2 ── */}
       <section className="pc-werkwijze" id="werkwijze">
         <div className="pc-vat pc-midden">
-          <span className="pc-chip--vlak">5 stappen<IcChevron richting="rechts" /></span>
           <h2 className="pc-h2--midden">Wat er gebeurt nadat<br />u een aanvraag indient</h2>
         </div>
         <div className="pc-stappen">
@@ -549,38 +729,46 @@ export default function LpReplica() {
         </div>
       </section>
 
-      {/* ── Ons werk: tabbalk met vier werkende filters en een fotoraster ── */}
+      {/* ── Realisaties: één spoor met alle werffoto's, daaronder de dakschuif ──
+          De vier tabbladen zijn weg. Een filter waar de bezoeker op moet
+          klikken verbergt drie kwart van het werk achter een knop die de
+          meesten niet aanraken; één spoor toont alles en scrolt zelf. Elke
+          tegel is even groot en vierkant, zodat de rij als één blok leest. */}
       <section className="pc-werk">
         <div className="pc-vat pc-midden">
           <h2 className="pc-h2--midden">Uitgevoerd werk</h2>
-          <div className="pc-tabs" role="tablist" aria-label="Soort werk">
-            {WERK_TABS.map((t, i) => (
-              <button key={t.label} type="button" role="tab" aria-selected={i === tab}
-                onClick={() => setTab(i)}>{t.label}</button>
-            ))}
-          </div>
         </div>
-        <div className="pc-vat" role="group" aria-label={WERK_TABS[tab].alt}>
-          <div className="pc-werk-rij1">
-            {WERK_TABS[tab].beelden.slice(0, 3).map((n) => (
-              <img key={n} src={beeld(n)} alt="" loading="lazy" />
-            ))}
+        <div className="pc-vat"
+          onPointerEnter={() => pauzeerWerk()} onPointerLeave={hervatWerk}
+          onFocusCapture={() => pauzeerWerk()} onBlurCapture={hervatWerk}
+          onTouchStart={() => pauzeerWerk(6000)} onWheel={() => pauzeerWerk(6000)}>
+          {/* De reeks staat er twee keer in. Zo kan het spoor bij het einde
+              onzichtbaar terugspringen naar dezelfde foto in de eerste reeks:
+              de bezoeker blijft met één pijl doorschuiven en raakt in geen van
+              beide richtingen een muur. De tweede reeks is voor een schermlezer
+              verborgen, anders staat elk project er twee keer in. */}
+          <div className="pc-werk-spoor" ref={werkSpoor} role="group" aria-label="Uitgevoerde projecten"
+            data-lus="1" onScroll={(e) => volgStand(e.currentTarget, setWerkPos)}>
+            {[0, 1].map((reeks) => WERK_FOTOS.map((f) => (
+              <figure className="pc-werk-foto" key={reeks + f.naam} aria-hidden={reeks === 1 ? true : undefined}>
+                <img src={beeld(f.naam)} alt={reeks === 1 ? '' : f.alt} loading="lazy"
+                  style={f.pos ? { objectPosition: f.pos } : undefined} />
+              </figure>
+            )))}
           </div>
-          <div className="pc-werk-rij2">
-            <div className="pc-werk-groot">
-              <img src={beeld(WERK_TABS[tab].beelden[3])} alt="" loading="lazy" />
-            </div>
-            <div className="pc-werk-klein">
-              {WERK_TABS[tab].beelden.slice(4, 6).map((n) => (
-                <img key={n} src={beeld(n)} alt="" loading="lazy" />
-              ))}
-            </div>
-            <div className="pc-werk-klein">
-              {WERK_TABS[tab].beelden.slice(6, 8).map((n) => (
-                <img key={n} src={beeld(n)} alt="" loading="lazy" />
-              ))}
-            </div>
+          {/* De vullijn loopt in vier seconden vol en begint opnieuw op het
+              moment dat de volgende foto inschuift: de bezoeker ziet hem
+              aankomen. Muis erop of vinger erop bevriest de lijn waar hij
+              staat; hij springt niet terug naar leeg. Dit is de enige
+              voortgangsaanduiding van dit spoor — het balkje tussen de pijlen
+              staat uit, twee streepjes vlak onder elkaar leest als een fout. */}
+          <div className="pc-werk-lijn" aria-hidden="true">
+            <i key={lijnRonde} className={werkStil ? 'pc-werk-vul pc-werk-vul--stil' : 'pc-werk-vul'} />
           </div>
+          <Bediening spoor={werkSpoor} pos={werkPos} schuif={schuif} wat="foto" lus />
+        </div>
+        <div className="pc-vat pc-midden">
+          <DakSchuif />
         </div>
       </section>
 
@@ -642,6 +830,23 @@ export default function LpReplica() {
           </div>
         </div>
         <Bediening spoor={reviewSpoor} pos={reviewPos} schuif={schuif} wat="review" />
+      </section>
+
+      {/* ── Uw zekerheden: de vier voorwaarden die vastliggen ──
+          Deze sectie stond eerst boven de werkwijze, dus vóór elk bewijs. Wie
+          nog niet weet wie hier werkt en wat er is opgeleverd, leest vier
+          voordelen als reclame. Nu komt hij ná het stappenplan, het werk en de
+          reviews: dezelfde vier punten lezen dan als voorwaarden waarop je
+          tekent, en de bezoeker scrolt langs het bewijs om er te komen. */}
+      <section className="pc-aanbod">
+        <div className="pc-vat">
+          <h2 className="pc-h2--midden">Uw zekerheden</h2>
+        </div>
+        <div className="pc-spoor" ref={aanbodSpoor}
+          onScroll={(e) => volgStand(e.currentTarget, setAanbodPos)}>
+          {AANBOD.map((k, i) => <SpoorKaart key={k.titel} {...k} gevuld={i === 0} />)}
+        </div>
+        <Bediening spoor={aanbodSpoor} pos={aanbodPos} schuif={schuif} wat="kaart" />
       </section>
 
       {/* ── Contact ── */}
@@ -714,8 +919,8 @@ export default function LpReplica() {
           <div className="pc-eind-vat">
             {/* De referentie herhaalt hier zijn eigen H1-vorm (drie diensten plus
                 "één X"). Deze kop zegt iets anders dan de hero. */}
-            <h2>Uw renovatie begint<br />bij de opmeting.</h2>
-            <p>Laat uw gegevens achter of bel ons. Wij plannen de opmeting in en bespreken uw plannen bij u thuis.</p>
+            <h2>Uw renovatie begint<br />met een plaatsbezoek.</h2>
+            <p>Laat uw gegevens achter of bel ons. Wij komen langs, lopen de woning met u door en zeggen meteen wat er mogelijk is.</p>
             <div className="pc-eind-knoppen">
               <a className="pc-knop pc-knop--accent" href={CONTACT.phone.href}>
                 {CONTACT.phone.display}<IcPijl />
@@ -793,22 +998,30 @@ export default function LpReplica() {
  * Op een telefoon is anders niet te zien dat er opzij te scrollen valt, en met
  * een muis is zijwaarts scrollen onhandig.
  */
-function Bediening({ spoor, pos, schuif, wat }: {
+function Bediening({ spoor, pos, schuif, wat, lus }: {
   spoor: React.RefObject<HTMLDivElement>;
   pos: { links: number; max: number };
   schuif: (ref: React.RefObject<HTMLDivElement>, richting: -1 | 1) => void;
   wat: string;
+  /** Een spoor dat rondloopt heeft geen begin en geen eind: de knoppen staan
+      dan nooit uit, en het positiebalkje vervalt. Dat balkje zou bij een
+      verdubbelde reeks een halve stand tonen en halverwege terugspringen, en
+      het stond bovendien vlak onder de vullijn — twee streepjes die iets
+      anders bedoelen, 50px uit elkaar. */
+  lus?: boolean;
 }) {
   const deel = Math.min(1, Math.max(0, pos.links / pos.max));
   const zichtbaar = spoor.current ? spoor.current.clientWidth / spoor.current.scrollWidth : 1;
   return (
     <div className="pc-bediening">
-      <button type="button" aria-label={`Vorige ${wat}`} disabled={pos.links <= 2}
+      <button type="button" aria-label={`Vorige ${wat}`} disabled={!lus && pos.links <= 2 && pos.max > 2}
         onClick={() => schuif(spoor, -1)}><IcChevron richting="links" /></button>
-      <span className="pc-bediening-rail" aria-hidden="true">
-        <i style={{ width: `${Math.max(12, zichtbaar * 100)}%`, transform: `translateX(${deel * (100 / Math.max(0.12, zichtbaar) - 100)}%)` }} />
-      </span>
-      <button type="button" aria-label={`Volgende ${wat}`} disabled={pos.links >= pos.max - 2}
+      {!lus && (
+        <span className="pc-bediening-rail" aria-hidden="true">
+          <i style={{ width: `${Math.max(12, zichtbaar * 100)}%`, transform: `translateX(${deel * (100 / Math.max(0.12, zichtbaar) - 100)}%)` }} />
+        </span>
+      )}
+      <button type="button" aria-label={`Volgende ${wat}`} disabled={lus ? false : pos.max <= 2 ? false : pos.links >= pos.max - 2}
         onClick={() => schuif(spoor, 1)}><IcChevron richting="rechts" /></button>
     </div>
   );
