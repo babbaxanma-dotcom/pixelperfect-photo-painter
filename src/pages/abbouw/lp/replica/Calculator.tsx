@@ -123,7 +123,14 @@ export default function Calculator() {
     const f = new FormData(e.currentTarget);
     const email = String(f.get('email') || '').trim();
     const telefoon = String(f.get('telefoon') || '').trim();
-    if (!email && !telefoon) { setFout('Vul een e-mailadres of een telefoonnummer in.'); return; }
+    /* Telefoon is hier VERPLICHT, e-mail niet. Een prijsindicatie geven we aan
+       de telefoon: dat is één gesprek in plaats van drie mails heen en weer.
+       Dezelfde drempel als de lead-pijplijn zelf hanteert — acht cijfers — want
+       een voorkant die iets doorlaat wat de achterkant weigert, laat de
+       bezoeker denken dat hij verstuurd heeft terwijl er niets aankomt. */
+    const cijfers = telefoon.replace(/D/g, '').length;
+    if (!telefoon) { setFout('Vul uw telefoonnummer in. Wij bellen u met de prijsindicatie.'); return; }
+    if (cijfers < 8) { setFout('Dat telefoonnummer lijkt niet volledig. Controleer het even.'); return; }
     setFout(null);
     setBezig(true);
     const res = await submitLead({
@@ -195,7 +202,8 @@ export default function Calculator() {
           </ul>
           <form onSubmit={verstuur}>
             <label className="pc-veld"><input name="naam" type="text" placeholder="Naam" autoComplete="name" aria-label="Naam" /></label>
-            <label className="pc-veld"><input name="telefoon" type="tel" placeholder="Telefoon" autoComplete="tel" aria-label="Telefoon" /></label>
+            <label className="pc-veld"><input name="telefoon" type="tel" placeholder="Telefoon" autoComplete="tel"
+              aria-label="Telefoon (verplicht)" aria-required="true" /></label>
             <label className="pc-veld"><input name="email" type="email" placeholder="E-mail" autoComplete="email" aria-label="E-mail" /></label>
             <button className="pc-knop pc-knop--accent" type="submit" disabled={bezig}>
               {bezig ? 'Bezig…' : 'Vraag mijn prijs aan'}<IcPijl />
