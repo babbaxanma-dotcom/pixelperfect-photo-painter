@@ -18,7 +18,7 @@ import { trackFormStart } from '@/lib/tracking';
 import { DIENSTEN } from '../LpDienst';
 import { REPLICA_CSS } from './stijl';
 import {
-  IcBericht, IcChevron, IcFacebook, IcLinkedIn, IcMail, IcPersoon, IcPijl,
+  IcBericht, IcChevron, IcGoogle, IcFacebook, IcLinkedIn, IcMail, IcPersoon, IcPijl,
   IcPin, IcSter, IcTelefoon, IcX, IcYouTube, IcZonnestraal,
   IcBoog, IcStapBel, IcStapBezoek, IcStapMeten, IcStapOplevering, IcStapWerf,
 } from './Iconen';
@@ -215,7 +215,7 @@ const STAPPEN = [
   { titel: 'De werf start', Icoon: IcStapWerf,
     tekst: 'Dezelfde mensen komen elke dag terug. Wij schermen de rest van de woning af tegen stof en ruimen elke avond op.' },
   { titel: 'De laatste ronde', Icoon: IcStapOplevering,
-    tekst: 'We lopen samen alles na. Wat u aanduidt, brengen we in orde voordat de laatste man vertrekt.' },
+    tekst: 'Bij de oplevering gaan we samen door de woning. Uw opmerkingen worden verholpen voordat de werf wordt afgesloten.' },
 ];
 
 const NAV = [
@@ -254,13 +254,44 @@ const BALKVELDEN = [
  */
 function DakSchuif() {
   const [deel, setDeel] = useState(50);
+  const vat = useRef<HTMLDivElement>(null);
+  const sleept = useRef(false);
+
+  /* Het slepen wordt hier ZELF afgehandeld met pointer-events, niet overgelaten
+     aan het gedrag van de range-input. Die input is onzichtbaar (opacity 0) en
+     iOS Safari levert daar niet betrouwbaar aanraakgebeurtenissen aan af — op
+     de telefoon bewoog de slider daardoor niet, terwijl hij in de browser op de
+     pc wel werkte. Met setPointerCapture volgt de vinger gegarandeerd, ook als
+     hij buiten het beeld komt. De input blijft staan voor het toetsenbord en
+     voor schermlezers. */
+  const uitPositie = (klientX: number) => {
+    const el = vat.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    if (r.width <= 0) return;
+    setDeel(Math.min(100, Math.max(0, ((klientX - r.left) / r.width) * 100)));
+  };
+  const pak = (e: React.PointerEvent) => {
+    sleept.current = true;
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    uitPositie(e.clientX);
+  };
+  const volg = (e: React.PointerEvent) => { if (sleept.current) uitPositie(e.clientX); };
+  const los = (e: React.PointerEvent) => {
+    sleept.current = false;
+    const el = e.currentTarget as HTMLElement;
+    if (el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId);
+  };
+
   return (
     <figure className="pc-vgl">
-      <div className="pc-vgl-vat">
+      <div className="pc-vgl-vat" ref={vat}>
         <img src={dakVoor} alt="Het dak van dezelfde woning met de pannen eraf: alleen het houten gebint staat er nog" />
         <img src={dakNa} alt="Hetzelfde dak na de werken, met nieuwe pannen en dakvensters"
           style={{ clipPath: `inset(0 0 0 ${deel}%)` }} />
-        <input type="range" min={0} max={100} step={1} value={deel} className="pc-vgl-bedien"
+        <div className="pc-vgl-sleep" onPointerDown={pak} onPointerMove={volg}
+          onPointerUp={los} onPointerCancel={los} aria-hidden="true" />
+        <input type="range" min={0} max={100} step={1} value={Math.round(deel)} className="pc-vgl-bedien"
           aria-label="Sleep om het dak voor en na de werken te vergelijken"
           onChange={(e) => setDeel(Number(e.target.value))} />
         <span className="pc-vgl-lijn" style={{ left: `${deel}%` }} aria-hidden="true">
@@ -272,6 +303,7 @@ function DakSchuif() {
     </figure>
   );
 }
+
 
 export default function LpReplica() {
   const navigate = useNavigate();
@@ -822,7 +854,7 @@ export default function LpReplica() {
                     <span className="pc-review-naam">{r.name}</span>
                     <span className="pc-review-rol">{r.role}</span>
                   </span>
-                  <span className="pc-review-bron" title="Beoordeling op Google">G</span>
+                  <span className="pc-review-bron" title="Beoordeling op Google"><IcGoogle /></span>
                 </div>
               </article>
             ))}

@@ -13,13 +13,14 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "check:ads": "node scripts/check-ads-negatives.cjs",
-    "verify": "npm run typecheck && npm run check:ads && npm run check:tekst && npm run check:copy && npm run check:fotos && npm run check:bediening && npm run test",
+    "verify": "npm run typecheck && npm run check:ads && npm run check:tekst && npm run check:copy && npm run check:fotos && npm run check:bediening && npm run check:schuif && npm run test",
     "check:tekst": "node scripts/check-tekstcorruptie.cjs",
     "check:contrast": "node scripts/check-contrast.mjs",
     "check:copy": "node scripts/check-lp-copy.cjs",
     "check:replica": "node scripts/check-replica.cjs",
     "check:fotos": "node scripts/check-fotos.cjs",
-    "check:bediening": "node scripts/check-bediening.cjs"
+    "check:bediening": "node scripts/check-bediening.cjs",
+    "check:schuif": "node scripts/check-schuif.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

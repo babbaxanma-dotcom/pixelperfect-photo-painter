@@ -456,9 +456,10 @@ export const REPLICA_CSS = `
 .pc-vgl-vat { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden;
   background: var(--pc-dark); touch-action: pan-y; }
 .pc-vgl-vat img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pc-vgl-sleep { position: absolute; left: 0; right: 0; top: 50%; height: 130px;
+  transform: translateY(-50%); cursor: ew-resize; touch-action: none; z-index: 3; }
 .pc-vgl-bedien { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; padding: 0;
-  opacity: 0; cursor: ew-resize; -webkit-appearance: none; appearance: none; background: none;
-  touch-action: pan-y; }
+  opacity: 0; pointer-events: none; -webkit-appearance: none; appearance: none; background: none; }
 .pc-vgl-bedien::-webkit-slider-thumb { -webkit-appearance: none; width: 56px; height: 100%; }
 .pc-vgl-bedien::-moz-range-thumb { width: 56px; height: 100%; border: 0; background: none; }
 .pc-vgl-lijn { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px;
@@ -482,7 +483,7 @@ export const REPLICA_CSS = `
    statisch element heen, ongeacht de volgorde in de DOM. De formulierbalk had
    daarom al z-index 4; de calculator ligt nu binnen dezelfde hoogte en heeft
    hem net zo goed nodig, anders verdwijnt hij achter de foto. */
-.pc-calc-vat { position: relative; z-index: 4; margin-top: 0; }
+.pc-calc-vat { position: relative; z-index: 4; margin-top: 0; margin-bottom: 190px; }
 
 /* Prijsindicatie-wizard. De kaart is wit op een witte band, dus de rand moet
    het werk doen: een zichtbare lijn plus een accentrand bovenaan. Zonder die
@@ -591,11 +592,12 @@ export const REPLICA_CSS = `
 .pc-review-voet > span:nth-child(2) { min-width: 0; flex: 1; }
 /* 16px in plaats van de gemeten 18: "Geert Vandenbussche" is 185px breed bij
    18px en de naamkolom in de kaart is er 172. Bij 16px past hij op één regel. */
-.pc-review-naam { display: block; font-size: 16px; font-weight: 600; line-height: 1; white-space: nowrap; }
+/* Geen nowrap: een lange naam als "Geert Vandenbussche" paste niet in de
+   kolom en liep het kaartje uit. Afbreken is beter dan afkappen bij een naam. */
+.pc-review-naam { display: block; font-size: 16px; font-weight: 600; line-height: 20px;
+  overflow-wrap: anywhere; }
 .pc-review-rol { display: block; font-size: 14px; line-height: 18px; color: #5b5955; margin-top: 8px; }
-/* Een merkteken van 28px zoals de G in de referentie, maar als letter: het
-   Google-beeldmerk staat niet in de repo en natekenen is namaken. Het woord
-   "Google" voluit maakt de naamkolom 52px smaller en breekt "Vandenbussche". */
+/* Het Google-beeldmerk in de eigen kleuren, als bron van de beoordeling. */
 .pc-review-bron { margin-left: auto; flex: 0 0 auto; width: 24px; height: 24px;
   border-radius: 50%; background: var(--pc-cream); display: grid; place-items: center;
   font-size: 15px; font-weight: 600; color: #5b5955; }
@@ -861,6 +863,7 @@ export const REPLICA_CSS = `
   .pc-balk .pc-veld input { padding-block: 10px; }
   /* De dichte calculator is boven de vouw een knop met een belofte, geen blok
      tekst: de uitleg staat een tik later toch op het eerste vraagscherm. */
+  .pc-calc-vat { margin-bottom: 0; }
   .pc-calc { padding: 12px 14px 14px; }
   .pc-calc--dicht { gap: 10px; }
   .pc-calc-badge { display: none; }
@@ -876,14 +879,12 @@ export const REPLICA_CSS = `
   .pc-hero-vat > .pc-knop { display: none; }
   /* op een kort scherm wordt de fotoband smaller in plaats van te verdwijnen */
   .pc-vgl-greep { width: 54px; height: 54px; }
-  .pc-vgl-bedien::-webkit-slider-thumb { width: 96px; }
   /* Op een telefoon vecht de veeg met het scrollen van de pagina: begin je hem
      een paar graden schuin, dan claimt de browser hem als scroll en beweegt de
      slider niet. Daarom is de regelaar hier een BAND rond de greep die elk
      gebaar volledig opeist (touch-action: none), terwijl het beeld erboven en
      eronder gewoon blijft scrollen. */
-  .pc-vgl-bedien { top: 50%; bottom: auto; height: 120px; transform: translateY(-50%);
-    touch-action: none; }
+  .pc-vgl-sleep { height: 120px; }
   .pcx .pc-h1 { font-size: 25px; line-height: 30px; }
 }
 
