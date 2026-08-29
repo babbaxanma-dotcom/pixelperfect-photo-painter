@@ -16,8 +16,8 @@ import puppeteer from 'puppeteer-core';
 import sharp from 'sharp';
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-const BASIS = process.argv[2] || 'http://localhost:4310';
-const ROUTES = ['/', '/lp/totaalrenovatie', '/lp/pleisterwerk', '/lp/tegelwerken', '/over', '/contact'];
+const BASIS = process.argv[2] || 'http://localhost:8080';
+const ROUTES = ['/', '/totaalrenovatie', '/badkamerrenovatie', '/lp/pleisterwerk', '/lp/tegelwerken', '/over', '/contact'];
 const SCHERMEN = [['desktop', 1440, 900], ['mobiel', 390, 844]];
 
 const lum = (r, g, b) => {

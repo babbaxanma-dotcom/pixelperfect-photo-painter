@@ -307,7 +307,31 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
     return () => window.clearInterval(id);
   }, [werkStil]);
 
-  useEffect(() => { document.title = inhoud.titel; }, []);
+  /* Titel, omschrijving en canonical.
+     De canonical wijst altijd naar het korte adres, ook als de bezoeker via
+     /lp/... binnenkomt. Beide adressen tonen dezelfde pagina; zonder deze regel
+     slaat App.tsx de /lp/-route over (die beheren hun eigen canonical) en blijft
+     de statische canonical uit index.html staan, die naar de homepage wijst.
+     Twee identieke pagina's die allebei naar de homepage canonicaliseren is
+     precies de duplicate content die robots.txt zegt te vermijden. */
+  useEffect(() => {
+    document.title = inhoud.titel;
+    const zet = (kies: string, maak: () => Element, attr: string, waarde: string) => {
+      let el = document.querySelector(kies);
+      if (!el) { el = maak(); document.head.appendChild(el); }
+      el.setAttribute(attr, waarde);
+    };
+    zet('meta[name="description"]', () => {
+      const m = document.createElement('meta');
+      m.setAttribute('name', 'description');
+      return m;
+    }, 'content', inhoud.omschrijving);
+    zet('link[rel="canonical"]:not([hreflang])', () => {
+      const l = document.createElement('link');
+      l.setAttribute('rel', 'canonical');
+      return l;
+    }, 'href', `https://abgroep.be${inhoud.pad}`);
+  }, [inhoud]);
 
   const meldStart = () => {
     if (startGemeld.current) return;

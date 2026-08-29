@@ -1,25 +1,29 @@
 #!/usr/bin/env node
 /**
- * Guard tegen bijna-dezelfde foto's in het werkraster.
+ * Guard tegen bijna-dezelfde foto's op één landingspagina.
  *
- * Aanleiding: Mohammed heeft drie keer moeten aanwijzen dat er in de tabbladen
- * "veel dezelfde foto's" staan — twee opnames van dezelfde ruimte vanuit een
- * hoek die een centimeter verschilt. Zulke paren zijn met het blote oog pas te
- * zien als je ze naast elkaar legt, en een keurder (mens of AI) mist ze zodra
- * hij de foto's één voor één bekijkt. Daarom worden ze hier geteld in plaats
- * van bekeken.
+ * Aanleiding: Mohammed heeft drie keer moeten aanwijzen dat er "veel dezelfde
+ * foto's" stonden — twee opnames van dezelfde ruimte vanuit een hoek die een
+ * centimeter verschilt. Zulke paren zijn met het blote oog pas te zien als je ze
+ * naast elkaar legt, en een keurder (mens of AI) mist ze zodra hij de foto's één
+ * voor één bekijkt. Daarom worden ze hier geteld in plaats van bekeken.
  *
  * Methode: dHash (verschil tussen naburige pixels op een 9x8 grijswaardebeeld)
  * plus een grof kleurhistogram. Twee foto's zijn "bijna dezelfde" als de
  * hamming-afstand van de dHash klein is EN de kleurverdeling dicht bij elkaar
- * ligt. Twee signalen, omdat dHash alleen ook los van elkaar staande maar
- * even sobere ruimtes als gelijk kan zien.
+ * ligt. Twee signalen, omdat dHash alleen ook los van elkaar staande maar even
+ * sobere ruimtes als gelijk kan zien.
+ *
+ * Getoetst worden ALLE foto's van een pagina, niet alleen het fotospoor: de
+ * hero, de dienstkaarten, de achtergronden, de zekerheidskaarten, de cirkel en
+ * de voor/na-schuif. Dat is precies waar Mohammed de dubbels aanwees — die
+ * stonden op de kaarten, niet in het spoor.
  *
  * Elke pagina wordt APART getoetst: dezelfde foto op twee verschillende
- * pagina's is geen dubbel, twee bijna-gelijke foto's in één spoor wel.
+ * pagina's is geen dubbel, twee bijna-gelijke foto's op één pagina wel.
  *
  * Draaien: node scripts/check-fotos.cjs [--alle]
- *   zonder vlag: alleen de foto's die in de vier tabbladen staan
+ *   zonder vlag: de foto's die echt op de pagina's staan
  *   --alle     : elk bestand in de realisatiemap, om vervangers te zoeken
  */
 const fs = require('node:fs');
@@ -60,13 +64,27 @@ async function kleuren(bestand) {
 const hamming = (a, b) => a.reduce((n, v, i) => n + (v === b[i] ? 0 : 1), 0);
 const kleurAfstand = (a, b) => a.reduce((n, v, i) => n + Math.abs(v - b[i]), 0) / 2;
 
+/** Alle velden waarin een foto-identifier staat. */
+const FOTOVELDEN = /(?:foto|achtergrond|cirkel|voor|na):\s*(\w+)[,\s}]/g;
+/** Eén regel uit het fotospoor. */
+const SPOORNAAM = /naam: '([a-z]+-p\d-[a-z])'/g;
+
 (async () => {
   const alle = process.argv.includes('--alle');
   const bron = fs.readFileSync(BRON, 'utf8');
 
-  /* Welke foto's staan er echt in de sporen? Per pagina uit de bron lezen, niet
-     raden. De inhoud van beide pagina's staat in hetzelfde bestand, dus de
-     tekst wordt eerst per pagina-object gesplitst. */
+  /* Invoerregels van inhoud.ts: naam -> bestandspad. De losse foto's staan in
+     de pagina-objecten als identifier, dus zonder deze tabel valt er niets te
+     meten. */
+  const invoer = {};
+  for (const m of bron.matchAll(/^import (\w+) from '@\/(.+?)';$/gm)) {
+    invoer[m[1]] = path.join(WORTEL, 'src', m[2]);
+  }
+  if (Object.keys(invoer).length < 10) {
+    console.error(`FOUT: maar ${Object.keys(invoer).length} invoerregels gelezen uit ${path.basename(BRON)} — de meting is ongeldig`);
+    process.exit(2);
+  }
+
   const paginas = [];
   for (const naam of ['TOTAALRENOVATIE', 'BADKAMER']) {
     const begin = bron.indexOf(`export const ${naam}: PaginaInhoud = {`);
@@ -76,31 +94,51 @@ const kleurAfstand = (a, b) => a.reduce((n, v, i) => n + Math.abs(v - b[i]), 0) 
     }
     const eind = bron.indexOf(String.fromCharCode(10) + 'export const ', begin + 10);
     const stuk = bron.slice(begin, eind < 0 ? bron.length : eind);
-    const spoor = stuk.slice(stuk.indexOf('fotos: ['), stuk.indexOf('schuif:') > 0 ? stuk.indexOf('schuif:') : undefined);
-    const gebruikt = [...spoor.matchAll(/naam: '([a-z]+-p\d-[a-z])'/g)].map((m) => m[1]);
+
+    /* 1. het fotospoor: bestandsnamen uit de realisatiemap */
+    const naSpoor = stuk.indexOf('schuif:');
+    const spoor = stuk.slice(stuk.indexOf('fotos: ['), naSpoor > 0 ? naSpoor : undefined);
+    const spoornamen = [...spoor.matchAll(SPOORNAAM)].map((m) => m[1]);
     const regels = (spoor.match(/\{ naam: '/g) || []).length;
     /* Positieve controle op de meting zelf: evenveel gelezen namen als regels.
        Nul (veld hernoemd) of te weinig (regex loopt achter op de vorm) maakt de
        uitslag "geen dubbels" waardeloos, dus faalt de guard luid. */
-    if (!gebruikt.length || gebruikt.length !== regels) {
-      console.error(`FOUT: ${naam}: ${gebruikt.length} namen gelezen maar ${regels} regels in de lijst — de meting is ongeldig`);
+    if (!spoornamen.length || spoornamen.length !== regels) {
+      console.error(`FOUT: ${naam}: ${spoornamen.length} spoornamen gelezen maar ${regels} regels in de lijst — de meting is ongeldig`);
       process.exit(2);
     }
-    paginas.push({ naam, gebruikt });
+
+    /* 2. alle overige foto's: hero, kaarten, achtergronden, cirkel, schuif */
+    const velden = [...stuk.matchAll(FOTOVELDEN)].map((m) => m[1]);
+    const onbekend = velden.filter((v) => !invoer[v]);
+    if (onbekend.length) {
+      console.error(`FOUT: ${naam}: fotoveld verwijst naar iets zonder invoerregel: ${onbekend.join(', ')} — de meting is ongeldig`);
+      process.exit(2);
+    }
+    if (velden.length < 5) {
+      console.error(`FOUT: ${naam}: maar ${velden.length} losse foto's gevonden — de meting is ongeldig`);
+      process.exit(2);
+    }
+
+    paginas.push({
+      naam,
+      gebruikt: [
+        ...spoornamen.map((n) => ({ label: n, pad: path.join(MAP, `${n}.jpg`) })),
+        ...velden.map((v) => ({ label: v, pad: invoer[v] })),
+      ],
+    });
   }
 
-  /** Vingerafdrukken van een reeks namen. */
-  const meet = async (namen) => {
+  /** Vingerafdrukken van een reeks {label, pad}. */
+  const meet = async (lijst) => {
     const uit = [];
-    for (const n of namen) {
-      const pad = path.join(MAP, `${n}.jpg`);
-      uit.push({ naam: n, d: await dhash(pad), k: await kleuren(pad) });
-    }
+    for (const f of lijst) uit.push({ naam: f.label, d: await dhash(f.pad), k: await kleuren(f.pad) });
     return uit;
   };
 
   if (alle) {
-    const namen = fs.readdirSync(MAP).filter((f) => f.endsWith('.jpg')).map((f) => f.replace(/\.jpg$/, ''));
+    const namen = fs.readdirSync(MAP).filter((f) => f.endsWith('.jpg'))
+      .map((f) => ({ label: f.replace(/\.jpg$/, ''), pad: path.join(MAP, f) }));
     const vingers = await meet(namen);
     const paren = [];
     for (let i = 0; i < vingers.length; i++) {
@@ -112,8 +150,7 @@ const kleurAfstand = (a, b) => a.reduce((n, v, i) => n + Math.abs(v - b[i]), 0) 
     }
     paren.sort((x, y) => x.h - y.h);
     for (const p of paren) console.log(`  lijkt op elkaar  ${p.a}  ~  ${p.b}   (hamming ${p.h}, kleur ${p.k.toFixed(3)})`);
-    console.log(`
-${paren.length} paar(en) onder de grens — met --alle is dit een lijst, geen oordeel.`);
+    console.log(`\n${paren.length} paar(en) onder de grens — met --alle is dit een lijst, geen oordeel.`);
     process.exit(0);
   }
 
@@ -122,9 +159,9 @@ ${paren.length} paar(en) onder de grens — met --alle is dit een lijst, geen oo
   let parenTotaal = 0;
 
   for (const { naam, gebruikt } of paginas) {
-    const ontbreekt = gebruikt.filter((n) => !fs.existsSync(path.join(MAP, `${n}.jpg`)));
+    const ontbreekt = gebruikt.filter((f) => !fs.existsSync(f.pad));
     if (ontbreekt.length) {
-      console.error(`FOUT: ${naam}: ${ontbreekt.length} foto bestaat niet: ${ontbreekt.join(', ')}`);
+      console.error(`FOUT: ${naam}: ${ontbreekt.length} foto bestaat niet: ${ontbreekt.map((f) => f.label).join(', ')}`);
       process.exit(1);
     }
     const vingers = await meet(gebruikt);
@@ -146,11 +183,11 @@ ${paren.length} paar(en) onder de grens — met --alle is dit een lijst, geen oo
       }
     }
 
-    /* dezelfde bestandsnaam twee keer in één spoor is altijd fout */
+    /* hetzelfde bestand twee keer op één pagina is altijd fout */
     const telling = {};
-    for (const n of gebruikt) telling[n] = (telling[n] || 0) + 1;
-    for (const [n, x] of Object.entries(telling).filter(([, x]) => x > 1)) {
-      fouten.push(`${naam}: ${n} staat ${x}x in het spoor`);
+    for (const f of gebruikt) telling[f.pad] = (telling[f.pad] || 0) + 1;
+    for (const [p, x] of Object.entries(telling).filter(([, n]) => n > 1)) {
+      fouten.push(`${naam}: ${path.basename(p)} staat ${x}x op de pagina`);
     }
     vergeleken += vingers.length;
   }

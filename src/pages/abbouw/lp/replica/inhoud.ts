@@ -49,13 +49,19 @@ import bkAanbod1 from '@/assets/lp-diensten/badkamer-what.jpg';
 import bkAanbod2 from '@/assets/lp-diensten/badkamer-g1.jpg';
 import bkAanbod3 from '@/assets/lp-diensten/badkamer-steps.jpg';
 import bkAanbod4 from '@/assets/lp-diensten/tegelwerken-g2.jpg';
-import bkTegelwand from '@/assets/lp-diensten/tegelkaart-grootformaat.jpg';
+import bkUitbraak from '@/assets/bad/ruwbouw.jpg';
+import bkLeidingen from '@/assets/construct/technieken.jpg';
+import bkTegelzetter from '@/assets/bad/tegelwerk.jpg';
 
 export type Werkfoto = { naam: string; alt: string; pos?: string };
 
 export type PaginaInhoud = {
   /** Titel in het browsertabblad. */
   titel: string;
+  /** Omschrijving voor de zoekresultaten. */
+  omschrijving: string;
+  /** Het korte adres van de pagina; hier wijst de canonical naartoe. */
+  pad: string;
   /** Sleutel in DIENSTEN: levert de reviews en de keuzelijst "soort werk". */
   dienst: 'totaalrenovatie' | 'badkamerrenovatie';
   /** Divisie waaronder de lead in het CRM terechtkomt. */
@@ -104,6 +110,8 @@ export type PaginaInhoud = {
 
 export const TOTAALRENOVATIE: PaginaInhoud = {
   titel: 'Totaalrenovatie in heel Vlaanderen — AB Bouw Groep',
+  omschrijving: 'Ruwbouw, technieken, pleisterwerk, vloeren en afwerking door één aannemer met een eigen ploeg. Eén planning, één aanspreekpunt, gratis plaatsbezoek in heel Vlaanderen.',
+  pad: '/totaalrenovatie',
   dienst: 'totaalrenovatie',
   divisie: 'ab_construct',
   bronPrefix: 'lp:totaalrenovatie',
@@ -279,6 +287,8 @@ export const TOTAALRENOVATIE: PaginaInhoud = {
 
 export const BADKAMER: PaginaInhoud = {
   titel: 'Badkamerrenovatie in heel Vlaanderen — AB Bouw Groep',
+  omschrijving: 'Uitbraak, leidingen, waterdichting, tegelwerk en sanitair door dezelfde ploeg. Een volledige badkamer staat er in twee tot drie weken, met een vaste prijs na het plaatsbezoek.',
+  pad: '/badkamerrenovatie',
   dienst: 'badkamerrenovatie',
   divisie: 'ab_bad__wellness',
   bronPrefix: 'lp:badkamerrenovatie',
@@ -310,16 +320,16 @@ export const BADKAMER: PaginaInhoud = {
     kaarten: [
       { titel: 'Alles eruit', href: '#contact',
         tekst: 'Tegels, bad, meubel en de oude leidingen verdwijnen. Pas dan is te zien wat erachter zat.',
-        foto: kaartRuwbouw, alt: 'Uitgebroken muuropening tijdens de ruwbouwfase van een renovatie' },
+        foto: bkUitbraak, alt: 'Uitgebroken badkamer: kale bakstenen muren met de oude leidingen nog in zicht' },
       { titel: 'Nieuwe leidingen', href: '#contact',
         tekst: 'Water, afvoer en elektriciteit gaan de open muur in. De helling van de afvoer bepaalt of uw douche straks wegloopt.',
-        foto: kaartTechnieken, alt: 'Nieuwe water- en afvoerleidingen in een opengelegde muur' },
+        foto: bkLeidingen, alt: 'Nieuwe water- en afvoerleidingen en ventilatie tegen de kale wand' },
       { titel: 'Waterdicht maken', href: '#contact',
         tekst: 'Op de vlakke ondergrond komt de laag die het water tegenhoudt. Gaat daar iets fout, dan ziet u dat pas jaren later.',
         foto: kaartTegel, alt: 'Vlakke, voorbereide vloer met grootformaat tegels' },
       { titel: 'Tegelwerk', href: '#contact',
         tekst: 'De tegelzetter begint bij de rij die u vanuit de deur ziet, zodat de gesneden stukken in de hoek uitkomen.',
-        foto: bkTegelwand, alt: 'Grootformaat wandtegels, strak in lijn gezet' },
+        foto: bkTegelzetter, alt: 'Tegelzetter die een grootformaat tegel in de lijmlaag plaatst' },
       { titel: 'Sanitair plaatsen', href: '#contact',
         tekst: 'Toilet, meubel, kranen en de afzuiging gaan als laatste aan. Daarna wordt er gevoegd en opgekuist.',
         foto: bkKaartSanitair, alt: 'Afgewerkte badkamer met wastafelmeubel, hangtoilet en inloopdouche' },
