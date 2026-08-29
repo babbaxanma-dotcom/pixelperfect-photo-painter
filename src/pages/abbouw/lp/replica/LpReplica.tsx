@@ -572,7 +572,6 @@ export default function LpReplica() {
           {/* De referentie zet 'New' in de pil: een nieuwheidsclaim die voor AB
               niet klopt. De pil is eruit; de chip noemt de dienst en het
               werkgebied, zodat er informatie staat en geen kaal opschrift. */}
-          <span className="pc-chip">Totaalrenovatie in heel Vlaanderen<IcChevron richting="rechts" /></span>
           <h1 className="pc-h1">Uw partner voor<br />totaalrenovatie<br />van A tot Z</h1>
           <a className="pc-knop pc-knop--accent" href="#contact">Plan gratis plaatsbezoek<IcPijl /></a>
         </div>
@@ -938,8 +937,8 @@ export default function LpReplica() {
             <div>
               <div className="pc-footer-logo"><img src={logo} alt="AB Bouw Groep" /></div>
               <p>
-                AB Bouw Groep werkt vanuit Willebroek met een eigen vaste ploeg: totaalrenovatie,
-                badkamers, dakwerken en gevelbekleding. Zes divisies, 120+ realisaties.
+                Eén vaste ploeg die uw woning strip, heropbouwt en afwerkt. Van het eerste
+                plaatsbezoek tot de laatste plint houdt u dezelfde aanspreekpartner.
               </p>
               {SOCIALS.length > 0 && (
                 <div className="pc-footer-soc">

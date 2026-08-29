@@ -164,7 +164,7 @@ export const REPLICA_CSS = `
    en liep de tekst erachter. Vanaf onderen gemeten blijft de afstand tot die
    balk altijd gelijk, ongeacht de hoogte van de hero. */
 .pc-hero-vat { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column;
-  justify-content: flex-end; padding-bottom: 300px; }
+  justify-content: flex-end; padding-bottom: 370px; }
 
 .pc-chip { display: inline-flex; align-items: center; gap: 9px; align-self: flex-start;
   height: 31px; padding: 0 13px 0 8px; border-radius: 15.5px; background: #ffffff;
@@ -203,7 +203,10 @@ export const REPLICA_CSS = `
    Formulierbalk: witte kaart die over de onderrand van de hero valt.
    974x124, radius 20, vier velden van 180 en een knop van 124.
    ───────────────────────────────────────────────────────────── */
-.pc-balk { position: relative; z-index: 4; margin-top: -164px; }
+/* -324 in plaats van -164: de balk schuift 160px verder de hero in, zodat de
+   calculator eronder nog boven de vouw van een laptopscherm valt. De hero zelf
+   en de foto blijven onaangeroerd op 812px. */
+.pc-balk { position: relative; z-index: 4; margin-top: -324px; }
 .pc-balk form { background: #fff; border-radius: 20px; padding: 40px 38px;
   display: flex; align-items: center; gap: 13px;
   box-shadow: 0 2px 6px rgba(10,22,40,.04), 0 24px 60px -30px rgba(10,22,40,.22); }
@@ -830,7 +833,10 @@ export const REPLICA_CSS = `
   .pc-telnr { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; }
   /* de herofoto duwt het formulier onder de vouw */
   .pc-hero { min-height: 0; }
-  .pc-hero-foto { display: none; }
+  /* De foto stond boven de tekst en was 300px hoog; dat duwde het formulier
+     onder de vouw. Nu staat hij ONDER de kop en is hij een band: zichtbaar,
+     maar niet ten koste van het formulier. */
+  .pc-hero-foto { display: block; order: 3; position: static; height: 170px; margin-top: 16px; }
   .pc-hero-vat { padding-block: 12px 16px; }
   .pc-hero-vat > .pc-chip { display: none; }
   .pcx .pc-h1 { font-size: 27px; line-height: 32px; }
@@ -854,6 +860,8 @@ export const REPLICA_CSS = `
    formulier eronder doet hetzelfde en staat al in beeld. */
 @media (max-width: 820px) and (max-height: 740px) {
   .pc-hero-vat > .pc-knop { display: none; }
+  /* op een kort scherm wordt de fotoband smaller in plaats van te verdwijnen */
+  .pc-hero-foto { height: 120px; }
   .pcx .pc-h1 { font-size: 25px; line-height: 30px; }
 }
 `;
