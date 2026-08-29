@@ -1,5 +1,11 @@
 /**
- * Landingspagina totaalrenovatie — replica van de referentie in Downloads.
+ * Landingspagina in replica-vorm — de opzet van de referentie in Downloads.
+ *
+ * Deze ene component draait beide replica-pagina's: /totaalrenovatie en
+ * /badkamerrenovatie. Wat per pagina verschilt (koppen, foto's, kaarten,
+ * stappen, calculatorvragen, leadbron) komt uit inhoud.ts; de opzet, de maten
+ * en het gedrag staan hier. Zo kan de tweede pagina niet stilletjes
+ * achterlopen op een correctie aan de eerste.
  *
  * De opzet, de maten en de plaatsing komen uit een pixelmeting van die
  * referentie (1200x8408). De inhoud, de kleuren en de foto's zijn van AB Bouw.
@@ -26,29 +32,13 @@ import {
   Bediening, Kaart, SpoorKaart, Stap, VoorNaSchuif,
   type Aanbodkaart, type Dienstkaart,
 } from './Onderdelen';
+import { TOTAALRENOVATIE, type PaginaInhoud } from './inhoud';
 
 import logo from '@/assets/home/logo-trim.png';
-import heroFoto from '@/assets/lp-diensten/totaalrenovatie-hero.jpg';
-import overFoto from '@/assets/lp-diensten/totaalrenovatie-g1.jpg';
 import glyph1 from '@/assets/lp-diensten/realisaties/totaalrenovatie-p1-a.jpg';
 import glyph2 from '@/assets/lp-diensten/realisaties/totaalrenovatie-p1-b.jpg';
 import glyph3 from '@/assets/lp-diensten/realisaties/totaalrenovatie-p2-a.jpg';
 import glyph4 from '@/assets/lp-diensten/realisaties/totaalrenovatie-p2-b.jpg';
-import dienstenBg from '@/assets/lp-diensten/totaalrenovatie-g2.jpg';
-import kaartRuwbouw from '@/assets/lp-diensten/kaart-ruwbouw.jpg';
-import kaartTechnieken from '@/assets/lp-diensten/kaart-technieken.jpg';
-import kaartPleister from '@/assets/lp-diensten/kaart-pleisterwerk.jpg';
-import kaartTegel from '@/assets/lp-diensten/kaart-vloeren.jpg';
-import kaartSanitair from '@/assets/lp-diensten/kaart-badkamer.jpg';
-import dakVoor from '@/assets/lp-diensten/dak-voor.jpg';
-import dakNa from '@/assets/lp-diensten/dak-na.jpg';
-import aanbod1 from '@/assets/lp-diensten/totaalrenovatie-steps.jpg';
-import aanbod2 from '@/assets/lp-diensten/terras-g1.jpg';
-import aanbod3 from '@/assets/lp-diensten/pleisterwerk-g2.jpg';
-import aanbod4 from '@/assets/lp-diensten/oprit-g2.jpg';
-import contactFoto from '@/assets/lp-diensten/totaalrenovatie-what.jpg';
-import eindFoto from '@/assets/lp-diensten/tegelwerken-hero.jpg';
-import cirkelFoto from '@/assets/lp-diensten/badkamer-hero.jpg';
 import merkWienerberger from '@/assets/merken/Wienerberger-donker.png';
 import merkKoramic from '@/assets/merken/Koramic-donker.png';
 import merkVelux from '@/assets/merken/Velux-donker.png';
@@ -87,64 +77,8 @@ const GETAL_GLYPHS = [
 const DIVISIES = ['AB Construct', 'AB Dakwerken', 'AB Gevelbekleding',
   'AB Interieurwerken', 'AB Bad & Wellness', 'AB Ecologisch'];
 
-/**
- * De reviews komen uit LpDienst.tsx, waar ze al voor de live site staan.
- * Hier geen nieuwe schrijven: klantbeoordelingen verzinnen mag niet, en twee
- * verschillende versies van dezelfde review op één site is ook fout.
- */
-const REVIEWS = DIENSTEN.totaalrenovatie.reviews;
 
-/** De opties uit de keuzelijst, gelijk aan die van de bestaande LP. */
-const SOORT_WERK = DIENSTEN.totaalrenovatie.typeWerkOpties;
 
-/**
- * De vijf kaarten: de ONDERDELEN van één totaalrenovatie, in de volgorde
- * waarin ze op de werf gebeuren — strippen, technieken, pleisteren, tegelen,
- * afwerken. Geen dienstenmenu: "Totaalrenovatie" naast "Badkamer" en "Oprit"
- * zetten leest als vijf losse opdrachten en spreekt de hele pagina tegen.
- *
- * De referentie laat drie van de vijf kaarten op dezelfde formule draaien
- * ("laat je X weg, dan gaat Y mis"). Die vorm staat hier nog maar op één kaart.
- */
-const DIENSTKAARTEN: Dienstkaart[] = [
-  { titel: 'Afbraak en ruwbouw', href: '#contact',
-    tekst: 'Muren weg, nieuwe openingen, oude vloer eruit. Wat blijft staan wordt eerst ondersteund.',
-    foto: kaartRuwbouw, alt: 'Nieuwe brede doorgang tussen leefruimte en keuken na het wegbreken van de muur' },
-  { titel: 'Technieken', href: '#contact',
-    tekst: 'Water, afvoer en elektriciteit gaan de muur in voordat er gepleisterd wordt.',
-    foto: kaartTechnieken, alt: 'Verdeler voor vloerverwarming, netjes aangesloten in een ingebouwde kast' },
-  { titel: 'Pleisterwerk en gyproc', href: '#contact',
-    tekst: 'Wanden en plafonds vlak en recht, klaar om te schilderen.',
-    foto: kaartPleister, alt: 'Strak gepleisterde wanden met een scherpe hoek en vlak plafond' },
-  { titel: 'Vloeren en tegelwerk', href: '#contact',
-    tekst: 'Van chape tot voeg: strak gelegd, recht in lijn en netjes afgewerkt.',
-    foto: kaartTegel, alt: 'Grootformaat vloertegels in een afgewerkte leefruimte' },
-  { titel: 'Interieur en afwerking', href: '#contact',
-    tekst: 'Badkamer, keuken, binnendeuren en het maatwerk dat erbij hoort.',
-    foto: kaartSanitair, alt: 'Afgewerkte badkamer met wastafel op eiken meubel' },
-];
-
-/**
- * De aanbodkaarten. De referentie toont hier Amerikaanse financieringsdeals
- * ("$0 Payment", "$45/Month"): een aanbod dat AB niet doet en dat hier dus een
- * verzonnen belofte zou zijn. De VORM blijft — sticker met twee regels, titel,
- * subtitel, één gevulde en drie omlijnde knoppen — en de INHOUD wordt wat er
- * bij een Vlaamse renovatie echt vastligt.
- */
-const AANBOD: Aanbodkaart[] = [
-  { badge: ['6%', 'btw'], titel: '6% btw in plaats van 21%',
-    tekst: 'Bij een woning ouder dan tien jaar.', knop: 'Bekijk of uw woning telt',
-    href: '#contact', foto: aanbod1, alt: 'Afgewerkte woonkamer na renovatie' },
-  { badge: ['5', 'werkdagen'], titel: 'Plaatsbezoek binnen vijf werkdagen',
-    tekst: "Opmeten, foto's van de opbouw, knelpunten.", knop: 'Gratis offerte',
-    href: '#contact', foto: aanbod2, alt: 'Terras aan een gerenoveerde woning' },
-  { badge: ['Eigen', 'ploeg'], titel: 'Eigen ploeg op de werf',
-    tekst: 'Dezelfde mensen, elke dag.', knop: 'Gratis offerte',
-    href: '#contact', foto: aanbod3, alt: 'Gepleisterde ruimte tijdens de afwerking' },
-  { badge: ['VCA', 'attest'], titel: 'VCA-gecertificeerd en verzekerd',
-    tekst: 'Attest en polis op aanvraag.', knop: 'Gratis offerte',
-    href: '#contact', foto: aanbod4, alt: 'Nieuwe oprit in klinkers' },
-];
 
 /**
  * De realisatiefoto's, per dienst opgehaald uit de map zelf.
@@ -163,60 +97,7 @@ const beeld = (naam: string) => {
   return treffer[1];
 };
 
-/**
- * De foto's in het spoor: vier per soort werk, op volgorde om en om gezet.
- *
- * Waarom om en om en niet per soort gegroepeerd: er passen er vier tegelijk in
- * beeld, dus bij groeperen ziet de bezoeker in het eerste scherm alleen
- * badkamers. Zo staat er op elke scrollpositie een woning, een badkamer, een
- * tegelvloer en een terras naast elkaar, en staan twee gelijkaardige foto's
- * nooit naast elkaar.
- *
- * Alleen ECHTE werffoto's. Elke gegenereerde foto die hier stond werd herkend
- * als AI — negen pogingen over drie rondes, allemaal afgekeurd. Van bijna
- * dezelfde opname (zelfde ruimte, zelfde hoek) staat alleen de beste hier.
- */
-const WERK_FOTOS: { naam: string; alt: string; pos?: string }[] = [
-  { naam: 'badkamer-p4-a', alt: 'Badkamer met marmerlook-tegels en zwevend meubel, door AB Bouw Groep' },
-  { naam: 'totaalrenovatie-p5-a', alt: 'Open keuken met eethoek na totaalrenovatie, door AB Bouw Groep' },
-  { naam: 'badkamer-p3-b', alt: 'Badkamer in antraciet met zwevend wastafelmeubel, door AB Bouw Groep' },
-  { naam: 'terras-p3-c', alt: 'Aangelegd terras met grijze tegels tegen de gevel, door AB Bouw Groep' },
-  { naam: 'tegelwerken-p2-a', alt: 'Gelegde tegelvloer met doorlopende plint, door AB Bouw Groep' },
-  { naam: 'badkamer-p4-b', alt: 'Badkamer met microcement wanden, bad en toilet, door AB Bouw Groep' },
-  { naam: 'totaalrenovatie-p6-a', alt: 'Keukeneiland met barkrukken na renovatie, door AB Bouw Groep' },
-  { naam: 'badkamer-p1-a', alt: 'Badkamer met inloopdouche in betonlook, door AB Bouw Groep' },
-  { naam: 'terras-p4-b', alt: 'Terrasaanleg met lijngoot en nivelleerclips rond een vijver, door AB Bouw Groep' },
-  { naam: 'tegelwerken-p1-a', alt: 'Grijze vloertegels in een gerenoveerde ruimte, door AB Bouw Groep' },
-  { naam: 'badkamer-p3-a', alt: 'Donkere badkamer met inloopdouche en lavabomeubel, door AB Bouw Groep' },
-  /* Het interessante van dit beeld — de glaspui en de straat — zit rechts;
-     bij een midden-crop blijft er kale muur over. Vandaar de eigen uitsnede. */
-  { naam: 'totaalrenovatie-p6-b', alt: 'Afgewerkte handelsruimte met glaspui en tegelvloer, door AB Bouw Groep', pos: '72% center' },
-  { naam: 'badkamer-p1-c', alt: 'Inloopdouche met glazen wand, door AB Bouw Groep' },
-  { naam: 'terras-p3-a', alt: 'Terras in grote betontegels achter een woning, door AB Bouw Groep' },
-  { naam: 'tegelwerken-p2-c', alt: 'Antracieten vloertegels in een gerenoveerde ruimte, door AB Bouw Groep' },
-  { naam: 'badkamer-p3-c', alt: 'Inloopdouche met donkere tegels en glaswand, door AB Bouw Groep' },
-  { naam: 'tegelwerken-p4-a', alt: 'Tegelvloer in houtlook op de verdieping, door AB Bouw Groep' },
-  { naam: 'badkamer-p1-b', alt: 'Badkamer met hangtoilet en wastafelmeubel, door AB Bouw Groep' },
-];
 
-/**
- * De vijf stappen. De referentie zet er keukenapparaten bij (dampkap, fornuis,
- * broodrooster); hier staat bij elke stap het gereedschap dat er echt aan te
- * pas komt. De teksten noemen elk iets anders: staan er drie keer dezelfde
- * belofte in, dan leest het als een sjabloon.
- */
-const STAPPEN = [
-  { titel: 'U doet een aanvraag', Icoon: IcStapBel,
-    tekst: 'Laat uw gegevens achter en vertel kort wat u wil laten doen. Een foto van de ruimte helpt. Bellen mag ook.' },
-  { titel: 'Gratis plaatsbezoek', Icoon: IcStapBezoek,
-    tekst: 'Meestal binnen vijf werkdagen staat er iemand bij u thuis. We bekijken de ruimte samen met u, luisteren naar wat u voor ogen hebt en zeggen meteen wat haalbaar is.' },
-  { titel: 'Opmeten en offerte', Icoon: IcStapMeten,
-    tekst: 'U krijgt de volledige prijs op papier, met per onderdeel wat erin zit. Ook de materialen die wij voorzien en de vermoedelijke doorlooptijd staan erbij.' },
-  { titel: 'De werf start', Icoon: IcStapWerf,
-    tekst: 'Dezelfde mensen komen elke dag terug. Wij schermen de rest van de woning af tegen stof en ruimen elke avond op.' },
-  { titel: 'De laatste ronde', Icoon: IcStapOplevering,
-    tekst: 'Bij de oplevering gaan we samen door de woning. Uw opmerkingen worden verholpen voordat de werf wordt afgesloten.' },
-];
 
 const NAV = [
   { label: 'Home', href: '#top' },
@@ -248,7 +129,13 @@ const BALKVELDEN = [
 
 
 
-export default function LpReplica() {
+/** Zet de regels van een kop onder elkaar, precies zoals ze in de referentie
+    afbreken. Levert dezelfde opbouw op als tekst met een los <br /> ertussen. */
+const regels = (r: string[]) => r.flatMap((t, i) => (i ? [<br key={i} />, t] : [t]));
+
+export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: PaginaInhoud }) {
+  const REVIEWS = DIENSTEN[inhoud.dienst].reviews;
+  const SOORT_WERK = DIENSTEN[inhoud.dienst].typeWerkOpties;
   const navigate = useNavigate();
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
@@ -420,7 +307,7 @@ export default function LpReplica() {
     return () => window.clearInterval(id);
   }, [werkStil]);
 
-  useEffect(() => { document.title = 'Totaalrenovatie in heel Vlaanderen — AB Bouw Groep'; }, []);
+  useEffect(() => { document.title = inhoud.titel; }, []);
 
   const meldStart = () => {
     if (startGemeld.current) return;
@@ -441,18 +328,18 @@ export default function LpReplica() {
     const res = await submitLead({
       source: 'landing_page',
       page_path: window.location.pathname,
-      landing_division: 'ab_construct',
+      landing_division: inhoud.divisie,
       firstName: String(f.get('voornaam') || '').trim() || undefined,
       lastName: String(f.get('achternaam') || '').trim() || undefined,
       email,
       phone: telefoon || undefined,
-      type_werk: 'ab_construct',
+      type_werk: inhoud.divisie,
       aanvullende_info: [String(f.get('soortwerk') || '').trim(), String(f.get('bericht') || '').trim()]
         .filter(Boolean).join(' — ') || undefined,
-      bron_lead: 'lp:totaalrenovatie:contact',
+      bron_lead: inhoud.bronPrefix + ':contact',
     });
     setBezig(false);
-    if (res.ok) navigate('/bedankt?dienst=totaalrenovatie');
+    if (res.ok) navigate('/bedankt?dienst=' + inhoud.dienst);
     else setFout('Versturen lukte niet. Bel gerust ' + CONTACT.phone.display + '.');
   };
 
@@ -470,17 +357,17 @@ export default function LpReplica() {
     const res = await submitLead({
       source: 'landing_page',
       page_path: window.location.pathname,
-      landing_division: 'ab_construct',
+      landing_division: inhoud.divisie,
       firstName: voor || undefined,
       lastName: rest.join(' ') || undefined,
       email,
       phone: telefoon || undefined,
-      type_werk: 'ab_construct',
+      type_werk: inhoud.divisie,
       aanvullende_info: String(f.get('bericht') || '').trim() || undefined,
-      bron_lead: 'lp:totaalrenovatie:balk',
+      bron_lead: inhoud.bronPrefix + ':balk',
     });
     setBezig(false);
-    if (res.ok) navigate('/bedankt?dienst=totaalrenovatie');
+    if (res.ok) navigate('/bedankt?dienst=' + inhoud.dienst);
     else setFout('Versturen lukte niet. Bel gerust ' + CONTACT.phone.display + '.');
   };
 
@@ -493,7 +380,8 @@ export default function LpReplica() {
       <section className="pc-hero">
         <div className="pc-hero-vlak" />
         <div className="pc-hero-foto">
-          <img src={heroFoto} alt="Woonkamer en keuken na een totaalrenovatie door AB Bouw Groep" />
+          <img src={inhoud.hero.foto} alt={inhoud.hero.alt}
+            style={inhoud.hero.focus ? ({ '--pc-hero-focus': inhoud.hero.focus } as React.CSSProperties) : undefined} />
         </div>
         <div className="pc-hero-sluier" />
 
@@ -547,8 +435,8 @@ export default function LpReplica() {
           {/* De referentie zet 'New' in de pil: een nieuwheidsclaim die voor AB
               niet klopt. De pil is eruit; de chip noemt de dienst en het
               werkgebied, zodat er informatie staat en geen kaal opschrift. */}
-          <h1 className="pc-h1">Uw partner voor<br />totaalrenovatie<br />van A tot Z</h1>
-          <a className="pc-knop pc-knop--accent" href="#contact">Plan gratis plaatsbezoek<IcPijl /></a>
+          <h1 className="pc-h1">{regels(inhoud.hero.regels)}</h1>
+          <a className="pc-knop pc-knop--accent" href="#contact">{inhoud.hero.knop}<IcPijl /></a>
         </div>
 
         <div className="pc-scroll">
@@ -582,13 +470,13 @@ export default function LpReplica() {
       </div>
 
       {/* ── Richtprijs-calculator, direct onder de balk ── */}
-      <div className="pc-vat pc-calc-vat"><Calculator /></div>
+      <div className="pc-vat pc-calc-vat"><Calculator inhoud={inhoud.calculator} /></div>
 
       {/* ── Over ons ── */}
       <section className="pc-over" id="over">
         <div className="pc-vat pc-over-grid">
           <div>
-            <h2 className="pc-h2">Eén vaste ploeg voor uw<br />hele renovatie</h2>
+            <h2 className="pc-h2">{regels(inhoud.over.kop)}</h2>
             <a className="pc-knop pc-knop--accent pc-over-knop" href={CONTACT.phone.href}>
               Bel {CONTACT.phone.display}<IcPijl />
             </a>
@@ -604,7 +492,7 @@ export default function LpReplica() {
           </div>
 
           <div className="pc-rij2 pc-over-foto">
-            <img src={overFoto} alt="Afgewerkte leefruimte na een totaalrenovatie door AB Bouw Groep" loading="lazy" />
+            <img src={inhoud.over.foto} alt={inhoud.over.alt} loading="lazy" />
             <div className="pc-score">
               <div className="pc-score-sterren">
                 {[0, 1, 2, 3, 4].map((i) => <IcSter key={i} />)}
@@ -615,19 +503,13 @@ export default function LpReplica() {
           </div>
 
           <div className="pc-rij2 pc-over-tekst">
-            <p>
-              Geen enkele renovatie loopt precies zoals op papier. Achter een muur zit een leiding
-              die niemand verwachtte, een vloer blijkt niet vlak, een deur sluit niet meer. Wie daar
-              vooraf ruimte voor laat, houdt de planning overeind.
-            </p>
+            <p>{inhoud.over.tekst}</p>
             {/* De zes divisies stonden in één doorlopende zin. Als lijst is in
                 één oogopslag te zien wat er onder één dak zit. */}
             <ul className="pc-divisies">
               {DIVISIES.map((d) => <li key={d}>{d}</li>)}
             </ul>
-            <p className="pc-over-slot">
-              Bij een totaalrenovatie werken die zes op dezelfde werf, volgens dezelfde planning.
-            </p>
+            <p className="pc-over-slot">{inhoud.over.slot}</p>
           </div>
         </div>
       </section>
@@ -635,24 +517,24 @@ export default function LpReplica() {
       {/* ── Diensten: donkere sectie met vijf getrapte fotokaarten ── */}
       <section className="pc-diensten" id="diensten">
         <div className="pc-diensten-bg">
-          <img src={dienstenBg} alt="" aria-hidden="true" loading="lazy" />
+          <img src={inhoud.diensten.achtergrond} alt="" aria-hidden="true" loading="lazy" />
         </div>
         <div className="pc-vat">
           <div className="pc-midden">
-            <h2 className="pc-h2--donker">Wat er in een<br />totaalrenovatie zit</h2>
+            <h2 className="pc-h2--donker">{regels(inhoud.diensten.kop)}</h2>
           </div>
 
           <div className="pc-kaarten">
             <div className="pc-kaarten-kolom">
-              <Kaart {...DIENSTKAARTEN[0]} hoogte={226} />
-              <Kaart {...DIENSTKAARTEN[1]} hoogte={335} />
+              <Kaart {...inhoud.diensten.kaarten[0]} hoogte={226} />
+              <Kaart {...inhoud.diensten.kaarten[1]} hoogte={335} />
             </div>
             <div className="pc-kaarten-kolom">
-              <Kaart {...DIENSTKAARTEN[2]} hoogte={585} gevuld />
+              <Kaart {...inhoud.diensten.kaarten[2]} hoogte={585} gevuld />
             </div>
             <div className="pc-kaarten-kolom">
-              <Kaart {...DIENSTKAARTEN[3]} hoogte={334} />
-              <Kaart {...DIENSTKAARTEN[4]} hoogte={227} />
+              <Kaart {...inhoud.diensten.kaarten[3]} hoogte={334} />
+              <Kaart {...inhoud.diensten.kaarten[4]} hoogte={227} />
             </div>
           </div>
         </div>
@@ -680,7 +562,7 @@ export default function LpReplica() {
       {/* ── Werkwijze: vijf stappen in 3 + 2 ── */}
       <section className="pc-werkwijze" id="werkwijze">
         <div className="pc-vat pc-midden">
-          <h2 className="pc-h2--midden">Wat er gebeurt nadat<br />u een aanvraag indient</h2>
+          <h2 className="pc-h2--midden">{regels(inhoud.werkwijze.kop)}</h2>
         </div>
         <div className="pc-stappen">
           {/* De bogen staan absoluut: hun plek komt uit de gemeten
@@ -689,10 +571,10 @@ export default function LpReplica() {
           <span className="pc-boog" style={{ left: 601, top: 11 }}><IcBoog bol /></span>
           <span className="pc-boog" style={{ left: 430, top: 227 }}><IcBoog /></span>
           <div className="pc-stappen-rij">
-            {STAPPEN.slice(0, 3).map((s, i) => <Stap key={s.titel} {...s} nr={i + 1} actief={i === 1} />)}
+            {inhoud.werkwijze.stappen.slice(0, 3).map((s, i) => <Stap key={s.titel} {...s} nr={i + 1} actief={i === 1} />)}
           </div>
           <div className="pc-stappen-rij pc-stappen-rij--twee">
-            {STAPPEN.slice(3).map((s, i) => <Stap key={s.titel} {...s} nr={i + 4} />)}
+            {inhoud.werkwijze.stappen.slice(3).map((s, i) => <Stap key={s.titel} {...s} nr={i + 4} />)}
           </div>
         </div>
       </section>
@@ -704,7 +586,7 @@ export default function LpReplica() {
           tegel is even groot en vierkant, zodat de rij als één blok leest. */}
       <section className="pc-werk">
         <div className="pc-vat pc-midden">
-          <h2 className="pc-h2--midden">Uitgevoerd werk</h2>
+          <h2 className="pc-h2--midden">{inhoud.werk.kop}</h2>
         </div>
         <div className="pc-vat"
           onPointerEnter={() => pauzeerWerk()} onPointerLeave={hervatWerk}
@@ -717,7 +599,7 @@ export default function LpReplica() {
               verborgen, anders staat elk project er twee keer in. */}
           <div className="pc-werk-spoor" ref={werkSpoor} role="group" aria-label="Uitgevoerde projecten"
             data-lus="1" onScroll={(e) => volgStand(e.currentTarget, setWerkPos)}>
-            {[0, 1].map((reeks) => WERK_FOTOS.map((f) => (
+            {[0, 1].map((reeks) => inhoud.werk.fotos.map((f) => (
               <figure className="pc-werk-foto" key={reeks + f.naam} aria-hidden={reeks === 1 ? true : undefined}>
                 <img src={beeld(f.naam)} alt={reeks === 1 ? '' : f.alt} loading="lazy"
                   style={f.pos ? { objectPosition: f.pos } : undefined} />
@@ -735,36 +617,39 @@ export default function LpReplica() {
           </div>
           <Bediening spoor={werkSpoor} pos={werkPos} schuif={schuif} wat="foto" lus />
         </div>
-        <div className="pc-vat pc-midden">
-          <VoorNaSchuif
-            voor={dakVoor} na={dakNa}
-            altVoor="Het dak van dezelfde woning met de pannen eraf: alleen het houten gebint staat er nog"
-            altNa="Hetzelfde dak na de werken, met nieuwe pannen en dakvensters"
-            labelLinks="Dak eraf" labelRechts="Dak erop"
-          />
-        </div>
+        {/* De voor/na-schuif hoort bij een paar opnames vanuit hetzelfde punt.
+            Bestaat dat paar voor deze pagina niet, dan valt het blok weg: twee
+            verschillende ruimtes naast elkaar zetten suggereert een
+            vergelijking die er niet is. */}
+        {inhoud.werk.schuif && (
+          <div className="pc-vat pc-midden">
+            <VoorNaSchuif {...inhoud.werk.schuif} />
+          </div>
+        )}
       </section>
 
       {/* ── Keurmerken: waar we mee bouwen ── */}
-      <section className="pc-merken">
-        <div className="pc-vat pc-midden">
-          <h2 className="pc-h2--midden">Waar we mee bouwen</h2>
-          <p className="pc-merken-sub">
-            Een goede verbouwing begint bij het materiaal.
-          </p>
-          {/* Vier merken, niet zes: dat zijn de logo's die in de repo staan.
-              Een VCA-beeldmerk erbij tekenen zou een keurmerk verzinnen. */}
-          <div className="pc-merkenrail" aria-label="Merken waarmee we werken">
-            <div className="pc-merkenrail-spoor">
-              {[0, 1].map((lus) => (
-                <div className="pc-merkenrail-rij" key={lus} aria-hidden={lus === 1}>
-                  {MERKEN.map((m) => <img key={m.alt} src={m.src} alt={m.alt} loading="lazy" />)}
-                </div>
-              ))}
+      {inhoud.toonMerken && (
+        <section className="pc-merken">
+          <div className="pc-vat pc-midden">
+            <h2 className="pc-h2--midden">Waar we mee bouwen</h2>
+            <p className="pc-merken-sub">
+              Een goede verbouwing begint bij het materiaal.
+            </p>
+            {/* Vier merken, niet zes: dat zijn de logo's die in de repo staan.
+                Een VCA-beeldmerk erbij tekenen zou een keurmerk verzinnen. */}
+            <div className="pc-merkenrail" aria-label="Merken waarmee we werken">
+              <div className="pc-merkenrail-spoor">
+                {[0, 1].map((lus) => (
+                  <div className="pc-merkenrail-rij" key={lus} aria-hidden={lus === 1}>
+                    {MERKEN.map((m) => <img key={m.alt} src={m.src} alt={m.alt} loading="lazy" />)}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── Reviews: scoreblok links, kaartenspoor rechts ── */}
       <section className="pc-reviews">
@@ -813,11 +698,11 @@ export default function LpReplica() {
           tekent, en de bezoeker scrolt langs het bewijs om er te komen. */}
       <section className="pc-aanbod">
         <div className="pc-vat">
-          <h2 className="pc-h2--midden">Uw zekerheden</h2>
+          <h2 className="pc-h2--midden">{inhoud.aanbod.kop}</h2>
         </div>
         <div className="pc-spoor" ref={aanbodSpoor}
           onScroll={(e) => volgStand(e.currentTarget, setAanbodPos)}>
-          {AANBOD.map((k, i) => <SpoorKaart key={k.titel} {...k} gevuld={i === 0} />)}
+          {inhoud.aanbod.kaarten.map((k, i) => <SpoorKaart key={k.titel} {...k} gevuld={i === 0} />)}
         </div>
         <Bediening spoor={aanbodSpoor} pos={aanbodPos} schuif={schuif} wat="kaart" />
       </section>
@@ -826,7 +711,7 @@ export default function LpReplica() {
       <section className="pc-contact" id="contact">
         <div className="pc-vat pc-midden">
           <span className="pc-chip--vlak">{CONTACT.phone.display}<IcChevron richting="rechts" /></span>
-          <h2 className="pc-h2--groot">Vraag een plaatsbezoek</h2>
+          <h2 className="pc-h2--groot">{inhoud.contact.kop}</h2>
         </div>
         <div className="pc-vat">
           <div className="pc-info">
@@ -874,7 +759,7 @@ export default function LpReplica() {
               {fout && <p className="pc-form-melding" style={{ color: '#a3231a' }}>{fout}</p>}
             </form>
             <div className="pc-contact-foto">
-              <img src={contactFoto} alt="Afgewerkte leefruimte uit een totaalrenovatie van AB Bouw Groep" loading="lazy" />
+              <img src={inhoud.contact.foto} alt={inhoud.contact.alt} loading="lazy" />
             </div>
           </div>
         </div>
@@ -883,17 +768,17 @@ export default function LpReplica() {
       {/* ── Eind-CTA met de cirkelfoto die over de bandrand steekt ── */}
       <section className="pc-eind">
         <div className="pc-eind-bg">
-          <img src={eindFoto} alt="" aria-hidden="true" loading="lazy" />
+          <img src={inhoud.eind.achtergrond} alt="" aria-hidden="true" loading="lazy" />
         </div>
         <div className="pc-cirkel">
-          <img src={cirkelFoto} alt="Afgewerkte badkamer uit een renovatie van AB Bouw Groep" loading="lazy" />
+          <img src={inhoud.eind.cirkel} alt={inhoud.eind.cirkelAlt} loading="lazy" />
         </div>
         <div className="pc-vat">
           <div className="pc-eind-vat">
             {/* De referentie herhaalt hier zijn eigen H1-vorm (drie diensten plus
                 "één X"). Deze kop zegt iets anders dan de hero. */}
-            <h2>Uw renovatie begint<br />met een plaatsbezoek.</h2>
-            <p>Laat uw gegevens achter of bel ons. Wij komen langs, lopen de woning met u door en zeggen meteen wat er mogelijk is.</p>
+            <h2>{regels(inhoud.eind.kop)}</h2>
+            <p>{inhoud.eind.tekst}</p>
             <div className="pc-eind-knoppen">
               <a className="pc-knop pc-knop--accent" href={CONTACT.phone.href}>
                 {CONTACT.phone.display}<IcPijl />
@@ -910,10 +795,7 @@ export default function LpReplica() {
           <div className="pc-footer-grid">
             <div>
               <div className="pc-footer-logo"><img src={logo} alt="AB Bouw Groep" /></div>
-              <p>
-                AB Bouw Groep is aannemer voor totaalrenovatie in heel Vlaanderen.
-                Van ruwbouw tot afwerking.
-              </p>
+              <p>{inhoud.footer}</p>
               {SOCIALS.length > 0 && (
                 <div className="pc-footer-soc">
                   {SOCIALS.map(({ naam, href }) => {

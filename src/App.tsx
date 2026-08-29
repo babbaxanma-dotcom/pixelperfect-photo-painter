@@ -31,6 +31,7 @@ const LpGevel = lazy(() => import("./pages/abbouw/lp/LpGevel"));
 const LpLokaal = lazy(() => import("./pages/abbouw/lp/LpLokaal"));
 const LpDienst = lazy(() => import("./pages/abbouw/lp/LpDienst"));
 const LpReplica = lazy(() => import("./pages/abbouw/lp/replica/LpReplica"));
+const LpBadkamer = lazy(() => import("./pages/abbouw/lp/replica/LpBadkamer"));
 const Bedankt = lazy(() => import("./pages/abbouw/Bedankt"));
 const CalculatorDak = lazy(() => import("./pages/abbouw/calculator/CalculatorDak"));
 const CalculatorGevel = lazy(() => import("./pages/abbouw/calculator/CalculatorGevel"));
@@ -107,7 +108,8 @@ const App = () => {
               pagina's blijven op LpDienst. */}
           <Route path="/lp/totaalrenovatie" element={<LpReplica />} />
           <Route path="/totaalrenovatie" element={<LpReplica />} />
-          <Route path="/lp/badkamerrenovatie" element={<LpDienst slug="badkamerrenovatie" />} />
+          <Route path="/lp/badkamerrenovatie" element={<LpBadkamer />} />
+          <Route path="/badkamerrenovatie" element={<LpBadkamer />} />
           <Route path="/lp/tegelwerken" element={<LpDienst slug="tegelwerken" />} />
           <Route path="/lp/pleisterwerk" element={<LpDienst slug="pleisterwerk" />} />
           <Route path="/lp/terrasaanleg" element={<LpDienst slug="terrasaanleg" />} />

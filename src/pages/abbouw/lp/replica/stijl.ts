@@ -852,7 +852,7 @@ export const REPLICA_CSS = `
      bijgesneden en de tuin blijft in beeld. Een schaling zoomt wél in, zonder
      dat het kader hoger wordt en de vouw kost. */
   .pc-hero-foto { overflow: hidden; }
-  .pc-hero-foto img { transform: scale(1.55); transform-origin: 30% center; }
+  .pc-hero-foto img { transform: scale(1.55); transform-origin: var(--pc-hero-focus, 30% center); }
   .pc-hero-vat { padding-block: 12px 16px; }
   .pc-hero-vat > .pc-chip { display: none; }
   .pcx .pc-h1 { font-size: 27px; line-height: 32px; }

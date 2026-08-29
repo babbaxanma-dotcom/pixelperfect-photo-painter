@@ -4,87 +4,11 @@ import { submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
 import { CONTACT } from '@/data/contact';
 import { IcChevron, IcPijl } from './Iconen';
+import type { PaginaInhoud } from './inhoud';
 
-type Keuze = { label: string; uitleg: string };
-type Vraag = { sleutel: string; vraag: string; keuzes: Keuze[] };
-
-/**
- * Vijf vragen, één per scherm.
- *
- * Bewust vijf en niet acht: elke extra vraag is een kans om af te haken, en een
- * vraag als "welke afwerking hebt u in gedachten" kan een bezoeker niet
- * beantwoorden zonder eerst offertes gezien te hebben. Wat overblijft is wat
- * hij zonder nadenken weet: wat, hoe groot, hoe oud, hoeveel, en wanneer.
- *
- * Onder elke keuze staat een tweede regel die de keuze concreet maakt — bij
- * grootte staat het aantal vierkante meter erbij, zodat niemand hoeft te meten.
- * Overal is er een uitweg ("weet ik niet"), want wie twijfelt sluit het scherm
- * in plaats van te gokken.
- */
-const VRAGEN: Vraag[] = [
-  /* Niet "welke dienst wil u" — wie op een totaalrenovatie-pagina landt heeft
-     dat al gezegd, en zo'n vraag leest alsof je niet geluisterd hebt. Wat wél
-     verschilt tussen deze bezoekers, en wat de prijs het hardst stuurt, is hoe
-     VER de renovatie gaat. Daar vraagt hij dus naar. Eén losse ruimte staat er bewust NIET bij:
-     dat is per definitie geen totaalrenovatie. */
-  {
-    sleutel: 'Omvang',
-    vraag: 'Hoever gaat uw renovatie?',
-    keuzes: [
-      { label: 'De hele woning', uitleg: 'van kelder tot dak' },
-      { label: 'De benedenverdieping', uitleg: 'leefruimte, keuken, berging' },
-      { label: 'De bovenverdieping', uitleg: 'slaapkamers en badkamer' },
-      { label: 'Nog niet beslist', uitleg: 'daar komen we samen uit' },
-    ],
-  },
-  /* Deze vraag gaat over de WONING, niet over het deel dat wordt aangepakt —
-     dat stond al in vraag 1. Stonden er hier opnieuw "een kamer" en "een
-     verdieping", dan herhaalde de vraag de vorige met dezelfde eenheden.
-     Woningtypes met een vierkantemeter-richtgetal erachter zijn zonder meten of
-     opzoeken te beantwoorden. */
-  {
-    sleutel: 'Woning',
-    vraag: 'Wat voor woning is het?',
-    keuzes: [
-      { label: 'Een appartement', uitleg: 'ongeveer 90 m²' },
-      { label: 'Een rijwoning', uitleg: 'ongeveer 120 m²' },
-      { label: 'Een halfopen woning', uitleg: 'ongeveer 160 m²' },
-      { label: 'Een open bebouwing', uitleg: '200 m² of meer' },
-      { label: 'Geen idee', uitleg: 'wij meten het op' },
-    ],
-  },
-  {
-    sleutel: 'Leeftijd woning',
-    vraag: 'Hoe oud is de woning ongeveer?',
-    keuzes: [
-      { label: 'Nieuwer dan 10 jaar', uitleg: 'dan geldt 21% btw' },
-      { label: '10 tot 30 jaar', uitleg: 'dan geldt 6% btw' },
-      { label: '30 tot 50 jaar', uitleg: 'dan geldt 6% btw' },
-      { label: 'Ouder dan 50 jaar', uitleg: 'dan geldt 6% btw' },
-      { label: 'Weet ik niet', uitleg: 'wij zoeken het op' },
-    ],
-  },
-  {
-    sleutel: 'Staat',
-    vraag: 'Hoeveel moet er vernieuwd worden?',
-    keuzes: [
-      { label: 'Alles', uitleg: 'strippen tot op de ruwbouw' },
-      { label: 'Een groot deel', uitleg: 'een stuk blijft staan' },
-      { label: 'Enkel de afwerking', uitleg: 'vloer, pleister en verf' },
-      { label: 'Weet ik niet', uitleg: 'dat zien we ter plaatse' },
-    ],
-  },
-  {
-    sleutel: 'Start',
-    vraag: 'Wanneer zou u willen starten?',
-    keuzes: [
-      { label: 'Zo snel mogelijk', uitleg: 'wij bellen u eerst' },
-      { label: 'Binnen drie maanden', uitleg: 'ruim op tijd' },
-      { label: 'Dit jaar nog', uitleg: 'we plannen samen in' },
-      { label: 'Ik kijk eerst rond', uitleg: 'vrijblijvend, geen druk' },
-    ],
-  },
-];
+type Inhoud = PaginaInhoud['calculator'];
+type Vraag = Inhoud['vragen'][number];
+type Keuze = Vraag['keuzes'][number];
 
 /**
  * Prijsindicatie-wizard onder de balk in de hero.
@@ -95,7 +19,8 @@ const VRAGEN: Vraag[] = [
  * samenvatting en laat hij zijn gegevens achter — hetzelfde patroon als de
  * bestaande calculators op de site (CalculatorWizard).
  */
-export default function Calculator() {
+export default function Calculator({ inhoud }: { inhoud: Inhoud }) {
+  const VRAGEN = inhoud.vragen;
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [stap, setStap] = useState(0);
@@ -109,7 +34,7 @@ export default function Calculator() {
 
   const start = () => {
     setOpen(true);
-    if (!gemeld.ja) { gemeld.ja = true; trackFormStart('lp:replica:calculator'); }
+    if (!gemeld.ja) { gemeld.ja = true; trackFormStart(inhoud.bronLead); }
   };
 
   const kies = (v: Vraag, k: Keuze) => {
@@ -136,16 +61,16 @@ export default function Calculator() {
     const res = await submitLead({
       source: 'landing_page',
       page_path: window.location.pathname,
-      landing_division: 'ab_construct',
+      landing_division: inhoud.divisie,
       firstName: String(f.get('naam') || '').trim() || undefined,
       email,
       phone: telefoon || undefined,
-      type_werk: 'ab_construct',
+      type_werk: inhoud.divisie,
       aanvullende_info: VRAGEN.map((v) => v.sleutel + ': ' + (antwoorden[v.sleutel] || '—')).join(' · '),
-      bron_lead: 'lp:totaalrenovatie:calculator',
+      bron_lead: inhoud.bronLead,
     });
     setBezig(false);
-    if (res.ok) navigate('/bedankt?dienst=totaalrenovatie');
+    if (res.ok) navigate('/bedankt?dienst=' + inhoud.bedanktSlug);
     else setFout('Versturen lukte niet. Bel gerust ' + CONTACT.phone.display + '.');
   };
 
@@ -153,12 +78,12 @@ export default function Calculator() {
     return (
       <div className="pc-calc pc-calc--dicht">
         <div>
-          <span className="pc-calc-badge">Prijsindicatie in 5 vragen</span>
-          <h2>Wat kost uw renovatie?</h2>
-          <p>Klik de antwoorden aan. U hoeft niets op te meten of op te zoeken.</p>
+          <span className="pc-calc-badge">{inhoud.badge}</span>
+          <h2>{inhoud.kop}</h2>
+          <p>{inhoud.onder}</p>
         </div>
         <button type="button" className="pc-knop pc-knop--accent" onClick={start}>
-          Start de berekening<IcPijl />
+          {inhoud.knop}<IcPijl />
         </button>
       </div>
     );
@@ -194,7 +119,7 @@ export default function Calculator() {
         </div>
       ) : (
         <div className="pc-calc-uitkomst">
-          <h2>Waar mogen wij uw prijs naartoe sturen?</h2>
+          <h2>{inhoud.uitkomstKop}</h2>
           <ul className="pc-calc-samenvatting">
             {VRAGEN.map((v) => (
               <li key={v.sleutel}><span>{v.sleutel}</span><span>{antwoorden[v.sleutel] || '—'}</span></li>

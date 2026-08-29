@@ -16,7 +16,8 @@
  */
 const puppeteer = require('puppeteer-core');
 
-const URL = process.argv[2] || 'http://localhost:8081/lp/totaalrenovatie';
+const BASIS = process.argv[2] || 'http://localhost:8080';
+const PADEN = ['/totaalrenovatie', '/badkamerrenovatie'];
 const CHROME = process.env.CHROME_PAD || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const BREEDTES = [1200, 768, 390];
 
@@ -29,13 +30,14 @@ const BREEDTES = [1200, 768, 390];
   const fouten = [];
   let geklikt = 0;
 
+  for (const pad of PADEN) {
   for (const breedte of BREEDTES) {
     const pg = await browser.newPage();
     await pg.setViewport({ width: breedte, height: 900, deviceScaleFactor: 1 });
     await pg.evaluateOnNewDocument(() => {
       try { localStorage.setItem('ab_bouw_consent_v1', JSON.stringify({ analytics: true, marketing: true, essential: true, ts: Date.now() })); } catch { /* leeg */ }
     });
-    await pg.goto(URL, { waitUntil: 'networkidle0', timeout: 60000 });
+    await pg.goto(BASIS + pad, { waitUntil: 'networkidle0', timeout: 60000 });
     await pg.evaluate(async () => {
       document.querySelectorAll('img[loading="lazy"]').forEach((i) => { i.loading = 'eager'; });
       await document.fonts.ready;
@@ -48,7 +50,7 @@ const BREEDTES = [1200, 768, 390];
     });
 
     const sporen = await pg.evaluate(() => [...document.querySelectorAll('.pc-bediening')].map((b, i) => i));
-    if (!sporen.length) { fouten.push(`${breedte}px: geen enkele bediening gevonden — de meting telt niet`); await pg.close(); continue; }
+    if (!sporen.length) { fouten.push(`${pad} ${breedte}px: geen enkele bediening gevonden — de meting telt niet`); await pg.close(); continue; }
 
     for (const i of sporen) {
       const naam = await pg.evaluate((n) => {
@@ -67,13 +69,25 @@ const BREEDTES = [1200, 768, 390];
         };
       }, i);
       if (beginstand.teSchuiven > 20 && beginstand.volgendeUit) {
-        fouten.push(`${breedte}px · ${naam}: "volgende" staat uit terwijl er ${Math.round(beginstand.teSchuiven)}px te schuiven valt`);
+        fouten.push(`${pad} ${breedte}px · ${naam}: "volgende" staat uit terwijl er ${Math.round(beginstand.teSchuiven)}px te schuiven valt`);
       }
-      if (beginstand.links === -1) { fouten.push(`${breedte}px · ${naam}: het spoor zelf niet gevonden`); continue; }
+      if (beginstand.links === -1) { fouten.push(`${pad} ${breedte}px · ${naam}: het spoor zelf niet gevonden`); continue; }
       if (beginstand.teSchuiven <= 20) continue;
 
+      /* Loopt dit spoor rond? Dan wordt het hieronder anders getoetst. */
+      const lus = await pg.evaluate((n) => {
+        const b = document.querySelectorAll('.pc-bediening')[n];
+        const spoor = b.parentElement.querySelector('[class*="spoor"]');
+        return spoor && spoor.dataset.lus ? spoor.children.length / 2 : 0;
+      }, i);
+
       /* 2. tien keer vooruit klikken: elke klik moet de positie echt verzetten,
-            tot het spoor aan het eind ligt */
+            tot het spoor aan het eind ligt.
+            NIET voor een spoor dat rondloopt: daar is terugspringen naar het
+            begin juist het gewenste gedrag, en bij acht foto's valt die sprong
+            binnen de tien klikken. Voor die sporen doet punt 3a de echte toets
+            (naad, uitlijning), en die is strenger. */
+      if (!lus) {
       let vorige = beginstand.links;
       let aanEind = false;
       for (let klik = 0; klik < 10 && !aanEind; klik++) {
@@ -90,10 +104,12 @@ const BREEDTES = [1200, 768, 390];
         if (uit.uitgeschakeld) { aanEind = true; break; }
         if (uit.links <= vorige + 2) {
           if (uit.links >= uit.max - 2) { aanEind = true; break; }
-          fouten.push(`${breedte}px · ${naam}: klik ${klik + 1} op "volgende" verzette niets (bleef op ${Math.round(uit.links)}px van ${Math.round(uit.max)}px)`);
+          fouten.push(`${pad} ${breedte}px · ${naam}: klik ${klik + 1} op "volgende" verzette niets (bleef op ${Math.round(uit.links)}px van ${Math.round(uit.max)}px)`);
           break;
         }
         vorige = uit.links;
+      }
+
       }
 
       /* 3a. een spoor dat rondloopt (data-lus) heeft geen eind: daar telt of de
@@ -103,11 +119,6 @@ const BREEDTES = [1200, 768, 390];
              hier al in zaten: de terugsprong ging over scrollWidth / 2 (één
              goot te kort) en de stap was geschat op breedte + 25 terwijl de
              goot 12px is op een telefoon — samen 13px wegkruipen per stap. */
-      const lus = await pg.evaluate((n) => {
-        const b = document.querySelectorAll('.pc-bediening')[n];
-        const spoor = b.parentElement.querySelector('[class*="spoor"]');
-        return spoor && spoor.dataset.lus ? spoor.children.length / 2 : 0;
-      }, i);
       if (lus) {
         const stappen = await pg.evaluate(async (n, reeks) => {
           const b = document.querySelectorAll('.pc-bediening')[n];
@@ -142,7 +153,7 @@ const BREEDTES = [1200, 768, 390];
             }
           };
           const rij = [];
-          for (let k = 0; k <= reeks; k++) {
+          for (let k = 0; k <= reeks + 1; k++) {
             rij.push(vooraan());
             knop.click();
             await stil();
@@ -152,15 +163,23 @@ const BREEDTES = [1200, 768, 390];
           return rij;
         }, i, lus);
         geklikt += stappen.length;
-        if (stappen.length < lus + 1 || stappen.some((s) => !s)) {
-          fouten.push(`${breedte}px · ${naam}: de lus-meting leverde ${stappen.length} standen op — ongeldig`);
+        if (stappen.length < lus + 2 || stappen.some((s) => !s)) {
+          fouten.push(`${pad} ${breedte}px · ${naam}: de lus-meting leverde ${stappen.length} standen op — ongeldig`);
         } else {
           if (stappen[lus].src !== stappen[0].src) {
-            fouten.push(`${breedte}px · ${naam}: na ${lus} stappen staat ${stappen[lus].src} vooraan in plaats van ${stappen[0].src} — de lus sluit niet`);
+            fouten.push(`${pad} ${breedte}px · ${naam}: na ${lus} stappen staat ${stappen[lus].src} vooraan in plaats van ${stappen[0].src} — de lus sluit niet`);
+          }
+          /* Na de terugsprong moet exact de tweede foto vooraan staan. Deze
+             toets is de enige die de SPRONG zelf meet: de naadtoets hierboven
+             kijkt naar de tegel vlak vóór de sprong en blijft groen als de
+             sprong op de verkeerde tegel uitkomt. Bewezen met een positieve
+             controle: één tegel mis in de terugsprong maakt deze regel rood. */
+          if (stappen[lus + 1].src !== stappen[1].src) {
+            fouten.push(`${pad} ${breedte}px · ${naam}: na de terugsprong staat ${stappen[lus + 1].src} vooraan in plaats van ${stappen[1].src} — de lus springt naar de verkeerde foto`);
           }
           const drift = Math.max(...stappen.map((s) => Math.abs(s.x - stappen[0].x)));
           if (drift > 2) {
-            fouten.push(`${breedte}px · ${naam}: de uitlijning kruipt ${drift}px weg over ${lus} stappen — de stapgrootte klopt niet met de goot`);
+            fouten.push(`${pad} ${breedte}px · ${naam}: de uitlijning kruipt ${drift}px weg over ${lus} stappen — de stapgrootte klopt niet met de goot`);
           }
         }
         continue;
@@ -179,12 +198,13 @@ const BREEDTES = [1200, 768, 390];
       }, i);
       geklikt++;
       if (terug.voor > 20 && terug.uitgeschakeld) {
-        fouten.push(`${breedte}px · ${naam}: "vorige" staat uit terwijl het spoor op ${Math.round(terug.voor)}px staat`);
+        fouten.push(`${pad} ${breedte}px · ${naam}: "vorige" staat uit terwijl het spoor op ${Math.round(terug.voor)}px staat`);
       } else if (!terug.uitgeschakeld && terug.na >= terug.voor - 2) {
-        fouten.push(`${breedte}px · ${naam}: klik op "vorige" verzette niets (bleef op ${Math.round(terug.na)}px)`);
+        fouten.push(`${pad} ${breedte}px · ${naam}: klik op "vorige" verzette niets (bleef op ${Math.round(terug.na)}px)`);
       }
     }
     await pg.close();
+  }
   }
   await browser.close();
 
@@ -194,7 +214,7 @@ const BREEDTES = [1200, 768, 390];
     process.exit(2);
   }
 
-  console.log(`check-bediening: ${geklikt} klikken over ${BREEDTES.length} schermbreedtes`);
+  console.log(`check-bediening: ${geklikt} klikken over ${BREEDTES.length} schermbreedtes en ${PADEN.length} pagina's`);
   if (!fouten.length) { console.log('  alle schuifknoppen doen wat ze beloven'); process.exit(0); }
   console.log('');
   for (const f of fouten) console.log(`  FOUT: ${f}`);

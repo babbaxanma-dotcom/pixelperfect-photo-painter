@@ -15,6 +15,9 @@
  * ligt. Twee signalen, omdat dHash alleen ook los van elkaar staande maar
  * even sobere ruimtes als gelijk kan zien.
  *
+ * Elke pagina wordt APART getoetst: dezelfde foto op twee verschillende
+ * pagina's is geen dubbel, twee bijna-gelijke foto's in één spoor wel.
+ *
  * Draaien: node scripts/check-fotos.cjs [--alle]
  *   zonder vlag: alleen de foto's die in de vier tabbladen staan
  *   --alle     : elk bestand in de realisatiemap, om vervangers te zoeken
@@ -25,7 +28,7 @@ const sharp = require('sharp');
 
 const WORTEL = path.join(__dirname, '..');
 const MAP = path.join(WORTEL, 'src/assets/lp-diensten/realisaties');
-const BRON = path.join(WORTEL, 'src/pages/abbouw/lp/replica/LpReplica.tsx');
+const BRON = path.join(WORTEL, 'src/pages/abbouw/lp/replica/inhoud.ts');
 
 /** Grens waaronder twee foto's als bijna dezelfde gelden. */
 const HAMMING_GRENS = 12;
@@ -61,69 +64,99 @@ const kleurAfstand = (a, b) => a.reduce((n, v, i) => n + Math.abs(v - b[i]), 0) 
   const alle = process.argv.includes('--alle');
   const bron = fs.readFileSync(BRON, 'utf8');
 
-  /* welke foto's staan er echt in het spoor? uit de bron lezen, niet raden */
-  const blok = bron.slice(bron.indexOf('const WERK_FOTOS'), bron.indexOf('const STAPPEN'));
-  const gebruikt = [...blok.matchAll(/naam: '([a-z]+-p\d-[a-z])'/g)].map((m) => m[1]);
-  /* Positieve controle op de meting zelf: het aantal namen dat de regex vindt
-     moet gelijk zijn aan het aantal regels in de lijst. Vindt hij er nul (naam
-     van de constante gewijzigd) of te weinig (regex loopt achter op de vorm),
-     dan is de uitslag "geen dubbels" waardeloos en faalt de guard luid. */
-  /* met de quote erbij: "{ naam: string;" uit de typedeclaratie is geen foto. */
-  const regels = (blok.match(/\{ naam: '/g) || []).length;
-  if (!gebruikt.length || gebruikt.length !== regels) {
-    console.error(`FOUT: ${gebruikt.length} namen gelezen uit WERK_FOTOS maar ${regels} regels in de lijst — de meting is ongeldig`);
-    process.exit(2);
-  }
-
-  const namen = alle
-    ? fs.readdirSync(MAP).filter((f) => f.endsWith('.jpg')).map((f) => f.replace(/\.jpg$/, ''))
-    : gebruikt;
-
-  const ontbreekt = namen.filter((n) => !fs.existsSync(path.join(MAP, `${n}.jpg`)));
-  if (ontbreekt.length) {
-    console.error(`FOUT: ${ontbreekt.length} foto uit WERK_TABS bestaat niet: ${ontbreekt.join(', ')}`);
-    process.exit(1);
-  }
-
-  const vingers = [];
-  for (const n of namen) {
-    const pad = path.join(MAP, `${n}.jpg`);
-    vingers.push({ naam: n, d: await dhash(pad), k: await kleuren(pad) });
-  }
-
-  /* positieve controle: een foto met zichzelf moet afstand 0 geven */
-  if (hamming(vingers[0].d, vingers[0].d) !== 0 || kleurAfstand(vingers[0].k, vingers[0].k) > 1e-9) {
-    console.error('FOUT: de vingerafdruk herkent een foto niet als gelijk aan zichzelf — meting ongeldig');
-    process.exit(2);
-  }
-
-  const paren = [];
-  for (let i = 0; i < vingers.length; i++) {
-    for (let j = i + 1; j < vingers.length; j++) {
-      const h = hamming(vingers[i].d, vingers[j].d);
-      const k = kleurAfstand(vingers[i].k, vingers[j].k);
-      if (h <= HAMMING_GRENS && k <= KLEUR_GRENS) paren.push({ a: vingers[i].naam, b: vingers[j].naam, h, k });
+  /* Welke foto's staan er echt in de sporen? Per pagina uit de bron lezen, niet
+     raden. De inhoud van beide pagina's staat in hetzelfde bestand, dus de
+     tekst wordt eerst per pagina-object gesplitst. */
+  const paginas = [];
+  for (const naam of ['TOTAALRENOVATIE', 'BADKAMER']) {
+    const begin = bron.indexOf(`export const ${naam}: PaginaInhoud = {`);
+    if (begin < 0) {
+      console.error(`FOUT: pagina ${naam} niet gevonden in ${path.basename(BRON)} — de meting is ongeldig`);
+      process.exit(2);
     }
+    const eind = bron.indexOf(String.fromCharCode(10) + 'export const ', begin + 10);
+    const stuk = bron.slice(begin, eind < 0 ? bron.length : eind);
+    const spoor = stuk.slice(stuk.indexOf('fotos: ['), stuk.indexOf('schuif:') > 0 ? stuk.indexOf('schuif:') : undefined);
+    const gebruikt = [...spoor.matchAll(/naam: '([a-z]+-p\d-[a-z])'/g)].map((m) => m[1]);
+    const regels = (spoor.match(/\{ naam: '/g) || []).length;
+    /* Positieve controle op de meting zelf: evenveel gelezen namen als regels.
+       Nul (veld hernoemd) of te weinig (regex loopt achter op de vorm) maakt de
+       uitslag "geen dubbels" waardeloos, dus faalt de guard luid. */
+    if (!gebruikt.length || gebruikt.length !== regels) {
+      console.error(`FOUT: ${naam}: ${gebruikt.length} namen gelezen maar ${regels} regels in de lijst — de meting is ongeldig`);
+      process.exit(2);
+    }
+    paginas.push({ naam, gebruikt });
   }
-  paren.sort((x, y) => x.h - y.h);
 
-  /* dubbele bestandsnaam binnen één tabblad is altijd fout */
-  const telling = {};
-  for (const n of gebruikt) telling[n] = (telling[n] || 0) + 1;
-  const letterlijkDubbel = Object.entries(telling).filter(([, n]) => n > 1);
+  /** Vingerafdrukken van een reeks namen. */
+  const meet = async (namen) => {
+    const uit = [];
+    for (const n of namen) {
+      const pad = path.join(MAP, `${n}.jpg`);
+      uit.push({ naam: n, d: await dhash(pad), k: await kleuren(pad) });
+    }
+    return uit;
+  };
 
-  console.log(`check-fotos: ${vingers.length} foto's vergeleken (${(vingers.length * (vingers.length - 1)) / 2} paren)`);
   if (alle) {
+    const namen = fs.readdirSync(MAP).filter((f) => f.endsWith('.jpg')).map((f) => f.replace(/\.jpg$/, ''));
+    const vingers = await meet(namen);
+    const paren = [];
+    for (let i = 0; i < vingers.length; i++) {
+      for (let j = i + 1; j < vingers.length; j++) {
+        const h = hamming(vingers[i].d, vingers[j].d);
+        const k = kleurAfstand(vingers[i].k, vingers[j].k);
+        if (h <= HAMMING_GRENS && k <= KLEUR_GRENS) paren.push({ a: vingers[i].naam, b: vingers[j].naam, h, k });
+      }
+    }
+    paren.sort((x, y) => x.h - y.h);
     for (const p of paren) console.log(`  lijkt op elkaar  ${p.a}  ~  ${p.b}   (hamming ${p.h}, kleur ${p.k.toFixed(3)})`);
-    console.log(`\n${paren.length} paar(en) onder de grens — met --alle is dit een lijst, geen oordeel.`);
+    console.log(`
+${paren.length} paar(en) onder de grens — met --alle is dit een lijst, geen oordeel.`);
     process.exit(0);
   }
 
   const fouten = [];
-  for (const [n, x] of letterlijkDubbel) fouten.push(`${n} staat ${x}x in de tabbladen`);
-  for (const p of paren) fouten.push(`${p.a} en ${p.b} zijn bijna dezelfde foto (hamming ${p.h}, kleur ${p.k.toFixed(3)})`);
+  let vergeleken = 0;
+  let parenTotaal = 0;
 
-  if (!fouten.length) { console.log('  geen bijna-dezelfde foto\'s in de tabbladen'); process.exit(0); }
+  for (const { naam, gebruikt } of paginas) {
+    const ontbreekt = gebruikt.filter((n) => !fs.existsSync(path.join(MAP, `${n}.jpg`)));
+    if (ontbreekt.length) {
+      console.error(`FOUT: ${naam}: ${ontbreekt.length} foto bestaat niet: ${ontbreekt.join(', ')}`);
+      process.exit(1);
+    }
+    const vingers = await meet(gebruikt);
+
+    /* positieve controle: een foto met zichzelf moet afstand 0 geven */
+    if (hamming(vingers[0].d, vingers[0].d) !== 0 || kleurAfstand(vingers[0].k, vingers[0].k) > 1e-9) {
+      console.error('FOUT: de vingerafdruk herkent een foto niet als gelijk aan zichzelf — meting ongeldig');
+      process.exit(2);
+    }
+
+    for (let i = 0; i < vingers.length; i++) {
+      for (let j = i + 1; j < vingers.length; j++) {
+        parenTotaal++;
+        const h = hamming(vingers[i].d, vingers[j].d);
+        const k = kleurAfstand(vingers[i].k, vingers[j].k);
+        if (h <= HAMMING_GRENS && k <= KLEUR_GRENS) {
+          fouten.push(`${naam}: ${vingers[i].naam} en ${vingers[j].naam} zijn bijna dezelfde foto (hamming ${h}, kleur ${k.toFixed(3)})`);
+        }
+      }
+    }
+
+    /* dezelfde bestandsnaam twee keer in één spoor is altijd fout */
+    const telling = {};
+    for (const n of gebruikt) telling[n] = (telling[n] || 0) + 1;
+    for (const [n, x] of Object.entries(telling).filter(([, x]) => x > 1)) {
+      fouten.push(`${naam}: ${n} staat ${x}x in het spoor`);
+    }
+    vergeleken += vingers.length;
+  }
+
+  console.log(`check-fotos: ${vergeleken} foto's over ${paginas.length} pagina's (${parenTotaal} paren)`);
+  if (!fouten.length) { console.log("  geen bijna-dezelfde foto's binnen een pagina"); process.exit(0); }
   console.log('');
   for (const f of fouten) console.log(`  FOUT: ${f}`);
   process.exit(1);
