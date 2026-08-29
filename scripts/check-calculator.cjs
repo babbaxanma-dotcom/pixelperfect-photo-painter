@@ -113,10 +113,10 @@ const LEADPADEN = [/leadconnectorhq/i, /gohighlevel/i, /web3forms/i, /hooks\./i]
   /* ── 3. een nummer dat te kort is om te bellen ── */
   {
     const { pg, gepoogd } = await totAanHetEind();
-    const r = await verstuur(pg, { naam: 'Test', telefoon: '0460 20' });
+    const r = await verstuur(pg, { naam: 'Test', telefoon: '0460 20 7' }); /* 7 cijfers: net onder de drempel */
     proeven++;
     if (!r.nogOpFormulier) fouten.push('een te kort nummer werd toch geaccepteerd');
-    if (!r.fout) fouten.push('een te kort nummer gaf geen melding');
+    if (!/telefoonnummer|volledig/i.test(r.fout)) fouten.push(`een nummer van 7 cijfers gaf geen validatiemelding ("${r.fout}")`);
     if (gepoogd.length) fouten.push(`te kort nummer: er vertrok toch een aanvraag (${gepoogd.length})`);
     await pg.close();
   }
@@ -127,6 +127,14 @@ const LEADPADEN = [/leadconnectorhq/i, /gohighlevel/i, /web3forms/i, /hooks\./i]
     const r = await verstuur(pg, { naam: 'Test', telefoon: 'bel mij maar' });
     proeven++;
     if (!r.nogOpFormulier) fouten.push('een nummer zonder cijfers werd toch geaccepteerd');
+    if (!/telefoonnummer|volledig/i.test(r.fout)) {
+      /* Zonder deze regel glipte een echte fout erdoor: de controle telde met
+         /D/ TEKENS in plaats van cijfers, dus 'bel mij maar' haalde de drempel
+         van acht. Het formulier bleef daarna toch staan - niet door de
+         controle, maar omdat het versturen lokaal faalt. 'Nog op het
+         formulier' is dus geen bewijs; alleen de validatiemelding is dat. */
+      fouten.push(`nummer zonder cijfers: geen validatiemelding ("${r.fout}") — de controle liet het door`);
+    }
     if (gepoogd.length) fouten.push(`nummer zonder cijfers: er vertrok toch een aanvraag (${gepoogd.length})`);
     await pg.close();
   }

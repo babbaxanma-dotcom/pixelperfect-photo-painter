@@ -128,7 +128,7 @@ export default function Calculator() {
        Dezelfde drempel als de lead-pijplijn zelf hanteert — acht cijfers — want
        een voorkant die iets doorlaat wat de achterkant weigert, laat de
        bezoeker denken dat hij verstuurd heeft terwijl er niets aankomt. */
-    const cijfers = telefoon.replace(/D/g, '').length;
+    const cijfers = telefoon.replace(/\D/g, '').length;
     if (!telefoon) { setFout('Vul uw telefoonnummer in. Wij bellen u met de prijsindicatie.'); return; }
     if (cijfers < 8) { setFout('Dat telefoonnummer lijkt niet volledig. Controleer het even.'); return; }
     setFout(null);

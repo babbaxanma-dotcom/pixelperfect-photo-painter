@@ -19,9 +19,13 @@ import { DIENSTEN } from '../LpDienst';
 import { REPLICA_CSS } from './stijl';
 import {
   IcBericht, IcChevron, IcGoogle, IcFacebook, IcLinkedIn, IcMail, IcPersoon, IcPijl,
-  IcPin, IcSter, IcTelefoon, IcX, IcYouTube, IcZonnestraal,
+  IcPin, IcSter, IcTelefoon, IcX, IcYouTube,
   IcBoog, IcStapBel, IcStapBezoek, IcStapMeten, IcStapOplevering, IcStapWerf,
 } from './Iconen';
+import {
+  Bediening, Kaart, SpoorKaart, Stap, VoorNaSchuif,
+  type Aanbodkaart, type Dienstkaart,
+} from './Onderdelen';
 
 import logo from '@/assets/home/logo-trim.png';
 import heroFoto from '@/assets/lp-diensten/totaalrenovatie-hero.jpg';
@@ -93,8 +97,6 @@ const REVIEWS = DIENSTEN.totaalrenovatie.reviews;
 /** De opties uit de keuzelijst, gelijk aan die van de bestaande LP. */
 const SOORT_WERK = DIENSTEN.totaalrenovatie.typeWerkOpties;
 
-type Dienstkaart = { titel: string; tekst: string; foto: string; alt: string; href: string };
-
 /**
  * De vijf kaarten: de ONDERDELEN van één totaalrenovatie, in de volgorde
  * waarin ze op de werf gebeuren — strippen, technieken, pleisteren, tegelen,
@@ -121,8 +123,6 @@ const DIENSTKAARTEN: Dienstkaart[] = [
     tekst: 'Badkamer, keuken, binnendeuren en het maatwerk dat erbij hoort.',
     foto: kaartSanitair, alt: 'Afgewerkte badkamer met wastafel op eiken meubel' },
 ];
-
-type Aanbodkaart = { badge: [string, string]; titel: string; tekst: string; foto: string; alt: string; knop: string; href: string };
 
 /**
  * De aanbodkaarten. De referentie toont hier Amerikaanse financieringsdeals
@@ -246,63 +246,6 @@ const BALKVELDEN = [
   { naam: 'bericht', plaats: 'Bericht', type: 'text', icoon: IcBericht, autoComplete: 'off' },
 ] as const;
 
-/**
- * Voor/na-schuif van één echte werf: hetzelfde dak met de pannen eraf en er weer
- * op. De bediening is een <input type="range"> over het hele beeld, zodat
- * slepen met de muis, vegen op een telefoon én de pijltjestoetsen alle drie
- * werken zonder eigen sleepcode — en een schermlezer krijgt een echte regelaar.
- */
-function DakSchuif() {
-  const [deel, setDeel] = useState(50);
-  const vat = useRef<HTMLDivElement>(null);
-  const sleept = useRef(false);
-
-  /* Het slepen wordt hier ZELF afgehandeld met pointer-events, niet overgelaten
-     aan het gedrag van de range-input. Die input is onzichtbaar (opacity 0) en
-     iOS Safari levert daar niet betrouwbaar aanraakgebeurtenissen aan af — op
-     de telefoon bewoog de slider daardoor niet, terwijl hij in de browser op de
-     pc wel werkte. Met setPointerCapture volgt de vinger gegarandeerd, ook als
-     hij buiten het beeld komt. De input blijft staan voor het toetsenbord en
-     voor schermlezers. */
-  const uitPositie = (klientX: number) => {
-    const el = vat.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    if (r.width <= 0) return;
-    setDeel(Math.min(100, Math.max(0, ((klientX - r.left) / r.width) * 100)));
-  };
-  const pak = (e: React.PointerEvent) => {
-    sleept.current = true;
-    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-    uitPositie(e.clientX);
-  };
-  const volg = (e: React.PointerEvent) => { if (sleept.current) uitPositie(e.clientX); };
-  const los = (e: React.PointerEvent) => {
-    sleept.current = false;
-    const el = e.currentTarget as HTMLElement;
-    if (el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId);
-  };
-
-  return (
-    <figure className="pc-vgl">
-      <div className="pc-vgl-vat" ref={vat}>
-        <img src={dakVoor} alt="Het dak van dezelfde woning met de pannen eraf: alleen het houten gebint staat er nog" />
-        <img src={dakNa} alt="Hetzelfde dak na de werken, met nieuwe pannen en dakvensters"
-          style={{ clipPath: `inset(0 0 0 ${deel}%)` }} />
-        <div className="pc-vgl-sleep" onPointerDown={pak} onPointerMove={volg}
-          onPointerUp={los} onPointerCancel={los} aria-hidden="true" />
-        <input type="range" min={0} max={100} step={1} value={Math.round(deel)} className="pc-vgl-bedien"
-          aria-label="Sleep om het dak voor en na de werken te vergelijken"
-          onChange={(e) => setDeel(Number(e.target.value))} />
-        <span className="pc-vgl-lijn" style={{ left: `${deel}%` }} aria-hidden="true">
-          <span className="pc-vgl-greep"><IcChevron richting="links" /><IcChevron richting="rechts" /></span>
-        </span>
-        <span className="pc-vgl-label pc-vgl-label--l" aria-hidden="true">Dak eraf</span>
-        <span className="pc-vgl-label pc-vgl-label--r" aria-hidden="true">Dak erop</span>
-      </div>
-    </figure>
-  );
-}
 
 
 export default function LpReplica() {
@@ -793,7 +736,12 @@ export default function LpReplica() {
           <Bediening spoor={werkSpoor} pos={werkPos} schuif={schuif} wat="foto" lus />
         </div>
         <div className="pc-vat pc-midden">
-          <DakSchuif />
+          <VoorNaSchuif
+            voor={dakVoor} na={dakNa}
+            altVoor="Het dak van dezelfde woning met de pannen eraf: alleen het houten gebint staat er nog"
+            altNa="Hetzelfde dak na de werken, met nieuwe pannen en dakvensters"
+            labelLinks="Dak eraf" labelRechts="Dak erop"
+          />
         </div>
       </section>
 
@@ -1014,93 +962,6 @@ export default function LpReplica() {
           </div>
         </div>
       </footer>
-    </div>
-  );
-}
-
-/**
- * Bediening onder een horizontaal spoor: vorige, voortgang, volgende.
- * Op een telefoon is anders niet te zien dat er opzij te scrollen valt, en met
- * een muis is zijwaarts scrollen onhandig.
- */
-function Bediening({ spoor, pos, schuif, wat, lus }: {
-  spoor: React.RefObject<HTMLDivElement>;
-  pos: { links: number; max: number };
-  schuif: (ref: React.RefObject<HTMLDivElement>, richting: -1 | 1) => void;
-  wat: string;
-  /** Een spoor dat rondloopt heeft geen begin en geen eind: de knoppen staan
-      dan nooit uit, en het positiebalkje vervalt. Dat balkje zou bij een
-      verdubbelde reeks een halve stand tonen en halverwege terugspringen, en
-      het stond bovendien vlak onder de vullijn — twee streepjes die iets
-      anders bedoelen, 50px uit elkaar. */
-  lus?: boolean;
-}) {
-  const deel = Math.min(1, Math.max(0, pos.links / pos.max));
-  const zichtbaar = spoor.current ? spoor.current.clientWidth / spoor.current.scrollWidth : 1;
-  return (
-    <div className="pc-bediening">
-      <button type="button" aria-label={`Vorige ${wat}`} disabled={!lus && pos.links <= 2 && pos.max > 2}
-        onClick={() => schuif(spoor, -1)}><IcChevron richting="links" /></button>
-      {!lus && (
-        <span className="pc-bediening-rail" aria-hidden="true">
-          <i style={{ width: `${Math.max(12, zichtbaar * 100)}%`, transform: `translateX(${deel * (100 / Math.max(0.12, zichtbaar) - 100)}%)` }} />
-        </span>
-      )}
-      <button type="button" aria-label={`Volgende ${wat}`} disabled={lus ? false : pos.max <= 2 ? false : pos.links >= pos.max - 2}
-        onClick={() => schuif(spoor, 1)}><IcChevron richting="rechts" /></button>
-    </div>
-  );
-}
-
-/** Eén stap uit de werkwijze: icooncirkel met stapnummer, titel en tekst. */
-function Stap({ titel, tekst, Icoon, nr, actief }: (typeof STAPPEN)[number] & { nr: number; actief?: boolean }) {
-  return (
-    <div className={actief ? 'pc-stap pc-stap--actief' : 'pc-stap'}>
-      <div className="pc-stap-badge">
-        {actief && <span className="pc-stap-schijf" />}
-        <Icoon />
-        <span className="pc-stap-pil">Stap {nr}</span>
-      </div>
-      <h3>{titel}</h3>
-      <p>{tekst}</p>
-    </div>
-  );
-}
-
-/** Eén kaart uit het aanbodspoor, met de zonnestraal-sticker op de foto. */
-function SpoorKaart({ badge, titel, tekst, foto, alt, knop, href, gevuld }: Aanbodkaart & { gevuld?: boolean }) {
-  return (
-    <article className="pc-spoor-kaart">
-      <div className="pc-spoor-foto">
-        <img src={foto} alt={alt} loading="lazy" />
-        <span className="pc-badge" style={{ color: 'var(--pc-accent)' }}>
-          <IcZonnestraal />
-          <span><b>{badge[0]}</b><i>{badge[1]}</i></span>
-        </span>
-      </div>
-      <h3>{titel}</h3>
-      <p>{tekst}</p>
-      <a className={`pc-knop ${gevuld ? 'pc-knop--accent' : 'pc-knop--rand'}`} href={href}>
-        {knop}<IcPijl />
-      </a>
-    </article>
-  );
-}
-
-/** Eén fotokaart uit het dienstenraster. */
-function Kaart({ titel, tekst, foto, alt, href, hoogte, gevuld }: Dienstkaart & { hoogte: number; gevuld?: boolean }) {
-  return (
-    <div className="pc-kaart" style={{ height: hoogte }}>
-      <img src={foto} alt={alt} loading="lazy" />
-      <div className="pc-kaart-inhoud">
-        <div className="pc-kaart-tekst">
-          <h3>{titel}</h3>
-          <p>{tekst}</p>
-        </div>
-        <a className={gevuld ? 'pc-rond pc-rond--vol' : 'pc-rond'} href={href} aria-label={titel}>
-          <IcPijl maat={14} />
-        </a>
-      </div>
     </div>
   );
 }
