@@ -207,11 +207,11 @@ const WERK_FOTOS: { naam: string; alt: string; pos?: string }[] = [
  */
 const STAPPEN = [
   { titel: 'U doet een aanvraag', Icoon: IcStapBel,
-    tekst: 'Vul het formulier in met uw postcode en wat u wil veranderen. Een foto van de ruimte helpt. Bellen mag ook.' },
+    tekst: 'Laat uw gegevens achter en vertel kort wat u wil laten doen. Een foto van de ruimte helpt. Bellen mag ook.' },
   { titel: 'Gratis plaatsbezoek', Icoon: IcStapBezoek,
-    tekst: 'Meestal binnen vijf werkdagen staat er iemand bij u thuis. Die bekijkt de ruimte en zegt meteen wat er mogelijk is.' },
+    tekst: 'Meestal binnen vijf werkdagen staat er iemand bij u thuis. We bekijken de ruimte samen met u, luisteren naar wat u voor ogen hebt en zeggen meteen wat haalbaar is.' },
   { titel: 'Opmeten en offerte', Icoon: IcStapMeten,
-    tekst: 'U krijgt de volledige prijs op papier, met per onderdeel wat erin zit. Is uw woning ouder dan tien jaar, dan geldt 6% btw.' },
+    tekst: 'U krijgt de volledige prijs op papier, met per onderdeel wat erin zit. Ook de materialen die wij voorzien en de vermoedelijke doorlooptijd staan erbij.' },
   { titel: 'De werf start', Icoon: IcStapWerf,
     tekst: 'Dezelfde mensen komen elke dag terug. Wij schermen de rest van de woning af tegen stof en ruimen elke avond op.' },
   { titel: 'De laatste ronde', Icoon: IcStapOplevering,
@@ -956,7 +956,7 @@ export default function LpReplica() {
               <a className="pc-knop pc-knop--accent" href={CONTACT.phone.href}>
                 {CONTACT.phone.display}<IcPijl />
               </a>
-              <a className="pc-knop pc-knop--wit" href="#contact">Gratis offerte<IcPijl /></a>
+              <a className="pc-knop pc-knop--wit" href="#contact">Vraag een plaatsbezoek aan<IcPijl /></a>
             </div>
           </div>
         </div>
@@ -970,7 +970,7 @@ export default function LpReplica() {
               <div className="pc-footer-logo"><img src={logo} alt="AB Bouw Groep" /></div>
               <p>
                 AB Bouw Groep is aannemer voor totaalrenovatie in heel Vlaanderen.
-                Van ruwbouw tot afwerking, met een eigen ploeg.
+                Van ruwbouw tot afwerking.
               </p>
               {SOCIALS.length > 0 && (
                 <div className="pc-footer-soc">
