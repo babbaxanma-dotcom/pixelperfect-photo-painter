@@ -152,15 +152,19 @@ export const REPLICA_CSS = `
    Hero: 812px hoog. Links een gebroken wit paneel tot x=636 (53%),
    rechts de foto die tot de paginarand doorloopt.
    ───────────────────────────────────────────────────────────── */
-.pc-hero { position: relative; height: min(812px, calc(100vh - 168px));
-  min-height: 520px; background: var(--pc-cream); overflow: hidden; }
+.pc-hero { position: relative; height: 812px; background: var(--pc-cream); overflow: hidden; }
 .pc-hero-foto { position: absolute; top: 0; right: 0; bottom: 0; left: 53%; }
 .pc-hero-foto img { width: 100%; height: 100%; object-fit: cover; }
 .pc-hero-sluier { position: absolute; top: 0; right: 0; left: 53%; height: 160px; z-index: 2;
   background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0) 100%); pointer-events: none; }
 .pc-hero-vlak { position: absolute; top: 0; bottom: 0; left: 0; width: 53%; background: var(--pc-cream); }
+/* De tekst hangt aan de ONDERKANT van de hero, niet aan de bovenkant.
+   Met padding-top: 247px stond hij vast op een afstand die alleen klopte bij een
+   hero van 812px; werd die korter, dan zakte de kop tot tegen de formulierbalk
+   en liep de tekst erachter. Vanaf onderen gemeten blijft de afstand tot die
+   balk altijd gelijk, ongeacht de hoogte van de hero. */
 .pc-hero-vat { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column;
-  justify-content: flex-start; padding-top: 247px; }
+  justify-content: flex-end; padding-bottom: 300px; }
 
 .pc-chip { display: inline-flex; align-items: center; gap: 9px; align-self: flex-start;
   height: 31px; padding: 0 13px 0 8px; border-radius: 15.5px; background: #ffffff;
