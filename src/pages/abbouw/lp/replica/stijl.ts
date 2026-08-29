@@ -164,7 +164,7 @@ export const REPLICA_CSS = `
    en liep de tekst erachter. Vanaf onderen gemeten blijft de afstand tot die
    balk altijd gelijk, ongeacht de hoogte van de hero. */
 .pc-hero-vat { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column;
-  justify-content: flex-end; padding-bottom: 370px; }
+  justify-content: flex-end; padding-bottom: 410px; }
 
 .pc-chip { display: inline-flex; align-items: center; gap: 9px; align-self: flex-start;
   height: 31px; padding: 0 13px 0 8px; border-radius: 15.5px; background: #ffffff;
@@ -206,7 +206,7 @@ export const REPLICA_CSS = `
 /* -324 in plaats van -164: de balk schuift 160px verder de hero in, zodat de
    calculator eronder nog boven de vouw van een laptopscherm valt. De hero zelf
    en de foto blijven onaangeroerd op 812px. */
-.pc-balk { position: relative; z-index: 4; margin-top: -324px; }
+.pc-balk { position: relative; z-index: 4; margin-top: -400px; }
 .pc-balk form { background: #fff; border-radius: 20px; padding: 40px 38px;
   display: flex; align-items: center; gap: 13px;
   box-shadow: 0 2px 6px rgba(10,22,40,.04), 0 24px 60px -30px rgba(10,22,40,.22); }
@@ -225,7 +225,7 @@ export const REPLICA_CSS = `
    met een goot van 42. Rij 2 is ONDER uitgelijnd: de onderkant van de
    foto (1556) en van de avatarrij vallen samen.
    ───────────────────────────────────────────────────────────── */
-.pc-balk { margin-bottom: 41px; }
+.pc-balk { margin-bottom: 14px; }
 .pc-over { padding: 84px 0 82px; background: #fff; }
 /* minmax(0,..) is nodig: zonder dat duwt het grote getal (min-content) de
    rechterkolom breder en klopt de kolomverhouding niet meer. Rij 1 staat vast
@@ -457,7 +457,8 @@ export const REPLICA_CSS = `
   background: var(--pc-dark); touch-action: pan-y; }
 .pc-vgl-vat img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .pc-vgl-bedien { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; padding: 0;
-  opacity: 0; cursor: ew-resize; -webkit-appearance: none; appearance: none; background: none; }
+  opacity: 0; cursor: ew-resize; -webkit-appearance: none; appearance: none; background: none;
+  touch-action: pan-y; }
 .pc-vgl-bedien::-webkit-slider-thumb { -webkit-appearance: none; width: 56px; height: 100%; }
 .pc-vgl-bedien::-moz-range-thumb { width: 56px; height: 100%; border: 0; background: none; }
 .pc-vgl-lijn { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px;
@@ -477,19 +478,26 @@ export const REPLICA_CSS = `
 /* Richtprijs-calculator onder de balk in de hero. Zelfde taal als de rest:
    witte kaart, 14px radius, accentknop. Eén vraag per scherm, want acht velden
    onder elkaar leest als huiswerk. */
-.pc-calc-vat { margin-top: 10px; }
+/* De herofoto staat absoluut gepositioneerd en schildert daardoor over elk
+   statisch element heen, ongeacht de volgorde in de DOM. De formulierbalk had
+   daarom al z-index 4; de calculator ligt nu binnen dezelfde hoogte en heeft
+   hem net zo goed nodig, anders verdwijnt hij achter de foto. */
+.pc-calc-vat { position: relative; z-index: 4; margin-top: 0; }
 
 /* Prijsindicatie-wizard. De kaart is wit op een witte band, dus de rand moet
    het werk doen: een zichtbare lijn plus een accentrand bovenaan. Zonder die
    twee loopt het kaartvlak over in de pagina en scrolt de bezoeker er langs —
    precies wat er gebeurde. */
 .pc-calc { background: #fff; border: 1px solid #ddd8cf; border-top: 3px solid var(--pc-accent);
-  border-radius: 14px; padding: 26px 30px 28px; box-shadow: 0 14px 34px rgba(10, 22, 40, .09); }
-.pc-calc--dicht { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  border-radius: 14px; padding: 18px 26px 20px; box-shadow: 0 14px 34px rgba(10, 22, 40, .09); }
+.pc-calc--dicht { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.pc-calc--dicht > div { display: flex; align-items: center; gap: 14px; }
 .pc-calc-badge { display: inline-block; padding: 5px 11px; border-radius: 999px;
   background: #f6f1e4; color: var(--pc-dark); font-size: 12px; line-height: 15px; font-weight: 600; }
-.pc-calc--dicht h2 { margin-top: 10px; font-size: 23px; line-height: 29px; font-weight: 600; }
-.pc-calc--dicht p { margin-top: 5px; font-size: 14px; line-height: 20px; color: #565656; }
+.pc-calc--dicht h2 { margin-top: 0; font-size: 21px; line-height: 27px; font-weight: 600; }
+/* de uitlegregel kost een hele regelhoogte en staat een tik later toch op
+   het eerste vraagscherm */
+.pc-calc--dicht p { display: none; }
 .pc-calc-kop { display: flex; align-items: center; justify-content: space-between; }
 .pc-calc-tel { font-size: 13px; line-height: 16px; font-weight: 600; color: #565656; }
 .pc-calc-terug { display: inline-flex; align-items: center; gap: 6px; padding: 8px 4px;
@@ -836,7 +844,13 @@ export const REPLICA_CSS = `
   /* De foto stond boven de tekst en was 300px hoog; dat duwde het formulier
      onder de vouw. Nu staat hij ONDER de kop en is hij een band: zichtbaar,
      maar niet ten koste van het formulier. */
-  .pc-hero-foto { display: block; order: 3; position: static; height: 170px; margin-top: 16px; }
+  .pc-hero-foto { display: block; order: 3; position: static; height: clamp(120px, 21vh, 230px); margin-top: 14px; }
+  /* Alleen object-position volstaat niet: het kader van 390x240 verhoudt zich
+     bijna gelijk aan de foto (1,63 tegen 1,78), dus er wordt nauwelijks
+     bijgesneden en de tuin blijft in beeld. Een schaling zoomt wél in, zonder
+     dat het kader hoger wordt en de vouw kost. */
+  .pc-hero-foto { overflow: hidden; }
+  .pc-hero-foto img { transform: scale(1.55); transform-origin: 30% center; }
   .pc-hero-vat { padding-block: 12px 16px; }
   .pc-hero-vat > .pc-chip { display: none; }
   .pcx .pc-h1 { font-size: 27px; line-height: 32px; }
@@ -861,7 +875,16 @@ export const REPLICA_CSS = `
 @media (max-width: 820px) and (max-height: 740px) {
   .pc-hero-vat > .pc-knop { display: none; }
   /* op een kort scherm wordt de fotoband smaller in plaats van te verdwijnen */
-  .pc-hero-foto { height: 120px; }
+  .pc-vgl-greep { width: 54px; height: 54px; }
+  .pc-vgl-bedien::-webkit-slider-thumb { width: 96px; }
+  /* Op een telefoon vecht de veeg met het scrollen van de pagina: begin je hem
+     een paar graden schuin, dan claimt de browser hem als scroll en beweegt de
+     slider niet. Daarom is de regelaar hier een BAND rond de greep die elk
+     gebaar volledig opeist (touch-action: none), terwijl het beeld erboven en
+     eronder gewoon blijft scrollen. */
+  .pc-vgl-bedien { top: 50%; bottom: auto; height: 120px; transform: translateY(-50%);
+    touch-action: none; }
   .pcx .pc-h1 { font-size: 25px; line-height: 30px; }
 }
+
 `;

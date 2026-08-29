@@ -937,8 +937,8 @@ export default function LpReplica() {
             <div>
               <div className="pc-footer-logo"><img src={logo} alt="AB Bouw Groep" /></div>
               <p>
-                Eén vaste ploeg die uw woning strip, heropbouwt en afwerkt. Van het eerste
-                plaatsbezoek tot de laatste plint houdt u dezelfde aanspreekpartner.
+                AB Bouw Groep is aannemer voor totaalrenovatie in heel Vlaanderen.
+                Van ruwbouw tot afwerking, met een eigen ploeg.
               </p>
               {SOCIALS.length > 0 && (
                 <div className="pc-footer-soc">

@@ -37,14 +37,19 @@ const VRAGEN: Vraag[] = [
       { label: 'Nog niet beslist', uitleg: 'daar komen we samen uit' },
     ],
   },
+  /* Deze vraag gaat over de WONING, niet over het deel dat wordt aangepakt —
+     dat stond al in vraag 1. Stonden er hier opnieuw "een kamer" en "een
+     verdieping", dan herhaalde de vraag de vorige met dezelfde eenheden.
+     Woningtypes met een vierkantemeter-richtgetal erachter zijn zonder meten of
+     opzoeken te beantwoorden. */
   {
-    sleutel: 'Grootte',
-    vraag: 'Hoe groot is het ongeveer?',
+    sleutel: 'Woning',
+    vraag: 'Wat voor woning is het?',
     keuzes: [
-      { label: 'Eén kamer', uitleg: 'ongeveer 20 m²' },
-      { label: 'Een verdieping', uitleg: 'ongeveer 60 m²' },
+      { label: 'Een appartement', uitleg: 'ongeveer 90 m²' },
       { label: 'Een rijwoning', uitleg: 'ongeveer 120 m²' },
-      { label: 'Een grote woning', uitleg: '200 m² of meer' },
+      { label: 'Een halfopen woning', uitleg: 'ongeveer 160 m²' },
+      { label: 'Een open bebouwing', uitleg: '200 m² of meer' },
       { label: 'Geen idee', uitleg: 'wij meten het op' },
     ],
   },
