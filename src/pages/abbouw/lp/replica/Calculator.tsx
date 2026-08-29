@@ -203,7 +203,7 @@ export default function Calculator() {
           </form>
           <p className="pc-calc-gerust">
             <strong>Volledig vrijblijvend — u zit nergens aan vast.</strong> Wij bellen u binnen één
-            werkdag met een prijsindicatie en plannen het gratis plaatsbezoek in.
+            werkdag met een prijsindicatie.
           </p>
           {fout && <p className="pc-calc-fout">{fout}</p>}
         </div>

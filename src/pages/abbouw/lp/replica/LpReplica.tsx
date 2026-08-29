@@ -117,8 +117,8 @@ const DIENSTKAARTEN: Dienstkaart[] = [
   { titel: 'Vloeren en tegelwerk', href: '#contact',
     tekst: 'Van chape tot voeg: strak gelegd, recht in lijn en netjes afgewerkt.',
     foto: kaartTegel, alt: 'Grootformaat vloertegels in een afgewerkte leefruimte' },
-  { titel: 'Badkamer en sanitair', href: '#contact',
-    tekst: 'Douche, bad, kranen en alles wat erachter zit.',
+  { titel: 'Interieur en afwerking', href: '#contact',
+    tekst: 'Badkamer, keuken, binnendeuren en het maatwerk dat erbij hoort.',
     foto: kaartSanitair, alt: 'Afgewerkte badkamer met wastafel op eiken meubel' },
 ];
 
@@ -711,12 +711,6 @@ export default function LpReplica() {
               <Kaart {...DIENSTKAARTEN[3]} hoogte={334} />
               <Kaart {...DIENSTKAARTEN[4]} hoogte={227} />
             </div>
-          </div>
-
-          <div className="pc-midden">
-            <p className="pc-diensten-slot">
-              Alle vijf de onderdelen lopen via dezelfde planning en dezelfde mensen op de werf.
-            </p>
           </div>
         </div>
       </section>
