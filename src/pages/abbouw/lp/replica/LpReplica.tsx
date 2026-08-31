@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router-dom';
 import { CONTACT } from '@/data/contact';
 import { submitLead } from '@/lib/leads';
 import Calculator from './Calculator';
+import Schetser from './Schetser';
 import { trackFormStart } from '@/lib/tracking';
 import { DIENSTEN } from '../LpDienst';
 import { REPLICA_CSS } from './stijl';
@@ -539,6 +540,8 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       </section>
 
       {/* ── Diensten: donkere sectie met vijf getrapte fotokaarten ── */}
+      {inhoud.schetser && <Schetser />}
+
       <section className="pc-diensten" id="diensten">
         <div className="pc-diensten-bg">
           <img src={inhoud.diensten.achtergrond} alt="" aria-hidden="true" loading="lazy" />
