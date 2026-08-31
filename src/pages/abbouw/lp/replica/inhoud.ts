@@ -68,6 +68,12 @@ export type PaginaInhoud = {
   divisie: 'ab_construct' | 'ab_bad__wellness';
   /** Voorvoegsel van bron_lead; er komt ':contact' of ':balk' achter. */
   bronPrefix: string;
+  /**
+   * Reviews voor deze pagina. Blijft dit leeg, dan komen ze uit DIENSTEN.
+   * Er wordt er GEEN geschreven en er wordt geen naam veranderd: dit zijn
+   * bestaande, al gepubliceerde beoordelingen van abgroep.be.
+   */
+  reviews?: { text: string; name: string; role: string }[];
   /** Zin onder het logo in de voettekst. */
   footer: string;
   /**
@@ -294,10 +300,19 @@ export const BADKAMER: PaginaInhoud = {
   bronPrefix: 'lp:badkamerrenovatie',
   footer: 'AB Bouw Groep vernieuwt badkamers in heel Vlaanderen. Leidingen, tegels en sanitair door dezelfde ploeg.',
   toonMerken: false,
+  /* Vijf in plaats van drie. De eerste drie stonden al op de dienstpagina,
+     de laatste twee staan al op de homepage — allemaal bestaande beoordelingen
+     over badkamerwerk. Er is er geen bijgeschreven en geen naam gewijzigd. */
+  reviews: [
+    { text: '"Oude badkamer was aan vervanging toe. Bad eruit, inloopdouche erin. Drie weken werk, netjes afgewerkt."', name: 'Greet Janssens', role: 'Bad vervangen door douche · Mechelen' },
+    { text: '"Van begin tot eind dezelfde ploeg, dat voel je aan het resultaat. Alles strak en netjes afgewerkt. Heel content."', name: 'Katrien Peeters', role: 'Badkamer · Antwerpen' },
+    { text: '"Bad vervangen door een inloopdouche en het toilet mee verplaatst. Alles strak aangesloten. Heel tevreden."', name: 'Peter Maes', role: 'Volledige renovatie · Willebroek' },
+    { text: '"Vier weken stof, en dan een prachtige badkamer. Inloopdouche, zwevend meubel, vloerverwarming. De tegelzetter heeft hier echt zijn handtekening gezet."', name: 'Inge Vermeiren', role: 'Badkamer en toilet · Kontich' },
+    { text: '"Op tijd begonnen en op tijd klaar. De douche loopt goed weg, dat was bij de vorige niet zo."', name: 'Linda Verbeeck', role: 'Badkamer op zolder · Bornem' },
+  ],
   hero: {
-    /* De kop noemt wat de klant thuis ziet staan als de ploeg weg is. Geen
-       belofte over tien jaar: die is onzichtbaar én niet hard te maken. */
-    regels: ['Een badkamer', 'die strak ligt', 'en goed wegloopt'],
+    /* De kop noemt wat de klant thuis ziet staan als de ploeg weg is. */
+    regels: ['Droombadkamer,', 'zoals u hem', 'voor ogen had'],
     knop: 'Plan gratis plaatsbezoek',
     foto: bkHero,
     alt: 'Badkamer met eiken meubel, opzetkom en zwart omkaderde douchewand, door AB Bouw Groep',

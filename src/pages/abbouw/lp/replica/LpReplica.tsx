@@ -134,7 +134,7 @@ const BALKVELDEN = [
 const regels = (r: string[]) => r.flatMap((t, i) => (i ? [<br key={i} />, t] : [t]));
 
 export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: PaginaInhoud }) {
-  const REVIEWS = DIENSTEN[inhoud.dienst].reviews;
+  const REVIEWS = inhoud.reviews ?? DIENSTEN[inhoud.dienst].reviews;
   const SOORT_WERK = DIENSTEN[inhoud.dienst].typeWerkOpties;
   const navigate = useNavigate();
   const [bezig, setBezig] = useState(false);

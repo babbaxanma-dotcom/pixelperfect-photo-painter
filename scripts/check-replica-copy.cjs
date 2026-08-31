@@ -155,7 +155,58 @@ for (const zin of zinnen) {
   }
 }
 
-console.log(`check-replica-copy: ${zinnen.length} zinnen getoetst aan ${REGELS.length} regels`);
+/* ── de hookregel ─────────────────────────────────────────────────────────
+   Apart, want hij geldt op één plek: de kop van de hero.
+
+   Aanleiding: ik zette "Droombadkamer / met de prijs / vooraf op papier" in de
+   kop. Mohammed keurde dat af en had gelijk — het breekt twee gelockte regels
+   tegelijk. "De prijs vooraf op papier" is een geruststelling, en die hoort op
+   een zekerheidskaart. De kop moet gaan over wat er straks bij hem THUIS staat.
+   De regels hierboven zagen daar niets van: die toetsen telzinnen, negatie,
+   hedges en cijfers. Een controle die de vraag niet stelt, geeft geen groen
+   licht — hij zwijgt alleen. Vandaar deze. */
+const BEWIJSWOORDEN = [
+  'prijs', 'offerte', 'gratis', 'garantie', 'btw', 'papier', 'korting',
+  'certificaat', 'vca', 'verzekerd', 'attest', 'keurmerk', 'werkdagen',
+  'vrijblijvend', 'aanbod', 'actie',
+];
+const koppen = [];
+for (const paginanaam of ['TOTAALRENOVATIE', 'BADKAMER']) {
+  const begin = bron.indexOf(`export const ${paginanaam}: PaginaInhoud = {`);
+  if (begin < 0) {
+    console.error(`FOUT: pagina ${paginanaam} niet gevonden — de meting is ongeldig`);
+    process.exit(2);
+  }
+  const stuk = bron.slice(begin, bron.indexOf(String.fromCharCode(10) + 'export const ', begin + 10) + 1 || undefined);
+  const m = stuk.match(/regels:\s*\[([^\]]*)\]/);
+  if (!m) {
+    console.error(`FOUT: ${paginanaam}: geen hero-kop gevonden — de meting is ongeldig`);
+    process.exit(2);
+  }
+  const kop = [...m[1].matchAll(/'((?:[^'\\]|\\.)*)'/g)].map((x) => x[1]).join(' ');
+  if (!kop.trim()) {
+    console.error(`FOUT: ${paginanaam}: hero-kop is leeg — de meting is ongeldig`);
+    process.exit(2);
+  }
+  koppen.push({ paginanaam, kop });
+}
+
+/* positieve controle: de afgekeurde kop moet deze regel laten vuren */
+const PROEFKOP = 'Droombadkamer met de prijs vooraf op papier';
+const treft = (t) => BEWIJSWOORDEN.find((w) => new RegExp(`\\b${w}\\b`, 'i').test(t));
+if (!treft(PROEFKOP)) {
+  console.error('FOUT: de hookregel vuurt niet op de afgekeurde kop — de meting is ongeldig');
+  process.exit(2);
+}
+
+for (const { paginanaam, kop } of koppen) {
+  const woord = treft(kop);
+  if (woord) {
+    fouten.push(`hook bevat bewijs: "${kop}" (${paginanaam})\n         "${woord}" is een geruststelling; die hoort op een zekerheidskaart. De kop gaat over wat er bij de klant thuis staat.`);
+  }
+}
+
+console.log(`check-replica-copy: ${zinnen.length} zinnen getoetst aan ${REGELS.length} regels, ${koppen.length} koppen aan de hookregel`);
 for (const t of toegestaan) console.log(`  toegestaan: ${t}`);
 if (!fouten.length) {
   console.log('  geen telzinnen, negatie-framing, hedge-woorden of ongedekte cijfers');
