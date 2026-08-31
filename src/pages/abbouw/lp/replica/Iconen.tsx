@@ -51,6 +51,15 @@ export const IcTelefoon = ({ className }: P) => (
   </svg>
 );
 
+/** Camera-icoon voor de opnameknop op de schets. */
+export const IcCamera = ({ className, maat = 26 }: P & { maat?: number }) => (
+  <svg className={className} width={maat} height={maat} viewBox="0 0 26 26" fill="none"
+    stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M3 8.6h3.4l1.7-2.6h9.8l1.7 2.6H23a1 1 0 0 1 1 1v9.8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V9.6a1 1 0 0 1 1-1Z" />
+    <circle cx="13" cy="14.2" r="4.1" />
+  </svg>
+);
+
 export const IcPijl = ({ className, maat = 8 }: P & { maat?: number }) => (
   <svg className={className} width={maat} height={maat} viewBox="0 0 8 8" fill="none" stroke="currentColor"
     strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

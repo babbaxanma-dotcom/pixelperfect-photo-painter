@@ -889,77 +889,63 @@ export const REPLICA_CSS = `
 }
 
 
-/* ── Badkamerschetser ─────────────────────────────────────────────────────
-   Vier vooraf gemaakte varianten van dezelfde voorbeeldbadkamer. Ze liggen
-   over elkaar en wisselen met opacity, zodat een tik geen laadmoment en geen
-   sprong in de opmaak geeft. */
+/* ── Ontwerp uw eigen badkamer ────────────────────────────────────────────
+   Links de vragen, rechts de ruimte en het formulier. Op een telefoon onder
+   elkaar, met het beeld eerst: dat is wat de bezoeker wil zien. */
 .pc-schets { padding: 92px 0 84px; background: #f3f4ef; }
-.pc-schets-sub { max-width: 520px; margin: 14px auto 0; color: #55606f; font-size: 16px; line-height: 26px; }
+.pc-schets-sub { max-width: 560px; margin: 14px auto 0; color: #55606f; font-size: 16px; line-height: 26px; }
+.pc-schets-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; margin-top: 38px; align-items: start; }
 
-.pc-schets-beeld { position: relative; margin: 38px 0 0; aspect-ratio: 3 / 2;
-  border-radius: 16px; overflow: hidden; background: #e6e7e1; }
-.pc-schets-beeld img { position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; opacity: 0; transition: opacity .22s ease; }
-.pc-schets-beeld img.is-aan { opacity: 1; }
-.pc-schets-beeld figcaption { position: absolute; left: 14px; bottom: 14px; z-index: 2;
-  padding: 6px 12px; border-radius: 999px; background: rgba(10,22,40,.72);
-  color: #fff; font-size: 12px; letter-spacing: .01em; }
-
-.pc-schets-keuzes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 18px; }
-.pc-schets-keuzes button { display: flex; flex-direction: column; align-items: flex-start;
-  gap: 2px; padding: 12px 14px 14px; text-align: left; cursor: pointer;
-  background: #fff; border: 1px solid #ddd8cf; border-radius: 12px;
+.pc-schets-as { margin-bottom: 22px; }
+.pc-schets-as h3 { margin: 0 0 10px; font-size: 15px; color: var(--pc-dark); }
+.pc-schets-keuzes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.pc-schets-keuzes--twee { grid-template-columns: repeat(2, 1fr); }
+.pc-schets-keuzes button { display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  min-height: 60px; padding: 11px 13px; text-align: left; cursor: pointer;
+  background: #fff; border: 1px solid #ddd8cf; border-radius: 11px;
   transition: border-color .18s ease, box-shadow .18s ease; }
 .pc-schets-keuzes button:hover { border-color: #c8c1b4; }
-.pc-schets-keuzes button.is-aan { border-color: var(--pc-accent);
-  box-shadow: 0 0 0 1px var(--pc-accent); }
-.pc-schets-staal { width: 100%; height: 54px; margin-bottom: 8px; border-radius: 8px;
-  background-size: 260%; background-position: 32% 62%; }
-.pc-schets-keuzes strong { font-size: 15px; color: var(--pc-dark); }
-.pc-schets-keuzes span { font-size: 13px; color: #6b7480; }
+.pc-schets-keuzes button.is-aan { border-color: var(--pc-accent); box-shadow: 0 0 0 1px var(--pc-accent); }
+.pc-schets-keuzes strong { font-size: 14px; color: var(--pc-dark); }
+.pc-schets-keuzes span { font-size: 12.5px; color: #6b7480; }
 
-.pc-schets-meer { margin: 16px 0 0; font-size: 14px; line-height: 22px; color: #55606f; }
+.pc-schets-lijst { display: block; margin-bottom: 14px; }
+.pc-schets-lijst > span { display: block; margin-bottom: 6px; font-size: 14px; color: var(--pc-dark); }
+.pc-schets-lijst select, .pc-schets-lijst textarea { width: 100%; padding: 11px 13px; font: inherit;
+  font-size: 15px; color: var(--pc-dark); background: #fff; border: 1px solid #ddd8cf; border-radius: 11px; }
+.pc-schets-lijst textarea { resize: vertical; }
 
-.pc-schets-voet { display: flex; align-items: center; justify-content: space-between;
-  gap: 26px; margin-top: 26px; padding-top: 22px; border-top: 1px solid #ddd8cf; }
-.pc-schets-voet p { margin: 0; max-width: 560px; font-size: 14px; line-height: 22px; color: #55606f; }
-.pc-schets-voet strong { color: var(--pc-dark); }
+.pc-schets-beeld { position: relative; margin: 0; aspect-ratio: 3 / 2; border-radius: 16px;
+  overflow: hidden; background: #e6e7e1; }
+.pc-schets-beeld img { width: 100%; height: 100%; object-fit: cover; }
+.pc-schets-beeld.is-leeg { display: grid; place-items: center; padding: 24px; }
+.pc-schets-beeld.is-leeg p { margin: 0; max-width: 260px; text-align: center; color: #6b7480; font-size: 14px; line-height: 22px; }
+.pc-schets-beeld figcaption { position: absolute; left: 14px; bottom: 14px; padding: 6px 12px;
+  border-radius: 999px; background: rgba(10,22,40,.72); color: #fff; font-size: 12px; }
+
+.pc-schets-opname { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; margin-top: 16px; }
+.pc-schets-cam { display: flex; align-items: center; gap: 11px; min-height: 44px; padding: 0;
+  background: none; border: 0; cursor: pointer; color: var(--pc-dark); font-size: 15px; font-weight: 600; }
+.pc-schets-cam > span { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+  background: var(--pc-accent); color: var(--pc-dark); }
+.pc-schets-uit { min-height: 44px; padding: 0; background: none; border: 0; cursor: pointer;
+  color: #6b7480; font-size: 13.5px; text-decoration: underline; text-underline-offset: 3px; }
+
+.pc-schets-form { margin-top: 20px; padding: 20px 22px 22px; background: #fff;
+  border: 1px solid #ddd8cf; border-top: 3px solid var(--pc-accent); border-radius: 14px; }
+.pc-schets-form h3 { margin: 0 0 14px; font-size: 17px; color: var(--pc-dark); }
+.pc-schets-form .pc-veld { margin-bottom: 10px; }
+.pc-schets-form .pc-knop { width: 100%; justify-content: center; margin-top: 4px; }
+.pc-schets-fout { margin: 12px 0 0; font-size: 14px; line-height: 21px; color: #a3231a; }
+.pc-schets-gerust { margin: 12px 0 0; font-size: 13px; line-height: 20px; color: #55606f; }
+.pc-schets-gerust strong { color: var(--pc-dark); }
+.pc-schets-bezoek { width: 100%; justify-content: center; margin-top: 14px; }
 
 @media (max-width: 820px) {
   .pc-schets { padding: 56px 0 52px; }
-  /* Twee kolommen: vier stalen naast elkaar worden op een telefoon smaller dan
-     een vinger. Zo blijft elke knop ruim boven de 44px. */
-  .pc-schets-keuzes { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .pc-schets-staal { height: 44px; }
-  .pc-schets-voet { flex-direction: column; align-items: stretch; }
-  .pc-schets-voet .pc-knop { justify-content: center; }
-}
-
-/* aanvulling op de schetser: opname, assen, eigen materiaal, wachtstand */
-.pc-schets-beeld img { position: static; opacity: 1; }
-.pc-schets-bezig { position: absolute; inset: auto 0 0 0; z-index: 3; display: flex;
-  align-items: center; gap: 12px; padding: 14px 18px;
-  background: rgba(10,22,40,.82); color: #fff; font-size: 14px; }
-.pc-schets-balk { flex: 1 1 auto; height: 4px; border-radius: 999px; background: rgba(255,255,255,.25); overflow: hidden; }
-.pc-schets-balk i { display: block; height: 100%; width: 35%; border-radius: 999px;
-  background: var(--pc-accent); animation: pc-schets-loop 1.6s ease-in-out infinite; }
-@keyframes pc-schets-loop { 0% { transform: translateX(-110%); } 100% { transform: translateX(320%); } }
-
-.pc-schets-opname { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
-.pc-schets-as { margin-top: 22px; }
-.pc-schets-as h3 { margin: 0 0 10px; font-size: 15px; color: var(--pc-dark); }
-.pc-schets-eigen { margin-top: 26px; padding: 18px 20px; background: #fff;
-  border: 1px solid #ddd8cf; border-radius: 12px; }
-.pc-schets-eigen p { margin: 0 0 12px; font-size: 14px; line-height: 22px; color: #55606f; }
-.pc-schets-mini { display: block; width: 84px; height: 84px; margin-top: 12px;
-  object-fit: cover; border-radius: 8px; border: 1px solid #ddd8cf; }
-.pc-schets-fout { margin: 16px 0 0; font-size: 14px; line-height: 22px; color: #a3231a; }
-.pc-schets-doen { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 24px; }
-.pc-schets-doen span { font-size: 14px; color: #6b7480; }
-.pc-schets-doen .pc-knop:disabled { opacity: .45; cursor: not-allowed; }
-
-@media (max-width: 820px) {
-  .pc-schets-opname .pc-knop { flex: 1 1 100%; justify-content: center; }
-  .pc-schets-doen .pc-knop { width: 100%; justify-content: center; }
+  /* Het beeld eerst: de bezoeker moet zien waar hij aan begint. */
+  .pc-schets-grid { grid-template-columns: 1fr; gap: 24px; }
+  .pc-schets-grid > div:last-child { order: -1; }
+  .pc-schets-keuzes { grid-template-columns: repeat(2, 1fr); }
 }
 `;

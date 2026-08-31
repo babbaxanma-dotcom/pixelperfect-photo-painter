@@ -74,8 +74,10 @@ export type PaginaInhoud = {
    * bestaande, al gepubliceerde beoordelingen van abgroep.be.
    */
   reviews?: { text: string; name: string; role: string }[];
-  /** Toont de badkamerschetser boven de dienstkaarten. */
+  /** Toont de badkamerschetser. */
   schetser?: boolean;
+  /** Toont het raster met dienstkaarten. */
+  toonDiensten: boolean;
   /** Zin onder het logo in de voettekst. */
   footer: string;
   /**
@@ -123,6 +125,7 @@ export const TOTAALRENOVATIE: PaginaInhoud = {
   dienst: 'totaalrenovatie',
   divisie: 'ab_construct',
   bronPrefix: 'lp:totaalrenovatie',
+  toonDiensten: true,
   footer: 'AB Bouw Groep is aannemer voor totaalrenovatie in heel Vlaanderen. Van ruwbouw tot afwerking.',
   toonMerken: true,
   hero: {
@@ -301,6 +304,8 @@ export const BADKAMER: PaginaInhoud = {
   divisie: 'ab_bad__wellness',
   bronPrefix: 'lp:badkamerrenovatie',
   schetser: true,
+  /* De dienstkaarten staan hier niet: de schetser neemt die plek in. */
+  toonDiensten: false,
   footer: 'AB Bouw Groep vernieuwt badkamers in heel Vlaanderen. Leidingen, tegels en sanitair door dezelfde ploeg.',
   toonMerken: false,
   /* Vijf in plaats van drie. De eerste drie stonden al op de dienstpagina,

@@ -32,6 +32,13 @@ function magNog(ip) {
 }
 
 export default async function handler(req, res) {
+  /* De sectie vraagt hier bij het laden of het live ontwerpen aanstaat. Staat
+     het uit, dan blijft de foto gewoon meegaan met het formulier en maakt AB
+     het ontwerp na. De bezoeker krijgt nooit een knop die faalt. */
+  if (req.method === 'GET') {
+    res.status(200).json({ gereed: Boolean(process.env.AGENT_URL) });
+    return;
+  }
   if (req.method !== 'POST') {
     res.status(405).json({ fout: 'alleen POST' });
     return;
