@@ -5,12 +5,13 @@ import { trackFormStart } from '@/lib/tracking';
 import { CONTACT } from '@/data/contact';
 import { IcCamera, IcPijl } from './Iconen';
 
-import kleinWc from '@/assets/schetser/klein-wc.jpg';
-import kleinGeenWc from '@/assets/schetser/klein-geenwc.jpg';
-import middelWc from '@/assets/schetser/middel-wc.jpg';
-import middelGeenWc from '@/assets/schetser/middel-geenwc.jpg';
-import ruimWc from '@/assets/schetser/ruim-wc.jpg';
-import ruimGeenWc from '@/assets/schetser/ruim-geenwc.jpg';
+import basisWc from '@/assets/schetser/b-wc.jpg';
+import basisGeenWc from '@/assets/schetser/b-geenwc.jpg';
+import tAntraciet from '@/assets/schetser/t-antraciet.jpg';
+import tMarmer from '@/assets/schetser/t-marmer.jpg';
+import tZandsteen from '@/assets/schetser/t-zandsteen.jpg';
+import tHout from '@/assets/schetser/t-hout.jpg';
+import tMicro from '@/assets/schetser/t-micro.jpg';
 
 /**
  * Ontwerp uw eigen badkamer.
@@ -40,10 +41,29 @@ const RUIMTES: Ruimte[] = [
   { sleutel: 'ruim', naam: 'Ruim', onder: '9 m² of meer' },
 ];
 
+/**
+ * De beeldenbank.
+ *
+ * Elk beeld is AFGELEID van hetzelfde basisbeeld, niet los gemaakt. Alleen zo
+ * blijven hoek, raam, bad, meubel en kranen exact gelijk en verandert er echt
+ * maar één ding. Losse generaties gaven zes verschillende kamers — daar viel
+ * niets mee te vergelijken.
+ *
+ * De sleutel is toilet + tegelkeuze. De tegelas is volledig uitgewerkt voor de
+ * ruimte met toilet; voor de ruimte zonder toilet bestaat vandaag alleen de
+ * basisafwerking. Wat er niet is, wordt niet stilzwijgend vervangen: het
+ * onderschrift zegt dan welke afwerking er wél te zien is.
+ */
+const STANDAARDTEGEL = 'Betonlook grijs';
+
 const BEELDEN: Record<string, string> = {
-  'klein-wc': kleinWc, 'klein-geenwc': kleinGeenWc,
-  'middel-wc': middelWc, 'middel-geenwc': middelGeenWc,
-  'ruim-wc': ruimWc, 'ruim-geenwc': ruimGeenWc,
+  'wc|Betonlook grijs': basisWc,
+  'wc|Antraciet': tAntraciet,
+  'wc|Marmerlook wit': tMarmer,
+  'wc|Beige zandsteen': tZandsteen,
+  'wc|Houtlook': tHout,
+  'wc|Microcement': tMicro,
+  'geenwc|Betonlook grijs': basisGeenWc,
 };
 
 const NIET_ERTUSSEN = 'anders';
@@ -109,7 +129,15 @@ export default function Schetser() {
   const galerij = useRef<HTMLInputElement>(null);
 
   const gekozenRuimte = grootte !== null && wc !== null;
-  const beeld = gekozenRuimte ? BEELDEN[`${grootte}-${wc ? 'wc' : 'geenwc'}`] : null;
+
+  /* Het beeld reageert op het toilet en op de tegelkeuze. Bestaat die
+     combinatie nog niet, dan valt hij terug op de basisafwerking en zegt het
+     onderschrift dat er iets anders te zien is dan wat er gekozen werd. */
+  const tegelkeuze = keuzes['Tegels'];
+  const toiletdeel = wc ? 'wc' : 'geenwc';
+  const gevraagd = tegelkeuze && tegelkeuze !== NIET_ERTUSSEN ? tegelkeuze : STANDAARDTEGEL;
+  const getoond = BEELDEN[`${toiletdeel}|${gevraagd}`] ? gevraagd : STANDAARDTEGEL;
+  const beeld = gekozenRuimte ? BEELDEN[`${toiletdeel}|${getoond}`] : null;
   const ietsAnders = useMemo(
     () => Object.values(keuzes).some((v) => v === NIET_ERTUSSEN), [keuzes]);
 
@@ -244,7 +272,13 @@ export default function Schetser() {
               ? <img src={foto ?? beeld} alt={foto ? 'Uw badkamer' : 'Voorbeeldruimte'} />
               : <p>Kies eerst de grootte en of het toilet erin zit.</p>}
             {beeld && (
-              <figcaption>{foto ? 'Uw foto' : 'Voorbeeldruimte met standaarduitrusting'}</figcaption>
+              <figcaption>
+                {foto
+                  ? 'Uw foto'
+                  : getoond === gevraagd
+                    ? `Voorbeeldruimte — ${getoond.toLowerCase()}`
+                    : `Voorbeeldruimte in ${getoond.toLowerCase()}. Uw keuze noteren wij bij de aanvraag.`}
+              </figcaption>
             )}
           </figure>
 
