@@ -203,7 +203,7 @@ export default function Schetser() {
         <h2 className="pc-h2--midden">Ontwerp uw<br />eigen badkamer</h2>
         <p className="pc-schets-sub">
           <strong>Gratis ontwerp, in enkele ogenblikken.</strong> Geef aan hoe groot uw badkamer
-          is en wat u in gedachten hebt. Wij tekenen het uit en bellen u met de prijs.
+          is en wat u in gedachten hebt.
         </p>
       </div>
 
