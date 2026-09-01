@@ -17,7 +17,7 @@ const CIJFERS = [
 const PRINCIPES = [
   {
     n: '01', t: 'Vakmensen in vaste dienst',
-    d: 'Onze metselaars, dakdekkers, tegelzetters en schrijnwerkers staan op onze eigen loonlijst. Daardoor werkt op uw werf iedere dag dezelfde ploeg, met dezelfde standaarden.',
+    d: 'Onze metselaars, dakdekkers, tegelzetters en schrijnwerkers zijn in vaste dienst. Daardoor werkt op uw werf iedere dag dezelfde ploeg, met dezelfde standaarden.',
   },
   {
     n: '02', t: 'Eén prijs, uitgesplitst',
@@ -25,7 +25,7 @@ const PRINCIPES = [
   },
   {
     n: '03', t: 'Eén werfleider',
-    d: 'U krijgt één nummer dat u belt. Die persoon kent uw dossier, kent de planning en blijft uw aanspreekpunt tot een jaar na de oplevering.',
+    d: 'U krijgt één nummer dat u belt. Die persoon kent uw dossier en de planning, en blijft uw aanspreekpunt tot na de oplevering.',
   },
 ];
 
@@ -37,7 +37,6 @@ const AFSPRAKEN = [
   'Eén factuur per afgeronde fase',
   'Werf elke vrijdag opgeruimd',
   'Premiedossier dienen wij mee in',
-  'Nazorg tot twaalf maanden na oplevering',
 ];
 
 const ERKENNINGEN = [
@@ -72,21 +71,7 @@ ${rpNav('/over')}
   </div>
 </section>
 
-<section class="rp-section" style="padding-top:0">
-  <div class="rp-wrap">
-    <div class="rp-split">
-      <div class="rp-split__media">
-        <img src="${about}" alt="Woning in uitvoering bij AB Bouw Groep" width="560" height="420" loading="lazy" decoding="async"/>
-      </div>
-      <div>
-        <span class="rp-eyebrow">${ic.mark} Wie we zijn</span>
-        <h2 class="rp-split__t">Voor wie wij<span class="rp-dim">werken</span></h2>
-        <p class="rp-split__lede">Onze klanten zijn particulieren die hun woning grondig aanpakken: een gezinswoning die op de schop gaat, een rijwoning die tot op de muren gestript wordt, of een dak dat na dertig jaar aan vervanging toe is.</p>
-        <p class="rp-split__lede">We plannen per werf één ploeg in en nemen er maar zoveel aan als we met eigen mensen kunnen bemannen.</p>
-      </div>
-    </div>
-  </div>
-</section>
+
 
 <section class="rp-section rp-section--soft">
   <div class="rp-wrap">
@@ -96,6 +81,18 @@ ${rpNav('/over')}
         <h2 class="rp-head__title">Hoe wij<span class="rp-dim">werken</span></h2>
       </div>
     </div>
+
+    <div class="rp-uitleg">
+      <p>Een algemeen aannemer neemt de verantwoordelijkheid voor het geheel op zich: hij voert alle
+      bouwactiviteiten uit en stemt ze op elkaar af, en levert voor een prijs die in het contract staat
+      en binnen een afgesproken termijn een volledig afgewerkt bouwwerk op.</p>
+      <p>Een co&ouml;rdinator van werken doet iets anders. Die brengt u in contact met de verschillende
+      aannemers, maar draagt zelf geen verantwoordelijkheid voor de uitvoering. Een algemeen aannemer
+      draagt die wel, voor alle werken samen.</p>
+      <p>Voor u scheelt dat stappen. E&eacute;n vakman houdt het programma, de prijs en de termijn in de hand
+      en levert het eindresultaat af.</p>
+    </div>
+
     <div class="rp-why__tiles rp-tiles-3">
       ${PRINCIPES.map((p) => `
       <div class="rp-tile">
@@ -107,24 +104,7 @@ ${rpNav('/over')}
   </div>
 </section>
 
-<section class="rp-section">
-  <div class="rp-wrap">
-    <div class="rp-split rp-split--om">
-      <div class="rp-split__media">
-        <img src="${why}" alt="Afgewerkte leefruimte met verlaagd plafond en lichtlijnen, door AB Bouw Groep" width="560" height="420" loading="lazy" decoding="async"/>
-      </div>
-      <div>
-        <span class="rp-eyebrow">${ic.mark} Wat wij vastleggen</span>
-        <h2 class="rp-split__t">Acht afspraken<span class="rp-dim">die in het contract staan</span></h2>
-        <p class="rp-split__lede">Deze acht punten staan in uw offerte en in de overeenkomst.</p>
-        <ul class="rp-lijst">
-          ${AFSPRAKEN.map((a) => `<li>${vink}<span>${a}</span></li>`).join('')}
-        </ul>
-        <div class="rp-split__cta"><a class="rp-btn rp-btn--primary" href="/werkwijze">Zo verloopt een project ${ic.arrowUpRight()}</a></div>
-      </div>
-    </div>
-  </div>
-</section>
+
 
 <section class="rp-section rp-section--soft">
   <div class="rp-wrap">

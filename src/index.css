@@ -1,3 +1,7 @@
+/* De wortel op Poppins: zonder deze regel valt html terug op de standaard van
+   Tailwind (ui-sans-serif) en wijkt de enige plek af waar geen tekst staat. */
+html { font-family: Poppins, system-ui, -apple-system, sans-serif; }
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

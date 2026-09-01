@@ -1705,3 +1705,11 @@
 }
 .rp .rp-phero--foto .rp-btn--ghost:hover { border-color: var(--rp-ink); background: transparent; }
 
+/* Lopende uitleg onder een sectiekop. Zelfde maten als de rest van de
+   lopende tekst: 16px met regelhoogte 26. Smal gehouden, want een regel
+   die de volle 974px beslaat leest niet. */
+.rp .rp-uitleg { max-width: 660px; margin: 30px auto 0; text-align: center; }
+.rp .rp-uitleg p { font-size: 16px; line-height: 26px; color: var(--rp-body); }
+.rp .rp-uitleg p + p { margin-top: 16px; }
+@media (max-width: 700px) { .rp .rp-uitleg { text-align: left; } }
+
