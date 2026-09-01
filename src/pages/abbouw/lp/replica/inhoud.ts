@@ -28,7 +28,7 @@ import svcInterieur from '@/assets/home/svc-interieur.jpg';
 import svcConstruct from '@/assets/home/svc-construct.jpg';
 import svcEco from '@/assets/home/svc-eco.jpg';
 import homeHero from '@/assets/home/hero-3.jpg';
-import homeOver from '@/assets/home/about.jpg';
+import homeOver from '@/assets/lp-diensten/realisaties/totaalrenovatie-p6-a.jpg';
 import heroFoto from '@/assets/lp-diensten/totaalrenovatie-hero.jpg';
 import overFoto from '@/assets/lp-diensten/totaalrenovatie-g1.jpg';
 import dienstenBg from '@/assets/lp-diensten/totaalrenovatie-g2.jpg';
@@ -536,10 +536,10 @@ export const HOME: PaginaInhoud = {
 
   over: {
     kop: ['Uw vaste', 'totaalaannemer'],
-    tekst: 'Of uw plannen nu vastliggen of nog moeten groeien: wij begeleiden u van het eerste gesprek tot de oplevering. U schakelt één afdeling in of ze allemaal.',
+    tekst: 'Of uw plannen nu vastliggen of nog moeten groeien: wij begeleiden u van het eerste gesprek tot de oplevering. U schakelt één afdeling in of ze allemaal; de planning, de afstemming tussen de vakken en de opvolging op de werf nemen wij over.',
     slot: '',
     foto: homeOver,
-    alt: 'Gerenoveerde woning van AB Bouw Groep',
+    alt: 'Leefruimte met open keuken en glazen pui na een totaalrenovatie door AB Bouw Groep',
   },
 
   /* De zes divisies, niet de onderdelen van een enkele renovatie: op de

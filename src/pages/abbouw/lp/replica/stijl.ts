@@ -1078,7 +1078,12 @@ export const REPLICA_CSS = `
    bouwwerkzaamheden de foto in en viel de laatste regel achter de
    formulierbalk. De tekstkant loopt hier daarom tot 60% en de hero is hoger,
    zodat de kop, de knop en de balk alle drie hun eigen ruimte houden. */
-.pc-hero--ruim { height: 760px; }
+/* .pc-h1 staat op max-width 488px: de gemeten breedte van de kop op de
+   landingspagina. De zin hier is langer en brak daardoor midden in een regel
+   af, met het woord uw alleen op regel twee. De tekstkant loopt tot 60% van
+   het venster, dus is er ruimte voor 620px. */
+.pc-hero--ruim .pc-h1 { max-width: 620px; }
+.pc-hero--ruim { height: 700px; }
 /* De balk wordt normaal 260px over de hero getrokken. Bij deze hogere hero
    kwam de knop daardoor achter de balk te staan; 110px laat hem er nog steeds
    overheen vallen zonder de knop te raken. */
