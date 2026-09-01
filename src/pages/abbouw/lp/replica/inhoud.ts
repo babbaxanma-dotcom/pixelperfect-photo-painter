@@ -21,6 +21,14 @@ import {
 /* ── Beelden ──────────────────────────────────────────────────────────────
    De werffoto's van het spoor worden met een glob uit de realisaties-map
    gehaald (zie LpReplica); die staan hier dus als naam, niet als import. */
+import svcDak from '@/assets/dak/lp-veluxg-3.jpg';
+import svcGevel from '@/assets/home/svc-gevel.jpg';
+import svcBad from '@/assets/home/svc-bad.jpg';
+import svcInterieur from '@/assets/home/svc-interieur.jpg';
+import svcConstruct from '@/assets/home/svc-construct.jpg';
+import svcEco from '@/assets/home/svc-eco.jpg';
+import homeHero from '@/assets/home/hero-3.jpg';
+import homeOver from '@/assets/home/about.jpg';
 import heroFoto from '@/assets/lp-diensten/totaalrenovatie-hero.jpg';
 import overFoto from '@/assets/lp-diensten/totaalrenovatie-g1.jpg';
 import dienstenBg from '@/assets/lp-diensten/totaalrenovatie-g2.jpg';
@@ -74,6 +82,16 @@ export type PaginaInhoud = {
    * bestaande, al gepubliceerde beoordelingen van abgroep.be.
    */
   reviews?: { text: string; name: string; role: string }[];
+  /**
+   * Navigatie in de kop. Blijft dit leeg, dan staat de LP-navigatie er: links
+   * die alleen naar een sectie van dezelfde pagina springen. Een landingspagina
+   * hoort geen uitgangen te hebben, de homepage juist wel.
+   */
+  nav?: { label: string; href: string; chevron?: boolean }[];
+  /** Veelgestelde vragen. Alleen de homepage heeft deze sectie. */
+  faq?: { kop: string[]; vragen: { v: string; a: string }[] };
+  /** Blok met de laatste artikels. Alleen de homepage heeft deze sectie. */
+  blog?: { kop: string[]; knop: string; aantal: number };
   /** Toont de badkamerschetser. */
   schetser?: boolean;
   /** Toont het raster met dienstkaarten. */
@@ -467,5 +485,110 @@ export const BADKAMER: PaginaInhoud = {
         { label: 'Nog niet beslist', uitleg: 'de prijs bepaalt mijn timing' },
       ] },
     ],
+  },
+};
+
+/**
+ * De homepage.
+ *
+ * Erft van TOTAALRENOVATIE en overschrijft alleen wat een homepage anders
+ * maakt: navigatie met uitgangen, de zes divisies in plaats van de onderdelen
+ * van een enkele renovatie, en twee secties die een landingspagina niet heeft.
+ *
+ * De teksten zijn ONGEWIJZIGD overgenomen van de bestaande homepage. Bij een
+ * stijlombouw hoort geen stille herschrijving: dan weet niemand achteraf of
+ * een zin veranderde omdat het moest of omdat het toevallig gebeurde.
+ */
+export const HOME: PaginaInhoud = {
+  ...TOTAALRENOVATIE,
+  titel: 'AB Bouw Groep — bouw en renovatie in heel Vlaanderen',
+  omschrijving: 'Dakwerken, gevelrenovatie, badkamers, interieur, totaalrenovatie en energiewerken. Een aannemer met zes eigen afdelingen. Gratis plaatsbezoek in heel Vlaanderen.',
+  pad: '/',
+  bronPrefix: 'home',
+  footer: 'AB Bouw Groep werkt met zes afdelingen: ruwbouw, dak, gevel, badkamer, interieur en energiewerken.',
+
+  nav: [
+    { label: 'Home', href: '/' },
+    { label: 'Over ons', href: '/over' },
+    { label: 'Diensten', href: '/diensten', chevron: true },
+    { label: 'Realisaties', href: '/realisaties' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Contact', href: '/contact' },
+  ],
+
+  hero: {
+    regels: ['Bouwen en', 'renoveren'],
+    knop: 'Vraag een plaatsbezoek aan',
+    foto: homeHero,
+    alt: 'Gerenoveerde woning van AB Bouw Groep',
+  },
+
+  over: {
+    kop: ['Zes vakken', 'onder een dak'],
+    tekst: 'Wij zijn een Vlaams bouw- en renovatiebedrijf met eigen ploegen voor dakwerken, gevel, badkamer, interieur, ruwbouw en energiewerken. Omdat die vakken bij ons onder hetzelfde dak zitten, moet u niet zelf tussen aannemers bemiddelen wanneer het ene werk op het andere wacht.',
+    slot: 'U krijgt een gedetailleerde offerte waarin elke post apart staat, en tijdens de werken een werfleider die uw dossier kent.',
+    foto: homeOver,
+    alt: 'Gerenoveerde woning van AB Bouw Groep',
+  },
+
+  /* De zes divisies, niet de onderdelen van een enkele renovatie: op de
+     homepage moet een bezoeker zien welk vak hij nodig heeft en daarheen
+     kunnen doorklikken. */
+  diensten: {
+    ...TOTAALRENOVATIE.diensten,
+    kop: ['Dak, gevel en interieur', 'bij een aannemer'],
+    kaarten: [
+      { titel: 'Dakwerken', href: '/dakwerken', foto: svcDak,
+        tekst: 'Nieuwe pannen, leien of een plat dak in EPDM. Inclusief isolatie, dakgoten en het opruimen achteraf.',
+        alt: 'Dakwerken door AB Bouw Groep' },
+      { titel: 'Gevelrenovatie', href: '/gevel', foto: svcGevel,
+        tekst: 'Crepi, steenstrips, houten bekleding of gevelreiniging. Met buitenisolatie als de gevel toch openligt.',
+        alt: 'Gevelrenovatie door AB Bouw Groep' },
+      { titel: 'Badkamer en wellness', href: '/bad', foto: svcBad,
+        tekst: 'Van inloopdouche tot volledige badkamer. Sanitair, tegelwerk en vloerverwarming door dezelfde ploeg.',
+        alt: 'Badkamerrenovatie door AB Bouw Groep' },
+      { titel: 'Interieurwerken', href: '/interieur', foto: svcInterieur,
+        tekst: 'Maatkasten, keukens, gietvloeren en pleisterwerk. Afgewerkt tot in de plinten en de deurlijsten.',
+        alt: 'Interieurwerken door AB Bouw Groep' },
+      { titel: 'Totaalrenovatie en nieuwbouw', href: '/construct', foto: svcConstruct,
+        tekst: 'Ruwbouw, uitbreiding of een woning die volledig op de schop gaat. Wij coordineren alle vakken.',
+        alt: 'Totaalrenovatie door AB Bouw Groep' },
+      { titel: 'Ecologisch bouwen', href: '/ecologisch', foto: svcEco,
+        tekst: 'Isolatie, ventilatie, warmtepomp en zonnepanelen. We rekenen vooraf uit wat het oplevert.',
+        alt: 'Energiewerken door AB Bouw Groep' },
+    ],
+  },
+
+  werkwijze: {
+    ...TOTAALRENOVATIE.werkwijze,
+    kop: ['Van eerste telefoon', 'tot oplevering'],
+  },
+
+  eind: {
+    ...TOTAALRENOVATIE.eind,
+    kop: ['Plannen voor uw woning?', 'Laat uw nummer achter'],
+    tekst: 'Wij bellen u terug om een plaatsbezoek in te plannen. Dat bezoek en de offerte erna zijn kosteloos.',
+  },
+
+  faq: {
+    kop: ['Wat klanten ons', 'het vaakst vragen'],
+    vragen: [
+      { v: 'Werken jullie in heel Vlaanderen?',
+        a: 'Ja. We werken in heel Vlaanderen en in Brussel. Voor een plaatsbezoek maken we een afspraak die past, ook in de vooravond.' },
+      { v: 'Wat kost een plaatsbezoek en een offerte?',
+        a: 'Niets. We komen langs, meten op en bezorgen u een gedetailleerde offerte. Daar zijn geen kosten aan verbonden en u bent tot niets verplicht.' },
+      { v: 'Kan ik een enkel werk laten doen, of moet het een volledige renovatie zijn?',
+        a: 'Beide kan. Alleen een dak of alleen een badkamer is prima. Loopt uw project over meerdere vakken, dan coordineren wij die onderling.' },
+      { v: 'Hoe zit het met premies?',
+        a: 'We bekijken bij het plaatsbezoek welke premies op uw situatie van toepassing zijn en leveren de attesten aan die u nodig heeft. De premievoorwaarden wijzigen geregeld, dus we toetsen ze per dossier opnieuw.' },
+      { v: 'Hoe lang op voorhand moet ik boeken?',
+        a: 'Dat hangt af van het vak en het seizoen. Bij het plaatsbezoek zeggen we meteen welke startperiode realistisch is, en die zetten we in de offerte.' },
+    ],
+  },
+
+  blog: {
+    kop: ['Uit de praktijk', 'uitleg en achtergrond'],
+    knop: 'Alle artikels',
+    aantal: 3,
   },
 };

@@ -7,6 +7,7 @@ import "./styles/ab-bouw.css";
 // LAZY-LOAD alle routes — initial bundle van 1MB -> ~150KB
 // Eager-load alleen Home want LCP-critical (first paint)
 import Home from "./pages/abbouw/Home";
+import HomePc from "./pages/abbouw/HomePc";
 
 const OverOns = lazy(() => import("./pages/abbouw/OverOns"));
 const Diensten = lazy(() => import("./pages/abbouw/Diensten"));
@@ -75,7 +76,7 @@ const App = () => {
         <PageTransition>
         <Suspense fallback={<RouteLoading />}>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<HomePc />} />
           <Route path="/index" element={<Home />} />
           <Route path="/over" element={<OverOns />} />
           <Route path="/diensten" element={<Diensten />} />

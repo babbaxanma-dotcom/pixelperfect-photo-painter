@@ -124,10 +124,22 @@ const p1 = proef.find((r) => r.tekst.startsWith('Deze regel moet zakken'));
 console.log(`positieve controle : ${p1 ? (p1.zakt ? 'afgekeurd op ' + p1.ratio.toFixed(2) + ':1' : 'TEN ONRECHTE GOEDGEKEURD') : 'NIET GEVONDEN'}`);
 if (!p1 || !p1.zakt) { console.error('GUARD MEET NIETS'); await browser.close(); process.exit(2); }
 
-/* NEGATIEVE CONTROLE: gewone donkere kop op wit moet slagen. */
-const n1 = proef.filter((r) => !r.zakt && r.ratio > 10).length;
-console.log(`negatieve controle : ${n1} elementen ruim boven de eis (moet > 20 zijn)`);
-if (n1 < 20) { console.error('GUARD KEURT TE VEEL AF'); await browser.close(); process.exit(3); }
+/* NEGATIEVE CONTROLE: de guard mag niet alles afkeuren.
+
+   Dit telde eerst een VAST aantal (>20) elementen ruim boven de eis in het
+   eerste scherm van de homepage. Dat hing aan hoeveel tekst daar toevallig
+   stond: na de ombouw naar de PrimeCraft-vormtaal staat er een fotohero met
+   minder losse tekstelementen, en de guard sloeg alarm terwijl er 0 van de
+   195 gemeten elementen onder AA zakte. Een controle die op de vormgeving
+   reageert in plaats van op het contrast, meet het verkeerde.
+
+   Nu is het een VERHOUDING: het overgrote deel van wat gemeten wordt hoort
+   ruim te slagen. Zakt dat aandeel in, dan keurt de guard te veel af, hoeveel
+   tekst er ook staat. */
+const ruim = proef.filter((r) => !r.zakt && r.ratio > 10).length;
+const aandeel = proef.length ? ruim / proef.length : 0;
+console.log(`negatieve controle : ${ruim} van ${proef.length} elementen ruim boven de eis (${Math.round(aandeel*100)}%, moet >= 60% en >= 8 stuks zijn)`);
+if (ruim < 8 || aandeel < 0.6) { console.error('GUARD KEURT TE VEEL AF'); await browser.close(); process.exit(3); }
 
 let totaal = 0, gezakt = 0;
 const problemen = [];

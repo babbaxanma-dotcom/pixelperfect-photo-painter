@@ -34,6 +34,7 @@ import {
   type Aanbodkaart, type Dienstkaart,
 } from './Onderdelen';
 import { TOTAALRENOVATIE, type PaginaInhoud } from './inhoud';
+import { BLOGS } from '@/data/blogs';
 
 import logo from '@/assets/home/logo-trim.png';
 import glyph1 from '@/assets/lp-diensten/realisaties/totaalrenovatie-p1-a.jpg';
@@ -434,8 +435,8 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
               </div>
 
               <div className="pc-kop-rij2">
-                <nav className="pc-nav">
-                  {NAV.map((n) => (
+                <nav className={`pc-nav${(inhoud.nav ?? NAV).length > 5 ? ' pc-nav--dicht' : ''}`}>
+                  {(inhoud.nav ?? NAV).map((n) => (
                     <a key={n.label} href={n.href}>{n.label}{n.chevron && <IcChevron />}</a>
                   ))}
                 </nav>
@@ -737,6 +738,68 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       </section>
 
       {/* ── Contact ── */}
+      {/* ── Veelgestelde vragen. Alleen de homepage heeft deze sectie; een
+           landingspagina laat hem weg. Het paneel werkt met <details>, dus
+           ook zonder JavaScript. ── */}
+      {inhoud.faq && (
+        <section className="pc-faq" id="vragen">
+          <div className="pc-vat">
+            <h2 className="pc-h2--midden">{regels(inhoud.faq.kop)}</h2>
+            <div className="pc-faq-lijst">
+              {inhoud.faq.vragen.map((vraag, i) => (
+                <details className="pc-faq-item" key={vraag.v} open={i === 0}>
+                  <summary className="pc-faq-vraag">
+                    {vraag.v}
+                    <span className="pc-faq-teken" aria-hidden="true">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                        <path d="M12 5v14M5 12h14" />
+                      </svg>
+                    </span>
+                  </summary>
+                  <div className="pc-faq-antwoord">{vraag.a}</div>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── De laatste artikels. De kaart leent elke maat van .pc-kaart en
+           .pc-werk-foto; alleen de beeldverhouding is eigen, omdat een
+           artikelbeeld liggend hoort en het fotoraster vierkant is. ── */}
+      {inhoud.blog && (
+        <section className="pc-blog">
+          <div className="pc-vat">
+            <h2 className="pc-h2--midden">{regels(inhoud.blog.kop)}</h2>
+            <div className="pc-blog-raster">
+              {BLOGS.slice(0, inhoud.blog.aantal).map((post) => (
+                <a className="pc-blog-kaart" key={post.slug} href={`/blog/${post.slug}`}>
+                  <img src={post.img} alt={post.title} loading="lazy" decoding="async" />
+                  <div className="pc-blog-tekst">
+                    <div className="pc-blog-meta">
+                      <span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                          <rect x="3" y="4" width="18" height="17" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
+                        </svg>
+                        {post.date}
+                      </span>
+                      <span><IcPersoon />AB Bouw Groep</span>
+                    </div>
+                    <h3>{post.title}</h3>
+                    <span className="pc-blog-lees">Lees het artikel<IcPijl /></span>
+                  </div>
+                </a>
+              ))}
+            </div>
+            <div style={{ textAlign: "center", marginTop: 40 }}>
+              <a className="pc-knop pc-knop--donker" href="/blog">{inhoud.blog.knop}<IcPijl /></a>
+            </div>
+          </div>
+        </section>
+      )}
+
       <section className="pc-contact" id="contact">
         <div className="pc-vat pc-midden">
           <span className="pc-chip--vlak">{CONTACT.phone.display}<IcChevron richting="rechts" /></span>

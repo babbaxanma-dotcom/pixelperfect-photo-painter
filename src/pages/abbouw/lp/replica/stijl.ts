@@ -112,10 +112,20 @@ export const REPLICA_CSS = `
 
 /* 20px in plaats van 23: de Nederlandse navlabels zijn samen 67px breder dan
    de Engelse, en met 23px stond de offerteknop tegen "Contact" aan. */
-.pc-nav { display: flex; align-items: center; gap: 18px; }
+/* nowrap en 16px tussenruimte in plaats van 18: de homepage heeft zes links
+   waar een landingspagina er vijf korte heeft. Zonder nowrap brak 'Over ons'
+   over twee regels en schoof de offerteknop eroverheen. */
+.pc-nav { display: flex; align-items: center; gap: 16px; min-width: 0; }
 .pc-nav > a, .pc-nav > button { font-size: 14px; font-weight: 500; line-height: 1;
+  white-space: nowrap;
   display: inline-flex; align-items: center; gap: 9px; }
 .pc-nav > a:hover, .pc-nav > button:hover { color: var(--pc-accent-h); }
+/* Alleen wanneer er meer dan vijf links staan: de homepage heeft er zes en
+   die botsten tegen de offerteknop. De landingspagina houdt zijn eigen maten,
+   want die is goedgekeurd en mag niet verschuiven voor een probleem dat hij
+   niet heeft. */
+.pc-nav--dicht { gap: 11px; }
+.pc-nav--dicht > a, .pc-nav--dicht > button { font-size: 13.5px; }
 
 .pc-teltegel { width: 47px; height: 47px; border-radius: 12px; background: var(--pc-accent);
   color: var(--pc-dark); display: grid; place-items: center; flex: 0 0 auto;
@@ -947,5 +957,71 @@ export const REPLICA_CSS = `
   .pc-schets-grid { grid-template-columns: 1fr; gap: 24px; }
   .pc-schets-grid > div:last-child { order: -1; }
   .pc-schets-keuzes { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Veelgestelde vragen en Blog — twee secties die de referentie
+   niet heeft, voor de homepage.
+
+   Er staat hier GEEN enkel nieuw getal op één na. Elke maat is
+   geleend van een sectie die wel gemeten is:
+     rand/lijn      --pc-lijn-2      (#e7e7e7)
+     hoekradius     .pc-kaart        12px
+     fotoradius     .pc-werk-foto    14px
+     titel          .pc-kaart h3     600 / 17.6px / lh 24
+     lopende tekst  .pc-stap p       15px / lh 20 / #565656
+     raster         .pc-kaarten      3 kolommen, gap 24px
+     sectiepadding  .pc-werk         80px boven, 81px onder
+     knop           .pc-knop         44px hoog, radius 10
+   Het enige eigen getal is de beeldverhouding 3/2 van een
+   blogbeeld. Het vierkant van .pc-werk hoort bij een fotoraster;
+   een artikelbeeld is liggend. Dat is een keuze, geen meting,
+   en staat er daarom bij.
+   ───────────────────────────────────────────────────────────── */
+.pc-faq { background: #fff; padding: 80px 0 81px; }
+.pc-faq-lijst { margin-top: 50px; display: flex; flex-direction: column; gap: 12px; }
+.pc-faq-item { border: 1px solid var(--pc-lijn-2); border-radius: 12px; background: #fff;
+  overflow: hidden; }
+.pc-faq-item[open] { border-color: var(--pc-lijn); }
+.pcx .pc-faq-vraag { display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 20px 24px; cursor: pointer; list-style: none;
+  font-size: 17.6px; font-weight: 600; line-height: 24px; color: var(--pc-ink); }
+.pc-faq-vraag::-webkit-details-marker { display: none; }
+.pc-faq-vraag:hover { color: var(--pc-accent-h); }
+/* Het teken draait een kwartslag als het paneel opengaat: één element, twee
+   standen, geen tweede icoon dat uit de pas kan lopen. */
+.pc-faq-teken { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--pc-cream); border: 1px solid #edece9; display: grid; place-items: center;
+  transition: transform .18s ease, background-color .18s ease; }
+.pc-faq-item[open] .pc-faq-teken { transform: rotate(45deg); background: var(--pc-accent); }
+.pcx .pc-faq-antwoord { padding: 0 24px 22px; font-size: 15px; line-height: 20px;
+  color: #565656; max-width: 780px; }
+
+.pc-blog { background: var(--pc-cream); padding: 80px 0 81px; }
+.pc-blog-raster { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  margin-top: 50px; }
+.pc-blog-kaart { display: flex; flex-direction: column; background: #fff;
+  border: 1px solid var(--pc-lijn-2); border-radius: 12px; overflow: hidden;
+  transition: border-color .18s ease; }
+.pc-blog-kaart:hover { border-color: var(--pc-accent); }
+/* 3/2: het enige getal in dit blok dat niet uit een meting komt. */
+.pc-blog-kaart img { width: 100%; aspect-ratio: 3 / 2; height: auto; object-fit: cover;
+  border-radius: 14px 14px 0 0; }
+.pc-blog-tekst { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
+.pc-blog-meta { display: flex; align-items: center; gap: 14px; font-size: 14px;
+  line-height: 20px; color: #767676; }
+.pc-blog-meta span { display: inline-flex; align-items: center; gap: 6px; }
+.pcx .pc-blog-kaart h3 { font-size: 17.6px; font-weight: 600; line-height: 24px;
+  margin-top: 12px; color: var(--pc-ink); }
+.pc-blog-kaart:hover h3 { color: var(--pc-accent-h); }
+.pc-blog-lees { margin-top: auto; padding-top: 18px; font-size: 14px; font-weight: 600;
+  color: var(--pc-accent-h); display: inline-flex; align-items: center; gap: 8px; }
+
+@media (max-width: 900px) {
+  .pc-blog-raster { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .pcx .pc-faq-vraag { padding: 16px 18px; font-size: 16px; line-height: 22px; }
+  .pcx .pc-faq-antwoord { padding: 0 18px 18px; }
 }
 `;
