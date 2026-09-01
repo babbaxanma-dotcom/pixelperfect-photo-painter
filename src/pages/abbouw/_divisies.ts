@@ -12,7 +12,7 @@ import intHero from '@/assets/interieur/hero.jpg';
 import intStory from '@/assets/interieur/maatkasten.jpg';
 import conHero from '@/assets/construct/intro-villa.jpg';
 import conStory from '@/assets/construct/aanbouw.jpg';
-import ecoHero from '@/assets/eco/intro.jpg';
+import ecoHero from '@/assets/eco/dakisolatie-binnen.jpg';
 import ecoStory from '@/assets/eco/warmtepomp.jpg';
 
 const stap = (t: string, d: string, time: string, n: string) => ({ n, t, d, time });
