@@ -162,11 +162,16 @@ export const REPLICA_CSS = `
    Hero: 812px hoog. Links een gebroken wit paneel tot x=636 (53%),
    rechts de foto die tot de paginarand doorloopt.
    ───────────────────────────────────────────────────────────── */
-.pc-hero { position: relative; height: 812px; background: var(--pc-cream); overflow: hidden; }
+.pc-hero { position: relative; height: 672px; background: var(--pc-cream); overflow: hidden; }
 .pc-hero-foto { position: absolute; top: 0; right: 0; bottom: 0; left: 53%; }
 .pc-hero-foto img { width: 100%; height: 100%; object-fit: cover; }
-.pc-hero-sluier { position: absolute; top: 0; right: 0; left: 53%; height: 160px; z-index: 2;
-  background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0) 100%); pointer-events: none; }
+/* De sluier moet de HELE kop dekken, niet alleen de bovenrand. De kop is 137px
+   hoog en het telefoonblok staat op y=49 tot 77; met de oude 160px was de
+   sluier daar al half doorzichtig en stond "Bel ons vandaag" in grijs op de
+   herofoto. Wit tot 45% van 220px = 99px, dus het hele blok staat op wit en
+   daaronder loopt de foto zoals in de referentie vanzelf weer op. */
+.pc-hero-sluier { position: absolute; top: 0; right: 0; left: 53%; height: 220px; z-index: 2;
+  background: linear-gradient(180deg, #fff 0%, #fff 45%, rgba(255,255,255,0) 100%); pointer-events: none; }
 .pc-hero-vlak { position: absolute; top: 0; bottom: 0; left: 0; width: 53%; background: var(--pc-cream); }
 /* De tekst hangt aan de ONDERKANT van de hero, niet aan de bovenkant.
    Met padding-top: 247px stond hij vast op een afstand die alleen klopte bij een
@@ -174,7 +179,7 @@ export const REPLICA_CSS = `
    en liep de tekst erachter. Vanaf onderen gemeten blijft de afstand tot die
    balk altijd gelijk, ongeacht de hoogte van de hero. */
 .pc-hero-vat { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column;
-  justify-content: flex-end; padding-bottom: 410px; }
+  justify-content: flex-end; padding-bottom: 270px; }
 
 .pc-chip { display: inline-flex; align-items: center; gap: 9px; align-self: flex-start;
   height: 31px; padding: 0 13px 0 8px; border-radius: 15.5px; background: #ffffff;
@@ -216,7 +221,7 @@ export const REPLICA_CSS = `
 /* -324 in plaats van -164: de balk schuift 160px verder de hero in, zodat de
    calculator eronder nog boven de vouw van een laptopscherm valt. De hero zelf
    en de foto blijven onaangeroerd op 812px. */
-.pc-balk { position: relative; z-index: 4; margin-top: -400px; }
+.pc-balk { position: relative; z-index: 4; margin-top: -260px; }
 .pc-balk form { background: #fff; border-radius: 20px; padding: 40px 38px;
   display: flex; align-items: center; gap: 13px;
   box-shadow: 0 2px 6px rgba(10,22,40,.04), 0 24px 60px -30px rgba(10,22,40,.22); }
@@ -320,6 +325,19 @@ export const REPLICA_CSS = `
 .pc-kaarten { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
   margin-top: 47px; height: 585px; }
 .pc-kaarten-kolom { display: flex; flex-direction: column; gap: 24px; }
+/* Gelijk raster.
+
+   Het mozaiek hierboven is exact op VIJF kaarten ontworpen: 226 boven 335,
+   dan een volle kolom van 585, dan 334 boven 227. Met zes kaarten valt die
+   opbouw uit elkaar en staat er een gat. De homepage toont zes divisies,
+   dus daar staan ze alle zes even groot naast elkaar.
+
+   De hoogte 335px is niet nieuw: dat is de grootste van de twee gestapelde
+   kaarten uit de referentie. Zo blijft de kaartverhouding dezelfde. */
+.pc-kaarten--gelijk { grid-template-columns: repeat(3, 1fr); align-items: stretch; }
+.pc-kaarten--gelijk .pc-kaart { width: 100%; }
+@media (max-width: 900px) { .pc-kaarten--gelijk { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .pc-kaarten--gelijk { grid-template-columns: 1fr; } }
 .pc-kaart { position: relative; border-radius: 12px; overflow: hidden;
   box-shadow: inset 0 0 0 1px rgba(0,0,0,.35); }
 .pc-kaart > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }

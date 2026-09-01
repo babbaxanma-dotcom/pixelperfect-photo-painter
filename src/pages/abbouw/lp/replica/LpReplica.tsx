@@ -496,7 +496,9 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       </div>
 
       {/* ── Richtprijs-calculator, direct onder de balk ── */}
-      <div className="pc-vat pc-calc-vat"><Calculator inhoud={inhoud.calculator} /></div>
+      {inhoud.toonCalculator !== false && (
+        <div className="pc-vat pc-calc-vat"><Calculator inhoud={inhoud.calculator} /></div>
+      )}
 
       {/* ── Over ons ── */}
       <section className="pc-over" id="over">
@@ -553,19 +555,29 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
               <h2 className="pc-h2--donker">{regels(inhoud.diensten.kop)}</h2>
             </div>
 
-            <div className="pc-kaarten">
-              <div className="pc-kaarten-kolom">
-                <Kaart {...inhoud.diensten.kaarten[0]} hoogte={226} />
-                <Kaart {...inhoud.diensten.kaarten[1]} hoogte={335} />
+            {/* Het mozaiek van de referentie werkt alleen met vijf kaarten.
+                Bij elk ander aantal staan ze even groot naast elkaar. */}
+            {inhoud.diensten.kaarten.length === 5 ? (
+              <div className="pc-kaarten">
+                <div className="pc-kaarten-kolom">
+                  <Kaart {...inhoud.diensten.kaarten[0]} hoogte={226} />
+                  <Kaart {...inhoud.diensten.kaarten[1]} hoogte={335} />
+                </div>
+                <div className="pc-kaarten-kolom">
+                  <Kaart {...inhoud.diensten.kaarten[2]} hoogte={585} gevuld />
+                </div>
+                <div className="pc-kaarten-kolom">
+                  <Kaart {...inhoud.diensten.kaarten[3]} hoogte={334} />
+                  <Kaart {...inhoud.diensten.kaarten[4]} hoogte={227} />
+                </div>
               </div>
-              <div className="pc-kaarten-kolom">
-                <Kaart {...inhoud.diensten.kaarten[2]} hoogte={585} gevuld />
+            ) : (
+              <div className="pc-kaarten pc-kaarten--gelijk">
+                {inhoud.diensten.kaarten.map((k) => (
+                  <Kaart key={k.titel} {...k} hoogte={335} />
+                ))}
               </div>
-              <div className="pc-kaarten-kolom">
-                <Kaart {...inhoud.diensten.kaarten[3]} hoogte={334} />
-                <Kaart {...inhoud.diensten.kaarten[4]} hoogte={227} />
-              </div>
-            </div>
+            )}
           </div>
         </section>
       )}

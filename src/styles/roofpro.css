@@ -27,7 +27,8 @@
   --rp-star: #d98c03;
 
   /* --- maat --- */
-  --rp-container: 1200px;
+  /* 974 in plaats van 1200: de containerbreedte van PrimeCraft. */
+  --rp-container: 974px;
   --rp-gutter: 24px;
   --rp-nav-h: 100px;
   --rp-section-y: 96px;
@@ -46,7 +47,10 @@
 
 /* ── basis ─────────────────────────────────────────────────────────────── */
 .rp {
-  font-family: Archivo, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Poppins in plaats van Archivo: de site draait naar de PrimeCraft-vormtaal
+     en die is op Poppins gemeten. Twee lettertypes naast elkaar op een site
+     leest als twee sites. */
+  font-family: Poppins, Archivo, system-ui, -apple-system, 'Segoe UI', sans-serif;
   color: var(--rp-body);
   background: var(--rp-bg);
   font-size: 16px;
@@ -1507,7 +1511,12 @@
   .rp-track { grid-auto-columns: 86%; }
   .rp-why__tiles { grid-template-columns: minmax(0, 1fr); gap: 14px; }
   .rp-steps { grid-template-columns: minmax(0, 1fr); }
+  /* Poppins is breder dan de Archivo waarop deze rij was gemaakt: het label
+     "jaar ervaring in de bouw" werd 82px in een cel van 78 en duwde de pagina
+     2px open. Op smal breken de labels nu netjes af in plaats van de rij op te
+     rekken. */
   .rp-about__stats { gap: 14px; }
+  .rp-stat__l { font-size: 13px; overflow-wrap: anywhere; hyphens: auto; }
   .rp-stat__n { font-size: 30px; }
   .rp-about__badge { width: 116px; height: 116px; }
   .rp-about__badge b { font-size: 27px; }

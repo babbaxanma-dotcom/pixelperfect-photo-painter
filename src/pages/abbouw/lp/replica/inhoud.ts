@@ -94,6 +94,11 @@ export type PaginaInhoud = {
   blog?: { kop: string[]; knop: string; aantal: number };
   /** Toont de badkamerschetser. */
   schetser?: boolean;
+  /**
+   * Toont de richtprijs-calculator onder de balk. Standaard aan; de homepage
+   * zet hem uit. Optioneel, zodat de twee landingspagina's niets merken.
+   */
+  toonCalculator?: boolean;
   /** Toont het raster met dienstkaarten. */
   toonDiensten: boolean;
   /** Zin onder het logo in de voettekst. */
@@ -144,10 +149,10 @@ export const TOTAALRENOVATIE: PaginaInhoud = {
   divisie: 'ab_construct',
   bronPrefix: 'lp:totaalrenovatie',
   toonDiensten: true,
-  footer: 'AB Bouw Groep is aannemer voor totaalrenovatie in heel Vlaanderen. Van ruwbouw tot afwerking.',
+  footer: 'AB Bouw Groep is algemene aannemer voor renovatie en bouwwerken in heel Vlaanderen. Van ruwbouw tot afwerking.',
   toonMerken: true,
   hero: {
-    regels: ['Uw partner voor', 'totaalrenovatie', 'van A tot Z'],
+    regels: ['De partner voor uw', 'bouwwerkzaamheden', 'en renovatie'],
     knop: 'Plan gratis plaatsbezoek',
     foto: heroFoto,
     alt: 'Woonkamer en keuken na een totaalrenovatie door AB Bouw Groep',
@@ -505,6 +510,7 @@ export const HOME: PaginaInhoud = {
   omschrijving: 'Dakwerken, gevelrenovatie, badkamers, interieur, totaalrenovatie en energiewerken. Een aannemer met zes eigen afdelingen. Gratis plaatsbezoek in heel Vlaanderen.',
   pad: '/',
   bronPrefix: 'home',
+  toonCalculator: false,
   footer: 'AB Bouw Groep werkt met zes afdelingen: ruwbouw, dak, gevel, badkamer, interieur en energiewerken.',
 
   nav: [
@@ -524,9 +530,9 @@ export const HOME: PaginaInhoud = {
   },
 
   over: {
-    kop: ['Zes vakken', 'onder een dak'],
-    tekst: 'Wij zijn een Vlaams bouw- en renovatiebedrijf met eigen ploegen voor dakwerken, gevel, badkamer, interieur, ruwbouw en energiewerken. Omdat die vakken bij ons onder hetzelfde dak zitten, moet u niet zelf tussen aannemers bemiddelen wanneer het ene werk op het andere wacht.',
-    slot: 'U krijgt een gedetailleerde offerte waarin elke post apart staat, en tijdens de werken een werfleider die uw dossier kent.',
+    kop: ['Uw totaalaannemer voor', 'dak, gevel en interieur'],
+    tekst: 'Ruwbouw, dak, gevel, badkamer, interieur en energiewerken zitten bij ons in huis. Loopt uw project over meerdere vakken, dan plannen wij die op elkaar.',
+    slot: 'Elke post staat apart in uw offerte. Tijdens de werken hebt u een vaste werfleider.',
     foto: homeOver,
     alt: 'Gerenoveerde woning van AB Bouw Groep',
   },
@@ -536,7 +542,7 @@ export const HOME: PaginaInhoud = {
      kunnen doorklikken. */
   diensten: {
     ...TOTAALRENOVATIE.diensten,
-    kop: ['Dak, gevel en interieur', 'bij een aannemer'],
+    kop: ['Onze diensten'],
     kaarten: [
       { titel: 'Dakwerken', href: '/dakwerken', foto: svcDak,
         tekst: 'Nieuwe pannen, leien of een plat dak in EPDM. Inclusief isolatie, dakgoten en het opruimen achteraf.',
