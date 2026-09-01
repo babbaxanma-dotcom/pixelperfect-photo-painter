@@ -567,7 +567,7 @@ export const HOME: PaginaInhoud = {
 
   over: {
     kop: ['Waarom kiezen voor', 'AB Bouw Groep'],
-    tekst: 'U werkt met één partij voor het hele project. Alle vakken zitten bij ons in huis, wij plannen ze op elkaar en leveren op voor de prijs die in het contract staat.',
+    tekst: 'U vertelt wat u wil. Wij regelen de rest: de vakken, de planning en de opvolging op de werf.',
     slot: '',
     foto: homeOver,
     alt: 'Leefruimte met open keuken en glazen pui na een totaalrenovatie door AB Bouw Groep',
