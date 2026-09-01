@@ -40,6 +40,8 @@ import kaartSanitair from '@/assets/lp-diensten/kaart-badkamer.jpg';
 import uitbreidingVoor from '@/assets/lp-diensten/uitbreiding-voor.jpg';
 import uitbreidingNa from '@/assets/lp-diensten/uitbreiding-na.jpg';
 import aanbod1 from '@/assets/lp-diensten/totaalrenovatie-steps.jpg';
+import plaatsbezoekFoto from '@/assets/lp-diensten/plaatsbezoek.jpg';
+import werfVca from '@/assets/lp-diensten/werf-vca.jpg';
 import aanbod2 from '@/assets/lp-diensten/terras-g1.jpg';
 import aanbod3 from '@/assets/lp-diensten/pleisterwerk-g2.jpg';
 import aanbod4 from '@/assets/lp-diensten/oprit-g2.jpg';
@@ -256,13 +258,13 @@ export const TOTAALRENOVATIE: PaginaInhoud = {
         href: '#contact', foto: aanbod1, alt: 'Afgewerkte woonkamer na renovatie' },
       { badge: ['5', 'werkdagen'], titel: 'Plaatsbezoek binnen vijf werkdagen',
         tekst: "Opmeten, foto's van de opbouw, knelpunten.", knop: 'Gratis offerte',
-        href: '#contact', foto: aanbod2, alt: 'Terras aan een gerenoveerde woning' },
+        href: '#contact', foto: plaatsbezoekFoto, alt: 'Woning in uitvoering: vloerverwarming gelegd, klaar voor de chape' },
       { badge: ['Eigen', 'ploeg'], titel: 'Eigen ploeg op de werf',
         tekst: 'Dezelfde mensen, elke dag.', knop: 'Gratis offerte',
         href: '#contact', foto: aanbod3, alt: 'Gepleisterde ruimte tijdens de afwerking' },
       { badge: ['VCA', 'attest'], titel: 'VCA-gecertificeerd en verzekerd',
         tekst: 'Attest en polis op aanvraag.', knop: 'Gratis offerte',
-        href: '#contact', foto: aanbod4, alt: 'Nieuwe oprit in klinkers' },
+        href: '#contact', foto: werfVca, alt: 'Aanbouw in ruwbouw met de houten balken van het platte dak' },
     ],
   },
   contact: {
