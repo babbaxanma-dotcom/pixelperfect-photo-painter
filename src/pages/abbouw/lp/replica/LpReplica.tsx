@@ -626,6 +626,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
           klikken verbergt drie kwart van het werk achter een knop die de
           meesten niet aanraken; één spoor toont alles en scrolt zelf. Elke
           tegel is even groot en vierkant, zodat de rij als één blok leest. */}
+      {inhoud.toonWerk !== false && (
       <section className="pc-werk">
         <div className="pc-vat pc-midden">
           <h2 className="pc-h2--midden">{inhoud.werk.kop}</h2>
@@ -669,8 +670,10 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
           </div>
         )}
       </section>
+      )}
 
       {/* ── Keurmerken: waar we mee bouwen ── */}
+
       {inhoud.toonMerken && (
         <section className="pc-merken">
           <div className="pc-vat pc-midden">

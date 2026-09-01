@@ -19,10 +19,10 @@
   --rp-mute: #5f636c;              /* fijndruk — 5,45:1 op #f6f8fa (was #8b8f98 = 2,93:1) */
 
   --rp-bg: #ffffff;
-  --rp-bg-soft: #f6f8fa;           /* gemeten sectiegrijs */
-  --rp-dark: #09101a;              /* gemeten donkere band */
-  --rp-line: #e6e8ec;
-  --rp-line-soft: #eef0f3;
+  --rp-bg-soft: #f6f4f0;           /* gemeten sectiegrijs */
+  --rp-dark: #0a1628;              /* gemeten donkere band */
+  --rp-line: #e7e7e7;
+  --rp-line-soft: #edece9;
 
   --rp-star: #d98c03;
 
@@ -31,16 +31,16 @@
   --rp-container: 974px;
   --rp-gutter: 24px;
   --rp-nav-h: 100px;
-  --rp-section-y: 96px;
-  --rp-section-y-sm: 68px;
+  --rp-section-y: 80px;
+  --rp-section-y-sm: 60px;
 
-  --rp-r-btn: 6px;
-  --rp-r-card: 14px;
-  --rp-r-img: 12px;
+  --rp-r-btn: 10px;
+  --rp-r-card: 12px;
+  --rp-r-img: 14px;
   --rp-r-lg: 20px;
 
-  --rp-shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.06);
-  --rp-shadow-lift: 0 4px 10px rgba(16, 24, 40, 0.06), 0 18px 44px rgba(16, 24, 40, 0.10);
+  --rp-shadow-card: 0 1px 2px rgba(16, 24, 40, 0.03);
+  --rp-shadow-lift: 0 2px 6px rgba(16, 24, 40, 0.05);
 
   --rp-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -1547,3 +1547,104 @@
    website-tell en moet er bij hem ALTIJD uit. Stond zeven keer op de
    homepage en op de landingspaginas. De kop eronder draagt de sectie zelf. */
 .rp-eyebrow { display: none; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   OMBOUW NAAR PRIMECRAFT
+
+   Deze site had twee vormtalen naast elkaar: RoofPro op de gewone
+   paginas, PrimeCraft op de landingspaginas en de homepage. De tokens
+   hierboven zijn al omgezet; hieronder staan de onderdelen waar een
+   token niet volstaat omdat de maat in de regel zelf stond.
+
+   Elke waarde komt uit de gemeten PrimeCraft-stijl (stijl.ts), niet uit
+   een schatting. Waar dat bestand een getal noemt, staat het erbij.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Knoppen. In de hele PrimeCraft-referentie is er precies EEN knophoogte:
+   44px, radius 10, 14px in gewicht 600. De RoofPro-knop was 48px hoog met
+   radius 6 en gewicht 700. */
+.rp .rp-btn {
+  height: 44px;
+  min-height: 44px;
+  padding: 0 21px 0 18px;
+  gap: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: normal;
+}
+.rp .rp-btn--block { width: 100%; justify-content: center; }
+
+/* Sectiekoppen. PrimeCraft: 35,5px in gewicht 600 met regelhoogte 44, en
+   een gecentreerde variant op 37px. RoofPro schaalde tussen 30 en 44px in
+   gewicht 800 — dat leest als een zwaarder merk. */
+.rp .rp-head__title,
+.rp .rp-about__title,
+.rp .rp-why__title {
+  font-size: 35.5px;
+  font-weight: 600;
+  line-height: 44px;
+  letter-spacing: -0.01em;
+}
+/* De tweede regel van een kop staat in PrimeCraft in dezelfde grootte en
+   hetzelfde gewicht, alleen zachter van kleur. RoofPro zette hem op 700. */
+.rp .rp-dim { font-weight: 600; color: var(--rp-ink-2); }
+@media (max-width: 700px) {
+  .rp .rp-head__title, .rp .rp-about__title, .rp .rp-why__title {
+    font-size: 27px; line-height: 34px;
+  }
+}
+
+/* Paginakoppen boven aan een binnenpagina. */
+.rp .rp-phero__t { font-size: 44px; font-weight: 600; line-height: 52px; letter-spacing: -0.02em; }
+@media (max-width: 700px) { .rp .rp-phero__t { font-size: 30px; line-height: 38px; } }
+
+/* Kaarten en tegels: een dunne lijn in plaats van een zwevende schaduw. */
+.rp .rp-tile,
+.rp .bf-card,
+.rp .rp-rev,
+.rp .rp-blog {
+  border: 1px solid var(--rp-line);
+  border-radius: 12px;
+  box-shadow: none;
+}
+.rp .rp-tile:hover,
+.rp .bf-card:hover,
+.rp .rp-rev:hover,
+.rp .rp-blog:hover { border-color: var(--rp-accent); box-shadow: none; transform: none; }
+
+/* Kaarttitels op de PrimeCraft-maat: 17,6px in gewicht 600 met regelhoogte 24. */
+.rp .rp-tile__t, .rp .bf-card__t, .rp .rp-blog__t {
+  font-size: 17.6px; font-weight: 600; line-height: 24px;
+}
+/* Kaartteksten: 14px met regelhoogte 20. */
+.rp .rp-tile__d, .rp .bf-card__d { font-size: 14px; line-height: 20px; }
+
+/* De eyebrow-labels zijn eruit. Een klein hoofdletterwoord boven een kop
+   ("ONZE DIENSTEN", "WAAROM AB BOUW") is de duidelijkste AI-tell die deze
+   site had; PrimeCraft gebruikt ze nergens. De kop draagt de sectie. */
+.rp .rp-eyebrow, .rp .bf__pill { display: none; }
+
+/* De donkere afsluitband op PrimeCraft-navy. */
+.rp .rp-cta__box { border-radius: 12px; }
+.rp .rp-cta__t { font-size: 37.6px; font-weight: 600; line-height: 43px; }
+@media (max-width: 700px) { .rp .rp-cta__t { font-size: 27px; line-height: 34px; } }
+
+/* Beelden krijgen dezelfde hoekafronding als in het fotoraster: 14px. */
+.rp .rp-proj__item img, .rp .bf-card__img img, .rp .rp-blog__img img { border-radius: 14px; }
+
+/* PrimeCraft kent maar EEN kopgewicht: 600. RoofPro zette koppen op 700 en
+   800. Deze regel vangt ook de koppen zonder eigen klasse, zoals in de
+   juridische paginas, en de stap- en splitkoppen die een eigen maat hebben. */
+.rp h1, .rp h2, .rp h3, .rp h4, .rp h5 { font-weight: 600; }
+.rp strong, .rp b { font-weight: 600; }
+
+/* Staptitels op de PrimeCraft-maat: 20px in gewicht 600 met regelhoogte 26,
+   staptekst 15px met regelhoogte 20. */
+.rp .rp-step__t { font-size: 20px; line-height: 26px; }
+.rp .rp-step__d { font-size: 15px; line-height: 20px; }
+
+/* De tweekoloms-koppen binnen een pagina. */
+.rp .rp-split__t { line-height: 1.3; }
+

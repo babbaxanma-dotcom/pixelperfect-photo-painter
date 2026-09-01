@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation, Navigate } from "react-router-dom";
 import PageTransition from "./components/PageTransition";
 import "./styles/ab-bouw.css";
 
@@ -96,27 +96,32 @@ const App = () => {
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/lp/dakwerken" element={<LpDakwerken />} />
-          <Route path="/lp/gevel" element={<LpGevel />} />
-          <Route path="/lp/velux" element={<LpDienst slug="velux" />} />
-          <Route path="/lp/gevelreiniging" element={<LpDienst slug="gevelreiniging" />} />
-          <Route path="/lp/hervoegen" element={<LpDienst slug="hervoegen" />} />
-          <Route path="/lp/dakisolatie" element={<LpDienst slug="dakisolatie" />} />
-          <Route path="/lp/platdak" element={<LpDienst slug="platdak" />} />
-          <Route path="/lp/crepi" element={<LpDienst slug="crepi" />} />
-          <Route path="/lp/steenstrips" element={<LpDienst slug="steenstrips" />} />
+          {/* Alleen /totaalrenovatie en /badkamerrenovatie blijven als landingspagina
+              online. De rest verwijst door naar de dienstpagina over hetzelfde
+              onderwerp; NIET verwijderd, want er kan advertentieverkeer op staan en
+              een betaalde klik op een 404 is weggegooid geld. Zijn de advertenties
+              omgezet naar de nieuwe bestemming, dan kunnen deze regels weg. */}
+          <Route path="/lp/dakwerken" element={<Navigate to="/dakwerken" replace />} />
+          <Route path="/lp/gevel" element={<Navigate to="/gevel" replace />} />
+          <Route path="/lp/velux" element={<Navigate to="/dakwerken" replace />} />
+          <Route path="/lp/gevelreiniging" element={<Navigate to="/gevel" replace />} />
+          <Route path="/lp/hervoegen" element={<Navigate to="/gevel" replace />} />
+          <Route path="/lp/dakisolatie" element={<Navigate to="/dakwerken" replace />} />
+          <Route path="/lp/platdak" element={<Navigate to="/dakwerken" replace />} />
+          <Route path="/lp/crepi" element={<Navigate to="/gevel" replace />} />
+          <Route path="/lp/steenstrips" element={<Navigate to="/gevel" replace />} />
           {/* Totaalrenovatie draait op de replica-opzet; de andere dertien
               pagina's blijven op LpDienst. */}
           <Route path="/lp/totaalrenovatie" element={<LpReplica />} />
           <Route path="/totaalrenovatie" element={<LpReplica />} />
           <Route path="/lp/badkamerrenovatie" element={<LpBadkamer />} />
           <Route path="/badkamerrenovatie" element={<LpBadkamer />} />
-          <Route path="/lp/tegelwerken" element={<LpDienst slug="tegelwerken" />} />
-          <Route path="/lp/pleisterwerk" element={<LpDienst slug="pleisterwerk" />} />
-          <Route path="/lp/terrasaanleg" element={<LpDienst slug="terrasaanleg" />} />
-          <Route path="/lp/oprit" element={<LpDienst slug="oprit" />} />
-          <Route path="/lp/zwembad" element={<LpDienst slug="zwembad" />} />
-          <Route path="/lokaal/:slug" element={<LpLokaal />} />
+          <Route path="/lp/tegelwerken" element={<Navigate to="/interieur" replace />} />
+          <Route path="/lp/pleisterwerk" element={<Navigate to="/interieur" replace />} />
+          <Route path="/lp/terrasaanleg" element={<Navigate to="/construct" replace />} />
+          <Route path="/lp/oprit" element={<Navigate to="/construct" replace />} />
+          <Route path="/lp/zwembad" element={<Navigate to="/bad" replace />} />
+          <Route path="/lokaal/:slug" element={<Navigate to="/" replace />} />
           <Route path="/bedankt" element={<Bedankt />} />
           <Route path="/calculator/dakwerken" element={<CalculatorDak />} />
           <Route path="/calculator/gevel" element={<CalculatorGevel />} />

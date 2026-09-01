@@ -92,6 +92,8 @@ export type PaginaInhoud = {
   faq?: { kop: string[]; vragen: { v: string; a: string }[] };
   /** Blok met de laatste artikels. Alleen de homepage heeft deze sectie. */
   blog?: { kop: string[]; knop: string; aantal: number };
+  /** Toont de sectie met uitgevoerd werk. Standaard aan. */
+  toonWerk?: boolean;
   /** Toont de badkamerschetser. */
   schetser?: boolean;
   /**
@@ -511,6 +513,7 @@ export const HOME: PaginaInhoud = {
   pad: '/',
   bronPrefix: 'home',
   toonCalculator: false,
+  toonWerk: false,
   footer: 'AB Bouw Groep werkt met zes afdelingen: ruwbouw, dak, gevel, badkamer, interieur en energiewerken.',
 
   nav: [
