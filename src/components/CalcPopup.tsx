@@ -203,7 +203,7 @@ export default function CalcPopup() {
           border-radius: 14px;
           box-shadow: 0 24px 60px -16px rgba(15,23,42,0.28), 0 8px 20px -8px rgba(15,23,42,0.10);
           z-index: 9998;
-          font-family: Archivo, system-ui, -apple-system, sans-serif;
+          font-family: Poppins, system-ui, -apple-system, sans-serif;
           overflow: hidden;
         }
         .calc-popup-card.is-open {

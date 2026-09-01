@@ -1124,4 +1124,9 @@ export const REPLICA_CSS = `
     margin-top: 8px;
   }
 }
+
+/* De regel onder de hero-kop. Zelfde maat als de lopende tekst elders, zodat
+   er geen nieuwe tekstgrootte bijkomt. */
+.pc-hero-sub { font-size: 16px; line-height: 26px; color: var(--pc-grijs); margin-top: 14px; max-width: 34ch; }
+@media (max-width: 900px) { .pc-hero-sub { font-size: 15px; line-height: 23px; } }
 `;

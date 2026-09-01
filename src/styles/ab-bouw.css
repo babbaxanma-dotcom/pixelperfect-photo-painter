@@ -53,8 +53,11 @@ html {
   --d5: #4a9090; --d5-soft: #cee3e3;
   --d6: #5a544e; --d6-soft: #d8d4cf;
 
- --font-display: Archivo, system-ui, -apple-system, 'Segoe UI', sans-serif;
- --font-body: Archivo, system-ui, -apple-system, 'Segoe UI', sans-serif;
+ /* Poppins: de hele site draait op de PrimeCraft-vormtaal en die is op Poppins
+    gemeten. Deze twee tokens brachten Archivo terug op elk element dat
+    var(--font-display) of var(--font-body) gebruikt. */
+ --font-display: Poppins, system-ui, -apple-system, 'Segoe UI', sans-serif;
+ --font-body: Poppins, system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out-quart: cubic-bezier(0.25, 0.46, 0.45, 0.94);

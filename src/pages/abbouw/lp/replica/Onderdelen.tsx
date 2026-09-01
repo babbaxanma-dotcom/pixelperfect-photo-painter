@@ -26,13 +26,9 @@ export function Kaart({ titel, tekst, foto, alt, href, hoogte, gevuld }: Dienstk
     <div className="pc-kaart" style={{ height: hoogte }}>
       <img src={foto} alt={alt} loading="lazy" />
       <div className="pc-kaart-inhoud">
-        {/* Alleen de naam van de dienst staat er; de uitleg klapt open zodra je
-            de kaart aanwijst of er met het toetsenbord in landt. Op een scherm
-            zonder muis bestaat aanwijzen niet, dus daar staat de uitleg gewoon
-            open — zie de hover:none-regel in de stijl. */}
         <div className="pc-kaart-tekst">
           <h3>{titel}</h3>
-          <div className="pc-kaart-uitleg"><p>{tekst}</p></div>
+          <p>{tekst}</p>
         </div>
         <a className={gevuld ? 'pc-rond pc-rond--vol' : 'pc-rond'} href={href} aria-label={titel}>
           <IcPijl maat={14} />

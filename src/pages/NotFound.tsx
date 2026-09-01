@@ -11,7 +11,7 @@ const NotFound = () => {
   }, []);
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#faf9f7", padding: "24px", fontFamily: "Archivo, system-ui, sans-serif" }}>
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#faf9f7", padding: "24px", fontFamily: "Poppins, system-ui, sans-serif" }}>
       <div style={{ maxWidth: 560, width: "100%", background: "#fff", border: "1px solid #e7e2d9", borderRadius: 16, padding: "48px 40px", textAlign: "center", boxShadow: "0 24px 60px -32px rgba(10,22,40,0.18)" }}>
         <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", color: "#d98c03", marginBottom: 10 }}>FOUT 404</div>
         <h1 style={{ fontSize: 30, fontWeight: 700, letterSpacing: "-0.02em", color: "#0a1628", margin: "0 0 12px" }}>Deze pagina bestaat niet.</h1>

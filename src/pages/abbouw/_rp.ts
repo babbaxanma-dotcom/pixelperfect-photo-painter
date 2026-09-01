@@ -51,7 +51,6 @@ export const DIENST_LINKS = [
 const NAV_LINKS = [
   { t: 'Over ons', href: '/over' },
   { t: 'Diensten', href: '/diensten', sub: DIENST_LINKS },
-  { t: 'Realisaties', href: '/realisaties' },
   { t: 'Werkwijze', href: '/werkwijze' },
   { t: 'Blog', href: '/blog' },
   { t: 'Contact', href: '/contact' },
@@ -148,7 +147,6 @@ export const rpFooter = () => `
         <nav class="pc-footer-links">
           <a href="/over">Over ons</a>
           <a href="/werkwijze">Werkwijze</a>
-          <a href="/realisaties">Realisaties</a>
           <a href="/blog">Blog</a>
           <a href="/contact">Contact</a>
         </nav>

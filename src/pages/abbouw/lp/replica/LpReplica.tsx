@@ -462,6 +462,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
               niet klopt. De pil is eruit; de chip noemt de dienst en het
               werkgebied, zodat er informatie staat en geen kaal opschrift. */}
           <h1 className="pc-h1">{regels(inhoud.hero.regels)}</h1>
+          {inhoud.hero.sub && <p className="pc-hero-sub">{inhoud.hero.sub}</p>}
           <a className="pc-knop pc-knop--accent" href="#contact">{inhoud.hero.knop}<IcPijl /></a>
         </div>
 
@@ -510,6 +511,10 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
             </a>
           </div>
 
+          {/* De realisatieteller hoort bij het uitgevoerde werk. Staat die sectie
+              uit, dan hoort de teller er ook niet: dan telt de pagina iets dat ze
+              nergens laat zien. */}
+          {inhoud.toonTeller !== false && (
           <div>
             <div className="pc-getal">
               {GETAL_GLYPHS.map(({ teken, foto }, i) => (
@@ -518,6 +523,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
             </div>
             <p className="pc-getal-label">Realisaties</p>
           </div>
+          )}
 
           <div className="pc-rij2 pc-over-foto">
             <img src={inhoud.over.foto} alt={inhoud.over.alt} loading="lazy" />

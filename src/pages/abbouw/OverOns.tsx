@@ -10,7 +10,6 @@ const vink = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke
 
 const CIJFERS = [
   { n: '16', l: 'jaar ervaring in de bouw' },
-  { n: '23', l: 'vakmensen in vaste dienst' },
   { n: '120+', l: 'woningen gerenoveerd' },
   { n: '6', l: 'vakdisciplines onder één dak' },
 ];
@@ -61,14 +60,14 @@ ${rpNav('/over')}
   <div class="rp-wrap">
     <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Over ons</span></nav>
     <span class="rp-eyebrow">${ic.mark} Over AB Bouw Groep</span>
-    <h1 class="rp-phero__t">Een bouwbedrijf<span class="rp-dim">met mensen in dienst</span></h1>
-    <p class="rp-phero__lede">AB Bouw Groep telt zes afdelingen: ruwbouw, dak, gevel, badkamer, interieur en energiewerken. De vakmensen die op uw werf staan, staan bij ons op de loonlijst.</p>
+    <h1 class="rp-phero__t">Het bedrijf achter<span class="rp-dim">uw verbouwing</span></h1>
+    <p class="rp-phero__lede">AB Bouw Groep is een Vlaams bouw- en renovatiebedrijf met eigen afdelingen voor ruwbouw, dak, gevel, badkamer, interieur en energiewerken.</p>
   </div>
 </section>
 
 
 <section class="rp-section">
-  <div class="rp-wrap rp-about__stats" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+  <div class="rp-wrap rp-about__stats" style="grid-template-columns:repeat(3,minmax(0,1fr))">
     ${CIJFERS.map((c) => `<div><div class="rp-stat__n">${c.n}</div><div class="rp-stat__l">${c.l}</div></div>`).join('')}
   </div>
 </section>

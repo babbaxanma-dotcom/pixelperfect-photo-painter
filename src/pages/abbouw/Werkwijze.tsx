@@ -23,8 +23,8 @@ const STAPPEN = [
     d: 'We lopen samen rond en zetten de laatste punten op een lijst. Die werken we af voor de officiële oplevering.' },
   { n: '07', t: 'Oplevering', tag: 'Sleuteldag',
     d: 'Rondgang, sleuteloverdracht en het dossier: garanties, attesten en de gegevens van de gebruikte materialen.' },
-  { n: '08', t: 'Nazorg', tag: 'Twaalf maanden',
-    d: 'Merkt u in het eerste jaar iets op, dan komen we kijken. Uw werfleider blijft in die periode uw aanspreekpunt.' },
+  { n: '08', t: 'Nazorg', tag: '10 jaar',
+    d: 'Op structurele renovaties geldt tien jaar garantie. Merkt u iets op, dan komen we kijken.' },
 ];
 
 const HTML = () => `<div class="rp">

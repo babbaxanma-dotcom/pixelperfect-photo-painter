@@ -92,6 +92,8 @@ export type PaginaInhoud = {
   faq?: { kop: string[]; vragen: { v: string; a: string }[] };
   /** Blok met de laatste artikels. Alleen de homepage heeft deze sectie. */
   blog?: { kop: string[]; knop: string; aantal: number };
+  /** Toont de realisatieteller in de over-sectie. Standaard aan. */
+  toonTeller?: boolean;
   /** Toont de sectie met uitgevoerd werk. Standaard aan. */
   toonWerk?: boolean;
   /** Toont de badkamerschetser. */
@@ -114,6 +116,8 @@ export type PaginaInhoud = {
   toonMerken: boolean;
   hero: {
     regels: string[];
+    /** Regel onder de kop. Blijft dit leeg, dan staat er niets. */
+    sub?: string;
     knop: string;
     foto: string;
     alt: string;
@@ -513,29 +517,28 @@ export const HOME: PaginaInhoud = {
   pad: '/',
   bronPrefix: 'home',
   toonCalculator: false,
-  toonWerk: false,
-  footer: 'AB Bouw Groep werkt met zes afdelingen: ruwbouw, dak, gevel, badkamer, interieur en energiewerken.',
+  footer: '',
 
   nav: [
     { label: 'Home', href: '/' },
     { label: 'Over ons', href: '/over' },
     { label: 'Diensten', href: '/diensten', chevron: true },
-    { label: 'Realisaties', href: '/realisaties' },
     { label: 'Blog', href: '/blog' },
     { label: 'Contact', href: '/contact' },
   ],
 
   hero: {
     regels: ['Bouwen en', 'renoveren'],
+    sub: 'De oplossing voor uw bouwwerkzaamheden en renovatie.',
     knop: 'Vraag een plaatsbezoek aan',
     foto: homeHero,
     alt: 'Gerenoveerde woning van AB Bouw Groep',
   },
 
   over: {
-    kop: ['Uw totaalaannemer voor', 'dak, gevel en interieur'],
+    kop: ['Uw vaste', 'totaalaannemer'],
     tekst: 'U kunt bij ons een enkele afdeling inschakelen of ze allemaal.',
-    slot: 'Loopt uw project over meerdere vakken, dan plannen wij die op elkaar. Elke post staat apart in uw offerte.',
+    slot: 'Loopt uw project over meerdere vakken, dan staat de volgorde in één planning: technieken vóór het pleisterwerk, chape vóór het tegelwerk. Dat scheelt wachttijd op de werf.',
     foto: homeOver,
     alt: 'Gerenoveerde woning van AB Bouw Groep',
   },
