@@ -50,7 +50,7 @@ export default function Calculator({ inhoud }: { inhoud: Inhoud }) {
     const telefoon = String(f.get('telefoon') || '').trim();
     /* Telefoon is hier VERPLICHT, e-mail niet. Een prijsindicatie geven we aan
        de telefoon: dat is één gesprek in plaats van drie mails heen en weer.
-       Dezelfde drempel als de lead-pijplijn zelf hanteert — acht cijfers — want
+       Dezelfde drempel als de lead-pijplijn zelf hanteert, acht cijfers, want
        een voorkant die iets doorlaat wat de achterkant weigert, laat de
        bezoeker denken dat hij verstuurd heeft terwijl er niets aankomt. */
     const cijfers = telefoon.replace(/\D/g, '').length;
@@ -66,7 +66,7 @@ export default function Calculator({ inhoud }: { inhoud: Inhoud }) {
       email,
       phone: telefoon || undefined,
       type_werk: inhoud.divisie,
-      aanvullende_info: VRAGEN.map((v) => v.sleutel + ': ' + (antwoorden[v.sleutel] || '—')).join(' · '),
+      aanvullende_info: VRAGEN.map((v) => v.sleutel + ': ' + (antwoorden[v.sleutel] || ',')).join(' · '),
       bron_lead: inhoud.bronLead,
     });
     setBezig(false);
@@ -122,7 +122,7 @@ export default function Calculator({ inhoud }: { inhoud: Inhoud }) {
           <h2>{inhoud.uitkomstKop}</h2>
           <ul className="pc-calc-samenvatting">
             {VRAGEN.map((v) => (
-              <li key={v.sleutel}><span>{v.sleutel}</span><span>{antwoorden[v.sleutel] || '—'}</span></li>
+              <li key={v.sleutel}><span>{v.sleutel}</span><span>{antwoorden[v.sleutel] || ','}</span></li>
             ))}
           </ul>
           <form onSubmit={verstuur}>
@@ -135,7 +135,7 @@ export default function Calculator({ inhoud }: { inhoud: Inhoud }) {
             </button>
           </form>
           <p className="pc-calc-gerust">
-            <strong>Volledig vrijblijvend — u zit nergens aan vast.</strong> Wij bellen u binnen één
+            <strong>Volledig vrijblijvend, u zit nergens aan vast.</strong> Wij bellen u binnen één
             werkdag met een prijsindicatie.
           </p>
           {fout && <p className="pc-calc-fout">{fout}</p>}

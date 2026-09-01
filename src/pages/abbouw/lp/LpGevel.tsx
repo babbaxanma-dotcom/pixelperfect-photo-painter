@@ -30,7 +30,7 @@ import imgVoornaVoor from '@/assets/gevel/lp-voorna-voor.jpg';
 
 /* ─────────────────────────────────────────────────────────────────────────
    Texas-Roofing-Pros layout, faithfully replicated, NAVY theme, AB Bouw NL
-   content — gevel-variant. Zelfde structuur & CSS als LpDakwerken: scoped CSS
+   content, gevel-variant. Zelfde structuur & CSS als LpDakwerken: scoped CSS
    string injected via <style>, HTML als template literal gerenderd via
    dangerouslySetInnerHTML. Forms wired in useEffect via data-* hooks.
    ───────────────────────────────────────────────────────────────────────── */
@@ -456,7 +456,7 @@ const HTML = `
       </div>
       <div class="tr-hero-testi">
         <span class="tr-hero-testi-q">"Onze rijwoning had een vermoeide bezetting uit de jaren '80. Nu een spierwitte crepi-gevel die je zo uit een magazine plukt. Strak, proper, op tijd opgeleverd."</span>
-        <div class="tr-hero-testi-name">— Jasmien D., Mechelen</div>
+        <div class="tr-hero-testi-name">, Jasmien D., Mechelen</div>
       </div>
     </div>
   </div>
@@ -546,7 +546,7 @@ const HTML = `
         </div>
         <div class="tr-svc-card">
           <div class="tr-svc-img rl-thumb" data-rl-trigger data-rl-photos="[&quot;${imgSierpleister}&quot;]" data-rl-title="Gevelreiniging &amp; hervoegen"><img src="${imgSierpleister}" alt="Gevelreiniging en hervoegen" /><span class="rl-zoom">⤢</span></div>
-          <div class="tr-svc-body"><h3>Gevelreiniging & hervoegen</h3><p>Reinigen, impregneren of hervoegen — uw gevel weer als nieuw.</p></div>
+          <div class="tr-svc-body"><h3>Gevelreiniging & hervoegen</h3><p>Reinigen, impregneren of hervoegen, uw gevel weer als nieuw.</p></div>
         </div>
       </div>
     </div>
@@ -601,7 +601,7 @@ const HTML = `
   <section class="tr-section" style="background:#fff">
     <div class="tr-wrap">
       <div class="tr-head" style="text-align:left;max-width:760px;margin:0 0 32px">
-        <h2 style="font-size:clamp(27px,3.2vw,38px);color:#0a1628;font-weight:700;margin:0">Het verschil — sleep van voor naar na</h2>
+        <h2 style="font-size:clamp(27px,3.2vw,38px);color:#0a1628;font-weight:700;margin:0">Het verschil, sleep van voor naar na</h2>
         <p style="font-size:15px;line-height:1.6;color:#454f60;margin:10px 0 0">Zo verandert een vermoeide gevel in een strakke, frisse crepi-afwerking. Sleep de balk om voor en na te vergelijken.</p>
       </div>
       <div class="ba-slider" data-ba style="max-width:940px;margin:0 auto">
@@ -638,7 +638,7 @@ const HTML = `
         <details class="tr-faq-item"><summary>Hoe lang duurt het?</summary><p>Een gemiddelde rijwoning is doorgaans in 1 tot 2 weken afgewerkt, afhankelijk van het systeem en het weer. U krijgt een concrete startdatum in de offerte.</p></details>
         <details class="tr-faq-item"><summary>Welke premies en voordelen zijn er?</summary><p>Wij bekijken voor welke voordelen u in aanmerking komt: het 6% BTW-tarief (voor woningen ouder dan 10 jaar) en de Mijn VerbouwLening. Behoort u tot de juiste inkomenscategorie, dan regelen wij ook uw Mijn VerbouwPremie-dossier.</p></details>
         <details class="tr-faq-item"><summary>Wat is jullie garantie?</summary><p>10 jaar garantie op de uitvoering, plus de fabrieksgarantie op de gevelsystemen (Caparol, Knauf, Isover).</p></details>
-        <details class="tr-faq-item"><summary>Crepi of steenstrips — wat past bij mijn woning?</summary><p>Crepi geeft een strakke, moderne look in elke kleur; steenstrips geven een warme baksteen-uitstraling. Onze vakman adviseert u ter plaatse op basis van uw woning en budget.</p></details>
+        <details class="tr-faq-item"><summary>Crepi of steenstrips, wat past bij mijn woning?</summary><p>Crepi geeft een strakke, moderne look in elke kleur; steenstrips geven een warme baksteen-uitstraling. Onze vakman adviseert u ter plaatse op basis van uw woning en budget.</p></details>
         <details class="tr-faq-item"><summary>Welke regio's bedienen jullie?</summary><p>Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.</p></details>
       </div>
     </div>
@@ -657,7 +657,7 @@ const HTML = `
         </div>
         <div class="tr-final-card" data-lp-form-wrapper>
           <h3>Vraag uw gratis offerte</h3>
-          <div class="tr-safe">${icShield}Vrijblijvend — we bellen u terug binnen 1 werkdag</div>
+          <div class="tr-safe">${icShield}Vrijblijvend, we bellen u terug binnen 1 werkdag</div>
           <form data-lp-form novalidate>
             <div class="tr-final-row">
               <input type="text" name="firstName" placeholder="Voornaam *" autocomplete="given-name" required />
@@ -684,7 +684,7 @@ const HTML = `
         </div>
         <div class="tr-final-testi">
           <div class="tr-final-testi-q">"Onze verouderde gevel is in twee weken omgetoverd tot een strakke crepi-afwerking. Proper gewerkt, perfect opgeleverd en de prijs klopte met de offerte."</div>
-          <div class="tr-final-testi-name">— Patrick D., Bornem</div>
+          <div class="tr-final-testi-name">, Patrick D., Bornem</div>
         </div>
       </div>
     </div>
@@ -704,7 +704,7 @@ const HTML = `
         </div>
       </div>
       <div class="tr-footer-info">AB Bouw Groep · ${ADDRESS} · ${PHONE}</div>
-      <div class="tr-footer-copy">© ${new Date().getFullYear()} AB Bouw Groep — Erkend gevelspecialist in heel Vlaanderen. Alle rechten voorbehouden. &nbsp;·&nbsp; <a href="/voorwaarden" style="color:rgba(255,255,255,0.72);text-decoration:underline">Gebruiksvoorwaarden</a> &nbsp;·&nbsp; <a href="/privacy" style="color:rgba(255,255,255,0.72);text-decoration:underline">Privacybeleid</a> &nbsp;·&nbsp; <a href="/cookies" style="color:rgba(255,255,255,0.72);text-decoration:underline">Cookiebeleid</a></div>
+      <div class="tr-footer-copy">© ${new Date().getFullYear()} AB Bouw Groep, Erkend gevelspecialist in heel Vlaanderen. Alle rechten voorbehouden. &nbsp;·&nbsp; <a href="/voorwaarden" style="color:rgba(255,255,255,0.72);text-decoration:underline">Gebruiksvoorwaarden</a> &nbsp;·&nbsp; <a href="/privacy" style="color:rgba(255,255,255,0.72);text-decoration:underline">Privacybeleid</a> &nbsp;·&nbsp; <a href="/cookies" style="color:rgba(255,255,255,0.72);text-decoration:underline">Cookiebeleid</a></div>
     </div>
   </footer>
 
@@ -740,8 +740,8 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
     const pageUrl = local ? `https://abgroep.be/lokaal/gevelrenovatie-${local.slug}` : 'https://abgroep.be/lp/gevel';
     const canonicalUrl = local ? pageUrl : 'https://abgroep.be/gevel';
     document.title = local
-      ? `Gevelwerken ${local.name} — Crepi, ETICS, Steenstrips, Sierpleister | AB Bouw Groep`
-      : 'Gevelwerken Mechelen & Antwerpen — Crepi, Buitenisolatie, Steenstrips | AB Bouw Groep';
+      ? `Gevelwerken ${local.name}, Crepi, ETICS, Steenstrips, Sierpleister | AB Bouw Groep`
+      : 'Gevelwerken Mechelen & Antwerpen, Crepi, Buitenisolatie, Steenstrips | AB Bouw Groep';
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', local
@@ -756,8 +756,8 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
       el.setAttribute('content', content);
     };
     setMeta('og:title', local
-      ? `Gevelwerken ${local.name} — Gratis gevelinspectie | AB Bouw Groep`
-      : 'Gevelwerken Mechelen & Antwerpen — Gratis gevelinspectie | AB Bouw Groep', true);
+      ? `Gevelwerken ${local.name}, Gratis gevelinspectie | AB Bouw Groep`
+      : 'Gevelwerken Mechelen & Antwerpen, Gratis gevelinspectie | AB Bouw Groep', true);
     setMeta('og:description', local
       ? `Crepi, buitenisolatie (ETICS) en steenstrips in ${local.name}. Eigen ploeg, 10j garantie, 6% BTW-voordeel.`
       : 'Crepi, buitenisolatie (ETICS), steenstrips en sierpleister. Eigen ploeg, 10j garantie, 6% BTW-voordeel.', true);
@@ -826,7 +826,7 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
         },
         {
           '@type': 'Service',
-          name: 'Gevelwerken — crepi, buitenisolatie (ETICS), steenstrips, sierpleister',
+          name: 'Gevelwerken, crepi, buitenisolatie (ETICS), steenstrips, sierpleister',
           provider: { '@id': 'https://abgroep.be/#organization' },
           areaServed: 'Vlaanderen',
         },
@@ -837,7 +837,7 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
             { '@type': 'Question', name: 'Hoe lang duurt het?', acceptedAnswer: { '@type': 'Answer', text: 'Een gemiddelde rijwoning is doorgaans in 1 tot 2 weken afgewerkt, afhankelijk van het systeem en het weer. U krijgt een concrete startdatum in de offerte.' } },
             { '@type': 'Question', name: 'Welke premies en voordelen zijn er?', acceptedAnswer: { '@type': 'Answer', text: 'Wij bekijken voor welke voordelen u in aanmerking komt: het 6% BTW-tarief (voor woningen ouder dan 10 jaar) en de Mijn VerbouwLening. Behoort u tot de juiste inkomenscategorie, dan regelen wij ook uw Mijn VerbouwPremie-dossier.' } },
             { '@type': 'Question', name: 'Wat is jullie garantie?', acceptedAnswer: { '@type': 'Answer', text: '10 jaar garantie op de uitvoering, plus de fabrieksgarantie op de gevelsystemen (Caparol, Knauf, Isover).' } },
-            { '@type': 'Question', name: 'Crepi of steenstrips — wat past bij mijn woning?', acceptedAnswer: { '@type': 'Answer', text: 'Crepi geeft een strakke, moderne look in elke kleur; steenstrips geven een warme baksteen-uitstraling. Onze vakman adviseert u ter plaatse op basis van uw woning en budget.' } },
+            { '@type': 'Question', name: 'Crepi of steenstrips, wat past bij mijn woning?', acceptedAnswer: { '@type': 'Answer', text: 'Crepi geeft een strakke, moderne look in elke kleur; steenstrips geven een warme baksteen-uitstraling. Onze vakman adviseert u ter plaatse op basis van uw woning en budget.' } },
             { '@type': 'Question', name: 'Welke regio\'s bedienen jullie?', acceptedAnswer: { '@type': 'Answer', text: 'Mechelen, Antwerpen, Lier, Willebroek, Bornem, Sint-Niklaas en heel Vlaanderen.' } },
           ],
         },
@@ -889,7 +889,7 @@ export default function LpGevel({ local }: { local?: Gemeente } = {}) {
       const typeGevel = ((fd.get('type_gevelwerk') as string) || '').trim();
       const extra = ((fd.get('aanvullende_info') as string) || '').trim();
       const combinedInfo = [typeGevel ? `Type gevelwerk: ${typeGevel}` : '', extra]
-        .filter(Boolean).join(' — ') || undefined;
+        .filter(Boolean).join(', ') || undefined;
 
       const result = await submitLead({
         source: 'landing_page',

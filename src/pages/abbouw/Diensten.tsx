@@ -159,7 +159,7 @@ ${rpFooter()}
 
 export default function Diensten() {
   useEffect(() => {
-    document.title = 'Onze diensten — AB Bouw Groep';
+    document.title = 'Onze diensten · AB Bouw Groep';
     const op = wireMobielMenu();
     return () => op();
   }, []);

@@ -11,10 +11,10 @@ export default function BlogPost() {
   const andere = BLOGS.filter((b) => b.slug !== slug).slice(0, 3);
 
   useEffect(() => {
-    document.title = post ? `${post.title} — AB Bouw Groep` : 'Artikel — AB Bouw Groep';
+    document.title = post ? `${post.title} · AB Bouw Groep` : 'Artikel · AB Bouw Groep';
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
-    m.setAttribute('content', post ? post.excerpt.substring(0, 158) : 'Bouwblog AB Bouw Groep — vakkennis uit de Vlaamse bouwpraktijk.');
+    m.setAttribute('content', post ? post.excerpt.substring(0, 158) : 'Bouwblog AB Bouw Groep, vakkennis uit de Vlaamse bouwpraktijk.');
     window.scrollTo(0, 0);
 
     const opruimers: Array<() => void> = [wireMobielMenu()];

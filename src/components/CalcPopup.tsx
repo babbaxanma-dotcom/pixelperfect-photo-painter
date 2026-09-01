@@ -173,7 +173,7 @@ export default function CalcPopup() {
           <div className="calc-popup-text">
             <span className="calc-popup-eyebrow">Sneller dan een formulier</span>
             <strong id="calc-popup-title" className="calc-popup-title">
-              Bereken uw offerte online — <span className="calc-popup-em">60 seconden</span>
+              Bereken uw offerte online, <span className="calc-popup-em">60 seconden</span>
             </strong>
             <span className="calc-popup-sub">6 vragen, vrijblijvende prijsindicatie. Geen verplichtingen.</span>
           </div>

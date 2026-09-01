@@ -119,7 +119,7 @@ const HTML = (i: Record<string, string>) => {
     <div>
       <span class="rp-hero2__eyebrow">${ic.mark} AB Bouw Groep</span>
       <h1 class="rp-hero2__t">Bouwen en renoveren</h1>
-      <p class="rp-hero2__lede">Verbouwen vraagt meestal meer dan u vooraf denkt. Wij nemen het hele traject over — ruwbouw, dak, gevel, badkamer, interieur en energiewerken — met één vaste ploeg en een vaste prijs na het plaatsbezoek.</p>
+      <p class="rp-hero2__lede">Verbouwen vraagt meestal meer dan u vooraf denkt. Wij nemen het hele traject over, ruwbouw, dak, gevel, badkamer, interieur en energiewerken, met één vaste ploeg en een vaste prijs na het plaatsbezoek.</p>
       <div class="rp-hero2__punten">
         <span class="rp-hero2__punt">${vinkje} 4,9 op Google</span>
         <span class="rp-hero2__punt">${vinkje} 120+ woningen gerenoveerd</span>
@@ -460,7 +460,7 @@ const HTML = (i: Record<string, string>) => {
 
 export default function Home() {
   useEffect(() => {
-    document.title = 'AB Bouw Groep — bouw en renovatie in heel Vlaanderen';
+    document.title = 'AB Bouw Groep · bouw en renovatie in heel Vlaanderen';
     const opruimers: Array<() => void> = [];
 
     const opruimersMenu = wireMobielMenu();
@@ -619,7 +619,7 @@ export default function Home() {
         // zodat de lead nooit op een ontbrekend e-mailveld blijft hangen
         email: `lead-${digits}@abgroep.be`,
         type_werk: 'nog_te_bepalen',
-        aanvullende_info: 'Terugbelverzoek via CTA-band homepage — dienst nog onbekend',
+        aanvullende_info: 'Terugbelverzoek via CTA-band homepage, dienst nog onbekend',
         bron_lead: 'website:home:cta-band',
       });
       if (result.ok) {

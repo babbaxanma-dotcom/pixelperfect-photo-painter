@@ -42,7 +42,7 @@ const projects: Project[] = [
     tag: 'Lichtgrijze siliconencrepi',
     title: 'Klassieke woning · siliconencrepi in zacht lichtgrijs',
     story:
-      'Vrijstaande klassieke woning met traditioneel zadeldak vroeg om een tijdloze gevel — geen hard antraciet, geen kil wit, maar een warm-grijze siliconencrepi die mooi met de leien afdaling samenwerkt. Sto Lotusan in lichtgrijs (RAL 7044), antraciet aluminium schrijnwerk en dorpels in arduin. Zelf-reinigende coating — regen spoelt vuil automatisch mee.',
+      'Vrijstaande klassieke woning met traditioneel zadeldak vroeg om een tijdloze gevel, geen hard antraciet, geen kil wit, maar een warm-grijze siliconencrepi die mooi met de leien afdaling samenwerkt. Sto Lotusan in lichtgrijs (RAL 7044), antraciet aluminium schrijnwerk en dorpels in arduin. Zelf-reinigende coating, regen spoelt vuil automatisch mee.',
     specs: { m2: '224 m² gevelvlak', tijd: '5 weken', materiaal: 'Sto Lotusan RAL 7044 siliconencrepi' },
     filter: 'crepi',
   },
@@ -51,7 +51,7 @@ const projects: Project[] = [
     tag: 'Anthraciet steenstrips tuin-aanbouw',
     title: 'Aanbouw met schuifpui · steenstrips in zwart-anthraciet',
     story:
-      'Tuinzijde-aanbouw met grote schuifpui die uitkijkt op het terras. Volume bekleed met handvorm-steenstrips in zwart-anthraciet (Vandersanden Black Diamond) — modern karakter dat contrasteert met de witgekalkte hoofdgevel. Onderhoudsvrij voor 30+ jaar.',
+      'Tuinzijde-aanbouw met grote schuifpui die uitkijkt op het terras. Volume bekleed met handvorm-steenstrips in zwart-anthraciet (Vandersanden Black Diamond), modern karakter dat contrasteert met de witgekalkte hoofdgevel. Onderhoudsvrij voor 30+ jaar.',
     specs: { m2: '64 m² aanbouwgevel', tijd: '4 weken', materiaal: 'Vandersanden Black Diamond handvorm-steenstrips' },
     filter: 'steenstrips',
   },
@@ -60,7 +60,7 @@ const projects: Project[] = [
     tag: 'Sierpleister + zwart cladding',
     title: 'Modern volume · witte sierpleister boven anthraciet plint',
     story:
-      'Hedendaagse villa met scherp contrast tussen het strakke witte bovenvolume in handgeschilderde sierpleister, en de zwarte horizontale anthraciet-cladding van de onderbouw. Composiet daktrim verbergt het plat dak compleet — een gevel die op afstand bijna grafisch leest, van dichtbij ambachtelijk.',
+      'Hedendaagse villa met scherp contrast tussen het strakke witte bovenvolume in handgeschilderde sierpleister, en de zwarte horizontale anthraciet-cladding van de onderbouw. Composiet daktrim verbergt het plat dak compleet, een gevel die op afstand bijna grafisch leest, van dichtbij ambachtelijk.',
     specs: { m2: '178 m² (96 m² wit sierpleister + 82 m² zwarte cladding)', tijd: '7 weken', materiaal: 'Knauf handgeschilderde sierpleister + Eternit Equitone cladding' },
     filter: 'sierpleister',
   },
@@ -69,7 +69,7 @@ const projects: Project[] = [
     tag: 'Crepi-renovatie + herstelcoating',
     title: 'Bestaande crepi · reiniging + herstelcoating',
     story:
-      "Bestaande crepi-gevel uit 2003 had algenaangroei aan de noordzijde en kleine scheurtjes nabij de raamhoeken. Hogedruk-reiniging met algen-killer, scheuren hersteld met vezelmortel en netwapening, daarna volledige herstel-coating in dezelfde RAL-tint. Geen complete strip nodig — alleen waar het mogelijk was.",
+      "Bestaande crepi-gevel uit 2003 had algenaangroei aan de noordzijde en kleine scheurtjes nabij de raamhoeken. Hogedruk-reiniging met algen-killer, scheuren hersteld met vezelmortel en netwapening, daarna volledige herstel-coating in dezelfde RAL-tint. Geen complete strip nodig, alleen waar het mogelijk was.",
     specs: { m2: '198 m²', tijd: '2 weken', materiaal: 'Sto reinigings- en herstel-coating' },
     filter: 'reiniging',
   },
@@ -78,7 +78,7 @@ const projects: Project[] = [
     tag: 'Beige Vlaamse handvorm-baksteen',
     title: 'Nieuwbouw villa · gevelblokken in zacht beige handvorm',
     story:
-      'Strakke moderne villa met als gevraagd materiaal: traditionele Vlaamse handvorm-gevelsteen in zacht beige-roze, met diepe voegen voor schaduwwerking en grote zwarte aluminium raamopeningen. Eigen metselploeg — geen losse onderaannemer — om ritme en voegdiepte over de volledige 312 m² consistent te houden.',
+      'Strakke moderne villa met als gevraagd materiaal: traditionele Vlaamse handvorm-gevelsteen in zacht beige-roze, met diepe voegen voor schaduwwerking en grote zwarte aluminium raamopeningen. Eigen metselploeg, geen losse onderaannemer, om ritme en voegdiepte over de volledige 312 m² consistent te houden.',
     specs: { m2: '312 m² gevelvlak', tijd: '8 weken', materiaal: 'Vandersanden handvorm beige + Reynaers schrijnwerk' },
     filter: 'crepi',
   },
@@ -87,7 +87,7 @@ const projects: Project[] = [
     tag: 'Rood-bruine handvorm-steenstrips',
     title: 'Naïsolatie rijhuis · klassieke rood-bruine steenstrips',
     story:
-      'Tussenwoning eind 19e eeuw, enkele baksteen, geen isolatie. Volledig ingepakt met 14 cm EPS, daarna handvorm-steenstrips in warm rood-bruin Vandersanden — moderne thermische upgrade, klassiek straatbeeld behouden. Zwart aluminium schrijnwerk met diepe omkadering geeft een eigentijds detail.',
+      'Tussenwoning eind 19e eeuw, enkele baksteen, geen isolatie. Volledig ingepakt met 14 cm EPS, daarna handvorm-steenstrips in warm rood-bruin Vandersanden, moderne thermische upgrade, klassiek straatbeeld behouden. Zwart aluminium schrijnwerk met diepe omkadering geeft een eigentijds detail.',
     specs: { m2: '128 m² gevelvlak', tijd: '6 weken', materiaal: '14 cm EPS + Vandersanden Forum rood-bruin', premie: '6% btw-tarief' },
     filter: 'steenstrips',
   },
@@ -96,7 +96,7 @@ const projects: Project[] = [
     tag: 'Klassieke baksteen-hoekwoning',
     title: 'Behoud baksteengevel · enkel voegherstel + reiniging',
     story:
-      'Klassieke hoekwoning in originele rode Vlaamse baksteen. Eigenaar wou expliciet de gevel-uitstraling behouden — wij hebben geen ETICS toegepast maar zelectief voegherstel: oude verbrokkelende voegen uitgekapt, vervangen door kleurmatch kalkmortel. Biologische reiniging tegen algenaangroei. Karakter behouden, levensduur 25+ jaar verlengd.',
+      'Klassieke hoekwoning in originele rode Vlaamse baksteen. Eigenaar wou expliciet de gevel-uitstraling behouden, wij hebben geen ETICS toegepast maar zelectief voegherstel: oude verbrokkelende voegen uitgekapt, vervangen door kleurmatch kalkmortel. Biologische reiniging tegen algenaangroei. Karakter behouden, levensduur 25+ jaar verlengd.',
     specs: { m2: '156 m² gevelvlak', tijd: '5 weken', materiaal: 'Webertec kleurvaste voegmortel + bio-reiniging' },
     filter: 'reiniging',
   },
@@ -155,7 +155,7 @@ ${buildHero({
   bg: heroBg,
   eyebrow: 'Realisaties · gevelwerken',
   title: 'Ruim 60.000 m² gevel.<br/>16 jaar. Vakwerk dat blijft.',
-  lede: '12 recente gevelprojecten uit Mechelen, Antwerpen, Lier en omstreken. Crepi, ETICS-buitenisolatie, steenstrips, sierpleister en renovatie van karaktergevels. Eigen vakmensen — m²-aantallen, materiaal en doorlooptijd per project.',
+  lede: '12 recente gevelprojecten uit Mechelen, Antwerpen, Lier en omstreken. Crepi, ETICS-buitenisolatie, steenstrips, sierpleister en renovatie van karaktergevels. Eigen vakmensen, m²-aantallen, materiaal en doorlooptijd per project.',
   primary: { label: 'Plan uw gratis gevel-offerte', href: '/lp/gevel#lp-form' },
   secondary: { label: 'Naar gevelwerken-pagina →', href: '/gevel' },
 })}
@@ -191,18 +191,18 @@ ${buildHero({
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="ab-quote">
-      "Een gevel staat 30 jaar in weer en wind. We gebruiken bewust premium materialen: Sto, Wienerberger, Reynaers. Goedkoper kan altijd — maar dan bent u over 8 jaar opnieuw begonnen. Onze klanten kiezen ons omdat ze maar één keer willen renoveren."
+      "Een gevel staat 30 jaar in weer en wind. We gebruiken bewust premium materialen: Sto, Wienerberger, Reynaers. Goedkoper kan altijd, maar dan bent u over 8 jaar opnieuw begonnen. Onze klanten kiezen ons omdat ze maar één keer willen renoveren."
       <footer>Zaakvoerder AB Bouw Groep</footer>
     </div>
   </div>
 </section>
 
-<!-- WERKMETHODE — 4 stappen mini -->
+<!-- WERKMETHODE, 4 stappen mini -->
 <section class="lf-section">
   <div class="wrap">
     <div class="lf-section-head centered">
       <span class="lf-eyebrow">Onze werkmethode</span>
-      <h2 class="lf-h2">Vier fases — kleurkeuze<br/>en monsters vóór akkoord.</h2>
+      <h2 class="lf-h2">Vier fases, kleurkeuze<br/>en monsters vóór akkoord.</h2>
     </div>
     <div class="ab-flow">
       <div class="ab-flow-card">
@@ -213,12 +213,12 @@ ${buildHero({
       <div class="ab-flow-card">
         <div class="ab-flow-num">FASE 02</div>
         <h5>Kleurkeuze + monsters</h5>
-        <p>Kleurstaal-stukken op uw gevel uitgevoerd, 1m² echt materiaal, zodat u in echt licht kiest — niet uit een kleurenkaart.</p>
+        <p>Kleurstaal-stukken op uw gevel uitgevoerd, 1m² echt materiaal, zodat u in echt licht kiest, niet uit een kleurenkaart.</p>
       </div>
       <div class="ab-flow-card">
         <div class="ab-flow-num">FASE 03</div>
         <h5>Uitvoering eigen ploeg</h5>
-        <p>14 vaste vakmensen in dienst. Stelling, isolatie, finish — alles door dezelfde ploeg, niet onderverdeeld.</p>
+        <p>14 vaste vakmensen in dienst. Stelling, isolatie, finish, alles door dezelfde ploeg, niet onderverdeeld.</p>
       </div>
       <div class="ab-flow-card">
         <div class="ab-flow-num">FASE 04</div>
@@ -266,7 +266,7 @@ ${buildHero({
             ${p.quote ? `
               <blockquote class="rzd-card-quote">
                 <p>"${p.quote.text}"</p>
-                <cite>— ${p.quote.name}</cite>
+                <cite>, ${p.quote.name}</cite>
               </blockquote>` : ''}
           </div>
         </article>
@@ -296,7 +296,7 @@ ${buildHero({
       <div class="lf-support-card">
         <div class="lf-support-meta"><span>03</span> Erkenningen</div>
         <h5>VCA* + Lid Bouwunie</h5>
-        <p>VCA*-certificaat voor werken op hoogte en met stelling. Lid Bouwunie — kwaliteitscontrole en bemiddeling bij geschillen via de sector-organisatie.</p>
+        <p>VCA*-certificaat voor werken op hoogte en met stelling. Lid Bouwunie, kwaliteitscontrole en bemiddeling bij geschillen via de sector-organisatie.</p>
       </div>
     </div>
   </div>
@@ -310,12 +310,12 @@ ${buildHero({
       <h2 class="lf-h2">Over gevelwerken specifiek.</h2>
     </div>
     <div class="ab-faq">
-      <details><summary>Hoe lang duurt een gevelrenovatie?</summary><div class="ab-faq-body"><p>Een rijwoning-gevel (~120 m²) duurt gemiddeld 4-6 weken inclusief stelling. Halfopen of vrijstaand (200-300 m²) loopt op tot 7-10 weken. Tijd hangt vooral af van uithardingstijd van de mortel — die kunnen we niet versnellen. Wachttijd tussen offerte-akkoord en start werf: typisch 6-10 weken afhankelijk van seizoen.</p></div></details>
+      <details><summary>Hoe lang duurt een gevelrenovatie?</summary><div class="ab-faq-body"><p>Een rijwoning-gevel (~120 m²) duurt gemiddeld 4-6 weken inclusief stelling. Halfopen of vrijstaand (200-300 m²) loopt op tot 7-10 weken. Tijd hangt vooral af van uithardingstijd van de mortel, die kunnen we niet versnellen. Wachttijd tussen offerte-akkoord en start werf: typisch 6-10 weken afhankelijk van seizoen.</p></div></details>
       <details><summary>Wat met Mijn VerbouwPremie voor gevelisolatie?</summary><div class="ab-faq-body"><p>De regels zijn sinds 1 maart 2026 sterk veranderd: de premie voor buitenmuurisolatie geldt enkel nog voor de laagste inkomenscategorieën en voor verhuurders via een SVK. Voor de meeste eigenaars vervalt de premie, maar het verlaagde btw-tarief van 6% (woning ouder dan 10 jaar) en de renteloze Mijn VerbouwLening blijven wél bestaan. We bekijken bij het plaatsbezoek wat er in uw situatie geldt, en komt u in aanmerking, dan regelen wij het volledige dossier.</p></div></details>
-      <details><summary>Welk materiaal is beter: crepi, steenstrips of sierpleister?</summary><div class="ab-faq-body"><p>Crepi (siliconencrepi van Sto, Caparol, Marmolit) — goed voor strakke moderne uitstraling, 8-12 onderhoudsvrije jaren. Steenstrips (Wienerberger, Vandersanden) — authentieke baksteenlook, 30+ jaar onderhoudsvrij. Sierpleister (marmorino, kalkpleister) — premium ambachtelijk afwerking voor karaktergevels. Wij raden aan op basis van uw woning, niet op basis van wat we het liefst verkopen. Bij plaatsbezoek tonen we de drie opties met monsters op uw gevel.</p></div></details>
-      <details><summary>Mag ik mijn gevel zomaar laten isoleren — heb ik een vergunning nodig?</summary><div class="ab-faq-body"><p>Voor de meeste gevelisolatie-werken in Vlaanderen geldt vrijstelling (geen vergunning), op voorwaarde dat: de gevel grenst niet aan een beschermd zicht, de isolatie-dikte ≤14 cm blijft, en de kleur niet drastisch verandert van het straatbeeld. Bij twijfel — vooral binnenstad Mechelen, Antwerpen, Brussel — vragen wij de stedenbouwkundige stempel aan vóór start werf. Onze projectleider weet welke uitzonderingen waar gelden.</p></div></details>
-      <details><summary>Wat is het verschil tussen Sto en goedkopere crepi-merken?</summary><div class="ab-faq-body"><p>Sto Lotusan (en gelijkaardige Caparol AmphiSilan) heeft een siliconen-resin-basis die zelfreinigend werkt — regen spoelt vuil mee. Goedkopere crepi (acryl-basis) vraagt elke 5-7 jaar reiniging en herschildering. Het prijsverschil per m² is €4-6 — over 20 jaar bekeken levert de premium-keuze een netto besparing op door uitgespaard onderhoud.</p></div></details>
-      <details><summary>Krijg ik een fotorapport van het werk?</summary><div class="ab-faq-body"><p>Ja, standaard. Foto's van de bestaande staat bij offerte. Wekelijkse foto-update tijdens uitvoering. Bij oplevering een eindrapport per gevelvlak — inclusief detail-foto's rond ramen, dorpels en aansluitingen — digitaal bezorgd. Garantiedocumenten en kleurcode-fiches voor latere bijwerk-doeleinden.</p></div></details>
+      <details><summary>Welk materiaal is beter: crepi, steenstrips of sierpleister?</summary><div class="ab-faq-body"><p>Crepi (siliconencrepi van Sto, Caparol, Marmolit), goed voor strakke moderne uitstraling, 8-12 onderhoudsvrije jaren. Steenstrips (Wienerberger, Vandersanden), authentieke baksteenlook, 30+ jaar onderhoudsvrij. Sierpleister (marmorino, kalkpleister), premium ambachtelijk afwerking voor karaktergevels. Wij raden aan op basis van uw woning, niet op basis van wat we het liefst verkopen. Bij plaatsbezoek tonen we de drie opties met monsters op uw gevel.</p></div></details>
+      <details><summary>Mag ik mijn gevel zomaar laten isoleren, heb ik een vergunning nodig?</summary><div class="ab-faq-body"><p>Voor de meeste gevelisolatie-werken in Vlaanderen geldt vrijstelling (geen vergunning), op voorwaarde dat: de gevel grenst niet aan een beschermd zicht, de isolatie-dikte ≤14 cm blijft, en de kleur niet drastisch verandert van het straatbeeld. Bij twijfel, vooral binnenstad Mechelen, Antwerpen, Brussel, vragen wij de stedenbouwkundige stempel aan vóór start werf. Onze projectleider weet welke uitzonderingen waar gelden.</p></div></details>
+      <details><summary>Wat is het verschil tussen Sto en goedkopere crepi-merken?</summary><div class="ab-faq-body"><p>Sto Lotusan (en gelijkaardige Caparol AmphiSilan) heeft een siliconen-resin-basis die zelfreinigend werkt, regen spoelt vuil mee. Goedkopere crepi (acryl-basis) vraagt elke 5-7 jaar reiniging en herschildering. Het prijsverschil per m² is €4-6, over 20 jaar bekeken levert de premium-keuze een netto besparing op door uitgespaard onderhoud.</p></div></details>
+      <details><summary>Krijg ik een fotorapport van het werk?</summary><div class="ab-faq-body"><p>Ja, standaard. Foto's van de bestaande staat bij offerte. Wekelijkse foto-update tijdens uitvoering. Bij oplevering een eindrapport per gevelvlak, inclusief detail-foto's rond ramen, dorpels en aansluitingen, digitaal bezorgd. Garantiedocumenten en kleurcode-fiches voor latere bijwerk-doeleinden.</p></div></details>
     </div>
   </div>
 </section>
@@ -532,10 +532,10 @@ const PAGE_STYLE = `
 
 export default function RealisatiesGevel() {
   useEffect(() => {
-    document.title = "Gevel realisaties — crepi, steenstrips en voegwerk | AB Bouw Groep";
+    document.title = "Gevel realisaties · crepi, steenstrips en voegwerk | AB Bouw Groep";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name','description'); document.head.appendChild(m); }
-    m.setAttribute('content', 'Recente gevelrenovaties in Mechelen, Antwerpen, Lier en omstreken — crepi, ETICS-buitenisolatie, steenstrips, sierpleister en gevelreiniging. 12 echte projecten met m², doorlooptijd, materiaal en klant-quotes.');
+    m.setAttribute('content', 'Recente gevelrenovaties in Mechelen, Antwerpen, Lier en omstreken, crepi, ETICS-buitenisolatie, steenstrips, sierpleister en gevelreiniging. 12 echte projecten met m², doorlooptijd, materiaal en klant-quotes.');
 
     let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]:not([hreflang])');
     if (!link) { link = document.createElement('link'); link.setAttribute('rel','canonical'); document.head.appendChild(link); }

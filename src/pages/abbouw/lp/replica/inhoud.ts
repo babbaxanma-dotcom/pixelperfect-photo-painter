@@ -27,6 +27,7 @@ import svcBad from '@/assets/home/svc-bad.jpg';
 import svcInterieur from '@/assets/home/svc-interieur.jpg';
 import svcConstruct from '@/assets/home/svc-construct.jpg';
 import svcEco from '@/assets/home/svc-eco.jpg';
+import keukenFoto from '@/assets/lp-diensten/realisaties/totaalrenovatie-p6-a.jpg';
 import homeHero from '@/assets/home/hero-3.jpg';
 import homeOver from '@/assets/lp-diensten/realisaties/totaalrenovatie-p6-a.jpg';
 import heroFoto from '@/assets/lp-diensten/totaalrenovatie-hero.jpg';
@@ -148,7 +149,7 @@ export type PaginaInhoud = {
 /* ══ Totaalrenovatie ══════════════════════════════════════════════════════ */
 
 export const TOTAALRENOVATIE: PaginaInhoud = {
-  titel: 'Totaalrenovatie in heel Vlaanderen — AB Bouw Groep',
+  titel: 'Totaalrenovatie in heel Vlaanderen, AB Bouw Groep',
   omschrijving: 'Ruwbouw, technieken, pleisterwerk, vloeren en afwerking door één aannemer met een eigen ploeg. Eén planning, één aanspreekpunt, gratis plaatsbezoek in heel Vlaanderen.',
   pad: '/totaalrenovatie',
   dienst: 'totaalrenovatie',
@@ -326,7 +327,7 @@ export const TOTAALRENOVATIE: PaginaInhoud = {
 /* ══ Badkamerrenovatie ════════════════════════════════════════════════════ */
 
 export const BADKAMER: PaginaInhoud = {
-  titel: 'Badkamerrenovatie in heel Vlaanderen — AB Bouw Groep',
+  titel: 'Badkamerrenovatie in heel Vlaanderen, AB Bouw Groep',
   omschrijving: 'Uitbraak, leidingen, waterdichting, tegelwerk en sanitair door dezelfde ploeg. Een volledige badkamer staat er in twee tot drie weken, met een vaste prijs na het plaatsbezoek.',
   pad: '/badkamerrenovatie',
   dienst: 'badkamerrenovatie',
@@ -338,7 +339,7 @@ export const BADKAMER: PaginaInhoud = {
   footer: 'AB Bouw Groep vernieuwt badkamers in heel Vlaanderen. Leidingen, tegels en sanitair door dezelfde ploeg.',
   toonMerken: false,
   /* Vijf in plaats van drie. De eerste drie stonden al op de dienstpagina,
-     de laatste twee staan al op de homepage — allemaal bestaande beoordelingen
+     de laatste twee staan al op de homepage, allemaal bestaande beoordelingen
      over badkamerwerk. Er is er geen bijgeschreven en geen naam gewijzigd. */
   reviews: [
     { text: '"Oude badkamer was aan vervanging toe. Bad eruit, inloopdouche erin. Drie weken werk, netjes afgewerkt."', name: 'Greet Janssens', role: 'Bad vervangen door douche · Mechelen' },
@@ -512,10 +513,16 @@ export const BADKAMER: PaginaInhoud = {
  */
 export const HOME: PaginaInhoud = {
   ...TOTAALRENOVATIE,
-  titel: 'AB Bouw Groep — bouw en renovatie in heel Vlaanderen',
+  titel: 'AB Bouw Groep, bouw en renovatie in heel Vlaanderen',
   omschrijving: 'Algemene aannemer voor dakwerken, gevelrenovatie, badkamers, interieur, totaalrenovatie en energiewerken. Eén vaste ploeg, vaste prijs na het plaatsbezoek. Gratis plaatsbezoek in heel Vlaanderen.',
   pad: '/',
   bronPrefix: 'home',
+  /* De gerenoveerde keuken uit het uitgevoerde werk van de landingspagina. */
+  contact: {
+    kop: 'Vraag een plaatsbezoek',
+    foto: keukenFoto,
+    alt: 'Gerenoveerde keuken met bar en zithoek, door AB Bouw Groep',
+  },
   /* De beoordelingen van de bestaande homepage: dak, gevel, interieur,
      totaalrenovatie en badkamer door elkaar, zodat een bezoeker het vak
      terugvindt waarvoor hij komt. Niet geschreven, niet aangepast --

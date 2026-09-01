@@ -118,7 +118,7 @@ ${rpFooter()}
 
 export default function Cookies() {
   useEffect(() => {
-    document.title = 'Cookiebeleid — AB Bouw Groep';
+    document.title = 'Cookiebeleid · AB Bouw Groep';
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', 'Cookiebeleid van AB Bouw Groep: welke cookies deze website plaatst, waarvoor ze dienen en hoe u ze beheert.');

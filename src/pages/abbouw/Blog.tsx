@@ -67,7 +67,7 @@ ${rpFooter()}
 
 export default function Blog() {
   useEffect(() => {
-    document.title = 'Blog en nieuws — AB Bouw Groep';
+    document.title = 'Blog en nieuws · AB Bouw Groep';
     const opruimers: Array<() => void> = [wireMobielMenu()];
 
     const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'));

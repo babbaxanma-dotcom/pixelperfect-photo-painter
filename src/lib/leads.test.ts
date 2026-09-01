@@ -44,7 +44,7 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe('submitLead — transport', () => {
+describe('submitLead, transport', () => {
   it('vuurt BEIDE transporten parallel (GHL én Web3Forms) bij een geldige lead', async () => {
     const f = fetchMock();
     vi.stubGlobal('fetch', f);
@@ -74,7 +74,7 @@ describe('submitLead — transport', () => {
   });
 });
 
-describe('submitLead — contact-guard', () => {
+describe('submitLead, contact-guard', () => {
   it('blokkeert een telefoon-only lead NIET (snel LP-formulier zonder e-mail)', async () => {
     const f = fetchMock();
     vi.stubGlobal('fetch', f);
@@ -109,7 +109,7 @@ describe('submitLead — contact-guard', () => {
   });
 });
 
-describe('submitLead — conversie vuurt enkel bij bezorging', () => {
+describe('submitLead, conversie vuurt enkel bij bezorging', () => {
   it('vuurt GEEN conversie als alle transporten falen', async () => {
     const f = vi.fn(async () => { throw new Error('network down'); });
     vi.stubGlobal('fetch', f);

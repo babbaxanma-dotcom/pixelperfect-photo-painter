@@ -1,12 +1,12 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   AB BOUW GROEP — v6 designsysteem, replica van de RoofPro-referentie
+   AB BOUW GROEP, v6 designsysteem, replica van de RoofPro-referentie
    Eigen namespace rp-* : botst niet met de oude lf-/ab-/tr-regels.
    Maten afgeleid van de referentie (1920-ontwerp) x0,75 naar onze 1440-basis.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 :root {
   /* --- kleuren: neutralen 1:1 uit de referentie gemeten, rood -> AB-goud --- */
-  --rp-accent: #d98c03;            /* vlakken/knoppen/randen — NOOIT als tekstkleur op licht */
+  --rp-accent: #d98c03;            /* vlakken/knoppen/randen, NOOIT als tekstkleur op licht */
   --rp-accent-deep: #b87502;       /* hover-vlak */
   --rp-accent-ink: #0a1628;        /* tekst OP goud: 6,65:1 (wit zou 2,73:1 zijn = zakt door AA) */
   /* goud als TEKST op licht: #b87502 haalt maar 3,53:1 op #f6f8fa. Deze haalt 4,99:1. */
@@ -15,8 +15,8 @@
 
   --rp-ink: #0a1628;               /* koppen */
   --rp-ink-2: #6b7280;             /* tweede kopregel, grijs */
-  --rp-body: #52525b;              /* lopende tekst — 7,7:1 op wit */
-  --rp-mute: #5f636c;              /* fijndruk — 5,45:1 op #f6f8fa (was #8b8f98 = 2,93:1) */
+  --rp-body: #52525b;              /* lopende tekst, 7,7:1 op wit */
+  --rp-mute: #5f636c;              /* fijndruk, 5,45:1 op #f6f8fa (was #8b8f98 = 2,93:1) */
 
   --rp-bg: #ffffff;
   --rp-bg-soft: #f6f4f0;           /* gemeten sectiegrijs */
@@ -47,6 +47,9 @@
 
 /* ── basis ─────────────────────────────────────────────────────────────── */
 .rp {
+  /* de kleuren van de gemeten stijl, zodat de regels hieronder ze kennen */
+  --pc-ink: #131311;
+  --pc-grijs: #51514c;
   /* Poppins in plaats van Archivo: de site draait naar de PrimeCraft-vormtaal
      en die is op Poppins gemeten. Twee lettertypes naast elkaar op een site
      leest als twee sites. */
@@ -124,7 +127,7 @@
   margin-bottom: 52px;
 }
 .rp-head__title { font-size: clamp(30px, 3.1vw, 44px); }
-.rp-head__title .rp-dim { display: block; color: var(--rp-ink-2); font-weight: 700; }
+.rp-head__title .rp-dim { display: block; font-weight: 700; }
 .rp-head__lede { margin-top: 16px; max-width: 56ch; font-size: 16px; }
 
 /* ── knoppen ───────────────────────────────────────────────────────────── */
@@ -408,7 +411,7 @@
   color: #fff;
   font-weight: 800;
 }
-.rp-hero2__t .rp-dim2 { display: block; color: #c2cbd8; }
+.rp-hero2__t .rp-dim2 { display: block; }
 .rp-hero2__lede {
   margin-top: 22px;
   max-width: 52ch;
@@ -545,7 +548,7 @@
 .rp-about__inset img { width: 100%; height: 100%; object-fit: cover; }
 
 .rp-about__title { font-size: clamp(30px, 3.1vw, 44px); }
-.rp-about__title .rp-dim { display: block; color: var(--rp-ink-2); }
+.rp-about__title .rp-dim { display: block; }
 .rp-about__text { margin-top: 22px; font-size: 16px; line-height: 1.68; }
 
 .rp-about__stats {
@@ -815,7 +818,7 @@
   align-items: start;
 }
 .rp-why__title { font-size: clamp(30px, 3.1vw, 44px); }
-.rp-why__title .rp-dim { display: block; color: var(--rp-ink-2); }
+.rp-why__title .rp-dim { display: block; }
 .rp-why__p { margin-top: 22px; font-size: 16px; line-height: 1.68; }
 .rp-why__p + .rp-why__p { margin-top: 16px; }
 .rp-why__cta { margin-top: 32px; }
@@ -1042,7 +1045,7 @@
 .rp-phero--foto .rp-crumbs a:hover { color: #e0a83c; }
 .rp-phero--foto .rp-eyebrow { color: #f0c67a; }
 .rp-phero--foto .rp-phero__t { color: #fff; }
-.rp-phero--foto .rp-phero__t .rp-dim { color: #c2cbd8; }
+.rp-phero--foto .rp-phero__t .rp-dim { }
 .rp-phero--foto .rp-phero__lede { color: #d3d9e2; }
 .rp-phero--foto .rp-blog__tag { background: rgba(240,198,122,0.16); color: #f0c67a; }
 .rp-phero--foto .rp-blog__meta { color: #c2cbd8; }
@@ -1053,7 +1056,7 @@
 .rp-crumbs { font-size: 13.5px; color: var(--rp-mute); margin-bottom: 18px; }
 .rp-crumbs a:hover { color: var(--rp-accent-text); }
 .rp-phero__t { font-size: clamp(32px, 4.3vw, 58px); }
-.rp-phero__t .rp-dim { display: block; color: var(--rp-ink-2); }
+.rp-phero__t .rp-dim { display: block; }
 .rp-phero__lede { margin-top: 20px; max-width: 62ch; font-size: 16.5px; line-height: 1.66; }
 
 /* ══ FILTERTABS ════════════════════════════════════════════════════════ */
@@ -1337,7 +1340,7 @@
   color: var(--rp-accent-text); margin-bottom: 12px;
 }
 .rp-split__t { font-size: clamp(26px, 2.6vw, 34px); }
-.rp-split__t .rp-dim { display: block; color: var(--rp-ink-2); }
+.rp-split__t .rp-dim { display: block; }
 .rp-split__lede { margin-top: 16px; font-size: 16px; line-height: 1.66; }
 .rp-lijst { margin-top: 22px; display: grid; gap: 11px; }
 .rp-lijst li { display: flex; gap: 11px; font-size: 15px; line-height: 1.52; }
@@ -1578,7 +1581,7 @@
 
 /* Sectiekoppen. PrimeCraft: 35,5px in gewicht 600 met regelhoogte 44, en
    een gecentreerde variant op 37px. RoofPro schaalde tussen 30 en 44px in
-   gewicht 800 — dat leest als een zwaarder merk. */
+   gewicht 800, dat leest als een zwaarder merk. */
 .rp .rp-head__title,
 .rp .rp-about__title,
 .rp .rp-why__title {
@@ -1589,7 +1592,7 @@
 }
 /* De tweede regel van een kop staat in PrimeCraft in dezelfde grootte en
    hetzelfde gewicht, alleen zachter van kleur. RoofPro zette hem op 700. */
-.rp .rp-dim { font-weight: 600; color: var(--rp-ink-2); }
+.rp .rp-dim { font-weight: 600; }
 @media (max-width: 700px) {
   .rp .rp-head__title, .rp .rp-about__title, .rp .rp-why__title {
     font-size: 27px; line-height: 34px;
@@ -1671,11 +1674,7 @@
    bovenste helft van de foto weg: dat oogde als mist over het beeld. */
 .rp .rp-phero--foto .rp-phero__veil { display: none; }
 .rp .rp-phero--foto > .rp-wrap { position: relative; z-index: 3; }
-.rp .rp-phero--foto .rp-phero__t,
-.rp .rp-phero--foto .rp-phero__lede,
-.rp .rp-phero--foto .rp-crumbs,
-.rp .rp-phero--foto .rp-crumbs a,
-.rp .rp-phero--foto .rp-crumbs span { color: var(--rp-ink); }
+
 .rp .rp-phero--foto .rp-phero__lede { color: var(--rp-body); }
 .rp .rp-phero--foto .rp-phero__t,
 .rp .rp-phero--foto .rp-phero__lede { max-width: 47%; }
@@ -1697,7 +1696,7 @@
 /* De paginakop ging van donker naar licht; twee dingen waren nog voor de
    donkere ondergrond gekleurd en werden daardoor onleesbaar op cream:
    de tweede kopregel en de tweede knop. */
-.rp .rp-phero--foto .rp-dim { color: var(--pc-grijs, #56534f); }
+
 .rp .rp-phero--foto .rp-btn--ghost {
   background: transparent;
   color: var(--rp-ink);
@@ -1712,4 +1711,52 @@
 .rp .rp-uitleg p { font-size: 16px; line-height: 26px; color: var(--rp-body); }
 .rp .rp-uitleg p + p { margin-top: 16px; }
 @media (max-width: 700px) { .rp .rp-uitleg { text-align: left; } }
+
+/* ═══════════════════════════════════════════════════════════════════
+   PRIMECRAFT: KLEUR EN TEKSTRITME
+
+   Gemeten verschil met de landingspagina:
+     kopkleuren   PrimeCraft 2 (inkt, en wit op donkere secties)
+                  hier       5 (navy, twee grijzen, wit, inkt)
+     regelhoogte  PrimeCraft vast in px: 22, 20, 28
+                  hier       een ratio van 1,6 die 27,39 / 26,56 / 25,11 gaf
+
+   Die twee samen maakten dat de tekst nog als het vorige ontwerp las,
+   ook al stond de juiste letterfamilie er al.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Een kop heeft EEN kleur. Het RoofPro-sjabloon zette regel twee in grijs
+   (.rp-dim); PrimeCraft doet dat nergens. Die wisseling tussen zwart en
+   grijs was het duidelijkste overblijfsel van het vorige ontwerp. */
+.rp h1, .rp h2, .rp h3, .rp h4, .rp h5,
+.rp .rp-head__title, .rp .rp-about__title, .rp .rp-why__title,
+.rp .rp-split__t, .rp .rp-phero__t { color: var(--pc-ink, #131311); }
+.rp .rp-dim { color: inherit; display: block; font-weight: inherit; }
+
+/* Op donkere secties blijft de kop wit. */
+.rp .rp-cta .rp-cta__t, .rp .rp-cta .rp-dim,
+.rp [class*="--donker"] h1, .rp [class*="--donker"] h2,
+.rp [class*="--donker"] h3 { color: #fff; }
+
+/* Lopende tekst op vaste regelhoogtes, zoals in de gemeten stijl.
+   16/22 voor gewone alineas, 15/20 voor bijschriften en kaartteksten,
+   14/20 voor het kleinste. Een ratio geeft per grootte een andere hoogte
+   en daardoor een ander ritme dan de landingspagina. */
+.rp p, .rp li { font-size: 16px; line-height: 22px; }
+.rp .rp-phero__lede { font-size: 16px; line-height: 26px; }
+.rp .rp-tile__d, .rp .bf-card__d, .rp .rp-stat__l { font-size: 14px; line-height: 20px; }
+.rp .rp-uitleg p { font-size: 16px; line-height: 26px; }
+.rp small, .rp .rp-foot__copy { font-size: 14px; line-height: 20px; }
+
+/* De tekstkleur van lopende tekst: het grijs van de gemeten stijl, niet de
+   twee eigen grijzen die hier stonden. */
+.rp p, .rp li, .rp .rp-tile__d, .rp .bf-card__d { color: var(--pc-grijs, #51514c); }
+
+/* Kruimelpad en inleiding op de paginakop: die staan op een licht vlak en
+   krijgen de tekstkleur van de gemeten stijl. De kop zelf valt onder de
+   algemene regel hierboven, zodat er geen tweede kopkleur ontstaat. */
+.rp .rp-phero--foto .rp-phero__lede,
+.rp .rp-phero--foto .rp-crumbs,
+.rp .rp-phero--foto .rp-crumbs a,
+.rp .rp-phero--foto .rp-crumbs span { color: var(--pc-grijs, #51514c); }
 

@@ -209,7 +209,7 @@ export default function Schetser() {
 
       <div className="pc-vat pc-schets-grid">
         <div>
-          {/* Stap 1 — pas als grootte én toilet ingevuld zijn, verschijnt de
+          {/* Stap 1, pas als grootte én toilet ingevuld zijn, verschijnt de
               ruimte die het dichtst bij zijn badkamer ligt. */}
           <div className="pc-schets-as">
             <h3>Hoe groot is uw badkamer?</h3>
@@ -276,7 +276,7 @@ export default function Schetser() {
                 {foto
                   ? 'Uw foto'
                   : getoond === gevraagd
-                    ? `Voorbeeldruimte — ${getoond.toLowerCase()}`
+                    ? `Voorbeeldruimte, ${getoond.toLowerCase()}`
                     : `Voorbeeldruimte in ${getoond.toLowerCase()}. Uw keuze noteren wij bij de aanvraag.`}
               </figcaption>
             )}

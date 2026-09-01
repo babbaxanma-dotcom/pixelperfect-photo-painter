@@ -86,11 +86,11 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
 
   const STEP_PSYCHOLOGY: Record<number, { msg: string; timeLeft: string }> = {
     1: { msg: 'Net begonnen', timeLeft: '± 60 sec resterend' },
-    2: { msg: 'Goed bezig — nog 4 stappen', timeLeft: '± 50 sec resterend' },
+    2: { msg: 'Goed bezig, nog 4 stappen', timeLeft: '± 50 sec resterend' },
     3: { msg: 'Halverwege', timeLeft: '± 35 sec resterend' },
     4: { msg: 'Nog 2 vraagjes', timeLeft: '± 25 sec resterend' },
     5: { msg: 'Bijna klaar', timeLeft: '± 15 sec resterend' },
-    6: { msg: 'Laatste stap — uw contactgegevens', timeLeft: '± 10 sec resterend' },
+    6: { msg: 'Laatste stap, uw contactgegevens', timeLeft: '± 10 sec resterend' },
   };
   const psych = STEP_PSYCHOLOGY[state.step] ?? STEP_PSYCHOLOGY[1];
 
@@ -169,7 +169,7 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
           <span>{state.step > 1 ? 'Terug' : (isModal ? 'Sluiten' : 'Terug')}</span>
         </button>
-        <span className="calc-head-label">Gevelrenovatie — offerte-wizard</span>
+        <span className="calc-head-label">Gevelrenovatie, offerte-wizard</span>
         {isModal && (
           <button type="button" className="calc-modal-x" onClick={onClose} aria-label="Sluiten">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -201,11 +201,11 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
         </div>
       </div>
 
-      {/* STAP 1 — Aantal gevels (icon-based, 2x2) */}
+      {/* STAP 1, Aantal gevels (icon-based, 2x2) */}
       {state.step === 1 && (
         <div className="calc-step">
           <h2 className="calc-q">Hoeveel gevels?</h2>
-          <p className="calc-q-sub">Tel zichtbare buitenmuren — <span className="calc-em">niet zeker? Kies dichtstbij</span>.</p>
+          <p className="calc-q-sub">Tel zichtbare buitenmuren, <span className="calc-em">niet zeker? Kies dichtstbij</span>.</p>
           <div className="calc-options calc-options-2col calc-icon-grid">
             {(['1', '2', '3', '4plus'] as AantalGevels[]).map(v => (
               <button key={v} type="button"
@@ -221,11 +221,11 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
         </div>
       )}
 
-      {/* STAP 2 — Oppervlakte slider */}
+      {/* STAP 2, Oppervlakte slider */}
       {state.step === 2 && (
         <div className="calc-step">
           <h2 className="calc-q">Hoe groot is de gevel?</h2>
-          <p className="calc-q-sub"><span className="calc-em">Een ruwe schatting volstaat</span> — wij meten ter plaatse op.</p>
+          <p className="calc-q-sub"><span className="calc-em">Een ruwe schatting volstaat</span>, wij meten ter plaatse op.</p>
           <div className="calc-slider-card">
             <div className="calc-slider-value">
               <span className="calc-slider-num">± {state.oppervlakte}</span>
@@ -242,7 +242,7 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
               <span>350+ m²</span>
             </div>
           </div>
-          <div className="calc-tip">Niet zeker van de oppervlakte? <span className="calc-em">Geen probleem</span> — wij meten alles nauwkeurig op bij <span className="calc-em">het gratis plaatsbezoek</span>.</div>
+          <div className="calc-tip">Niet zeker van de oppervlakte? <span className="calc-em">Geen probleem</span>, wij meten alles nauwkeurig op bij <span className="calc-em">het gratis plaatsbezoek</span>.</div>
           <div className="calc-actions">
             <button type="button" className="calc-btn-ghost" onClick={back}>← Terug</button>
             <button type="button" className="calc-btn-primary" onClick={next}>Volgende →</button>
@@ -250,7 +250,7 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
         </div>
       )}
 
-      {/* STAP 3 — Isolatie ja/nee */}
+      {/* STAP 3, Isolatie ja/nee */}
       {state.step === 3 && (
         <div className="calc-step">
           <h2 className="calc-q">Wenst u ook isolatie?</h2>
@@ -259,14 +259,14 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
             <button type="button" className={`calc-opt-card ${state.isolatie === 'ja' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'ja' }); setTimeout(next, 220); }}>
               <div className="calc-opt-img"><img src={imgIsolatieJa} alt="ETICS isolatie"/></div>
               <div className="calc-opt-body">
-                <strong>Ja — ETICS isolatie</strong>
+                <strong>Ja, ETICS isolatie</strong>
                 <span>Buitenisolatie + crepi-afwerking, 6% BTW-tarief</span>
               </div>
             </button>
             <button type="button" className={`calc-opt-card ${state.isolatie === 'nee' ? 'is-active' : ''}`} onClick={() => { set({ isolatie: 'nee' }); setTimeout(next, 220); }}>
               <div className="calc-opt-img"><img src={imgIsolatieNee} alt="Enkel afwerking"/></div>
               <div className="calc-opt-body">
-                <strong>Nee — enkel afwerking</strong>
+                <strong>Nee, enkel afwerking</strong>
                 <span>Crepi, steenstrips of sierpleister zonder isolatie</span>
               </div>
             </button>
@@ -277,11 +277,11 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
         </div>
       )}
 
-      {/* STAP 4 — Timing */}
+      {/* STAP 4, Timing */}
       {state.step === 4 && (
         <div className="calc-step">
           <h2 className="calc-q">Wanneer wilt u starten?</h2>
-          <p className="calc-q-sub">Onze planning is meestal <span className="calc-em">4-8 weken vooruit</span> — laat ons weten wat past.</p>
+          <p className="calc-q-sub">Onze planning is meestal <span className="calc-em">4-8 weken vooruit</span>, laat ons weten wat past.</p>
           <div className="calc-options calc-options-1col">
             {([
               { v: 'snel' as Timing, icon: <TimingIconClock/>, desc: 'Plaatsbezoek binnen 5 werkdagen' },
@@ -307,16 +307,16 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
         </div>
       )}
 
-      {/* STAP 5 — Voorkeur afwerking */}
+      {/* STAP 5, Voorkeur afwerking */}
       {state.step === 5 && (
         <div className="calc-step">
           <h2 className="calc-q">Voorkeur afwerking?</h2>
           <p className="calc-q-sub">Geen idee? <span className="calc-em">Wij adviseren tijdens het plaatsbezoek</span> op basis van uw woning.</p>
           <div className="calc-options calc-options-1col">
             {([
-              { v: 'crepi' as Afwerking, img: imgCrepi, desc: 'Sto, Marmolit of Cova — 15+ kleuren beschikbaar' },
+              { v: 'crepi' as Afwerking, img: imgCrepi, desc: 'Sto, Marmolit of Cova, 15+ kleuren beschikbaar' },
               { v: 'steenstrips' as Afwerking, img: imgSteenstrips, desc: 'Authentieke baksteen-look, onderhoudsvrij 30+ jaar' },
-              { v: 'sierpleister' as Afwerking, img: imgSierpleister, desc: 'Marmorino e.a. — kunst-look voor speciale gevels' },
+              { v: 'sierpleister' as Afwerking, img: imgSierpleister, desc: 'Marmorino e.a., kunst-look voor speciale gevels' },
             ]).map(opt => (
               <button key={opt.v} type="button"
                 className={`calc-opt-row ${state.afwerking === opt.v ? 'is-active' : ''}`}
@@ -343,10 +343,10 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
         </div>
       )}
 
-      {/* STAP 6 — Contact */}
+      {/* STAP 6, Contact */}
       {state.step === 6 && (
         <div className="calc-step">
-          <h2 className="calc-q">Bijna klaar — waar mogen we u bereiken?</h2>
+          <h2 className="calc-q">Bijna klaar, waar mogen we u bereiken?</h2>
           <p className="calc-q-sub">U krijgt <span className="calc-em">binnen één werkdag</span> persoonlijk contact met een <span className="calc-em">vrijblijvende offerte op maat</span>.</p>
 
           <div className="calc-summary" aria-label="Samenvatting van uw aanvraag">
@@ -354,7 +354,7 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
             <ul>
               {state.aantal && <li><span>Aantal gevels</span><span>{AANTAL_LABELS[state.aantal]}</span></li>}
               <li><span>Oppervlakte</span><span>± {state.oppervlakte} m²</span></li>
-              {state.isolatie && <li><span>Isolatie</span><span>{state.isolatie === 'ja' ? 'Ja — ETICS' : 'Nee'}</span></li>}
+              {state.isolatie && <li><span>Isolatie</span><span>{state.isolatie === 'ja' ? 'Ja, ETICS' : 'Nee'}</span></li>}
               {state.timing && <li><span>Timing</span><span>{TIMING_LABELS[state.timing]}</span></li>}
               {state.afwerking && <li><span>Afwerking</span><span>{AFWERKING_LABELS[state.afwerking]}</span></li>}
             </ul>
@@ -430,7 +430,7 @@ function GevelIcon({ count }: { count: AantalGevels }) {
     <svg viewBox="0 0 80 80" fill="none">
       {/* Inactive building outline (alle 4 walls in light grey) */}
       <rect x="18" y="18" width="44" height="44" stroke={inactiveColor} strokeWidth={wallW} fill="none"/>
-      {/* Door marker — kleine streep onderin midden (signals "front") */}
+      {/* Door marker, kleine streep onderin midden (signals "front") */}
       <line x1="36" y1="62" x2="44" y2="62" stroke={inactiveColor} strokeWidth={wallW + 2} strokeLinecap="square"/>
       {/* Active walls highlighted */}
       {/* Front (bottom) */}

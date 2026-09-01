@@ -157,7 +157,7 @@ export function makeDivision(c: DivisionConfig) {
   const html = buildDivisionPage(c);
   return function DivisionPage() {
     useEffect(() => {
-      document.title = `${c.title} — AB Bouw Groep`;
+      document.title = `${c.title} · AB Bouw Groep`;
       let m = document.querySelector('meta[name="description"]');
       if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
       m.setAttribute('content', c.meta);

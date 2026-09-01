@@ -563,7 +563,7 @@ const HTML = `
           <aside class="tr-hero-form" aria-label="Plan uw gratis dakinspectie">
             <div class="tr-quickform tr-leadcard" id="lp-form" data-lp-quick>
 
-              <!-- RIJ 1 — PRIMAIR: gratis dakinspectie. Dichtgeklapt; vouwt open bij klik. -->
+              <!-- RIJ 1, PRIMAIR: gratis dakinspectie. Dichtgeklapt; vouwt open bij klik. -->
               <div class="tr-lc-row tr-lc-row--primary">
                 <button type="button" class="tr-lc-head" data-lc-toggle aria-expanded="false">
                   <span class="tr-lc-ic tr-lc-ic--accent" aria-hidden="true">${icDoc}</span>
@@ -600,7 +600,7 @@ const HTML = `
               <!-- SCHEIDING -->
               <div class="tr-lc-or"><span>Of</span></div>
 
-              <!-- RIJ 2 — SECUNDAIR: calculator (opent CalculatorDak-modal via data-calc-trigger) -->
+              <!-- RIJ 2, SECUNDAIR: calculator (opent CalculatorDak-modal via data-calc-trigger) -->
               <button type="button" class="tr-lc-row tr-lc-row--alt tr-lc-row--calc" data-calc-trigger>
                 <span class="tr-lc-ic" aria-hidden="true">${icCalc}</span>
                 <span class="tr-lc-txt">
@@ -613,7 +613,7 @@ const HTML = `
                 <span class="tr-lc-chev" aria-hidden="true">${icChevron}</span>
               </button>
 
-              <!-- RIJ 3 — SECUNDAIR: bellen (tel-link) -->
+              <!-- RIJ 3, SECUNDAIR: bellen (tel-link) -->
               <a class="tr-lc-row tr-lc-row--alt" href="${PHONE_HREF}">
                 <span class="tr-lc-ic" aria-hidden="true">${icPhoneRow}</span>
                 <span class="tr-lc-txt">
@@ -675,7 +675,7 @@ const HTML = `
     <div class="tr-num"><div class="tr-num-big">10 jaar</div><div class="tr-num-lbl">garantie</div></div>
   </section>
 
-  <!-- REVIEWS — naar boven verplaatst (CRO: sociale proof vlak na de cijfers) -->
+  <!-- REVIEWS, naar boven verplaatst (CRO: sociale proof vlak na de cijfers) -->
   <section class="tr-section tr-reviews" id="reviews">
     <div class="tr-wrap">
       <div class="tr-head">
@@ -723,7 +723,7 @@ const HTML = `
     </div>
   </section>
 
-  <!-- 6. ABOUT / CERTIFIED — onder de converterende secties: aandacht hoog houden voor hook + bewijs + diensten, daarna pas over ons -->
+  <!-- 6. ABOUT / CERTIFIED, onder de converterende secties: aandacht hoog houden voor hook + bewijs + diensten, daarna pas over ons -->
   <section class="tr-section" style="background:var(--bg-tint);">
     <div class="tr-wrap">
       <div class="tr-about-grid">
@@ -1091,7 +1091,7 @@ export default function LpDakwerken({ local }: { local?: Gemeente } = {}) {
         aanvullende_info: (() => {
           const t = ((fd.get('type_dakwerk') as string) || '').trim();
           const m = ((fd.get('aanvullende_info') as string) || '').trim();
-          return [t && `Type dakwerk: ${t}`, m].filter(Boolean).join(' — ') || undefined;
+          return [t && `Type dakwerk: ${t}`, m].filter(Boolean).join(', ') || undefined;
         })(),
         bron_lead: local ? `seo:dakwerker-${local.slug}` : 'ads:dakwerken',
       });

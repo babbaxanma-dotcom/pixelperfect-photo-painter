@@ -164,7 +164,7 @@ export default function Bedankt() {
     ruw.includes('dak') ? 'dakwerken' : ruw.includes('gevel') ? 'gevel' : 'default';
 
   useEffect(() => {
-    document.title = 'Bedankt voor uw aanvraag — AB Bouw Groep';
+    document.title = 'Bedankt voor uw aanvraag · AB Bouw Groep';
     let m = document.querySelector('meta[name="robots"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'robots'); document.head.appendChild(m); }
     m.setAttribute('content', 'noindex, nofollow');

@@ -158,7 +158,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
      sleutel van de vullijn: React hangt er een vers element aan op, dus de
      animatie start op nul. Zou de sleutel op de pauze staan, dan zou de lijn
      bij het minste hoveren terugspringen naar leeg in plaats van te bevriezen
-     op de stand die hij had — precies wat de eerste keuring liet zien. */
+     op de stand die hij had, precies wat de eerste keuring liet zien. */
   const [lijnRonde, setLijnRonde] = useState(0);
   const nieuweRonde = () => setLijnRonde((r) => r + 1);
   const werkIndex = useRef(0);
@@ -189,7 +189,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       Het spoor heeft scroll-behavior: smooth in de stijl, dus een gewone
       toewijzing aan scrollLeft wordt zelf geanimeerd en meteen door de
       volgende scrollTo overschreven. Gevolg: bij een klik op "vorige" vanaf
-      positie nul bleef het spoor op nul staan — precies de muur die er niet
+      positie nul bleef het spoor op nul staan, precies de muur die er niet
       mocht zijn. Even op auto, springen, terugzetten. */
   const springDirect = (el: HTMLElement, naar: number) => {
     const bewaar = el.style.scrollBehavior;
@@ -203,7 +203,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       van deze rekensom bestaat.
       Niet relatief stappen maar naar de EXACTE positie van een tegel springen:
       relatief optellen laat elke stap de fractie liggen die de browser van
-      scrollLeft afrondt, en over achttien tegels was dat 4 tot 7px scheef —
+      scrollLeft afrondt, en over achttien tegels was dat 4 tot 7px scheef ,
       dan sluit de lus niet meer en verspringt het beeld. */
   const stapLus = (el: HTMLElement, richting: -1 | 1) => {
     const tegels = Array.from(el.children) as HTMLElement[];
@@ -218,11 +218,11 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
     /* De index wordt GETELD, niet afgelezen. Onze eigen scroll is smooth, dus
        tijdens de animatie ligt scrollLeft tussen twee tegels in; wie dan
        opnieuw klikt, kiest de verkeerde "huidige" tegel en de uitlijning kruipt
-       weg — gemeten 113px over één reeks. Handmatig scrollen stelt de teller
+       weg, gemeten 113px over één reeks. Handmatig scrollen stelt de teller
        bij via synchroniseerWerkIndex, maar niet zolang onze animatie loopt. */
     let index = Math.min(Math.max(werkIndex.current, 0), tegels.length - 1);
     /* Zelfcorrectie. Verzet iets anders dan deze functie de positie — een veeg,
-       een sprong van buitenaf — dan klopt de teller niet meer met wat er staat.
+       een sprong van buitenaf, dan klopt de teller niet meer met wat er staat.
        De grens is één hele tegel: tijdens onze eigen animatie is het verschil
        altijd kleiner dan dat, dus dan blijft de teller leidend; is het groter,
        dan is er echt iets anders gebeurd en wint de DOM. */
@@ -249,7 +249,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
     if (!el) return;
     /* Wie zelf op een pijl klikt, neemt het over: de autoplay stopt zes
        seconden. Zonder dit vecht de tik van vier seconden met de klik en lijkt
-       de pijl niets te doen — precies wat de bedieningstest aan het eind van
+       de pijl niets te doen, precies wat de bedieningstest aan het eind van
        het spoor betrapte. Hoveren alleen volstaat niet: een klik vanuit een
        test of een toetsenbord stuurt geen pointerenter. */
     if (ref === werkSpoor) { pauzeerWerk(6000); nieuweRonde(); }
@@ -258,7 +258,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       /* Oneindig spoor: de reeks staat twee keer in de DOM, dus een sprong van
          precies één reeksbreedte laat exact hetzelfde beeld staan. Die sprong
          gebeurt ZONDER animatie vlak voor het schuiven, waarna de gewone
-         beweging volgt — je ziet de omslag daardoor niet. */
+         beweging volgt, je ziet de omslag daardoor niet. */
       stapLus(el, richting);
       volgStand(el, setWerkPos);
       return;
@@ -275,7 +275,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
 
   /* De sporen één keer opmeten zodra ze bestaan, en opnieuw bij elke maatwijziging.
      Zonder deze meting staat max op de beginwaarde 1, is "pos.links >= pos.max - 2"
-     al waar en is de knop "volgende" uitgeschakeld tot je met de hand scrolt —
+     al waar en is de knop "volgende" uitgeschakeld tot je met de hand scrolt ,
      dat is de pijl die "soms niet werkt". Beelden laden later, dus een
      ResizeObserver op het spoor vangt ook de breedte na het laden op. */
   useEffect(() => {
@@ -361,7 +361,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       phone: telefoon || undefined,
       type_werk: inhoud.divisie,
       aanvullende_info: [String(f.get('soortwerk') || '').trim(), String(f.get('bericht') || '').trim()]
-        .filter(Boolean).join(' — ') || undefined,
+        .filter(Boolean).join(', ') || undefined,
       bron_lead: inhoud.bronPrefix + ':contact',
     });
     setBezig(false);
@@ -598,7 +598,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
               {[0, 1, 2, 3].map((i) => (
                 <div className="pc-marquee-eenheid" key={i}>
                   <IcTelefoon />
-                  <span>Bel ons vandaag — {CONTACT.phone.spaced}</span>
+                  <span>Bel ons vandaag, {CONTACT.phone.spaced}</span>
                   <span className="pc-marquee-punt" />
                 </div>
               ))}
@@ -659,7 +659,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
               moment dat de volgende foto inschuift: de bezoeker ziet hem
               aankomen. Muis erop of vinger erop bevriest de lijn waar hij
               staat; hij springt niet terug naar leeg. Dit is de enige
-              voortgangsaanduiding van dit spoor — het balkje tussen de pijlen
+              voortgangsaanduiding van dit spoor, het balkje tussen de pijlen
               staat uit, twee streepjes vlak onder elkaar leest als een fout. */}
           <div className="pc-werk-lijn" aria-hidden="true">
             <i key={lijnRonde} className={werkStil ? 'pc-werk-vul pc-werk-vul--stil' : 'pc-werk-vul'} />

@@ -43,7 +43,7 @@ export const REPLICA_CSS = `
    pagina AB-navy #14233a en herschikt de browser de kopregels.
    De uitzonderingen staan in :where() omdat een gewone :not()-keten vier
    elementselectors optelt (0,1,4) en dan zwaarder weegt dan .pc-over-tekst p
-   (0,1,1) — die regel verloor daardoor zijn eigen tekstkleur. */
+   (0,1,1), die regel verloor daardoor zijn eigen tekstkleur. */
 .pcx, .pcx *:not(:where(svg, path, circle, rect)) {
   font-family: Poppins, 'Archivo', system-ui, -apple-system, sans-serif;
   color: inherit;
@@ -53,7 +53,7 @@ export const REPLICA_CSS = `
 .pcx { color: var(--pc-ink); }
 .pcx *, .pcx *::before, .pcx *::after { box-sizing: border-box; }
 /* De basisregels staan in :where() en wegen daardoor niets. Zonder dat wint
-   ".pcx h1 { margin: 0 }" van ".pc-h1 { margin-top: 18px }" — een elementregel
+   ".pcx h1 { margin: 0 }" van ".pc-h1 { margin-top: 18px }", een elementregel
    binnen de wortel is zwaarder dan een losse klasse. Diezelfde botsing zette
    eerder de knopvulling en de kopmarge stil. */
 .pcx :where(img) { display: block; max-width: 100%; }
@@ -135,7 +135,7 @@ export const REPLICA_CSS = `
   color: var(--pc-dark); display: grid; place-items: center; flex: 0 0 auto;
   box-shadow: 0 0 0 2px #fff; }
 /* De referentie meet cap 10 voor het label en cijferhoogte 12 voor het nummer.
-   In Poppins is dat 14,3px en 16,3px — niet de 14/17 die de uitmeting noemt,
+   In Poppins is dat 14,3px en 16,3px, niet de 14/17 die de uitmeting noemt,
    want die ging uit van Inter met een andere kapitaalverhouding. Het label
    staat op 13px omdat 'Bel ons vandaag' anders 6px te breed is voor de kolom. */
 .pc-telblok { display: flex; flex-direction: column; }
@@ -194,7 +194,7 @@ export const REPLICA_CSS = `
 .pc-chip--grijs { background: var(--pc-cream); }
 
 /* Kader 488 in plaats van de gemeten 483: de langste Nederlandse regel is
-   487px en de referentie geeft haar eigen tekst daar ook maar 7px speling —
+   487px en de referentie geeft haar eigen tekst daar ook maar 7px speling ,
    er lijnt niets aan die rand uit. */
 /* 18px, niet de 27 uit de uitmeting: die 27 is gemeten van de chip tot de
    KAPLIJN van de kop, en het regelkader begint 8px boven die kaplijn. Met 18
@@ -280,7 +280,7 @@ export const REPLICA_CSS = `
 .pc-over-foto { position: relative; }
 .pc-over-foto > img { width: 100%; height: 411px; object-fit: cover; border-radius: 8px; }
 /* De score-kaart ligt in de rechterbovenhoek van de foto, met een witte goot
-   van 8px links en onder — de kaart raakt de boven- en rechterrand wel. */
+   van 8px links en onder, de kaart raakt de boven- en rechterrand wel. */
 .pc-score { position: absolute; top: 0; right: 0; width: 157px; height: 178px;
   border-radius: 10px; background: var(--pc-cream); text-align: center;
   box-shadow: -8px 0 0 #fff, 0 8px 0 #fff, -8px 8px 0 #fff; }
@@ -523,7 +523,7 @@ export const REPLICA_CSS = `
 
 /* Prijsindicatie-wizard. De kaart is wit op een witte band, dus de rand moet
    het werk doen: een zichtbare lijn plus een accentrand bovenaan. Zonder die
-   twee loopt het kaartvlak over in de pagina en scrolt de bezoeker er langs —
+   twee loopt het kaartvlak over in de pagina en scrolt de bezoeker er langs ,
    precies wat er gebeurde. */
 .pc-calc { background: #fff; border: 1px solid #ddd8cf; border-top: 3px solid var(--pc-accent);
   border-radius: 14px; padding: 18px 26px 20px; box-shadow: 0 14px 34px rgba(10, 22, 40, .09); }
@@ -986,7 +986,7 @@ export const REPLICA_CSS = `
 }
 
 /* ─────────────────────────────────────────────────────────────
-   Veelgestelde vragen en Blog — twee secties die de referentie
+   Veelgestelde vragen en Blog, twee secties die de referentie
    niet heeft, voor de homepage.
 
    Er staat hier GEEN enkel nieuw getal op één na. Elke maat is
@@ -1097,6 +1097,12 @@ export const REPLICA_CSS = `
    LET OP: dit werkt alleen via de hoogte. De uitlijning op flex-start zetten
    met een padding-top brak de hero eerder: de knop viel dan achter de balk. */
 .pc-hero--ruim { height: 600px; }
+/* Geen sluier op de homepage. Die overgang naar wit is er om de navigatie
+   leesbaar te houden waar de kop doorzichtig over de hero ligt; hier staat de
+   kop op een eigen wit vlak en vaagde de sluier alleen de bovenkant van de
+   foto weg. De landingspagina houdt hem, want daar ligt de kop wel over de
+   hero. */
+.pc-hero--ruim .pc-hero-sluier { display: none; }
 /* De balk wordt normaal 260px over de hero getrokken. Bij deze hogere hero
    kwam de knop daardoor achter de balk te staan; 110px laat hem er nog steeds
    overheen vallen zonder de knop te raken. */
@@ -1141,7 +1147,7 @@ export const REPLICA_CSS = `
    nieuwe kleur bij, en wit op #0a1628 haalt ruim de contrasteis.
 
    De omschrijving verschijnt pas bij hover. Op een aanraakscherm bestaat
-   hover niet, dus daar blijft de tekst gewoon staan — anders zou een deel
+   hover niet, dus daar blijft de tekst gewoon staan, anders zou een deel
    van de bezoekers hem nooit zien.
 
    Alleen het gelijke raster: de landingspagina houdt haar eigen kaarten. */

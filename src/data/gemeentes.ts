@@ -39,12 +39,12 @@ export const GEMEENTES: Record<string, Gemeente> = {
     lat: 51.2194,
     lng: 4.4025,
     neighborhoods: ["Berchem", "Borgerhout", "Deurne", "Wilrijk", "Hoboken", "Ekeren", "Merksem"],
-    intro: "Antwerpen — van klassieke Berchemse rijwoning tot moderne Deurne nieuwbouw. We renoveren gevels, daken en interieurs in elke Antwerpse deelgemeente.",
+    intro: "Antwerpen, van klassieke Berchemse rijwoning tot moderne Deurne nieuwbouw. We renoveren gevels, daken en interieurs in elke Antwerpse deelgemeente.",
     highlights: [
       "Specialisatie in 1900-1930 Antwerpse Art Nouveau gevels",
       "Crepi + ETICS isolatie voor de typische Borgerhoutse rijwoning",
-      "EPDM platte daken Wilrijk + Hoboken — vakkennis van zinken bakgoten",
-      "Asbestverwijdering + heropbouw — typisch oude Antwerpse panden"
+      "EPDM platte daken Wilrijk + Hoboken, vakkennis van zinken bakgoten",
+      "Asbestverwijdering + heropbouw, typisch oude Antwerpse panden"
     ],
     reviewCount: 38,
     rating: "4.9"
@@ -56,10 +56,10 @@ export const GEMEENTES: Record<string, Gemeente> = {
     lat: 51.1318,
     lng: 4.5709,
     neighborhoods: ["Koningshooikt", "Lisp"],
-    intro: "Lier — historische binnenstad én moderne uitbreidingen. We renoveren met respect voor de Liërse architectuurtraditie.",
+    intro: "Lier, historische binnenstad én moderne uitbreidingen. We renoveren met respect voor de Liërse architectuurtraditie.",
     highlights: [
       "Erkend voor werken aan beschermde Liërse gevels in de binnenstad",
-      "Koramic Aleonard pannen — standaard in Liërse renovaties",
+      "Koramic Aleonard pannen, standaard in Liërse renovaties",
       "Klassieke timmerwerk + dakopbouw stadswoningen",
       "Recente nieuwbouw verkavelingen Koningshooikt"
     ],
@@ -72,7 +72,7 @@ export const GEMEENTES: Record<string, Gemeente> = {
     postcode: "2880",
     lat: 51.1014,
     lng: 4.2417,
-    intro: "Bornem en omgeving — rijwoningen, halfopen en vrijstaande nieuwbouw langs de Scheldedijken. Volledige gevel- en dakwerken inclusief premie- en financieringscheck (6% BTW).",
+    intro: "Bornem en omgeving, rijwoningen, halfopen en vrijstaande nieuwbouw langs de Scheldedijken. Volledige gevel- en dakwerken inclusief premie- en financieringscheck (6% BTW).",
     highlights: [
       "Sarkingisolatie + nieuwe pannendaken halfopen woningen",
       "Crepi + ETICS gevelisolatie typische Bornemse rijwoning",
@@ -89,10 +89,10 @@ export const GEMEENTES: Record<string, Gemeente> = {
     lat: 51.0561,
     lng: 4.3631,
     neighborhoods: ["Tisselt", "Heindonk", "Klein-Willebroek"],
-    intro: `Willebroek is ons kantoor — ${CONTACT.address.street}. We werken hier dagelijks, kennen elke straat, elk type woning, elke deelgemeente.`,
+    intro: `Willebroek is ons kantoor, ${CONTACT.address.street}. We werken hier dagelijks, kennen elke straat, elk type woning, elke deelgemeente.`,
     highlights: [
       "Hoofdkantoor + werkplaats in Willebroek",
-      "Werkkracht binnen 15 min ter plaatse — heel Willebroek + Tisselt + Heindonk",
+      "Werkkracht binnen 15 min ter plaatse, heel Willebroek + Tisselt + Heindonk",
       "Specialisatie nieuwbouw verkavelingen Klein-Willebroek",
       "100+ daken + gevels gerenoveerd in regio Willebroek"
     ],
@@ -106,10 +106,10 @@ export const GEMEENTES: Record<string, Gemeente> = {
     lat: 51.0353,
     lng: 4.5511,
     neighborhoods: ["Rijmenam"],
-    intro: "Bonheiden + Rijmenam — vrijstaande nieuwbouw en klassieke villa's met grote dakvolumes. Specialisatie complexe dakvormen + leien.",
+    intro: "Bonheiden + Rijmenam, vrijstaande nieuwbouw en klassieke villa's met grote dakvolumes. Specialisatie complexe dakvormen + leien.",
     highlights: [
       "Cupa natuurleien voor klassieke Bonheidense villa's",
-      "Crepi + steenstrips combinaties — moderne nieuwbouw Rijmenam",
+      "Crepi + steenstrips combinaties, moderne nieuwbouw Rijmenam",
       "Velux dakvensters + dakopbouwen zolderverdiepingen",
       "Pannenwissel hellende daken met integrale isolatie"
     ],
@@ -123,10 +123,10 @@ export const GEMEENTES: Record<string, Gemeente> = {
     lat: 51.0773,
     lng: 4.7244,
     neighborhoods: ["Booischot", "Hallaar", "Itegem", "Schriek", "Wiekevorst"],
-    intro: "Heist-op-den-Berg — verspreide deelgemeentes met diverse woningtypes. Van klassieke fermette tot moderne lintbebouwing.",
+    intro: "Heist-op-den-Berg, verspreide deelgemeentes met diverse woningtypes. Van klassieke fermette tot moderne lintbebouwing.",
     highlights: [
       "Fermette dak- en gevelrenovaties",
-      "PIR-isolatie hellende daken — vaak gecombineerd met dakkapellen",
+      "PIR-isolatie hellende daken, vaak gecombineerd met dakkapellen",
       "Stormschade-interventies omgeving Booischot/Hallaar",
       "Pannendak vernieuwingen lintbebouwing"
     ],
@@ -140,7 +140,7 @@ export const GEMEENTES: Record<string, Gemeente> = {
     lat: 51.0772,
     lng: 4.2845,
     neighborhoods: ["Liezele", "Ruisbroek", "Breendonk", "Sint-Amands", "Oppuurs"],
-    intro: "Puurs-Sint-Amands — fusie-gemeente met vele halfopen woningen. Crepi-renovaties + EPDM platte daken zijn hier dagelijkse kost.",
+    intro: "Puurs-Sint-Amands, fusie-gemeente met vele halfopen woningen. Crepi-renovaties + EPDM platte daken zijn hier dagelijkse kost.",
     highlights: [
       "ETICS gevelisolatie + crepi op halfopen woningen",
       "EPDM platte daken garage + bijbouw",
@@ -157,9 +157,9 @@ export const GEMEENTES: Record<string, Gemeente> = {
     lat: 51.1646,
     lng: 4.1376,
     neighborhoods: ["Belsele", "Nieuwkerken-Waas", "Sinaai"],
-    intro: "Sint-Niklaas en de Waaslandse rand — grote variatie van Belle Époque-villa tot recente nieuwbouw. We werken op alle types.",
+    intro: "Sint-Niklaas en de Waaslandse rand, grote variatie van Belle Époque-villa tot recente nieuwbouw. We werken op alle types.",
     highlights: [
-      "Zinkwerk VMZinc Anthra-Zinc — premium dakgoten Belle Époque villa's",
+      "Zinkwerk VMZinc Anthra-Zinc, premium dakgoten Belle Époque villa's",
       "Crepi-restauraties klassieke voorgevels stadscentrum",
       "Nieuwbouw daken + gevels verkavelingen Belsele/Nieuwkerken",
       "Specialisatie in art-déco panden centrum Sint-Niklaas"
@@ -174,11 +174,11 @@ export const GEMEENTES: Record<string, Gemeente> = {
     lat: 51.1359,
     lng: 4.4475,
     neighborhoods: ["Waarloos"],
-    intro: "Kontich + Waarloos — residentieel met veel vrijstaande villa's. Premium dak- en gevelrenovatie staat hier centraal.",
+    intro: "Kontich + Waarloos, residentieel met veel vrijstaande villa's. Premium dak- en gevelrenovatie staat hier centraal.",
     highlights: [
       "Witte crepi nieuwbouw + halfopen woningen",
       "Natuurleien daken klassieke villa's",
-      "Steenstrips voorgevels — recente Kontichse trends",
+      "Steenstrips voorgevels, recente Kontichse trends",
       "Zinkwerk + dakgoten in anthraciet voor moderne uitstraling"
     ],
     reviewCount: 9,
@@ -191,11 +191,11 @@ export const GEMEENTES: Record<string, Gemeente> = {
     lat: 50.9269,
     lng: 4.4324,
     neighborhoods: ["Houtem", "Koningslo", "Peutie"],
-    intro: "Vilvoorde — randstad rond Brussel. Klassieke rijwoning, halfopen woning, moderne appartementen. Werkgebied tot Strombeek/Grimbergen.",
+    intro: "Vilvoorde, randstad rond Brussel. Klassieke rijwoning, halfopen woning, moderne appartementen. Werkgebied tot Strombeek/Grimbergen.",
     highlights: [
       "Gevelrenovatie typische Vilvoordse rijwoning",
       "EPDM platte daken appartementsgebouwen",
-      "Asbestverwijdering + heropbouw — courante problematiek 1960-1980 woningen",
+      "Asbestverwijdering + heropbouw, courante problematiek 1960-1980 woningen",
       "6% BTW + EPC-attest; premie-check op uw inkomenscategorie"
     ],
     reviewCount: 5,
@@ -207,7 +207,7 @@ export const GEMEENTES: Record<string, Gemeente> = {
     postcode: "2850",
     lat: 51.0883,
     lng: 4.3692,
-    intro: "Boom — oude Rupelstreek industriële kern met ruime renovatiemarkt. Veel rijwoningen uit 1900-1950 met asbesthoudende daken.",
+    intro: "Boom, oude Rupelstreek industriële kern met ruime renovatiemarkt. Veel rijwoningen uit 1900-1950 met asbesthoudende daken.",
     highlights: [
       "Asbestverwijdering + nieuw pannendak inbegrepen in 1 offerte",
       "Crepi-restauratie klassieke Boomse gevels",
@@ -224,11 +224,11 @@ export const GEMEENTES: Record<string, Gemeente> = {
     lat: 51.0729,
     lng: 4.5325,
     neighborhoods: ["Onze-Lieve-Vrouw-Waver"],
-    intro: "Sint-Katelijne-Waver — tussen Mechelen en Lier, residentieel met veel halfopen en vrijstaande woningen. Onze ploegen rijden hier dagelijks.",
+    intro: "Sint-Katelijne-Waver, tussen Mechelen en Lier, residentieel met veel halfopen en vrijstaande woningen. Onze ploegen rijden hier dagelijks.",
     highlights: [
       "Crepi + ETICS gevelisolatie typisch voor Sint-Katelijne-Waver halfopen woningen",
       "Pannendaken Koramic op nieuwbouw + renovaties",
-      "Sarkingisolatie hellende daken — populair bij EPC-verbetering",
+      "Sarkingisolatie hellende daken, populair bij EPC-verbetering",
       "Premiedossier Mijn VerbouwPremie tot €5.750 inbegrepen"
     ],
     reviewCount: 9,
@@ -240,7 +240,7 @@ export const GEMEENTES: Record<string, Gemeente> = {
     postcode: "2570",
     lat: 51.0972,
     lng: 4.4983,
-    intro: "Duffel — kleinere gemeente tussen Mechelen en Lier, veel klassieke rijwoningen en nieuwe verkavelingen. Korte aanrijtijd voor onze ploeg vanuit Willebroek.",
+    intro: "Duffel, kleinere gemeente tussen Mechelen en Lier, veel klassieke rijwoningen en nieuwe verkavelingen. Korte aanrijtijd voor onze ploeg vanuit Willebroek.",
     highlights: [
       "Pannendaken + dakgoten klassieke Duffelse rijwoningen",
       "ETICS-buitenisolatie voor EPC-sprong",
@@ -256,7 +256,7 @@ export const GEMEENTES: Record<string, Gemeente> = {
     postcode: "2630",
     lat: 51.1356,
     lng: 4.3858,
-    intro: "Aartselaar — residentieel ten zuiden van Antwerpen, klassieke villa's en bungalows. Dak- en gevelrenovatie met respect voor de architectuur.",
+    intro: "Aartselaar, residentieel ten zuiden van Antwerpen, klassieke villa's en bungalows. Dak- en gevelrenovatie met respect voor de architectuur.",
     highlights: [
       "Natuurleien Cupa voor villa-daken",
       "Witte crepi op klassieke bungalows",

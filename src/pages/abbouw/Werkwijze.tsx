@@ -94,7 +94,7 @@ ${rpFooter()}
 
 export default function Werkwijze() {
   useEffect(() => {
-    document.title = 'Werkwijze — AB Bouw Groep';
+    document.title = 'Werkwijze · AB Bouw Groep';
     window.scrollTo(0, 0);
     const op = wireMobielMenu();
     return () => op();

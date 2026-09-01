@@ -106,7 +106,7 @@ ${rpFooter()}
 
 export default function Privacy() {
   useEffect(() => {
-    document.title = 'Privacybeleid — AB Bouw Groep';
+    document.title = 'Privacybeleid · AB Bouw Groep';
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', 'Privacybeleid van AB Bouw Groep: welke persoonsgegevens wij verwerken, waarvoor, hoe lang wij ze bewaren en welke rechten u heeft.');

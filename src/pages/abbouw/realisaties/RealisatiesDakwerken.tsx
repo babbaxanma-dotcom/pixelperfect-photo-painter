@@ -35,7 +35,7 @@ const projects: Project[] = [
     tag: 'Pannendak antraciet',
     title: 'Gele baksteenwoning · nieuw antraciet pannendak',
     story:
-      "Hedendaagse woning in gele Vlaamse baksteen met origineel daken van betonpannen — kleur was vervaagd en porositeit toegenomen. Volledige vervanging met antraciet Koramic-keramiek, nieuwe onderdakfolie en panlatten. Tegelijk 18 cm PIR-isolatie tussen de kepers — strakke moderne dakblik tegen de warme gele gevelsteen.",
+      "Hedendaagse woning in gele Vlaamse baksteen met origineel daken van betonpannen, kleur was vervaagd en porositeit toegenomen. Volledige vervanging met antraciet Koramic-keramiek, nieuwe onderdakfolie en panlatten. Tegelijk 18 cm PIR-isolatie tussen de kepers, strakke moderne dakblik tegen de warme gele gevelsteen.",
     specs: { m2: '180 m²', tijd: '14 werkdagen', materiaal: 'Koramic Tempest antraciet keramiek', premie: '6% btw-tarief' },
     filter: 'pannendak',
   },
@@ -44,7 +44,7 @@ const projects: Project[] = [
     tag: 'Hellend zonnedak + plat gevelvolume',
     title: 'Hedendaagse villa · pannen-met-PV en plat dak boven gevelopening',
     story:
-      'Architecturale villa met asymmetrisch zadeldak — volledig bedekt met geïntegreerde PV-panelen op anthraciet pannen. Plat dak boven de inkom + grote schuifpui in EPDM Firestone met crepi-gevelvolume eronder. Cederlat-accent rondom de inkom. Wij hebben dak + PV-integratie + plat-dak details simultaan uitgevoerd zodat niets dubbel hoefde te worden gefactureerd.',
+      'Architecturale villa met asymmetrisch zadeldak, volledig bedekt met geïntegreerde PV-panelen op anthraciet pannen. Plat dak boven de inkom + grote schuifpui in EPDM Firestone met crepi-gevelvolume eronder. Cederlat-accent rondom de inkom. Wij hebben dak + PV-integratie + plat-dak details simultaan uitgevoerd zodat niets dubbel hoefde te worden gefactureerd.',
     specs: { m2: '142 m² hoofddak + 36 m² plat dak', tijd: '14 werkdagen', materiaal: 'Pannen + JinkoSolar PV + Firestone EPDM' },
     filter: 'platdak',
   },
@@ -53,7 +53,7 @@ const projects: Project[] = [
     tag: 'Natuurleien Cupa Heavy 3',
     title: 'Karaktervilla \'60 · volledig nieuw leiendak Cupa Heavy 3',
     story:
-      'Klassieke vrijstaande karaktervilla met origineel leiendak dat na 60 winters versleten was — broze leien, lekkages bij de schouwen. Volledig nieuw dak in Spaanse natuurleien Cupa Heavy 3 in dezelfde blauwgrijze tint. Bestaande dakstructuur versterkt waar nodig, originele bakstenen schouwen behouden en gerestaureerd, koperen kielgoten op maat geklopt. De karakteristieke uitstraling van de buurt blijft intact.',
+      'Klassieke vrijstaande karaktervilla met origineel leiendak dat na 60 winters versleten was, broze leien, lekkages bij de schouwen. Volledig nieuw dak in Spaanse natuurleien Cupa Heavy 3 in dezelfde blauwgrijze tint. Bestaande dakstructuur versterkt waar nodig, originele bakstenen schouwen behouden en gerestaureerd, koperen kielgoten op maat geklopt. De karakteristieke uitstraling van de buurt blijft intact.',
     specs: { m2: '240 m²', tijd: '22 werkdagen', materiaal: 'Cupa Heavy 3 + VMZinc koperen kielgoten' },
     filter: 'leien',
   },
@@ -62,7 +62,7 @@ const projects: Project[] = [
     tag: 'Sarking-isolatie 24 cm PIR',
     title: 'Halfopen woning · 24 cm PIR sarking op bestaand dak',
     story:
-      'Onverdeeld dak met koude winters en hete zolders. Sarking-isolatie 24 cm PIR boven op de bestaande dakconstructie geplaatst, oude pannen tijdelijk verwijderd en herplaatst — de foto toont het dak halverwege uitvoering met de nieuwe PIR-platen en dampdichte folie zichtbaar. Premiedossier compleet door ons ingediend bij Fluvius — klant kreeg €6.480 retour.',
+      'Onverdeeld dak met koude winters en hete zolders. Sarking-isolatie 24 cm PIR boven op de bestaande dakconstructie geplaatst, oude pannen tijdelijk verwijderd en herplaatst, de foto toont het dak halverwege uitvoering met de nieuwe PIR-platen en dampdichte folie zichtbaar. Premiedossier compleet door ons ingediend bij Fluvius, klant kreeg €6.480 retour.',
     specs: { m2: '165 m² dakvlak', tijd: '11 werkdagen', materiaal: '24 cm PIR sarking + Delta onderdakfolie', premie: '6% btw-tarief' },
     filter: 'sarking',
   },
@@ -80,7 +80,7 @@ const projects: Project[] = [
     tag: 'Zinkwerk VMZinc Quartz',
     title: 'Herenhuis 1925 · volledige vervanging bakgoten',
     story:
-      'Originele zinkgoten met meerdere lekkages na de januaristorm. Vervangen door VMZinc Quartz-Zinc in originele profielmaten — modernere alloy met 80+ jaar levensduur. Koperen regenpijpen op maat gesoldeerd. Het pand behoudt zijn historische uitstraling met materiaal dat de tijd doorstaat.',
+      'Originele zinkgoten met meerdere lekkages na de januaristorm. Vervangen door VMZinc Quartz-Zinc in originele profielmaten, modernere alloy met 80+ jaar levensduur. Koperen regenpijpen op maat gesoldeerd. Het pand behoudt zijn historische uitstraling met materiaal dat de tijd doorstaat.',
     specs: { tijd: '5 werkdagen', materiaal: 'VMZinc Quartz-Zinc + koperen pijpen' },
     filter: 'zinkwerk',
   },
@@ -89,7 +89,7 @@ const projects: Project[] = [
     tag: 'Spoedinterventie stormschade',
     title: 'Spoedinterventie bitumen-dak · 48u na storm',
     story:
-      'Groot deel van het bitumen-dak gescheurd na een windstoot van 130 km/u. Tijdelijke afdichting binnen 4 uur, definitief herstel met 2-laagse APP-bitumen na 48u. Verzekeringsdossier compleet door ons gefactureerd op AG Insurance — klant moest niet zelf bellen.',
+      'Groot deel van het bitumen-dak gescheurd na een windstoot van 130 km/u. Tijdelijke afdichting binnen 4 uur, definitief herstel met 2-laagse APP-bitumen na 48u. Verzekeringsdossier compleet door ons gefactureerd op AG Insurance, klant moest niet zelf bellen.',
     specs: { m2: '65 m²', tijd: '3 werkdagen (incl. spoeddichting binnen 4u)', materiaal: 'APP-bitumen 2-laags met leislag' },
     filter: 'platdak',
   },
@@ -98,7 +98,7 @@ const projects: Project[] = [
     tag: 'Doorlopende zinkbekleding dak + gevel',
     title: 'Radicale dak-en-gevel renovatie · VMZinc Anthra-Zinc',
     story:
-      "Tussenwoning met volledige dak-en-gevel transformatie. Originele pannendak en voorgevel vervangen door doorlopende verticale zinkbekleding in VMZinc Anthra-Zinc met staande naden — identiek profiel op dakvlak én gevel maakt het volume monolitisch. Klassieke nokhoogte en breedte behouden zodat het volume aansluit op de twee buur-rijwoningen met hun traditionele rode pannen- en baksteengevel. Daagt de norm uit qua materiaal, respecteert de norm qua proportie.",
+      "Tussenwoning met volledige dak-en-gevel transformatie. Originele pannendak en voorgevel vervangen door doorlopende verticale zinkbekleding in VMZinc Anthra-Zinc met staande naden, identiek profiel op dakvlak én gevel maakt het volume monolitisch. Klassieke nokhoogte en breedte behouden zodat het volume aansluit op de twee buur-rijwoningen met hun traditionele rode pannen- en baksteengevel. Daagt de norm uit qua materiaal, respecteert de norm qua proportie.",
     specs: { m2: '128 m² zinkbekleding (dak + gevel)', tijd: '32 werkdagen', materiaal: 'VMZinc Anthra-Zinc + nieuwe structuur + isolatie passief-niveau' },
     filter: 'zinkwerk',
   },
@@ -107,7 +107,7 @@ const projects: Project[] = [
     tag: 'Pannendak Koramic Datura',
     title: 'Rijwoning 1995 · vervanging cement-pannen',
     story:
-      'Cement-pannen op leeftijd — schuimaangroei en losse pannen. Volledige vervanging met Koramic Datura in rood-bruin. Tegelijk dakgoten vernieuwd in zink, en 12 cm PIR-isolatie tussen kepers.',
+      'Cement-pannen op leeftijd, schuimaangroei en losse pannen. Volledige vervanging met Koramic Datura in rood-bruin. Tegelijk dakgoten vernieuwd in zink, en 12 cm PIR-isolatie tussen kepers.',
     specs: { m2: '110 m²', tijd: '9 werkdagen', materiaal: 'Koramic Datura rood-bruin + zinkwerk', premie: '6% btw-tarief' },
     filter: 'pannendak',
   },
@@ -116,7 +116,7 @@ const projects: Project[] = [
     tag: 'Zinken dakkapel VMZinc',
     title: 'Uitbreiding zolder · dakkapel in zink VMZinc Anthra',
     story:
-      'Bestaande dakkapel met lekkage werd compleet vervangen door een grotere zinken-bekleede dakkapel — gevels in VMZinc Anthra-Zinc met staande naden, plat dak in EPDM. Resultaat: 6 m² extra woonruimte op zolder en een design-statement dat past bij de moderne buurt.',
+      'Bestaande dakkapel met lekkage werd compleet vervangen door een grotere zinken-bekleede dakkapel, gevels in VMZinc Anthra-Zinc met staande naden, plat dak in EPDM. Resultaat: 6 m² extra woonruimte op zolder en een design-statement dat past bij de moderne buurt.',
     specs: { m2: '14 m² dakkapel-buitenoppervlak', tijd: '6 werkdagen', materiaal: 'VMZinc Anthra-Zinc + Firestone EPDM' },
     filter: 'zinkwerk',
   },
@@ -134,7 +134,7 @@ const projects: Project[] = [
     tag: 'Bitumen plat dak APP 2-laags',
     title: 'Garagedak · vervanging meerdere lagen bitumen',
     story:
-      'Garagedak met drie generaties bitumen op elkaar — te zwaar geworden voor de structuur. Volledig gestript tot op de OSB, nieuwe OSB-platen waar rotting aanwezig was, 2-laagse APP-bitumen met grijze leislag en aluminium daktrim rondom. Onder €3.500 compleet.',
+      'Garagedak met drie generaties bitumen op elkaar, te zwaar geworden voor de structuur. Volledig gestript tot op de OSB, nieuwe OSB-platen waar rotting aanwezig was, 2-laagse APP-bitumen met grijze leislag en aluminium daktrim rondom. Onder €3.500 compleet.',
     specs: { m2: '48 m²', tijd: '2 werkdagen', materiaal: 'APP-bitumen 2-laags + aluminium daktrim' },
     filter: 'platdak',
   },
@@ -153,8 +153,8 @@ const filters = [
 const HTML = `
 <header class="lp-mini-header">
   <div class="wrap lp-mini-header-inner">
-    <a class="lp-mini-brand" href="/" aria-label="AB Bouw Groep — home">
-      <img src="${logo}" alt="AB Bouw Groep — Dakwerken" class="lp-mini-logo" />
+    <a class="lp-mini-brand" href="/" aria-label="AB Bouw Groep, home">
+      <img src="${logo}" alt="AB Bouw Groep, Dakwerken" class="lp-mini-logo" />
     </a>
     <a href="${CONTACT.phone.href}" class="lp-mini-phone" aria-label="Bel ons direct">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -167,12 +167,12 @@ ${buildHero({
   bg: heroBg,
   eyebrow: 'Realisaties · dakwerken',
   title: 'Een dak dat<br/>doet wat het belooft.',
-  lede: '12 recent afgewerkte daken — pannen Koramic, EPDM, sarking-isolatie, Velux, zinkwerk en natuurleien. Voor elk project: oppervlakte, materiaal-keuze, doorlooptijd en wat de klant erover zei.',
+  lede: '12 recent afgewerkte daken, pannen Koramic, EPDM, sarking-isolatie, Velux, zinkwerk en natuurleien. Voor elk project: oppervlakte, materiaal-keuze, doorlooptijd en wat de klant erover zei.',
   primary: { label: 'Plan uw gratis dakinspectie', href: '/lp/dakwerken#lp-form' },
   secondary: { label: 'Bereken uw offerte (60 sec)', href: '/calculator/dakwerken' },
 })}
 
-<!-- TRUST STRIP — bewijs in plaats van marketing-getallen -->
+<!-- TRUST STRIP, bewijs in plaats van marketing-getallen -->
 <section class="lf-section rzd-trust-section">
   <div class="wrap">
     <div class="rzd-trust">
@@ -199,22 +199,22 @@ ${buildHero({
   </div>
 </section>
 
-<!-- QUOTE — story-driven, geen herhaling van trust-stats -->
+<!-- QUOTE, story-driven, geen herhaling van trust-stats -->
 <section class="lf-section lf-tone-soft">
   <div class="wrap">
     <div class="ab-quote">
-      "De vraag is niet 'wie legt mijn dak'. De vraag is: 'wie staat er nog binnen tien jaar als er iets is'. Dat antwoord is voor ons hetzelfde gebleven — een eigen dakdekker met een naam, een gsm-nummer en een polis bij Federale. Geen onderaannemer-keten waar niemand zich verantwoordelijk voelt."
+      "De vraag is niet 'wie legt mijn dak'. De vraag is: 'wie staat er nog binnen tien jaar als er iets is'. Dat antwoord is voor ons hetzelfde gebleven, een eigen dakdekker met een naam, een gsm-nummer en een polis bij Federale. Geen onderaannemer-keten waar niemand zich verantwoordelijk voelt."
       <footer>Zaakvoerder AB Bouw Groep</footer>
     </div>
   </div>
 </section>
 
-<!-- WERKMETHODE — 4 stappen mini -->
+<!-- WERKMETHODE, 4 stappen mini -->
 <section class="lf-section">
   <div class="wrap">
     <div class="lf-section-head centered">
       <span class="lf-eyebrow">Onze werkmethode</span>
-      <h2 class="lf-h2">Vier fases — vaste prijs<br/>vóór één pan beweegt.</h2>
+      <h2 class="lf-h2">Vier fases, vaste prijs<br/>vóór één pan beweegt.</h2>
     </div>
     <div class="ab-flow">
       <div class="ab-flow-card">
@@ -278,7 +278,7 @@ ${buildHero({
             ${p.quote ? `
               <blockquote class="rzd-card-quote">
                 <p>"${p.quote.text}"</p>
-                <cite>— ${p.quote.name}</cite>
+                <cite>, ${p.quote.name}</cite>
               </blockquote>` : ''}
           </div>
         </article>
@@ -308,7 +308,7 @@ ${buildHero({
       <div class="lf-support-card">
         <div class="lf-support-meta"><span>03</span> Erkenningen</div>
         <h5>VCA* + Lid Bouwunie</h5>
-        <p>VCA*-veiligheidscertificaat voor werken op hoogte. Lid Bouwunie sinds 2014 — kwaliteitscontroles en bemiddeling bij geschillen via de sector-organisatie.</p>
+        <p>VCA*-veiligheidscertificaat voor werken op hoogte. Lid Bouwunie sinds 2014, kwaliteitscontroles en bemiddeling bij geschillen via de sector-organisatie.</p>
       </div>
     </div>
   </div>
@@ -322,17 +322,17 @@ ${buildHero({
       <h2 class="lf-h2">Over dakwerken specifiek.</h2>
     </div>
     <div class="ab-faq">
-      <details><summary>Hoe snel kunnen jullie een dak vernieuwen?</summary><div class="ab-faq-body"><p>Een standaard pannendak van 150 m² duurt 10-14 werkdagen, een plat dak EPDM van 80 m² ongeveer 8 werkdagen. Wachttijd tussen offerte-akkoord en start werf is gemiddeld 4-8 weken — afhankelijk van seizoen. Spoed-interventies bij lekkage of stormschade: binnen 48 uur ter plaatse.</p></div></details>
-      <details><summary>Wie betaalt bij stormschade — verzekering of klant?</summary><div class="ab-faq-body"><p>Wij factureren rechtstreeks op uw woningverzekeraar (AG, AXA, Ethias, KBC, etc.) wanneer er een schadedossier loopt. U hoeft niets voor te schieten. Wij sturen het schaderapport mét fotoreportage rechtstreeks naar de expert van de verzekering.</p></div></details>
-      <details><summary>Wat met Mijn VerbouwPremie 2026?</summary><div class="ab-faq-body"><p>De premievoorwaarden wijzigden op 1 maart 2026: voor inkomenscategorie 1 en 2 (de meeste eigenaars) verviel de dakisolatiepremie. Behoort u tot een lagere inkomenscategorie, dan kan er nog Mijn VerbouwPremie zijn (tot €40/m²) — wij checken dit en regelen het dossier. Het 6% BTW-tarief geldt sowieso voor woningen ouder dan 10 jaar. Pure dakvervanging zonder isolatie kwam ook voordien al niet in aanmerking.</p></div></details>
-      <details><summary>Werken jullie ook bij regen of in de winter?</summary><div class="ab-faq-body"><p>Op een hellend pannendak werken we tot temperaturen van −2°C. Plat dak EPDM en bitumen tot 5°C minimum. Bij hevige regen of windstoten boven 60 km/u verleggen we de werkdag — daarom planning altijd met buffer. We laten een dak nooit half open eindigen, ook niet als dat een dag uitloopt.</p></div></details>
-      <details><summary>Krijg ik een fotorapport van het werk?</summary><div class="ab-faq-body"><p>Ja, standaard. Bij de offerte een foto-inspectie van de bestaande situatie. Tijdens de werf wekelijks een foto-update via WhatsApp of e-mail. Bij oplevering een eindrapport met foto's van elk dakvlak, detail-aansluitingen en garantiedocumenten — digitaal bezorgd, papieren kopie op aanvraag.</p></div></details>
-      <details><summary>Doen jullie ook kleinere werken zoals een dakgoot of een lek?</summary><div class="ab-faq-body"><p>Ja. We hebben een aparte interventie-ploeg voor herstellingen onder de €5.000 — sneller plannen, geen plaatsbezoek nodig voor offerte (we werken op uurregie of vaste prijs vooraf op basis van foto's). Bel of mail voor een snelle prijsindicatie.</p></div></details>
+      <details><summary>Hoe snel kunnen jullie een dak vernieuwen?</summary><div class="ab-faq-body"><p>Een standaard pannendak van 150 m² duurt 10-14 werkdagen, een plat dak EPDM van 80 m² ongeveer 8 werkdagen. Wachttijd tussen offerte-akkoord en start werf is gemiddeld 4-8 weken, afhankelijk van seizoen. Spoed-interventies bij lekkage of stormschade: binnen 48 uur ter plaatse.</p></div></details>
+      <details><summary>Wie betaalt bij stormschade, verzekering of klant?</summary><div class="ab-faq-body"><p>Wij factureren rechtstreeks op uw woningverzekeraar (AG, AXA, Ethias, KBC, etc.) wanneer er een schadedossier loopt. U hoeft niets voor te schieten. Wij sturen het schaderapport mét fotoreportage rechtstreeks naar de expert van de verzekering.</p></div></details>
+      <details><summary>Wat met Mijn VerbouwPremie 2026?</summary><div class="ab-faq-body"><p>De premievoorwaarden wijzigden op 1 maart 2026: voor inkomenscategorie 1 en 2 (de meeste eigenaars) verviel de dakisolatiepremie. Behoort u tot een lagere inkomenscategorie, dan kan er nog Mijn VerbouwPremie zijn (tot €40/m²), wij checken dit en regelen het dossier. Het 6% BTW-tarief geldt sowieso voor woningen ouder dan 10 jaar. Pure dakvervanging zonder isolatie kwam ook voordien al niet in aanmerking.</p></div></details>
+      <details><summary>Werken jullie ook bij regen of in de winter?</summary><div class="ab-faq-body"><p>Op een hellend pannendak werken we tot temperaturen van −2°C. Plat dak EPDM en bitumen tot 5°C minimum. Bij hevige regen of windstoten boven 60 km/u verleggen we de werkdag, daarom planning altijd met buffer. We laten een dak nooit half open eindigen, ook niet als dat een dag uitloopt.</p></div></details>
+      <details><summary>Krijg ik een fotorapport van het werk?</summary><div class="ab-faq-body"><p>Ja, standaard. Bij de offerte een foto-inspectie van de bestaande situatie. Tijdens de werf wekelijks een foto-update via WhatsApp of e-mail. Bij oplevering een eindrapport met foto's van elk dakvlak, detail-aansluitingen en garantiedocumenten, digitaal bezorgd, papieren kopie op aanvraag.</p></div></details>
+      <details><summary>Doen jullie ook kleinere werken zoals een dakgoot of een lek?</summary><div class="ab-faq-body"><p>Ja. We hebben een aparte interventie-ploeg voor herstellingen onder de €5.000, sneller plannen, geen plaatsbezoek nodig voor offerte (we werken op uurregie of vaste prijs vooraf op basis van foto's). Bel of mail voor een snelle prijsindicatie.</p></div></details>
     </div>
   </div>
 </section>
 
-<!-- CALCULATOR-CTA banner — zelfde patroon als /lp/dakwerken -->
+<!-- CALCULATOR-CTA banner, zelfde patroon als /lp/dakwerken -->
 <section class="lf-section rzd-calc-cta-section">
   <div class="wrap">
     <a href="/calculator/dakwerken" class="rzd-calc-cta">
@@ -351,7 +351,7 @@ ${buildHero({
       </div>
       <div class="rzd-calc-cta-text">
         <span class="rzd-calc-cta-eyebrow">Sneller dan een formulier</span>
-        <strong class="rzd-calc-cta-title">Bereken uw offerte online — <span class="rzd-calc-cta-em">60 seconden</span></strong>
+        <strong class="rzd-calc-cta-title">Bereken uw offerte online, <span class="rzd-calc-cta-em">60 seconden</span></strong>
         <span class="rzd-calc-cta-sub">6 simpele vragen. <strong>Geen technische kennis nodig.</strong> Wij meten alles nauwkeurig op bij het gratis plaatsbezoek.</span>
       </div>
       <div class="rzd-calc-cta-arrow" aria-hidden="true">
@@ -364,13 +364,13 @@ ${buildHero({
   </div>
 </section>
 
-<!-- FINAL CTA — beide knoppen naar LP-form -->
+<!-- FINAL CTA, beide knoppen naar LP-form -->
 <section class="lf-section">
   <div class="wrap">
     <div class="lf-cta lf-cta--simple">
       <div class="lf-cta-text">
         <h2>Klaar voor uw eigen project?</h2>
-        <p>Plan een gratis plaatsbezoek. Binnen 5 werkdagen ter plaatse — antwoord op uw vraag binnen één werkdag.</p>
+        <p>Plan een gratis plaatsbezoek. Binnen 5 werkdagen ter plaatse, antwoord op uw vraag binnen één werkdag.</p>
         <div class="lf-cta-actions">
           <a href="/lp/dakwerken#lp-form" class="lf-btn-light">Plan uw dakinspectie</a>
           <a href="/lp/dakwerken#lp-form" class="lf-btn-outline">Vraag een offerte</a>
@@ -674,10 +674,10 @@ const PAGE_STYLE = `
 
 export default function RealisatiesDakwerken() {
   useEffect(() => {
-    document.title = "Dakwerken realisaties — pannen, EPDM, zink en leien | AB Bouw Groep";
+    document.title = "Dakwerken realisaties · pannen, EPDM, zink en leien | AB Bouw Groep";
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name','description'); document.head.appendChild(m); }
-    m.setAttribute('content', 'Recente dakwerken in Mechelen, Antwerpen, Lier en omstreken — pannendak Koramic, plat dak EPDM, sarking-isolatie, Velux, zinkwerk en natuurleien. 12 echte projecten met m², doorlooptijd, materiaal en klant-quotes.');
+    m.setAttribute('content', 'Recente dakwerken in Mechelen, Antwerpen, Lier en omstreken, pannendak Koramic, plat dak EPDM, sarking-isolatie, Velux, zinkwerk en natuurleien. 12 echte projecten met m², doorlooptijd, materiaal en klant-quotes.');
 
     // Canonical
     let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]:not([hreflang])');

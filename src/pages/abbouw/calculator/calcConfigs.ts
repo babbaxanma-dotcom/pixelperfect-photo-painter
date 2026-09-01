@@ -59,7 +59,7 @@ export const CALC_CONFIGS: Record<string, CalcConfig> = {
         sub: 'Beide kan. Als erkend Velux-plaatser regelen wij het graag mee.',
         options: [
           { key: 'incl', label: 'Leveren én plaatsen', desc: 'Wij regelen het Velux-raam, plaatsing inbegrepen' },
-          { key: 'eigen', label: 'Ik heb het raam al', desc: 'U levert het raam, wij plaatsen het waterdicht — met onze plaatsingsgarantie' },
+          { key: 'eigen', label: 'Ik heb het raam al', desc: 'U levert het raam, wij plaatsen het waterdicht, met onze plaatsingsgarantie' },
           { key: 'weet', label: 'Weet ik niet', desc: 'We bespreken het bij de gratis opmeting' },
         ],
       },

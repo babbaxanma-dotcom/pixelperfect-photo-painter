@@ -244,7 +244,7 @@ ${rpFooter()}
 
 export default function Realisaties() {
   useEffect(() => {
-    document.title = 'Realisaties — AB Bouw Groep';
+    document.title = 'Realisaties · AB Bouw Groep';
     window.scrollTo(0, 0);
     const opruimers: Array<() => void> = [wireMobielMenu()];
 

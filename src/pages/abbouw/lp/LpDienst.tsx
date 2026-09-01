@@ -607,7 +607,7 @@ export const DIENSTEN: Record<string, Dienst> = {
     beforeAfter: { before: imgHervoegVoor, after: imgHervoegNa },
     signs: {
       title: 'Tijd om te hervoegen? Herkent u dit?',
-      intro: 'Voegen gaan niet eeuwig mee. Deze signalen wijzen erop dat uw gevel toe is aan nieuw voegwerk — wacht niet tot vocht de muur aantast.',
+      intro: 'Voegen gaan niet eeuwig mee. Deze signalen wijzen erop dat uw gevel toe is aan nieuw voegwerk, wacht niet tot vocht de muur aantast.',
       items: [
         'Voegen die loskomen, verbrokkelen of als zand wegvallen',
         'Diep uitgesleten voegen waar u makkelijk een muntstuk in steekt',
@@ -1075,7 +1075,7 @@ export default function LpDienst({ slug }: { slug: string }) {
     if (phone.replace(/\D/g, '').length < 8) { setFinalErr('Vul een geldig telefoonnummer in (minstens 8 cijfers).'); return; }
     setFinalErr('');
     setFinalState('busy');
-    const aanvullend = [typeWerkSel ? `Type werk: ${typeWerkSel}` : '', info].filter(Boolean).join(' — ') || `Sub-service LP: ${d.slug}`;
+    const aanvullend = [typeWerkSel ? `Type werk: ${typeWerkSel}` : '', info].filter(Boolean).join(', ') || `Sub-service LP: ${d.slug}`;
     const res = await submitLead({
       source: 'landing_page', landing_division: d.division, page_path: window.location.pathname,
       firstName: firstName || undefined, email: email || `lead-${phone.replace(/\D/g, '') || Date.now()}@abgroep.be`, phone, type_werk: d.typeWerk as Divisie,
@@ -1296,7 +1296,7 @@ export default function LpDienst({ slug }: { slug: string }) {
         </section>
       )}
 
-      {/* 9. REVIEWS — naar boven verplaatst (CRO: sociale proof vlak na de cijfers) */}
+      {/* 9. REVIEWS, naar boven verplaatst (CRO: sociale proof vlak na de cijfers) */}
       <section className={'tr-section tr-reviews' + (ADS_LPS.has(slug) ? ' tr-compact' : '')} id="reviews">
         <div className="tr-wrap">
           {/* Zelfde blok als op de homepage: kop met tweede regel gedimd, dan
@@ -1361,7 +1361,7 @@ export default function LpDienst({ slug }: { slug: string }) {
         </div>
       </section>
 
-      {/* 6. ABOUT / CERTIFIED — onder de converterende secties: aandacht hoog houden voor hook + bewijs + diensten, daarna pas over ons */}
+      {/* 6. ABOUT / CERTIFIED, onder de converterende secties: aandacht hoog houden voor hook + bewijs + diensten, daarna pas over ons */}
       <section className="tr-section" style={{ background: '#fff' }}>
         <div className="tr-wrap">
           <div className="tr-about-grid">
@@ -1403,7 +1403,7 @@ export default function LpDienst({ slug }: { slug: string }) {
         </div>
       </section>
 
-      {/* 8a. HERKENT U DIT? — signalen */}
+      {/* 8a. HERKENT U DIT?, signalen */}
       {d.signs && (
         <section className="tr-section" style={{ background: '#fff' }}>
           <div className="tr-wrap">
@@ -1961,7 +1961,7 @@ const LP_CSS = `
 
 /* 11 — REVIEWS */
 /* reviews: asymmetrische editorial (rail + open rijen) op crème; geen dozen,
-   geen initiaal-avatars — de crème-doos-op-wit was 1,03:1 en de avatar de #1 tell */
+   geen initiaal-avatars, de crème-doos-op-wit was 1,03:1 en de avatar de #1 tell */
 .tr-reviews { background: var(--bg-tint); }
 .tr-rev-layout { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(40px, 5vw, 72px); align-items: start; }
 .tr-rev-rail h2 { font-size: clamp(24px, 2.6vw, 34px); color: ${NAVY}; font-weight: 700; margin: 0 0 22px; }

@@ -700,8 +700,8 @@ ul.ab-checks li::before { content: '✓'; color: var(--accent); font-weight: 800
 }
 
 /* =====================================================================
-   Minimal polish — Google reviews badge + nav fix.
-   (Extensive design layer removed at user request — andere designer
+   Minimal polish, Google reviews badge + nav fix.
+   (Extensive design layer removed at user request, andere designer
     werkt morgen verder.)
    ===================================================================== */
 
@@ -725,7 +725,7 @@ ul.ab-checks li::before { content: '✓'; color: var(--accent); font-weight: 800
 .lf-bar-track i { width: var(--bar-w, 100%); }
 
 /* =====================================================================
-   GOOGLE REVIEWS BADGE — single, clean pill under hero
+   GOOGLE REVIEWS BADGE, single, clean pill under hero
    ===================================================================== */
 .lf-hero-trust { padding: 28px 0 8px; }
 .lf-hero-trust-row { display: flex; justify-content: center; }
@@ -783,7 +783,7 @@ ul.ab-checks li::before { content: '✓'; color: var(--accent); font-weight: 800
 }
 
 /* =====================================================================
-   MOBILE: cards-in-your-face — horizontal scroll-snap on stat grid
+   MOBILE: cards-in-your-face, horizontal scroll-snap on stat grid
    Vertical scroll on the page; on mobile this section becomes a
    horizontal snapping rail so cards arrive one by one.
    ===================================================================== */
@@ -1014,7 +1014,7 @@ html { scroll-behavior: smooth; }
   font-size: 14px;
   margin-left: 6px;
 }
-.lf-hero-bg--slides + * { /* nothing — placeholder */ }
+.lf-hero-bg--slides + * { /* nothing, placeholder */ }
 .lf-hero-bg::after,
 .lf-hero-bg--slides::after {
   content: '';
@@ -1093,7 +1093,7 @@ html { scroll-behavior: smooth; }
 @media (max-width: 720px) { .lf-blog-grid { grid-template-columns: 1fr; gap: 22px; } }
 
 /* =====================================================================
-   AB HIGHLIGHT — gele marker-arcering die in-scrollt op key woorden.
+   AB HIGHLIGHT, gele marker-arcering die in-scrollt op key woorden.
    Werkt automatisch zodra de ouder [data-reveal] de .revealed klasse krijgt.
    ===================================================================== */
 .ab-mark { position: relative; display: inline-block; color: var(--navy); white-space: nowrap; }
@@ -1122,7 +1122,7 @@ html { scroll-behavior: smooth; }
 }
 
 /* =====================================================================
-   .dak-grid[data-scroll="x"] — horizontale carrousel voor de "types"
+   .dak-grid[data-scroll="x"], horizontale carrousel voor de "types"
    sectie op elke dienstenpagina. Op telefoon swipe je zijwaarts in plaats
    van eindeloos te scrollen.
    ===================================================================== */
@@ -1163,7 +1163,7 @@ html { scroll-behavior: smooth; }
 .ab-scroll-hint svg { color: var(--accent); }
 
 /* =====================================================================
-   MOBILE UI OVERHAUL — applies to ALL subpages (excludes Home which has
+   MOBILE UI OVERHAUL, applies to ALL subpages (excludes Home which has
    its own .lf-hero-mini structure). Single source of truth for mobile
    ergonomics on subpages, forms, buttons, and grids.
    ===================================================================== */

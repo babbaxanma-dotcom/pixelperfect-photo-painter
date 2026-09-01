@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════
-   AB BOUW GROUP — v5 — strak, functioneel, RoofPro-stijl
+   AB BOUW GROUP, v5, strak, functioneel, RoofPro-stijl
    ════════════════════════════════════════════════════════════════ */
 
 /* Slim, subtle scrollbar — geen witte border (gaf op dark heroes een dikke navy/witte strip) */
@@ -617,7 +617,7 @@ body.menu-open { overflow: hidden; }
 section.tone-soft .compare-card.light { background: #fff; }
 
 /* ════════════════════════════════════════════════════════════════
-   V2 — DRAMATIC HERO + 3D HOUSE AESTHETIC
+   V2, DRAMATIC HERO + 3D HOUSE AESTHETIC
    ════════════════════════════════════════════════════════════════ */
 
 /* HERO V2 */
@@ -660,7 +660,7 @@ section.tone-soft .compare-card.light { background: #fff; }
 
 
 /* ════════════════════════════════════════════════════════════════
-   V3 — CLEAN, RESTFUL, ROOFAGE/APEX-INSPIRED (geen gimmicks)
+   V3, CLEAN, RESTFUL, ROOFAGE/APEX-INSPIRED (geen gimmicks)
    ════════════════════════════════════════════════════════════════ */
 
 /* HERO V3 — clean split */
@@ -679,7 +679,7 @@ section.tone-soft .compare-card.light { background: #fff; }
 
 
 /* ════════════════════════════════════════════════════════════════
-   V4 — NAVY + AMBER PALETTE OVERRIDES
+   V4, NAVY + AMBER PALETTE OVERRIDES
    ════════════════════════════════════════════════════════════════ */
 
 /* Topbar teal zoals Dural stijl */
@@ -704,7 +704,7 @@ section.tone-soft .compare-card.light { background: #fff; }
 .footer { background: var(--navy) !important; }
 
 /* ════════════════════════════════════════════════════════════════
-   V4 — EDITORIAL SERVICES SPLIT VIEW
+   V4, EDITORIAL SERVICES SPLIT VIEW
    ════════════════════════════════════════════════════════════════ */
 
 
@@ -804,12 +804,12 @@ section.tone-soft .compare-card.light { background: #fff; }
 }
 
 /* ════════════════════════════════════════════════════════════════
-   CTA BANNER FIX — geen oranje meer, navy met amber
+   CTA BANNER FIX, geen oranje meer, navy met amber
    ════════════════════════════════════════════════════════════════ */
 
 
 /* ════════════════════════════════════════════════════════════════
-   V5 — VISUAL UPGRADES (floating cards, blueprint grid, logo strip)
+   V5, VISUAL UPGRADES (floating cards, blueprint grid, logo strip)
    ════════════════════════════════════════════════════════════════ */
 
 /* Subtle blueprint grid in hero background */
@@ -831,7 +831,7 @@ section.tone-soft .compare-card.light { background: #fff; }
 
 
 /* ════════════════════════════════════════════════════════════════════════════
-   V9 — ROOFORA HERO (overlay-structuur)
+   V9, ROOFORA HERO (overlay-structuur)
    Foto vult de hele card. Glaspanelen zweven bovenop.
    ════════════════════════════════════════════════════════════════════════════ */
 
@@ -952,7 +952,7 @@ body:has(.hero-fs) .nav:not(.scrolled) .dd-arr { stroke: #fff; }
 
 
 /* ═══════════════════════════════════════════════════════
-   v13 — HERO SPLIT, STATS COUNTER, SERVICES TABS
+   v13, HERO SPLIT, STATS COUNTER, SERVICES TABS
    ═══════════════════════════════════════════════════════ */
 
 /* ── HERO SPLIT v13 ── */
@@ -1028,7 +1028,7 @@ body:has(.hero-fs) .nav:not(.scrolled) .dd-arr { stroke: #fff; }
 }
 
 /* ═══════════════════════════════════════════════════════
-   v14 — RUSTIGER HERO + CONVERSIE-BLOK + EDITORIAL PROOF
+   v14, RUSTIGER HERO + CONVERSIE-BLOK + EDITORIAL PROOF
    ═══════════════════════════════════════════════════════ */
 
 /* ── HERO v14: zachter ── */
@@ -1058,7 +1058,7 @@ body:has(.hero-fs) .nav:not(.scrolled) .dd-arr { stroke: #fff; }
 
 
 /* ═══════════════════════════════════════════════════════
-   HERO v15 — FULLSCREEN + DIAGONAAL KLEURBLOK
+   HERO v15, FULLSCREEN + DIAGONAAL KLEURBLOK
    ═══════════════════════════════════════════════════════ */
 
 
@@ -1092,7 +1092,7 @@ body.page-hero-dark .footer {
 }
 
 /* ═════════════════════════════════════════════════
-   FIGMA 1:1 — About / Why / Testimonials
+   FIGMA 1:1, About / Why / Testimonials
    Accent: #d98c03 (AB Bouw gold, replaces Figma red)
    ═════════════════════════════════════════════════ */
 
@@ -1106,7 +1106,7 @@ body.page-hero-dark .footer {
 
 
 /* ───────────────────────────────────────────────
-   Testimonials marquee — clean auto-scroll
+   Testimonials marquee, clean auto-scroll
    ─────────────────────────────────────────────── */
 .lf-testi-marquee {
   position: relative;
@@ -1612,7 +1612,7 @@ body:not(.is-subpage) .lf-nav .lf-nav-inner {
 
 
 /* ============================================================
-   GLOBAL — geldt op ALLE pages (Home + subpages).
+   GLOBAL, geldt op ALLE pages (Home + subpages).
    Mobile menu open: nav-pil verbergen (geen overlap met X-close)
    + mm-footer SVG icons (geen emoji's meer) + bel-FAB op subpages.
    ============================================================ */
@@ -1672,7 +1672,7 @@ body.menu-open .lf-nav {
 }
 
 /* ============================================================
-   HOME hero fullscreen op mobile — geen witte balken boven/onder.
+   HOME hero fullscreen op mobile, geen witte balken boven/onder.
    Hero vult HET HELE scherm (100dvh) op telefoon.
    ============================================================ */
 @media (max-width: 900px) {
@@ -1696,7 +1696,7 @@ body.menu-open .lf-nav {
 }
 
 /* ============================================================
-   HOME hero MOBILE — echte fullscreen edge-to-edge.
+   HOME hero MOBILE, echte fullscreen edge-to-edge.
    Forceer html/body geen margin, hero start vlak tegen viewport top,
    en geen ruimte onder de hero voor de volgende sectie.
    ============================================================ */
@@ -1731,7 +1731,7 @@ body.menu-open .lf-nav {
 }
 
 /* ============================================================
-   DIENSTEN page hero — compacter zodat de eerste dienst-card al
+   DIENSTEN page hero, compacter zodat de eerste dienst-card al
    peept aan de onderkant van de viewport (geen fullscreen).
    ============================================================ */
 body[data-route="/diensten"] .lf-hero,

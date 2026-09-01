@@ -118,7 +118,7 @@ ${rpFooter()}
 
 export default function Voorwaarden() {
   useEffect(() => {
-    document.title = 'Algemene voorwaarden — AB Bouw Groep';
+    document.title = 'Algemene voorwaarden · AB Bouw Groep';
     let m = document.querySelector('meta[name="description"]');
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
     m.setAttribute('content', 'De algemene voorwaarden van AB Bouw Groep: offertes, uitvoering, betaling, oplevering, garantie en aansprakelijkheid.');

@@ -14,7 +14,7 @@ import { getUtmParams, fireConversion } from './tracking';
 // OF hieronder hardcoded — Lovable-env blijkt soms leeg, dáárom kwam de backup
 // niet binnen. Mails arriveren op het e-mailadres waarmee de key is aangemaakt
 // (LEAD_EMAIL_TO override is optioneel).
-const WEB3FORMS_ACCESS_KEY = 'b01e4fea-3e73-418b-b65a-acfb1d3ee43c'; // Mohammeds Web3Forms access key (de werkende — bevestigd dat leads landen)
+const WEB3FORMS_ACCESS_KEY = 'b01e4fea-3e73-418b-b65a-acfb1d3ee43c'; // Mohammeds Web3Forms access key (de werkende, bevestigd dat leads landen)
 const LEAD_EMAIL_TO = ''; // optioneel: forceer ontvanger; leeg = Web3Forms-registratie-mail
 
 export type Divisie =
@@ -180,7 +180,7 @@ export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
     const emailOk = !!p.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email.trim());
     const phoneOk = !!p.phone && (p.phone.replace(/\D/g, '').length >= 8);
     if (!emailOk && !phoneOk) {
-      console.error('[lead] geblokkeerd — geen email én geen telefoon', { emailOk, phoneOk, source: p.source });
+      console.error('[lead] geblokkeerd, geen email én geen telefoon', { emailOk, phoneOk, source: p.source });
       return { ok: false, via: 'none', error: 'invalid_contact_info' };
     }
   }
@@ -209,7 +209,7 @@ export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
     tasks.push(
       postJSON('https://api.web3forms.com/submit', {
         access_key: w3key,
-        subject: `Nieuwe AB Bouw lead (${p.source}) — ${body.name || body.email}`,
+        subject: `Nieuwe AB Bouw lead (${p.source}), ${body.name || body.email}`,
         from_name: 'AB Bouw website',
         ...(w3to ? { to: w3to } : {}),
         ...body,
@@ -229,6 +229,6 @@ export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
     return { ok: true, via };
   }
 
-  console.error('[lead] geen enkel transport geslaagd — lead niet bezorgd', { source: p.source });
+  console.error('[lead] geen enkel transport geslaagd, lead niet bezorgd', { source: p.source });
   return { ok: false, via: 'none', error: 'no transport succeeded' };
 }

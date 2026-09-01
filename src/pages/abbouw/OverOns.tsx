@@ -83,14 +83,11 @@ ${rpNav('/over')}
     </div>
 
     <div class="rp-uitleg">
-      <p>Een algemeen aannemer neemt de verantwoordelijkheid voor het geheel op zich: hij voert alle
-      bouwactiviteiten uit en stemt ze op elkaar af, en levert voor een prijs die in het contract staat
-      en binnen een afgesproken termijn een volledig afgewerkt bouwwerk op.</p>
-      <p>Een co&ouml;rdinator van werken doet iets anders. Die brengt u in contact met de verschillende
-      aannemers, maar draagt zelf geen verantwoordelijkheid voor de uitvoering. Een algemeen aannemer
-      draagt die wel, voor alle werken samen.</p>
-      <p>Voor u scheelt dat stappen. E&eacute;n vakman houdt het programma, de prijs en de termijn in de hand
-      en levert het eindresultaat af.</p>
+      <p>Een algemeen aannemer neemt het geheel op zich: hij voert alle bouwactiviteiten uit, stemt ze
+      op elkaar af en levert het bouwwerk afgewerkt op, voor de prijs die in het contract staat en
+      binnen de afgesproken termijn.</p>
+      <p>De verantwoordelijkheid voor alle werken samen ligt daarmee bij &eacute;&eacute;n partij. U volgt dus
+      &eacute;&eacute;n programma, &eacute;&eacute;n prijs en &eacute;&eacute;n termijn.</p>
     </div>
 
     <div class="rp-why__tiles rp-tiles-3">
@@ -165,7 +162,7 @@ ${rpFooter()}
 
 export default function OverOns() {
   useEffect(() => {
-    document.title = 'Over ons — AB Bouw Groep';
+    document.title = 'Over ons · AB Bouw Groep';
     window.scrollTo(0, 0);
     const op = wireMobielMenu();
     return () => op();

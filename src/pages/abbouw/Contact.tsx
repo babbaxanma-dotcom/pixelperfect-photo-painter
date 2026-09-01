@@ -56,7 +56,7 @@ ${rpNav('/contact')}
               </div>
             </div>
             <details class="rp-faq__item" style="border-radius:8px">
-              <summary class="rp-faq__q" style="padding:14px 16px;font-size:15px">Adres van het project <span style="font-weight:600;color:var(--rp-mute)">&nbsp;— optioneel</span>${ic.plus}</summary>
+              <summary class="rp-faq__q" style="padding:14px 16px;font-size:15px">Adres van het project <span style="font-weight:600;color:var(--rp-mute)">&nbsp;, optioneel</span>${ic.plus}</summary>
               <div style="padding:0 16px 16px;display:grid;gap:16px">
                 <div class="rp-veld">
                   <label for="cf-straat">Straat en nummer</label>
@@ -131,7 +131,7 @@ ${rpFooter()}
 
 export default function Contact() {
   useEffect(() => {
-    document.title = 'Contact — AB Bouw Groep';
+    document.title = 'Contact · AB Bouw Groep';
     window.scrollTo(0, 0);
     const opruimers: Array<() => void> = [wireMobielMenu()];
 
