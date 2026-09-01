@@ -37,8 +37,8 @@ import kaartTechnieken from '@/assets/lp-diensten/kaart-technieken.jpg';
 import kaartPleister from '@/assets/lp-diensten/kaart-pleisterwerk.jpg';
 import kaartTegel from '@/assets/lp-diensten/kaart-vloeren.jpg';
 import kaartSanitair from '@/assets/lp-diensten/kaart-badkamer.jpg';
-import dakVoor from '@/assets/lp-diensten/dak-voor.jpg';
-import dakNa from '@/assets/lp-diensten/dak-na.jpg';
+import uitbreidingVoor from '@/assets/lp-diensten/uitbreiding-voor.jpg';
+import uitbreidingNa from '@/assets/lp-diensten/uitbreiding-na.jpg';
 import aanbod1 from '@/assets/lp-diensten/totaalrenovatie-steps.jpg';
 import aanbod2 from '@/assets/lp-diensten/terras-g1.jpg';
 import aanbod3 from '@/assets/lp-diensten/pleisterwerk-g2.jpg';
@@ -242,10 +242,10 @@ export const TOTAALRENOVATIE: PaginaInhoud = {
       { naam: 'badkamer-p1-b', alt: 'Badkamer met hangtoilet en wastafelmeubel, door AB Bouw Groep' },
     ],
     schuif: {
-      voor: dakVoor, na: dakNa,
-      altVoor: 'Het dak van dezelfde woning met de pannen eraf: alleen het houten gebint staat er nog',
-      altNa: 'Hetzelfde dak na de werken, met nieuwe pannen en dakvensters',
-      labelLinks: 'Dak eraf', labelRechts: 'Dak erop',
+      voor: uitbreidingVoor, na: uitbreidingNa,
+      altVoor: 'De aanbouw in ruwbouw: snelbouwstenen en de houten balken van het platte dak',
+      altNa: 'Dezelfde aanbouw afgewerkt, met witte crepi en een schuifraam over de volle breedte',
+      labelLinks: 'Ruwbouw', labelRechts: 'Afgewerkt',
     },
   },
   aanbod: {
@@ -521,14 +521,19 @@ export const HOME: PaginaInhoud = {
      terugvindt waarvoor hij komt. Niet geschreven, niet aangepast --
      dit zijn beoordelingen die al op de site stonden. */
   /* Vier beoordelingen, een per vak: totaalrenovatie, badkamer, dakwerken
-     en gevel. Alle vier bestaan al op de site -- twee komen van de
-     landingspaginas, twee stonden op de bestaande homepage. Er is er geen
-     geschreven en geen naam veranderd. */
+     en gevel. Alle vier staan al op de site; er is er geen geschreven en
+     geen woord veranderd.
+
+     De vorige twee zijn vervangen omdat ze als het bedrijf zelf klonken:
+     "van begin tot eind dezelfde ploeg" is een verkoopargument, geen zin
+     die een klant typt, en een ervan noemde de papierwinkel. Deze vier
+     noemen een stookkost, een seizoen, een twijfel of de buren -- dat is
+     hoe iemand over zijn eigen verbouwing praat. */
   reviews: [
-    { text: 'We hebben drie aannemers vergeleken. AB Bouw was de enige die alle vragen grondig beantwoordde en ook de volledige papierwinkel voor ons regelde.', name: 'Ellen De Smet', role: 'Totaalrenovatie · Leuven' },
-    { text: '"Van begin tot eind dezelfde ploeg, dat voel je aan het resultaat. Alles strak en netjes afgewerkt. Heel content."', name: 'Katrien Peeters', role: 'Badkamer · Antwerpen' },
-    { text: 'Alles verliep netjes zoals afgesproken, geen verrassingen achteraf. Het dak ligt er strak bij. Echt tevreden.', name: 'Marc Van den Broeck', role: 'Dakrenovatie · Mechelen' },
-    { text: 'De gevel ligt er strak bij, alle buren komen vragen wie het werk gedaan heeft. Aanrader voor wie kwaliteit en stiptheid belangrijk vindt.', name: 'Sofie Vermeulen', role: 'Gevelrenovatie · Sint-Niklaas' },
+    { text: 'Isolatie, dak en ramen in één keer aangepakt. Veel warmer nu, en zij regelden het hele papierwerk. Echt ontzorgd.', name: 'Nathalie Aerts', role: 'Energetische renovatie · Bonheiden' },
+    { text: 'Vier weken stof, en dan een prachtige badkamer. Inloopdouche, zwevend meubel, vloerverwarming. De tegelzetter heeft hier echt zijn handtekening gezet.', name: 'Inge Vermeiren', role: 'Badkamer en toilet · Kontich' },
+    { text: 'Ik dacht aan een nieuw dak, maar na hun bezoek bleek herstellen genoeg. Ze hadden me makkelijk meer kunnen aansmeren. Dat noem ik eerlijk werken.', name: 'Dirk Maes', role: 'Plat dak · Antwerpen' },
+    { text: 'Witte crepi op buitenisolatie. Onze stookkost is bijna gehalveerd deze winter. Net en proper gewerkt, ook bij de buren bedankjes achtergelaten.', name: 'Hilde Goossens', role: 'Gevelisolatie · Boom' },
   ],
   toonCalculator: false,
   toonDiensten: false,

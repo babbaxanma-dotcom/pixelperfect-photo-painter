@@ -9,6 +9,13 @@ import { REPLICA_CSS } from './lp/replica/stijl';
 export const LOGO = logoTrim;
 
 export const ic = {
+  /* Iconen in de PrimeCraft-maat, alleen voor de kop. Letterlijk dezelfde
+     paden en maten als IcPin, IcMail en IcTelefoon in lp/replica/Iconen.tsx.
+     Met de RoofPro-varianten (17x17, lijndikte 2) stond de contactrij op de
+     binnenpaginas 2px lager en 7px breder dan op de homepage. */
+  pinKop: '<svg width="12" height="14" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 5.9c0 3.3-4.5 7.1-4.5 7.1S1.5 9.2 1.5 5.9a4.5 4.5 0 0 1 9 0Z"/><circle cx="6" cy="5.8" r="1.7"/></svg>',
+  mailKop: '<svg width="15" height="13" viewBox="0 0 15 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="1.4" width="13" height="10.2" rx="1.8"/><path d="m1.6 2.6 5.9 4.2 5.9-4.2"/></svg>',
+  telKop: '<svg width="22" height="22" viewBox="0 0 22 22" fill="currentColor" aria-hidden="true"><path d="M7.4 3.1c.4-.3 1-.2 1.3.2l1.8 2.6c.3.4.2.9-.1 1.2l-1.1 1c-.2.2-.3.5-.2.8.5 1.4 1.9 3.2 3.6 4.3.3.2.6.1.8-.1l1-1c.3-.3.8-.4 1.2-.2l2.7 1.6c.5.3.6.9.3 1.3l-1.2 1.6c-.5.7-1.4 1-2.2.8-2.2-.6-4.6-2.2-6.4-4.1C7 11 5.6 8.7 5.1 6.6c-.2-.8.1-1.6.8-2.1l1.5-1.4Z"/></svg>',
   /* De chevron van de PrimeCraft-kop is 10x6, de RoofPro-versie 14x14. Dat
      verschil maakte de navigatiebalk 2px hoger en schoof elke link erna 9px
      op, waardoor de kop op de binnenpaginas niet gelijk stond aan die op de
@@ -86,8 +93,8 @@ export const rpNav = (actief: string) => `
     <div class="pc-kop-midden">
       <div class="pc-kop-rij1">
         <div class="pc-kop-contact">
-          <span>${ic.pin}${CONTACT.address.street}, ${CONTACT.address.city}</span>
-          <span>${ic.mail}<a href="mailto:${CONTACT.email}">${CONTACT.email}</a></span>
+          <span>${ic.pinKop}${CONTACT.address.street}, ${CONTACT.address.city}</span>
+          <span>${ic.mailKop}<a href="mailto:${CONTACT.email}">${CONTACT.email}</a></span>
         </div>
       </div>
       <div class="pc-kop-rij2">
@@ -104,7 +111,7 @@ export const rpNav = (actief: string) => `
     </div>
     <div class="pc-kop-streep"></div>
     <div class="pc-kop-tel">
-      <span class="pc-teltegel">${ic.phone(20)}</span>
+      <span class="pc-teltegel">${ic.telKop}</span>
       <span class="pc-telblok">
         <span class="pc-tellabel">Bel ons vandaag</span>
         <a class="pc-telnr" href="${CONTACT.phone.href}">${CONTACT.phone.display}</a>

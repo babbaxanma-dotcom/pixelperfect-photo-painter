@@ -4,11 +4,11 @@ import { CONTACT } from '@/data/contact';
 import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
 import svcConstruct from '@/assets/home/svc-construct.jpg';
-import svcEco from '@/assets/home/svc-eco.jpg';
-import svcInterieur from '@/assets/home/svc-interieur.jpg';
-import svcDak from '@/assets/dak/lp-veluxg-3.jpg';
+import svcEco from '@/assets/lp-diensten/dak-na.jpg';
+import svcInterieur from '@/assets/home/svc-interieur-nieuw.jpg';
+import svcDak from '@/assets/dak/drone-antraciet.jpg';
 import svcBad from '@/assets/home/svc-bad.jpg';
-import svcGevel from '@/assets/home/svc-gevel.jpg';
+import svcGevel from '@/assets/gevel/uitbreiding-gevel.jpg';
 
 const vink = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
 
