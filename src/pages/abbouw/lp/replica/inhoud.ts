@@ -556,7 +556,7 @@ export const HOME: PaginaInhoud = {
 
   over: {
     kop: ['Uw vaste', 'totaalaannemer'],
-    tekst: 'Of uw plannen nu vastliggen of nog moeten groeien: wij begeleiden u van het eerste gesprek tot de oplevering. U schakelt één afdeling in of ze allemaal; de planning, de afstemming tussen de vakken en de opvolging op de werf nemen wij over.',
+    tekst: 'Of uw plannen nu vastliggen of nog moeten groeien: wij begeleiden u van het eerste gesprek tot de oplevering. U schakelt één afdeling in of ze allemaal. Wij coördineren alle bouwactiviteiten die nodig zijn voor de realisatie van uw bouwwerk.',
     slot: '',
     foto: homeOver,
     alt: 'Leefruimte met open keuken en glazen pui na een totaalrenovatie door AB Bouw Groep',

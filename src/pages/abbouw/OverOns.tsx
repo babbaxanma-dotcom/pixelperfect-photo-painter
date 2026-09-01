@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import '@/styles/roofpro.css';
 import hero from '@/assets/home/hero-over.jpg';
 import about from '@/assets/home/about.jpg';
-import why from '@/assets/home/why.jpg';
+import why from '@/assets/home/why-nieuw.jpg';
 import { CONTACT } from '@/data/contact';
 import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
@@ -111,7 +111,7 @@ ${rpNav('/over')}
   <div class="rp-wrap">
     <div class="rp-split rp-split--om">
       <div class="rp-split__media">
-        <img src="${why}" alt="Vakman van AB Bouw Groep aan het werk" width="560" height="420" loading="lazy" decoding="async"/>
+        <img src="${why}" alt="Afgewerkte leefruimte met verlaagd plafond en lichtlijnen, door AB Bouw Groep" width="560" height="420" loading="lazy" decoding="async"/>
       </div>
       <div>
         <span class="rp-eyebrow">${ic.mark} Wat wij vastleggen</span>
