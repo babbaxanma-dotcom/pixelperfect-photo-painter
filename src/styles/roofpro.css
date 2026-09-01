@@ -1648,3 +1648,60 @@
 /* De tweekoloms-koppen binnen een pagina. */
 .rp .rp-split__t { line-height: 1.3; }
 
+/* ── De paginakop in de PrimeCraft-heroverm ──────────────────────────────
+   De PrimeCraft-hero is een cream vlak met de tekst links en de foto rechts
+   vanaf 53%, met een witte sluier over de bovenrand zodat de navigatie
+   leesbaar blijft. De RoofPro-versie legde een donkere waas over de HELE
+   breedte en zette witte tekst daarop: een andere vormtaal, en het was het
+   eerste wat je op elke binnenpagina zag. */
+.rp .rp-phero--foto {
+  position: relative;
+  background: var(--rp-bg-soft);
+  padding: 92px 0 84px;
+  border-bottom: none;
+  overflow: hidden;
+}
+.rp .rp-phero--foto .rp-phero__bg { inset: 0 0 0 53%; }
+.rp .rp-phero--foto .rp-phero__bg img { object-position: center 50%; }
+/* De sluier loopt van wit naar niets over de bovenste 220px, precies zoals in
+   de gemeten hero. Zo staat de kop op wit en komt de foto er daaronder uit. */
+.rp .rp-phero--foto .rp-phero__veil {
+  inset: 0 0 auto 0;
+  height: 220px;
+  background: linear-gradient(180deg, #fff 0%, #fff 45%, rgba(255,255,255,0) 100%);
+}
+.rp .rp-phero--foto > .rp-wrap { position: relative; z-index: 3; }
+.rp .rp-phero--foto .rp-phero__t,
+.rp .rp-phero--foto .rp-phero__lede,
+.rp .rp-phero--foto .rp-crumbs,
+.rp .rp-phero--foto .rp-crumbs a,
+.rp .rp-phero--foto .rp-crumbs span { color: var(--rp-ink); }
+.rp .rp-phero--foto .rp-phero__lede { color: var(--rp-body); }
+.rp .rp-phero--foto .rp-phero__t,
+.rp .rp-phero--foto .rp-phero__lede { max-width: 47%; }
+@media (max-width: 900px) {
+  .rp .rp-phero--foto .rp-phero__bg { inset: 0; opacity: 0.16; }
+  .rp .rp-phero--foto .rp-phero__veil { display: none; }
+  .rp .rp-phero--foto .rp-phero__t,
+  .rp .rp-phero--foto .rp-phero__lede { max-width: 100%; }
+}
+
+/* ── De afsluitband in de PrimeCraft-vorm ───────────────────────────────
+   Navy in plaats van een foto met waas, gecentreerd, met de kop op de
+   gemeten 37,6px. */
+.rp .rp-cta__box { background: var(--rp-dark); border-radius: 12px; overflow: hidden; }
+.rp .rp-cta__bg { display: none; }
+.rp .rp-cta__inner { text-align: center; }
+.rp .rp-cta__form { justify-content: center; }
+
+/* De paginakop ging van donker naar licht; twee dingen waren nog voor de
+   donkere ondergrond gekleurd en werden daardoor onleesbaar op cream:
+   de tweede kopregel en de tweede knop. */
+.rp .rp-phero--foto .rp-dim { color: var(--pc-grijs, #56534f); }
+.rp .rp-phero--foto .rp-btn--ghost {
+  background: transparent;
+  color: var(--rp-ink);
+  border: 1px solid var(--rp-line);
+}
+.rp .rp-phero--foto .rp-btn--ghost:hover { border-color: var(--rp-ink); background: transparent; }
+
