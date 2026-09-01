@@ -27,7 +27,6 @@ import svcBad from '@/assets/home/svc-bad.jpg';
 import svcInterieur from '@/assets/home/svc-interieur.jpg';
 import svcConstruct from '@/assets/home/svc-construct.jpg';
 import svcEco from '@/assets/home/svc-eco.jpg';
-import keukenFoto from '@/assets/lp-diensten/realisaties/totaalrenovatie-p6-a.jpg';
 import homeHero from '@/assets/home/hero-3.jpg';
 import homeOver from '@/assets/lp-diensten/realisaties/totaalrenovatie-p6-a.jpg';
 import heroFoto from '@/assets/lp-diensten/totaalrenovatie-hero.jpg';
@@ -520,8 +519,8 @@ export const HOME: PaginaInhoud = {
   /* De gerenoveerde keuken uit het uitgevoerde werk van de landingspagina. */
   contact: {
     kop: 'Vraag een plaatsbezoek',
-    foto: keukenFoto,
-    alt: 'Gerenoveerde keuken met bar en zithoek, door AB Bouw Groep',
+    foto: heroFoto,
+    alt: 'Gerenoveerde keuken met zicht op de tuin, door AB Bouw Groep',
   },
   /* De beoordelingen van de bestaande homepage: dak, gevel, interieur,
      totaalrenovatie en badkamer door elkaar, zodat een bezoeker het vak
@@ -540,7 +539,7 @@ export const HOME: PaginaInhoud = {
     { text: 'Isolatie, dak en ramen in één keer aangepakt. Veel warmer nu, en zij regelden het hele papierwerk. Echt ontzorgd.', name: 'Nathalie Aerts', role: 'Energetische renovatie · Bonheiden' },
     { text: 'Vier weken stof, en dan een prachtige badkamer. Inloopdouche, zwevend meubel, vloerverwarming. De tegelzetter heeft hier echt zijn handtekening gezet.', name: 'Inge Vermeiren', role: 'Badkamer en toilet · Kontich' },
     { text: 'Ik dacht aan een nieuw dak, maar na hun bezoek bleek herstellen genoeg. Ze hadden me makkelijk meer kunnen aansmeren. Dat noem ik eerlijk werken.', name: 'Dirk Maes', role: 'Plat dak · Antwerpen' },
-    { text: 'Witte crepi op buitenisolatie. Onze stookkost is bijna gehalveerd deze winter. Net en proper gewerkt, ook bij de buren bedankjes achtergelaten.', name: 'Hilde Goossens', role: 'Gevelisolatie · Boom' },
+    { text: 'Witte crepi op buitenisolatie. Onze stookkost is bijna gehalveerd deze winter. Net en proper gewerkt.', name: 'Hilde Goossens', role: 'Gevelisolatie · Boom' },
   ],
   toonCalculator: false,
   toonDiensten: false,
@@ -550,7 +549,6 @@ export const HOME: PaginaInhoud = {
     { label: 'Over ons', href: '/over' },
     { label: 'Diensten', href: '/diensten', chevron: true },
     { label: 'Werkwijze', href: '/werkwijze' },
-    { label: 'Blog', href: '/blog' },
     { label: 'Contact', href: '/contact' },
   ],
 
@@ -624,9 +622,4 @@ export const HOME: PaginaInhoud = {
     ],
   },
 
-  blog: {
-    kop: ['Uit de praktijk', 'uitleg en achtergrond'],
-    knop: 'Alle artikels',
-    aantal: 3,
-  },
 };

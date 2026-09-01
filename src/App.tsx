@@ -94,8 +94,8 @@ const App = () => {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/voorwaarden" element={<Voorwaarden />} />
           <Route path="/cookies" element={<Cookies />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/blog" element={<Navigate to="/" replace />} />
+          <Route path="/blog/:slug" element={<Navigate to="/" replace />} />
           {/* Alleen /totaalrenovatie en /badkamerrenovatie blijven als landingspagina
               online. De rest verwijst door naar de dienstpagina over hetzelfde
               onderwerp; NIET verwijderd, want er kan advertentieverkeer op staan en
