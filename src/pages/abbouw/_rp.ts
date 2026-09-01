@@ -4,6 +4,8 @@
 import { CONTACT } from '@/data/contact';
 import logoTrim from '@/assets/home/logo-trim.png';
 
+import { REPLICA_CSS } from './lp/replica/stijl';
+
 export const LOGO = logoTrim;
 
 export const ic = {
@@ -47,7 +49,6 @@ export const DIENST_LINKS = [
 ];
 
 const NAV_LINKS = [
-  { t: 'Home', href: '/' },
   { t: 'Over ons', href: '/over' },
   { t: 'Diensten', href: '/diensten', sub: DIENST_LINKS },
   { t: 'Realisaties', href: '/realisaties' },
@@ -57,26 +58,58 @@ const NAV_LINKS = [
 ];
 
 /** actief = het href van de huidige pagina, bv. '/blog' */
+/**
+ * De kop, in de PrimeCraft-vorm.
+ *
+ * De opbouw komt van de landingspagina: contactrij boven, logo links,
+ * navigatie en offerteknop in het midden, telefoonblok rechts. Alleen de kop
+ * en de voet staan in een .pcx-schil; de secties daartussen houden hun eigen
+ * regels. Dat is met opzet, want .pcx zet color op inherit voor alles wat
+ * eronder valt en dat zou de donkere secties van de pagina leegtrekken.
+ *
+ * Het mobiele menu houdt zijn bestaande knoppen en data-attributen, zodat
+ * wireMobielMenu ongewijzigd blijft werken.
+ */
 export const rpNav = (actief: string) => `
-<header class="rp-nav">
-  <div class="rp-wrap rp-nav__inner">
-    <a class="rp-nav__logo" href="/" aria-label="AB Bouw Groep, naar de startpagina">
-      <img src="${LOGO}" alt="AB Bouw Groep" width="147" height="42" decoding="async"/>
-    </a>
-    <nav class="rp-nav__links" aria-label="Hoofdmenu">
-      ${NAV_LINKS.map((l) => l.sub
-        ? `<div class="rp-dd">
-             <a class="rp-nav__link" href="${l.href}"${l.href === actief ? ' aria-current="page"' : ''}>${l.t}${ic.chev}</a>
-             <div class="rp-dd__panel">${l.sub.map((s) => `<a class="rp-dd__item" href="${s.href}">${s.t}</a>`).join('')}</div>
-           </div>`
-        : `<a class="rp-nav__link" href="${l.href}"${l.href === actief ? ' aria-current="page"' : ''}>${l.t}</a>`).join('')}
-    </nav>
-    <a class="rp-nav__cta" href="${CONTACT.phone.href}">
-      <span class="rp-nav__cta-ic" aria-hidden="true">${ic.phone(16)}</span>${CONTACT.phone.display}
-    </a>
+<style>${REPLICA_CSS}</style>
+<div class="pcx pc-chrome">
+<header class="pc-kop">
+  <div class="pc-vat pc-kop-vat">
+    <div class="pc-kop-logo">
+      <a href="/" aria-label="AB Bouw Groep, naar de startpagina"><img src="${LOGO}" alt="AB Bouw Groep" width="147" height="42" decoding="async"/></a>
+    </div>
+    <div class="pc-kop-streep"></div>
+    <div class="pc-kop-midden">
+      <div class="pc-kop-rij1">
+        <div class="pc-kop-contact">
+          <span>${ic.pin}${CONTACT.address.street}, ${CONTACT.address.city}</span>
+          <span>${ic.mail}<a href="mailto:${CONTACT.email}">${CONTACT.email}</a></span>
+        </div>
+      </div>
+      <div class="pc-kop-rij2">
+        <nav class="pc-nav pc-nav--dicht" aria-label="Hoofdmenu">
+          ${NAV_LINKS.map((l) => l.sub
+            ? `<span class="rp-dd">
+                 <a href="${l.href}"${l.href === actief ? ' aria-current="page"' : ''}>${l.t}${ic.chev}</a>
+                 <span class="rp-dd__panel">${l.sub.map((x) => `<a class="rp-dd__item" href="${x.href}">${x.t}</a>`).join('')}</span>
+               </span>`
+            : `<a href="${l.href}"${l.href === actief ? ' aria-current="page"' : ''}>${l.t}</a>`).join('')}
+        </nav>
+        <a class="pc-knop pc-knop--donker pc-kop-offerte" href="/contact">Gratis offerte</a>
+      </div>
+    </div>
+    <div class="pc-kop-streep"></div>
+    <div class="pc-kop-tel">
+      <span class="pc-teltegel">${ic.phone(20)}</span>
+      <span class="pc-telblok">
+        <span class="pc-tellabel">Bel ons vandaag</span>
+        <a class="pc-telnr" href="${CONTACT.phone.href}">${CONTACT.phone.display}</a>
+      </span>
+    </div>
     <button class="rp-burger" type="button" data-mob-open aria-label="Menu openen" aria-expanded="false" aria-controls="rp-mob">${ic.burger}</button>
   </div>
 </header>
+</div>
 
 <div class="rp-mob" id="rp-mob" data-mob hidden>
   <div class="rp-wrap" style="padding:0">
@@ -86,7 +119,7 @@ export const rpNav = (actief: string) => `
     </div>
     <nav class="rp-mob__list" aria-label="Mobiel menu">
       ${NAV_LINKS.map((l) => l.sub
-        ? `<a class="rp-mob__link" href="${l.href}">${l.t}</a><div class="rp-mob__sub">${l.sub.map((s) => `<a href="${s.href}">${s.t}</a>`).join('')}</div>`
+        ? `<a class="rp-mob__link" href="${l.href}">${l.t}</a><div class="rp-mob__sub">${l.sub.map((x) => `<a href="${x.href}">${x.t}</a>`).join('')}</div>`
         : `<a class="rp-mob__link" href="${l.href}">${l.t}</a>`).join('')}
     </nav>
     <div class="rp-mob__cta">
@@ -96,50 +129,51 @@ export const rpNav = (actief: string) => `
   </div>
 </div>`;
 
+/**
+ * De voet, in de PrimeCraft-vorm. Vier kolommen, dan een lijn en de
+ * onderregel. De openingsuren stonden hier eerder bij; die zijn een aanname
+ * die nooit bevestigd is en staan daarom niet in deze versie.
+ */
 export const rpFooter = () => `
-<footer class="rp-foot">
-  <div class="rp-wrap">
-    <div class="rp-foot__grid">
+<div class="pcx pc-chrome">
+<footer class="pc-footer">
+  <div class="pc-vat">
+    <div class="pc-footer-grid">
       <div>
-        <a class="rp-foot__logo" href="/" aria-label="AB Bouw Groep"><img src="${LOGO}" alt="AB Bouw Groep" width="161" height="46" loading="lazy" decoding="async"/></a>
-        <p class="rp-foot__about">Bouw- en renovatiebedrijf voor dak, gevel, badkamer, interieur, ruwbouw en energiewerken. Actief in Vlaanderen en Brussel.</p>
-        <div class="rp-foot__rows">
-          <span class="rp-foot__row">${ic.phone(17)}<a href="${CONTACT.phone.href}">${CONTACT.phone.display}</a></span>
-          <span class="rp-foot__row">${ic.mail}<a href="mailto:${CONTACT.email}">${CONTACT.email}</a></span>
-          <span class="rp-foot__row">${ic.pin}<span>${CONTACT.address.full}</span></span>
-        </div>
+        <div class="pc-footer-logo"><a href="/"><img src="${LOGO}" alt="AB Bouw Groep" loading="lazy" decoding="async"/></a></div>
+        <p>Bouw en renovatie voor dak, gevel, badkamer en interieur. Actief in Vlaanderen en Brussel.</p>
       </div>
       <div>
-        <h3 class="rp-foot__h">Snel naar</h3>
-        <div class="rp-foot__links">
+        <h3>Snel naar</h3>
+        <nav class="pc-footer-links">
           <a href="/over">Over ons</a>
           <a href="/werkwijze">Werkwijze</a>
           <a href="/realisaties">Realisaties</a>
           <a href="/blog">Blog</a>
           <a href="/contact">Contact</a>
-        </div>
+        </nav>
       </div>
       <div>
-        <h3 class="rp-foot__h">Onze diensten</h3>
-        <div class="rp-foot__links">
-          ${DIENST_LINKS.map((d) => `<a href="${d.href}">${d.t}</a>`).join('')}
-        </div>
+        <h3>Onze diensten</h3>
+        <nav class="pc-footer-links">${DIENST_LINKS.map((x) => `<a href="${x.href}">${x.t}</a>`).join('')}</nav>
       </div>
-      <div class="rp-foot__hours-col">
-        <h3 class="rp-foot__h">Bereikbaarheid</h3>
-        <div class="rp-hours">
-          <div class="rp-hours__row"><span class="rp-hours__d">Ma&ndash;vr</span><span>08:00 &ndash; 18:00</span></div>
-          <div class="rp-hours__row"><span class="rp-hours__d">Zaterdag</span><span>Op afspraak</span></div>
-          <div class="rp-hours__row"><span class="rp-hours__d">Zondag</span><span>Gesloten</span></div>
+      <div>
+        <h3>Contact</h3>
+        <div class="pc-footer-contact">
+          <span>${ic.phone(17)}<a href="${CONTACT.phone.href}">${CONTACT.phone.display}</a></span>
+          <span>${ic.pin}<span>${CONTACT.address.street},<br/>${CONTACT.address.postcode} ${CONTACT.address.city}</span></span>
+          <span>${ic.mail}<a href="mailto:${CONTACT.email}">${CONTACT.email}</a></span>
         </div>
       </div>
     </div>
-    <div class="rp-foot__bar">
-      <span class="rp-foot__copy">&copy; ${new Date().getFullYear()} AB Bouw Groep &middot; <a href="/privacy">Privacy</a> &middot; <a href="/voorwaarden">Voorwaarden</a> &middot; <a href="/cookies">Cookies</a></span>
-      <span class="rp-foot__copy"><a href="${CONTACT.phone.href}">${CONTACT.phone.display}</a> &middot; <a href="mailto:${CONTACT.email}">${CONTACT.email}</a></span>
+    <div class="pc-footer-lijn"></div>
+    <div class="pc-footer-onder">
+      <span>&copy; ${new Date().getFullYear()} AB Bouw Groep. Alle rechten voorbehouden.</span>
+      <span><a href="/privacy">Privacy</a> &middot; <a href="/voorwaarden">Voorwaarden</a> &middot; <a href="/cookies">Cookies</a></span>
     </div>
   </div>
 </footer>
+</div>
 
 <a class="rp-fab" href="${CONTACT.phone.href}" aria-label="Bel AB Bouw Groep">${ic.phone(22)}</a>`;
 

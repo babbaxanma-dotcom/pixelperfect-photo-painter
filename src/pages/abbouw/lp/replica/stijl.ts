@@ -1042,4 +1042,38 @@ export const REPLICA_CSS = `
   .pcx .pc-faq-vraag { padding: 16px 18px; font-size: 16px; line-height: 22px; }
   .pcx .pc-faq-antwoord { padding: 0 18px 18px; }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   De gedeelde kop en voet op de gewone paginas (.pc-chrome).
+
+   Op de landingspagina ligt de kop OVER de hero: die begint met een licht
+   vlak, dus donkere tekst is daar leesbaar. De gewone paginas openen met een
+   donkere fotohero. Zonder eigen achtergrond stond de navigatie daar donker
+   op donker en liep het kruimelpad door de kop heen.
+   ───────────────────────────────────────────────────────────── */
+.pc-chrome .pc-kop { background: #fff; position: relative; z-index: 20; }
+/* De diensten-link heeft een uitklapmenu. Zonder deze regel is die wikkel een
+   blok: het pijltje viel dan onder de tekst en duwde de link uit de rij.
+   Inline-flex zet het pijltje ernaast en maakt de balk meteen smaller. */
+.pc-chrome .pc-nav .rp-dd { display: inline-flex; align-items: center; position: relative; }
+.pc-chrome .pc-nav .rp-dd > a { display: inline-flex; align-items: center; gap: 6px; }
+/* De offerteknop staat NIET in de kop van de gewone paginas. Daar is het
+   telefoonblok rechts al de oproep tot actie, en zes navigatielinks plus twee
+   knoppen passen niet in 974px: de laatste link liep over de knop heen. De
+   knop staat nog in het mobiele menu en in de voet. */
+.pc-chrome .pc-kop-offerte { display: none; }
+.pc-chrome .pc-nav { gap: 13px; margin-right: auto; }
+.pc-chrome .pc-nav > a, .pc-chrome .pc-nav > .rp-dd > a { line-height: 1; align-self: center; }
+.pc-chrome .pc-nav .rp-dd { padding: 0; margin: 0; }
+.pc-chrome .pc-kop-rij2 { gap: 0; }
+.pc-chrome .pc-footer { position: relative; z-index: 1; }
+/* De eerste voetkolom had geen grens: de omschrijving liep door tot achter de
+   linkkolom ernaast. Een grid-cel krimpt niet vanzelf onder de breedte van
+   haar inhoud; min-width 0 laat dat wel toe. */
+.pc-chrome .pc-footer-grid > div { min-width: 0; }
+.pc-chrome .pc-footer-grid > div p { max-width: 30ch; }
+/* De site heeft zes navigatielinks plus een offerteknop in dezelfde rij als
+   het logo en het telefoonblok. Bij minder ruimte gaat de knop eruit; hij
+   staat dan nog steeds in het mobiele menu en in de voet. */
+@media (max-width: 1180px) { .pc-chrome .pc-kop-offerte { display: none; } }
 `;
