@@ -1076,4 +1076,12 @@ export const REPLICA_CSS = `
    het logo en het telefoonblok. Bij minder ruimte gaat de knop eruit; hij
    staat dan nog steeds in het mobiele menu en in de voet. */
 @media (max-width: 1180px) { .pc-chrome .pc-kop-offerte { display: none; } }
+
+/* De formulierbalk wordt met een negatieve marge over de onderrand van de hero
+   getrokken. Op een landingspagina staat de rekenmodule daaronder en die vult
+   het gat dat daardoor ontstaat. Zonder die module schoof de volgende sectie
+   omhoog TOT ONDER de hero-foto: de kop en de cijfers werden half bedekt.
+   Deze klasse geeft de balk de ruimte terug die de negatieve marge wegnam. */
+.pc-balk--los { margin-bottom: 176px; }
+@media (max-width: 900px) { .pc-balk--los { margin-bottom: 0; } }
 `;

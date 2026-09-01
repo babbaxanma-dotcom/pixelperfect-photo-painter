@@ -476,7 +476,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       </section>
 
       {/* ── Formulierbalk die over de onderrand van de hero valt ── */}
-      <div className="pc-vat pc-balk">
+      <div className={`pc-vat pc-balk${inhoud.toonCalculator === false ? ' pc-balk--los' : ''}`}>
         <form onSubmit={verstuur} onFocusCapture={meldStart}>
           {BALKVELDEN.map((v) => {
             const Icoon = v.icoon;

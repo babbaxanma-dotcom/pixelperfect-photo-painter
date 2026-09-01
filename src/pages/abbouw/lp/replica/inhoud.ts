@@ -534,8 +534,8 @@ export const HOME: PaginaInhoud = {
 
   over: {
     kop: ['Uw totaalaannemer voor', 'dak, gevel en interieur'],
-    tekst: 'Ruwbouw, dak, gevel, badkamer, interieur en energiewerken zitten bij ons in huis. Loopt uw project over meerdere vakken, dan plannen wij die op elkaar.',
-    slot: 'Elke post staat apart in uw offerte. Tijdens de werken hebt u een vaste werfleider.',
+    tekst: 'U kunt bij ons een enkele afdeling inschakelen of ze allemaal.',
+    slot: 'Loopt uw project over meerdere vakken, dan plannen wij die op elkaar. Elke post staat apart in uw offerte.',
     foto: homeOver,
     alt: 'Gerenoveerde woning van AB Bouw Groep',
   },
