@@ -116,10 +116,14 @@ export const REPLICA_CSS = `
    waar een landingspagina er vijf korte heeft. Zonder nowrap brak 'Over ons'
    over twee regels en schoof de offerteknop eroverheen. */
 .pc-nav { display: flex; align-items: center; gap: 16px; min-width: 0; }
-.pc-nav > a, .pc-nav > button { font-size: 14px; font-weight: 500; line-height: 1;
+/* .rp-dd > a hoort er ook bij: op de binnenpaginas zit de diensten-link in
+   een uitklap-wikkel en is hij dus een kleinkind van .pc-nav. Zonder deze
+   selector kreeg hij de maten nooit en stond hij 8px breder met een andere
+   regelhoogte, waardoor elke link erna verschoof. */
+.pc-nav > a, .pc-nav > button, .pc-nav .rp-dd > a { font-size: 14px; font-weight: 500; line-height: 1;
   white-space: nowrap;
   display: inline-flex; align-items: center; gap: 9px; }
-.pc-nav > a:hover, .pc-nav > button:hover { color: var(--pc-accent-h); }
+.pc-nav > a:hover, .pc-nav > button:hover, .pc-nav .rp-dd > a:hover { color: var(--pc-accent-h); }
 /* Alleen wanneer er meer dan vijf links staan: de homepage heeft er zes en
    die botsten tegen de offerteknop. De landingspagina houdt zijn eigen maten,
    want die is goedgekeurd en mag niet verschuiven voor een probleem dat hij
@@ -1060,7 +1064,10 @@ export const REPLICA_CSS = `
    blok: het pijltje viel dan onder de tekst en duwde de link uit de rij.
    Inline-flex zet het pijltje ernaast en maakt de balk meteen smaller. */
 .pc-chrome .pc-nav .rp-dd { display: inline-flex; align-items: center; position: relative; }
-.pc-chrome .pc-nav .rp-dd > a { display: inline-flex; align-items: center; gap: 6px; }
+/* Exact de maten van de navigatie op de homepage: 9px tussen tekst en
+   pijltje, en de wikkel telt niet mee voor de hoogte. Met 6px stond elke link
+   erna 5px verkeerd en was de balk 2px hoger. */
+.pc-chrome .pc-nav .rp-dd > a svg { display: block; }
 /* De offerteknop staat NIET in de kop van de gewone paginas. Daar is het
    telefoonblok rechts al de oproep tot actie, en zes navigatielinks plus twee
    knoppen passen niet in 974px: de laatste link liep over de knop heen. De
@@ -1083,7 +1090,13 @@ export const REPLICA_CSS = `
    af, met het woord uw alleen op regel twee. De tekstkant loopt tot 60% van
    het venster, dus is er ruimte voor 620px. */
 .pc-hero--ruim .pc-h1 { max-width: 620px; }
-.pc-hero--ruim { height: 700px; }
+/* 620 in plaats van 700. De formulierbalk is het eerste wat een bezoeker
+   moet kunnen invullen; op een laptop van 1366x768 blijft er na browserbalken
+   ongeveer 620px over en viel de verstuurknop 54px onder de vouw. De inhoud
+   van de hero hangt aan de onderkant, dus schuift die mee omhoog.
+   LET OP: dit werkt alleen via de hoogte. De uitlijning op flex-start zetten
+   met een padding-top brak de hero eerder: de knop viel dan achter de balk. */
+.pc-hero--ruim { height: 600px; }
 /* De balk wordt normaal 260px over de hero getrokken. Bij deze hogere hero
    kwam de knop daardoor achter de balk te staan; 110px laat hem er nog steeds
    overheen vallen zonder de knop te raken. */
@@ -1096,7 +1109,9 @@ export const REPLICA_CSS = `
   .pc-hero--ruim .pc-hero-foto, .pc-hero--ruim .pc-hero-sluier { left: 0; }
   .pc-hero--ruim .pc-hero-vlak { width: 100%; }
 }
-.pc-chrome .pc-nav { gap: 13px; margin-right: auto; }
+/* Geen eigen tussenruimte: de kop hoort op elke pagina dezelfde te zijn.
+   16px is de waarde die de homepage al had. */
+.pc-chrome .pc-nav { margin-right: auto; }
 .pc-chrome .pc-nav > a, .pc-chrome .pc-nav > .rp-dd > a { line-height: 1; align-self: center; }
 .pc-chrome .pc-nav .rp-dd { padding: 0; margin: 0; }
 .pc-chrome .pc-kop-rij2 { gap: 0; }
@@ -1116,7 +1131,7 @@ export const REPLICA_CSS = `
    het gat dat daardoor ontstaat. Zonder die module schoof de volgende sectie
    omhoog TOT ONDER de hero-foto: de kop en de cijfers werden half bedekt.
    Deze klasse geeft de balk de ruimte terug die de negatieve marge wegnam. */
-.pc-balk--los { margin-bottom: 176px; }
+.pc-balk--los { margin-bottom: 70px; }
 @media (max-width: 900px) { .pc-balk--los { margin-bottom: 0; } }
 
 /* ── Dienstkaarten op de homepage ────────────────────────────────────────

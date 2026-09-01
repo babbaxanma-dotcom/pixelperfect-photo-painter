@@ -9,6 +9,11 @@ import { REPLICA_CSS } from './lp/replica/stijl';
 export const LOGO = logoTrim;
 
 export const ic = {
+  /* De chevron van de PrimeCraft-kop is 10x6, de RoofPro-versie 14x14. Dat
+     verschil maakte de navigatiebalk 2px hoger en schoof elke link erna 9px
+     op, waardoor de kop op de binnenpaginas niet gelijk stond aan die op de
+     homepage. Deze wordt alleen in de kop gebruikt. */
+  chevKop: '<svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m1 1 4 4 4-4"/></svg>',
   chev: '<svg class="rp-nav__chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>',
   phone: (s = 18) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`,
   mail: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>',
@@ -86,10 +91,10 @@ export const rpNav = (actief: string) => `
         </div>
       </div>
       <div class="pc-kop-rij2">
-        <nav class="pc-nav pc-nav--dicht" aria-label="Hoofdmenu">
+        <nav class="pc-nav" aria-label="Hoofdmenu">
           ${NAV_LINKS.map((l) => l.sub
             ? `<span class="rp-dd">
-                 <a href="${l.href}"${l.href === actief ? ' aria-current="page"' : ''}>${l.t}${ic.chev}</a>
+                 <a href="${l.href}"${l.href === actief ? ' aria-current="page"' : ''}>${l.t}${ic.chevKop}</a>
                  <span class="rp-dd__panel">${l.sub.map((x) => `<a class="rp-dd__item" href="${x.href}">${x.t}</a>`).join('')}</span>
                </span>`
             : `<a href="${l.href}"${l.href === actief ? ' aria-current="page"' : ''}>${l.t}</a>`).join('')}

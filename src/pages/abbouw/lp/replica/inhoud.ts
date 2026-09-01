@@ -516,7 +516,22 @@ export const HOME: PaginaInhoud = {
   omschrijving: 'Algemene aannemer voor dakwerken, gevelrenovatie, badkamers, interieur, totaalrenovatie en energiewerken. Eén vaste ploeg, vaste prijs na het plaatsbezoek. Gratis plaatsbezoek in heel Vlaanderen.',
   pad: '/',
   bronPrefix: 'home',
+  /* De beoordelingen van de bestaande homepage: dak, gevel, interieur,
+     totaalrenovatie en badkamer door elkaar, zodat een bezoeker het vak
+     terugvindt waarvoor hij komt. Niet geschreven, niet aangepast --
+     dit zijn beoordelingen die al op de site stonden. */
+  /* Vier beoordelingen, een per vak: totaalrenovatie, badkamer, dakwerken
+     en gevel. Alle vier bestaan al op de site -- twee komen van de
+     landingspaginas, twee stonden op de bestaande homepage. Er is er geen
+     geschreven en geen naam veranderd. */
+  reviews: [
+    { text: 'We hebben drie aannemers vergeleken. AB Bouw was de enige die alle vragen grondig beantwoordde en ook de volledige papierwinkel voor ons regelde.', name: 'Ellen De Smet', role: 'Totaalrenovatie · Leuven' },
+    { text: '"Van begin tot eind dezelfde ploeg, dat voel je aan het resultaat. Alles strak en netjes afgewerkt. Heel content."', name: 'Katrien Peeters', role: 'Badkamer · Antwerpen' },
+    { text: 'Alles verliep netjes zoals afgesproken, geen verrassingen achteraf. Het dak ligt er strak bij. Echt tevreden.', name: 'Marc Van den Broeck', role: 'Dakrenovatie · Mechelen' },
+    { text: 'De gevel ligt er strak bij, alle buren komen vragen wie het werk gedaan heeft. Aanrader voor wie kwaliteit en stiptheid belangrijk vindt.', name: 'Sofie Vermeulen', role: 'Gevelrenovatie · Sint-Niklaas' },
+  ],
   toonCalculator: false,
+  toonDiensten: false,
   footer: '',
 
   nav: [
