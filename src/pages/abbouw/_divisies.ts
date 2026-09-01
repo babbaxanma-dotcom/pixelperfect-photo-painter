@@ -24,7 +24,7 @@ export const DIVISIES: Record<string, DivisionConfig> = {
     heroLede: 'Van een lek dat hersteld moet worden tot een dak dat volledig vernieuwd wordt. Wij leggen pannen, leien en platte daken, en isoleren mee zolang het dak toch openligt.',
     heroBg: dakHero,
     storyTitle: 'Eerst kijken,<br/>dan pas vernieuwen',
-    storyLede: 'Bij het plaatsbezoek zeggen we eerlijk of herstellen volstaat, ook als dat ons minder oplevert. Moet het dak er wel af, dan hoort u meteen wat het kost en hoelang uw woning openligt.',
+    storyLede: 'Bij het plaatsbezoek zeggen we of herstellen volstaat of vervangen nodig is. Moet het dak er wel af, dan hoort u meteen wat het kost en hoelang uw woning openligt.',
     storyImg: dakStory,
     features: [
       { n: '01', t: 'Pannen en leien', d: 'Volledig vernieuwen inclusief onderdak, tengels en panlatten.' },

@@ -1760,3 +1760,9 @@
 .rp .rp-phero--foto .rp-crumbs a,
 .rp .rp-phero--foto .rp-crumbs span { color: var(--pc-grijs, #51514c); }
 
+/* De tekst onder de kop van de afsluitband staat op navy en moet dus wit zijn.
+   Hij erfde het grijs van de lopende tekst en week daardoor af van de kop
+   erboven. */
+.rp .rp-cta__p, .rp .rp-cta__note { color: #fff; }
+.rp .rp-cta__note a { color: #fff; }
+

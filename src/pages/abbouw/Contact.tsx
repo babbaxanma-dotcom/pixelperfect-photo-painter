@@ -18,14 +18,7 @@ const DIVISIE_OPTIES = [
 const HTML = () => `<div class="rp">
 ${rpNav('/contact')}
 
-<section class="rp-phero">
-  <div class="rp-wrap">
-    <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Contact</span></nav>
-    <span class="rp-eyebrow">${ic.mark} Contact</span>
-    <h1 class="rp-phero__t">Vertel ons<span class="rp-dim">wat u van plan bent</span></h1>
-    <p class="rp-phero__lede">Laat uw gegevens achter, dan bellen wij u terug om een plaatsbezoek in te plannen. Dat bezoek en de offerte erna zijn kosteloos en verplichten u tot niets.</p>
-  </div>
-</section>
+
 
 <section class="rp-section">
   <div class="rp-wrap">

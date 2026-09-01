@@ -27,7 +27,7 @@ import svcBad from '@/assets/home/svc-bad.jpg';
 import svcInterieur from '@/assets/home/svc-interieur.jpg';
 import svcConstruct from '@/assets/home/svc-construct.jpg';
 import svcEco from '@/assets/home/svc-eco.jpg';
-import homeHero from '@/assets/home/hero-3.jpg';
+import homeHero from '@/assets/home/hero-steenstrips.jpg';
 import homeOver from '@/assets/lp-diensten/realisaties/totaalrenovatie-p6-a.jpg';
 import heroFoto from '@/assets/lp-diensten/totaalrenovatie-hero.jpg';
 import overFoto from '@/assets/lp-diensten/totaalrenovatie-g1.jpg';
@@ -50,7 +50,7 @@ import eindFoto from '@/assets/lp-diensten/tegelwerken-hero.jpg';
 import cirkelFoto from '@/assets/lp-diensten/badkamer-hero.jpg';
 
 import bkHero from '@/assets/lp-diensten/tegelwerken-g1.jpg';
-import bkOver from '@/assets/lp-diensten/badkamer-g2.jpg';
+import bkOver from '@/assets/lp-diensten/realisaties/badkamer-nieuw.jpg';
 import bkDienstenBg from '@/assets/lp-diensten/tegelwerken-what.jpg';
 import bkKaartSanitair from '@/assets/lp-diensten/badkamer-g3.jpg';
 import bkContact from '@/assets/lp-diensten/badkamer-hero.jpg';
@@ -59,6 +59,7 @@ import bkAanbod1 from '@/assets/lp-diensten/badkamer-what.jpg';
 import bkAanbod2 from '@/assets/lp-diensten/badkamer-g1.jpg';
 import bkAanbod3 from '@/assets/lp-diensten/badkamer-steps.jpg';
 import bkAanbod4 from '@/assets/lp-diensten/tegelwerken-g2.jpg';
+import bkWerf from '@/assets/lp-diensten/badkamer-werf.jpg';
 import bkUitbraak from '@/assets/bad/ruwbouw.jpg';
 import bkLeidingen from '@/assets/construct/technieken.jpg';
 import bkTegelzetter from '@/assets/bad/tegelwerk.jpg';
@@ -94,6 +95,8 @@ export type PaginaInhoud = {
   faq?: { kop: string[]; vragen: { v: string; a: string }[] };
   /** Blok met de laatste artikels. Alleen de homepage heeft deze sectie. */
   blog?: { kop: string[]; knop: string; aantal: number };
+  /** Toont de lijst met de zes divisies in de over-sectie. Standaard aan. */
+  toonDivisies?: boolean;
   /** Toont de realisatieteller in de over-sectie. Standaard aan. */
   toonTeller?: boolean;
   /** Toont de sectie met uitgevoerd werk. Standaard aan. */
@@ -338,6 +341,7 @@ export const BADKAMER: PaginaInhoud = {
   /* De dienstkaarten staan hier niet: de schetser neemt die plek in. */
   toonDiensten: false,
   footer: 'AB Bouw Groep vernieuwt badkamers in heel Vlaanderen. Leidingen, tegels en sanitair door dezelfde ploeg.',
+  toonDivisies: false,
   toonMerken: false,
   /* Vijf in plaats van drie. De eerste drie stonden al op de dienstpagina,
      de laatste twee staan al op de homepage, allemaal bestaande beoordelingen
@@ -440,7 +444,7 @@ export const BADKAMER: PaginaInhoud = {
         href: '#contact', foto: bkAanbod3, alt: 'Badkamer met dubbele lavabo, bad en inloopdouche' },
       { badge: ['2-3', 'weken'], titel: 'Twee tot drie weken werk',
         tekst: 'Van uitbreken tot de laatste voeg.', knop: 'Gratis offerte',
-        href: '#contact', foto: bkAanbod4, alt: 'Tegelvloer in visgraatmotief, gelegd door AB Bouw Groep' },
+        href: '#contact', foto: bkWerf, alt: 'Badkamer halverwege de renovatie: wanden deels betegeld, leidingen aangesloten' },
     ],
   },
   contact: {
@@ -558,7 +562,7 @@ export const HOME: PaginaInhoud = {
     regels: ['De oplossing voor uw', 'bouwwerkzaamheden', 'en renovatie'],
     knop: 'Vraag een plaatsbezoek aan',
     foto: homeHero,
-    alt: 'Gerenoveerde woning van AB Bouw Groep',
+    alt: 'Woning met vernieuwde gevel in steenstrips en een nieuw pannendak, door AB Bouw Groep',
   },
 
   over: {

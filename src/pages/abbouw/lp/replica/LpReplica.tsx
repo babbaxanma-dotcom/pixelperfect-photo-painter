@@ -540,9 +540,11 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
             <p>{inhoud.over.tekst}</p>
             {/* De zes divisies stonden in één doorlopende zin. Als lijst is in
                 één oogopslag te zien wat er onder één dak zit. */}
+            {inhoud.toonDivisies !== false && (
             <ul className="pc-divisies">
               {DIVISIES.map((d) => <li key={d}>{d}</li>)}
             </ul>
+            )}
             {inhoud.over.slot && <p className="pc-over-slot">{inhoud.over.slot}</p>}
           </div>
         </div>
