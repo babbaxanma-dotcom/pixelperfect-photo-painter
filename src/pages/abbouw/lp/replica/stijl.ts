@@ -1084,4 +1084,44 @@ export const REPLICA_CSS = `
    Deze klasse geeft de balk de ruimte terug die de negatieve marge wegnam. */
 .pc-balk--los { margin-bottom: 176px; }
 @media (max-width: 900px) { .pc-balk--los { margin-bottom: 0; } }
+
+/* ── Dienstkaarten op de homepage ────────────────────────────────────────
+   In rust toont de kaart alleen de naam van de dienst. Witte letters los op
+   een foto zijn per foto anders leesbaar; daarom staat de naam in een eigen
+   navy vlak. Dat is dezelfde kleur als de afsluitband, dus er komt geen
+   nieuwe kleur bij, en wit op #0a1628 haalt ruim de contrasteis.
+
+   De omschrijving verschijnt pas bij hover. Op een aanraakscherm bestaat
+   hover niet, dus daar blijft de tekst gewoon staan — anders zou een deel
+   van de bezoekers hem nooit zien.
+
+   Alleen het gelijke raster: de landingspagina houdt haar eigen kaarten. */
+.pc-kaarten--gelijk .pc-kaart-inhoud {
+  inset: auto 16px 16px 16px;
+  background: var(--pc-dark);
+  border-radius: 10px;
+  padding: 13px 16px;
+  transition: padding .2s ease;
+}
+.pc-kaarten--gelijk .pc-kaart h3 { margin: 0; }
+.pc-kaarten--gelijk .pc-kaart-tekst { max-width: none; }
+/* De sluier over de foto mag lichter: de naam heeft zijn eigen vlak en hoeft
+   niet meer van de foto af te steken. */
+.pc-kaarten--gelijk .pc-kaart::after { background: linear-gradient(180deg, rgba(10,22,40,0) 45%, rgba(10,22,40,0.35) 100%); }
+
+@media (hover: hover) {
+  .pc-kaarten--gelijk .pc-kaart p {
+    margin-top: 0;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height .22s ease, opacity .18s ease, margin-top .22s ease;
+  }
+  .pc-kaarten--gelijk .pc-kaart:hover p,
+  .pc-kaarten--gelijk .pc-kaart:focus-within p {
+    max-height: 80px;
+    opacity: 1;
+    margin-top: 8px;
+  }
+}
 `;
