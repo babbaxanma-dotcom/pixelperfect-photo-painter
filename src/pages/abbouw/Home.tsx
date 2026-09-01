@@ -119,7 +119,7 @@ const HTML = (i: Record<string, string>) => {
     <div>
       <span class="rp-hero2__eyebrow">${ic.mark} AB Bouw Groep</span>
       <h1 class="rp-hero2__t">Bouwen en renoveren</h1>
-      <p class="rp-hero2__lede">AB Bouw Groep werkt met zes afdelingen: ruwbouw, dak, gevel, badkamer, interieur en energiewerken. Van één ingreep tot een woning die volledig op de schop gaat.</p>
+      <p class="rp-hero2__lede">Verbouwen vraagt meestal meer dan u vooraf denkt. Wij nemen het hele traject over — ruwbouw, dak, gevel, badkamer, interieur en energiewerken — met één vaste ploeg en een vaste prijs na het plaatsbezoek.</p>
       <div class="rp-hero2__punten">
         <span class="rp-hero2__punt">${vinkje} 4,9 op Google</span>
         <span class="rp-hero2__punt">${vinkje} 120+ woningen gerenoveerd</span>

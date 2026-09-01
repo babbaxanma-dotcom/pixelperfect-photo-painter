@@ -513,23 +513,22 @@ export const BADKAMER: PaginaInhoud = {
 export const HOME: PaginaInhoud = {
   ...TOTAALRENOVATIE,
   titel: 'AB Bouw Groep — bouw en renovatie in heel Vlaanderen',
-  omschrijving: 'Dakwerken, gevelrenovatie, badkamers, interieur, totaalrenovatie en energiewerken. Een aannemer met zes eigen afdelingen. Gratis plaatsbezoek in heel Vlaanderen.',
+  omschrijving: 'Algemene aannemer voor dakwerken, gevelrenovatie, badkamers, interieur, totaalrenovatie en energiewerken. Eén vaste ploeg, vaste prijs na het plaatsbezoek. Gratis plaatsbezoek in heel Vlaanderen.',
   pad: '/',
   bronPrefix: 'home',
   toonCalculator: false,
   footer: '',
 
   nav: [
-    { label: 'Home', href: '/' },
     { label: 'Over ons', href: '/over' },
     { label: 'Diensten', href: '/diensten', chevron: true },
+    { label: 'Werkwijze', href: '/werkwijze' },
     { label: 'Blog', href: '/blog' },
     { label: 'Contact', href: '/contact' },
   ],
 
   hero: {
-    regels: ['Bouwen en', 'renoveren'],
-    sub: 'De oplossing voor uw bouwwerkzaamheden en renovatie.',
+    regels: ['De oplossing voor uw', 'bouwwerkzaamheden', 'en renovatie'],
     knop: 'Vraag een plaatsbezoek aan',
     foto: homeHero,
     alt: 'Gerenoveerde woning van AB Bouw Groep',
@@ -537,8 +536,8 @@ export const HOME: PaginaInhoud = {
 
   over: {
     kop: ['Uw vaste', 'totaalaannemer'],
-    tekst: 'U kunt bij ons een enkele afdeling inschakelen of ze allemaal.',
-    slot: 'Loopt uw project over meerdere vakken, dan staat de volgorde in één planning: technieken vóór het pleisterwerk, chape vóór het tegelwerk. Dat scheelt wachttijd op de werf.',
+    tekst: 'Of uw plannen nu vastliggen of nog moeten groeien: wij begeleiden u van het eerste gesprek tot de oplevering. U schakelt één afdeling in of ze allemaal.',
+    slot: '',
     foto: homeOver,
     alt: 'Gerenoveerde woning van AB Bouw Groep',
   },

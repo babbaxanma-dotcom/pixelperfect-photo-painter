@@ -1665,11 +1665,11 @@
 .rp .rp-phero--foto .rp-phero__bg img { object-position: center 50%; }
 /* De sluier loopt van wit naar niets over de bovenste 220px, precies zoals in
    de gemeten hero. Zo staat de kop op wit en komt de foto er daaronder uit. */
-.rp .rp-phero--foto .rp-phero__veil {
-  inset: 0 0 auto 0;
-  height: 220px;
-  background: linear-gradient(180deg, #fff 0%, #fff 45%, rgba(255,255,255,0) 100%);
-}
+/* GEEN sluier op de binnenpaginas. Op de landingspagina ligt de kop
+   transparant OVER de hero en maakt die witte overgang de navigatie leesbaar.
+   Hier staat de kop op een eigen wit vlak, dus vaagde de sluier alleen de
+   bovenste helft van de foto weg: dat oogde als mist over het beeld. */
+.rp .rp-phero--foto .rp-phero__veil { display: none; }
 .rp .rp-phero--foto > .rp-wrap { position: relative; z-index: 3; }
 .rp .rp-phero--foto .rp-phero__t,
 .rp .rp-phero--foto .rp-phero__lede,

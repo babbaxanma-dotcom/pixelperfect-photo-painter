@@ -334,7 +334,11 @@ export const REPLICA_CSS = `
 
    De hoogte 335px is niet nieuw: dat is de grootste van de twee gestapelde
    kaarten uit de referentie. Zo blijft de kaartverhouding dezelfde. */
-.pc-kaarten--gelijk { grid-template-columns: repeat(3, 1fr); align-items: stretch; }
+/* height auto: .pc-kaarten staat vast op 585px, de hoogte van het mozaiek uit
+   de referentie. Twee rijen van 335 passen daar niet in, en omdat de sectie
+   overflow hidden heeft werden de onderste kaarten afgesneden door de gouden
+   band eronder. */
+.pc-kaarten--gelijk { grid-template-columns: repeat(3, 1fr); align-items: stretch; height: auto; }
 .pc-kaarten--gelijk .pc-kaart { width: 100%; }
 @media (max-width: 900px) { .pc-kaarten--gelijk { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 620px) { .pc-kaarten--gelijk { grid-template-columns: 1fr; } }
@@ -1061,7 +1065,32 @@ export const REPLICA_CSS = `
    telefoonblok rechts al de oproep tot actie, en zes navigatielinks plus twee
    knoppen passen niet in 974px: de laatste link liep over de knop heen. De
    knop staat nog in het mobiele menu en in de voet. */
-.pc-chrome .pc-kop-offerte { display: none; }
+.pc-chrome .pc-kop-offerte,
+.pc-kop--site .pc-kop-rij2 .pc-knop { display: none; }
+/* Dezelfde kop op de hele site. Op de landingspagina ligt hij doorzichtig over
+   de hero; dat is daar het ontwerp en die pagina blijft zo. Op de homepage
+   week hij daardoor af van elke andere pagina, dus krijgt hij hier hetzelfde
+   witte vlak. */
+.pc-kop--site { background: #fff; position: relative; z-index: 20; }
+
+/* De hero van de homepage draagt een langere kop dan de landingspagina,
+   waarvoor de verhouding 53/47 gemeten is. Op drie regels liep het woord
+   bouwwerkzaamheden de foto in en viel de laatste regel achter de
+   formulierbalk. De tekstkant loopt hier daarom tot 60% en de hero is hoger,
+   zodat de kop, de knop en de balk alle drie hun eigen ruimte houden. */
+.pc-hero--ruim { height: 760px; }
+/* De balk wordt normaal 260px over de hero getrokken. Bij deze hogere hero
+   kwam de knop daardoor achter de balk te staan; 110px laat hem er nog steeds
+   overheen vallen zonder de knop te raken. */
+.pc-hero--ruim + .pc-balk { margin-top: -110px; }
+.pc-hero--ruim .pc-hero-foto,
+.pc-hero--ruim .pc-hero-sluier { left: 60%; }
+.pc-hero--ruim .pc-hero-vlak { width: 60%; }
+@media (max-width: 900px) {
+  .pc-hero--ruim { height: auto; }
+  .pc-hero--ruim .pc-hero-foto, .pc-hero--ruim .pc-hero-sluier { left: 0; }
+  .pc-hero--ruim .pc-hero-vlak { width: 100%; }
+}
 .pc-chrome .pc-nav { gap: 13px; margin-right: auto; }
 .pc-chrome .pc-nav > a, .pc-chrome .pc-nav > .rp-dd > a { line-height: 1; align-self: center; }
 .pc-chrome .pc-nav .rp-dd { padding: 0; margin: 0; }

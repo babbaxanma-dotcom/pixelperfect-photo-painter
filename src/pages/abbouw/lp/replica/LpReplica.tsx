@@ -403,7 +403,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
 
       {/* ── Hero met de kop erover. De foto begint op y=0 en loopt onder de
            kop door; een wegvallende witte sluier maakt de kop leesbaar. ── */}
-      <section className="pc-hero">
+      <section className={`pc-hero${inhoud.nav ? ' pc-hero--ruim' : ''}`}>
         <div className="pc-hero-vlak" />
         <div className="pc-hero-foto">
           <img src={inhoud.hero.foto} alt={inhoud.hero.alt}
@@ -411,7 +411,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
         </div>
         <div className="pc-hero-sluier" />
 
-        <header className="pc-kop">
+        <header className={`pc-kop${inhoud.nav ? ' pc-kop--site' : ''}`}>
           <div className="pc-vat pc-kop-vat">
             <div className="pc-kop-logo">
               <a href="/"><img src={logo} alt="AB Bouw Groep" /></a>
@@ -543,7 +543,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
             <ul className="pc-divisies">
               {DIVISIES.map((d) => <li key={d}>{d}</li>)}
             </ul>
-            <p className="pc-over-slot">{inhoud.over.slot}</p>
+            {inhoud.over.slot && <p className="pc-over-slot">{inhoud.over.slot}</p>}
           </div>
         </div>
       </section>
