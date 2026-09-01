@@ -41,7 +41,7 @@ import uitbreidingVoor from '@/assets/lp-diensten/uitbreiding-voor.jpg';
 import uitbreidingNa from '@/assets/lp-diensten/uitbreiding-na.jpg';
 import aanbod1 from '@/assets/lp-diensten/totaalrenovatie-steps.jpg';
 import plaatsbezoekFoto from '@/assets/lp-diensten/plaatsbezoek.jpg';
-import werfVca from '@/assets/lp-diensten/werf-vca.jpg';
+import vcaLogo from '@/assets/lp-diensten/vca-logo.jpg';
 import aanbod2 from '@/assets/lp-diensten/terras-g1.jpg';
 import aanbod3 from '@/assets/lp-diensten/pleisterwerk-g2.jpg';
 import aanbod4 from '@/assets/lp-diensten/oprit-g2.jpg';
@@ -263,8 +263,8 @@ export const TOTAALRENOVATIE: PaginaInhoud = {
         tekst: 'Dezelfde mensen, elke dag.', knop: 'Gratis offerte',
         href: '#contact', foto: aanbod3, alt: 'Gepleisterde ruimte tijdens de afwerking' },
       { badge: ['VCA', 'attest'], titel: 'VCA-gecertificeerd en verzekerd',
-        tekst: 'Attest en polis op aanvraag.', knop: 'Gratis offerte',
-        href: '#contact', foto: werfVca, alt: 'Aanbouw in ruwbouw met de houten balken van het platte dak' },
+        tekst: '', knop: 'Gratis offerte',
+        href: '#contact', foto: vcaLogo, alt: 'VCA-gecertificeerd' },
     ],
   },
   contact: {
@@ -562,8 +562,8 @@ export const HOME: PaginaInhoud = {
   },
 
   over: {
-    kop: ['Uw vaste', 'totaalaannemer'],
-    tekst: 'Of uw plannen nu vastliggen of nog moeten groeien: wij begeleiden u van het eerste gesprek tot de oplevering. U schakelt één afdeling in of ze allemaal. Wij coördineren alle bouwactiviteiten die nodig zijn voor de realisatie van uw bouwwerk.',
+    kop: ['Waarom kiezen voor', 'AB Bouw Groep'],
+    tekst: 'U werkt met één partij voor het hele project. Alle vakken zitten bij ons in huis, wij plannen ze op elkaar en leveren op voor de prijs die in het contract staat.',
     slot: '',
     foto: homeOver,
     alt: 'Leefruimte met open keuken en glazen pui na een totaalrenovatie door AB Bouw Groep',

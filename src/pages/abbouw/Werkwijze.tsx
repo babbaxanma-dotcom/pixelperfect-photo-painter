@@ -30,11 +30,7 @@ const STAPPEN = [
 const HTML = () => `<div class="rp">
 ${rpNav('/werkwijze')}
 
-<section class="rp-phero rp-phero--foto">
-  <div class="rp-phero__bg" aria-hidden="true">
-    <img src="${hero}" alt="" width="1920" height="620" fetchpriority="high" decoding="async"/>
-    <span class="rp-phero__veil"></span>
-  </div>
+<section class="rp-phero">
   <div class="rp-wrap">
     <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Werkwijze</span></nav>
     <span class="rp-eyebrow">${ic.mark} Werkwijze</span>

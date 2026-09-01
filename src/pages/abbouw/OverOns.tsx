@@ -41,26 +41,20 @@ const AFSPRAKEN = [
 
 const ERKENNINGEN = [
   { t: 'VCA', d: 'Veiligheidscertificaat aannemers, jaarlijks gecontroleerd.' },
-  { t: 'BTW en KBO geregistreerd', d: 'Ondernemingsnummer opvraagbaar; staat op elke offerte en factuur.' },
-  { t: '6% btw bij renovatie', d: 'Voor woningen ouder dan tien jaar, en de Mijn VerbouwLening waar u aan de voorwaarden voldoet.' },
-  { t: 'Tienjarige aansprakelijkheid', d: 'Polis stabiliteit en waterdichtheid bij een federale verzekeraar.' },
+  { t: '6% btw bij renovatie', d: 'Voor woningen ouder dan tien jaar.' },
+  { t: 'Tienjarige aansprakelijkheid', d: '' },
   { t: 'EPB-verslaggever in huis', d: 'Voor renovaties en nieuwbouw waar een verslag verplicht is.' },
-  { t: 'Eigen ploegen', d: 'Mensen op de loonlijst, met correcte verloning; geen schijnconstructies.' },
+  { t: 'Eigen ploegen', d: '' },
 ];
 
 const HTML = () => `<div class="rp">
 ${rpNav('/over')}
 
-<section class="rp-phero rp-phero--foto">
-  <div class="rp-phero__bg" aria-hidden="true">
-    <img src="${hero}" alt="" width="1920" height="620" fetchpriority="high" decoding="async"/>
-    <span class="rp-phero__veil"></span>
-  </div>
+<section class="rp-phero">
   <div class="rp-wrap">
     <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Over ons</span></nav>
     <span class="rp-eyebrow">${ic.mark} Over AB Bouw Groep</span>
     <h1 class="rp-phero__t">Het bedrijf achter<span class="rp-dim">uw verbouwing</span></h1>
-    <p class="rp-phero__lede">AB Bouw Groep is een Vlaams bouw- en renovatiebedrijf met eigen afdelingen voor ruwbouw, dak, gevel, badkamer, interieur en energiewerken.</p>
   </div>
 </section>
 
