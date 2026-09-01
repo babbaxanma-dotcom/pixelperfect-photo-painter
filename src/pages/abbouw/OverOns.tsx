@@ -78,10 +78,8 @@ ${rpNav('/over')}
 
     <div class="rp-uitleg">
       <p>Een algemeen aannemer neemt het geheel op zich: hij voert alle bouwactiviteiten uit, stemt ze
-      op elkaar af en levert het bouwwerk afgewerkt op, voor de prijs die in het contract staat en
-      binnen de afgesproken termijn.</p>
-      <p>De verantwoordelijkheid voor alle werken samen ligt daarmee bij &eacute;&eacute;n partij. U volgt dus
-      &eacute;&eacute;n programma, &eacute;&eacute;n prijs en &eacute;&eacute;n termijn.</p>
+      op elkaar af en levert het bouwwerk afgewerkt op voor de prijs die in het contract staat.</p>
+      <p>De verantwoordelijkheid voor alle werken samen ligt bij ons.</p>
     </div>
 
     <div class="rp-why__tiles rp-tiles-3">
