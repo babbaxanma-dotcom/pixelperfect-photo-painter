@@ -1766,3 +1766,28 @@
 .rp .rp-cta__p, .rp .rp-cta__note { color: #fff; }
 .rp .rp-cta__note a { color: #fff; }
 
+/* Brede beeldband tussen twee tekstsecties. Zelfde hoekafronding als het
+   fotoraster elders: 14px. */
+/* Een figure erft elders een navy vlak en 16px padding; dat gaf een donkere
+   rand boven en onder de foto. */
+.rp .rp-band { margin: 0; padding: 0; background: transparent; border-radius: 14px;
+  overflow: hidden; line-height: 0; }
+/* object-position laag: bij deze opname zit het interessante deel onderaan.
+   Op het midden zag je vooral plafond. */
+.rp .rp-band img { width: 100%; height: 420px; object-fit: cover; object-position: center 78%; display: block; }
+@media (max-width: 700px) { .rp .rp-band img { height: 240px; } }
+
+/* Vijf erkenningen in een raster van drie laten een gat achter op de tweede
+   rij. Als rij van vijf smalle kaarten valt dat weg en leest de reeks als
+   een opsomming in plaats van als losse blokken. */
+.rp .rp-tiles-3:has(> :nth-child(5)) { grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.rp .rp-tiles-3:has(> :nth-child(5)) .rp-tile { padding: 20px 18px; }
+.rp .rp-tiles-3:has(> :nth-child(5)) .rp-tile__t { font-size: 15px; line-height: 21px; }
+.rp .rp-tiles-3:has(> :nth-child(5)) .rp-tile__d { font-size: 13px; line-height: 19px; }
+@media (max-width: 1000px) {
+  .rp .rp-tiles-3:has(> :nth-child(5)) { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .rp .rp-tiles-3:has(> :nth-child(5)) { grid-template-columns: 1fr; }
+}
+

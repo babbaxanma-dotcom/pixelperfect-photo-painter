@@ -42,9 +42,9 @@ const AFSPRAKEN = [
 const ERKENNINGEN = [
   { t: 'VCA', d: 'Veiligheidscertificaat aannemers, jaarlijks gecontroleerd.' },
   { t: '6% btw bij renovatie', d: 'Voor woningen ouder dan tien jaar.' },
-  { t: 'Tienjarige aansprakelijkheid', d: '' },
+  { t: 'Tienjarige aansprakelijkheid', d: 'Op stabiliteit en waterdichtheid.' },
   { t: 'EPB-verslaggever in huis', d: 'Voor renovaties en nieuwbouw waar een verslag verplicht is.' },
-  { t: 'Eigen ploegen', d: '' },
+  { t: 'Eigen ploegen', d: 'Dezelfde mensen op uw werf, elke dag.' },
 ];
 
 const HTML = () => `<div class="rp">
@@ -67,6 +67,14 @@ ${rpNav('/over')}
 
 
 
+<section class="rp-section rp-section--soft" style="padding-top:56px;padding-bottom:0">
+  <div class="rp-wrap">
+    <figure class="rp-band">
+      <img src="${why}" alt="Afgewerkte leefruimte met verlaagd plafond en lichtlijnen, door AB Bouw Groep"
+        width="1200" height="520" loading="lazy" decoding="async"/>
+    </figure>
+  </div>
+</section>
 <section class="rp-section rp-section--soft">
   <div class="rp-wrap">
     <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
