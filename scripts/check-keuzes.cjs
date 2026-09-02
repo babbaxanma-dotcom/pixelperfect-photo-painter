@@ -34,17 +34,21 @@ const DOELEN = [
     /*
      * Hoeveel keuzegroepen de bezoeker een BEELD moeten laten zien.
      *
-     * Zeven vragen, waarvan er vijf over uiterlijk gaan: de ruimte, het toilet,
-     * de tegel, het meubel en de kraan. Die vijf tonen beeld — de eerste drie
-     * door het voorbeeldbeeld te veranderen, de laatste twee met stalen. De
-     * andere twee, indeling en verwarming, zijn geen materiaal en kunnen dat
-     * niet; die landen in het keuzelijstje.
+     * Drie: de tegel, het meubel en de kraan. Dat zijn de vragen die over
+     * materiaal gaan, en alle drie tonen ze stalen bij de keuze zelf. De ruimte
+     * en het toilet bepalen de indeling, niet het uiterlijk, en verwarming valt
+     * niet te fotograferen; die landen in het keuzelijstje.
      *
-     * Dit getal gaat alleen omhoog. Zakt het, dan is een keuze van beeld naar
-     * tekst gedegradeerd, en dat is precies de fout die deze check bestaat om
-     * te vangen.
+     * Stond eerder op vijf, toen een gegenereerd voorbeeldbeeld meeveranderde
+     * met de ruimte, het toilet en de tegel. Dat beeld is eruit: het volgde drie
+     * van de zeven vragen en kostte zesendertig beelden om in de lucht te
+     * houden. De tegelkeuze kreeg er stalen voor terug.
+     *
+     * Dit getal is de bodem. Omhoog mag altijd; omlaag alleen met een reden die
+     * hier komt te staan, want anders is een keuze stilletjes van beeld naar
+     * tekst gezakt en is dat precies de fout die deze check moet vangen.
      */
-    metBeeld: 5,
+    metBeeld: 3,
   },
 ];
 

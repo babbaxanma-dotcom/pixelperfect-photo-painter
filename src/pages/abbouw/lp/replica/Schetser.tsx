@@ -64,10 +64,16 @@ type Ruimte = { sleutel: string; naam: string; onder: string };
 type Optie = { waarde: string; label: string };
 type As = { sleutel: string; vraag: string; opties: Optie[] };
 
+/*
+ * De maten volgen de gangbare indeling voor badkamers, niet een schatting.
+ * Klein is wat in een appartement of een ouder huis zit: douche, wastafel,
+ * soms een compact bad, en het toilet meestal apart. Middelgroot is de
+ * eengezinswoning: douche, ligbad, meubel en eventueel het toilet erbij.
+ */
 const RUIMTES: Ruimte[] = [
-  { sleutel: 'klein', naam: 'Klein', onder: 'ongeveer 4 m²' },
-  { sleutel: 'middel', naam: 'Gemiddeld', onder: 'ongeveer 6 m²' },
-  { sleutel: 'ruim', naam: 'Ruim', onder: '9 m² of meer' },
+  { sleutel: 'klein', naam: 'Klein', onder: 'tot 6 m²' },
+  { sleutel: 'middel', naam: 'Middelgroot', onder: '6 tot 10 m²' },
+  { sleutel: 'ruim', naam: 'Groot', onder: 'meer dan 10 m²' },
 ];
 
 /**
@@ -133,6 +139,12 @@ const BEELDEN: Record<string, string> = {
   'ruim|geenwc|Microcement': rGwcMicro,
 };
 
+import sTegelBeton from '@/assets/schetser/s-tegel-beton.jpg';
+import sTegelAntraciet from '@/assets/schetser/s-tegel-antraciet.jpg';
+import sTegelMarmer from '@/assets/schetser/s-tegel-marmer.jpg';
+import sTegelZandsteen from '@/assets/schetser/s-tegel-zandsteen.jpg';
+import sTegelHout from '@/assets/schetser/s-tegel-hout.jpg';
+import sTegelMicro from '@/assets/schetser/s-tegel-micro.jpg';
 import sMeubelEiken from '@/assets/schetser/s-meubel-eiken.jpg';
 import sMeubelWalnoot from '@/assets/schetser/s-meubel-walnoot.jpg';
 import sMeubelWit from '@/assets/schetser/s-meubel-wit.jpg';
@@ -154,6 +166,14 @@ const NIET_ERTUSSEN = 'anders';
  * met wat ernaast staat.
  */
 const STALEN: Record<string, Record<string, string>> = {
+  Tegels: {
+    'Betonlook grijs': sTegelBeton,
+    'Antraciet': sTegelAntraciet,
+    'Marmerlook wit': sTegelMarmer,
+    'Beige zandsteen': sTegelZandsteen,
+    'Houtlook': sTegelHout,
+    'Microcement': sTegelMicro,
+  },
   Meubel: {
     'Eiken': sMeubelEiken,
     'Walnoot': sMeubelWalnoot,
@@ -347,8 +367,7 @@ export default function Schetser() {
       <div className="pc-vat pc-midden">
         <h2 className="pc-h2--midden">Ontwerp uw<br />eigen badkamer</h2>
         <p className="pc-schets-sub">
-          <strong>Gratis ontwerp, in enkele ogenblikken.</strong> Geef aan hoe groot uw badkamer
-          is en wat u in gedachten hebt.
+          <strong>Gratis ontwerp van uw eigen badkamer.</strong> Geef aan wat u in gedachten hebt.
         </p>
       </div>
 
@@ -442,38 +461,30 @@ export default function Schetser() {
         </div>
 
         <div>
-          <figure className={`pc-schets-beeld${beeld ? '' : ' is-leeg'}`}>
-            {beeld
-              ? <img src={foto ?? beeld} alt={foto ? 'Uw badkamer' : 'Voorbeeldruimte'} />
-              : <p>Kies eerst de grootte en of het toilet erin zit.</p>}
-            {beeld && (
-              <figcaption>
-                {foto
-                  ? 'Uw foto'
-                  : getoond === gevraagd
-                    ? `${ruimteNaam}, ${getoond.toLowerCase()}`
-                    : `${ruimteNaam} in ${getoond.toLowerCase()}. Uw keuze noteren wij bij de aanvraag.`}
-              </figcaption>
-            )}
-          </figure>
+          {/* Alleen de foto van de bezoeker staat hier groot. Het gegenereerde
+              voorbeeldbeeld is eruit: het volgde drie van de zeven vragen, en
+              de stalen bij elke keuze tonen het materiaal directer. */}
+          {foto && (
+            <figure className="pc-schets-beeld">
+              <img src={foto} alt="Uw badkamer" />
+              <figcaption>Uw foto</figcaption>
+            </figure>
+          )}
 
-          {/* Wat er al vaststaat. De drie assen die het beeld sturen zijn
-              gemarkeerd; de rest gaat mee in de aanvraag. Zo ziet de bezoeker
-              dat elke klik aankomt, ook als het beeld niet verandert. */}
+          {/* Wat er al vaststaat, in de volgorde waarin het gekozen werd. Zo
+              staat de hele keuze op één plek bij elkaar voordat hij verstuurt. */}
           {gemaakteKeuzes.length > 0 && (
             <div className="pc-schets-keus">
               <h4>Uw keuzes</h4>
               <ul>
                 {gemaakteKeuzes.map((k) => (
-                  <li key={k.label} className={k.inBeeld ? 'is-beeld' : undefined}>
+                  <li key={k.label}>
                     <span>{k.label}</span>
                     <strong>{k.waarde}</strong>
                   </li>
                 ))}
               </ul>
-              {gemaakteKeuzes.some((k) => !k.inBeeld) && (
-                <p>De onderstreepte keuzes ziet u in de voorbeeldruimte hierboven. De rest ziet u bij de keuze zelf.</p>
-              )}
+
             </div>
           )}
 

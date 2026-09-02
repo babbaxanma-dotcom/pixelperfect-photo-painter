@@ -271,9 +271,32 @@ export function wireVasteKop(): () => void {
     if (!wikkel) return;
     const was = kop.classList.contains('is-vast');
     if (was) kop.classList.remove('is-vast');
+
+    /* Een doorzichtige kop ligt over de herofoto en hoort geen ruimte te
+       krijgen; daar zakt de foto anders weg. */
     const bg = getComputedStyle(kop).backgroundColor;
     const dekkend = bg !== 'transparent' && !/rgba\(.+,\s*0\)$/.test(bg);
-    wikkel.style.paddingTop = dekkend ? kop.offsetHeight + 'px' : '';
+    if (!dekkend) {
+      wikkel.style.paddingTop = '';
+      if (was) kop.classList.add('is-vast');
+      return;
+    }
+
+    let ruimte = kop.offsetHeight;
+    wikkel.style.paddingTop = ruimte + 'px';
+
+    /* Nameten en bijtellen. De hero van de homepage heeft een vaste hoogte en
+       een vat dat zijn inhoud zelf uitlijnt: de titel komt daar boven zijn
+       eigen container uit en de kophoogte alleen is dan te weinig. */
+    const titel = wikkel.querySelector<HTMLElement>('.pc-h1, .rp-phero__t, h1');
+    if (titel) {
+      const tekort = () => kop.getBoundingClientRect().bottom - titel.getBoundingClientRect().top;
+      for (let ronde = 0; ronde < 4 && tekort() > 0; ronde++) {
+        ruimte += Math.ceil(tekort());
+        wikkel.style.paddingTop = ruimte + 'px';
+      }
+    }
+
     if (was) kop.classList.add('is-vast');
   };
 
