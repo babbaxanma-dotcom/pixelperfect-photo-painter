@@ -224,6 +224,30 @@ export default function Schetser() {
   const tegelkeuze = keuzes['Tegels'];
   const toiletdeel = wc ? 'wc' : 'geenwc';
   const { gevraagd, getoond, beeld: gekozenBeeld } = kiesBeeld(grootte || 'middel', toiletdeel, tegelkeuze);
+
+  /* Het onderschrift benoemt de ruimte die te zien is. De grootte is de eerste
+     vraag; zonder die bevestiging leest het beeld als een willekeurige foto. */
+  const gekozenRuimteNaam = RUIMTES.find((r) => r.sleutel === grootte);
+  const ruimteNaam = gekozenRuimteNaam ? `${gekozenRuimteNaam.naam}e badkamer (${gekozenRuimteNaam.onder})` : 'Voorbeeldruimte';
+
+  /**
+   * De keuzes die de bezoeker al maakte, in de volgorde waarin hij ze maakte.
+   *
+   * Het beeld reageert op drie assen; de andere vier gaan mee in de aanvraag.
+   * Zonder dit lijstje klikt de bezoeker vier keuzes zonder dat er iets
+   * verandert, en lijkt het alsof ze niet meetellen.
+   */
+  const gemaakteKeuzes = useMemo(() => {
+    const uit: { label: string; waarde: string; inBeeld: boolean }[] = [];
+    if (gekozenRuimteNaam) uit.push({ label: 'Grootte', waarde: gekozenRuimteNaam.naam, inBeeld: true });
+    if (wc !== null) uit.push({ label: 'Toilet', waarde: wc ? 'in de badkamer' : 'apart', inBeeld: true });
+    for (const as of ASSEN) {
+      const v = keuzes[as.sleutel];
+      if (!v) continue;
+      uit.push({ label: as.vraag, waarde: v === NIET_ERTUSSEN ? 'iets anders' : v, inBeeld: as.sleutel === 'Tegels' });
+    }
+    return uit;
+  }, [gekozenRuimteNaam, wc, keuzes]);
   const beeld = gekozenRuimte ? gekozenBeeld : null;
   const ietsAnders = useMemo(
     () => Object.values(keuzes).some((v) => v === NIET_ERTUSSEN), [keuzes]);
@@ -363,11 +387,31 @@ export default function Schetser() {
                 {foto
                   ? 'Uw foto'
                   : getoond === gevraagd
-                    ? `Voorbeeldruimte, ${getoond.toLowerCase()}`
-                    : `Voorbeeldruimte in ${getoond.toLowerCase()}. Uw keuze noteren wij bij de aanvraag.`}
+                    ? `${ruimteNaam}, ${getoond.toLowerCase()}`
+                    : `${ruimteNaam} in ${getoond.toLowerCase()}. Uw keuze noteren wij bij de aanvraag.`}
               </figcaption>
             )}
           </figure>
+
+          {/* Wat er al vaststaat. De drie assen die het beeld sturen zijn
+              gemarkeerd; de rest gaat mee in de aanvraag. Zo ziet de bezoeker
+              dat elke klik aankomt, ook als het beeld niet verandert. */}
+          {gemaakteKeuzes.length > 0 && (
+            <div className="pc-schets-keus">
+              <h4>Uw keuzes</h4>
+              <ul>
+                {gemaakteKeuzes.map((k) => (
+                  <li key={k.label} className={k.inBeeld ? 'is-beeld' : undefined}>
+                    <span>{k.label}</span>
+                    <strong>{k.waarde}</strong>
+                  </li>
+                ))}
+              </ul>
+              {gemaakteKeuzes.some((k) => !k.inBeeld) && (
+                <p>De onderstreepte keuzes ziet u in het beeld. De andere nemen wij mee in uw ontwerp.</p>
+              )}
+            </div>
+          )}
 
           {gekozenRuimte && (
             <>

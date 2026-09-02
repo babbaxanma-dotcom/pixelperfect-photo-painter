@@ -458,6 +458,23 @@ export const REPLICA_CSS = `
 
 .pc-boog { position: absolute; color: var(--pc-accent); pointer-events: none; }
 
+/* Wat de bezoeker al koos. Het beeld reageert op drie van de zeven vragen; de
+   overige vier zouden zonder dit lijstje in het niets verdwijnen. */
+.pc-schets-keus { margin-top: 18px; }
+.pc-schets-keus h4 { font-size: 13px; font-weight: 600; color: var(--pc-ink);
+  text-transform: none; margin-bottom: 8px; }
+.pc-schets-keus ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.pc-schets-keus li { display: flex; justify-content: space-between; gap: 16px;
+  font-size: 14px; line-height: 20px; padding-bottom: 6px; border-bottom: 1px solid #edece9; }
+.pc-schets-keus li span { color: #565656; }
+.pc-schets-keus li strong { font-weight: 600; color: var(--pc-ink); text-align: right; }
+/* De drie assen die het beeld sturen krijgen een onderstreping in het accent,
+   zodat het verschil met de overige keuzes af te lezen is zonder uitleg. */
+.pc-schets-keus li.is-beeld strong { text-decoration: underline;
+  text-decoration-color: var(--pc-accent); text-decoration-thickness: 2px;
+  text-underline-offset: 3px; }
+.pc-schets-keus p { margin-top: 10px; font-size: 12.5px; line-height: 17px; color: #6b6b6b; }
+
 /* ─────────────────────────────────────────────────────────────
    Ons werk: kop, witte tabbalk met vier pillen, en een fotoraster
    van drie kaarten boven en een grote plus vier kleine eronder.
