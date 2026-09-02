@@ -225,6 +225,10 @@ export const TOTAALRENOVATIE: PaginaInhoud = {
      * werffoto's — elke gegenereerde foto die hier stond werd herkend als AI.
      */
     fotos: [
+      { naam: 'badkamer-nieuw', alt: 'Badkamer met dubbele wastafel, groene metrotegels en vrijstaand bad, door AB Bouw Groep' },
+      /* Staand beeld in een liggend kader: op het midden valt de tv-wand mooi
+         uit, een lagere uitsnede zou alleen vloer laten zien. */
+      { naam: 'interieur-tvwand', alt: 'Tv-wand in marmerlook met houten lamellen en zwevend meubel, door AB Bouw Groep' },
       { naam: 'badkamer-p4-a', alt: 'Badkamer met marmerlook-tegels en zwevend meubel, door AB Bouw Groep' },
       { naam: 'totaalrenovatie-p5-a', alt: 'Open keuken met eethoek na totaalrenovatie, door AB Bouw Groep' },
       { naam: 'badkamer-p3-b', alt: 'Badkamer in antraciet met zwevend wastafelmeubel, door AB Bouw Groep' },

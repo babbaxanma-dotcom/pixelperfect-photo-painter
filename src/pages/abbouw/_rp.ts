@@ -39,6 +39,41 @@ export const ic = {
   info: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>',
 };
 
+/**
+ * De stapiconen van de werkwijze.
+ *
+ * De eerste vijf staan als React-component in lp/replica/Iconen.tsx en dragen
+ * daar de stappen op de homepage. De binnenpaginas zijn HTML-strings, dus een
+ * component past er niet in en staan ze hier een tweede keer. De paden zijn
+ * letterlijk overgenomen; wijzigt er een, wijzig dan beide. Drie iconen zijn
+ * nieuw: de werkwijzepagina telt acht stappen, de homepage vijf.
+ *
+ * Allemaal 28x27 op viewBox 0 0 28 27, lijndikte 1,6, ronde uiteinden.
+ */
+const tekening = 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
+const svg = (paden: string) =>
+  `<svg class="rp-step__ic" width="28" height="27" viewBox="0 0 28 27" ${tekening} aria-hidden="true">${paden}</svg>`;
+
+export const icStap = {
+  /* Aanvraag: envelop met belgolven. */
+  bel: svg('<rect x="1.5" y="6" width="17" height="12.5" rx="2"/><path d="m2.4 7.2 7.6 5.4 7.6-5.4"/><path d="M18.5 19.4c1.3 2.3 3.3 4.1 5.6 5.2M20.6 15.8c2 .9 3.7 2.4 4.8 4.3"/>'),
+  /* Plaatsbezoek: een woning met een loep. */
+  bezoek: svg('<path d="M2 11.6 12.4 3l10.4 8.6"/><path d="M4.7 13.6V23a1.4 1.4 0 0 0 1.4 1.4h5.2"/><circle cx="19.4" cy="18.4" r="5"/><path d="m23.2 22.2 3.3 3.2"/>'),
+  /* Opmeten en offerte: rolmeter op een plan. */
+  meten: svg('<rect x="1.6" y="2.4" width="18" height="22" rx="2"/><path d="M5.4 7.6h10M5.4 12h10M5.4 16.4h6"/><path d="M20.8 13.4h5.6v9.4a1.6 1.6 0 0 1-1.6 1.6h-2.4a1.6 1.6 0 0 1-1.6-1.6Z"/><path d="M22.2 16.2v2M24.8 16.2v2"/>'),
+  /* De werf start: truweel. */
+  werf: svg('<path d="M15.6 2.4 25 11.8l-8.2 8.2a3 3 0 0 1-4.2 0l-5-5a3 3 0 0 1 0-4.2Z"/><path d="m11.4 14.6-8 8"/><path d="M2.4 21.2 5 23.8"/>'),
+  /* De laatste ronde: lijstje met vinkjes. */
+  lijst: svg('<rect x="3.4" y="3.6" width="19" height="21" rx="2"/><path d="M9.4 1.6h7.2v4H9.4Z"/><path d="m7.6 12 2 2 3.6-3.8M7.6 18.6l2 2 3.6-3.8"/><path d="M15.8 12.6h3.2M15.8 19.2h3.2"/>'),
+
+  /* Nieuw. Voorbereiding: een kalender met de startdatum aangevinkt. */
+  planning: svg('<rect x="2.4" y="4.6" width="23.2" height="20" rx="2.2"/><path d="M19.2 2.4v4.4M8.8 2.4v4.4M2.4 10.8h23.2"/><path d="m10 17.6 2.6 2.6 5.4-5.6"/>'),
+  /* Nieuw. Oplevering: de sleutel die overgaat. */
+  sleutel: svg('<circle cx="9" cy="9" r="5.6"/><path d="m13 13 10.6 10.6"/><path d="m18.4 18.4-2.6 2.6M21 21l-2.6 2.6"/>'),
+  /* Nieuw. Nazorg: schild met vinkje, voor de tienjarige garantie. */
+  garantie: svg('<path d="M14 2.2 4.6 6v7.4c0 5.6 3.8 9.6 9.4 11.4 5.6-1.8 9.4-5.8 9.4-11.4V6Z"/><path d="m9.8 13.4 3 3 5.4-5.6"/>'),
+};
+
 /** Zichtbare plek voor een foto die nog moet komen. `hoogte` in px of een
  *  CSS-waarde, `maat` = de gewenste verhouding/resolutie. */
 export const fotoPlaats = (opts: { titel: string; toelichting: string; maat: string; hoogte?: string }) => `

@@ -76,10 +76,9 @@ const ARTIKELEN: Artikel[] = [
     ],
   },
   {
-    n: 'Artikel 10', t: 'Toepasselijk recht en bevoegde rechtbank',
+    n: 'Artikel 10', t: 'Toepasselijk recht',
     p: [
       'Op onze overeenkomsten is het Belgisch recht van toepassing.',
-      'Bij een geschil zijn uitsluitend de rechtbanken van het arrondissement Mechelen bevoegd.',
     ],
   },
 ];

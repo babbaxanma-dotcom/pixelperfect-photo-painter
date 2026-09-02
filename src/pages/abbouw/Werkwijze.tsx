@@ -6,24 +6,24 @@ import hero from '@/assets/home/hero-diensten.jpg';
 // met mensen erop, en mensen overtuigend genereren lukt niet. De stapkaarten
 // zijn nu tekst; het nummer draagt de kaart.
 import { CONTACT } from '@/data/contact';
-import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
+import { ic, icStap, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
 const STAPPEN = [
-  { n: '01', t: 'Eerste contact', tag: 'Dag 1 tot 2',
+  { n: '01', ic: icStap.bel, t: 'Eerste contact', tag: 'Dag 1 tot 2',
     d: 'U belt of vult het formulier in. We bellen terug, bespreken samen wat u van plan bent en spreken een moment af voor het plaatsbezoek.' },
-  { n: '02', t: 'Plaatsbezoek', tag: 'Week 1',
+  { n: '02', ic: icStap.bezoek, t: 'Plaatsbezoek', tag: 'Week 1',
     d: 'We komen langs, meten op en fotograferen de bestaande toestand. U hoort ter plaatse al welke aanpak realistisch is.' },
-  { n: '03', t: 'Offerte', tag: 'Week 2 tot 3',
+  { n: '03', ic: icStap.meten, t: 'Offerte', tag: 'Week 2 tot 3',
     d: 'U krijgt een offerte waarin elke post apart staat: afbraak, materiaal, uitvoering en afvoer. We nemen ze samen door.' },
-  { n: '04', t: 'Voorbereiding', tag: 'Week 3 en verder',
+  { n: '04', ic: icStap.planning, t: 'Voorbereiding', tag: 'Week 3 en verder',
     d: 'Materiaal bestellen, ploegen inplannen en waar nodig vergunning en EPB regelen. U krijgt de startdatum op papier.' },
-  { n: '05', t: 'Uitvoering', tag: 'Duur hangt af van het werk',
+  { n: '05', ic: icStap.werf, t: 'Uitvoering', tag: 'Duur hangt af van het werk',
     d: 'De werfleider volgt de planning op en stuurt wekelijks een werfrapport. De werf gaat elke vrijdag opgeruimd het weekend in.' },
-  { n: '06', t: 'Voor-oplevering', tag: 'Laatste week',
+  { n: '06', ic: icStap.lijst, t: 'Voor-oplevering', tag: 'Laatste week',
     d: 'We lopen samen rond en zetten de laatste punten op een lijst. Die werken we af voor de officiële oplevering.' },
-  { n: '07', t: 'Oplevering', tag: 'Laatste dag',
+  { n: '07', ic: icStap.sleutel, t: 'Oplevering', tag: 'Laatste dag',
     d: 'Samen een rondgang, en het dossier erbij: garanties, attesten en de gegevens van de gebruikte materialen.' },
-  { n: '08', t: 'Nazorg', tag: '10 jaar',
+  { n: '08', ic: icStap.garantie, t: 'Nazorg', tag: '10 jaar',
     d: 'Op structurele renovaties geldt tien jaar garantie. Merkt u iets op, dan komen we kijken.' },
 ];
 
@@ -50,7 +50,9 @@ ${rpNav('/werkwijze')}
       ${STAPPEN.map((s) => `
       <article class="rp-step rp-step--tekst">
         <div class="rp-step__body">
-          <div class="rp-step__n">${s.n}</div>
+          <div class="rp-step__badge">${s.ic}
+            <span class="rp-step__pil">Stap ${s.n}</span>
+          </div>
           <h2 class="rp-step__t">${s.t}</h2>
           <p class="rp-step__d">${s.d}</p>
           <p class="rp-step__tijd">${s.tag}</p>

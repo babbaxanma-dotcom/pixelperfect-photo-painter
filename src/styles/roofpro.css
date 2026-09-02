@@ -927,6 +927,28 @@
 .rp-step--tekst .rp-step__body { padding: 28px 24px 30px; }
 .rp-step--tekst .rp-step__n { width: 42px; height: 42px; font-size: 15px; margin-bottom: 16px; }
 
+/* De stapbadge, letterlijk de vorm van .pc-stap-badge op de homepage: een
+   cirkel van 62px op cream met een dunne rand, en het stapnummer als gouden
+   pil die er half overheen valt. Op de homepage staat hij gecentreerd, hier
+   in een kaart die links uitlijnt. */
+.rp-step__badge {
+  position: relative; width: 62px; height: 62px; border-radius: 50%;
+  background: var(--rp-bg-soft); border: 1px solid #edece9;
+  display: grid; place-items: center; color: var(--rp-ink);
+  margin-bottom: 16px;
+}
+.rp-step__ic { position: relative; }
+.rp-step__pil {
+  position: absolute; top: 1px; left: 50%; transform: translateX(-50%);
+  height: 13px; padding: 0 6px; border-radius: 6.5px;
+  background: var(--rp-accent); color: var(--rp-accent-ink);
+  font-size: 8px; font-weight: 600; line-height: 13px; white-space: nowrap;
+  box-shadow: 0 0 0 2px #fff;
+}
+/* De kaart staat op cream in de soft-sectie; dan moet de badge er juist
+   wit uit springen in plaats van erin te verdwijnen. */
+.rp-section--soft .rp-step__badge { background: #fff; }
+
 /* ══ REVIEWS ═══════════════════════════════════════════════════════════ */
 .rp-rev {
   background: #fff;

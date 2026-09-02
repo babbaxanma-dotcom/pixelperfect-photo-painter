@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import '@/styles/roofpro.css';
 import { CONTACT } from '@/data/contact';
-import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
+import { ic, rpNav, rpFooter, wireMobielMenu, icStap } from './_rp';
 
 export type DivisionConfig = {
   slug: string;
@@ -99,10 +99,12 @@ ${rpNav('/diensten')}
       <a class="rp-btn rp-btn--primary" href="/werkwijze">Volledige werkwijze</a>
     </div>
     <div class="rp-steps">
-      ${c.process.map((s) => `
+      ${c.process.map((s, i) => `
       <article class="rp-step">
         <div class="rp-step__body">
-          <div class="rp-step__n">${s.n}</div>
+          <div class="rp-step__badge">${[icStap.bezoek, icStap.meten, icStap.werf, icStap.sleutel][i] || icStap.lijst}
+            <span class="rp-step__pil">Stap ${s.n}</span>
+          </div>
           <h3 class="rp-step__t">${s.t}</h3>
           <p class="rp-step__d">${s.d}</p>
           <p class="rp-step__tijd">${s.time}</p>
