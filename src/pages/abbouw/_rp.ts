@@ -54,6 +54,32 @@ const tekening = 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-li
 const svg = (paden: string) =>
   `<svg class="rp-step__ic" width="28" height="27" viewBox="0 0 28 27" ${tekening} aria-hidden="true">${paden}</svg>`;
 
+/**
+ * De bogen tussen twee stappen op het werkwijzepad.
+ *
+ * Zelfde hand als IcBoog op de homepage: lijndikte 1,6, ronde uiteinden,
+ * een open pijlpunt van twee streken. Die boog loopt horizontaal tussen
+ * drie stappen naast elkaar; hier slingert het pad naar beneden, dus zijn
+ * ze schuin. Twee richtingen, elkaars spiegelbeeld.
+ */
+const boog = (d: string, punt: string) =>
+  `<svg class="rp-pad__ic" width="132" height="104" viewBox="0 0 132 104" fill="none" stroke="currentColor"
+    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="${d}"/><path d="${punt}"/></svg>`;
+
+export const icPad = {
+  /* Van de kaart rechtsboven naar de kaart linksonder. */
+  naarLinks: boog('M118 8C114 46 80 76 16 92', 'm30 86-14 6 12 7'),
+  /* De aanloop: van onder de heroknop naar de eerste kaart rechtsboven.
+     Vlakker en breder dan de bogen tussen twee kaarten. */
+  aanloop: `<svg class="rp-pad__ic" width="500" height="100" viewBox="0 0 500 100" fill="none" stroke="currentColor"
+    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M6 8C12 48 96 76 232 82c92 4 182 3 258 4"/>
+    <path d="m476 78 16 8-16 8"/></svg>`,
+  /* En terug. */
+  naarRechts: boog('M14 8C18 46 52 76 116 92', 'm102 86 14 6-12 7'),
+};
+
 export const icStap = {
   /* Aanvraag: envelop met belgolven. */
   bel: svg('<rect x="1.5" y="6" width="17" height="12.5" rx="2"/><path d="m2.4 7.2 7.6 5.4 7.6-5.4"/><path d="M18.5 19.4c1.3 2.3 3.3 4.1 5.6 5.2M20.6 15.8c2 .9 3.7 2.4 4.8 4.3"/>'),

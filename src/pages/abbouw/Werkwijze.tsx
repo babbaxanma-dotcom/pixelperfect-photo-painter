@@ -6,7 +6,7 @@ import hero from '@/assets/home/hero-diensten.jpg';
 // met mensen erop, en mensen overtuigend genereren lukt niet. De stapkaarten
 // zijn nu tekst; het nummer draagt de kaart.
 import { CONTACT } from '@/data/contact';
-import { ic, icStap, rpNav, rpFooter, wireMobielMenu } from './_rp';
+import { ic, icStap, icPad, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
 const STAPPEN = [
   { n: '01', ic: icStap.bel, t: 'Eerste contact', tag: 'Dag 1 tot 2',
@@ -46,9 +46,10 @@ ${rpNav('/werkwijze')}
 
 <section class="rp-section">
   <div class="rp-wrap">
-    <div class="rp-steps">
-      ${STAPPEN.map((s) => `
-      <article class="rp-step rp-step--tekst">
+    <div class="rp-pad">
+      <span class="rp-pad__boog rp-pad__boog--aanloop">${icPad.aanloop}</span>
+      ${STAPPEN.map((s, i) => `
+      <article class="rp-step rp-step--tekst rp-pad__stap rp-pad__stap--${i % 2 === 0 ? 'rechts' : 'links'}">
         <div class="rp-step__body">
           <div class="rp-step__badge">${s.ic}
             <span class="rp-step__pil">Stap ${s.n}</span>
@@ -57,7 +58,9 @@ ${rpNav('/werkwijze')}
           <p class="rp-step__d">${s.d}</p>
           <p class="rp-step__tijd">${s.tag}</p>
         </div>
-      </article>`).join('')}
+      </article>
+      ${i === STAPPEN.length - 1 ? '' : `<span class="rp-pad__boog rp-pad__boog--${i % 2 === 0 ? 'links' : 'rechts'}">${i % 2 === 0 ? icPad.naarLinks : icPad.naarRechts}</span>`}
+      `).join('')}
     </div>
   </div>
 </section>

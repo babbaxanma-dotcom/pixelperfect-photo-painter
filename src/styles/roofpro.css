@@ -949,6 +949,37 @@
    wit uit springen in plaats van erin te verdwijnen. */
 .rp-section--soft .rp-step__badge { background: #fff; }
 
+/* ══ HET WERKWIJZEPAD ══════════════════════════════════════════════════
+   De acht stappen stonden in een raster van vier. Dat leest als een lijst,
+   niet als een volgorde, terwijl de volgorde hier het onderwerp is. Nu
+   slingeren ze naar beneden: de eerste rechts, aansluitend op de hero
+   erboven, daarna om en om, met tussen elke twee een boog met pijlpunt.  */
+.rp-pad { display: flex; flex-direction: column; align-items: center; }
+.rp-pad__stap { width: 430px; max-width: 100%; }
+.rp-pad__stap--rechts { align-self: flex-end; }
+.rp-pad__stap--links { align-self: flex-start; }
+/* De boog overlapt de kaarten licht, zodat het pad doorloopt in plaats van
+   in stukken te vallen. Niet meer dan een paar pixels: bij een diepere
+   overlap verdwijnt de pijlpunt achter de witte kaart. */
+.rp-pad__boog { color: var(--rp-accent); line-height: 0; margin: -6px 0; }
+.rp-pad__boog--links { align-self: center; margin-right: 96px; }
+.rp-pad__boog--rechts { align-self: center; margin-left: 96px; }
+/* De aanloop hangt onder de heroknop en wijst naar de eerste kaart, zodat
+   het pad bij de hero begint en niet los eronder. */
+.rp-pad__boog--aanloop { align-self: flex-start; margin: -18px 0 -14px 30px; }
+.rp-pad__ic { display: block; }
+
+@media (max-width: 900px) {
+  /* Onder de 900px staan de kaarten onder elkaar op volle breedte. Een
+     slinger heeft dan geen ruimte meer, dus vervalt hij; de nummerpil op
+     elke kaart draagt de volgorde. */
+  .rp-pad__stap, .rp-pad__stap--rechts, .rp-pad__stap--links {
+    width: 100%; align-self: stretch;
+  }
+  .rp-pad__boog, .rp-pad__boog--aanloop { display: none; }
+  .rp-pad { gap: 16px; }
+}
+
 /* ══ REVIEWS ═══════════════════════════════════════════════════════════ */
 .rp-rev {
   background: #fff;
