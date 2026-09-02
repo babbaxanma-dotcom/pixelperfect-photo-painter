@@ -37,6 +37,8 @@ import kaartTechnieken from '@/assets/lp-diensten/kaart-technieken.jpg';
 import kaartPleister from '@/assets/lp-diensten/kaart-pleisterwerk.jpg';
 import kaartTegel from '@/assets/lp-diensten/kaart-vloeren.jpg';
 import kaartSanitair from '@/assets/lp-diensten/kaart-badkamer.jpg';
+import dakVoor from '@/assets/lp-diensten/dak-voor.jpg';
+import dakNa from '@/assets/lp-diensten/dak-na.jpg';
 import uitbreidingVoor from '@/assets/lp-diensten/uitbreiding-voor.jpg';
 import uitbreidingNa from '@/assets/lp-diensten/uitbreiding-na.jpg';
 import aanbod1 from '@/assets/lp-diensten/totaalrenovatie-steps.jpg';
@@ -229,7 +231,6 @@ export const TOTAALRENOVATIE: PaginaInhoud = {
       /* Staand beeld in een liggend kader: op het midden valt de tv-wand mooi
          uit, een lagere uitsnede zou alleen vloer laten zien. */
       { naam: 'interieur-tvwand', alt: 'Tv-wand in marmerlook met houten lamellen en zwevend meubel, door AB Bouw Groep' },
-      { naam: 'dak-rood-drone', alt: 'Vernieuwd pannendak in rode keramische pannen met dakvensters, door AB Bouw Groep' },
       { naam: 'badkamer-p4-a', alt: 'Badkamer met marmerlook-tegels en zwevend meubel, door AB Bouw Groep' },
       { naam: 'totaalrenovatie-p5-a', alt: 'Open keuken met eethoek na totaalrenovatie, door AB Bouw Groep' },
       { naam: 'badkamer-p3-b', alt: 'Badkamer in antraciet met zwevend wastafelmeubel, door AB Bouw Groep' },
@@ -252,10 +253,10 @@ export const TOTAALRENOVATIE: PaginaInhoud = {
       { naam: 'badkamer-p1-b', alt: 'Badkamer met hangtoilet en wastafelmeubel, door AB Bouw Groep' },
     ],
     schuif: {
-      voor: uitbreidingVoor, na: uitbreidingNa,
-      altVoor: 'De aanbouw in ruwbouw: snelbouwstenen en de houten balken van het platte dak',
-      altNa: 'Dezelfde aanbouw afgewerkt, met witte crepi en een schuifraam over de volle breedte',
-      labelLinks: 'Ruwbouw', labelRechts: 'Afgewerkt',
+      voor: dakVoor, na: dakNa,
+      altVoor: 'Het dak van dezelfde woning met de pannen eraf: alleen het houten gebint staat er nog',
+      altNa: 'Hetzelfde dak na de werken, met nieuwe pannen en dakvensters',
+      labelLinks: 'Dak eraf', labelRechts: 'Dak erop',
     },
   },
   aanbod: {
@@ -604,6 +605,30 @@ export const HOME: PaginaInhoud = {
         tekst: 'Isolatie, warmtepomp en zonnepanelen.',
         alt: 'Energiewerken door AB Bouw Groep' },
     ],
+  },
+
+  /**
+   * De homepage deelt het fotospoor met de landingspagina, maar niet de
+   * voor-na-schuif. Daar toont de landingspagina het dak, en op de homepage
+   * de aanbouw. Het dakbeeld staat daarom hier in het spoor en niet in het
+   * gedeelde blok: op de landingspagina zou het naast de schuif een dubbel
+   * van hetzelfde dak zijn.
+   */
+  werk: {
+    ...TOTAALRENOVATIE.werk,
+    fotos: [
+      ...TOTAALRENOVATIE.werk.fotos.slice(0, 2),
+      { naam: 'dak-rood-drone', alt: 'Vernieuwd pannendak in rode keramische pannen met dakvensters, door AB Bouw Groep' },
+      /* De keuken staat op deze pagina al bij "Waarom kiezen voor". Twee keer
+         hetzelfde beeld op een pagina leest slordig, dus hier eruit. */
+      ...TOTAALRENOVATIE.werk.fotos.slice(2).filter((f) => f.naam !== 'totaalrenovatie-p6-a'),
+    ],
+    schuif: {
+      voor: uitbreidingVoor, na: uitbreidingNa,
+      altVoor: 'De aanbouw in ruwbouw: snelbouwstenen en de houten balken van het platte dak',
+      altNa: 'Dezelfde aanbouw afgewerkt, met witte crepi en een schuifraam over de volle breedte',
+      labelLinks: 'Ruwbouw', labelRechts: 'Afgewerkt',
+    },
   },
 
   werkwijze: {

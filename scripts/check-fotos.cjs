@@ -93,7 +93,7 @@ const SPOORNAAM = /naam: '([a-z0-9-]+)'/g;
   }
 
   const paginas = [];
-  for (const naam of ['TOTAALRENOVATIE', 'BADKAMER']) {
+  for (const naam of ['TOTAALRENOVATIE', 'BADKAMER', 'HOME']) {
     const begin = bron.indexOf(`export const ${naam}: PaginaInhoud = {`);
     if (begin < 0) {
       console.error(`FOUT: pagina ${naam} niet gevonden in ${path.basename(BRON)} — de meting is ongeldig`);
@@ -105,13 +105,50 @@ const SPOORNAAM = /naam: '([a-z0-9-]+)'/g;
     /* 1. het fotospoor: bestandsnamen uit de realisatiemap */
     const naSpoor = stuk.indexOf('schuif:');
     const spoor = stuk.slice(stuk.indexOf('fotos: ['), naSpoor > 0 ? naSpoor : undefined);
-    const spoornamen = [...spoor.matchAll(SPOORNAAM)].map((m) => m[1]);
+    const eigen = [...spoor.matchAll(SPOORNAAM)].map((m) => m[1]);
     const regels = (spoor.match(/\{ naam: '/g) || []).length;
+
+    /* De homepage erft het spoor van de landingspagina met een spread en zet
+       er beelden bij. Alleen die extra beelden staan er letterlijk, dus de
+       geerfde namen komen hier van TOTAALRENOVATIE erbij. */
+    const erft = /\.\.\.TOTAALRENOVATIE\.werk\.fotos/.test(spoor);
+    if (naam === 'HOME' && !erft) {
+      console.error('FOUT: HOME erft het fotospoor niet meer met een spread — de meting is ongeldig');
+      process.exit(2);
+    }
+    let geerfd = [];
+    if (erft) {
+      const van = paginas.find((p) => p.naam === 'TOTAALRENOVATIE');
+      if (!van || !van.spoornamen || !van.spoornamen.length) {
+        console.error(`FOUT: ${naam} erft van TOTAALRENOVATIE maar dat spoor is hier leeg — de meting is ongeldig`);
+        process.exit(2);
+      }
+      geerfd = van.spoornamen;
+
+      /* De pagina kan beelden uit het geerfde spoor halen met een filter op
+         naam. Leest de guard dat niet, dan meldt hij een dubbel dat in de
+         gerenderde pagina niet bestaat. */
+      const weg = [...spoor.matchAll(/f\.naam !== '([a-z0-9-]+)'/g)].map((m) => m[1]);
+      for (const n of weg) {
+        if (!geerfd.includes(n)) {
+          console.error(`FOUT: ${naam} filtert ${n} uit het geerfde spoor, maar dat beeld staat er niet in — de meting is ongeldig`);
+          process.exit(2);
+        }
+      }
+      geerfd = geerfd.filter((n) => !weg.includes(n));
+    }
+    const spoornamen = [...geerfd, ...eigen];
     /* Positieve controle op de meting zelf: evenveel gelezen namen als regels.
        Nul (veld hernoemd) of te weinig (regex loopt achter op de vorm) maakt de
        uitslag "geen dubbels" waardeloos, dus faalt de guard luid. */
-    if (!spoornamen.length || spoornamen.length !== regels) {
-      console.error(`FOUT: ${naam}: ${spoornamen.length} spoornamen gelezen maar ${regels} regels in de lijst — de meting is ongeldig`);
+    if (!spoornamen.length || eigen.length !== regels) {
+      console.error(`FOUT: ${naam}: ${eigen.length} spoornamen gelezen maar ${regels} regels in de lijst — de meting is ongeldig`);
+      process.exit(2);
+    }
+    /* Een erfpagina zonder eigen beelden hoeft niet apart gemeten: dan is zij
+       een kopie van de pagina waarvan zij erft. */
+    if (erft && !eigen.length) {
+      console.error(`FOUT: ${naam} erft het spoor maar zet er niets bij — dan hoort de pagina niet in deze lijst`);
       process.exit(2);
     }
 
@@ -129,6 +166,7 @@ const SPOORNAAM = /naam: '([a-z0-9-]+)'/g;
 
     paginas.push({
       naam,
+      spoornamen,
       gebruikt: [
         ...spoornamen.map((n) => ({ label: n, pad: path.join(MAP, `${n}.jpg`) })),
         ...velden.map((v) => ({ label: v, pad: invoer[v] })),
