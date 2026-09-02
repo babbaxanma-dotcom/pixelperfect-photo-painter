@@ -70,12 +70,12 @@ const boog = (d: string, punt: string) =>
 export const icPad = {
   /* Van de kaart rechtsboven naar de kaart linksonder. */
   naarLinks: boog('M118 8C114 46 80 76 16 92', 'm30 86-14 6 12 7'),
-  /* De aanloop: van onder de heroknop naar de eerste kaart rechtsboven.
-     Vlakker en breder dan de bogen tussen twee kaarten. */
-  aanloop: `<svg class="rp-pad__ic" width="500" height="100" viewBox="0 0 500 100" fill="none" stroke="currentColor"
+  /* De aanloop staat in de lege rechterhelft van de hero en daalt naar de
+     eerste kaart. Staand dus, en langer dan de bogen tussen twee kaarten. */
+  aanloop: `<svg class="rp-pad__ic" width="140" height="384" viewBox="0 0 140 384" fill="none" stroke="currentColor"
     stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <path d="M6 8C12 48 96 76 232 82c92 4 182 3 258 4"/>
-    <path d="m476 78 16 8-16 8"/></svg>`,
+    <path d="M24 8C10 112 38 248 100 360"/>
+    <path d="m82 348 18 12-4-20"/></svg>`,
   /* En terug. */
   naarRechts: boog('M14 8C18 46 52 76 116 92', 'm102 86 14 6-12 7'),
 };

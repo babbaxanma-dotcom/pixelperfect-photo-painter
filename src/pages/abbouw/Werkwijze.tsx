@@ -30,7 +30,8 @@ const STAPPEN = [
 const HTML = () => `<div class="rp">
 ${rpNav('/werkwijze')}
 
-<section class="rp-phero">
+<section class="rp-phero rp-phero--pad">
+  <span class="rp-pad__boog rp-pad__boog--aanloop">${icPad.aanloop}</span>
   <div class="rp-wrap">
     <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Werkwijze</span></nav>
     <span class="rp-eyebrow">${ic.mark} Werkwijze</span>
@@ -47,7 +48,6 @@ ${rpNav('/werkwijze')}
 <section class="rp-section">
   <div class="rp-wrap">
     <div class="rp-pad">
-      <span class="rp-pad__boog rp-pad__boog--aanloop">${icPad.aanloop}</span>
       ${STAPPEN.map((s, i) => `
       <article class="rp-step rp-step--tekst rp-pad__stap rp-pad__stap--${i % 2 === 0 ? 'rechts' : 'links'}">
         <div class="rp-step__body">

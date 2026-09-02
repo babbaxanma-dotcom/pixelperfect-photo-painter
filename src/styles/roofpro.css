@@ -964,9 +964,16 @@
 .rp-pad__boog { color: var(--rp-accent); line-height: 0; margin: -6px 0; }
 .rp-pad__boog--links { align-self: center; margin-right: 96px; }
 .rp-pad__boog--rechts { align-self: center; margin-left: 96px; }
-/* De aanloop hangt onder de heroknop en wijst naar de eerste kaart, zodat
-   het pad bij de hero begint en niet los eronder. */
-.rp-pad__boog--aanloop { align-self: flex-start; margin: -18px 0 -14px 30px; }
+/* De aanloop staat in de hero zelf: de tekst vult daar de linkerhelft, de
+   rechterhelft is leeg. Hij loopt over de onderrand van de hero heen door
+   naar de eerste kaart, dus mag die sectie niet afknippen. */
+.rp-phero--pad { position: relative; overflow: visible; }
+@media (max-width: 900px) { .rp-pad__boog--aanloop { display: none; } }
+.rp-pad__boog--aanloop {
+  position: absolute; z-index: 1;
+  top: 128px; left: 50%; margin-left: 118px;
+  color: var(--rp-accent); line-height: 0; pointer-events: none;
+}
 .rp-pad__ic { display: block; }
 
 @media (max-width: 900px) {
@@ -976,7 +983,7 @@
   .rp-pad__stap, .rp-pad__stap--rechts, .rp-pad__stap--links {
     width: 100%; align-self: stretch;
   }
-  .rp-pad__boog, .rp-pad__boog--aanloop { display: none; }
+  .rp-pad__boog { display: none; }
   .rp-pad { gap: 16px; }
 }
 
