@@ -4,7 +4,7 @@ import { CONTACT } from '@/data/contact';
 import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
 import svcConstruct from '@/assets/home/svc-construct-nieuw.jpg';
-import svcEco from '@/assets/eco/dakisolatie-werf.jpg';
+import svcEco from '@/assets/eco/achterkant-isolatie.jpg';
 import svcInterieur from '@/assets/home/svc-interieur-nieuw.jpg';
 import svcDak from '@/assets/lp-diensten/dak-na.jpg';
 import svcBad from '@/assets/lp-diensten/realisaties/badkamer-nieuw.jpg';

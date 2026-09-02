@@ -66,8 +66,15 @@ const kleurAfstand = (a, b) => a.reduce((n, v, i) => n + Math.abs(v - b[i]), 0) 
 
 /** Alle velden waarin een foto-identifier staat. */
 const FOTOVELDEN = /(?:foto|achtergrond|cirkel|voor|na):\s*(\w+)[,\s}]/g;
-/** Eén regel uit het fotospoor. */
-const SPOORNAAM = /naam: '([a-z]+-p\d-[a-z])'/g;
+/**
+ * Eén regel uit het fotospoor.
+ *
+ * Las eerst alleen namen in de vorm dienst-pN-x, de vorm van de beelden die
+ * uit de realisatiemap kwamen. Los aangeleverde foto's (badkamer-nieuw,
+ * interieur-tvwand) vielen daardoor buiten de meting: een dubbel gebruik
+ * ervan bleef onzichtbaar voor deze guard. Hij leest nu elke naam.
+ */
+const SPOORNAAM = /naam: '([a-z0-9-]+)'/g;
 
 (async () => {
   const alle = process.argv.includes('--alle');
