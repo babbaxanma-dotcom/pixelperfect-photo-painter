@@ -79,7 +79,25 @@ export const REPLICA_CSS = `
    De kop ligt OVER de herofoto: die begint al op y=0 en wordt bovenaan
    met een wegvallende witte sluier bedekt.
    ───────────────────────────────────────────────────────────── */
-.pc-kop { position: absolute; inset: 0 0 auto 0; height: 137px; z-index: 3; }
+/* De kop over de herofoto neemt geen ruimte in de stroom in, dus kan hij niet
+   sticky: dan zou hij binnen de hero blijven en er onderaan uit lopen. Fixed
+   houdt hem op het scherm; de hero rekent de hoogte al in met padding. */
+.pc-kop { position: fixed; top: 0; left: 0; right: 0; height: 137px; z-index: 30;
+  transition: background .22s var(--pc-ease, ease), box-shadow .22s var(--pc-ease, ease); }
+/* Zolang je bovenaan staat blijft hij doorzichtig over de foto. Zodra je
+   scrolt komt er wit onder, anders loopt de tekst door de inhoud heen. */
+.pc-kop.is-vast { background: #fff; box-shadow: 0 1px 0 rgba(10, 22, 40, .07), 0 10px 28px rgba(10, 22, 40, .06); }
+/* Bij het scrollen valt de contactrij weg: die is bovenaan nuttig en onderweg
+   ballast, en zonder die 59px blijft er meer pagina zichtbaar. Alleen op een
+   breed scherm: op een telefoon staat die rij er niet en zou de kop hierdoor
+   juist groeien. */
+@media (min-width: 901px) {
+  .pc-kop.is-vast { height: 78px; }
+  .pc-kop.is-vast .pc-kop-vat { height: 78px; }
+  .pc-kop.is-vast .pc-kop-rij1 { display: none; }
+  .pc-kop.is-vast .pc-kop-streep { height: 56px; }
+  .pc-kop.is-vast .pc-kop-logo img { height: 36px; }
+}
 .pc-kop-vat { display: flex; align-items: stretch; height: 137px; }
 .pc-kop-logo { width: 181px; display: flex; align-items: center; }
 .pc-kop-logo img { height: 43px; width: auto; }
@@ -458,6 +476,30 @@ export const REPLICA_CSS = `
 
 .pc-boog { position: absolute; color: var(--pc-accent); pointer-events: none; }
 
+/* Stalen: een rij beelden per uitvoering. Een keuzelijst met "Walnoot" erin
+   laat niet zien wat walnoot is; een uitsnede uit dezelfde ruimte wel. */
+.pc-schets-stalen { margin-top: 18px; }
+.pc-schets-stalen__vraag { display: block; font-size: 14px; line-height: 20px;
+  color: #565656; margin-bottom: 9px; }
+.pc-schets-stalen__rij { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: 10px; }
+.pc-schets-stalen__rij button { padding: 0; border: 1.5px solid #e6e4e0; border-radius: 10px;
+  background: #fff; overflow: hidden; cursor: pointer; text-align: left;
+  display: flex; flex-direction: column;
+  transition: border-color .16s ease, box-shadow .16s ease; }
+.pc-schets-stalen__rij button:hover { border-color: #cfccc6; }
+.pc-schets-stalen__rij button.is-aan { border-color: var(--pc-ink);
+  box-shadow: 0 0 0 1px var(--pc-ink); }
+.pc-schets-stalen__rij img { width: 100%; height: 74px; object-fit: cover; display: block; }
+.pc-schets-stalen__rij button > span { display: block; padding: 7px 8px 8px;
+  font-size: 12.5px; line-height: 16px; font-weight: 600; color: var(--pc-ink); }
+/* "Staat er niet tussen" heeft geen staal en vult daarom de hele tegel met
+   tekst, op dezelfde hoogte als de andere zodat de rij niet verspringt. */
+.pc-schets-stalen__anders { min-height: 106px; align-items: flex-start;
+  justify-content: flex-end; padding: 0 8px 8px !important; font-size: 12.5px;
+  line-height: 16px; font-weight: 600; color: #565656; }
+.pc-schets-stalen__anders.is-aan { color: var(--pc-ink); }
+
 /* Wat de bezoeker al koos. Het beeld reageert op drie van de zeven vragen; de
    overige vier zouden zonder dit lijstje in het niets verdwijnen. */
 .pc-schets-keus { margin-top: 18px; }
@@ -786,7 +828,10 @@ export const REPLICA_CSS = `
   .pc-footer-onder a, .pc-footer-onder span { padding: 12px 0; display: inline-block; }
   .pc-review-bron { width: 28px; height: 28px; }
 
-  .pc-kop { position: static; height: auto; background: #fff; }
+  /* De kop blijft ook hier vast staan. De herofoto staat in de DOM vóór de
+     kop en werd met flex-order onder hem gezet; fixed haalt de kop uit die
+     stroom, en de ruimte eronder wordt gemeten in wireVasteKop. */
+  .pc-kop { position: fixed; top: 0; left: 0; right: 0; height: auto; background: #fff; z-index: 30; }
   /* padding-block, niet de shorthand: deze elementen dragen ook .pc-vat en
      die zet de zijmarge van 20px. Met "padding: 14px 0" viel die weg en
      plakte de hele kop tegen de schermrand. */
@@ -1076,7 +1121,10 @@ export const REPLICA_CSS = `
    donkere fotohero. Zonder eigen achtergrond stond de navigatie daar donker
    op donker en liep het kruimelpad door de kop heen.
    ───────────────────────────────────────────────────────────── */
-.pc-chrome .pc-kop { background: #fff; position: relative; z-index: 20; }
+/* De kop op de gewone paginas: wit en vast. De wikkel eromheen houdt de
+   ruimte vast met padding die in wireVasteKop gemeten wordt; zonder die
+   padding zou de pagina onder de kop schieten zodra hij fixed werd. */
+.pc-chrome .pc-kop { background: #fff; position: fixed; top: 0; left: 0; right: 0; z-index: 30; }
 /* De diensten-link heeft een uitklapmenu. Zonder deze regel is die wikkel een
    blok: het pijltje viel dan onder de tekst en duwde de link uit de rij.
    Inline-flex zet het pijltje ernaast en maakt de balk meteen smaller. */
@@ -1095,7 +1143,9 @@ export const REPLICA_CSS = `
    de hero; dat is daar het ontwerp en die pagina blijft zo. Op de homepage
    week hij daardoor af van elke andere pagina, dus krijgt hij hier hetzelfde
    witte vlak. */
-.pc-kop--site { background: #fff; position: relative; z-index: 20; }
+/* De witte kop staat wel in de stroom en neemt zijn hoogte in. Sticky laat
+   hem meelopen zonder dat de pagina eronder verspringt. */
+.pc-kop--site { background: #fff; position: fixed; top: 0; left: 0; right: 0; z-index: 30; }
 
 /* De hero van de homepage draagt een langere kop dan de landingspagina,
    waarvoor de verhouding 53/47 gemeten is. Op drie regels liep het woord

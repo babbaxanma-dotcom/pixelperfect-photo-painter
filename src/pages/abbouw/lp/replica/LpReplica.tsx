@@ -16,6 +16,7 @@
  * Deze pagina staat naast LpDienst.tsx en raakt de andere dertien pagina's niet.
  */
 import { useEffect, useRef, useState } from 'react';
+import { wireVasteKop } from '../../_rp';
 import { useNavigate } from 'react-router-dom';
 import { CONTACT } from '@/data/contact';
 import { submitLead } from '@/lib/leads';
@@ -278,6 +279,11 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
      al waar en is de knop "volgende" uitgeschakeld tot je met de hand scrolt ,
      dat is de pijl die "soms niet werkt". Beelden laden later, dus een
      ResizeObserver op het spoor vangt ook de breedte na het laden op. */
+  /* De kop blijft staan bij het scrollen en krimpt tot de navigatierij. Op de
+     landingspagina ligt hij over de herofoto, dus krijgt hij daarbij een witte
+     achtergrond; zonder die achtergrond leest hij door de inhoud heen. */
+  useEffect(() => wireVasteKop(), []);
+
   useEffect(() => {
     const paren: [React.RefObject<HTMLDivElement>, (p: { links: number; max: number }) => void][] =
       [[reviewSpoor, setReviewPos], [aanbodSpoor, setAanbodPos], [werkSpoor, setWerkPos]];

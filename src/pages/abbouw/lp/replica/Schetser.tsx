@@ -133,7 +133,41 @@ const BEELDEN: Record<string, string> = {
   'ruim|geenwc|Microcement': rGwcMicro,
 };
 
+import sMeubelEiken from '@/assets/schetser/s-meubel-eiken.jpg';
+import sMeubelWalnoot from '@/assets/schetser/s-meubel-walnoot.jpg';
+import sMeubelWit from '@/assets/schetser/s-meubel-wit.jpg';
+import sMeubelAntraciet from '@/assets/schetser/s-meubel-antraciet.jpg';
+import sMeubelDubbel from '@/assets/schetser/s-meubel-dubbel.jpg';
+import sKraanZwart from '@/assets/schetser/s-kraan-zwart.jpg';
+import sKraanChroom from '@/assets/schetser/s-kraan-chroom.jpg';
+import sKraanGoud from '@/assets/schetser/s-kraan-goud.jpg';
+import sKraanRvs from '@/assets/schetser/s-kraan-rvs.jpg';
+
 const NIET_ERTUSSEN = 'anders';
+
+/**
+ * Stalen per keuze, zoals in een badkamerzaak.
+ *
+ * Het hoofdbeeld reageert op de ruimte, het toilet en de tegel. Het meubel en
+ * de kraan kunnen daar niet bij: dat zou zevenhonderdtwintig beelden vragen.
+ * Deze stalen zijn uit dezelfde ruimte gesneden, dus licht en omgeving kloppen
+ * met wat ernaast staat.
+ */
+const STALEN: Record<string, Record<string, string>> = {
+  Meubel: {
+    'Eiken': sMeubelEiken,
+    'Walnoot': sMeubelWalnoot,
+    'Mat wit': sMeubelWit,
+    'Antraciet': sMeubelAntraciet,
+    'Dubbele lavabo': sMeubelDubbel,
+  },
+  Kranen: {
+    'Mat zwart': sKraanZwart,
+    'Chroom': sKraanChroom,
+    'Geborsteld goud': sKraanGoud,
+    'RVS': sKraanRvs,
+  },
+};
 
 /**
  * Welk beeld hoort bij deze keuze, en klopt het met wat er gevraagd werd.
@@ -354,17 +388,47 @@ export default function Schetser() {
 
           {gekozenRuimte && (
             <>
-              {ASSEN.map((as) => (
-                <label className="pc-schets-lijst" key={as.sleutel}>
-                  <span>{as.vraag}</span>
-                  <select value={keuzes[as.sleutel] ?? ''}
-                    onChange={(e) => { setKeuzes((v) => ({ ...v, [as.sleutel]: e.target.value })); meldStart(); }}>
-                    <option value="" disabled>Kies…</option>
-                    {as.opties.map((o) => <option key={o.waarde} value={o.waarde}>{o.label}</option>)}
-                    <option value={NIET_ERTUSSEN}>Staat er niet tussen</option>
-                  </select>
-                </label>
-              ))}
+              {ASSEN.map((as) => {
+                const stalen = STALEN[as.sleutel];
+                /* Waar stalen bestaan vervangen ze de keuzelijst: een lijst met
+                   "Walnoot" erin laat niet zien wat walnoot is. Waar ze niet
+                   bestaan — indeling en verwarming zijn geen materiaal — blijft
+                   de lijst staan. */
+                if (!stalen) return (
+                  <label className="pc-schets-lijst" key={as.sleutel}>
+                    <span>{as.vraag}</span>
+                    <select value={keuzes[as.sleutel] ?? ''}
+                      onChange={(e) => { setKeuzes((v) => ({ ...v, [as.sleutel]: e.target.value })); meldStart(); }}>
+                      <option value="" disabled>Kies…</option>
+                      {as.opties.map((o) => <option key={o.waarde} value={o.waarde}>{o.label}</option>)}
+                      <option value={NIET_ERTUSSEN}>Staat er niet tussen</option>
+                    </select>
+                  </label>
+                );
+                const gekozen = keuzes[as.sleutel];
+                return (
+                  <div className="pc-schets-stalen" key={as.sleutel}>
+                    <span className="pc-schets-stalen__vraag">{as.vraag}</span>
+                    <div className="pc-schets-stalen__rij" role="group" aria-label={as.vraag}>
+                      {as.opties.map((o) => (
+                        <button type="button" key={o.waarde}
+                          className={gekozen === o.waarde ? 'is-aan' : undefined}
+                          aria-pressed={gekozen === o.waarde}
+                          onClick={() => { setKeuzes((v) => ({ ...v, [as.sleutel]: o.waarde })); meldStart(); }}>
+                          <img src={stalen[o.waarde]} alt="" width={560} height={420} loading="lazy" decoding="async" />
+                          <span>{o.label}</span>
+                        </button>
+                      ))}
+                      <button type="button"
+                        className={`pc-schets-stalen__anders${gekozen === NIET_ERTUSSEN ? ' is-aan' : ''}`}
+                        aria-pressed={gekozen === NIET_ERTUSSEN}
+                        onClick={() => { setKeuzes((v) => ({ ...v, [as.sleutel]: NIET_ERTUSSEN })); meldStart(); }}>
+                        Staat er niet tussen
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
 
               {ietsAnders && (
                 <label className="pc-schets-lijst">
@@ -408,7 +472,7 @@ export default function Schetser() {
                 ))}
               </ul>
               {gemaakteKeuzes.some((k) => !k.inBeeld) && (
-                <p>De onderstreepte keuzes ziet u in het beeld. De andere nemen wij mee in uw ontwerp.</p>
+                <p>De onderstreepte keuzes ziet u in de voorbeeldruimte hierboven. De rest ziet u bij de keuze zelf.</p>
               )}
             </div>
           )}

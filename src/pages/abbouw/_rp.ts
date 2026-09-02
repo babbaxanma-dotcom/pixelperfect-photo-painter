@@ -247,7 +247,59 @@ export const rpFooter = () => `
 <a class="rp-fab" href="${CONTACT.phone.href}" aria-label="Bel AB Bouw Groep">${ic.phone(22)}</a>`;
 
 /** Mobiel menu open/dicht. Geeft een opruimfunctie terug. */
+/**
+ * Zet de klasse die de kop laat krimpen zodra je scrolt.
+ *
+ * De drempel ligt op 24px zodat een kleine duw op een telefoon hem niet laat
+ * knipperen, en de klasse wordt alleen geschreven als hij verandert.
+ */
+export function wireVasteKop(): () => void {
+  const kop = document.querySelector<HTMLElement>('.pc-kop');
+  if (!kop) return () => {};
+
+  /* De kop is fixed en laat dus een gat achter. Dat gat wordt gemeten, niet
+     geraden: hij is 137px op een breed scherm, 69px op een telefoon, en
+     krimpt onderweg. Meten gebeurt in ongescrollde toestand, want gescrolld
+     is hij kleiner en zou de pagina onder hem wegspringen.
+
+     En alleen wanneer hij een dekkende achtergrond heeft. Op een breed scherm
+     ligt hij doorzichtig over de herofoto van een landingspagina; daar hoort
+     geen ruimte onder, anders zakt de foto weg. */
+  const wikkel = kop.closest<HTMLElement>('.pc-chrome')
+    ?? kop.parentElement as HTMLElement | null;
+  const zetRuimte = () => {
+    if (!wikkel) return;
+    const was = kop.classList.contains('is-vast');
+    if (was) kop.classList.remove('is-vast');
+    const bg = getComputedStyle(kop).backgroundColor;
+    const dekkend = bg !== 'transparent' && !/rgba\(.+,\s*0\)$/.test(bg);
+    wikkel.style.paddingTop = dekkend ? kop.offsetHeight + 'px' : '';
+    if (was) kop.classList.add('is-vast');
+  };
+
+  let vast = false;
+  const meet = () => {
+    const nu = window.scrollY > 24;
+    if (nu === vast) return;
+    vast = nu;
+    kop.classList.toggle('is-vast', nu);
+  };
+
+  zetRuimte();
+  meet();
+  window.addEventListener('scroll', meet, { passive: true });
+  window.addEventListener('resize', zetRuimte);
+  return () => {
+    window.removeEventListener('scroll', meet);
+    window.removeEventListener('resize', zetRuimte);
+    if (wikkel) wikkel.style.paddingTop = '';
+  };
+}
+
 export function wireMobielMenu(): () => void {
+  /* De vaste kop hangt hier aan vast. Elke pagina roept deze functie al aan;
+     een tweede aanroep per pagina zou er vroeg of laat een missen. */
+  const kopOp = wireVasteKop();
   const mob = document.querySelector<HTMLElement>('[data-mob]');
   const openBtn = document.querySelector<HTMLButtonElement>('[data-mob-open]');
   const closeBtn = document.querySelector<HTMLButtonElement>('[data-mob-close]');
@@ -266,6 +318,7 @@ export function wireMobielMenu(): () => void {
   document.addEventListener('keydown', onEsc);
   mob?.querySelectorAll('a').forEach((a) => a.addEventListener('click', onClose));
   return () => {
+    kopOp();
     openBtn?.removeEventListener('click', onOpen);
     closeBtn?.removeEventListener('click', onClose);
     document.removeEventListener('keydown', onEsc);
