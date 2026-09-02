@@ -992,6 +992,12 @@ export const REPLICA_CSS = `
    elkaar, met het beeld eerst: dat is wat de bezoeker wil zien. */
 .pc-schets { padding: 92px 0 84px; background: #f3f4ef; }
 .pc-schets-sub { max-width: 560px; margin: 14px auto 0; color: #55606f; font-size: 16px; line-height: 26px; }
+/* De belofte hoort op te vallen in plaats van mee te lopen in de zin. Een
+   onderstreping in het accent, dik en met lucht eronder, tilt hem eruit
+   zonder een tweede tekstkleur te introduceren. */
+.pc-schets-sub strong { color: var(--pc-ink); text-decoration: underline;
+  text-decoration-color: var(--pc-accent); text-decoration-thickness: 3px;
+  text-underline-offset: 5px; }
 .pc-schets-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; margin-top: 38px; align-items: start; }
 
 .pc-schets-as { margin-bottom: 22px; }
@@ -1146,6 +1152,11 @@ export const REPLICA_CSS = `
 /* De witte kop staat wel in de stroom en neemt zijn hoogte in. Sticky laat
    hem meelopen zonder dat de pagina eronder verspringt. */
 .pc-kop--site { background: #fff; position: fixed; top: 0; left: 0; right: 0; z-index: 30; }
+/* Deze hero had een vaste hoogte. De ruimte onder de vaste kop werd daarbinnen
+   herverdeeld in plaats van de inhoud omlaag te duwen, waardoor de bovenrand van
+   de titel achter de kop bleef. Met een minimumhoogte groeit de sectie mee met
+   die ruimte en valt de titel er weer onder. */
+.pcx .pc-hero--ruim { height: auto; min-height: 600px; }
 
 /* De hero van de homepage draagt een langere kop dan de landingspagina,
    waarvoor de verhouding 53/47 gemeten is. Op drie regels liep het woord
