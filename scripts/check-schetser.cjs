@@ -22,8 +22,16 @@ const POORT = 4321;
 const ADRES = `http://localhost:${POORT}/badkamerrenovatie`;
 
 /* De tegels waarvan een eigen beeld bestaat. Komt er een look bij, dan hoort
-   dit getal mee te groeien — anders vangt de check de nieuwe niet. */
+   deze lijst mee te groeien — anders vangt de check de nieuwe niet. */
 const MET_EIGEN_BEELD = ['Betonlook grijs', 'Antraciet', 'Marmerlook wit', 'Beige zandsteen', 'Houtlook', 'Microcement'];
+
+/* Beide takken worden gemeten. De check draaide alleen de tak MET toilet; de
+   tak zonder had toen ook maar een beeld. Nu bestaan alle twaalf combinaties,
+   en een halve meting zou de helft van de belofte ongetoetst laten. */
+const TAKKEN = [
+  { naam: 'met toilet', knop: 3 },
+  { naam: 'zonder toilet', knop: 4 },
+];
 
 const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
 
@@ -50,7 +58,7 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
     const sectie = await p.$('#schetser');
     if (!sectie) stop(2, 'FOUT: de schetser-sectie staat niet op de pagina — de meting is ongeldig');
 
-    /* stap 1: grootte en toilet, want zonder die twee verschijnt er geen beeld */
+    /* stap 1: grootte, want zonder grootte en toilet verschijnt er geen beeld */
     const knoppen = await p.$$('#schetser .pc-schets-keuzes button');
     if (knoppen.length < 5) stop(2, `FOUT: maar ${knoppen.length} keuzeknoppen gevonden — de meting is ongeldig`);
     await knoppen[1].click();            // Gemiddeld
@@ -62,36 +70,46 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
     const eerste = await beeldSrc();
     if (!eerste) stop(2, 'FOUT: geen voorbeeldbeeld na het kiezen van grootte en toilet — de meting is ongeldig');
 
-    /* stap 2: elke tegeloptie langs, en het beeld uitlezen */
-    const gezien = new Map();
-    for (const tegel of MET_EIGEN_BEELD) {
-      await p.select('#schetser select', tegel);
-      await new Promise((k) => setTimeout(k, 120));
-      gezien.set(tegel, { src: await beeldSrc(), onderschrift: await onder() });
-    }
-
+    /* stap 2: per tak elke tegeloptie langs, en het beeld uitlezen */
     const fouten = [];
-    const unieke = new Set([...gezien.values()].map((v) => v.src));
-    if (unieke.size !== MET_EIGEN_BEELD.length) {
-      fouten.push(`${MET_EIGEN_BEELD.length} tegellooks, maar ${unieke.size} verschillende beelden — minstens twee opties tonen hetzelfde`);
-    }
-    for (const [tegel, v] of gezien) {
-      if (!v.onderschrift.toLowerCase().includes(tegel.toLowerCase())) {
-        fouten.push(`"${tegel}" gekozen, maar het onderschrift zegt "${v.onderschrift}"`);
+    const gezien = new Map();
+    for (const tak of TAKKEN) {
+      await p.$$eval(`#schetser .pc-schets-keuzes button`, (ns, i) => ns[i].click(), tak.knop);
+      for (const tegel of MET_EIGEN_BEELD) {
+        await p.select('#schetser select', tegel);
+        await new Promise((k) => setTimeout(k, 120));
+        gezien.set(`${tak.naam}|${tegel}`, { tak: tak.naam, tegel, src: await beeldSrc(), onderschrift: await onder() });
       }
     }
 
-    /* positieve controle: een look zonder eigen beeld moet WEL terugvallen én
-       dat zeggen. Vindt hij dat niet, dan meet de check de eerlijkheid niet. */
-    await p.$$eval('#schetser .pc-schets-keuzes button', (ns) => ns[4].click());  // apart toilet
-    await p.select('#schetser select', 'Antraciet');
-    await new Promise((k) => setTimeout(k, 120));
-    const terugval = await onder();
-    if (!/noteren wij/i.test(terugval)) {
-      fouten.push(`terugval niet gemeld: bij een combinatie zonder eigen beeld zei het onderschrift "${terugval}"`);
+    /* Elke combinatie hoort een eigen beeld te tonen: twee takken die hetzelfde
+       laten zien is even fout als twee looks die hetzelfde laten zien. */
+    const verwacht = MET_EIGEN_BEELD.length * TAKKEN.length;
+    const unieke = new Set([...gezien.values()].map((v) => v.src));
+    if (unieke.size !== verwacht) {
+      fouten.push(`${verwacht} combinaties, maar ${unieke.size} verschillende beelden — minstens twee tonen hetzelfde`);
+    }
+    for (const v of gezien.values()) {
+      if (!v.onderschrift.toLowerCase().includes(v.tegel.toLowerCase())) {
+        fouten.push(`"${v.tegel}" gekozen ${v.tak}, maar het onderschrift zegt "${v.onderschrift}"`);
+      }
     }
 
-    console.log(`check-schetser: ${gezien.size} tegellooks doorlopen, ${unieke.size} verschillende beelden`);
+    /* "Staat er niet tussen" is een keuze, geen terugval: de bezoeker beschrijft
+       het zelf in het veld eronder. Het onderschrift hoort dan de basis te noemen
+       zonder excuus — een excuus zou suggereren dat er iets misging.
+
+       Het vangnet zelf (een look zonder eigen beeld toont de basis mét uitleg) is
+       hier niet meer te meten nu elke combinatie bestaat. Dat staat in
+       Schetser.test.ts, waar de keuze met een onvolledige beeldenbank draait. */
+    await p.select('#schetser select', 'anders');
+    await new Promise((k) => setTimeout(k, 120));
+    const anders = await onder();
+    if (/noteren wij/i.test(anders) || !/betonlook/i.test(anders)) {
+      fouten.push(`"staat er niet tussen" hoort de basis te tonen zonder excuus, maar het onderschrift zei "${anders}"`);
+    }
+
+    console.log(`check-schetser: ${gezien.size} combinaties doorlopen over ${TAKKEN.length} takken, ${unieke.size} verschillende beelden`);
     if (!fouten.length) { console.log('  het beeld volgt elke tegelkeuze en het onderschrift klopt'); process.exit(0); }
     console.log('');
     for (const f of fouten) console.log(`  FOUT: ${f}`);

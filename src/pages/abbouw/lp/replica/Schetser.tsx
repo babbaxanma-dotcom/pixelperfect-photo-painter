@@ -12,6 +12,11 @@ import tMarmer from '@/assets/schetser/t-marmer.jpg';
 import tZandsteen from '@/assets/schetser/t-zandsteen.jpg';
 import tHout from '@/assets/schetser/t-hout.jpg';
 import tMicro from '@/assets/schetser/t-micro.jpg';
+import gAntraciet from '@/assets/schetser/g-antraciet.jpg';
+import gMarmer from '@/assets/schetser/g-marmer.jpg';
+import gZandsteen from '@/assets/schetser/g-zandsteen.jpg';
+import gHout from '@/assets/schetser/g-hout.jpg';
+import gMicro from '@/assets/schetser/g-micro.jpg';
 
 /**
  * Ontwerp uw eigen badkamer.
@@ -49,10 +54,19 @@ const RUIMTES: Ruimte[] = [
  * maar één ding. Losse generaties gaven zes verschillende kamers — daar viel
  * niets mee te vergelijken.
  *
- * De sleutel is toilet + tegelkeuze. De tegelas is volledig uitgewerkt voor de
- * ruimte met toilet; voor de ruimte zonder toilet bestaat vandaag alleen de
- * basisafwerking. Wat er niet is, wordt niet stilzwijgend vervangen: het
- * onderschrift zegt dan welke afwerking er wél te zien is.
+ * De sleutel is toilet + tegelkeuze, en beide takken zijn nu volledig: elke
+ * look bestaat met en zonder toilet. Wie "geen toilet" koos zag eerder bij vijf
+ * van de zes looks de betonlook-basis met een uitleg eronder; dat was eerlijk,
+ * maar het beloofde iets anders dan het toonde.
+ *
+ * De terugval blijft in de code staan. Komt er een look bij zonder dat beide
+ * beelden gemaakt zijn, dan toont de schetser liever een ander beeld met een
+ * eerlijk onderschrift dan een gebroken plaatje.
+ *
+ * Elk beeld is gemaakt met onderzochte materiaalregels: tegelformaat, voegmaat
+ * en -kleur, legverband, glansgraad en hoeveel de tegels onderling verschillen.
+ * Zonder die regels tekent een generator marmer dat over de voegen doorloopt en
+ * houtlook in plankbreedtes die niet bestaan.
  */
 const STANDAARDTEGEL = 'Betonlook grijs';
 
@@ -64,9 +78,34 @@ const BEELDEN: Record<string, string> = {
   'wc|Houtlook': tHout,
   'wc|Microcement': tMicro,
   'geenwc|Betonlook grijs': basisGeenWc,
+  'geenwc|Antraciet': gAntraciet,
+  'geenwc|Marmerlook wit': gMarmer,
+  'geenwc|Beige zandsteen': gZandsteen,
+  'geenwc|Houtlook': gHout,
+  'geenwc|Microcement': gMicro,
 };
 
 const NIET_ERTUSSEN = 'anders';
+
+/**
+ * Welk beeld hoort bij deze keuze, en klopt het met wat er gevraagd werd.
+ *
+ * Apart en puur, zodat het vangnet toetsbaar blijft. In de pagina bestaat elke
+ * combinatie, dus valt er niets terug en kan een browsercheck niet bewijzen dat
+ * de terugval nog werkt. Met een onvolledige beeldenbank kan dat hier wel.
+ */
+/** Alleen voor de test: zo kan die de echte bank toetsen zonder hem te kopieren. */
+export const BEELDEN_TEST = BEELDEN;
+
+export function kiesBeeld(
+  toiletdeel: string,
+  tegelkeuze: string | undefined,
+  bank: Record<string, string> = BEELDEN,
+) {
+  const gevraagd = tegelkeuze && tegelkeuze !== NIET_ERTUSSEN ? tegelkeuze : STANDAARDTEGEL;
+  const getoond = bank[`${toiletdeel}|${gevraagd}`] ? gevraagd : STANDAARDTEGEL;
+  return { gevraagd, getoond, beeld: bank[`${toiletdeel}|${getoond}`] };
+}
 
 const ASSEN: As[] = [
   { sleutel: 'Tegels', vraag: 'Tegels', opties: [
@@ -135,9 +174,8 @@ export default function Schetser() {
      onderschrift dat er iets anders te zien is dan wat er gekozen werd. */
   const tegelkeuze = keuzes['Tegels'];
   const toiletdeel = wc ? 'wc' : 'geenwc';
-  const gevraagd = tegelkeuze && tegelkeuze !== NIET_ERTUSSEN ? tegelkeuze : STANDAARDTEGEL;
-  const getoond = BEELDEN[`${toiletdeel}|${gevraagd}`] ? gevraagd : STANDAARDTEGEL;
-  const beeld = gekozenRuimte ? BEELDEN[`${toiletdeel}|${getoond}`] : null;
+  const { gevraagd, getoond, beeld: gekozenBeeld } = kiesBeeld(toiletdeel, tegelkeuze);
+  const beeld = gekozenRuimte ? gekozenBeeld : null;
   const ietsAnders = useMemo(
     () => Object.values(keuzes).some((v) => v === NIET_ERTUSSEN), [keuzes]);
 
