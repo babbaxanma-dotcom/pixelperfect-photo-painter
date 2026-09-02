@@ -211,12 +211,15 @@ export function kiesBeeld(
 }
 
 const ASSEN: As[] = [
+  /* De waarde blijft "Betonlook grijs" en zo: daar draaien de beeldsleutels en
+     de aanvraag op. Het label is wat de bezoeker leest, en daar is "look" uit:
+     in Vlaanderen leest dat als een woord over knoflook. */
   { sleutel: 'Tegels', vraag: 'Tegels', opties: [
-    { waarde: 'Betonlook grijs', label: 'Betonlook grijs' },
+    { waarde: 'Betonlook grijs', label: 'Beton grijs' },
     { waarde: 'Antraciet', label: 'Antraciet' },
-    { waarde: 'Marmerlook wit', label: 'Marmerlook wit' },
+    { waarde: 'Marmerlook wit', label: 'Marmer wit' },
     { waarde: 'Beige zandsteen', label: 'Beige zandsteen' },
-    { waarde: 'Houtlook', label: 'Houtlook' },
+    { waarde: 'Houtlook', label: 'Hout' },
     { waarde: 'Microcement', label: 'Microcement (naadloos)' },
   ] },
   { sleutel: 'Meubel', vraag: 'Wastafelmeubel', opties: [
@@ -263,6 +266,9 @@ export default function Schetser() {
   const [wc, setWc] = useState<boolean | null>(null);
   const [keuzes, setKeuzes] = useState<Record<string, string>>({});
   const [toelichting, setToelichting] = useState('');
+  /* Wie 'staat er niet tussen' kiest heeft vaak een voorbeeld in gedachten dat
+     ergens op internet staat. Zonder dit veld kon hij dat nergens kwijt. */
+  const [voorbeeldLink, setVoorbeeldLink] = useState('');
   const [foto, setFoto] = useState<string | null>(null);
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
@@ -298,7 +304,11 @@ export default function Schetser() {
     for (const as of ASSEN) {
       const v = keuzes[as.sleutel];
       if (!v) continue;
-      uit.push({ label: as.vraag, waarde: v === NIET_ERTUSSEN ? 'iets anders' : v, inBeeld: as.sleutel === 'Tegels' });
+      /* Het label tonen, niet de waarde. De waarde is de sleutel waarop de
+         beelden en de aanvraag draaien en bevat woorden als "betonlook"; wat de
+         bezoeker leest staat in het label. */
+      const optie = as.opties.find((o) => o.waarde === v);
+      uit.push({ label: as.vraag, waarde: v === NIET_ERTUSSEN ? 'iets anders' : (optie?.label ?? v), inBeeld: as.sleutel === 'Tegels' });
     }
     return uit;
   }, [gekozenRuimteNaam, wc, keuzes]);
@@ -343,6 +353,7 @@ export default function Schetser() {
       ...ASSEN.map((a) => keuzes[a.sleutel]
         && `${a.sleutel}: ${keuzes[a.sleutel] === NIET_ERTUSSEN ? 'iets anders' : keuzes[a.sleutel]}`),
       toelichting.trim() && `Eigen wens: ${toelichting.trim()}`,
+      voorbeeldLink.trim() && `Voorbeeld: ${voorbeeldLink.trim()}`,
       foto && 'Bezoeker heeft een foto van zijn badkamer meegestuurd.',
     ].filter(Boolean).join(' · ');
 
@@ -449,12 +460,28 @@ export default function Schetser() {
                 );
               })}
 
+              {/* Wie "staat er niet tussen" koos, moet kunnen zeggen wat hij dan
+                  wél wil. Beschrijven, een link naar een voorbeeld, of een foto:
+                  drie manieren, want wat iemand in gedachten heeft zit even vaak
+                  in een beeld als in woorden. */}
               {ietsAnders && (
-                <label className="pc-schets-lijst">
-                  <span>Wat had u in gedachten?</span>
-                  <textarea rows={3} value={toelichting} onChange={(e) => setToelichting(e.target.value)}
-                    placeholder="Beschrijf het gerust in uw eigen woorden." />
-                </label>
+                <div className="pc-schets-anders">
+                  <label className="pc-schets-lijst">
+                    <span>Wat had u in gedachten?</span>
+                    <textarea rows={3} value={toelichting} onChange={(e) => setToelichting(e.target.value)}
+                      placeholder="Beschrijf het gerust in uw eigen woorden." />
+                  </label>
+                  <label className="pc-schets-lijst">
+                    <span>Of een link naar een voorbeeld</span>
+                    <input type="url" inputMode="url" value={voorbeeldLink}
+                      onChange={(e) => setVoorbeeldLink(e.target.value)}
+                      placeholder="https://" />
+                  </label>
+                  <button type="button" className="pc-schets-anders__foto"
+                    onClick={() => galerij.current?.click()}>
+                    {foto ? 'Andere foto kiezen' : 'Of stuur een foto mee'}
+                  </button>
+                </div>
               )}
             </>
           )}

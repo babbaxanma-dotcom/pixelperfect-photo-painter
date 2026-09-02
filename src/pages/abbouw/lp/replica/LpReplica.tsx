@@ -102,10 +102,16 @@ const beeld = (naam: string) => {
 
 
 
-const NAV = [
+/*
+ * De navigatie van een landingspagina wijst naar secties op die pagina zelf.
+ *
+ * "Diensten" stond hier maar de badkamerpagina heeft die sectie niet: daar
+ * klikte je op een link die je nergens bracht. Een pagina kan deze lijst
+ * overschrijven via inhoud.nav; waar dat niet gebeurt telt deze.
+ */
+const NAV: { label: string; href: string; chevron?: boolean }[] = [
   { label: 'Home', href: '#top' },
   { label: 'Over ons', href: '#over' },
-  { label: 'Diensten', href: '#diensten', chevron: true },
   { label: 'Aanpak', href: '#werkwijze' },
   { label: 'Contact', href: '#contact' },
 ];

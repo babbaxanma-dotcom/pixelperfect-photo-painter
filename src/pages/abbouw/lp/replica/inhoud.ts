@@ -343,6 +343,20 @@ export const BADKAMER: PaginaInhoud = {
   dienst: 'badkamerrenovatie',
   divisie: 'ab_bad__wellness',
   bronPrefix: 'lp:badkamerrenovatie',
+
+  /*
+   * Eigen navigatie. De standaardlijst had een link naar de dienstensectie en
+   * die staat niet op deze pagina; daar klikte je op iets wat je nergens
+   * bracht. Op die plek staat hier de schetser, dus wijst de link daarheen en
+   * heet hij ernaar.
+   */
+  nav: [
+    { label: 'Home', href: '#top' },
+    { label: 'Over ons', href: '#over' },
+    { label: 'Ontwerp uw badkamer', href: '#schetser' },
+    { label: 'Aanpak', href: '#werkwijze' },
+    { label: 'Contact', href: '#contact' },
+  ],
   schetser: true,
   /* De dienstkaarten staan hier niet: de schetser neemt die plek in. */
   toonDiensten: false,
@@ -368,8 +382,8 @@ export const BADKAMER: PaginaInhoud = {
   },
   over: {
     kop: ['Eén vaste ploeg voor uw', 'hele badkamer'],
-    tekst: 'Het meeste geld en de meeste tijd zitten achter de muur: leidingen verleggen, lagen laten drogen voordat er getegeld kan worden. Daarom meten wij eerst ter plaatse op en zetten we de prijs per onderdeel op papier, voordat er iets uitgebroken wordt.',
-    slot: 'De badkamer valt onder AB Bad & Wellness; loopt het werk verder dan die ene kamer, dan schuiven de collega’s van interieur of dak mee aan.',
+    tekst: 'Een badkamer is de lastigste kamer van het huis om te verbouwen. Sanitair, elektriciteit, waterdichting en tegelwerk moeten op elkaar aansluiten, en de verkeerde volgorde kost tijd die u niet terugkrijgt. Bij ons zit dat werk in één ploeg, met één aanspreekpunt van het uitbreken tot de laatste voeg.',
+    slot: 'U kiest de tegels, het sanitair en de afwerking. De volgorde, de droogtijden en de aansluitingen regelen wij.',
     foto: bkOver,
     alt: 'Badkamer met dubbele lavabo op eiken meubel, bad en inloopdouche, door AB Bouw Groep',
   },
@@ -445,11 +459,11 @@ export const BADKAMER: PaginaInhoud = {
       { badge: ['5', 'werkdagen'], titel: 'Plaatsbezoek binnen vijf werkdagen',
         tekst: 'Opmeten, de afvoer bekijken, knelpunten benoemen.', knop: 'Gratis offerte',
         href: '#contact', foto: bkAanbod2, alt: 'Badkamer onder een schuin dak met hangtoilet en meubel' },
-      { badge: ['Vaste', 'prijs'], titel: 'Vaste prijs na het plaatsbezoek',
-        tekst: 'Wat op de offerte staat, betaalt u.', knop: 'Gratis offerte',
-        href: '#contact', foto: bkAanbod3, alt: 'Badkamer met dubbele lavabo, bad en inloopdouche' },
       { badge: ['2-3', 'weken'], titel: 'Twee tot drie weken werk',
         tekst: 'Van uitbreken tot de laatste voeg.', knop: 'Gratis offerte',
+        href: '#contact', foto: bkAanbod3, alt: 'Badkamer met dubbele lavabo, bad en inloopdouche' },
+      { badge: ['Vaste', 'prijs'], titel: 'Vaste prijs na het plaatsbezoek',
+        tekst: 'Wat op de offerte staat, betaalt u.', knop: 'Gratis offerte',
         href: '#contact', foto: bkWerf, alt: 'Badkamer halverwege de renovatie: wanden deels betegeld, leidingen aangesloten' },
     ],
   },
