@@ -5,18 +5,42 @@ import { trackFormStart } from '@/lib/tracking';
 import { CONTACT } from '@/data/contact';
 import { IcCamera, IcPijl } from './Iconen';
 
-import basisWc from '@/assets/schetser/b-wc.jpg';
-import basisGeenWc from '@/assets/schetser/b-geenwc.jpg';
-import tAntraciet from '@/assets/schetser/t-antraciet.jpg';
-import tMarmer from '@/assets/schetser/t-marmer.jpg';
-import tZandsteen from '@/assets/schetser/t-zandsteen.jpg';
-import tHout from '@/assets/schetser/t-hout.jpg';
-import tMicro from '@/assets/schetser/t-micro.jpg';
-import gAntraciet from '@/assets/schetser/g-antraciet.jpg';
-import gMarmer from '@/assets/schetser/g-marmer.jpg';
-import gZandsteen from '@/assets/schetser/g-zandsteen.jpg';
-import gHout from '@/assets/schetser/g-hout.jpg';
-import gMicro from '@/assets/schetser/g-micro.jpg';
+import kWcBeton from '@/assets/schetser/k-wc-beton.jpg';
+import kWcAntraciet from '@/assets/schetser/k-wc-antraciet.jpg';
+import kWcMarmer from '@/assets/schetser/k-wc-marmer.jpg';
+import kWcZandsteen from '@/assets/schetser/k-wc-zandsteen.jpg';
+import kWcHout from '@/assets/schetser/k-wc-hout.jpg';
+import kWcMicro from '@/assets/schetser/k-wc-micro.jpg';
+import kGwcBeton from '@/assets/schetser/k-gwc-beton.jpg';
+import kGwcAntraciet from '@/assets/schetser/k-gwc-antraciet.jpg';
+import kGwcMarmer from '@/assets/schetser/k-gwc-marmer.jpg';
+import kGwcZandsteen from '@/assets/schetser/k-gwc-zandsteen.jpg';
+import kGwcHout from '@/assets/schetser/k-gwc-hout.jpg';
+import kGwcMicro from '@/assets/schetser/k-gwc-micro.jpg';
+import mWcBeton from '@/assets/schetser/m-wc-beton.jpg';
+import mWcAntraciet from '@/assets/schetser/m-wc-antraciet.jpg';
+import mWcMarmer from '@/assets/schetser/m-wc-marmer.jpg';
+import mWcZandsteen from '@/assets/schetser/m-wc-zandsteen.jpg';
+import mWcHout from '@/assets/schetser/m-wc-hout.jpg';
+import mWcMicro from '@/assets/schetser/m-wc-micro.jpg';
+import mGwcBeton from '@/assets/schetser/m-gwc-beton.jpg';
+import mGwcAntraciet from '@/assets/schetser/m-gwc-antraciet.jpg';
+import mGwcMarmer from '@/assets/schetser/m-gwc-marmer.jpg';
+import mGwcZandsteen from '@/assets/schetser/m-gwc-zandsteen.jpg';
+import mGwcHout from '@/assets/schetser/m-gwc-hout.jpg';
+import mGwcMicro from '@/assets/schetser/m-gwc-micro.jpg';
+import rWcBeton from '@/assets/schetser/r-wc-beton.jpg';
+import rWcAntraciet from '@/assets/schetser/r-wc-antraciet.jpg';
+import rWcMarmer from '@/assets/schetser/r-wc-marmer.jpg';
+import rWcZandsteen from '@/assets/schetser/r-wc-zandsteen.jpg';
+import rWcHout from '@/assets/schetser/r-wc-hout.jpg';
+import rWcMicro from '@/assets/schetser/r-wc-micro.jpg';
+import rGwcBeton from '@/assets/schetser/r-gwc-beton.jpg';
+import rGwcAntraciet from '@/assets/schetser/r-gwc-antraciet.jpg';
+import rGwcMarmer from '@/assets/schetser/r-gwc-marmer.jpg';
+import rGwcZandsteen from '@/assets/schetser/r-gwc-zandsteen.jpg';
+import rGwcHout from '@/assets/schetser/r-gwc-hout.jpg';
+import rGwcMicro from '@/assets/schetser/r-gwc-micro.jpg';
 
 /**
  * Ontwerp uw eigen badkamer.
@@ -54,7 +78,7 @@ const RUIMTES: Ruimte[] = [
  * maar één ding. Losse generaties gaven zes verschillende kamers — daar viel
  * niets mee te vergelijken.
  *
- * De sleutel is toilet + tegelkeuze, en beide takken zijn nu volledig: elke
+ * De sleutel is grootte + toilet + tegelkeuze, en alle drie zijn volledig: elke
  * look bestaat met en zonder toilet. Wie "geen toilet" koos zag eerder bij vijf
  * van de zes looks de betonlook-basis met een uitleg eronder; dat was eerlijk,
  * maar het beloofde iets anders dan het toonde.
@@ -71,18 +95,42 @@ const RUIMTES: Ruimte[] = [
 const STANDAARDTEGEL = 'Betonlook grijs';
 
 const BEELDEN: Record<string, string> = {
-  'wc|Betonlook grijs': basisWc,
-  'wc|Antraciet': tAntraciet,
-  'wc|Marmerlook wit': tMarmer,
-  'wc|Beige zandsteen': tZandsteen,
-  'wc|Houtlook': tHout,
-  'wc|Microcement': tMicro,
-  'geenwc|Betonlook grijs': basisGeenWc,
-  'geenwc|Antraciet': gAntraciet,
-  'geenwc|Marmerlook wit': gMarmer,
-  'geenwc|Beige zandsteen': gZandsteen,
-  'geenwc|Houtlook': gHout,
-  'geenwc|Microcement': gMicro,
+  'klein|wc|Betonlook grijs': kWcBeton,
+  'klein|wc|Antraciet': kWcAntraciet,
+  'klein|wc|Marmerlook wit': kWcMarmer,
+  'klein|wc|Beige zandsteen': kWcZandsteen,
+  'klein|wc|Houtlook': kWcHout,
+  'klein|wc|Microcement': kWcMicro,
+  'klein|geenwc|Betonlook grijs': kGwcBeton,
+  'klein|geenwc|Antraciet': kGwcAntraciet,
+  'klein|geenwc|Marmerlook wit': kGwcMarmer,
+  'klein|geenwc|Beige zandsteen': kGwcZandsteen,
+  'klein|geenwc|Houtlook': kGwcHout,
+  'klein|geenwc|Microcement': kGwcMicro,
+  'middel|wc|Betonlook grijs': mWcBeton,
+  'middel|wc|Antraciet': mWcAntraciet,
+  'middel|wc|Marmerlook wit': mWcMarmer,
+  'middel|wc|Beige zandsteen': mWcZandsteen,
+  'middel|wc|Houtlook': mWcHout,
+  'middel|wc|Microcement': mWcMicro,
+  'middel|geenwc|Betonlook grijs': mGwcBeton,
+  'middel|geenwc|Antraciet': mGwcAntraciet,
+  'middel|geenwc|Marmerlook wit': mGwcMarmer,
+  'middel|geenwc|Beige zandsteen': mGwcZandsteen,
+  'middel|geenwc|Houtlook': mGwcHout,
+  'middel|geenwc|Microcement': mGwcMicro,
+  'ruim|wc|Betonlook grijs': rWcBeton,
+  'ruim|wc|Antraciet': rWcAntraciet,
+  'ruim|wc|Marmerlook wit': rWcMarmer,
+  'ruim|wc|Beige zandsteen': rWcZandsteen,
+  'ruim|wc|Houtlook': rWcHout,
+  'ruim|wc|Microcement': rWcMicro,
+  'ruim|geenwc|Betonlook grijs': rGwcBeton,
+  'ruim|geenwc|Antraciet': rGwcAntraciet,
+  'ruim|geenwc|Marmerlook wit': rGwcMarmer,
+  'ruim|geenwc|Beige zandsteen': rGwcZandsteen,
+  'ruim|geenwc|Houtlook': rGwcHout,
+  'ruim|geenwc|Microcement': rGwcMicro,
 };
 
 const NIET_ERTUSSEN = 'anders';
@@ -98,13 +146,14 @@ const NIET_ERTUSSEN = 'anders';
 export const BEELDEN_TEST = BEELDEN;
 
 export function kiesBeeld(
+  grootte: string,
   toiletdeel: string,
   tegelkeuze: string | undefined,
   bank: Record<string, string> = BEELDEN,
 ) {
   const gevraagd = tegelkeuze && tegelkeuze !== NIET_ERTUSSEN ? tegelkeuze : STANDAARDTEGEL;
-  const getoond = bank[`${toiletdeel}|${gevraagd}`] ? gevraagd : STANDAARDTEGEL;
-  return { gevraagd, getoond, beeld: bank[`${toiletdeel}|${getoond}`] };
+  const getoond = bank[`${grootte}|${toiletdeel}|${gevraagd}`] ? gevraagd : STANDAARDTEGEL;
+  return { gevraagd, getoond, beeld: bank[`${grootte}|${toiletdeel}|${getoond}`] };
 }
 
 const ASSEN: As[] = [
@@ -174,7 +223,7 @@ export default function Schetser() {
      onderschrift dat er iets anders te zien is dan wat er gekozen werd. */
   const tegelkeuze = keuzes['Tegels'];
   const toiletdeel = wc ? 'wc' : 'geenwc';
-  const { gevraagd, getoond, beeld: gekozenBeeld } = kiesBeeld(toiletdeel, tegelkeuze);
+  const { gevraagd, getoond, beeld: gekozenBeeld } = kiesBeeld(grootte || 'middel', toiletdeel, tegelkeuze);
   const beeld = gekozenRuimte ? gekozenBeeld : null;
   const ietsAnders = useMemo(
     () => Object.values(keuzes).some((v) => v === NIET_ERTUSSEN), [keuzes]);

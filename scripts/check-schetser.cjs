@@ -25,9 +25,18 @@ const ADRES = `http://localhost:${POORT}/badkamerrenovatie`;
    deze lijst mee te groeien — anders vangt de check de nieuwe niet. */
 const MET_EIGEN_BEELD = ['Betonlook grijs', 'Antraciet', 'Marmerlook wit', 'Beige zandsteen', 'Houtlook', 'Microcement'];
 
-/* Beide takken worden gemeten. De check draaide alleen de tak MET toilet; de
-   tak zonder had toen ook maar een beeld. Nu bestaan alle twaalf combinaties,
-   en een halve meting zou de helft van de belofte ongetoetst laten. */
+/* Alle drie de assen worden gemeten: ruimtegrootte, toilet en tegellook.
+
+   De check draaide eerst alleen de tak MET toilet en negeerde de grootte, want
+   die stuurde het beeld toen nog niet aan. Nu bestaan alle zesendertig
+   combinaties en zou een halve meting het grootste deel van de belofte
+   ongetoetst laten. De knopnummers volgen de volgorde in de pagina: eerst drie
+   groottes, dan twee toiletkeuzes. */
+const RUIMTES = [
+  { naam: 'klein', knop: 0 },
+  { naam: 'gemiddeld', knop: 1 },
+  { naam: 'ruim', knop: 2 },
+];
 const TAKKEN = [
   { naam: 'met toilet', knop: 3 },
   { naam: 'zonder toilet', knop: 4 },
@@ -70,28 +79,33 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
     const eerste = await beeldSrc();
     if (!eerste) stop(2, 'FOUT: geen voorbeeldbeeld na het kiezen van grootte en toilet — de meting is ongeldig');
 
-    /* stap 2: per tak elke tegeloptie langs, en het beeld uitlezen */
+    /* stap 2: elke ruimte, elke tak, elke tegeloptie, en het beeld uitlezen */
     const fouten = [];
     const gezien = new Map();
-    for (const tak of TAKKEN) {
-      await p.$$eval(`#schetser .pc-schets-keuzes button`, (ns, i) => ns[i].click(), tak.knop);
-      for (const tegel of MET_EIGEN_BEELD) {
-        await p.select('#schetser select', tegel);
-        await new Promise((k) => setTimeout(k, 120));
-        gezien.set(`${tak.naam}|${tegel}`, { tak: tak.naam, tegel, src: await beeldSrc(), onderschrift: await onder() });
+    for (const ruimte of RUIMTES) {
+      await p.$$eval(`#schetser .pc-schets-keuzes button`, (ns, i) => ns[i].click(), ruimte.knop);
+      for (const tak of TAKKEN) {
+        await p.$$eval(`#schetser .pc-schets-keuzes button`, (ns, i) => ns[i].click(), tak.knop);
+        for (const tegel of MET_EIGEN_BEELD) {
+          await p.select('#schetser select', tegel);
+          await new Promise((k) => setTimeout(k, 120));
+          gezien.set(`${ruimte.naam}|${tak.naam}|${tegel}`,
+            { ruimte: ruimte.naam, tak: tak.naam, tegel, src: await beeldSrc(), onderschrift: await onder() });
+        }
       }
     }
 
-    /* Elke combinatie hoort een eigen beeld te tonen: twee takken die hetzelfde
-       laten zien is even fout als twee looks die hetzelfde laten zien. */
-    const verwacht = MET_EIGEN_BEELD.length * TAKKEN.length;
+    /* Elke combinatie hoort een eigen beeld te tonen. Twee ruimtes die hetzelfde
+       laten zien is even fout als twee looks die hetzelfde laten zien: de vraag
+       wordt dan gesteld zonder dat het antwoord iets verandert. */
+    const verwacht = MET_EIGEN_BEELD.length * TAKKEN.length * RUIMTES.length;
     const unieke = new Set([...gezien.values()].map((v) => v.src));
     if (unieke.size !== verwacht) {
       fouten.push(`${verwacht} combinaties, maar ${unieke.size} verschillende beelden — minstens twee tonen hetzelfde`);
     }
     for (const v of gezien.values()) {
       if (!v.onderschrift.toLowerCase().includes(v.tegel.toLowerCase())) {
-        fouten.push(`"${v.tegel}" gekozen ${v.tak}, maar het onderschrift zegt "${v.onderschrift}"`);
+        fouten.push(`"${v.tegel}" gekozen bij ${v.ruimte}, ${v.tak}, maar het onderschrift zegt "${v.onderschrift}"`);
       }
     }
 
@@ -109,7 +123,7 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
       fouten.push(`"staat er niet tussen" hoort de basis te tonen zonder excuus, maar het onderschrift zei "${anders}"`);
     }
 
-    console.log(`check-schetser: ${gezien.size} combinaties doorlopen over ${TAKKEN.length} takken, ${unieke.size} verschillende beelden`);
+    console.log(`check-schetser: ${gezien.size} combinaties doorlopen over ${RUIMTES.length} ruimtes en ${TAKKEN.length} takken, ${unieke.size} verschillende beelden`);
     if (!fouten.length) { console.log('  het beeld volgt elke tegelkeuze en het onderschrift klopt'); process.exit(0); }
     console.log('');
     for (const f of fouten) console.log(`  FOUT: ${f}`);
