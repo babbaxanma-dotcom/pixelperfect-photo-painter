@@ -229,23 +229,24 @@ export const TOTAALRENOVATIE: PaginaInhoud = {
       /* Staand beeld in een liggend kader: op het midden valt de tv-wand mooi
          uit, een lagere uitsnede zou alleen vloer laten zien. */
       { naam: 'interieur-tvwand', alt: 'Tv-wand in marmerlook met houten lamellen en zwevend meubel, door AB Bouw Groep' },
+      { naam: 'dak-rood-drone', alt: 'Vernieuwd pannendak in rode keramische pannen met dakvensters, door AB Bouw Groep' },
       { naam: 'badkamer-p4-a', alt: 'Badkamer met marmerlook-tegels en zwevend meubel, door AB Bouw Groep' },
       { naam: 'totaalrenovatie-p5-a', alt: 'Open keuken met eethoek na totaalrenovatie, door AB Bouw Groep' },
       { naam: 'badkamer-p3-b', alt: 'Badkamer in antraciet met zwevend wastafelmeubel, door AB Bouw Groep' },
       { naam: 'terras-p3-c', alt: 'Aangelegd terras met grijze tegels tegen de gevel, door AB Bouw Groep' },
-      { naam: 'tegelwerken-p2-a', alt: 'Gelegde tegelvloer met doorlopende plint, door AB Bouw Groep' },
+      { naam: 'totaalrenovatie-p1-a', alt: 'Rijwoning met nieuwe gevelpleister en vernieuwd dak, door AB Bouw Groep' },
       { naam: 'badkamer-p4-b', alt: 'Badkamer met microcement wanden, bad en toilet, door AB Bouw Groep' },
       { naam: 'totaalrenovatie-p6-a', alt: 'Keukeneiland met barkrukken na renovatie, door AB Bouw Groep' },
       { naam: 'badkamer-p1-a', alt: 'Badkamer met inloopdouche in betonlook, door AB Bouw Groep' },
       { naam: 'terras-p4-b', alt: 'Terrasaanleg met lijngoot en nivelleerclips rond een vijver, door AB Bouw Groep' },
-      { naam: 'tegelwerken-p1-a', alt: 'Grijze vloertegels in een gerenoveerde ruimte, door AB Bouw Groep' },
+      { naam: 'oprit-p2-a', alt: 'Aangelegde klinkeroprit tot aan de poort, door AB Bouw Groep' },
       { naam: 'badkamer-p3-a', alt: 'Donkere badkamer met inloopdouche en lavabomeubel, door AB Bouw Groep' },
       /* Het interessante van dit beeld — de glaspui en de straat — zit rechts;
          bij een midden-crop blijft er kale muur over. Vandaar de eigen uitsnede. */
       { naam: 'totaalrenovatie-p6-b', alt: 'Afgewerkte handelsruimte met glaspui en tegelvloer, door AB Bouw Groep', pos: '72% center' },
       { naam: 'badkamer-p1-c', alt: 'Inloopdouche met glazen wand, door AB Bouw Groep' },
       { naam: 'terras-p3-a', alt: 'Terras in grote betontegels achter een woning, door AB Bouw Groep' },
-      { naam: 'tegelwerken-p2-c', alt: 'Antracieten vloertegels in een gerenoveerde ruimte, door AB Bouw Groep' },
+      { naam: 'totaalrenovatie-p3-a', alt: 'Slaapkamer met eiken parket na renovatie, door AB Bouw Groep' },
       { naam: 'badkamer-p3-c', alt: 'Inloopdouche met donkere tegels en glaswand, door AB Bouw Groep' },
       { naam: 'tegelwerken-p4-a', alt: 'Tegelvloer in houtlook op de verdieping, door AB Bouw Groep' },
       { naam: 'badkamer-p1-b', alt: 'Badkamer met hangtoilet en wastafelmeubel, door AB Bouw Groep' },
