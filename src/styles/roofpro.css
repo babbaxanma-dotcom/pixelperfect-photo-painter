@@ -964,16 +964,21 @@
 .rp-pad__boog { color: var(--rp-accent); line-height: 0; margin: -6px 0; }
 .rp-pad__boog--links { align-self: center; margin-right: 96px; }
 .rp-pad__boog--rechts { align-self: center; margin-left: 96px; }
-/* De aanloop staat in de hero zelf: de tekst vult daar de linkerhelft, de
-   rechterhelft is leeg. Hij loopt over de onderrand van de hero heen door
-   naar de eerste kaart, dus mag die sectie niet afknippen. */
+/* De eerste stap staat in de hero, naast de kop, in de ruimte die de tekst
+   vrijlaat. De boog eronder loopt over de onderrand van de hero heen naar de
+   tweede kaart, dus mag die sectie niet afknippen. */
 .rp-phero--pad { position: relative; overflow: visible; }
-@media (max-width: 900px) { .rp-pad__boog--aanloop { display: none; } }
-.rp-pad__boog--aanloop {
-  position: absolute; z-index: 1;
-  top: 128px; left: 50%; margin-left: 118px;
-  color: var(--rp-accent); line-height: 0; pointer-events: none;
+.rp-phero__pad-wrap { position: relative; }
+/* De kaart hangt over de rechterhelft, dus houdt de tekst links. Zonder deze
+   grens loopt de laatste regel van de lede onder de kaart door. */
+.rp-phero--pad .rp-phero__t, .rp-phero--pad .rp-phero__lede { max-width: 560px; }
+.rp-phero__stap {
+  position: absolute; z-index: 1; top: 0; right: 0; width: 430px;
+  display: flex; flex-direction: column; align-items: flex-end;
 }
+/* De boog uit de hero moet omhoog de sectiemarge in, anders staat hij als
+   los stuk in de witruimte tussen de hero en de eerste kaart van het pad. */
+.rp-pad__boog--start { margin-top: -104px; }
 .rp-pad__ic { display: block; }
 
 @media (max-width: 900px) {
@@ -984,6 +989,10 @@
     width: 100%; align-self: stretch;
   }
   .rp-pad__boog { display: none; }
+  /* De hero-kaart uit de absolute plaatsing halen: op smalle schermen staat
+     de tekst over de volle breedte en is er geen ruimte naast. */
+  .rp-phero__stap { position: static; width: 100%; margin-top: 28px; }
+  .rp-phero__stap .rp-pad__stap { width: 100%; }
   .rp-pad { gap: 16px; }
 }
 

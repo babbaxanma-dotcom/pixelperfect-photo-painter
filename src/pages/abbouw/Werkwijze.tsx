@@ -19,7 +19,7 @@ const STAPPEN = [
     d: 'Materiaal bestellen, ploegen inplannen en waar nodig vergunning en EPB regelen. U krijgt de startdatum op papier.' },
   { n: '05', ic: icStap.werf, t: 'Uitvoering', tag: 'Duur hangt af van het werk',
     d: 'De werfleider volgt de planning op en stuurt wekelijks een werfrapport. De werf gaat elke vrijdag opgeruimd het weekend in.' },
-  { n: '06', ic: icStap.lijst, t: 'Voor-oplevering', tag: 'Laatste week',
+  { n: '06', ic: icStap.lijst, t: 'Controle', tag: 'Laatste week',
     d: 'We lopen samen rond en zetten de laatste punten op een lijst. Die werken we af voor de officiële oplevering.' },
   { n: '07', ic: icStap.sleutel, t: 'Oplevering', tag: 'Laatste dag',
     d: 'Samen een rondgang, en het dossier erbij: garanties, attesten en de gegevens van de gebruikte materialen.' },
@@ -27,29 +27,9 @@ const STAPPEN = [
     d: 'Op structurele renovaties geldt tien jaar garantie. Merkt u iets op, dan komen we kijken.' },
 ];
 
-const HTML = () => `<div class="rp">
-${rpNav('/werkwijze')}
-
-<section class="rp-phero rp-phero--pad">
-  <span class="rp-pad__boog rp-pad__boog--aanloop">${icPad.aanloop}</span>
-  <div class="rp-wrap">
-    <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Werkwijze</span></nav>
-    <span class="rp-eyebrow">${ic.mark} Werkwijze</span>
-    <h1 class="rp-phero__t">Acht stappen<span class="rp-dim">van telefoon tot nazorg</span></h1>
-    <p class="rp-phero__lede">Hieronder staat wat er in welke volgorde gebeurt, en wanneer u van ons hoort. Zo weet u op elk moment waar uw dossier staat.</p>
-    <div style="margin-top:30px;display:flex;flex-wrap:wrap;gap:12px">
-      <a class="rp-btn rp-btn--primary" href="/contact">Start bij stap 1</a>
-      <a class="rp-btn rp-btn--ghost" href="${CONTACT.phone.href}">${ic.phone(17)} ${CONTACT.phone.display}</a>
-    </div>
-  </div>
-</section>
-
-
-<section class="rp-section">
-  <div class="rp-wrap">
-    <div class="rp-pad">
-      ${STAPPEN.map((s, i) => `
-      <article class="rp-step rp-step--tekst rp-pad__stap rp-pad__stap--${i % 2 === 0 ? 'rechts' : 'links'}">
+/** Een stapkaart. Staat zowel in de hero (de eerste) als in het pad. */
+const kaart = (s: typeof STAPPEN[number], kant?: string) => `
+      <article class="rp-step rp-step--tekst rp-pad__stap${kant ? ' rp-pad__stap--' + kant : ''}">
         <div class="rp-step__body">
           <div class="rp-step__badge">${s.ic}
             <span class="rp-step__pil">Stap ${s.n}</span>
@@ -58,8 +38,43 @@ ${rpNav('/werkwijze')}
           <p class="rp-step__d">${s.d}</p>
           <p class="rp-step__tijd">${s.tag}</p>
         </div>
-      </article>
-      ${i === STAPPEN.length - 1 ? '' : `<span class="rp-pad__boog rp-pad__boog--${i % 2 === 0 ? 'links' : 'rechts'}">${i % 2 === 0 ? icPad.naarLinks : icPad.naarRechts}</span>`}
+      </article>`;
+
+const HTML = () => `<div class="rp">
+${rpNav('/werkwijze')}
+
+<section class="rp-phero rp-phero--pad">
+  <div class="rp-wrap rp-phero__pad-wrap">
+    <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Werkwijze</span></nav>
+    <span class="rp-eyebrow">${ic.mark} Werkwijze</span>
+    <h1 class="rp-phero__t">Acht stappen<span class="rp-dim">van telefoon tot nazorg</span></h1>
+    <p class="rp-phero__lede">Hieronder staat wat er in welke volgorde gebeurt, en wanneer u van ons hoort. Zo weet u op elk moment waar uw dossier staat.</p>
+    <div style="margin-top:30px;display:flex;flex-wrap:wrap;gap:12px">
+      <a class="rp-btn rp-btn--primary" href="/contact">Start bij stap 1</a>
+      <a class="rp-btn rp-btn--ghost" href="${CONTACT.phone.href}">${ic.phone(17)} ${CONTACT.phone.display}</a>
+    </div>
+
+    <!-- Het pad begint hier: de eerste kaart staat naast de kop, in de ruimte
+         die de tekst vrijlaat. De boog eronder loopt door naar stap twee. -->
+    <div class="rp-phero__stap">
+      ${kaart(STAPPEN[0])}
+    </div>
+  </div>
+</section>
+
+
+<section class="rp-section">
+  <div class="rp-wrap">
+    <!-- Stap een staat in de hero, dus begint dit bij twee. Die hoort links,
+         waar de boog uit de hero naartoe wijst; daarna om en om. -->
+    <div class="rp-pad">
+      <!-- De boog vanaf de kaart in de hero. Hij hoort hier en niet daar: in
+           de hero zat hij vast in een doos van 430px, terwijl hij de hele
+           breedte naar links moet overbruggen. -->
+      <span class="rp-pad__boog rp-pad__boog--links rp-pad__boog--start">${icPad.naarLinks}</span>
+      ${STAPPEN.slice(1).map((s, i) => `
+      ${kaart(s, i % 2 === 0 ? 'links' : 'rechts')}
+      ${i === STAPPEN.length - 2 ? '' : `<span class="rp-pad__boog rp-pad__boog--${i % 2 === 0 ? 'rechts' : 'links'}">${i % 2 === 0 ? icPad.naarRechts : icPad.naarLinks}</span>`}
       `).join('')}
     </div>
   </div>
