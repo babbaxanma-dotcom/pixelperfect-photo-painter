@@ -68,6 +68,8 @@ const OVERSLAAN = ['submit', 'reset'];
 const BUITEN_DE_PAGINA = [
   'Foto van uw badkamer maken',
   'of kies er een uit uw toestel',
+  'Of stuur een foto mee',
+  'Andere foto kiezen',
 ];
 
 const stop = (code, bericht) => { console.error(bericht); process.exit(code); };

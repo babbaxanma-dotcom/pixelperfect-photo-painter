@@ -476,6 +476,17 @@ export const REPLICA_CSS = `
 
 .pc-boog { position: absolute; color: var(--pc-accent); pointer-events: none; }
 
+/* Het blok onder "staat er niet tussen". Het staat ingesprongen met een lijn
+   ernaast, zodat te zien is dat het bij de keuze erboven hoort en niet bij de
+   volgende vraag. */
+.pc-schets-anders { margin-top: 14px; padding-left: 14px;
+  border-left: 2px solid var(--pc-accent); display: grid; gap: 12px; }
+.pc-schets-anders__foto { justify-self: start; padding: 9px 14px; border-radius: 8px;
+  border: 1.5px solid #e6e4e0; background: #fff; cursor: pointer;
+  font-size: 14px; font-weight: 600; color: var(--pc-ink);
+  transition: border-color .16s ease; }
+.pc-schets-anders__foto:hover { border-color: #cfccc6; }
+
 /* Stalen: een rij beelden per uitvoering. Een keuzelijst met "Walnoot" erin
    laat niet zien wat walnoot is; een uitsnede uit dezelfde ruimte wel. */
 .pc-schets-stalen { margin-top: 18px; }
