@@ -160,12 +160,18 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
         }
 
         /* 4. Scrollen met het wiel, zoals een bezoeker het doet. De plek van de
-              titel in het DOCUMENT hoort constant te blijven: de pagina beweegt,
-              de inhoud niet. Verschuift die, dan springt de pagina onder de
-              vinger weg. window.scrollTo zou dit missen — dat is één sprong, en
-              de kop wisselt juist onderweg van hoogte. */
+              inhoud in het DOCUMENT hoort constant te blijven: de pagina
+              beweegt, de inhoud niet. Verschuift die, dan springt de pagina
+              onder de vinger weg. window.scrollTo zou dit missen — dat is één
+              sprong, en de kop wisselt juist onderweg van hoogte.
+
+              Gemeten aan de balk of de eerste sectie ná de hero, niet aan de
+              titel. De hero blijft staan terwijl de pagina eroverheen schuift en
+              zijn inhoud vervaagt daarbij mee: die titel hoort dus te bewegen.
+              Wat eronder komt hoort dat niet, en dat is precies wat een bezoeker
+              als wegspringen ervaart. */
         const plek = () => p.evaluate(() => {
-          const e = document.querySelector('.pc-h1, .rp-phero__t, h1');
+          const e = document.querySelector('.pc-balk, .pc-over, section:nth-of-type(2)');
           return e ? Math.round(e.getBoundingClientRect().top + window.scrollY) : 0;
         });
         let vorige = await plek();
@@ -180,7 +186,7 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
           vorige = nu;
         }
         if (ergste > SPELING) {
-          fouten.push(`${waar}: de titel springt ${ergste}px tijdens het scrollen, rond scrollpositie ${ergsteY}`);
+          fouten.push(`${waar}: de inhoud onder de hero springt ${ergste}px tijdens het scrollen, rond scrollpositie ${ergsteY}`);
         }
 
         /* 5. Op een telefoon verdwijnt de navigatierij. Dan moet de menuknop

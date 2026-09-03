@@ -1220,7 +1220,34 @@ export const REPLICA_CSS = `
    een 1366x768-laptop; harder dan dat mag het niet zijn, want dan snijdt een
    langere titel af tegen de kop aan. De hero groeit dus mee wanneer de inhoud
    plus de vrije kophoogte er niet in past. */
-.pc-hero--ruim { height: auto; min-height: 600px; display: flex; flex-direction: column; }
+/* De hero vult het scherm en blijft staan; de pagina schuift eroverheen.
+   Niet de volle 100svh: de balk met het formulier steekt 62px onder de hero uit
+   en hoort erbij. Samen vullen ze precies één scherm, zodat de bezoeker de kop,
+   de foto en het formulier in één blik heeft zonder te scrollen.
+
+   svh en niet vh: op een telefoon rekent vh met de adresbalk weg, waardoor de
+   hero bij het laden hoger is dan het zichtbare scherm en het formulier er net
+   onder valt.
+
+   sticky met top 0 houdt hem op zijn plek terwijl de rest eroverheen komt. Dat
+   is het wegvallen dat hier bedoeld is: geen beweging die zelf opvalt, gewoon
+   inhoud die de hero bedekt. */
+.pc-hero--ruim {
+  height: calc(100svh - 62px);
+  display: flex; flex-direction: column;
+  position: sticky; top: 0; z-index: 0;
+}
+/* Op een laag venster past de vaste ruimte onder de knop niet meer: bij 620px
+   hoogte vroegen de kophoogte, de tekst en 230px onderruimte samen 601px in een
+   hero van 558, en werd de knop tot een streepje van 18px platgedrukt. De
+   onderruimte krimpt daarom mee met het venster; boven de 885px blijft ze 230.
+   Alleen op een breed scherm: op een telefoon staat alles onder elkaar en heeft
+   het vat daar zijn eigen, veel kleinere onderruimte. */
+@media (min-width: 901px) { .pc-hero--ruim .pc-hero-vat { padding-bottom: min(230px, 26vh); } }
+/* Alles na de hero schuift eroverheen, dus moet het ervoor liggen en dekken.
+   Zonder eigen achtergrond schijnt de herofoto door de tekst heen. */
+.pc-hero--ruim ~ * { position: relative; z-index: 2; }
+.pc-hero--ruim ~ .pc-over { background: #fff; }
 /* Het vat vulde de hero met height:100%, wat bij een ouder zonder vaste hoogte
    niets meer betekent. Als flex-kind vult het de hero wel, ook als die groeit,
    en blijft de inhoud onderaan hangen. De foto ernaast staat absolute en valt

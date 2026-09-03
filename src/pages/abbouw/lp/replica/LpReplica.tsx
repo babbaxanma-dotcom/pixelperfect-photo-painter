@@ -290,6 +290,41 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
      achtergrond; zonder die achtergrond leest hij door de inhoud heen. */
   useEffect(() => wireVasteKop(), []);
 
+  /* De hero blijft staan terwijl de pagina eroverheen schuift. Zonder meer zou
+     de titel half onder de formulierkaart blijven hangen: een afgesneden woord
+     dat er tijdens het hele scrollen onderuit steekt. De inhoud vervaagt daarom
+     mee terwijl je de hero uit scrolt, over de eerste 380px, en is weg tegen de
+     tijd dat de kaart erover ligt. De foto blijft; die hoort bij het beeld dat
+     onder de pagina wegzakt.
+
+     Wie beweging heeft uitgezet in zijn systeem krijgt dit niet: dan blijft de
+     hero gewoon staan zoals hij is. */
+  useEffect(() => {
+    const vat = document.querySelector<HTMLElement>('.pc-hero--ruim .pc-hero-vat');
+    if (!vat) return;
+    const rustig = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let bezig = false;
+    const teken = () => {
+      bezig = false;
+      const deel = Math.min(1, Math.max(0, window.scrollY / 380));
+      vat.style.opacity = String(1 - deel);
+      vat.style.transform = `translateY(${-deel * 36}px)`;
+    };
+    const meet = () => { if (!bezig) { bezig = true; requestAnimationFrame(teken); } };
+    const zet = () => {
+      if (rustig.matches) { vat.style.opacity = ''; vat.style.transform = ''; return; }
+      teken();
+    };
+    zet();
+    window.addEventListener('scroll', meet, { passive: true });
+    rustig.addEventListener('change', zet);
+    return () => {
+      window.removeEventListener('scroll', meet);
+      rustig.removeEventListener('change', zet);
+      vat.style.opacity = ''; vat.style.transform = '';
+    };
+  }, []);
+
   /* Het menu sluit bij Escape en zodra het scherm breed genoeg is voor de gewone
      navigatierij, en zet de pagina eronder vast zolang het openstaat. Zonder dat
      scrolt de achtergrond mee onder het paneel door. */
