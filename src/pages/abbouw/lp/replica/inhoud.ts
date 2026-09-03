@@ -397,14 +397,19 @@ export const BADKAMER: PaginaInhoud = {
     alt: 'Badkamer met eiken meubel, opzetkom en zwart omkaderde douchewand, door AB Bouw Groep',
   },
   over: {
-    /* Een why-us, geen uitleg over badkamers. De kop stelt de vraag die de
-       bezoeker op dit punt heeft, en de tekst antwoordt met wat AB anders doet
-       dan een reeks losse vaklui: hetzelfde ploeg legt de leidingen en zet de
-       tegels. Dat is een feit over de werkwijze, geen belofte over het
-       resultaat. */
+    /* Een why-us die loopt als een verhaal, niet als een rij bewijsstukken.
+       Twee eerdere versies stapelden feitjes waar niemand om vraagt: de
+       startdatum op papier, elke post apart in de offerte. Waar, maar het
+       leest als een machine die zijn regels afvinkt.
+
+       Deze volgt de teksten die Mohammed aandroeg: hij spreekt het vertrouwen
+       uit ("u mag rekenen op") in plaats van het te bewijzen, noemt waarvoor
+       je terecht kunt met een voorbeeld dat een lezer herkent, en eindigt op
+       waar de lezer voor komt. Geen cijfer, geen jaartal, geen belofte over
+       een resultaat dat AB niet zelf in de hand heeft. */
     kop: ['Waarom kiezen voor', 'AB Bouw Groep'],
-    tekst: 'Sanitair, elektriciteit, waterdichting en tegelwerk zitten bij ons in één ploeg. Dezelfde mensen die de leidingen leggen, zetten ook de tegels, dus de volgorde en de droogtijden liggen in één hand. U hebt één aanspreekpunt van het uitbreken tot de laatste voeg.',
-    slot: 'De startdatum krijgt u op papier. In de offerte staat elke post apart: afbraak, materiaal, uitvoering en afvoer.',
+    tekst: 'Onze badkamerploeg verzorgt uw badkamer in de ruimste zin van het woord. Bij ons kan u terecht voor een volledige renovatie, of voor een aanpassing aan wat er staat: de stap van een ligbad naar een ruime inloopdouche, bijvoorbeeld. Wij werken met ervaren vakmensen, plannen de uitvoering nauwkeurig en volgen ze van dichtbij op.',
+    slot: 'U mag rekenen op één aanspreekpunt dat uw dossier kent, van de eerste kennismaking tot de oplevering. Zo krijgt u de badkamer die u voor ogen had, binnen de afgesproken termijn terwijl u van de werken zelf weinig merkt.',
     foto: bkOver,
     alt: 'Badkamer met dubbele lavabo op eiken meubel, bad en inloopdouche, door AB Bouw Groep',
   },

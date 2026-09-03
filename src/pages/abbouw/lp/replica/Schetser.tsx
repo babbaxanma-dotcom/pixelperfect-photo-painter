@@ -291,45 +291,70 @@ export default function Schetser() {
   const andersFoto = useRef<HTMLInputElement>(null);
   const andersVoor = useRef<string | null>(null);
 
+
+  /**
+   * De vragen als één rij stappen, in de volgorde waarin ze gesteld worden.
+   *
+   * De schetser toonde alle vragen onder elkaar: zeven blokken waar je doorheen
+   * moest scrollen voor je bij het formulier kwam, met de kans om er halverwege
+   * uit te stappen bij elke vraag die je niet meteen wist. Nu staat er één vraag
+   * op het scherm en gaat het vanzelf door naar de volgende, met de stappen die
+   * al beantwoord zijn erboven om op terug te klikken.
+   */
+  type Stap = { sleutel: string; vraag: string; as?: As };
+  const STAPPEN: Stap[] = useMemo(() => [
+    { sleutel: 'grootte', vraag: 'Hoe groot is uw badkamer?' },
+    { sleutel: 'wc', vraag: 'Zit het toilet in de badkamer?' },
+    ...ASSEN.map((as) => ({ sleutel: as.sleutel, vraag: as.vraag, as })),
+    { sleutel: 'slot', vraag: 'Waar mogen wij uw ontwerp naartoe sturen?' },
+  ], []);
+  const [stap, setStap] = useState(0);
+  const laatste = STAPPEN.length - 1;
+  const huidige = STAPPEN[Math.min(stap, laatste)];
+
+  /** Wat er op een stap gekozen is; leeg betekent nog niet beantwoord. */
+  const antwoordVan = (sleutel: string): string | null => {
+    if (sleutel === 'grootte') return grootte ? (RUIMTES.find((r) => r.sleutel === grootte)?.naam ?? grootte) : null;
+    if (sleutel === 'wc') return wc === null ? null : (wc ? 'in de badkamer' : 'apart');
+    if (sleutel === 'slot') return null;
+    const v = keuzes[sleutel];
+    if (!v) return null;
+    if (v === NIET_ERTUSSEN) return 'iets anders';
+    if (v === AAN_ONS) return 'wij kiezen';
+    const as = ASSEN.find((a) => a.sleutel === sleutel);
+    return as?.opties.find((o) => o.waarde === v)?.label ?? v;
+  };
+
+  /* Doorlopen gebeurt vanzelf, maar niet meteen: een korte tel laat de keuze
+     eerst oplichten, zodat je ziet wat je aangeraakt hebt voor het scherm
+     verspringt. Bij "staat er niet tussen" blijft de stap staan, want daar moet
+     nog getypt worden. */
+  /* De stappen die al een antwoord hebben, met een kort label. Dit is
+     tegelijk het overzicht van wat er vaststaat en de weg terug: elke knop
+     springt naar die stap zonder de rest te wissen. */
+  const beantwoorde = useMemo(() => STAPPEN.map((s, index) => {
+    const antwoord = antwoordVan(s.sleutel);
+    if (antwoord === null) return null;
+    /* De vraag zelf is te lang voor een knop; het kernwoord volstaat om te
+       herkennen waar het over ging. */
+    const kort = s.sleutel === 'grootte' ? 'Grootte'
+      : s.sleutel === 'wc' ? 'Toilet'
+      : (s.as?.vraag ?? s.vraag);
+    return { sleutel: s.sleutel, vraag: s.vraag, kort, antwoord, index };
+  }).filter((b): b is NonNullable<typeof b> => b !== null),
+  [STAPPEN, grootte, wc, keuzes]);
+
+  const gaVerder = (blijf = false) => {
+    if (blijf) return;
+    window.setTimeout(() => setStap((s) => Math.min(s + 1, laatste)), 260);
+  };
+
   const gekozenRuimte = grootte !== null && wc !== null;
 
-  /* Het beeld reageert op het toilet en op de tegelkeuze. Bestaat die
-     combinatie nog niet, dan valt hij terug op de basisafwerking en zegt het
-     onderschrift dat er iets anders te zien is dan wat er gekozen werd. */
-  const tegelkeuze = keuzes['Tegels'];
-  const toiletdeel = wc ? 'wc' : 'geenwc';
-  const { gevraagd, getoond, beeld: gekozenBeeld } = kiesBeeld(grootte || 'middel', toiletdeel, tegelkeuze);
 
   /* Het onderschrift benoemt de ruimte die te zien is. De grootte is de eerste
      vraag; zonder die bevestiging leest het beeld als een willekeurige foto. */
   const gekozenRuimteNaam = RUIMTES.find((r) => r.sleutel === grootte);
-  const ruimteNaam = gekozenRuimteNaam ? `${gekozenRuimteNaam.naam}e badkamer (${gekozenRuimteNaam.onder})` : 'Voorbeeldruimte';
-
-  /**
-   * De keuzes die de bezoeker al maakte, in de volgorde waarin hij ze maakte.
-   *
-   * Het beeld reageert op drie assen; de andere vier gaan mee in de aanvraag.
-   * Zonder dit lijstje klikt de bezoeker vier keuzes zonder dat er iets
-   * verandert, en lijkt het alsof ze niet meetellen.
-   */
-  const gemaakteKeuzes = useMemo(() => {
-    const uit: { label: string; waarde: string; inBeeld: boolean }[] = [];
-    if (gekozenRuimteNaam) uit.push({ label: 'Grootte', waarde: gekozenRuimteNaam.naam, inBeeld: true });
-    if (wc !== null) uit.push({ label: 'Toilet', waarde: wc ? 'in de badkamer' : 'apart', inBeeld: true });
-    for (const as of ASSEN) {
-      const v = keuzes[as.sleutel];
-      if (!v) continue;
-      /* Het label tonen, niet de waarde. De waarde is de sleutel waarop de
-         beelden en de aanvraag draaien en bevat woorden als "betonlook"; wat de
-         bezoeker leest staat in het label. */
-      const optie = as.opties.find((o) => o.waarde === v);
-      const leesbaar = v === NIET_ERTUSSEN ? 'iets anders'
-        : v === AAN_ONS ? 'wij kiezen' : (optie?.label ?? v);
-      uit.push({ label: as.vraag, waarde: leesbaar, inBeeld: as.sleutel === 'Tegels' });
-    }
-    return uit;
-  }, [gekozenRuimteNaam, wc, keuzes]);
-  const beeld = gekozenRuimte ? gekozenBeeld : null;
 
   const meldStart = () => {
     if (gemeld.current) return;
@@ -414,57 +439,134 @@ export default function Schetser() {
 
   return (
     <section className="pc-schets" id="schetser">
-      <div className="pc-vat pc-midden">
-        <h2 className="pc-h2--midden">Ontwerp uw<br />eigen badkamer</h2>
-        <p className="pc-schets-sub">
-          <strong>Gratis ontwerp van uw eigen badkamer.</strong> Geef aan wat u in gedachten hebt.
-        </p>
-      </div>
+      {/* De titel en de belofte staan bij de eerste vraag. Vanaf de tweede is
+          de bezoeker binnen: dan vertelt de voortgangsbalk waar hij is, en
+          kost een herhaalde kop alleen maar beeld dat de vraag nodig heeft. */}
+      {stap === 0 && (
+        <div className="pc-vat pc-midden">
+          <h2 className="pc-h2--midden">Ontwerp uw<br />eigen badkamer</h2>
+          <p className="pc-schets-sub">
+            <strong>Gratis visueel ontwerp van uw eigen badkamer.</strong> Geef aan wat u in gedachten hebt.
+          </p>
+        </div>
+      )}
 
-      <div className="pc-vat pc-schets-grid">
-        <div>
-          {/* Stap 1, pas als grootte én toilet ingevuld zijn, verschijnt de
-              ruimte die het dichtst bij zijn badkamer ligt. */}
-          <div className="pc-schets-as">
-            <h3>Hoe groot is uw badkamer?</h3>
+      <div className="pc-vat pc-schets-doorloop">
+        {/* De voortgang. Zonder dit is een reeks vragen een gat zonder bodem;
+            met een balk die vult weet je hoever je bent en dat het eindigt. */}
+        <div className="pc-schets-voort">
+          <div className="pc-schets-voort__baan">
+            <span style={{ width: `${(stap / laatste) * 100}%` }} />
+          </div>
+          <p className="pc-schets-voort__tel">Stap {stap + 1} van {STAPPEN.length}</p>
+        </div>
+
+        {/* Wat al beantwoord is, als knoppen. Terugklikken hoort te kunnen
+            zonder de rest kwijt te raken: dit is een doorloop, geen formulier
+            dat je in één keer goed moet invullen. */}
+        {beantwoorde.length > 0 && (
+          <div className="pc-schets-terug" aria-label="Uw antwoorden, klik om aan te passen">
+            {beantwoorde.map((b) => (
+              <button type="button" key={b.sleutel} onClick={() => setStap(b.index)}
+                className={b.index === stap ? 'is-aan' : undefined}
+                title={`${b.vraag} aanpassen`}>
+                <span>{b.kort}</span><strong>{b.antwoord}</strong>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* De vraag zelf. De sleutel op de stap laat React dit blok opnieuw
+            opbouwen, zodat de overgang telkens speelt en je voelt dat je een
+            stap verder bent. */}
+        <div className="pc-schets-vraag" key={stap}>
+          <h3>{huidige.vraag}</h3>
+
+          {huidige.sleutel === 'grootte' && (
             <div className="pc-schets-keuzes">
               {RUIMTES.map((r) => (
                 <button key={r.sleutel} type="button"
                   className={grootte === r.sleutel ? 'is-aan' : undefined}
                   aria-pressed={grootte === r.sleutel}
-                  onClick={() => { setGrootte(r.sleutel); meldStart(); }}>
+                  onClick={() => { setGrootte(r.sleutel); meldStart(); gaVerder(); }}>
                   <strong>{r.naam}</strong>
                   <span>{r.onder}</span>
                 </button>
               ))}
             </div>
-          </div>
+          )}
 
-          <div className="pc-schets-as">
-            <h3>Zit het toilet in de badkamer?</h3>
+          {huidige.sleutel === 'wc' && (
             <div className="pc-schets-keuzes pc-schets-keuzes--twee">
               {[true, false].map((v) => (
                 <button key={String(v)} type="button"
                   className={wc === v ? 'is-aan' : undefined}
                   aria-pressed={wc === v}
-                  onClick={() => { setWc(v); meldStart(); }}>
+                  onClick={() => { setWc(v); meldStart(); gaVerder(); }}>
                   <strong>{v ? 'Ja' : 'Nee'}</strong>
                   <span>{v ? 'toilet staat erin' : 'apart toilet'}</span>
                 </button>
               ))}
             </div>
-          </div>
+          )}
 
-          {gekozenRuimte && (
-            <>
-              {ASSEN.map((as) => {
-                const stalen = STALEN[as.sleutel];
-                const gekozen = keuzes[as.sleutel];
-                /* Het blok onder één vraag, dat alleen opengaat wanneer die
-                   vraag zelf buiten het rijtje valt. Beschrijven, een link of
-                   een foto: wat iemand in gedachten heeft zit even vaak in een
-                   beeld als in woorden. */
-                const eigenBlok = gekozen === NIET_ERTUSSEN && (
+          {huidige.as && (() => {
+            const as = huidige.as;
+            const stalen = STALEN[as.sleutel];
+            const gekozen = keuzes[as.sleutel];
+            const kies = (waarde: string) => {
+              setKeuzes((v) => ({ ...v, [as.sleutel]: waarde }));
+              meldStart();
+              /* Bij "staat er niet tussen" blijft de stap staan: daaronder komt
+                 het vak waar hij beschrijft wat hij dan wel wil. */
+              gaVerder(waarde === NIET_ERTUSSEN);
+            };
+            return (
+              <>
+                {stalen ? (
+                  <div className="pc-schets-stalen__rij" role="group" aria-label={as.vraag}>
+                    {as.opties.map((o) => (
+                      <button type="button" key={o.waarde}
+                        className={gekozen === o.waarde ? 'is-aan' : undefined}
+                        aria-pressed={gekozen === o.waarde}
+                        onClick={() => kies(o.waarde)}>
+                        <img src={stalen[o.waarde]} alt="" width={560} height={420} loading="lazy" decoding="async" />
+                        <span>{o.label}</span>
+                      </button>
+                    ))}
+                    <button type="button"
+                      className={`pc-schets-stalen__anders${gekozen === AAN_ONS ? ' is-aan' : ''}`}
+                      aria-pressed={gekozen === AAN_ONS} onClick={() => kies(AAN_ONS)}>
+                      Laat ons kiezen
+                    </button>
+                    <button type="button"
+                      className={`pc-schets-stalen__anders${gekozen === NIET_ERTUSSEN ? ' is-aan' : ''}`}
+                      aria-pressed={gekozen === NIET_ERTUSSEN} onClick={() => kies(NIET_ERTUSSEN)}>
+                      Staat er niet tussen
+                    </button>
+                  </div>
+                ) : (
+                  <div className="pc-schets-keuzes">
+                    {as.opties.map((o) => (
+                      <button key={o.waarde} type="button"
+                        className={gekozen === o.waarde ? 'is-aan' : undefined}
+                        aria-pressed={gekozen === o.waarde}
+                        onClick={() => kies(o.waarde)}>
+                        <strong>{o.label}</strong>
+                      </button>
+                    ))}
+                    <button type="button" className={gekozen === AAN_ONS ? 'is-aan' : undefined}
+                      aria-pressed={gekozen === AAN_ONS} onClick={() => kies(AAN_ONS)}>
+                      <strong>Laat ons kiezen</strong>
+                    </button>
+                    <button type="button" className={gekozen === NIET_ERTUSSEN ? 'is-aan' : undefined}
+                      aria-pressed={gekozen === NIET_ERTUSSEN} onClick={() => kies(NIET_ERTUSSEN)}>
+                      <strong>Staat er niet tussen</strong>
+                    </button>
+                  </div>
+                )}
+
+                {gekozen === NIET_ERTUSSEN && (
                   <div className="pc-schets-anders">
                     <label className="pc-schets-lijst">
                       <span>Wat had u in gedachten bij {as.vraag.toLowerCase()}?</span>
@@ -489,95 +591,14 @@ export default function Schetser() {
                       </figure>
                     )}
                   </div>
-                );
+                )}
+              </>
+            );
+          })()}
 
-                /* Waar stalen bestaan vervangen ze de keuzelijst: een lijst met
-                   "Walnoot" erin laat niet zien wat walnoot is. Waar ze niet
-                   bestaan — indeling en verwarming zijn geen materiaal — blijft
-                   de lijst staan. */
-                if (!stalen) return (
-                  <div key={as.sleutel}>
-                    <label className="pc-schets-lijst">
-                      <span>{as.vraag}</span>
-                      <select value={gekozen ?? ''}
-                        onChange={(e) => { setKeuzes((v) => ({ ...v, [as.sleutel]: e.target.value })); meldStart(); }}>
-                        <option value="" disabled>Kies…</option>
-                        {as.opties.map((o) => <option key={o.waarde} value={o.waarde}>{o.label}</option>)}
-                        <option value={AAN_ONS}>Laat ons kiezen</option>
-                        <option value={NIET_ERTUSSEN}>Staat er niet tussen</option>
-                      </select>
-                    </label>
-                    {eigenBlok}
-                  </div>
-                );
-                return (
-                  <div className="pc-schets-stalen" key={as.sleutel}>
-                    <span className="pc-schets-stalen__vraag">{as.vraag}</span>
-                    <div className="pc-schets-stalen__rij" role="group" aria-label={as.vraag}>
-                      {as.opties.map((o) => (
-                        <button type="button" key={o.waarde}
-                          className={gekozen === o.waarde ? 'is-aan' : undefined}
-                          aria-pressed={gekozen === o.waarde}
-                          onClick={() => { setKeuzes((v) => ({ ...v, [as.sleutel]: o.waarde })); meldStart(); }}>
-                          <img src={stalen[o.waarde]} alt="" width={560} height={420} loading="lazy" decoding="async" />
-                          <span>{o.label}</span>
-                        </button>
-                      ))}
-                      {/* Twee uitwegen naast de stalen: het zelf invullen, of het
-                          aan ons overlaten. Zonder de tweede blijft iemand zonder
-                          voorkeur hangen op een vraag die hij niet kan
-                          beantwoorden. */}
-                      <button type="button"
-                        className={`pc-schets-stalen__anders${gekozen === AAN_ONS ? ' is-aan' : ''}`}
-                        aria-pressed={gekozen === AAN_ONS}
-                        onClick={() => { setKeuzes((v) => ({ ...v, [as.sleutel]: AAN_ONS })); meldStart(); }}>
-                        Laat ons kiezen
-                      </button>
-                      <button type="button"
-                        className={`pc-schets-stalen__anders${gekozen === NIET_ERTUSSEN ? ' is-aan' : ''}`}
-                        aria-pressed={gekozen === NIET_ERTUSSEN}
-                        onClick={() => { setKeuzes((v) => ({ ...v, [as.sleutel]: NIET_ERTUSSEN })); meldStart(); }}>
-                        Staat er niet tussen
-                      </button>
-                    </div>
-                    {eigenBlok}
-                  </div>
-                );
-              })}
-
-            </>
-          )}
-        </div>
-
-        <div>
-          {/* Alleen de foto van de bezoeker staat hier groot. Het gegenereerde
-              voorbeeldbeeld is eruit: het volgde drie van de zeven vragen, en
-              de stalen bij elke keuze tonen het materiaal directer. */}
-          {foto && (
-            <figure className="pc-schets-beeld">
-              <img src={foto} alt="Uw badkamer" />
-              <figcaption>Uw foto</figcaption>
-            </figure>
-          )}
-
-          {/* Wat er al vaststaat, in de volgorde waarin het gekozen werd. Zo
-              staat de hele keuze op één plek bij elkaar voordat hij verstuurt. */}
-          {gemaakteKeuzes.length > 0 && (
-            <div className="pc-schets-keus">
-              <h4>Uw keuzes</h4>
-              <ul>
-                {gemaakteKeuzes.map((k) => (
-                  <li key={k.label}>
-                    <span>{k.label}</span>
-                    <strong>{k.waarde}</strong>
-                  </li>
-                ))}
-              </ul>
-
-            </div>
-          )}
-
-          {gekozenRuimte && (
+          {/* De laatste stap: een foto van de eigen badkamer, en waar het
+              ontwerp naartoe mag. */}
+          {huidige.sleutel === 'slot' && (
             <>
               <div className="pc-schets-opname">
                 <button type="button" className="pc-schets-cam" onClick={() => camera.current?.click()}>
@@ -588,12 +609,14 @@ export default function Schetser() {
                   of kies er een uit uw toestel
                 </button>
               </div>
-              <input ref={camera} type="file" accept="image/*" capture="environment" hidden onChange={neemFoto} />
-              <input ref={galerij} type="file" accept="image/*" hidden onChange={neemFoto} />
-              <input ref={andersFoto} type="file" accept="image/*" hidden onChange={neemAndersFoto} />
+              {foto && (
+                <figure className="pc-schets-beeld">
+                  <img src={foto} alt="Uw badkamer" />
+                  <figcaption>Uw foto</figcaption>
+                </figure>
+              )}
 
               <form className="pc-schets-form" onSubmit={verstuur} onFocusCapture={meldStart}>
-                <h3>Waar mogen wij uw ontwerp naartoe sturen?</h3>
                 <label className="pc-veld"><input name="naam" type="text" placeholder="Naam" autoComplete="name" aria-label="Naam" /></label>
                 <label className="pc-veld"><input name="telefoon" type="tel" placeholder="Telefoon" autoComplete="tel"
                   aria-label="Telefoon (verplicht)" aria-required="true" /></label>
@@ -614,6 +637,26 @@ export default function Schetser() {
             </>
           )}
         </div>
+
+        {/* Heen en terug. De knop vooruit staat uit tot er iets gekozen is:
+            doorklikken zonder antwoord levert een leeg ontwerp op. */}
+        <div className="pc-schets-nav">
+          <button type="button" className="pc-schets-nav__terug" disabled={stap === 0}
+            onClick={() => setStap((s) => Math.max(0, s - 1))}>
+            Terug
+          </button>
+          {stap < laatste && (
+            <button type="button" className="pc-knop pc-knop--accent"
+              disabled={antwoordVan(huidige.sleutel) === null}
+              onClick={() => setStap((s) => Math.min(laatste, s + 1))}>
+              Volgende<IcPijl />
+            </button>
+          )}
+        </div>
+
+        <input ref={camera} type="file" accept="image/*" capture="environment" hidden onChange={neemFoto} />
+        <input ref={galerij} type="file" accept="image/*" hidden onChange={neemFoto} />
+        <input ref={andersFoto} type="file" accept="image/*" hidden onChange={neemAndersFoto} />
       </div>
     </section>
   );

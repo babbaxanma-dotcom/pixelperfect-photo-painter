@@ -1349,4 +1349,89 @@ export const REPLICA_CSS = `
    er geen nieuwe tekstgrootte bijkomt. */
 .pc-hero-sub { font-size: 16px; line-height: 26px; color: var(--pc-grijs); margin-top: 14px; max-width: 34ch; }
 @media (max-width: 900px) { .pc-hero-sub { font-size: 15px; line-height: 23px; } }
+
+/* ── De badkamerdoorloop ──────────────────────────────────────────────
+   Eén vraag per scherm in plaats van zeven blokken onder elkaar. De maat is
+   zo gekozen dat vraag, antwoorden en navigatie samen in beeld passen zonder
+   te scrollen, ook op een laptop van 620px hoog. */
+.pc-schets-doorloop {
+  max-width: 720px; margin: 0 auto;
+  display: grid; gap: 18px;
+}
+/* De baan vult mee met elke stap. Dat is het enige wat hier beweegt, en het
+   is er om te tonen dat het ergens eindigt. */
+.pc-schets-voort__baan {
+  height: 4px; border-radius: 999px; background: #e6e4e0; overflow: hidden;
+}
+.pc-schets-voort__baan span {
+  display: block; height: 100%; border-radius: 999px;
+  background: var(--pc-accent); transition: width .32s ease;
+}
+.pc-schets-voort__tel {
+  margin: 8px 0 0; font-size: 13px; font-weight: 600; color: var(--pc-grijs);
+}
+
+/* De antwoorden die al vaststaan. Klikbaar, want aanpassen hoort te kunnen
+   zonder opnieuw te beginnen. */
+.pc-schets-terug { display: flex; flex-wrap: wrap; gap: 8px; }
+.pc-schets-terug button {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  padding: 7px 12px; border-radius: 999px;
+  border: 1.5px solid var(--pc-lijn-2); background: #fff;
+  font-size: 12.5px; line-height: 16px; cursor: pointer;
+  transition: border-color .16s ease;
+}
+.pc-schets-terug button:hover { border-color: #cfccc6; }
+.pc-schets-terug button.is-aan { border-color: var(--pc-accent); box-shadow: 0 0 0 1px var(--pc-accent); }
+.pc-schets-terug button span { color: var(--pc-grijs); }
+.pc-schets-terug button strong { color: var(--pc-ink); font-weight: 700; }
+
+/* De vraag in beeld. Hij komt van rechts binnen: kort, één keer per stap,
+   zodat de overgang voelbaar is zonder een show te worden. */
+.pc-schets-vraag { animation: pc-schets-in .28s ease both; }
+.pc-schets-vraag > h3 {
+  margin: 0 0 16px; font-size: 24px; line-height: 32px;
+  font-weight: 600; letter-spacing: -.02em; color: var(--pc-ink);
+}
+@keyframes pc-schets-in {
+  from { opacity: 0; transform: translateX(18px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pc-schets-vraag { animation: none; }
+  .pc-schets-voort__baan span { transition: none; }
+}
+
+/* Heen en terug, onderaan. Terug is een tekstknop: hij hoort er te zijn,
+   maar mag de aandacht niet wegnemen van de vraag zelf. */
+.pc-schets-nav { display: flex; align-items: center; gap: 14px; }
+.pc-schets-nav__terug {
+  padding: 10px 4px; background: none; border: 0;
+  font-size: 14px; font-weight: 600; color: var(--pc-grijs); cursor: pointer;
+}
+.pc-schets-nav__terug:disabled { opacity: .35; cursor: default; }
+.pc-schets-nav .pc-knop { margin-left: auto; }
+.pc-schets-nav .pc-knop:disabled { opacity: .4; pointer-events: none; }
+
+/* In de doorloop staan de vragen zonder stalen als knoppenrij, net als de
+   grootte en het toilet: op één vraag per scherm is een uitklaplijst een
+   klik extra zonder dat er iets bij te zien is. */
+.pc-schets-doorloop .pc-schets-keuzes {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;
+}
+@media (max-width: 560px) {
+  .pc-schets-doorloop { gap: 14px; }
+  .pc-schets-vraag > h3 { font-size: 21px; line-height: 28px; }
+  .pc-schets-doorloop .pc-schets-keuzes { grid-template-columns: 1fr 1fr; }
+}
+
+/* Een laptop van 1366x768 houdt na de browserbalken ongeveer 620px over. Twee
+   rijen stalen van 74px pasten daar net niet in; met 58px en iets minder
+   ruimte eromheen blijft de hele vraag in beeld. */
+@media (max-height: 700px) and (min-width: 561px) {
+  .pc-schets-doorloop { gap: 12px; }
+  .pc-schets-vraag > h3 { margin-bottom: 12px; font-size: 21px; line-height: 28px; }
+  .pc-schets-doorloop .pc-schets-stalen__rij img { height: 58px; }
+  .pc-schets-doorloop .pc-schets-stalen__anders { min-height: 90px; }
+}
 `;
