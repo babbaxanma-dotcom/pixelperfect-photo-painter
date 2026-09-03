@@ -156,6 +156,10 @@ import sKraanGoud from '@/assets/schetser/s-kraan-goud.jpg';
 import sKraanRvs from '@/assets/schetser/s-kraan-rvs.jpg';
 
 const NIET_ERTUSSEN = 'anders';
+/* Niet iedereen heeft een voorkeur, en dan is doorklikken zonder te kiezen
+   vervelender dan kunnen zeggen dat wij het invullen. Deze waarde gaat mee in
+   de aanvraag, zodat de ploeg weet waar hij vrij is en waar niet. */
+const AAN_ONS = 'aanons';
 
 /**
  * Stalen per keuze, zoals in een badkamerzaak.
@@ -265,16 +269,27 @@ export default function Schetser() {
   const [grootte, setGrootte] = useState<string | null>(null);
   const [wc, setWc] = useState<boolean | null>(null);
   const [keuzes, setKeuzes] = useState<Record<string, string>>({});
-  const [toelichting, setToelichting] = useState('');
-  /* Wie 'staat er niet tussen' kiest heeft vaak een voorbeeld in gedachten dat
-     ergens op internet staat. Zonder dit veld kon hij dat nergens kwijt. */
-  const [voorbeeldLink, setVoorbeeldLink] = useState('');
+  /* Per vraag apart, niet één keer voor alles. Wie bij de tegels iets anders
+     wil dan de zes stalen, bedoelt iets anders dan wie bij de kranen buiten het
+     rijtje valt: één gedeeld tekstvak dwong hem die twee door elkaar te
+     schrijven. Elk product heeft dus zijn eigen beschrijving, link en foto. */
+  const [anders, setAnders] = useState<Record<string, { tekst: string; link: string; foto: string | null }>>({});
+  const zetAnders = (sleutel: string, veld: 'tekst' | 'link' | 'foto', waarde: string | null) =>
+    setAnders((v) => ({
+      ...v,
+      [sleutel]: { tekst: '', link: '', foto: null, ...v[sleutel], [veld]: waarde },
+    }));
   const [foto, setFoto] = useState<string | null>(null);
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
   const gemeld = useRef(false);
   const camera = useRef<HTMLInputElement>(null);
   const galerij = useRef<HTMLInputElement>(null);
+  /* Eén bestandskiezer voor alle voorbeeldfoto's. Welke vraag hem opende staat
+     hier, want een aparte input per vraag zou er zeven in de pagina zetten die
+     op één na altijd stilstaan. */
+  const andersFoto = useRef<HTMLInputElement>(null);
+  const andersVoor = useRef<string | null>(null);
 
   const gekozenRuimte = grootte !== null && wc !== null;
 
@@ -308,18 +323,29 @@ export default function Schetser() {
          beelden en de aanvraag draaien en bevat woorden als "betonlook"; wat de
          bezoeker leest staat in het label. */
       const optie = as.opties.find((o) => o.waarde === v);
-      uit.push({ label: as.vraag, waarde: v === NIET_ERTUSSEN ? 'iets anders' : (optie?.label ?? v), inBeeld: as.sleutel === 'Tegels' });
+      const leesbaar = v === NIET_ERTUSSEN ? 'iets anders'
+        : v === AAN_ONS ? 'wij kiezen' : (optie?.label ?? v);
+      uit.push({ label: as.vraag, waarde: leesbaar, inBeeld: as.sleutel === 'Tegels' });
     }
     return uit;
   }, [gekozenRuimteNaam, wc, keuzes]);
   const beeld = gekozenRuimte ? gekozenBeeld : null;
-  const ietsAnders = useMemo(
-    () => Object.values(keuzes).some((v) => v === NIET_ERTUSSEN), [keuzes]);
 
   const meldStart = () => {
     if (gemeld.current) return;
     gemeld.current = true;
     trackFormStart('lp:badkamerrenovatie:schetser');
+  };
+
+  const neemAndersFoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const bestand = e.target.files?.[0];
+    const sleutel = andersVoor.current;
+    e.target.value = '';
+    andersVoor.current = null;
+    if (!bestand || !sleutel) return;
+    meldStart();
+    try { zetAnders(sleutel, 'foto', await verklein(bestand)); }
+    catch { setFout('Die foto konden we niet lezen. Probeer er een andere.'); }
   };
 
   const neemFoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -347,13 +373,26 @@ export default function Schetser() {
     setBezig(true);
 
     const ruimte = RUIMTES.find((r) => r.sleutel === grootte);
+    /* De samenvatting per vraag, zodat de ploeg weet wat waar bij hoort. Wie
+       bij de tegels een link geeft en bij de kranen een beschrijving, kreeg dat
+       vroeger als één brok tekst zonder te zeggen waar het over ging. */
+    const perVraag = ASSEN.flatMap((a) => {
+      const v = keuzes[a.sleutel];
+      if (!v) return [];
+      const eigen = anders[a.sleutel];
+      const gekozenTekst = v === NIET_ERTUSSEN ? 'iets anders'
+        : v === AAN_ONS ? 'laat AB kiezen' : v;
+      const extra = v === NIET_ERTUSSEN ? [
+        eigen?.tekst?.trim() && `wens: ${eigen.tekst.trim()}`,
+        eigen?.link?.trim() && `voorbeeld: ${eigen.link.trim()}`,
+        eigen?.foto && 'foto meegestuurd',
+      ].filter(Boolean) : [];
+      return [`${a.sleutel}: ${gekozenTekst}${extra.length ? ` (${extra.join(', ')})` : ''}`];
+    });
     const samenvatting = [
       ruimte && `Grootte: ${ruimte.naam} (${ruimte.onder})`,
       wc !== null && `Toilet in de badkamer: ${wc ? 'ja' : 'nee'}`,
-      ...ASSEN.map((a) => keuzes[a.sleutel]
-        && `${a.sleutel}: ${keuzes[a.sleutel] === NIET_ERTUSSEN ? 'iets anders' : keuzes[a.sleutel]}`),
-      toelichting.trim() && `Eigen wens: ${toelichting.trim()}`,
-      voorbeeldLink.trim() && `Voorbeeld: ${voorbeeldLink.trim()}`,
+      ...perVraag,
       foto && 'Bezoeker heeft een foto van zijn badkamer meegestuurd.',
     ].filter(Boolean).join(' · ');
 
@@ -420,22 +459,57 @@ export default function Schetser() {
             <>
               {ASSEN.map((as) => {
                 const stalen = STALEN[as.sleutel];
+                const gekozen = keuzes[as.sleutel];
+                /* Het blok onder één vraag, dat alleen opengaat wanneer die
+                   vraag zelf buiten het rijtje valt. Beschrijven, een link of
+                   een foto: wat iemand in gedachten heeft zit even vaak in een
+                   beeld als in woorden. */
+                const eigenBlok = gekozen === NIET_ERTUSSEN && (
+                  <div className="pc-schets-anders">
+                    <label className="pc-schets-lijst">
+                      <span>Wat had u in gedachten bij {as.vraag.toLowerCase()}?</span>
+                      <textarea rows={3} value={anders[as.sleutel]?.tekst ?? ''}
+                        onChange={(e) => zetAnders(as.sleutel, 'tekst', e.target.value)}
+                        placeholder="Beschrijf het gerust in uw eigen woorden." />
+                    </label>
+                    <label className="pc-schets-lijst">
+                      <span>Of een link naar een voorbeeld</span>
+                      <input type="url" inputMode="url" value={anders[as.sleutel]?.link ?? ''}
+                        onChange={(e) => zetAnders(as.sleutel, 'link', e.target.value)}
+                        placeholder="https://" />
+                    </label>
+                    <button type="button" className="pc-schets-anders__foto"
+                      onClick={() => { andersVoor.current = as.sleutel; andersFoto.current?.click(); }}>
+                      {anders[as.sleutel]?.foto ? 'Andere foto kiezen' : 'Of stuur een foto mee'}
+                    </button>
+                    {anders[as.sleutel]?.foto && (
+                      <figure className="pc-schets-anders__beeld">
+                        <img src={anders[as.sleutel]!.foto!} alt={`Voorbeeld voor ${as.vraag.toLowerCase()}`} />
+                        <figcaption>Uw voorbeeld voor {as.vraag.toLowerCase()}</figcaption>
+                      </figure>
+                    )}
+                  </div>
+                );
+
                 /* Waar stalen bestaan vervangen ze de keuzelijst: een lijst met
                    "Walnoot" erin laat niet zien wat walnoot is. Waar ze niet
                    bestaan — indeling en verwarming zijn geen materiaal — blijft
                    de lijst staan. */
                 if (!stalen) return (
-                  <label className="pc-schets-lijst" key={as.sleutel}>
-                    <span>{as.vraag}</span>
-                    <select value={keuzes[as.sleutel] ?? ''}
-                      onChange={(e) => { setKeuzes((v) => ({ ...v, [as.sleutel]: e.target.value })); meldStart(); }}>
-                      <option value="" disabled>Kies…</option>
-                      {as.opties.map((o) => <option key={o.waarde} value={o.waarde}>{o.label}</option>)}
-                      <option value={NIET_ERTUSSEN}>Staat er niet tussen</option>
-                    </select>
-                  </label>
+                  <div key={as.sleutel}>
+                    <label className="pc-schets-lijst">
+                      <span>{as.vraag}</span>
+                      <select value={gekozen ?? ''}
+                        onChange={(e) => { setKeuzes((v) => ({ ...v, [as.sleutel]: e.target.value })); meldStart(); }}>
+                        <option value="" disabled>Kies…</option>
+                        {as.opties.map((o) => <option key={o.waarde} value={o.waarde}>{o.label}</option>)}
+                        <option value={AAN_ONS}>Laat ons kiezen</option>
+                        <option value={NIET_ERTUSSEN}>Staat er niet tussen</option>
+                      </select>
+                    </label>
+                    {eigenBlok}
+                  </div>
                 );
-                const gekozen = keuzes[as.sleutel];
                 return (
                   <div className="pc-schets-stalen" key={as.sleutel}>
                     <span className="pc-schets-stalen__vraag">{as.vraag}</span>
@@ -449,6 +523,16 @@ export default function Schetser() {
                           <span>{o.label}</span>
                         </button>
                       ))}
+                      {/* Twee uitwegen naast de stalen: het zelf invullen, of het
+                          aan ons overlaten. Zonder de tweede blijft iemand zonder
+                          voorkeur hangen op een vraag die hij niet kan
+                          beantwoorden. */}
+                      <button type="button"
+                        className={`pc-schets-stalen__anders${gekozen === AAN_ONS ? ' is-aan' : ''}`}
+                        aria-pressed={gekozen === AAN_ONS}
+                        onClick={() => { setKeuzes((v) => ({ ...v, [as.sleutel]: AAN_ONS })); meldStart(); }}>
+                        Laat ons kiezen
+                      </button>
                       <button type="button"
                         className={`pc-schets-stalen__anders${gekozen === NIET_ERTUSSEN ? ' is-aan' : ''}`}
                         aria-pressed={gekozen === NIET_ERTUSSEN}
@@ -456,33 +540,11 @@ export default function Schetser() {
                         Staat er niet tussen
                       </button>
                     </div>
+                    {eigenBlok}
                   </div>
                 );
               })}
 
-              {/* Wie "staat er niet tussen" koos, moet kunnen zeggen wat hij dan
-                  wél wil. Beschrijven, een link naar een voorbeeld, of een foto:
-                  drie manieren, want wat iemand in gedachten heeft zit even vaak
-                  in een beeld als in woorden. */}
-              {ietsAnders && (
-                <div className="pc-schets-anders">
-                  <label className="pc-schets-lijst">
-                    <span>Wat had u in gedachten?</span>
-                    <textarea rows={3} value={toelichting} onChange={(e) => setToelichting(e.target.value)}
-                      placeholder="Beschrijf het gerust in uw eigen woorden." />
-                  </label>
-                  <label className="pc-schets-lijst">
-                    <span>Of een link naar een voorbeeld</span>
-                    <input type="url" inputMode="url" value={voorbeeldLink}
-                      onChange={(e) => setVoorbeeldLink(e.target.value)}
-                      placeholder="https://" />
-                  </label>
-                  <button type="button" className="pc-schets-anders__foto"
-                    onClick={() => galerij.current?.click()}>
-                    {foto ? 'Andere foto kiezen' : 'Of stuur een foto mee'}
-                  </button>
-                </div>
-              )}
             </>
           )}
         </div>
@@ -528,6 +590,7 @@ export default function Schetser() {
               </div>
               <input ref={camera} type="file" accept="image/*" capture="environment" hidden onChange={neemFoto} />
               <input ref={galerij} type="file" accept="image/*" hidden onChange={neemFoto} />
+              <input ref={andersFoto} type="file" accept="image/*" hidden onChange={neemAndersFoto} />
 
               <form className="pc-schets-form" onSubmit={verstuur} onFocusCapture={meldStart}>
                 <h3>Waar mogen wij uw ontwerp naartoe sturen?</h3>

@@ -502,6 +502,11 @@ export const REPLICA_CSS = `
   font-size: 14px; font-weight: 600; color: var(--pc-ink);
   transition: border-color .16s ease; }
 .pc-schets-anders__foto:hover { border-color: #cfccc6; }
+/* De voorbeeldfoto hoort bij de vraag waar hij onder staat, dus blijft hij daar
+   klein staan in plaats van naar het grote beeld te springen. */
+.pc-schets-anders__beeld { margin: 0; display: grid; gap: 6px; justify-items: start; }
+.pc-schets-anders__beeld img { max-width: 220px; border-radius: 10px; display: block; }
+.pc-schets-anders__beeld figcaption { font-size: 13px; color: var(--pc-grijs); }
 
 /* Stalen: een rij beelden per uitvoering. Een keuzelijst met "Walnoot" erin
    laat niet zien wat walnoot is; een uitsnede uit dezelfde ruimte wel. */
@@ -515,8 +520,10 @@ export const REPLICA_CSS = `
   display: flex; flex-direction: column;
   transition: border-color .16s ease, box-shadow .16s ease; }
 .pc-schets-stalen__rij button:hover { border-color: #cfccc6; }
-.pc-schets-stalen__rij button.is-aan { border-color: var(--pc-ink);
-  box-shadow: 0 0 0 1px var(--pc-ink); }
+/* Hetzelfde goud als de keuzeknoppen erboven. Deze rij stond op zwart, dus
+   leerde de bezoeker twee signalen voor "dit heb ik gekozen" op één scherm. */
+.pc-schets-stalen__rij button.is-aan { border-color: var(--pc-accent);
+  box-shadow: 0 0 0 1px var(--pc-accent); }
 .pc-schets-stalen__rij img { width: 100%; height: 74px; object-fit: cover; display: block; }
 .pc-schets-stalen__rij button > span { display: block; padding: 7px 8px 8px;
   font-size: 12.5px; line-height: 16px; font-weight: 600; color: var(--pc-ink); }
