@@ -73,10 +73,8 @@ const MERKEN = [
 ];
 
 /** Elke glyph van "120+" krijgt een eigen foto, net als de drie in de referentie. */
-const GETAL_GLYPHS = [
-  { teken: '1', foto: glyph1 }, { teken: '2', foto: glyph2 },
-  { teken: '0', foto: glyph3 }, { teken: '+', foto: glyph4 },
-];
+const GLYPH_TEKENS = ['1', '2', '0', '+'];
+const GLYPH_STANDAARD = [glyph1, glyph2, glyph3, glyph4];
 /** De zes divisies van AB Bouw Groep. */
 const DIVISIES = ['AB Construct', 'AB Dakwerken', 'AB Gevelbekleding',
   'AB Interieurwerken', 'AB Bad & Wellness', 'AB Ecologisch'];
@@ -591,8 +589,10 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
           {inhoud.toonTeller !== false && (
           <div>
             <div className="pc-getal">
-              {GETAL_GLYPHS.map(({ teken, foto }, i) => (
-                <span key={i} style={{ backgroundImage: `url(${foto})` }}>{teken}</span>
+              {GLYPH_TEKENS.map((teken, i) => (
+                <span key={i} style={{
+                  backgroundImage: `url(${(inhoud.glyphFotos ?? GLYPH_STANDAARD)[i]})`,
+                }}>{teken}</span>
               ))}
             </div>
             <p className="pc-getal-label">Realisaties</p>

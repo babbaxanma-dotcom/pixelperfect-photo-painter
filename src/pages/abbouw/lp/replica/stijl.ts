@@ -1240,9 +1240,18 @@ export const REPLICA_CSS = `
 .pc-hero--ruim .pc-hero-sluier { left: 60%; }
 .pc-hero--ruim .pc-hero-vlak { width: 60%; }
 @media (max-width: 900px) {
-  .pc-hero--ruim { height: auto; }
+  /* De 600px is een maat voor een breed scherm, waar de tekst naast de foto
+     staat. Op een telefoon staat alles onder elkaar en heeft de hero maar de
+     hoogte van zijn inhoud nodig. Bleef de ondergrens staan, dan rekte de hero
+     uit tot 600px terwijl de inhoud er 184 vulde: de titel hing dan 156px
+     onder de kop in een leeg cream vlak. */
+  .pc-hero--ruim { height: auto; min-height: 0; }
   .pc-hero--ruim .pc-hero-foto, .pc-hero--ruim .pc-hero-sluier { left: 0; }
   .pc-hero--ruim .pc-hero-vlak { width: 100%; }
+  /* De balk hoort hier onder de foto, niet eroverheen. Op een breed scherm valt
+     ze over een foto die de halve hero vult; hier is de foto een band van
+     ruim 200px en dekte 110px overlap de helft ervan af. */
+  .pc-hero--ruim + .pc-balk { margin-top: 0; }
 }
 /* Geen eigen tussenruimte: de kop hoort op elke pagina dezelfde te zijn.
    16px is de waarde die de homepage al had. */

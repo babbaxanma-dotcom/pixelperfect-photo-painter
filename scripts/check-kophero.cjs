@@ -88,6 +88,27 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
             heroForm: !!form,
             verstuurOnder: verstuur ? Math.round(R(verstuur).bottom) : null,
             heroknopHoogte: heroknop ? Math.round(R(heroknop).height) : null,
+            fotoOnder: q('.pc-hero-foto') ? Math.round(R(q('.pc-hero-foto')).bottom) : null,
+            balkBoven: q('.pc-balk') ? Math.round(R(q('.pc-balk')).top) : null,
+            /* Het bovenste element in de hero dat werkelijk iets toont. */
+            eersteInhoud: (() => {
+              const hero = q('.pc-hero, .rp-phero');
+              if (!hero) return null;
+              let top = Infinity;
+              for (const e of hero.querySelectorAll('*')) {
+                /* De kop staat op een telefoon binnen de hero, als eerste blok
+                   in de kolom. Zonder deze uitzondering telt zijn logo als het
+                   eerste stuk inhoud en meet deze check altijd nul. */
+                if (e.closest('.pc-kop')) continue;
+                const r = e.getBoundingClientRect();
+                if (r.height < 4 || r.width < 4) continue;
+                const heeftTekst = [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
+                const isBeeld = e.tagName === 'IMG' || e.tagName === 'SVG';
+                if (!heeftTekst && !isBeeld) continue;
+                top = Math.min(top, r.top);
+              }
+              return top === Infinity ? null : Math.round(top);
+            })(),
             vouw: window.innerHeight,
           };
         });
@@ -114,6 +135,28 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
               inhoud niet in de hero past. */
         if (m.heroknopHoogte !== null && m.heroknopHoogte < 40) {
           fouten.push(`${waar}: de heroknop is platgedrukt tot ${m.heroknopHoogte}px`);
+        }
+
+        /* 3b. Leegte onder de kop. Op een telefoon staat alles onder elkaar en
+               heeft de hero alleen de hoogte van zijn inhoud nodig. Bleef er een
+               ondergrens van een breed scherm staan, dan rekte de hero uit en
+               hing de inhoud in een leeg vlak: 156px niets tussen de kop en de
+               eerste letter. Niemand meet dat, iedereen ziet het.
+
+               Gemeten tot het EERSTE stuk inhoud, niet tot de titel: op een
+               gewone pagina staat er een kruimelpad boven de titel, en dat is
+               inhoud, geen leegte. */
+        if (breedte < 500 && m.eersteInhoud !== null && m.kopOnder !== null) {
+          const leeg = m.eersteInhoud - m.kopOnder;
+          if (leeg > 70) fouten.push(`${waar}: ${leeg}px leegte onder de kop voor er inhoud komt`);
+        }
+
+        /* 3c. De balk hoort op een telefoon onder de foto, niet eroverheen.
+               Daar is de foto een band van ruim 200px, en een overlap uit de
+               brede opmaak dekt daar de helft van af. */
+        if (breedte < 500 && m.fotoOnder !== null && m.balkBoven !== null) {
+          const overlap = m.fotoOnder - m.balkBoven;
+          if (overlap > 8) fouten.push(`${waar}: het formulier dekt ${overlap}px van de herofoto af`);
         }
 
         /* 4. Scrollen met het wiel, zoals een bezoeker het doet. De plek van de

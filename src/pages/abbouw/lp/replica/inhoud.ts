@@ -53,6 +53,12 @@ import cirkelFoto from '@/assets/lp-diensten/badkamer-hero.jpg';
 
 import bkHero from '@/assets/lp-diensten/tegelwerken-g1.jpg';
 import bkOver from '@/assets/lp-diensten/realisaties/badkamer-nieuw.jpg';
+/* De vier beelden in de letters van 120+ op de badkamerpagina. Vier verschillende
+   werven, zodat het getal niet vier keer dezelfde ruimte toont. */
+import bkGlyph1 from '@/assets/lp-diensten/realisaties/badkamer-p1-a.jpg';
+import bkGlyph2 from '@/assets/lp-diensten/realisaties/badkamer-p2-a.jpg';
+import bkGlyph3 from '@/assets/lp-diensten/realisaties/badkamer-p3-a.jpg';
+import bkGlyph4 from '@/assets/lp-diensten/realisaties/badkamer-p4-a.jpg';
 import bkDienstenBg from '@/assets/lp-diensten/tegelwerken-what.jpg';
 import bkKaartSanitair from '@/assets/lp-diensten/badkamer-g3.jpg';
 import bkContact from '@/assets/lp-diensten/badkamer-hero.jpg';
@@ -87,6 +93,12 @@ export type PaginaInhoud = {
    * bestaande, al gepubliceerde beoordelingen van abgroep.be.
    */
   reviews?: { text: string; name: string; role: string }[];
+  /**
+   * De vier foto's in de letters van "120+". Blijft dit leeg, dan staan er
+   * renovatiebeelden. Op een dienstpagina hoort in dat getal het werk te staan
+   * waar de bezoeker voor kwam: wie een badkamer zoekt, ziet daar geen daken.
+   */
+  glyphFotos?: string[];
   /**
    * Navigatie in de kop. Blijft dit leeg, dan staat de LP-navigatie er: links
    * die alleen naar een sectie van dezelfde pagina springen. Een landingspagina
@@ -343,6 +355,10 @@ export const BADKAMER: PaginaInhoud = {
   dienst: 'badkamerrenovatie',
   divisie: 'ab_bad__wellness',
   bronPrefix: 'lp:badkamerrenovatie',
+
+  /* Het getal 120+ toont hier badkamers. Met de renovatiebeelden stonden er
+     daken en gevels in een cijfer dat over badkamerwerk gaat. */
+  glyphFotos: [bkGlyph1, bkGlyph2, bkGlyph3, bkGlyph4],
 
   /*
    * Eigen navigatie. De standaardlijst had een link naar de dienstensectie en
