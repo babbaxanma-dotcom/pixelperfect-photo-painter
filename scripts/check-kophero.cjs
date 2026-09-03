@@ -32,8 +32,16 @@ const POORT = 4382;
 
 /* De landingspaginas met een heroformulier, plus een gewone pagina zodat de
    kop daar ook meegemeten wordt. */
-const PAGINAS = ['/', '/badkamerrenovatie', '/totaalrenovatie', '/over'];
-const SCHERMEN = [[1440, 900], [1366, 620], [390, 844]];
+/* Ook de /lp/-adressen. Die wijzen naar dezelfde component, maar het zijn de
+   adressen uit de advertenties en dus wat bezoekers werkelijk openen. Ik testte
+   alleen /badkamerrenovatie terwijl Mohammed naar /lp/badkamerrenovatie keek:
+   een guard die de echte adressen niet kent, meet de verkeerde pagina. */
+const PAGINAS = ['/', '/badkamerrenovatie', '/lp/badkamerrenovatie',
+  '/totaalrenovatie', '/lp/totaalrenovatie', '/over'];
+/* Drie soorten scherm plus dat van Mohammed zelf. Zijn venster is breed maar
+   laag: 1531x708 na browserbalken en taakbalk. Juist daar valt het formulier
+   het eerst weg, en juist daar keek ik niet. */
+const SCHERMEN = [[1531, 708], [1440, 900], [1366, 620], [390, 844]];
 
 /* Een subpixel-afronding bij het schalen van een beeld is geen sprong. */
 const SPELING = 2;
