@@ -976,9 +976,26 @@
   position: absolute; z-index: 1; top: 0; right: 0; width: 430px;
   display: flex; flex-direction: column; align-items: flex-end;
 }
-/* De boog uit de hero moet omhoog de sectiemarge in, anders staat hij als
-   los stuk in de witruimte tussen de hero en de eerste kaart van het pad. */
-.rp-pad__boog--start { margin-top: -104px; }
+/* De boog uit de hero verbindt twee kaarten die ver uit elkaar staan: de
+   hero-kaart hangt rechtsboven, de eerste kaart van het pad linksonder. Hij
+   begint dus rechts, onder het midden van de hero-kaart, en eindigt links,
+   boven het midden van de eerste kaart.
+
+   De marges zijn gemeten, niet geschat. De kaarten zijn 430px breed in een
+   container van 974px: het midden van de linkerkaart ligt op 215px, dat van de
+   rechter op 759px. De pijlpunt zit 16px van de linkerrand van de tekening, dus
+   staat die 199px van de containerrand. Omhoog moet hij de sectiemarge in,
+   anders zweeft hij los in de witruimte tussen de hero en de eerste kaart. */
+.rp-pad__boog--start {
+  align-self: flex-start;
+  margin: -184px 0 0 199px;
+  /* De hero erboven is een gepositioneerd element met een eigen achtergrond en
+     ligt daardoor over alles wat niet gepositioneerd is. Het stuk van de boog
+     dat de hero in steekt werd zo weggedekt: de pijl leek pas onder de hero te
+     beginnen in plaats van bij de kaart. Positie en stapelplek halen hem naar
+     voren. */
+  position: relative; z-index: 2;
+}
 .rp-pad__ic { display: block; }
 
 @media (max-width: 900px) {

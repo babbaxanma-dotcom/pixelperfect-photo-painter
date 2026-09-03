@@ -82,7 +82,14 @@ export const REPLICA_CSS = `
 /* De kop over de herofoto neemt geen ruimte in de stroom in, dus kan hij niet
    sticky: dan zou hij binnen de hero blijven en er onderaan uit lopen. Fixed
    houdt hem op het scherm; de hero rekent de hoogte al in met padding. */
-.pc-kop { position: fixed; top: 0; left: 0; right: 0; height: 137px; z-index: 30;
+.pcx .rp-burger { display: none; }
+/* Het sluitkruis van het mobiele paneel raakt zijn rand kwijt aan dezelfde
+   reset. Zelfde vorm als de knop die het paneel opende. */
+.pcx .rp-mob__close {
+  width: 46px; height: 46px; display: grid; place-items: center;
+  border: 1.5px solid var(--pc-lijn-2); border-radius: 10px; background: #fff; color: var(--pc-ink);
+}
+.pc-kop { --kop-in-stroom: 0; position: fixed; top: 0; left: 0; right: 0; height: 137px; z-index: 30;
   transition: background .22s var(--pc-ease, ease), box-shadow .22s var(--pc-ease, ease); }
 /* Zolang je bovenaan staat blijft hij doorzichtig over de foto. Zodra je
    scrolt komt er wit onder, anders loopt de tekst door de inhoud heen. */
@@ -200,8 +207,17 @@ export const REPLICA_CSS = `
    hero van 812px; werd die korter, dan zakte de kop tot tegen de formulierbalk
    en liep de tekst erachter. Vanaf onderen gemeten blijft de afstand tot die
    balk altijd gelijk, ongeacht de hoogte van de hero. */
+/* 230px, was 270. De vrije kophoogte hierboven maakte de hero 66px hoger en
+   duwde de verstuurknop op een 1366x768-laptop onder de vouw. Dit wint dat terug
+   zonder de heroknop te verplaatsen: die hangt aan dezelfde onderkant, dus knop
+   en hero schuiven samen op. Alleen de witte balk komt 40px hoger over de foto.
+   De inhoud hangt aan de onderkant en groeit dus naar boven. De kop is fixed en
+   ligt erover, dus moet die bovenrand er ook zijn: zonder padding-top schuift de
+   eerste regel van de titel achter de kop. Het is de ongescrollde kophoogte, niet
+   de gekrompen: bij scrollen mag hier niets bewegen. Met border-box gaat dit van
+   de 600px af in plaats van erbij, dus de hero houdt zijn hoogte. */
 .pc-hero-vat { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column;
-  justify-content: flex-end; padding-bottom: 270px; }
+  justify-content: flex-end; padding-top: 137px; padding-bottom: 230px; }
 
 .pc-chip { display: inline-flex; align-items: center; gap: 9px; align-self: flex-start;
   height: 31px; padding: 0 13px 0 8px; border-radius: 15.5px; background: #ffffff;
@@ -842,7 +858,7 @@ export const REPLICA_CSS = `
   /* De kop blijft ook hier vast staan. De herofoto staat in de DOM vóór de
      kop en werd met flex-order onder hem gezet; fixed haalt de kop uit die
      stroom, en de ruimte eronder wordt gemeten in wireVasteKop. */
-  .pc-kop { position: fixed; top: 0; left: 0; right: 0; height: auto; background: #fff; z-index: 30; }
+  .pc-kop { --kop-in-stroom: 1; position: fixed; top: 0; left: 0; right: 0; height: auto; background: #fff; z-index: 30; }
   /* padding-block, niet de shorthand: deze elementen dragen ook .pc-vat en
      die zet de zijmarge van 20px. Met "padding: 14px 0" viel die weg en
      plakte de hele kop tegen de schermrand. */
@@ -947,6 +963,19 @@ export const REPLICA_CSS = `
   .pc-kop-logo img { max-height: 34px; width: auto; }
   .pc-kop-midden { margin-left: auto; }
   .pc-kop-midden { display: none; }
+  /* Hier verdwijnt de navigatierij, dus hier verschijnt de knop die hem
+     terugbrengt. De vorm staat er voluit: de reset .pcx :where(button) haalt
+     rand en achtergrond weg en heeft evenveel gewicht als de klasse zelf, dus
+     de vorm uit roofpro.css kwam hier niet door. Randkleur en radius zijn die
+     van de andere keuzeknoppen op deze paginas. */
+  .pcx .rp-burger {
+    display: flex; flex: 0 0 auto;
+    width: 46px; height: 46px;
+    align-items: center; justify-content: center;
+    border: 1.5px solid var(--pc-lijn-2); border-radius: 10px;
+    background: #fff; color: var(--pc-ink);
+  }
+  .pcx .rp-burger:active { background: var(--pc-cream); }
   .pc-kop-tel { display: flex; align-items: center; gap: 8px; }
   .pc-kop-tel .pc-teltegel { width: 36px; height: 36px; }
   .pc-telnr { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; }
@@ -1141,7 +1170,7 @@ export const REPLICA_CSS = `
 /* De kop op de gewone paginas: wit en vast. De wikkel eromheen houdt de
    ruimte vast met padding die in wireVasteKop gemeten wordt; zonder die
    padding zou de pagina onder de kop schieten zodra hij fixed werd. */
-.pc-chrome .pc-kop { background: #fff; position: fixed; top: 0; left: 0; right: 0; z-index: 30; }
+.pc-chrome .pc-kop { --kop-in-stroom: 1; background: #fff; position: fixed; top: 0; left: 0; right: 0; z-index: 30; }
 /* De diensten-link heeft een uitklapmenu. Zonder deze regel is die wikkel een
    blok: het pijltje viel dan onder de tekst en duwde de link uit de rij.
    Inline-flex zet het pijltje ernaast en maakt de balk meteen smaller. */
@@ -1163,11 +1192,6 @@ export const REPLICA_CSS = `
 /* De witte kop staat wel in de stroom en neemt zijn hoogte in. Sticky laat
    hem meelopen zonder dat de pagina eronder verspringt. */
 .pc-kop--site { background: #fff; position: fixed; top: 0; left: 0; right: 0; z-index: 30; }
-/* Deze hero had een vaste hoogte. De ruimte onder de vaste kop werd daarbinnen
-   herverdeeld in plaats van de inhoud omlaag te duwen, waardoor de bovenrand van
-   de titel achter de kop bleef. Met een minimumhoogte groeit de sectie mee met
-   die ruimte en valt de titel er weer onder. */
-.pcx .pc-hero--ruim { height: auto; min-height: 600px; }
 
 /* De hero van de homepage draagt een langere kop dan de landingspagina,
    waarvoor de verhouding 53/47 gemeten is. Op drie regels liep het woord
@@ -1185,7 +1209,16 @@ export const REPLICA_CSS = `
    van de hero hangt aan de onderkant, dus schuift die mee omhoog.
    LET OP: dit werkt alleen via de hoogte. De uitlijning op flex-start zetten
    met een padding-top brak de hero eerder: de knop viel dan achter de balk. */
-.pc-hero--ruim { height: 600px; }
+/* Ondergrens, geen vaste maat. De 600px houdt het formulier boven de vouw van
+   een 1366x768-laptop; harder dan dat mag het niet zijn, want dan snijdt een
+   langere titel af tegen de kop aan. De hero groeit dus mee wanneer de inhoud
+   plus de vrije kophoogte er niet in past. */
+.pc-hero--ruim { height: auto; min-height: 600px; display: flex; flex-direction: column; }
+/* Het vat vulde de hero met height:100%, wat bij een ouder zonder vaste hoogte
+   niets meer betekent. Als flex-kind vult het de hero wel, ook als die groeit,
+   en blijft de inhoud onderaan hangen. De foto ernaast staat absolute en valt
+   buiten deze flex. */
+.pc-hero--ruim .pc-hero-vat { flex: 1; }
 /* Geen sluier op de homepage. Die overgang naar wit is er om de navigatie
    leesbaar te houden waar de kop doorzichtig over de hero ligt; hier staat de
    kop op een eigen wit vlak en vaagde de sluier alleen de bovenkant van de

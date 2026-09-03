@@ -381,9 +381,14 @@ export const BADKAMER: PaginaInhoud = {
     alt: 'Badkamer met eiken meubel, opzetkom en zwart omkaderde douchewand, door AB Bouw Groep',
   },
   over: {
-    kop: ['Eén vaste ploeg voor uw', 'hele badkamer'],
-    tekst: 'Een badkamer is de lastigste kamer van het huis om te verbouwen. Sanitair, elektriciteit, waterdichting en tegelwerk moeten op elkaar aansluiten, en de verkeerde volgorde kost tijd die u niet terugkrijgt. Bij ons zit dat werk in één ploeg, met één aanspreekpunt van het uitbreken tot de laatste voeg.',
-    slot: 'U kiest de tegels, het sanitair en de afwerking. De volgorde, de droogtijden en de aansluitingen regelen wij.',
+    /* Een why-us, geen uitleg over badkamers. De kop stelt de vraag die de
+       bezoeker op dit punt heeft, en de tekst antwoordt met wat AB anders doet
+       dan een reeks losse vaklui: hetzelfde ploeg legt de leidingen en zet de
+       tegels. Dat is een feit over de werkwijze, geen belofte over het
+       resultaat. */
+    kop: ['Waarom kiezen voor', 'AB Bouw Groep'],
+    tekst: 'Sanitair, elektriciteit, waterdichting en tegelwerk zitten bij ons in één ploeg. Dezelfde mensen die de leidingen leggen, zetten ook de tegels, dus de volgorde en de droogtijden liggen in één hand. U hebt één aanspreekpunt van het uitbreken tot de laatste voeg.',
+    slot: 'De startdatum krijgt u op papier. In de offerte staat elke post apart: afbraak, materiaal, uitvoering en afvoer.',
     foto: bkOver,
     alt: 'Badkamer met dubbele lavabo op eiken meubel, bad en inloopdouche, door AB Bouw Groep',
   },

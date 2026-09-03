@@ -71,7 +71,7 @@ ${rpNav('/werkwijze')}
       <!-- De boog vanaf de kaart in de hero. Hij hoort hier en niet daar: in
            de hero zat hij vast in een doos van 430px, terwijl hij de hele
            breedte naar links moet overbruggen. -->
-      <span class="rp-pad__boog rp-pad__boog--links rp-pad__boog--start">${icPad.naarLinks}</span>
+      <span class="rp-pad__boog rp-pad__boog--links rp-pad__boog--start">${icPad.heroNaarLinks}</span>
       ${STAPPEN.slice(1).map((s, i) => `
       ${kaart(s, i % 2 === 0 ? 'links' : 'rechts')}
       ${i === STAPPEN.length - 2 ? '' : `<span class="rp-pad__boog rp-pad__boog--${i % 2 === 0 ? 'rechts' : 'links'}">${i % 2 === 0 ? icPad.naarRechts : icPad.naarLinks}</span>`}

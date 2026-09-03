@@ -13,7 +13,7 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "check:ads": "node scripts/check-ads-negatives.cjs",
-    "verify": "npm run typecheck && npm run check:ads && npm run check:tekst && npm run check:copy && npm run check:replicacopy && npm run check:fotos && npm run check:bediening && npm run check:keuzes && npm run check:schuif && npm run check:calculator && npm run check:contrast && npm run test",
+    "verify": "npm run typecheck && npm run check:ads && npm run check:tekst && npm run check:copy && npm run check:replicacopy && npm run check:fotos && npm run check:bediening && npm run check:keuzes && npm run check:schuif && npm run check:calculator && npm run check:contrast && npm run check:kophero && npm run test",
     "check:tekst": "node scripts/check-tekstcorruptie.cjs",
     "check:contrast": "node scripts/check-contrast.mjs",
     "check:copy": "node scripts/check-lp-copy.cjs",
@@ -24,7 +24,8 @@
     "check:calculator": "node scripts/check-calculator.cjs",
     "check:replicacopy": "node scripts/check-replica-copy.cjs",
     "check:schetser": "node scripts/check-schetser.cjs",
-    "check:keuzes": "node scripts/check-keuzes.cjs"
+    "check:keuzes": "node scripts/check-keuzes.cjs",
+    "check:kophero": "node scripts/check-kophero.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

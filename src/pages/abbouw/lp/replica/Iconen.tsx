@@ -206,3 +206,19 @@ export const IcGoogle = ({ className }: P) => (
     <path fill="#EA4335" d="M24 10.8c3.3 0 6.2 1.1 8.5 3.3l6.3-6.3C35 4.3 30 2 24 2 15.4 2 7.9 6.9 4.3 14.2l7.3 5.7c1.8-5.2 6.6-9.1 12.4-9.1Z" />
   </svg>
 );
+/* De drie lijntjes en het kruis van het mobiele menu. Dezelfde maat en dikte
+   als de knop op de gewone paginas gebruikt, zodat de kop op een telefoon
+   overal hetzelfde aanvoelt. */
+export const IcBurger = ({ className }: P) => (
+  <svg className={className} width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+    <path d="M3 6h18M3 12h18M3 18h18" />
+  </svg>
+);
+
+export const IcKruis = ({ className }: P) => (
+  <svg className={className} width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+    <path d="M18 6 6 18M6 6l12 12" />
+  </svg>
+);

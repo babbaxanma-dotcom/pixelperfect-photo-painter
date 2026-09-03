@@ -76,6 +76,15 @@ export const icPad = {
     stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M24 8C10 112 38 248 100 360"/>
     <path d="m82 348 18 12-4-20"/></svg>`,
+  /* De boog uit de hero. Die kan de gewone boog niet zijn: tussen twee kaarten
+     in de kolom ligt 132px, maar van de kaart in de hero rechtsboven naar de
+     eerste kaart linksonder ligt 567px. Met de smalle boog begon de pijl daarom
+     midden in de lucht, los van beide kaarten. Zelfde hand als de andere: één
+     bocht, en een pijlpunt van twee losse streken. */
+  heroNaarLinks: `<svg class="rp-pad__ic" width="567" height="170" viewBox="0 0 567 170" fill="none" stroke="currentColor"
+    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M551 8C533 75 372 124 16 150"/>
+    <path d="m34 142-18 8 15 9"/></svg>`,
   /* En terug. */
   naarRechts: boog('M14 8C18 46 52 76 116 92', 'm102 86 14 6-12 7'),
 };
@@ -257,46 +266,29 @@ export function wireVasteKop(): () => void {
   const kop = document.querySelector<HTMLElement>('.pc-kop');
   if (!kop) return () => {};
 
-  /* De kop is fixed en laat dus een gat achter. Dat gat wordt gemeten, niet
-     geraden: hij is 137px op een breed scherm, 69px op een telefoon, en
-     krimpt onderweg. Meten gebeurt in ongescrollde toestand, want gescrolld
-     is hij kleiner en zou de pagina onder hem wegspringen.
+  /* De kop is fixed en laat alleen een gat achter waar hij eerst ruimte innam.
+     Dat verschilt per pagina en per schermbreedte:
 
-     En alleen wanneer hij een dekkende achtergrond heeft. Op een breed scherm
-     ligt hij doorzichtig over de herofoto van een landingspagina; daar hoort
-     geen ruimte onder, anders zakt de foto weg. */
+       - gewone paginas: hij stond bovenaan als relative blok en telde mee;
+       - telefoon: hij stond als eerste blok in de hero-kolom en telde mee;
+       - breed scherm, home en landingspaginas: hij lag absolute over de hero en
+         telde niet mee.
+
+     Dat onderscheid hoort in de CSS thuis, want daar staat het al. Vandaar de
+     eigenschap --kop-in-stroom: die is 1 waar de kop ruimte innam en 0 waar hij
+     erover lag. Raden aan de hand van zijn achtergrond ging mis, want op een
+     telefoon is de kop wit en neemt hij ruimte in, maar op een breed scherm is
+     hij dat ook zodra je scrollt, terwijl hij daar over de hero ligt. */
   const wikkel = kop.closest<HTMLElement>('.pc-chrome')
     ?? kop.parentElement as HTMLElement | null;
   const zetRuimte = () => {
     if (!wikkel) return;
+    /* Meten in ongescrollde toestand: gescrolld is de kop kleiner, en dan zou
+       de pagina onder hem wegspringen. */
     const was = kop.classList.contains('is-vast');
     if (was) kop.classList.remove('is-vast');
-
-    /* Een doorzichtige kop ligt over de herofoto en hoort geen ruimte te
-       krijgen; daar zakt de foto anders weg. */
-    const bg = getComputedStyle(kop).backgroundColor;
-    const dekkend = bg !== 'transparent' && !/rgba\(.+,\s*0\)$/.test(bg);
-    if (!dekkend) {
-      wikkel.style.paddingTop = '';
-      if (was) kop.classList.add('is-vast');
-      return;
-    }
-
-    let ruimte = kop.offsetHeight;
-    wikkel.style.paddingTop = ruimte + 'px';
-
-    /* Nameten en bijtellen. De hero van de homepage heeft een vaste hoogte en
-       een vat dat zijn inhoud zelf uitlijnt: de titel komt daar boven zijn
-       eigen container uit en de kophoogte alleen is dan te weinig. */
-    const titel = wikkel.querySelector<HTMLElement>('.pc-h1, .rp-phero__t, h1');
-    if (titel) {
-      const tekort = () => kop.getBoundingClientRect().bottom - titel.getBoundingClientRect().top;
-      for (let ronde = 0; ronde < 4 && tekort() > 0; ronde++) {
-        ruimte += Math.ceil(tekort());
-        wikkel.style.paddingTop = ruimte + 'px';
-      }
-    }
-
+    const inStroom = getComputedStyle(kop).getPropertyValue('--kop-in-stroom').trim() === '1';
+    wikkel.style.paddingTop = inStroom ? kop.offsetHeight + 'px' : '';
     if (was) kop.classList.add('is-vast');
   };
 

@@ -29,6 +29,7 @@ import {
   IcBericht, IcChevron, IcGoogle, IcFacebook, IcLinkedIn, IcMail, IcPersoon, IcPijl,
   IcPin, IcSter, IcTelefoon, IcX, IcYouTube,
   IcBoog, IcStapBel, IcStapBezoek, IcStapMeten, IcStapOplevering, IcStapWerf,
+  IcBurger, IcKruis,
 } from './Iconen';
 import {
   Bediening, Kaart, SpoorKaart, Stap, VoorNaSchuif,
@@ -146,6 +147,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
   const REVIEWS = inhoud.reviews ?? DIENSTEN[inhoud.dienst].reviews;
   const SOORT_WERK = DIENSTEN[inhoud.dienst].typeWerkOpties;
   const navigate = useNavigate();
+  const [mobOpen, setMobOpen] = useState(false);
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
   const startGemeld = useRef(false);
@@ -289,6 +291,25 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
      landingspagina ligt hij over de herofoto, dus krijgt hij daarbij een witte
      achtergrond; zonder die achtergrond leest hij door de inhoud heen. */
   useEffect(() => wireVasteKop(), []);
+
+  /* Het menu sluit bij Escape en zodra het scherm breed genoeg is voor de gewone
+     navigatierij, en zet de pagina eronder vast zolang het openstaat. Zonder dat
+     scrolt de achtergrond mee onder het paneel door. */
+  useEffect(() => {
+    if (!mobOpen) return;
+    const vorige = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const toets = (e: KeyboardEvent) => { if (e.key === 'Escape') setMobOpen(false); };
+    const breed = window.matchMedia('(min-width: 901px)');
+    const dicht = () => setMobOpen(false);
+    window.addEventListener('keydown', toets);
+    breed.addEventListener('change', dicht);
+    return () => {
+      document.body.style.overflow = vorige;
+      window.removeEventListener('keydown', toets);
+      breed.removeEventListener('change', dicht);
+    };
+  }, [mobOpen]);
 
   useEffect(() => {
     const paren: [React.RefObject<HTMLDivElement>, (p: { links: number; max: number }) => void][] =
@@ -466,8 +487,49 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
                 <a className="pc-telnr" href={CONTACT.phone.href}>{CONTACT.phone.display}</a>
               </span>
             </div>
+            <button
+              className="rp-burger"
+              type="button"
+              aria-label={mobOpen ? 'Menu sluiten' : 'Menu openen'}
+              aria-expanded={mobOpen}
+              aria-controls="pc-mob"
+              onClick={() => setMobOpen((o) => !o)}
+            >
+              <IcBurger />
+            </button>
           </div>
         </header>
+
+        {/* Op een telefoon is er geen plaats voor de navigatierij, dus verdween
+            die helemaal: er was geen enkele manier om vanaf hier naar een andere
+            pagina te gaan. Dit paneel is hetzelfde als op de gewone paginas, met
+            dezelfde knop van drie lijntjes, zodat de site zich overal gelijk
+            gedraagt. */}
+        <div className={`rp-mob${mobOpen ? ' is-open' : ''}`} id="pc-mob" hidden={!mobOpen}>
+          <div className="rp-mob__top">
+            <img src={logo} alt="AB Bouw Groep" style={{ height: 36, width: 'auto' }} />
+            <button className="rp-mob__close" type="button" onClick={() => setMobOpen(false)} aria-label="Menu sluiten">
+              <IcKruis />
+            </button>
+          </div>
+          <nav className="rp-mob__list" aria-label="Mobiel menu">
+            {(inhoud.nav ?? NAV).map((n) => (
+              /* Sluiten bij het aanklikken: de meeste links hier zijn ankers op
+                 deze pagina, en dan blijft het paneel er anders overheen liggen. */
+              <a className="rp-mob__link" key={n.label} href={n.href} onClick={() => setMobOpen(false)}>
+                {n.label}
+              </a>
+            ))}
+          </nav>
+          <div className="rp-mob__cta">
+            <a className="pc-knop pc-knop--accent" href={CONTACT.phone.href} style={{ justifyContent: 'center' }}>
+              <IcTelefoon />{CONTACT.phone.display}
+            </a>
+            <a className="pc-knop pc-knop--donker" href="#contact" onClick={() => setMobOpen(false)} style={{ justifyContent: 'center' }}>
+              Gratis offerte<IcPijl />
+            </a>
+          </div>
+        </div>
 
         <div className="pc-vat pc-hero-vat">
           {/* De referentie zet 'New' in de pil: een nieuwheidsclaim die voor AB
