@@ -507,6 +507,12 @@ export const REPLICA_CSS = `
 .pc-schets-anders__beeld { margin: 0; display: grid; gap: 6px; justify-items: start; }
 .pc-schets-anders__beeld img { max-width: 220px; border-radius: 10px; display: block; }
 .pc-schets-anders__beeld figcaption { font-size: 13px; color: var(--pc-grijs); }
+/* De regel boven de fotoknop. Klein en grijs: hij hoort de knop uit te leggen,
+   niet ermee te concurreren. */
+.pc-schets-opname__uitleg {
+  margin: 0 0 10px; font-size: 13.5px; line-height: 20px; color: var(--pc-grijs);
+}
+.pc-schets-opname__uitleg strong { color: var(--pc-ink); font-weight: 700; }
 
 /* Stalen: een rij beelden per uitvoering. Een keuzelijst met "Walnoot" erin
    laat niet zien wat walnoot is; een uitsnede uit dezelfde ruimte wel. */
