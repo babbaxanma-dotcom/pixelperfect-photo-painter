@@ -217,7 +217,7 @@ export const REPLICA_CSS = `
    de gekrompen: bij scrollen mag hier niets bewegen. Met border-box gaat dit van
    de 600px af in plaats van erbij, dus de hero houdt zijn hoogte. */
 .pc-hero-vat { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column;
-  justify-content: flex-end; padding-top: 137px; padding-bottom: 230px; }
+  justify-content: flex-end; padding-top: 137px; padding-bottom: 270px; }
 
 .pc-chip { display: inline-flex; align-items: center; gap: 9px; align-self: flex-start;
   height: 31px; padding: 0 13px 0 8px; border-radius: 15.5px; background: #ffffff;
@@ -239,7 +239,10 @@ export const REPLICA_CSS = `
 /* 26 in plaats van 36: de 36 uit de uitmeting loopt van de BASISLIJN van de
    laatste kopregel (457) tot de knop, en het kader van de kop loopt nog 11px
    door onder die basislijn. */
-.pc-hero-vat > .pc-knop { margin-top: 26px; align-self: flex-start; }
+/* flex-shrink 0: in deze kolom krimpt anders de knop als de inhoud niet past,
+   want tekst kan niet kleiner worden en een knop wel. Op een laag venster werd
+   hij daardoor 14px hoog met de letters tegen de randen. */
+.pc-hero-vat > .pc-knop { margin-top: 26px; align-self: flex-start; flex: 0 0 auto; }
 
 /* De capsule rechts in de foto: 68x132, radius 34, binnenmarge 9, twee cirkels
    van 50 met 12 ertussen. De onderste is in de referentie accentgevuld. */
@@ -1246,7 +1249,7 @@ export const REPLICA_CSS = `
    is het wegvallen dat hier bedoeld is: geen beweging die zelf opvalt, gewoon
    inhoud die de hero bedekt. */
 .pc-hero--ruim {
-  height: calc(100svh - 62px);
+  height: calc(100svh - 62px); min-height: min-content;
   display: flex; flex-direction: column;
   position: sticky; top: 0; z-index: 0;
 }
@@ -1256,6 +1259,10 @@ export const REPLICA_CSS = `
    onderruimte krimpt daarom mee met het venster; boven de 885px blijft ze 230.
    Alleen op een breed scherm: op een telefoon staat alles onder elkaar en heeft
    het vat daar zijn eigen, veel kleinere onderruimte. */
+/* Alleen bij de hero die het scherm vult. Daar ligt de balk 110px over de hero
+   in plaats van 260, dus is er minder onderruimte nodig, en die 40px winst
+   houdt de verstuurknop op een laptop van 620px boven de vouw. Op de gewone
+   hero zou dezelfde verlaging de heroknop onder de balk duwen. */
 @media (min-width: 901px) { .pc-hero--ruim .pc-hero-vat { padding-bottom: min(230px, 26vh); } }
 /* Alles na de hero schuift eroverheen, dus moet het ervoor liggen en dekken.
    Zonder eigen achtergrond schijnt de herofoto door de tekst heen. */
@@ -1265,7 +1272,7 @@ export const REPLICA_CSS = `
    niets meer betekent. Als flex-kind vult het de hero wel, ook als die groeit,
    en blijft de inhoud onderaan hangen. De foto ernaast staat absolute en valt
    buiten deze flex. */
-.pc-hero--ruim .pc-hero-vat { flex: 1; }
+.pc-hero--ruim .pc-hero-vat { flex: 1; height: auto; }
 /* Geen sluier op de homepage. Die overgang naar wit is er om de navigatie
    leesbaar te houden waar de kop doorzichtig over de hero ligt; hier staat de
    kop op een eigen wit vlak en vaagde de sluier alleen de bovenkant van de

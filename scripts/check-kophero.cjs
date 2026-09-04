@@ -40,8 +40,12 @@ const PAGINAS = ['/', '/badkamerrenovatie', '/lp/badkamerrenovatie',
   '/totaalrenovatie', '/lp/totaalrenovatie', '/over'];
 /* Drie soorten scherm plus dat van Mohammed zelf. Zijn venster is breed maar
    laag: 1531x708 na browserbalken en taakbalk. Juist daar valt het formulier
-   het eerst weg, en juist daar keek ik niet. */
-const SCHERMEN = [[1531, 708], [1440, 900], [1366, 620], [390, 844]];
+   het eerst weg, en juist daar keek ik niet.
+
+   De 1440x520 staat erbij omdat de heroknop pas onder de 600px vensterhoogte
+   begon te krimpen. Vier maten die toevallig ruim genoeg zijn, bewijzen niets
+   over een venster dat half op het scherm staat of een grote taakbalk heeft. */
+const SCHERMEN = [[1531, 708], [1440, 900], [1366, 620], [1440, 520], [390, 844]];
 
 /* Een subpixel-afronding bij het schalen van een beeld is geen sprong. */
 const SPELING = 2;
@@ -88,6 +92,15 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
             heroForm: !!form,
             verstuurOnder: verstuur ? Math.round(R(verstuur).bottom) : null,
             heroknopHoogte: heroknop ? Math.round(R(heroknop).height) : null,
+            /* Wat er op het midden van de heroknop ligt. Is dat de knop zelf
+               niet, dan valt er niet op te klikken hoe goed hij er ook uitziet. */
+            heroknopBedekt: (() => {
+              if (!heroknop) return null;
+              const r = R(heroknop);
+              const boven = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+              if (!boven || boven === heroknop || heroknop.contains(boven)) return null;
+              return boven.tagName + (boven.className ? "." + String(boven.className).slice(0, 24) : "");
+            })(),
             fotoOnder: q('.pc-hero-foto') ? Math.round(R(q('.pc-hero-foto')).bottom) : null,
             balkBoven: q('.pc-balk') ? Math.round(R(q('.pc-balk')).top) : null,
             /* Het bovenste element in de hero dat werkelijk iets toont. */
@@ -135,6 +148,11 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
               inhoud niet in de hero past. */
         if (m.heroknopHoogte !== null && m.heroknopHoogte < 40) {
           fouten.push(`${waar}: de heroknop is platgedrukt tot ${m.heroknopHoogte}px`);
+        }
+        /* En een knop op volle maat die onder de formulierbalk ligt is even
+           stuk, alleen zie je het niet aan zijn afmetingen. */
+        if (m.heroknopBedekt) {
+          fouten.push(`${waar}: de heroknop ligt onder ${m.heroknopBedekt} en is niet aan te klikken`);
         }
 
         /* 3b. Leegte onder de kop. Op een telefoon staat alles onder elkaar en
