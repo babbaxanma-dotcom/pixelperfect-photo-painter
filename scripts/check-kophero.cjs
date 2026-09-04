@@ -207,6 +207,36 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
           fouten.push(`${waar}: de inhoud onder de hero springt ${ergste}px tijdens het scrollen, rond scrollpositie ${ergsteY}`);
         }
 
+        /* 4b. En blijft de kop zelf boven alles liggen? Hij staat vast bovenaan,
+              dus als er iets overheen schuift is de navigatie weg terwijl de kop
+              er nog wel staat: zichtbaar, op de goede plek, en toch bedekt. Dat
+              gebeurde toen de kop binnen de sticky hero stond en daarmee in
+              diens stapelcontext zat. */
+        for (const hoogte of [400, 1200, 2600]) {
+          await p.evaluate((v) => window.scrollTo(0, v), hoogte);
+          await new Promise((k) => setTimeout(k, 260));
+          const kopStand = await p.evaluate(() => {
+            const k = document.querySelector('.pc-kop');
+            if (!k) return { er: false };
+            const r = k.getBoundingClientRect();
+            const boven = document.elementFromPoint(
+              Math.round(window.innerWidth / 2), Math.max(4, Math.round(r.top + r.height / 2)));
+            return {
+              er: true, top: Math.round(r.top),
+              vrij: boven ? (boven === k || k.contains(boven)) : false,
+              erover: boven ? boven.tagName + (boven.className ? '.' + String(boven.className).slice(0, 20) : '') : 'niets',
+            };
+          });
+          metingen++;
+          if (!kopStand.er) fouten.push(`${waar}: geen kop meer op scrollpositie ${hoogte}`);
+          else if (!kopStand.vrij) {
+            fouten.push(`${waar}: op scrollpositie ${hoogte} ligt ${kopStand.erover} over de kop`);
+          } else if (Math.abs(kopStand.top) > SPELING) {
+            fouten.push(`${waar}: de kop staat op ${kopStand.top}px na scrollen, niet bovenaan`);
+          }
+        }
+        await p.evaluate(() => window.scrollTo(0, 0));
+
         /* 5. Op een telefoon verdwijnt de navigatierij. Dan moet de menuknop
               hem terugbrengen, anders is er geen weg naar een andere pagina. */
         if (breedte < 500) {

@@ -487,10 +487,10 @@ export const BADKAMER: PaginaInhoud = {
         href: '#contact', foto: bkAanbod2, alt: 'Badkamer onder een schuin dak met hangtoilet en meubel' },
       { badge: ['2-3', 'weken'], titel: 'Twee tot drie weken werk',
         tekst: 'Van uitbreken tot de laatste voeg.', knop: 'Gratis offerte',
-        href: '#contact', foto: bkAanbod3, alt: 'Badkamer met dubbele lavabo, bad en inloopdouche' },
+        href: '#contact', foto: bkWerf, alt: 'Badkamer halverwege de renovatie: wanden deels betegeld, leidingen aangesloten' },
       { badge: ['Vaste', 'prijs'], titel: 'Vaste prijs na het plaatsbezoek',
         tekst: 'Wat op de offerte staat, betaalt u.', knop: 'Gratis offerte',
-        href: '#contact', foto: bkWerf, alt: 'Badkamer halverwege de renovatie: wanden deels betegeld, leidingen aangesloten' },
+        href: '#contact', foto: bkAanbod3, alt: 'Badkamer met dubbele lavabo, bad en inloopdouche' },
     ],
   },
   contact: {

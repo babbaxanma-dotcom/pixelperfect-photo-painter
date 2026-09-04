@@ -469,6 +469,97 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
 
       {/* ── Hero met de kop erover. De foto begint op y=0 en loopt onder de
            kop door; een wegvallende witte sluier maakt de kop leesbaar. ── */}
+      {/* De kop staat buiten de hero. Binnen een sticky hero met een z-index
+          zit hij opgesloten in diens stapelcontext, en dan schuift de inhoud
+          die eroverheen hoort te komen ook over de navigatie heen. */}
+
+      <header className={`pc-kop${inhoud.nav ? ' pc-kop--site' : ''}`}>
+        <div className="pc-vat pc-kop-vat">
+          <div className="pc-kop-logo">
+            <a href="/"><img src={logo} alt="AB Bouw Groep" /></a>
+          </div>
+          <div className="pc-kop-streep" />
+
+          <div className="pc-kop-midden">
+            <div className="pc-kop-rij1">
+              {SOCIALS.length > 0 && (
+                <div className="pc-soc">
+                  {SOCIALS.map(({ naam, href }) => {
+                    const Icoon = SOCIAAL_ICOON[naam];
+                    return <a key={naam} href={href} aria-label={naam} target="_blank" rel="noopener noreferrer"><Icoon /></a>;
+                  })}
+                </div>
+              )}
+              <div className="pc-kop-contact">
+                <span><IcPin />{CONTACT.address.street}, {CONTACT.address.city}</span>
+                <span><IcMail /><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></span>
+              </div>
+            </div>
+
+            <div className="pc-kop-rij2">
+              <nav className={`pc-nav${(inhoud.nav ?? NAV).length > 5 ? ' pc-nav--dicht' : ''}`}>
+                {(inhoud.nav ?? NAV).map((n) => (
+                  <a key={n.label} href={n.href}>{n.label}{n.chevron && <IcChevron />}</a>
+                ))}
+              </nav>
+              <a className="pc-knop pc-knop--donker" href="#contact" style={{ marginLeft: 'auto' }}>
+                Gratis offerte<IcPijl />
+              </a>
+            </div>
+          </div>
+
+          <div className="pc-kop-streep" />
+          <div className="pc-kop-tel">
+            <span className="pc-teltegel"><IcTelefoon /></span>
+            <span className="pc-telblok">
+              <span className="pc-tellabel">Bel ons vandaag</span>
+              <a className="pc-telnr" href={CONTACT.phone.href}>{CONTACT.phone.display}</a>
+            </span>
+          </div>
+          <button
+            className="rp-burger"
+            type="button"
+            aria-label={mobOpen ? 'Menu sluiten' : 'Menu openen'}
+            aria-expanded={mobOpen}
+            aria-controls="pc-mob"
+            onClick={() => setMobOpen((o) => !o)}
+          >
+            <IcBurger />
+          </button>
+        </div>
+      </header>
+
+      {/* Op een telefoon is er geen plaats voor de navigatierij, dus verdween
+          die helemaal: er was geen enkele manier om vanaf hier naar een andere
+          pagina te gaan. Dit paneel is hetzelfde als op de gewone paginas, met
+          dezelfde knop van drie lijntjes, zodat de site zich overal gelijk
+          gedraagt. */}
+      <div className={`rp-mob${mobOpen ? ' is-open' : ''}`} id="pc-mob" hidden={!mobOpen}>
+        <div className="rp-mob__top">
+          <img src={logo} alt="AB Bouw Groep" style={{ height: 36, width: 'auto' }} />
+          <button className="rp-mob__close" type="button" onClick={() => setMobOpen(false)} aria-label="Menu sluiten">
+            <IcKruis />
+          </button>
+        </div>
+        <nav className="rp-mob__list" aria-label="Mobiel menu">
+          {(inhoud.nav ?? NAV).map((n) => (
+            /* Sluiten bij het aanklikken: de meeste links hier zijn ankers op
+               deze pagina, en dan blijft het paneel er anders overheen liggen. */
+            <a className="rp-mob__link" key={n.label} href={n.href} onClick={() => setMobOpen(false)}>
+              {n.label}
+            </a>
+          ))}
+        </nav>
+        <div className="rp-mob__cta">
+          <a className="pc-knop pc-knop--accent" href={CONTACT.phone.href} style={{ justifyContent: 'center' }}>
+            <IcTelefoon />{CONTACT.phone.display}
+          </a>
+          <a className="pc-knop pc-knop--donker" href="#contact" onClick={() => setMobOpen(false)} style={{ justifyContent: 'center' }}>
+            Gratis offerte<IcPijl />
+          </a>
+        </div>
+      </div>
+
       <section className={`pc-hero${inhoud.nav ? ' pc-hero--ruim' : ''}`}>
         <div className="pc-hero-vlak" />
         <div className="pc-hero-foto">
@@ -476,93 +567,6 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
             style={inhoud.hero.focus ? ({ '--pc-hero-focus': inhoud.hero.focus } as React.CSSProperties) : undefined} />
         </div>
         <div className="pc-hero-sluier" />
-
-        <header className={`pc-kop${inhoud.nav ? ' pc-kop--site' : ''}`}>
-          <div className="pc-vat pc-kop-vat">
-            <div className="pc-kop-logo">
-              <a href="/"><img src={logo} alt="AB Bouw Groep" /></a>
-            </div>
-            <div className="pc-kop-streep" />
-
-            <div className="pc-kop-midden">
-              <div className="pc-kop-rij1">
-                {SOCIALS.length > 0 && (
-                  <div className="pc-soc">
-                    {SOCIALS.map(({ naam, href }) => {
-                      const Icoon = SOCIAAL_ICOON[naam];
-                      return <a key={naam} href={href} aria-label={naam} target="_blank" rel="noopener noreferrer"><Icoon /></a>;
-                    })}
-                  </div>
-                )}
-                <div className="pc-kop-contact">
-                  <span><IcPin />{CONTACT.address.street}, {CONTACT.address.city}</span>
-                  <span><IcMail /><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></span>
-                </div>
-              </div>
-
-              <div className="pc-kop-rij2">
-                <nav className={`pc-nav${(inhoud.nav ?? NAV).length > 5 ? ' pc-nav--dicht' : ''}`}>
-                  {(inhoud.nav ?? NAV).map((n) => (
-                    <a key={n.label} href={n.href}>{n.label}{n.chevron && <IcChevron />}</a>
-                  ))}
-                </nav>
-                <a className="pc-knop pc-knop--donker" href="#contact" style={{ marginLeft: 'auto' }}>
-                  Gratis offerte<IcPijl />
-                </a>
-              </div>
-            </div>
-
-            <div className="pc-kop-streep" />
-            <div className="pc-kop-tel">
-              <span className="pc-teltegel"><IcTelefoon /></span>
-              <span className="pc-telblok">
-                <span className="pc-tellabel">Bel ons vandaag</span>
-                <a className="pc-telnr" href={CONTACT.phone.href}>{CONTACT.phone.display}</a>
-              </span>
-            </div>
-            <button
-              className="rp-burger"
-              type="button"
-              aria-label={mobOpen ? 'Menu sluiten' : 'Menu openen'}
-              aria-expanded={mobOpen}
-              aria-controls="pc-mob"
-              onClick={() => setMobOpen((o) => !o)}
-            >
-              <IcBurger />
-            </button>
-          </div>
-        </header>
-
-        {/* Op een telefoon is er geen plaats voor de navigatierij, dus verdween
-            die helemaal: er was geen enkele manier om vanaf hier naar een andere
-            pagina te gaan. Dit paneel is hetzelfde als op de gewone paginas, met
-            dezelfde knop van drie lijntjes, zodat de site zich overal gelijk
-            gedraagt. */}
-        <div className={`rp-mob${mobOpen ? ' is-open' : ''}`} id="pc-mob" hidden={!mobOpen}>
-          <div className="rp-mob__top">
-            <img src={logo} alt="AB Bouw Groep" style={{ height: 36, width: 'auto' }} />
-            <button className="rp-mob__close" type="button" onClick={() => setMobOpen(false)} aria-label="Menu sluiten">
-              <IcKruis />
-            </button>
-          </div>
-          <nav className="rp-mob__list" aria-label="Mobiel menu">
-            {(inhoud.nav ?? NAV).map((n) => (
-              /* Sluiten bij het aanklikken: de meeste links hier zijn ankers op
-                 deze pagina, en dan blijft het paneel er anders overheen liggen. */
-              <a className="rp-mob__link" key={n.label} href={n.href} onClick={() => setMobOpen(false)}>
-                {n.label}
-              </a>
-            ))}
-          </nav>
-          <div className="rp-mob__cta">
-            <a className="pc-knop pc-knop--accent" href={CONTACT.phone.href} style={{ justifyContent: 'center' }}>
-              <IcTelefoon />{CONTACT.phone.display}
-            </a>
-            <a className="pc-knop pc-knop--donker" href="#contact" onClick={() => setMobOpen(false)} style={{ justifyContent: 'center' }}>
-              Gratis offerte<IcPijl />
-            </a>
-          </div>
-        </div>
 
         <div className="pc-vat pc-hero-vat">
           {/* De referentie zet 'New' in de pil: een nieuwheidsclaim die voor AB
