@@ -541,7 +541,7 @@ const HTML = `
           <div class="tr-hero-main">
             <div class="tr-hero-trust">
               <span class="tr-hero-trust-stars">${stars}</span>
-              <span><b>4,9/5</b> op Google (180+ reviews)</span><span class="tr-hero-trust-dot">·</span>
+              <span><b>4,9/5</b> op Google</span><span class="tr-hero-trust-dot">·</span>
               <span>120+ daken vernieuwd</span><span class="tr-hero-trust-dot">·</span>
               <span>Sinds 2010</span>
             </div>

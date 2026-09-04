@@ -505,7 +505,7 @@ const HTML = `
           <p class="tr-about-intro">AB Bouw Groep werkt met een eigen vaste ploeg. Wij verzorgen crepi, buitenisolatie (ETICS), steenstrips en sierpleister van A tot Z.</p>
           <ul class="tr-checks">
             <li>${icCheck}<span><b>Offerte = factuur, ook bij prijsstijgingen</b></span></li>
-            <li>${icCheck}<span>Eigen ploeg, geen onderaannemers</span></li>
+            <li>${icCheck}<span>Eigen ploeg, alles in eigen beheer</span></li>
             <li>${icCheck}<span>6% BTW-tarief en premie-advies regelen wij</span></li>
             <li>${icCheck}<span>Transparante prijs, geen verborgen kosten</span></li>
             <li>${icCheck}<span>Strakke, duurzame afwerking</span></li>

@@ -126,7 +126,12 @@ export default function Contact() {
   useEffect(() => {
     document.title = 'Contact · AB Bouw Groep';
     window.scrollTo(0, 0);
-    const opruimers: Array<() => void> = [wireMobielMenu()];
+    /* De zwevende belknop lag hier over de keuzelijst en de verstuurknop, en
+       is op deze pagina overbodig: het nummer staat er al naast. Dit merk zet
+       hem uit, en gaat er bij het verlaten weer af. */
+    document.body.dataset.pagina = 'contact';
+    const opruimers: Array<() => void> = [wireMobielMenu(),
+      () => { delete document.body.dataset.pagina; }];
 
     const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
     const btn = document.querySelector<HTMLButtonElement>('[data-form-btn]');

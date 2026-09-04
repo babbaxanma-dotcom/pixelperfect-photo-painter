@@ -1561,6 +1561,11 @@
   box-shadow: 0 8px 22px rgba(9, 16, 26, 0.34);
 }
 .rp-fab:hover { background: var(--rp-accent); color: var(--rp-accent-ink); }
+/* Op de contactpagina staat de zwevende belknop over het formulier: over de
+   keuzelijst en over de verstuurknop, waar een duim hem makkelijk in plaats
+   van het formulier raakt. Daar is hij ook overbodig, want het nummer staat
+   er al twee keer groot naast. Elders blijft hij. */
+body[data-pagina="contact"] .rp-fab { display: none; }
 
 /* ══ RESPONSIEF ════════════════════════════════════════════════════════ */
 @media (max-width: 1100px) {

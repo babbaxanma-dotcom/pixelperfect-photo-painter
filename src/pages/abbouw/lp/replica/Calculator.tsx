@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { submitLead } from '@/lib/leads';
+import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
 import { CONTACT } from '@/data/contact';
 import { IcChevron, IcPijl } from './Iconen';
@@ -71,7 +71,7 @@ export default function Calculator({ inhoud }: { inhoud: Inhoud }) {
     });
     setBezig(false);
     if (res.ok) navigate('/bedankt?dienst=' + inhoud.bedanktSlug);
-    else setFout('Versturen lukte niet. Bel gerust ' + CONTACT.phone.display + '.');
+    else setFout(leadFoutmelding(res, CONTACT.phone.display));
   };
 
   if (!open) {
@@ -127,7 +127,7 @@ export default function Calculator({ inhoud }: { inhoud: Inhoud }) {
           </ul>
           <form onSubmit={verstuur}>
             <label className="pc-veld"><input name="naam" type="text" placeholder="Naam" autoComplete="name" aria-label="Naam" /></label>
-            <label className="pc-veld"><input name="telefoon" type="tel" placeholder="Telefoon" autoComplete="tel"
+            <label className="pc-veld"><input name="telefoon" type="tel" placeholder="Telefoon *" autoComplete="tel"
               aria-label="Telefoon (verplicht)" aria-required="true" /></label>
             <label className="pc-veld"><input name="email" type="email" placeholder="E-mail" autoComplete="email" aria-label="E-mail" /></label>
             <button className="pc-knop pc-knop--accent" type="submit" disabled={bezig}>

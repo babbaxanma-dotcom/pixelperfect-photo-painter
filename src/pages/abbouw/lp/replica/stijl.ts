@@ -520,6 +520,9 @@ export const REPLICA_CSS = `
   margin: 0; font-size: 15px; line-height: 22px; font-weight: 600; color: var(--pc-ink);
 }
 .pc-schets-opname__kop span { font-weight: 400; color: var(--pc-grijs); }
+/* De legenda bij het sterretje. Klein en grijs: hij hoort er te staan, maar
+   mag geen aandacht wegnemen van de velden zelf. */
+.pc-schets-verplicht { margin: 2px 0 0; font-size: 12.5px; line-height: 18px; color: var(--pc-grijs); }
 .pc-schets-opname__uitleg {
   margin: 0 0 10px; font-size: 13.5px; line-height: 20px; color: var(--pc-grijs);
 }

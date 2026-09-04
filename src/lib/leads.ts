@@ -170,6 +170,22 @@ async function postJSON(url: string, body: unknown, timeoutMs = 8000) {
   }
 }
 
+/**
+ * De melding die bij een mislukte inzending hoort.
+ *
+ * Er zijn twee soorten mislukking en ze vragen om iets heel anders van de
+ * bezoeker. Bij invalid_contact_info kan hij het zelf oplossen: er staat een
+ * typfout in zijn adres of nummer. Bij alle andere ligt het aan ons en is
+ * bellen de snelste weg. Eén zin voor beide gevallen liet de eerste groep in
+ * de veronderstelling dat de site stuk was.
+ */
+export function leadFoutmelding(res: SubmitResult, telefoon: string): string {
+  if (res.error === 'invalid_contact_info') {
+    return 'Controleer uw telefoonnummer en e-mailadres: één van beide moet kloppen zodat wij u kunnen bereiken.';
+  }
+  return 'Versturen lukte niet. Bel gerust ' + telefoon + '.';
+}
+
 export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
   const ghlUrl = import.meta.env.VITE_GHL_WEBHOOK_URL as string | undefined;
 

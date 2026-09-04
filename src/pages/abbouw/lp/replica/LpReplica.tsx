@@ -19,7 +19,7 @@ import { useEffect, useRef, useState } from 'react';
 import { wireVasteKop } from '../../_rp';
 import { useNavigate } from 'react-router-dom';
 import { CONTACT } from '@/data/contact';
-import { submitLead } from '@/lib/leads';
+import { leadFoutmelding, submitLead } from '@/lib/leads';
 import Calculator from './Calculator';
 import Schetser from './Schetser';
 import { trackFormStart } from '@/lib/tracking';
@@ -432,7 +432,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
     });
     setBezig(false);
     if (res.ok) navigate('/bedankt?dienst=' + inhoud.dienst);
-    else setFout('Versturen lukte niet. Bel gerust ' + CONTACT.phone.display + '.');
+    else setFout(leadFoutmelding(res, CONTACT.phone.display));
   };
 
   const verstuur = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -460,7 +460,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
     });
     setBezig(false);
     if (res.ok) navigate('/bedankt?dienst=' + inhoud.dienst);
-    else setFout('Versturen lukte niet. Bel gerust ' + CONTACT.phone.display + '.');
+    else setFout(leadFoutmelding(res, CONTACT.phone.display));
   };
 
   return (
@@ -965,7 +965,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
               </div>
               <div className="pc-form-paar">
                 <label className="pc-form-veld"><span>Telefoon</span>
-                  <input name="telefoon" type="tel" placeholder="Telefoon" autoComplete="tel" /></label>
+                  <input name="telefoon" type="tel" placeholder="Telefoon *" autoComplete="tel" /></label>
                 <label className="pc-form-veld"><span>E-mail</span>
                   <input name="email" type="email" placeholder="E-mail" autoComplete="email" /></label>
               </div>

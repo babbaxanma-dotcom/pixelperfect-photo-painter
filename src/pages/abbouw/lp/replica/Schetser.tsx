@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { submitLead } from '@/lib/leads';
+import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
 import { CONTACT } from '@/data/contact';
 import { IcCamera, IcPijl } from './Iconen';
@@ -434,7 +434,7 @@ export default function Schetser() {
     });
     setBezig(false);
     if (res.ok) navigate('/bedankt?dienst=badkamerrenovatie');
-    else setFout('Versturen lukte niet. Bel gerust ' + CONTACT.phone.display + '.');
+    else setFout(leadFoutmelding(res, CONTACT.phone.display));
   };
 
   return (
@@ -624,13 +624,14 @@ export default function Schetser() {
 
               <form className="pc-schets-form" onSubmit={verstuur} onFocusCapture={meldStart}>
                 <label className="pc-veld"><input name="naam" type="text" placeholder="Naam" autoComplete="name" aria-label="Naam" /></label>
-                <label className="pc-veld"><input name="telefoon" type="tel" placeholder="Telefoon" autoComplete="tel"
+                <label className="pc-veld"><input name="telefoon" type="tel" placeholder="Telefoon *" autoComplete="tel"
                   aria-label="Telefoon (verplicht)" aria-required="true" /></label>
                 <label className="pc-veld"><input name="email" type="email" placeholder="E-mail" autoComplete="email" aria-label="E-mail" /></label>
                 <button className="pc-knop pc-knop--accent" type="submit" disabled={bezig}>
                   {bezig ? 'Bezig…' : 'Stuur mijn ontwerp'}<IcPijl />
                 </button>
                 {fout && <p className="pc-schets-fout">{fout}</p>}
+                <p className="pc-schets-verplicht">Met * bedoelen wij: dit hebben wij nodig om u het ontwerp te bezorgen.</p>
                 <p className="pc-schets-gerust">
                   <strong>Volledig vrijblijvend en kosteloos.</strong> Uw foto gebruiken wij alleen
                   om uw ontwerp te maken.
