@@ -601,13 +601,15 @@ export default function Schetser() {
           {huidige.sleutel === 'slot' && (
             <>
               <div className="pc-schets-opname">
+                <p className="pc-schets-opname__kop">
+                  Foto van uw badkamer <span>(optioneel)</span>
+                </p>
                 <p className="pc-schets-opname__uitleg">
-                  <strong>Optioneel.</strong> Stuurt u een foto van uw huidige badkamer
-                  mee, dan tekenen wij het ontwerp op uw eigen ruimte.
+                  Stuurt u er een mee, dan tekenen wij het ontwerp op uw eigen ruimte.
                 </p>
                 <button type="button" className="pc-schets-cam" onClick={() => camera.current?.click()}>
                   <span aria-hidden="true"><IcCamera maat={22} /></span>
-                  {foto ? 'Andere foto maken' : 'Foto van uw badkamer maken'}
+                  {foto ? 'Andere foto maken' : 'Foto maken'}
                 </button>
                 <button type="button" className="pc-schets-uit" onClick={() => galerij.current?.click()}>
                   of kies er een uit uw toestel
