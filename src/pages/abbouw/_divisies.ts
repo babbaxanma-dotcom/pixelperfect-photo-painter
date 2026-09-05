@@ -20,11 +20,11 @@ const stap = (t: string, d: string, time: string, n: string) => ({ n, t, d, time
 export const DIVISIES: Record<string, DivisionConfig> = {
   dakwerken: {
     slug: 'dakwerken', num: '04', title: 'Dakwerken', eyebrow: 'Dakwerken',
-    heroTitle: 'Een dak dat<br/>weer decennia meegaat',
-    heroLede: 'Wij leggen pannen, leien en platte daken, en herstellen wat te herstellen valt. Ligt het dak toch open, dan isoleren wij het meteen mee.',
+    heroTitle: 'Pannen, leien<br/>en platte daken',
+    heroLede: 'Onze dakwerkers vernieuwen hellende en platte daken, herstellen lekken en verzorgen het zinkwerk. Ligt het dak toch open, dan brengen wij de isolatie in dezelfde werf aan.',
     heroBg: dakHero,
-    storyTitle: 'U hoort wat uw dak<br/>werkelijk nodig heeft',
-    storyLede: 'Wij klimmen op uw dak, bekijken het onderdak en het houtwerk, en fotograferen wat wij tegenkomen. Daarna zegt onze dakwerker u eerlijk of een herstelling volstaat, en bij een vernieuwing hoort u meteen wat het kost en hoelang uw woning openligt.',
+    storyTitle: 'Onze dakwerkers<br/>en zinkwerkers',
+    storyLede: 'Onze dakwerkers leggen pannen en leien, dichten platte daken in EPDM en plaatsen goten, kilgoten en slabben. Bij het plaatsbezoek gaan zij het dak op, controleren zij het onderdak en het houtwerk en fotograferen zij de toestand. U krijgt daarna een offerte waarin afbraak, materiaal, isolatie, zinkwerk en afvoer apart staan.',
     storyImg: dakStory,
     features: [
       { n: '01', t: 'Pannen en leien', d: 'Volledig vernieuwen inclusief onderdak, tengels en panlatten.' },
@@ -53,11 +53,11 @@ export const DIVISIES: Record<string, DivisionConfig> = {
 
   gevel: {
     slug: 'gevel', num: '06', title: 'Gevelrenovatie', eyebrow: 'Gevelrenovatie',
-    heroTitle: 'Uw gevel warm ingepakt<br/>en strak afgewerkt',
-    heroLede: 'Crepi, steenstrips, houten bekleding of composiet, geplaatst door onze eigen gevelploeg. Staat de stelling er toch, dan zetten wij er in dezelfde beweging buitenisolatie achter.',
+    heroTitle: 'Gevelbekleding<br/>en buitenisolatie',
+    heroLede: 'Crepi, steenstrips, houten bekleding en composiet plaatsen wij met onze eigen gevelploeg, met buitenisolatie eronder waar dat kan. Wij zetten de stelling zelf en ruimen de werf na afloop op.',
     heroBg: gevelHero,
-    storyTitle: 'Twee keer betalen<br/>voor dezelfde stelling',
-    storyLede: 'De stelling zetten, de gevel voorbereiden en alles weer opruimen kost meer dan de afwerking zelf. Wie de isolatie meeneemt terwijl die stelling er staat, betaalt dat deel één keer in plaats van twee.',
+    storyTitle: 'Isolatie en afwerking<br/>in één werf',
+    storyLede: 'Crepi, steenstrips, hout en composiet plaatsen wij met onze eigen ploeg, op een ondergrond die wij zelf voorbereiden. De stelling, de voorbereiding en de opruim wegen zwaarder door dan de afwerking, en die posten lopen maar één keer wanneer de isolatie in dezelfde werf meegaat. Wij rekenen beide varianten voor u door.',
     storyImg: gevelStory,
     features: [
       { n: '01', t: 'Crepi', d: 'Mineraal, silicaat of siliconen, op isolatie of rechtstreeks op de muur.' },
@@ -87,10 +87,10 @@ export const DIVISIES: Record<string, DivisionConfig> = {
   bad: {
     slug: 'bad', num: '05', title: 'Badkamer en wellness', eyebrow: 'Badkamers',
     heroTitle: 'Eén ploeg voor<br/>uw hele badkamer',
-    heroLede: 'Sanitair, tegelwerk, vloerverwarming en elektriciteit komen bij ons van dezelfde ploeg. De afstemming tussen die vakken blijft daarmee onze zorg.',
+    heroLede: 'Sanitair, tegelwerk, vloerverwarming en elektriciteit komen bij ons van dezelfde ploeg. Wij verzorgen uw badkamer van het uitbreken tot de laatste voeg.',
     heroBg: badHero,
-    storyTitle: 'Op tekening klaar<br/>voor er besteld wordt',
-    storyLede: 'Voor er iets besteld wordt, tekenen wij uw badkamer in 3D en leggen wij hem u voor. U ziet dan al waar het meubel komt, hoe de deur opengaat en waar de douchewand staat, en u kunt nog schuiven tot het klopt.',
+    storyTitle: 'Van ontwerp<br/>tot oplevering',
+    storyLede: 'Wij tekenen uw badkamer in 3D en leggen het ontwerp aan u voor. Na uw goedkeuring bestellen wij het sanitair en de tegels en plannen wij het uitbreken, het leidingwerk, de waterdichting en het tegelwerk in één doorlopende planning. U mag rekenen op één aanspreekpunt dat uw dossier kent.',
     storyImg: badStory,
     features: [
       { n: '01', t: '3D-ontwerp vooraf', d: 'U ziet de indeling, de tegels en het meubilair voor de eerste bestelling vertrekt.' },
@@ -119,11 +119,11 @@ export const DIVISIES: Record<string, DivisionConfig> = {
 
   interieur: {
     slug: 'interieur', num: '03', title: 'Interieurwerken', eyebrow: 'Interieurwerken',
-    heroTitle: 'De afwerking waar u<br/>elke dag naar kijkt',
-    heroLede: 'Wanden, plafonds, vloeren en het maatwerk dat daar tussen komt. Onze eigen schrijnwerker maakt uw kasten, dressings en tv-meubels.',
+    heroTitle: 'Wanden, vloeren<br/>en maatwerk',
+    heroLede: 'Plafonneerders, vloerders en schilders werken bij ons in dezelfde planning. Het maatwerk dat daar tussen komt, tekent en maakt onze schrijnwerker in ons eigen atelier.',
     heroBg: intHero,
-    storyTitle: 'Ons eigen atelier<br/>maakt uw kasten',
-    storyLede: 'Wat onze schrijnwerker tekent, maakt hij ook, in ons eigen atelier. Wilt u tijdens de werken een lade erbij of een kast tien centimeter smaller, dan is dat een kwestie van dagen en van een telefoon naar de werkplaats.',
+    storyTitle: 'Ons eigen<br/>schrijnwerkatelier',
+    storyLede: 'In ons eigen atelier tekent en maakt onze schrijnwerker uw kasten, dressings, tv-meubels en badkamermeubels op maat. Omdat de werkplaats van ons is, verloopt een aanpassing tijdens de werken via één telefoon en is ze een kwestie van dagen.',
     storyImg: intStory,
     features: [
       { n: '01', t: 'Gyproc en plafonds', d: 'Enkele en dubbele wanden, akoestisch geïsoleerd, met verlaagde plafonds.' },
@@ -153,10 +153,10 @@ export const DIVISIES: Record<string, DivisionConfig> = {
   construct: {
     slug: 'construct', num: '01', title: 'Totaalrenovatie en nieuwbouw', eyebrow: 'Totaalrenovatie',
     heroTitle: 'Van ruwe muren<br/>tot sleutelklaar',
-    heroLede: 'Een woning die tot op de ruwe muren gaat, een aanbouw, of bouwen van nul. Alle vakken werken bij ons in dezelfde planning, en die planning houden wij bij.',
+    heroLede: 'Een woning die tot op de ruwe muren gaat, een aanbouw, of bouwen van nul. Onze werfleider coördineert alle vakken en houdt de planning bij.',
     heroBg: conHero,
-    storyTitle: 'Waar een renovatie<br/>zijn tijd verliest',
-    storyLede: 'In een totaalrenovatie gaat de meeste tijd op aan stilstand. De tegelzetter staat voor een chape die nog moet drogen, de elektricien wacht op de plafonneerder. Onze vakken zitten onder hetzelfde dak, dus die volgorde zetten wij zelf op de kalender en bewaken wij dag per dag.',
+    storyTitle: 'Coördinatie<br/>van alle vakken',
+    storyLede: 'Bij een totaalrenovatie verzorgen wij de afbraak, de ruwbouw, de technieken, de chape, het tegelwerk en de afwerking. Onze werfleider zet de volgorde van die vakken op de kalender, bestelt de materialen op tijd en volgt de werf dag per dag op. U hebt één aanspreekpunt voor het hele dossier.',
     storyImg: conStory,
     features: [
       { n: '01', t: 'Sleutel op de deur', d: 'Nieuwbouwwoningen vanaf ongeveer 180 m², van vergunning tot oplevering.' },
@@ -185,11 +185,11 @@ export const DIVISIES: Record<string, DivisionConfig> = {
 
   ecologisch: {
     slug: 'ecologisch', num: '02', title: 'Ecologisch en energetisch', eyebrow: 'Energetisch renoveren',
-    heroTitle: 'U weet vooraf wat<br/>elke ingreep oplevert',
-    heroLede: 'Isolatie, warmtepomp, ventilatie en zonnepanelen, in één dossier en op één EPC-berekening. U kiest daarna zelf welke ingrepen doorgaan.',
+    heroTitle: 'Isolatie, warmtepomp<br/>en zonnepanelen',
+    heroLede: 'Isolatie, warmtepomp, ventilatie en zonnepanelen komen bij ons in één dossier en op één berekening. U kiest daarna zelf welke ingrepen doorgaan.',
     heroBg: ecoHero,
-    storyTitle: 'De schil bepaalt wat<br/>uw warmtepomp kost',
-    storyLede: 'Warmte die door dak en muren weglekt, dwingt een warmtepomp permanent op zijn duurste stand en houdt hem van zijn rendement af. Wij brengen daarom de schil op orde en bepalen het toestel op de warmtevraag die dan overblijft.',
+    storyTitle: 'Schil en technieken<br/>in één dossier',
+    storyLede: 'Dak, muren en vloer brengen wij op isolatiepeil, en daarna bepalen wij de warmtepomp, de ventilatie en de zonnepanelen op de warmtevraag die overblijft. Onze verslaggever rekent elke maatregel door en zet de premies waarop u recht hebt mee in het dossier. Per ingreep ziet u wat hij kost en wat hij opbrengt.',
     storyImg: ecoStory,
     features: [
       { n: '01', t: 'Isolatie eerst', d: 'Dak, spouw en buitengevel, zodat de installatie kleiner mag worden.' },
