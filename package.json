@@ -13,7 +13,7 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "check:ads": "node scripts/check-ads-negatives.cjs",
-    "verify": "npm run typecheck && npm run check:ads && npm run check:tekst && npm run check:copy && npm run check:replicacopy && npm run check:fotos && npm run check:bediening && npm run check:doorloop && npm run check:schuif && npm run check:calculator && npm run check:contrast && npm run check:kophero && npm run check:sitemap && npm run test",
+    "verify": "npm run typecheck && npm run check:ads && npm run check:tekst && npm run check:copy && npm run check:replicacopy && npm run check:diensten && npm run check:fotos && npm run check:bediening && npm run check:doorloop && npm run check:schuif && npm run check:calculator && npm run check:contrast && npm run check:kophero && npm run check:sitemap && npm run test",
     "check:tekst": "node scripts/check-tekstcorruptie.cjs",
     "check:contrast": "node scripts/check-contrast.mjs",
     "check:copy": "node scripts/check-lp-copy.cjs",
@@ -26,7 +26,8 @@
     "check:kophero": "node scripts/check-kophero.cjs",
     "check:doorloop": "node scripts/check-doorloop.cjs",
     "check:sitemap": "node scripts/check-sitemap.cjs",
-    "maak:sitemap": "node scripts/maak-sitemap.cjs"
+    "maak:sitemap": "node scripts/maak-sitemap.cjs",
+    "check:diensten": "node scripts/check-diensten-copy.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
