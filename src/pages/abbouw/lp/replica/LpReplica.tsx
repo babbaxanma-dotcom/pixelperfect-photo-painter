@@ -290,6 +290,36 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
      achtergrond; zonder die achtergrond leest hij door de inhoud heen. */
   useEffect(() => wireVasteKop(), []);
 
+  /* Een adres met #iets erachter kwam bovenaan uit. De browser zoekt dat
+     element meteen bij het laden, en dan heeft React nog niets gerenderd. De
+     secties verschijnen een tel later, maar dan is de sprong al voorbij.
+
+     Dat raakt elke sitelink in een advertentie: die brengt de bezoeker naar
+     de bovenkant in plaats van naar de berekening of de realisaties waar hij
+     op klikte. Hier wachten we tot het element bestaat en springen we alsnog,
+     en we herhalen dat kort: beelden en lettertypes schuiven de pagina nog
+     op nadat het element er staat. */
+  useEffect(() => {
+    const naam = window.location.hash.slice(1);
+    if (!naam) return;
+    let pogingen = 0;
+    let klaar = false;
+    const spring = () => {
+      const doel = document.getElementById(naam);
+      if (doel) {
+        doel.scrollIntoView({ block: 'start' });
+        klaar = true;
+      }
+      /* Twintig pogingen van 100ms: ruim voor de eerste render, en het stopt
+         vanzelf als het element er nooit komt. Na de eerste geslaagde sprong
+         blijven we nog even corrigeren voor wat er nalaadt. */
+      pogingen += 1;
+      if (pogingen < 20 && !(klaar && pogingen > 8)) window.setTimeout(spring, 100);
+    };
+    const id = window.setTimeout(spring, 50);
+    return () => window.clearTimeout(id);
+  }, []);
+
   /* De hero blijft staan terwijl de pagina eroverheen schuift. Zonder meer zou
      de titel half onder de formulierkaart blijven hangen: een afgesneden woord
      dat er tijdens het hele scrollen onderuit steekt. De inhoud vervaagt daarom
@@ -588,7 +618,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       </section>
 
       {/* ── Formulierbalk die over de onderrand van de hero valt ── */}
-      <div className={`pc-vat pc-balk${inhoud.toonCalculator === false ? ' pc-balk--los' : ''}`}>
+      <div id="calculator" className={`pc-vat pc-balk${inhoud.toonCalculator === false ? ' pc-balk--los' : ''}`}>
         <form onSubmit={verstuur} onFocusCapture={meldStart}>
           {BALKVELDEN.map((v) => {
             const Icoon = v.icoon;
@@ -748,7 +778,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
           meesten niet aanraken; één spoor toont alles en scrolt zelf. Elke
           tegel is even groot en vierkant, zodat de rij als één blok leest. */}
       {inhoud.toonWerk !== false && (
-      <section className="pc-werk">
+      <section className="pc-werk" id="werk">
         <div className="pc-vat pc-midden">
           <h2 className="pc-h2--midden">{inhoud.werk.kop}</h2>
         </div>
@@ -862,7 +892,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
           voordelen als reclame. Nu komt hij ná het stappenplan, het werk en de
           reviews: dezelfde vier punten lezen dan als voorwaarden waarop je
           tekent, en de bezoeker scrolt langs het bewijs om er te komen. */}
-      <section className="pc-aanbod">
+      <section className="pc-aanbod" id="aanbod">
         <div className="pc-vat">
           <h2 className="pc-h2--midden">{inhoud.aanbod.kop}</h2>
         </div>
