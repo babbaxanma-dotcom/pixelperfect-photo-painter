@@ -36,8 +36,8 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-reken__vraag { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 700; font-size: 21px;
   line-height: 1.25; color: var(--kop); margin-bottom: 16px; letter-spacing: -.015em; }
 .kgj-reken__keuzes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-/* Vijf keuzes: de laatste over de volle breedte, anders blijft er een gat. */
-.kgj-reken__keuzes--vijf .kgj-reken__keuze:last-child { grid-column: 1 / -1; }
+/* Oneven aantal keuzes: de laatste over de volle breedte, anders blijft er een gat. */
+.kgj-reken__keuzes--oneven .kgj-reken__keuze:last-child { grid-column: 1 / -1; }
 .kgjx .kgj-reken__keuze { min-height: 56px; padding: 12px 16px; text-align: left; cursor: pointer;
   background: var(--wit); border: 1px solid var(--lijn); border-radius: var(--r); color: var(--inkt);
   font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 600; font-size: 15.5px; line-height: 1.3;
@@ -58,14 +58,21 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-reken__gerust { margin-top: 10px; font-size: 13.5px; color: var(--zacht); }
 .kgjx .kgj-reken__fout { margin-top: 10px; font-size: 14px; color: #a3231a; }
 
-/* ── bewijs onder de kop ──
-   Drie controleerbare feiten, elk met een vinkje. Ze staan op de foto, dus in
-   wit met een halfdoorzichtige rand eronder. */
-.kgj-hero__bewijs { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px 22px; }
-.kgjx .kgj-hero__bewijs li { display: inline-flex; align-items: center; gap: 9px;
-  font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 14.5px; font-weight: 600;
-  color: rgba(255, 255, 255, .94); }
-.kgjx .kgj-hero__bewijs svg { flex: none; color: var(--accent); }
+/* ── bewijs onder de kop ── */
+/* Vier punten in een vast raster van twee op twee: groot genoeg om te lezen
+   op de foto, en elk punt op een vaste plek. Het vinkje staat in een oranje
+   bolletje met een donker vinkje, dat leest op elke foto. Mohammed: "die 4
+   punten bij de hero moeten duidelijker". */
+.kgj-hero__bewijs { margin-top: 28px; display: grid; grid-template-columns: repeat(2, minmax(0, max-content)); gap: 14px 30px; }
+.kgjx .kgj-hero__bewijs li { display: flex; align-items: center; gap: 11px;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 16px; font-weight: 700; line-height: 1.3;
+  color: #fff; text-shadow: 0 1px 10px rgba(5, 11, 20, .55); }
+.kgjx .kgj-hero__bewijs svg { flex: none; width: 26px; height: 26px; padding: 5px; border-radius: 999px;
+  background: var(--accent); color: var(--merk-diep); stroke-width: 2.6; }
+@media (max-width: 640px) {
+  .kgj-hero__bewijs { grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+  .kgjx .kgj-hero__bewijs li { font-size: 15px; }
+}
 
 /* ── keuze met een verduidelijking eronder (het btw-tarief) ── */
 .kgjx .kgj-reken__keuze { display: flex; flex-direction: column; gap: 3px; }
@@ -137,6 +144,20 @@ export const KGJ_EXTRA = `
   .kgj-reken__rij { grid-template-columns: 1fr; gap: 0; }
   .kgjx .kgj-reken__keuze { min-height: 52px; padding: 10px 12px; font-size: 15px; }
 }
+/* ── werkwijze: vijf stappen op één rij ──
+   De demo had er vier. Met Nazorg erbij zijn het er vijf; op een groot scherm
+   blijven ze naast elkaar, zodat de golf één lijn blijft. Kleiner dan 1000px
+   neemt de gegenereerde stijl het over (twee kolommen, dan één). */
+@media (min-width: 1001px) {
+  .kgjx .kgj-werkwijze .kgj-stappen { grid-template-columns: repeat(5, 1fr); gap: 22px; }
+}
+
+/* ── inspectieformulier: tweede weg naar de calculator ── */
+.kgjx .kgj-reken__alt { display: block; margin-top: 14px; text-align: center;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 600; font-size: 14.5px;
+  color: var(--merk); text-decoration: underline; text-underline-offset: 3px; }
+.kgjx .kgj-reken__alt:hover { color: var(--accent-diep); }
+
 @media (prefers-reduced-motion: reduce) {
   .kgj-reken__stap { animation: none; }
 }

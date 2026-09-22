@@ -95,7 +95,7 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
       {!klaar ? (
         <div className="kgj-reken__stap" key={stap}>
           <p className="kgj-reken__vraag">{vraag.vraag}</p>
-          <div className={`kgj-reken__keuzes${vraag.keuzes.length === 5 ? ' kgj-reken__keuzes--vijf' : ''}`}>
+          <div className={`kgj-reken__keuzes${vraag.keuzes.length % 2 === 1 ? ' kgj-reken__keuzes--oneven' : ''}`}>
             {vraag.keuzes.map((k) => (
               <button type="button" key={k.label}
                 className={`kgj-reken__keuze${antwoorden[vraag.sleutel] === k.label ? ' is-aan' : ''}`}

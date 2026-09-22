@@ -52,6 +52,8 @@ export type KgjInhoud = {
   reviews: { kop: string; beeld: Foto; lijst: Review[] };
   werkwijze: { kop: string; onder: string; stappen: { titel: string; tekst: string }[] };
   cta: { kop: string; tekst: string; foto: Foto };
+  /** Het formulier onderaan: de gratis dakinspectie, met een link terug naar de calculator. */
+  inspectie: { kop: string; knop: string; onder: string; alt: string; bronLead: string };
 };
 
 export const DAKWERKEN: KgjInhoud = {
@@ -62,8 +64,11 @@ export const DAKWERKEN: KgjInhoud = {
   bedanktSlug: 'dakwerken',
 
   hero: {
-    kop: 'Reken vooraf uit wat uw dak kost',
-    onder: 'Vijf vragen over uw dak. Binnen één werkdag weet u wat het kost.',
+    /* De calculator staat ernaast en zegt zelf wat hij doet. Mohammed: 'de
+       berekening is toch ernaast dat hoef je niet te verwoorden'. De kop gaat
+       over het resultaat aan zijn huis. */
+    kop: 'Een nieuw dak dat decennia waterdicht blijft',
+    onder: 'Vijf vragen over uw dak en u weet direct wat het kost.',
     /* Drie controleerbare feiten onder de kop. Een bezoeker die uit een
        advertentie komt, kent AB niet; dit is het enige bewijs dat boven de
        vouw past zolang er geen geverifieerde Google-score is.
@@ -72,7 +77,7 @@ export const DAKWERKEN: KgjInhoud = {
        zet "gratis en vrijblijvend" vooraan. Het VCA-attest staat nu in het
        waarom-blok: een certificaat overtuigt lager op de pagina, een
        toezegging overtuigt boven de vouw. */
-    bewijs: ['Gratis plaatsbezoek en offerte', '6% btw vanaf tien jaar oud', 'Tien jaar aansprakelijk'],
+    bewijs: ['Gratis dakinspectie en offerte', 'Volledige premiebegeleiding (Mijn VerbouwPremie)', '6% btw vanaf tien jaar oud', 'Tien jaar aansprakelijk'],
     dias: [
       { src: antraciet, alt: 'Halfopen woning in rode baksteen met een nieuw antraciet pannendak' },
       { src: panRood, alt: 'Rijwoning met een nieuw rood pannendak en een dakvenster' },
@@ -88,7 +93,6 @@ export const DAKWERKEN: KgjInhoud = {
         { label: 'Dak vernieuwen' },
         { label: 'Dak isoleren' },
         { label: 'Lek of schade herstellen' },
-        { label: 'Plat dak vernieuwen' },
       ] },
       { sleutel: 'Dak', vraag: 'Wat voor dak heeft u?', keuzes: [
         { label: 'Pannen' }, { label: 'Leien' }, { label: 'Plat dak' }, { label: 'Weet ik niet' },
@@ -123,6 +127,11 @@ export const DAKWERKEN: KgjInhoud = {
       { titel: 'Eigen ploegen', tekst: 'Omdat we onze eigen ploegen hebben, kunnen we de volledige werf zelf opvolgen. Dat zorgt voor een vlottere uitvoering.' },
       { titel: 'Tien jaar aansprakelijk', tekst: 'Wij staan tien jaar in voor elk dak dat we leggen. We zijn volledig verzekerd en VCA-gecertificeerd.' },
       { titel: 'Vrijblijvende offerte en dakinspectie', tekst: 'We komen langs en voeren een vrijblijvende dakinspectie uit.' },
+      /* Mohammed, 23 sep 2026: 'volledige premiebegeleiding, Mijn VerbouwPremie, zoals
+         Kijzer ook doet'. Kijzer noemt het 'Premieservice' en 'volledige omkadering
+         met hulp bij premie aanvragen'. Geen bedragen: die hangen af van inkomen en
+         werk, en de regels veranderen (gevelpremie weg sinds 1 maart 2026). */
+      { titel: 'Volledige premiebegeleiding', tekst: 'Wij regelen de aanvraag van uw Mijn VerbouwPremie.' },
     ],
     /* Boven: de dakwerker zelf aan het werk. Dit blok verkoopt de mensen, dus
        hoort er een mens in beeld en geen vierde gevelfoto. Hier stond eerst
@@ -175,14 +184,25 @@ export const DAKWERKEN: KgjInhoud = {
       /* Stond eerst "Elke post staat apart op papier": dat is nu de derde
          reden in het waarom-blok. Twee keer dezelfde belofte op één pagina
          leest als vulling, dus deze stap draagt het geruststellende deel. */
-      { titel: 'Offerte', tekst: 'U neemt hem rustig door voor u beslist.' },
-      { titel: 'Uitvoering', tekst: 'Het dak gaat elke avond dicht, ook als het werk nog loopt.' },
+      { titel: 'Offerte', tekst: 'U krijgt een vrijblijvende offerte.' },
+      /* Mohammed: 'wij beginnen aan de werken, meestal duurt dakwerk ...'. De duur
+         staat nergens vast; die komt erbij zodra hij het getal geeft. */
+      { titel: 'Uitvoering', tekst: 'Wij beginnen aan de werken.' },
+      { titel: 'Nazorg', tekst: 'Na de oplevering blijven wij uw aanspreekpunt.' },
     ],
   },
 
   cta: {
-    kop: 'Laat uw dak opmeten',
-    tekst: 'Wij komen langs binnen vijf werkdagen en meten uw dak op. De offerte die erop volgt is gratis en vrijblijvend.',
+    kop: 'Gratis dakinspectie',
+    tekst: 'Een van onze dakwerkers inspecteert uw dak ter plaatse. De offerte die erop volgt is gratis en vrijblijvend.',
     foto: { src: pannenDicht, alt: 'Nieuw hellend dak met pannen' },
+  },
+
+  inspectie: {
+    kop: 'Plan uw dakinspectie',
+    knop: 'Vraag uw gratis dakinspectie aan',
+    onder: 'Wij bellen u binnen één werkdag om een moment af te spreken.',
+    alt: 'Liever eerst een prijs? Bereken hem in vijf vragen',
+    bronLead: 'lp:dakwerken:inspectie',
   },
 };

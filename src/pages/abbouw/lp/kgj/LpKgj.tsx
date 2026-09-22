@@ -3,6 +3,7 @@ import { CONTACT } from '@/data/contact';
 import { KGJ_CSS } from './stijl';
 import { KGJ_EXTRA } from './extra';
 import Rekenaar from './Rekenaar';
+import Inspectie from './Inspectie';
 import { DAKWERKEN, type KgjInhoud, type Review } from './inhoud';
 import logo from '@/assets/home/logo-trim.png';
 
@@ -26,7 +27,7 @@ import logo from '@/assets/home/logo-trim.png';
  */
 
 /* Hoe hoog elke stap van de werkwijze hangt: dezelfde golf als in de demo. */
-const STAP_HOOGTE = [0, 58, 34, 0];
+const STAP_HOOGTE = [0, 58, 34, 58, 0];
 
 const IcBel = () => (
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2"
@@ -42,12 +43,14 @@ const REDEN_ICONEN = [
   <svg {...lijn} key="ploeg"><circle cx="9" cy="8" r="3.2" /><path d="M3.5 19.5c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5" /><circle cx="17" cy="9" r="2.4" /><path d="M16 14.6c2.3.2 4 1.8 4.5 4.9" /></svg>,
   <svg {...lijn} key="schild"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6z" /><path d="m8.8 12 2.2 2.2 4.3-4.4" /></svg>,
   <svg {...lijn} key="agenda"><rect x="3.5" y="5" width="17" height="15.5" rx="2" /><path d="M8 3v4M16 3v4M3.5 10h17" /><path d="m9 15 2 2 4-4" /></svg>,
+  <svg {...lijn} key="premie"><circle cx="12" cy="12" r="8.6" /><path d="M15.2 8.6a4 4 0 1 0 0 6.8M7.2 10.8h5.6M7.2 13.2h5.6" /></svg>,
 ];
 const STAP_ICONEN = [
-  <svg {...lijn} key="reken"><rect x="5" y="2.8" width="14" height="18.4" rx="2" /><path d="M8.5 6.5h7M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01M8.5 18h.01M12 18h3.5" /></svg>,
+  <svg {...lijn} key="aanvraag"><path d="M21 3 3 10.5l7 2.6 2.6 7.4z" /><path d="m10 13.1 5-5" /></svg>,
   <svg {...lijn} key="huis"><path d="M3.2 10.6 12 3.4l8.8 7.2V20a1 1 0 0 1-1 1H4.2a1 1 0 0 1-1-1z" /><path d="M9.4 21v-6.2h5.2V21" /></svg>,
   <svg {...lijn} key="papier"><path d="M6 2.9h7.4L18.4 8v13.1H6z" /><path d="M13.4 2.9V8h5" /><path d="M9 12.2h6.4M9 15.4h6.4M9 18.6h3.6" /></svg>,
   <svg {...lijn} key="dak"><path d="M2.5 12.5 12 4l9.5 8.5" /><path d="M5.5 10v10h13V10" /><path d="M9 20v-5h6v5" /></svg>,
+  <svg {...lijn} key="nazorg"><circle cx="12" cy="12" r="8.6" /><path d="m8.4 12.2 2.4 2.4 4.8-5" /></svg>,
 ];
 
 /* De boog tussen twee rondjes, uitgerekend uit het hoogteverschil. Zo tekent de
@@ -114,24 +117,21 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
     if (meta) meta.setAttribute('content', inhoud.omschrijving);
   }, [inhoud]);
 
-  /* Herofoto's: om de zes seconden de volgende, stil onder de muis en als het
-     tabblad niet zichtbaar is, zoals in de demo. */
+  /* Herofoto's: om de zes seconden de volgende, stil als het tabblad niet
+     zichtbaar is. De demo stopte ook onder de muis, maar hier staat de
+     calculator in de hero: wie iets invult, heeft de muis er altijd op, en dan
+     liep de diashow nooit. Mohammed: "de hero moet automatisch loopen". */
   useEffect(() => {
     const n = inhoud.hero.dias.length;
     if (n < 2 || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
-    const hero = vat.current?.querySelector<HTMLElement>('.kgj-hero');
     let klok: number | null = null;
     const stop = () => { if (klok !== null) { window.clearInterval(klok); klok = null; } };
     const start = () => { stop(); klok = window.setInterval(() => setDia((d) => (d + 1) % n), 6000); };
     const zicht = () => (document.hidden ? stop() : start());
-    hero?.addEventListener('mouseenter', stop);
-    hero?.addEventListener('mouseleave', start);
     document.addEventListener('visibilitychange', zicht);
     start();
     return () => {
       stop();
-      hero?.removeEventListener('mouseenter', stop);
-      hero?.removeEventListener('mouseleave', start);
       document.removeEventListener('visibilitychange', zicht);
     };
   }, [inhoud]);
@@ -235,7 +235,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                 ))}
               </ul>
             </div>
-            <Rekenaar inhoud={inhoud} plek="hero" />
+            <div id="rekenaar"><Rekenaar inhoud={inhoud} plek="hero" /></div>
           </div>
         </div>
         <div className="kgj-hero__bediening">
@@ -254,7 +254,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           <div className="kgj-waarom__tekst kgj-op">
             <h2>{inhoud.waarom.kop}</h2>
             <p>{inhoud.waarom.tekst}</p>
-            <a className="kgj-knop kgj-knop--vol" href="#top">Bereken uw prijs</a>
+            <a className="kgj-knop kgj-knop--vol" href="#rekenaar">Bereken uw prijs</a>
           </div>
           <ul className="kgj-redenen">
             {inhoud.waarom.redenen.map((r, i) => (
@@ -291,7 +291,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             ))}
           </ol>
           <div className="kgj-midknop">
-            <a className="kgj-knop kgj-knop--vol" href="#top">Bereken uw prijs</a>
+            <a className="kgj-knop kgj-knop--vol" href="#rekenaar">Bereken uw prijs</a>
           </div>
         </div>
       </section>
@@ -387,12 +387,12 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             <p>{inhoud.cta.tekst}</p>
             <a className="kgj-knop kgj-knop--wit" href={CONTACT.phone.href}>Bel {CONTACT.phone.display}</a>
           </div>
-          <div className="kgj-op"><Rekenaar inhoud={inhoud} plek="onder" /></div>
+          <div className="kgj-op"><Inspectie inhoud={inhoud} /></div>
         </div>
       </section>
 
       <div className={`kgj-actiebalk${balk ? ' is-aan' : ''}`}>
-        <a className="kgj-knop kgj-knop--vol" href="#top">Bereken uw prijs</a>
+        <a className="kgj-knop kgj-knop--vol" href="#rekenaar">Bereken uw prijs</a>
         <a className="kgj-knop kgj-knop--rand" href={CONTACT.phone.href}
           aria-label={'Bel ' + CONTACT.phone.display}><IcBel /></a>
       </div>
@@ -413,7 +413,8 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           </div>
         </div>
         <div className="kgj-breed kgj-voet__onder">
-          <p>© {new Date().getFullYear()} AB Bouw Groep</p>
+          {/* Btw-nummer uit Voorwaarden.tsx, de enige plek in de code waar het staat. */}
+          <p>© {new Date().getFullYear()} AB Bouw Groep · BTW BE 0712.443.881</p>
           <a href="/privacy">Privacy</a>
           <a href="/cookies">Cookies</a>
           <a href="/voorwaarden">Voorwaarden</a>
