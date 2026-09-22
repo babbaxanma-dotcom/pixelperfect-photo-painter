@@ -56,14 +56,14 @@ export type KgjInhoud = {
 
 export const DAKWERKEN: KgjInhoud = {
   titel: 'Dakwerken: reken vooraf uit wat uw dak kost | AB Bouw Groep',
-  omschrijving: 'Klik vijf antwoorden aan en hoor binnen één werkdag wat uw dak kost. Eigen dakwerkers en zinkwerkers, gratis plaatsbezoek.',
+  omschrijving: 'Klik vijf antwoorden aan en hoor binnen één werkdag wat uw dak kost. Gratis plaatsbezoek en offerte, werken aan 6% btw.',
   divisie: 'ab_dakwerken',
   bronLead: 'lp:dakwerken:rekenaar',
   bedanktSlug: 'dakwerken',
 
   hero: {
     kop: 'Reken vooraf uit wat uw dak kost',
-    onder: 'Vijf vragen over uw dak. Binnen één werkdag belt een van onze dakwerkers u met de prijs.',
+    onder: 'Vijf vragen over uw dak. Binnen één werkdag weet u wat het kost.',
     /* Drie controleerbare feiten onder de kop. Een bezoeker die uit een
        advertentie komt, kent AB niet; dit is het enige bewijs dat boven de
        vouw past zolang er geen geverifieerde Google-score is.
@@ -72,7 +72,7 @@ export const DAKWERKEN: KgjInhoud = {
        zet "gratis en vrijblijvend" vooraan. Het VCA-attest staat nu in het
        waarom-blok: een certificaat overtuigt lager op de pagina, een
        toezegging overtuigt boven de vouw. */
-    bewijs: ['Gratis plaatsbezoek en offerte', 'Eigen dakwerkers en zinkwerkers', 'Tien jaar aansprakelijk'],
+    bewijs: ['Gratis plaatsbezoek en offerte', '6% btw vanaf tien jaar oud', 'Tien jaar aansprakelijk'],
     dias: [
       { src: antraciet, alt: 'Halfopen woning in rode baksteen met een nieuw antraciet pannendak' },
       { src: panRood, alt: 'Rijwoning met een nieuw rood pannendak en een dakvenster' },
@@ -89,7 +89,6 @@ export const DAKWERKEN: KgjInhoud = {
         { label: 'Dak isoleren' },
         { label: 'Lek of schade herstellen' },
         { label: 'Plat dak vernieuwen' },
-        { label: 'Dakraam plaatsen' },
       ] },
       { sleutel: 'Dak', vraag: 'Wat voor dak heeft u?', keuzes: [
         { label: 'Pannen' }, { label: 'Leien' }, { label: 'Plat dak' }, { label: 'Weet ik niet' },
@@ -119,9 +118,13 @@ export const DAKWERKEN: KgjInhoud = {
        zelf beoordelen. Daarna wat hij eraan overhoudt. De drie redenen
        dragen de feiten; deze twee zinnen zetten hem op zijn eigen stoep, en
        herhalen dus niets uit de redenen. */
-    tekst: 'Een dak vernieuwt u één keer in dertig jaar. U geeft er veel geld aan uit voor werk waar u zelf nooit op klimt om te kijken of het goed zit. Daarom houden wij het in eigen huis. Onze eigen dakwerkers leggen de pannen en onze eigen zinkwerkers maken de goten. Dezelfde mensen die maandag beginnen, leggen ook de laatste pan. Voor we starten hoort u wat er gebeurt en wat het kost, met elke post apart op de offerte. Tien jaar lang blijft dit dak ons werk.',
+    /* Belofte vooraan, onderbouwing daarna. Het aantal jaren ervaring staat
+       hier bewust niet: dat getal is nergens vastgelegd, en een cijfer dat
+       AB niet zelf gegeven heeft, is een claim die de offerte later moet
+       waarmaken. Zodra Mohammed het jaartal doorgeeft, kan het hier in. */
+    tekst: 'Bij AB Bouw Groep garanderen wij u vakmanschap: onze dakwerkers werken jaar in jaar uit op Vlaamse daken en weten precies wat het uwe nodig heeft om decennia mee te gaan. Wij nemen de hele werf op ons en houden u onderweg op de hoogte.',
     redenen: [
-      { titel: 'Eigen dakwerkers en zinkwerkers', tekst: 'Elke ochtend dezelfde ploeg op uw dak, tot de laatste nokpan vastligt.' },
+      { titel: 'Eigen dakwerkers en zinkwerkers', tekst: 'Elke ochtend dezelfde ploeg, tot de laatste nokpan vastligt.' },
       { titel: 'Tien jaar aansprakelijk', tekst: 'Zo lang blijft dit dak ons werk. Verzekerd, met een VCA-attest voor de werf.' },
       { titel: 'Elke post apart op uw offerte', tekst: 'U leest per post wat u betaalt, aan het btw-tarief dat op uw woning geldt.' },
     ],
@@ -172,7 +175,7 @@ export const DAKWERKEN: KgjInhoud = {
     onder: 'U weet vooraf wat er gebeurt en wanneer.',
     stappen: [
       { titel: 'Prijs', tekst: 'Uw vijf antwoorden zeggen ons hoe groot het werk is.' },
-      { titel: 'Plaatsbezoek', tekst: 'Binnen vijf werkdagen staan we op uw dak en meten we op.' },
+      { titel: 'Plaatsbezoek', tekst: 'Binnen vijf werkdagen komen we opmeten.' },
       /* Stond eerst "Elke post staat apart op papier": dat is nu de derde
          reden in het waarom-blok. Twee keer dezelfde belofte op één pagina
          leest als vulling, dus deze stap draagt het geruststellende deel. */

@@ -27,22 +27,42 @@ const blok = bron.slice(begin);
 
 /* De velden die de bezoeker leest. alt-teksten en technische sleutels
    (divisie, bronLead, src) blijven eruit: die staan niet op de pagina. */
-const LEESBAAR = /(?:^|\s)(kop|onder|tekst|titel|label|vraag|gerust|uitkomstKop|uitkomstOnder|knop|omschrijving)\s*:\s*'((?:[^'\\]|\\.)*)'/g;
+const LEESBAAR = /(?:^|\s)(kop|onder|tekst|titel|vraag|gerust|uitkomstKop|uitkomstOnder|knop)\s*:\s*'((?:[^'\\]|\\.)*)'/g;
+
+const schoon = (s) => s.replace(/\\'/g, "'").replace(/\\\\/g, '\\');
 
 const regels = [];
 let m;
 while ((m = LEESBAAR.exec(blok))) {
-  const waarde = m[2].replace(/\\'/g, "'").replace(/\\\\/g, '\\');
+  const waarde = schoon(m[2]);
   if (waarde) regels.push(waarde);
 }
-/* De keuzes van de calculator staan als { label: '…' } al in LEESBAAR, maar
-   de losse keuzes zonder sleutel niet. Die haken we er apart bij. */
-for (const k of blok.matchAll(/\{\s*label:\s*'((?:[^'\\]|\\.)*)'(?:,\s*uitleg:\s*'((?:[^'\\]|\\.)*)')?\s*\}/g)) {
-  if (!regels.includes(k[1])) regels.push(k[1]);
-  if (k[2] && !regels.includes(k[2])) regels.push(k[2]);
+
+/* Knoppen van de calculator, tegellabels, paginatitel en SEO-tekst komen
+   onder een scheidingslijn. Ze zijn functioneel: twee vragen mogen allebei
+   een knop "Weet ik niet" hebben, en de paginatitel MAG de kop van de hero
+   spiegelen. De herhalingsguard stopt bij die lijn; de copy-guard leest het
+   hele bestand, want de verboden woorden gelden overal. */
+const functioneel = [];
+for (const s of ['titel', 'omschrijving']) {
+  const t = blok.match(new RegExp(`(?:^|\\s)${s}\\s*:\\s*'((?:[^'\\\\]|\\\\.)*)'`));
+  if (t) functioneel.push(schoon(t[1]));
+}
+for (const k of blok.matchAll(/\{\s*label:\s*'((?:[^'\\]|\\.)*)'(?:,\s*uitleg:\s*'((?:[^'\\]|\\.)*)')?/g)) {
+  functioneel.push(schoon(k[1]));
+  if (k[2]) functioneel.push(schoon(k[2]));
+}
+for (const b of blok.matchAll(/bewijs:\s*\[([^\]]*)\]/g)) {
+  for (const p of b[1].matchAll(/'((?:[^'\\]|\\.)*)'/g)) functioneel.push(schoon(p[1]));
 }
 
-if (regels.length < 30) throw new Error(`te weinig tekst gevonden (${regels.length}): de regex vangt de inhoud niet meer`);
+/* De paginatitel matcht ook op `titel:` en stond daardoor zowel boven als
+   onder de streep; de herhalingsguard meldde hem dan als stempel tegen
+   zichzelf. Wat functioneel is, hoort maar op één plek te staan. */
+const lopend = regels.filter((r) => !functioneel.includes(r));
 
-fs.writeFileSync(DOEL, regels.join('\n') + '\n', 'utf8');
-console.log(`${regels.length} zinnen uit inhoud.ts naar ${path.relative(process.cwd(), DOEL)}`);
+if (lopend.length < 20) throw new Error(`te weinig lopende tekst gevonden (${lopend.length}): de regex vangt de inhoud niet meer`);
+
+const uit = lopend.join('\n') + '\n\n--- functioneel ---\n' + functioneel.join('\n') + '\n';
+fs.writeFileSync(DOEL, uit, 'utf8');
+console.log(`${lopend.length} zinnen lopende tekst + ${functioneel.length} functionele regels naar ${path.relative(process.cwd(), DOEL)}`);
