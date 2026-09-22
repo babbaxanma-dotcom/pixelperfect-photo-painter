@@ -93,32 +93,31 @@ export const DAKWERKEN: KgjInhoud = {
   },
 
   rekenaar: {
+    /* Overgenomen van de calculator van Recotex (calculator.recotex.be/dakwerken,
+       23 sep 2026): soort dak, bedekking, grootte, isolatie, asbest. Simpeler
+       gemaakt: de grootte als knoppen in plaats van een schuifbalk, geen
+       tussenvraag naar het type pan of isolatie. Als zesde vraag de start,
+       zodat AB de dringende aanvragen eerst kan bellen.
+       Bij plat dak Mohammeds eigen keuzes (bitumen, roofing, EPDM). */
     vragen: [
-      { sleutel: 'Werk', vraag: 'Wat moet er aan uw dak gebeuren?', keuzes: [
-        { label: 'Dak vernieuwen' },
-        { label: 'Dak isoleren' },
-        { label: 'Lek of schade herstellen' },
-        { label: 'Anders' },
+      { sleutel: 'Dak', vraag: 'Welk soort dak heeft u?', keuzes: [
+        { label: 'Hellend dak', uitleg: 'hellingshoek groter dan 15°' },
+        { label: 'Plat dak', uitleg: 'hellingshoek kleiner dan 15°' },
       ] },
-      /* Mohammed: eerst hellend of plat, dan pas wat erop ligt. Elk pad krijgt
-         precies één vervolgvraag, zodat de teller op beide paden zes zegt. */
-      { sleutel: 'Dak', vraag: 'Is het een hellend of een plat dak?', keuzes: [
-        { label: 'Hellend dak' }, { label: 'Plat dak' },
+      { sleutel: 'Bedekking', vraag: 'Welke dakbedekking wenst u?', als: { sleutel: 'Dak', waarde: 'Hellend dak' }, keuzes: [
+        { label: 'Gegolfde pannen' }, { label: 'Vlakke pannen of leien' }, { label: 'Golfplaten' }, { label: 'Weet ik nog niet' },
       ] },
-      { sleutel: 'Bedekking', vraag: 'Wat ligt er nu op uw dak?', als: { sleutel: 'Dak', waarde: 'Hellend dak' }, keuzes: [
-        { label: 'Pannen' }, { label: 'Leien' }, { label: 'Iets anders' }, { label: 'Weet ik niet' },
+      { sleutel: 'Bedekking', vraag: 'Wat wilt u op uw plat dak?', als: { sleutel: 'Dak', waarde: 'Plat dak' }, keuzes: [
+        { label: 'Bitumen' }, { label: 'Roofing' }, { label: 'EPDM' }, { label: 'Weet ik nog niet' },
       ] },
-      { sleutel: 'Bedekking', vraag: 'Welke dakbedekking heeft uw plat dak?', als: { sleutel: 'Dak', waarde: 'Plat dak' }, keuzes: [
-        { label: 'Bitumen' }, { label: 'Roofing' }, { label: 'EPDM' }, { label: 'Iets anders' }, { label: 'Weet ik niet' },
+      { sleutel: 'Grootte', vraag: 'Hoe groot is het dak?', keuzes: [
+        { label: 'Kleiner dan 50 m²' }, { label: '50 tot 100 m²' }, { label: '100 tot 150 m²' }, { label: 'Groter dan 150 m²' }, { label: 'Weet ik niet' },
       ] },
-      { sleutel: 'Woning', vraag: 'Wat voor woning is het?', keuzes: [
-        { label: 'Rijwoning' }, { label: 'Halfopen bebouwing' }, { label: 'Vrijstaande woning' }, { label: 'Ander gebouw' },
+      { sleutel: 'Isolatie', vraag: 'Is er isolatie nodig?', keuzes: [
+        { label: 'Ja', uitleg: 'ik wil isolatie laten plaatsen' }, { label: 'Nee', uitleg: 'enkel dakwerken' },
       ] },
-      /* Deze vraag bepaalt het btw-tarief: 6% bij een woning ouder dan tien
-         jaar, anders 21%. Wie belt met de prijs, weet dat dan al. */
-      { sleutel: 'Leeftijd', vraag: 'Hoe oud is de woning?', keuzes: [
-        { label: 'Ouder dan tien jaar', uitleg: 'dan geldt 6% btw' },
-        { label: 'Jonger dan tien jaar' }, { label: 'Weet ik niet' },
+      { sleutel: 'Asbest', vraag: 'Is er asbest aanwezig in het dak?', keuzes: [
+        { label: 'Ja, vermoedelijk' }, { label: 'Nee' }, { label: 'Weet ik niet zeker' },
       ] },
       { sleutel: 'Start', vraag: 'Wanneer wilt u beginnen?', keuzes: [
         { label: 'Zo snel mogelijk' }, { label: 'Binnen drie maanden' }, { label: 'Later dit jaar' }, { label: 'Ik verken nog' },

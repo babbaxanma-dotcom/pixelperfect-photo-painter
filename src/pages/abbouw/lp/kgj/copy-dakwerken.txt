@@ -1,11 +1,11 @@
 Dé specialist voor uw dakwerk
 Beantwoord zes korte vragen en u weet direct wat het kost.
-Wat moet er aan uw dak gebeuren?
-Is het een hellend of een plat dak?
-Wat ligt er nu op uw dak?
-Welke dakbedekking heeft uw plat dak?
-Wat voor woning is het?
-Hoe oud is de woning?
+Welk soort dak heeft u?
+Welke dakbedekking wenst u?
+Wat wilt u op uw plat dak?
+Hoe groot is het dak?
+Is er isolatie nodig?
+Is er asbest aanwezig in het dak?
 Wanneer wilt u beginnen?
 Weet u het niet zeker? Een schatting volstaat.
 Nog één stap
@@ -44,29 +44,30 @@ U ontvangt een vrijblijvende offerte
 --- functioneel ---
 Dakwerken: reken vooraf uit wat uw dak kost | AB Bouw Groep
 Klik zes antwoorden aan en hoor binnen één werkdag wat uw dak kost. Gratis plaatsbezoek en offerte, werken aan 6% btw.
-Dak vernieuwen
-Dak isoleren
-Lek of schade herstellen
-Anders
 Hellend dak
+hellingshoek groter dan 15°
 Plat dak
-Pannen
-Leien
-Iets anders
-Weet ik niet
+hellingshoek kleiner dan 15°
+Gegolfde pannen
+Vlakke pannen of leien
+Golfplaten
+Weet ik nog niet
 Bitumen
 Roofing
 EPDM
-Iets anders
+Weet ik nog niet
+Kleiner dan 50 m²
+50 tot 100 m²
+100 tot 150 m²
+Groter dan 150 m²
 Weet ik niet
-Rijwoning
-Halfopen bebouwing
-Vrijstaande woning
-Ander gebouw
-Ouder dan tien jaar
-dan geldt 6% btw
-Jonger dan tien jaar
-Weet ik niet
+Ja
+ik wil isolatie laten plaatsen
+Nee
+enkel dakwerken
+Ja, vermoedelijk
+Nee
+Weet ik niet zeker
 Zo snel mogelijk
 Binnen drie maanden
 Later dit jaar

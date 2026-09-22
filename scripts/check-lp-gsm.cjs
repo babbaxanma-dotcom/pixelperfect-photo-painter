@@ -57,21 +57,22 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   meld(vouw.h1 === 'Dé specialist voor uw dakwerk', 'kop', vouw.h1);
   await page.screenshot({ path: `${UIT}/01-hero.png` });
 
-  /* 2. Vraag 1: vier keuzes, geen 'Weet u het niet zeker' */
+  /* 2. Vraag 1 (Recotex-volgorde): soort dak, geen 'Weet u het niet zeker' */
   const v1 = await page.evaluate(() => ({
-    keuzes: [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')].map((b) => b.textContent.trim()),
+    keuzes: [...document.querySelectorAll('#rekenaar .kgj-reken__keuze strong')].map((b) => b.textContent.trim()),
+    vraag: document.querySelector('#rekenaar .kgj-reken__vraag').textContent.trim(),
     gerust: !!document.querySelector('#rekenaar .kgj-reken__gerust'),
   }));
-  meld(v1.keuzes.join('|') === 'Dak vernieuwen|Dak isoleren|Lek of schade herstellen|Anders', 'vraag 1 heeft de vier keuzes', v1.keuzes.join(', '));
+  meld(v1.vraag === 'Welk soort dak heeft u?' && v1.keuzes.join('|') === 'Hellend dak|Plat dak', 'vraag 1 = soort dak', `${v1.vraag} / ${v1.keuzes.join(', ')}`);
   meld(!v1.gerust, "geen 'Weet u het niet zeker' bij vraag 1");
   meld((await tel()) === 'Vraag 1 van 6', 'teller start op 1 van 6', await tel());
 
   /* 3. Hellend pad tot het formulier */
-  await klikKeuze('Dak vernieuwen'); await wacht(250);
-  meld((await vraag()) === 'Is het een hellend of een plat dak?', 'vraag 2 = hellend of plat', await vraag());
   await klikKeuze('Hellend dak'); await wacht(250);
-  meld((await vraag()) === 'Wat ligt er nu op uw dak?' && (await tel()) === 'Vraag 3 van 6', 'hellend: vraag 3 = pannen of leien', `${await vraag()} / ${await tel()}`);
-  for (const k of ['Pannen', 'Rijwoning', 'Ouder dan tien jaar', 'Zo snel mogelijk']) { await klikKeuze(k); await wacht(250); }
+  meld((await vraag()) === 'Welke dakbedekking wenst u?' && (await tel()) === 'Vraag 2 van 6', 'hellend: vraag 2 = dakbedekking', `${await vraag()} / ${await tel()}`);
+  const volgorde = [];
+  for (const k of ['Gegolfde pannen', '50 tot 100 m²', 'Ja', 'Nee', 'Zo snel mogelijk']) { await klikKeuze(k); await wacht(250); volgorde.push(await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__vraag')?.textContent.trim())); }
+  meld(volgorde.slice(0, 4).join(' > ') === 'Hoe groot is het dak? > Is er isolatie nodig? > Is er asbest aanwezig in het dak? > Wanneer wilt u beginnen?', 'volgorde grootte, isolatie, asbest, start', volgorde.slice(0, 4).join(' > '));
   const form = await page.evaluate(() => {
     const knop = document.querySelector('#rekenaar .kgj-reken__knop');
     return { knop: knop && knop.textContent.trim(), onder: !!document.querySelector('#rekenaar form .kgj-reken__gerust') };
@@ -82,11 +83,11 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   await wacht(300);
   await page.screenshot({ path: `${UIT}/02-calculator-formulier.png` });
 
-  /* 4. Plat pad (terug naar vraag 2) */
-  for (let i = 0; i < 5; i++) { await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__terug')?.click()); await wacht(200); }
+  /* 4. Plat pad (terug naar vraag 1) */
+  for (let i = 0; i < 6; i++) { await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__terug')?.click()); await wacht(200); }
   await klikKeuze('Plat dak'); await wacht(250);
   const plat = await page.evaluate(() => [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')].map((b) => b.textContent.trim()).join(', '));
-  meld(plat === 'Bitumen, Roofing, EPDM, Iets anders, Weet ik niet' && (await tel()) === 'Vraag 3 van 6', 'plat: bitumen, roofing, EPDM', `${plat} / ${await tel()}`);
+  meld(plat === 'Bitumen, Roofing, EPDM, Weet ik nog niet' && (await tel()) === 'Vraag 2 van 6', 'plat: bitumen, roofing, EPDM', `${plat} / ${await tel()}`);
 
   /* 5. Horizontaal scrollen en foto's */
   const breed = await page.evaluate(() => document.documentElement.scrollWidth);
