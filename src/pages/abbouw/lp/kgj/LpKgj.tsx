@@ -340,7 +340,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         <div className="kgj-breed">
           <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
             <h2>{inhoud.werk.kop}</h2>
-            <p>{inhoud.werk.onder}</p>
+            {inhoud.werk.onder && <p>{inhoud.werk.onder}</p>}
           </div>
           <ul className="kgj-werkraster kgj-op">
             {inhoud.werk.fotos.map((f) => (

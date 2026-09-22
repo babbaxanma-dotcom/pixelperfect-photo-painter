@@ -136,7 +136,7 @@ export const DAKWERKEN: KgjInhoud = {
        worden, "degelijk" overtuigde niet). Vier eigen varianten met beeldspraak zijn afgekeurd:
        een zakelijke belofte hier, geen zin die moet "landen".
        "meer dan 15 jaar" komt van Mohammed zelf. */
-    tekst: 'Bij een dak ziet u de kwaliteit pas na jaren. Daarom is het belangrijk dat u een aannemer kiest die het vak kent. Met meer dan 15 jaar ervaring in dakwerken staan we garant voor een eindresultaat van topkwaliteit. U kan rekenen op een zorgeloos traject van A tot Z.',
+    tekst: 'Een dak vernieuwt u één keer en vervolgens moet het decennia meegaan. Daarom is het belangrijk dat u een aannemer kiest die het vak kent. Met meer dan 15 jaar ervaring in dakwerken staan we garant voor een eindresultaat van topkwaliteit. U kan rekenen op een zorgeloos traject van A tot Z.',
     redenen: [
       { titel: 'Tien jaar aansprakelijk', tekst: 'Wij staan tien jaar in voor elk dak dat we leggen. We zijn volledig verzekerd en VCA-gecertificeerd.' },
       { titel: 'Vrijblijvende offerte en dakinspectie', tekst: 'We komen langs en voeren een vrijblijvende dakinspectie uit.' },
@@ -167,7 +167,7 @@ export const DAKWERKEN: KgjInhoud = {
 
   werk: {
     kop: 'Uitgevoerd werk',
-    onder: 'Zo ziet het eruit als de ploeg vertrokken is.',
+    onder: '',
     fotos: [
       { src: antraciet, label: 'Antraciet pannendak', alt: 'Halfopen woning in rode baksteen met een nieuw antraciet pannendak' },
       { src: panRood, label: 'Rood pannendak', alt: 'Rijwoning met een nieuw rood pannendak en een dakvenster' },
