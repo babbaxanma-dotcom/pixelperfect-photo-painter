@@ -100,10 +100,12 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
               <button type="button" key={k.label}
                 className={`kgj-reken__keuze${antwoorden[vraag.sleutel] === k.label ? ' is-aan' : ''}`}
                 onClick={() => kies(vraag.sleutel, k.label)}>
-                {k.label}
+                <strong>{k.label}</strong>
+                {k.uitleg && <span>{k.uitleg}</span>}
               </button>
             ))}
           </div>
+          <p className="kgj-reken__gerust">{inhoud.rekenaar.gerust}</p>
         </div>
       ) : (
         <form className="kgj-reken__stap kgj-reken__form" onSubmit={verstuur} noValidate>

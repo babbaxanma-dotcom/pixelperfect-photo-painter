@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { CONTACT } from '@/data/contact';
-import { DIENSTEN } from '../LpDienst';
 import { KGJ_CSS } from './stijl';
 import { KGJ_EXTRA } from './extra';
 import Rekenaar from './Rekenaar';
@@ -68,19 +67,6 @@ function Boog({ delta }: { delta: number }) {
   );
 }
 
-/* De reviews die al op de dakpagina's van de site staan, zonder de
-   aanhalingstekens die daar in de tekst zelf zitten. */
-function dakReviews(): Review[] {
-  const bronnen = ['dakisolatie', 'velux', 'platdak'] as const;
-  const uit: Review[] = [];
-  for (const b of bronnen) {
-    for (const r of (DIENSTEN as Record<string, { reviews?: { text: string; name: string; role: string }[] }>)[b]?.reviews ?? []) {
-      uit.push({ tekst: r.text.replace(/^["“]|["”]$/g, ''), naam: r.name, bron: r.role });
-    }
-  }
-  return uit;
-}
-
 export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   const vat = useRef<HTMLDivElement>(null);
   const [dia, setDia] = useState(0);
@@ -88,15 +74,38 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
      tot de hero de klasse is-binnen krijgt. Zonder die klasse blijft de kop
      onzichtbaar. De calculator doet niet mee en staat er meteen. */
   const [binnen, setBinnen] = useState(false);
+  const [balk, setBalk] = useState(false);
   const [rev, setRev] = useState(0);
   const [schuif, setSchuif] = useState(50);
   const schuifVak = useRef<HTMLDivElement>(null);
   const sleept = useRef(false);
-  const reviews = inhoud.reviews.lijst.length ? inhoud.reviews.lijst : dakReviews();
+  /* Alleen echte klantenstemmen. Is de lijst leeg, dan toont de pagina de
+     sectie niet: een reviewblok met bedachte quotes is verzonnen bewijs. */
+  const reviews = inhoud.reviews.lijst;
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setBinnen(true));
     return () => cancelAnimationFrame(id);
+  }, []);
+
+  /* De vaste balk onderaan de telefoon verdwijnt zodra een calculator in beeld
+     staat. Anders dekt hij de verzendknop van het formulier af, en herhaalt hij
+     een knop die de bezoeker op dat moment al voor zich heeft. */
+  useEffect(() => {
+    const wortel = vat.current;
+    if (!wortel || !('IntersectionObserver' in window)) return;
+    const kaarten = [...wortel.querySelectorAll('.kgj-reken')];
+    if (!kaarten.length) return;
+    const inBeeld = new Set<Element>();
+    const kijker = new IntersectionObserver((rijen) => {
+      for (const r of rijen) {
+        if (r.isIntersecting) inBeeld.add(r.target);
+        else inBeeld.delete(r.target);
+      }
+      setBalk(inBeeld.size === 0);
+    }, { threshold: 0.25 });
+    kaarten.forEach((k) => kijker.observe(k));
+    return () => kijker.disconnect();
   }, []);
 
   useEffect(() => {
@@ -215,6 +224,16 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             <div>
               <h1>{inhoud.hero.kop}</h1>
               <p className="kgj-hero__sub">{inhoud.hero.onder}</p>
+              <ul className="kgj-hero__bewijs">
+                {inhoud.hero.bewijs.map((b) => (
+                  <li key={b}>
+                    <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor"
+                      strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="m4 10.5 4 4 8-9" />
+                    </svg>{b}
+                  </li>
+                ))}
+              </ul>
             </div>
             <Rekenaar inhoud={inhoud} plek="hero" />
           </div>
@@ -271,6 +290,9 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               </li>
             ))}
           </ol>
+          <div className="kgj-midknop">
+            <a className="kgj-knop kgj-knop--vol" href="#top">Bereken uw prijs</a>
+          </div>
         </div>
       </section>
 
@@ -304,6 +326,23 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               <figcaption>{inhoud.voorna.label}</figcaption>
             </figure>
           </div>
+        </div>
+      </section>
+
+      <section className="kgj-band kgj-werk" id="werk">
+        <div className="kgj-breed">
+          <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
+            <h2>{inhoud.werk.kop}</h2>
+            <p>{inhoud.werk.onder}</p>
+          </div>
+          <ul className="kgj-werkraster kgj-op">
+            {inhoud.werk.fotos.map((f) => (
+              <li className="kgj-tegel" key={f.src + f.label}>
+                <span className="kgj-tegel__beeld"><img src={f.src} alt={f.alt} loading="lazy" /></span>
+                <span className="kgj-tegel__naam">{f.label}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -351,6 +390,12 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           <div className="kgj-op"><Rekenaar inhoud={inhoud} plek="onder" /></div>
         </div>
       </section>
+
+      <div className={`kgj-actiebalk${balk ? ' is-aan' : ''}`}>
+        <a className="kgj-knop kgj-knop--vol" href="#top">Bereken uw prijs</a>
+        <a className="kgj-knop kgj-knop--rand" href={CONTACT.phone.href}
+          aria-label={'Bel ' + CONTACT.phone.display}><IcBel /></a>
+      </div>
 
       <footer className="kgj-voet kgj-voet--lp">
         <div className="kgj-breed kgj-voet__in">

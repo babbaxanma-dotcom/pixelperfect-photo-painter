@@ -58,11 +58,57 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-reken__gerust { margin-top: 10px; font-size: 13.5px; color: var(--zacht); }
 .kgjx .kgj-reken__fout { margin-top: 10px; font-size: 14px; color: #a3231a; }
 
+/* ── bewijs onder de kop ──
+   Drie controleerbare feiten, elk met een vinkje. Ze staan op de foto, dus in
+   wit met een halfdoorzichtige rand eronder. */
+.kgj-hero__bewijs { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px 22px; }
+.kgjx .kgj-hero__bewijs li { display: inline-flex; align-items: center; gap: 9px;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 14.5px; font-weight: 600;
+  color: rgba(255, 255, 255, .94); }
+.kgjx .kgj-hero__bewijs svg { flex: none; color: var(--accent); }
+
+/* ── keuze met een verduidelijking eronder (het btw-tarief) ── */
+.kgjx .kgj-reken__keuze { display: flex; flex-direction: column; gap: 3px; }
+.kgjx .kgj-reken__keuze strong { font-weight: 600; }
+.kgjx .kgj-reken__keuze span { font-family: Lato, system-ui, sans-serif; font-size: 13px;
+  font-weight: 400; color: var(--zacht); }
+.kgjx .kgj-reken__keuze.is-aan span { color: var(--accent-diep); }
+
 /* ── voor en na: één liggende foto ──
    De demo zet staande foto's naast elkaar in kolommen van 380px. AB heeft één
    liggend paar; in zo'n smalle kolom werd dat een postzegel. Eén kolom van
    maximaal 880px toont het dak op een leesbare maat. */
 .kgjx .kgj-voorna .kgj-schuif { grid-template-columns: minmax(0, 880px); }
+
+/* ── uitgevoerd werk: rustig raster, geen schuivende band ──
+   De demo laat de realisaties vanzelf voorbijschuiven. Op een advertentie-
+   pagina is dat een bewegend doel: je wil iets bekijken en het schuift weg.
+   Hier staan de foto's stil in een raster; op een telefoon veeg je ze opzij. */
+.kgj-werkraster { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+.kgjx .kgj-werkraster .kgj-tegel { width: auto; margin-right: 0; }
+@media (max-width: 1000px) {
+  .kgj-werkraster { grid-auto-flow: column; grid-auto-columns: 74%; grid-template-columns: none;
+    overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px;
+    scrollbar-width: none; padding-bottom: 4px; }
+  .kgj-werkraster::-webkit-scrollbar { display: none; }
+  .kgjx .kgj-werkraster .kgj-tegel { scroll-snap-align: start; }
+}
+
+/* ── vaste actiebalk op de telefoon ──
+   Waar de bezoeker ook staat, de volgende stap blijft in beeld. Alleen op een
+   telefoon: op een groot scherm staat de calculator zelf al rechts naast de
+   kop en zou een balk alleen ruimte innemen. */
+.kgj-actiebalk { display: none; }
+@media (max-width: 1000px) {
+  .kgj-actiebalk.is-aan { position: fixed; left: 0; right: 0; bottom: 0; z-index: 80;
+    display: flex; gap: 10px; padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, .96); border-top: 1px solid var(--lijn);
+    backdrop-filter: blur(8px); }
+  .kgjx .kgj-actiebalk .kgj-knop { flex: 1; justify-content: center; height: 50px; }
+  .kgjx .kgj-actiebalk .kgj-knop--rand { flex: 0 0 64px; }
+  /* Ruimte onder de voet, anders dekt de balk de laatste regels af. */
+  .kgjx .kgj-voet--lp { padding-bottom: 96px; }
+}
 
 /* ── onderaan: de calculator in plaats van het formulier van de demo ── */
 .kgjx .kgj-cta--lp .kgj-reken { box-shadow: 0 30px 70px -30px rgba(0, 0, 0, .7); }
