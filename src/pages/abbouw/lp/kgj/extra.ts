@@ -59,18 +59,18 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-reken__fout { margin-top: 10px; font-size: 14px; color: #a3231a; }
 
 /* ── bewijs onder de kop ── */
-/* Vier punten in een vast raster van twee op twee: groot genoeg om te lezen
-   op de foto, en elk punt op een vaste plek. Het vinkje staat in een oranje
+/* Vier punten onder elkaar: groot genoeg om te lezen op de foto, en geen
+   punt dat halverwege afbreekt (in twee kolommen brak 'offerte' af). Het vinkje staat in een oranje
    bolletje met een donker vinkje, dat leest op elke foto. Mohammed: "die 4
    punten bij de hero moeten duidelijker". */
-.kgj-hero__bewijs { margin-top: 28px; display: grid; grid-template-columns: repeat(2, minmax(0, max-content)); gap: 14px 30px; }
+.kgj-hero__bewijs { margin-top: 26px; display: grid; grid-template-columns: 1fr; gap: 11px; }
 .kgjx .kgj-hero__bewijs li { display: flex; align-items: center; gap: 11px;
   font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 16px; font-weight: 700; line-height: 1.3;
   color: #fff; text-shadow: 0 1px 10px rgba(5, 11, 20, .55); }
 .kgjx .kgj-hero__bewijs svg { flex: none; width: 26px; height: 26px; padding: 5px; border-radius: 999px;
   background: var(--accent); color: var(--merk-diep); stroke-width: 2.6; }
 @media (max-width: 640px) {
-  .kgj-hero__bewijs { grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+  .kgj-hero__bewijs { gap: 10px; margin-top: 20px; }
   .kgjx .kgj-hero__bewijs li { font-size: 15px; }
 }
 

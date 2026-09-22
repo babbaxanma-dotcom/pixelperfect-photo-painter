@@ -40,13 +40,17 @@ const woorden = (tekst) => tekst.toLowerCase()
   .split(/\s+/).filter(Boolean);
 
 const zoek = (tekst) => {
-  const w = woorden(tekst);
   const tel = new Map();
-  for (let n = LENGTE; n <= 6; n++) {
-    for (let i = 0; i + n <= w.length; i++) {
-      const groep = w.slice(i, i + n).join(' ');
-      if (TOEGESTAAN.some((t) => groep.includes(t))) continue;
-      tel.set(groep, (tel.get(groep) || 0) + 1);
+  /* Per regel: elke regel is een losse tekst op de pagina. Over de regelgrens
+     heen tellen gaf vals alarm ("plat dak?" + "Wat ligt er" = "plat dak wat"). */
+  for (const regel of tekst.split(/\r?\n/)) {
+    const w = woorden(regel);
+    for (let n = LENGTE; n <= 6; n++) {
+      for (let i = 0; i + n <= w.length; i++) {
+        const groep = w.slice(i, i + n).join(' ');
+        if (TOEGESTAAN.some((t) => groep.includes(t))) continue;
+        tel.set(groep, (tel.get(groep) || 0) + 1);
+      }
     }
   }
   /* Alleen de langste variant melden: "eigen dakwerkers en zinkwerkers"

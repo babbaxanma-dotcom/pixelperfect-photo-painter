@@ -25,7 +25,7 @@ import type { KgjInhoud } from './inhoud';
  * GHL-webhook en Web3Forms-backup tegelijk, conversie alleen bij bezorging.
  */
 export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'hero' | 'onder' }) {
-  const VRAGEN = inhoud.rekenaar.vragen;
+  const ALLE = inhoud.rekenaar.vragen;
   const navigate = useNavigate();
   const [stap, setStap] = useState(0);
   const [antwoorden, setAntwoorden] = useState<Record<string, string>>({});
@@ -33,8 +33,16 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
   const [fout, setFout] = useState<string | null>(null);
   const gestart = useRef(false);
 
+  /* Vragen met een voorwaarde (als) tellen pas mee als het antwoord waarop ze
+     wachten gegeven is: na 'Hellend dak' komt de vraag naar pannen of leien,
+     na 'Plat dak' die naar bitumen of EPDM. Elk pad heeft precies één
+     vervolgvraag, dus het totaal staat vast vanaf de eerste vraag. */
+  const VRAGEN = ALLE.filter((v) => !v.als || antwoorden[v.als.sleutel] === v.als.waarde);
+  const AANTAL = ALLE.filter((v) => !v.als).length
+    + new Set(ALLE.filter((v) => v.als).map((v) => v.als!.sleutel)).size;
+
   const klaar = stap >= VRAGEN.length;
-  const totaal = VRAGEN.length + 1;
+  const totaal = AANTAL + 1;
   const nu = klaar ? totaal : stap + 1;
 
   /* De eerste tik telt als start van het formulier: in GA4 zie je dan hoeveel
@@ -85,7 +93,7 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
   return (
     <div className={`kgj-reken kgj-reken--${plek}`}>
       <div className="kgj-reken__kop">
-        <span className="kgj-reken__tel">{klaar ? 'Laatste stap' : `Vraag ${nu} van ${VRAGEN.length}`}</span>
+        <span className="kgj-reken__tel">{klaar ? 'Laatste stap' : `Vraag ${nu} van ${AANTAL}`}</span>
         {stap > 0 && (
           <button type="button" className="kgj-reken__terug" onClick={() => setStap((s) => s - 1)}>‹ Terug</button>
         )}

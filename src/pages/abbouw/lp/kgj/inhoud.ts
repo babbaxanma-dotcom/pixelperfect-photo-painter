@@ -29,7 +29,8 @@ import dakVoor from '@/assets/lp-diensten/dak-voor.jpg';
 import dakNa from '@/assets/lp-diensten/dak-na.jpg';
 
 export type Keuze = { label: string; uitleg?: string };
-export type Vraag = { sleutel: string; vraag: string; keuzes: Keuze[] };
+/** als: de vraag verschijnt alleen als een eerdere vraag dat antwoord kreeg. */
+export type Vraag = { sleutel: string; vraag: string; keuzes: Keuze[]; als?: { sleutel: string; waarde: string } };
 export type Foto = { src: string; alt: string };
 export type Review = { tekst: string; naam: string; bron: string };
 
@@ -58,7 +59,7 @@ export type KgjInhoud = {
 
 export const DAKWERKEN: KgjInhoud = {
   titel: 'Dakwerken: reken vooraf uit wat uw dak kost | AB Bouw Groep',
-  omschrijving: 'Klik vijf antwoorden aan en hoor binnen één werkdag wat uw dak kost. Gratis plaatsbezoek en offerte, werken aan 6% btw.',
+  omschrijving: 'Klik zes antwoorden aan en hoor binnen één werkdag wat uw dak kost. Gratis plaatsbezoek en offerte, werken aan 6% btw.',
   divisie: 'ab_dakwerken',
   bronLead: 'lp:dakwerken:rekenaar',
   bedanktSlug: 'dakwerken',
@@ -67,8 +68,8 @@ export const DAKWERKEN: KgjInhoud = {
     /* De calculator staat ernaast en zegt zelf wat hij doet. Mohammed: 'de
        berekening is toch ernaast dat hoef je niet te verwoorden'. De kop gaat
        over het resultaat aan zijn huis. */
-    kop: 'Een nieuw dak dat decennia waterdicht blijft',
-    onder: 'Vijf vragen over uw dak en u weet direct wat het kost.',
+    kop: 'Uw dak in één keer goed vernieuwd',
+    onder: 'Dé specialist voor uw dakwerk. Beantwoord zes korte vragen en u weet direct wat het kost.',
     /* Drie controleerbare feiten onder de kop. Een bezoeker die uit een
        advertentie komt, kent AB niet; dit is het enige bewijs dat boven de
        vouw past zolang er geen geverifieerde Google-score is.
@@ -81,7 +82,9 @@ export const DAKWERKEN: KgjInhoud = {
     dias: [
       { src: antraciet, alt: 'Halfopen woning in rode baksteen met een nieuw antraciet pannendak' },
       { src: panRood, alt: 'Rijwoning met een nieuw rood pannendak en een dakvenster' },
-      { src: platdak, alt: 'Plat dak met EPDM en een lichtkoepel op een aanbouw achter een woning' },
+      /* Het platte dak staat niet in de diashow: van dichtbij is het een zwart
+         vlak van rand tot rand, en onder de donkere laag leek de hero dan leeg.
+         Het staat wel als werktegel. */
       { src: droneAntraciet, alt: 'Dronefoto boven een nieuw antraciet pannendak' },
       { src: pannenDicht, alt: 'Nieuw hellend dak met pannen, schuin van onderaf' },
     ],
@@ -94,8 +97,16 @@ export const DAKWERKEN: KgjInhoud = {
         { label: 'Dak isoleren' },
         { label: 'Lek of schade herstellen' },
       ] },
-      { sleutel: 'Dak', vraag: 'Wat voor dak heeft u?', keuzes: [
-        { label: 'Pannen' }, { label: 'Leien' }, { label: 'Plat dak' }, { label: 'Weet ik niet' },
+      /* Mohammed: eerst hellend of plat, dan pas wat erop ligt. Elk pad krijgt
+         precies één vervolgvraag, zodat de teller op beide paden zes zegt. */
+      { sleutel: 'Dak', vraag: 'Is het een hellend of een plat dak?', keuzes: [
+        { label: 'Hellend dak' }, { label: 'Plat dak' },
+      ] },
+      { sleutel: 'Bedekking', vraag: 'Wat ligt er nu op uw dak?', als: { sleutel: 'Dak', waarde: 'Hellend dak' }, keuzes: [
+        { label: 'Pannen' }, { label: 'Leien' }, { label: 'Iets anders' }, { label: 'Weet ik niet' },
+      ] },
+      { sleutel: 'Bedekking', vraag: 'Welke dakbedekking heeft uw plat dak?', als: { sleutel: 'Dak', waarde: 'Plat dak' }, keuzes: [
+        { label: 'Bitumen' }, { label: 'Roofing' }, { label: 'EPDM' }, { label: 'Iets anders' }, { label: 'Weet ik niet' },
       ] },
       { sleutel: 'Woning', vraag: 'Wat voor woning is het?', keuzes: [
         { label: 'Rijwoning' }, { label: 'Halfopen bebouwing' }, { label: 'Vrijstaande woning' }, { label: 'Ander gebouw' },
@@ -122,9 +133,8 @@ export const DAKWERKEN: KgjInhoud = {
        ("waterdicht"). Vier eigen varianten met beeldspraak zijn afgekeurd:
        een zakelijke belofte hier, geen zin die moet "landen".
        "meer dan 15 jaar" komt van Mohammed zelf. */
-    tekst: 'Met meer dan 15 jaar ervaring in dakwerken staan we garant voor een waterdicht eindresultaat. U kan rekenen op een zorgeloos traject van A tot Z.',
+    tekst: 'Bij een dak ziet u de kwaliteit pas na jaren. Daarom is het belangrijk dat u een aannemer kiest die het vak kent. Met meer dan 15 jaar ervaring in dakwerken staan we garant voor een waterdicht eindresultaat. U kan rekenen op een zorgeloos traject van A tot Z.',
     redenen: [
-      { titel: 'Eigen ploegen', tekst: 'Omdat we onze eigen ploegen hebben, kunnen we de volledige werf zelf opvolgen. Dat zorgt voor een vlottere uitvoering.' },
       { titel: 'Tien jaar aansprakelijk', tekst: 'Wij staan tien jaar in voor elk dak dat we leggen. We zijn volledig verzekerd en VCA-gecertificeerd.' },
       { titel: 'Vrijblijvende offerte en dakinspectie', tekst: 'We komen langs en voeren een vrijblijvende dakinspectie uit.' },
       /* Mohammed, 23 sep 2026: 'volledige premiebegeleiding, Mijn VerbouwPremie, zoals
@@ -186,9 +196,9 @@ export const DAKWERKEN: KgjInhoud = {
          leest als vulling, dus deze stap draagt het geruststellende deel. */
       { titel: 'Offerte', tekst: 'U krijgt een vrijblijvende offerte.' },
       /* Mohammed: 'wij beginnen aan de werken, meestal duurt dakwerk ...'. De duur
-         staat nergens vast; die komt erbij zodra hij het getal geeft. */
-      { titel: 'Uitvoering', tekst: 'Wij beginnen aan de werken.' },
-      { titel: 'Nazorg', tekst: 'Na de oplevering blijven wij uw aanspreekpunt.' },
+         (één tot twee weken) is door Claude ingevuld: nog te bevestigen door AB. */
+      { titel: 'Uitvoering', tekst: 'Wij beginnen aan de werken. Meestal duurt dakwerk één tot twee weken.' },
+      { titel: 'Nazorg', tekst: 'Ook na de oplevering staan we voor u klaar.' },
     ],
   },
 
@@ -202,7 +212,7 @@ export const DAKWERKEN: KgjInhoud = {
     kop: 'Plan uw dakinspectie',
     knop: 'Vraag uw gratis dakinspectie aan',
     onder: 'Wij bellen u binnen één werkdag om een moment af te spreken.',
-    alt: 'Liever eerst een prijs? Bereken hem in vijf vragen',
+    alt: 'Liever eerst een prijs? Bereken hem in zes vragen',
     bronLead: 'lp:dakwerken:inspectie',
   },
 };

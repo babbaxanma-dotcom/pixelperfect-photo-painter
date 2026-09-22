@@ -40,7 +40,6 @@ const IcBel = () => (
 const lijn = { viewBox: '0 0 24 24', width: 24, height: 24, fill: 'none', stroke: 'currentColor',
   strokeWidth: 1.6, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true };
 const REDEN_ICONEN = [
-  <svg {...lijn} key="ploeg"><circle cx="9" cy="8" r="3.2" /><path d="M3.5 19.5c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5" /><circle cx="17" cy="9" r="2.4" /><path d="M16 14.6c2.3.2 4 1.8 4.5 4.9" /></svg>,
   <svg {...lijn} key="schild"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6z" /><path d="m8.8 12 2.2 2.2 4.3-4.4" /></svg>,
   <svg {...lijn} key="agenda"><rect x="3.5" y="5" width="17" height="15.5" rx="2" /><path d="M8 3v4M16 3v4M3.5 10h17" /><path d="m9 15 2 2 4-4" /></svg>,
   <svg {...lijn} key="premie"><circle cx="12" cy="12" r="8.6" /><path d="M15.2 8.6a4 4 0 1 0 0 6.8M7.2 10.8h5.6M7.2 13.2h5.6" /></svg>,
@@ -238,12 +237,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             <div id="rekenaar"><Rekenaar inhoud={inhoud} plek="hero" /></div>
           </div>
         </div>
-        <div className="kgj-hero__bediening">
-          <button className="kgj-rond kgj-rond--glas" type="button" aria-label="Vorige foto"
-            onClick={() => setDia((d) => (d - 1 + inhoud.hero.dias.length) % inhoud.hero.dias.length)}>‹</button>
-          <button className="kgj-rond kgj-rond--glas" type="button" aria-label="Volgende foto"
-            onClick={() => setDia((d) => (d + 1) % inhoud.hero.dias.length)}>›</button>
-        </div>
+        {/* Geen pijlen: de diashow loopt vanzelf (Mohammed: "doe die onderste pijlen weg"). */}
         <div className="kgj-hero__streep" aria-hidden="true">
           {inhoud.hero.dias.map((d, i) => <span className={`kgj-hero__tik${i === dia ? ' is-aan' : ''}`} key={d.src} />)}
         </div>
