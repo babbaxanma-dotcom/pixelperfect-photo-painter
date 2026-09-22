@@ -170,7 +170,7 @@ export const DAKWERKEN: KgjInhoud = {
     kop: 'Zo verloopt uw dakwerk',
     onder: 'U weet vooraf wat er gebeurt en wanneer.',
     stappen: [
-      { titel: 'Prijs', tekst: 'Uw vijf antwoorden zeggen ons hoe groot het werk is.' },
+      { titel: 'Aanvraag', tekst: 'Uw vijf antwoorden zeggen ons hoe groot het werk is.' },
       { titel: 'Dakinspectie', tekst: 'Binnen enkele werkdagen doen we de inspectie en bekijken we samen de bevindingen.' },
       /* Stond eerst "Elke post staat apart op papier": dat is nu de derde
          reden in het waarom-blok. Twee keer dezelfde belofte op één pagina
