@@ -79,6 +79,18 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   const [balk, setBalk] = useState(false);
   const [rev, setRev] = useState(0);
   const [schuif, setSchuif] = useState(50);
+  /* De calculator in een venster: elke knop 'Bereken uw prijs' opent hem waar
+     de bezoeker is. Mohammed: 'elke knop moet rechtstreeks in het form komen,
+     niet eerst naar boven gestuurd worden'. */
+  const [venster, setVenster] = useState(false);
+  useEffect(() => {
+    if (!venster) return;
+    const toets = (e: KeyboardEvent) => { if (e.key === 'Escape') setVenster(false); };
+    const vorig = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', toets);
+    return () => { document.body.style.overflow = vorig; document.removeEventListener('keydown', toets); };
+  }, [venster]);
   const schuifVak = useRef<HTMLDivElement>(null);
   const sleept = useRef(false);
   /* Alleen echte klantenstemmen. Is de lijst leeg, dan toont de pagina de
@@ -222,6 +234,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           <div className="kgj-hero__raster">
             <div>
               <h1>{inhoud.hero.kop}</h1>
+              {inhoud.hero.ondertitel && <p className="kgj-hero__ondertitel">{inhoud.hero.ondertitel}</p>}
               <p className="kgj-hero__sub">{inhoud.hero.onder}</p>
               <ul className="kgj-hero__bewijs">
                 {inhoud.hero.bewijs.map((b) => (
@@ -248,7 +261,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           <div className="kgj-waarom__tekst kgj-op">
             <h2>{inhoud.waarom.kop}</h2>
             <p>{inhoud.waarom.tekst}</p>
-            <a className="kgj-knop kgj-knop--vol" href="#rekenaar">Bereken uw prijs</a>
+            <button type="button" className="kgj-knop kgj-knop--vol" onClick={() => setVenster(true)}>Bereken uw prijs</button>
           </div>
           <ul className="kgj-redenen">
             {inhoud.waarom.redenen.map((r, i) => (
@@ -285,7 +298,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             ))}
           </ol>
           <div className="kgj-midknop">
-            <a className="kgj-knop kgj-knop--vol" href="#rekenaar">Bereken uw prijs</a>
+            <button type="button" className="kgj-knop kgj-knop--vol" onClick={() => setVenster(true)}>Bereken uw prijs</button>
           </div>
         </div>
       </section>
@@ -333,7 +346,6 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             {inhoud.werk.fotos.map((f) => (
               <li className="kgj-tegel" key={f.src + f.label}>
                 <span className="kgj-tegel__beeld"><img src={f.src} alt={f.alt} loading="lazy" /></span>
-                <span className="kgj-tegel__naam">{f.label}</span>
               </li>
             ))}
           </ul>
@@ -378,15 +390,25 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         <div className="kgj-breed kgj-cta__in">
           <div className="kgj-cta__tekst kgj-op">
             <h2>{inhoud.cta.kop}</h2>
-            <p>{inhoud.cta.tekst}</p>
+            {inhoud.cta.tekst && <p>{inhoud.cta.tekst}</p>}
+            <ul className="kgj-cta__punten">
+              {inhoud.cta.punten.map((p) => (
+                <li key={p}>
+                  <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor"
+                    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="m4 10.5 4 4 8-9" />
+                  </svg>{p}
+                </li>
+              ))}
+            </ul>
             <a className="kgj-knop kgj-knop--wit" href={CONTACT.phone.href}>Bel {CONTACT.phone.display}</a>
           </div>
-          <div className="kgj-op"><Inspectie inhoud={inhoud} /></div>
+          <div className="kgj-op"><Inspectie inhoud={inhoud} opPrijs={() => setVenster(true)} /></div>
         </div>
       </section>
 
       <div className={`kgj-actiebalk${balk ? ' is-aan' : ''}`}>
-        <a className="kgj-knop kgj-knop--vol" href="#rekenaar">Bereken uw prijs</a>
+        <button type="button" className="kgj-knop kgj-knop--vol" onClick={() => setVenster(true)}>Bereken uw prijs</button>
         <a className="kgj-knop kgj-knop--rand" href={CONTACT.phone.href}
           aria-label={'Bel ' + CONTACT.phone.display}><IcBel /></a>
       </div>
@@ -414,6 +436,16 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           <a href="/voorwaarden">Voorwaarden</a>
         </div>
       </footer>
+
+      {venster && (
+        <div className="kgj-venster" role="dialog" aria-modal="true" aria-label="Bereken uw prijs"
+          onClick={(e) => { if (e.target === e.currentTarget) setVenster(false); }}>
+          <div className="kgj-venster__in">
+            <button type="button" className="kgj-venster__dicht" aria-label="Sluiten" onClick={() => setVenster(false)}>×</button>
+            <Rekenaar inhoud={inhoud} plek="venster" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

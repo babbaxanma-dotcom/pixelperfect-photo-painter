@@ -27,7 +27,7 @@ const blok = bron.slice(begin);
 
 /* De velden die de bezoeker leest. alt-teksten en technische sleutels
    (divisie, bronLead, src) blijven eruit: die staan niet op de pagina. */
-const LEESBAAR = /(?:^|\s)(kop|onder|tekst|titel|vraag|gerust|uitkomstKop|uitkomstOnder|knop)\s*:\s*'((?:[^'\\]|\\.)*)'/g;
+const LEESBAAR = /(?:^|\s)(kop|onder|ondertitel|tekst|titel|vraag|gerust|uitkomstKop|uitkomstOnder|knop)\s*:\s*'((?:[^'\\]|\\.)*)'/g;
 
 const schoon = (s) => s.replace(/\\'/g, "'").replace(/\\\\/g, '\\');
 
@@ -36,6 +36,12 @@ let m;
 while ((m = LEESBAAR.exec(blok))) {
   const waarde = schoon(m[2]);
   if (waarde) regels.push(waarde);
+}
+
+/* Lijsten met lopende zinnen (de vinkjes in het slotblok) horen bij de copy:
+   zonder deze regel zag de guard ze niet. */
+for (const b of blok.matchAll(/punten:\s*\[([^\]]*)\]/g)) {
+  for (const p of b[1].matchAll(/'((?:[^'\\]|\\.)*)'/g)) regels.push(schoon(p[1]));
 }
 
 /* Knoppen van de calculator, tegellabels, paginatitel en SEO-tekst komen

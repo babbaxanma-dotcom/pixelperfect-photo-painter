@@ -24,7 +24,7 @@ import type { KgjInhoud } from './inhoud';
  * De lead gaat via submitLead, dezelfde weg als de bestaande calculator:
  * GHL-webhook en Web3Forms-backup tegelijk, conversie alleen bij bezorging.
  */
-export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'hero' | 'onder' }) {
+export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'hero' | 'onder' | 'venster' }) {
   const ALLE = inhoud.rekenaar.vragen;
   const navigate = useNavigate();
   const [stap, setStap] = useState(0);

@@ -12,8 +12,8 @@ import type { KgjInhoud } from './inhoud';
  * Daarom geen vijf vragen meer, maar drie velden: telefoon (verplicht), naam
  * en gemeente. De gemeente is er zodat de ploeg weet waar hij heen moet.
  *
- * Wie toch eerst een prijs wil, krijgt onder de knop een link naar de
- * calculator bovenaan. Zo zijn er twee wegen en geen doodlopende.
+ * Wie toch eerst een prijs wil, opent onder de knop de calculator in een
+ * venster. Zo zijn er twee wegen en geen doodlopende.
  *
  * Draagt de klasse kgj-reken, zodat de vaste actiebalk op de telefoon
  * wegvalt zodra dit formulier in beeld komt, net als bij de calculator.
@@ -21,7 +21,7 @@ import type { KgjInhoud } from './inhoud';
  * De lead gaat via submitLead: GHL-webhook en Web3Forms-backup tegelijk,
  * conversie alleen bij bezorging.
  */
-export default function Inspectie({ inhoud }: { inhoud: KgjInhoud }) {
+export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPrijs: () => void }) {
   const navigate = useNavigate();
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
@@ -79,7 +79,7 @@ export default function Inspectie({ inhoud }: { inhoud: KgjInhoud }) {
         </button>
         <p className="kgj-reken__gerust">{t.onder}</p>
         {fout && <p className="kgj-reken__fout" role="alert">{fout}</p>}
-        <a className="kgj-reken__alt" href="#rekenaar">{t.alt}</a>
+        <button type="button" className="kgj-reken__alt" onClick={opPrijs}>{t.alt}</button>
       </form>
     </div>
   );

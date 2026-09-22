@@ -42,7 +42,8 @@ export type KgjInhoud = {
   /** Bron in GHL, zodat je in het CRM ziet van welke pagina een lead komt. */
   bronLead: string;
   bedanktSlug: string;
-  hero: { kop: string; onder: string; bewijs: string[]; dias: Foto[] };
+  /** ondertitel: eigen regel direct onder de kop, boven de subkop. */
+  hero: { kop: string; ondertitel?: string; onder: string; bewijs: string[]; dias: Foto[] };
   rekenaar: { vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string };
   waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto] };
   voorna: { kop: string; onder: string; voor: Foto; na: Foto; label: string };
@@ -52,7 +53,8 @@ export type KgjInhoud = {
   werk: { kop: string; onder: string; fotos: (Foto & { label: string })[] };
   reviews: { kop: string; beeld: Foto; lijst: Review[] };
   werkwijze: { kop: string; onder: string; stappen: { titel: string; tekst: string }[] };
-  cta: { kop: string; tekst: string; foto: Foto };
+  /** punten: wat de klant bij de gratis inspectie krijgt, als vinkjes onder de kop. */
+  cta: { kop: string; tekst: string; punten: string[]; foto: Foto };
   /** Het formulier onderaan: de gratis dakinspectie, met een link terug naar de calculator. */
   inspectie: { kop: string; knop: string; onder: string; alt: string; bronLead: string };
 };
@@ -68,8 +70,8 @@ export const DAKWERKEN: KgjInhoud = {
     /* De calculator staat ernaast en zegt zelf wat hij doet. Mohammed: 'de
        berekening is toch ernaast dat hoef je niet te verwoorden'. De kop gaat
        over het resultaat aan zijn huis. */
-    kop: 'Uw dak in één keer goed vernieuwd',
-    onder: 'Dé specialist voor uw dakwerk. Beantwoord zes korte vragen en u weet direct wat het kost.',
+    kop: 'Dé specialist voor uw dakwerk',
+    onder: 'Beantwoord zes korte vragen en u weet direct wat het kost.',
     /* Drie controleerbare feiten onder de kop. Een bezoeker die uit een
        advertentie komt, kent AB niet; dit is het enige bewijs dat boven de
        vouw past zolang er geen geverifieerde Google-score is.
@@ -130,10 +132,11 @@ export const DAKWERKEN: KgjInhoud = {
   waarom: {
     kop: 'Waarom AB Bouw Groep',
     /* Mohammeds eigen zin (22 sep 2026), alleen het open woord ingevuld
-       ("waterdicht"). Vier eigen varianten met beeldspraak zijn afgekeurd:
+       ("van topkwaliteit"; "waterdicht" kon letterlijk gelezen
+       worden, "degelijk" overtuigde niet). Vier eigen varianten met beeldspraak zijn afgekeurd:
        een zakelijke belofte hier, geen zin die moet "landen".
        "meer dan 15 jaar" komt van Mohammed zelf. */
-    tekst: 'Bij een dak ziet u de kwaliteit pas na jaren. Daarom is het belangrijk dat u een aannemer kiest die het vak kent. Met meer dan 15 jaar ervaring in dakwerken staan we garant voor een waterdicht eindresultaat. U kan rekenen op een zorgeloos traject van A tot Z.',
+    tekst: 'Bij een dak ziet u de kwaliteit pas na jaren. Daarom is het belangrijk dat u een aannemer kiest die het vak kent. Met meer dan 15 jaar ervaring in dakwerken staan we garant voor een eindresultaat van topkwaliteit. U kan rekenen op een zorgeloos traject van A tot Z.',
     redenen: [
       { titel: 'Tien jaar aansprakelijk', tekst: 'Wij staan tien jaar in voor elk dak dat we leggen. We zijn volledig verzekerd en VCA-gecertificeerd.' },
       { titel: 'Vrijblijvende offerte en dakinspectie', tekst: 'We komen langs en voeren een vrijblijvende dakinspectie uit.' },
@@ -204,7 +207,15 @@ export const DAKWERKEN: KgjInhoud = {
 
   cta: {
     kop: 'Gratis dakinspectie',
-    tekst: 'Een van onze dakwerkers inspecteert uw dak ter plaatse. De offerte die erop volgt is gratis en vrijblijvend.',
+    /* Mohammed: 'gratis dakinspectie onderaan moet duidelijker'. Wat de klant
+       bij de inspectie krijgt, staat nu als drie vinkjes in plaats van in één
+       lopende zin. Alles komt uit de werkwijze en de redenen hierboven. */
+    tekst: '',
+    punten: [
+      'We bekijken uw dak ter plaatse',
+      'Samen overlopen we de bevindingen',
+      'U ontvangt een vrijblijvende offerte',
+    ],
     foto: { src: pannenDicht, alt: 'Nieuw hellend dak met pannen' },
   },
 
