@@ -17,10 +17,10 @@
  */
 import type { Divisie } from '@/lib/leads';
 
-import panRood from '@/assets/dak/lp-real-pan-2.jpg';
-import panRood1 from '@/assets/dak/lp-real-pan-1.jpg';
+import panRood from '@/assets/dak/lp-dak-panrood.jpg';
 import antraciet from '@/assets/dak/lp-real-det-2.jpg';
-import antraciet1 from '@/assets/dak/lp-real-det-1.jpg';
+import dakwerker from '@/assets/dak/dakwerker-pannen.jpg';
+import pannenDichtbij from '@/assets/dak/pannen-dichtbij.jpg';
 import antraciet3 from '@/assets/dak/lp-real-det-3.jpg';
 import platdak from '@/assets/dak/lp-real-epdm-2.jpg';
 import droneAntraciet from '@/assets/dak/drone-antraciet.jpg';
@@ -63,16 +63,19 @@ export const DAKWERKEN: KgjInhoud = {
 
   hero: {
     kop: 'Reken vooraf uit wat uw dak kost',
-    onder: 'Vijf vragen over uw dak. Een van onze dakwerkers belt u binnen één werkdag met de prijs, vrijblijvend.',
+    onder: 'Vijf vragen over uw dak. Binnen één werkdag belt een van onze dakwerkers u met de prijs.',
     /* Drie controleerbare feiten onder de kop. Een bezoeker die uit een
        advertentie komt, kent AB niet; dit is het enige bewijs dat boven de
-       vouw past zolang er geen geverifieerde Google-score is. */
-    bewijs: ['Eigen dakwerkers en zinkwerkers', 'VCA-gecertificeerd en verzekerd', 'Gratis plaatsbezoek'],
+       vouw past zolang er geen geverifieerde Google-score is.
+       Volgorde op wat de Belgische markt blijkt te belonen: de langstlopende
+       tekstadvertentie van Dural (1462 dagen, 45 van zijn 60 leesbare ads)
+       zet "gratis en vrijblijvend" vooraan. Het VCA-attest staat nu in het
+       waarom-blok: een certificaat overtuigt lager op de pagina, een
+       toezegging overtuigt boven de vouw. */
+    bewijs: ['Gratis plaatsbezoek en offerte', 'Eigen dakwerkers en zinkwerkers', 'Tien jaar aansprakelijk'],
     dias: [
-      /* Het antracieten dak staat vooraan tot Mohammed een vervanger stuurt
-         voor de foto met de oranje pannen (22 sep). */
       { src: antraciet, alt: 'Halfopen woning in rode baksteen met een nieuw antraciet pannendak' },
-      { src: panRood, alt: 'Rijwoning met een nieuw rood pannendak tussen twee oudere buren' },
+      { src: panRood, alt: 'Rijwoning met een nieuw rood pannendak en een dakvenster' },
       { src: platdak, alt: 'Plat dak met nieuwe EPDM en een zinken dakrand, van bovenaf' },
       { src: droneAntraciet, alt: 'Dronefoto boven een nieuw antraciet pannendak' },
       { src: pannenDicht, alt: 'Nieuw hellend dak met pannen, schuin van onderaf' },
@@ -104,23 +107,32 @@ export const DAKWERKEN: KgjInhoud = {
         { label: 'Zo snel mogelijk' }, { label: 'Binnen drie maanden' }, { label: 'Later dit jaar' }, { label: 'Ik verken nog' },
       ] },
     ],
-    gerust: 'Een schatting volstaat.',
+    gerust: 'Weet u het niet zeker? Een schatting volstaat.',
     uitkomstKop: 'Nog één stap',
-    uitkomstOnder: 'Wij bellen u binnen één werkdag met de prijs. Het gesprek is vrijblijvend.',
+    uitkomstOnder: 'U hoort de prijs binnen één werkdag. Wilt u daarna verder, dan komen wij opmeten.',
     knop: 'Bel mij met de prijs',
   },
 
   waarom: {
     kop: 'Wie er op uw dak staat',
-    tekst: 'Het meeste dakwerk verdwijnt onder de pannen: het onderdak, de isolatie, het lood langs de gemene muur. U ziet het na de werf nooit meer terug, dus moet u kunnen vertrouwen op de mensen die het leggen.',
+    /* De pijn eerst, in zijn situatie: hij kan de kwaliteit van een dak niet
+       zelf beoordelen. Daarna wat hij eraan overhoudt. De drie redenen
+       dragen de feiten; deze twee zinnen zetten hem op zijn eigen stoep, en
+       herhalen dus niets uit de redenen. */
+    tekst: 'Een dak vernieuwt u één keer in dertig jaar. U geeft er veel geld aan uit voor werk waar u zelf nooit op klimt om te kijken of het goed zit. Daarom houden wij het in eigen huis. Onze eigen dakwerkers leggen de pannen en onze eigen zinkwerkers maken de goten. Dezelfde mensen die maandag beginnen, leggen ook de laatste pan. Voor we starten hoort u wat er gebeurt en wat het kost, met elke post apart op de offerte. Tien jaar lang blijft dit dak ons werk.',
     redenen: [
-      { titel: 'Eigen dakwerkers en zinkwerkers', tekst: 'Dezelfde mensen staan elke dag op uw werf, tot de laatste nokpan vastligt.' },
-      { titel: 'Tienjarige aansprakelijkheid', tekst: 'Verzekerd op de constructie, met een VCA-attest voor de veiligheid op de werf.' },
-      { titel: 'Elke post apart op uw offerte', tekst: 'U ziet wat het dak, het onderdak en de goot apart kosten.' },
+      { titel: 'Eigen dakwerkers en zinkwerkers', tekst: 'Elke ochtend dezelfde ploeg op uw dak, tot de laatste nokpan vastligt.' },
+      { titel: 'Tien jaar aansprakelijk', tekst: 'Zo lang blijft dit dak ons werk. Verzekerd, met een VCA-attest voor de werf.' },
+      { titel: 'Elke post apart op uw offerte', tekst: 'U leest per post wat u betaalt, aan het btw-tarief dat op uw woning geldt.' },
     ],
+    /* Boven: de dakwerker zelf aan het werk. De kop van dit blok gaat over
+       wie er op het dak staat, dus hoort daar een mens bij en geen vierde
+       gevelfoto. Hier stond eerst lp-real-det-1, en dat bestand bleek op een
+       pixelvergelijking hetzelfde frame als de eerste hero-dia (verschil 1,8
+       van 255): dezelfde woning stond dus twee keer op één pagina. */
     duo: [
-      { src: antraciet1, alt: 'Halfopen woning met een nieuw antraciet dak, vanaf de straat' },
-      { src: panRood1, alt: 'Rijwoning met een nieuw rood pannendak, recht van voren' },
+      { src: dakwerker, alt: 'Dakwerker die nieuwe antraciet pannen legt op de tengellatten' },
+      { src: pannenDichtbij, alt: 'Hetzelfde pannendak van bovenaf, tot op de nokpannen' },
     ],
   },
 
@@ -134,10 +146,10 @@ export const DAKWERKEN: KgjInhoud = {
 
   werk: {
     kop: 'Uitgevoerd werk',
-    onder: 'Daken die wij vernieuwden.',
+    onder: 'Zo ziet het eruit als de ploeg vertrokken is.',
     fotos: [
       { src: antraciet, label: 'Antraciet pannendak', alt: 'Halfopen woning in rode baksteen met een nieuw antraciet pannendak' },
-      { src: panRood, label: 'Rood pannendak', alt: 'Rijwoning met een nieuw rood pannendak tussen twee oudere buren' },
+      { src: panRood, label: 'Rood pannendak', alt: 'Rijwoning met een nieuw rood pannendak en een dakvenster' },
       { src: platdak, label: 'Plat dak met EPDM', alt: 'Plat dak met nieuwe EPDM en een zinken dakrand, van bovenaf' },
       /* Drie tegels, één per daktype. De overige beelden tonen dezelfde
          woningen vanuit een andere hoek en lezen als herhaling. */
@@ -159,15 +171,18 @@ export const DAKWERKEN: KgjInhoud = {
     kop: 'Zo verloopt uw dakwerk',
     onder: 'U weet vooraf wat er gebeurt en wanneer.',
     stappen: [
-      { titel: 'Prijs', tekst: 'Uw antwoorden geven ons de omvang van het werk.' },
+      { titel: 'Prijs', tekst: 'Uw vijf antwoorden zeggen ons hoe groot het werk is.' },
       { titel: 'Plaatsbezoek', tekst: 'Binnen vijf werkdagen staan we op uw dak en meten we op.' },
-      { titel: 'Offerte', tekst: 'Elke post staat apart op papier. Bij een woning ouder dan tien jaar aan 6% btw.' },
-      { titel: 'Werf', tekst: 'Dezelfde ploeg komt elke dag terug en ruimt elke avond op.' },
+      /* Stond eerst "Elke post staat apart op papier": dat is nu de derde
+         reden in het waarom-blok. Twee keer dezelfde belofte op één pagina
+         leest als vulling, dus deze stap draagt het geruststellende deel. */
+      { titel: 'Offerte', tekst: 'U neemt hem rustig door voor u beslist.' },
+      { titel: 'Werf', tekst: 'Het dak gaat elke avond dicht, ook als het werk nog loopt.' },
     ],
   },
 
   cta: {
-    kop: 'Uw dak van dichtbij bekeken',
+    kop: 'Laat uw dak opmeten',
     tekst: 'Wij komen langs binnen vijf werkdagen en meten uw dak op. De offerte die erop volgt is gratis en vrijblijvend.',
     foto: { src: pannenDicht, alt: 'Nieuw hellend dak met pannen' },
   },
