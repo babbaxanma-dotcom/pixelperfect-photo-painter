@@ -121,8 +121,8 @@ export const DAKWERKEN: KgjInhoud = {
     tekst: 'Met meer dan 15 jaar ervaring in dakwerken staan we garant voor een waterdicht eindresultaat. U kan rekenen op een zorgeloos traject van A tot Z.',
     redenen: [
       { titel: 'Eigen ploegen', tekst: 'Omdat we onze eigen ploegen hebben, kunnen we de volledige werf zelf opvolgen. Dat zorgt voor een vlottere uitvoering.' },
-      { titel: 'Tien jaar aansprakelijk', tekst: 'Dat geldt voor alle uitgevoerde werken. We zijn verzekerd en VCA-gecertificeerd.' },
-      { titel: 'Elke post apart op uw offerte', tekst: 'U leest per post wat u betaalt, aan het btw-tarief dat op uw woning geldt.' },
+      { titel: 'Tien jaar aansprakelijk', tekst: 'Wij staan tien jaar in voor elk dak dat we leggen. We zijn volledig verzekerd en VCA-gecertificeerd.' },
+      { titel: 'Vrijblijvende offerte en dakinspectie', tekst: 'We komen langs en voeren een vrijblijvende dakinspectie uit.' },
     ],
     /* Boven: de dakwerker zelf aan het werk. Dit blok verkoopt de mensen, dus
        hoort er een mens in beeld en geen vierde gevelfoto. Hier stond eerst
@@ -171,7 +171,7 @@ export const DAKWERKEN: KgjInhoud = {
     onder: 'U weet vooraf wat er gebeurt en wanneer.',
     stappen: [
       { titel: 'Prijs', tekst: 'Uw vijf antwoorden zeggen ons hoe groot het werk is.' },
-      { titel: 'Plaatsbezoek', tekst: 'Binnen vijf werkdagen komen we opmeten.' },
+      { titel: 'Dakinspectie', tekst: 'Binnen enkele werkdagen doen we de inspectie en bekijken we samen de bevindingen.' },
       /* Stond eerst "Elke post staat apart op papier": dat is nu de derde
          reden in het waarom-blok. Twee keer dezelfde belofte op één pagina
          leest als vulling, dus deze stap draagt het geruststellende deel. */
