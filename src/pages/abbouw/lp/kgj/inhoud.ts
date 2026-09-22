@@ -22,7 +22,7 @@ import antraciet from '@/assets/dak/lp-real-det-2.jpg';
 import dakwerker from '@/assets/dak/dakwerker-pannen.jpg';
 import pannenDichtbij from '@/assets/dak/pannen-dichtbij.jpg';
 import antraciet3 from '@/assets/dak/lp-real-det-3.jpg';
-import platdak from '@/assets/dak/lp-real-epdm-2.jpg';
+import platdak from '@/assets/realisaties-new/dak-epdm-modern.jpg';
 import droneAntraciet from '@/assets/dak/drone-antraciet.jpg';
 import pannenDicht from '@/assets/dak/hellend-pannen.jpg';
 import dakVoor from '@/assets/lp-diensten/dak-voor.jpg';
@@ -76,7 +76,7 @@ export const DAKWERKEN: KgjInhoud = {
     dias: [
       { src: antraciet, alt: 'Halfopen woning in rode baksteen met een nieuw antraciet pannendak' },
       { src: panRood, alt: 'Rijwoning met een nieuw rood pannendak en een dakvenster' },
-      { src: platdak, alt: 'Plat dak met nieuwe EPDM en een zinken dakrand, van bovenaf' },
+      { src: platdak, alt: 'Plat dak met EPDM en een lichtkoepel op een aanbouw achter een woning' },
       { src: droneAntraciet, alt: 'Dronefoto boven een nieuw antraciet pannendak' },
       { src: pannenDicht, alt: 'Nieuw hellend dak met pannen, schuin van onderaf' },
     ],
@@ -114,13 +114,11 @@ export const DAKWERKEN: KgjInhoud = {
 
   waarom: {
     kop: 'Waarom AB Bouw Groep',
-    /* De inzet eerst, dan de ervaring, dan wat de klant eraan overhoudt.
-       De drie redenen eronder dragen de losse feiten, dus deze zinnen
-       herhalen daar niets van.
-       "meer dan vijftien jaar" komt van Mohammed zelf (22 sep 2026). Tot dan
-       stond hier geen getal, omdat een cijfer dat AB niet gegeven heeft een
-       claim is die de offerte later moet waarmaken. */
-    tekst: 'Een dak vervangt u niet elk jaar, en wat er op komt hangt daar jarenlang boven uw hoofd. Met meer dan vijftien jaar dakwerken achter ons weten wij wat het uwe nodig heeft om te blijven liggen. U kiest de pannen en wij regelen de rest.',
+    /* Mohammeds eigen zin (22 sep 2026), alleen het open woord ingevuld
+       ("waterdicht"). Vier eigen varianten met beeldspraak zijn afgekeurd:
+       een zakelijke belofte hier, geen zin die moet "landen".
+       "meer dan 15 jaar" komt van Mohammed zelf. */
+    tekst: 'Met meer dan 15 jaar ervaring in dakwerken staan we garant voor een waterdicht eindresultaat. U kan rekenen op een zorgeloos traject van A tot Z.',
     redenen: [
       { titel: 'Eigen dakwerkers en zinkwerkers', tekst: 'Elke ochtend dezelfde ploeg, tot de laatste nokpan vastligt.' },
       { titel: 'Tien jaar aansprakelijk', tekst: 'Zo lang blijft dit dak ons werk. Verzekerd, met een VCA-attest voor de werf.' },
@@ -151,7 +149,7 @@ export const DAKWERKEN: KgjInhoud = {
     fotos: [
       { src: antraciet, label: 'Antraciet pannendak', alt: 'Halfopen woning in rode baksteen met een nieuw antraciet pannendak' },
       { src: panRood, label: 'Rood pannendak', alt: 'Rijwoning met een nieuw rood pannendak en een dakvenster' },
-      { src: platdak, label: 'Plat dak met EPDM', alt: 'Plat dak met nieuwe EPDM en een zinken dakrand, van bovenaf' },
+      { src: platdak, label: 'Plat dak met EPDM', alt: 'Plat dak met EPDM en een lichtkoepel op een aanbouw achter een woning' },
       /* Drie tegels, één per daktype. De overige beelden tonen dezelfde
          woningen vanuit een andere hoek en lezen als herhaling. */
     ],
