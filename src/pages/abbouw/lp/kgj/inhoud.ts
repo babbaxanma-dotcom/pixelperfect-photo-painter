@@ -113,26 +113,24 @@ export const DAKWERKEN: KgjInhoud = {
   },
 
   waarom: {
-    kop: 'Wie er op uw dak staat',
-    /* De pijn eerst, in zijn situatie: hij kan de kwaliteit van een dak niet
-       zelf beoordelen. Daarna wat hij eraan overhoudt. De drie redenen
-       dragen de feiten; deze twee zinnen zetten hem op zijn eigen stoep, en
-       herhalen dus niets uit de redenen. */
-    /* Belofte vooraan, onderbouwing daarna. Het aantal jaren ervaring staat
-       hier bewust niet: dat getal is nergens vastgelegd, en een cijfer dat
-       AB niet zelf gegeven heeft, is een claim die de offerte later moet
-       waarmaken. Zodra Mohammed het jaartal doorgeeft, kan het hier in. */
-    tekst: 'Bij AB Bouw Groep garanderen wij u vakmanschap: onze dakwerkers werken jaar in jaar uit op Vlaamse daken en weten precies wat het uwe nodig heeft om decennia mee te gaan. Wij nemen de hele werf op ons en houden u onderweg op de hoogte.',
+    kop: 'Waarom AB Bouw Groep',
+    /* De inzet eerst, dan de ervaring, dan wat de klant eraan overhoudt.
+       De drie redenen eronder dragen de losse feiten, dus deze zinnen
+       herhalen daar niets van.
+       "meer dan vijftien jaar" komt van Mohammed zelf (22 sep 2026). Tot dan
+       stond hier geen getal, omdat een cijfer dat AB niet gegeven heeft een
+       claim is die de offerte later moet waarmaken. */
+    tekst: 'Een dak vervangt u niet elk jaar, en wat er op komt hangt daar jarenlang boven uw hoofd. Met meer dan vijftien jaar dakwerken achter ons weten wij wat het uwe nodig heeft om te blijven liggen. U kiest de pannen en wij regelen de rest.',
     redenen: [
       { titel: 'Eigen dakwerkers en zinkwerkers', tekst: 'Elke ochtend dezelfde ploeg, tot de laatste nokpan vastligt.' },
       { titel: 'Tien jaar aansprakelijk', tekst: 'Zo lang blijft dit dak ons werk. Verzekerd, met een VCA-attest voor de werf.' },
       { titel: 'Elke post apart op uw offerte', tekst: 'U leest per post wat u betaalt, aan het btw-tarief dat op uw woning geldt.' },
     ],
-    /* Boven: de dakwerker zelf aan het werk. De kop van dit blok gaat over
-       wie er op het dak staat, dus hoort daar een mens bij en geen vierde
-       gevelfoto. Hier stond eerst lp-real-det-1, en dat bestand bleek op een
-       pixelvergelijking hetzelfde frame als de eerste hero-dia (verschil 1,8
-       van 255): dezelfde woning stond dus twee keer op één pagina. */
+    /* Boven: de dakwerker zelf aan het werk. Dit blok verkoopt de mensen, dus
+       hoort er een mens in beeld en geen vierde gevelfoto. Hier stond eerst
+       lp-real-det-1, en dat bestand bleek op een pixelvergelijking hetzelfde
+       frame als de eerste hero-dia (verschil 1,8 van 255): dezelfde woning
+       stond dus twee keer op één pagina. */
     duo: [
       { src: dakwerker, alt: 'Dakwerker die nieuwe antraciet pannen legt op de tengellatten' },
       { src: pannenDichtbij, alt: 'Hetzelfde pannendak van bovenaf, tot op de nokpannen' },
