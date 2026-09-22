@@ -34,6 +34,7 @@ const NIET_IN_SITEMAP = new Set([
   '/bedankt',          // heeft alleen zin na een aanvraag
   '/lp/totaalrenovatie',    // duplicaat van /totaalrenovatie
   '/lp/badkamerrenovatie',  // duplicaat van /badkamerrenovatie
+  '/lp/dakwerken',          // advertentiepagina; concurreert anders met /dakwerken
 ]);
 
 /* Hoe vaak een pagina verandert en hoe zwaar ze weegt. Alleen een hint voor

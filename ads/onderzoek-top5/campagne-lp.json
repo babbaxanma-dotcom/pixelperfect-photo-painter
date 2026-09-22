@@ -1,0 +1,190 @@
+[
+ {
+  "url": "https://campagnes-recotex.be/?page_id=120",
+  "pagina": {
+   "titel": "Dakwerken - Recotex",
+   "koppen": [
+    "Ontvang een gratis offerte",
+    "Bespaar tot 30% op je energierekening",
+    "Maak jouw woning EPC-conform",
+    "Geniet van de overheidssteun",
+    "Bereken jouw dakwerken",
+    "in slechts 2 minuten"
+   ],
+   "knoppen": [
+    "Bereken jouw dakwerken",
+    "Verzenden",
+    "Bereken jouw prijs en bespaar",
+    "Start jouw renovatie met premie",
+    "Bereken jouw gevelrenovatie",
+    "Ontvang een offerte",
+    "settings",
+    "Accept",
+    "Reject",
+    "Close GDPR Cookie Settings",
+    "Privacy Overview",
+    "Strictly Necessary Cookies",
+    "Powered by GDPR Cookie Compliance",
+    "Enable All",
+    "Reject All",
+    "Save Changes"
+   ],
+   "links": [
+    "https://campagnes-recotex.be/dakwerken/#calculator",
+    "https://campagnes-recotex.be/dakwerken/#offerte",
+    "https://wordpress.org/plugins/gdpr-cookie-compliance/"
+   ],
+   "velden": [
+    {
+     "soort": "text",
+     "naam": "fields[naam]",
+     "label": "Naam*",
+     "boven": true
+    },
+    {
+     "soort": "text",
+     "naam": "fields[voornaam]",
+     "label": "Voornaam*",
+     "boven": true
+    },
+    {
+     "soort": "tel",
+     "naam": "fields[telefoonnummer]",
+     "label": "Telefoonnummer*",
+     "boven": true
+    },
+    {
+     "soort": "email",
+     "naam": "fields[email]",
+     "label": "Email*",
+     "boven": true
+    },
+    {
+     "soort": "text",
+     "naam": "fields[adres]",
+     "label": "Adres*",
+     "boven": true
+    },
+    {
+     "soort": "text",
+     "naam": "fields[postcode]",
+     "label": "Postcode*",
+     "boven": true
+    },
+    {
+     "soort": "text",
+     "naam": "fields[daksize]",
+     "label": "Grootte dak*",
+     "boven": true
+    },
+    {
+     "soort": "text",
+     "naam": "fields[hpname]",
+     "label": "HP Name",
+     "boven": true
+    },
+    {
+     "soort": "checkbox",
+     "naam": "moove_gdpr_strict_cookies",
+     "label": "Enable or Disable Cookies Enabled Disabled",
+     "boven": true
+    }
+   ],
+   "hoogte": 3917
+  }
+ },
+ {
+  "url": "https://campagnes-recotex.be/?page_id=40",
+  "pagina": {
+   "titel": "Gevelwerken - Recotex",
+   "koppen": [
+    "Ontvang een gratis offerte",
+    "Bespaar tot 30% op je energierekening",
+    "Maak jouw woning EPC-conform",
+    "Geniet van de overheidssteun",
+    "Bereken jouw gevelrenovatie",
+    "in slechts 2 minuten"
+   ],
+   "knoppen": [
+    "Bereken je gevelrenovatie",
+    "Verzenden",
+    "Bereken jouw prijs en bespaar",
+    "Bereken jouw gevelrenovatie",
+    "Start jouw renovatie met premie",
+    "Ontvang een offerte",
+    "settings",
+    "Accept",
+    "Reject",
+    "Close GDPR Cookie Settings",
+    "Privacy Overview",
+    "Strictly Necessary Cookies",
+    "Powered by GDPR Cookie Compliance",
+    "Enable All",
+    "Reject All",
+    "Save Changes"
+   ],
+   "links": [
+    "https://campagnes-recotex.be/gevelwerken/#calculator",
+    "https://campagnes-recotex.be/gevelwerken/#offerte",
+    "https://wordpress.org/plugins/gdpr-cookie-compliance/"
+   ],
+   "velden": [
+    {
+     "soort": "text",
+     "naam": "fields[naam]",
+     "label": "Naam*",
+     "boven": true
+    },
+    {
+     "soort": "text",
+     "naam": "fields[voornaam]",
+     "label": "Voornaam*",
+     "boven": true
+    },
+    {
+     "soort": "tel",
+     "naam": "fields[telefoonnummer]",
+     "label": "Telefoonnummer*",
+     "boven": true
+    },
+    {
+     "soort": "email",
+     "naam": "fields[email]",
+     "label": "Email*",
+     "boven": true
+    },
+    {
+     "soort": "text",
+     "naam": "fields[adres]",
+     "label": "Adres*",
+     "boven": true
+    },
+    {
+     "soort": "text",
+     "naam": "fields[postcode]",
+     "label": "Postcode*",
+     "boven": true
+    },
+    {
+     "soort": "text",
+     "naam": "fields[gevelsize]",
+     "label": "Geschatte grootte gevel*",
+     "boven": true
+    },
+    {
+     "soort": "text",
+     "naam": "fields[hpname]",
+     "label": "HP Name",
+     "boven": true
+    },
+    {
+     "soort": "checkbox",
+     "naam": "moove_gdpr_strict_cookies",
+     "label": "Enable or Disable Cookies Enabled Disabled",
+     "boven": true
+    }
+   ],
+   "hoogte": 3925
+  }
+ }
+]

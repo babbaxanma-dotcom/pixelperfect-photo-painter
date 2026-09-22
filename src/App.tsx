@@ -33,6 +33,7 @@ const LpLokaal = lazy(() => import("./pages/abbouw/lp/LpLokaal"));
 const LpDienst = lazy(() => import("./pages/abbouw/lp/LpDienst"));
 const LpReplica = lazy(() => import("./pages/abbouw/lp/replica/LpReplica"));
 const LpBadkamer = lazy(() => import("./pages/abbouw/lp/replica/LpBadkamer"));
+const LpKgj = lazy(() => import("./pages/abbouw/lp/kgj/LpKgj"));
 const Bedankt = lazy(() => import("./pages/abbouw/Bedankt"));
 const CalculatorDak = lazy(() => import("./pages/abbouw/calculator/CalculatorDak"));
 const CalculatorGevel = lazy(() => import("./pages/abbouw/calculator/CalculatorGevel"));
@@ -101,7 +102,7 @@ const App = () => {
               onderwerp; NIET verwijderd, want er kan advertentieverkeer op staan en
               een betaalde klik op een 404 is weggegooid geld. Zijn de advertenties
               omgezet naar de nieuwe bestemming, dan kunnen deze regels weg. */}
-          <Route path="/lp/dakwerken" element={<Navigate to="/dakwerken" replace />} />
+          <Route path="/lp/dakwerken" element={<LpKgj />} />
           <Route path="/lp/gevel" element={<Navigate to="/gevel" replace />} />
           <Route path="/lp/velux" element={<Navigate to="/dakwerken" replace />} />
           <Route path="/lp/gevelreiniging" element={<Navigate to="/gevel" replace />} />
