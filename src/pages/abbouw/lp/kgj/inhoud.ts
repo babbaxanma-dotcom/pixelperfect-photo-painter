@@ -170,13 +170,13 @@ export const DAKWERKEN: KgjInhoud = {
     kop: 'Zo verloopt uw dakwerk',
     onder: 'U weet vooraf wat er gebeurt en wanneer.',
     stappen: [
-      { titel: 'Aanvraag', tekst: 'Uw vijf antwoorden zeggen ons hoe groot het werk is.' },
+      { titel: 'Aanvraag', tekst: 'U doet uw aanvraag via het formulier hieronder of rechtstreeks telefonisch.' },
       { titel: 'Dakinspectie', tekst: 'Binnen enkele werkdagen doen we de inspectie en bekijken we samen de bevindingen.' },
       /* Stond eerst "Elke post staat apart op papier": dat is nu de derde
          reden in het waarom-blok. Twee keer dezelfde belofte op één pagina
          leest als vulling, dus deze stap draagt het geruststellende deel. */
       { titel: 'Offerte', tekst: 'U neemt hem rustig door voor u beslist.' },
-      { titel: 'Werf', tekst: 'Het dak gaat elke avond dicht, ook als het werk nog loopt.' },
+      { titel: 'Uitvoering', tekst: 'Het dak gaat elke avond dicht, ook als het werk nog loopt.' },
     ],
   },
 
