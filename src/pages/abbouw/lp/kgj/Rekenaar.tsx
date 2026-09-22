@@ -113,7 +113,9 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
               </button>
             ))}
           </div>
-          <p className="kgj-reken__gerust">{inhoud.rekenaar.gerust}</p>
+          {/* Niet bij vraag 1: wat er aan het dak moet gebeuren, weet de bezoeker
+              zelf (Mohammed: 'hoe kan iemand niet weten wat hij wilt'). */}
+          {stap > 0 && <p className="kgj-reken__gerust">{inhoud.rekenaar.gerust}</p>}
         </div>
       ) : (
         <form className="kgj-reken__stap kgj-reken__form" onSubmit={verstuur} noValidate>
@@ -129,7 +131,7 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
           <button className="kgj-knop kgj-knop--vol kgj-reken__knop" type="submit" disabled={bezig}>
             {bezig ? 'Bezig…' : inhoud.rekenaar.knop}
           </button>
-          <p className="kgj-reken__gerust">{inhoud.rekenaar.uitkomstOnder}</p>
+          {inhoud.rekenaar.uitkomstOnder && <p className="kgj-reken__gerust">{inhoud.rekenaar.uitkomstOnder}</p>}
           {fout && <p className="kgj-reken__fout" role="alert">{fout}</p>}
         </form>
       )}

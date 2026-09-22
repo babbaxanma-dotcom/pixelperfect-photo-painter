@@ -1722,11 +1722,17 @@ body.menu-open .lf-nav {
     margin-right: calc(50% - 50vw) !important;
     position: relative;
   }
-  /* Cookie banner: verplaats naar boven of maak minder dominant */
+  /* Cookie banner: verplaats naar boven of maak minder dominant.
+     transform en width moeten mee: consent.ts centreert met left: 50% en
+     translateX(-50%). Zonder deze twee regels bleef de -50% staan terwijl
+     left naar 8px ging, en stond de banner op elke telefoon half buiten
+     beeld (gemeten 23 sep 2026: x = -175 op 390 breed). */
   .abc-banner {
     bottom: 12px !important;
     left: 8px !important;
     right: 8px !important;
+    transform: none !important;
+    width: auto !important;
   }
 }
 

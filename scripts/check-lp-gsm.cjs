@@ -1,0 +1,158 @@
+/**
+ * Telefooncontrole van /lp/dakwerken: loopt de pagina af zoals een bezoeker
+ * op een iPhone (390 x 844) en meldt per punt AF of NIET AF.
+ *
+ * Er wordt NIETS verstuurd: de formulieren worden tot de verzendknop
+ * doorgeklikt, maar nooit ingediend. Geen enkele echte lead.
+ *
+ * Verwacht een draaiende preview op http://127.0.0.1:8140 (preview-licht.cjs).
+ * Schermen komen in %TEMP%/claude/lp-gsm.
+ *
+ * Draaien: node scripts/check-lp-gsm.cjs
+ */
+const fs = require('node:fs');
+const puppeteer = require('puppeteer-core');
+
+const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+const URL = 'http://127.0.0.1:8140/lp/dakwerken';
+const UIT = 'C:/Users/Mohammed/AppData/Local/Temp/claude/lp-gsm';
+const wacht = (ms) => new Promise((k) => setTimeout(k, ms));
+const uitslag = [];
+const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF'}  ${wat}${detail ? '  (' + detail + ')' : ''}`);
+
+(async () => {
+  fs.mkdirSync(UIT, { recursive: true });
+  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox'] });
+  const page = await browser.newPage();
+  await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+  const fouten = [];
+  page.on('pageerror', (e) => fouten.push(e.message));
+  page.on('console', (m) => { if (m.type() === 'error') fouten.push(m.text()); });
+  await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+  await page.goto(URL, { waitUntil: 'networkidle0' });
+  await wacht(800);
+
+  const klikKeuze = async (label) => page.evaluate((l) => {
+    const k = [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')].find((b) => b.textContent.trim().startsWith(l));
+    if (!k) return false; k.click(); return true;
+  }, label);
+  const tel = () => page.$eval('#rekenaar .kgj-reken__tel', (e) => e.textContent.trim());
+  const vraag = () => page.$eval('#rekenaar .kgj-reken__vraag', (e) => e.textContent.trim());
+
+  /* 0. Cookiebanner binnen het scherm. Stond op 23 sep op elke telefoon half
+        buiten beeld (x = -175) en dekte keuzes en verzendknoppen af; de
+        eerste versie van deze controle zag dat niet. */
+  const banner = await page.evaluate(() => {
+    const e = document.querySelector('.abc-banner'); if (!e) return null;
+    const r = e.getBoundingClientRect(); return { l: Math.round(r.left), r: Math.round(r.right) };
+  });
+  meld(!banner || (banner.l >= 0 && banner.r <= 390), 'cookiebanner volledig binnen het scherm', banner ? `${banner.l} tot ${banner.r} van 390` : 'geen banner');
+
+  /* 1. Boven de vouw */
+  const vouw = await page.evaluate(() => {
+    const k = document.querySelector('#rekenaar .kgj-reken__keuze:last-child').getBoundingClientRect();
+    return { onder: Math.round(k.bottom), h1: document.querySelector('.kgj-hero h1').textContent.trim() };
+  });
+  meld(vouw.onder <= 844, 'alle keuzes van vraag 1 boven de vouw', `laatste keuze eindigt op ${vouw.onder} van 844`);
+  meld(vouw.h1 === 'Dé specialist voor uw dakwerk', 'kop', vouw.h1);
+  await page.screenshot({ path: `${UIT}/01-hero.png` });
+
+  /* 2. Vraag 1: vier keuzes, geen 'Weet u het niet zeker' */
+  const v1 = await page.evaluate(() => ({
+    keuzes: [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')].map((b) => b.textContent.trim()),
+    gerust: !!document.querySelector('#rekenaar .kgj-reken__gerust'),
+  }));
+  meld(v1.keuzes.join('|') === 'Dak vernieuwen|Dak isoleren|Lek of schade herstellen|Anders', 'vraag 1 heeft de vier keuzes', v1.keuzes.join(', '));
+  meld(!v1.gerust, "geen 'Weet u het niet zeker' bij vraag 1");
+  meld((await tel()) === 'Vraag 1 van 6', 'teller start op 1 van 6', await tel());
+
+  /* 3. Hellend pad tot het formulier */
+  await klikKeuze('Dak vernieuwen'); await wacht(250);
+  meld((await vraag()) === 'Is het een hellend of een plat dak?', 'vraag 2 = hellend of plat', await vraag());
+  await klikKeuze('Hellend dak'); await wacht(250);
+  meld((await vraag()) === 'Wat ligt er nu op uw dak?' && (await tel()) === 'Vraag 3 van 6', 'hellend: vraag 3 = pannen of leien', `${await vraag()} / ${await tel()}`);
+  for (const k of ['Pannen', 'Rijwoning', 'Ouder dan tien jaar', 'Zo snel mogelijk']) { await klikKeuze(k); await wacht(250); }
+  const form = await page.evaluate(() => {
+    const knop = document.querySelector('#rekenaar .kgj-reken__knop');
+    return { knop: knop && knop.textContent.trim(), onder: !!document.querySelector('#rekenaar form .kgj-reken__gerust') };
+  });
+  meld(form.knop === 'Bereken prijs', 'verzendknop calculator', form.knop);
+  meld(!form.onder, "zin 'U hoort de prijs binnen één werkdag' is weg");
+  await page.evaluate(() => document.querySelector('#rekenaar').scrollIntoView({ block: 'center' }));
+  await wacht(300);
+  await page.screenshot({ path: `${UIT}/02-calculator-formulier.png` });
+
+  /* 4. Plat pad (terug naar vraag 2) */
+  for (let i = 0; i < 5; i++) { await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__terug')?.click()); await wacht(200); }
+  await klikKeuze('Plat dak'); await wacht(250);
+  const plat = await page.evaluate(() => [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')].map((b) => b.textContent.trim()).join(', '));
+  meld(plat === 'Bitumen, Roofing, EPDM, Iets anders, Weet ik niet' && (await tel()) === 'Vraag 3 van 6', 'plat: bitumen, roofing, EPDM', `${plat} / ${await tel()}`);
+
+  /* 5. Horizontaal scrollen en foto's */
+  const breed = await page.evaluate(() => document.documentElement.scrollWidth);
+  meld(breed <= 390, 'geen horizontaal scrollen', `paginabreedte ${breed}`);
+  await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 500) { window.scrollTo(0, y); await new Promise((k) => setTimeout(k, 120)); } });
+  await wacht(1200);
+  const kapot = await page.evaluate(() => [...document.querySelectorAll('.kgjx img')].filter((i) => !i.complete || i.naturalWidth === 0).map((i) => i.getAttribute('src')));
+  meld(kapot.length === 0, 'alle foto’s geladen', kapot.join(', '));
+
+  /* 6. Vaste balk onderaan: zichtbaar midden op de pagina */
+  await page.evaluate(() => document.getElementById('werkwijze').scrollIntoView());
+  await wacht(600);
+  const balk = await page.evaluate(() => { const b = document.querySelector('.kgj-actiebalk'); return b && getComputedStyle(b).display !== 'none'; });
+  meld(balk, 'vaste balk zichtbaar midden op de pagina');
+  await page.screenshot({ path: `${UIT}/03-werkwijze.png` });
+
+  /* 7. Venster: prijsknop opent de calculator op de plek zelf */
+  const yVoor = await page.evaluate(() => window.scrollY);
+  await page.evaluate(() => [...document.querySelectorAll('.kgj-actiebalk button')].find((b) => /Bereken/.test(b.textContent))?.click());
+  await wacht(400);
+  const venster = await page.evaluate(() => {
+    const v = document.querySelector('.kgj-venster');
+    if (!v) return null;
+    const r = v.querySelector('.kgj-reken').getBoundingClientRect();
+    return { vraag: v.querySelector('.kgj-reken__vraag').textContent.trim(), onder: Math.round(r.bottom), y: window.scrollY };
+  });
+  meld(!!venster, 'prijsknop in de balk opent het venster');
+  if (venster) {
+    meld(venster.y === yVoor, 'pagina blijft staan bij openen', `${yVoor} -> ${venster.y}`);
+    meld(venster.onder <= 844, 'venster past op het scherm', `onderkant ${venster.onder} van 844`);
+    await page.screenshot({ path: `${UIT}/04-venster.png` });
+    await page.evaluate(() => document.querySelector('.kgj-venster__dicht').click());
+    await wacht(300);
+    meld(!(await page.$('.kgj-venster')), 'venster sluit met het kruisje');
+  }
+
+  /* 8. Slotblok met inspectieformulier */
+  await page.evaluate(() => document.getElementById('contact').scrollIntoView());
+  await wacht(800);
+  const slot = await page.evaluate(() => ({
+    kop: document.querySelector('#contact h2')?.textContent.trim(),
+    punten: [...document.querySelectorAll('.kgj-cta__punten li')].map((l) => l.textContent.trim()),
+    knop: document.querySelector('.kgj-reken--inspectie .kgj-reken__knop')?.textContent.trim(),
+    balk: getComputedStyle(document.querySelector('.kgj-actiebalk')).display !== 'none',
+  }));
+  meld(slot.kop === 'Gratis dakinspectie', 'slotblok-kop', slot.kop);
+  meld(slot.punten.length === 3, 'drie vinkjes bij de inspectie', slot.punten.join(' | '));
+  meld(slot.knop === 'Vraag uw gratis dakinspectie aan', 'knop inspectieformulier', slot.knop);
+  await page.evaluate(() => document.querySelector('.kgj-reken--inspectie').scrollIntoView({ block: 'center' }));
+  await wacht(700);
+  const balkBijForm = await page.evaluate(() => getComputedStyle(document.querySelector('.kgj-actiebalk')).display !== 'none');
+  meld(!balkBijForm, 'vaste balk verdwijnt bij het formulier (dekt de knop niet af)');
+  await page.screenshot({ path: `${UIT}/05-inspectie.png` });
+
+  /* 9. Voet */
+  const voet = await page.evaluate(() => document.querySelector('.kgj-voet')?.textContent || '');
+  meld(voet.includes('BE 0712.443.881'), 'btw-nummer in de voet');
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await wacht(400);
+  await page.screenshot({ path: `${UIT}/06-voet.png` });
+
+  meld(fouten.length === 0, 'geen fouten in de console', fouten.slice(0, 3).join(' | '));
+  await browser.close();
+
+  console.log(uitslag.join('\n'));
+  const niet = uitslag.filter((r) => r.startsWith('NIET')).length;
+  console.log(`\n${uitslag.length - niet} van ${uitslag.length} AF · schermen in ${UIT}`);
+  process.exit(niet ? 1 : 0);
+})();

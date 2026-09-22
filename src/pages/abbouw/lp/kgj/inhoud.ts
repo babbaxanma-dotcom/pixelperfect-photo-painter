@@ -22,7 +22,7 @@ import antraciet from '@/assets/dak/lp-real-det-2.jpg';
 import dakwerker from '@/assets/dak/dakwerker-pannen.jpg';
 import pannenDichtbij from '@/assets/dak/pannen-dichtbij.jpg';
 import antraciet3 from '@/assets/dak/lp-real-det-3.jpg';
-import platdak from '@/assets/realisaties-new/dak-epdm-modern.jpg';
+import platdak from '@/assets/dak/platdak-tegel.jpg';
 import droneAntraciet from '@/assets/dak/drone-antraciet.jpg';
 import pannenDicht from '@/assets/dak/hellend-pannen.jpg';
 import dakVoor from '@/assets/lp-diensten/dak-voor.jpg';
@@ -80,7 +80,7 @@ export const DAKWERKEN: KgjInhoud = {
        zet "gratis en vrijblijvend" vooraan. Het VCA-attest staat nu in het
        waarom-blok: een certificaat overtuigt lager op de pagina, een
        toezegging overtuigt boven de vouw. */
-    bewijs: ['Gratis dakinspectie en offerte', 'Volledige premiebegeleiding (Mijn VerbouwPremie)', '6% btw vanaf tien jaar oud', 'Tien jaar aansprakelijk'],
+    bewijs: ['Gratis dakinspectie en offerte', 'Volledige premiebegeleiding (Mijn VerbouwPremie)', '6% btw vanaf tien jaar oud', 'Tien jaar garantie'],
     dias: [
       { src: antraciet, alt: 'Halfopen woning in rode baksteen met een nieuw antraciet pannendak' },
       { src: panRood, alt: 'Rijwoning met een nieuw rood pannendak en een dakvenster' },
@@ -98,6 +98,7 @@ export const DAKWERKEN: KgjInhoud = {
         { label: 'Dak vernieuwen' },
         { label: 'Dak isoleren' },
         { label: 'Lek of schade herstellen' },
+        { label: 'Anders' },
       ] },
       /* Mohammed: eerst hellend of plat, dan pas wat erop ligt. Elk pad krijgt
          precies één vervolgvraag, zodat de teller op beide paden zes zegt. */
@@ -125,8 +126,8 @@ export const DAKWERKEN: KgjInhoud = {
     ],
     gerust: 'Weet u het niet zeker? Een schatting volstaat.',
     uitkomstKop: 'Nog één stap',
-    uitkomstOnder: 'U hoort de prijs binnen één werkdag. Wilt u daarna verder, dan komen wij opmeten.',
-    knop: 'Bel mij met de prijs',
+    uitkomstOnder: '',
+    knop: 'Bereken prijs',
   },
 
   waarom: {
@@ -138,7 +139,7 @@ export const DAKWERKEN: KgjInhoud = {
        "meer dan 15 jaar" komt van Mohammed zelf. */
     tekst: 'Een dak vernieuwt u één keer en vervolgens moet het decennia meegaan. Daarom is het belangrijk dat u een aannemer kiest die het vak kent. Met meer dan 15 jaar ervaring in dakwerken staan we garant voor een eindresultaat van topkwaliteit. U kan rekenen op een zorgeloos traject van A tot Z.',
     redenen: [
-      { titel: 'Tien jaar aansprakelijk', tekst: 'Wij staan tien jaar in voor elk dak dat we leggen. We zijn volledig verzekerd en VCA-gecertificeerd.' },
+      { titel: 'Tien jaar garantie', tekst: 'Tien jaar garantie op dakrenovatie. We zijn volledig verzekerd en VCA-gecertificeerd.' },
       { titel: 'Vrijblijvende offerte en dakinspectie', tekst: 'We komen langs en voeren een vrijblijvende dakinspectie uit.' },
       /* Mohammed, 23 sep 2026: 'volledige premiebegeleiding, Mijn VerbouwPremie, zoals
          Kijzer ook doet'. Kijzer noemt het 'Premieservice' en 'volledige omkadering

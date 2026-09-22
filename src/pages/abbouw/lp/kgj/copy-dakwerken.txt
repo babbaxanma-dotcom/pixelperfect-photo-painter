@@ -9,11 +9,10 @@ Hoe oud is de woning?
 Wanneer wilt u beginnen?
 Weet u het niet zeker? Een schatting volstaat.
 Nog één stap
-U hoort de prijs binnen één werkdag. Wilt u daarna verder, dan komen wij opmeten.
-Bel mij met de prijs
+Bereken prijs
 Waarom AB Bouw Groep
 Een dak vernieuwt u één keer en vervolgens moet het decennia meegaan. Daarom is het belangrijk dat u een aannemer kiest die het vak kent. Met meer dan 15 jaar ervaring in dakwerken staan we garant voor een eindresultaat van topkwaliteit. U kan rekenen op een zorgeloos traject van A tot Z.
-Wij staan tien jaar in voor elk dak dat we leggen. We zijn volledig verzekerd en VCA-gecertificeerd.
+Tien jaar garantie op dakrenovatie. We zijn volledig verzekerd en VCA-gecertificeerd.
 Vrijblijvende offerte en dakinspectie
 We komen langs en voeren een vrijblijvende dakinspectie uit.
 Volledige premiebegeleiding
@@ -48,6 +47,7 @@ Klik zes antwoorden aan en hoor binnen één werkdag wat uw dak kost. Gratis pla
 Dak vernieuwen
 Dak isoleren
 Lek of schade herstellen
+Anders
 Hellend dak
 Plat dak
 Pannen
@@ -74,4 +74,4 @@ Ik verken nog
 Gratis dakinspectie en offerte
 Volledige premiebegeleiding (Mijn VerbouwPremie)
 6% btw vanaf tien jaar oud
-Tien jaar aansprakelijk
+Tien jaar garantie
