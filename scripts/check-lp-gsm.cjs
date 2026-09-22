@@ -98,7 +98,10 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   meld(kapot.length === 0, 'alle foto’s geladen', kapot.join(', '));
 
   /* 6. Vaste balk onderaan: zichtbaar midden op de pagina */
-  await page.evaluate(() => document.getElementById('werkwijze').scrollIntoView());
+  /* Direct springen: de pagina scrollt vloeiend (scroll-behavior: smooth), en
+     wie meet terwijl dat nog loopt, ziet een verschuiving die het venster
+     niet veroorzaakt (eerste meting: 1946 -> 1931). */
+  await page.evaluate(() => window.scrollTo({ top: document.getElementById('werkwijze').offsetTop, behavior: 'instant' }));
   await wacht(600);
   const balk = await page.evaluate(() => { const b = document.querySelector('.kgj-actiebalk'); return b && getComputedStyle(b).display !== 'none'; });
   meld(balk, 'vaste balk zichtbaar midden op de pagina');
