@@ -120,7 +120,7 @@ export const DAKWERKEN: KgjInhoud = {
        "meer dan 15 jaar" komt van Mohammed zelf. */
     tekst: 'Met meer dan 15 jaar ervaring in dakwerken staan we garant voor een waterdicht eindresultaat. U kan rekenen op een zorgeloos traject van A tot Z.',
     redenen: [
-      { titel: 'Eigen dakwerkers en zinkwerkers', tekst: 'Elke ochtend dezelfde ploeg, tot de laatste nokpan vastligt.' },
+      { titel: 'Eigen ploegen', tekst: 'Elke dag dezelfde vaste ploeg op uw dak.' },
       { titel: 'Tien jaar aansprakelijk', tekst: 'Zo lang blijft dit dak ons werk. Verzekerd, met een VCA-attest voor de werf.' },
       { titel: 'Elke post apart op uw offerte', tekst: 'U leest per post wat u betaalt, aan het btw-tarief dat op uw woning geldt.' },
     ],
