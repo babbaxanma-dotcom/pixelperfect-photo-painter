@@ -84,6 +84,16 @@ export const KGJ_EXTRA = `
   font-weight: 400; color: var(--zacht); }
 .kgjx .kgj-reken__keuze.is-aan span { color: var(--accent-diep); }
 
+/* ── foto boven de keuze (vraag 1: hellend of plat dak) ──
+   Mohammed, 23 sep: bij pannendak en plat dak een bijpassende foto. De foto
+   loopt tot de rand van de knop; de negatieve marge heft de binnenruimte op. */
+.kgjx .kgj-reken__foto { display: block; width: calc(100% + 32px); max-width: none; margin: -12px -16px 8px;
+  aspect-ratio: 16 / 9; height: auto; object-fit: cover;
+  border-radius: calc(var(--r) - 1px) calc(var(--r) - 1px) 0 0; }
+@media (max-width: 420px) {
+  .kgjx .kgj-reken__foto { width: calc(100% + 24px); margin: -10px -12px 8px; }
+}
+
 /* ── voor en na: één liggende foto ──
    De demo zet staande foto's naast elkaar in kolommen van 380px. AB heeft één
    liggend paar; in zo'n smalle kolom werd dat een postzegel. Eén kolom van

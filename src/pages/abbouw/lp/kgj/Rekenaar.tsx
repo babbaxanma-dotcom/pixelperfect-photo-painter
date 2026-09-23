@@ -108,6 +108,7 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
               <button type="button" key={k.label}
                 className={`kgj-reken__keuze${antwoorden[vraag.sleutel] === k.label ? ' is-aan' : ''}`}
                 onClick={() => kies(vraag.sleutel, k.label)}>
+                {k.foto && <img className="kgj-reken__foto" src={k.foto} alt="" width={640} height={360} decoding="async" />}
                 <strong>{k.label}</strong>
                 {k.uitleg && <span>{k.uitleg}</span>}
               </button>

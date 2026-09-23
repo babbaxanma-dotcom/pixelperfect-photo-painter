@@ -27,8 +27,14 @@ import droneAntraciet from '@/assets/dak/drone-antraciet.jpg';
 import pannenDicht from '@/assets/dak/hellend-pannen.jpg';
 import dakVoor from '@/assets/lp-diensten/dak-voor.jpg';
 import dakNa from '@/assets/lp-diensten/dak-na.jpg';
+/* Foto's bij de eerste calculatorvraag. Uitsneden van lp-real-pan-2 en
+   lp-real-epdm-2, twee beelden die nergens anders op deze pagina staan
+   (Mohammed, 23 sep: "mag niet zijn wat al op de pagina staat"). */
+import keuzeHellend from '@/assets/dak/keuze-hellend.jpg';
+import keuzePlat from '@/assets/dak/keuze-plat.jpg';
 
-export type Keuze = { label: string; uitleg?: string };
+/** foto: optioneel beeld boven het label; het label zegt al wat erop staat, dus geen alt-tekst. */
+export type Keuze = { label: string; uitleg?: string; foto?: string };
 /** als: de vraag verschijnt alleen als een eerdere vraag dat antwoord kreeg. */
 export type Vraag = { sleutel: string; vraag: string; keuzes: Keuze[]; als?: { sleutel: string; waarde: string } };
 export type Foto = { src: string; alt: string };
@@ -101,8 +107,8 @@ export const DAKWERKEN: KgjInhoud = {
        Bij plat dak Mohammeds eigen keuzes (bitumen, roofing, EPDM). */
     vragen: [
       { sleutel: 'Dak', vraag: 'Welk soort dak heeft u?', keuzes: [
-        { label: 'Hellend dak', uitleg: 'hellingshoek groter dan 15°' },
-        { label: 'Plat dak', uitleg: 'hellingshoek kleiner dan 15°' },
+        { label: 'Hellend dak', uitleg: 'hellingshoek groter dan 15°', foto: keuzeHellend },
+        { label: 'Plat dak', uitleg: 'hellingshoek kleiner dan 15°', foto: keuzePlat },
       ] },
       { sleutel: 'Bedekking', vraag: 'Welke dakbedekking wenst u?', als: { sleutel: 'Dak', waarde: 'Hellend dak' }, keuzes: [
         { label: 'Gegolfde pannen' }, { label: 'Vlakke pannen of leien' }, { label: 'Golfplaten' }, { label: 'Weet ik nog niet' },
