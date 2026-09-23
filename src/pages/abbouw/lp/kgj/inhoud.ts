@@ -166,7 +166,8 @@ export const DAKWERKEN: KgjInhoud = {
   },
 
   werk: {
-    kop: 'Uitgevoerd werk',
+    /* Geen kop: de foto's spreken voor zich (Mohammed, 23 sep). */
+    kop: '',
     onder: '',
     fotos: [
       { src: antraciet, label: 'Antraciet pannendak', alt: 'Halfopen woning in rode baksteen met een nieuw antraciet pannendak' },

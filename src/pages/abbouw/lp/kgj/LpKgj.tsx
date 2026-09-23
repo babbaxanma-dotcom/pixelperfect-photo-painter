@@ -338,10 +338,12 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
 
       <section className="kgj-band kgj-werk" id="werk">
         <div className="kgj-breed">
-          <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
-            <h2>{inhoud.werk.kop}</h2>
-            {inhoud.werk.onder && <p>{inhoud.werk.onder}</p>}
-          </div>
+          {(inhoud.werk.kop || inhoud.werk.onder) && (
+            <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
+              {inhoud.werk.kop && <h2>{inhoud.werk.kop}</h2>}
+              {inhoud.werk.onder && <p>{inhoud.werk.onder}</p>}
+            </div>
+          )}
           <ul className="kgj-werkraster kgj-op">
             {inhoud.werk.fotos.map((f) => (
               <li className="kgj-tegel" key={f.src + f.label}>
