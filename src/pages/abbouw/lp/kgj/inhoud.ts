@@ -80,7 +80,7 @@ export const DAKWERKEN: KgjInhoud = {
        zet "gratis en vrijblijvend" vooraan. Het VCA-attest staat nu in het
        waarom-blok: een certificaat overtuigt lager op de pagina, een
        toezegging overtuigt boven de vouw. */
-    bewijs: ['Gratis dakinspectie en offerte', 'Volledige premiebegeleiding (Mijn VerbouwPremie)', '6% btw vanaf tien jaar oud', 'Tien jaar garantie'],
+    bewijs: ['Gratis dakinspectie en offerte', 'Volledige premiebegeleiding (Mijn VerbouwPremie)', '6% btw vanaf tien jaar oud', '10 jaar garantie'],
     dias: [
       { src: antraciet, alt: 'Halfopen woning in rode baksteen met een nieuw antraciet pannendak' },
       { src: panRood, alt: 'Rijwoning met een nieuw rood pannendak en een dakvenster' },
