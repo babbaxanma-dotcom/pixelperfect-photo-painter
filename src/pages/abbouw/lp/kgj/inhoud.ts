@@ -201,7 +201,7 @@ export const DAKWERKEN: KgjInhoud = {
       /* Mohammed: 'wij beginnen aan de werken, meestal duurt dakwerk ...'. De duur
          (één tot twee weken) is door Claude ingevuld: nog te bevestigen door AB. */
       { titel: 'Uitvoering', tekst: 'Wij beginnen aan de werken. Meestal duurt dakwerk één tot twee weken.' },
-      { titel: 'Oplevering', tekst: 'Ook na de oplevering staan we voor u klaar.' },
+      { titel: 'Oplevering', tekst: 'Wij ruimen alles netjes op. Het enige wat we achterlaten is een perfect dak.' },
     ],
   },
 
