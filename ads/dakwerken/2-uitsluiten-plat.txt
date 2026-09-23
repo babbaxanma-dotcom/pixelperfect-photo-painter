@@ -1,0 +1,6 @@
+"pannen"
+"pannendak"
+"leien"
+"hellend"
+"sarking"
+"sarkingdak"

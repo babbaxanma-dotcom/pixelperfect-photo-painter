@@ -6,7 +6,7 @@
 //
 // Mapping volgt het Norvo context document (custom fields uit GHL subaccount).
 
-import { getUtmParams, fireConversion } from './tracking';
+import { getUtmParams, fireConversion, type UtmParams } from './tracking';
 
 // ── Web3Forms email-backup ────────────────────────────────────────────────
 // Vuurt ALTIJD parallel met de GHL-webhook, zodat een lead NOOIT verloren gaat
@@ -70,6 +70,22 @@ function toGhlDivisie(input: string | undefined): string {
   return DIVISIE_TO_GHL_LABEL[input] ?? 'Nog te bepalen';
 }
 
+// GHL "Bron lead" is ook een dropdown (single) en bewaart alleen een exacte optie
+// (Website / Telefoon / Doorverwijzing / Google Ads / Social / ...). Tot 23 sep 2026
+// stuurde de site hier "lp:dakwerken:rekenaar:hero" of "ads:google": geen optie, dus
+// het veld bleef leeg. Nu: het kanaal als label, het formulier-detail apart in
+// bron_lead_detail (GHL-tekstveld "Bron lead detail").
+export type GhlBron = 'Website' | 'Google Ads' | 'Social';
+
+export function ghlBron(utm: UtmParams): GhlBron {
+  const bron = (utm.utm_source ?? '').toLowerCase();
+  const medium = (utm.utm_medium ?? '').toLowerCase();
+  if (utm.gclid || utm.gbraid || utm.wbraid) return 'Google Ads';
+  if (bron === 'google' && /^(cpc|ppc|paid)/.test(medium)) return 'Google Ads';
+  if (utm.fbclid || /^(facebook|instagram|meta|fb|ig)$/.test(bron)) return 'Social';
+  return 'Website';
+}
+
 export interface LeadPayload {
   // Pipeline-stuurinformatie
   source: 'contact_form' | 'newsletter' | 'landing_page';
@@ -131,7 +147,8 @@ function buildBody(p: LeadPayload) {
     type_werk: toGhlDivisie(p.type_werk),
     aanvullende_info: p.aanvullende_info?.trim() || undefined,
     adres_project: adresProject,
-    bron_lead: p.bron_lead || (utm.utm_source ? `ads:${utm.utm_source}` : 'website'),
+    bron_lead: ghlBron(utm),
+    bron_lead_detail: p.bron_lead || p.page_path,
 
     // UTM / context
     page_path: p.page_path,

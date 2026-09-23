@@ -1,0 +1,282 @@
+{
+  "url": "https://www.abgroep.be/lp/dakwerken",
+  "groepen": {
+    "Hellend dak vernieuwen": {
+      "zoekwoorden": [
+        [
+          "dak vernieuwen",
+          "w"
+        ],
+        [
+          "dak vernieuwen",
+          "e"
+        ],
+        [
+          "dak vernieuwen prijs",
+          "w"
+        ],
+        [
+          "dak vernieuwen kosten",
+          "w"
+        ],
+        [
+          "dak vernieuwen en isoleren",
+          "w"
+        ],
+        [
+          "hellend dak vernieuwen",
+          "w"
+        ],
+        [
+          "volledig dak vernieuwen prijs",
+          "e"
+        ],
+        [
+          "kostprijs nieuw dak",
+          "w"
+        ],
+        [
+          "prijs nieuw dak",
+          "w"
+        ],
+        [
+          "nieuw dak laten plaatsen",
+          "w"
+        ],
+        [
+          "nieuw dak laten leggen",
+          "w"
+        ],
+        [
+          "dak laten vernieuwen",
+          "w"
+        ],
+        [
+          "dak laten vervangen",
+          "w"
+        ],
+        [
+          "dak renoveren kosten",
+          "w"
+        ],
+        [
+          "dakrenovatie prijs",
+          "w"
+        ],
+        [
+          "dakrenovatie offerte",
+          "w"
+        ],
+        [
+          "nieuw pannendak",
+          "w"
+        ],
+        [
+          "pannendak vervangen",
+          "w"
+        ],
+        [
+          "leien dak vervangen",
+          "w"
+        ],
+        [
+          "sarkingdak prijs",
+          "w"
+        ]
+      ],
+      "kruis": [
+        "plat dak",
+        "platte dak",
+        "platte daken",
+        "platdak",
+        "roofing",
+        "epdm",
+        "bitumen"
+      ],
+      "pad": [
+        "dak",
+        "vernieuwen"
+      ],
+      "koppen": [
+        "Dak vernieuwen?",
+        "Wat kost uw nieuw dak?",
+        "Prijsaanvraag in 2 minuten",
+        "Gratis dakinspectie",
+        "Tien jaar garantie op uw dak",
+        "Huis ouder dan 10 jaar? 6% btw",
+        "Mijn VerbouwPremie-begeleiding",
+        "Pannendak vervangen",
+        "Nieuw dak met isolatie",
+        "Een nieuw dak voor decennia",
+        "Vraag uw gratis offerte aan",
+        "Dak aan vervanging toe?",
+        "Eerst de prijs, dan beslissen",
+        "Dak vernieuwen in {LOCATION(City):uw regio}",
+        "Kostprijs nieuw dak"
+      ],
+      "beschrijvingen": [
+        "Nieuw dak nodig? In 2 minuten vraagt u uw prijs aan. Wij bellen u terug, vrijblijvend.",
+        "Gratis dakinspectie ter plaatse. Daarna krijgt u een vrijblijvende offerte.",
+        "Tien jaar garantie op dakrenovatie. Volledig verzekerd en VCA-gecertificeerd.",
+        "Woning ouder dan tien jaar? 6% btw. En volledige Mijn VerbouwPremie-begeleiding."
+      ]
+    },
+    "Plat dak vernieuwen": {
+      "zoekwoorden": [
+        [
+          "plat dak vernieuwen",
+          "w"
+        ],
+        [
+          "plat dak vernieuwen",
+          "e"
+        ],
+        [
+          "plat dak vernieuwen prijs",
+          "w"
+        ],
+        [
+          "plat dak vernieuwen en isoleren",
+          "w"
+        ],
+        [
+          "plat dak laten vernieuwen",
+          "w"
+        ],
+        [
+          "plat dak laten vervangen",
+          "w"
+        ],
+        [
+          "nieuw plat dak",
+          "w"
+        ],
+        [
+          "kostprijs plat dak vernieuwen",
+          "w"
+        ],
+        [
+          "kostprijs nieuw plat dak",
+          "w"
+        ],
+        [
+          "dakrenovatie plat dak",
+          "w"
+        ],
+        [
+          "roofing plat dak vernieuwen",
+          "w"
+        ],
+        [
+          "roofing vernieuwen",
+          "w"
+        ],
+        [
+          "prijs roofing m2 geplaatst",
+          "w"
+        ],
+        [
+          "epdm laten leggen",
+          "w"
+        ],
+        [
+          "epdm dakbedekking laten leggen",
+          "w"
+        ],
+        [
+          "prijs epdm dak geplaatst",
+          "w"
+        ],
+        [
+          "bitumen dak vervangen",
+          "w"
+        ],
+        [
+          "plat dak epdm aannemer",
+          "w"
+        ]
+      ],
+      "kruis": [
+        "pannen",
+        "pannendak",
+        "leien",
+        "hellend",
+        "sarking",
+        "sarkingdak"
+      ],
+      "pad": [
+        "plat-dak",
+        "vernieuwen"
+      ],
+      "koppen": [
+        "Plat dak vernieuwen?",
+        "Wat kost een nieuw plat dak?",
+        "Prijs aanvragen in 2 minuten",
+        "Gratis inspectie van uw dak",
+        "10 jaar garantie op dakwerk",
+        "6% btw bij woning 10+ jaar",
+        "Begeleiding Mijn VerbouwPremie",
+        "Nieuw plat dak in EPDM",
+        "Roofing of EPDM vernieuwen",
+        "Plat dak met nieuwe isolatie",
+        "Offerte gratis en vrijblijvend",
+        "Plat dak aan vervanging toe?",
+        "EPDM laten leggen",
+        "Nieuw plat dak in {LOCATION(City):uw regio}",
+        "Plat dak laten vervangen"
+      ],
+      "beschrijvingen": [
+        "Wat kost een nieuw plat dak? Zes vragen, 2 minuten, en wij bellen u met de prijs.",
+        "Gratis dakinspectie: we bekijken uw plat dak ter plaatse en overlopen de bevindingen.",
+        "Wij geven tien jaar garantie op dakrenovatie en zijn volledig verzekerd.",
+        "6% btw voor een woning ouder dan tien jaar, met Mijn VerbouwPremie-begeleiding."
+      ]
+    }
+  },
+  "sitelinks": [
+    {
+      "tekst": "Gratis dakinspectie",
+      "r1": "Wij bekijken uw dak ter plaatse",
+      "r2": "Daarna een vrijblijvende offerte",
+      "url": "https://www.abgroep.be/lp/dakwerken#contact"
+    },
+    {
+      "tekst": "Prijs in zes vragen",
+      "r1": "Vul zes korte vragen in",
+      "r2": "Wij bellen u met de prijs",
+      "url": "https://www.abgroep.be/lp/dakwerken#rekenaar"
+    },
+    {
+      "tekst": "Waarom AB Bouw Groep",
+      "r1": "Tien jaar garantie op dakwerk",
+      "r2": "Volledige premiebegeleiding",
+      "url": "https://www.abgroep.be/lp/dakwerken#waarom"
+    },
+    {
+      "tekst": "Zo verloopt uw dakwerk",
+      "r1": "Van aanvraag tot nazorg",
+      "r2": "In vijf duidelijke stappen",
+      "url": "https://www.abgroep.be/lp/dakwerken#werkwijze"
+    }
+  ],
+  "highlights": [
+    "Gratis dakinspectie",
+    "Tien jaar garantie",
+    "Premiebegeleiding",
+    "Ruim 15 jaar ervaring",
+    "VCA-gecertificeerd",
+    "Volledig verzekerd",
+    "Vrijblijvende offerte"
+  ],
+  "snippet": {
+    "kop": "Typen",
+    "waarden": [
+      "Pannendak",
+      "Leien dak",
+      "Plat dak",
+      "EPDM",
+      "Roofing",
+      "Bitumen"
+    ]
+  }
+}
