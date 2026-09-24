@@ -27,9 +27,10 @@ import droneAntraciet from '@/assets/dak/drone-antraciet.jpg';
 import pannenDicht from '@/assets/dak/hellend-pannen.jpg';
 import dakVoor from '@/assets/lp-diensten/dak-voor.jpg';
 import dakNa from '@/assets/lp-diensten/dak-na.jpg';
-/* Foto's bij de eerste calculatorvraag. Uitsneden van lp-real-pan-2 en
-   lp-real-epdm-2, twee beelden die nergens anders op deze pagina staan
-   (Mohammed, 23 sep: "mag niet zijn wat al op de pagina staat"). */
+/* Foto's bij de eerste calculatorvraag (Mohammed, 24 sep). Hellend: de
+   dakwerkenfoto van getnorvo.com (norvo-website sectoren/niche-dak.jpg).
+   Plat: een plat dak op de achterbouw van een rijwoning
+   (generated-final/set/platdak-na.jpg). Uitsneden 16:9, 640x360. */
 import keuzeHellend from '@/assets/dak/keuze-hellend.jpg';
 import keuzePlat from '@/assets/dak/keuze-plat.jpg';
 
@@ -50,7 +51,8 @@ export type KgjInhoud = {
   bedanktSlug: string;
   /** ondertitel: eigen regel direct onder de kop, boven de subkop. */
   hero: { kop: string; ondertitel?: string; onder: string; bewijs: string[]; dias: Foto[] };
-  rekenaar: { vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string };
+  /** titel: naam van de calculator boven de voortgang; zeker: de regel onderaan de kaart. */
+  rekenaar: { titel: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string };
   waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto] };
   voorna: { kop: string; onder: string; voor: Foto; na: Foto; label: string };
   /* Foto's van uitgevoerd werk. Dit staat op de plek waar de demo reviews
@@ -77,7 +79,9 @@ export const DAKWERKEN: KgjInhoud = {
        berekening is toch ernaast dat hoef je niet te verwoorden'. De kop gaat
        over het resultaat aan zijn huis. */
     kop: 'Dé specialist voor uw dakwerk',
-    onder: 'Beantwoord zes korte vragen en u weet direct wat het kost.',
+    /* De calculator toont geen bedrag: AB belt met de prijs. "u weet direct wat
+       het kost" beloofde een getal op het scherm (24 sep vervangen). */
+    onder: 'Duid aan wat voor dak u heeft en wij bellen u met de prijs.',
     /* Drie controleerbare feiten onder de kop. Een bezoeker die uit een
        advertentie komt, kent AB niet; dit is het enige bewijs dat boven de
        vouw past zolang er geen geverifieerde Google-score is.
@@ -104,7 +108,13 @@ export const DAKWERKEN: KgjInhoud = {
        gemaakt: de grootte als knoppen in plaats van een schuifbalk, geen
        tussenvraag naar het type pan of isolatie. Als zesde vraag de start,
        zodat AB de dringende aanvragen eerst kan bellen.
-       Bij plat dak Mohammeds eigen keuzes (bitumen, roofing, EPDM). */
+       Bij plat dak Mohammeds eigen keuzes (bitumen, roofing, EPDM).
+       Kop en slotregel (24 sep, Mohammed: "duidelijk voor de bezoeker dat ze
+       daar de prijs kunnen berekenen in 2 minuten"; referentie Airadvisor:
+       de uitkomst zichtbaar aan het einde van de balk, een geruststelling
+       bij de knop). */
+    titel: 'Bereken uw dakprijs in 2 minuten',
+    zeker: 'Gratis en vrijblijvend',
     vragen: [
       { sleutel: 'Dak', vraag: 'Welk soort dak heeft u?', keuzes: [
         { label: 'Hellend dak', uitleg: 'hellingshoek groter dan 15°', foto: keuzeHellend },
@@ -130,7 +140,7 @@ export const DAKWERKEN: KgjInhoud = {
       ] },
     ],
     gerust: 'Weet u het niet zeker? Een schatting volstaat.',
-    uitkomstKop: 'Nog één stap',
+    uitkomstKop: 'Op welk nummer bereiken we u?',
     uitkomstOnder: '',
     knop: 'Bereken prijs',
   },

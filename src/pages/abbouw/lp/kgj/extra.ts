@@ -36,7 +36,7 @@ export const KGJ_EXTRA = `
 .kgj-reken__balk i { display: block; height: 100%; background: var(--accent); transition: width .35s cubic-bezier(.3,.7,.3,1); }
 .kgj-reken__stap { animation: kgj-reken-in .32s cubic-bezier(.22,.7,.3,1); }
 @keyframes kgj-reken-in { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
-.kgjx .kgj-reken__vraag { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 700; font-size: 21px;
+.kgjx .kgj-reken__vraag { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 700; font-size: 18px;
   line-height: 1.25; color: var(--kop); margin-bottom: 16px; letter-spacing: -.015em; }
 .kgj-reken__keuzes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 /* Oneven aantal keuzes: de laatste over de volle breedte, anders blijft er een gat. */
@@ -94,6 +94,28 @@ export const KGJ_EXTRA = `
   .kgjx .kgj-reken__foto { width: calc(100% + 24px); margin: -10px -12px 8px; }
 }
 
+/* ── kaartkop: wat dit is, en de weg van het huis naar de prijs ──
+   Mohammed, 24 sep: "duidelijker voor de bezoeker een calculator", met
+   Airadvisor als referentie. De titel zegt wat de kaart doet en hoe lang het
+   duurt; de balk loopt van een huisje naar het eurosymbool, dat oplicht bij de
+   laatste stap. Onderaan de kaart de geruststelling, op elke stap. */
+.kgjx .kgj-reken__titel { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 800; font-size: 20px;
+  line-height: 1.2; letter-spacing: -.015em; color: var(--kop); margin: 0 0 14px; }
+.kgj-reken__weg { display: flex; align-items: center; gap: 10px; }
+.kgjx .kgj-reken__weg .kgj-reken__balk { flex: 1; margin: 0; height: 6px; border-radius: 3px; }
+.kgjx .kgj-reken__begin { flex: none; width: 20px; height: 20px; color: var(--merk); }
+.kgjx .kgj-reken__eind { flex: none; display: inline-grid; place-items: center; width: 26px; height: 26px;
+  border-radius: 999px; border: 1.5px solid var(--accent); background: var(--accent-licht); color: var(--accent-diep);
+  font: 700 13px/1 "Plus Jakarta Sans", system-ui, sans-serif;
+  transition: background .2s ease, border-color .2s ease, color .2s ease; }
+.kgjx .kgj-reken__eind.is-aan { background: var(--accent); border-color: var(--accent); color: var(--merk-diep); }
+.kgjx .kgj-reken__weg + .kgj-reken__kop { min-height: 0; margin: 8px 0 12px; }
+.kgjx .kgj-reken__zeker { display: flex; align-items: center; gap: 7px; margin: 16px 0 0; padding-top: 12px;
+  border-top: 1px solid var(--lijn); font-family: Lato, system-ui, sans-serif; font-size: 13.5px; color: var(--zacht); }
+.kgjx .kgj-reken__zeker svg { flex: none; width: 16px; height: 16px; color: var(--merk); }
+/* Geen los woord op de laatste regel ("prijs.", "15°"). */
+.kgjx .kgj-hero__sub, .kgjx .kgj-reken__keuze span { text-wrap: pretty; }
+
 /* ── voor en na: één liggende foto ──
    De demo zet staande foto's naast elkaar in kolommen van 380px. AB heeft één
    liggend paar; in zo'n smalle kolom werd dat een postzegel. Eén kolom van
@@ -148,7 +170,8 @@ export const KGJ_EXTRA = `
   .kgjx .kgj-hero__sub { font-size: 16px; margin-top: 12px; }
   .kgjx .kgj-hero__ondertitel { font-size: 18px; margin-top: 10px; }
   .kgjx .kgj-reken { padding: 20px 18px 18px; }
-  .kgjx .kgj-reken__vraag { font-size: 19px; }
+  .kgjx .kgj-reken__vraag { font-size: 17px; }
+  .kgjx .kgj-reken__titel { font-size: 19px; }
   .kgjx .kgj-kop--lp .kgj-kop__bel { display: inline-flex; height: 44px; padding: 0 16px; font-size: 14px; }
   .kgjx .kgj-kop--lp .kgj-kop__bel span { display: none; }
   .kgjx .kgj-hero--lp .kgj-hero__bediening, .kgjx .kgj-hero--lp .kgj-hero__streep { display: none; }

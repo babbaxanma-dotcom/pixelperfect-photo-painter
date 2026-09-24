@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Home, ShieldCheck } from 'lucide-react';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
 import { CONTACT } from '@/data/contact';
@@ -92,13 +93,20 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
 
   return (
     <div className={`kgj-reken kgj-reken--${plek}`}>
+      <p className="kgj-reken__titel">{inhoud.rekenaar.titel}</p>
+      {/* De balk loopt van het huis naar de prijs: wat je aan het einde krijgt,
+          staat er vanaf de eerste vraag (zoals bij Airadvisor het bedrag). */}
+      <div className="kgj-reken__weg" aria-hidden="true">
+        <Home className="kgj-reken__begin" />
+        <div className="kgj-reken__balk"><i style={{ width: `${(nu / totaal) * 100}%` }} /></div>
+        <span className={`kgj-reken__eind${klaar ? ' is-aan' : ''}`}>€</span>
+      </div>
       <div className="kgj-reken__kop">
         <span className="kgj-reken__tel">{klaar ? 'Laatste stap' : `Vraag ${nu} van ${AANTAL}`}</span>
         {stap > 0 && (
           <button type="button" className="kgj-reken__terug" onClick={() => setStap((s) => s - 1)}>‹ Terug</button>
         )}
       </div>
-      <div className="kgj-reken__balk" aria-hidden="true"><i style={{ width: `${(nu / totaal) * 100}%` }} /></div>
 
       {!klaar ? (
         <div className="kgj-reken__stap" key={stap}>
@@ -136,6 +144,7 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
           {fout && <p className="kgj-reken__fout" role="alert">{fout}</p>}
         </form>
       )}
+      <p className="kgj-reken__zeker"><ShieldCheck aria-hidden="true" />{inhoud.rekenaar.zeker}</p>
     </div>
   );
 }
