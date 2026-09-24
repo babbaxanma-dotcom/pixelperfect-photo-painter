@@ -65,14 +65,26 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   }));
   meld(v1.vraag === 'Welk soort dak heeft u?' && v1.keuzes.join('|') === 'Hellend dak|Plat dak', 'vraag 1 = soort dak', `${v1.vraag} / ${v1.keuzes.join(', ')}`);
   meld(!v1.gerust, "geen 'Weet u het niet zeker' bij vraag 1");
-  meld((await tel()) === 'Vraag 1 van 6', 'teller start op 1 van 6', await tel());
+  meld((await tel()) === 'Vraag 1 van 8', 'teller start op 1 van 8 (langste pad)', await tel());
 
-  /* 3. Hellend pad tot het formulier */
+  /* 3. Hellend + renovatie tot het formulier (Mohammed 24 sep: na vraag 1
+     eerst herstelling/renovatie/isolatie, dan hoe oud het dak is). */
+  const tip = () => page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__tip')?.textContent.trim() || '');
+  const keuzesNu = () => page.evaluate(() => [...document.querySelectorAll('#rekenaar .kgj-reken__keuze strong')].map((b) => b.textContent.trim()).join('|'));
   await klikKeuze('Hellend dak'); await wacht(250);
-  meld((await vraag()) === 'Welke dakbedekking wenst u?' && (await tel()) === 'Vraag 2 van 6', 'hellend: vraag 2 = dakbedekking', `${await vraag()} / ${await tel()}`);
+  meld((await vraag()) === 'Wat moet er aan uw dak gebeuren?' && (await keuzesNu()) === 'Herstelling|Renovatie|Isolatie' && (await tel()) === 'Vraag 2 van 8',
+    'vraag 2 = herstelling, renovatie, isolatie', `${await vraag()} / ${await keuzesNu()} / ${await tel()}`);
+  await klikKeuze('Renovatie'); await wacht(250);
+  meld((await vraag()) === 'Hoe oud is uw dak?' && (await tel()) === 'Vraag 3 van 8', 'vraag 3 = hoe oud is uw dak', `${await vraag()} / ${await tel()}`);
+  meld(!(await tip()), 'nog geen btw-melding vóór het antwoord');
+  await klikKeuze('Ouder dan 30 jaar'); await wacht(250);
+  meld((await vraag()) === 'Welke dakbedekking wenst u?', 'renovatie: dakbedekking die u wenst', await vraag());
+  meld((await tip()).includes('6% btw'), 'btw-melding na een dak ouder dan 10 jaar', await tip());
   const volgorde = [];
-  for (const k of ['Gegolfde pannen', '50 tot 100 m²', 'Ja', 'Nee', 'Zo snel mogelijk']) { await klikKeuze(k); await wacht(250); volgorde.push(await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__vraag')?.textContent.trim())); }
-  meld(volgorde.slice(0, 4).join(' > ') === 'Hoe groot is het dak? > Is er isolatie nodig? > Is er asbest aanwezig in het dak? > Wanneer wilt u beginnen?', 'volgorde grootte, isolatie, asbest, start', volgorde.slice(0, 4).join(' > '));
+  const tipDaarna = [];
+  for (const k of ['Gegolfde pannen', '50 tot 100 m²', 'Ja', 'Nee', 'Zo snel mogelijk']) { await klikKeuze(k); await wacht(250); volgorde.push(await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__vraag')?.textContent.trim())); tipDaarna.push(await tip()); }
+  meld(volgorde.slice(0, 4).join(' > ') === 'Hoe groot is het dak? > Is er isolatie nodig? > Is er asbest aanwezig in het dak? > Wanneer wilt u beginnen?', 'renovatie: grootte, isolatie, asbest, start', volgorde.slice(0, 4).join(' > '));
+  meld(tipDaarna.every((t) => !t), 'btw-melding staat alleen op de stap na het antwoord');
   const form = await page.evaluate(() => {
     const knop = document.querySelector('#rekenaar .kgj-reken__knop');
     return { knop: knop && knop.textContent.trim(), onder: !!document.querySelector('#rekenaar form .kgj-reken__gerust') };
@@ -83,11 +95,35 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   await wacht(300);
   await page.screenshot({ path: `${UIT}/02-calculator-formulier.png` });
 
-  /* 4. Plat pad (terug naar vraag 1) */
-  for (let i = 0; i < 6; i++) { await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__terug')?.click()); await wacht(200); }
-  await klikKeuze('Plat dak'); await wacht(250);
-  const plat = await page.evaluate(() => [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')].map((b) => b.textContent.trim()).join(', '));
-  meld(plat === 'Bitumen, Roofing, EPDM, Weet ik nog niet' && (await tel()) === 'Vraag 2 van 6', 'plat: bitumen, roofing, EPDM', `${plat} / ${await tel()}`);
+  /* 4. Plat + renovatie, dak jonger dan 10 jaar (terug naar vraag 1) */
+  const naarBegin = async () => { for (let i = 0; i < 9; i++) { await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__terug')?.click()); await wacht(150); } };
+  await naarBegin();
+  for (const k of ['Plat dak', 'Renovatie', 'Jonger dan 10 jaar']) { await klikKeuze(k); await wacht(250); }
+  const plat = await keuzesNu();
+  meld((await vraag()) === 'Wat wilt u op uw plat dak?' && plat === 'Bitumen|Roofing|EPDM|Weet ik nog niet' && (await tel()) === 'Vraag 4 van 8',
+    'plat: bitumen, roofing, EPDM', `${await vraag()} / ${plat} / ${await tel()}`);
+  meld(!(await tip()), 'geen btw-melding bij een dak jonger dan 10 jaar');
+
+  /* 4b. Hellend + herstelling: wat ligt er NU, geen isolatievraag, 7 vragen */
+  await naarBegin();
+  const herstel = [];
+  for (const k of ['Hellend dak', 'Herstelling', 'Tussen 10 en 30 jaar']) { await klikKeuze(k); await wacht(250); }
+  herstel.push(await vraag());
+  const telHerstel = await tel();
+  for (const k of ['Gegolfde pannen', 'Kleiner dan 50 m²', 'Nee']) { await klikKeuze(k); await wacht(250); herstel.push(await vraag()); }
+  meld(herstel.join(' > ') === 'Welke dakbedekking ligt er nu? > Hoe groot is het dak? > Is er asbest aanwezig in het dak? > Wanneer wilt u beginnen?' && telHerstel === 'Vraag 4 van 7',
+    'herstelling: huidige bedekking, grootte, asbest, start (7 vragen)', `${herstel.join(' > ')} / ${telHerstel}`);
+
+  /* 4c. Isolatie: geen bedekking, geen isolatievraag, 6 vragen */
+  await naarBegin();
+  const isol = [];
+  for (const k of ['Hellend dak', 'Isolatie', 'Weet ik niet']) { await klikKeuze(k); await wacht(250); }
+  isol.push(await vraag());
+  const telIsol = await tel();
+  for (const k of ['Kleiner dan 50 m²', 'Nee']) { await klikKeuze(k); await wacht(250); isol.push(await vraag()); }
+  meld(isol.join(' > ') === 'Hoe groot is het dak? > Is er asbest aanwezig in het dak? > Wanneer wilt u beginnen?' && telIsol === 'Vraag 4 van 6',
+    'isolatie: grootte, asbest, start (6 vragen)', `${isol.join(' > ')} / ${telIsol}`);
+  await naarBegin();
 
   /* 5. Horizontaal scrollen en foto's */
   const breed = await page.evaluate(() => document.documentElement.scrollWidth);
@@ -107,9 +143,13 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   meld(balk, 'vaste balk zichtbaar midden op de pagina');
   await page.screenshot({ path: `${UIT}/03-werkwijze.png` });
 
-  /* 7. Venster: prijsknop opent de calculator op de plek zelf */
+  /* 6b. De knop in de balk heet "Gratis dakinspectie" (Mohammed 24 sep) */
+  const balkKnop = await page.evaluate(() => document.querySelector('.kgj-actiebalk .kgj-knop--vol')?.textContent.trim());
+  meld(balkKnop === 'Gratis dakinspectie', 'knop in de vaste balk = Gratis dakinspectie', balkKnop);
+
+  /* 7. Venster: de prijsknop op de pagina opent de calculator op de plek zelf */
   const yVoor = await page.evaluate(() => window.scrollY);
-  await page.evaluate(() => [...document.querySelectorAll('.kgj-actiebalk button')].find((b) => /Bereken/.test(b.textContent))?.click());
+  await page.evaluate(() => document.querySelector('.kgj-midknop button')?.click());
   await wacht(400);
   const venster = await page.evaluate(() => {
     const v = document.querySelector('.kgj-venster');
@@ -117,7 +157,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     const r = v.querySelector('.kgj-reken').getBoundingClientRect();
     return { vraag: v.querySelector('.kgj-reken__vraag').textContent.trim(), onder: Math.round(r.bottom), y: window.scrollY };
   });
-  meld(!!venster, 'prijsknop in de balk opent het venster');
+  meld(!!venster, 'prijsknop op de pagina opent het venster');
   if (venster) {
     meld(venster.y === yVoor, 'pagina blijft staan bij openen', `${yVoor} -> ${venster.y}`);
     meld(venster.onder <= 844, 'venster past op het scherm', `onderkant ${venster.onder} van 844`);
@@ -127,7 +167,15 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     meld(!(await page.$('.kgj-venster')), 'venster sluit met het kruisje');
   }
 
-  /* 8. Slotblok met inspectieformulier */
+  /* 8. De balkknop brengt de bezoeker naar het inspectieformulier */
+  await page.evaluate(() => window.scrollTo({ top: document.getElementById('werkwijze').offsetTop, behavior: 'instant' }));
+  await wacht(500);
+  await page.evaluate(() => document.querySelector('.kgj-actiebalk .kgj-knop--vol')?.click());
+  await wacht(1500);
+  const inBeeld = await page.evaluate(() => { const r = document.querySelector('.kgj-reken--inspectie').getBoundingClientRect(); return r.top < 844 && r.bottom > 0; });
+  meld(inBeeld, 'balkknop brengt u naar het inspectieformulier');
+
+  /* 8b. Slotblok met inspectieformulier */
   await page.evaluate(() => document.getElementById('contact').scrollIntoView());
   await wacht(800);
   const slot = await page.evaluate(() => ({

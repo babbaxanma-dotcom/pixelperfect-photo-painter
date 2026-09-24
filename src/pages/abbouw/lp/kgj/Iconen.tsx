@@ -13,7 +13,8 @@ export type IcoonNaam =
   | 'golfpan' | 'vlakkepan' | 'golfplaat' | 'bitumen' | 'roofing' | 'epdm'
   | 'maat1' | 'maat2' | 'maat3' | 'maat4'
   | 'isolatie' | 'geenisolatie' | 'asbest' | 'veilig' | 'twijfel'
-  | 'snel' | 'drie' | 'later' | 'verken';
+  | 'snel' | 'drie' | 'later' | 'verken'
+  | 'herstel' | 'nieuwdak' | 'jong' | 'midden' | 'oud';
 
 const Svg = ({ children }: { children: ReactNode }) => (
   <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth={2}
@@ -137,6 +138,41 @@ const ICONEN: Record<IcoonNaam, () => JSX.Element> = {
       <rect x="3.5" y="5" width="17" height="15.5" rx="2" />
       <path d="M3.5 10h17M8 3v4M16 3v4" />
       <path d="M8.5 15.3h6.5M13 13.3l2 2-2 2" />
+    </Svg>
+  ),
+  /* Herstelling: een steeksleutel. */
+  herstel: () => (
+    <Svg>
+      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z" />
+    </Svg>
+  ),
+  /* Renovatie: een huis met een volledig nieuw pannendak. */
+  nieuwdak: () => (
+    <Svg>
+      <path d="M2.5 11.5 12 4l9.5 7.5z" />
+      <path d="M8.3 8.4h7.4M5.8 10.4h12.4" strokeWidth={1.4} />
+      <path d="M5.5 11.5V20h13v-8.5" />
+      <path d="M10 20v-4.5h4V20" />
+    </Svg>
+  ),
+  /* Leeftijd van het dak: een jong plantje, een klok, een zandloper. */
+  jong: () => (
+    <Svg>
+      <path d="M12 21v-9" />
+      <path d="M12 12c0-4 2.5-6.5 7-6.5 0 4.5-2.8 6.5-7 6.5z" />
+      <path d="M12 14.5C12 11 10 9 5.5 9c0 3.8 2.3 5.5 6.5 5.5z" />
+    </Svg>
+  ),
+  midden: () => (
+    <Svg>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3.5 2" />
+    </Svg>
+  ),
+  oud: () => (
+    <Svg>
+      <path d="M6 3h12M6 21h12" />
+      <path d="M7.5 3v2.5c0 2.3 4.5 4.3 4.5 6.5s-4.5 4.2-4.5 6.5V21M16.5 3v2.5c0 2.3-4.5 4.3-4.5 6.5s4.5 4.2 4.5 6.5V21" />
     </Svg>
   ),
   /* Vergrootglas: ik verken nog. */

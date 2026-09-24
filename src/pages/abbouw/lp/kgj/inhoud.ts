@@ -39,8 +39,14 @@ import type { IcoonNaam } from './Iconen';
 /** foto: optioneel beeld boven het label; icoon: optioneel icoon links van het label.
     Het label zegt al wat er te zien is, dus geen alt-tekst. */
 export type Keuze = { label: string; uitleg?: string; foto?: string; icoon?: IcoonNaam };
-/** als: de vraag verschijnt alleen als een eerdere vraag dat antwoord kreeg. */
-export type Vraag = { sleutel: string; vraag: string; keuzes: Keuze[]; als?: { sleutel: string; waarde: string } };
+/** als: de vraag verschijnt alleen als elke genoemde eerdere vraag één van de
+    opgesomde antwoorden kreeg ({ Dak: ['Hellend dak'], Werk: ['Renovatie'] }).
+    tip: na een van de antwoorden in `bij` staat `tekst` klein onder de volgende vraag. */
+export type Vraag = {
+  sleutel: string; vraag: string; keuzes: Keuze[];
+  als?: Record<string, string[]>;
+  tip?: { bij: string[]; tekst: string };
+};
 export type Foto = { src: string; alt: string };
 export type Review = { tekst: string; naam: string; bron: string };
 
@@ -72,7 +78,9 @@ export type KgjInhoud = {
 
 export const DAKWERKEN: KgjInhoud = {
   titel: 'Dakwerken: reken vooraf uit wat uw dak kost | AB Bouw Groep',
-  omschrijving: 'Klik zes antwoorden aan en hoor binnen één werkdag wat uw dak kost. Gratis plaatsbezoek en offerte, werken aan 6% btw.',
+  /* 24 sep: "zes antwoorden" klopt niet meer (6 tot 8 vragen per pad) en
+     "binnen één werkdag" is als belofte van de pagina gehaald. */
+  omschrijving: 'Bereken in 2 minuten de prijs van uw dak. Gratis dakinspectie en offerte, werken aan 6% btw.',
   divisie: 'ab_dakwerken',
   bronLead: 'lp:dakwerken:rekenaar',
   bedanktSlug: 'dakwerken',
@@ -128,20 +136,46 @@ export const DAKWERKEN: KgjInhoud = {
         { label: 'Hellend dak', foto: keuzeHellend },
         { label: 'Plat dak', foto: keuzePlat },
       ] },
-      { sleutel: 'Bedekking', vraag: 'Welke dakbedekking wenst u?', als: { sleutel: 'Dak', waarde: 'Hellend dak' }, keuzes: [
+      /* Mohammed, 24 sep: "na vraag 1 moet er eerst zijn: herstelling,
+         renovatie, isolatie, en dan pas de rest". Elk antwoord heeft een eigen
+         vervolg: bij herstelling vragen we wat er NU op het dak ligt, bij
+         isolatie vervalt de bedekking en de vraag of er isolatie nodig is. */
+      { sleutel: 'Werk', vraag: 'Wat moet er aan uw dak gebeuren?', keuzes: [
+        { label: 'Herstelling', icoon: 'herstel' }, { label: 'Renovatie', icoon: 'nieuwdak' },
+        { label: 'Isolatie', icoon: 'isolatie' },
+      ] },
+      /* Mohammed, 24 sep: "doe ook vraag hoe oud is uw dak", met na het antwoord
+         de btw-melding klein in het formulier, "zodat ze verder gaan met de
+         vragen". Een dak ouder dan tien jaar ligt op een woning ouder dan tien
+         jaar, en dat is de voorwaarde voor 6% btw bij renovatie. De melding zegt
+         "15% minder btw" (21% wordt 6%); "15% op uw totale factuur" klopt niet:
+         op €10.000 werk is het verschil €1.500, 12,4% van de factuur. */
+      { sleutel: 'Leeftijd', vraag: 'Hoe oud is uw dak?', keuzes: [
+        { label: 'Jonger dan 10 jaar', icoon: 'jong' }, { label: 'Tussen 10 en 30 jaar', icoon: 'midden' },
+        { label: 'Ouder dan 30 jaar', icoon: 'oud' }, { label: 'Weet ik niet', icoon: 'twijfel' },
+      ], tip: { bij: ['Tussen 10 en 30 jaar', 'Ouder dan 30 jaar'], tekst: 'Dankzij de wettelijke 6% btw-regeling betaalt u 15% minder btw op uw factuur.' } },
+      { sleutel: 'Bedekking', vraag: 'Welke dakbedekking wenst u?', als: { Dak: ['Hellend dak'], Werk: ['Renovatie'] }, keuzes: [
         { label: 'Gegolfde pannen', icoon: 'golfpan' }, { label: 'Vlakke pannen of leien', icoon: 'vlakkepan' },
         { label: 'Golfplaten', icoon: 'golfplaat' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
       ] },
-      { sleutel: 'Bedekking', vraag: 'Wat wilt u op uw plat dak?', als: { sleutel: 'Dak', waarde: 'Plat dak' }, keuzes: [
+      { sleutel: 'Bedekking', vraag: 'Wat wilt u op uw plat dak?', als: { Dak: ['Plat dak'], Werk: ['Renovatie'] }, keuzes: [
         { label: 'Bitumen', icoon: 'bitumen' }, { label: 'Roofing', icoon: 'roofing' },
         { label: 'EPDM', icoon: 'epdm' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
+      ] },
+      { sleutel: 'Bedekking', vraag: 'Welke dakbedekking ligt er nu?', als: { Dak: ['Hellend dak'], Werk: ['Herstelling'] }, keuzes: [
+        { label: 'Gegolfde pannen', icoon: 'golfpan' }, { label: 'Vlakke pannen of leien', icoon: 'vlakkepan' },
+        { label: 'Golfplaten', icoon: 'golfplaat' }, { label: 'Weet ik niet', icoon: 'twijfel' },
+      ] },
+      { sleutel: 'Bedekking', vraag: 'Wat ligt er nu op uw plat dak?', als: { Dak: ['Plat dak'], Werk: ['Herstelling'] }, keuzes: [
+        { label: 'Bitumen', icoon: 'bitumen' }, { label: 'Roofing', icoon: 'roofing' },
+        { label: 'EPDM', icoon: 'epdm' }, { label: 'Weet ik niet', icoon: 'twijfel' },
       ] },
       { sleutel: 'Grootte', vraag: 'Hoe groot is het dak?', keuzes: [
         { label: 'Kleiner dan 50 m²', icoon: 'maat1' }, { label: '50 tot 100 m²', icoon: 'maat2' },
         { label: '100 tot 150 m²', icoon: 'maat3' }, { label: 'Groter dan 150 m²', icoon: 'maat4' },
         { label: 'Weet ik niet', icoon: 'twijfel' },
       ] },
-      { sleutel: 'Isolatie', vraag: 'Is er isolatie nodig?', keuzes: [
+      { sleutel: 'Isolatie', vraag: 'Is er isolatie nodig?', als: { Werk: ['Renovatie'] }, keuzes: [
         { label: 'Ja', uitleg: 'ik wil isolatie laten plaatsen', icoon: 'isolatie' },
         { label: 'Nee', uitleg: 'enkel dakwerken', icoon: 'geenisolatie' },
       ] },
@@ -254,7 +288,7 @@ export const DAKWERKEN: KgjInhoud = {
     kop: 'Plan uw dakinspectie',
     knop: 'Vraag uw gratis dakinspectie aan',
     onder: 'Wij bellen u binnen één werkdag om een moment af te spreken.',
-    alt: 'Liever eerst een prijs? Bereken hem in zes vragen',
+    alt: 'Liever eerst een prijs? Bereken hem in 2 minuten',
     bronLead: 'lp:dakwerken:inspectie',
   },
 };

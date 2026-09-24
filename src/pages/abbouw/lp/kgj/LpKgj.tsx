@@ -395,7 +395,13 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       </section>
 
       <div className={`kgj-actiebalk${balk ? ' is-aan' : ''}`}>
-        <button type="button" className="kgj-knop kgj-knop--vol" onClick={() => setVenster(true)}>Bereken uw prijs</button>
+        {/* Mohammed, 24 sep: "de cta bij het scrollen onderaan moet zijn: gratis
+            dakinspectie". De knop brengt de bezoeker naar het inspectieformulier;
+            de calculator blijft bereikbaar via de knoppen op de pagina zelf. */}
+        <button type="button" className="kgj-knop kgj-knop--vol"
+          onClick={() => document.querySelector('.kgj-reken--inspectie')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}>
+          Gratis dakinspectie
+        </button>
         <a className="kgj-knop kgj-knop--rand" href={CONTACT.phone.href}
           aria-label={'Bel ' + CONTACT.phone.display}><IcBel /></a>
       </div>

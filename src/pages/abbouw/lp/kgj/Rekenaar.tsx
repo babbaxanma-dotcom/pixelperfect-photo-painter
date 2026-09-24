@@ -1,11 +1,11 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calculator, Clock, Home, ShieldCheck } from 'lucide-react';
+import { BadgePercent, Calculator, Clock, Home, ShieldCheck } from 'lucide-react';
 import { Icoon } from './Iconen';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
 import { CONTACT } from '@/data/contact';
-import type { KgjInhoud } from './inhoud';
+import type { KgjInhoud, Vraag } from './inhoud';
 
 /**
  * De prijscalculator als eerste handeling van de pagina.
@@ -26,6 +26,22 @@ import type { KgjInhoud } from './inhoud';
  * De lead gaat via submitLead, dezelfde weg als de bestaande calculator:
  * GHL-webhook en Web3Forms-backup tegelijk, conversie alleen bij bezorging.
  */
+/** Past de vraag bij de antwoorden tot nu toe? Een open voorwaarde telt als nee. */
+function past(v: Vraag, a: Record<string, string>) {
+  return !v.als || Object.entries(v.als).every(([k, waarden]) => waarden.includes(a[k]));
+}
+
+/** Aantal vragen op het langste pad dat met deze antwoorden nog kan. */
+function langstePad(alle: Vraag[], antwoorden: Record<string, string>) {
+  const sleutels = [...new Set(alle.flatMap((v) => Object.keys(v.als ?? {})))].filter((k) => !antwoorden[k]);
+  let mogelijk: Record<string, string>[] = [{ ...antwoorden }];
+  for (const k of sleutels) {
+    const opties = alle.find((v) => v.sleutel === k && !v.als)?.keuzes.map((c) => c.label) ?? [];
+    mogelijk = mogelijk.flatMap((m) => opties.map((o) => ({ ...m, [k]: o })));
+  }
+  return Math.max(...mogelijk.map((m) => alle.filter((v) => past(v, m)).length));
+}
+
 export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'hero' | 'onder' | 'venster' }) {
   const ALLE = inhoud.rekenaar.vragen;
   const navigate = useNavigate();
@@ -35,13 +51,14 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
   const [fout, setFout] = useState<string | null>(null);
   const gestart = useRef(false);
 
-  /* Vragen met een voorwaarde (als) tellen pas mee als het antwoord waarop ze
-     wachten gegeven is: na 'Hellend dak' komt de vraag naar pannen of leien,
-     na 'Plat dak' die naar bitumen of EPDM. Elk pad heeft precies één
-     vervolgvraag, dus het totaal staat vast vanaf de eerste vraag. */
-  const VRAGEN = ALLE.filter((v) => !v.als || antwoorden[v.als.sleutel] === v.als.waarde);
-  const AANTAL = ALLE.filter((v) => !v.als).length
-    + new Set(ALLE.filter((v) => v.als).map((v) => v.als!.sleutel)).size;
+  /* Vragen met een voorwaarde (als) verschijnen pas als de antwoorden waarop ze
+     wachten gegeven zijn: de bedekking hangt af van het soort dak én van het
+     werk, de vraag naar isolatie komt alleen bij een renovatie. */
+  const VRAGEN = ALLE.filter((v) => past(v, antwoorden));
+  /* De teller rekent met het langste pad zolang een vraag waarvan het vervolg
+     afhangt nog open staat, zodat het totaal nooit oploopt; daarna met het
+     echte pad (renovatie 8, herstelling 7, isolatie 6). */
+  const AANTAL = langstePad(ALLE, antwoorden);
 
   const klaar = stap >= VRAGEN.length;
   const totaal = AANTAL + 1;
@@ -70,7 +87,7 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
        iets doorlaat wat de achterkant weigert, laat de bezoeker denken dat hij
        verstuurd heeft terwijl er niets aankomt. */
     const cijfers = telefoon.replace(/\D/g, '').length;
-    if (!telefoon) { setFout('Vul uw telefoonnummer in. Wij bellen u met de prijs.'); return; }
+    if (!telefoon) { setFout('Vul uw telefoonnummer in om uw prijs te ontvangen.'); return; }
     if (cijfers < 8) { setFout('Dat telefoonnummer lijkt niet volledig. Controleer het even.'); return; }
     setFout(null);
     setBezig(true);
@@ -91,6 +108,10 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
   };
 
   const vraag = VRAGEN[stap];
+  /* Na bepaalde antwoorden verschijnt onder de volgende vraag een korte melding
+     (de 6% btw na "Hoe oud is uw dak?"), alleen op die ene stap. */
+  const vorige = stap > 0 ? VRAGEN[stap - 1] : undefined;
+  const tip = vorige?.tip && vorige.tip.bij.includes(antwoorden[vorige.sleutel]) ? vorige.tip.tekst : null;
 
   return (
     <div className={`kgj-reken kgj-reken--${plek}`}>
@@ -132,6 +153,7 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
               </button>
             ))}
           </div>
+          {tip && <p className="kgj-reken__tip"><BadgePercent aria-hidden="true" />{tip}</p>}
           {/* Niet bij vraag 1: wat er aan het dak moet gebeuren, weet de bezoeker
               zelf (Mohammed: 'hoe kan iemand niet weten wat hij wilt'). */}
           {stap > 0 && <p className="kgj-reken__gerust">{inhoud.rekenaar.gerust}</p>}

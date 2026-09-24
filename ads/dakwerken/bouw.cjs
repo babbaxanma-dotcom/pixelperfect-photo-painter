@@ -54,7 +54,7 @@ const GROEPEN = {
       'Kostprijs nieuw dak',
     ],
     beschrijvingen: [
-      'Nieuw dak nodig? In 2 minuten vraagt u uw prijs aan. Wij bellen u terug, vrijblijvend.',
+      'Nieuw dak nodig? Bereken in 2 minuten uw dakprijs. Gratis en vrijblijvend.',
       'Gratis dakinspectie ter plaatse. Daarna krijgt u een vrijblijvende offerte.',
       'Tien jaar garantie op dakrenovatie. Volledig verzekerd en VCA-gecertificeerd.',
       'Woning ouder dan tien jaar? 6% btw. En volledige Mijn VerbouwPremie-begeleiding.',
@@ -89,7 +89,7 @@ const GROEPEN = {
       'Plat dak laten vervangen',
     ],
     beschrijvingen: [
-      'Wat kost een nieuw plat dak? Zes vragen, 2 minuten, en wij bellen u met de prijs.',
+      'Wat kost een nieuw plat dak? Bereken het op onze website in 2 minuten.',
       'Gratis dakinspectie: we bekijken uw plat dak ter plaatse en overlopen de bevindingen.',
       'Wij geven tien jaar garantie op dakrenovatie en zijn volledig verzekerd.',
       '6% btw voor een woning ouder dan tien jaar, met Mijn VerbouwPremie-begeleiding.',
@@ -100,9 +100,11 @@ const GROEPEN = {
 /* ---------- Componenten op campagneniveau ---------- */
 const SITELINKS = [
   { tekst: 'Gratis dakinspectie', r1: 'Wij bekijken uw dak ter plaatse', r2: 'Daarna een vrijblijvende offerte', url: URL + '#contact' },
-  { tekst: 'Prijs in zes vragen', r1: 'Vul zes korte vragen in', r2: 'Wij bellen u met de prijs', url: URL + '#rekenaar' },
+  /* 24 sep: de calculator heeft 6 tot 8 vragen per pad, "zes vragen" klopt niet meer;
+     de kop van de calculator heet nu "Bereken uw dakprijs / Klaar in 2 minuten". */
+  { tekst: 'Bereken uw dakprijs', r1: 'Klaar in 2 minuten', r2: 'Gratis en vrijblijvend', url: URL + '#rekenaar' },
   { tekst: 'Waarom AB Bouw Groep', r1: 'Tien jaar garantie op dakwerk', r2: 'Volledige premiebegeleiding', url: URL + '#waarom' },
-  { tekst: 'Zo verloopt uw dakwerk', r1: 'Van aanvraag tot nazorg', r2: 'In vijf duidelijke stappen', url: URL + '#werkwijze' },
+  { tekst: 'Zo verloopt uw dakwerk', r1: 'In vijf duidelijke stappen', r2: 'U weet vooraf wat er gebeurt', url: URL + '#werkwijze' },
 ];
 const HIGHLIGHTS = ['Gratis dakinspectie', 'Tien jaar garantie', 'Premiebegeleiding', 'Ruim 15 jaar ervaring', 'VCA-gecertificeerd', 'Volledig verzekerd', 'Vrijblijvende offerte'];
 const SNIPPET = { kop: 'Typen', waarden: ['Pannendak', 'Leien dak', 'Plat dak', 'EPDM', 'Roofing', 'Bitumen'] };

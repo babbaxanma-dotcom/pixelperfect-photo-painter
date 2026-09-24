@@ -105,9 +105,21 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-reken__logo svg { width: 24px; height: 24px; }
 .kgjx .kgj-reken__titel { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 800; font-size: 21px;
   line-height: 1.15; letter-spacing: -.02em; color: var(--kop); margin: 0; }
+/* Tekst in navy: oranje op wit haalde 3,76:1, AA eist 4,5:1 (check-contrast, 24 sep).
+   Het klokje mag oranje blijven, een icoon heeft 3:1 nodig. */
 .kgjx .kgj-reken__tijd { display: flex; align-items: center; gap: 6px; margin: 3px 0 0;
-  font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 13.5px; font-weight: 600; color: var(--accent-diep); }
-.kgjx .kgj-reken__tijd svg { width: 15px; height: 15px; }
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 13.5px; font-weight: 600; color: var(--merk); }
+.kgjx .kgj-reken__tijd svg { width: 15px; height: 15px; color: var(--accent-diep); }
+
+/* ── melding na een antwoord (de 6% btw na "Hoe oud is uw dak?") ──
+   Klein, onder de keuzes, in een rustig groen vlak: goed nieuws dat de
+   bezoeker verder laat klikken, zoals grote formulierbouwers dat doen. */
+.kgjx .kgj-reken__tip { display: flex; align-items: flex-start; gap: 9px; margin: 12px 0 0; padding: 10px 12px;
+  border-radius: var(--r); background: #edf7ef; border: 1px solid #cfe9d5; color: #1d5632;
+  font-family: Lato, system-ui, sans-serif; font-size: 14px; line-height: 1.4; animation: kgj-tip-in .35s ease both; }
+.kgjx .kgj-reken__tip svg { flex: none; width: 18px; height: 18px; margin-top: 1px; color: #23703f; }
+@keyframes kgj-tip-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .kgjx .kgj-reken__tip { animation: none; } }
 
 /* ── iconen bij de antwoorden ──
    Mohammed, 24 sep: "maak super mooie en duidelijke iconen en voeg iconen toe
@@ -133,7 +145,7 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-reken__weg .kgj-reken__balk { flex: 1; margin: 0; height: 6px; border-radius: 3px; }
 .kgjx .kgj-reken__begin { flex: none; width: 20px; height: 20px; color: var(--merk); }
 .kgjx .kgj-reken__eind { flex: none; display: inline-grid; place-items: center; width: 26px; height: 26px;
-  border-radius: 999px; border: 1.5px solid var(--accent); background: var(--accent-licht); color: var(--accent-diep);
+  border-radius: 999px; border: 1.5px solid var(--accent); background: var(--accent-licht); color: var(--merk);
   font: 700 13px/1 "Plus Jakarta Sans", system-ui, sans-serif;
   transition: background .2s ease, border-color .2s ease, color .2s ease; }
 .kgjx .kgj-reken__eind.is-aan { background: var(--accent); border-color: var(--accent); color: var(--merk-diep); }
