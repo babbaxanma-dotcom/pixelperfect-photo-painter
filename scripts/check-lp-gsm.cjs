@@ -76,8 +76,9 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     'vraag 2 = herstelling, renovatie, isolatie', `${await vraag()} / ${await keuzesNu()} / ${await tel()}`);
   await klikKeuze('Renovatie'); await wacht(250);
   meld((await vraag()) === 'Hoe oud is uw dak?' && (await tel()) === 'Vraag 3 van 8', 'vraag 3 = hoe oud is uw dak', `${await vraag()} / ${await tel()}`);
+  meld((await keuzesNu()) === 'Jonger dan 10 jaar|Ouder dan 10 jaar', 'leeftijd: alleen jonger of ouder dan 10 jaar', await keuzesNu());
   meld(!(await tip()), 'nog geen btw-melding vóór het antwoord');
-  await klikKeuze('Ouder dan 30 jaar'); await wacht(250);
+  await klikKeuze('Ouder dan 10 jaar'); await wacht(250);
   meld((await vraag()) === 'Welke dakbedekking wenst u?', 'renovatie: dakbedekking die u wenst', await vraag());
   meld((await tip()).includes('6% btw'), 'btw-melding na een dak ouder dan 10 jaar', await tip());
   const volgorde = [];
@@ -107,7 +108,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   /* 4b. Hellend + herstelling: wat ligt er NU, geen isolatievraag, 7 vragen */
   await naarBegin();
   const herstel = [];
-  for (const k of ['Hellend dak', 'Herstelling', 'Tussen 10 en 30 jaar']) { await klikKeuze(k); await wacht(250); }
+  for (const k of ['Hellend dak', 'Herstelling', 'Ouder dan 10 jaar']) { await klikKeuze(k); await wacht(250); }
   herstel.push(await vraag());
   const telHerstel = await tel();
   for (const k of ['Gegolfde pannen', 'Kleiner dan 50 m²', 'Nee']) { await klikKeuze(k); await wacht(250); herstel.push(await vraag()); }
@@ -117,7 +118,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   /* 4c. Isolatie: geen bedekking, geen isolatievraag, 6 vragen */
   await naarBegin();
   const isol = [];
-  for (const k of ['Hellend dak', 'Isolatie', 'Weet ik niet']) { await klikKeuze(k); await wacht(250); }
+  for (const k of ['Hellend dak', 'Isolatie', 'Jonger dan 10 jaar']) { await klikKeuze(k); await wacht(250); }
   isol.push(await vraag());
   const telIsol = await tel();
   for (const k of ['Kleiner dan 50 m²', 'Nee']) { await klikKeuze(k); await wacht(250); isol.push(await vraag()); }

@@ -150,10 +150,11 @@ export const DAKWERKEN: KgjInhoud = {
          jaar, en dat is de voorwaarde voor 6% btw bij renovatie. De melding zegt
          "15% minder btw" (21% wordt 6%); "15% op uw totale factuur" klopt niet:
          op €10.000 werk is het verschil €1.500, 12,4% van de factuur. */
+      /* Twee keuzes (Mohammed, 24 sep: "jonger dan 10 jaar en ouder dan 10
+         jaar, meer moeten we niet weten"): de grens is die van de 6% btw. */
       { sleutel: 'Leeftijd', vraag: 'Hoe oud is uw dak?', keuzes: [
-        { label: 'Jonger dan 10 jaar', icoon: 'jong' }, { label: 'Tussen 10 en 30 jaar', icoon: 'midden' },
-        { label: 'Ouder dan 30 jaar', icoon: 'oud' }, { label: 'Weet ik niet', icoon: 'twijfel' },
-      ], tip: { bij: ['Tussen 10 en 30 jaar', 'Ouder dan 30 jaar'], tekst: 'Dankzij de wettelijke 6% btw-regeling betaalt u 15% minder btw op uw factuur.' } },
+        { label: 'Jonger dan 10 jaar', icoon: 'jong' }, { label: 'Ouder dan 10 jaar', icoon: 'oud' },
+      ], tip: { bij: ['Ouder dan 10 jaar'], tekst: 'Dankzij de wettelijke 6% btw-regeling betaalt u 15% minder btw op uw factuur.' } },
       { sleutel: 'Bedekking', vraag: 'Welke dakbedekking wenst u?', als: { Dak: ['Hellend dak'], Werk: ['Renovatie'] }, keuzes: [
         { label: 'Gegolfde pannen', icoon: 'golfpan' }, { label: 'Vlakke pannen of leien', icoon: 'vlakkepan' },
         { label: 'Golfplaten', icoon: 'golfplaat' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
