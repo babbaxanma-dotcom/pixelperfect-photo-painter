@@ -99,8 +99,36 @@ export const KGJ_EXTRA = `
    Airadvisor als referentie. De titel zegt wat de kaart doet en hoe lang het
    duurt; de balk loopt van een huisje naar het eurosymbool, dat oplicht bij de
    laatste stap. Onderaan de kaart de geruststelling, op elke stap. */
-.kgjx .kgj-reken__titel { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 800; font-size: 20px;
-  line-height: 1.2; letter-spacing: -.015em; color: var(--kop); margin: 0 0 14px; }
+.kgj-reken__hoofd { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; }
+.kgjx .kgj-reken__logo { flex: none; display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 12px; background: var(--merk); color: var(--accent); }
+.kgjx .kgj-reken__logo svg { width: 24px; height: 24px; }
+.kgjx .kgj-reken__titel { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 800; font-size: 21px;
+  line-height: 1.15; letter-spacing: -.02em; color: var(--kop); margin: 0; }
+.kgjx .kgj-reken__tijd { display: flex; align-items: center; gap: 6px; margin: 3px 0 0;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 13.5px; font-weight: 600; color: var(--accent-diep); }
+.kgjx .kgj-reken__tijd svg { width: 15px; height: 15px; }
+
+/* ── iconen bij de antwoorden ──
+   Mohammed, 24 sep: "maak super mooie en duidelijke iconen en voeg iconen toe
+   in de vragen". Icoon links in een zacht vlak, label ernaast: de knop blijft
+   even hoog als zonder icoon, dus vraag 3 met vijf antwoorden past nog. */
+.kgjx .kgj-reken__keuze--icoon { flex-direction: row; align-items: center; gap: 10px; padding-left: 12px; }
+.kgjx .kgj-reken__icoon { flex: none; display: grid; place-items: center; width: 36px; height: 36px;
+  border-radius: 10px; background: var(--accent-licht); color: var(--accent-diep);
+  transition: background .15s ease, color .15s ease; }
+.kgjx .kgj-reken__icoon svg { width: 22px; height: 22px; }
+.kgjx .kgj-reken__keuze.is-aan .kgj-reken__icoon,
+.kgjx .kgj-reken__keuze:hover .kgj-reken__icoon { background: var(--accent); color: var(--merk-diep); }
+.kgjx .kgj-reken__keuze .kgj-reken__tekst { display: flex; flex-direction: column; gap: 3px; min-width: 0;
+  font: inherit; color: inherit; }
+.kgjx .kgj-reken__keuze.is-aan .kgj-reken__tekst { color: inherit; }
+/* Op een telefoon staan antwoorden met een icoon onder elkaar: in twee smalle
+   kolommen brak "Vlakke pannen of leien" over drie regels. */
+@media (max-width: 560px) {
+  .kgj-reken__keuzes:has(.kgj-reken__keuze--icoon) { grid-template-columns: 1fr; gap: 8px; }
+  .kgjx .kgj-reken__keuze--icoon { min-height: 54px; }
+}
 .kgj-reken__weg { display: flex; align-items: center; gap: 10px; }
 .kgjx .kgj-reken__weg .kgj-reken__balk { flex: 1; margin: 0; height: 6px; border-radius: 3px; }
 .kgjx .kgj-reken__begin { flex: none; width: 20px; height: 20px; color: var(--merk); }
@@ -171,7 +199,7 @@ export const KGJ_EXTRA = `
   .kgjx .kgj-hero__ondertitel { font-size: 18px; margin-top: 10px; }
   .kgjx .kgj-reken { padding: 20px 18px 18px; }
   .kgjx .kgj-reken__vraag { font-size: 17px; }
-  .kgjx .kgj-reken__titel { font-size: 19px; }
+  .kgjx .kgj-reken__titel { font-size: 20px; }
   .kgjx .kgj-kop--lp .kgj-kop__bel { display: inline-flex; height: 44px; padding: 0 16px; font-size: 14px; }
   .kgjx .kgj-kop--lp .kgj-kop__bel span { display: none; }
   .kgjx .kgj-hero--lp .kgj-hero__bediening, .kgjx .kgj-hero--lp .kgj-hero__streep { display: none; }

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, ShieldCheck } from 'lucide-react';
+import { Calculator, Clock, Home, ShieldCheck } from 'lucide-react';
+import { Icoon } from './Iconen';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
 import { CONTACT } from '@/data/contact';
@@ -93,7 +94,13 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
 
   return (
     <div className={`kgj-reken kgj-reken--${plek}`}>
-      <p className="kgj-reken__titel">{inhoud.rekenaar.titel}</p>
+      <div className="kgj-reken__hoofd">
+        <span className="kgj-reken__logo" aria-hidden="true"><Calculator /></span>
+        <div>
+          <p className="kgj-reken__titel">{inhoud.rekenaar.titel}</p>
+          <p className="kgj-reken__tijd"><Clock aria-hidden="true" />{inhoud.rekenaar.tijd}</p>
+        </div>
+      </div>
       {/* De balk loopt van het huis naar de prijs: wat je aan het einde krijgt,
           staat er vanaf de eerste vraag (zoals bij Airadvisor het bedrag). */}
       <div className="kgj-reken__weg" aria-hidden="true">
@@ -114,11 +121,14 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
           <div className={`kgj-reken__keuzes${vraag.keuzes.length % 2 === 1 ? ' kgj-reken__keuzes--oneven' : ''}`}>
             {vraag.keuzes.map((k) => (
               <button type="button" key={k.label}
-                className={`kgj-reken__keuze${antwoorden[vraag.sleutel] === k.label ? ' is-aan' : ''}`}
+                className={`kgj-reken__keuze${k.icoon ? ' kgj-reken__keuze--icoon' : ''}${antwoorden[vraag.sleutel] === k.label ? ' is-aan' : ''}`}
                 onClick={() => kies(vraag.sleutel, k.label)}>
                 {k.foto && <img className="kgj-reken__foto" src={k.foto} alt="" width={640} height={360} decoding="async" />}
-                <strong>{k.label}</strong>
-                {k.uitleg && <span>{k.uitleg}</span>}
+                {k.icoon && <i className="kgj-reken__icoon"><Icoon naam={k.icoon} /></i>}
+                <span className="kgj-reken__tekst">
+                  <strong>{k.label}</strong>
+                  {k.uitleg && <span>{k.uitleg}</span>}
+                </span>
               </button>
             ))}
           </div>
@@ -130,8 +140,10 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
         <form className="kgj-reken__stap kgj-reken__form" onSubmit={verstuur} noValidate>
           <p className="kgj-reken__vraag">{inhoud.rekenaar.uitkomstKop}</p>
           <label>Telefoon *
+            {/* Geen autoFocus: op een telefoon sprong het toetsenbord dan meteen open
+                over de vraag heen (Mohammed, 24 sep: "oude mensen gaan vastraken"). */}
             <input name="telefoon" type="tel" autoComplete="tel" inputMode="tel" placeholder="04xx xx xx xx"
-              aria-required="true" autoFocus />
+              aria-required="true" />
           </label>
           <div className="kgj-reken__rij">
             <label>Naam<input name="naam" type="text" autoComplete="name" placeholder="Uw naam" /></label>

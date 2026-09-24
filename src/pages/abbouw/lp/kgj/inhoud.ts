@@ -34,8 +34,11 @@ import dakNa from '@/assets/lp-diensten/dak-na.jpg';
 import keuzeHellend from '@/assets/dak/keuze-hellend.jpg';
 import keuzePlat from '@/assets/dak/keuze-plat.jpg';
 
-/** foto: optioneel beeld boven het label; het label zegt al wat erop staat, dus geen alt-tekst. */
-export type Keuze = { label: string; uitleg?: string; foto?: string };
+import type { IcoonNaam } from './Iconen';
+
+/** foto: optioneel beeld boven het label; icoon: optioneel icoon links van het label.
+    Het label zegt al wat er te zien is, dus geen alt-tekst. */
+export type Keuze = { label: string; uitleg?: string; foto?: string; icoon?: IcoonNaam };
 /** als: de vraag verschijnt alleen als een eerdere vraag dat antwoord kreeg. */
 export type Vraag = { sleutel: string; vraag: string; keuzes: Keuze[]; als?: { sleutel: string; waarde: string } };
 export type Foto = { src: string; alt: string };
@@ -51,8 +54,8 @@ export type KgjInhoud = {
   bedanktSlug: string;
   /** ondertitel: eigen regel direct onder de kop, boven de subkop. */
   hero: { kop: string; ondertitel?: string; onder: string; bewijs: string[]; dias: Foto[] };
-  /** titel: naam van de calculator boven de voortgang; zeker: de regel onderaan de kaart. */
-  rekenaar: { titel: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string };
+  /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart. */
+  rekenaar: { titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string };
   waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto] };
   voorna: { kop: string; onder: string; voor: Foto; na: Foto; label: string };
   /* Foto's van uitgevoerd werk. Dit staat op de plek waar de demo reviews
@@ -79,9 +82,11 @@ export const DAKWERKEN: KgjInhoud = {
        berekening is toch ernaast dat hoef je niet te verwoorden'. De kop gaat
        over het resultaat aan zijn huis. */
     kop: 'Dé specialist voor uw dakwerk',
-    /* De calculator toont geen bedrag: AB belt met de prijs. "u weet direct wat
-       het kost" beloofde een getal op het scherm (24 sep vervangen). */
-    onder: 'Duid aan wat voor dak u heeft en wij bellen u met de prijs.',
+    /* Mohammeds eigen zin, letterlijk (24 sep): "doe daar gewoon subheadline
+       van de specialisatie". De vorige subkop ("u weet direct wat het kost",
+       daarna "wij bellen u met de prijs") ging over de calculator, die ernaast
+       staat en zichzelf uitlegt. */
+    onder: 'De specialist voor daken in Regio Antwerpen en omstreken. Wij zorgen voor perfect afgewerkte dakrenovaties, herstellingen en isolaties.',
     /* Drie controleerbare feiten onder de kop. Een bezoeker die uit een
        advertentie komt, kent AB niet; dit is het enige bewijs dat boven de
        vouw past zolang er geen geverifieerde Google-score is.
@@ -113,30 +118,39 @@ export const DAKWERKEN: KgjInhoud = {
        daar de prijs kunnen berekenen in 2 minuten"; referentie Airadvisor:
        de uitkomst zichtbaar aan het einde van de balk, een geruststelling
        bij de knop). */
-    titel: 'Bereken uw dakprijs in 2 minuten',
+    titel: 'Bereken uw dakprijs',
+    tijd: 'Klaar in 2 minuten',
     zeker: 'Gratis en vrijblijvend',
     vragen: [
+      /* Geen hellingshoek meer onder hellend en plat (Mohammed, 24 sep: "mensen
+         weten wat een hellend dak is en plat dak"); de foto zegt het al. */
       { sleutel: 'Dak', vraag: 'Welk soort dak heeft u?', keuzes: [
-        { label: 'Hellend dak', uitleg: 'hellingshoek groter dan 15°', foto: keuzeHellend },
-        { label: 'Plat dak', uitleg: 'hellingshoek kleiner dan 15°', foto: keuzePlat },
+        { label: 'Hellend dak', foto: keuzeHellend },
+        { label: 'Plat dak', foto: keuzePlat },
       ] },
       { sleutel: 'Bedekking', vraag: 'Welke dakbedekking wenst u?', als: { sleutel: 'Dak', waarde: 'Hellend dak' }, keuzes: [
-        { label: 'Gegolfde pannen' }, { label: 'Vlakke pannen of leien' }, { label: 'Golfplaten' }, { label: 'Weet ik nog niet' },
+        { label: 'Gegolfde pannen', icoon: 'golfpan' }, { label: 'Vlakke pannen of leien', icoon: 'vlakkepan' },
+        { label: 'Golfplaten', icoon: 'golfplaat' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
       ] },
       { sleutel: 'Bedekking', vraag: 'Wat wilt u op uw plat dak?', als: { sleutel: 'Dak', waarde: 'Plat dak' }, keuzes: [
-        { label: 'Bitumen' }, { label: 'Roofing' }, { label: 'EPDM' }, { label: 'Weet ik nog niet' },
+        { label: 'Bitumen', icoon: 'bitumen' }, { label: 'Roofing', icoon: 'roofing' },
+        { label: 'EPDM', icoon: 'epdm' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
       ] },
       { sleutel: 'Grootte', vraag: 'Hoe groot is het dak?', keuzes: [
-        { label: 'Kleiner dan 50 m²' }, { label: '50 tot 100 m²' }, { label: '100 tot 150 m²' }, { label: 'Groter dan 150 m²' }, { label: 'Weet ik niet' },
+        { label: 'Kleiner dan 50 m²', icoon: 'maat1' }, { label: '50 tot 100 m²', icoon: 'maat2' },
+        { label: '100 tot 150 m²', icoon: 'maat3' }, { label: 'Groter dan 150 m²', icoon: 'maat4' },
+        { label: 'Weet ik niet', icoon: 'twijfel' },
       ] },
       { sleutel: 'Isolatie', vraag: 'Is er isolatie nodig?', keuzes: [
-        { label: 'Ja', uitleg: 'ik wil isolatie laten plaatsen' }, { label: 'Nee', uitleg: 'enkel dakwerken' },
+        { label: 'Ja', uitleg: 'ik wil isolatie laten plaatsen', icoon: 'isolatie' },
+        { label: 'Nee', uitleg: 'enkel dakwerken', icoon: 'geenisolatie' },
       ] },
       { sleutel: 'Asbest', vraag: 'Is er asbest aanwezig in het dak?', keuzes: [
-        { label: 'Ja, vermoedelijk' }, { label: 'Nee' }, { label: 'Weet ik niet zeker' },
+        { label: 'Ja, vermoedelijk', icoon: 'asbest' }, { label: 'Nee', icoon: 'veilig' }, { label: 'Weet ik niet zeker', icoon: 'twijfel' },
       ] },
       { sleutel: 'Start', vraag: 'Wanneer wilt u beginnen?', keuzes: [
-        { label: 'Zo snel mogelijk' }, { label: 'Binnen drie maanden' }, { label: 'Later dit jaar' }, { label: 'Ik verken nog' },
+        { label: 'Zo snel mogelijk', icoon: 'snel' }, { label: 'Binnen drie maanden', icoon: 'drie' },
+        { label: 'Later dit jaar', icoon: 'later' }, { label: 'Ik verken nog', icoon: 'verken' },
       ] },
     ],
     gerust: 'Weet u het niet zeker? Een schatting volstaat.',
