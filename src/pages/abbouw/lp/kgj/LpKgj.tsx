@@ -336,23 +336,8 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         </div>
       </section>
 
-      <section className="kgj-band kgj-werk" id="werk">
-        <div className="kgj-breed">
-          {(inhoud.werk.kop || inhoud.werk.onder) && (
-            <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
-              {inhoud.werk.kop && <h2>{inhoud.werk.kop}</h2>}
-              {inhoud.werk.onder && <p>{inhoud.werk.onder}</p>}
-            </div>
-          )}
-          <ul className="kgj-werkraster kgj-op">
-            {inhoud.werk.fotos.map((f) => (
-              <li className="kgj-tegel" key={f.src + f.label}>
-                <span className="kgj-tegel__beeld"><img src={f.src} alt={f.alt} loading="lazy" /></span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      {/* De drie werkfoto's onder de schuif zijn weg (Mohammed, 23 sep: "die 3
+          fotos onder de slider haal die gewoon weg"). inhoud.werk blijft bestaan. */}
 
       {reviews.length > 0 && (
         <section className="kgj-band kgj-reviews" id="reviews">
