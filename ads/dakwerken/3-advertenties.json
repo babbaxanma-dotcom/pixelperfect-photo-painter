@@ -231,6 +231,78 @@
         "Wij geven tien jaar garantie op dakrenovatie en zijn volledig verzekerd.",
         "6% btw voor een woning ouder dan tien jaar, met Mijn VerbouwPremie-begeleiding."
       ]
+    },
+    "Dakisolatie": {
+      "zoekwoorden": [
+        [
+          "dakisolatie",
+          "w"
+        ],
+        [
+          "dak isoleren",
+          "w"
+        ],
+        [
+          "dak laten isoleren",
+          "w"
+        ],
+        [
+          "dakisolatie prijs",
+          "w"
+        ],
+        [
+          "prijs dakisolatie",
+          "w"
+        ],
+        [
+          "dakisolatie kosten",
+          "w"
+        ],
+        [
+          "hellend dak isoleren",
+          "w"
+        ],
+        [
+          "sarking isolatie",
+          "w"
+        ],
+        [
+          "sarkingisolatie",
+          "w"
+        ],
+        [
+          "plat dak isoleren",
+          "w"
+        ]
+      ],
+      "kruis": [],
+      "pad": [
+        "dak",
+        "isolatie"
+      ],
+      "koppen": [
+        "Wat kost dakisolatie?",
+        "Uw dak isoleren?",
+        "{KeyWord:Isoleer uw dak}",
+        "AB Bouw Groep: dakisolatie",
+        "Te koud onder uw dak?",
+        "Bereken uw prijs in 2 minuten",
+        "Gratis dakinspectie aan huis",
+        "Sarkingisolatie op uw dak",
+        "Isolatie van binnenuit",
+        "PIR, PUR of cellulose",
+        "Dak en isolatie in één werf",
+        "6% btw voor woning 10+ jaar",
+        "Hulp bij Mijn VerbouwPremie",
+        "Dakisolatie in {LOCATION(City):uw regio}",
+        "Altijd luchtdicht uitgevoerd"
+      ],
+      "beschrijvingen": [
+        "Wat kost uw dakisolatie? Bereken het in 2 minuten op onze website. Gratis en vrijblijvend.",
+        "Sarking op het dakvlak of isolatie van binnenuit, met PIR, PUR of cellulose.",
+        "Gratis dakinspectie ter plaatse: we bekijken uw dak en u krijgt een vrijblijvende offerte.",
+        "Woning ouder dan tien jaar? 6% btw. En wij regelen uw aanvraag voor Mijn VerbouwPremie."
+      ]
     }
   },
   "sitelinks": [

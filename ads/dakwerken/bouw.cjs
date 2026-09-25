@@ -98,6 +98,49 @@ const GROEPEN = {
       '6% btw voor een woning ouder dan tien jaar, met Mijn VerbouwPremie-begeleiding.',
     ],
   },
+  /* 25 sep, Mohammed: "doe ook dakisolatie componenten met de juiste hooks", "je hebt toch
+     geanalyseerd wat de grote namen doen en wat er werkt". Transparency Center (oogst-25sep,
+     langst-actief.json): Dural draait voor isolatie het langst met het zoekwoord als kop
+     ("{KeyWord:Isoleer uw hellend dak}" 693 dagen, "Uw dak isoleren?" 499 dagen) en gratis
+     advies aan huis. Niet overgenomen: "Premie voor dakisolatie?" (428 dagen), want sinds
+     1 maart 2026 is de premie versmald en dat belooft wat de meeste bezoekers niet krijgen;
+     "Uw zolder isoleren?", want dat is vaak de zoldervloer en die dienst staat nergens bij AB.
+     Bron van de techniek: AB's eigen dakwerkenpagina (_divisies.ts: "PIR, PUR of cellulose
+     ... van binnenuit of via sarking op het dakvlak"; _source/dakwerken.html: "altijd
+     luchtdicht uitgevoerd"; "Ligt het dak toch open, dan brengen wij de isolatie in dezelfde
+     werf aan"). */
+  'Dakisolatie': {
+    zoekwoorden: [
+      ['dakisolatie', 'w'], ['dak isoleren', 'w'], ['dak laten isoleren', 'w'], ['dakisolatie prijs', 'w'],
+      ['prijs dakisolatie', 'w'], ['dakisolatie kosten', 'w'], ['hellend dak isoleren', 'w'],
+      ['sarking isolatie', 'w'], ['sarkingisolatie', 'w'], ['plat dak isoleren', 'w'],
+    ],
+    kruis: [],
+    pad: ['dak', 'isolatie'],
+    koppen: [
+      'Wat kost dakisolatie?',          // positie 1, gepind (samen met Uw dak isoleren? en {KeyWord:Isoleer uw dak})
+      'Uw dak isoleren?',
+      '{KeyWord:Isoleer uw dak}',
+      'AB Bouw Groep: dakisolatie',
+      'Te koud onder uw dak?',
+      'Bereken uw prijs in 2 minuten',
+      'Gratis dakinspectie aan huis',
+      'Sarkingisolatie op uw dak',
+      'Isolatie van binnenuit',
+      'PIR, PUR of cellulose',
+      'Dak en isolatie in één werf',
+      '6% btw voor woning 10+ jaar',
+      'Hulp bij Mijn VerbouwPremie',
+      'Dakisolatie in {LOCATION(City):uw regio}',
+      'Altijd luchtdicht uitgevoerd',
+    ],
+    beschrijvingen: [
+      'Wat kost uw dakisolatie? Bereken het in 2 minuten op onze website. Gratis en vrijblijvend.',
+      'Sarking op het dakvlak of isolatie van binnenuit, met PIR, PUR of cellulose.',
+      'Gratis dakinspectie ter plaatse: we bekijken uw dak en u krijgt een vrijblijvende offerte.',
+      'Woning ouder dan tien jaar? 6% btw. En wij regelen uw aanvraag voor Mijn VerbouwPremie.',
+    ],
+  },
 };
 
 /* ---------- Componenten op campagneniveau ---------- */
