@@ -242,6 +242,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
       postcode: w.querySelector('input[name=postcode]').value,
       gemeente: w.querySelector('input[name=gemeente]').value,
       opties: [...w.querySelectorAll('.kgj-pg__lijst li')].map((l) => l.textContent.trim()),
+      ok: w.querySelector('.kgj-pg__ok')?.textContent.trim() ?? '',
     };
   });
   /* Veld leegmaken zoals een bezoeker: alles selecteren en wissen (een
@@ -254,9 +255,33 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     await page.type(pg, s, { delay: 40 });
     await wacht(500);
   };
+  /* Mohammed 25 sep: "het lukt niet goed op telefoon als je postcode wilt
+     verwijderen" en "het selecteren gaat soms ook automatisch terwijl je het niet
+     wilt". De tekst die de bezoeker typt, verandert nooit onder zijn vingers: de
+     gevonden gemeente staat eronder als bevestiging en vult pas aan bij het
+     verlaten van het veld. */
   await typ('2850');
   let st = await pgStaat();
-  meld(st.tekst === '2850 Boom' && st.postcode === '2850' && st.gemeente === 'Boom' && !st.opties.length, 'postcode 2850 kiest vanzelf Boom', JSON.stringify(st));
+  meld(st.tekst === '2850' && st.postcode === '2850' && st.gemeente === 'Boom' && !st.opties.length && st.ok.includes('Boom'), 'postcode 2850 vindt Boom zonder de tekst te veranderen', JSON.stringify(st));
+  await typ('2850 Boom');
+  st = await pgStaat();
+  meld(st.tekst === '2850 Boom' && st.postcode === '2850' && st.gemeente === 'Boom', 'verder typen na de postcode geeft geen dubbele gemeente', JSON.stringify(st));
+  await typ('2850');
+  await page.$eval(pg, (el) => el.blur());
+  await wacht(300);
+  st = await pgStaat();
+  meld(st.tekst === '2850 Boom', 'bij het verlaten van het veld vult de gemeente aan', JSON.stringify(st));
+  await page.focus(pg);
+  await page.$eval(pg, (el) => el.setSelectionRange(el.value.length, el.value.length));
+  for (let i = 0; i < 12; i++) { await page.keyboard.press('Backspace'); await wacht(60); }
+  await wacht(300);
+  st = await pgStaat();
+  meld(st.tekst === '' && st.postcode === '' && st.gemeente === '', 'wissen met de backspace haalt alles weg', JSON.stringify(st));
+  await typ('2850');
+  const wisKnop = await page.$('.kgj-reken--inspectie .kgj-pg__wis');
+  if (wisKnop) { const b = await wisKnop.boundingBox(); await page.touchscreen.tap(b.x + b.width / 2, b.y + b.height / 2); await wacht(300); }
+  st = await pgStaat();
+  meld(!!wisKnop && st.tekst === '' && st.postcode === '', 'kruisje in het veld maakt het in één tik leeg', JSON.stringify(st));
   await typ('2830');
   st = await pgStaat();
   meld(st.opties.length === 4 && st.opties.join('|').includes('Willebroek'), 'postcode 2830 toont de 4 deelgemeenten', st.opties.join(' | '));
@@ -277,7 +302,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   meld(st.tekst === '2830 Willebroek' && st.postcode === '2830' && st.gemeente === 'Willebroek' && !st.opties.length, 'tik op een voorstel kiest het', JSON.stringify(st));
   await typ('Willebroek');
   st = await pgStaat();
-  meld(st.tekst === '2830 Willebroek' && st.postcode === '2830', 'volledige naam kiest vanzelf', JSON.stringify(st));
+  meld(st.tekst === 'Willebroek' && st.postcode === '2830' && st.gemeente === 'Willebroek', 'volledige naam vindt de gemeente zonder de tekst te veranderen', JSON.stringify(st));
   await typ('Mech');
   st = await pgStaat();
   meld(st.opties.some((o) => o.includes('Mechelen')), 'begin van een naam geeft voorstellen', st.opties.slice(0, 3).join(' | '));

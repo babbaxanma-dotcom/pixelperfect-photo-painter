@@ -91,6 +91,18 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-pg__lijst li b { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 700; color: var(--merk); min-width: 40px; }
 .kgjx .kgj-pg__lijst li.is-aan { background: var(--accent-licht); }
 @media (hover: hover) and (pointer: fine) { .kgjx .kgj-pg__lijst li:hover { background: var(--accent-licht); } }
+/* Kruisje rechts in het veld (44px raakvlak) en de bevestiging van de gevonden
+   gemeente onder het veld (Mohammed 25 sep: wissen op telefoon, geen
+   automatische vervanging tijdens het typen). */
+.kgjx .kgj-pg__veld { position: relative; display: block; }
+.kgjx .kgj-pg__veld input { padding-right: 48px; }
+.kgjx .kgj-pg__wis { position: absolute; right: 2px; top: calc(50% + 3px); transform: translateY(-50%);
+  display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: none;
+  color: var(--tekst); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.kgjx .kgj-pg__wis svg { width: 18px; height: 18px; }
+.kgjx .kgj-pg__ok { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-family: Lato, system-ui, sans-serif;
+  font-size: 14.5px; font-weight: 400; color: var(--merk); }
+.kgjx .kgj-pg__ok svg { width: 16px; height: 16px; color: var(--accent-diep); stroke-width: 2.6; }
 
 /* AVG-regel onder de formulieren: klein en rustig, zelfde grijs als de rest. */
 .kgjx .kgj-reken__privacy { margin: 10px 0 0; font-family: Lato, system-ui, sans-serif; font-size: 12.5px;
