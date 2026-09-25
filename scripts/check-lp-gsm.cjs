@@ -217,6 +217,57 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   meld(slot.kop === 'Gratis dakinspectie', 'slotblok-kop', slot.kop);
   meld(slot.punten.length === 3, 'drie vinkjes bij de inspectie', slot.punten.join(' | '));
   meld(slot.knop === 'Vraag uw gratis dakinspectie aan', 'knop inspectieformulier', slot.knop);
+
+  /* 8c. Postcode of gemeente (Mohammed 25 sep): automatisch kiezen bij postcode
+     en bij een volledige naam, voorstellen bij deelgemeenten. */
+  const pg = '.kgj-reken--inspectie .kgj-pg input[type=text]';
+  const pgStaat = () => page.evaluate(() => {
+    const w = document.querySelector('.kgj-reken--inspectie .kgj-pg');
+    return {
+      tekst: w.querySelector('input[type=text]').value,
+      postcode: w.querySelector('input[name=postcode]').value,
+      gemeente: w.querySelector('input[name=gemeente]').value,
+      opties: [...w.querySelectorAll('.kgj-pg__lijst li')].map((l) => l.textContent.trim()),
+    };
+  });
+  /* Veld leegmaken zoals een bezoeker: alles selecteren en wissen (een
+     driedubbele tik selecteert niets op een aanraakscherm). */
+  const typ = async (s) => {
+    await page.focus(pg);
+    await page.$eval(pg, (el) => el.select());
+    await page.keyboard.press('Backspace');
+    await wacht(150);
+    await page.type(pg, s, { delay: 40 });
+    await wacht(500);
+  };
+  await typ('2850');
+  let st = await pgStaat();
+  meld(st.tekst === '2850 Boom' && st.postcode === '2850' && st.gemeente === 'Boom' && !st.opties.length, 'postcode 2850 kiest vanzelf Boom', JSON.stringify(st));
+  await typ('2830');
+  st = await pgStaat();
+  meld(st.opties.length === 4 && st.opties.join('|').includes('Willebroek'), 'postcode 2830 toont de 4 deelgemeenten', st.opties.join(' | '));
+  const optie = await page.$$('.kgj-reken--inspectie .kgj-pg__lijst li');
+  const doelOptie = [];
+  for (const o of optie) { if ((await (await o.getProperty('textContent')).jsonValue()).includes('Willebroek')) doelOptie.push(o); }
+  /* Het voorstel moet zichtbaar en raakbaar zijn: het element op het tikpunt
+     is het voorstel zelf, niet de cookiebanner of een vaste balk. */
+  let raakbaar = false;
+  if (doelOptie[0]) {
+    const b = await doelOptie[0].boundingBox();
+    const x = b.x + b.width / 2, y = b.y + b.height / 2;
+    raakbaar = await page.evaluate((x, y) => !!document.elementFromPoint(x, y)?.closest('.kgj-pg__lijst li'), x, y);
+    await page.touchscreen.tap(x, y); await wacht(300);
+  }
+  meld(raakbaar, 'voorstel is zichtbaar en raakbaar (niets ligt erover)');
+  st = await pgStaat();
+  meld(st.tekst === '2830 Willebroek' && st.postcode === '2830' && st.gemeente === 'Willebroek' && !st.opties.length, 'tik op een voorstel kiest het', JSON.stringify(st));
+  await typ('Willebroek');
+  st = await pgStaat();
+  meld(st.tekst === '2830 Willebroek' && st.postcode === '2830', 'volledige naam kiest vanzelf', JSON.stringify(st));
+  await typ('Mech');
+  st = await pgStaat();
+  meld(st.opties.some((o) => o.includes('Mechelen')), 'begin van een naam geeft voorstellen', st.opties.slice(0, 3).join(' | '));
+  await page.keyboard.press('Escape');
   await page.evaluate(() => document.querySelector('.kgj-reken--inspectie').scrollIntoView({ block: 'center' }));
   await wacht(700);
   const balkBijForm = await page.evaluate(() => getComputedStyle(document.querySelector('.kgj-actiebalk')).display !== 'none');

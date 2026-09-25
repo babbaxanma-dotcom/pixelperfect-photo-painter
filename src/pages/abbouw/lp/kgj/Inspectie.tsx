@@ -4,6 +4,7 @@ import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
 import { CONTACT } from '@/data/contact';
 import type { KgjInhoud } from './inhoud';
+import PostcodeGemeente from './PostcodeGemeente';
 
 /**
  * Aanvraag voor de gratis dakinspectie, onderaan de pagina.
@@ -52,6 +53,7 @@ export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPr
       firstName: String(f.get('naam') || '').trim() || undefined,
       email: '',
       phone: telefoon,
+      postcode: String(f.get('postcode') || '').trim() || undefined,
       gemeente: String(f.get('gemeente') || '').trim() || undefined,
       type_werk: inhoud.divisie,
       aanvullende_info: 'Aanvraag gratis dakinspectie',
@@ -72,7 +74,7 @@ export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPr
         </label>
         <div className="kgj-reken__rij">
           <label>Naam<input name="naam" type="text" autoComplete="name" placeholder="Uw naam" /></label>
-          <label>Gemeente<input name="gemeente" type="text" autoComplete="address-level2" placeholder="Uw gemeente" /></label>
+          <PostcodeGemeente />
         </div>
         <button className="kgj-knop kgj-knop--vol kgj-reken__knop" type="submit" disabled={bezig}>
           {bezig ? 'Bezig…' : t.knop}
@@ -80,6 +82,7 @@ export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPr
         <p className="kgj-reken__gerust">{t.onder}</p>
         {fout && <p className="kgj-reken__fout" role="alert">{fout}</p>}
         <button type="button" className="kgj-reken__alt" onClick={opPrijs}>{t.alt}</button>
+        <p className="kgj-reken__privacy">Wij gebruiken uw gegevens alleen voor deze aanvraag. <a href="/privacy">Privacybeleid</a></p>
       </form>
     </div>
   );

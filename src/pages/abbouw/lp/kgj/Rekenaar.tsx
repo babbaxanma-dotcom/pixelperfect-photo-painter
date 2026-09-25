@@ -175,6 +175,9 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
             {bezig ? 'Bezig…' : inhoud.rekenaar.knop}
           </button>
           {inhoud.rekenaar.uitkomstOnder && <p className="kgj-reken__gerust">{inhoud.rekenaar.uitkomstOnder}</p>}
+          {/* AVG: informatie bij het verzamelen (art. 13), klein en rustig (Mohammed, 25 sep:
+              "niet opeens super duidelijk aan de prospect"). */}
+          <p className="kgj-reken__privacy">Wij gebruiken uw gegevens alleen voor deze aanvraag. <a href="/privacy">Privacybeleid</a></p>
           {fout && <p className="kgj-reken__fout" role="alert">{fout}</p>}
         </form>
       )}

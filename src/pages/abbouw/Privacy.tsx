@@ -20,12 +20,22 @@ const BLOKKEN: Blok[] = [
       'uw naam en voornaam',
       'uw e-mailadres en telefoonnummer',
       'het adres van het pand waar de werken plaatsvinden',
-      'een beschrijving van uw project',
-      'de berichten die u ons stuurt via het contactformulier',
+      'een beschrijving van uw project en de antwoorden die u in de prijscalculator aanduidt',
+      'de berichten die u ons stuurt via het contactformulier, per sms of per telefoon',
+      'hoe u bij ons terechtkwam, bijvoorbeeld via welke advertentie of zoekopdracht',
     ],
   },
   {
-    n: '3', t: 'Waarvoor wij ze gebruiken',
+    n: '3', t: 'Op welke grond wij ze verwerken',
+    lijst: [
+      'uw offerteaanvraag en de uitvoering van de werken: om een overeenkomst met u voor te bereiden en uit te voeren',
+      'facturatie en administratie: om te voldoen aan onze wettelijke verplichtingen',
+      'het opvolgen van uw aanvraag en het meten van onze advertenties: ons gerechtvaardigd belang om aanvragen goed op te volgen',
+      'cookies voor statistieken en advertenties: uw toestemming, die u altijd kan intrekken',
+    ],
+  },
+  {
+    n: '4', t: 'Waarvoor wij ze gebruiken',
     p: ['Uw gegevens gebruiken wij uitsluitend om:'],
     lijst: [
       'een offerte op te maken en op te volgen',
@@ -37,14 +47,30 @@ const BLOKKEN: Blok[] = [
     na: ['Wij verkopen uw gegevens niet door en gebruiken ze niet voor reclame van derden zonder uw uitdrukkelijke toestemming.'],
   },
   {
-    n: '4', t: 'Hoe lang wij ze bewaren',
+    /* Mohammed, 25 sep: "wij als Norvo zien klantgegevens ook". Elke partij die
+       persoonsgegevens verwerkt in opdracht van AB staat hier; de lijst komt uit
+       de code (leads.ts, tracking.ts, vercel.json) en de telefonie (Twilio). */
+    n: '5', t: 'Wie uw gegevens nog verwerkt',
+    p: ['Voor onze website, onze klantenopvolging en onze advertenties werken wij met partijen die uw gegevens in onze opdracht verwerken. Zij mogen ze alleen gebruiken voor de taak die wij hen geven:'],
+    lijst: [
+      'Norvo, ons marketingbureau: beheert onze website, ons klantenbestand en onze advertenties, en ziet daarvoor uw aanvraag',
+      'HighLevel (LeadConnector): het klantenbestand waarin uw aanvraag binnenkomt en wordt opgevolgd, ook per sms',
+      'Web3Forms: stuurt een kopie van uw aanvraag naar ons per e-mail, zodat er geen aanvraag verloren gaat',
+      'Twilio: onze telefonie en sms',
+      'Google: meet het bezoek aan de website en de resultaten van onze advertenties, alleen als u daarvoor toestemming gaf',
+      'Vercel: host onze website',
+    ],
+    na: ['Sommige van deze partijen verwerken gegevens buiten de Europese Unie. Dat gebeurt alleen met de waarborgen die de AVG voorschrijft, zoals de standaardcontractbepalingen van de Europese Commissie.'],
+  },
+  {
+    n: '6', t: 'Hoe lang wij ze bewaren',
     p: [
       'Een projectdossier bewaren wij zolang de garantie op de uitgevoerde werken loopt.',
       'Boekhoudkundige gegevens houden wij zeven jaar bij, zoals de Belgische wetgeving voorschrijft. Offerteaanvragen die niet tot een opdracht leiden, verwijderen wij na maximaal twee jaar.',
     ],
   },
   {
-    n: '5', t: 'Uw rechten',
+    n: '7', t: 'Uw rechten',
     p: ['De AVG geeft u het recht om:'],
     lijst: [
       'uw persoonsgegevens in te kijken',
@@ -52,17 +78,18 @@ const BLOKKEN: Blok[] = [
       'uw gegevens te laten wissen, het recht op vergetelheid',
       'bezwaar te maken tegen de verwerking',
       'uw gegevens te laten overdragen',
+      'uw toestemming voor cookies op elk moment in te trekken',
     ],
     na: [`Stuur uw vraag naar <a href="mailto:${CONTACT.email}">${CONTACT.email}</a>. Wij antwoorden binnen dertig dagen.`],
   },
   {
-    n: '6', t: 'Cookies',
+    n: '8', t: 'Cookies',
     p: [
       'Onze website plaatst functionele cookies die nodig zijn om de site te laten werken, en met uw toestemming ook cookies om bezoek te meten en advertenties op te volgen. In ons <a href="/cookies">cookiebeleid</a> leest u precies welke dat zijn.',
     ],
   },
   {
-    n: '7', t: 'Klachten',
+    n: '9', t: 'Klachten',
     p: [
       'Bent u niet tevreden over hoe wij met uw gegevens omgaan, laat het ons dan eerst weten. Meestal lossen we het snel op.',
       'U heeft daarnaast altijd het recht een klacht in te dienen bij de Gegevensbeschermingsautoriteit via <a href="https://www.gegevensbeschermingsautoriteit.be" rel="noopener noreferrer" target="_blank">gegevensbeschermingsautoriteit.be</a>.',
@@ -78,7 +105,7 @@ ${rpNav('')}
     <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Privacybeleid</span></nav>
     <span class="rp-eyebrow">${ic.mark} Juridisch</span>
     <h1 class="rp-phero__t">Privacybeleid</h1>
-    <p class="rp-phero__lede">Wat wij met uw gegevens doen, waarom, en hoe lang wij ze bijhouden. Laatste aanpassing: augustus 2026.</p>
+    <p class="rp-phero__lede">Wat wij met uw gegevens doen, waarom, en hoe lang wij ze bijhouden. Laatste aanpassing: september 2026.</p>
   </div>
 </section>
 

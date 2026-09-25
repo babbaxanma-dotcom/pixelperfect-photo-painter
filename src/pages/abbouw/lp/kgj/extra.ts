@@ -67,6 +67,24 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-reken__knop { width: 100%; margin-top: 4px; }
 .kgjx .kgj-reken__gerust { margin-top: 10px; font-size: 13.5px; color: var(--zacht); }
 .kgjx .kgj-reken__fout { margin-top: 10px; font-size: 14px; color: #a3231a; }
+/* ── postcode of gemeente: voorstellen onder het veld ──
+   Rijen van 44px zodat ze met een duim te raken zijn; de lijst ligt boven de
+   rest van het formulier en schuift niets opzij. */
+.kgjx .kgj-pg { position: relative; }
+.kgjx .kgj-pg__lijst { position: absolute; left: 0; right: 0; top: 100%; z-index: 20; margin: 4px 0 0; padding: 4px;
+  list-style: none; background: var(--wit); border: 1px solid var(--lijn); border-radius: var(--r);
+  box-shadow: 0 16px 36px -14px rgba(5, 11, 20, .35); max-height: 264px; overflow-y: auto; }
+.kgjx .kgj-pg__lijst li { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 10px;
+  border-radius: calc(var(--r) - 2px); cursor: pointer; font-family: Lato, system-ui, sans-serif; font-size: 15px;
+  font-weight: 400; color: var(--inkt); }
+.kgjx .kgj-pg__lijst li b { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 700; color: var(--merk); min-width: 40px; }
+.kgjx .kgj-pg__lijst li.is-aan { background: var(--accent-licht); }
+@media (hover: hover) and (pointer: fine) { .kgjx .kgj-pg__lijst li:hover { background: var(--accent-licht); } }
+
+/* AVG-regel onder de formulieren: klein en rustig, zelfde grijs als de rest. */
+.kgjx .kgj-reken__privacy { margin: 10px 0 0; font-family: Lato, system-ui, sans-serif; font-size: 12.5px;
+  line-height: 1.45; color: var(--zacht); }
+.kgjx .kgj-reken__privacy a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 
 /* ── bewijs onder de kop ── */
 /* Vier punten onder elkaar: groot genoeg om te lezen op de foto, en geen
