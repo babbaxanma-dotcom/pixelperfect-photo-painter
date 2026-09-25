@@ -4,6 +4,7 @@ import { KGJ_CSS } from './stijl';
 import { KGJ_EXTRA } from './extra';
 import Rekenaar from './Rekenaar';
 import Inspectie from './Inspectie';
+import { Icoon } from './Iconen';
 import { DAKWERKEN, type KgjInhoud, type Review } from './inhoud';
 import logo from '@/assets/home/logo-trim.png';
 
@@ -127,6 +128,17 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute('content', inhoud.omschrijving);
   }, [inhoud]);
+
+  /* Anker in de link (Google-sitelink /lp/dakwerken#rekenaar, #hellend, ...): naar
+     die sectie scrollen. De browser probeert dat bij het laden zelf, maar dan
+     bestaat het element nog niet; zonder dit landden alle sitelinks bovenaan
+     (gevonden 25 sep, zelfde oplossing als LpDienst.tsx). */
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (!id) return;
+    const t = window.setTimeout(() => document.getElementById(id)?.scrollIntoView({ block: 'start' }), 120);
+    return () => window.clearTimeout(t);
+  }, []);
 
   /* Herofoto's: om de zes seconden de volgende, stil als het tabblad niet
      zichtbaar is. De demo stopte ook onder de muis, maar hier staat de
@@ -275,6 +287,25 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             <img className="kgj-duo__a" src={inhoud.waarom.duo[0].src} alt={inhoud.waarom.duo[0].alt} loading="lazy" />
             <img className="kgj-duo__b" src={inhoud.waarom.duo[1].src} alt={inhoud.waarom.duo[1].alt} loading="lazy" />
           </figure>
+        </div>
+      </section>
+
+      {/* Mohammed, 25 sep: korte dienstensectie onder "Waarom", met iconen. De
+          id's per dienst zijn de ankers van de sitelinks. */}
+      <section className="kgj-band kgj-diensten" id="diensten">
+        <div className="kgj-breed">
+          <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
+            <h2>{inhoud.diensten.kop}</h2>
+          </div>
+          <ul className="kgj-dienstraster">
+            {inhoud.diensten.lijst.map((d) => (
+              <li className="kgj-dienst kgj-op" id={d.id} key={d.id}>
+                <span className="kgj-dienst__icoon"><Icoon naam={d.icoon} /></span>
+                <h3>{d.naam}</h3>
+                <p>{d.tekst}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

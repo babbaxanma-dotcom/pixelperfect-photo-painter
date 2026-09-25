@@ -180,6 +180,31 @@ export const KGJ_EXTRA = `
 /* Geen los woord op de laatste regel ("prijs.", "15°"). */
 .kgjx .kgj-hero__sub, .kgjx .kgj-reken__keuze span { text-wrap: pretty; }
 
+/* ── onze dakwerken: vier diensten met een icoon ──
+   Mohammed, 25 sep: "korte diensten sectie, diensten met mooie iconen gewoon,
+   naam, en de nodige tekst". Zelfde iconen als in de calculator, groter, in een
+   navy vlak met goud: dezelfde taal als de redenen erboven. scroll-margin houdt
+   de kaart vrij van de vaste kop als een sitelink ernaartoe springt. */
+.kgj-dienstraster { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; list-style: none; margin: 0; padding: 0; }
+.kgjx .kgj-dienst { scroll-margin-top: 110px; padding: 26px 22px 24px; background: var(--wit);
+  border: 1px solid var(--lijn); border-radius: var(--r); }
+.kgjx .kgj-dienst__icoon { display: grid; place-items: center; width: 56px; height: 56px; margin-bottom: 18px;
+  border-radius: 14px; background: var(--merk); color: var(--accent); }
+.kgjx .kgj-dienst__icoon svg { width: 30px; height: 30px; }
+.kgjx .kgj-dienst h3 { margin: 0 0 8px; font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 19px;
+  font-weight: 700; line-height: 1.25; color: var(--kop); }
+.kgjx .kgj-dienst p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--tekst); }
+.kgjx .kgj-diensten .kgj-kopblok { margin-bottom: 34px; }
+@media (max-width: 1000px) { .kgj-dienstraster { grid-template-columns: repeat(2, 1fr); gap: 14px; } }
+@media (max-width: 560px) {
+  .kgj-dienstraster { grid-template-columns: 1fr; gap: 12px; }
+  .kgjx .kgj-dienst { display: grid; grid-template-columns: 48px 1fr; column-gap: 14px; padding: 18px 16px; }
+  .kgjx .kgj-dienst__icoon { grid-row: span 2; width: 48px; height: 48px; margin: 0; border-radius: 12px; }
+  .kgjx .kgj-dienst__icoon svg { width: 26px; height: 26px; }
+  .kgjx .kgj-dienst h3 { font-size: 17px; margin-bottom: 4px; }
+  .kgjx .kgj-dienst p { font-size: 15px; }
+}
+
 /* ── voor en na: één liggende foto ──
    De demo zet staande foto's naast elkaar in kolommen van 380px. AB heeft één
    liggend paar; in zo'n smalle kolom werd dat een postzegel. Eén kolom van

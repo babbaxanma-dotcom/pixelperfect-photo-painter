@@ -63,6 +63,8 @@ export type KgjInhoud = {
   /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart. */
   rekenaar: { titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string };
   waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto] };
+  /** Diensten onder "Waarom": id is het anker voor een sitelink (/lp/dakwerken#hellend). */
+  diensten: { kop: string; lijst: { id: string; icoon: IcoonNaam; naam: string; tekst: string }[] };
   voorna: { kop: string; onder: string; voor: Foto; na: Foto; label: string };
   /* Foto's van uitgevoerd werk. Dit staat op de plek waar de demo reviews
      heeft: AB heeft één Google-review, dus tot er echte klantenstemmen zijn
@@ -77,7 +79,8 @@ export type KgjInhoud = {
 };
 
 export const DAKWERKEN: KgjInhoud = {
-  titel: 'Dakwerken: reken vooraf uit wat uw dak kost | AB Bouw Groep',
+  /* Mohammed, 25 sep: de tekst in het tabblad "moet gaan over het vak", niet over prijs. */
+  titel: 'Dé specialist voor uw dakwerk | AB Bouw Groep',
   /* 24 sep: "zes antwoorden" klopt niet meer (6 tot 8 vragen per pad) en
      "binnen één werkdag" is als belofte van de pagina gehaald. */
   omschrijving: 'Bereken in 2 minuten de prijs van uw dak. Gratis dakinspectie en offerte, werken aan 6% btw.',
@@ -219,6 +222,23 @@ export const DAKWERKEN: KgjInhoud = {
     duo: [
       { src: dakwerker, alt: 'Dakwerker die nieuwe antraciet pannen legt op de tengellatten' },
       { src: pannenDichtbij, alt: 'Hetzelfde pannendak van bovenaf, tot op de nokpannen' },
+    ],
+  },
+
+  /* Mohammed, 25 sep: "onder de sectie waarom ab bouw groep 1 korte diensten sectie,
+     diensten met mooie iconen gewoon, naam, en de nodige tekst". De vier diensten
+     komen uit de pagina zelf: hellend en plat dak (vraag 1 van de calculator),
+     herstelling en isolatie (vraag 2), en zijn subkop "dakrenovaties,
+     herstellingen en isolaties". De bedekkingen zijn de keuzes uit de calculator.
+     De ankers (#hellend, #plat) zijn de sitelinks "Hellende daken" en "Platte
+     daken", naar het voorbeeld van Kijzer en Recotex (Transparency Center 25 sep). */
+  diensten: {
+    kop: 'Onze dakwerken',
+    lijst: [
+      { id: 'hellend', icoon: 'nieuwdak', naam: 'Hellend dak', tekst: 'Wij vernieuwen uw pannendak of leien dak, met isolatie als u dat wenst.' },
+      { id: 'plat', icoon: 'platdak', naam: 'Plat dak', tekst: 'Wij leggen een nieuw plat dak in EPDM, roofing of bitumen.' },
+      { id: 'isolatie', icoon: 'isolatie', naam: 'Dakisolatie', tekst: 'Wij isoleren uw dak tijdens de renovatie of als aparte opdracht.' },
+      { id: 'herstelling', icoon: 'herstel', naam: 'Dakherstelling', tekst: 'Wij herstellen een lek of schade aan uw hellend of plat dak.' },
     ],
   },
 

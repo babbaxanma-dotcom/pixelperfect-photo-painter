@@ -14,7 +14,7 @@ export type IcoonNaam =
   | 'maat1' | 'maat2' | 'maat3' | 'maat4'
   | 'isolatie' | 'geenisolatie' | 'asbest' | 'veilig' | 'twijfel'
   | 'snel' | 'drie' | 'later' | 'verken'
-  | 'herstel' | 'nieuwdak' | 'jong' | 'midden' | 'oud';
+  | 'herstel' | 'nieuwdak' | 'jong' | 'midden' | 'oud' | 'platdak';
 
 const Svg = ({ children }: { children: ReactNode }) => (
   <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth={2}
@@ -153,6 +153,15 @@ const ICONEN: Record<IcoonNaam, () => JSX.Element> = {
       <path d="M8.3 8.4h7.4M5.8 10.4h12.4" strokeWidth={1.4} />
       <path d="M5.5 11.5V20h13v-8.5" />
       <path d="M10 20v-4.5h4V20" />
+    </Svg>
+  ),
+  /* Plat dak: een gebouw met een plat dak en een dakrand die iets uitsteekt. */
+  platdak: () => (
+    <Svg>
+      <path d="M2.5 8h19" strokeWidth={2.4} />
+      <path d="M4 8V6.5h16V8" />
+      <path d="M4.5 8v12h15V8" />
+      <path d="M8 20v-5h3v5M14 12h2.5v2.5H14z" />
     </Svg>
   ),
   /* Leeftijd van het dak: een jong plantje, een klok, een zandloper. */
