@@ -49,10 +49,21 @@ export const KGJ_EXTRA = `
    hangen op die plek, en het antwoord dat bij de volgende vraag daar staat,
    leek dan al gekozen (Mohammed, 25 sep: "1 ding is altijd geselecteerd voor
    het klikken ... zeker op telefoon"). */
+.kgjx .kgj-reken__keuze { -webkit-tap-highlight-color: transparent; }
 @media (hover: hover) and (pointer: fine) {
   .kgjx .kgj-reken__keuze:hover { border-color: var(--merk); box-shadow: 0 0 0 1px var(--merk); }
   .kgjx .kgj-reken__keuze:hover .kgj-reken__icoon { background: var(--accent); color: var(--merk-diep); }
 }
+/* Druktoestand: zodra de vinger het antwoord raakt (is-druk, gezet bij
+   pointerdown in Rekenaar.tsx), kleurt het goud (rand, vlak en icoon) en zakt
+   het een fractie in. Bij het loslaten volgt meteen de volgende vraag. Geen
+   overgang: de feedback moet er meteen staan. De grijze tikgloed van de browser
+   zelf gaat uit, die vervangt dit. Staat na :hover, zodat drukken met de muis
+   ook goud geeft. */
+.kgjx .kgj-reken__keuze.is-druk, .kgjx .kgj-reken__keuze:active { border-color: var(--accent); background: var(--accent-licht);
+  box-shadow: 0 0 0 2px var(--accent); transform: scale(.985); transition: none; }
+.kgjx .kgj-reken__keuze.is-druk .kgj-reken__icoon, .kgjx .kgj-reken__keuze:active .kgj-reken__icoon {
+  background: var(--accent); color: var(--merk-diep); transition: none; }
 .kgjx .kgj-reken__keuze.is-aan { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); background: var(--accent-licht); }
 .kgjx .kgj-reken__keuze:focus-visible { outline: 3px solid var(--merk); outline-offset: 2px; }
 
@@ -180,17 +191,19 @@ export const KGJ_EXTRA = `
 /* Geen los woord op de laatste regel ("prijs.", "15°"). */
 .kgjx .kgj-hero__sub, .kgjx .kgj-reken__keuze span { text-wrap: pretty; }
 
-/* ── onze dakwerken: vier diensten met een icoon ──
+/* ── onze diensten: vier diensten met een icoon ──
    Mohammed, 25 sep: "korte diensten sectie, diensten met mooie iconen gewoon,
-   naam, en de nodige tekst". Zelfde iconen als in de calculator, groter, in een
-   navy vlak met goud: dezelfde taal als de redenen erboven. scroll-margin houdt
-   de kaart vrij van de vaste kop als een sitelink ernaartoe springt. */
+   naam, en de nodige tekst", daarna "betere clean iconen en graag lichte iconen
+   niet zwarte". Eigen dienst-iconen met een dunnere lijn, goud op een licht
+   goudvlak (contrast 3,3:1, boven de 3:1 voor grafische elementen).
+   scroll-margin houdt de kaart vrij van de vaste kop als een sitelink ernaartoe
+   springt. */
 .kgj-dienstraster { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; list-style: none; margin: 0; padding: 0; }
 .kgjx .kgj-dienst { scroll-margin-top: 110px; padding: 26px 22px 24px; background: var(--wit);
   border: 1px solid var(--lijn); border-radius: var(--r); }
 .kgjx .kgj-dienst__icoon { display: grid; place-items: center; width: 56px; height: 56px; margin-bottom: 18px;
-  border-radius: 14px; background: var(--merk); color: var(--accent); }
-.kgjx .kgj-dienst__icoon svg { width: 30px; height: 30px; }
+  border-radius: 14px; background: var(--accent-licht); color: var(--accent-diep); }
+.kgjx .kgj-dienst__icoon svg { width: 30px; height: 30px; stroke-width: 1.75; }
 .kgjx .kgj-dienst h3 { margin: 0 0 8px; font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 19px;
   font-weight: 700; line-height: 1.25; color: var(--kop); }
 .kgjx .kgj-dienst p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--tekst); }

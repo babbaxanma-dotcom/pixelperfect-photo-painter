@@ -14,7 +14,8 @@ export type IcoonNaam =
   | 'maat1' | 'maat2' | 'maat3' | 'maat4'
   | 'isolatie' | 'geenisolatie' | 'asbest' | 'veilig' | 'twijfel'
   | 'snel' | 'drie' | 'later' | 'verken'
-  | 'herstel' | 'nieuwdak' | 'jong' | 'midden' | 'oud' | 'platdak';
+  | 'herstel' | 'nieuwdak' | 'jong' | 'midden' | 'oud' | 'platdak'
+  | 'dienst-hellend' | 'dienst-plat' | 'dienst-isolatie' | 'dienst-herstel';
 
 const Svg = ({ children }: { children: ReactNode }) => (
   <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth={2}
@@ -153,6 +154,42 @@ const ICONEN: Record<IcoonNaam, () => JSX.Element> = {
       <path d="M8.3 8.4h7.4M5.8 10.4h12.4" strokeWidth={1.4} />
       <path d="M5.5 11.5V20h13v-8.5" />
       <path d="M10 20v-4.5h4V20" />
+    </Svg>
+  ),
+  /* ── iconen van de dienstensectie (Mohammed 25 sep: "betere clean iconen") ──
+     Ronde hoeken en één lijndikte, in de stijl van lucide, zodat de vier als
+     één set lezen. */
+  /* Hellend dak: een huis met een schuin dak en een deur. */
+  'dienst-hellend': () => (
+    <Svg>
+      <path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+      <path d="M9.5 21v-6.5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1V21" />
+    </Svg>
+  ),
+  /* Plat dak: een gebouw met een platte dakrand, twee ramen en een deur. */
+  'dienst-plat': () => (
+    <Svg>
+      <path d="M3.5 5.5h17a.5.5 0 0 1 .5.5v2.5H3V6a.5.5 0 0 1 .5-.5z" />
+      <path d="M5 8.5V19a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8.5" />
+      <path d="M10 21v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4" />
+      <rect x="8" y="11" width="2.5" height="2.5" rx=".5" />
+      <rect x="13.5" y="11" width="2.5" height="2.5" rx=".5" />
+    </Svg>
+  ),
+  /* Dakisolatie: hetzelfde huis, gevuld met twee lagen isolatie. */
+  'dienst-isolatie': () => (
+    <Svg>
+      <path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+      <path d="M7 13c.8-.7 1.7-.7 2.5 0s1.7.7 2.5 0 1.7-.7 2.5 0 1.7.7 2.5 0" />
+      <path d="M7 17c.8-.7 1.7-.7 2.5 0s1.7.7 2.5 0 1.7-.7 2.5 0 1.7.7 2.5 0" />
+    </Svg>
+  ),
+  /* Dakherstelling: een hamer (lucide "hammer", v0.462). */
+  'dienst-herstel': () => (
+    <Svg>
+      <path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9" />
+      <path d="m18 15 4-4" />
+      <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
     </Svg>
   ),
   /* Plat dak: een gebouw met een plat dak en een dakrand die iets uitsteekt. */

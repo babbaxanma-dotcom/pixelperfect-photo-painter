@@ -72,7 +72,20 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
     trackFormStart(`${inhoud.bronLead}:${plek}`);
   };
 
+  /* Mohammed, 25 sep: "op telefoon ... je ziet niet wat je hebt aangeklikt" en
+     "na de tik moet het wel gewoon direct doorgaan". Het antwoord kleurt op zodra
+     de vinger het raakt (druk, stijl in extra.ts) en bij het loslaten volgt
+     meteen de volgende vraag. :active alleen volstaat niet: Chrome op Android
+     zet die pas na ongeveer 100 ms vasthouden, dus bij een snelle tik zag je
+     niets. Een tweede tik binnen 200 ms telt niet, zodat een dubbele tik geen
+     vraag overslaat. */
+  const [druk, setDruk] = useState<string | null>(null);
+  const laatsteTik = useRef(0);
   const kies = (sleutel: string, label: string) => {
+    const nu = Date.now();
+    if (nu - laatsteTik.current < 200) return;
+    laatsteTik.current = nu;
+    setDruk(null);
     meldStart();
     setAntwoorden((a) => ({ ...a, [sleutel]: label }));
     setStap((s) => s + 1);
@@ -142,7 +155,13 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
           <div className={`kgj-reken__keuzes${vraag.keuzes.length % 2 === 1 ? ' kgj-reken__keuzes--oneven' : ''}`}>
             {vraag.keuzes.map((k) => (
               <button type="button" key={k.label}
-                className={`kgj-reken__keuze${k.icoon ? ' kgj-reken__keuze--icoon' : ''}${antwoorden[vraag.sleutel] === k.label ? ' is-aan' : ''}`}
+                className={`kgj-reken__keuze${k.icoon ? ' kgj-reken__keuze--icoon' : ''}${antwoorden[vraag.sleutel] === k.label ? ' is-aan' : ''}${druk === k.label ? ' is-druk' : ''}`}
+                /* Loslaten, wegschuiven of scrollen (pointercancel) haalt de
+                   druktoestand weer weg. */
+                onPointerDown={() => setDruk(k.label)}
+                onPointerUp={() => setDruk(null)}
+                onPointerCancel={() => setDruk(null)}
+                onPointerLeave={() => setDruk(null)}
                 onClick={() => kies(vraag.sleutel, k.label)}>
                 {k.foto && <img className="kgj-reken__foto" src={k.foto} alt="" width={640} height={360} decoding="async" />}
                 {k.icoon && <i className="kgj-reken__icoon"><Icoon naam={k.icoon} /></i>}

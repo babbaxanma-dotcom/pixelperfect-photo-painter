@@ -233,12 +233,12 @@ export const DAKWERKEN: KgjInhoud = {
      De ankers (#hellend, #plat) zijn de sitelinks "Hellende daken" en "Platte
      daken", naar het voorbeeld van Kijzer en Recotex (Transparency Center 25 sep). */
   diensten: {
-    kop: 'Onze dakwerken',
+    kop: 'Onze diensten',
     lijst: [
-      { id: 'hellend', icoon: 'nieuwdak', naam: 'Hellend dak', tekst: 'Wij vernieuwen uw pannendak of leien dak, met isolatie als u dat wenst.' },
-      { id: 'plat', icoon: 'platdak', naam: 'Plat dak', tekst: 'Wij leggen een nieuw plat dak in EPDM, roofing of bitumen.' },
-      { id: 'isolatie', icoon: 'isolatie', naam: 'Dakisolatie', tekst: 'Wij isoleren uw dak tijdens de renovatie of als aparte opdracht.' },
-      { id: 'herstelling', icoon: 'herstel', naam: 'Dakherstelling', tekst: 'Wij herstellen een lek of schade aan uw hellend of plat dak.' },
+      { id: 'hellend', icoon: 'dienst-hellend', naam: 'Hellend dak', tekst: 'Wij vernieuwen uw pannendak of leien dak, met isolatie als u dat wenst.' },
+      { id: 'plat', icoon: 'dienst-plat', naam: 'Plat dak', tekst: 'Wij leggen een nieuw plat dak in EPDM, roofing of bitumen.' },
+      { id: 'isolatie', icoon: 'dienst-isolatie', naam: 'Dakisolatie', tekst: 'Wij isoleren uw dak tijdens de renovatie of als aparte opdracht.' },
+      { id: 'herstelling', icoon: 'dienst-herstel', naam: 'Dakherstelling', tekst: 'Wij herstellen een lek of schade aan uw hellend of plat dak.' },
     ],
   },
 

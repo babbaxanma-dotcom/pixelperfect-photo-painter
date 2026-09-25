@@ -107,11 +107,25 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   await wacht(300);
   const tikOp = async (label) => {
     const r = await page.evaluate((l) => { const b = [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')].find((k) => k.textContent.trim().startsWith(l)); const x = b.getBoundingClientRect(); return { x: x.left + x.width / 2, y: x.top + x.height / 2 }; }, label);
-    await page.touchscreen.tap(r.x, r.y);
-    await wacht(400);
+    /* Mohammed 25 sep: "je ziet niet wat je hebt aangeklikt" en "na de tik moet
+       het direct doorgaan". Tijdens het drukken kleurt het antwoord goud; na het
+       loslaten staat binnen 150 ms de volgende vraag er. */
+    const rust = await page.evaluate((l) => getComputedStyle([...document.querySelectorAll('#rekenaar .kgj-reken__keuze')].find((k) => k.textContent.trim().startsWith(l))).borderColor, label);
+    await page.touchscreen.touchStart(r.x, r.y);
+    await wacht(60);
+    r.druk = await page.evaluate((l) => getComputedStyle([...document.querySelectorAll('#rekenaar .kgj-reken__keuze')].find((k) => k.textContent.trim().startsWith(l))).borderColor, label);
+    r.rust = rust;
+    await page.touchscreen.touchEnd();
+    await wacht(150);
+    r.vraagNa = await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__vraag')?.textContent.trim());
+    await wacht(300);
     return r;
   };
-  const plek = await tikOp('Hellend dak');
+  /* Op "Plat dak": dat antwoord staat na de doorloop hierboven niet gekozen, dus
+     de rustkleur is de gewone grijze rand. */
+  const plek = await tikOp('Plat dak');
+  meld(plek.druk !== plek.rust, 'tijdens het drukken kleurt het antwoord op', `rust ${plek.rust} / druk ${plek.druk}`);
+  meld(plek.vraagNa === 'Wat moet er aan uw dak gebeuren?', 'na het loslaten meteen de volgende vraag (binnen 150 ms)', plek.vraagNa);
   const naTik = await page.evaluate(({ x, y }) => {
     const el = document.elementFromPoint(x, y)?.closest('.kgj-reken__keuze');
     if (!el) return { geraakt: false };
