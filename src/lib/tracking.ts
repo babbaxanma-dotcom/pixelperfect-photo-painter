@@ -33,6 +33,20 @@ function activeGa4Id(): string | undefined {
 
 const LS_UTM_KEY = 'ab_bouw_utm_v1';
 
+/* AVG/ePrivacy (25 sep 2026): een gclid of utm-waarde op het toestel bewaren
+   mag pas met toestemming voor marketing. Zonder die toestemming blijven ze in
+   het geheugen van de pagina, zodat een aanvraag in hetzelfde bezoek toch
+   meldt waar ze vandaan komt; niets wordt op het toestel geschreven. */
+let utmInGeheugen: UtmParams = {};
+function magBewaren(): boolean {
+  try {
+    const raw = window.localStorage.getItem('ab_bouw_consent_v1');
+    return !!raw && JSON.parse(raw).marketing === true;
+  } catch {
+    return false;
+  }
+}
+
 // gbraid/wbraid = iOS/app + web-to-app click-ids; Google strips gclid op iOS/Safari,
 // dus deze parallel vangen is nodig voor volledige attributie (research 2026).
 const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid', 'fbclid'] as const;
@@ -67,10 +81,26 @@ export function captureUtm() {
       if (v) found[k] = v;
     });
     if (Object.keys(found).length > 0) {
-      const existing = readUtm();
-      const merged: UtmParams = { ...existing, ...found, ...{ captured_at: new Date().toISOString() } as UtmParams };
-      window.localStorage.setItem(LS_UTM_KEY, JSON.stringify(merged));
+      utmInGeheugen = { ...utmInGeheugen, ...found };
+      if (magBewaren()) {
+        const existing = readUtm();
+        const merged: UtmParams = { ...existing, ...found, ...{ captured_at: new Date().toISOString() } as UtmParams };
+        window.localStorage.setItem(LS_UTM_KEY, JSON.stringify(merged));
+      }
     }
+    /* Geeft de bezoeker later toestemming, dan pas bewaren; trekt hij ze in,
+       dan wissen. */
+    window.addEventListener('ab-bouw-consent-changed', () => {
+      try {
+        if (magBewaren()) {
+          if (Object.keys(utmInGeheugen).length) {
+            window.localStorage.setItem(LS_UTM_KEY, JSON.stringify({ ...readUtm(), ...utmInGeheugen, captured_at: new Date().toISOString() }));
+          }
+        } else {
+          window.localStorage.removeItem(LS_UTM_KEY);
+        }
+      } catch { /* ignore */ }
+    });
   } catch {
     /* ignore */
   }
@@ -87,7 +117,7 @@ function readUtm(): UtmParams {
 }
 
 export function getUtmParams(): UtmParams {
-  return readUtm();
+  return { ...readUtm(), ...utmInGeheugen };
 }
 
 export function trackPageView(path: string) {
