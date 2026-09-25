@@ -263,6 +263,18 @@
       "r1": "6% btw bij woning 10+ jaar",
       "r2": "Hulp bij Mijn VerbouwPremie",
       "url": "https://www.abgroep.be/lp/dakwerken#top"
+    },
+    {
+      "tekst": "Nieuw dak",
+      "r1": "Volledig nieuw dak",
+      "r2": "Pannen, leien of plat dak",
+      "url": "https://www.abgroep.be/lp/dakwerken?dienst=nieuw-dak"
+    },
+    {
+      "tekst": "Dakrenovatie",
+      "r1": "Uw dakstructuur blijft staan",
+      "r2": "Nieuwe pannen en onderdak",
+      "url": "https://www.abgroep.be/lp/dakwerken?dienst=renovatie"
     }
   ],
   "highlights": [
@@ -302,11 +314,10 @@
     {
       "kop": "Diensten",
       "waarden": [
+        "Nieuw dak",
         "Dakrenovatie",
-        "Dakherstelling",
         "Dakisolatie",
-        "Nieuw pannendak",
-        "Nieuw plat dak"
+        "Dakherstelling"
       ]
     }
   ]

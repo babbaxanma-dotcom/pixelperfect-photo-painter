@@ -232,13 +232,13 @@ export const DAKWERKEN: KgjInhoud = {
      Bron van de teksten: de dakwerkenpagina van AB zelf (_divisies.ts: "volledig
      afgebroken en opnieuw opgebouwd, met nieuw onderdak"; "onderdak, tengels en
      panlatten"). De bedekkingen van een plat dak zijn de keuzes uit de calculator.
-     Het verschil tussen de eerste twee: bij een nieuw dak gaat alles eraf, bij
-     een renovatie blijft de dakstructuur staan.
+     Nieuw dak: Mohammeds woorden "Volledig nieuw dak" (25 sep: "want anders haal
+     je nieuwbouw eruit"). Bij een renovatie blijft de dakstructuur staan.
      Elke id is een anker voor een sitelink (/lp/dakwerken#nieuw-dak). */
   diensten: {
     kop: 'Onze diensten',
     lijst: [
-      { id: 'nieuw-dak', icoon: 'dienst-nieuw', naam: 'Nieuw dak', tekst: 'Wij breken uw oude dak af en bouwen het volledig nieuw op. Met pannen of leien, of als plat dak in EPDM, roofing of bitumen.' },
+      { id: 'nieuw-dak', icoon: 'dienst-nieuw', naam: 'Nieuw dak', tekst: 'Volledig nieuw dak, met pannen of leien, of als plat dak in EPDM, roofing of bitumen.' },
       { id: 'renovatie', icoon: 'dienst-renovatie', naam: 'Dakrenovatie', tekst: 'Uw dakstructuur blijft staan. Wij vernieuwen de pannen of leien, samen met het onderdak en de panlatten.' },
       { id: 'isolatie', icoon: 'dienst-isolatie', naam: 'Dakisolatie', tekst: 'Wij isoleren uw dak tijdens de renovatie of als aparte opdracht.' },
       { id: 'herstelling', icoon: 'dienst-herstel', naam: 'Dakherstelling', tekst: 'Wij herstellen een lek of schade aan uw hellend of plat dak.' },

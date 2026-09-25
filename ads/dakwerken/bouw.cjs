@@ -111,14 +111,20 @@ const SITELINKS = [
   /* 25 sep: Google raadt 6 sitelinks aan, Dural toont er tot 8. De vijfde wijst naar de
      hero, waar de 6% btw en de premiebegeleiding als vinkjes staan. */
   { tekst: '6% btw en premies', r1: '6% btw bij woning 10+ jaar', r2: 'Hulp bij Mijn VerbouwPremie', url: URL + '#top' },
+  /* 25 sep, de twee grote diensten van de dienstensectie. Mohammed: "nee niet naar de
+     nieuwe ankers op pagina", "het mag bovenaan komen want daar moeten ze ook zijn":
+     ze landen bovenaan bij de calculator. De parameter geeft elke sitelink een eigen
+     URL (Google weigert twee sitelinks met dezelfde) en de pagina opent zonder anker. */
+  { tekst: 'Nieuw dak', r1: 'Volledig nieuw dak', r2: 'Pannen, leien of plat dak', url: URL + '?dienst=nieuw-dak' },
+  { tekst: 'Dakrenovatie', r1: 'Uw dakstructuur blijft staan', r2: 'Nieuwe pannen en onderdak', url: URL + '?dienst=renovatie' },
 ];
 const HIGHLIGHTS = ['Gratis dakinspectie', 'Tien jaar garantie', 'Premiebegeleiding', 'Ruim 15 jaar ervaring', 'VCA-gecertificeerd', 'Volledig verzekerd', 'Vrijblijvende offerte',
   'Aanvraag in 2 minuten', '6% btw vanaf 10 jaar'];
-/* 25 sep: tweede snippet met de drie soorten werk uit de calculator en de subkop van de
-   landingspagina ("dakrenovaties, herstellingen en isolaties"). */
+/* 25 sep: tweede snippet = de vier diensten van de landingspagina, in dezelfde volgorde
+   (Mohammed: "de diensten moeten zijn, nieuw dak, dakrenovatie, dakisolatie, dakherstelling"). */
 const SNIPPETS = [
   { kop: 'Typen', waarden: ['Pannendak', 'Leien dak', 'Plat dak', 'EPDM', 'Roofing', 'Bitumen'] },
-  { kop: 'Diensten', waarden: ['Dakrenovatie', 'Dakherstelling', 'Dakisolatie', 'Nieuw pannendak', 'Nieuw plat dak'] },
+  { kop: 'Diensten', waarden: ['Nieuw dak', 'Dakrenovatie', 'Dakisolatie', 'Dakherstelling'] },
 ];
 const SNIPPET = SNIPPETS[0];
 
