@@ -107,10 +107,10 @@
         "Mijn VerbouwPremie-begeleiding",
         "Pannendak vervangen",
         "Nieuw dak met isolatie",
-        "Een nieuw dak voor decennia",
+        "AB Bouw Groep",
         "Vraag uw gratis offerte aan",
         "Dak aan vervanging toe?",
-        "Eerst de prijs, dan beslissen",
+        "{KeyWord:Nieuw dak laten plaatsen}",
         "Dak vernieuwen in {LOCATION(City):uw regio}",
         "Kostprijs nieuw dak"
       ],
@@ -219,8 +219,8 @@
         "Nieuw plat dak in EPDM",
         "Roofing of EPDM vernieuwen",
         "Plat dak met nieuwe isolatie",
-        "Offerte gratis en vrijblijvend",
-        "Plat dak aan vervanging toe?",
+        "AB Bouw Groep: platte daken",
+        "{KeyWord:Nieuw plat dak}",
         "EPDM laten leggen",
         "Nieuw plat dak in {LOCATION(City):uw regio}",
         "Plat dak laten vervangen"
@@ -257,6 +257,12 @@
       "r1": "In vijf duidelijke stappen",
       "r2": "U weet vooraf wat er gebeurt",
       "url": "https://www.abgroep.be/lp/dakwerken#werkwijze"
+    },
+    {
+      "tekst": "6% btw en premies",
+      "r1": "6% btw bij woning 10+ jaar",
+      "r2": "Hulp bij Mijn VerbouwPremie",
+      "url": "https://www.abgroep.be/lp/dakwerken#top"
     }
   ],
   "highlights": [
@@ -266,7 +272,9 @@
     "Ruim 15 jaar ervaring",
     "VCA-gecertificeerd",
     "Volledig verzekerd",
-    "Vrijblijvende offerte"
+    "Vrijblijvende offerte",
+    "Aanvraag in 2 minuten",
+    "6% btw vanaf 10 jaar"
   ],
   "snippet": {
     "kop": "Typen",
@@ -278,5 +286,28 @@
       "Roofing",
       "Bitumen"
     ]
-  }
+  },
+  "snippets": [
+    {
+      "kop": "Typen",
+      "waarden": [
+        "Pannendak",
+        "Leien dak",
+        "Plat dak",
+        "EPDM",
+        "Roofing",
+        "Bitumen"
+      ]
+    },
+    {
+      "kop": "Diensten",
+      "waarden": [
+        "Dakrenovatie",
+        "Dakherstelling",
+        "Dakisolatie",
+        "Nieuw pannendak",
+        "Nieuw plat dak"
+      ]
+    }
+  ]
 }

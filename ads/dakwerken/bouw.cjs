@@ -46,10 +46,13 @@ const GROEPEN = {
       'Mijn VerbouwPremie-begeleiding',
       'Pannendak vervangen',
       'Nieuw dak met isolatie',
-      'Een nieuw dak voor decennia',
+      /* 25 sep, Transparency Center: de langstlopende advertenties van de grote namen
+         dragen de bedrijfsnaam als kop ("Dural Bouwgroep" 1414 dagen, "OVB Construct"
+         1027) en herhalen het zoekwoord ("Experts in {KeyWord:platte daken}", 1669 dagen). */
+      'AB Bouw Groep',
       'Vraag uw gratis offerte aan',
       'Dak aan vervanging toe?',
-      'Eerst de prijs, dan beslissen',
+      '{KeyWord:Nieuw dak laten plaatsen}',
       'Dak vernieuwen in {LOCATION(City):uw regio}',
       'Kostprijs nieuw dak',
     ],
@@ -82,8 +85,8 @@ const GROEPEN = {
       'Nieuw plat dak in EPDM',
       'Roofing of EPDM vernieuwen',
       'Plat dak met nieuwe isolatie',
-      'Offerte gratis en vrijblijvend',
-      'Plat dak aan vervanging toe?',
+      'AB Bouw Groep: platte daken',
+      '{KeyWord:Nieuw plat dak}',
       'EPDM laten leggen',
       'Nieuw plat dak in {LOCATION(City):uw regio}',
       'Plat dak laten vervangen',
@@ -105,9 +108,19 @@ const SITELINKS = [
   { tekst: 'Bereken uw dakprijs', r1: 'Klaar in 2 minuten', r2: 'Gratis en vrijblijvend', url: URL + '#rekenaar' },
   { tekst: 'Waarom AB Bouw Groep', r1: 'Tien jaar garantie op dakwerk', r2: 'Volledige premiebegeleiding', url: URL + '#waarom' },
   { tekst: 'Zo verloopt uw dakwerk', r1: 'In vijf duidelijke stappen', r2: 'U weet vooraf wat er gebeurt', url: URL + '#werkwijze' },
+  /* 25 sep: Google raadt 6 sitelinks aan, Dural toont er tot 8. De vijfde wijst naar de
+     hero, waar de 6% btw en de premiebegeleiding als vinkjes staan. */
+  { tekst: '6% btw en premies', r1: '6% btw bij woning 10+ jaar', r2: 'Hulp bij Mijn VerbouwPremie', url: URL + '#top' },
 ];
-const HIGHLIGHTS = ['Gratis dakinspectie', 'Tien jaar garantie', 'Premiebegeleiding', 'Ruim 15 jaar ervaring', 'VCA-gecertificeerd', 'Volledig verzekerd', 'Vrijblijvende offerte'];
-const SNIPPET = { kop: 'Typen', waarden: ['Pannendak', 'Leien dak', 'Plat dak', 'EPDM', 'Roofing', 'Bitumen'] };
+const HIGHLIGHTS = ['Gratis dakinspectie', 'Tien jaar garantie', 'Premiebegeleiding', 'Ruim 15 jaar ervaring', 'VCA-gecertificeerd', 'Volledig verzekerd', 'Vrijblijvende offerte',
+  'Aanvraag in 2 minuten', '6% btw vanaf 10 jaar'];
+/* 25 sep: tweede snippet met de drie soorten werk uit de calculator en de subkop van de
+   landingspagina ("dakrenovaties, herstellingen en isolaties"). */
+const SNIPPETS = [
+  { kop: 'Typen', waarden: ['Pannendak', 'Leien dak', 'Plat dak', 'EPDM', 'Roofing', 'Bitumen'] },
+  { kop: 'Diensten', waarden: ['Dakrenovatie', 'Dakherstelling', 'Dakisolatie', 'Nieuw pannendak', 'Nieuw plat dak'] },
+];
+const SNIPPET = SNIPPETS[0];
 
 /* ---------- Uitsluitingen ---------- */
 const BRON = require('./negatives-bron.cjs');
@@ -209,12 +222,18 @@ const VERBODEN = [
 ];
 // {LOCATION(City):standaard} telt voor de lengte als de standaardtekst; een te lange gemeente
 // valt bij Google zelf terug op die standaardtekst.
-const LOCATIE = /\{LOCATION\(City\):([^}]*)\}/g;
+const LOCATIE = /\{LOCATION\(City\):([^}]*)\}|\{KeyWord:([^}]*)\}/g;
+// 25 sep: {KeyWord:standaard} telt net als de locatie als zijn standaardtekst; een te lang
+// zoekwoord valt bij Google terug op die standaard. Het zoekwoord zelf komt uit de eigen
+// zoekwoordenlijst en draagt dus geen plaatsnaam.
 // Elke claim met een getal moet letterlijk op /lp/dakwerken staan (inhoud.ts, cf9ea56).
 const TOEGESTAAN_GETAL = [/\b2 minuten\b/, /6%/, /\b(10|tien) jaar\b/i, /\b15 jaar\b/, /\b(6|zes) (korte )?vragen\b/i, /\b10\+ jaar\b/];
 
 function toets(tekst, max, soort) {
-  const zichtbaar = tekst.replace(LOCATIE, '$1');
+  const zichtbaar = tekst.replace(LOCATIE, (_, loc, kw) => loc ?? kw);
+  /* Invoeging met een ander formaat dan deze twee (bv. {KEYWORD:...} of {Keyword:...})
+     verandert de hoofdletters; alleen {KeyWord:} en {LOCATION(City):} zijn afgesproken. */
+  if (/\{(?!KeyWord:|LOCATION\(City\):)[^}]*\}/.test(tekst)) fouten.push(`${soort} "${tekst}": onbekende invoeging`);
   if (zichtbaar.length > max) fouten.push(`${soort} ${zichtbaar.length}/${max} tekens: "${tekst}"`);
   const zonder = tekst.replace(LOCATIE, '');
   for (const v of VERBODEN) if (v.re.test(v.zonderLocatie ? zonder : zichtbaar)) fouten.push(`${soort} "${tekst}": ${v.waarom}`);
@@ -242,7 +261,12 @@ for (const [naam, g] of Object.entries(GROEPEN)) {
 for (const s of SITELINKS) { toets(s.tekst, 25, 'sitelink'); toets(s.r1, 35, 'sitelinkregel'); toets(s.r2, 35, 'sitelinkregel'); }
 if (new Set(SITELINKS.map((s) => s.url)).size !== SITELINKS.length) fouten.push('twee sitelinks met dezelfde URL');
 for (const h of HIGHLIGHTS) toets(h, 25, 'highlight');
-for (const w of SNIPPET.waarden) if (w.length > 25) fouten.push(`snippetwaarde te lang: ${w}`);
+for (const s of SNIPPETS) {
+  if (s.waarden.length < 3) fouten.push(`snippet ${s.kop}: minstens 3 waarden`);
+  for (const w of s.waarden) { if (w.length > 25) fouten.push(`snippetwaarde te lang: ${w}`); toets(w, 25, `snippet ${s.kop}`); }
+}
+/* Positieve controle op de invoeging: een te lange standaardtekst moet vallen. */
+{ const voor = fouten.length; toets('{KeyWord:Dit is een veel te lange standaardkop}', 30, 'controle'); if (fouten.length === voor) { console.error('TOETS DEFECT: KeyWord-lengte wordt niet gemeten'); process.exit(2); } fouten.pop(); }
 
 if (fouten.length) { for (const f of fouten) console.error('FOUT: ' + f); process.exit(1); }
 
@@ -254,7 +278,7 @@ for (const [naam, g] of Object.entries(GROEPEN)) {
   fs.writeFileSync(path.join(MAP, `2-uitsluiten-${slug}.txt`), g.kruis.map((t) => `"${t}"`).join('\n') + '\n');
 }
 fs.writeFileSync(path.join(MAP, '2-uitsluiten-campagne.txt'), negs.map((n) => plak(n.t, n.ty)).join('\n') + '\n');
-fs.writeFileSync(path.join(MAP, '3-advertenties.json'), JSON.stringify({ url: URL, groepen: GROEPEN, sitelinks: SITELINKS, highlights: HIGHLIGHTS, snippet: SNIPPET }, null, 2) + '\n');
+fs.writeFileSync(path.join(MAP, '3-advertenties.json'), JSON.stringify({ url: URL, groepen: GROEPEN, sitelinks: SITELINKS, highlights: HIGHLIGHTS, snippet: SNIPPET, snippets: SNIPPETS }, null, 2) + '\n');
 
 console.log(`Groen. ${Object.values(GROEPEN).reduce((s, g) => s + g.zoekwoorden.length, 0)} zoekwoorden, ${negs.length} campagne-uitsluitingen, 2 advertenties.`);
 console.log(`Koperzoekopdrachten: ${KOPER.length} getoetst, ${geblokt.length} bewust geblokkeerd:`);
