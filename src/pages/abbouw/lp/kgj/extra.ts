@@ -45,7 +45,14 @@ export const KGJ_EXTRA = `
   background: var(--wit); border: 1px solid var(--lijn); border-radius: var(--r); color: var(--inkt);
   font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 600; font-size: 15.5px; line-height: 1.3;
   transition: border-color .15s ease, box-shadow .15s ease, background .15s ease; }
-.kgjx .kgj-reken__keuze:hover { border-color: var(--merk); box-shadow: 0 0 0 1px var(--merk); }
+/* Hover alleen met een echte muis. Op een telefoon blijft :hover na een tik
+   hangen op die plek, en het antwoord dat bij de volgende vraag daar staat,
+   leek dan al gekozen (Mohammed, 25 sep: "1 ding is altijd geselecteerd voor
+   het klikken ... zeker op telefoon"). */
+@media (hover: hover) and (pointer: fine) {
+  .kgjx .kgj-reken__keuze:hover { border-color: var(--merk); box-shadow: 0 0 0 1px var(--merk); }
+  .kgjx .kgj-reken__keuze:hover .kgj-reken__icoon { background: var(--accent); color: var(--merk-diep); }
+}
 .kgjx .kgj-reken__keuze.is-aan { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); background: var(--accent-licht); }
 .kgjx .kgj-reken__keuze:focus-visible { outline: 3px solid var(--merk); outline-offset: 2px; }
 
@@ -130,8 +137,7 @@ export const KGJ_EXTRA = `
   border-radius: 10px; background: var(--accent-licht); color: var(--accent-diep);
   transition: background .15s ease, color .15s ease; }
 .kgjx .kgj-reken__icoon svg { width: 22px; height: 22px; }
-.kgjx .kgj-reken__keuze.is-aan .kgj-reken__icoon,
-.kgjx .kgj-reken__keuze:hover .kgj-reken__icoon { background: var(--accent); color: var(--merk-diep); }
+.kgjx .kgj-reken__keuze.is-aan .kgj-reken__icoon { background: var(--accent); color: var(--merk-diep); }
 .kgjx .kgj-reken__keuze .kgj-reken__tekst { display: flex; flex-direction: column; gap: 3px; min-width: 0;
   font: inherit; color: inherit; }
 .kgjx .kgj-reken__keuze.is-aan .kgj-reken__tekst { color: inherit; }

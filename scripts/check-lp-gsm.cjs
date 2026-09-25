@@ -96,8 +96,37 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   await wacht(300);
   await page.screenshot({ path: `${UIT}/02-calculator-formulier.png` });
 
-  /* 4. Plat + renovatie, dak jonger dan 10 jaar (terug naar vraag 1) */
   const naarBegin = async () => { for (let i = 0; i < 9; i++) { await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__terug')?.click()); await wacht(150); } };
+
+  /* 3b. Tikken zoals op een telefoon: het antwoord dat na de tik op dezelfde
+     plek staat, mag er niet gekozen uitzien (Mohammed 25 sep: "1 ding is
+     altijd geselecteerd voor het klikken ... zeker op telefoon"). Oorzaak was
+     :hover die op een aanraakscherm blijft hangen. */
+  await naarBegin();
+  await page.evaluate(() => document.querySelector('#rekenaar').scrollIntoView({ block: 'center' }));
+  await wacht(300);
+  const tikOp = async (label) => {
+    const r = await page.evaluate((l) => { const b = [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')].find((k) => k.textContent.trim().startsWith(l)); const x = b.getBoundingClientRect(); return { x: x.left + x.width / 2, y: x.top + x.height / 2 }; }, label);
+    await page.touchscreen.tap(r.x, r.y);
+    await wacht(400);
+    return r;
+  };
+  const plek = await tikOp('Hellend dak');
+  const naTik = await page.evaluate(({ x, y }) => {
+    const el = document.elementFromPoint(x, y)?.closest('.kgj-reken__keuze');
+    if (!el) return { geraakt: false };
+    const s = getComputedStyle(el);
+    /* Referentie: een ander antwoord dat niet als gekozen gemarkeerd is (na
+       "Terug" blijft het vorige antwoord bewust gemarkeerd). */
+    const rust = getComputedStyle([...document.querySelectorAll('#rekenaar .kgj-reken__keuze')].find((k) => k !== el && !k.classList.contains('is-aan')));
+    return { geraakt: true, label: el.querySelector('strong').textContent.trim(), rand: s.borderColor, schaduw: s.boxShadow, rustRand: rust.borderColor, rustSchaduw: rust.boxShadow, aan: el.classList.contains('is-aan'),
+      aanraak: matchMedia('(hover: none)').matches || matchMedia('(pointer: coarse)').matches };
+  }, plek);
+  meld(naTik.aanraak, 'testbrowser meldt zich als aanraakscherm (anders meet 3b niets)');
+  meld(!naTik.geraakt || (!naTik.aan && naTik.rand === naTik.rustRand && naTik.schaduw === naTik.rustSchaduw),
+    'na een tik ziet het volgende antwoord op die plek er niet gekozen uit', naTik.geraakt ? `${naTik.label}: rand ${naTik.rand} / rust ${naTik.rustRand}` : 'geen antwoord op die plek');
+
+  /* 4. Plat + renovatie, dak jonger dan 10 jaar (terug naar vraag 1) */
   await naarBegin();
   for (const k of ['Plat dak', 'Renovatie', 'Jonger dan 10 jaar']) { await klikKeuze(k); await wacht(250); }
   const plat = await keuzesNu();
