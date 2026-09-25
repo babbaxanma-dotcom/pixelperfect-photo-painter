@@ -63,7 +63,7 @@ export type KgjInhoud = {
   /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart. */
   rekenaar: { titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string };
   waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto] };
-  /** Diensten onder "Waarom": id is het anker voor een sitelink (/lp/dakwerken#hellend). */
+  /** Diensten onder "Waarom": id is het anker voor een sitelink (/lp/dakwerken#nieuw-dak). */
   diensten: { kop: string; lijst: { id: string; icoon: IcoonNaam; naam: string; tekst: string }[] };
   voorna: { kop: string; onder: string; voor: Foto; na: Foto; label: string };
   /* Foto's van uitgevoerd werk. Dit staat op de plek waar de demo reviews
@@ -226,17 +226,20 @@ export const DAKWERKEN: KgjInhoud = {
   },
 
   /* Mohammed, 25 sep: "onder de sectie waarom ab bouw groep 1 korte diensten sectie,
-     diensten met mooie iconen gewoon, naam, en de nodige tekst". De vier diensten
-     komen uit de pagina zelf: hellend en plat dak (vraag 1 van de calculator),
-     herstelling en isolatie (vraag 2), en zijn subkop "dakrenovaties,
-     herstellingen en isolaties". De bedekkingen zijn de keuzes uit de calculator.
-     De ankers (#hellend, #plat) zijn de sitelinks "Hellende daken" en "Platte
-     daken", naar het voorbeeld van Kijzer en Recotex (Transparency Center 25 sep). */
+     diensten met mooie iconen gewoon, naam, en de nodige tekst", daarna "de
+     diensten moeten zijn, nieuw dak, dakrenovatie, dakisolatie, dakherstelling"
+     en "er zijn genoeg mensen dat nieuw dak willen ipv renovatie".
+     Bron van de teksten: de dakwerkenpagina van AB zelf (_divisies.ts: "volledig
+     afgebroken en opnieuw opgebouwd, met nieuw onderdak"; "onderdak, tengels en
+     panlatten"). De bedekkingen van een plat dak zijn de keuzes uit de calculator.
+     Het verschil tussen de eerste twee: bij een nieuw dak gaat alles eraf, bij
+     een renovatie blijft de dakstructuur staan.
+     Elke id is een anker voor een sitelink (/lp/dakwerken#nieuw-dak). */
   diensten: {
     kop: 'Onze diensten',
     lijst: [
-      { id: 'hellend', icoon: 'dienst-hellend', naam: 'Hellend dak', tekst: 'Wij vernieuwen uw pannendak of leien dak, met isolatie als u dat wenst.' },
-      { id: 'plat', icoon: 'dienst-plat', naam: 'Plat dak', tekst: 'Wij leggen een nieuw plat dak in EPDM, roofing of bitumen.' },
+      { id: 'nieuw-dak', icoon: 'dienst-nieuw', naam: 'Nieuw dak', tekst: 'Wij breken uw oude dak af en bouwen het volledig nieuw op. Met pannen of leien, of als plat dak in EPDM, roofing of bitumen.' },
+      { id: 'renovatie', icoon: 'dienst-renovatie', naam: 'Dakrenovatie', tekst: 'Uw dakstructuur blijft staan. Wij vernieuwen de pannen of leien, samen met het onderdak en de panlatten.' },
       { id: 'isolatie', icoon: 'dienst-isolatie', naam: 'Dakisolatie', tekst: 'Wij isoleren uw dak tijdens de renovatie of als aparte opdracht.' },
       { id: 'herstelling', icoon: 'dienst-herstel', naam: 'Dakherstelling', tekst: 'Wij herstellen een lek of schade aan uw hellend of plat dak.' },
     ],

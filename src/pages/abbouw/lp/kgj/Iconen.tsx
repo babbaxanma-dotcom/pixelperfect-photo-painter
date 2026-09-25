@@ -15,7 +15,7 @@ export type IcoonNaam =
   | 'isolatie' | 'geenisolatie' | 'asbest' | 'veilig' | 'twijfel'
   | 'snel' | 'drie' | 'later' | 'verken'
   | 'herstel' | 'nieuwdak' | 'jong' | 'midden' | 'oud' | 'platdak'
-  | 'dienst-hellend' | 'dienst-plat' | 'dienst-isolatie' | 'dienst-herstel';
+  | 'dienst-nieuw' | 'dienst-renovatie' | 'dienst-isolatie' | 'dienst-herstel';
 
 const Svg = ({ children }: { children: ReactNode }) => (
   <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth={2}
@@ -159,21 +159,23 @@ const ICONEN: Record<IcoonNaam, () => JSX.Element> = {
   /* ── iconen van de dienstensectie (Mohammed 25 sep: "betere clean iconen") ──
      Ronde hoeken en één lijndikte, in de stijl van lucide, zodat de vier als
      één set lezen. */
-  /* Hellend dak: een huis met een schuin dak en een deur. */
-  'dienst-hellend': () => (
+  /* Nieuw dak: een huis met een plus (lucide "house-plus", v0.462). */
+  'dienst-nieuw': () => (
     <Svg>
-      <path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-      <path d="M9.5 21v-6.5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1V21" />
+      <path d="M13.22 2.416a2 2 0 0 0-2.511.057l-7 5.999A2 2 0 0 0 3 10v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7.354" />
+      <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+      <path d="M15 6h6" />
+      <path d="M18 3v6" />
     </Svg>
   ),
-  /* Plat dak: een gebouw met een platte dakrand, twee ramen en een deur. */
-  'dienst-plat': () => (
+  /* Dakrenovatie: een bestaand huis met een tweede daklijn erover, de nieuwe
+     laag op het oude dak. */
+  'dienst-renovatie': () => (
     <Svg>
-      <path d="M3.5 5.5h17a.5.5 0 0 1 .5.5v2.5H3V6a.5.5 0 0 1 .5-.5z" />
-      <path d="M5 8.5V19a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8.5" />
+      <path d="M2 10.5 11.3 2.8a1 1 0 0 1 1.4 0L22 10.5" />
+      <path d="M5 11.2 11.4 6a1 1 0 0 1 1.2 0l6.4 5.2" />
+      <path d="M5 11.2V19a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7.8" />
       <path d="M10 21v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4" />
-      <rect x="8" y="11" width="2.5" height="2.5" rx=".5" />
-      <rect x="13.5" y="11" width="2.5" height="2.5" rx=".5" />
     </Svg>
   ),
   /* Dakisolatie: hetzelfde huis, gevuld met twee lagen isolatie. */

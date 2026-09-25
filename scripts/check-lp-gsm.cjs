@@ -295,6 +295,30 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   await wacht(400);
   await page.screenshot({ path: `${UIT}/06-voet.png` });
 
+  /* 10. Diensten (Mohammed 25 sep: "de diensten moeten zijn, nieuw dak,
+     dakrenovatie, dakisolatie, dakherstelling"). Elk anker is een mogelijke
+     sitelink: na het openen van /lp/dakwerken#id staat die kaart in beeld. */
+  const diensten = await page.evaluate(() => ({
+    kop: document.querySelector('#diensten h2')?.textContent.trim(),
+    namen: [...document.querySelectorAll('#diensten .kgj-dienst h3')].map((h) => h.textContent.trim()),
+    ids: [...document.querySelectorAll('#diensten .kgj-dienst')].map((d) => d.id),
+    iconen: [...document.querySelectorAll('#diensten .kgj-dienst__icoon svg')].length,
+  }));
+  meld(diensten.kop === 'Onze diensten', 'kop dienstensectie', diensten.kop);
+  meld(diensten.namen.join('|') === 'Nieuw dak|Dakrenovatie|Dakisolatie|Dakherstelling', 'diensten: nieuw dak, dakrenovatie, dakisolatie, dakherstelling', diensten.namen.join(' | '));
+  meld(diensten.iconen === 4, 'elke dienst heeft een icoon', `${diensten.iconen} iconen`);
+  const ankers = [];
+  for (const id of diensten.ids) {
+    const q = await browser.newPage();
+    await q.setViewport({ width: 390, height: 844, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
+    await q.evaluateOnNewDocument(() => localStorage.setItem('ab_bouw_consent_v1', JSON.stringify({ analytics: false, marketing: false })));
+    await q.goto(`${URL}#${id}`, { waitUntil: 'networkidle0' });
+    await wacht(700);
+    ankers.push(await q.evaluate((a) => { const r = document.getElementById(a).getBoundingClientRect(); return r.top >= 0 && r.bottom <= innerHeight ? a : `${a} buiten beeld (${Math.round(r.top)})`; }, id));
+    await q.close();
+  }
+  meld(ankers.length === 4 && ankers.every((a) => !a.includes('buiten')), 'elk dienstanker springt naar zijn kaart', ankers.join(' | '));
+
   meld(fouten.length === 0, 'geen fouten in de console', fouten.slice(0, 3).join(' | '));
   await browser.close();
 
