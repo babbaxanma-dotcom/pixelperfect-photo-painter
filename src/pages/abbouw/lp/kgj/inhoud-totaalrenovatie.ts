@@ -17,12 +17,11 @@
  */
 import type { KgjInhoud } from './inhoud';
 
-import witteWoning from '@/assets/lp-diensten/realisaties/totaalrenovatie-p2-a.jpg';
-import rijwoning from '@/assets/lp-diensten/realisaties/totaalrenovatie-p1-a.jpg';
 import openKeuken from '@/assets/lp-diensten/realisaties/totaalrenovatie-p5-a.jpg';
 import keukeneiland from '@/assets/lp-diensten/realisaties/totaalrenovatie-p6-a.jpg';
 import tvWand from '@/assets/lp-diensten/realisaties/interieur-tvwand.jpg';
-import leefruimte from '@/assets/lp-diensten/totaalrenovatie-hero.jpg';
+import badkamer from '@/assets/lp-diensten/realisaties/badkamer-nieuw.jpg';
+import keuken from '@/assets/lp-diensten/totaalrenovatie-hero.jpg';
 import doorgang from '@/assets/lp-diensten/totaalrenovatie-what.jpg';
 import uitbouwVoor from '@/assets/lp-diensten/uitbreiding-voor.jpg';
 import uitbouwNa from '@/assets/lp-diensten/uitbreiding-na.jpg';
@@ -42,11 +41,14 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     onder: 'Totaalrenovaties in Regio Antwerpen en omstreken. Onze eigen ploegen nemen elk vak voor hun rekening, volgens één planning.',
     /* Mohammeds eigen drie vinkjes, letterlijk (26 sep). */
     bewijs: ['1 vast aanspreekpunt van ontwerp tot oplevering', 'Transparante offerte & strikte planning', 'Echt vakmanschap en perfecte afwerking'],
+    /* Mohammed, 26 sep: "laat enkel de keuken foto, badkamerrenovatie foto van
+       abgroep die we bij badkamerrenovatie lp in de sectie hebben onder hero, en
+       dan nog die leefruimte echte foto". De badkamer is de foto uit de sectie
+       onder de hero van /lp/badkamerrenovatie (replica/inhoud.ts, bkOver). */
     dias: [
-      { src: witteWoning, alt: 'Woning met nieuwe witte gevel en antraciet dak na renovatie door AB Bouw Groep' },
-      { src: openKeuken, alt: 'Open keuken met eethoek na totaalrenovatie door AB Bouw Groep' },
-      { src: rijwoning, alt: 'Rijwoning met nieuwe gevelpleister en vernieuwd dak door AB Bouw Groep' },
-      { src: leefruimte, alt: 'Keuken met eiland en glaspui na een totaalrenovatie door AB Bouw Groep' },
+      { src: keuken, alt: 'Keuken met eiland en glaspui na een totaalrenovatie door AB Bouw Groep' },
+      { src: badkamer, alt: 'Badkamer met dubbele lavabo op eiken meubel, bad en inloopdouche, door AB Bouw Groep' },
+      { src: openKeuken, alt: 'Open leefruimte met keuken en eethoek na totaalrenovatie door AB Bouw Groep' },
     ],
   },
 
@@ -143,7 +145,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     onder: 'U weet vooraf wat er gebeurt en wanneer.',
     stappen: [
       { titel: 'Aanvraag', tekst: 'U doet uw aanvraag via het formulier hieronder of rechtstreeks telefonisch.' },
-      { titel: 'Plaatsbezoek', tekst: 'We bekijken de woning samen met u en zeggen meteen wat haalbaar is.' },
+      { titel: 'Plaatsbezoek', tekst: 'We bekijken de woning samen met u en overlopen uw wensen.' },
       { titel: 'Offerte', tekst: 'U krijgt de volledige prijs op papier, met per onderdeel wat erin zit.' },
       { titel: 'Uitvoering', tekst: 'Dezelfde ploeg komt elke dag terug. Wij schermen de woning af tegen stof en ruimen elke avond op.' },
       { titel: 'Oplevering', tekst: 'We lopen samen door de woning. Uw opmerkingen werken we af voordat de werf sluit.' },
@@ -155,7 +157,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     tekst: '',
     punten: [
       'We bekijken uw woning ter plaatse',
-      'Samen overlopen we de bevindingen',
+      'Samen overlopen we uw wensen',
       'U ontvangt een vrijblijvende offerte',
     ],
     foto: { src: doorgang, alt: 'Afgewerkte leefruimte uit een totaalrenovatie van AB Bouw Groep' },

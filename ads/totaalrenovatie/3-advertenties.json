@@ -1,0 +1,263 @@
+{
+  "campagne": "AB Bouw — Totaalrenovatie — Search",
+  "url": "https://www.abgroep.be/lp/totaalrenovatie",
+  "instellingen": {
+    "status": "Onderbroken",
+    "budgetPerDag": 40,
+    "bieding": "Klikken maximaliseren, max. CPC € 8",
+    "netwerk": "Alleen Google Zoeken (geen zoekpartners, geen Display)",
+    "aiMax": "uit",
+    "breedZoeken": "uit",
+    "taal": "Nederlands",
+    "locatie": "Dezelfde 42 gemeenten als de dakcampagne (arrondissementen Antwerpen en Mechelen, Beveren-Kruibeke-Zwijndrecht), stad Antwerpen uitgesloten (Bardh, 23 sep), optie Aanwezigheid",
+    "doelen": "Leadformulieren, Leads van telefoongesprekken, Offertes aanvragen (zoals dak)",
+    "urlAchtervoegsel": "utm_source=google&utm_medium=cpc&utm_campaign=totaalrenovatie&utm_term={keyword}"
+  },
+  "budget": {
+    "perDag": 40,
+    "klikprijs": 4.22,
+    "klikkenPerLead": 31
+  },
+  "groepen": {
+    "Totaalrenovatie": {
+      "kern": "totaalrenovatie",
+      "zoekwoorden": [
+        [
+          "totaalrenovatie",
+          "w"
+        ],
+        [
+          "totaalrenovatie",
+          "e"
+        ],
+        [
+          "totaalrenovatie woning",
+          "w"
+        ],
+        [
+          "totaalrenovatie huis",
+          "w"
+        ],
+        [
+          "woning volledig renoveren",
+          "w"
+        ],
+        [
+          "huis volledig renoveren",
+          "w"
+        ],
+        [
+          "aannemer totaalrenovatie",
+          "w"
+        ],
+        [
+          "renovatie aannemer",
+          "w"
+        ],
+        [
+          "aannemer renovatie",
+          "w"
+        ],
+        [
+          "algemene aannemer renovatie",
+          "w"
+        ],
+        [
+          "aannemer verbouwing",
+          "w"
+        ],
+        [
+          "huis gekocht renoveren",
+          "w"
+        ],
+        [
+          "oude woning renoveren",
+          "w"
+        ],
+        [
+          "woning strippen en renoveren",
+          "w"
+        ],
+        [
+          "renovatiebedrijf",
+          "w"
+        ],
+        [
+          "renovatie woning",
+          "w"
+        ],
+        [
+          "huis renoveren",
+          "w"
+        ]
+      ],
+      "pad": [
+        "totaal",
+        "renovatie"
+      ],
+      "koppen": [
+        "Totaalrenovatie van uw woning",
+        "{KeyWord:Aannemer totaalrenovatie}",
+        "Renoveren met eigen ploegen",
+        "AB Bouw Groep: renovatie",
+        "Bereken uw prijs in 2 minuten",
+        "6% btw bij woning 10+ jaar",
+        "Hulp bij Mijn VerbouwPremie",
+        "Gratis plaatsbezoek en offerte",
+        "VCA-gecertificeerd, verzekerd",
+        "Eén planning voor alle werken",
+        "Ruwbouw en afwerking in huis",
+        "Totaalrenovatie in {LOCATION(City):uw regio}",
+        "Huis gekocht om te renoveren?",
+        "Transparante offerte",
+        "Offerte per onderdeel"
+      ],
+      "beschrijvingen": [
+        "Bereken in 2 minuten de prijs van uw renovatie. Gratis plaatsbezoek en offerte.",
+        "Onze eigen ploegen doen elk vak, volgens één planning. VCA-gecertificeerd en verzekerd.",
+        "Woning ouder dan tien jaar? Dan geldt 6% btw. Wij regelen uw Mijn VerbouwPremie.",
+        "U krijgt de volledige prijs op papier, met per onderdeel wat erin zit."
+      ]
+    },
+    "Prijs renovatie": {
+      "kern": "renovatie",
+      "zoekwoorden": [
+        [
+          "renovatie kostprijs",
+          "w"
+        ],
+        [
+          "kostprijs totaalrenovatie",
+          "w"
+        ],
+        [
+          "prijs totaalrenovatie",
+          "w"
+        ],
+        [
+          "wat kost een huis renoveren",
+          "w"
+        ],
+        [
+          "wat kost een totaalrenovatie",
+          "w"
+        ],
+        [
+          "huis renoveren prijs",
+          "w"
+        ],
+        [
+          "woning renoveren kostprijs",
+          "w"
+        ],
+        [
+          "renovatie prijs per m2",
+          "w"
+        ],
+        [
+          "renovatiekosten berekenen",
+          "w"
+        ],
+        [
+          "prijs huis renoveren",
+          "w"
+        ],
+        [
+          "kostprijs renovatie woning",
+          "w"
+        ],
+        [
+          "totaalrenovatie prijs",
+          "w"
+        ]
+      ],
+      "pad": [
+        "prijs",
+        "renovatie"
+      ],
+      "koppen": [
+        "Wat kost uw totaalrenovatie?",
+        "{KeyWord:Prijs totaalrenovatie}",
+        "Bereken uw renovatieprijs",
+        "Prijs in 2 minuten berekend",
+        "AB Bouw Groep: totaalrenovatie",
+        "6% btw voor woning 10+ jaar",
+        "Inclusief premiebegeleiding",
+        "Gratis plaatsbezoek",
+        "Elke post apart op papier",
+        "Eigen ploegen voor elk vak",
+        "Renovatie in {LOCATION(City):uw regio}",
+        "Wat kost een huis renoveren?",
+        "Kostprijs renovatie woning",
+        "VCA-attest en verzekerd",
+        "Strikte planning"
+      ],
+      "beschrijvingen": [
+        "Wat kost uw renovatie? Beantwoord zes korte vragen op onze website. Klaar in 2 minuten.",
+        "Gratis plaatsbezoek: we bekijken uw woning en u krijgt een vrijblijvende offerte.",
+        "Woning ouder dan tien jaar? 6% btw, en wij regelen de aanvraag van uw premie.",
+        "Eigen ploegen voor ruwbouw en afwerking, volgens één planning. VCA en verzekerd."
+      ]
+    }
+  },
+  "sitelinks": [
+    {
+      "tekst": "Bereken uw renovatieprijs",
+      "r1": "Klaar in 2 minuten",
+      "r2": "Gratis en vrijblijvend",
+      "url": "https://www.abgroep.be/lp/totaalrenovatie#rekenaar"
+    },
+    {
+      "tekst": "Gratis plaatsbezoek",
+      "r1": "We bekijken uw woning ter plaatse",
+      "r2": "Daarna een vrijblijvende offerte",
+      "url": "https://www.abgroep.be/lp/totaalrenovatie#contact"
+    },
+    {
+      "tekst": "Onze diensten",
+      "r1": "Afbraak en ruwbouw",
+      "r2": "Pleisterwerk en interieur",
+      "url": "https://www.abgroep.be/lp/totaalrenovatie#diensten"
+    },
+    {
+      "tekst": "Zo verloopt uw renovatie",
+      "r1": "In vijf duidelijke stappen",
+      "r2": "U weet vooraf wat er gebeurt",
+      "url": "https://www.abgroep.be/lp/totaalrenovatie#werkwijze"
+    },
+    {
+      "tekst": "Voor en na",
+      "r1": "Dezelfde uitbouw, voor en na",
+      "r2": "Een werf van AB Bouw Groep",
+      "url": "https://www.abgroep.be/lp/totaalrenovatie#voorna"
+    },
+    {
+      "tekst": "6% btw en premies",
+      "r1": "6% btw bij woning 10+ jaar",
+      "r2": "Hulp bij Mijn VerbouwPremie",
+      "url": "https://www.abgroep.be/lp/totaalrenovatie#waarom"
+    }
+  ],
+  "highlights": [
+    "Gratis plaatsbezoek",
+    "Eigen ploegen",
+    "VCA-gecertificeerd",
+    "Volledig verzekerd",
+    "Offerte per onderdeel",
+    "Premiebegeleiding",
+    "6% btw vanaf 10 jaar",
+    "Prijs in 2 minuten"
+  ],
+  "snippets": [
+    {
+      "kop": "Services",
+      "waarden": [
+        "Afbraak en ruwbouw",
+        "Technieken",
+        "Pleisterwerk",
+        "Vloeren en tegels",
+        "Interieur"
+      ]
+    }
+  ]
+}
