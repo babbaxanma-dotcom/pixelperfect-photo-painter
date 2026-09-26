@@ -56,7 +56,8 @@ export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPr
       postcode: String(f.get('postcode') || '').trim() || undefined,
       gemeente: String(f.get('gemeente') || '').trim() || undefined,
       type_werk: inhoud.divisie,
-      aanvullende_info: 'Aanvraag gratis dakinspectie',
+      /* "Aanvraag gratis dakinspectie" of "Aanvraag gratis plaatsbezoek". */
+      aanvullende_info: 'Aanvraag ' + inhoud.cta.kop.toLowerCase(),
       bron_lead: t.bronLead,
     });
     setBezig(false);

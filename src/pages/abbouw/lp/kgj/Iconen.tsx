@@ -15,7 +15,10 @@ export type IcoonNaam =
   | 'isolatie' | 'geenisolatie' | 'asbest' | 'veilig' | 'twijfel'
   | 'snel' | 'drie' | 'later' | 'verken'
   | 'herstel' | 'nieuwdak' | 'jong' | 'midden' | 'oud' | 'platdak'
-  | 'dienst-nieuw' | 'dienst-renovatie' | 'dienst-isolatie' | 'dienst-herstel';
+  | 'dienst-nieuw' | 'dienst-renovatie' | 'dienst-isolatie' | 'dienst-herstel'
+  | 'appartement' | 'rijwoning' | 'halfopen' | 'vrijstaand'
+  | 'heelhuis' | 'beneden' | 'boven' | 'strippen' | 'deel' | 'afwerking'
+  | 'dienst-ruwbouw' | 'dienst-technieken' | 'dienst-pleister' | 'dienst-interieur';
 
 const Svg = ({ children }: { children: ReactNode }) => (
   <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth={2}
@@ -192,6 +195,108 @@ const ICONEN: Record<IcoonNaam, () => JSX.Element> = {
       <path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9" />
       <path d="m18 15 4-4" />
       <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+    </Svg>
+  ),
+  /* ── totaalrenovatie (26 sep): soort woning, omvang, staat en diensten ── */
+  /* Appartement: lucide "building-2". */
+  appartement: () => (
+    <Svg>
+      <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
+      <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" />
+      <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
+      <path d="M10 6h4M10 10h4M10 14h4M10 18h4" />
+    </Svg>
+  ),
+  /* Rijwoning: drie huizen tegen elkaar, met één grondlijn. */
+  rijwoning: () => (
+    <Svg>
+      <path d="M2.5 20.5v-10l3.25-3 3.25 3v10M9 20.5v-10l3-2.8 3 2.8v10M15 20.5v-10l3.25-3 3.25 3v10" />
+      <path d="M1.5 20.5h21" />
+    </Svg>
+  ),
+  /* Halfopen woning: twee huizen tegen elkaar. */
+  halfopen: () => (
+    <Svg>
+      <path d="M3 20.5V10.8l4.5-4 4.5 4v9.7M12 20.5V10.8l4.5-4 4.5 4v9.7" />
+      <path d="M2 20.5h20" />
+    </Svg>
+  ),
+  /* Open bebouwing: één huis los op de grond (lucide "house"). */
+  vrijstaand: () => (
+    <Svg>
+      <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+      <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+    </Svg>
+  ),
+  /* Omvang: het huis met een verdiepingslijn; de verdieping die gerenoveerd
+     wordt, is licht ingekleurd. */
+  heelhuis: () => (
+    <Svg>
+      <path d="M4.5 10.2 12 4l7.5 6.2V20H4.5z" fill="currentColor" fillOpacity={0.22} />
+      <path d="M4.5 14.6h15" />
+    </Svg>
+  ),
+  beneden: () => (
+    <Svg>
+      <path d="M4.5 14.6h15V20h-15z" fill="currentColor" fillOpacity={0.22} stroke="none" />
+      <path d="M4.5 10.2 12 4l7.5 6.2V20H4.5z" />
+      <path d="M4.5 14.6h15" />
+    </Svg>
+  ),
+  boven: () => (
+    <Svg>
+      <path d="M4.5 10.2 12 4l7.5 6.2v4.4h-15z" fill="currentColor" fillOpacity={0.22} stroke="none" />
+      <path d="M4.5 10.2 12 4l7.5 6.2V20H4.5z" />
+      <path d="M4.5 14.6h15" />
+    </Svg>
+  ),
+  /* Staat: alles eruit (hamer), een groot deel (muur half weg), enkel de afwerking (verfroller). */
+  strippen: () => (
+    <Svg>
+      <path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9" />
+      <path d="m18 15 4-4" />
+      <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+    </Svg>
+  ),
+  deel: () => (
+    <Svg>
+      <path d="M3 21V9h6V5h6v4h6v12z" />
+      <path d="M3 15h18M9 9v6M15 9v6M12 15v6" />
+    </Svg>
+  ),
+  afwerking: () => (
+    <Svg>
+      <rect width="16" height="6" x="2" y="2" rx="2" />
+      <path d="M10 16v-2a2 2 0 0 1 2-2h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+      <rect width="4" height="6" x="8" y="16" rx="1" />
+    </Svg>
+  ),
+  /* Diensten van de renovatiepagina (lucide brick-wall, plug-zap, paint-roller, sofa). */
+  'dienst-ruwbouw': () => (
+    <Svg>
+      <rect width="18" height="18" x="3" y="3" rx="2" />
+      <path d="M12 9v6M16 15v6M16 3v6M3 15h18M3 9h18M8 15v6M8 3v6" />
+    </Svg>
+  ),
+  'dienst-technieken': () => (
+    <Svg>
+      <path d="M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4Z" />
+      <path d="m2 22 3-3M7.5 13.5 10 11M10.5 16.5 13 14" />
+      <path d="m18 3-4 4h6l-4 4" />
+    </Svg>
+  ),
+  'dienst-pleister': () => (
+    <Svg>
+      <rect width="16" height="6" x="2" y="2" rx="2" />
+      <path d="M10 16v-2a2 2 0 0 1 2-2h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+      <rect width="4" height="6" x="8" y="16" rx="1" />
+    </Svg>
+  ),
+  'dienst-interieur': () => (
+    <Svg>
+      <path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3" />
+      <path d="M2 16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z" />
+      <path d="M4 18v2M20 18v2M12 4v9" />
     </Svg>
   ),
   /* Plat dak: een gebouw met een plat dak en een dakrand die iets uitsteekt. */

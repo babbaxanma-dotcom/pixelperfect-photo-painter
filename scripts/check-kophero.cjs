@@ -36,8 +36,11 @@ const POORT = 4382;
    adressen uit de advertenties en dus wat bezoekers werkelijk openen. Ik testte
    alleen /badkamerrenovatie terwijl Mohammed naar /lp/badkamerrenovatie keek:
    een guard die de echte adressen niet kent, meet de verkeerde pagina. */
+/* /lp/totaalrenovatie staat sinds 26 sep 2026 in de vorm van /lp/dakwerken (geen menu, met
+   opzet: elke menulink is een uitgang). Die pagina's toetsen check-lp-gsm, check-lp-reno en
+   stress-lp-reno; deze toets meet de replica-opzet met zijn vaste kop en menu. */
 const PAGINAS = ['/', '/badkamerrenovatie', '/lp/badkamerrenovatie',
-  '/totaalrenovatie', '/lp/totaalrenovatie', '/over'];
+  '/totaalrenovatie', '/over'];
 /* Drie soorten scherm plus dat van Mohammed zelf. Zijn venster is breed maar
    laag: 1531x708 na browserbalken en taakbalk. Juist daar valt het formulier
    het eerst weg, en juist daar keek ik niet.

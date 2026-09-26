@@ -17,7 +17,7 @@ import sharp from 'sharp';
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const BASIS = process.argv[2] || 'http://localhost:8080';
-const ROUTES = ['/', '/totaalrenovatie', '/badkamerrenovatie', '/lp/pleisterwerk', '/lp/tegelwerken', '/over', '/contact', '/lp/dakwerken'];
+const ROUTES = ['/', '/totaalrenovatie', '/badkamerrenovatie', '/lp/pleisterwerk', '/lp/tegelwerken', '/over', '/contact', '/lp/dakwerken', '/lp/totaalrenovatie'];
 const SCHERMEN = [['desktop', 1440, 900], ['mobiel', 390, 844]];
 
 const lum = (r, g, b) => {

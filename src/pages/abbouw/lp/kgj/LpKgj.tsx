@@ -428,10 +428,12 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       <div className={`kgj-actiebalk${balk ? ' is-aan' : ''}`}>
         {/* Mohammed, 24 sep: "de cta bij het scrollen onderaan moet zijn: gratis
             dakinspectie". De knop brengt de bezoeker naar het inspectieformulier;
-            de calculator blijft bereikbaar via de knoppen op de pagina zelf. */}
+            de calculator blijft bereikbaar via de knoppen op de pagina zelf. De
+            tekst is de kop van het slotblok: "Gratis dakinspectie" op dakwerken,
+            "Gratis plaatsbezoek" op totaalrenovatie. */}
         <button type="button" className="kgj-knop kgj-knop--vol"
           onClick={() => document.querySelector('.kgj-reken--inspectie')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}>
-          Gratis dakinspectie
+          {inhoud.cta.kop}
         </button>
         <a className="kgj-knop kgj-knop--rand" href={CONTACT.phone.href}
           aria-label={'Bel ' + CONTACT.phone.display}><IcBel /></a>

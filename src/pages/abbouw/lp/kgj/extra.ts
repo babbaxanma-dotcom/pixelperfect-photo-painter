@@ -187,6 +187,12 @@ export const KGJ_EXTRA = `
 @media (max-width: 560px) {
   .kgj-reken__keuzes:has(.kgj-reken__keuze--icoon) { grid-template-columns: 1fr; gap: 8px; }
   .kgjx .kgj-reken__keuze--icoon { min-height: 54px; }
+  /* Vraag met vier korte antwoorden (raster: true in inhoud): twee tegels naast
+     elkaar, icoon boven het label, zodat alle antwoorden van vraag 1 boven de
+     vouw staan (totaalrenovatie, 26 sep). */
+  .kgjx .kgj-reken__keuzes--raster { grid-template-columns: 1fr 1fr; }
+  .kgjx .kgj-reken__keuzes--raster .kgj-reken__keuze--icoon { flex-direction: column; justify-content: center;
+    gap: 6px; padding: 12px 8px; text-align: center; min-height: 92px; }
 }
 .kgj-reken__weg { display: flex; align-items: center; gap: 10px; }
 .kgjx .kgj-reken__weg .kgj-reken__balk { flex: 1; margin: 0; height: 6px; border-radius: 3px; }

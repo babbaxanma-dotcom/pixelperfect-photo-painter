@@ -46,6 +46,8 @@ export type Vraag = {
   sleutel: string; vraag: string; keuzes: Keuze[];
   als?: Record<string, string[]>;
   tip?: { bij: string[]; tekst: string };
+  /** Op een telefoon twee tegels naast elkaar in plaats van één kolom (alleen voor korte labels). */
+  raster?: boolean;
 };
 export type Foto = { src: string; alt: string };
 export type Review = { tekst: string; naam: string; bron: string };

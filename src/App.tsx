@@ -34,6 +34,7 @@ const LpDienst = lazy(() => import("./pages/abbouw/lp/LpDienst"));
 const LpReplica = lazy(() => import("./pages/abbouw/lp/replica/LpReplica"));
 const LpBadkamer = lazy(() => import("./pages/abbouw/lp/replica/LpBadkamer"));
 const LpKgj = lazy(() => import("./pages/abbouw/lp/kgj/LpKgj"));
+const LpTotaalrenovatie = lazy(() => import("./pages/abbouw/lp/kgj/LpTotaalrenovatie"));
 const Bedankt = lazy(() => import("./pages/abbouw/Bedankt"));
 const CalculatorDak = lazy(() => import("./pages/abbouw/calculator/CalculatorDak"));
 const CalculatorGevel = lazy(() => import("./pages/abbouw/calculator/CalculatorGevel"));
@@ -111,9 +112,10 @@ const App = () => {
           <Route path="/lp/platdak" element={<Navigate to="/dakwerken" replace />} />
           <Route path="/lp/crepi" element={<Navigate to="/gevel" replace />} />
           <Route path="/lp/steenstrips" element={<Navigate to="/gevel" replace />} />
-          {/* Totaalrenovatie draait op de replica-opzet; de andere dertien
-              pagina's blijven op LpDienst. */}
-          <Route path="/lp/totaalrenovatie" element={<LpReplica />} />
+          {/* /lp/totaalrenovatie is de advertentiepagina in de vorm van
+              /lp/dakwerken (26 sep 2026). /totaalrenovatie blijft de
+              sitepagina op de replica-opzet. */}
+          <Route path="/lp/totaalrenovatie" element={<LpTotaalrenovatie />} />
           <Route path="/totaalrenovatie" element={<LpReplica />} />
           <Route path="/lp/badkamerrenovatie" element={<LpBadkamer />} />
           <Route path="/badkamerrenovatie" element={<LpBadkamer />} />
