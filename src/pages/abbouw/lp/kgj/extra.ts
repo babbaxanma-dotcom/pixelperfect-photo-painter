@@ -38,7 +38,10 @@ export const KGJ_EXTRA = `
 @keyframes kgj-reken-in { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
 .kgjx .kgj-reken__vraag { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 700; font-size: 18px;
   line-height: 1.25; color: var(--kop); margin-bottom: 16px; letter-spacing: -.015em; }
-.kgj-reken__keuzes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+/* minmax(0, 1fr): een kolom groeit nooit breder dan de kaart, ook niet bij een lang
+   woord (26 sep: "De benedenverdieping" duwde de rechterkolom buiten de kaart). */
+.kgj-reken__keuzes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.kgjx .kgj-reken__keuze .kgj-reken__tekst strong { overflow-wrap: break-word; }
 /* Oneven aantal keuzes: de laatste over de volle breedte, anders blijft er een gat. */
 .kgj-reken__keuzes--oneven .kgj-reken__keuze:last-child { grid-column: 1 / -1; }
 .kgjx .kgj-reken__keuze { min-height: 56px; padding: 12px 16px; text-align: left; cursor: pointer;
@@ -75,6 +78,16 @@ export const KGJ_EXTRA = `
   background: var(--wit); border: 1px solid var(--lijn); border-radius: var(--r); }
 .kgjx .kgj-reken__form input:focus { outline: 2px solid var(--merk); outline-offset: 1px; border-color: var(--merk); }
 .kgj-reken__rij { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+/* Keuzelijsten onder de verplichte velden (totaalrenovatie): zelfde veld als de
+   invoer, met een eigen pijltje; 16px zodat een iPhone niet inzoomt. Altijd
+   onder elkaar: het formulier onderaan is ook op desktop smal. */
+.kgjx .kgj-reken__rij--extra { grid-template-columns: 1fr; gap: 0; }
+.kgjx .kgj-reken__form select { display: block; width: 100%; margin-top: 6px; padding: 13px 38px 13px 13px;
+  font-family: Lato, system-ui, sans-serif; font-size: 16px; font-weight: 400; color: var(--inkt);
+  background: var(--wit) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%230a1628' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 14px center;
+  border: 1px solid var(--lijn); border-radius: var(--r); -webkit-appearance: none; appearance: none; cursor: pointer; }
+.kgjx .kgj-reken__form select:focus { outline: 2px solid var(--merk); outline-offset: 1px; border-color: var(--merk); }
+.kgjx .kgj-reken__form select:invalid, .kgjx .kgj-reken__form select option[value=""] { color: var(--zacht); }
 .kgjx .kgj-reken__knop { width: 100%; margin-top: 4px; }
 .kgjx .kgj-reken__gerust { margin-top: 10px; font-size: 13.5px; color: var(--zacht); }
 .kgjx .kgj-reken__fout { margin-top: 10px; font-size: 14px; color: #a3231a; }
@@ -190,7 +203,7 @@ export const KGJ_EXTRA = `
   /* Vraag met vier korte antwoorden (raster: true in inhoud): twee tegels naast
      elkaar, icoon boven het label, zodat alle antwoorden van vraag 1 boven de
      vouw staan (totaalrenovatie, 26 sep). */
-  .kgjx .kgj-reken__keuzes--raster { grid-template-columns: 1fr 1fr; }
+  .kgjx .kgj-reken__keuzes--raster { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .kgjx .kgj-reken__keuzes--raster .kgj-reken__keuze--icoon { flex-direction: column; justify-content: center;
     gap: 6px; padding: 12px 8px; text-align: center; min-height: 92px; }
 }
@@ -234,6 +247,36 @@ export const KGJ_EXTRA = `
   .kgjx .kgj-dienst__icoon svg { width: 26px; height: 26px; }
   .kgjx .kgj-dienst h3 { font-size: 17px; margin-bottom: 4px; }
   .kgjx .kgj-dienst p { font-size: 15px; }
+}
+
+/* ── voordelen van dakrenovatie: drie gekleurde bollen ──
+   Mohammed, 26 sep: "iconen, graag in bolvorm en met verschillende bijpassende
+   kleuren", "bij elk bolletje een korte uitleg". Een licht verloop van linksboven
+   geeft de bol diepte. Wit icoon op de basiskleur: oranje 3,67:1, blauw 5,28:1,
+   groen 4,48:1 (grafisch minimum 3:1). Op de telefoon staat de bol links van de
+   tekst, zodat de sectie kort blijft. */
+.kgj-voordeelraster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 34px; list-style: none; margin: 0; padding: 0; }
+.kgjx .kgj-voordelen .kgj-kopblok { margin-bottom: 38px; }
+.kgjx .kgj-voordeel { text-align: center; }
+.kgjx .kgj-voordeel__bol { display: grid; place-items: center; width: 84px; height: 84px; margin: 0 auto 20px;
+  border-radius: 50%; color: #fff;
+  background: radial-gradient(circle at 32% 28%, var(--bol-licht) 0%, var(--bol) 58%, var(--bol-diep) 100%);
+  box-shadow: 0 12px 22px -12px var(--bol-diep); }
+.kgjx .kgj-voordeel__bol svg { width: 38px; height: 38px; stroke-width: 1.9; }
+.kgjx .kgj-voordeel--oranje { --bol: #d4661c; --bol-licht: #e8894a; --bol-diep: #a94c10; }
+.kgjx .kgj-voordeel--blauw { --bol: #2f6db5; --bol-licht: #5b8fd0; --bol-diep: #214f86; }
+.kgjx .kgj-voordeel--groen { --bol: #23875a; --bol-licht: #4ea57d; --bol-diep: #17613f; }
+.kgjx .kgj-voordeel h3 { margin: 0 0 8px; font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 19px;
+  font-weight: 700; line-height: 1.3; color: var(--kop); overflow-wrap: break-word; }
+.kgjx .kgj-voordeel p { margin: 0 auto; max-width: 34ch; font-size: 15.5px; line-height: 1.55; color: var(--tekst); }
+@media (max-width: 760px) {
+  .kgj-voordeelraster { grid-template-columns: 1fr; gap: 22px; }
+  .kgjx .kgj-voordelen .kgj-kopblok { margin-bottom: 26px; }
+  .kgjx .kgj-voordeel { display: grid; grid-template-columns: 60px minmax(0, 1fr); column-gap: 16px; text-align: left; }
+  .kgjx .kgj-voordeel__bol { grid-row: span 2; width: 60px; height: 60px; margin: 0; }
+  .kgjx .kgj-voordeel__bol svg { width: 28px; height: 28px; }
+  .kgjx .kgj-voordeel h3 { font-size: 17px; margin: 4px 0 4px; }
+  .kgjx .kgj-voordeel p { margin: 0; max-width: none; font-size: 15px; }
 }
 
 /* ── voor en na: één liggende foto ──

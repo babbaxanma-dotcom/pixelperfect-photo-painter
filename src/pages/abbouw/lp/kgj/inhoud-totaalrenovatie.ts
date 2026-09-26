@@ -35,10 +35,12 @@ export const TOTAALRENOVATIE: KgjInhoud = {
   bedanktSlug: 'totaalrenovatie',
 
   hero: {
-    kop: 'Dé specialist voor uw renovatie',
+    /* Mohammeds eigen kop, letterlijk (26 sep). */
+    kop: 'Expert in totaalrenovaties en totaalprojecten',
     /* Zelfde opbouw als Mohammeds subkop op dakwerken. Het mechanisme: AB heeft
        voor elk vak een eigen ploeg (homepage), dus één planning. */
-    onder: 'Totaalrenovaties in Regio Antwerpen en omstreken. Onze eigen ploegen nemen elk vak voor hun rekening, volgens één planning.',
+    /* Mohammed, 26 sep: de subkop "eruit". Leeg = geen regel onder de kop. */
+    onder: '',
     /* Mohammeds eigen drie vinkjes, letterlijk (26 sep). */
     bewijs: ['1 vast aanspreekpunt van ontwerp tot oplevering', 'Transparante offerte & strikte planning', 'Echt vakmanschap en perfecte afwerking'],
     /* Mohammed, 26 sep: "laat enkel de keuken foto, badkamerrenovatie foto van
@@ -66,8 +68,8 @@ export const TOTAALRENOVATIE: KgjInhoud = {
         { label: 'Halfopen woning', icoon: 'halfopen' }, { label: 'Open bebouwing', icoon: 'vrijstaand' },
       ] },
       { sleutel: 'Omvang', vraag: 'Wat wilt u renoveren?', keuzes: [
-        { label: 'De hele woning', icoon: 'heelhuis' }, { label: 'De benedenverdieping', icoon: 'beneden' },
-        { label: 'De bovenverdieping', icoon: 'boven' }, { label: 'Nog niet beslist', icoon: 'twijfel' },
+        { label: 'De hele woning', icoon: 'heelhuis' }, { label: 'Het gelijkvloers', icoon: 'beneden' },
+        { label: 'De verdieping', icoon: 'boven' }, { label: 'Nog niet beslist', icoon: 'twijfel' },
       ] },
       /* 26 sep, uit het plan van Gemini dat Mohammed doorstuurde: de oppervlakte.
          De grenzen komen uit de vorige calculator (appartement 90 m², rijwoning
@@ -92,21 +94,26 @@ export const TOTAALRENOVATIE: KgjInhoud = {
       ] },
     ],
     gerust: 'Weet u het niet zeker? Een schatting volstaat.',
-    uitkomstKop: 'Op welk nummer bereiken we u?',
+    uitkomstKop: 'Waar mogen we de berekening naartoe verzenden?',
     uitkomstOnder: '',
     knop: 'Bereken prijs',
   },
 
   waarom: {
     kop: 'Waarom AB Bouw Groep',
-    /* Zelfde opbouw als de goedgekeurde tekst op dakwerken. Geen jaartal: "meer
-       dan 15 jaar" gaat bij AB over dakwerken, niet over renovatie. */
-    tekst: 'Een totaalrenovatie doet u één keer en daarna woont u er jaren in. Daarom is het belangrijk dat u een aannemer kiest die elk vak zelf in huis heeft. Onze eigen ploegen werken op dezelfde werf, volgens één planning. U kan rekenen op één aanspreekpunt dat uw dossier kent.',
+    /* Mohammed, 26 sep: zoals de tekst van Zedreno, "maar iets aanpassen dat het
+       niet zelfde tekst lijkt". Eigen woorden en AB's eigen feiten (eigen ploegen
+       per vak, uitbreiding: de uitbouw in de voor/na). Geen jaartal: "meer dan 15
+       jaar" gaat bij AB over dakwerken. */
+    tekst: 'Wilt u uw woning renoveren? Bij AB Bouw Groep bent u aan het juiste adres voor een volledige renovatie, welke stijl u ook wilt en welk type woning u ook heeft. Voor een totaalrenovatie, een verbouwing of een nieuwe inrichting rekent u op één ervaren aannemer met een sterk team van vakmensen. Kwaliteit, oog voor detail, uw wensen en onze liefde voor het vak staan daarbij altijd voorop.',
     redenen: [
-      { titel: 'VCA-gecertificeerd en verzekerd', tekst: 'Onze ploegen zijn VCA-gecertificeerd en volledig verzekerd.' },
+      /* Mohammed, 26 sep: VCA is "een raar puntje"; liever wat een particulier van een
+         totaalaannemer wil horen. Bron: de live homepage ("vaste prijs na het plaatsbezoek")
+         en de badkamerpagina ("Wat op de offerte staat, betaalt u."). */
+      { titel: 'Vaste prijs na het plaatsbezoek', tekst: 'Na het plaatsbezoek krijgt u een vaste prijs. Wat op de offerte staat, betaalt u.' },
       { titel: 'Gratis plaatsbezoek en offerte', tekst: 'Het plaatsbezoek en de offerte zijn gratis en vrijblijvend.' },
       /* Premiebegeleiding: dezelfde zin als op dakwerken (AB regelt de aanvraag). Geen bedrag: sinds 1 maart 2026 is de premie versmald. */
-      { titel: '6% btw en premiebegeleiding', tekst: 'Voor een woning ouder dan tien jaar geldt 6% btw. Wij regelen de aanvraag van uw Mijn VerbouwPremie.' },
+      { titel: 'EPC- en premiebegeleiding', tekst: 'Wij begeleiden u bij uw EPC-attest en regelen de aanvraag van uw Mijn VerbouwPremie.' },
     ],
     duo: [
       { src: keukeneiland, alt: 'Keukeneiland met barkrukken na renovatie door AB Bouw Groep' },
@@ -146,7 +153,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     stappen: [
       { titel: 'Aanvraag', tekst: 'U doet uw aanvraag via het formulier hieronder of rechtstreeks telefonisch.' },
       { titel: 'Plaatsbezoek', tekst: 'We bekijken de woning samen met u en overlopen uw wensen.' },
-      { titel: 'Offerte', tekst: 'U krijgt de volledige prijs op papier, met per onderdeel wat erin zit.' },
+      { titel: 'Offerte', tekst: 'U ontvangt een vrijblijvende offerte.' },
       { titel: 'Uitvoering', tekst: 'Dezelfde ploeg komt elke dag terug. Wij schermen de woning af tegen stof en ruimen elke avond op.' },
       { titel: 'Oplevering', tekst: 'We lopen samen door de woning. Uw opmerkingen werken we af voordat de werf sluit.' },
     ],
@@ -169,5 +176,14 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     onder: 'Wij bellen u binnen één werkdag om een moment af te spreken.',
     alt: 'Liever eerst een prijs? Bereken hem in 2 minuten',
     bronLead: 'lp:totaalrenovatie:inspectie',
+    /* Mohammed, 26 sep: "voeg een paar bijhorende dropdown menus of vragen toe, maar
+       hou het wel hoge conversie", "want bij totaalrenovatie willen ze juist meer".
+       Drie keuzelijsten, geen enkele verplicht. Het budget is voor AB de sterkste
+       filter op grote projecten (Bardh: grote werken). */
+    extra: [
+      { naam: 'omvang', label: 'Wat wilt u renoveren?', opties: ['De hele woning', 'Het gelijkvloers', 'De verdieping', 'Enkele ruimtes', 'Nog niet beslist'] },
+      { naam: 'start', label: 'Wanneer wilt u starten?', opties: ['Zo snel mogelijk', 'Binnen drie maanden', 'Later dit jaar', 'Ik verken nog'] },
+      { naam: 'budget', label: 'Uw budget', opties: ['Tot € 50.000', '€ 50.000 tot € 100.000', '€ 100.000 tot € 200.000', 'Meer dan € 200.000', 'Weet ik nog niet'] },
+    ],
   },
 };

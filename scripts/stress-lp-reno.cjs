@@ -73,7 +73,7 @@ const ANTWOORDEN = ['Halfopen woning', 'De hele woning', '150 tot 200 m²', 'Oud
     const { page, leads, ontsnapt, fouten } = await nieuwePagina(browser, gsm);
     await page.goto(URL, { waitUntil: 'networkidle0' }); await wacht(500);
     for (const a of ANTWOORDEN) await tik(page, a);
-    meld((await vraag(page)) === 'Op welk nummer bereiken we u?', 'calculator komt bij het formulier', await vraag(page));
+    meld((await vraag(page)) === 'Waar mogen we de berekening naartoe verzenden?', 'calculator komt bij het formulier', await vraag(page));
     /* Leeg nummer, dan een te kort nummer: de juiste foutmelding, niets verstuurd. */
     await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__knop').click()); await wacht(300);
     const leeg = await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__fout')?.textContent.trim());
@@ -110,6 +110,12 @@ const ANTWOORDEN = ['Halfopen woning', 'De hele woning', '150 tot 200 m²', 'Oud
     const f = '.kgj-reken--inspectie';
     await page.type(`${f} input[name=telefoon]`, '0470 11 22 33', { delay: 10 });
     await page.focus(`${f} .kgj-pg input[type=text]`); await page.type(`${f} .kgj-pg input[type=text]`, '2850', { delay: 30 }); await wacht(400);
+    /* Twee van de drie keuzelijsten invullen, de derde leeg laten: alleen wat
+       gekozen is, gaat mee met de lead. */
+    const lijsten = await page.$$eval(`${f} select`, (s) => s.map((e) => e.name));
+    meld(lijsten.join(',') === 'omvang,start,budget', 'drie keuzelijsten in het plaatsbezoekformulier', lijsten.join(', '));
+    await page.select(`${f} select[name=omvang]`, 'De hele woning');
+    await page.select(`${f} select[name=budget]`, '€ 100.000 tot € 200.000');
     await Promise.all([
       page.waitForNavigation({ timeout: 15000 }).catch(() => null),
       page.evaluate((s) => document.querySelector(`${s} .kgj-reken__knop`).click(), f),
@@ -118,6 +124,7 @@ const ANTWOORDEN = ['Halfopen woning', 'De hele woning', '150 tot 200 m²', 'Oud
     const ghl = leads.find((l) => /leadconnector|gohighlevel|hooks\./i.test(l.url));
     const body = ghl ? ghl.body : '';
     meld(/Aanvraag gratis plaatsbezoek/.test(body), 'inspectie-lead: "Aanvraag gratis plaatsbezoek"');
+    meld(/Wat wilt u renoveren: De hele woning/.test(body) && /Uw budget: € 100.000 tot € 200.000/.test(body) && !/Wanneer wilt u starten/.test(body), 'gekozen keuzelijsten gaan mee, de lege niet', (body.match(/Aanvraag gratis plaatsbezoek[^"]*/) || [''])[0]);
     meld(/2850/.test(body) && /Boom/.test(body), 'postcode en gemeente gaan mee', (body.match(/"postcode":"\d+"|"gemeente":"[^"]*"/g) || []).join(' '));
     meld(/lp:totaalrenovatie:inspectie/.test(body), 'bron = lp:totaalrenovatie:inspectie');
     await page.close();

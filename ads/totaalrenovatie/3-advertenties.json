@@ -106,17 +106,17 @@
         "Gratis plaatsbezoek en offerte",
         "VCA-gecertificeerd, verzekerd",
         "Eén planning voor alle werken",
-        "Ruwbouw en afwerking in huis",
+        "Inclusief EPC-begeleiding",
         "Totaalrenovatie in {LOCATION(City):uw regio}",
         "Huis gekocht om te renoveren?",
         "Transparante offerte",
-        "Offerte per onderdeel"
+        "Vrijblijvende offerte"
       ],
       "beschrijvingen": [
         "Bereken in 2 minuten de prijs van uw renovatie. Gratis plaatsbezoek en offerte.",
         "Onze eigen ploegen doen elk vak, volgens één planning. VCA-gecertificeerd en verzekerd.",
         "Woning ouder dan tien jaar? Dan geldt 6% btw. Wij regelen uw Mijn VerbouwPremie.",
-        "U krijgt de volledige prijs op papier, met per onderdeel wat erin zit."
+        "Transparante offerte en strikte planning. Echt vakmanschap en perfecte afwerking."
       ]
     },
     "Prijs renovatie": {
@@ -184,7 +184,7 @@
         "6% btw voor woning 10+ jaar",
         "Inclusief premiebegeleiding",
         "Gratis plaatsbezoek",
-        "Elke post apart op papier",
+        "Gratis en vrijblijvend",
         "Eigen ploegen voor elk vak",
         "Renovatie in {LOCATION(City):uw regio}",
         "Wat kost een huis renoveren?",
@@ -232,8 +232,8 @@
       "url": "https://www.abgroep.be/lp/totaalrenovatie#voorna"
     },
     {
-      "tekst": "6% btw en premies",
-      "r1": "6% btw bij woning 10+ jaar",
+      "tekst": "EPC- en premiebegeleiding",
+      "r1": "Begeleiding bij uw EPC-attest",
       "r2": "Hulp bij Mijn VerbouwPremie",
       "url": "https://www.abgroep.be/lp/totaalrenovatie#waarom"
     }
@@ -243,8 +243,9 @@
     "Eigen ploegen",
     "VCA-gecertificeerd",
     "Volledig verzekerd",
-    "Offerte per onderdeel",
+    "Transparante offerte",
     "Premiebegeleiding",
+    "EPC-begeleiding",
     "6% btw vanaf 10 jaar",
     "Prijs in 2 minuten"
   ],

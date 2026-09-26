@@ -67,6 +67,8 @@ export type KgjInhoud = {
   waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto] };
   /** Diensten onder "Waarom": id is het anker voor een sitelink (/lp/dakwerken#nieuw-dak). */
   diensten: { kop: string; lijst: { id: string; icoon: IcoonNaam; naam: string; tekst: string }[] };
+  /** Voordelen tussen "Waarom" en de diensten: elk voordeel een gekleurde bol met icoon. */
+  voordelen?: { kop: string; lijst: { icoon: IcoonNaam; kleur: 'oranje' | 'blauw' | 'groen'; titel: string; tekst: string }[] };
   voorna: { kop: string; onder: string; voor: Foto; na: Foto; label: string };
   /* Foto's van uitgevoerd werk. Dit staat op de plek waar de demo reviews
      heeft: AB heeft één Google-review, dus tot er echte klantenstemmen zijn
@@ -77,7 +79,14 @@ export type KgjInhoud = {
   /** punten: wat de klant bij de gratis inspectie krijgt, als vinkjes onder de kop. */
   cta: { kop: string; tekst: string; punten: string[]; foto: Foto };
   /** Het formulier onderaan: de gratis dakinspectie, met een link terug naar de calculator. */
-  inspectie: { kop: string; knop: string; onder: string; alt: string; bronLead: string };
+  /** extra: optionele keuzelijsten onder de verplichte velden (totaalrenovatie, 26 sep:
+      "bij totaalrenovatie willen ze juist meer"). Nooit verplicht: alleen het telefoonnummer is dat. */
+  inspectie: { kop: string; knop: string; onder: string; alt: string; bronLead: string;
+    extra?: { naam: string; label: string; opties: string[] }[] };
+  /** Message match (Mohammed, 26 sep): wie via een advertentie of sitelink komt, ziet een kop
+      die past bij wat hij zocht. `zoek` is een regex, apart getoetst op dienst=, dak= en utm_term;
+      voor de kop wint die volgorde (LpKgj.tsx). `voor` beantwoordt vraag 1 al (Terug blijft werken). */
+  boodschap?: { zoek: string; kop: string; voor?: { sleutel: string; label: string } }[];
 };
 
 export const DAKWERKEN: KgjInhoud = {
@@ -181,7 +190,12 @@ export const DAKWERKEN: KgjInhoud = {
         { label: '100 tot 150 m²', icoon: 'maat3' }, { label: 'Groter dan 150 m²', icoon: 'maat4' },
         { label: 'Weet ik niet', icoon: 'twijfel' },
       ] },
-      { sleutel: 'Isolatie', vraag: 'Is er isolatie nodig?', als: { Werk: ['Renovatie'] }, keuzes: [
+      /* Mohammed, 26 sep: de premie van tot 50% "creatief" inzetten. Hier, op het moment dat de
+         bezoeker kiest voor isolatie: dat is de voorwaarde van de premie (Rd 4,5). Bron: vlaanderen.be,
+         Mijn VerbouwPremie voor dak, aanvragen vanaf 1 maart 2026: categorie 4 50% (max. 5.750 euro),
+         categorie 3 35% (max. 4.025 euro), categorie 1 en 2 niets meer. */
+      { sleutel: 'Isolatie', vraag: 'Is er isolatie nodig?', als: { Werk: ['Renovatie'] },
+        tip: { bij: ['Ja'], tekst: 'Met isolatie komt uw dak in aanmerking voor Mijn VerbouwPremie: bij inkomenscategorie 3 of 4 tot 50% van de factuur terug, maximaal € 5.750.' }, keuzes: [
         { label: 'Ja', uitleg: 'ik wil isolatie laten plaatsen', icoon: 'isolatie' },
         { label: 'Nee', uitleg: 'enkel dakwerken', icoon: 'geenisolatie' },
       ] },
@@ -194,7 +208,8 @@ export const DAKWERKEN: KgjInhoud = {
       ] },
     ],
     gerust: 'Weet u het niet zeker? Een schatting volstaat.',
-    uitkomstKop: 'Op welk nummer bereiken we u?',
+    /* Mohammed, 26 sep: "waar mogen we de berekening naartoe verzenden?", ook op dakwerken. */
+    uitkomstKop: 'Waar mogen we de berekening naartoe verzenden?',
     uitkomstOnder: '',
     knop: 'Bereken prijs',
   },
@@ -214,7 +229,7 @@ export const DAKWERKEN: KgjInhoud = {
          Kijzer ook doet'. Kijzer noemt het 'Premieservice' en 'volledige omkadering
          met hulp bij premie aanvragen'. Geen bedragen: die hangen af van inkomen en
          werk, en de regels veranderen (gevelpremie weg sinds 1 maart 2026). */
-      { titel: 'Volledige premiebegeleiding', tekst: 'Wij regelen de aanvraag van uw Mijn VerbouwPremie.' },
+      { titel: 'Volledige premiebegeleiding', tekst: 'Wij regelen de aanvraag van uw Mijn VerbouwPremie. Wordt uw dak mee geïsoleerd, dan krijgt u bij inkomenscategorie 3 of 4 tot 50% van de factuur terug, maximaal € 5.750.' },
     ],
     /* Boven: de dakwerker zelf aan het werk. Dit blok verkoopt de mensen, dus
        hoort er een mens in beeld en geen vierde gevelfoto. Hier stond eerst
@@ -224,6 +239,22 @@ export const DAKWERKEN: KgjInhoud = {
     duo: [
       { src: dakwerker, alt: 'Dakwerker die nieuwe antraciet pannen legt op de tengellatten' },
       { src: pannenDichtbij, alt: 'Hetzelfde pannendak van bovenaf, tot op de nokpannen' },
+    ],
+  },
+
+  /* Mohammed, 26 sep: "voeg ... net onder waarom en boven diensten sectie een sectie,
+     voordelen van dakrenovatie, minder stookkost, vermijd schade aan uw dak en
+     investering in de waarde van uw woning en wooncomfort", "met de nodige juiste
+     iconen, graag in bolvorm en met verschillende bijpassende kleuren", "bij elk
+     bolletje een korte uitleg erbij". Kop en titels zijn zijn woorden.
+     Bron EPC: vlaanderen.be, "EPC bij verkoop of verhuur van een woning": de
+     energiescore of het EPC-label staat verplicht in elke advertentie. */
+  voordelen: {
+    kop: 'Voordelen van dakrenovatie',
+    lijst: [
+      { icoon: 'voordeel-stook', kleur: 'oranje', titel: 'Minder stookkost', tekst: 'Warme lucht stijgt en verdwijnt langs het dak. Met een goed geïsoleerd dak blijft die warmte binnen en stookt u minder.' },
+      { icoon: 'voordeel-schade', kleur: 'blauw', titel: 'Vermijd schade aan uw dak', tekst: 'Een verschoven pan of een barst in de roofing laat regenwater binnen. Renoveert u op tijd, dan blijven uw dakhout en plafonds droog.' },
+      { icoon: 'voordeel-waarde', kleur: 'groen', titel: 'Investering in de waarde van uw woning en wooncomfort', tekst: "Een geïsoleerd dak verbetert uw EPC-score, en die staat verplicht in elke verkoopadvertentie. Binnen blijft het 's winters warm en 's zomers koel." },
     ],
   },
 
@@ -317,4 +348,16 @@ export const DAKWERKEN: KgjInhoud = {
     alt: 'Liever eerst een prijs? Bereken hem in 2 minuten',
     bronLead: 'lp:dakwerken:inspectie',
   },
+
+  /* Message match (Mohammed, 26 sep: "voor de mensen die bijvoorbeeld klikken, bij die koppen,
+     dat ze denken, ah, ik ben op de juiste website"). Volgorde telt: isolatie vóór plat, want
+     "plat dak isoleren" is een isolatievraag. Isolatie, renovatie en nieuw vragen het woord
+     dak erbij: "badkamer renoveren" of "gevel isoleren" houdt de standaardkop. */
+  boodschap: [
+    { zoek: 'dak.*isol|isol.*dak|sarking', kop: 'Dé specialist voor uw dakisolatie' },
+    { zoek: 'plat|epdm|roofing|bitumen', kop: 'Dé specialist voor uw plat dak', voor: { sleutel: 'Dak', label: 'Plat dak' } },
+    { zoek: 'hellend|pannen|leien|sarking', kop: 'Dé specialist voor uw hellend dak', voor: { sleutel: 'Dak', label: 'Hellend dak' } },
+    { zoek: 'dak.*renov|^renovatie$', kop: 'Dé specialist voor uw dakrenovatie' },
+    { zoek: 'dak.*(nieuw|vervang)|(nieuw|vervang).*dak', kop: 'Dé specialist voor uw nieuwe dak' },
+  ],
 };

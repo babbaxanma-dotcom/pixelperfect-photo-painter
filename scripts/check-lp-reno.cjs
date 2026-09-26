@@ -26,7 +26,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
 
   const kop = await page.evaluate(() => ({ titel: document.title, h1: document.querySelector('h1')?.textContent.trim() }));
   meld(kop.titel === 'Dé specialist voor uw renovatie | AB Bouw Groep', 'tabbladtitel', kop.titel);
-  meld(kop.h1 === 'Dé specialist voor uw renovatie', 'kop', kop.h1);
+  meld(kop.h1 === 'Expert in totaalrenovaties en totaalprojecten', 'kop', kop.h1);
 
   /* Zoals op dakwerken: alle antwoorden van vraag 1 boven de vouw. */
   const vouw = await page.evaluate(() => { const k = [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')]; return Math.round(Math.max(...k.map((e) => e.getBoundingClientRect().bottom))); });
@@ -63,7 +63,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   }
   meld(tip.includes('6% btw'), 'btw-melding na een woning ouder dan 10 jaar', tip);
   const form = await page.evaluate(() => ({ kop: document.querySelector('#rekenaar .kgj-reken__vraag')?.textContent.trim(), knop: document.querySelector('#rekenaar .kgj-reken__knop')?.textContent.trim(), telVerplicht: document.querySelector('#rekenaar input[name=telefoon]')?.getAttribute('aria-required') }));
-  meld(form.kop === 'Op welk nummer bereiken we u?' && form.knop === 'Bereken prijs', 'formulier na de laatste vraag', `${form.kop} / ${form.knop}`);
+  meld(form.kop === 'Waar mogen we de berekening naartoe verzenden?' && form.knop === 'Bereken prijs', 'formulier na de laatste vraag', `${form.kop} / ${form.knop}`);
   meld(form.telVerplicht === 'true', 'alleen telefoon verplicht');
 
   /* Tikfeedback: tijdens het drukken kleurt het antwoord op. */
@@ -102,6 +102,41 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.45)); await wacht(700);
   const balk = await page.evaluate(() => { const b = document.querySelector('.kgj-actiebalk'); return { aan: b?.classList.contains('is-aan'), tekst: b?.querySelector('button')?.textContent.trim() }; });
   meld(balk.aan && balk.tekst === 'Gratis plaatsbezoek', 'vaste balk: Gratis plaatsbezoek', JSON.stringify(balk));
+  /* Mohammed 26 sep, klembord: op desktop stak de rechterkolom van vraag 2
+     buiten de kaart ("De benedenverdieping"). Elke vraag, op desktop en gsm:
+     elk antwoord ligt binnen de kaart. */
+  for (const [naam, vp] of [['desktop', { width: 1440, height: 900 }], ['gsm', { width: 390, height: 844, isMobile: true, hasTouch: true }]]) {
+    const q = await browser.newPage();
+    await q.setViewport(vp);
+    await q.evaluateOnNewDocument(() => localStorage.setItem('ab_bouw_consent_v1', JSON.stringify({ analytics: false, marketing: false })));
+    await q.goto(URL, { waitUntil: 'networkidle0' }); await wacht(500);
+    const buiten = [];
+    for (let stap = 0; stap < 6; stap++) {
+      const m = await q.evaluate(() => {
+        const kaart = document.querySelector('#rekenaar .kgj-reken').getBoundingClientRect();
+        const k = [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')];
+        const fout = k.filter((e) => { const r = e.getBoundingClientRect(); return r.right > kaart.right - 1 || r.left < kaart.left + 1 || e.scrollWidth > e.clientWidth + 1; }).map((e) => e.textContent.trim());
+        return { vraag: document.querySelector('#rekenaar .kgj-reken__vraag')?.textContent.trim(), fout };
+      });
+      if (m.fout.length) buiten.push(`${m.vraag}: ${m.fout.join(', ')}`);
+      await q.evaluate(() => document.querySelector('#rekenaar .kgj-reken__keuze').click()); await wacht(260);
+    }
+    meld(buiten.length === 0, `${naam}: elk antwoord van elke vraag binnen de kaart`, buiten.join(' | '));
+    await q.close();
+  }
+  /* Positieve controle: een te breed antwoord moet de toets doen falen. */
+  {
+    const q = await browser.newPage(); await q.setViewport({ width: 1440, height: 900 });
+    await q.goto(URL, { waitUntil: 'networkidle0' }); await wacht(400);
+    const gevangen = await q.evaluate(() => {
+      const kaart = document.querySelector('#rekenaar .kgj-reken').getBoundingClientRect();
+      const e = document.querySelector('#rekenaar .kgj-reken__keuze'); e.style.width = '900px';
+      const r = e.getBoundingClientRect(); return r.right > kaart.right - 1;
+    });
+    meld(gevangen, 'positieve controle: een te breed antwoord wordt gevangen');
+    await q.close();
+  }
+
   meld(fouten.length === 0, 'geen fouten in de console', fouten.join(' | '));
 
   await browser.close();

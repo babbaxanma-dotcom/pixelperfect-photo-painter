@@ -27,13 +27,34 @@ const puppeteer = require('puppeteer-core');
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const POORT = 4384;
 
-/* Elk anker waar een navigatielink of een sitelink naartoe wijst. Komt er een
-   sitelink bij in ads/, dan hoort het doel hier ook bij te staan. */
+/* Elk anker waar een navigatielink of een sitelink naartoe wijst. De sitelinks
+   komen rechtstreeks uit ads/<campagne>/3-advertenties.json: op 26 sep liep de
+   vaste lijst hier achter op de nieuwe /lp/totaalrenovatie (hij testte nog de
+   ankers van de pagina van 15 sep). */
 const DOELEN = [
-  { pad: '/lp/totaalrenovatie', ankers: ['calculator', 'aanbod', 'werk', 'werkwijze', 'contact', 'over'] },
   { pad: '/lp/badkamerrenovatie', ankers: ['schetser', 'werkwijze', 'contact', 'over'] },
   { pad: '/', ankers: ['over', 'werkwijze', 'contact'] },
 ];
+{
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const ADS = path.join(__dirname, '..', 'ads');
+  for (const map of fs.readdirSync(ADS)) {
+    const bestand = path.join(ADS, map, '3-advertenties.json');
+    if (!fs.existsSync(bestand)) continue;
+    for (const s of JSON.parse(fs.readFileSync(bestand, 'utf8')).sitelinks || []) {
+      const u = new URL(s.url);
+      if (!u.hash) continue;
+      let doel = DOELEN.find((d) => d.pad === u.pathname);
+      if (!doel) DOELEN.push((doel = { pad: u.pathname, ankers: [] }));
+      if (!doel.ankers.includes(u.hash.slice(1))) doel.ankers.push(u.hash.slice(1));
+    }
+  }
+  /* Positieve controle: de sitelinks van beide campagnes moeten gelezen zijn. */
+  for (const pad of ['/lp/dakwerken', '/lp/totaalrenovatie']) {
+    if (!DOELEN.some((d) => d.pad === pad && d.ankers.length)) { console.error(`FOUT: geen sitelink-ankers gelezen voor ${pad} — de meting is ongeldig`); process.exit(2); }
+  }
+}
 
 /* Hoe ver de sectie van de bovenrand mag staan na het springen. De vaste kop
    dekt de bovenste 137px af, dus dat is geen fout. */

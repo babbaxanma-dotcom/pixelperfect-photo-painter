@@ -85,7 +85,8 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   const tipDaarna = [];
   for (const k of ['Gegolfde pannen', '50 tot 100 m²', 'Ja', 'Nee', 'Zo snel mogelijk']) { await klikKeuze(k); await wacht(250); volgorde.push(await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__vraag')?.textContent.trim())); tipDaarna.push(await tip()); }
   meld(volgorde.slice(0, 4).join(' > ') === 'Hoe groot is het dak? > Is er isolatie nodig? > Is er asbest aanwezig in het dak? > Wanneer wilt u beginnen?', 'renovatie: grootte, isolatie, asbest, start', volgorde.slice(0, 4).join(' > '));
-  meld(tipDaarna.every((t) => !t), 'btw-melding staat alleen op de stap na het antwoord');
+  /* Na "isolatie: ja" staat bewust de premiemelding (26 sep); de btw-melding mag nergens terugkomen. */
+  meld(tipDaarna.every((t) => !t.includes('btw')), 'btw-melding staat alleen op de stap na het antwoord', tipDaarna.filter(Boolean).map((t) => t.slice(0, 40)).join(' | '));
   const form = await page.evaluate(() => {
     const knop = document.querySelector('#rekenaar .kgj-reken__knop');
     return { knop: knop && knop.textContent.trim(), onder: !!document.querySelector('#rekenaar form .kgj-reken__gerust') };
@@ -343,6 +344,95 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     await q.close();
   }
   meld(ankers.length === 4 && ankers.every((a) => !a.includes('buiten')), 'elk dienstanker springt naar zijn kaart', ankers.join(' | '));
+
+  /* 11. Message match (Mohammed 26 sep). De advertentiegroepen komen uit
+     ads/dakwerken/3-advertenties.json: elk zoekwoord opent de echte klik-URL (het
+     achtervoegsel van zijn groep, {keyword} ingevuld) en moet de kop tonen die de groep
+     belooft. Vraag 1 slaat alleen over als het soort dak vaststaat: dak=plat, of het
+     zoekwoord noemt het. Een sitelink staat vóór het achtervoegsel en wint de kop. */
+  const ADS = JSON.parse(fs.readFileSync(require('node:path').join(__dirname, '../ads/dakwerken/3-advertenties.json'), 'utf8'));
+  const V1 = 'Welk soort dak heeft u?', V2 = 'Wat moet er aan uw dak gebeuren?';
+  const DAKTYPE = /plat|epdm|roofing|bitumen|hellend|pannen|leien|sarking/i;
+  const klik = (groep, kw) => ADS.groepen[groep].achtervoegsel.replace('{keyword}', encodeURIComponent(kw));
+  const mm = [];
+  for (const [naam, g] of Object.entries(ADS.groepen)) for (const [kw] of g.zoekwoorden) {
+    const qs = '?' + klik(naam, kw);
+    mm.push([naam, qs, g.lpKop, /[?&]dak=/.test(qs) || DAKTYPE.test(kw) ? V2 : V1]);
+  }
+  mm.push(['sitelinks', '?dienst=renovatie&' + klik('Hellend dak vernieuwen', 'dak vernieuwen'), 'Dé specialist voor uw dakrenovatie', V1]);
+  mm.push(['sitelinks', '?dienst=nieuw-dak&' + klik('Plat dak vernieuwen', 'epdm laten leggen'), 'Dé specialist voor uw nieuwe dak', V2]);
+  mm.push(['sitelinks', '?dienst=renovatie&' + klik('Dakisolatie', 'dakisolatie'), 'Dé specialist voor uw dakrenovatie', V1]);
+  /* Positieve controle: zonder parameter en met een zoekwoord zonder dakwoord blijft de standaardkop. */
+  mm.push(['zonder match', '', 'Dé specialist voor uw dakwerk', V1]);
+  mm.push(['zonder match', '?utm_term=badkamer%20renoveren', 'Dé specialist voor uw dakwerk', V1]);
+  {
+    const q = await browser.newPage();
+    await q.setViewport({ width: 390, height: 844, isMobile: true, hasTouch: true });
+    await q.evaluateOnNewDocument(() => localStorage.setItem('ab_bouw_consent_v1', JSON.stringify({ analytics: false, marketing: false })));
+    const perGroep = {};
+    for (const [groep, qs, h1, eerste] of mm) {
+      await q.goto(URL + qs, { waitUntil: 'networkidle0' }); await wacht(250);
+      const r = await q.evaluate(() => ({ h1: document.querySelector('h1')?.textContent.trim(), vraag: document.querySelector('#rekenaar .kgj-reken__vraag')?.textContent.trim() }));
+      const p = (perGroep[groep] ||= { ok: 0, n: 0, fout: [] });
+      p.n++;
+      if (r.h1 === h1 && r.vraag === eerste) p.ok++; else p.fout.push(`${decodeURIComponent(qs)} -> ${r.h1} / ${r.vraag}`);
+    }
+    for (const [groep, p] of Object.entries(perGroep)) meld(p.ok === p.n, `message match ${groep}: ${p.ok} van ${p.n}`, p.fout.slice(0, 3).join(' | '));
+    await q.close();
+  }
+  /* Premie op het moment van de isolatiekeuze: renovatie, ja isolatie -> melding bij de volgende vraag. */
+  {
+    const q = await browser.newPage();
+    await q.setViewport({ width: 390, height: 844, isMobile: true, hasTouch: true });
+    await q.evaluateOnNewDocument(() => localStorage.setItem('ab_bouw_consent_v1', JSON.stringify({ analytics: false, marketing: false })));
+    await q.goto(URL, { waitUntil: 'networkidle0' }); await wacht(500);
+    const klik = async (l) => { await q.evaluate((t) => [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')].find((k) => k.textContent.trim().startsWith(t)).click(), l); await wacht(260); };
+    for (const a of ['Hellend dak', 'Renovatie', 'Ouder dan 10 jaar', 'Gegolfde pannen', '50 tot 100 m²', 'Ja']) await klik(a);
+    const tip = await q.evaluate(() => document.querySelector('#rekenaar .kgj-reken__tip')?.textContent.trim() || '');
+    meld(/5\.750/.test(tip) && /categorie 3 of 4/.test(tip), 'premiemelding na "isolatie: ja"', tip);
+    await q.close();
+  }
+
+  /* 12. Voordelen van dakrenovatie (Mohammed 26 sep): tussen Waarom en Diensten,
+     drie ronde bollen in drie kleuren, elk met een titel en een korte uitleg. */
+  for (const [breed, hoog, naam] of [[390, 844, 'telefoon'], [1440, 900, 'desktop']]) {
+    const q = await browser.newPage();
+    await q.setViewport({ width: breed, height: hoog, deviceScaleFactor: 2, isMobile: breed < 500, hasTouch: breed < 500 });
+    await q.evaluateOnNewDocument(() => localStorage.setItem('ab_bouw_consent_v1', JSON.stringify({ analytics: false, marketing: false })));
+    await q.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+    await q.goto(URL, { waitUntil: 'networkidle0' });
+    await q.evaluate(() => document.getElementById('voordelen')?.scrollIntoView({ block: 'start' }));
+    await wacht(900);
+    const v = await q.evaluate(() => {
+      const s = document.getElementById('voordelen');
+      if (!s) return null;
+      const ids = [...document.querySelectorAll('section[id]')].map((x) => x.id);
+      const items = [...s.querySelectorAll('.kgj-voordeel')].map((li) => {
+        const bol = li.querySelector('.kgj-voordeel__bol');
+        const cs = getComputedStyle(bol);
+        const r = bol.getBoundingClientRect();
+        const l = li.getBoundingClientRect();
+        return {
+          titel: li.querySelector('h3')?.textContent.trim() || '',
+          uitleg: li.querySelector('p')?.textContent.trim() || '',
+          rond: Math.abs(r.width - r.height) < 1 && parseFloat(cs.borderTopLeftRadius) >= r.width / 2 - 1,
+          kleur: cs.backgroundImage,
+          icoon: !!bol.querySelector('svg path'),
+          zichtbaar: parseFloat(getComputedStyle(li).opacity) > 0.95,
+          binnen: l.left >= 0 && l.right <= innerWidth,
+        };
+      });
+      return { na: ids[ids.indexOf('voordelen') - 1], voor: ids[ids.indexOf('voordelen') + 1], kop: s.querySelector('h2')?.textContent.trim(), items };
+    });
+    meld(!!v && v.na === 'waarom' && v.voor === 'diensten', `${naam}: voordelen staan tussen Waarom en Diensten`, v ? `${v.na} > voordelen > ${v.voor}` : 'sectie ontbreekt');
+    meld(!!v && v.kop === 'Voordelen van dakrenovatie' && v.items.map((i) => i.titel).join('|') === 'Minder stookkost|Vermijd schade aan uw dak|Investering in de waarde van uw woning en wooncomfort',
+      `${naam}: kop en drie voordelen`, v ? v.items.map((i) => i.titel).join(' / ') : '');
+    meld(!!v && v.items.length === 3 && v.items.every((i) => i.rond && i.icoon && i.uitleg.length > 40) && new Set(v.items.map((i) => i.kleur)).size === 3,
+      `${naam}: elke bol rond, met icoon, eigen kleur en uitleg`);
+    meld(!!v && v.items.every((i) => i.binnen && i.zichtbaar), `${naam}: elk voordeel zichtbaar en binnen het scherm`);
+    await q.screenshot({ path: `${UIT}/12-voordelen-${naam}.png` });
+    await q.close();
+  }
 
   meld(fouten.length === 0, 'geen fouten in de console', fouten.slice(0, 3).join(' | '));
   await browser.close();

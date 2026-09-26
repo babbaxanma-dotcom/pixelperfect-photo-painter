@@ -42,8 +42,6 @@
 "school"
 "gemeente"
 "subsidie aanvragen"
-"renovatieplicht"
-"epc"
 "energiescan"
 "architect"
 "tekenaar"

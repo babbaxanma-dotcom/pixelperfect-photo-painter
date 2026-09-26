@@ -56,8 +56,11 @@ export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPr
       postcode: String(f.get('postcode') || '').trim() || undefined,
       gemeente: String(f.get('gemeente') || '').trim() || undefined,
       type_werk: inhoud.divisie,
-      /* "Aanvraag gratis dakinspectie" of "Aanvraag gratis plaatsbezoek". */
-      aanvullende_info: 'Aanvraag ' + inhoud.cta.kop.toLowerCase(),
+      /* "Aanvraag gratis dakinspectie" of "Aanvraag gratis plaatsbezoek", met de
+         ingevulde keuzelijsten erachter (alleen wat de bezoeker koos). */
+      aanvullende_info: ['Aanvraag ' + inhoud.cta.kop.toLowerCase(),
+        ...(t.extra ?? []).map((x) => [x.label, String(f.get(x.naam) || '').trim()] as const)
+          .filter(([, w]) => w).map(([l, w]) => `${l.replace(/\?$/, '')}: ${w}`)].join(' · '),
       bron_lead: t.bronLead,
     });
     setBezig(false);
@@ -77,6 +80,18 @@ export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPr
           <label>Naam<input name="naam" type="text" autoComplete="name" placeholder="Uw naam" /></label>
           <PostcodeGemeente />
         </div>
+        {t.extra && t.extra.length > 0 && (
+          <div className="kgj-reken__rij kgj-reken__rij--extra">
+            {t.extra.map((x) => (
+              <label key={x.naam}>{x.label}
+                <select name={x.naam} defaultValue="">
+                  <option value="">Maak een keuze</option>
+                  {x.opties.map((o) => <option key={o} value={o}>{o}</option>)}
+                </select>
+              </label>
+            ))}
+          </div>
+        )}
         <button className="kgj-knop kgj-knop--vol kgj-reken__knop" type="submit" disabled={bezig}>
           {bezig ? 'Bezig…' : t.knop}
         </button>

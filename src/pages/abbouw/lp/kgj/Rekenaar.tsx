@@ -42,11 +42,16 @@ function langstePad(alle: Vraag[], antwoorden: Record<string, string>) {
   return Math.max(...mogelijk.map((m) => alle.filter((v) => past(v, m)).length));
 }
 
-export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'hero' | 'onder' | 'venster' }) {
+export default function Rekenaar({ inhoud, plek, voor }: {
+  inhoud: KgjInhoud; plek: 'hero' | 'onder' | 'venster';
+  /** Message match: vraag 1 is al beantwoord met wat de bezoeker zocht (plat of hellend dak). */
+  voor?: { sleutel: string; label: string };
+}) {
   const ALLE = inhoud.rekenaar.vragen;
   const navigate = useNavigate();
-  const [stap, setStap] = useState(0);
-  const [antwoorden, setAntwoorden] = useState<Record<string, string>>({});
+  const vooraf = voor && ALLE[0]?.sleutel === voor.sleutel && ALLE[0].keuzes.some((k) => k.label === voor.label) ? voor : undefined;
+  const [stap, setStap] = useState(vooraf ? 1 : 0);
+  const [antwoorden, setAntwoorden] = useState<Record<string, string>>(vooraf ? { [vooraf.sleutel]: vooraf.label } : {});
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
   const gestart = useRef(false);
@@ -180,16 +185,18 @@ export default function Rekenaar({ inhoud, plek }: { inhoud: KgjInhoud; plek: 'h
       ) : (
         <form className="kgj-reken__stap kgj-reken__form" onSubmit={verstuur} noValidate>
           <p className="kgj-reken__vraag">{inhoud.rekenaar.uitkomstKop}</p>
+          {/* Mohammed, 26 sep: "naam en email bovenaan, telefoon onderaan, maar
+              telefoon wel verplichting". */}
+          <div className="kgj-reken__rij">
+            <label>Naam<input name="naam" type="text" autoComplete="name" placeholder="Uw naam" /></label>
+            <label>E-mail<input name="email" type="email" autoComplete="email" placeholder="uw@email.be" /></label>
+          </div>
           <label>Telefoon *
             {/* Geen autoFocus: op een telefoon sprong het toetsenbord dan meteen open
                 over de vraag heen (Mohammed, 24 sep: "oude mensen gaan vastraken"). */}
             <input name="telefoon" type="tel" autoComplete="tel" inputMode="tel" placeholder="04xx xx xx xx"
               aria-required="true" />
           </label>
-          <div className="kgj-reken__rij">
-            <label>Naam<input name="naam" type="text" autoComplete="name" placeholder="Uw naam" /></label>
-            <label>E-mail<input name="email" type="email" autoComplete="email" placeholder="uw@email.be" /></label>
-          </div>
           <button className="kgj-knop kgj-knop--vol kgj-reken__knop" type="submit" disabled={bezig}>
             {bezig ? 'Bezig…' : inhoud.rekenaar.knop}
           </button>

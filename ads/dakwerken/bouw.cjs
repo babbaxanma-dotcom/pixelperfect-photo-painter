@@ -19,6 +19,10 @@ const path = require('path');
 const MAP = __dirname;
 
 const URL = 'https://www.abgroep.be/lp/dakwerken';
+/* URL-achtervoegsel van de campagne (live sinds 23 sep). Een achtervoegsel op
+   advertentiegroepniveau vervangt dat van de campagne volledig, dus elke groep
+   herhaalt het en voegt haar eigen parameter toe (message match, 26 sep). */
+const SUFFIX = 'utm_source=google&utm_medium=cpc&utm_campaign=dakrenovatie&utm_term={keyword}';
 
 /* ---------- Zoekwoorden (onderzoek autocomplete gl=be + junidata, 23 sep) ---------- */
 // w = woordgroep, e = exact. Geen breed zoeken.
@@ -36,6 +40,12 @@ const GROEPEN = {
     // Zonder deze vangt "dak vernieuwen" ook de platte daken; die horen in de andere groep.
     kruis: ['plat dak', 'platte dak', 'platte daken', 'platdak', 'roofing', 'epdm', 'bitumen'],
     pad: ['dak', 'vernieuwen'],
+    /* Message match: de vastgezette kop 1 zegt "Dak vernieuwen?", "Pannendak vervangen"
+       of "Kostprijs nieuw dak"; de pagina opent met dezelfde belofte. Geen dak=hellend:
+       wie "dak vernieuwen" typt, kan ook een plat dak hebben, dus vraag 1 blijft staan
+       tenzij het zoekwoord pannen, leien, hellend of sarking noemt. */
+    achtervoegsel: SUFFIX + '&dienst=nieuw-dak',
+    lpKop: 'Dé specialist voor uw nieuwe dak',
     koppen: [
       'Dak vernieuwen?',                // positie 1, gepind (samen met Pannendak vervangen en Kostprijs nieuw dak)
       'Wat kost uw nieuw dak?',
@@ -60,7 +70,11 @@ const GROEPEN = {
       'Nieuw dak nodig? Bereken in 2 minuten uw dakprijs. Gratis en vrijblijvend.',
       'Gratis dakinspectie ter plaatse. Daarna krijgt u een vrijblijvende offerte.',
       'Tien jaar garantie op dakrenovatie. Volledig verzekerd en VCA-gecertificeerd.',
-      'Woning ouder dan tien jaar? 6% btw. En volledige Mijn VerbouwPremie-begeleiding.',
+      /* 26 sep, Mohammed: de premie "creatief" in de advertenties. Het bedrag staat alleen
+         in een beschrijving, met de voorwaarde erbij: categorie 1 en 2 krijgen niets
+         (vlaanderen.be, Mijn VerbouwPremie dak sinds 1 maart 2026). In een kop trekt
+         "tot 50% terug" premiejagers aan. 6% btw blijft in kop 6 en in de highlights. */
+      'Nieuw dak mee isoleren? Bij inkomenscategorie 3 of 4 tot 50% premie terug, max. € 5.750.',
     ],
   },
   'Plat dak vernieuwen': {
@@ -74,6 +88,9 @@ const GROEPEN = {
     ],
     kruis: ['pannen', 'pannendak', 'leien', 'hellend', 'sarking', 'sarkingdak'],
     pad: ['plat-dak', 'vernieuwen'],
+    // Elk zoekwoord van deze groep noemt het platte dak (kruislijst van Hellend), dus vraag 1 vult zich in.
+    achtervoegsel: SUFFIX + '&dak=plat',
+    lpKop: 'Dé specialist voor uw plat dak',
     koppen: [
       'Plat dak vernieuwen?',           // positie 1, gepind (samen met Wat kost een nieuw plat dak? en Roofing of EPDM vernieuwen)
       'Wat kost een nieuw plat dak?',
@@ -95,7 +112,7 @@ const GROEPEN = {
       'Wat kost een nieuw plat dak? Bereken het op onze website in 2 minuten.',
       'Gratis dakinspectie: we bekijken uw plat dak ter plaatse en overlopen de bevindingen.',
       'Wij geven tien jaar garantie op dakrenovatie en zijn volledig verzekerd.',
-      '6% btw voor een woning ouder dan tien jaar, met Mijn VerbouwPremie-begeleiding.',
+      'Plat dak mee geïsoleerd? Tot 50% premie terug bij inkomenscategorie 3 of 4, max. € 5.750.',
     ],
   },
   /* 25 sep, Mohammed: "doe ook dakisolatie componenten met de juiste hooks", "je hebt toch
@@ -117,6 +134,9 @@ const GROEPEN = {
     ],
     kruis: [],
     pad: ['dak', 'isolatie'],
+    // "plat dak isoleren" en "hellend dak isoleren" vullen vraag 1 zelf in via het zoekwoord.
+    achtervoegsel: SUFFIX + '&dienst=dakisolatie',
+    lpKop: 'Dé specialist voor uw dakisolatie',
     koppen: [
       'Wat kost dakisolatie?',          // positie 1, gepind (samen met Uw dak isoleren? en {KeyWord:Isoleer uw dak})
       'Uw dak isoleren?',
@@ -138,7 +158,7 @@ const GROEPEN = {
       'Wat kost uw dakisolatie? Bereken het in 2 minuten op onze website. Gratis en vrijblijvend.',
       'Sarking op het dakvlak of isolatie van binnenuit, met PIR, PUR of cellulose.',
       'Gratis dakinspectie ter plaatse: we bekijken uw dak en u krijgt een vrijblijvende offerte.',
-      'Woning ouder dan tien jaar? 6% btw. En wij regelen uw aanvraag voor Mijn VerbouwPremie.',
+      'Wij regelen uw premie: tot 50% terug bij inkomenscategorie 3 of 4, max. € 5.750.',
     ],
   },
 };
@@ -276,7 +296,9 @@ const LOCATIE = /\{LOCATION\(City\):([^}]*)\}|\{KeyWord:([^}]*)\}/g;
 // zoekwoord valt bij Google terug op die standaard. Het zoekwoord zelf komt uit de eigen
 // zoekwoordenlijst en draagt dus geen plaatsnaam.
 // Elke claim met een getal moet letterlijk op /lp/dakwerken staan (inhoud.ts, cf9ea56).
-const TOEGESTAAN_GETAL = [/\b2 minuten\b/, /6%/, /\b(10|tien) jaar\b/i, /\b15 jaar\b/, /\b(6|zes) (korte )?vragen\b/i, /\b10\+ jaar\b/];
+const TOEGESTAAN_GETAL = [/\b2 minuten\b/, /6%/, /\b(10|tien) jaar\b/i, /\b15 jaar\b/, /\b(6|zes) (korte )?vragen\b/i, /\b10\+ jaar\b/,
+  // 26 sep: de premie, zoals op /lp/dakwerken (isolatietip en "Waarom"). Alleen samen, nooit los.
+  /^(?=.*\binkomenscategorie 3 of 4\b)(?=.*tot 50%)(?=.*max\. € 5\.750)/i];
 
 function toets(tekst, max, soort) {
   const zichtbaar = tekst.replace(LOCATIE, (_, loc, kw) => loc ?? kw);
@@ -304,16 +326,25 @@ for (const [naam, g] of Object.entries(GROEPEN)) {
   }
   for (const b of g.beschrijvingen) toets(b, 90, `beschrijving (${naam})`);
   for (const p of g.pad) if (p.length > 15) fouten.push(`pad "${p}" te lang`);
+  if (!g.achtervoegsel?.startsWith(SUFFIX + '&')) fouten.push(`${naam}: achtervoegsel herhaalt het campagne-achtervoegsel niet`);
+  if (!/&(dienst|dak)=[a-z-]+$/.test(g.achtervoegsel || '')) fouten.push(`${naam}: achtervoegsel zonder dienst= of dak=`);
+  if (!/^Dé specialist voor uw /.test(g.lpKop || '')) fouten.push(`${naam}: lpKop ontbreekt`);
+  // Het premiebedrag staat nooit in een kop (premiejagers); in precies één beschrijving, met voorwaarde.
+  for (const k of g.koppen) if (/50%|5\.750|premie terug/i.test(k)) fouten.push(`${naam}: premiebedrag in kop "${k}"`);
+  if (g.beschrijvingen.filter((b) => /50%/.test(b)).length !== 1) fouten.push(`${naam}: premiebedrag moet in precies één beschrijving staan`);
   // Kop 1 moet het zoekwoord van de groep dragen.
   if (!g.koppen[0].toLowerCase().includes(naam.toLowerCase().replace('hellend ', ''))) fouten.push(`${naam}: kop 1 "${g.koppen[0]}" draagt het zoekwoord niet`);
 }
 for (const s of SITELINKS) { toets(s.tekst, 25, 'sitelink'); toets(s.r1, 35, 'sitelinkregel'); toets(s.r2, 35, 'sitelinkregel'); }
 if (new Set(SITELINKS.map((s) => s.url)).size !== SITELINKS.length) fouten.push('twee sitelinks met dezelfde URL');
+if (new Set(Object.values(GROEPEN).map((g) => g.achtervoegsel)).size !== Object.keys(GROEPEN).length) fouten.push('twee groepen met hetzelfde achtervoegsel');
 for (const h of HIGHLIGHTS) toets(h, 25, 'highlight');
 for (const s of SNIPPETS) {
   if (s.waarden.length < 3) fouten.push(`snippet ${s.kop}: minstens 3 waarden`);
   for (const w of s.waarden) { if (w.length > 25) fouten.push(`snippetwaarde te lang: ${w}`); toets(w, 25, `snippet ${s.kop}`); }
 }
+/* Positieve controle op de premie: het bedrag zonder inkomenscategorie moet vallen. */
+{ const voor = fouten.length; toets('Tot 50% premie terug, max. € 5.750.', 90, 'controle'); if (fouten.length === voor) { console.error('TOETS DEFECT: premie zonder voorwaarde wordt niet gevangen'); process.exit(2); } fouten.pop(); }
 /* Positieve controle op de invoeging: een te lange standaardtekst moet vallen. */
 { const voor = fouten.length; toets('{KeyWord:Dit is een veel te lange standaardkop}', 30, 'controle'); if (fouten.length === voor) { console.error('TOETS DEFECT: KeyWord-lengte wordt niet gemeten'); process.exit(2); } fouten.pop(); }
 
@@ -327,8 +358,8 @@ for (const [naam, g] of Object.entries(GROEPEN)) {
   fs.writeFileSync(path.join(MAP, `2-uitsluiten-${slug}.txt`), g.kruis.map((t) => `"${t}"`).join('\n') + '\n');
 }
 fs.writeFileSync(path.join(MAP, '2-uitsluiten-campagne.txt'), negs.map((n) => plak(n.t, n.ty)).join('\n') + '\n');
-fs.writeFileSync(path.join(MAP, '3-advertenties.json'), JSON.stringify({ url: URL, groepen: GROEPEN, sitelinks: SITELINKS, highlights: HIGHLIGHTS, snippet: SNIPPET, snippets: SNIPPETS }, null, 2) + '\n');
+fs.writeFileSync(path.join(MAP, '3-advertenties.json'), JSON.stringify({ url: URL, achtervoegselCampagne: SUFFIX, groepen: GROEPEN, sitelinks: SITELINKS, highlights: HIGHLIGHTS, snippet: SNIPPET, snippets: SNIPPETS }, null, 2) + '\n');
 
-console.log(`Groen. ${Object.values(GROEPEN).reduce((s, g) => s + g.zoekwoorden.length, 0)} zoekwoorden, ${negs.length} campagne-uitsluitingen, 2 advertenties.`);
+console.log(`Groen. ${Object.values(GROEPEN).reduce((s, g) => s + g.zoekwoorden.length, 0)} zoekwoorden, ${negs.length} campagne-uitsluitingen, ${Object.keys(GROEPEN).length} advertenties.`);
 console.log(`Koperzoekopdrachten: ${KOPER.length} getoetst, ${geblokt.length} bewust geblokkeerd:`);
 for (const g of geblokt) console.log('  ' + g);

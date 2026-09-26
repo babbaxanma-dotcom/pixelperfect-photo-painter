@@ -98,6 +98,29 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
      sectie niet: een reviewblok met bedachte quotes is verzonnen bewijs. */
   const reviews = inhoud.reviews.lijst;
 
+  /* Message match (Mohammed, 26 sep): de kop en vraag 1 volgen wat de bezoeker zocht.
+     utm_term is het zoekwoord uit de advertentie; dak= of dienst= zet elke
+     advertentiegroep via haar URL-achtervoegsel (ads/dakwerken/bouw.cjs), dienst=
+     staat ook in de sitelinks. Alleen lezen, niets bewaren. */
+  /* De kop volgt de link waarop geklikt is: dienst= (sitelink, of de groep via het
+     achtervoegsel; bij twee staat die van de sitelink eerst), dan dak=, dan het
+     zoekwoord. Zo herhaalt de kop wat de vastgezette advertentiekop beloofde.
+     Vraag 1 slaat alleen over als het soort dak vaststaat: dak= of het zoekwoord
+     noemt het ("plat dak isoleren" = isolatiekop én vraag 1 = plat dak). */
+  const [match] = useState(() => {
+    if (typeof window === 'undefined' || !inhoud.boodschap) return undefined;
+    const p = new URLSearchParams(window.location.search);
+    const vind = (k: string) => {
+      const q = (p.get(k) || '').toLowerCase();
+      return q.trim() ? inhoud.boodschap!.filter((b) => new RegExp(b.zoek, 'i').test(q)) : [];
+    };
+    const [dienst, dak, term] = [vind('dienst'), vind('dak'), vind('utm_term')];
+    const kop = (dienst[0] ?? dak[0] ?? term[0])?.kop;
+    if (!kop) return undefined;
+    return { kop, voor: [...dak, ...term].find((b) => b.voor)?.voor };
+  });
+  const kop = match?.kop ?? inhoud.hero.kop;
+
   useEffect(() => {
     const id = requestAnimationFrame(() => setBinnen(true));
     return () => cancelAnimationFrame(id);
@@ -245,9 +268,9 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         <div className="kgj-breed kgj-hero__in">
           <div className="kgj-hero__raster">
             <div>
-              <h1>{inhoud.hero.kop}</h1>
+              <h1>{kop}</h1>
               {inhoud.hero.ondertitel && <p className="kgj-hero__ondertitel">{inhoud.hero.ondertitel}</p>}
-              <p className="kgj-hero__sub">{inhoud.hero.onder}</p>
+              {inhoud.hero.onder && <p className="kgj-hero__sub">{inhoud.hero.onder}</p>}
               <ul className="kgj-hero__bewijs">
                 {inhoud.hero.bewijs.map((b) => (
                   <li key={b}>
@@ -259,7 +282,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                 ))}
               </ul>
             </div>
-            <div id="rekenaar"><Rekenaar inhoud={inhoud} plek="hero" /></div>
+            <div id="rekenaar"><Rekenaar inhoud={inhoud} plek="hero" voor={match?.voor} /></div>
           </div>
         </div>
         {/* Geen pijlen: de diashow loopt vanzelf (Mohammed: "doe die onderste pijlen weg"). */}
@@ -289,6 +312,27 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           </figure>
         </div>
       </section>
+
+      {/* Mohammed, 26 sep: voordelen tussen "Waarom" en de diensten, elk met een
+          gekleurde bol en een korte uitleg. Alleen op pagina's die ze invullen. */}
+      {inhoud.voordelen && (
+        <section className="kgj-band kgj-voordelen" id="voordelen">
+          <div className="kgj-breed">
+            <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
+              <h2>{inhoud.voordelen.kop}</h2>
+            </div>
+            <ul className="kgj-voordeelraster">
+              {inhoud.voordelen.lijst.map((v) => (
+                <li className={`kgj-voordeel kgj-voordeel--${v.kleur} kgj-op`} key={v.titel}>
+                  <span className="kgj-voordeel__bol"><Icoon naam={v.icoon} /></span>
+                  <h3>{v.titel}</h3>
+                  <p>{v.tekst}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       {/* Mohammed, 25 sep: korte dienstensectie onder "Waarom", met iconen. De
           id's per dienst zijn de ankers van de sitelinks. */}

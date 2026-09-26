@@ -12,9 +12,9 @@
  *                            (2 van 38, Tifre 771 dagen), prijs berekenen (3 van 38, Rinovato)
  *   het zoekwoord als kop:   Rinovato, 477 dagen: "Aannemer Totaalrenovatie",
  *                            "{KeyWord:Aannemer in jouw buurt}", "Renoveren met 1 Totaalaannemer"
- * Niet gebruikt: "inclusief EPC-attest". AB levert dat nergens; een EPC-attest maakt een
- * energiedeskundige. Wel: "inclusief premiebegeleiding" (op de pagina: "Wij regelen de
- * aanvraag van uw Mijn VerbouwPremie").
+ * EPC: Mohammed, 26 sep: "begeleiding bij EPC-attest en premiebegeleiding". Op de pagina:
+ * "Wij begeleiden u bij uw EPC-attest en regelen de aanvraag van uw Mijn VerbouwPremie."
+ * Dus "EPC-begeleiding" mag; "inclusief EPC-attest" niet (het attest maakt een energiedeskundige).
  *
  * Dit script faalt (exit 1) als een tekst te lang is, een verboden zinsbouw of een getal
  * zonder bron op de pagina bevat, een kop dubbel staat, of een uitsluiting een eigen
@@ -67,17 +67,17 @@ const GROEPEN = {
       'Gratis plaatsbezoek en offerte',
       'VCA-gecertificeerd, verzekerd',
       'Eén planning voor alle werken',
-      'Ruwbouw en afwerking in huis',
+      'Inclusief EPC-begeleiding',
       'Totaalrenovatie in {LOCATION(City):uw regio}',
       'Huis gekocht om te renoveren?',
       'Transparante offerte',
-      'Offerte per onderdeel',
+      'Vrijblijvende offerte',
     ],
     beschrijvingen: [
       'Bereken in 2 minuten de prijs van uw renovatie. Gratis plaatsbezoek en offerte.',
       'Onze eigen ploegen doen elk vak, volgens één planning. VCA-gecertificeerd en verzekerd.',
       'Woning ouder dan tien jaar? Dan geldt 6% btw. Wij regelen uw Mijn VerbouwPremie.',
-      'U krijgt de volledige prijs op papier, met per onderdeel wat erin zit.',
+      'Transparante offerte en strikte planning. Echt vakmanschap en perfecte afwerking.',
     ],
   },
   'Prijs renovatie': {
@@ -98,7 +98,7 @@ const GROEPEN = {
       '6% btw voor woning 10+ jaar',
       'Inclusief premiebegeleiding',
       'Gratis plaatsbezoek',
-      'Elke post apart op papier',
+      'Gratis en vrijblijvend',
       'Eigen ploegen voor elk vak',
       'Renovatie in {LOCATION(City):uw regio}',
       'Wat kost een huis renoveren?',
@@ -122,10 +122,10 @@ const SITELINKS = [
   { tekst: 'Onze diensten', r1: 'Afbraak en ruwbouw', r2: 'Pleisterwerk en interieur', url: URL + '#diensten' },
   { tekst: 'Zo verloopt uw renovatie', r1: 'In vijf duidelijke stappen', r2: 'U weet vooraf wat er gebeurt', url: URL + '#werkwijze' },
   { tekst: 'Voor en na', r1: 'Dezelfde uitbouw, voor en na', r2: 'Een werf van AB Bouw Groep', url: URL + '#voorna' },
-  { tekst: '6% btw en premies', r1: '6% btw bij woning 10+ jaar', r2: 'Hulp bij Mijn VerbouwPremie', url: URL + '#waarom' },
+  { tekst: 'EPC- en premiebegeleiding', r1: 'Begeleiding bij uw EPC-attest', r2: 'Hulp bij Mijn VerbouwPremie', url: URL + '#waarom' },
 ];
-const HIGHLIGHTS = ['Gratis plaatsbezoek', 'Eigen ploegen', 'VCA-gecertificeerd', 'Volledig verzekerd', 'Offerte per onderdeel',
-  'Premiebegeleiding', '6% btw vanaf 10 jaar', 'Prijs in 2 minuten'];
+const HIGHLIGHTS = ['Gratis plaatsbezoek', 'Eigen ploegen', 'VCA-gecertificeerd', 'Volledig verzekerd', 'Transparante offerte',
+  'Premiebegeleiding', 'EPC-begeleiding', '6% btw vanaf 10 jaar', 'Prijs in 2 minuten'];
 const SNIPPETS = [
   { kop: 'Services', waarden: ['Afbraak en ruwbouw', 'Technieken', 'Pleisterwerk', 'Vloeren en tegels', 'Interieur'] },
 ];
@@ -144,7 +144,8 @@ const UITSLUITEN = [
   ['badkamer', 'w'], ['keuken', 'w'], ['dak', 'w'], ['dakwerken', 'w'], ['gevel', 'w'], ['schilder', 'w'],
   ['schilderwerken', 'w'], ['behangen', 'w'], ['laminaat', 'w'], ['parket leggen', 'w'], ['kantoor', 'w'],
   ['winkel', 'w'], ['horeca', 'w'], ['kerk', 'w'], ['school', 'w'], ['gemeente', 'w'], ['subsidie aanvragen', 'w'],
-  ['renovatieplicht', 'w'], ['epc', 'w'], ['energiescan', 'w'], ['architect', 'w'], ['tekenaar', 'w'],
+  /* 26 sep: 'epc' en 'renovatieplicht' NIET uitsluiten: wie een woning met een slecht label kocht, moet renoveren. */
+  ['energiescan', 'w'], ['architect', 'w'], ['tekenaar', 'w'],
   ['gratis', 'e'], ['goedkoop', 'w'], ['goedkoopste', 'w'], ['zwart', 'w'], ['in het zwart', 'w'],
 ];
 
@@ -174,7 +175,7 @@ for (const [naam, g] of Object.entries(GROEPEN)) for (const [kw] of g.zoekwoorde
   if (blokkeert(t, ty, kw)) fouten.push(`uitsluiting "${t}" blokkeert eigen zoekwoord "${kw}" (${naam})`);
 }
 /* Koperzoekopdrachten die NIET geblokkeerd mogen worden. */
-const KOPER = ['totaalrenovatie woning prijs', 'aannemer totaalrenovatie antwerpen', 'wat kost een totaalrenovatie per m2', 'huis gekocht volledig renoveren',
+const KOPER = ['renovatie woning epc label', 'renovatieplicht woning aannemer', 'totaalrenovatie woning prijs', 'aannemer totaalrenovatie antwerpen', 'wat kost een totaalrenovatie per m2', 'huis gekocht volledig renoveren',
   'renovatie oude woning kostprijs', 'totaalrenovatie offerte', 'renovatie woning 6 btw', 'aannemer renovatie in de buurt', 'woning renoveren premie'];
 for (const q of KOPER) for (const [t, ty] of UITSLUITEN) if (blokkeert(t, ty, q)) fouten.push(`uitsluiting "${t}" blokkeert koper "${q}"`);
 
@@ -185,7 +186,7 @@ const VERBODEN = [
   { re: /\b(geen|niet|zonder|nooit)\b/i, waarom: 'negatie-framing' },
   { re: /nr\.? ?1|#1|beste|sterren|review/i, waarom: 'claim die AB niet kan dragen (1 Google-review)' },
   { re: /!/, waarom: 'geen uitroepteken op search' },
-  { re: /\bepc\b/i, waarom: 'EPC-attest levert AB niet' },
+  { re: /inclusief epc-attest|epc-attest inbegrepen/i, waarom: 'het EPC-attest maakt een energiedeskundige; AB begeleidt' },
   { re: /\b(?!EPDM\b|VCA\b)[A-Z]{4,}\b/, waarom: 'geen hoofdletterwoorden' },
   { re: /\b(rond|omgeving|regio|provincie|antwerpen|mechelen|brasschaat|schilde|schoten|wilrijk|vlaanderen)\b/i, waarom: 'plaatsnaam in de tekst; gebruik {LOCATION(City):uw regio}', zonderLocatie: true },
 ];
