@@ -153,9 +153,11 @@ const UITSLUITEN = [
    Zoekwoordplanner 26 sep, België, gemiddeld per maand: totaalrenovatie 880, renovatie woning 210,
    huis renoveren 480, renovatie aannemer 390; bod bovenaan €1,60 (laag) en €6,83 (hoog).
    Klikprijs voor de rekensom: €4,22 (midden van die twee). €40 per dag = 9 klikken per dag.
-   Benchmark bouw/aannemers (LocaliQ 2025): 1 lead per 31 klikken. Dan 1 lead per 3,4 dagen,
-   kost per lead €131. Zie het rapport voor de meetregel. */
-const BUDGET = { perDag: INSTELLINGEN.budgetPerDag, klikprijs: 4.22, klikkenPerLead: 31 };
+   Benchmark bouw/aannemers (LocaliQ 2025, localiq.com/blog/home-services-search-advertising-benchmarks,
+   april 2024 tot maart 2025): conversie 2,61%, dus 1 lead per 38 klikken. Dan 1 lead per 4,0 dagen,
+   kost per lead €160. (26 sep gecorrigeerd: eerst 31 klikken, afgeleid uit kost per lead gedeeld door
+   klikprijs; dat deelt twee gemiddelden en is niet de conversie. Dak rekent ook met de conversie.) */
+const BUDGET = { perDag: INSTELLINGEN.budgetPerDag, klikprijs: 4.22, klikkenPerLead: Math.round(1 / 0.0261) };
 
 /* ---------- Toetsen ---------- */
 const tok = (s) => s.toLowerCase().replace(/[^a-z0-9àâäéèêëïîôöùûüç² ]/g, ' ').split(/\s+/).filter(Boolean);
