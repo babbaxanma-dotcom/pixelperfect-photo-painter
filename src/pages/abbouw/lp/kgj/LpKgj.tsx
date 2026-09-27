@@ -477,9 +477,23 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             dakinspectie". De knop brengt de bezoeker naar het inspectieformulier;
             de calculator blijft bereikbaar via de knoppen op de pagina zelf. De
             tekst is de kop van het slotblok: "Gratis dakinspectie" op dakwerken,
-            "Gratis plaatsbezoek" op totaalrenovatie. */}
+            "Gratis plaatsbezoek" op totaalrenovatie. Past het formulier niet onder
+            de vaste kop (28 sep, totaalrenovatie op een iPhone), dan komt de
+            bovenkant in beeld: in het midden viel de kop met het telefoonveld
+            onder de vaste kop. */}
         <button type="button" className="kgj-knop kgj-knop--vol"
-          onClick={() => document.querySelector('.kgj-reken--inspectie')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}>
+          onClick={() => {
+            const vorm = document.querySelector<HTMLElement>('.kgj-reken--inspectie');
+            if (!vorm) return;
+            const kopH = document.querySelector('.kgj-kop')?.getBoundingClientRect().height ?? 0;
+            if (vorm.offsetHeight <= window.innerHeight - kopH) {
+              vorm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              return;
+            }
+            /* Net onder de vaste kop (8px lucht), niet op de 96px scroll-padding:
+               op 390x664 viel de knop anders 1px onder het scherm. */
+            window.scrollTo({ top: vorm.getBoundingClientRect().top + window.scrollY - kopH - 8, behavior: 'smooth' });
+          }}>
           {inhoud.cta.kop}
         </button>
         <a className="kgj-knop kgj-knop--rand" href={CONTACT.phone.href}

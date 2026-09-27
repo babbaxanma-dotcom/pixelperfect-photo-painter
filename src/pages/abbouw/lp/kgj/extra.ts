@@ -374,6 +374,22 @@ export const KGJ_EXTRA = `
   .kgjx .kgj-werkwijze .kgj-stappen { grid-template-columns: repeat(5, 1fr); gap: 22px; }
 }
 
+/* ── inspectieformulier met keuzelijsten (totaalrenovatie) ──
+   Mohammed, 28 sep: het blok "Plan uw plaatsbezoek" is "te groot" en op de
+   telefoon "de knop is er niet". Zes velden van 93px zetten de knop 651px onder
+   de kop: meer dan een iPhone met Safari-balken (664px) onder de vaste kop toont.
+   Lagere velden en minder lucht tussen label en veld: kop en knop staan samen
+   in beeld. Dakwerken (drie velden, 372px) blijft zoals het is. Velden 46px
+   (duimmaat 44) en 16px tekst, zodat een iPhone niet inzoomt. */
+.kgjx .kgj-reken--extra .kgj-reken__vraag { margin-bottom: 12px; }
+.kgjx .kgj-reken--extra .kgj-reken__form label { margin-bottom: 10px; line-height: 1.3; }
+.kgjx .kgj-reken--extra .kgj-reken__form input,
+.kgjx .kgj-reken--extra .kgj-reken__form select { margin-top: 4px; padding-top: 10px; padding-bottom: 10px; line-height: 24px; }
+.kgjx .kgj-reken--extra .kgj-pg__wis { top: calc(50% + 2px); }
+/* De knoptekst "Vraag uw gratis plaatsbezoek aan" is 254px, 4px breder dan die
+   van dakwerken: met 29px zijmarge brak "aan" op 390px af naar een tweede regel. */
+.kgjx .kgj-reken--inspectie .kgj-reken__knop { padding-inline: 16px; }
+
 /* ── inspectieformulier: tweede weg naar de calculator ── */
 .kgjx .kgj-reken__alt { display: block; margin-top: 14px; text-align: center;
   font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 600; font-size: 14.5px;

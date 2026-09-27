@@ -69,7 +69,7 @@ export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPr
   };
 
   return (
-    <div className="kgj-reken kgj-reken--inspectie">
+    <div className={`kgj-reken kgj-reken--inspectie${t.extra?.length ? ' kgj-reken--extra' : ''}`}>
       <form className="kgj-reken__form" onSubmit={verstuur} onFocus={meldStart} noValidate>
         <p className="kgj-reken__vraag">{t.kop}</p>
         <label>Telefoon *
