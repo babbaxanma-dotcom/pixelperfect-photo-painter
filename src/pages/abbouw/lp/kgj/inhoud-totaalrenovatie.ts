@@ -129,7 +129,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
      bad 05, gevel 06). */
   diensten: {
     kop: 'Onze diensten',
-    onder: 'Bij een renovatie stemmen wij onze afdelingen op elkaar af. Omdat we alles in huis hebben, verloopt de planning vlot.',
+    onder: 'Bij een renovatie stemmen wij onze afdelingen op elkaar af. Omdat we alles in huis hebben, kan u rekenen op een vlot traject.',
     lijst: [
       { id: 'bouw', icoon: 'dienst-nieuw', naam: 'Totaalrenovatie en nieuwbouw', tekst: '' },
       { id: 'ecologisch', icoon: 'afd-eco', naam: 'Ecologisch bouwen', tekst: '' },
