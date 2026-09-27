@@ -45,6 +45,7 @@ const GROEPEN = {
        wie "dak vernieuwen" typt, kan ook een plat dak hebben, dus vraag 1 blijft staan
        tenzij het zoekwoord pannen, leien, hellend of sarking noemt. */
     achtervoegsel: SUFFIX + '&dienst=nieuw-dak',
+    pin2: 'Wij vernieuwen het hele dak',
     lpKop: 'Dé specialist voor uw nieuwe dak',
     koppen: [
       'Dak vernieuwen?',                // positie 1, gepind (samen met Pannendak vervangen en Kostprijs nieuw dak)
@@ -60,7 +61,10 @@ const GROEPEN = {
          dragen de bedrijfsnaam als kop ("Dural Bouwgroep" 1414 dagen, "OVB Construct"
          1027) en herhalen het zoekwoord ("Experts in {KeyWord:platte daken}", 1669 dagen). */
       'AB Bouw Groep',
-      'Vraag uw gratis offerte aan',
+      /* 27 sep, Mohammed: "natuurlijk door de koppen ... dat die mensen niet klikken". Vast op
+         positie 2: de materiaalzoeker, de premiezoeker en wie één pan kwijt is, ziet vooraf dat
+         dit over het hele dak gaat en klikt niet. Vervangt "Vraag uw gratis offerte aan". */
+      'Wij vernieuwen het hele dak',
       'Dak aan vervanging toe?',
       '{KeyWord:Nieuw dak laten plaatsen}',
       'Dak vernieuwen in {LOCATION(City):uw regio}',
@@ -90,11 +94,12 @@ const GROEPEN = {
     pad: ['plat-dak', 'vernieuwen'],
     // Elk zoekwoord van deze groep noemt het platte dak (kruislijst van Hellend), dus vraag 1 vult zich in.
     achtervoegsel: SUFFIX + '&dak=plat',
+    pin2: 'Uw hele platte dak vernieuwd',
     lpKop: 'Dé specialist voor uw plat dak',
     koppen: [
       'Plat dak vernieuwen?',           // positie 1, gepind (samen met Wat kost een nieuw plat dak? en Roofing of EPDM vernieuwen)
       'Wat kost een nieuw plat dak?',
-      'Prijs aanvragen in 2 minuten',
+      'Uw hele platte dak vernieuwd',   // positie 2, gepind (filterkop, zie Hellend); vervangt "Prijs aanvragen in 2 minuten"
       'Gratis inspectie van uw dak',
       '10 jaar garantie op dakwerk',
       '6% btw bij woning 10+ jaar',
@@ -332,6 +337,8 @@ for (const [naam, g] of Object.entries(GROEPEN)) {
   // Het premiebedrag staat nooit in een kop (premiejagers); in precies één beschrijving, met voorwaarde.
   for (const k of g.koppen) if (/50%|5\.750|premie terug/i.test(k)) fouten.push(`${naam}: premiebedrag in kop "${k}"`);
   if (g.beschrijvingen.filter((b) => /50%/.test(b)).length !== 1) fouten.push(`${naam}: premiebedrag moet in precies één beschrijving staan`);
+  // Filterkop op positie 2 (27 sep): staat in de koppen en zegt dat het om het hele dak gaat.
+  if (naam !== 'Dakisolatie' && !(g.pin2 && g.koppen.includes(g.pin2) && /\bhele\b/.test(g.pin2))) fouten.push(`${naam}: filterkop op positie 2 ontbreekt`);
   // Kop 1 moet het zoekwoord van de groep dragen.
   if (!g.koppen[0].toLowerCase().includes(naam.toLowerCase().replace('hellend ', ''))) fouten.push(`${naam}: kop 1 "${g.koppen[0]}" draagt het zoekwoord niet`);
 }
