@@ -249,34 +249,38 @@ export const KGJ_EXTRA = `
   .kgjx .kgj-dienst p { font-size: 15px; }
 }
 
-/* ── voordelen van dakrenovatie: drie gekleurde bollen ──
+/* ── voordelen van dakrenovatie: drie kaarten met een ronde, gekleurde bol ──
    Mohammed, 26 sep: "iconen, graag in bolvorm en met verschillende bijpassende
-   kleuren", "bij elk bolletje een korte uitleg". Een licht verloop van linksboven
-   geeft de bol diepte. Wit icoon op de basiskleur: oranje 3,67:1, blauw 5,28:1,
-   groen 4,48:1 (grafisch minimum 3:1). Op de telefoon staat de bol links van de
-   tekst, zodat de sectie kort blijft. */
-.kgj-voordeelraster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 34px; list-style: none; margin: 0; padding: 0; }
-.kgjx .kgj-voordelen .kgj-kopblok { margin-bottom: 38px; }
-.kgjx .kgj-voordeel { text-align: center; }
-.kgjx .kgj-voordeel__bol { display: grid; place-items: center; width: 84px; height: 84px; margin: 0 auto 20px;
-  border-radius: 50%; color: #fff;
-  background: radial-gradient(circle at 32% 28%, var(--bol-licht) 0%, var(--bol) 58%, var(--bol-diep) 100%);
-  box-shadow: 0 12px 22px -12px var(--bol-diep); }
-.kgjx .kgj-voordeel__bol svg { width: 38px; height: 38px; stroke-width: 1.9; }
-.kgjx .kgj-voordeel--oranje { --bol: #d4661c; --bol-licht: #e8894a; --bol-diep: #a94c10; }
-.kgjx .kgj-voordeel--blauw { --bol: #2f6db5; --bol-licht: #5b8fd0; --bol-diep: #214f86; }
-.kgjx .kgj-voordeel--groen { --bol: #23875a; --bol-licht: #4ea57d; --bol-diep: #17613f; }
-.kgjx .kgj-voordeel h3 { margin: 0 0 8px; font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 19px;
-  font-weight: 700; line-height: 1.3; color: var(--kop); overflow-wrap: break-word; }
-.kgjx .kgj-voordeel p { margin: 0 auto; max-width: 34ch; font-size: 15.5px; line-height: 1.55; color: var(--tekst); }
+   kleuren", "bij elk bolletje een korte uitleg". 27 sep: de glanzende bollen
+   oogden "te tech achtig" en de tekst eronder "asymmetrisch, alsof het daar
+   gewoon is gegooid". Nu: een vlakke, lichte bol met het icoon in kleur (zoals
+   de dienst-iconen), drie even hoge kaarten, tekst links uitgelijnd. De bol
+   staat naast de titel: die kop is in elke kaart 60px hoog, ook als de titel
+   twee regels telt, zodat de uitleg overal op dezelfde hoogte begint.
+   Icoon op bol: oranje 4,19:1, blauw 5,16:1, groen 4,52:1 (minimum 3:1). */
+.kgj-voordeelraster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; list-style: none; margin: 0; padding: 0; }
+.kgjx .kgj-voordelen .kgj-kopblok { margin-bottom: 34px; }
+.kgjx .kgj-voordeel { display: grid; grid-template-columns: 60px minmax(0, 1fr); grid-template-areas: "bol titel" "tekst tekst";
+  column-gap: 16px; row-gap: 16px; align-items: center; align-content: start; padding: 26px 26px 28px;
+  background: var(--wit); border: 1px solid var(--lijn); border-radius: var(--r-vak); text-align: left; }
+.kgjx .kgj-voordeel__bol { grid-area: bol; display: grid; place-items: center; width: 60px; height: 60px; margin: 0;
+  border-radius: 50%; background: var(--bol-licht); color: var(--bol); }
+.kgjx .kgj-voordeel__bol svg { width: 30px; height: 30px; stroke-width: 1.75; }
+.kgjx .kgj-voordeel--oranje { --bol: #b9531a; --bol-licht: #fcebdd; }
+.kgjx .kgj-voordeel--blauw { --bol: #2a63a6; --bol-licht: #e3edf8; }
+.kgjx .kgj-voordeel--groen { --bol: #1f7a52; --bol-licht: #e0f1e8; }
+.kgjx .kgj-voordeel h3 { grid-area: titel; margin: 0; font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 19px;
+  font-weight: 700; line-height: 1.3; color: var(--kop); }
+.kgjx .kgj-voordeel p { grid-area: tekst; align-self: start; margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--tekst); }
 @media (max-width: 760px) {
-  .kgj-voordeelraster { grid-template-columns: 1fr; gap: 22px; }
-  .kgjx .kgj-voordelen .kgj-kopblok { margin-bottom: 26px; }
-  .kgjx .kgj-voordeel { display: grid; grid-template-columns: 60px minmax(0, 1fr); column-gap: 16px; text-align: left; }
-  .kgjx .kgj-voordeel__bol { grid-row: span 2; width: 60px; height: 60px; margin: 0; }
-  .kgjx .kgj-voordeel__bol svg { width: 28px; height: 28px; }
-  .kgjx .kgj-voordeel h3 { font-size: 17px; margin: 4px 0 4px; }
-  .kgjx .kgj-voordeel p { margin: 0; max-width: none; font-size: 15px; }
+  .kgj-voordeelraster { grid-template-columns: 1fr; gap: 12px; }
+  .kgjx .kgj-voordelen .kgj-kopblok { margin-bottom: 24px; }
+  .kgjx .kgj-voordeel { grid-template-columns: 52px minmax(0, 1fr); grid-template-areas: "bol titel" "bol tekst";
+    column-gap: 14px; row-gap: 4px; align-items: start; padding: 18px 16px; }
+  .kgjx .kgj-voordeel__bol { width: 52px; height: 52px; }
+  .kgjx .kgj-voordeel__bol svg { width: 26px; height: 26px; }
+  .kgjx .kgj-voordeel h3 { font-size: 17px; margin-top: 2px; }
+  .kgjx .kgj-voordeel p { font-size: 15px; }
 }
 
 /* ── voor en na: één liggende foto ──

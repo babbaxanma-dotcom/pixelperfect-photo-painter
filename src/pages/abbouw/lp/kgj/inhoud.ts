@@ -158,6 +158,17 @@ export const DAKWERKEN: KgjInhoud = {
         { label: 'Herstelling', icoon: 'herstel' }, { label: 'Renovatie', icoon: 'nieuwdak' },
         { label: 'Isolatie', icoon: 'isolatie' },
       ] },
+      /* Mohammed, 27 sep: "als je klikt op herstelling of renovatie, dat je kan kiezen, met
+         isolatie of zonder", want "nu is isolatie enkel en alleen apart". De keuze staat dus meteen
+         na herstelling of renovatie; wie "Isolatie" koos, krijgt ze niet.
+         Premie (26 sep): de melding verschijnt bij "Met isolatie", want isolatie is de voorwaarde
+         (Rd 4,5). Bron: vlaanderen.be, Mijn VerbouwPremie voor dak, aanvragen vanaf 1 maart 2026:
+         categorie 4 50% (max. 5.750 euro), categorie 3 35% (max. 4.025 euro), 1 en 2 niets meer. */
+      { sleutel: 'Isolatie', vraag: 'Wilt u het dak ook laten isoleren?', als: { Werk: ['Herstelling', 'Renovatie'] },
+        tip: { bij: ['Met isolatie'], tekst: 'Met isolatie komt uw dak in aanmerking voor Mijn VerbouwPremie: bij inkomenscategorie 3 of 4 tot 50% van de factuur terug, maximaal € 5.750.' }, keuzes: [
+        { label: 'Met isolatie', uitleg: 'het dak wordt mee geïsoleerd', icoon: 'isolatie' },
+        { label: 'Zonder isolatie', uitleg: 'enkel de dakwerken', icoon: 'geenisolatie' },
+      ] },
       /* Mohammed, 24 sep: "doe ook vraag hoe oud is uw dak", met na het antwoord
          de btw-melding klein in het formulier, "zodat ze verder gaan met de
          vragen". Een dak ouder dan tien jaar ligt op een woning ouder dan tien
@@ -189,15 +200,6 @@ export const DAKWERKEN: KgjInhoud = {
         { label: 'Kleiner dan 50 m²', icoon: 'maat1' }, { label: '50 tot 100 m²', icoon: 'maat2' },
         { label: '100 tot 150 m²', icoon: 'maat3' }, { label: 'Groter dan 150 m²', icoon: 'maat4' },
         { label: 'Weet ik niet', icoon: 'twijfel' },
-      ] },
-      /* Mohammed, 26 sep: de premie van tot 50% "creatief" inzetten. Hier, op het moment dat de
-         bezoeker kiest voor isolatie: dat is de voorwaarde van de premie (Rd 4,5). Bron: vlaanderen.be,
-         Mijn VerbouwPremie voor dak, aanvragen vanaf 1 maart 2026: categorie 4 50% (max. 5.750 euro),
-         categorie 3 35% (max. 4.025 euro), categorie 1 en 2 niets meer. */
-      { sleutel: 'Isolatie', vraag: 'Is er isolatie nodig?', als: { Werk: ['Renovatie'] },
-        tip: { bij: ['Ja'], tekst: 'Met isolatie komt uw dak in aanmerking voor Mijn VerbouwPremie: bij inkomenscategorie 3 of 4 tot 50% van de factuur terug, maximaal € 5.750.' }, keuzes: [
-        { label: 'Ja', uitleg: 'ik wil isolatie laten plaatsen', icoon: 'isolatie' },
-        { label: 'Nee', uitleg: 'enkel dakwerken', icoon: 'geenisolatie' },
       ] },
       { sleutel: 'Asbest', vraag: 'Is er asbest aanwezig in het dak?', keuzes: [
         { label: 'Ja, vermoedelijk', icoon: 'asbest' }, { label: 'Nee', icoon: 'veilig' }, { label: 'Weet ik niet zeker', icoon: 'twijfel' },
@@ -246,15 +248,17 @@ export const DAKWERKEN: KgjInhoud = {
      voordelen van dakrenovatie, minder stookkost, vermijd schade aan uw dak en
      investering in de waarde van uw woning en wooncomfort", "met de nodige juiste
      iconen, graag in bolvorm en met verschillende bijpassende kleuren", "bij elk
-     bolletje een korte uitleg erbij". Kop en titels zijn zijn woorden.
-     Bron EPC: vlaanderen.be, "EPC bij verkoop of verhuur van een woning": de
-     energiescore of het EPC-label staat verplicht in elke advertentie. */
+     bolletje een korte uitleg erbij".
+     27 sep: titel 2 is zijn zin ("vermijd duizenden euros aan schade"); punt 3 "is echt niet
+     overtuigend", dus een feit met bron: Nationale Bank met KU Leuven en UAntwerpen
+     (VRT NWS, 14 jan 2025, cijfers 2016-2022): label F gaat 10% goedkoper van de hand,
+     label A 13% duurder. De drie teksten zijn even lang, zodat de kaarten gelijk lopen. */
   voordelen: {
     kop: 'Voordelen van dakrenovatie',
     lijst: [
       { icoon: 'voordeel-stook', kleur: 'oranje', titel: 'Minder stookkost', tekst: 'Warme lucht stijgt en verdwijnt langs het dak. Met een goed geïsoleerd dak blijft die warmte binnen en stookt u minder.' },
-      { icoon: 'voordeel-schade', kleur: 'blauw', titel: 'Vermijd schade aan uw dak', tekst: 'Een verschoven pan of een barst in de roofing laat regenwater binnen. Renoveert u op tijd, dan blijven uw dakhout en plafonds droog.' },
-      { icoon: 'voordeel-waarde', kleur: 'groen', titel: 'Investering in de waarde van uw woning en wooncomfort', tekst: "Een geïsoleerd dak verbetert uw EPC-score, en die staat verplicht in elke verkoopadvertentie. Binnen blijft het 's winters warm en 's zomers koel." },
+      { icoon: 'voordeel-schade', kleur: 'blauw', titel: "Vermijd duizenden euro's aan schade", tekst: 'Een verschoven pan of een barst in de roofing laat regenwater binnen. Renoveert u op tijd, dan blijven dakhout en plafonds droog.' },
+      { icoon: 'voordeel-waarde', kleur: 'groen', titel: 'Meer waarde voor uw woning', tekst: 'Volgens de Nationale Bank gaat een woning met EPC-label F 10% goedkoper van de hand. Een geïsoleerd dak verbetert uw EPC-score.' },
     ],
   },
 

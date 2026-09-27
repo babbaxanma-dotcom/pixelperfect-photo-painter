@@ -75,7 +75,11 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   meld((await vraag()) === 'Wat moet er aan uw dak gebeuren?' && (await keuzesNu()) === 'Herstelling|Renovatie|Isolatie' && (await tel()) === 'Vraag 2 van 8',
     'vraag 2 = herstelling, renovatie, isolatie', `${await vraag()} / ${await keuzesNu()} / ${await tel()}`);
   await klikKeuze('Renovatie'); await wacht(250);
-  meld((await vraag()) === 'Hoe oud is uw dak?' && (await tel()) === 'Vraag 3 van 8', 'vraag 3 = hoe oud is uw dak', `${await vraag()} / ${await tel()}`);
+  /* 27 sep (Mohammed): na herstelling of renovatie meteen de keuze met of zonder isolatie. */
+  meld((await vraag()) === 'Wilt u het dak ook laten isoleren?' && (await keuzesNu()) === 'Met isolatie|Zonder isolatie' && (await tel()) === 'Vraag 3 van 8',
+    'vraag 3 = met of zonder isolatie', `${await vraag()} / ${await keuzesNu()} / ${await tel()}`);
+  await klikKeuze('Zonder isolatie'); await wacht(250);
+  meld((await vraag()) === 'Hoe oud is uw dak?' && (await tel()) === 'Vraag 4 van 8', 'vraag 4 = hoe oud is uw dak', `${await vraag()} / ${await tel()}`);
   meld((await keuzesNu()) === 'Jonger dan 10 jaar|Ouder dan 10 jaar', 'leeftijd: alleen jonger of ouder dan 10 jaar', await keuzesNu());
   meld(!(await tip()), 'nog geen btw-melding vóór het antwoord');
   await klikKeuze('Ouder dan 10 jaar'); await wacht(250);
@@ -83,8 +87,8 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   meld((await tip()).includes('6% btw'), 'btw-melding na een dak ouder dan 10 jaar', await tip());
   const volgorde = [];
   const tipDaarna = [];
-  for (const k of ['Gegolfde pannen', '50 tot 100 m²', 'Ja', 'Nee', 'Zo snel mogelijk']) { await klikKeuze(k); await wacht(250); volgorde.push(await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__vraag')?.textContent.trim())); tipDaarna.push(await tip()); }
-  meld(volgorde.slice(0, 4).join(' > ') === 'Hoe groot is het dak? > Is er isolatie nodig? > Is er asbest aanwezig in het dak? > Wanneer wilt u beginnen?', 'renovatie: grootte, isolatie, asbest, start', volgorde.slice(0, 4).join(' > '));
+  for (const k of ['Gegolfde pannen', '50 tot 100 m²', 'Nee', 'Zo snel mogelijk']) { await klikKeuze(k); await wacht(250); volgorde.push(await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__vraag')?.textContent.trim())); tipDaarna.push(await tip()); }
+  meld(volgorde.slice(0, 3).join(' > ') === 'Hoe groot is het dak? > Is er asbest aanwezig in het dak? > Wanneer wilt u beginnen?', 'renovatie: grootte, asbest, start', volgorde.slice(0, 3).join(' > '));
   /* Na "isolatie: ja" staat bewust de premiemelding (26 sep); de btw-melding mag nergens terugkomen. */
   meld(tipDaarna.every((t) => !t.includes('btw')), 'btw-melding staat alleen op de stap na het antwoord', tipDaarna.filter(Boolean).map((t) => t.slice(0, 40)).join(' | '));
   const form = await page.evaluate(() => {
@@ -143,21 +147,21 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
 
   /* 4. Plat + renovatie, dak jonger dan 10 jaar (terug naar vraag 1) */
   await naarBegin();
-  for (const k of ['Plat dak', 'Renovatie', 'Jonger dan 10 jaar']) { await klikKeuze(k); await wacht(250); }
+  for (const k of ['Plat dak', 'Renovatie', 'Zonder isolatie', 'Jonger dan 10 jaar']) { await klikKeuze(k); await wacht(250); }
   const plat = await keuzesNu();
-  meld((await vraag()) === 'Wat wilt u op uw plat dak?' && plat === 'Bitumen|Roofing|EPDM|Weet ik nog niet' && (await tel()) === 'Vraag 4 van 8',
+  meld((await vraag()) === 'Wat wilt u op uw plat dak?' && plat === 'Bitumen|Roofing|EPDM|Weet ik nog niet' && (await tel()) === 'Vraag 5 van 8',
     'plat: bitumen, roofing, EPDM', `${await vraag()} / ${plat} / ${await tel()}`);
   meld(!(await tip()), 'geen btw-melding bij een dak jonger dan 10 jaar');
 
-  /* 4b. Hellend + herstelling: wat ligt er NU, geen isolatievraag, 7 vragen */
+  /* 4b. Hellend + herstelling: met of zonder isolatie (27 sep), dan wat ligt er NU, 8 vragen */
   await naarBegin();
   const herstel = [];
-  for (const k of ['Hellend dak', 'Herstelling', 'Ouder dan 10 jaar']) { await klikKeuze(k); await wacht(250); }
+  for (const k of ['Hellend dak', 'Herstelling', 'Met isolatie', 'Ouder dan 10 jaar']) { await klikKeuze(k); await wacht(250); }
   herstel.push(await vraag());
   const telHerstel = await tel();
   for (const k of ['Gegolfde pannen', 'Kleiner dan 50 m²', 'Nee']) { await klikKeuze(k); await wacht(250); herstel.push(await vraag()); }
-  meld(herstel.join(' > ') === 'Welke dakbedekking ligt er nu? > Hoe groot is het dak? > Is er asbest aanwezig in het dak? > Wanneer wilt u beginnen?' && telHerstel === 'Vraag 4 van 7',
-    'herstelling: huidige bedekking, grootte, asbest, start (7 vragen)', `${herstel.join(' > ')} / ${telHerstel}`);
+  meld(herstel.join(' > ') === 'Welke dakbedekking ligt er nu? > Hoe groot is het dak? > Is er asbest aanwezig in het dak? > Wanneer wilt u beginnen?' && telHerstel === 'Vraag 5 van 8',
+    'herstelling: isolatiekeuze, huidige bedekking, grootte, asbest, start (8 vragen)', `${herstel.join(' > ')} / ${telHerstel}`);
 
   /* 4c. Isolatie: geen bedekking, geen isolatievraag, 6 vragen */
   await naarBegin();
@@ -387,9 +391,13 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     await q.evaluateOnNewDocument(() => localStorage.setItem('ab_bouw_consent_v1', JSON.stringify({ analytics: false, marketing: false })));
     await q.goto(URL, { waitUntil: 'networkidle0' }); await wacht(500);
     const klik = async (l) => { await q.evaluate((t) => [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')].find((k) => k.textContent.trim().startsWith(t)).click(), l); await wacht(260); };
-    for (const a of ['Hellend dak', 'Renovatie', 'Ouder dan 10 jaar', 'Gegolfde pannen', '50 tot 100 m²', 'Ja']) await klik(a);
-    const tip = await q.evaluate(() => document.querySelector('#rekenaar .kgj-reken__tip')?.textContent.trim() || '');
-    meld(/5\.750/.test(tip) && /categorie 3 of 4/.test(tip), 'premiemelding na "isolatie: ja"', tip);
+    const tips = [];
+    for (const werk of ['Renovatie', 'Herstelling']) {
+      await q.goto(URL, { waitUntil: 'networkidle0' }); await wacht(400);
+      for (const a of ['Hellend dak', werk, 'Met isolatie']) await klik(a);
+      tips.push(await q.evaluate(() => document.querySelector('#rekenaar .kgj-reken__tip')?.textContent.trim() || ''));
+    }
+    meld(tips.every((tip) => /5\.750/.test(tip) && /categorie 3 of 4/.test(tip)), 'premiemelding na "met isolatie", bij renovatie en bij herstelling', tips.map((x) => x.slice(0, 30)).join(' | '));
     await q.close();
   }
 
@@ -416,7 +424,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
           titel: li.querySelector('h3')?.textContent.trim() || '',
           uitleg: li.querySelector('p')?.textContent.trim() || '',
           rond: Math.abs(r.width - r.height) < 1 && parseFloat(cs.borderTopLeftRadius) >= r.width / 2 - 1,
-          kleur: cs.backgroundImage,
+          kleur: cs.backgroundColor,
           icoon: !!bol.querySelector('svg path'),
           zichtbaar: parseFloat(getComputedStyle(li).opacity) > 0.95,
           binnen: l.left >= 0 && l.right <= innerWidth,
@@ -425,7 +433,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
       return { na: ids[ids.indexOf('voordelen') - 1], voor: ids[ids.indexOf('voordelen') + 1], kop: s.querySelector('h2')?.textContent.trim(), items };
     });
     meld(!!v && v.na === 'waarom' && v.voor === 'diensten', `${naam}: voordelen staan tussen Waarom en Diensten`, v ? `${v.na} > voordelen > ${v.voor}` : 'sectie ontbreekt');
-    meld(!!v && v.kop === 'Voordelen van dakrenovatie' && v.items.map((i) => i.titel).join('|') === 'Minder stookkost|Vermijd schade aan uw dak|Investering in de waarde van uw woning en wooncomfort',
+    meld(!!v && v.kop === 'Voordelen van dakrenovatie' && v.items.map((i) => i.titel).join('|') === "Minder stookkost|Vermijd duizenden euro's aan schade|Meer waarde voor uw woning",
       `${naam}: kop en drie voordelen`, v ? v.items.map((i) => i.titel).join(' / ') : '');
     meld(!!v && v.items.length === 3 && v.items.every((i) => i.rond && i.icoon && i.uitleg.length > 40) && new Set(v.items.map((i) => i.kleur)).size === 3,
       `${naam}: elke bol rond, met icoon, eigen kleur en uitleg`);
