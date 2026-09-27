@@ -32,6 +32,8 @@ const UIT = path.join(__dirname, '..', 'public', 'sitemap.xml');
 const NIET_IN_SITEMAP = new Set([
   '/index',            // zelfde inhoud als /
   '/bedankt',          // heeft alleen zin na een aanvraag
+  '/afspraak',         // alleen voor wie de link uit een sms krijgt
+  '/dakinspectie',     // idem, voor de dakinspectie-aanvraag
   '/lp/totaalrenovatie',    // duplicaat van /totaalrenovatie
   '/lp/badkamerrenovatie',  // duplicaat van /badkamerrenovatie
   '/lp/dakwerken',          // advertentiepagina; concurreert anders met /dakwerken
