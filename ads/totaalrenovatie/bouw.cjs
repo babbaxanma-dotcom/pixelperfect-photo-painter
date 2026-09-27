@@ -16,6 +16,23 @@
  * "Wij begeleiden u bij uw EPC-attest en regelen de aanvraag van uw Mijn VerbouwPremie."
  * Dus "EPC-begeleiding" mag; "inclusief EPC-attest" niet (het attest maakt een energiedeskundige).
  *
+ * Onderzoek 27 sep (onderzoek-27sep/, Mohammed: "we gaan niet blind starten"):
+ *   concurrenten:  Transparency Center, 51 actieve renovatie-aannemers. De tien die het langst
+ *                  lopen (RuverkO 1446 dagen, Verelst 997, Builthings 759) zeggen gratis/vrijblijvend
+ *                  (7 van 10), bewijs (6), één aanspreekpunt (6), lokaal (5). Prijszekerheid staat bij
+ *                  4 van 33 op de zoekpagina (Verelst: "Binnen timing én binnen budget"), dus
+ *                  "Vaste prijs na plaatsbezoek" (bron: de pagina en de homepage).
+ *   zoekwoorden:   1663 autocomplete-aanvullingen, 491 kopers. 120 kopers vielen buiten de oude 29
+ *                  zoekwoorden (woning renoveren, volledige renovatie, huis verbouwen, renovatiekosten,
+ *                  algemene aannemer ...), nu opgenomen. 3 oude uitsluitingen blokkeerden kopers
+ *                  (goedkoopste, subsidie aanvragen, badkamer), nu weg of versmald. Uitsluitingen
+ *                  matchen geen meervoud of samenstelling ("vacature" blokkeert "vacatures" niet),
+ *                  dus die staan er apart bij, net als de junk die "huis renoveren" en "renovatie
+ *                  woning" vangen (youtube, lening, tunnels, buitenland, concurrenten).
+ *   filterkop:     zoals dak een gepinde kop op positie 2 met "hele", zodat wie één kamer of één
+ *                  vloer zoekt niet klikt.
+ *   VCA:           uit koppen en beschrijvingen; Mohammed noemde het op de pagina "een raar puntje".
+ *
  * Dit script faalt (exit 1) als een tekst te lang is, een verboden zinsbouw of een getal
  * zonder bron op de pagina bevat, een kop dubbel staat, of een uitsluiting een eigen
  * zoekwoord blokkeert. Het toetst ook de 681 uitsluitingen van de dakcampagne, zodat
@@ -54,30 +71,38 @@ const GROEPEN = {
       ['renovatie aannemer', 'w'], ['aannemer renovatie', 'w'], ['algemene aannemer renovatie', 'w'],
       ['aannemer verbouwing', 'w'], ['huis gekocht renoveren', 'w'], ['oude woning renoveren', 'w'],
       ['woning strippen en renoveren', 'w'], ['renovatiebedrijf', 'w'], ['renovatie woning', 'w'], ['huis renoveren', 'w'],
+      // 27 sep: kopers uit de autocomplete die de lijst hierboven niet vangt
+      ['woning renoveren', 'w'], ['renovatie huis', 'w'], ['woningrenovatie', 'w'], ['volledige renovatie', 'w'],
+      ['huis compleet renoveren', 'w'], ['huis laten renoveren', 'w'], ['huis volledig laten renoveren', 'w'],
+      ['renovatie oude woning', 'w'], ['renovatie rijwoning', 'w'], ['rijwoning renoveren', 'w'], ['huis verbouwen', 'w'],
+      ['woning verbouwen', 'w'], ['verbouwingswerken', 'w'], ['aannemer renovatiewerken', 'w'], ['algemene aannemer', 'w'],
+      ['aannemer voor renovatie', 'w'], ['aannemer energetische renovatie', 'w'],
     ],
     pad: ['totaal', 'renovatie'],
+    pin2: 'Uw hele woning gerenoveerd',
     koppen: [
-      'Totaalrenovatie van uw woning',   // positie 1, gepind met de KeyWord-kop
+      'Aannemer voor totaalrenovatie',   // positie 1, gepind met de KeyWord-kop
       '{KeyWord:Aannemer totaalrenovatie}',
-      'Renoveren met eigen ploegen',
-      'AB Bouw Groep: renovatie',
+      /* Positie 2, gepind: filterkop. Wie één kamer of één vloer zoekt, klikt hier niet. */
+      'Uw hele woning gerenoveerd',
       'Bereken uw prijs in 2 minuten',
       '6% btw bij woning 10+ jaar',
       'Hulp bij Mijn VerbouwPremie',
       'Gratis plaatsbezoek en offerte',
-      'VCA-gecertificeerd, verzekerd',
+      'Vaste prijs na plaatsbezoek',
+      'Zes afdelingen in huis',
       'Eén planning voor alle werken',
       'Inclusief EPC-begeleiding',
       'Totaalrenovatie in {LOCATION(City):uw regio}',
       'Huis gekocht om te renoveren?',
-      'Transparante offerte',
-      'Vrijblijvende offerte',
+      'AB Bouw Groep: renovatie',
+      'Eigen ploeg, elke dag dezelfde',   // pagina, werkwijze: "Dezelfde ploeg komt elke dag terug."
     ],
     beschrijvingen: [
       'Bereken in 2 minuten de prijs van uw renovatie. Gratis plaatsbezoek en offerte.',
-      'Onze eigen ploegen doen elk vak, volgens één planning. VCA-gecertificeerd en verzekerd.',
+      'Zes afdelingen in huis: onze eigen ploegen doen elk vak, volgens één planning.',
       'Woning ouder dan tien jaar? Dan geldt 6% btw. Wij regelen uw Mijn VerbouwPremie.',
-      'Transparante offerte en strikte planning. Echt vakmanschap en perfecte afwerking.',
+      'Tijdens de werken schermen wij de woning af tegen stof en ruimen we elke avond op.',
     ],
   },
   'Prijs renovatie': {
@@ -87,12 +112,19 @@ const GROEPEN = {
       ['wat kost een huis renoveren', 'w'], ['wat kost een totaalrenovatie', 'w'], ['huis renoveren prijs', 'w'],
       ['woning renoveren kostprijs', 'w'], ['renovatie prijs per m2', 'w'], ['renovatiekosten berekenen', 'w'],
       ['prijs huis renoveren', 'w'], ['kostprijs renovatie woning', 'w'], ['totaalrenovatie prijs', 'w'],
+      // 27 sep: prijszoekers uit de autocomplete die de lijst hierboven niet vangt
+      ['renovatiekosten', 'w'], ['renovatie prijs', 'w'], ['renovatie offerte', 'w'], ['offerte renovatie', 'w'],
+      ['verbouwing prijs', 'w'], ['huis verbouwen kosten', 'w'], ['woning verbouwen kosten', 'w'],
+      ['woning renoveren kosten', 'w'], ['renovatie huis kosten', 'w'], ['volledige renovatie kosten', 'w'],
+      ['huis laten renoveren kosten', 'w'], ['kostprijs renovatie huis', 'w'],
     ],
     pad: ['prijs', 'renovatie'],
+    pin2: 'Prijs voor de hele woning',
     koppen: [
       'Wat kost uw totaalrenovatie?',     // positie 1, gepind met de KeyWord-kop
       '{KeyWord:Prijs totaalrenovatie}',
-      'Bereken uw renovatieprijs',
+      /* Positie 2, gepind: filterkop. Wie de prijs van één badkamer of vloer zoekt, klikt hier niet. */
+      'Prijs voor de hele woning',
       'Prijs in 2 minuten berekend',
       'AB Bouw Groep: totaalrenovatie',
       '6% btw voor woning 10+ jaar',
@@ -103,14 +135,14 @@ const GROEPEN = {
       'Renovatie in {LOCATION(City):uw regio}',
       'Wat kost een huis renoveren?',
       'Kostprijs renovatie woning',
-      'VCA-attest en verzekerd',
-      'Strikte planning',
+      'Vaste prijs op uw offerte',
+      'Zes afdelingen, één planning',
     ],
     beschrijvingen: [
       'Wat kost uw renovatie? Beantwoord zes korte vragen op onze website. Klaar in 2 minuten.',
-      'Gratis plaatsbezoek: we bekijken uw woning en u krijgt een vrijblijvende offerte.',
+      'Na het gratis plaatsbezoek krijgt u een vaste prijs. Wat op de offerte staat, betaalt u.',
       'Woning ouder dan tien jaar? 6% btw, en wij regelen de aanvraag van uw premie.',
-      'Eigen ploegen voor ruwbouw en afwerking, volgens één planning. VCA en verzekerd.',
+      'Eigen ploegen voor ruwbouw en afwerking, volgens één planning. Volledig verzekerd.',
     ],
   },
 };
@@ -124,10 +156,11 @@ const SITELINKS = [
   { tekst: 'Voor en na', r1: 'Sleep de balk over de foto', r2: 'Een werf van AB Bouw Groep', url: URL + '#voorna' },  // 27 sep: "uitbouw/aanbouw" van de pagina gehaald
   { tekst: 'EPC- en premiebegeleiding', r1: 'Begeleiding bij uw EPC-attest', r2: 'Hulp bij Mijn VerbouwPremie', url: URL + '#waarom' },
 ];
-const HIGHLIGHTS = ['Gratis plaatsbezoek', 'Eigen ploegen', 'VCA-gecertificeerd', 'Volledig verzekerd', 'Transparante offerte',
+const HIGHLIGHTS = ['Gratis plaatsbezoek', 'Eigen ploegen', 'Vaste prijs', 'Volledig verzekerd', 'Zes afdelingen in huis',
   'Premiebegeleiding', 'EPC-begeleiding', '6% btw vanaf 10 jaar', 'Prijs in 2 minuten'];
+/* 27 sep: dezelfde zes afdelingen als de sectie "Onze diensten" op de pagina. */
 const SNIPPETS = [
-  { kop: 'Services', waarden: ['Afbraak en ruwbouw', 'Technieken', 'Pleisterwerk', 'Vloeren en tegels', 'Interieur'] },
+  { kop: 'Services', waarden: ['Totaalrenovatie', 'Ecologisch bouwen', 'Interieurwerken', 'Dakwerken', 'Badkamer en wellness', 'Gevelrenovatie'] },
 ];
 
 /* ---------- Uitsluitingen van deze campagne ---------- */
@@ -141,12 +174,47 @@ const UITSLUITEN = [
   ['charleroi', 'w'], ['forum', 'w'], ['klachten', 'w'], ['failliet', 'w'], ['wikipedia', 'w'], ['betekenis', 'w'],
   ['tweedehands', 'w'], ['containerwoning', 'w'], ['mobilhome', 'w'], ['caravan', 'w'],
   // 26 sep: deelwerken met een eigen pagina of een kleine opdracht, en andere bestemmingen
-  ['badkamer', 'w'], ['keuken', 'w'], ['dak', 'w'], ['dakwerken', 'w'], ['gevel', 'w'], ['schilder', 'w'],
+  ['keuken', 'w'], ['dak', 'w'], ['dakwerken', 'w'], ['gevel', 'w'], ['schilder', 'w'],
   ['schilderwerken', 'w'], ['behangen', 'w'], ['laminaat', 'w'], ['parket leggen', 'w'], ['kantoor', 'w'],
-  ['winkel', 'w'], ['horeca', 'w'], ['kerk', 'w'], ['school', 'w'], ['gemeente', 'w'], ['subsidie aanvragen', 'w'],
+  ['winkel', 'w'], ['horeca', 'w'], ['kerk', 'w'], ['school', 'w'], ['gemeente', 'w'],
   /* 26 sep: 'epc' en 'renovatieplicht' NIET uitsluiten: wie een woning met een slecht label kocht, moet renoveren. */
   ['energiescan', 'w'], ['architect', 'w'], ['tekenaar', 'w'],
-  ['gratis', 'e'], ['goedkoop', 'w'], ['goedkoopste', 'w'], ['zwart', 'w'], ['in het zwart', 'w'],
+  ['gratis', 'e'], ['zwart', 'w'], ['in het zwart', 'w'],
+  /* 27 sep: 'badkamer' blokkeerde "aannemer renovatie 1e verdieping inclusief badkamer"; nu alleen de
+     zoekopdracht naar een losse badkamer. 'goedkoop(ste)' en 'subsidie aanvragen' weg: ze blokkeerden
+     "totaalrenovatie goedkoopste prijs" en "totaalrenovatie subsidie aanvragen mechelen". */
+  ['badkamer renovatie', 'w'], ['renovatie badkamer', 'w'], ['badkamer renoveren', 'w'], ['badkamerrenovatie', 'w'],
+  ['totaalrenovatie badkamer', 'w'], ['verbouwing badkamer', 'w'],
+  ['parket renovatie', 'w'], ['toilet renovatie', 'w'], ['tuin renovatie', 'w'], ['trap renovatie', 'w'], ['traprenovatie', 'w'],
+  // 27 sep: meervoud en samenstelling van de lijst hierboven (een uitsluiting matcht die niet)
+  ['vacatures', 'w'], ['stages', 'w'], ['cursussen', 'w'], ['jobstudent', 'w'], ['flexijob', 'w'], ['loonbrief', 'w'],
+  ['loonbarema', 'w'], ['klachtendienst', 'w'], ['klachtenformulier', 'w'], ['klachtencommissie', 'w'], ['caravans', 'w'],
+  ['containerwoningen', 'w'], ['kantoorruimte', 'w'], ['kantoormeubelen', 'w'], ['winkels', 'w'], ['schooltv', 'w'],
+  ['schoolfeest', 'w'], ['schooluren', 'w'],
+  // 27 sep: geld lenen en administratie
+  ['lening', 'w'], ['krediet', 'w'], ['renovatiekrediet', 'w'], ['verbouwingslening', 'w'], ['hypotheekrente', 'w'],
+  ['jaarrekening', 'w'], ['fiscaal', 'w'], ['aftrekbaar', 'w'], ['zelfstandige', 'w'], ['notaris', 'w'], ['fluvius', 'w'],
+  ['cadgis', 'w'], ['kadaster', 'w'], ['excel', 'w'], ['xls', 'w'], ['huurder', 'w'], ['huren', 'w'], ['huur', 'w'],
+  ['te koop', 'w'], ['kopen', 'w'], ['verhuizen', 'w'], ['overwaarde', 'w'], ['agrarisch', 'w'],
+  // 27 sep: tv, video, school, taal en nieuws (tunnels en het Binnenhof zijn werven in het nieuws)
+  ['youtube', 'w'], ['quiz', 'w'], ['quizlet', 'w'], ['quotes', 'w'], ['xxl', 'w'], ['programma', 'w'],
+  ['voor een ton', 'w'], ['vtm', 'w'], ['qmusic', 'w'], ['boek', 'w'], ['animal crossing', 'w'], ['ai', 'w'], ['ugc', 'w'],
+  ['reddit', 'w'], ['zwarte lijst', 'w'], ['engels', 'w'], ['frans', 'w'], ['nederlands', 'w'], ['ugent', 'w'], ['uza', 'w'],
+  ['uz', 'w'], ['cm', 'w'], ['condoleren', 'w'], ['xtc', 'w'], ['q8', 'w'], ['fortis', 'w'], ['binnenhof', 'w'],
+  ['tunnel', 'w'], ['hubertustunnel', 'w'], ['rupeltunnel', 'w'], ['waaslandtunnel', 'w'], ['camper', 'w'], ['cadeau', 'w'],
+  ['chalet', 'w'], ['loods', 'w'],
+  // 27 sep: buitenland (de locatie-instelling kijkt naar waar iemand is, niet naar wat hij zoekt)
+  ['spanje', 'w'], ['frankrijk', 'w'], ['italie', 'w'], ['duitsland', 'w'], ['curacao', 'w'], ['suriname', 'w'], ['ibiza', 'w'],
+  ['zwarte woud', 'w'], ['amsterdam', 'w'], ['rotterdam', 'w'], ['den haag', 'w'], ['utrecht', 'w'], ['haarlem', 'w'],
+  ['leiden', 'w'], ['kerkrade', 'w'], ['yerseke', 'w'], ['ypenburg', 'w'], ['ymere', 'w'],
+  /* 27 sep: concurrenten (zoekpagina 15 sep, Transparency Center en autocomplete). Wie een merk zoekt,
+     zoekt dat bedrijf (Ben Heath: concurrentnamen uitsluiten tenzij je er actief op biedt). */
+  ['verelst', 'w'], ['kapareno', 'w'], ['martha', 'w'], ['vulsteke', 'w'], ['gijbels', 'w'], ['ruverko', 'w'],
+  ['builthings', 'w'], ['cleys', 'w'], ['pintelon', 'w'], ['interieurkabinet', 'w'], ['total interior', 'w'], ['dhoore', 'w'],
+  ['domico', 'w'], ['tifre', 'w'], ['grava', 'w'], ['renox', 'w'], ['reno x', 'w'], ['reno vlad', 'w'], ['noterman', 'w'],
+  ['iha', 'w'], ['genki', 'w'], ['franssen', 'w'], ['jvr', 'w'], ['mitch', 'w'], ['mortier', 'w'], ['ooms', 'w'],
+  ['schipper', 'w'], ['chrisma', 'w'], ['rinovato', 'w'], ['vanoverbeke', 'w'], ['zedreno', 'w'], ['x2o', 'w'], ['mh', 'w'],
+  ['b&g', 'w'], ['bobex', 'w'], ['aannemeroffertes', 'w'],
 ];
 
 /* ---------- Budget (Mohammed: "het dagbudget mag je ook bepalen") ----------
@@ -180,6 +248,13 @@ for (const [naam, g] of Object.entries(GROEPEN)) for (const [kw] of g.zoekwoorde
 const KOPER = ['renovatie woning epc label', 'renovatieplicht woning aannemer', 'totaalrenovatie woning prijs', 'aannemer totaalrenovatie antwerpen', 'wat kost een totaalrenovatie per m2', 'huis gekocht volledig renoveren',
   'renovatie oude woning kostprijs', 'totaalrenovatie offerte', 'renovatie woning 6 btw', 'aannemer renovatie in de buurt', 'woning renoveren premie'];
 for (const q of KOPER) for (const [t, ty] of UITSLUITEN) if (blokkeert(t, ty, q)) fouten.push(`uitsluiting "${t}" blokkeert koper "${q}"`);
+/* 27 sep: ook geen enkele koper uit het autocomplete-onderzoek (491 kopers plus wie een premie of
+   subsidie voor de renovatie zoekt). */
+const ONDERZOEK = require('./onderzoek-27sep/zoekwoorden.json').aanvullingen.filter((a) => a.klasse === 'KOPER' || a.koopnabij);
+if (ONDERZOEK.length < 400) { console.error(`TOETS DEFECT: ${ONDERZOEK.length} kopers uit het onderzoek`); process.exit(2); }
+for (const a of ONDERZOEK) for (const [t, ty] of UITSLUITEN) if (blokkeert(t, ty, a.tekst)) fouten.push(`uitsluiting "${t}" blokkeert koper "${a.tekst}" (autocomplete)`);
+const dubbel = UITSLUITEN.map(([t, ty]) => ty + t).filter((x, i, l) => l.indexOf(x) !== i);
+if (dubbel.length) fouten.push(`dubbele uitsluitingen: ${dubbel.join(', ')}`);
 
 const VERBODEN = [
   { re: /zonder (gedoe|stress|zorgen)|ontzorg|zorgeloos/i, waarom: '13 van de 38 concurrenten zeggen dit al' },
@@ -189,6 +264,7 @@ const VERBODEN = [
   { re: /nr\.? ?1|#1|beste|sterren|review/i, waarom: 'claim die AB niet kan dragen (1 Google-review)' },
   { re: /!/, waarom: 'geen uitroepteken op search' },
   { re: /inclusief epc-attest|epc-attest inbegrepen/i, waarom: 'het EPC-attest maakt een energiedeskundige; AB begeleidt' },
+  { re: /\bVCA\b/, waarom: 'Mohammed, 26 sep: VCA is voor een particulier "een raar puntje"' },
   { re: /\b(?!EPDM\b|VCA\b)[A-Z]{4,}\b/, waarom: 'geen hoofdletterwoorden' },
   { re: /\b(rond|omgeving|regio|provincie|antwerpen|mechelen|brasschaat|schilde|schoten|wilrijk|vlaanderen)\b/i, waarom: 'plaatsnaam in de tekst; gebruik {LOCATION(City):uw regio}', zonderLocatie: true },
 ];
@@ -218,6 +294,9 @@ for (const [naam, g] of Object.entries(GROEPEN)) {
   for (const b of g.beschrijvingen) toets(b, 90, `beschrijving (${naam})`);
   for (const p of g.pad) if (p.length > 15) fouten.push(`pad "${p}" te lang`);
   if (!g.koppen[0].toLowerCase().includes(g.kern)) fouten.push(`${naam}: kop 1 draagt het zoekwoord "${g.kern}" niet`);
+  if (!(g.pin2 && g.koppen.includes(g.pin2) && /\bhele\b/.test(g.pin2))) fouten.push(`${naam}: filterkop op positie 2 ontbreekt`);
+  const kws = g.zoekwoorden.map(([t, ty]) => ty + t);
+  if (new Set(kws).size !== kws.length) fouten.push(`${naam}: dubbel zoekwoord`);
 }
 for (const s of SITELINKS) { toets(s.tekst, 25, 'sitelink'); toets(s.r1, 35, 'sitelinkregel'); toets(s.r2, 35, 'sitelinkregel'); }
 if (new Set(SITELINKS.map((s) => s.url)).size !== SITELINKS.length) fouten.push('twee sitelinks met dezelfde URL');

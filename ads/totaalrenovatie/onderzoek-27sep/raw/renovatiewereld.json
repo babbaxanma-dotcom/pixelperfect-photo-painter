@@ -1,0 +1,16 @@
+{
+ "speler": "Renovatiewereld",
+ "slug": "renovatiewereld",
+ "soort": "offertesite",
+ "serp": 0,
+ "oogst": "2026-09-27",
+ "doelen": {
+  "domein:renovatiewereld.be": {
+   "creatives": [],
+   "token": null,
+   "klaar": true,
+   "bladen": 1,
+   "totaal": null
+  }
+ }
+}

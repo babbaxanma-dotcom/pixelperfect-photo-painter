@@ -1,0 +1,62 @@
+{
+ "speler": "RuverkO",
+ "slug": "ruverko",
+ "soort": "aannemer",
+ "serp": 5,
+ "oogst": "2026-09-27",
+ "doelen": {
+  "domein:ruverko-totaalproject.be": {
+   "creatives": [
+    {
+     "adverteerderId": "AR07192117213271162881",
+     "cr": "CR14888699638495313921",
+     "adverteerder": "Proximedia SA",
+     "formaatCode": 1,
+     "formaat": "tekst",
+     "eerst": "2022-10-12",
+     "laatst": "2026-09-27",
+     "eerstTs": 1665589371,
+     "laatstTs": 1790497616,
+     "looptijdDagen": 1446,
+     "dagenGetoond": 1080,
+     "preview": null,
+     "beeld": "https://tpc.googlesyndication.com/archive/simgad/93873416579319411"
+    },
+    {
+     "adverteerderId": "AR07192117213271162881",
+     "cr": "CR04059838314948067329",
+     "adverteerder": "Proximedia SA",
+     "formaatCode": 1,
+     "formaat": "tekst",
+     "eerst": "2022-10-11",
+     "laatst": "2026-09-27",
+     "eerstTs": 1665521964,
+     "laatstTs": 1790486107,
+     "looptijdDagen": 1446,
+     "dagenGetoond": 1433,
+     "preview": null,
+     "beeld": "https://tpc.googlesyndication.com/archive/simgad/3943173640892736775"
+    },
+    {
+     "adverteerderId": "AR07192117213271162881",
+     "cr": "CR16277693865907978241",
+     "adverteerder": "Proximedia SA",
+     "formaatCode": 1,
+     "formaat": "tekst",
+     "eerst": "2022-10-17",
+     "laatst": "2026-09-26",
+     "eerstTs": 1666043149,
+     "laatstTs": 1790421940,
+     "looptijdDagen": 1440,
+     "dagenGetoond": 259,
+     "preview": null,
+     "beeld": "https://tpc.googlesyndication.com/archive/simgad/1552261770744484452"
+    }
+   ],
+   "token": null,
+   "klaar": true,
+   "bladen": 1,
+   "totaal": 3
+  }
+ }
+}

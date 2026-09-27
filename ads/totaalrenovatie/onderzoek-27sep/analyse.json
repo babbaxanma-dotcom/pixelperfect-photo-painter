@@ -1,0 +1,2559 @@
+{
+ "gemaakt": "2026-09-27",
+ "bronnen": {
+  "A": "ads/totaalrenovatie/6-serp-concurrenten.txt (15 sep 2026)",
+  "B": "onderzoek-27sep/concurrenten.json (Transparency Center, 27 sep 2026)"
+ },
+ "regels": {
+  "actief": "laatst getoond op of na 2026-09-20",
+  "renovatieFilter": "/renov|verbouw|rénov/i in kop, beschrijving, sitelinks, extensies of weergave-URL",
+  "serpAannemers": "alle domeinen behalve aannemeroffertes.be, renovatieweekend.be, sint-niklaas.be, sundae.be, kwadraat.be"
+ },
+ "A": {
+  "advertentiesPerAdverteerder": [
+   {
+    "domein": "verelst.be",
+    "advertenties": 20,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "aannemeroffertes.be",
+    "advertenties": 12,
+    "soort": "offertesite"
+   },
+   {
+    "domein": "reno-x.be",
+    "advertenties": 8,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "kapareno.be",
+    "advertenties": 7,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "martha-bouwteam.be",
+    "advertenties": 7,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "vulsteke.be",
+    "advertenties": 7,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "gijbels.be",
+    "advertenties": 5,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "ruverko-totaalproject.be",
+    "advertenties": 5,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "builthings.be",
+    "advertenties": 4,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "cleys.be",
+    "advertenties": 4,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "diegopintelon.be",
+    "advertenties": 4,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "interieurkabinet.be",
+    "advertenties": 4,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "totalinteriorconcept.be",
+    "advertenties": 4,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "dhoore-construct.be",
+    "advertenties": 3,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "domico.be",
+    "advertenties": 3,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "reno-vlad.be",
+    "advertenties": 3,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "tifre.be",
+    "advertenties": 3,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "gravagroup.be",
+    "advertenties": 2,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "homedecor-oostende.be",
+    "advertenties": 2,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "kijzer.be",
+    "advertenties": 2,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "klussenier.be",
+    "advertenties": 2,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "wr-pleisterenschilderwerken.be",
+    "advertenties": 2,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "Formaat per regel: domein",
+    "advertenties": 1,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "allworkx.be",
+    "advertenties": 1,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "buildingarts.be",
+    "advertenties": 1,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "delpasrenovatie.be",
+    "advertenties": 1,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "kwadraat.be",
+    "advertenties": 1,
+    "soort": "projectontwikkelaar"
+   },
+   {
+    "domein": "mldprojects.be",
+    "advertenties": 1,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "pascinelprojects.com",
+    "advertenties": 1,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "renovaties-michael.be",
+    "advertenties": 1,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "renovatieweekend.be",
+    "advertenties": 1,
+    "soort": "evenement"
+   },
+   {
+    "domein": "sint-niklaas.be",
+    "advertenties": 1,
+    "soort": "stad"
+   },
+   {
+    "domein": "sundae.be",
+    "advertenties": 1,
+    "soort": "interieuradvies"
+   },
+   {
+    "domein": "taelmanconstruct.be",
+    "advertenties": 1,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "tomrottiers.be",
+    "advertenties": 1,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "vanderydt.com",
+    "advertenties": 1,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "vd-build.be",
+    "advertenties": 1,
+    "soort": "aannemer"
+   },
+   {
+    "domein": "vitico.be",
+    "advertenties": 1,
+    "soort": "aannemer"
+   }
+  ],
+  "kopFragmenten": [
+   {
+    "fragment": "totaalrenovatie",
+    "adverteerders": 3,
+    "advertenties": 12,
+    "wie": [
+     "martha-bouwteam.be",
+     "builthings.be",
+     "homedecor-oostende.be"
+    ]
+   },
+   {
+    "fragment": "tijdloze kwaliteit",
+    "adverteerders": 1,
+    "advertenties": 9,
+    "wie": [
+     "verelst.be"
+    ]
+   },
+   {
+    "fragment": "45+ jaar bouwervaring",
+    "adverteerders": 1,
+    "advertenties": 8,
+    "wie": [
+     "verelst.be"
+    ]
+   },
+   {
+    "fragment": "verelst aannemer renovatie <stad>",
+    "adverteerders": 1,
+    "advertenties": 6,
+    "wie": [
+     "verelst.be"
+    ]
+   },
+   {
+    "fragment": "woningrenovatie zonder gedoe",
+    "adverteerders": 1,
+    "advertenties": 5,
+    "wie": [
+     "verelst.be"
+    ]
+   },
+   {
+    "fragment": "renovatie <stad>",
+    "adverteerders": 3,
+    "advertenties": 5,
+    "wie": [
+     "verelst.be",
+     "klussenier.be",
+     "pascinelprojects.com"
+    ]
+   },
+   {
+    "fragment": "renovatie bedrijfspand",
+    "adverteerders": 1,
+    "advertenties": 5,
+    "wie": [
+     "gijbels.be"
+    ]
+   },
+   {
+    "fragment": "renovatiewerken op maat",
+    "adverteerders": 2,
+    "advertenties": 5,
+    "wie": [
+     "diegopintelon.be",
+     "reno-vlad.be"
+    ]
+   },
+   {
+    "fragment": "totaalrenovatie <stad>",
+    "adverteerders": 3,
+    "advertenties": 5,
+    "wie": [
+     "domico.be",
+     "wr-pleisterenschilderwerken.be",
+     "renovaties-michael.be"
+    ]
+   },
+   {
+    "fragment": "totaalrenovatie in jouw regio",
+    "adverteerders": 1,
+    "advertenties": 4,
+    "wie": [
+     "verelst.be"
+    ]
+   },
+   {
+    "fragment": "reno x",
+    "adverteerders": 1,
+    "advertenties": 4,
+    "wie": [
+     "reno-x.be"
+    ]
+   },
+   {
+    "fragment": "renovatiewerken <stad>",
+    "adverteerders": 3,
+    "advertenties": 4,
+    "wie": [
+     "ruverko-totaalproject.be",
+     "reno-vlad.be",
+     "wr-pleisterenschilderwerken.be"
+    ]
+   },
+   {
+    "fragment": "totaalrenovatie prijs",
+    "adverteerders": 1,
+    "advertenties": 3,
+    "wie": [
+     "reno-x.be"
+    ]
+   },
+   {
+    "fragment": "totaalrenovatie op maat",
+    "adverteerders": 1,
+    "advertenties": 3,
+    "wie": [
+     "kapareno.be"
+    ]
+   },
+   {
+    "fragment": "bouwbedrijf <stad>",
+    "adverteerders": 1,
+    "advertenties": 3,
+    "wie": [
+     "martha-bouwteam.be"
+    ]
+   },
+   {
+    "fragment": "aannemer totaalrenovatie",
+    "adverteerders": 2,
+    "advertenties": 3,
+    "wie": [
+     "martha-bouwteam.be",
+     "gravagroup.be"
+    ]
+   },
+   {
+    "fragment": "totaalprojecten",
+    "adverteerders": 1,
+    "advertenties": 3,
+    "wie": [
+     "vulsteke.be"
+    ]
+   },
+   {
+    "fragment": "meer dan 40 jaar ervaring",
+    "adverteerders": 1,
+    "advertenties": 3,
+    "wie": [
+     "vulsteke.be"
+    ]
+   },
+   {
+    "fragment": "renovatie",
+    "adverteerders": 1,
+    "advertenties": 3,
+    "wie": [
+     "builthings.be"
+    ]
+   },
+   {
+    "fragment": "interieurkabinet",
+    "adverteerders": 1,
+    "advertenties": 3,
+    "wie": [
+     "interieurkabinet.be"
+    ]
+   },
+   {
+    "fragment": "totaalrenovatie zonder gedoe",
+    "adverteerders": 1,
+    "advertenties": 3,
+    "wie": [
+     "interieurkabinet.be"
+    ]
+   },
+   {
+    "fragment": "totaalaannemer renovaties",
+    "adverteerders": 1,
+    "advertenties": 3,
+    "wie": [
+     "totalinteriorconcept.be"
+    ]
+   },
+   {
+    "fragment": "renovatiebedrijf",
+    "adverteerders": 1,
+    "advertenties": 3,
+    "wie": [
+     "dhoore-construct.be"
+    ]
+   }
+  ],
+  "hoekenAannemers": [
+   {
+    "hoek": "één aanspreekpunt / van A tot Z",
+    "adverteerders": 16,
+    "vanAdverteerders": 33,
+    "advertenties": 39,
+    "vanAdvertenties": 113,
+    "wie": [
+     "verelst.be",
+     "reno-x.be",
+     "kapareno.be",
+     "vulsteke.be",
+     "interieurkabinet.be",
+     "totalinteriorconcept.be",
+     "domico.be",
+     "reno-vlad.be",
+     "tifre.be",
+     "gravagroup.be",
+     "homedecor-oostende.be",
+     "kijzer.be",
+     "mldprojects.be",
+     "taelmanconstruct.be",
+     "vanderydt.com",
+     "vitico.be"
+    ]
+   },
+   {
+    "hoek": "kwaliteit / vakmanschap",
+    "adverteerders": 15,
+    "vanAdverteerders": 33,
+    "advertenties": 39,
+    "vanAdvertenties": 113,
+    "wie": [
+     "verelst.be",
+     "kapareno.be",
+     "martha-bouwteam.be",
+     "diegopintelon.be",
+     "domico.be",
+     "reno-vlad.be",
+     "gravagroup.be",
+     "kijzer.be",
+     "wr-pleisterenschilderwerken.be",
+     "buildingarts.be",
+     "delpasrenovatie.be",
+     "mldprojects.be",
+     "taelmanconstruct.be",
+     "vanderydt.com",
+     "vd-build.be"
+    ]
+   },
+   {
+    "hoek": "ontzorgen / zonder stress",
+    "adverteerders": 13,
+    "vanAdverteerders": 33,
+    "advertenties": 59,
+    "vanAdvertenties": 113,
+    "wie": [
+     "verelst.be",
+     "reno-x.be",
+     "kapareno.be",
+     "martha-bouwteam.be",
+     "interieurkabinet.be",
+     "totalinteriorconcept.be",
+     "domico.be",
+     "tifre.be",
+     "homedecor-oostende.be",
+     "kijzer.be",
+     "mldprojects.be",
+     "taelmanconstruct.be",
+     "vanderydt.com"
+    ]
+   },
+   {
+    "hoek": "jaren ervaring (getal)",
+    "adverteerders": 11,
+    "vanAdverteerders": 33,
+    "advertenties": 50,
+    "vanAdvertenties": 113,
+    "wie": [
+     "verelst.be",
+     "reno-x.be",
+     "kapareno.be",
+     "vulsteke.be",
+     "gijbels.be",
+     "ruverko-totaalproject.be",
+     "cleys.be",
+     "totalinteriorconcept.be",
+     "tifre.be",
+     "gravagroup.be",
+     "renovaties-michael.be"
+    ]
+   },
+   {
+    "hoek": "bewijs (realisaties, projecten, reviews)",
+    "adverteerders": 10,
+    "vanAdverteerders": 33,
+    "advertenties": 28,
+    "vanAdvertenties": 113,
+    "wie": [
+     "verelst.be",
+     "reno-x.be",
+     "kapareno.be",
+     "vulsteke.be",
+     "interieurkabinet.be",
+     "totalinteriorconcept.be",
+     "domico.be",
+     "tifre.be",
+     "klussenier.be",
+     "vd-build.be"
+    ]
+   },
+   {
+    "hoek": "gratis / vrijblijvend",
+    "adverteerders": 10,
+    "vanAdverteerders": 33,
+    "advertenties": 20,
+    "vanAdvertenties": 113,
+    "wie": [
+     "reno-x.be",
+     "kapareno.be",
+     "cleys.be",
+     "totalinteriorconcept.be",
+     "domico.be",
+     "reno-vlad.be",
+     "gravagroup.be",
+     "allworkx.be",
+     "delpasrenovatie.be",
+     "renovaties-michael.be"
+    ]
+   },
+   {
+    "hoek": "lokaal / regio",
+    "adverteerders": 5,
+    "vanAdverteerders": 33,
+    "advertenties": 24,
+    "vanAdvertenties": 113,
+    "wie": [
+     "verelst.be",
+     "kapareno.be",
+     "diegopintelon.be",
+     "totalinteriorconcept.be",
+     "kijzer.be"
+    ]
+   },
+   {
+    "hoek": "energie / isolatie / duurzaam",
+    "adverteerders": 5,
+    "vanAdverteerders": 33,
+    "advertenties": 15,
+    "vanAdvertenties": 113,
+    "wie": [
+     "verelst.be",
+     "martha-bouwteam.be",
+     "cleys.be",
+     "tifre.be",
+     "pascinelprojects.com"
+    ]
+   },
+   {
+    "hoek": "prijszekerheid (vaste prijs, raming, budget)",
+    "adverteerders": 4,
+    "vanAdverteerders": 33,
+    "advertenties": 13,
+    "vanAdvertenties": 113,
+    "wie": [
+     "verelst.be",
+     "reno-x.be",
+     "totalinteriorconcept.be",
+     "mldprojects.be"
+    ]
+   },
+   {
+    "hoek": "prijs berekenen / kostprijs",
+    "adverteerders": 3,
+    "vanAdverteerders": 33,
+    "advertenties": 10,
+    "vanAdvertenties": 113,
+    "wie": [
+     "reno-x.be",
+     "cleys.be",
+     "kijzer.be"
+    ]
+   },
+   {
+    "hoek": "snelheid met getal",
+    "adverteerders": 3,
+    "vanAdverteerders": 33,
+    "advertenties": 7,
+    "vanAdvertenties": 113,
+    "wie": [
+     "reno-x.be",
+     "domico.be",
+     "gravagroup.be"
+    ]
+   },
+   {
+    "hoek": "gratis plaatsbezoek / aan huis",
+    "adverteerders": 2,
+    "vanAdverteerders": 33,
+    "advertenties": 5,
+    "vanAdvertenties": 113,
+    "wie": [
+     "reno-x.be",
+     "domico.be"
+    ]
+   },
+   {
+    "hoek": "garantie",
+    "adverteerders": 2,
+    "vanAdverteerders": 33,
+    "advertenties": 3,
+    "vanAdvertenties": 113,
+    "wie": [
+     "gravagroup.be",
+     "klussenier.be"
+    ]
+   },
+   {
+    "hoek": "eigen personeel / team",
+    "adverteerders": 2,
+    "vanAdverteerders": 33,
+    "advertenties": 3,
+    "vanAdvertenties": 113,
+    "wie": [
+     "totalinteriorconcept.be",
+     "tifre.be"
+    ]
+   },
+   {
+    "hoek": "premies / subsidies",
+    "adverteerders": 1,
+    "vanAdverteerders": 33,
+    "advertenties": 1,
+    "vanAdvertenties": 113,
+    "wie": [
+     "vd-build.be"
+    ]
+   },
+   {
+    "hoek": "btw 6%",
+    "adverteerders": 0,
+    "vanAdverteerders": 33,
+    "advertenties": 0,
+    "vanAdvertenties": 113,
+    "wie": []
+   },
+   {
+    "hoek": "EPC / energielabel",
+    "adverteerders": 0,
+    "vanAdverteerders": 33,
+    "advertenties": 0,
+    "vanAdvertenties": 113,
+    "wie": []
+   },
+   {
+    "hoek": "renovatieplicht",
+    "adverteerders": 0,
+    "vanAdverteerders": 33,
+    "advertenties": 0,
+    "vanAdvertenties": 113,
+    "wie": []
+   }
+  ],
+  "ctaAannemers": [
+   {
+    "hoek": "contact / bellen",
+    "adverteerders": 12,
+    "vanAdverteerders": 33,
+    "advertenties": 13,
+    "vanAdvertenties": 113,
+    "wie": [
+     "reno-x.be",
+     "kapareno.be",
+     "vulsteke.be",
+     "ruverko-totaalproject.be",
+     "builthings.be",
+     "diegopintelon.be",
+     "allworkx.be",
+     "buildingarts.be",
+     "delpasrenovatie.be",
+     "mldprojects.be",
+     "renovaties-michael.be",
+     "vd-build.be"
+    ]
+   },
+   {
+    "hoek": "offerte aanvragen",
+    "adverteerders": 10,
+    "vanAdverteerders": 33,
+    "advertenties": 19,
+    "vanAdvertenties": 113,
+    "wie": [
+     "reno-x.be",
+     "kapareno.be",
+     "martha-bouwteam.be",
+     "cleys.be",
+     "totalinteriorconcept.be",
+     "domico.be",
+     "reno-vlad.be",
+     "gravagroup.be",
+     "kijzer.be",
+     "delpasrenovatie.be"
+    ]
+   },
+   {
+    "hoek": "realisaties bekijken",
+    "adverteerders": 4,
+    "vanAdverteerders": 33,
+    "advertenties": 9,
+    "vanAdvertenties": 113,
+    "wie": [
+     "reno-x.be",
+     "totalinteriorconcept.be",
+     "domico.be",
+     "tifre.be"
+    ]
+   },
+   {
+    "hoek": "afspraak / gesprek / kennismaking",
+    "adverteerders": 3,
+    "vanAdverteerders": 33,
+    "advertenties": 9,
+    "vanAdvertenties": 113,
+    "wie": [
+     "verelst.be",
+     "interieurkabinet.be",
+     "gravagroup.be"
+    ]
+   },
+   {
+    "hoek": "zelf berekenen / check",
+    "adverteerders": 2,
+    "vanAdverteerders": 33,
+    "advertenties": 2,
+    "vanAdvertenties": 113,
+    "wie": [
+     "cleys.be",
+     "kijzer.be"
+    ]
+   },
+   {
+    "hoek": "offertes vergelijken",
+    "adverteerders": 0,
+    "vanAdverteerders": 33,
+    "advertenties": 0,
+    "vanAdvertenties": 113,
+    "wie": []
+   },
+   {
+    "hoek": "postcode invullen",
+    "adverteerders": 0,
+    "vanAdverteerders": 33,
+    "advertenties": 0,
+    "vanAdvertenties": 113,
+    "wie": []
+   }
+  ],
+  "extensies": [
+   {
+    "soort": "sitelink of callout",
+    "adverteerders": 17,
+    "vermeldingen": 95,
+    "wie": [
+     "Formaat per regel: domein",
+     "verelst.be",
+     "aannemeroffertes.be",
+     "reno-x.be",
+     "kapareno.be",
+     "vulsteke.be",
+     "gijbels.be",
+     "diegopintelon.be",
+     "interieurkabinet.be",
+     "totalinteriorconcept.be",
+     "domico.be",
+     "tifre.be",
+     "kijzer.be",
+     "klussenier.be",
+     "wr-pleisterenschilderwerken.be",
+     "sundae.be",
+     "vd-build.be"
+    ],
+    "voorbeelden": [
+     "extensies",
+     "Totaalrenovatie nodig?",
+     "Renoveren woning",
+     "Ontwerp tot oplevering",
+     "Energiezuinig renoveren?",
+     "Sleutel-op-de-deur",
+     "Bouw met Verelst",
+     "Renovatie Offertes",
+     "Verbouwen of Renoveren?",
+     "Verbouw Offertes",
+     "Uitbouw Offertes",
+     "Aanbouw Offertes",
+     "Ontvang gratis offertes voor jouw renovatieproject.",
+     "Nieuw Huis Bouwen?",
+     "totale verbouwing huis kosten",
+     "kost totaalrenovatie",
+     "Gratis prijs schatting",
+     "Zie projecten",
+     "Reno AI",
+     "Van ruwbouw tot afwerking: 1 aannemer, 1 aanspreekpunt, geen verrassingen. Vaste prijs, vaste...",
+     "Totale Renovatie",
+     "Vraag uw gratis offerte",
+     "Betrouwbare aannemer voor renovaties in Antwerpen en omgeving.",
+     "Onze realisaties",
+     "Plus de 40 ans d'expérience",
+     "Contactez-Nous",
+     "50 jaar ervaring in renovatie",
+     "Specialisaties",
+     "Gyprocwerken",
+     "Algemene Renovatie",
+     "Contact",
+     "Aannemer Brugge",
+     "Contacteer Diego Pintelon vandaag nog voor meer informatie over uw renovatiewerken",
+     "InterieurKabinet: 360° VerbouwMethode voor een zorgeloze renovatie. Vraag een gesprek aan.",
+     "Plan Je Renovatie Slim",
+     "Projecten",
+     "Over Ons",
+     "Onze Werkwijze",
+     "Reviews",
+     "Projecten bekijken"
+    ]
+   },
+   {
+    "soort": "annotatie \"10.000+ bezoeken\"",
+    "adverteerders": 4,
+    "vermeldingen": 10,
+    "wie": [
+     "verelst.be",
+     "gijbels.be",
+     "tifre.be",
+     "tomrottiers.be"
+    ],
+    "voorbeelden": [
+     "10.000+ bezoeken in de afgelopen maand"
+    ]
+   },
+   {
+    "soort": "knop (Route/Website/Bel ons)",
+    "adverteerders": 4,
+    "vermeldingen": 8,
+    "wie": [
+     "reno-x.be",
+     "kapareno.be",
+     "interieurkabinet.be",
+     "mldprojects.be"
+    ],
+    "voorbeelden": [
+     "Route",
+     "Website",
+     "Bel ons"
+    ]
+   },
+   {
+    "soort": "locatie (adres/openingsuren)",
+    "adverteerders": 3,
+    "vermeldingen": 6,
+    "wie": [
+     "reno-x.be",
+     "kapareno.be",
+     "interieurkabinet.be"
+    ],
+    "voorbeelden": [
+     "Aannemer · Berlare · Geopend ⋅ Sluit om 18:00",
+     "Geopend ⋅ Sluit om 18:00",
+     "Aannemer · Mechelen"
+    ]
+   },
+   {
+    "soort": "reviews (sterren)",
+    "adverteerders": 3,
+    "vermeldingen": 3,
+    "wie": [
+     "reno-x.be",
+     "kapareno.be",
+     "interieurkabinet.be"
+    ],
+    "voorbeelden": [
+     "4,9 (22)",
+     "4,8 (12)",
+     "4,7 (16)"
+    ]
+   },
+   {
+    "soort": "telefoonnummer",
+    "adverteerders": 3,
+    "vermeldingen": 3,
+    "wie": [
+     "reno-x.be",
+     "kapareno.be",
+     "mldprojects.be"
+    ],
+    "voorbeelden": [
+     "+32 472 29 69 95",
+     "+32 85 63 90 01",
+     "+32 56 89 19 55"
+    ]
+   }
+  ]
+ },
+ "B": {
+  "perSpeler": {
+   "Bobex": {
+    "soort": "offertesite",
+    "tekst": 100,
+    "actief": 84,
+    "actiefRenov": 5,
+    "langsteActiefRenov": 1769
+   },
+   "Solvari": {
+    "soort": "offertesite",
+    "tekst": 133,
+    "actief": 112,
+    "actiefRenov": 14,
+    "langsteActiefRenov": 1571
+   },
+   "RuverkO": {
+    "soort": "aannemer",
+    "tekst": 3,
+    "actief": 3,
+    "actiefRenov": 3,
+    "langsteActiefRenov": 1446
+   },
+   "Diego Pintelon": {
+    "soort": "aannemer",
+    "tekst": 4,
+    "actief": 3,
+    "actiefRenov": 1,
+    "langsteActiefRenov": 1340
+   },
+   "Aannemingen Verelst": {
+    "soort": "aannemer",
+    "tekst": 67,
+    "actief": 44,
+    "actiefRenov": 14,
+    "langsteActiefRenov": 590
+   },
+   "Builthings": {
+    "soort": "aannemer",
+    "tekst": 8,
+    "actief": 8,
+    "actiefRenov": 8,
+    "langsteActiefRenov": 759
+   },
+   "Cleys": {
+    "soort": "aannemer",
+    "tekst": 46,
+    "actief": 20,
+    "actiefRenov": 11,
+    "langsteActiefRenov": 548
+   },
+   "aannemeroffertes.be": {
+    "soort": "offertesite",
+    "tekst": 11,
+    "actief": 11,
+    "actiefRenov": 7,
+    "langsteActiefRenov": 390
+   },
+   "InterieurKabinet": {
+    "soort": "aannemer",
+    "tekst": 32,
+    "actief": 10,
+    "actiefRenov": 8,
+    "langsteActiefRenov": 344
+   },
+   "Martha Bouwteam": {
+    "soort": "aannemer",
+    "tekst": 2,
+    "actief": 1,
+    "actiefRenov": 1,
+    "langsteActiefRenov": 163
+   },
+   "KapaReno": {
+    "soort": "aannemer",
+    "tekst": 7,
+    "actief": 1,
+    "actiefRenov": 1,
+    "langsteActiefRenov": 132
+   },
+   "Reno X": {
+    "soort": "aannemer",
+    "tekst": 8,
+    "actief": 1,
+    "actiefRenov": 1,
+    "langsteActiefRenov": 59
+   },
+   "Total Interior Concept": {
+    "soort": "aannemer",
+    "tekst": 9,
+    "actief": 3,
+    "actiefRenov": 3,
+    "langsteActiefRenov": 34
+   }
+  },
+  "aantalActiefAannemerRenov": 51,
+  "aantalActiefOfferteRenov": 26,
+  "top10strikt": [
+   {
+    "dagen": 1446,
+    "dagenGetoond": 1080,
+    "eerst": "2022-10-12",
+    "laatst": "2026-09-27",
+    "adverteerder": "RuverkO",
+    "kop": "Renovatiebedrijf in uw regio - Maak meteen een afspraak",
+    "koppen": [
+     "Renovatiebedrijf in uw regio",
+     "Maak meteen een afspraak"
+    ],
+    "beschrijving": "Op zoek naar een ervaren aannemer voor uw renovatiewerken? RuverkO helpt u verder Stel ons...",
+    "sitelinks": [
+     "Contact",
+     "Realisaties",
+     "Totaalrenovaties"
+    ],
+    "url": "www.ruverko-totaalproject.be/",
+    "bron": "ocr+visueel",
+    "link": "https://adstransparency.google.com/advertiser/AR07192117213271162881/creative/CR14888699638495313921?region=BE"
+   },
+   {
+    "dagen": 1446,
+    "dagenGetoond": 1433,
+    "eerst": "2022-10-11",
+    "laatst": "2026-09-27",
+    "adverteerder": "RuverkO",
+    "kop": "Aannemer in uw regio - Meer dan 35 jaar ervaring",
+    "koppen": [
+     "Aannemer in uw regio",
+     "Meer dan 35 jaar ervaring"
+    ],
+    "beschrijving": "Op zoek naar een ervaren aannemer voor uw renovatiewerken? RuverkO helpt u verder Stel...",
+    "sitelinks": [],
+    "url": "www.ruverko-totaalproject.be/",
+    "bron": "ocr+visueel",
+    "link": "https://adstransparency.google.com/advertiser/AR07192117213271162881/creative/CR04059838314948067329?region=BE"
+   },
+   {
+    "dagen": 1440,
+    "dagenGetoond": 259,
+    "eerst": "2022-10-17",
+    "laatst": "2026-09-26",
+    "adverteerder": "RuverkO",
+    "kop": "RuverkO - RuverkO Badkamerrenovatie Zele - Steeds met de juiste expertise",
+    "koppen": [
+     "RuverkO",
+     "RuverkO Badkamerrenovatie Zele",
+     "Steeds met de juiste expertise"
+    ],
+    "beschrijving": "RuverkO is dé ervaren aannemer met de juiste expertise voor uw badkamerrenovatie Stel ons gerust al uw vragen en vraag meteen een vrijblijvende offerte op maat",
+    "sitelinks": [],
+    "url": "www.ruverko-totaalproject.be/",
+    "bron": "ocr+visueel",
+    "link": "https://adstransparency.google.com/advertiser/AR07192117213271162881/creative/CR16277693865907978241?region=BE"
+   },
+   {
+    "dagen": 1340,
+    "dagenGetoond": 1319,
+    "eerst": "2023-01-25",
+    "laatst": "2026-09-27",
+    "adverteerder": "Diego Pintelon",
+    "kop": "Renovatiewerken op maat - Aannemer Brugge",
+    "koppen": [
+     "Renovatiewerken op maat",
+     "Aannemer Brugge"
+    ],
+    "beschrijving": "Ik ben uw aannemer in regio Brugge me[...] renovatiewerken van topkwaliteit levere[...] (rest van de zin staat achter de foto op de schermafdruk)",
+    "sitelinks": [
+     "Contact",
+     "Contacteer ons nu",
+     "Diego Pintelon"
+    ],
+    "url": "www.diegopintelon.be/",
+    "bron": "ocr+visueel",
+    "link": "https://adstransparency.google.com/advertiser/AR07192117213271162881/creative/CR07373174274053373953?region=BE"
+   },
+   {
+    "dagen": 759,
+    "dagenGetoond": 513,
+    "eerst": "2024-08-29",
+    "laatst": "2026-09-27",
+    "adverteerder": "Builthings",
+    "kop": "Aannemer Bouw - Totalrenovatie aannemer",
+    "koppen": [
+     "Aannemer Bouw",
+     "Totalrenovatie aannemer"
+    ],
+    "beschrijving": "Afwerking volgens de regels van de kunst. Uw renovatie is onze passie.Vrijblijvend gesprek Bouwbedrijf Gent: Aannemer voor renovatie...",
+    "sitelinks": [
+     "Over ons",
+     "Ontdek onze realisaties",
+     "Contacteer ons",
+     "Residentiële bouwproject",
+     "Renovatie Aannemer"
+    ],
+    "url": "www.builthings.be/",
+    "bron": "ocr+visueel",
+    "link": "https://adstransparency.google.com/advertiser/AR01614059481614778369/creative/CR04886467185528012801?region=BE"
+   },
+   {
+    "dagen": 759,
+    "dagenGetoond": 512,
+    "eerst": "2024-08-29",
+    "laatst": "2026-09-27",
+    "adverteerder": "Builthings",
+    "kop": "Aannemer Bouw - Totaalverbouwing",
+    "koppen": [
+     "Aannemer Bouw",
+     "Totaalverbouwing"
+    ],
+    "beschrijving": "Zorgeloos verbouwen met persoonlijke [...] Neem vrijblijvend contact met ons op. U[...] (rest staat achter de foto op de schermafdruk)",
+    "sitelinks": [
+     "Aannemer Gezocht",
+     "Uw nieuwbouwwoning"
+    ],
+    "url": "www.builthings.be/",
+    "bron": "ocr+visueel",
+    "link": "https://adstransparency.google.com/advertiser/AR01614059481614778369/creative/CR06156763755423203329?region=BE"
+   },
+   {
+    "dagen": 758,
+    "dagenGetoond": 507,
+    "eerst": "2024-08-30",
+    "laatst": "2026-09-27",
+    "adverteerder": "Builthings",
+    "kop": "Bouwbedrijf Gent - Totaalproject - Renovati. ..",
+    "koppen": [
+     "Bouwbedrijf Gent",
+     "Totaalproject",
+     "Renovati. .."
+    ],
+    "beschrijving": "Nieuwbouw of renovatie? Wij hebben d te helpen! Wij realiseren uw bouw- of r volgens...",
+    "sitelinks": [
+     "Verbouwing Gent",
+     "Over ons",
+     "Huis verbouwen"
+    ],
+    "url": "www.builthings.be/",
+    "bron": "ocr",
+    "link": "https://adstransparency.google.com/advertiser/AR01614059481614778369/creative/CR05237176210416467969?region=BE"
+   },
+   {
+    "dagen": 758,
+    "dagenGetoond": 507,
+    "eerst": "2024-08-30",
+    "laatst": "2026-09-27",
+    "adverteerder": "Builthings",
+    "kop": "Totaalproject - Renovatie Architect - Totaalrenovatie",
+    "koppen": [
+     "Totaalproject",
+     "Renovatie Architect",
+     "Totaalrenovatie"
+    ],
+    "beschrijving": "Samen met ons team en de beste vaklieden bouwen we uw droomwoning.",
+    "sitelinks": [
+     "Over ons",
+     "Contacteer ons",
+     "o",
+     "Aannemer"
+    ],
+    "url": "www.builthings.be/",
+    "bron": "ocr",
+    "link": "https://adstransparency.google.com/advertiser/AR01614059481614778369/creative/CR07938531144327233537?region=BE"
+   },
+   {
+    "dagen": 758,
+    "dagenGetoond": 504,
+    "eerst": "2024-08-30",
+    "laatst": "2026-09-27",
+    "adverteerder": "Builthings",
+    "kop": "Aannemer Bouw",
+    "koppen": [
+     "Aannemer Bouw"
+    ],
+    "beschrijving": "Aannemer renovatie: Wij zijn de experts in het renoveren van uw woning.",
+    "sitelinks": [
+     "Contacteer ons",
+     "Over ons",
+     "Totaalproject",
+     "Renovatie aannemer"
+    ],
+    "url": "www.builthings.be/",
+    "bron": "ocr",
+    "link": "https://adstransparency.google.com/advertiser/AR01614059481614778369/creative/CR00914035028466335745?region=BE"
+   },
+   {
+    "dagen": 758,
+    "dagenGetoond": 504,
+    "eerst": "2024-08-30",
+    "laatst": "2026-09-27",
+    "adverteerder": "Builthings",
+    "kop": "Bouwbedrijf Gent - Renovatie aannemer Gent",
+    "koppen": [
+     "Bouwbedrijf Gent",
+     "Renovatie aannemer Gent"
+    ],
+    "beschrijving": "Bouwen is onze zorg. Wij realiseren uw nieuwbouwproject binnen uw budget en tijdspanne.",
+    "sitelinks": [],
+    "url": "www.builthings.be/",
+    "bron": "ocr",
+    "link": "https://adstransparency.google.com/advertiser/AR01614059481614778369/creative/CR14934566401703149569?region=BE"
+   }
+  ],
+  "top10max2PerAdverteerder": [
+   {
+    "dagen": 1446,
+    "dagenGetoond": 1080,
+    "eerst": "2022-10-12",
+    "laatst": "2026-09-27",
+    "adverteerder": "RuverkO",
+    "kop": "Renovatiebedrijf in uw regio - Maak meteen een afspraak",
+    "koppen": [
+     "Renovatiebedrijf in uw regio",
+     "Maak meteen een afspraak"
+    ],
+    "beschrijving": "Op zoek naar een ervaren aannemer voor uw renovatiewerken? RuverkO helpt u verder Stel ons...",
+    "sitelinks": [
+     "Contact",
+     "Realisaties",
+     "Totaalrenovaties"
+    ],
+    "url": "www.ruverko-totaalproject.be/",
+    "bron": "ocr+visueel",
+    "link": "https://adstransparency.google.com/advertiser/AR07192117213271162881/creative/CR14888699638495313921?region=BE"
+   },
+   {
+    "dagen": 1446,
+    "dagenGetoond": 1433,
+    "eerst": "2022-10-11",
+    "laatst": "2026-09-27",
+    "adverteerder": "RuverkO",
+    "kop": "Aannemer in uw regio - Meer dan 35 jaar ervaring",
+    "koppen": [
+     "Aannemer in uw regio",
+     "Meer dan 35 jaar ervaring"
+    ],
+    "beschrijving": "Op zoek naar een ervaren aannemer voor uw renovatiewerken? RuverkO helpt u verder Stel...",
+    "sitelinks": [],
+    "url": "www.ruverko-totaalproject.be/",
+    "bron": "ocr+visueel",
+    "link": "https://adstransparency.google.com/advertiser/AR07192117213271162881/creative/CR04059838314948067329?region=BE"
+   },
+   {
+    "dagen": 1340,
+    "dagenGetoond": 1319,
+    "eerst": "2023-01-25",
+    "laatst": "2026-09-27",
+    "adverteerder": "Diego Pintelon",
+    "kop": "Renovatiewerken op maat - Aannemer Brugge",
+    "koppen": [
+     "Renovatiewerken op maat",
+     "Aannemer Brugge"
+    ],
+    "beschrijving": "Ik ben uw aannemer in regio Brugge me[...] renovatiewerken van topkwaliteit levere[...] (rest van de zin staat achter de foto op de schermafdruk)",
+    "sitelinks": [
+     "Contact",
+     "Contacteer ons nu",
+     "Diego Pintelon"
+    ],
+    "url": "www.diegopintelon.be/",
+    "bron": "ocr+visueel",
+    "link": "https://adstransparency.google.com/advertiser/AR07192117213271162881/creative/CR07373174274053373953?region=BE"
+   },
+   {
+    "dagen": 759,
+    "dagenGetoond": 513,
+    "eerst": "2024-08-29",
+    "laatst": "2026-09-27",
+    "adverteerder": "Builthings",
+    "kop": "Aannemer Bouw - Totalrenovatie aannemer",
+    "koppen": [
+     "Aannemer Bouw",
+     "Totalrenovatie aannemer"
+    ],
+    "beschrijving": "Afwerking volgens de regels van de kunst. Uw renovatie is onze passie.Vrijblijvend gesprek Bouwbedrijf Gent: Aannemer voor renovatie...",
+    "sitelinks": [
+     "Over ons",
+     "Ontdek onze realisaties",
+     "Contacteer ons",
+     "Residentiële bouwproject",
+     "Renovatie Aannemer"
+    ],
+    "url": "www.builthings.be/",
+    "bron": "ocr+visueel",
+    "link": "https://adstransparency.google.com/advertiser/AR01614059481614778369/creative/CR04886467185528012801?region=BE"
+   },
+   {
+    "dagen": 759,
+    "dagenGetoond": 512,
+    "eerst": "2024-08-29",
+    "laatst": "2026-09-27",
+    "adverteerder": "Builthings",
+    "kop": "Aannemer Bouw - Totaalverbouwing",
+    "koppen": [
+     "Aannemer Bouw",
+     "Totaalverbouwing"
+    ],
+    "beschrijving": "Zorgeloos verbouwen met persoonlijke [...] Neem vrijblijvend contact met ons op. U[...] (rest staat achter de foto op de schermafdruk)",
+    "sitelinks": [
+     "Aannemer Gezocht",
+     "Uw nieuwbouwwoning"
+    ],
+    "url": "www.builthings.be/",
+    "bron": "ocr+visueel",
+    "link": "https://adstransparency.google.com/advertiser/AR01614059481614778369/creative/CR06156763755423203329?region=BE"
+   },
+   {
+    "dagen": 590,
+    "dagenGetoond": 555,
+    "eerst": "2025-02-13",
+    "laatst": "2026-09-26",
+    "adverteerder": "Aannemingen Verelst",
+    "kop": "Droomwoningen Verelst - Verelst woningbouw",
+    "koppen": [
+     "Droomwoningen Verelst",
+     "Verelst woningbouw"
+    ],
+    "beschrijving": "Met Verelst (ver)bouw je zonder zorgen. Deel je bouwplannen met ons, we denken graag mee. Nieuwbouw of totaalrenovaties: we maken jouw woondroom waar! Stel je vraag nu. Al 40 jaar ervaring.",
+    "sitelinks": [
+     "Neem contact met ons op",
+     "Ontdek ons aanbod",
+     "BEN-woning specialist",
+     "Waarom Verelst?"
+    ],
+    "url": "www.verelst.be/",
+    "bron": "ocr+visueel",
+    "link": "https://adstransparency.google.com/advertiser/AR13925616890962509825/creative/CR06993310753461633025?region=BE"
+   },
+   {
+    "dagen": 590,
+    "dagenGetoond": 531,
+    "eerst": "2025-02-13",
+    "laatst": "2026-09-26",
+    "adverteerder": "Aannemingen Verelst",
+    "kop": "Droomwoningen Verelst - Nieuwbouw en totaalrenovaties",
+    "koppen": [
+     "Droomwoningen Verelst",
+     "Nieuwbouw en totaalrenovaties"
+    ],
+    "beschrijving": "Met Verelst (ver)bouw je zonder zorgen. Deel je bouwplannen met ons, we denken graag mee. Nieuwbouw of totaalrenovaties: we maken jouw woondroom waar...",
+    "sitelinks": [
+     "Ontdek ons aanbod",
+     "Neem contact met ons op",
+     "Meer dan 45 jaar ervaring",
+     "Waarom Verelst?"
+    ],
+    "url": "www.verelst.be/",
+    "bron": "ocr+visueel",
+    "link": "https://adstransparency.google.com/advertiser/AR13925616890962509825/creative/CR06403979942677184513?region=BE"
+   },
+   {
+    "dagen": 548,
+    "dagenGetoond": 548,
+    "eerst": "2025-03-28",
+    "laatst": "2026-09-27",
+    "adverteerder": "Cleys",
+    "kop": "Crepi in Herentals - Gevelrenovatie met isolatie",
+    "koppen": [
+     "Crepi in Herentals",
+     "Gevelrenovatie met isolatie"
+    ],
+    "beschrijving": "Crepi is de ideale gevelafwerking. Bereken hoeveel crepi voor jouw project kost. Crepi gevel laten...",
+    "sitelinks": [
+     "Met of zonder isolatie",
+     "Crepi gevel laten plaatsen",
+     "Contact",
+     "Afspraak maken"
+    ],
+    "url": "www.cleys.be/gevel-crepi",
+    "bron": "ocr+visueel",
+    "link": "https://adstransparency.google.com/advertiser/AR00901624222248337409/creative/CR15862176464582475777?region=BE"
+   },
+   {
+    "dagen": 538,
+    "dagenGetoond": 538,
+    "eerst": "2025-04-07",
+    "laatst": "2026-09-27",
+    "adverteerder": "Cleys",
+    "kop": "Laat je gevel vernieuwen - Vrijblijvend advies - Cleys",
+    "koppen": [
+     "Laat je gevel vernieuwen",
+     "Vrijblijvend advies",
+     "Cleys"
+    ],
+    "beschrijving": "Cleys is de specialist in Sint-Niklaas voor gevelrenovatie met spuitkurk. Spuitkurk is de ideale gevelafwerking, want het is waterdicht en onderhoudsvriendelijk. Snelle service.",
+    "sitelinks": [
+     "Spuitkurk in Sint-Niklaas",
+     "Met of zonder isolatie",
+     "Referenties",
+     "Over ons",
+     "Afspraak maken"
+    ],
+    "url": "www.cleys.be/gevel/spuitkurk",
+    "bron": "ocr+visueel",
+    "link": "https://adstransparency.google.com/advertiser/AR00901624222248337409/creative/CR02850731233585922049?region=BE"
+   },
+   {
+    "dagen": 344,
+    "dagenGetoond": 137,
+    "eerst": "2025-10-18",
+    "laatst": "2026-09-27",
+    "adverteerder": "InterieurKabinet",
+    "kop": "Totaalrenovatie Zonder Gedoe - Slim Omgaan Met Ruimte",
+    "koppen": [
+     "Totaalrenovatie Zonder Gedoe",
+     "Slim Omgaan Met Ruimte"
+    ],
+    "beschrijving": "Een volledige renovatie in één vlotte periode, niet jarenlang op een werf wonen. Doe onze verbouwcheck. Wij geven duidelijkheid over prioriteiten, haalbaarheid...",
+    "sitelinks": [],
+    "url": "www.interieurkabinet.be/",
+    "bron": "ocr+visueel",
+    "link": "https://adstransparency.google.com/advertiser/AR15692061760699760641/creative/CR04641549011935821825?region=BE"
+   }
+  ],
+  "hoekenAannemers": [
+   {
+    "hoek": "gratis / vrijblijvend",
+    "adverteerders": 7,
+    "vanAdverteerders": 10,
+    "advertenties": 17,
+    "vanAdvertenties": 51,
+    "wie": [
+     "RuverkO",
+     "Builthings",
+     "Cleys",
+     "InterieurKabinet",
+     "Aannemingen Verelst",
+     "KapaReno",
+     "Total Interior Concept"
+    ]
+   },
+   {
+    "hoek": "één aanspreekpunt / van A tot Z",
+    "adverteerders": 6,
+    "vanAdverteerders": 10,
+    "advertenties": 12,
+    "vanAdvertenties": 51,
+    "wie": [
+     "Builthings",
+     "Aannemingen Verelst",
+     "InterieurKabinet",
+     "KapaReno",
+     "Reno X",
+     "Total Interior Concept"
+    ]
+   },
+   {
+    "hoek": "bewijs (realisaties, projecten, reviews)",
+    "adverteerders": 6,
+    "vanAdverteerders": 10,
+    "advertenties": 10,
+    "vanAdvertenties": 51,
+    "wie": [
+     "RuverkO",
+     "Builthings",
+     "Cleys",
+     "InterieurKabinet",
+     "Martha Bouwteam",
+     "Reno X"
+    ]
+   },
+   {
+    "hoek": "lokaal / regio",
+    "adverteerders": 5,
+    "vanAdverteerders": 10,
+    "advertenties": 7,
+    "vanAdvertenties": 51,
+    "wie": [
+     "RuverkO",
+     "Diego Pintelon",
+     "Cleys",
+     "Aannemingen Verelst",
+     "Total Interior Concept"
+    ]
+   },
+   {
+    "hoek": "energie / isolatie / duurzaam",
+    "adverteerders": 4,
+    "vanAdverteerders": 10,
+    "advertenties": 14,
+    "vanAdvertenties": 51,
+    "wie": [
+     "Builthings",
+     "Aannemingen Verelst",
+     "Cleys",
+     "Martha Bouwteam"
+    ]
+   },
+   {
+    "hoek": "kwaliteit / vakmanschap",
+    "adverteerders": 4,
+    "vanAdverteerders": 10,
+    "advertenties": 4,
+    "vanAdvertenties": 51,
+    "wie": [
+     "Diego Pintelon",
+     "Builthings",
+     "Martha Bouwteam",
+     "Aannemingen Verelst"
+    ]
+   },
+   {
+    "hoek": "ontzorgen / zonder stress",
+    "adverteerders": 3,
+    "vanAdverteerders": 10,
+    "advertenties": 18,
+    "vanAdvertenties": 51,
+    "wie": [
+     "Builthings",
+     "Aannemingen Verelst",
+     "InterieurKabinet"
+    ]
+   },
+   {
+    "hoek": "jaren ervaring (getal)",
+    "adverteerders": 3,
+    "vanAdverteerders": 10,
+    "advertenties": 9,
+    "vanAdvertenties": 51,
+    "wie": [
+     "RuverkO",
+     "Aannemingen Verelst",
+     "Cleys"
+    ]
+   },
+   {
+    "hoek": "prijs berekenen / kostprijs",
+    "adverteerders": 2,
+    "vanAdverteerders": 10,
+    "advertenties": 7,
+    "vanAdvertenties": 51,
+    "wie": [
+     "Cleys",
+     "InterieurKabinet"
+    ]
+   },
+   {
+    "hoek": "prijszekerheid (vaste prijs, raming, budget)",
+    "adverteerders": 1,
+    "vanAdverteerders": 10,
+    "advertenties": 2,
+    "vanAdvertenties": 51,
+    "wie": [
+     "Builthings"
+    ]
+   },
+   {
+    "hoek": "gratis plaatsbezoek / aan huis",
+    "adverteerders": 1,
+    "vanAdverteerders": 10,
+    "advertenties": 1,
+    "vanAdvertenties": 51,
+    "wie": [
+     "Total Interior Concept"
+    ]
+   },
+   {
+    "hoek": "snelheid met getal",
+    "adverteerders": 0,
+    "vanAdverteerders": 10,
+    "advertenties": 0,
+    "vanAdvertenties": 51,
+    "wie": []
+   },
+   {
+    "hoek": "garantie",
+    "adverteerders": 0,
+    "vanAdverteerders": 10,
+    "advertenties": 0,
+    "vanAdvertenties": 51,
+    "wie": []
+   },
+   {
+    "hoek": "eigen personeel / team",
+    "adverteerders": 0,
+    "vanAdverteerders": 10,
+    "advertenties": 0,
+    "vanAdvertenties": 51,
+    "wie": []
+   },
+   {
+    "hoek": "premies / subsidies",
+    "adverteerders": 0,
+    "vanAdverteerders": 10,
+    "advertenties": 0,
+    "vanAdvertenties": 51,
+    "wie": []
+   },
+   {
+    "hoek": "btw 6%",
+    "adverteerders": 0,
+    "vanAdverteerders": 10,
+    "advertenties": 0,
+    "vanAdvertenties": 51,
+    "wie": []
+   },
+   {
+    "hoek": "EPC / energielabel",
+    "adverteerders": 0,
+    "vanAdverteerders": 10,
+    "advertenties": 0,
+    "vanAdvertenties": 51,
+    "wie": []
+   },
+   {
+    "hoek": "renovatieplicht",
+    "adverteerders": 0,
+    "vanAdverteerders": 10,
+    "advertenties": 0,
+    "vanAdvertenties": 51,
+    "wie": []
+   }
+  ],
+  "ctaAannemers": [
+   {
+    "hoek": "contact / bellen",
+    "adverteerders": 8,
+    "vanAdverteerders": 10,
+    "advertenties": 20,
+    "vanAdvertenties": 51,
+    "wie": [
+     "RuverkO",
+     "Diego Pintelon",
+     "Builthings",
+     "Aannemingen Verelst",
+     "Cleys",
+     "InterieurKabinet",
+     "Martha Bouwteam",
+     "Reno X"
+    ]
+   },
+   {
+    "hoek": "afspraak / gesprek / kennismaking",
+    "adverteerders": 6,
+    "vanAdverteerders": 10,
+    "advertenties": 12,
+    "vanAdvertenties": 51,
+    "wie": [
+     "RuverkO",
+     "Builthings",
+     "Cleys",
+     "InterieurKabinet",
+     "Aannemingen Verelst",
+     "Total Interior Concept"
+    ]
+   },
+   {
+    "hoek": "offerte aanvragen",
+    "adverteerders": 3,
+    "vanAdverteerders": 10,
+    "advertenties": 6,
+    "vanAdvertenties": 51,
+    "wie": [
+     "RuverkO",
+     "Cleys",
+     "KapaReno"
+    ]
+   },
+   {
+    "hoek": "zelf berekenen / check",
+    "adverteerders": 2,
+    "vanAdverteerders": 10,
+    "advertenties": 7,
+    "vanAdvertenties": 51,
+    "wie": [
+     "Cleys",
+     "InterieurKabinet"
+    ]
+   },
+   {
+    "hoek": "realisaties bekijken",
+    "adverteerders": 1,
+    "vanAdverteerders": 10,
+    "advertenties": 1,
+    "vanAdvertenties": 51,
+    "wie": [
+     "Builthings"
+    ]
+   },
+   {
+    "hoek": "offertes vergelijken",
+    "adverteerders": 0,
+    "vanAdverteerders": 10,
+    "advertenties": 0,
+    "vanAdvertenties": 51,
+    "wie": []
+   },
+   {
+    "hoek": "postcode invullen",
+    "adverteerders": 0,
+    "vanAdverteerders": 10,
+    "advertenties": 0,
+    "vanAdvertenties": 51,
+    "wie": []
+   }
+  ],
+  "sitelinksAannemers": [
+   {
+    "sitelink": "Contact",
+    "adverteerders": 5,
+    "wie": [
+     "RuverkO",
+     "Diego Pintelon",
+     "Cleys",
+     "InterieurKabinet",
+     "Martha Bouwteam"
+    ]
+   },
+   {
+    "sitelink": "Over ons",
+    "adverteerders": 3,
+    "wie": [
+     "Builthings",
+     "Cleys",
+     "Martha Bouwteam"
+    ]
+   },
+   {
+    "sitelink": "Realisaties",
+    "adverteerders": 1,
+    "wie": [
+     "RuverkO"
+    ]
+   },
+   {
+    "sitelink": "Totaalrenovaties",
+    "adverteerders": 1,
+    "wie": [
+     "RuverkO"
+    ]
+   },
+   {
+    "sitelink": "Contacteer ons nu",
+    "adverteerders": 1,
+    "wie": [
+     "Diego Pintelon"
+    ]
+   },
+   {
+    "sitelink": "Diego Pintelon",
+    "adverteerders": 1,
+    "wie": [
+     "Diego Pintelon"
+    ]
+   },
+   {
+    "sitelink": "Ontdek onze realisaties",
+    "adverteerders": 1,
+    "wie": [
+     "Builthings"
+    ]
+   },
+   {
+    "sitelink": "Contacteer ons",
+    "adverteerders": 1,
+    "wie": [
+     "Builthings"
+    ]
+   },
+   {
+    "sitelink": "Residentiële bouwproject",
+    "adverteerders": 1,
+    "wie": [
+     "Builthings"
+    ]
+   },
+   {
+    "sitelink": "Renovatie Aannemer",
+    "adverteerders": 1,
+    "wie": [
+     "Builthings"
+    ]
+   },
+   {
+    "sitelink": "Aannemer Gezocht",
+    "adverteerders": 1,
+    "wie": [
+     "Builthings"
+    ]
+   },
+   {
+    "sitelink": "Uw nieuwbouwwoning",
+    "adverteerders": 1,
+    "wie": [
+     "Builthings"
+    ]
+   },
+   {
+    "sitelink": "Verbouwing Gent",
+    "adverteerders": 1,
+    "wie": [
+     "Builthings"
+    ]
+   },
+   {
+    "sitelink": "Huis verbouwen",
+    "adverteerders": 1,
+    "wie": [
+     "Builthings"
+    ]
+   },
+   {
+    "sitelink": "o",
+    "adverteerders": 1,
+    "wie": [
+     "Builthings"
+    ]
+   },
+   {
+    "sitelink": "Aannemer",
+    "adverteerders": 1,
+    "wie": [
+     "Builthings"
+    ]
+   },
+   {
+    "sitelink": "Totaalproject",
+    "adverteerders": 1,
+    "wie": [
+     "Builthings"
+    ]
+   },
+   {
+    "sitelink": "Renovatie aannemer",
+    "adverteerders": 1,
+    "wie": [
+     "Builthings"
+    ]
+   },
+   {
+    "sitelink": "Renovatie aannemer Gent",
+    "adverteerders": 1,
+    "wie": [
+     "Builthings"
+    ]
+   },
+   {
+    "sitelink": "Aannemer gezocht",
+    "adverteerders": 1,
+    "wie": [
+     "Builthings"
+    ]
+   },
+   {
+    "sitelink": "Neem contact met ons op",
+    "adverteerders": 1,
+    "wie": [
+     "Aannemingen Verelst"
+    ]
+   },
+   {
+    "sitelink": "Ontdek ons aanbod",
+    "adverteerders": 1,
+    "wie": [
+     "Aannemingen Verelst"
+    ]
+   },
+   {
+    "sitelink": "BEN-woning specialist",
+    "adverteerders": 1,
+    "wie": [
+     "Aannemingen Verelst"
+    ]
+   },
+   {
+    "sitelink": "Waarom Verelst?",
+    "adverteerders": 1,
+    "wie": [
+     "Aannemingen Verelst"
+    ]
+   },
+   {
+    "sitelink": "Meer dan 45 jaar ervaring",
+    "adverteerders": 1,
+    "wie": [
+     "Aannemingen Verelst"
+    ]
+   },
+   {
+    "sitelink": "Met of zonder isolatie",
+    "adverteerders": 1,
+    "wie": [
+     "Cleys"
+    ]
+   },
+   {
+    "sitelink": "Crepi gevel laten plaatsen",
+    "adverteerders": 1,
+    "wie": [
+     "Cleys"
+    ]
+   },
+   {
+    "sitelink": "Afspraak maken",
+    "adverteerders": 1,
+    "wie": [
+     "Cleys"
+    ]
+   },
+   {
+    "sitelink": "Spuitkurk in Sint-Niklaas",
+    "adverteerders": 1,
+    "wie": [
+     "Cleys"
+    ]
+   },
+   {
+    "sitelink": "Referenties",
+    "adverteerders": 1,
+    "wie": [
+     "Cleys"
+    ]
+   },
+   {
+    "sitelink": "Afgewerkt met crepi",
+    "adverteerders": 1,
+    "wie": [
+     "Cleys"
+    ]
+   },
+   {
+    "sitelink": "Buitengevel isoleren",
+    "adverteerders": 1,
+    "wie": [
+     "Cleys"
+    ]
+   },
+   {
+    "sitelink": "Woning bouwen met Verelst",
+    "adverteerders": 1,
+    "wie": [
+     "Aannemingen Verelst"
+    ]
+   },
+   {
+    "sitelink": "Nieuwbouw en totaalrenovaties",
+    "adverteerders": 1,
+    "wie": [
+     "Aannemingen Verelst"
+    ]
+   },
+   {
+    "sitelink": "Meteen duidelijke prijs",
+    "adverteerders": 1,
+    "wie": [
+     "Aannemingen Verelst"
+    ]
+   },
+   {
+    "sitelink": "Je gevel in crepi",
+    "adverteerders": 1,
+    "wie": [
+     "Cleys"
+    ]
+   },
+   {
+    "sitelink": "Crepi plaatsen",
+    "adverteerders": 1,
+    "wie": [
+     "Cleys"
+    ]
+   },
+   {
+    "sitelink": "Aannemer gevelrenovatie",
+    "adverteerders": 1,
+    "wie": [
+     "Cleys"
+    ]
+   },
+   {
+    "sitelink": "Wij renoveren jouw gevel",
+    "adverteerders": 1,
+    "wie": [
+     "Cleys"
+    ]
+   },
+   {
+    "sitelink": "Gevel laten renoveren",
+    "adverteerders": 1,
+    "wie": [
+     "Cleys"
+    ]
+   },
+   {
+    "sitelink": "Aannemer voor gevels",
+    "adverteerders": 1,
+    "wie": [
+     "Cleys"
+    ]
+   },
+   {
+    "sitelink": "Volwaardige Aanbouw",
+    "adverteerders": 1,
+    "wie": [
+     "InterieurKabinet"
+    ]
+   },
+   {
+    "sitelink": "Interieurkabinet",
+    "adverteerders": 1,
+    "wie": [
+     "InterieurKabinet"
+    ]
+   },
+   {
+    "sitelink": "Onze Werkwijze",
+    "adverteerders": 1,
+    "wie": [
+     "InterieurKabinet"
+    ]
+   },
+   {
+    "sitelink": "Projecten",
+    "adverteerders": 1,
+    "wie": [
+     "InterieurKabinet"
+    ]
+   },
+   {
+    "sitelink": "Vrijblijvende Afspraak",
+    "adverteerders": 1,
+    "wie": [
+     "InterieurKabinet"
+    ]
+   },
+   {
+    "sitelink": "Over Ons",
+    "adverteerders": 1,
+    "wie": [
+     "InterieurKabinet"
+    ]
+   },
+   {
+    "sitelink": "Reviews",
+    "adverteerders": 1,
+    "wie": [
+     "InterieurKabinet"
+    ]
+   },
+   {
+    "sitelink": "realisaties",
+    "adverteerders": 1,
+    "wie": [
+     "Martha Bouwteam"
+    ]
+   },
+   {
+    "sitelink": "renovatie woning",
+    "adverteerders": 1,
+    "wie": [
+     "Martha Bouwteam"
+    ]
+   },
+   {
+    "sitelink": "Aannemers In Belgie",
+    "adverteerders": 1,
+    "wie": [
+     "Martha Bouwteam"
+    ]
+   }
+  ],
+  "offertesiteHoeken": [
+   {
+    "hoek": "vergelijken",
+    "adverteerders": 3,
+    "vanAdverteerders": 3,
+    "advertenties": 33,
+    "vanAdvertenties": 38,
+    "wie": [
+     "Bobex",
+     "Solvari",
+     "aannemeroffertes.be"
+    ]
+   },
+   {
+    "hoek": "gratis / vrijblijvend",
+    "adverteerders": 3,
+    "vanAdverteerders": 3,
+    "advertenties": 33,
+    "vanAdvertenties": 38,
+    "wie": [
+     "Bobex",
+     "Solvari",
+     "aannemeroffertes.be"
+    ]
+   },
+   {
+    "hoek": "aantal gratis offertes (getal)",
+    "adverteerders": 3,
+    "vanAdverteerders": 3,
+    "advertenties": 27,
+    "vanAdvertenties": 38,
+    "wie": [
+     "Bobex",
+     "Solvari",
+     "aannemeroffertes.be"
+    ]
+   },
+   {
+    "hoek": "besparen / korting",
+    "adverteerders": 3,
+    "vanAdverteerders": 3,
+    "advertenties": 6,
+    "vanAdvertenties": 38,
+    "wie": [
+     "Solvari",
+     "aannemeroffertes.be",
+     "Bobex"
+    ]
+   },
+   {
+    "hoek": "\"beste/top\" aannemers",
+    "adverteerders": 2,
+    "vanAdverteerders": 3,
+    "advertenties": 23,
+    "vanAdvertenties": 38,
+    "wie": [
+     "Solvari",
+     "aannemeroffertes.be"
+    ]
+   },
+   {
+    "hoek": "snelheid in minuten",
+    "adverteerders": 2,
+    "vanAdverteerders": 3,
+    "advertenties": 22,
+    "vanAdvertenties": 38,
+    "wie": [
+     "Solvari",
+     "aannemeroffertes.be"
+    ]
+   },
+   {
+    "hoek": "prijs + jaartal (prijsgids)",
+    "adverteerders": 2,
+    "vanAdverteerders": 3,
+    "advertenties": 7,
+    "vanAdvertenties": 38,
+    "wie": [
+     "Bobex",
+     "Solvari"
+    ]
+   },
+   {
+    "hoek": "postcode invullen",
+    "adverteerders": 1,
+    "vanAdverteerders": 3,
+    "advertenties": 18,
+    "vanAdvertenties": 38,
+    "wie": [
+     "aannemeroffertes.be"
+    ]
+   },
+   {
+    "hoek": "volume-cijfers (vakmensen, opdrachten, klanten)",
+    "adverteerders": 1,
+    "vanAdverteerders": 3,
+    "advertenties": 13,
+    "vanAdvertenties": 38,
+    "wie": [
+     "aannemeroffertes.be"
+    ]
+   },
+   {
+    "hoek": "premies",
+    "adverteerders": 1,
+    "vanAdverteerders": 3,
+    "advertenties": 3,
+    "vanAdvertenties": 38,
+    "wie": [
+     "Solvari"
+    ]
+   }
+  ],
+  "offertesitesOpAannemerHoeken": [
+   {
+    "hoek": "gratis / vrijblijvend",
+    "adverteerders": 3,
+    "vanAdverteerders": 3,
+    "advertenties": 21,
+    "vanAdvertenties": 26,
+    "wie": [
+     "Bobex",
+     "Solvari",
+     "aannemeroffertes.be"
+    ]
+   },
+   {
+    "hoek": "prijs berekenen / kostprijs",
+    "adverteerders": 2,
+    "vanAdverteerders": 3,
+    "advertenties": 11,
+    "vanAdvertenties": 26,
+    "wie": [
+     "Bobex",
+     "Solvari"
+    ]
+   },
+   {
+    "hoek": "snelheid met getal",
+    "adverteerders": 2,
+    "vanAdverteerders": 3,
+    "advertenties": 10,
+    "vanAdvertenties": 26,
+    "wie": [
+     "Solvari",
+     "aannemeroffertes.be"
+    ]
+   },
+   {
+    "hoek": "bewijs (realisaties, projecten, reviews)",
+    "adverteerders": 2,
+    "vanAdverteerders": 3,
+    "advertenties": 9,
+    "vanAdvertenties": 26,
+    "wie": [
+     "aannemeroffertes.be",
+     "Solvari"
+    ]
+   },
+   {
+    "hoek": "lokaal / regio",
+    "adverteerders": 2,
+    "vanAdverteerders": 3,
+    "advertenties": 6,
+    "vanAdvertenties": 26,
+    "wie": [
+     "Solvari",
+     "aannemeroffertes.be"
+    ]
+   },
+   {
+    "hoek": "kwaliteit / vakmanschap",
+    "adverteerders": 1,
+    "vanAdverteerders": 3,
+    "advertenties": 4,
+    "vanAdvertenties": 26,
+    "wie": [
+     "Solvari"
+    ]
+   },
+   {
+    "hoek": "premies / subsidies",
+    "adverteerders": 1,
+    "vanAdverteerders": 3,
+    "advertenties": 3,
+    "vanAdvertenties": 26,
+    "wie": [
+     "Solvari"
+    ]
+   },
+   {
+    "hoek": "jaren ervaring (getal)",
+    "adverteerders": 1,
+    "vanAdverteerders": 3,
+    "advertenties": 1,
+    "vanAdvertenties": 26,
+    "wie": [
+     "Solvari"
+    ]
+   },
+   {
+    "hoek": "garantie",
+    "adverteerders": 1,
+    "vanAdverteerders": 3,
+    "advertenties": 1,
+    "vanAdvertenties": 26,
+    "wie": [
+     "Bobex"
+    ]
+   },
+   {
+    "hoek": "ontzorgen / zonder stress",
+    "adverteerders": 0,
+    "vanAdverteerders": 3,
+    "advertenties": 0,
+    "vanAdvertenties": 26,
+    "wie": []
+   },
+   {
+    "hoek": "één aanspreekpunt / van A tot Z",
+    "adverteerders": 0,
+    "vanAdverteerders": 3,
+    "advertenties": 0,
+    "vanAdvertenties": 26,
+    "wie": []
+   },
+   {
+    "hoek": "gratis plaatsbezoek / aan huis",
+    "adverteerders": 0,
+    "vanAdverteerders": 3,
+    "advertenties": 0,
+    "vanAdvertenties": 26,
+    "wie": []
+   },
+   {
+    "hoek": "prijszekerheid (vaste prijs, raming, budget)",
+    "adverteerders": 0,
+    "vanAdverteerders": 3,
+    "advertenties": 0,
+    "vanAdvertenties": 26,
+    "wie": []
+   },
+   {
+    "hoek": "eigen personeel / team",
+    "adverteerders": 0,
+    "vanAdverteerders": 3,
+    "advertenties": 0,
+    "vanAdvertenties": 26,
+    "wie": []
+   },
+   {
+    "hoek": "btw 6%",
+    "adverteerders": 0,
+    "vanAdverteerders": 3,
+    "advertenties": 0,
+    "vanAdvertenties": 26,
+    "wie": []
+   },
+   {
+    "hoek": "EPC / energielabel",
+    "adverteerders": 0,
+    "vanAdverteerders": 3,
+    "advertenties": 0,
+    "vanAdvertenties": 26,
+    "wie": []
+   },
+   {
+    "hoek": "renovatieplicht",
+    "adverteerders": 0,
+    "vanAdverteerders": 3,
+    "advertenties": 0,
+    "vanAdvertenties": 26,
+    "wie": []
+   },
+   {
+    "hoek": "energie / isolatie / duurzaam",
+    "adverteerders": 0,
+    "vanAdverteerders": 3,
+    "advertenties": 0,
+    "vanAdvertenties": 26,
+    "wie": []
+   }
+  ],
+  "offertesiteLangst": [
+   {
+    "dagen": 1769,
+    "dagenGetoond": 784,
+    "eerst": "2021-11-23",
+    "laatst": "2026-09-26",
+    "adverteerder": "Bobex",
+    "kop": "Calculez votre prix gratuit - Prix au rn2 2026",
+    "koppen": [
+     "Calculez votre prix gratuit",
+     "Prix au rn2 2026"
+    ],
+    "beschrijving": "Comparez la rénovation de salle de bain 2026 sur prix et garantie. Gratuit BE Prix salle de bain en Belgique: comparez 3 devis gratuits...",
+    "sitelinks": [],
+    "url": "www.info-bobex.com/",
+    "bron": "ocr",
+    "link": "https://adstransparency.google.com/advertiser/AR14518224778973675521/creative/CR13766269515472044033?region=BE"
+   },
+   {
+    "dagen": 1571,
+    "dagenGetoond": 1532,
+    "eerst": "2022-06-09",
+    "laatst": "2026-09-27",
+    "adverteerder": "Solvari",
+    "kop": "Prijs Badkamerrenovatie 2025 - 4 Offertes aanvragen in 1 min",
+    "koppen": [
+     "Prijs Badkamerrenovatie 2025",
+     "4 Offertes aanvragen in 1 min"
+    ],
+    "beschrijving": "Vergelijk specialisten in jouw regio voor een badkamerrenovatie aan de beste prijs. Kies & bespaar.",
+    "sitelinks": [
+     "Tot € 2.625 korting op factuur via premies"
+    ],
+    "url": "www.solvari.be/badkamer/renovatie",
+    "bron": "ocr",
+    "link": "https://adstransparency.google.com/advertiser/AR09373451800633409537/creative/CR18390900840207482881?region=BE"
+   },
+   {
+    "dagen": 1538,
+    "dagenGetoond": 1309,
+    "eerst": "2022-07-12",
+    "laatst": "2026-09-27",
+    "adverteerder": "Solvari",
+    "kop": "Prijs Woning Renoveren 2024",
+    "koppen": [
+     "Prijs Woning Renoveren 2024"
+    ],
+    "beschrijving": "Dé specialist in woningrenovatie vind je via Solvari. Gratis en vrijblijvend.",
+    "sitelinks": [],
+    "url": "www.solvari.be/",
+    "bron": "ocr",
+    "link": "https://adstransparency.google.com/advertiser/AR09373451800633409537/creative/CR09317156049377034241?region=BE"
+   },
+   {
+    "dagen": 1538,
+    "dagenGetoond": 1307,
+    "eerst": "2022-07-12",
+    "laatst": "2026-09-27",
+    "adverteerder": "Solvari",
+    "kop": "Top Aannemers <dynamically generated location>",
+    "koppen": [
+     "Top Aannemers <dynamically generated location>"
+    ],
+    "beschrijving": "Je woning laten renoveren? Op zoek naar een goede aannemer? Wij helpen je graag.",
+    "sitelinks": [],
+    "url": "www.solvari.be/",
+    "bron": "ocr",
+    "link": "https://adstransparency.google.com/advertiser/AR09373451800633409537/creative/CR16032172627367821313?region=BE"
+   },
+   {
+    "dagen": 1538,
+    "dagenGetoond": 1297,
+    "eerst": "2022-07-12",
+    "laatst": "2026-09-27",
+    "adverteerder": "Solvari",
+    "kop": "Prijs Aannemer Renovatie 2025 - 4 Offertes aanvragen in 1 min",
+    "koppen": [
+     "Prijs Aannemer Renovatie 2025",
+     "4 Offertes aanvragen in 1 min"
+    ],
+    "beschrijving": "Renovatiespecialist nodig? Vergelijk Gratis offertes van vakmannen in Gent. Dé specialist in...",
+    "sitelinks": [
+     "4 Gratis Offertes",
+     "Top renovatiespecialisten",
+     "Aanmelden als vakman",
+     "Vergelijken = Besparen"
+    ],
+    "url": "www.solvari.be/renovatie/specialisten",
+    "bron": "ocr",
+    "link": "https://adstransparency.google.com/advertiser/AR09373451800633409537/creative/CR15598709753168003073?region=BE"
+   },
+   {
+    "dagen": 1537,
+    "dagenGetoond": 1299,
+    "eerst": "2022-07-12",
+    "laatst": "2026-09-27",
+    "adverteerder": "Solvari",
+    "kop": "Prijs Woning Renoveren 2023",
+    "koppen": [
+     "Prijs Woning Renoveren 2023"
+    ],
+    "beschrijving": "Dé specialist in woningrenovatie vind je via Solvari. Gratis en vrijblijvend.",
+    "sitelinks": [],
+    "url": "www.solvari.be/",
+    "bron": "ocr",
+    "link": "https://adstransparency.google.com/advertiser/AR09373451800633409537/creative/CR13407079819959599105?region=BE"
+   },
+   {
+    "dagen": 1537,
+    "dagenGetoond": 1112,
+    "eerst": "2022-07-12",
+    "laatst": "2026-09-27",
+    "adverteerder": "Solvari",
+    "kop": "Woning Renoveren? - Top Vakmannen <dynamically generated location> - Solvari.be",
+    "koppen": [
+     "Woning Renoveren?",
+     "Top Vakmannen <dynamically generated location>",
+     "Solvari.be"
+    ],
+    "beschrijving": "Dé specialist in woningrenovatie vind je via Solvari. Gratis en vrijblijvend.",
+    "sitelinks": [],
+    "url": "www.solvari.be/",
+    "bron": "ocr",
+    "link": "https://adstransparency.google.com/advertiser/AR09373451800633409537/creative/CR07992841572720836609?region=BE"
+   },
+   {
+    "dagen": 1458,
+    "dagenGetoond": 1417,
+    "eerst": "2022-09-30",
+    "laatst": "2026-09-27",
+    "adverteerder": "Solvari",
+    "kop": "Prijzen Zolder Renoveren - 4 Offertes aanvragen in 1 min",
+    "koppen": [
+     "Prijzen Zolder Renoveren",
+     "4 Offertes aanvragen in 1 min"
+    ],
+    "beschrijving": "Vergelijk vakmensen in jouw regio en vind de Zolderrenovatie aan de beste prijs/kwaliteit.",
+    "sitelinks": [
+     "4 Gratis Offertes • Vind dé specialist •"
+    ],
+    "url": "www.solvari.be/zolderrenovatie/offertes",
+    "bron": "ocr",
+    "link": "https://adstransparency.google.com/advertiser/AR09373451800633409537/creative/CR01372618839962943489?region=BE"
+   },
+   {
+    "dagen": 1201,
+    "dagenGetoond": 537,
+    "eerst": "2023-06-14",
+    "laatst": "2026-09-27",
+    "adverteerder": "Bobex",
+    "kop": "Rénovation de votre salle de bain . Conseils, Inspirations & Prix",
+    "koppen": [
+     "Rénovation de votre salle de bain . Conseils, Inspirations & Prix"
+    ],
+    "beschrijving": "Rénovation salle de bain : Comparez gratuitement des devis d'experts en Belgique Demande de devis...",
+    "sitelinks": [],
+    "url": "www.bobex.be/",
+    "bron": "ocr",
+    "link": "https://adstransparency.google.com/advertiser/AR14518224778973675521/creative/CR10508425873860853761?region=BE"
+   },
+   {
+    "dagen": 1151,
+    "dagenGetoond": 1086,
+    "eerst": "2023-08-02",
+    "laatst": "2026-09-26",
+    "adverteerder": "Solvari",
+    "kop": "Couvreur Herstal - Meilleures offres à Herstal",
+    "koppen": [
+     "Couvreur Herstal",
+     "Meilleures offres à Herstal"
+    ],
+    "beschrijving": "Comparez des couvreurs à Herstal et réalisez des travaux de toiture au meilleur prix. Profitez des primes en Wallonie et rénovez votre toit à...",
+    "sitelinks": [],
+    "url": "www.solvari.be/toiture/devis",
+    "bron": "ocr",
+    "link": "https://adstransparency.google.com/advertiser/AR09373451800633409537/creative/CR09031417681969938433?region=BE"
+   },
+   {
+    "dagen": 1017,
+    "dagenGetoond": 1018,
+    "eerst": "2023-12-15",
+    "laatst": "2026-09-27",
+    "adverteerder": "Solvari",
+    "kop": "Dak Renoveren Meerhout - De beste keuze in Meerhout",
+    "koppen": [
+     "Dak Renoveren Meerhout",
+     "De beste keuze in Meerhout"
+    ],
+    "beschrijving": "Vergelijk dakwerkers in Meerhout en vind de Dakwerken aan de beste prijs/kwaliteit.",
+    "sitelinks": [
+     "Tot € 5.000 korting op factuur via premies"
+    ],
+    "url": "www.solvari.be/dakwerken/offertes",
+    "bron": "ocr",
+    "link": "https://adstransparency.google.com/advertiser/AR09373451800633409537/creative/CR13175828713339617281?region=BE"
+   },
+   {
+    "dagen": 390,
+    "dagenGetoond": 369,
+    "eerst": "2025-09-02",
+    "laatst": "2026-09-27",
+    "adverteerder": "aannemeroffertes.be",
+    "kop": "Gratis Verbouw Offertes - 6 Gratis Offertes in 2 Minuten",
+    "koppen": [
+     "Gratis Verbouw Offertes",
+     "6 Gratis Offertes in 2 Minuten"
+    ],
+    "beschrijving": "Vergelijk de Best Beoordeelde Aannemers. Vul uw Postcode in & Ontvang Offertes Kies de Offerte die het beste bij u past! 2000+ Vakspecialisten.",
+    "sitelinks": [],
+    "url": "www.aannemeroffertes.be/offertes",
+    "bron": "ocr",
+    "link": "https://adstransparency.google.com/advertiser/AR03844467145530408961/creative/CR17149248455181336577?region=BE"
+   }
+  ]
+ }
+}

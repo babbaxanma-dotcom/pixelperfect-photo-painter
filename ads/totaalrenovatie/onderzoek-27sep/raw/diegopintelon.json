@@ -1,0 +1,77 @@
+{
+ "speler": "Diego Pintelon",
+ "slug": "diegopintelon",
+ "soort": "aannemer",
+ "serp": 4,
+ "oogst": "2026-09-27",
+ "doelen": {
+  "domein:diegopintelon.be": {
+   "creatives": [
+    {
+     "adverteerderId": "AR07192117213271162881",
+     "cr": "CR02853818198380249089",
+     "adverteerder": "Proximedia SA",
+     "formaatCode": 1,
+     "formaat": "tekst",
+     "eerst": "2023-01-26",
+     "laatst": "2026-09-27",
+     "eerstTs": 1674724141,
+     "laatstTs": 1790532734,
+     "looptijdDagen": 1340,
+     "dagenGetoond": 1306,
+     "preview": null,
+     "beeld": "https://tpc.googlesyndication.com/archive/simgad/6575345486390468149"
+    },
+    {
+     "adverteerderId": "AR07192117213271162881",
+     "cr": "CR07373174274053373953",
+     "adverteerder": "Proximedia SA",
+     "formaatCode": 1,
+     "formaat": "tekst",
+     "eerst": "2023-01-25",
+     "laatst": "2026-09-27",
+     "eerstTs": 1674663645,
+     "laatstTs": 1790470527,
+     "looptijdDagen": 1340,
+     "dagenGetoond": 1319,
+     "preview": null,
+     "beeld": "https://tpc.googlesyndication.com/archive/simgad/11468690125528844954"
+    },
+    {
+     "adverteerderId": "AR07192117213271162881",
+     "cr": "CR11813365718685057025",
+     "adverteerder": "Proximedia SA",
+     "formaatCode": 1,
+     "formaat": "tekst",
+     "eerst": "2023-05-04",
+     "laatst": "2026-09-26",
+     "eerstTs": 1683214606,
+     "laatstTs": 1790449113,
+     "looptijdDagen": 1241,
+     "dagenGetoond": 1234,
+     "preview": null,
+     "beeld": "https://tpc.googlesyndication.com/archive/simgad/5703595809193494339"
+    },
+    {
+     "adverteerderId": "AR07192117213271162881",
+     "cr": "CR09053624020099923969",
+     "adverteerder": "Proximedia SA",
+     "formaatCode": 1,
+     "formaat": "tekst",
+     "eerst": "2023-06-19",
+     "laatst": "2026-09-19",
+     "eerstTs": 1687196480,
+     "laatstTs": 1789808060,
+     "looptijdDagen": 1188,
+     "dagenGetoond": 281,
+     "preview": null,
+     "beeld": "https://tpc.googlesyndication.com/archive/simgad/12313752400385252414"
+    }
+   ],
+   "token": null,
+   "klaar": true,
+   "bladen": 1,
+   "totaal": 4
+  }
+ }
+}

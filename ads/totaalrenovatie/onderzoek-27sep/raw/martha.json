@@ -1,0 +1,47 @@
+{
+ "speler": "Martha Bouwteam",
+ "slug": "martha",
+ "soort": "aannemer",
+ "serp": 7,
+ "oogst": "2026-09-27",
+ "doelen": {
+  "domein:martha-bouwteam.be": {
+   "creatives": [
+    {
+     "adverteerderId": "AR09954109217021362177",
+     "cr": "CR11785576498595889153",
+     "adverteerder": "Solid Medio",
+     "formaatCode": 1,
+     "formaat": "tekst",
+     "eerst": "2026-04-16",
+     "laatst": "2026-09-26",
+     "eerstTs": 1776354608,
+     "laatstTs": 1790461669,
+     "looptijdDagen": 163,
+     "dagenGetoond": 157,
+     "preview": null,
+     "beeld": "https://tpc.googlesyndication.com/archive/simgad/1272621670122559967"
+    },
+    {
+     "adverteerderId": "AR09954109217021362177",
+     "cr": "CR17289225313418477569",
+     "adverteerder": "Solid Medio",
+     "formaatCode": 1,
+     "formaat": "tekst",
+     "eerst": "2026-06-18",
+     "laatst": "2026-07-08",
+     "eerstTs": 1781801977,
+     "laatstTs": 1783512826,
+     "looptijdDagen": 20,
+     "dagenGetoond": 14,
+     "preview": "https://displayads-formats.googleusercontent.com/ads/preview/content.js?client=ads-integrity-transparency&obfuscatedCustomerId=9267246224&creativeId=813256787919&uiFeatures=12,54&adGroupId=196345228263&sig=ACiVB_xxJ0FZqVQfUi_f4vI5rE4T2INnJA&htmlParentId=fletch-render-7413234902593307433&responseCallback=fletchCallback7413234902593307433",
+     "beeld": null
+    }
+   ],
+   "token": null,
+   "klaar": true,
+   "bladen": 1,
+   "totaal": 2
+  }
+ }
+}

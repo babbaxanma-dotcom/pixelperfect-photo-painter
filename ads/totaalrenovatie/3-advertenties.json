@@ -89,34 +89,103 @@
         [
           "huis renoveren",
           "w"
+        ],
+        [
+          "woning renoveren",
+          "w"
+        ],
+        [
+          "renovatie huis",
+          "w"
+        ],
+        [
+          "woningrenovatie",
+          "w"
+        ],
+        [
+          "volledige renovatie",
+          "w"
+        ],
+        [
+          "huis compleet renoveren",
+          "w"
+        ],
+        [
+          "huis laten renoveren",
+          "w"
+        ],
+        [
+          "huis volledig laten renoveren",
+          "w"
+        ],
+        [
+          "renovatie oude woning",
+          "w"
+        ],
+        [
+          "renovatie rijwoning",
+          "w"
+        ],
+        [
+          "rijwoning renoveren",
+          "w"
+        ],
+        [
+          "huis verbouwen",
+          "w"
+        ],
+        [
+          "woning verbouwen",
+          "w"
+        ],
+        [
+          "verbouwingswerken",
+          "w"
+        ],
+        [
+          "aannemer renovatiewerken",
+          "w"
+        ],
+        [
+          "algemene aannemer",
+          "w"
+        ],
+        [
+          "aannemer voor renovatie",
+          "w"
+        ],
+        [
+          "aannemer energetische renovatie",
+          "w"
         ]
       ],
       "pad": [
         "totaal",
         "renovatie"
       ],
+      "pin2": "Uw hele woning gerenoveerd",
       "koppen": [
-        "Totaalrenovatie van uw woning",
+        "Aannemer voor totaalrenovatie",
         "{KeyWord:Aannemer totaalrenovatie}",
-        "Renoveren met eigen ploegen",
-        "AB Bouw Groep: renovatie",
+        "Uw hele woning gerenoveerd",
         "Bereken uw prijs in 2 minuten",
         "6% btw bij woning 10+ jaar",
         "Hulp bij Mijn VerbouwPremie",
         "Gratis plaatsbezoek en offerte",
-        "VCA-gecertificeerd, verzekerd",
+        "Vaste prijs na plaatsbezoek",
+        "Zes afdelingen in huis",
         "Eén planning voor alle werken",
         "Inclusief EPC-begeleiding",
         "Totaalrenovatie in {LOCATION(City):uw regio}",
         "Huis gekocht om te renoveren?",
-        "Transparante offerte",
-        "Vrijblijvende offerte"
+        "AB Bouw Groep: renovatie",
+        "Eigen ploeg, elke dag dezelfde"
       ],
       "beschrijvingen": [
         "Bereken in 2 minuten de prijs van uw renovatie. Gratis plaatsbezoek en offerte.",
-        "Onze eigen ploegen doen elk vak, volgens één planning. VCA-gecertificeerd en verzekerd.",
+        "Zes afdelingen in huis: onze eigen ploegen doen elk vak, volgens één planning.",
         "Woning ouder dan tien jaar? Dan geldt 6% btw. Wij regelen uw Mijn VerbouwPremie.",
-        "Transparante offerte en strikte planning. Echt vakmanschap en perfecte afwerking."
+        "Tijdens de werken schermen wij de woning af tegen stof en ruimen we elke avond op."
       ]
     },
     "Prijs renovatie": {
@@ -169,16 +238,65 @@
         [
           "totaalrenovatie prijs",
           "w"
+        ],
+        [
+          "renovatiekosten",
+          "w"
+        ],
+        [
+          "renovatie prijs",
+          "w"
+        ],
+        [
+          "renovatie offerte",
+          "w"
+        ],
+        [
+          "offerte renovatie",
+          "w"
+        ],
+        [
+          "verbouwing prijs",
+          "w"
+        ],
+        [
+          "huis verbouwen kosten",
+          "w"
+        ],
+        [
+          "woning verbouwen kosten",
+          "w"
+        ],
+        [
+          "woning renoveren kosten",
+          "w"
+        ],
+        [
+          "renovatie huis kosten",
+          "w"
+        ],
+        [
+          "volledige renovatie kosten",
+          "w"
+        ],
+        [
+          "huis laten renoveren kosten",
+          "w"
+        ],
+        [
+          "kostprijs renovatie huis",
+          "w"
         ]
       ],
       "pad": [
         "prijs",
         "renovatie"
       ],
+      "pin2": "Prijs voor de hele woning",
       "koppen": [
         "Wat kost uw totaalrenovatie?",
         "{KeyWord:Prijs totaalrenovatie}",
-        "Bereken uw renovatieprijs",
+        "Prijs voor de hele woning",
         "Prijs in 2 minuten berekend",
         "AB Bouw Groep: totaalrenovatie",
         "6% btw voor woning 10+ jaar",
@@ -189,14 +307,14 @@
         "Renovatie in {LOCATION(City):uw regio}",
         "Wat kost een huis renoveren?",
         "Kostprijs renovatie woning",
-        "VCA-attest en verzekerd",
-        "Strikte planning"
+        "Vaste prijs op uw offerte",
+        "Zes afdelingen, één planning"
       ],
       "beschrijvingen": [
         "Wat kost uw renovatie? Beantwoord zes korte vragen op onze website. Klaar in 2 minuten.",
-        "Gratis plaatsbezoek: we bekijken uw woning en u krijgt een vrijblijvende offerte.",
+        "Na het gratis plaatsbezoek krijgt u een vaste prijs. Wat op de offerte staat, betaalt u.",
         "Woning ouder dan tien jaar? 6% btw, en wij regelen de aanvraag van uw premie.",
-        "Eigen ploegen voor ruwbouw en afwerking, volgens één planning. VCA en verzekerd."
+        "Eigen ploegen voor ruwbouw en afwerking, volgens één planning. Volledig verzekerd."
       ]
     }
   },
@@ -241,9 +359,9 @@
   "highlights": [
     "Gratis plaatsbezoek",
     "Eigen ploegen",
-    "VCA-gecertificeerd",
+    "Vaste prijs",
     "Volledig verzekerd",
-    "Transparante offerte",
+    "Zes afdelingen in huis",
     "Premiebegeleiding",
     "EPC-begeleiding",
     "6% btw vanaf 10 jaar",
@@ -253,11 +371,12 @@
     {
       "kop": "Services",
       "waarden": [
-        "Afbraak en ruwbouw",
-        "Technieken",
-        "Pleisterwerk",
-        "Vloeren en tegels",
-        "Interieur"
+        "Totaalrenovatie",
+        "Ecologisch bouwen",
+        "Interieurwerken",
+        "Dakwerken",
+        "Badkamer en wellness",
+        "Gevelrenovatie"
       ]
     }
   ]
