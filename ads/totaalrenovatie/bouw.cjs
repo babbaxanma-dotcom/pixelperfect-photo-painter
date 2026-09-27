@@ -34,7 +34,7 @@ const URL = 'https://www.abgroep.be/lp/totaalrenovatie';
 const INSTELLINGEN = {
   status: 'Onderbroken',
   budgetPerDag: 40,            // zie BUDGET hieronder
-  bieding: 'Klikken maximaliseren, max. CPC € 8',
+  bieding: 'Klikken maximaliseren, zonder max. CPC (Mohammed, 27 sep: "geen cpc maximaal")',
   netwerk: 'Alleen Google Zoeken (geen zoekpartners, geen Display)',
   aiMax: 'uit', breedZoeken: 'uit',
   taal: 'Nederlands',
