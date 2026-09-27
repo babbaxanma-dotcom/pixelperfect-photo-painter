@@ -99,14 +99,16 @@ const GROEPEN = {
     koppen: [
       'Plat dak vernieuwen?',           // positie 1, gepind (samen met Wat kost een nieuw plat dak? en Roofing of EPDM vernieuwen)
       'Wat kost een nieuw plat dak?',
-      'Uw hele platte dak vernieuwd',   // positie 2, gepind (filterkop, zie Hellend); vervangt "Prijs aanvragen in 2 minuten"
+      'Prijs aanvragen in 2 minuten',   // Mohammed 27 sep: "is wel een belangrijke om erin te laten"
       'Gratis inspectie van uw dak',
       '10 jaar garantie op dakwerk',
       '6% btw bij woning 10+ jaar',
       'Begeleiding Mijn VerbouwPremie',
       'Nieuw plat dak in EPDM',
       'Roofing of EPDM vernieuwen',
-      'Plat dak met nieuwe isolatie',
+      /* Positie 2, gepind: filterkop (zie Hellend). Vervangt "Plat dak met nieuwe isolatie", die
+         wie alleen wil isoleren aantrok ("prijs plat dak isoleren", 1 klik, €8,09, 25-27 sep). */
+      'Uw hele platte dak vernieuwd',
       'AB Bouw Groep: platte daken',
       '{KeyWord:Nieuw plat dak}',
       'EPDM laten leggen',
