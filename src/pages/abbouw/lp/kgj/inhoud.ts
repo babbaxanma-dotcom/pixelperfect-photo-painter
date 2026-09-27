@@ -66,7 +66,8 @@ export type KgjInhoud = {
   rekenaar: { titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string };
   waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto] };
   /** Diensten onder "Waarom": id is het anker voor een sitelink (/lp/dakwerken#nieuw-dak). */
-  diensten: { kop: string; lijst: { id: string; icoon: IcoonNaam; naam: string; tekst: string }[] };
+  /** onder: optionele zin onder de kop. Een lege tekst toont alleen icoon en naam (totaalrenovatie, 27 sep). */
+  diensten: { kop: string; onder?: string; lijst: { id: string; icoon: IcoonNaam; naam: string; tekst: string }[] };
   /** Voordelen tussen "Waarom" en de diensten: elk voordeel een gekleurde bol met icoon. */
   voordelen?: { kop: string; lijst: { icoon: IcoonNaam; kleur: 'oranje' | 'blauw' | 'groen'; titel: string; tekst: string }[] };
   voorna: { kop: string; onder: string; voor: Foto; na: Foto; label: string };

@@ -340,13 +340,16 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         <div className="kgj-breed">
           <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
             <h2>{inhoud.diensten.kop}</h2>
+            {inhoud.diensten.onder && <p>{inhoud.diensten.onder}</p>}
           </div>
-          <ul className="kgj-dienstraster">
+          {/* Zonder tekst per dienst (totaalrenovatie, 27 sep: "simpel, zonder al te veel
+              tekst") staan icoon en naam naast elkaar in een compact raster. */}
+          <ul className={`kgj-dienstraster${inhoud.diensten.lijst.every((d) => !d.tekst) ? ' kgj-dienstraster--kort' : ''}`}>
             {inhoud.diensten.lijst.map((d) => (
               <li className="kgj-dienst kgj-op" id={d.id} key={d.id}>
                 <span className="kgj-dienst__icoon"><Icoon naam={d.icoon} /></span>
                 <h3>{d.naam}</h3>
-                <p>{d.tekst}</p>
+                {d.tekst && <p>{d.tekst}</p>}
               </li>
             ))}
           </ul>
@@ -381,7 +384,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       <section className="kgj-band kgj-band--grijs kgj-voorna" id="voorna">
         <div className="kgj-breed">
           <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
-            <h2>{inhoud.voorna.kop}</h2>
+            {inhoud.voorna.kop && <h2>{inhoud.voorna.kop}</h2>}
             <p>{inhoud.voorna.onder}</p>
           </div>
           <div className="kgj-schuif kgj-op">
@@ -405,7 +408,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                   <span className="kgj-schuif__greep" aria-hidden="true">‹ ›</span>
                 </span>
               </div>
-              <figcaption>{inhoud.voorna.label}</figcaption>
+              {inhoud.voorna.label && <figcaption>{inhoud.voorna.label}</figcaption>}
             </figure>
           </div>
         </div>

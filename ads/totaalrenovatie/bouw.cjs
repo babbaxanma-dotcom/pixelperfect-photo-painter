@@ -119,9 +119,9 @@ const GROEPEN = {
 const SITELINKS = [
   { tekst: 'Bereken uw renovatieprijs', r1: 'Klaar in 2 minuten', r2: 'Gratis en vrijblijvend', url: URL + '#rekenaar' },
   { tekst: 'Gratis plaatsbezoek', r1: 'We bekijken uw woning ter plaatse', r2: 'Daarna een vrijblijvende offerte', url: URL + '#contact' },
-  { tekst: 'Onze diensten', r1: 'Afbraak en ruwbouw', r2: 'Pleisterwerk en interieur', url: URL + '#diensten' },
+  { tekst: 'Onze diensten', r1: 'Zes afdelingen in huis', r2: 'Eén planning voor alle werken', url: URL + '#diensten' },  // 27 sep: de sectie toont nu de zes afdelingen
   { tekst: 'Zo verloopt uw renovatie', r1: 'In vijf duidelijke stappen', r2: 'U weet vooraf wat er gebeurt', url: URL + '#werkwijze' },
-  { tekst: 'Voor en na', r1: 'Dezelfde uitbouw, voor en na', r2: 'Een werf van AB Bouw Groep', url: URL + '#voorna' },
+  { tekst: 'Voor en na', r1: 'Sleep de balk over de foto', r2: 'Een werf van AB Bouw Groep', url: URL + '#voorna' },  // 27 sep: "uitbouw/aanbouw" van de pagina gehaald
   { tekst: 'EPC- en premiebegeleiding', r1: 'Begeleiding bij uw EPC-attest', r2: 'Hulp bij Mijn VerbouwPremie', url: URL + '#waarom' },
 ];
 const HIGHLIGHTS = ['Gratis plaatsbezoek', 'Eigen ploegen', 'VCA-gecertificeerd', 'Volledig verzekerd', 'Transparante offerte',

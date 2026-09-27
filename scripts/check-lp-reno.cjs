@@ -81,6 +81,9 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     breed: document.documentElement.scrollWidth,
     reviews: !!document.querySelector('#reviews'),
     diensten: [...document.querySelectorAll('#diensten .kgj-dienst h3')].map((h) => h.textContent.trim()),
+    dienstTekst: document.querySelectorAll('#diensten .kgj-dienst p').length,
+    voornaKop: document.querySelectorAll('#voorna h2').length,
+    voornaLabel: document.querySelectorAll('#voorna figcaption').length,
     voor: document.querySelector('.kgj-schuif__voor img')?.getAttribute('src') || '',
     na: document.querySelector('.kgj-schuif__na img')?.getAttribute('src') || '',
     stukFoto: [...document.images].filter((i) => i.complete && i.naturalWidth === 0 && i.loading !== 'lazy').map((i) => i.src).slice(0, 3),
@@ -88,7 +91,10 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   }));
   meld(pg.breed <= 390, 'geen horizontaal scrollen', `paginabreedte ${pg.breed}`);
   meld(!pg.reviews, "geen sectie 'wat klanten schrijven'");
-  meld(pg.diensten.length === 4, 'vier diensten', pg.diensten.join(' | '));
+  /* 27 sep (Mohammed): de zes afdelingen van AB, alleen naam en icoon. */
+  meld(pg.diensten.join('|') === 'Totaalrenovatie en nieuwbouw|Ecologisch bouwen|Interieurwerken|Dakwerken|Badkamer en wellness|Gevelrenovatie' && pg.dienstTekst === 0,
+    'zes afdelingen, zonder tekst per afdeling', pg.diensten.join(' | '));
+  meld(pg.voornaKop === 0 && pg.voornaLabel === 0, "voor/na zonder kop 'Dezelfde uitbouw' en zonder label 'Aanbouw'");
   /* De build geeft de foto's een hashnaam; vergelijk dus de inhoud (md5) met
      de bronbestanden van de uitbouw. */
   const md5 = (buf) => require('crypto').createHash('md5').update(buf).digest('hex');

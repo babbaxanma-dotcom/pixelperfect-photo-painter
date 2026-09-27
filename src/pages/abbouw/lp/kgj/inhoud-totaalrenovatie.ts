@@ -121,25 +121,34 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     ],
   },
 
-  /* De onderdelen van één renovatie, in de volgorde waarin ze op de werf
-     gebeuren (vorige pagina: "Wat er in een totaalrenovatie zit"). */
+  /* Mohammed, 27 sep: "doe gewoon bij onze diensten de afdelingen van ab bouw groep,
+     simpel, zonder al te veel tekst, die 6 afdelingen" en "bij een renovatie ... stellen
+     wij de afdelingen juist op aan elkaar omdat we alles binnenshuis hebben verloopt de
+     planning vlot". Namen en volgorde: de zes afdelingen van AB (homepage DIENSTEN,
+     nummering in _divisies.ts: construct 01, ecologisch 02, interieur 03, dak 04,
+     bad 05, gevel 06). */
   diensten: {
     kop: 'Onze diensten',
+    onder: 'Bij een renovatie stemmen wij onze afdelingen op elkaar af. Omdat we alles in huis hebben, verloopt de planning vlot.',
     lijst: [
-      { id: 'ruwbouw', icoon: 'dienst-ruwbouw', naam: 'Afbraak en ruwbouw', tekst: 'Muren weg, nieuwe openingen, oude vloer eruit. Wat blijft staan, wordt eerst ondersteund.' },
-      { id: 'technieken', icoon: 'dienst-technieken', naam: 'Technieken', tekst: 'Nieuwe leidingen en elektriciteit gaan de muur in voordat er gepleisterd wordt.' },
-      { id: 'afwerking', icoon: 'dienst-pleister', naam: 'Pleisterwerk en vloeren', tekst: 'Wanden en plafonds vlak en recht, de tegels strak in lijn gelegd.' },
-      { id: 'interieur', icoon: 'dienst-interieur', naam: 'Interieur', tekst: 'Badkamer en keuken, met het maatwerk dat erbij hoort.' },
+      { id: 'bouw', icoon: 'dienst-nieuw', naam: 'Totaalrenovatie en nieuwbouw', tekst: '' },
+      { id: 'ecologisch', icoon: 'afd-eco', naam: 'Ecologisch bouwen', tekst: '' },
+      { id: 'interieur', icoon: 'dienst-interieur', naam: 'Interieurwerken', tekst: '' },
+      { id: 'dakwerken', icoon: 'dienst-renovatie', naam: 'Dakwerken', tekst: '' },
+      { id: 'badkamer', icoon: 'afd-bad', naam: 'Badkamer en wellness', tekst: '' },
+      { id: 'gevel', icoon: 'dienst-ruwbouw', naam: 'Gevelrenovatie', tekst: '' },
     ],
   },
 
-  /* Mohammed: de slider van de homepage, de witte uitbouw. */
+  /* Mohammed: de slider van de homepage, de witte uitbouw. 27 sep: kop "Dezelfde
+     uitbouw voor en na de werken" en label "Aanbouw" eruit ("die tekst is echt niet
+     mooi", "1 keer zeg je aanbouw en 1 keer uitbouw"). */
   voorna: {
-    kop: 'Dezelfde uitbouw voor en na de werken',
+    kop: '',
     onder: 'Sleep de balk over de foto.',
-    voor: { src: uitbouwVoor, alt: 'De aanbouw in ruwbouw: snelbouwstenen en de houten balken van het platte dak' },
-    na: { src: uitbouwNa, alt: 'Dezelfde aanbouw afgewerkt, met witte crepi en een schuifraam over de volle breedte' },
-    label: 'Aanbouw',
+    voor: { src: uitbouwVoor, alt: 'De uitbouw in ruwbouw: snelbouwstenen en de houten balken van het platte dak' },
+    na: { src: uitbouwNa, alt: 'Dezelfde uitbouw afgewerkt, met witte crepi en een schuifraam over de volle breedte' },
+    label: '',
   },
 
   werk: { kop: '', onder: '', fotos: [] },

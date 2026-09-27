@@ -249,6 +249,24 @@ export const KGJ_EXTRA = `
   .kgjx .kgj-dienst p { font-size: 15px; }
 }
 
+/* ── onze diensten, kort: alleen icoon en naam (totaalrenovatie, 27 sep) ──
+   Mohammed: "simpel, zonder al te veel tekst, die 6 afdelingen". Drie kolommen
+   op desktop, één kolom op de telefoon; icoon en naam naast elkaar. */
+.kgjx .kgj-diensten .kgj-kopblok p { max-width: 60ch; margin: 12px auto 0; }
+.kgj-dienstraster--kort { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.kgjx .kgj-dienstraster--kort .kgj-dienst { display: flex; align-items: center; gap: 16px; padding: 18px 20px; }
+.kgjx .kgj-dienstraster--kort .kgj-dienst__icoon { flex: none; width: 52px; height: 52px; margin: 0; border-radius: 12px; }
+.kgjx .kgj-dienstraster--kort .kgj-dienst__icoon svg { width: 28px; height: 28px; }
+.kgjx .kgj-dienstraster--kort .kgj-dienst h3 { margin: 0; font-size: 18px; }
+@media (max-width: 1000px) { .kgj-dienstraster--kort { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) {
+  .kgj-dienstraster--kort { grid-template-columns: 1fr; gap: 10px; }
+  .kgjx .kgj-dienstraster--kort .kgj-dienst { padding: 14px 16px; }
+  .kgjx .kgj-dienstraster--kort .kgj-dienst__icoon { width: 44px; height: 44px; }
+  .kgjx .kgj-dienstraster--kort .kgj-dienst__icoon svg { width: 24px; height: 24px; }
+  .kgjx .kgj-dienstraster--kort .kgj-dienst h3 { font-size: 16.5px; }
+}
+
 /* ── voordelen van dakrenovatie: drie kaarten met een ronde, gekleurde bol ──
    Mohammed, 26 sep: "iconen, graag in bolvorm en met verschillende bijpassende
    kleuren", "bij elk bolletje een korte uitleg". 27 sep: de glanzende bollen
