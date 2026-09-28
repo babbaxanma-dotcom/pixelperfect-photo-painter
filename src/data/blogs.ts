@@ -194,7 +194,7 @@ export const BLOGS: BlogPost[] = [
       <h3>5. Wat veel mensen vergeten</h3>
       <p>Btw-tarief van 6% voor woningen ouder dan 10 jaar geldt nog altijd. Op een totaalrenovatie van € 80.000 is dat € 12.800 minder dan aan 21%.</p>
       <h3>Ons advies</h3>
-      <p>Sinds 1 maart 2026 verviel de dak- en gevelisolatiepremie voor de meeste eigenaars (inkomenscategorie 1 en 2). Wat overblijft: het 6% BTW-tarief en de Mijn VerbouwLening (0%). Wij checken of u nog premie-recht heeft en dienen het dossier in als dat zo is.</p>
+      <p>Sinds 1 maart 2026 is de premie voor dakisolatie er alleen nog voor inkomenscategorie 3 en 4, en is de premie voor gevelisolatie voor eigenaar-bewoners afgeschaft. Wat overblijft: het 6% BTW-tarief en de Mijn VerbouwLening (0%). Wij checken of u nog premie-recht heeft en dienen het dossier in als dat zo is.</p>
     `,
   },
   {
@@ -274,7 +274,7 @@ export const BLOGS: BlogPost[] = [
       <h3>1. EPC-label D wordt de nieuwe ondergrens</h3>
       <p>Sinds 2023 moeten woningen met EPC E of F binnen vijf jaar na aankoop gerenoveerd worden tot minstens label D. In 2028 schuift die lat op naar label C, in 2035 naar label A. Praktisch betekent dat: dakisolatie, hoogrendementsbeglazing en een efficiënte verwarmingsinstallatie zijn niet langer optioneel.</p>
       <h3>2. Mijn VerbouwPremie blijft, maar wijzigt</h3>
-      <p>De inkomensgebonden premie loopt door in 2026, met aangepaste plafonds. Voor dakisolatie, muurisolatie en glasvervanging blijven de bedragen interessant. Wij dienen de aanvraag standaard mee in, zonder meerprijs.</p>
+      <p>De inkomensgebonden premie loopt door in 2026, maar is sterk versmald: voor dakisolatie alleen nog voor inkomenscategorie 3 en 4, en voor muur- en vloerisolatie is ze voor eigenaar-bewoners afgeschaft. Wij dienen de aanvraag standaard mee in, zonder meerprijs.</p>
       <h3>3. Circulair bouwen wordt mainstream</h3>
       <p>Hergebruikte bakstenen, biogebaseerde isolatie (hennep, houtvezel, kurk) en demonteerbare constructies zijn niet meer iets voor nichebouwers. We zien ze elke maand vaker in onze offertes, vaak op vraag van de klant zelf.</p>
       <h3>Wat wij u aanraden</h3>
@@ -513,7 +513,7 @@ export const BLOGS: BlogPost[] = [
       <h3>1. Basis crepi op bestaande gevel (€ 45 - 60/m²)</h3>
       <p>Reinigen, gronderen, één laag siliconenhars-pleister 2 mm. Geen stelling apart gerekend bij rijwoningen onder 8 m hoogte. Geschikt als de gevel structureel gezond is en u enkel een verfrissing wil.</p>
       <h3>2. Crepi met isolatie buitenkant, ETICS (€ 110 - 150/m²)</h3>
-      <p>EPS- of rockwool-isolatie 12-16 cm + wapeningsnet + crepi-afwerking. Geeft u meteen een R-waarde van 4,5+, en bij renovatie geldt doorgaans het verlaagde btw-tarief van 6%. Let op: de Mijn VerbouwPremie voor buitenmuurisolatie is sinds 1 maart 2026 enkel nog beschikbaar voor de laagste inkomenscategorieën en verhuurders via een SVK; wij checken bij het plaatsbezoek wat er in uw situatie geldt. Beste lange-termijn investering.</p>
+      <p>EPS- of rockwool-isolatie 12-16 cm + wapeningsnet + crepi-afwerking. Geeft u meteen een R-waarde van 4,5+, en bij renovatie geldt doorgaans het verlaagde btw-tarief van 6%. Let op: de Mijn VerbouwPremie voor buitenmuurisolatie is sinds 1 maart 2026 afgeschaft voor eigenaar-bewoners; wij checken bij het plaatsbezoek wat er in uw situatie geldt. Beste lange-termijn investering.</p>
       <h3>3. Stelling: vaak verborgen post</h3>
       <p>Een halfopen woning van 120 m² gevel vraagt 7-10 stelling-dagen. Stelling huren + opzetten kost € 1.800-3.200 voor zo'n project. Goedkope offertes "vergeten" deze post.</p>
       <h3>4. Welke korrel kiezen?</h3>
@@ -539,7 +539,7 @@ export const BLOGS: BlogPost[] = [
       <h3>2. R-waarde en EPC-impact</h3>
       <p>Een goed uitgevoerd ETICS-systeem haalt R 4,5-5,5 m²K/W. Voor een doorsnee rijwoning betekent dat een EPC-sprong van 80-120 punten, voldoende om van label F naar C te springen, of van D naar B.</p>
       <h3>3. Premies en btw in 2026</h3>
-      <p>Belangrijk: sinds 1 maart 2026 is de Mijn VerbouwPremie voor buitenmuurisolatie weggevallen voor de meeste eigenaars; enkel de laagste inkomenscategorieën en verhuurders via een SVK komen nog in aanmerking. Wat wél voor bijna iedereen geldt: 6% btw bij renovatie van woningen ouder dan 10 jaar, en de renteloze Mijn VerbouwLening voor wie aan de voorwaarden voldoet. Komt u in aanmerking, dan dienen wij het premiedossier mee in.</p>
+      <p>Belangrijk: sinds 1 maart 2026 is de Mijn VerbouwPremie voor buitenmuurisolatie afgeschaft voor eigenaar-bewoners, in elke inkomenscategorie. Wat wél voor bijna iedereen geldt: 6% btw bij renovatie van woningen ouder dan 10 jaar, en de renteloze Mijn VerbouwLening voor wie aan de voorwaarden voldoet. Komt u in aanmerking, dan dienen wij het premiedossier mee in.</p>
       <h3>4. Valkuilen: dakoversteken en raamdorpels</h3>
       <p>Uw gevel wordt 16 cm dikker. Bestaande dakoversteken moeten verlengd, raamdorpels vernieuwd, regenpijpen verlegd. Dat is 15-25% van uw totale ETICS-budget, niet vergeten in te calculeren.</p>
       <h3>5. Welke isolatieplaat?</h3>

@@ -229,7 +229,7 @@ export const GEMEENTES: Record<string, Gemeente> = {
       "Crepi + ETICS gevelisolatie typisch voor Sint-Katelijne-Waver halfopen woningen",
       "Pannendaken Koramic op nieuwbouw + renovaties",
       "Sarkingisolatie hellende daken, populair bij EPC-verbetering",
-      "Premiedossier Mijn VerbouwPremie tot €5.750 inbegrepen"
+      "Premiedossier Mijn VerbouwPremie voor wie in aanmerking komt"
     ],
     reviewCount: 9,
     rating: "4.9"
