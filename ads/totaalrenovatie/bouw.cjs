@@ -217,7 +217,38 @@ const UITSLUITEN = [
   ['iha', 'w'], ['genki', 'w'], ['franssen', 'w'], ['jvr', 'w'], ['mitch', 'w'], ['mortier', 'w'], ['ooms', 'w'],
   ['schipper', 'w'], ['chrisma', 'w'], ['rinovato', 'w'], ['vanoverbeke', 'w'], ['zedreno', 'w'], ['x2o', 'w'], ['mh', 'w'],
   ['b&g', 'w'], ['bobex', 'w'], ['aannemeroffertes', 'w'],
+  /* 28 sep (Mohammed: "super veel negatives die er niets mee te maken hebben maar deftige negatives
+     weinig"). De lijst hierboven kwam uit de autocomplete-oogst; die toont rariteiten even groot als de
+     grote groepen. Hieronder de soorten zoekers die geen aannemer zoeken, elk woord getoetst tegen de
+     491 kopers. Bewust NIET: 'hoe' (blokkeert "hoe renovatiekosten berekenen"), 'verplicht(ingen)',
+     'premie', 'subsidie(s)', 'epc' (kopers), 'planning' en 'duur' (dubbelzinnig), 'ervaringen'
+     (wie een aannemer vergelijkt). */
+  // doe-het-zelf
+  ['zelf', 'w'], ['diy', 'w'], ['klussen', 'w'], ['klusser', 'w'], ['klushuis', 'w'], ['zelfbouw', 'w'],
+  ['zonder aannemer', 'w'], ['goedkoop', 'w'],
+  // uitleg en regels
+  ['handleiding', 'w'], ['tutorial', 'w'], ['video', 'w'], ['tips', 'w'], ['wat is', 'w'], ['definitie', 'w'],
+  ['uitleg', 'w'], ['hoe beginnen', 'w'], ['waar beginnen', 'w'], ['wat eerst', 'w'], ['volgorde', 'w'],
+  ['stappen', 'w'], ['duurtijd', 'w'], ['hoelang', 'w'], ['hoe lang', 'w'], ['regels', 'w'], ['wetgeving', 'w'],
+  ['normen', 'w'], ['vergunning', 'w'], ['omgevingsvergunning', 'w'], ['belasting', 'w'], ['pdf', 'w'],
+  ['template', 'w'], ['sjabloon', 'w'],
+  // inspiratie
+  ['ideeën', 'w'], ['ideeen', 'w'], ['inspiratie', 'w'], ['voorbeelden', 'w'], ['voorbeeld', 'w'], ['voor en na', 'w'],
+  // bouwmarkten en materiaal
+  ['gamma', 'w'], ['brico', 'w'], ['hubo', 'w'], ['praxis', 'w'], ['hornbach', 'w'], ['ikea', 'w'],
+  ['materiaal', 'w'], ['materialen', 'w'], ['bouwmaterialen', 'w'],
 ];
+/* 28 sep: elke soort niet-koper moet in de lijst staan. Zo kan een lijst niet meer groot lijken terwijl
+   de grote groepen ontbreken. */
+const VERPLICHTE_SOORTEN = {
+  'doe-het-zelf': ['zelf', 'doe het zelf', 'diy', 'klussen'],
+  uitleg: ['tips', 'wat is', 'handleiding', 'uitleg', 'stappenplan'],
+  inspiratie: ['ideeën', 'inspiratie', 'voorbeelden', 'voor en na'],
+  bouwmarkten: ['gamma', 'brico', 'hubo', 'praxis'],
+  regels: ['vergunning', 'regels', 'wetgeving'],
+  jobs: ['vacature', 'vacatures', 'jobs', 'opleiding'],
+  lenen: ['lening', 'krediet', 'renovatielening', 'hypotheek'],
+};
 
 /* ---------- Budget (Mohammed: "het dagbudget mag je ook bepalen") ----------
    Zoekwoordplanner 26 sep, België, gemiddeld per maand: totaalrenovatie 880, renovatie woning 210,
@@ -257,6 +288,9 @@ if (ONDERZOEK.length < 400) { console.error(`TOETS DEFECT: ${ONDERZOEK.length} k
 for (const a of ONDERZOEK) for (const [t, ty] of UITSLUITEN) if (blokkeert(t, ty, a.tekst)) fouten.push(`uitsluiting "${t}" blokkeert koper "${a.tekst}" (autocomplete)`);
 const dubbel = UITSLUITEN.map(([t, ty]) => ty + t).filter((x, i, l) => l.indexOf(x) !== i);
 if (dubbel.length) fouten.push(`dubbele uitsluitingen: ${dubbel.join(', ')}`);
+for (const [soort, woorden] of Object.entries(VERPLICHTE_SOORTEN)) for (const w of woorden) {
+  if (!UITSLUITEN.some(([t]) => t === w)) fouten.push(`soort "${soort}": uitsluiting "${w}" ontbreekt`);
+}
 
 const VERBODEN = [
   { re: /zonder (gedoe|stress|zorgen)|ontzorg|zorgeloos/i, waarom: '13 van de 38 concurrenten zeggen dit al' },
