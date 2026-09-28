@@ -4,6 +4,7 @@ import { KGJ_CSS } from './stijl';
 import { KGJ_EXTRA } from './extra';
 import Rekenaar from './Rekenaar';
 import Inspectie from './Inspectie';
+import Werkspoor from './Werkspoor';
 import { Icoon } from './Iconen';
 import { DAKWERKEN, type KgjInhoud, type Review } from './inhoud';
 import logo from '@/assets/home/logo-trim.png';
@@ -382,26 +383,16 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       </section>
 
       {/* Mohammed, 28 sep: "net boven de before and after, uitgevoerd werk, maar enkel
-          abgroep echte fotos". Alleen op pagina's die het invullen (totaalrenovatie). */}
+          abgroep echte fotos", daarna "zonder de namen", "op de manier van de home
+          page", "zo dat het horizontaal doorloopt". Het doorlopende spoor van de
+          homepage (Werkspoor.tsx). Alleen op pagina's die het invullen. */}
       {inhoud.uitgevoerd && inhoud.uitgevoerd.fotos.length > 0 && (
         <section className="kgj-band kgj-uitgevoerd" id="uitgevoerd">
           <div className="kgj-breed">
             <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
               <h2>{inhoud.uitgevoerd.kop}</h2>
             </div>
-            <ul className={`kgj-uitraster kgj-uitraster--${inhoud.uitgevoerd.fotos.length}`}>
-              {inhoud.uitgevoerd.fotos.map((f) => (
-                <li className="kgj-uitfoto kgj-op" key={f.src}>
-                  <figure>
-                    <span className="kgj-uitfoto__beeld">
-                      <img src={f.src} alt={f.alt} loading="lazy" decoding="async"
-                        style={f.pos ? { objectPosition: f.pos } : undefined} />
-                    </span>
-                    {f.label && <figcaption>{f.label}</figcaption>}
-                  </figure>
-                </li>
-              ))}
-            </ul>
+            <Werkspoor fotos={inhoud.uitgevoerd.fotos} label="Uitgevoerde projecten" />
           </div>
         </section>
       )}

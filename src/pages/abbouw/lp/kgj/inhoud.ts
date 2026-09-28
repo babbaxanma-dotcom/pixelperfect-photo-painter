@@ -71,11 +71,11 @@ export type KgjInhoud = {
   /** Voordelen tussen "Waarom" en de diensten: elk voordeel een gekleurde bol met icoon. */
   voordelen?: { kop: string; lijst: { icoon: IcoonNaam; kleur: 'oranje' | 'blauw' | 'groen'; titel: string; tekst: string }[] };
   voorna: { kop: string; onder: string; voor: Foto; na: Foto; label: string };
-  /** Uitgevoerd werk, direct boven de voor/na (totaalrenovatie, 28 sep): alleen echte
-      werffoto's van AB. Optioneel: dakwerken vult het niet in en toont de sectie niet.
-      label: één categoriewoord of een korte afdelingsnaam, of niets. pos: object-position
-      van de uitsnede. De herkomst van elke foto staat in scripts/check-lp-reno.cjs. */
-  uitgevoerd?: { kop: string; fotos: (Foto & { label?: string; pos?: string })[] };
+  /** Uitgevoerd werk, direct boven de voor/na (totaalrenovatie, 28 sep): een doorlopend
+      spoor met alleen echte foto's van AB, zonder namen (Mohammed: "zonder de namen").
+      Optioneel: dakwerken vult het niet in en toont de sectie niet. pos: object-position
+      van de vierkante uitsnede. De herkomst van elke foto staat in scripts/check-lp-reno.cjs. */
+  uitgevoerd?: { kop: string; fotos: (Foto & { pos?: string })[] };
   /* Foto's van uitgevoerd werk. Dit staat op de plek waar de demo reviews
      heeft: AB heeft één Google-review, dus tot er echte klantenstemmen zijn
      draagt het werk zelf het bewijs. */

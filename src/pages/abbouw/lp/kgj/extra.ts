@@ -321,27 +321,44 @@ export const KGJ_EXTRA = `
   .kgjx .kgj-werkraster .kgj-tegel { scroll-snap-align: start; }
 }
 
-/* ── uitgevoerd werk boven de voor/na (totaalrenovatie, 28 sep) ──
-   Een stil raster van echte werffoto's, geen schuivende band. Staande uitsnede
-   4:5, want drie van de vier foto's zijn staand genomen. Drie kolommen op een
-   groot scherm; staan er precies vier foto's, dan vier naast elkaar, anders
-   blijft er één foto alleen op de tweede rij. Op tablet en telefoon twee
-   kolommen. */
-.kgj-uitraster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; list-style: none; margin: 0; padding: 0; }
-.kgj-uitraster--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.kgjx .kgj-uitfoto__beeld { display: block; aspect-ratio: 4 / 5; border-radius: var(--r-vak); overflow: hidden; background: var(--merk-licht); }
-.kgjx .kgj-uitfoto__beeld img { width: 100%; height: 100%; object-fit: cover; }
-.kgjx .kgj-uitfoto figcaption { margin-top: 12px; font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-  font-size: 16px; font-weight: 700; line-height: 1.3; color: var(--kop); }
+/* ── uitgevoerd werk: het doorlopende spoor van de homepage (totaalrenovatie, 28 sep) ──
+   Mohammed: "zonder de namen", "op de manier van de home page", "zo dat het
+   horizontaal doorloopt". Maten letterlijk uit replica/stijl.ts (.pc-werk-*,
+   .pc-bediening): vierkante tegels van 309px, 24px tussenruimte, 14px afronding,
+   in een baan van 974px (--pc-container), dus drie tegels in beeld zoals op de
+   homepage. Onder 1000px een tegel van 78% met een streep van de volgende
+   ernaast: het teken dat er zijwaarts meer staat. position: relative maakt het
+   spoor de offsetParent van de tegels (zie Werkspoor.tsx). */
+.kgj-werkspoor { max-width: 974px; margin: 0 auto; }
+.kgj-werkspoor__spoor { position: relative; display: flex; gap: 24px; overflow-x: auto;
+  scroll-behavior: smooth; scrollbar-width: none; padding-bottom: 4px; }
+.kgj-werkspoor__spoor::-webkit-scrollbar { display: none; }
+.kgjx .kgj-werkspoor__foto { flex: 0 0 309px; margin: 0; }
+.kgjx .kgj-werkspoor__foto img { width: 100%; aspect-ratio: 1 / 1; height: auto; object-fit: cover;
+  border-radius: 14px; display: block; }
+/* De vullijn: vier seconden vol, dan schuift het spoor een tegel op. */
+.kgj-werkspoor__lijn { height: 3px; border-radius: 999px; background: rgba(10, 22, 40, .10);
+  margin-top: 22px; overflow: hidden; }
+.kgj-werkspoor__vul { display: block; height: 100%; width: 100%; border-radius: inherit;
+  background: var(--accent); transform-origin: left center;
+  animation: kgj-werkspoor-vullen 4s linear infinite; }
+.kgj-werkspoor__vul--stil { animation-play-state: paused; }
+@keyframes kgj-werkspoor-vullen { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+/* De pijlen: Bediening uit replica/Onderdelen.tsx, met de maten van .pc-bediening. */
+.kgjx .kgj-werkspoor .pc-bediening { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 28px; }
+.kgjx .kgj-werkspoor .pc-bediening button { width: 44px; height: 44px; border-radius: 50%; background: #fff;
+  display: grid; place-items: center; color: var(--kop); flex: 0 0 auto; border: 0; padding: 0; cursor: pointer;
+  box-shadow: inset 0 0 0 1px #dddddd;
+  transition: background-color .18s ease, color .18s ease, opacity .18s ease; }
+.kgjx .kgj-werkspoor .pc-bediening button:hover { background: var(--accent); color: var(--merk); box-shadow: none; }
+.kgjx .kgj-werkspoor .pc-bediening button:focus-visible { outline: 3px solid var(--merk); outline-offset: 3px; }
 @media (max-width: 1000px) {
-  .kgj-uitraster, .kgj-uitraster--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .kgj-werkspoor__spoor { gap: 12px; padding-right: 40px; }
+  .kgjx .kgj-werkspoor__foto { flex: 0 0 78%; }
+  .kgj-werkspoor__lijn { margin-top: 16px; }
+  .kgjx .kgj-werkspoor .pc-bediening { margin-top: 20px; gap: 12px; }
 }
-@media (max-width: 560px) {
-  .kgj-uitraster, .kgj-uitraster--4 { gap: 12px; }
-  .kgjx .kgj-uitgevoerd .kgj-kopblok { margin-bottom: 26px; }
-  .kgjx .kgj-uitfoto__beeld { border-radius: 10px; }
-  .kgjx .kgj-uitfoto figcaption { margin-top: 8px; font-size: 14.5px; }
-}
+@media (prefers-reduced-motion: reduce) { .kgj-werkspoor__lijn { display: none; } }
 
 /* ── vaste actiebalk op de telefoon ──
    Waar de bezoeker ook staat, de volgende stap blijft in beeld. Alleen op een

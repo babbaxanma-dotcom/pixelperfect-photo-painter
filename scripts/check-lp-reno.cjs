@@ -105,60 +105,68 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   meld(voorOk && naOk, 'voor/na = de uitbouw van de homepage (md5)', `voor ${voorOk} / na ${naOk}`);
 
   /* Uitgevoerd werk (Mohammed, 28 sep: "net boven de before and after, uitgevoerd
-     werk, maar enkel abgroep echte fotos"). Elke foto in de sectie moet uit
-     ECHTE_FOTOS komen, vergeleken op inhoud (md5), niet op naam.
-     Bron van de lijst: de git-geschiedenis. Alle vier kwamen binnen in b314038
-     (28 aug 2026: "Zijn eigen foto's ingevoegd: ... afgewerkt plafond met lichtvoeg,
-     ... kamers met antracieten ramen, twee badkamers ...") en zijn sindsdien niet
-     gewijzigd (git log --follow). Bewust NIET op de lijst:
-       - generated-final/ en alles met fal/flux/ai/gegenereerd in naam of commit;
-       - de reeksen *-p1/p2/p3 in lp-diensten/realisaties: nano /edit in 683e7bc
-         (20 jun), 1200x896 = generatorformaat, ook al staan ze in het spoor van
-         de homepage;
-       - interieur/ en bad/: a8320f0 (3 jun) "78 scene-fotos geregenereerd";
-       - via Artlist bewerkte foto's (badkamer-nieuw, hero-steenstrips);
-       - de hero-beelden van de LP's en alles wat al elders op deze pagina staat. */
-  const ECHTE_FOTOS = [
-    { f: 'lp-diensten/kaart-pleisterwerk.jpg', bron: 'b314038: "afgewerkt plafond met lichtvoeg"' },
-    { f: 'lp-diensten/realisaties/badkamer-p4-b.jpg', bron: 'b314038: "twee badkamers"' },
-    { f: 'lp-diensten/realisaties/totaalrenovatie-p4-a.jpg', bron: 'b314038: "kamers met antracieten ramen"' },
-    { f: 'lp-diensten/realisaties/badkamer-p4-a.jpg', bron: 'b314038: "twee badkamers"' },
-  ];
+     werk, maar enkel abgroep echte fotos", daarna "zonder de namen", "op de manier
+     van de home page", "zo dat het horizontaal doorloopt", "er zijn veel meer
+     fotos" en "kijk gewoon naar de gedownloade foto's ... neem de goede foto's
+     eruit"). Elke foto in het spoor moet uit ECHTE_FOTOS komen, vergeleken op
+     inhoud (md5), niet op naam.
+     Bron: Mohammeds eigen iPhone-foto's in C:/Users/Mohammed/Downloads
+     (IMG_90xx.jpeg, 28 aug en 1 sep), stand gecorrigeerd en op 1179px breed gezet
+     in commit fe90779 (src/assets/lp-diensten/eigen/). Alleen afgewerkt werk.
+     Bewust NIET op de lijst:
+       - IMG_9068: de uitbouw, die de voor/na eronder al toont;
+       - IMG_9064: vloerverwarming in een kale kamer (werf);
+       - de oude kopieën uit b314038 (realisaties/*-p4/p5/p6, kaart-*): grotendeels
+         dezelfde foto's in een andere uitsnede, dus dubbel in het spoor;
+       - badkamer-nieuw: Artlist-bewerking van IMG_9069 (d3dc17f);
+       - generated-final/, de reeksen *-p1/p2/p3 (nano /edit, 683e7bc),
+         interieur/ en bad/ (a8320f0), stockfoto's van andere bedrijven
+         (83e321e, 61094f6, d36d186, 96275c5) en elke andere Artlist-bewerking. */
+  const BRON = (n) => `Downloads/IMG_${n}.jpeg, eigen iPhone-foto Mohammed (fe90779)`;
+  const ECHTE_FOTOS = ['9065', '9028', '9022', '9015', '9069', '9030', '9027', '9025', '9029', '9014']
+    .map((n) => ({ f: `lp-diensten/eigen/IMG_${n}.jpg`, bron: BRON(n) }));
   const assetMd5 = (f) => md5(require('fs').readFileSync(require('path').join(__dirname, '..', 'src/assets', f)));
   const echtMd5 = new Map(ECHTE_FOTOS.map((e) => [assetMd5(e.f), e.f]));
   const uit = await page.evaluate(() => {
     const s = document.querySelector('#uitgevoerd');
     if (!s) return null;
+    const imgs = [...s.querySelectorAll('.kgj-werkspoor__spoor img')];
     return {
       kop: s.querySelector('h2')?.textContent.trim(),
+      /* Alle zichtbare tekst van de sectie: alleen de kop mag er staan. */
+      tekst: s.innerText.replace(/\s+/g, ' ').trim(),
+      figcaptions: s.querySelectorAll('figcaption').length,
       volgende: s.nextElementSibling?.id || '',
-      fotos: [...s.querySelectorAll('img')].map((i) => ({ src: i.getAttribute('src'), alt: i.alt.trim(), lazy: i.getAttribute('loading'), fit: getComputedStyle(i).objectFit })),
-      labels: [...s.querySelectorAll('figcaption')].map((c) => c.textContent.trim()),
-      rest: [...document.querySelectorAll('img')].filter((i) => !s.contains(i)).map((i) => i.getAttribute('src')).filter(Boolean),
+      fotos: imgs.map((i) => ({ src: i.getAttribute('src'), alt: i.alt.trim(), verborgen: !!i.closest('[aria-hidden="true"]'), lazy: i.getAttribute('loading'), fit: getComputedStyle(i).objectFit })),
+      pijlen: [...s.querySelectorAll('.pc-bediening button')].map((b) => b.getAttribute('aria-label')),
+      heroSrc: document.querySelector('.kgj-dia img')?.getAttribute('src') || '',
     };
   });
   meld(!!uit, 'sectie uitgevoerd werk staat op de pagina');
   if (uit) {
     meld(uit.kop === 'Uitgevoerd werk', "kop 'Uitgevoerd werk'", uit.kop);
+    meld(uit.tekst === 'Uitgevoerd werk' && uit.figcaptions === 0, 'geen namen bij de foto\'s: alleen de kop', uit.tekst);
     meld(uit.volgende === 'voorna', 'sectie staat direct boven de voor/na', `volgende sectie: ${uit.volgende}`);
-    meld(uit.fotos.length >= 4, 'minstens 4 foto\'s', String(uit.fotos.length));
+    const eerste = uit.fotos.filter((f) => !f.verborgen);
+    const tweede = uit.fotos.filter((f) => f.verborgen);
+    meld(eerste.length >= 10 && tweede.length === eerste.length && eerste.every((f, i) => f.src === tweede[i].src),
+      'de reeks staat twee keer in het spoor (oneindige lus), de tweede verborgen', `${eerste.length} + ${tweede.length}`);
     const sommen = await Promise.all(uit.fotos.map((f) => haal(f.src)));
     const vreemd = sommen.map((s, i) => (echtMd5.has(s) ? '' : uit.fotos[i].src)).filter(Boolean);
-    meld(vreemd.length === 0, 'elke foto komt uit de lijst met echte AB-foto\'s (md5)',
-      vreemd.length ? `niet goedgekeurd: ${vreemd.join(' ')}` : sommen.map((s) => echtMd5.get(s).split('/').pop()).join(', '));
-    meld(new Set(sommen).size === sommen.length, 'geen foto twee keer in de sectie');
-    const restSommen = new Set(await Promise.all(uit.rest.map((s) => haal(s))));
-    const dubbel = sommen.filter((s) => restSommen.has(s)).map((s) => echtMd5.get(s));
-    meld(dubbel.length === 0, 'geen foto die al elders op de pagina staat (hero, waarom, voor/na, slot)',
-      dubbel.length ? dubbel.join(' ') : `${restSommen.size} andere beelden vergeleken`);
-    /* Positieve controle: de eerste herofoto is geen goedgekeurde werffoto en
-       staat al op de pagina; beide toetsen moeten hem vangen. */
-    const heroSom = await haal(uit.rest.find((s) => /totaalrenovatie-hero/.test(s)) || uit.rest[0]);
-    meld(!echtMd5.has(heroSom) && restSommen.has(heroSom), 'positieve controle: de herofoto wordt gevangen');
-    meld(uit.fotos.every((f) => f.lazy === 'lazy' && f.alt.length >= 20 && f.fit === 'cover'),
-      'elke foto: loading=lazy, beschrijvende alt, object-fit cover');
-    /* Label = één categoriewoord of een korte afdelingsnaam: hooguit drie woorden, geen cijfer. */
-    meld(uit.labels.every((l) => l.split(/\s+/).length <= 3 && !/\d/.test(l)), 'labels kort, zonder cijfer', uit.labels.join(', '));
+    meld(vreemd.length === 0, `elke foto komt uit de lijst met ${ECHTE_FOTOS.length} echte AB-foto's (md5)`,
+      vreemd.length ? `niet goedgekeurd: ${vreemd.join(' ')}` : `${new Set(sommen).size} verschillende`);
+    const eersteSommen = sommen.slice(0, eerste.length);
+    meld(new Set(eersteSommen).size === eersteSommen.length && eersteSommen.length === ECHTE_FOTOS.length,
+      'elke goedgekeurde foto precies één keer per reeks', `${new Set(eersteSommen).size} van ${ECHTE_FOTOS.length}`);
+    /* Positieve controle: de herofoto van deze pagina is niet goedgekeurd en moet gevangen worden. */
+    const heroSom = await haal(uit.heroSrc);
+    meld(!!uit.heroSrc && !echtMd5.has(heroSom), 'positieve controle: de herofoto wordt gevangen', uit.heroSrc);
+    /* De uitbouw staat al in de voor/na eronder: niet nog eens in het spoor. */
+    const uitbouw = assetMd5('lp-diensten/eigen/IMG_9068.jpg');
+    meld(!echtMd5.has(uitbouw) && !sommen.includes(uitbouw), 'de uitbouw (IMG_9068) staat niet in het spoor');
+    meld(eerste.every((f) => f.lazy === 'lazy' && f.alt.length >= 20 && f.fit === 'cover') && tweede.every((f) => f.alt === ''),
+      'elke foto: loading=lazy, object-fit cover, beschrijvende alt (tweede reeks leeg)');
+    meld(uit.pijlen.join('|') === 'Vorige foto|Volgende foto', 'pijlen zoals op de homepage', uit.pijlen.join(', '));
   }
   meld(pg.stukFoto.length === 0, 'geen kapotte foto', pg.stukFoto.join(' '));
   meld(pg.slot === 'Gratis plaatsbezoek', 'slotblok', pg.slot);
@@ -187,20 +195,52 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     meld(buiten.length === 0, `${naam}: elk antwoord van elke vraag binnen de kaart`, buiten.join(' | '));
     await q.close();
   }
-  /* Uitgevoerd werk: een rustig raster. Telefoon twee kolommen; groot scherm drie,
-     of vier naast elkaar als er precies vier foto's zijn. Alle tegels even groot. */
+  /* Uitgevoerd werk: het spoor van de homepage. Het schuift zelf op (positie na
+     6 s is een andere), het stopt onder de muis, de pijl "Volgende" loopt rond
+     zonder muur, en de tegels hebben de maat van de homepage: 309px vierkant met
+     14px afronding op een groot scherm, 78% van de baan op de telefoon. */
   for (const [naam, vp] of [['desktop', { width: 1440, height: 900 }], ['gsm', { width: 390, height: 844, isMobile: true, hasTouch: true }]]) {
     const q = await browser.newPage(); await q.setViewport(vp);
+    await q.evaluateOnNewDocument(() => localStorage.setItem('ab_bouw_consent_v1', JSON.stringify({ analytics: false, marketing: false })));
     await q.goto(URL, { waitUntil: 'networkidle0' }); await wacht(400);
-    const r = await q.evaluate(() => {
-      const t = [...document.querySelectorAll('#uitgevoerd .kgj-uitfoto__beeld')].map((e) => e.getBoundingClientRect());
-      const top = Math.min(...t.map((b) => b.top));
-      return { n: t.length, kolommen: t.filter((b) => Math.abs(b.top - top) < 2).length,
-        maten: [...new Set(t.map((b) => `${Math.round(b.width)}x${Math.round(b.height)}`))], breed: document.documentElement.scrollWidth };
+    await q.evaluate(() => document.querySelector('#uitgevoerd').scrollIntoView({ block: 'center', behavior: 'instant' }));
+    await wacht(500);
+    const stand = () => q.evaluate(() => document.querySelector('#uitgevoerd .kgj-werkspoor__spoor').scrollLeft);
+    const maat = await q.evaluate(() => {
+      const baan = document.querySelector('#uitgevoerd .kgj-werkspoor__spoor').getBoundingClientRect();
+      const t = [...document.querySelectorAll('#uitgevoerd .kgj-werkspoor__foto img')].map((e) => e.getBoundingClientRect());
+      const img = document.querySelector('#uitgevoerd .kgj-werkspoor__foto img');
+      return { b: Math.round(t[0].width), h: Math.round(t[0].height), gelijk: new Set(t.map((r) => `${Math.round(r.width)}x${Math.round(r.height)}`)).size,
+        radius: getComputedStyle(img).borderTopLeftRadius, baan: Math.round(baan.width), breed: document.documentElement.scrollWidth };
     });
-    const verwacht = naam === 'gsm' ? 2 : (r.n === 4 ? 4 : 3);
-    meld(r.kolommen === verwacht && r.maten.length === 1 && r.breed <= vp.width, `${naam}: uitgevoerd werk in ${verwacht} kolommen, tegels even groot`,
-      `${r.kolommen} kolommen, ${r.maten.join(' / ')}, paginabreedte ${r.breed}`);
+    const maatOk = naam === 'desktop' ? maat.b === 309 && maat.h === 309 : Math.abs(maat.b - Math.round((maat.baan - 40) * 0.78)) <= 2 && maat.b === maat.h;
+    meld(maatOk && maat.gelijk === 1 && maat.radius === '14px' && maat.breed <= vp.width, `${naam}: tegels vierkant zoals de homepage, afronding 14px`,
+      `${maat.b}x${maat.h}, baan ${maat.baan}, radius ${maat.radius}, paginabreedte ${maat.breed}`);
+    const t0 = await stand(); await wacht(6000); const t6 = await stand();
+    meld(t6 !== t0, `${naam}: het spoor schuift zelf op`, `scrollLeft ${t0} -> ${t6} na 6 s`);
+    if (naam === 'desktop') {
+      /* Muis op het spoor: na de lopende beweging mag de stand 5 s lang niet veranderen (de klok tikt om de 4 s). */
+      const r = await q.evaluate(() => { const x = document.querySelector('#uitgevoerd .kgj-werkspoor__spoor').getBoundingClientRect(); return { x: x.left + x.width / 2, y: x.top + x.height / 2 }; });
+      await q.mouse.move(r.x, r.y); await wacht(800);
+      const h0 = await stand(); await wacht(5000); const h5 = await stand();
+      const lijnStil = await q.evaluate(() => !!document.querySelector('#uitgevoerd .kgj-werkspoor__vul--stil'));
+      meld(h5 === h0 && lijnStil, 'desktop: het spoor stopt onder de muis', `scrollLeft ${h0} -> ${h5} na 5 s, lijn stil: ${lijnStil}`);
+      /* Pijl "Volgende": één volle reeks verder staat dezelfde foto links, en elke klik verschuift. */
+      const links = () => q.evaluate(() => {
+        const sp = document.querySelector('#uitgevoerd .kgj-werkspoor__spoor'); const l = sp.getBoundingClientRect().left;
+        const f = [...sp.querySelectorAll('img')].map((i) => ({ s: i.getAttribute('src'), d: Math.abs(i.getBoundingClientRect().left - l) })).sort((a, b) => a.d - b.d)[0];
+        return f.s;
+      });
+      const n = await q.evaluate(() => document.querySelectorAll('#uitgevoerd .kgj-werkspoor__spoor img').length / 2);
+      const begin = await links(); let muur = 0;
+      for (let k = 0; k < n; k++) {
+        const voor = await stand();
+        await q.click('#uitgevoerd .pc-bediening button[aria-label="Volgende foto"]'); await wacht(700);
+        const na = await stand(); if (Math.abs(na - voor) < 1) muur += 1;
+      }
+      const einde = await links();
+      meld(muur === 0 && einde === begin, `desktop: ${n} keer "Volgende" = rond, zonder muur`, `muur ${muur}, begin ${begin.split('/').pop()} / einde ${einde.split('/').pop()}`);
+    }
     await q.close();
   }
   /* Dakwerken deelt de componenten maar heeft deze sectie niet. */

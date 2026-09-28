@@ -25,15 +25,22 @@ import keuken from '@/assets/lp-diensten/totaalrenovatie-hero.jpg';
 import doorgang from '@/assets/lp-diensten/totaalrenovatie-what.jpg';
 import uitbouwVoor from '@/assets/lp-diensten/uitbreiding-voor.jpg';
 import uitbouwNa from '@/assets/lp-diensten/uitbreiding-na.jpg';
-/* Uitgevoerd werk: vier eigen foto's van Mohammed, commit b314038 (28 aug 2026,
-   "Zijn eigen foto's ingevoegd: ... afgewerkt plafond met lichtvoeg, ... kamers
-   met antracieten ramen, twee badkamers"). Sindsdien niet gewijzigd. Geen enkele
-   staat al elders op deze pagina. De volledige lijst met bron staat in
-   scripts/check-lp-reno.cjs (ECHTE_FOTOS). */
-import werkPlafond from '@/assets/lp-diensten/kaart-pleisterwerk.jpg';
-import werkBadkamer from '@/assets/lp-diensten/realisaties/badkamer-p4-b.jpg';
-import werkKamer from '@/assets/lp-diensten/realisaties/totaalrenovatie-p4-a.jpg';
-import werkDouche from '@/assets/lp-diensten/realisaties/badkamer-p4-a.jpg';
+/* Uitgevoerd werk: Mohammeds eigen iPhone-foto's van afgewerkt werk, uit zijn
+   Downloads (IMG_90xx.jpeg), stand gecorrigeerd in commit fe90779. Mohammed:
+   "kijk gewoon naar de gedownloade foto's ... neem de goede foto's eruit".
+   IMG_9068 (de uitbouw) staat al in de voor/na eronder en IMG_9064 is een werf;
+   die twee horen niet in het spoor. De lijst met bron staat in
+   scripts/check-lp-reno.cjs (ECHTE_FOTOS); die guard toetst elke foto op md5. */
+import eigen9014 from '@/assets/lp-diensten/eigen/IMG_9014.jpg';
+import eigen9015 from '@/assets/lp-diensten/eigen/IMG_9015.jpg';
+import eigen9022 from '@/assets/lp-diensten/eigen/IMG_9022.jpg';
+import eigen9025 from '@/assets/lp-diensten/eigen/IMG_9025.jpg';
+import eigen9027 from '@/assets/lp-diensten/eigen/IMG_9027.jpg';
+import eigen9028 from '@/assets/lp-diensten/eigen/IMG_9028.jpg';
+import eigen9029 from '@/assets/lp-diensten/eigen/IMG_9029.jpg';
+import eigen9030 from '@/assets/lp-diensten/eigen/IMG_9030.jpg';
+import eigen9065 from '@/assets/lp-diensten/eigen/IMG_9065.jpg';
+import eigen9069 from '@/assets/lp-diensten/eigen/IMG_9069.jpg';
 
 export const TOTAALRENOVATIE: KgjInhoud = {
   /* Zelfde vorm als het tabblad van dakwerken, dat Mohammed koos ("over het vak"). */
@@ -150,16 +157,24 @@ export const TOTAALRENOVATIE: KgjInhoud = {
   },
 
   /* Mohammed, 28 sep: "op de totaalrenovatie pagina wil ik graag net boven de before
-     and after, uitgevoerd werk, maar enkel abgroep echte fotos". Alleen afgewerkte
-     ruimtes: een werf in uitvoering hoort niet in een raster van uitgevoerd werk.
-     Labels: één woord per foto, wat er te zien is. */
+     and after, uitgevoerd werk, maar enkel abgroep echte fotos". Daarna: "zonder de
+     namen", "op de manier van de home page", "zo dat het horizontaal doorloopt",
+     "er zijn veel meer fotos" en "kijk gewoon naar de gedownloade foto's". Tien
+     eigen foto's, om en om gezet: twee badkamers of twee keukens staan nooit naast
+     elkaar, ook niet waar het spoor rondloopt. pos: vierkante uitsnede. */
   uitgevoerd: {
     kop: 'Uitgevoerd werk',
     fotos: [
-      { src: werkPlafond, label: 'Plafonds', alt: 'Plafond met ingewerkte lichtlijnen en spots boven een wand met sierlijsten, door AB Bouw Groep' },
-      { src: werkBadkamer, label: 'Badkamer', pos: '56% center', alt: 'Badkamer met ligbad onder het raam, hangtoilet, douchebak en wastafelmeubel met zwarte kraan, door AB Bouw Groep' },
-      { src: werkKamer, label: 'Interieurwerken', alt: 'Kamer met antraciet raam, witte wanden en grijze vaste vloerbekleding, gezien vanuit de deuropening, door AB Bouw Groep' },
-      { src: werkDouche, label: 'Inloopdouche', alt: 'Inloopdouche met marmerlook-tegels, glazen wand met zwart profiel en een zwevend wastafelmeubel in lichte houtlook, door AB Bouw Groep' },
+      { src: eigen9065, alt: 'Tv-wand in marmerlook tussen houten lamellen, met een zwevend meubel, door AB Bouw Groep' },
+      { src: eigen9028, pos: '60% center', alt: 'Badkamer met ligbad onder het raam, hangtoilet, douchebak en wastafelmeubel met zwarte kraan, door AB Bouw Groep' },
+      { src: eigen9022, alt: 'Open leefruimte met keukeneiland, eettafel en glaspui naar de tuin, door AB Bouw Groep' },
+      { src: eigen9015, alt: 'Plafond met ingewerkte lichtlijnen en spots boven een wand met sierlijsten, door AB Bouw Groep' },
+      { src: eigen9069, pos: '75% center', alt: 'Badkamer met dubbele wastafel op een houten meubel, groene wandtegels en een inloopdouche, door AB Bouw Groep' },
+      { src: eigen9030, alt: 'Wit geschilderde woning met een nieuw tuinpad van grote tegels in wit grind, door AB Bouw Groep' },
+      { src: eigen9027, alt: 'Keukeneiland met twee barkrukken en witte keukenkasten, door AB Bouw Groep' },
+      { src: eigen9025, alt: 'Inloopdouche met marmerlook-tegels, glazen wand met zwart profiel en een zwevend wastafelmeubel in lichte houtlook, door AB Bouw Groep' },
+      { src: eigen9029, pos: '80% center', alt: 'Afgewerkte handelsruimte met grote tegelvloer, spots en een glaspui naar de straat, door AB Bouw Groep' },
+      { src: eigen9014, alt: 'Kamer met antraciet raam, witte wanden en grijze vaste vloerbekleding, gezien vanuit de deuropening, door AB Bouw Groep' },
     ],
   },
 
