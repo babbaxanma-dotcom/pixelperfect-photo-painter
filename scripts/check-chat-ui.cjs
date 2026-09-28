@@ -179,6 +179,16 @@ const laatsteAi = (p) => p.evaluate(() => [...document.querySelectorAll('.kgj-ch
   await klikTekst(r.p, '.kgj-chat__snel button', 'Gratis plaatsbezoek aanvragen'); await wachtAntwoord(r.p);
   meld(/Wat voor woning/.test(await laatsteAi(r.p)), 'totaalrenovatie: aanvraag begint bij de woning', await laatsteAi(r.p));
   await r.p.screenshot({ path: `${UIT}/09-reno-gsm.png` });
+  for (const k of ['Rijwoning', 'Alles (totaalrenovatie)']) { await klikTekst(r.p, '.kgj-chat__keuzes button', k); await wachtAntwoord(r.p); }
+  await r.p.type('.kgj-chat__invoer textarea', 'Kontich'); await r.p.keyboard.press('Enter'); await wachtAntwoord(r.p);
+  for (const k of ['100 tot 150 m²', 'Zo snel mogelijk']) { await klikTekst(r.p, '.kgj-chat__keuzes button', k); await wachtAntwoord(r.p); }
+  const renoKaart = await r.p.evaluate(() => ({ knop: document.querySelector('.kgj-chat__kaart button[type=submit]')?.textContent, velden: document.querySelectorAll('.kgj-chat__kaart dt').length }));
+  meld(renoKaart.velden === 5 && /plaatsbezoek/.test(renoKaart.knop || ''), 'totaalrenovatie: kaart met vijf velden en knop plaatsbezoek', JSON.stringify(renoKaart));
+  await r.p.type('.kgj-chat__kaart input[name=telefoon]', '0400 00 00 00');
+  await r.p.click('.kgj-chat__kaart button[type=submit]'); await wacht(1500);
+  const renoLead = (await r.p.evaluate(() => window.__leads)).find((l) => /leadconnectorhq|msgsvc/.test(l.url));
+  meld(!!renoLead && /lp:totaalrenovatie:inspectie/.test(renoLead.body) && /Kontich/.test(renoLead.body) && r.leads.length === 0,
+    'totaalrenovatie: lead met bron lp:totaalrenovatie:inspectie (tegengehouden, niets op het netwerk)');
   meld(r.fouten.length === 0, 'geen fouten in de console (totaalrenovatie)', r.fouten.join(' | '));
   await r.p.close();
 
