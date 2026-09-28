@@ -32,7 +32,8 @@
     "check:chat": "node scripts/check-chat.mjs",
     "check:chat:ui": "node scripts/check-chat-ui.cjs",
     "check:chat:live": "node scripts/check-chat-live.mjs",
-    "chat:kennis": "node scripts/maak-chat-kennis.mjs"
+    "chat:kennis": "node scripts/maak-chat-kennis.mjs",
+    "chat:echt": "node scripts/chat-echt.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.128.0",

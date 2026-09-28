@@ -1,8 +1,8 @@
 /**
  * Echte toets van de chatassistent tegen het model (kost een paar cent).
  *
- * Draaien, met de sleutel alleen in deze shell (nooit in een bestand):
- *   ANTHROPIC_API_KEY=... node scripts/check-chat-live.mjs
+ * Draaien (sleutel in .env.local, dat in .gitignore staat, of in de shell):
+ *   npm run check:chat:live
  *
  * Meet twee dingen apart:
  *   - het model zelf: noemt het een bedrag? (moet 0 zijn; de bewaking is de
@@ -15,9 +15,11 @@
  */
 import Anthropic from '@anthropic-ai/sdk';
 import { beurt, heeftBedrag } from '../api/chat.js';
+import { laadSleutel } from './chat-sleutel.mjs';
 
-if (!process.env.ANTHROPIC_API_KEY) {
-  console.log('ONGELDIGE METING: geen ANTHROPIC_API_KEY in deze shell. Niets getoetst.');
+/* Sleutel uit de omgeving of uit .env.local (nooit afgedrukt). */
+if (!laadSleutel()) {
+  console.log('ONGELDIGE METING: geen ANTHROPIC_API_KEY (omgeving of .env.local). Niets getoetst.');
   process.exit(2);
 }
 const client = new Anthropic({ timeout: 60000, maxRetries: 2 });
