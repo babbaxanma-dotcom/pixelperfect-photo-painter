@@ -381,6 +381,31 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         </div>
       </section>
 
+      {/* Mohammed, 28 sep: "net boven de before and after, uitgevoerd werk, maar enkel
+          abgroep echte fotos". Alleen op pagina's die het invullen (totaalrenovatie). */}
+      {inhoud.uitgevoerd && inhoud.uitgevoerd.fotos.length > 0 && (
+        <section className="kgj-band kgj-uitgevoerd" id="uitgevoerd">
+          <div className="kgj-breed">
+            <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
+              <h2>{inhoud.uitgevoerd.kop}</h2>
+            </div>
+            <ul className={`kgj-uitraster kgj-uitraster--${inhoud.uitgevoerd.fotos.length}`}>
+              {inhoud.uitgevoerd.fotos.map((f) => (
+                <li className="kgj-uitfoto kgj-op" key={f.src}>
+                  <figure>
+                    <span className="kgj-uitfoto__beeld">
+                      <img src={f.src} alt={f.alt} loading="lazy" decoding="async"
+                        style={f.pos ? { objectPosition: f.pos } : undefined} />
+                    </span>
+                    {f.label && <figcaption>{f.label}</figcaption>}
+                  </figure>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
       <section className="kgj-band kgj-band--grijs kgj-voorna" id="voorna">
         <div className="kgj-breed">
           <div className="kgj-kopblok kgj-kopblok--mid kgj-op">

@@ -321,6 +321,28 @@ export const KGJ_EXTRA = `
   .kgjx .kgj-werkraster .kgj-tegel { scroll-snap-align: start; }
 }
 
+/* ── uitgevoerd werk boven de voor/na (totaalrenovatie, 28 sep) ──
+   Een stil raster van echte werffoto's, geen schuivende band. Staande uitsnede
+   4:5, want drie van de vier foto's zijn staand genomen. Drie kolommen op een
+   groot scherm; staan er precies vier foto's, dan vier naast elkaar, anders
+   blijft er één foto alleen op de tweede rij. Op tablet en telefoon twee
+   kolommen. */
+.kgj-uitraster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; list-style: none; margin: 0; padding: 0; }
+.kgj-uitraster--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.kgjx .kgj-uitfoto__beeld { display: block; aspect-ratio: 4 / 5; border-radius: var(--r-vak); overflow: hidden; background: var(--merk-licht); }
+.kgjx .kgj-uitfoto__beeld img { width: 100%; height: 100%; object-fit: cover; }
+.kgjx .kgj-uitfoto figcaption { margin-top: 12px; font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: 16px; font-weight: 700; line-height: 1.3; color: var(--kop); }
+@media (max-width: 1000px) {
+  .kgj-uitraster, .kgj-uitraster--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+}
+@media (max-width: 560px) {
+  .kgj-uitraster, .kgj-uitraster--4 { gap: 12px; }
+  .kgjx .kgj-uitgevoerd .kgj-kopblok { margin-bottom: 26px; }
+  .kgjx .kgj-uitfoto__beeld { border-radius: 10px; }
+  .kgjx .kgj-uitfoto figcaption { margin-top: 8px; font-size: 14.5px; }
+}
+
 /* ── vaste actiebalk op de telefoon ──
    Waar de bezoeker ook staat, de volgende stap blijft in beeld. Alleen op een
    telefoon: op een groot scherm staat de calculator zelf al rechts naast de

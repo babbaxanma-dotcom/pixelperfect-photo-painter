@@ -14,7 +14,8 @@ const fs = require('node:fs');
 const puppeteer = require('puppeteer-core');
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-const URL = 'http://127.0.0.1:8140/lp/dakwerken';
+/* LP_URL: een andere poort, als 8140 al bezet is door een andere sessie. */
+const URL = process.env.LP_URL || 'http://127.0.0.1:8140/lp/dakwerken';
 const UIT = 'C:/Users/Mohammed/AppData/Local/Temp/claude/lp-gsm';
 const wacht = (ms) => new Promise((k) => setTimeout(k, ms));
 const uitslag = [];
