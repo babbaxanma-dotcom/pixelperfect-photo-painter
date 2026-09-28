@@ -19,7 +19,9 @@ const uitslag = [];
 const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF'}  ${wat}${detail ? '  (' + detail + ')' : ''}`);
 
 /* 1. De kennis loopt gelijk met de site. */
-meld(fs.readFileSync(new URL('../api/_kennis.js', import.meta.url), 'utf8') === bestandInhoud(bouwKennis()),
+/* Regeleinden tellen niet: git zet het bestand bij uitchecken om naar CRLF. */
+const lf = (s) => s.replace(/\r\n/g, '\n');
+meld(lf(fs.readFileSync(new URL('../api/_kennis.js', import.meta.url), 'utf8')) === lf(bestandInhoud(bouwKennis())),
   'api/_kennis.js is bijgewerkt (anders: node scripts/maak-chat-kennis.mjs)');
 const euroRegels = KENNIS.split('\n').filter((r) => /€|\beuro\b/i.test(r));
 meld(euroRegels.length > 0 && euroRegels.every((r) => /VerbouwPremie/.test(r)), 'kennis: bedragen alleen in de premiezin', `${euroRegels.length} regels`);
