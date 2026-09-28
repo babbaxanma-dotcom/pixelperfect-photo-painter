@@ -1,6 +1,8 @@
 /**
- * Totaalrenovatie-campagne AB Bouw (Google Ads), gebouwd op 26 sep 2026. NOG NIET ONLINE:
- * Mohammed: "Alles mag ingesteld worden, maar nog niet online zetten."
+ * Totaalrenovatie-campagne AB Bouw (Google Ads), gebouwd op 26 sep 2026. LIVE sinds 28 sep 2026
+ * (Mohammed: "totaalrenovatie advertentie mag online", "Doe het nu"), campagne-ID 24290242482,
+ * groepen Totaalrenovatie (34) en Prijs renovatie (24), 189 uitsluitingen, 6 sitelinks, 9 highlights,
+ * snippet Services. Deze file blijft de bron: elke wijziging hier eerst, dan in Google Ads.
  *
  * Landingspagina: /lp/totaalrenovatie (vorm van /lp/dakwerken, calculator in de hero).
  *
@@ -49,7 +51,7 @@ const URL = 'https://www.abgroep.be/lp/totaalrenovatie';
 
 /* ---------- Instellingen (door Claude beslist, Mohammed keurt) ---------- */
 const INSTELLINGEN = {
-  status: 'Onderbroken',
+  status: 'Aangezet (28 sep 2026, campagne-ID 24290242482)',
   budgetPerDag: 40,            // zie BUDGET hieronder
   bieding: 'Klikken maximaliseren, zonder max. CPC (Mohammed, 27 sep: "geen cpc maximaal")',
   netwerk: 'Alleen Google Zoeken (geen zoekpartners, geen Display)',
