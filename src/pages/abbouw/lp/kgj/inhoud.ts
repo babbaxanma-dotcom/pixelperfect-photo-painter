@@ -38,7 +38,9 @@ import type { IcoonNaam } from './Iconen';
 
 /** foto: optioneel beeld boven het label; icoon: optioneel icoon links van het label.
     Het label zegt al wat er te zien is, dus geen alt-tekst. */
-export type Keuze = { label: string; uitleg?: string; foto?: string; icoon?: IcoonNaam };
+export type Keuze = { label: string; uitleg?: string; foto?: string; icoon?: IcoonNaam;
+  /** Afvinkvraag: de groep waaronder de keuze als knopje staat (Ruimtes, Werken). */
+  groep?: string };
 /** als: de vraag verschijnt alleen als elke genoemde eerdere vraag één van de
     opgesomde antwoorden kreeg ({ Dak: ['Hellend dak'], Werk: ['Renovatie'] }).
     tip: na een van de antwoorden in `bij` staat `tekst` klein onder de volgende vraag. */
@@ -48,6 +50,9 @@ export type Vraag = {
   tip?: { bij: string[]; tekst: string };
   /** Op een telefoon twee tegels naast elkaar in plaats van één kolom (alleen voor korte labels). */
   raster?: boolean;
+  /** Afvinkvraag: meerdere keuzes, met een knop Volgende. `alles` is het label van
+      het vakje bovenaan dat alle keuzes in één keer aanvinkt. */
+  afvinken?: { alles: string; tip?: { bij: string[]; tekst: string } };
 };
 export type Foto = { src: string; alt: string };
 export type Review = { tekst: string; naam: string; bron: string };
@@ -63,7 +68,7 @@ export type KgjInhoud = {
   /** ondertitel: eigen regel direct onder de kop, boven de subkop. */
   hero: { kop: string; ondertitel?: string; onder: string; bewijs: string[]; dias: Foto[] };
   /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart. */
-  rekenaar: { titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string };
+  rekenaar: { titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string; troeven?: string[] };
   waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto] };
   /** Diensten onder "Waarom": id is het anker voor een sitelink (/lp/dakwerken#nieuw-dak). */
   /** onder: optionele zin onder de kop. Een lege tekst toont alleen icoon en naam (totaalrenovatie, 27 sep). */
@@ -220,6 +225,9 @@ export const DAKWERKEN: KgjInhoud = {
     uitkomstKop: 'Waar mogen we de berekening naartoe verzenden?',
     uitkomstOnder: 'Wij bezorgen u uw richtprijs zo snel mogelijk.',
     knop: 'Ontvang mijn richtprijs',
+    /* Drie zekerheden net boven de knop (Mohammed, 28 sept). Bron: 10 jaar garantie
+       en vaste prijs staan op deze pagina en de bedankpagina. */
+    troeven: ['Gratis en vrijblijvend', 'Vaste prijs, geen verrassingen', '10 jaar garantie'],
   },
 
   waarom: {

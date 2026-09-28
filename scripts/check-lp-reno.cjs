@@ -47,7 +47,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   /* De hele calculator door, met de verwachte vraag op elke stap. */
   const pad = [
     ['Wat voor woning is het?', 'Rijwoning', 'Vraag 1 van 6'],
-    ['Wat wilt u renoveren?', 'De hele woning', 'Vraag 2 van 6'],
+    ['Wat wilt u renoveren?', 'Alles (totaalrenovatie)', 'Vraag 2 van 6'],
     ['Hoe groot is de woning?', '100 tot 150 m²', 'Vraag 3 van 6'],
     ['Hoe oud is de woning?', 'Ouder dan 10 jaar', 'Vraag 4 van 6'],
     ['Hoeveel moet er vernieuwd worden?', 'Alles', 'Vraag 5 van 6'],
@@ -59,6 +59,36 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     meld(nu === v && t === teller, `vraag: ${v}`, `${nu} / ${t}`);
     if (v === 'Hoeveel moet er vernieuwd worden?') tip = await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__tip')?.textContent.trim() || '');
     if (v === 'Wat voor woning is het?') meld((await keuzes()).join('|') === 'Appartement|Rijwoning|Halfopen woning|Open bebouwing', 'vier soorten woning', (await keuzes()).join(', '));
+    if (v === 'Wat wilt u renoveren?') {
+      /* Mohammed, 28 sep: afvinken per ruimte en onderdeel, met "Alles
+         (totaalrenovatie)" dat alles aanvinkt. */
+      const vink = () => page.evaluate(() => ({
+        labels: [...document.querySelectorAll('#rekenaar .kgj-reken__vink')].map((e) => e.textContent.trim()),
+        aan: [...document.querySelectorAll('#rekenaar .kgj-reken__vink')].filter((e) => e.getAttribute('aria-checked') === 'true').map((e) => e.textContent.trim()),
+        uit: document.querySelector('#rekenaar .kgj-reken__verder')?.disabled,
+      }));
+      const klik = (l) => page.evaluate((l) => [...document.querySelectorAll('#rekenaar .kgj-reken__vink')].find((e) => e.textContent.trim() === l).click(), l);
+      const leeg = await vink();
+      meld(leeg.labels.join('|') === 'Alles (totaalrenovatie)|Keuken|Badkamer|Woonkamer|Slaapkamers|Vloeren|Muren en plafonds|Verwarming en sanitair|Isolatie|Ramen en deuren|Elektriciteit|Dak|Gevel',
+        'afvinklijst: Alles + 12 ruimtes en onderdelen', leeg.labels.join(', '));
+      meld(leeg.aan.length === 0 && leeg.uit === true, 'niets aangevinkt: Volgende staat uit');
+      await klik('Alles (totaalrenovatie)'); await wacht(120);
+      const alles = await vink();
+      meld(alles.aan.length === 13 && alles.uit === false, 'Alles vinkt alles aan', `${alles.aan.length} van 13`);
+      const premie = () => page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__tip')?.textContent.trim() || '');
+      meld((await premie()).includes('Mijn VerbouwPremie'), 'Alles (dus ook Isolatie): premiemelding staat er', await premie());
+      await klik('Isolatie'); await wacht(120);
+      meld((await premie()) === '', 'Isolatie uit: geen premiemelding', await premie());
+      await klik('Isolatie'); await wacht(120);
+      await klik('Dak'); await wacht(120);
+      const zonderDak = await vink();
+      meld(zonderDak.aan.length === 11 && !zonderDak.aan.includes('Alles (totaalrenovatie)'), 'één vakje uit: Alles gaat mee uit', `${zonderDak.aan.length} aan`);
+      await klik('Dak'); await wacht(120);
+      meld((await vink()).aan.includes('Alles (totaalrenovatie)'), 'alle vakjes weer aan: Alles staat weer aan');
+      await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__verder').click()); await wacht(400);
+      meld(true, `tik op "${antwoord}" en Volgende`);
+      continue;
+    }
     meld(await tik(antwoord), `tik op "${antwoord}"`);
   }
   meld(tip.includes('6% btw'), 'btw-melding na een woning ouder dan 10 jaar', tip);
@@ -185,12 +215,18 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     for (let stap = 0; stap < 6; stap++) {
       const m = await q.evaluate(() => {
         const kaart = document.querySelector('#rekenaar .kgj-reken').getBoundingClientRect();
-        const k = [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')];
+        const k = [...document.querySelectorAll('#rekenaar .kgj-reken__keuze, #rekenaar .kgj-reken__vink')];
         const fout = k.filter((e) => { const r = e.getBoundingClientRect(); return r.right > kaart.right - 1 || r.left < kaart.left + 1 || e.scrollWidth > e.clientWidth + 1; }).map((e) => e.textContent.trim());
         return { vraag: document.querySelector('#rekenaar .kgj-reken__vraag')?.textContent.trim(), fout };
       });
       if (m.fout.length) buiten.push(`${m.vraag}: ${m.fout.join(', ')}`);
-      await q.evaluate(() => document.querySelector('#rekenaar .kgj-reken__keuze').click()); await wacht(260);
+      /* De afvinkvraag gaat pas door met Volgende. */
+      await q.evaluate(() => {
+        const v = document.querySelector('#rekenaar .kgj-reken__vink');
+        if (v) { v.click(); return; }
+        document.querySelector('#rekenaar .kgj-reken__keuze').click();
+      }); await wacht(120);
+      await q.evaluate(() => document.querySelector('#rekenaar .kgj-reken__verder')?.click()); await wacht(260);
     }
     meld(buiten.length === 0, `${naam}: elk antwoord van elke vraag binnen de kaart`, buiten.join(' | '));
     await q.close();

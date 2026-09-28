@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BadgePercent, Calculator, Clock, Home, ShieldCheck } from 'lucide-react';
+import { ArrowRight, BadgePercent, Calculator, Check, Clock, Home, Lock, Plus, ShieldCheck } from 'lucide-react';
 import { Icoon } from './Iconen';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
@@ -96,6 +96,29 @@ export default function Rekenaar({ inhoud, plek, voor }: {
     setStap((s) => s + 1);
   };
 
+  /* Afvinkvraag (totaalrenovatie, "Wat wilt u renoveren?"): elke tik zet een
+     vakje aan of uit, pas Volgende gaat door. "Alles" vinkt alles aan of alles
+     uit; staat alles aan, dan staat ook "Alles" aan. Per vraag bewaard, zodat
+     Terug de vinkjes laat staan. */
+  const [vinken, setVinken] = useState<Record<string, string[]>>({});
+  const vink = (v: Vraag, label: string | null) => {
+    meldStart();
+    const alle = v.keuzes.map((k) => k.label);
+    setVinken((o) => {
+      const nu = o[v.sleutel] ?? [];
+      const volgend = label === null
+        ? (nu.length === alle.length ? [] : alle)
+        : nu.includes(label) ? nu.filter((l) => l !== label) : alle.filter((l) => l === label || nu.includes(l));
+      return { ...o, [v.sleutel]: volgend };
+    });
+  };
+  const verder = (v: Vraag) => {
+    const gekozen = vinken[v.sleutel] ?? [];
+    if (!gekozen.length || !v.afvinken) return;
+    setAntwoorden((a) => ({ ...a, [v.sleutel]: gekozen.length === v.keuzes.length ? v.afvinken!.alles : gekozen.join(', ') }));
+    setStap((s) => s + 1);
+  };
+
   const verstuur = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (bezig) return;
@@ -154,7 +177,48 @@ export default function Rekenaar({ inhoud, plek, voor }: {
         )}
       </div>
 
-      {!klaar ? (
+      {!klaar && vraag.afvinken ? (() => {
+        const gekozen = vinken[vraag.sleutel] ?? [];
+        const alles = gekozen.length === vraag.keuzes.length;
+        return (
+          <div className="kgj-reken__stap" key={stap}>
+            <p className="kgj-reken__vraag kgj-reken__vraag--vink">{vraag.vraag}</p>
+            <p className="kgj-reken__meer">Meerdere keuzes mogelijk</p>
+            <div className="kgj-reken__vinken" role="group" aria-label={vraag.vraag}>
+              <button type="button" role="checkbox" aria-checked={alles}
+                className={`kgj-reken__vink kgj-reken__vink--alles${alles ? ' is-aan' : ''}`}
+                onClick={() => vink(vraag, null)}>
+                <i className="kgj-reken__vakje" aria-hidden="true"><Check /></i>{vraag.afvinken.alles}
+              </button>
+              {/* Onder Alles: kleine knopjes per groep. Een plus zolang het knopje
+                  uit staat, een vinkje zodra het aan staat (zoals filterknopjes). */}
+              {[...new Set(vraag.keuzes.map((k) => k.groep ?? ''))].map((groep) => (
+                <div className="kgj-reken__groep" key={groep}>
+                  {groep && <p className="kgj-reken__groepnaam">{groep}</p>}
+                  <div className="kgj-reken__chips">
+                    {vraag.keuzes.filter((k) => (k.groep ?? '') === groep).map((k) => {
+                      const aan = gekozen.includes(k.label);
+                      return (
+                        <button type="button" role="checkbox" aria-checked={aan} key={k.label}
+                          className={`kgj-reken__vink kgj-reken__vink--chip${aan ? ' is-aan' : ''}`} onClick={() => vink(vraag, k.label)}>
+                          {aan ? <Check aria-hidden="true" /> : <Plus aria-hidden="true" />}{k.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+            {vraag.afvinken.tip && vraag.afvinken.tip.bij.some((b) => gekozen.includes(b)) && (
+              <p className="kgj-reken__tip"><BadgePercent aria-hidden="true" />{vraag.afvinken.tip.tekst}</p>
+            )}
+            <button type="button" className="kgj-knop kgj-knop--vol kgj-reken__verder" disabled={!gekozen.length}
+              onClick={() => verder(vraag)}>
+              {gekozen.length ? <>Volgende<ArrowRight aria-hidden="true" /></> : 'Vink minstens één onderdeel aan'}
+            </button>
+          </div>
+        );
+      })() : !klaar ? (
         <div className="kgj-reken__stap" key={stap}>
           <p className="kgj-reken__vraag">{vraag.vraag}</p>
           <div className={`kgj-reken__keuzes${vraag.keuzes.length % 2 === 1 ? ' kgj-reken__keuzes--oneven' : ''}${vraag.raster ? ' kgj-reken__keuzes--raster' : ''}`}>
@@ -184,7 +248,24 @@ export default function Rekenaar({ inhoud, plek, voor }: {
         </div>
       ) : (
         <form className="kgj-reken__stap kgj-reken__form" onSubmit={verstuur} noValidate>
-          <p className="kgj-reken__vraag">{inhoud.rekenaar.uitkomstKop}</p>
+          {/* Vervaagde richtprijs bovenaan de laatste stap, met een slot (Mohammed,
+              28 sept; naar zijn voorbeeld, zonder het sterretje en de hoofdletters).
+              Er staan bewust alleen nullen in: de prijs wordt op de pagina nooit
+              onthuld. De klant krijgt een mail, Bardh krijgt de antwoorden en
+              bezorgt de richtprijs; de zin onder de knop zegt dat eerlijk.
+              Dak: vijf cijfers, renovatie: zes, passend bij die bedragen. */}
+          <div className="kgj-reken__richt" aria-hidden="true">
+            <span className="kgj-reken__richt-bedrag">
+              <span className="kgj-reken__richt-euro">€</span>
+              <span className="kgj-reken__richt-cijfers">
+                {inhoud.divisie === 'ab_dakwerken' ? '00.000 – 00.000' : '000.000 – 000.000'}
+              </span>
+            </span>
+            <span className="kgj-reken__slot"><Lock /></span>
+          </div>
+          {/* Direct onder het bedrag, zodat de regel bij de prijs hoort (Mohammed, 28 sept). */}
+          <p className="kgj-reken__richt-onder">Op basis van uw {Object.values(antwoorden).filter(Boolean).length} antwoorden</p>
+          <p className="kgj-reken__vraag kgj-reken__vraag--richt">{inhoud.rekenaar.uitkomstKop}</p>
           {/* Mohammed, 26 sep: "naam en email bovenaan, telefoon onderaan, maar
               telefoon wel verplichting". */}
           <div className="kgj-reken__rij">
@@ -197,21 +278,13 @@ export default function Rekenaar({ inhoud, plek, voor }: {
             <input name="telefoon" type="tel" autoComplete="tel" inputMode="tel" placeholder="04xx xx xx xx"
               aria-required="true" />
           </label>
-          {/* Vervaagde richtprijs net boven de knop (Mohammed, 28 sept). Er staan
-              bewust alleen nullen in: de prijs wordt op de pagina nooit onthuld.
-              De klant krijgt een mail, Bardh krijgt de antwoorden en bezorgt de
-              richtprijs. Het vak wekt nieuwsgierigheid, de zin onder de knop zegt
-              eerlijk hoe de prijs komt. Dak: vijf cijfers, renovatie: zes, passend
-              bij de bedragen van die werken. */}
-          <div className="kgj-reken__richt" aria-hidden="true">
-            <span className="kgj-reken__richt-label">Uw richtprijs</span>
-            <span className="kgj-reken__richt-bedrag">
-              € {inhoud.divisie === 'ab_dakwerken' ? '00.000 – 00.000' : '000.000 – 000.000'}
-            </span>
-            <span className="kgj-reken__richt-onder">op basis van uw {Object.values(antwoorden).filter(Boolean).length} antwoorden</span>
-          </div>
-          <button className="kgj-knop kgj-knop--vol kgj-reken__knop" type="submit" disabled={bezig}>
-            {bezig ? 'Bezig…' : inhoud.rekenaar.knop}
+          {inhoud.rekenaar.troeven && (
+            <ul className="kgj-reken__troeven">
+              {inhoud.rekenaar.troeven.map((t) => <li key={t}><Check aria-hidden="true" />{t}</li>)}
+            </ul>
+          )}
+          <button className="kgj-knop kgj-knop--vol kgj-reken__knop kgj-reken__knop--richt" type="submit" disabled={bezig}>
+            {bezig ? 'Bezig…' : <>{inhoud.rekenaar.knop}<ArrowRight aria-hidden="true" /></>}
           </button>
           {inhoud.rekenaar.uitkomstOnder && <p className="kgj-reken__gerust">{inhoud.rekenaar.uitkomstOnder}</p>}
           {/* AVG: informatie bij het verzamelen (art. 13), klein en rustig (Mohammed, 25 sep:
@@ -220,7 +293,8 @@ export default function Rekenaar({ inhoud, plek, voor }: {
           {fout && <p className="kgj-reken__fout" role="alert">{fout}</p>}
         </form>
       )}
-      <p className="kgj-reken__zeker"><ShieldCheck aria-hidden="true" />{inhoud.rekenaar.zeker}</p>
+      {/* "Gratis en vrijblijvend" staat op de laatste stap al bij de zekerheden. */}
+      {!(klaar && inhoud.rekenaar.troeven) && <p className="kgj-reken__zeker"><ShieldCheck aria-hidden="true" />{inhoud.rekenaar.zeker}</p>}
     </div>
   );
 }

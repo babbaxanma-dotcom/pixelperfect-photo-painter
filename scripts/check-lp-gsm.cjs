@@ -94,10 +94,14 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   meld(tipDaarna.every((t) => !t.includes('btw')), 'btw-melding staat alleen op de stap na het antwoord', tipDaarna.filter(Boolean).map((t) => t.slice(0, 40)).join(' | '));
   const form = await page.evaluate(() => {
     const knop = document.querySelector('#rekenaar .kgj-reken__knop');
-    return { knop: knop && knop.textContent.trim(), onder: !!document.querySelector('#rekenaar form .kgj-reken__gerust') };
+    const zinnen = [...document.querySelectorAll('#rekenaar form .kgj-reken__gerust')].map((e) => e.textContent.trim());
+    return { knop: knop && knop.textContent.trim(), zinnen };
   });
   meld(form.knop === 'Ontvang mijn richtprijs', 'verzendknop calculator', form.knop);
-  meld(!form.onder, "zin 'U hoort de prijs binnen één werkdag' is weg");
+  meld(!form.zinnen.some((z) => /prijs binnen één werkdag/.test(z)), "zin 'U hoort de prijs binnen één werkdag' is weg", form.zinnen.join(' | '));
+  /* 28 sep (Mohammed): de prijs komt niet op de pagina; de klant krijgt een mail en
+     Bardh bezorgt de richtprijs. Onder de knop staat dat eerlijk. */
+  meld(form.zinnen.includes('Wij bezorgen u uw richtprijs zo snel mogelijk.'), 'onder de knop: wij bezorgen de richtprijs', form.zinnen.join(' | '));
   await page.evaluate(() => document.querySelector('#rekenaar').scrollIntoView({ block: 'center' }));
   await wacht(300);
   await page.screenshot({ path: `${UIT}/02-calculator-formulier.png` });

@@ -70,6 +70,42 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-reken__keuze.is-aan { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); background: var(--accent-licht); }
 .kgjx .kgj-reken__keuze:focus-visible { outline: 3px solid var(--merk); outline-offset: 2px; }
 
+/* ── afvinkvraag (totaalrenovatie, vraag 2) ──
+   Twee kolommen vakjes met een echt vinkje links; "Alles" over de volle breedte
+   bovenaan. Aangevinkt = hetzelfde goud als een gekozen antwoord. */
+.kgjx .kgj-reken__vraag--vink { margin-bottom: 4px; }
+.kgjx .kgj-reken__meer { margin: 0 0 14px; font-size: 13.5px; color: var(--zacht); }
+.kgjx .kgj-reken__vinken { display: block; }
+.kgjx .kgj-reken__vink.kgj-reken__vink--alles { width: 100%; min-height: 54px; }
+/* Onder Alles: twee korte groepen ronde knopjes die naast elkaar doorlopen
+   (28 sep: "tis nu allemaal vakjes overwhelming"). */
+.kgjx .kgj-reken__groep { margin-top: 14px; }
+.kgjx .kgj-reken__groepnaam { margin: 0 0 8px; font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 13px;
+  font-weight: 700; color: var(--zacht); }
+.kgjx .kgj-reken__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.kgjx .kgj-reken__vink.kgj-reken__vink--chip { min-height: 40px; padding: 8px 14px 8px 11px; gap: 6px; border-radius: 999px; font-size: 14px; }
+.kgjx .kgj-reken__vink--chip svg { flex: none; width: 16px; height: 16px; stroke-width: 2.4; color: var(--zacht); }
+.kgjx .kgj-reken__vink--chip.is-aan svg { color: var(--merk-diep); stroke-width: 3; }
+.kgjx .kgj-reken__vink { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 10px 12px;
+  text-align: left; cursor: pointer; background: var(--wit); border: 1px solid var(--lijn); border-radius: var(--r);
+  color: var(--inkt); font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 600; font-size: 14.5px;
+  line-height: 1.25; overflow-wrap: break-word; -webkit-tap-highlight-color: transparent;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease; }
+.kgjx .kgj-reken__vink--alles { grid-column: 1 / -1; font-weight: 700; font-size: 15.5px; }
+.kgjx .kgj-reken__vakje { flex: none; display: grid; place-items: center; width: 20px; height: 20px;
+  border: 1.5px solid #b9bdc4; border-radius: 4px; background: var(--wit); color: transparent;
+  transition: background .12s ease, border-color .12s ease; }
+.kgjx .kgj-reken__vakje svg { width: 14px; height: 14px; stroke-width: 3.2; }
+@media (hover: hover) and (pointer: fine) {
+  .kgjx .kgj-reken__vink:hover { border-color: var(--merk); box-shadow: 0 0 0 1px var(--merk); }
+}
+.kgjx .kgj-reken__vink.is-aan { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); background: var(--accent-licht); }
+.kgjx .kgj-reken__vink.is-aan .kgj-reken__vakje { background: var(--accent); border-color: var(--accent); color: var(--merk-diep); }
+.kgjx .kgj-reken__vink:focus-visible { outline: 3px solid var(--merk); outline-offset: 2px; }
+.kgjx .kgj-reken__verder { width: 100%; height: 54px; margin-top: 14px; gap: 10px; border-radius: 12px; font-size: 16px; }
+.kgjx .kgj-reken__verder svg { width: 18px; height: 18px; }
+.kgjx .kgj-reken__verder:disabled { background: #eef0f3; border-color: #eef0f3; color: var(--zacht); cursor: default; box-shadow: none; }
+
 .kgjx .kgj-reken__form label { display: block; margin-bottom: 12px; font-family: "Plus Jakarta Sans", system-ui, sans-serif;
   font-size: 13px; font-weight: 600; color: var(--tekst); }
 /* 16px: kleiner laat Safari op een iPhone inzoomen zodra je het veld aantikt. */
@@ -89,17 +125,39 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-reken__form select:focus { outline: 2px solid var(--merk); outline-offset: 1px; border-color: var(--merk); }
 .kgjx .kgj-reken__form select:invalid, .kgjx .kgj-reken__form select option[value=""] { color: var(--zacht); }
 .kgjx .kgj-reken__knop { width: 100%; margin-top: 4px; }
-/* Vervaagde richtprijs boven de knop: donkerblauwe cijfers, onleesbaar vervaagd,
-   op het lichte goud van de keuzeknoppen. Geen echte cijfers in de bron. */
-.kgjx .kgj-reken__richt { display: flex; flex-direction: column; align-items: center; gap: 4px; margin: 2px 0 14px;
-  padding: 14px 16px 12px; border: 1px solid var(--accent); border-radius: var(--r); background: var(--accent-licht);
-  text-align: center; user-select: none; }
-.kgjx .kgj-reken__richt-label { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 13px; font-weight: 700;
-  color: var(--inkt); }
-.kgjx .kgj-reken__richt-bedrag { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 28px; font-weight: 800;
-  line-height: 1.2; letter-spacing: .5px; color: var(--merk-diep); filter: blur(7px); white-space: nowrap; }
-@media (max-width: 420px) { .kgjx .kgj-reken__richt-bedrag { font-size: 23px; } }
-.kgjx .kgj-reken__richt-onder { font-size: 13px; color: var(--zacht); }
+/* ── laatste stap: vervaagde richtprijs met slot ──
+   Bovenaan de stap, groot en zacht vervaagd. Het slot staat in het midden van
+   het bedrag. Geen echte cijfers in de bron (zie Rekenaar.tsx). */
+.kgjx .kgj-reken__richt { position: relative; display: grid; place-items: center; height: 88px; margin: 0 0 8px;
+  border-radius: 12px; background: radial-gradient(120% 140% at 50% 0%, #16294a 0%, var(--merk) 55%, var(--merk-diep) 100%);
+  overflow: hidden; user-select: none; }
+.kgjx .kgj-reken__richt-bedrag { display: inline-flex; align-items: baseline; gap: 10px;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 28px; font-weight: 800; line-height: 1;
+  letter-spacing: .5px; white-space: nowrap; }
+.kgjx .kgj-reken__richt-euro { color: var(--accent); }
+.kgjx .kgj-reken__richt-cijfers { color: #fff; filter: blur(7px); opacity: .85; }
+.kgjx .kgj-reken__slot { position: absolute; inset: 0; margin: auto; width: 44px; height: 44px; display: grid;
+  place-items: center; border-radius: 999px; background: var(--accent); color: var(--merk-diep);
+  box-shadow: 0 0 0 6px rgba(217, 140, 3, .18), 0 8px 20px -6px rgba(0, 0, 0, .5); }
+.kgjx .kgj-reken__slot svg { width: 20px; height: 20px; stroke-width: 2.4; }
+.kgjx .kgj-reken__vraag--richt { margin-bottom: 16px; text-align: center; }
+.kgjx .kgj-reken__richt-onder { margin: 0 0 18px; text-align: center; font-size: 13.5px; color: var(--zacht); }
+@media (max-width: 420px) { .kgjx .kgj-reken__richt-bedrag { font-size: 22px; gap: 8px; } }
+
+/* ── drie zekerheden net boven de knop ── */
+.kgjx .kgj-reken__troeven { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; margin: 6px 0 14px;
+  padding: 0; list-style: none; }
+.kgjx .kgj-reken__troeven li { display: inline-flex; align-items: center; gap: 6px; font-family: "Plus Jakarta Sans",
+  system-ui, sans-serif; font-size: 13.5px; font-weight: 700; color: var(--inkt); }
+.kgjx .kgj-reken__troeven svg { flex: none; width: 16px; height: 16px; padding: 2px; border-radius: 999px;
+  background: var(--accent); color: var(--merk-diep); stroke-width: 3; }
+
+/* ── verzendknop van de rekenaar: groter, ronder, met pijl ── */
+.kgjx .kgj-reken__knop--richt { height: 58px; gap: 10px; border-radius: 12px; font-size: 17px;
+  box-shadow: 0 12px 24px -12px rgba(184, 117, 2, .8); transition: background .18s ease, transform .18s ease; }
+.kgjx .kgj-reken__knop--richt svg { width: 20px; height: 20px; transition: transform .18s ease; }
+.kgjx .kgj-reken__knop--richt:hover svg { transform: translateX(3px); }
+.kgjx .kgj-reken__knop--richt:active { transform: translateY(1px); }
 .kgjx .kgj-reken__gerust { margin-top: 10px; font-size: 13.5px; color: var(--zacht); }
 .kgjx .kgj-reken__fout { margin-top: 10px; font-size: 14px; color: #a3231a; }
 /* ── postcode of gemeente: voorstellen onder het veld ──

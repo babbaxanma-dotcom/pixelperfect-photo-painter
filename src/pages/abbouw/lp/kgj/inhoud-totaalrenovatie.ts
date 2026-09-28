@@ -83,9 +83,33 @@ export const TOTAALRENOVATIE: KgjInhoud = {
         { label: 'Appartement', icoon: 'appartement' }, { label: 'Rijwoning', icoon: 'rijwoning' },
         { label: 'Halfopen woning', icoon: 'halfopen' }, { label: 'Open bebouwing', icoon: 'vrijstaand' },
       ] },
-      { sleutel: 'Omvang', vraag: 'Wat wilt u renoveren?', keuzes: [
-        { label: 'De hele woning', icoon: 'heelhuis' }, { label: 'Het gelijkvloers', icoon: 'beneden' },
-        { label: 'Een verdieping', icoon: 'boven' }, { label: 'Nog niet beslist', icoon: 'twijfel' },
+      /* Mohammed, 28 sep: "bij vraag 2, wat wilt u renoveren, krijg je afvinksysteem
+         van de kamers etc" en "een afvink erbij van, alles, totaalrenovatie, en alles
+         wordt daarmee aangevinkt". Voorbeeld: de prijsschatting van reno-x.be (per
+         onderdeel inbegrepen of niet), zonder hun "per m²"/"vast bedrag" en hun
+         Engelse termen. Alleen werk dat AB zelf doet, zoals de site het noemt:
+         keuken, badkamer, vloeren, pleister- en schilderwerk, "elektriciteit,
+         sanitair, verwarming en ventilatie", isolatie, schrijnwerk, dak en gevel. */
+      /* Premiemelding zodra Isolatie aangevinkt is, ook via Alles (Mohammed, 28 sep:
+         "omdat u isolatie mee hebt geselecteerd ... tot 50% van de factuur terug ...
+         via mijn verbouwpremie. Wij begeleiden u ... niet zo van die gekke uitleg").
+         "Afhankelijk van uw inkomen" blijft: sinds 1 maart 2026 krijgen categorie 1
+         en 2 niets meer. Daarna: "hier moet ook dat maximum bedrag zijn".
+         Nagelezen op vlaanderen.be (28 sep 2026), aanvragen vanaf 1 maart 2026,
+         eigenaar-bewoner: dak categorie 4 50% (max. 5.750 euro), categorie 3 35%
+         (max. 4.025 euro), 1 en 2 niets; buitenmuur en vloer: "Er is geen premie meer
+         mogelijk" in elke categorie. Daarom noemt de zin alleen dakisolatie. */
+      { sleutel: 'Renoveren', vraag: 'Wat wilt u renoveren?', afvinken: { alles: 'Alles (totaalrenovatie)', tip: { bij: ['Isolatie'],
+        tekst: 'Omdat u isolatie hebt aangevinkt: voor dakisolatie krijgt u via Mijn VerbouwPremie tot 50% van de factuur terug, maximaal € 5.750, afhankelijk van uw inkomen. Wij begeleiden u bij de aanvraag.' } }, keuzes: [
+        /* Mohammed, 28 sep: "tis nu allemaal vakjes overwhelming". Twee korte groepen
+           knopjes onder één groot vakje Alles. */
+        { label: 'Keuken', groep: 'Ruimtes' }, { label: 'Badkamer', groep: 'Ruimtes' },
+        { label: 'Woonkamer', groep: 'Ruimtes' }, { label: 'Slaapkamers', groep: 'Ruimtes' },
+        /* Volgorde zo dat de knopjes op een gsm vier volle regels vullen. */
+        { label: 'Vloeren', groep: 'Werken' }, { label: 'Muren en plafonds', groep: 'Werken' },
+        { label: 'Verwarming en sanitair', groep: 'Werken' }, { label: 'Isolatie', groep: 'Werken' },
+        { label: 'Ramen en deuren', groep: 'Werken' }, { label: 'Elektriciteit', groep: 'Werken' },
+        { label: 'Dak', groep: 'Werken' }, { label: 'Gevel', groep: 'Werken' },
       ] },
       /* 26 sep, uit het plan van Gemini dat Mohammed doorstuurde: de oppervlakte.
          De grenzen komen uit de vorige calculator (appartement 90 m², rijwoning
@@ -113,6 +137,9 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     uitkomstKop: 'Waar mogen we de berekening naartoe verzenden?',
     uitkomstOnder: 'Wij bezorgen u uw richtprijs zo snel mogelijk.',
     knop: 'Ontvang mijn richtprijs',
+    /* Drie zekerheden net boven de knop (Mohammed, 28 sept). Geen 10 jaar garantie:
+       die geldt volgens de site alleen voor dakwerken. */
+    troeven: ['Gratis en vrijblijvend', 'Vaste prijs, geen verrassingen', '1 vast aanspreekpunt'],
   },
 
   waarom: {
