@@ -535,4 +535,109 @@ export const KGJ_EXTRA = `
   .kgj-reken__stap { animation: none; }
   .kgj-venster { animation: none; }
 }
+
+/* ── digitale assistent (ChatAssistent.tsx, 28 sep) ──
+   Knop rechtsonder; op de telefoon een ronde knop die boven de actiebalk
+   schuift. Het venster is op de telefoon schermvullend. Kleuren van de
+   pagina: donkerblauw voor de kop en de bezoeker, goud voor keuzes en de
+   knop die iets doet. */
+.kgjx .kgj-chatknop { position: fixed; right: 24px; bottom: 24px; z-index: 85; display: inline-flex; align-items: center;
+  gap: 8px; height: 54px; padding: 0 20px 0 16px; border: 0; border-radius: 999px; background: var(--merk); color: var(--wit);
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 700; font-size: 15px; cursor: pointer;
+  box-shadow: 0 10px 28px -8px rgba(10, 22, 40, .5); transition: bottom .25s ease, background .18s ease; }
+.kgjx .kgj-chatknop:hover { background: var(--merk-diep); }
+.kgjx .kgj-chatknop svg { width: 22px; height: 22px; }
+@media (max-width: 1000px) {
+  .kgjx .kgj-chatknop.is-hoog { bottom: calc(86px + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 640px) {
+  .kgjx .kgj-chatknop { right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); width: 56px; height: 56px;
+    padding: 0; justify-content: center; }
+  .kgjx .kgj-chatknop span { display: none; }
+}
+
+.kgjx .kgj-chat { position: fixed; right: 24px; bottom: 24px; z-index: 220; display: flex; flex-direction: column;
+  width: 390px; height: min(660px, calc(100dvh - 48px)); overflow: hidden; background: var(--wit); border-radius: 16px;
+  box-shadow: 0 24px 60px -12px rgba(10, 22, 40, .4), 0 0 0 1px rgba(10, 22, 40, .06); }
+@media (max-width: 640px) {
+  .kgjx .kgj-chat { inset: 0; width: auto; height: 100dvh; border-radius: 0; }
+}
+.kgjx .kgj-chat__kop { display: flex; align-items: center; gap: 10px; padding: 14px 12px 14px 16px; background: var(--merk); color: var(--wit); }
+.kgjx .kgj-chat__merk { flex: none; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 999px;
+  background: var(--accent); color: var(--merk-diep); font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 800; font-size: 14px; }
+.kgjx .kgj-chat__naam { margin: 0; font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 700; font-size: 15px; line-height: 1.2; }
+.kgjx .kgj-chat__sub { margin: 2px 0 0; font-size: 12.5px; opacity: .75; }
+.kgjx .kgj-chat__dicht { margin-left: auto; display: grid; place-items: center; width: 38px; height: 38px; border: 0; border-radius: 999px;
+  background: transparent; color: var(--wit); cursor: pointer; }
+.kgjx .kgj-chat__dicht:hover { background: rgba(255, 255, 255, .12); }
+.kgjx .kgj-chat__dicht svg { width: 20px; height: 20px; }
+
+.kgjx .kgj-chat__lijst { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding: 16px 14px;
+  background: #f5f6f8; overscroll-behavior: contain; }
+.kgjx .kgj-chat__beurt { display: flex; flex-direction: column; gap: 8px; }
+.kgjx .kgj-chat__bel { max-width: 86%; padding: 10px 13px; border-radius: 14px; font-size: 14.5px; line-height: 1.45;
+  white-space: pre-wrap; overflow-wrap: break-word; }
+.kgjx .kgj-chat__bel--ai { align-self: flex-start; background: var(--wit); color: var(--inkt); border: 1px solid var(--lijn); border-top-left-radius: 4px; }
+.kgjx .kgj-chat__bel--mens { align-self: flex-end; background: var(--merk); color: var(--wit); border-top-right-radius: 4px; }
+
+.kgjx .kgj-chat__snel { display: grid; gap: 6px; }
+.kgjx .kgj-chat__snel button, .kgjx .kgj-chat__snel a { display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 10px 12px;
+  border: 1px solid var(--lijn); border-radius: 10px; background: var(--wit); color: var(--inkt); text-align: left; text-decoration: none;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 600; font-size: 14.5px; cursor: pointer; }
+.kgjx .kgj-chat__snel svg { flex: none; width: 19px; height: 19px; color: var(--accent-diep); }
+@media (hover: hover) and (pointer: fine) {
+  .kgjx .kgj-chat__snel button:hover, .kgjx .kgj-chat__snel a:hover { border-color: var(--merk); }
+  .kgjx .kgj-chat__vaak button:hover { border-color: var(--merk); }
+  .kgjx .kgj-chat__keuzes button:hover { background: var(--accent); }
+}
+
+.kgjx .kgj-chat__vaak { display: flex; flex-wrap: wrap; gap: 6px; }
+.kgjx .kgj-chat__vaak p { flex-basis: 100%; margin: 4px 0 0; font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: 12.5px; font-weight: 700; color: var(--zacht); }
+.kgjx .kgj-chat__vaak button { padding: 7px 12px; border: 1px solid var(--lijn); border-radius: 999px; background: var(--wit);
+  color: var(--merk); font-size: 13.5px; line-height: 1.3; text-align: left; cursor: pointer; }
+.kgjx .kgj-chat__keuzes { display: flex; flex-wrap: wrap; gap: 6px; }
+.kgjx .kgj-chat__keuzes button { padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 999px; background: var(--accent-licht);
+  color: var(--merk-diep); font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 600; font-size: 14px; cursor: pointer; }
+.kgjx .kgj-chat__actie { align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border: 0;
+  border-radius: 10px; background: var(--accent); color: var(--merk-diep); font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-weight: 700; font-size: 14px; cursor: pointer; }
+.kgjx .kgj-chat__actie:hover { background: var(--accent-diep); }
+.kgjx .kgj-chat__actie svg { width: 17px; height: 17px; }
+
+.kgjx .kgj-chat__typt { display: inline-flex; gap: 4px; padding: 13px 14px; }
+.kgjx .kgj-chat__typt i { width: 7px; height: 7px; border-radius: 999px; background: #a3a8b1; animation: kgj-typt 1s infinite ease-in-out; }
+.kgjx .kgj-chat__typt i:nth-child(2) { animation-delay: .15s; }
+.kgjx .kgj-chat__typt i:nth-child(3) { animation-delay: .3s; }
+@keyframes kgj-typt { 0%, 80%, 100% { opacity: .35; transform: none; } 40% { opacity: 1; transform: translateY(-3px); } }
+
+.kgjx .kgj-chat__kaart { display: grid; gap: 10px; padding: 14px; background: var(--wit); border: 1px solid var(--lijn); border-radius: 14px;
+  box-shadow: 0 6px 18px -10px rgba(10, 22, 40, .25); }
+.kgjx .kgj-chat__kaartkop { margin: 0; font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 700; font-size: 15.5px; color: var(--merk); }
+.kgjx .kgj-chat__velden { margin: 0; border-top: 1px solid var(--lijn); }
+.kgjx .kgj-chat__velden div { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--lijn); }
+.kgjx .kgj-chat__velden dt { font-size: 13px; color: var(--zacht); }
+.kgjx .kgj-chat__velden dd { margin: 0; font-size: 13.5px; font-weight: 600; color: var(--inkt); text-align: right; }
+.kgjx .kgj-chat__kaart label { display: block; font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 13px; font-weight: 600; color: var(--tekst); }
+.kgjx .kgj-chat__kaart input, .kgjx .kgj-chat__kaart textarea { display: block; width: 100%; margin-top: 5px; padding: 10px 12px;
+  border: 1px solid var(--lijn); border-radius: 8px; background: var(--wit); color: var(--inkt); font: 16px/1.4 Lato, system-ui, sans-serif; resize: vertical; }
+.kgjx .kgj-chat__kaart input:focus, .kgjx .kgj-chat__kaart textarea:focus { outline: 2px solid var(--merk); outline-offset: 1px; }
+.kgjx .kgj-chat__rij { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.kgjx .kgj-chat__verstuur { width: 100%; height: 50px; gap: 8px; border-radius: 10px; background: var(--accent); border-color: var(--accent); color: var(--merk-diep); }
+.kgjx .kgj-chat__verstuur:hover { background: var(--accent-diep); border-color: var(--accent-diep); color: var(--merk-diep); }
+.kgjx .kgj-chat__verstuur svg { width: 18px; height: 18px; }
+.kgjx .kgj-chat__klein { margin: 0; font-size: 12.5px; color: var(--zacht); }
+
+.kgjx .kgj-chat__invoer { display: flex; align-items: flex-end; gap: 8px; padding: 10px 12px 6px; background: var(--wit); border-top: 1px solid var(--lijn); }
+.kgjx .kgj-chat__invoer textarea { flex: 1; min-height: 42px; max-height: 120px; padding: 10px 14px; border: 1px solid var(--lijn); border-radius: 21px;
+  font: 16px/1.35 Lato, system-ui, sans-serif; color: var(--inkt); resize: none; }
+.kgjx .kgj-chat__invoer textarea:focus { outline: none; border-color: var(--merk); box-shadow: 0 0 0 1px var(--merk); }
+.kgjx .kgj-chat__invoer button { flex: none; display: grid; place-items: center; width: 42px; height: 42px; border: 0; border-radius: 999px;
+  background: var(--merk); color: var(--wit); cursor: pointer; }
+.kgjx .kgj-chat__invoer button:disabled { opacity: .35; cursor: default; }
+.kgjx .kgj-chat__invoer button svg { width: 20px; height: 20px; }
+.kgjx .kgj-chat__voet { margin: 0; padding: 0 12px calc(8px + env(safe-area-inset-bottom)); background: var(--wit); text-align: center;
+  font-size: 11.5px; color: var(--zacht); }
+.kgjx .kgj-chat__voet a { color: inherit; text-decoration: underline; }
+@media (prefers-reduced-motion: reduce) { .kgjx .kgj-chat__typt i { animation: none; } }
 `;

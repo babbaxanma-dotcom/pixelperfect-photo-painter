@@ -13,7 +13,7 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "check:ads": "node scripts/check-ads-negatives.cjs",
-    "verify": "npm run typecheck && npm run check:ads && npm run check:tekst && npm run check:copy && npm run check:replicacopy && npm run check:diensten && npm run check:fotos && npm run check:bediening && npm run check:doorloop && npm run check:schuif && npm run check:calculator && npm run check:contrast && npm run check:kophero && npm run check:sitemap && npm run check:ankers && npm run test",
+    "verify": "npm run typecheck && npm run check:ads && npm run check:tekst && npm run check:copy && npm run check:replicacopy && npm run check:diensten && npm run check:fotos && npm run check:bediening && npm run check:doorloop && npm run check:schuif && npm run check:calculator && npm run check:contrast && npm run check:kophero && npm run check:sitemap && npm run check:ankers && npm run check:chat && npm run test",
     "check:tekst": "node scripts/check-tekstcorruptie.cjs",
     "check:contrast": "node scripts/check-contrast.mjs",
     "check:copy": "node scripts/check-lp-copy.cjs",
@@ -28,9 +28,14 @@
     "check:sitemap": "node scripts/check-sitemap.cjs",
     "maak:sitemap": "node scripts/maak-sitemap.cjs",
     "check:diensten": "node scripts/check-diensten-copy.cjs",
-    "check:ankers": "node scripts/check-ankers.cjs"
+    "check:ankers": "node scripts/check-ankers.cjs",
+    "check:chat": "node scripts/check-chat.mjs",
+    "check:chat:ui": "node scripts/check-chat-ui.cjs",
+    "check:chat:live": "node scripts/check-chat-live.mjs",
+    "chat:kennis": "node scripts/maak-chat-kennis.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.128.0",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-alert-dialog": "^1.1.14",

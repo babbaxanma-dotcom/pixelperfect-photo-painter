@@ -22,8 +22,13 @@ const BLOKKEN: Blok[] = [
       'het adres van het pand waar de werken plaatsvinden',
       'een beschrijving van uw project en de antwoorden die u in de prijscalculator aanduidt',
       'de berichten die u ons stuurt via het contactformulier, per sms of per telefoon',
+      'de vragen die u stelt aan de digitale assistent op onze website',
       'hoe u bij ons terechtkwam, bijvoorbeeld via welke advertentie of zoekopdracht',
     ],
+    /* 28 sep: api/chat.js logt geen inhoud en slaat niets op; het gesprek staat
+       alleen in de browser van de bezoeker (sessionStorage). ChatAssistent.tsx
+       zet alleen bij een verstuurde aanvraag de velden en het bericht erbij. */
+    na: ['De gesprekken met de digitale assistent bewaren wij zelf niet. Verstuurt u via de chat een aanvraag, dan komt een samenvatting van het gesprek bij uw aanvraag.'],
   },
   {
     n: '3', t: 'Op welke grond wij ze verwerken',
@@ -59,6 +64,7 @@ const BLOKKEN: Blok[] = [
       'Twilio: onze telefonie en sms',
       'Google: meet het bezoek aan de website en de resultaten van onze advertenties, alleen als u daarvoor toestemming gaf',
       'Vercel: host onze website',
+      'Anthropic: maakt de antwoorden van de digitale assistent op onze website, op basis van de vragen die u daar stelt',
     ],
     na: ['Sommige van deze partijen verwerken gegevens buiten de Europese Unie. Dat gebeurt alleen met de waarborgen die de AVG voorschrijft, zoals de standaardcontractbepalingen van de Europese Commissie.'],
   },
