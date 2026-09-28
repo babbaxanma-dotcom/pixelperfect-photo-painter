@@ -96,7 +96,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     const knop = document.querySelector('#rekenaar .kgj-reken__knop');
     return { knop: knop && knop.textContent.trim(), onder: !!document.querySelector('#rekenaar form .kgj-reken__gerust') };
   });
-  meld(form.knop === 'Bereken prijs', 'verzendknop calculator', form.knop);
+  meld(form.knop === 'Ontvang mijn richtprijs', 'verzendknop calculator', form.knop);
   meld(!form.onder, "zin 'U hoort de prijs binnen één werkdag' is weg");
   await page.evaluate(() => document.querySelector('#rekenaar').scrollIntoView({ block: 'center' }));
   await wacht(300);

@@ -111,8 +111,8 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     ],
     gerust: 'Weet u het niet zeker? Een schatting volstaat.',
     uitkomstKop: 'Waar mogen we de berekening naartoe verzenden?',
-    uitkomstOnder: '',
-    knop: 'Bereken prijs',
+    uitkomstOnder: 'Wij bezorgen u uw richtprijs zo snel mogelijk.',
+    knop: 'Ontvang mijn richtprijs',
   },
 
   waarom: {

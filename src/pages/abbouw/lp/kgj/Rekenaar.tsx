@@ -197,6 +197,19 @@ export default function Rekenaar({ inhoud, plek, voor }: {
             <input name="telefoon" type="tel" autoComplete="tel" inputMode="tel" placeholder="04xx xx xx xx"
               aria-required="true" />
           </label>
+          {/* Vervaagde richtprijs net boven de knop (Mohammed, 28 sept). Er staan
+              bewust alleen nullen in: de prijs wordt op de pagina nooit onthuld.
+              De klant krijgt een mail, Bardh krijgt de antwoorden en bezorgt de
+              richtprijs. Het vak wekt nieuwsgierigheid, de zin onder de knop zegt
+              eerlijk hoe de prijs komt. Dak: vijf cijfers, renovatie: zes, passend
+              bij de bedragen van die werken. */}
+          <div className="kgj-reken__richt" aria-hidden="true">
+            <span className="kgj-reken__richt-label">Uw richtprijs</span>
+            <span className="kgj-reken__richt-bedrag">
+              € {inhoud.divisie === 'ab_dakwerken' ? '00.000 – 00.000' : '000.000 – 000.000'}
+            </span>
+            <span className="kgj-reken__richt-onder">op basis van uw {Object.values(antwoorden).filter(Boolean).length} antwoorden</span>
+          </div>
           <button className="kgj-knop kgj-knop--vol kgj-reken__knop" type="submit" disabled={bezig}>
             {bezig ? 'Bezig…' : inhoud.rekenaar.knop}
           </button>

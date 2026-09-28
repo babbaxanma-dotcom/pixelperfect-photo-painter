@@ -218,8 +218,8 @@ export const DAKWERKEN: KgjInhoud = {
     gerust: 'Weet u het niet zeker? Een schatting volstaat.',
     /* Mohammed, 26 sep: "waar mogen we de berekening naartoe verzenden?", ook op dakwerken. */
     uitkomstKop: 'Waar mogen we de berekening naartoe verzenden?',
-    uitkomstOnder: '',
-    knop: 'Bereken prijs',
+    uitkomstOnder: 'Wij bezorgen u uw richtprijs zo snel mogelijk.',
+    knop: 'Ontvang mijn richtprijs',
   },
 
   waarom: {

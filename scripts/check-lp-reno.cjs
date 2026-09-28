@@ -63,7 +63,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   }
   meld(tip.includes('6% btw'), 'btw-melding na een woning ouder dan 10 jaar', tip);
   const form = await page.evaluate(() => ({ kop: document.querySelector('#rekenaar .kgj-reken__vraag')?.textContent.trim(), knop: document.querySelector('#rekenaar .kgj-reken__knop')?.textContent.trim(), telVerplicht: document.querySelector('#rekenaar input[name=telefoon]')?.getAttribute('aria-required') }));
-  meld(form.kop === 'Waar mogen we de berekening naartoe verzenden?' && form.knop === 'Bereken prijs', 'formulier na de laatste vraag', `${form.kop} / ${form.knop}`);
+  meld(form.kop === 'Waar mogen we de berekening naartoe verzenden?' && form.knop === 'Ontvang mijn richtprijs', 'formulier na de laatste vraag', `${form.kop} / ${form.knop}`);
   meld(form.telVerplicht === 'true', 'alleen telefoon verplicht');
 
   /* Tikfeedback: tijdens het drukken kleurt het antwoord op. */

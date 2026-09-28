@@ -89,6 +89,17 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-reken__form select:focus { outline: 2px solid var(--merk); outline-offset: 1px; border-color: var(--merk); }
 .kgjx .kgj-reken__form select:invalid, .kgjx .kgj-reken__form select option[value=""] { color: var(--zacht); }
 .kgjx .kgj-reken__knop { width: 100%; margin-top: 4px; }
+/* Vervaagde richtprijs boven de knop: donkerblauwe cijfers, onleesbaar vervaagd,
+   op het lichte goud van de keuzeknoppen. Geen echte cijfers in de bron. */
+.kgjx .kgj-reken__richt { display: flex; flex-direction: column; align-items: center; gap: 4px; margin: 2px 0 14px;
+  padding: 14px 16px 12px; border: 1px solid var(--accent); border-radius: var(--r); background: var(--accent-licht);
+  text-align: center; user-select: none; }
+.kgjx .kgj-reken__richt-label { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 13px; font-weight: 700;
+  color: var(--inkt); }
+.kgjx .kgj-reken__richt-bedrag { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 28px; font-weight: 800;
+  line-height: 1.2; letter-spacing: .5px; color: var(--merk-diep); filter: blur(7px); white-space: nowrap; }
+@media (max-width: 420px) { .kgjx .kgj-reken__richt-bedrag { font-size: 23px; } }
+.kgjx .kgj-reken__richt-onder { font-size: 13px; color: var(--zacht); }
 .kgjx .kgj-reken__gerust { margin-top: 10px; font-size: 13.5px; color: var(--zacht); }
 .kgjx .kgj-reken__fout { margin-top: 10px; font-size: 14px; color: #a3231a; }
 /* ── postcode of gemeente: voorstellen onder het veld ──
