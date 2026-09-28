@@ -38,6 +38,8 @@ const LpTotaalrenovatie = lazy(() => import("./pages/abbouw/lp/kgj/LpTotaalrenov
 const Bedankt = lazy(() => import("./pages/abbouw/Bedankt"));
 const Afspraak = lazy(() => import("./pages/abbouw/Afspraak"));
 const Status = lazy(() => import("./pages/abbouw/Status"));
+const Beoordeling = lazy(() => import("./pages/abbouw/Beoordeling"));
+const Review = lazy(() => import("./pages/abbouw/Review"));
 const CalculatorDak = lazy(() => import("./pages/abbouw/calculator/CalculatorDak"));
 const CalculatorGevel = lazy(() => import("./pages/abbouw/calculator/CalculatorGevel"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
@@ -131,6 +133,8 @@ const App = () => {
           <Route path="/afspraak" element={<Afspraak />} />
           <Route path="/dakinspectie" element={<Afspraak soort="dakinspectie" />} />
           <Route path="/status/:tel/:stap?" element={<Status />} />
+          <Route path="/beoordeling/:tel/:score" element={<Beoordeling />} />
+          <Route path="/review" element={<Review />} />
           <Route path="/calculator/dakwerken" element={<CalculatorDak />} />
           <Route path="/calculator/gevel" element={<CalculatorGevel />} />
           <Route path="*" element={<NotFound />} />

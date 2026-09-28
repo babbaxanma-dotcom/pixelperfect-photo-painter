@@ -34,6 +34,7 @@ const NIET_IN_SITEMAP = new Set([
   '/bedankt',          // heeft alleen zin na een aanvraag
   '/afspraak',         // alleen voor wie de link uit een sms krijgt
   '/dakinspectie',     // idem, voor de dakinspectie-aanvraag
+  '/review',           // doorverwijzing naar Google, alleen voor de review-sms
   '/lp/totaalrenovatie',    // duplicaat van /totaalrenovatie
   '/lp/badkamerrenovatie',  // duplicaat van /badkamerrenovatie
   '/lp/dakwerken',          // advertentiepagina; concurreert anders met /dakwerken
