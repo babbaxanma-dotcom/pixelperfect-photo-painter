@@ -238,6 +238,15 @@ BRON['11 Echte zoektermen en oude lijst (23 sep)'] = [
   ['vandersanden', 'w', 'steenmerk, oude lijst'],
   ['sandwich', 'w', 'bijgebouw of loods, oude lijst'],
 ];
+/* 28 sep: soorten niet-koper die in de lijst ontbraken (zelfde toets als totaalrenovatie,
+   feedback_uitsluitingen_per_soort). Niet: 'vergunning', 'lening', 'krediet', want KOPER bevat
+   "nieuw dak plaatsen vergunning" en "dak vernieuwen lening". */
+BRON['12 Uitleg en inspiratie (28 sep)'] = [
+  ['klussen', 'w', 'doe-het-zelver'],
+  ['tips', 'w', 'infozoeker'], ['wat is', 'w', 'infozoeker'], ['regels', 'w', 'infozoeker'], ['wetgeving', 'w', 'infozoeker'],
+  ['ideeën', 'w', 'inspiratie'], ['ideeen', 'w', 'inspiratie'], ['inspiratie', 'w', 'inspiratie'],
+  ['voorbeelden', 'w', 'inspiratie'], ['voorbeeld', 'w', 'inspiratie'], ['voor en na', 'w', 'inspiratie'],
+];
 
 const tok = (s) => s.toLowerCase().replace(/[’']/g, "'").split(/\s+/).filter(Boolean);
 function blokkeert(neg, type, query) {
