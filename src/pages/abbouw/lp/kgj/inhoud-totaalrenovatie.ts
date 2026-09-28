@@ -85,7 +85,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
       ] },
       { sleutel: 'Omvang', vraag: 'Wat wilt u renoveren?', keuzes: [
         { label: 'De hele woning', icoon: 'heelhuis' }, { label: 'Het gelijkvloers', icoon: 'beneden' },
-        { label: 'De verdieping', icoon: 'boven' }, { label: 'Nog niet beslist', icoon: 'twijfel' },
+        { label: 'Een verdieping', icoon: 'boven' }, { label: 'Nog niet beslist', icoon: 'twijfel' },
       ] },
       /* 26 sep, uit het plan van Gemini dat Mohammed doorstuurde: de oppervlakte.
          De grenzen komen uit de vorige calculator (appartement 90 m², rijwoning
@@ -228,7 +228,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
        Drie keuzelijsten, geen enkele verplicht. Het budget is voor AB de sterkste
        filter op grote projecten (Bardh: grote werken). */
     extra: [
-      { naam: 'omvang', label: 'Wat wilt u renoveren?', opties: ['De hele woning', 'Het gelijkvloers', 'De verdieping', 'Enkele ruimtes', 'Nog niet beslist'] },
+      { naam: 'omvang', label: 'Wat wilt u renoveren?', opties: ['De hele woning', 'Het gelijkvloers', 'Een verdieping', 'Enkele ruimtes', 'Nog niet beslist'] },
       { naam: 'start', label: 'Wanneer wilt u starten?', opties: ['Zo snel mogelijk', 'Binnen drie maanden', 'Later dit jaar', 'Ik verken nog'] },
       { naam: 'budget', label: 'Uw budget', opties: ['Tot € 50.000', '€ 50.000 tot € 100.000', '€ 100.000 tot € 200.000', 'Meer dan € 200.000', 'Weet ik nog niet'] },
     ],
