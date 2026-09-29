@@ -177,8 +177,8 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     };
   });
   const VRAGEN = ['Kan ik in huis blijven wonen tijdens de werken?', 'Hoe zit het met meerwerk?', 'Moet ik alles in één keer doen?',
-    'Hebben jullie een eigen architect?', 'Regelen jullie de vergunning?', 'Maken jullie de kasten zelf?'];
-  meld(!!faq && faq.kop === 'Veelgestelde vragen' && faq.vragen.join('|') === VRAGEN.join('|'), 'veelgestelde vragen: zes vragen in vaste volgorde', faq && faq.vragen.join(' | '));
+    'Hebben jullie een eigen architect?', 'Regelen jullie de vergunning?'];
+  meld(!!faq && faq.kop === 'Veelgestelde vragen' && faq.vragen.join('|') === VRAGEN.join('|'), 'veelgestelde vragen: vijf vragen in vaste volgorde', faq && faq.vragen.join(' | '));
   const eigen = faq ? faq.antwoorden.filter((a) => divisies.includes(`a: '${a.replace(/'/g, "\\'")}'`)).length : 0;
   meld(eigen === VRAGEN.length, 'elk antwoord staat letterlijk op een afdelingspagina van AB (_divisies.ts)', `${eigen} van ${VRAGEN.length}`);
   meld(!!faq && faq.vorige === 'voorna' && faq.volgende === 'contact', 'vragen staan tussen de voor/na en het slotblok', faq && `${faq.vorige} > faq > ${faq.volgende}`);

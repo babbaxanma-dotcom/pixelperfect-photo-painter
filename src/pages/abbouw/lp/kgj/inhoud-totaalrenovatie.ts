@@ -265,7 +265,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
      ooms woonrealisaties en verelst en zedreno". Ooms en Verelst hebben allebei
      een blok veelgestelde vragen; de vragen hieronder zijn de angsten van wie een
      hele woning laat renoveren (wonen tijdens de werken, meerwerk, faseren,
-     architect, vergunning, eigen vakmensen), met AB's eigen antwoorden. */
+     architect, vergunning), met AB's eigen antwoorden. */
   faq: {
     kop: 'Veelgestelde vragen',
     lijst: [
@@ -274,7 +274,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
       ...vraag('ecologisch', 'Moet ik alles in één keer doen?'),
       ...vraag('construct', 'Hebben jullie een eigen architect?'),
       ...vraag('construct', 'Regelen jullie de vergunning?'),
-      ...vraag('interieur', 'Maken jullie de kasten zelf?'),
+      /* 29 sep: "Maken jullie de kasten zelf?" eruit (Mohammed: "onnodig puntje"). */
     ],
   },
 
