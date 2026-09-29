@@ -159,6 +159,31 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   const s3 = await schuifStand();
   meld(s3.tel === '1 / 2' && s3.voor === s1.voor, 'voor/na: na het laatste paar weer het eerste (rond)', s3.tel);
 
+  /* 29 sep (Mohammed: "meer goeie puntjes? dat de particulier wilt zien", "kijk
+     ooms ... verelst ... zedreno"): veelgestelde vragen met AB's eigen antwoorden
+     uit _divisies.ts, tussen de voor/na en het slotblok. */
+  const divisies = require('fs').readFileSync(require('path').join(__dirname, '..', 'src/pages/abbouw/_divisies.ts'), 'utf8').replace(/\r\n/g, '\n');
+  const faq = await page.evaluate(() => {
+    const s = document.querySelector('#faq');
+    if (!s) return null;
+    const items = [...s.querySelectorAll('details')];
+    const eerste = items[0]; eerste.querySelector('summary').click();
+    return {
+      kop: s.querySelector('h2')?.textContent.trim(),
+      vragen: items.map((d) => d.querySelector('summary').textContent.trim()),
+      antwoorden: items.map((d) => d.querySelector('p').textContent.trim()),
+      open: eerste.open,
+      vorige: s.previousElementSibling?.id, volgende: s.nextElementSibling?.id,
+    };
+  });
+  const VRAGEN = ['Kan ik in huis blijven wonen tijdens de werken?', 'Hoe zit het met meerwerk?', 'Moet ik alles in één keer doen?',
+    'Hebben jullie een eigen architect?', 'Regelen jullie de vergunning?', 'Maken jullie de kasten zelf?'];
+  meld(!!faq && faq.kop === 'Veelgestelde vragen' && faq.vragen.join('|') === VRAGEN.join('|'), 'veelgestelde vragen: zes vragen in vaste volgorde', faq && faq.vragen.join(' | '));
+  const eigen = faq ? faq.antwoorden.filter((a) => divisies.includes(`a: '${a.replace(/'/g, "\\'")}'`)).length : 0;
+  meld(eigen === VRAGEN.length, 'elk antwoord staat letterlijk op een afdelingspagina van AB (_divisies.ts)', `${eigen} van ${VRAGEN.length}`);
+  meld(!!faq && faq.vorige === 'voorna' && faq.volgende === 'contact', 'vragen staan tussen de voor/na en het slotblok', faq && `${faq.vorige} > faq > ${faq.volgende}`);
+  meld(!!faq && faq.open, 'een vraag klapt open bij een klik');
+
   /* Uitgevoerd werk (Mohammed, 28 sep: "net boven de before and after, uitgevoerd
      werk, maar enkel abgroep echte fotos", daarna "zonder de namen", "op de manier
      van de home page", "zo dat het horizontaal doorloopt", "er zijn veel meer

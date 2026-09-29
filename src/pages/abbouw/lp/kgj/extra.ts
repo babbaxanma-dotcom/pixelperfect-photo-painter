@@ -538,6 +538,25 @@ export const KGJ_EXTRA = `
   .kgj-venster { animation: none; }
 }
 
+/* ── veelgestelde vragen (totaalrenovatie, 29 sep) ──
+   Eén kolom, gecentreerd; elke vraag klapt open (details/summary, werkt zonder
+   JavaScript en met het toetsenbord). Plus wordt een streep als hij open staat. */
+.kgjx .kgj-faq__lijst { max-width: 820px; margin: 0 auto; border-top: 1px solid var(--lijn); }
+.kgjx .kgj-faq__item { border-bottom: 1px solid var(--lijn); }
+.kgjx .kgj-faq__item summary { position: relative; display: block; padding: 20px 48px 20px 0; cursor: pointer; list-style: none;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 700; font-size: 17px; line-height: 1.35; color: var(--kop); }
+.kgjx .kgj-faq__item summary::-webkit-details-marker { display: none; }
+.kgjx .kgj-faq__item summary::before, .kgjx .kgj-faq__item summary::after { content: ""; position: absolute; right: 8px; top: 50%;
+  width: 16px; height: 2px; margin-top: -1px; background: var(--accent-diep); transition: transform .2s ease; }
+.kgjx .kgj-faq__item summary::after { transform: rotate(90deg); }
+.kgjx .kgj-faq__item[open] summary::after { transform: rotate(0deg); }
+.kgjx .kgj-faq__item summary:hover { color: var(--merk); }
+.kgjx .kgj-faq__item summary:focus-visible { outline: 3px solid var(--merk); outline-offset: 4px; }
+.kgjx .kgj-faq__item p { margin: -6px 0 20px; max-width: 700px; font-size: 16px; line-height: 1.6; color: var(--tekst); }
+@media (max-width: 640px) {
+  .kgjx .kgj-faq__item summary { padding: 18px 40px 18px 0; font-size: 16px; }
+}
+
 /* ── digitale assistent (ChatAssistent.tsx, 28 sep) ──
    Knop rechtsonder; op de telefoon een ronde knop die boven de actiebalk
    schuift. Het venster is op de telefoon schermvullend. Kleuren van de

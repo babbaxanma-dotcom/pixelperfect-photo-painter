@@ -16,6 +16,15 @@
  * uitbouw van de homepage (uitbreiding-voor/na) in de voor/na-schuif.
  */
 import type { KgjInhoud } from './inhoud';
+import { DIVISIES } from '../../_divisies';
+
+/* Veelgestelde vragen: de antwoorden die AB al op zijn afdelingspagina's geeft,
+   rechtstreeks uit _divisies.ts (één bron, niets nieuw beweerd). Een vraag die
+   daar verdwijnt, valt hier stil weg; check-lp-reno telt ze. */
+const vraag = (afdeling: string, v: string) => {
+  const f = DIVISIES[afdeling]?.faqs.find((x) => x.q === v);
+  return f ? [{ v: f.q, a: f.a }] : [];
+};
 
 import openKeuken from '@/assets/lp-diensten/realisaties/totaalrenovatie-p5-a.jpg';
 import keukeneiland from '@/assets/lp-diensten/realisaties/totaalrenovatie-p6-a.jpg';
@@ -251,6 +260,23 @@ export const TOTAALRENOVATIE: KgjInhoud = {
   },
 
   werk: { kop: '', onder: '', fotos: [] },
+
+  /* 29 sep, Mohammed: "meer goeie puntjes? dat de particulier wilt zien", "kijk
+     ooms woonrealisaties en verelst en zedreno". Ooms en Verelst hebben allebei
+     een blok veelgestelde vragen; de vragen hieronder zijn de angsten van wie een
+     hele woning laat renoveren (wonen tijdens de werken, meerwerk, faseren,
+     architect, vergunning, eigen vakmensen), met AB's eigen antwoorden. */
+  faq: {
+    kop: 'Veelgestelde vragen',
+    lijst: [
+      ...vraag('interieur', 'Kan ik in huis blijven wonen tijdens de werken?'),
+      ...vraag('construct', 'Hoe zit het met meerwerk?'),
+      ...vraag('ecologisch', 'Moet ik alles in één keer doen?'),
+      ...vraag('construct', 'Hebben jullie een eigen architect?'),
+      ...vraag('construct', 'Regelen jullie de vergunning?'),
+      ...vraag('interieur', 'Maken jullie de kasten zelf?'),
+    ],
+  },
 
   /* Mohammed: "wat klanten schrijven, weg". Een lege lijst toont de sectie niet. */
   reviews: { kop: '', beeld: { src: doorgang, alt: '' }, lijst: [] },

@@ -483,6 +483,26 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         </section>
       )}
 
+      {/* 29 sep: veelgestelde vragen vlak voor het slotblok (zoals Ooms en Verelst),
+          met AB's eigen antwoorden uit _divisies.ts. Alleen waar inhoud.faq bestaat. */}
+      {inhoud.faq && inhoud.faq.lijst.length > 0 && (
+        <section className="kgj-band kgj-faq" id="faq">
+          <div className="kgj-breed kgj-faq__in">
+            <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
+              <h2>{inhoud.faq.kop}</h2>
+            </div>
+            <div className="kgj-faq__lijst kgj-op">
+              {inhoud.faq.lijst.map((f) => (
+                <details className="kgj-faq__item" key={f.v}>
+                  <summary>{f.v}</summary>
+                  <p>{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       <section className="kgj-cta kgj-cta--lp" id="contact">
         <div className="kgj-cta__foto"><img src={inhoud.cta.foto.src} alt={inhoud.cta.foto.alt} loading="lazy" /></div>
         <div className="kgj-breed kgj-cta__in">
