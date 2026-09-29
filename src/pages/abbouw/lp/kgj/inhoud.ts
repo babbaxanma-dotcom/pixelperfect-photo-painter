@@ -19,6 +19,7 @@ import type { Divisie } from '@/lib/leads';
 
 import panRood from '@/assets/dak/lp-dak-panrood.jpg';
 import antraciet from '@/assets/dak/lp-real-det-2.jpg';
+import heroNok from '@/assets/dak/hero-antraciet-nok.jpg';
 import dakwerker from '@/assets/dak/dakwerker-pannen.jpg';
 import pannenDichtbij from '@/assets/dak/pannen-dichtbij.jpg';
 import antraciet3 from '@/assets/dak/lp-real-det-3.jpg';
@@ -66,7 +67,8 @@ export type KgjInhoud = {
   bronLead: string;
   bedanktSlug: string;
   /** ondertitel: eigen regel direct onder de kop, boven de subkop. */
-  hero: { kop: string; ondertitel?: string; onder: string; bewijs: string[]; dias: Foto[] };
+  /** dias.pos: uitsnede in de brede hero (object-position), bijvoorbeeld om een nok in beeld te houden. */
+  hero: { kop: string; ondertitel?: string; onder: string; bewijs: string[]; dias: (Foto & { pos?: string })[] };
   /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart. */
   rekenaar: { titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string; troeven?: string[] };
   waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto] };
@@ -133,7 +135,11 @@ export const DAKWERKEN: KgjInhoud = {
        toezegging overtuigt boven de vouw. */
     bewijs: ['Gratis dakinspectie en offerte', 'Volledige premiebegeleiding (Mijn VerbouwPremie)', '6% btw vanaf tien jaar oud', '10 jaar garantie'],
     dias: [
-      { src: antraciet, alt: 'Halfopen woning in rode baksteen met een nieuw antraciet pannendak' },
+      /* 29 sep, Mohammed: de eerste foto "vind ik maar niks", vervangen door een
+         echte foto uit de afbeeldingen van de Google Ads-campagne Dakrenovatie
+         (pimgad 10985073941082978780, 1200x1200): "deze is mooi ... zet juist".
+         pos 15%: in de brede hero blijft de nok met de lucht erboven in beeld. */
+      { src: heroNok, pos: '50% 15%', alt: 'Nieuw antraciet pannendak met de nok tegen een blauwe lucht' },
       { src: panRood, alt: 'Rijwoning met een nieuw rood pannendak en een dakvenster' },
       /* Het platte dak staat niet in de diashow: van dichtbij is het een zwart
          vlak van rand tot rand, en onder de donkere laag leek de hero dan leeg.

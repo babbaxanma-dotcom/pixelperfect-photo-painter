@@ -270,7 +270,8 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         <div className="kgj-hero__foto">
           {inhoud.hero.dias.map((d, i) => (
             <figure className={`kgj-dia${i === dia ? ' is-aan' : ''}`} key={d.src}>
-              <img src={d.src} alt={d.alt} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+              <img src={d.src} alt={d.alt} loading={i === 0 ? 'eager' : 'lazy'} decoding="async"
+                style={d.pos ? { objectPosition: d.pos } : undefined} />
             </figure>
           ))}
         </div>
