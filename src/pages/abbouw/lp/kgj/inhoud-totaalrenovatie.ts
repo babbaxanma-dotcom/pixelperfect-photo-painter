@@ -41,6 +41,23 @@ import eigen9029 from '@/assets/lp-diensten/eigen/IMG_9029.jpg';
 import eigen9030 from '@/assets/lp-diensten/eigen/IMG_9030.jpg';
 import eigen9065 from '@/assets/lp-diensten/eigen/IMG_9065.jpg';
 import eigen9069 from '@/assets/lp-diensten/eigen/IMG_9069.jpg';
+/* 29 sep, Mohammed: "pak al deze fotos" (Downloads/bijlagen, IMG_01xx.jpeg) en "al
+   de rest eigenlijk in uitgevoerd werk, behalve 2 onafgewerkte fotos". Van de 13
+   afgewerkte stonden er 6 al in het spoor (0104 = 9025, 0107 = 9027, 0108 = 9028,
+   0109 = 9029, 0112 = 9014, 0113 = 9015); de 7 nieuwe staan hieronder. Werffoto's
+   (0101, 0103, 0115, 0116) horen niet in "Uitgevoerd werk". 0117 en 0119 zijn het
+   voor/na-paar. */
+import eigen0100 from '@/assets/lp-diensten/eigen/IMG_0100.jpg';
+import eigen0102 from '@/assets/lp-diensten/eigen/IMG_0102.jpg';
+import eigen0105 from '@/assets/lp-diensten/eigen/IMG_0105.jpg';
+import eigen0106 from '@/assets/lp-diensten/eigen/IMG_0106.jpg';
+import eigen0110 from '@/assets/lp-diensten/eigen/IMG_0110.jpg';
+import eigen0111 from '@/assets/lp-diensten/eigen/IMG_0111.jpg';
+import eigen0114 from '@/assets/lp-diensten/eigen/IMG_0114.jpg';
+/* Voor/na (29 sep): IMG_0117 (ruwbouw) en IMG_0119 (afgewerkt), dezelfde doorkijk
+   naar de tuin; beide 16:10 uitgesneden met de tuindeur op dezelfde plek. */
+import woonkeukenVoor from '@/assets/lp-diensten/woonkeuken-voor.jpg';
+import woonkeukenNa from '@/assets/lp-diensten/woonkeuken-na.jpg';
 
 export const TOTAALRENOVATIE: KgjInhoud = {
   /* Zelfde vorm als het tabblad van dakwerken, dat Mohammed koos ("over het vak"). */
@@ -186,34 +203,51 @@ export const TOTAALRENOVATIE: KgjInhoud = {
   /* Mohammed, 28 sep: "op de totaalrenovatie pagina wil ik graag net boven de before
      and after, uitgevoerd werk, maar enkel abgroep echte fotos". Daarna: "zonder de
      namen", "op de manier van de home page", "zo dat het horizontaal doorloopt",
-     "er zijn veel meer fotos" en "kijk gewoon naar de gedownloade foto's". Tien
-     eigen foto's, om en om gezet: twee badkamers of twee keukens staan nooit naast
-     elkaar, ook niet waar het spoor rondloopt. pos: vierkante uitsnede. */
+     "er zijn veel meer fotos" en "kijk gewoon naar de gedownloade foto's". Sinds
+     29 sep zeventien eigen foto's, om en om gezet: twee badkamers, twee keukens,
+     twee plafonds of twee salons staan nooit naast elkaar, ook niet waar het spoor
+     rondloopt. pos: vierkante uitsnede. */
   uitgevoerd: {
     kop: 'Uitgevoerd werk',
     fotos: [
       { src: eigen9065, alt: 'Tv-wand in marmerlook tussen houten lamellen, met een zwevend meubel, door AB Bouw Groep' },
       { src: eigen9028, pos: '60% center', alt: 'Badkamer met ligbad onder het raam, hangtoilet, douchebak en wastafelmeubel met zwarte kraan, door AB Bouw Groep' },
+      { src: eigen0110, alt: 'Gewelfde doorgang in lichte leempleister naar een ruimte met vaste vloerbekleding en fluwelen gordijnen, door AB Bouw Groep' },
       { src: eigen9022, alt: 'Open leefruimte met keukeneiland, eettafel en glaspui naar de tuin, door AB Bouw Groep' },
+      { src: eigen0114, alt: 'Witte trap met eiken treden en een smal raam bovenaan, door AB Bouw Groep' },
       { src: eigen9015, alt: 'Plafond met ingewerkte lichtlijnen en spots boven een wand met sierlijsten, door AB Bouw Groep' },
       { src: eigen9069, pos: '75% center', alt: 'Badkamer met dubbele wastafel op een houten meubel, groene wandtegels en een inloopdouche, door AB Bouw Groep' },
+      { src: eigen0102, pos: '40% center', alt: 'Leefruimte met visgraatparket, een haard in donkere marmerlook en een tv-wand tussen houten lamellen, door AB Bouw Groep' },
       { src: eigen9030, alt: 'Wit geschilderde woning met een nieuw tuinpad van grote tegels in wit grind, door AB Bouw Groep' },
+      { src: eigen0111, alt: 'Behandelruimte met twee maatwerk-behandeltafels, gescheiden door lichte gordijnen, door AB Bouw Groep' },
       { src: eigen9027, alt: 'Keukeneiland met twee barkrukken en witte keukenkasten, door AB Bouw Groep' },
+      { src: eigen0105, alt: 'Verlaagd plafond met spots, lichtlijnen en indirecte verlichting boven een wand met sierlijsten, door AB Bouw Groep' },
       { src: eigen9025, alt: 'Inloopdouche met marmerlook-tegels, glazen wand met zwart profiel en een zwevend wastafelmeubel in lichte houtlook, door AB Bouw Groep' },
+      { src: eigen0100, alt: 'Zithoek met donkere houten vloer, wand in sierpleister en een wand met houten lamellen naast de terrasdeur, door AB Bouw Groep' },
       { src: eigen9029, pos: '80% center', alt: 'Afgewerkte handelsruimte met grote tegelvloer, spots en een glaspui naar de straat, door AB Bouw Groep' },
+      { src: eigen0106, alt: 'Douche met patroontegels en een regendouche, naast een wastafelmeubel met zwart blad, door AB Bouw Groep' },
       { src: eigen9014, alt: 'Kamer met antraciet raam, witte wanden en grijze vaste vloerbekleding, gezien vanuit de deuropening, door AB Bouw Groep' },
     ],
   },
 
   /* Mohammed: de slider van de homepage, de witte uitbouw. 27 sep: kop "Dezelfde
      uitbouw voor en na de werken" en label "Aanbouw" eruit ("die tekst is echt niet
-     mooi", "1 keer zeg je aanbouw en 1 keer uitbouw"). */
+     mooi", "1 keer zeg je aanbouw en 1 keer uitbouw"). 29 sep: "2 daarvan moet je
+     zetten in before and after slider" en "die before and after slider moet je ook
+     pijltje kunnen doen voor andere before after". Eerst de woonkeuken (0117/0119),
+     met de pijl daarna de uitbouw. */
   voorna: {
     kop: '',
     onder: 'Sleep de balk over de foto.',
-    voor: { src: uitbouwVoor, alt: 'De uitbouw in ruwbouw: snelbouwstenen en de houten balken van het platte dak' },
-    na: { src: uitbouwNa, alt: 'Dezelfde uitbouw afgewerkt, met witte crepi en een schuifraam over de volle breedte' },
+    voor: { src: woonkeukenVoor, alt: 'De verbouwing in ruwbouw: nieuwe binnenmuren in snelbouwsteen, houten balken in het plafond en de opening naar de tuin' },
+    na: { src: woonkeukenNa, alt: 'Dezelfde doorkijk na de werken: open woonkeuken met lichtkoepel, lichte vloer en een glazen deur naar de tuin' },
     label: '',
+    meer: [
+      {
+        voor: { src: uitbouwVoor, alt: 'De uitbouw in ruwbouw: snelbouwstenen en de houten balken van het platte dak' },
+        na: { src: uitbouwNa, alt: 'Dezelfde uitbouw afgewerkt, met witte crepi en een schuifraam over de volle breedte' },
+      },
+    ],
   },
 
   werk: { kop: '', onder: '', fotos: [] },
@@ -255,7 +289,10 @@ export const TOTAALRENOVATIE: KgjInhoud = {
        Drie keuzelijsten, geen enkele verplicht. Het budget is voor AB de sterkste
        filter op grote projecten (Bardh: grote werken). */
     extra: [
-      { naam: 'omvang', label: 'Wat wilt u renoveren?', opties: ['De hele woning', 'Het gelijkvloers', 'Een verdieping', 'Enkele ruimtes', 'Nog niet beslist'] },
+      /* 29 sep, Mohammed: "gelijkvloers eerste verdieping geeft te weinig optie ...
+         zonder dat t overwhelming word". Nog altijd één keuzelijst, nu per ruimte, in
+         dezelfde woorden als de rekenaar. */
+      { naam: 'omvang', label: 'Wat wilt u renoveren?', opties: ['De hele woning (totaalrenovatie)', 'Keuken', 'Badkamer', 'Keuken en badkamer', 'Meerdere ruimtes', 'Nog niet beslist'] },
       { naam: 'start', label: 'Wanneer wilt u starten?', opties: ['Zo snel mogelijk', 'Binnen drie maanden', 'Later dit jaar', 'Ik verken nog'] },
       { naam: 'budget', label: 'Uw budget', opties: ['Tot € 50.000', '€ 50.000 tot € 100.000', '€ 100.000 tot € 200.000', 'Meer dan € 200.000', 'Weet ik nog niet'] },
     ],

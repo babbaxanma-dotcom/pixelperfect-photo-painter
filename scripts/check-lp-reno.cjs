@@ -130,9 +130,34 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   const md5 = (buf) => require('crypto').createHash('md5').update(buf).digest('hex');
   const bron = (f) => md5(require('fs').readFileSync(require('path').join(__dirname, '..', 'src/assets/lp-diensten', f)));
   const haal = async (src) => md5(Buffer.from(await (await fetch(new globalThis.URL(src, URL))).arrayBuffer()));
-  const voorOk = (await haal(pg.voor)) === bron('uitbreiding-voor.jpg');
-  const naOk = (await haal(pg.na)) === bron('uitbreiding-na.jpg');
-  meld(voorOk && naOk, 'voor/na = de uitbouw van de homepage (md5)', `voor ${voorOk} / na ${naOk}`);
+  /* 29 sep (Mohammed): eerst de woonkeuken (IMG_0117/0119), met de pijl de uitbouw
+     van de homepage; "pijltje ... voor andere before after". */
+  const voorOk = (await haal(pg.voor)) === bron('woonkeuken-voor.jpg');
+  const naOk = (await haal(pg.na)) === bron('woonkeuken-na.jpg');
+  meld(voorOk && naOk, 'voor/na paar 1 = de woonkeuken (md5)', `voor ${voorOk} / na ${naOk}`);
+  const schuifStand = () => page.evaluate(() => ({
+    voor: document.querySelector('.kgj-schuif__voor img')?.getAttribute('src') || '',
+    na: document.querySelector('.kgj-schuif__na img')?.getAttribute('src') || '',
+    tel: document.querySelector('.kgj-schuif__wissel .pc-bediening-tel')?.textContent.trim() || '',
+    lijn: document.querySelector('.kgj-schuif__lijn')?.style.left || '',
+    pijlen: [...document.querySelectorAll('.kgj-schuif__wissel button')].map((b) => b.getAttribute('aria-label')),
+  }));
+  const s1 = await schuifStand();
+  meld(s1.pijlen.join('|') === 'Vorige voor en na|Volgende voor en na' && s1.tel === '1 / 2', 'voor/na: pijlen en teller 1 / 2', `${s1.pijlen.join(', ')} · ${s1.tel}`);
+  /* Balk eerst verschuiven, dan wisselen: hij moet terug naar het midden. */
+  await page.evaluate(() => { const r = document.querySelector('.kgj-schuif__bereik'); const zet = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set; zet.call(r, '20'); r.dispatchEvent(new Event('input', { bubbles: true })); });
+  await wacht(150);
+  await page.evaluate(() => [...document.querySelectorAll('.kgj-schuif__wissel button')].find((b) => b.getAttribute('aria-label') === 'Volgende voor en na').click());
+  await wacht(300);
+  const s2 = await schuifStand();
+  const s2voor = (await haal(s2.voor)) === bron('uitbreiding-voor.jpg');
+  const s2na = (await haal(s2.na)) === bron('uitbreiding-na.jpg');
+  meld(s2voor && s2na && s2.tel === '2 / 2', 'voor/na: pijl volgende toont paar 2 = de uitbouw van de homepage (md5)', `voor ${s2voor} / na ${s2na} · ${s2.tel}`);
+  meld(s2.lijn === '50%', 'voor/na: na het wisselen staat de balk terug in het midden', s2.lijn);
+  await page.evaluate(() => [...document.querySelectorAll('.kgj-schuif__wissel button')].find((b) => b.getAttribute('aria-label') === 'Volgende voor en na').click());
+  await wacht(300);
+  const s3 = await schuifStand();
+  meld(s3.tel === '1 / 2' && s3.voor === s1.voor, 'voor/na: na het laatste paar weer het eerste (rond)', s3.tel);
 
   /* Uitgevoerd werk (Mohammed, 28 sep: "net boven de before and after, uitgevoerd
      werk, maar enkel abgroep echte fotos", daarna "zonder de namen", "op de manier
@@ -152,8 +177,15 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
        - generated-final/, de reeksen *-p1/p2/p3 (nano /edit, 683e7bc),
          interieur/ en bad/ (a8320f0), stockfoto's van andere bedrijven
          (83e321e, 61094f6, d36d186, 96275c5) en elke andere Artlist-bewerking. */
-  const BRON = (n) => `Downloads/IMG_${n}.jpeg, eigen iPhone-foto Mohammed (fe90779)`;
-  const ECHTE_FOTOS = ['9065', '9028', '9022', '9015', '9069', '9030', '9027', '9025', '9029', '9014']
+  /* 29 sep: zeven foto's erbij uit Downloads/bijlagen (Mohammed: "pak al deze fotos",
+     "al de rest in uitgevoerd werk, behalve 2 onafgewerkte"). Niet opgenomen: 0104,
+     0107, 0108, 0109, 0112, 0113 (dezelfde foto's als 9025, 9027, 9028, 9029, 9014,
+     9015), de werffoto's 0101, 0103, 0115, 0116 en het voor/na-paar 0117/0119. */
+  const BRON = (n) => n.startsWith('01')
+    ? `Downloads/bijlagen/IMG_${n}.jpeg, eigen foto Mohammed (29 sep)`
+    : `Downloads/IMG_${n}.jpeg, eigen iPhone-foto Mohammed (fe90779)`;
+  const ECHTE_FOTOS = ['9065', '9028', '9022', '9015', '9069', '9030', '9027', '9025', '9029', '9014',
+    '0100', '0102', '0105', '0106', '0110', '0111', '0114']
     .map((n) => ({ f: `lp-diensten/eigen/IMG_${n}.jpg`, bron: BRON(n) }));
   const assetMd5 = (f) => md5(require('fs').readFileSync(require('path').join(__dirname, '..', 'src/assets', f)));
   const echtMd5 = new Map(ECHTE_FOTOS.map((e) => [assetMd5(e.f), e.f]));
@@ -194,6 +226,8 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     /* De uitbouw staat al in de voor/na eronder: niet nog eens in het spoor. */
     const uitbouw = assetMd5('lp-diensten/eigen/IMG_9068.jpg');
     meld(!echtMd5.has(uitbouw) && !sommen.includes(uitbouw), 'de uitbouw (IMG_9068) staat niet in het spoor');
+    const paarSommen = ['lp-diensten/woonkeuken-voor.jpg', 'lp-diensten/woonkeuken-na.jpg'].map(assetMd5);
+    meld(paarSommen.every((s) => !sommen.includes(s)), 'het voor/na-paar van de woonkeuken staat niet in het spoor');
     meld(eerste.every((f) => f.lazy === 'lazy' && f.alt.length >= 20 && f.fit === 'cover') && tweede.every((f) => f.alt === ''),
       'elke foto: loading=lazy, object-fit cover, beschrijvende alt (tweede reeks leeg)');
     meld(uit.pijlen.join('|') === 'Vorige foto|Volgende foto', 'pijlen zoals op de homepage', uit.pijlen.join(', '));

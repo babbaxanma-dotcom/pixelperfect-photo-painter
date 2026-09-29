@@ -412,20 +412,22 @@ export const KGJ_EXTRA = `
   background: var(--accent); transform-origin: left center;
   animation: kgj-werkspoor-vullen 4s linear infinite; }
 .kgj-werkspoor__vul--stil { animation-play-state: paused; }
+.kgjx .kgj-schuif__wissel .pc-bediening-tel { min-width: 44px; text-align: center; font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: 14px; font-weight: 700; color: var(--zacht); }
 @keyframes kgj-werkspoor-vullen { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 /* De pijlen: Bediening uit replica/Onderdelen.tsx, met de maten van .pc-bediening. */
-.kgjx .kgj-werkspoor .pc-bediening { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 28px; }
-.kgjx .kgj-werkspoor .pc-bediening button { width: 44px; height: 44px; border-radius: 50%; background: #fff;
+.kgjx :is(.kgj-werkspoor, .kgj-schuif__wissel) .pc-bediening { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 28px; }
+.kgjx :is(.kgj-werkspoor, .kgj-schuif__wissel) .pc-bediening button { width: 44px; height: 44px; border-radius: 50%; background: #fff;
   display: grid; place-items: center; color: var(--kop); flex: 0 0 auto; border: 0; padding: 0; cursor: pointer;
   box-shadow: inset 0 0 0 1px #dddddd;
   transition: background-color .18s ease, color .18s ease, opacity .18s ease; }
-.kgjx .kgj-werkspoor .pc-bediening button:hover { background: var(--accent); color: var(--merk); box-shadow: none; }
-.kgjx .kgj-werkspoor .pc-bediening button:focus-visible { outline: 3px solid var(--merk); outline-offset: 3px; }
+.kgjx :is(.kgj-werkspoor, .kgj-schuif__wissel) .pc-bediening button:hover { background: var(--accent); color: var(--merk); box-shadow: none; }
+.kgjx :is(.kgj-werkspoor, .kgj-schuif__wissel) .pc-bediening button:focus-visible { outline: 3px solid var(--merk); outline-offset: 3px; }
 @media (max-width: 1000px) {
   .kgj-werkspoor__spoor { gap: 12px; padding-right: 40px; }
   .kgjx .kgj-werkspoor__foto { flex: 0 0 78%; }
   .kgj-werkspoor__lijn { margin-top: 16px; }
-  .kgjx .kgj-werkspoor .pc-bediening { margin-top: 20px; gap: 12px; }
+  .kgjx :is(.kgj-werkspoor, .kgj-schuif__wissel) .pc-bediening { margin-top: 20px; gap: 12px; }
 }
 @media (prefers-reduced-motion: reduce) { .kgj-werkspoor__lijn { display: none; } }
 

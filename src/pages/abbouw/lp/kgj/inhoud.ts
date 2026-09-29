@@ -75,7 +75,8 @@ export type KgjInhoud = {
   diensten: { kop: string; onder?: string; lijst: { id: string; icoon: IcoonNaam; naam: string; tekst: string }[] };
   /** Voordelen tussen "Waarom" en de diensten: elk voordeel een gekleurde bol met icoon. */
   voordelen?: { kop: string; lijst: { icoon: IcoonNaam; kleur: 'oranje' | 'blauw' | 'groen'; titel: string; tekst: string }[] };
-  voorna: { kop: string; onder: string; voor: Foto; na: Foto; label: string };
+  /** meer: nog andere voor/na-paren; de schuif krijgt dan pijlen (29 sep). */
+  voorna: { kop: string; onder: string; voor: Foto; na: Foto; label: string; meer?: { voor: Foto; na: Foto; label?: string }[] };
   /** Uitgevoerd werk, direct boven de voor/na (totaalrenovatie, 28 sep): een doorlopend
       spoor met alleen echte foto's van AB, zonder namen (Mohammed: "zonder de namen").
       Optioneel: dakwerken vult het niet in en toont de sectie niet. pos: object-position

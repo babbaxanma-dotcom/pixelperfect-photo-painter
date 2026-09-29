@@ -7,6 +7,7 @@ import Inspectie from './Inspectie';
 import ChatAssistent from './ChatAssistent';
 import Werkspoor from './Werkspoor';
 import { Icoon } from './Iconen';
+import { IcChevron } from '../replica/Iconen';
 import { DAKWERKEN, type KgjInhoud, type Review } from './inhoud';
 import logo from '@/assets/home/logo-trim.png';
 
@@ -236,6 +237,12 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   /* Voor/na: slepen met pointer-events, want iOS Safari levert aan een
      onzichtbare range-input geen betrouwbare aanrakingen af. De input blijft
      voor het toetsenbord. */
+  /* Meer voor/na-paren (29 sep, Mohammed: "pijltje ... voor andere before after"):
+     de pijlen wisselen het paar en zetten de balk terug in het midden. */
+  const paren = [{ voor: inhoud.voorna.voor, na: inhoud.voorna.na, label: inhoud.voorna.label }, ...(inhoud.voorna.meer ?? [])];
+  const [paar, setPaar] = useState(0);
+  const huidig = paren[paar] ?? paren[0];
+  const wissel = (r: -1 | 1) => { setPaar((p) => (p + r + paren.length) % paren.length); setSchuif(50); };
   const zetSchuif = (x: number) => {
     const el = schuifVak.current;
     if (!el) return;
@@ -412,11 +419,11 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                 onPointerUp={(e) => { sleept.current = false; const el = e.currentTarget as HTMLElement; if (el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId); }}
                 onPointerCancel={() => { sleept.current = false; }}>
                 <div className="kgj-schuif__na">
-                  <img src={inhoud.voorna.na.src} alt={inhoud.voorna.na.alt} loading="lazy" />
+                  <img src={huidig.na.src} alt={huidig.na.alt} loading="lazy" />
                   <span className="kgj-schuif__merk kgj-schuif__merk--na">Na</span>
                 </div>
                 <div className="kgj-schuif__voor" style={{ clipPath: `inset(0 ${100 - schuif}% 0 0)` }}>
-                  <img src={inhoud.voorna.voor.src} alt={inhoud.voorna.voor.alt} loading="lazy" />
+                  <img src={huidig.voor.src} alt={huidig.voor.alt} loading="lazy" />
                   <span className="kgj-schuif__merk kgj-schuif__merk--voor">Voor</span>
                 </div>
                 <input className="kgj-schuif__bereik" type="range" min={0} max={100} step={0.1} value={schuif}
@@ -425,8 +432,17 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                   <span className="kgj-schuif__greep" aria-hidden="true">‹ ›</span>
                 </span>
               </div>
-              {inhoud.voorna.label && <figcaption>{inhoud.voorna.label}</figcaption>}
+              {huidig.label && <figcaption>{huidig.label}</figcaption>}
             </figure>
+            {paren.length > 1 && (
+              <div className="kgj-schuif__wissel">
+                <div className="pc-bediening">
+                  <button type="button" aria-label="Vorige voor en na" onClick={() => wissel(-1)}><IcChevron richting="links" /></button>
+                  <span className="pc-bediening-tel" aria-live="polite">{paar + 1} / {paren.length}</span>
+                  <button type="button" aria-label="Volgende voor en na" onClick={() => wissel(1)}><IcChevron richting="rechts" /></button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
