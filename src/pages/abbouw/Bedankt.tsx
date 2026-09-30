@@ -13,22 +13,15 @@ const KOP: Record<DienstSleutel, { r1: string; r2: string }> = {
   default: { r1: 'Bedankt,', r2: 'uw aanvraag is binnen' },
 };
 
+/* 30 sep: hier stonden 9 reviews met naam en een Google-icoon. Ze staan NIET op
+   het Google-profiel van AB (dat heeft één review, 5,0, gecontroleerd 22 sep
+   2026). Zolang dat zo is blijven de lijsten leeg en toont de pagina de sectie
+   niet, net als de landingspagina (lp/kgj/inhoud.ts, reviews). Echte reviews
+   komen hier alleen met naam en toestemming van de klant. */
 const REVIEWS: Record<DienstSleutel, Review[]> = {
-  dakwerken: [
-    { name: 'Geert Verbeke', role: 'Pannendak · Mechelen', text: 'Ons dak lekte op verschillende plaatsen en was echt aan vervanging toe. Nu helemaal vernieuwd, met de garantie netjes op papier. Daar slaap je rustig van.' },
-    { name: 'Saïda El Khatib', role: 'Plat dak EPDM · Antwerpen', text: 'Plat dak in één stuk gelegd, zonder naden. Twee jaar later nog altijd kurkdroog. Heel tevreden.' },
-    { name: 'Yusuf Demir', role: 'Sarkingisolatie · Bornem', text: 'Dak geïsoleerd en vernieuwd, nu een pak warmer. Elke week kregen we een update met foto en de werf bleef netjes. Goed opgevolgd.' },
-  ],
-  gevel: [
-    { name: 'Jasmien De Backer', role: 'Witte crepi · Mechelen', text: 'Onze rijwoning had een vermoeide bezetting uit de jaren tachtig. Nu een spierwitte crepi-gevel. Buren komen vragen wie het werk gedaan heeft. Strak, proper, op tijd opgeleverd.' },
-    { name: 'Dimitri Maes', role: 'Crepi en ETICS-isolatie · Antwerpen', text: 'Onze woning was altijd koud. Sinds de gevelisolatie en crepi voelen de muren warm aan en ligt de stookkost flink lager. Echt een verschil.' },
-    { name: 'Hicham Bouali', role: 'Gevelisolatie · Mechelen', text: 'Eerst wilde ik enkel crepi, maar ze legden uit waarom isolatie beter was. Wat duurder, en het comfort is er echt op vooruitgegaan.' },
-  ],
-  default: [
-    { name: 'Greet Vermeiren', role: 'Totaalrenovatie · Lier', text: 'Volledige renovatie van A tot Z. De planning klopte tot op de dag en de eindfactuur was exact de offerte.' },
-    { name: 'Ahmed Karimi', role: 'Badkamerrenovatie · Vilvoorde', text: 'Mooie inloopdouche, en de werf bleef altijd netjes. Klaar op de afgesproken datum. Top werk.' },
-    { name: 'Tine Maes', role: 'Aanbouw · Bonheiden', text: 'Aanbouw van 28 m² met zinkwerk en een grote raampartij. Het architectenplan werd één op één uitgevoerd en de ploeg dacht mee bij de details.' },
-  ],
+  dakwerken: [],
+  gevel: [],
+  default: [],
 };
 
 const FASES = [
@@ -109,7 +102,7 @@ ${rpNav('')}
   </div>
 </section>
 
-<section class="rp-section rp-section--soft">
+${reviews.length ? `<section class="rp-section rp-section--soft">
   <div class="rp-wrap">
     <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
       <div>
@@ -132,7 +125,7 @@ ${rpNav('')}
       </article>`).join('')}
     </div>
   </div>
-</section>
+</section>` : ''}
 
 <section class="rp-section">
   <div class="rp-wrap">
