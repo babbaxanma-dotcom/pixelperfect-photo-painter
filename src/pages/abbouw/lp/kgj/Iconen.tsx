@@ -130,7 +130,7 @@ const ICONEN: Record<IcoonNaam, () => JSX.Element> = {
       <path d="M13 2.5 4.5 13.5H12l-1 8 8.5-11H12z" />
     </Svg>
   ),
-  /* Kalender met drie bolletjes: binnen drie maanden. */
+  /* Kalender met drie bolletjes: dit jaar. */
   drie: () => (
     <Svg>
       <rect x="3.5" y="5" width="17" height="15.5" rx="2" />
@@ -138,7 +138,7 @@ const ICONEN: Record<IcoonNaam, () => JSX.Element> = {
       <path d="M8 15h.01M12 15h.01M16 15h.01" strokeWidth={2.6} />
     </Svg>
   ),
-  /* Kalender met een pijl vooruit: later dit jaar. */
+  /* Kalender met een pijl vooruit: volgend jaar. */
   later: () => (
     <Svg>
       <rect x="3.5" y="5" width="17" height="15.5" rx="2" />

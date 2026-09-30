@@ -225,8 +225,9 @@ export const DAKWERKEN: KgjInhoud = {
         { label: 'Ja, vermoedelijk', icoon: 'asbest' }, { label: 'Nee', icoon: 'veilig' }, { label: 'Weet ik niet zeker', icoon: 'twijfel' },
       ] },
       { sleutel: 'Start', vraag: 'Wanneer wilt u beginnen?', keuzes: [
-        { label: 'Zo snel mogelijk', icoon: 'snel' }, { label: 'Binnen drie maanden', icoon: 'drie' },
-        { label: 'Later dit jaar', icoon: 'later' }, { label: 'Ik verken nog', icoon: 'verken' },
+        /* 30 sep, Mohammed: "duidelijker, zo snel mogelijk, dit jaar, volgend jaar". */
+        { label: 'Zo snel mogelijk', icoon: 'snel' }, { label: 'Dit jaar', icoon: 'drie' },
+        { label: 'Volgend jaar', icoon: 'later' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
       ] },
     ],
     gerust: 'Weet u het niet zeker? Een schatting volstaat.',

@@ -51,7 +51,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     ['Hoe groot is de woning?', '100 tot 150 m²', 'Vraag 3 van 6'],
     ['Hoe oud is de woning?', 'Ouder dan 10 jaar', 'Vraag 4 van 6'],
     ['Hoeveel moet er vernieuwd worden?', 'Alles', 'Vraag 5 van 6'],
-    ['Wanneer wilt u beginnen?', 'Binnen drie maanden', 'Vraag 6 van 6'],
+    ['Wanneer wilt u beginnen?', 'Dit jaar', 'Vraag 6 van 6'],
   ];
   let tip = '';
   for (const [v, antwoord, teller] of pad) {

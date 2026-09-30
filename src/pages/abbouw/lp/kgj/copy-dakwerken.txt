@@ -1,18 +1,10 @@
 Dé specialist voor uw dakwerk
-Dé specialist voor uw dakisolatie
-Dé specialist voor uw plat dak
-Dé specialist voor uw hellend dak
-Dé specialist voor uw dakrenovatie
-Dé specialist voor uw nieuwe dak
 De specialist voor daken in Regio Antwerpen en omstreken. Wij zorgen voor perfect afgewerkte dakrenovaties, herstellingen en isolaties.
 Bereken uw dakprijs
-Klaar in 2 minuten
-Gratis en vrijblijvend
 Welk soort dak heeft u?
 Wat moet er aan uw dak gebeuren?
 Wilt u het dak ook laten isoleren?
-Met isolatie
-Zonder isolatie
+Met isolatie komt uw dak in aanmerking voor Mijn VerbouwPremie: bij inkomenscategorie 3 of 4 tot 50% van de factuur terug, maximaal € 5.750.
 Hoe oud is uw dak?
 Dankzij de wettelijke 6% btw-regeling betaalt u 15% minder btw op uw factuur.
 Welke dakbedekking wenst u?
@@ -20,13 +12,12 @@ Wat wilt u op uw plat dak?
 Welke dakbedekking ligt er nu?
 Wat ligt er nu op uw plat dak?
 Hoe groot is het dak?
-Is er isolatie nodig?
-Met isolatie komt uw dak in aanmerking voor Mijn VerbouwPremie: bij inkomenscategorie 3 of 4 tot 50% van de factuur terug, maximaal € 5.750.
 Is er asbest aanwezig in het dak?
 Wanneer wilt u beginnen?
 Weet u het niet zeker? Een schatting volstaat.
 Waar mogen we de berekening naartoe verzenden?
-Bereken prijs
+Wij bezorgen u uw richtprijs zo snel mogelijk.
+Ontvang mijn richtprijs
 Waarom AB Bouw Groep
 Een dak vernieuwt u één keer en vervolgens moet het decennia meegaan. Daarom is het belangrijk dat u een aannemer kiest die het vak kent. Met meer dan 15 jaar ervaring in dakwerken staan we garant voor een eindresultaat van topkwaliteit. U kan rekenen op een zorgeloos traject van A tot Z.
 Tien jaar garantie op dakrenovatie. We zijn volledig verzekerd en VCA-gecertificeerd.
@@ -37,22 +28,16 @@ Wij regelen de aanvraag van uw Mijn VerbouwPremie. Wordt uw dak mee geïsoleerd,
 Voordelen van dakrenovatie
 Minder stookkost
 Warme lucht stijgt en verdwijnt langs het dak. Met een goed geïsoleerd dak blijft die warmte binnen en stookt u minder.
-Vermijd duizenden euro's aan schade
 Een verschoven pan of een barst in de roofing laat regenwater binnen. Renoveert u op tijd, dan vermijdt u vocht en verdere schade aan uw dak.
 Meer waarde voor uw woning
 Een dakrenovatie verhoogt de waarde van uw woning en verbetert, met isolatie, de EPC-score aanzienlijk.
 Onze diensten
-Nieuw dak
 Volledig nieuw dak, met pannen of leien, of als plat dak in EPDM, roofing of bitumen.
-Dakrenovatie
 Uw dakstructuur blijft staan. Wij vernieuwen de pannen of leien, samen met het onderdak en de panlatten.
-Dakisolatie
 Wij isoleren uw dak tijdens de renovatie of als aparte opdracht.
-Dakherstelling
 Wij herstellen een lek of schade aan uw hellend of plat dak.
 Hetzelfde dak voor en na de werken
 Sleep de balk over de foto.
-Uitgevoerd werk
 Wat klanten schrijven
 Zo verloopt uw dakwerk
 U weet vooraf wat er gebeurt en wanneer.
@@ -70,17 +55,29 @@ Gratis dakinspectie
 Plan uw dakinspectie
 Vraag uw gratis dakinspectie aan
 Wij bellen u binnen één werkdag om een moment af te spreken.
+Dé specialist voor uw dakisolatie
+Dé specialist voor uw plat dak
+Dé specialist voor uw hellend dak
+Dé specialist voor uw dakrenovatie
+Dé specialist voor uw nieuwe dak
 We bekijken uw dak ter plaatse
 Samen overlopen we de bevindingen
 U ontvangt een vrijblijvende offerte
 
 --- functioneel ---
 Dé specialist voor uw dakwerk | AB Bouw Groep
-Klik zes antwoorden aan en hoor binnen één werkdag wat uw dak kost. Gratis plaatsbezoek en offerte, werken aan 6% btw.
+Bereken in 2 minuten de prijs van uw dak. Gratis dakinspectie en offerte, werken aan 6% btw.
 Hellend dak
-hellingshoek groter dan 15°
 Plat dak
-hellingshoek kleiner dan 15°
+Herstelling
+Renovatie
+Isolatie
+Met isolatie
+het dak wordt mee geïsoleerd
+Zonder isolatie
+enkel de dakwerken
+Jonger dan 10 jaar
+Ouder dan 10 jaar
 Gegolfde pannen
 Vlakke pannen of leien
 Golfplaten
@@ -89,22 +86,26 @@ Bitumen
 Roofing
 EPDM
 Weet ik nog niet
+Gegolfde pannen
+Vlakke pannen of leien
+Golfplaten
+Weet ik niet
+Bitumen
+Roofing
+EPDM
+Weet ik niet
 Kleiner dan 50 m²
 50 tot 100 m²
 100 tot 150 m²
 Groter dan 150 m²
 Weet ik niet
-Ja
-ik wil isolatie laten plaatsen
-Nee
-enkel dakwerken
 Ja, vermoedelijk
 Nee
 Weet ik niet zeker
 Zo snel mogelijk
-Binnen drie maanden
-Later dit jaar
-Ik verken nog
+Dit jaar
+Volgend jaar
+Weet ik nog niet
 Gratis dakinspectie en offerte
 Volledige premiebegeleiding (Mijn VerbouwPremie)
 6% btw vanaf tien jaar oud
