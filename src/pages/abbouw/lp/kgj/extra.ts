@@ -661,4 +661,17 @@ export const KGJ_EXTRA = `
   font-size: 11.5px; color: var(--zacht); }
 .kgjx .kgj-chat__voet a { color: inherit; text-decoration: underline; }
 @media (prefers-reduced-motion: reduce) { .kgjx .kgj-chat__typt i { animation: none; } }
+
+/* ── vraag na de aanvraag: mag Google meten dat ze via een advertentie kwam ── */
+.kgjx .kgj-toestemming { display: grid; gap: 12px; }
+.kgjx .kgj-toestemming__ok { display: flex; align-items: center; gap: 8px; margin: 0; font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-weight: 700; font-size: 18px; color: var(--kop); }
+.kgjx .kgj-toestemming__ok svg { flex: none; width: 22px; height: 22px; color: #1f7a52; }
+.kgjx .kgj-toestemming__tekst { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--tekst); }
+.kgjx .kgj-toestemming__tekst a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+/* Beide knoppen even zwaar: weigeren moet even makkelijk zijn als aanvaarden. */
+.kgjx .kgj-toestemming__knoppen { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.kgjx .kgj-toestemming__knoppen button { min-height: 52px; padding: 10px 12px; border: 2px solid var(--merk); border-radius: var(--r);
+  background: var(--wit); color: var(--merk); font: 700 16px/1.2 "Plus Jakarta Sans", system-ui, sans-serif; cursor: pointer; }
+.kgjx .kgj-toestemming__knoppen button:disabled { opacity: .5; cursor: default; }
 `;

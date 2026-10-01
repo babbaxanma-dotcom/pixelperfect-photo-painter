@@ -43,6 +43,14 @@ export function hasDecided(): boolean {
   return readConsent() !== null;
 }
 
+/* Keuze uit de vraag na een aanvraag ("Mag AB Bouw Groep aan Google doorgeven ...").
+   Alleen marketing wijzigt; analytics blijft wat de bezoeker eerder koos (standaard nee).
+   De banner verdwijnt, want de bezoeker heeft gekozen. */
+export function kiesMarketing(ja: boolean) {
+  writeConsent({ analytics: readConsent()?.analytics === true, marketing: ja, decided_at: '' });
+  removeBanner?.();
+}
+
 export function allowsAnalytics(): boolean {
   return readConsent()?.analytics === true;
 }
@@ -150,7 +158,22 @@ export function installConsentBanner() {
   const wrap = document.createElement('div');
   wrap.id = BANNER_ID;
   wrap.innerHTML = BANNER_HTML;
-  document.body.appendChild(wrap);
+  /* Advertentiepagina's (/lp/): op de telefoon lag de banner bij het openen over de
+     antwoorden van de eerste rekenaarvraag (gemeten 1 okt 2026). Daar verschijnt hij pas
+     zodra de bezoeker voorbij het eerste scherm scrolt. Tot dan staat alles op "geweigerd"
+     (Consent Mode-standaard in index.html), dus er wordt niets gemeten zonder toestemming. */
+  let wachtOpScroll: (() => void) | null = null;
+  if (window.location.pathname.startsWith('/lp/')) {
+    wachtOpScroll = () => {
+      if (window.scrollY < window.innerHeight * 0.9) return;
+      window.removeEventListener('scroll', wachtOpScroll!);
+      wachtOpScroll = null;
+      if (!hasDecided()) document.body.appendChild(wrap);
+    };
+    window.addEventListener('scroll', wachtOpScroll, { passive: true });
+  } else {
+    document.body.appendChild(wrap);
+  }
 
   const onClick = (e: Event) => {
     const t = e.target;
@@ -167,6 +190,8 @@ export function installConsentBanner() {
   wrap.addEventListener('click', onClick);
 
   removeBanner = () => {
+    if (wachtOpScroll) window.removeEventListener('scroll', wachtOpScroll);
+    wachtOpScroll = null;
     wrap.removeEventListener('click', onClick);
     wrap.remove();
     styleEl.remove();

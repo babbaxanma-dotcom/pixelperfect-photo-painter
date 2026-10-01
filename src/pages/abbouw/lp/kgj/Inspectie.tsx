@@ -2,9 +2,11 @@ import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
+import { allowsMarketing } from '@/lib/consent';
 import { CONTACT } from '@/data/contact';
 import type { KgjInhoud } from './inhoud';
 import PostcodeGemeente from './PostcodeGemeente';
+import Toestemming from './Toestemming';
 
 /**
  * Aanvraag voor de gratis dakinspectie, onderaan de pagina.
@@ -26,6 +28,7 @@ export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPr
   const navigate = useNavigate();
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
+  const [vraagToestemming, setVraagToestemming] = useState(false);
   const gestart = useRef(false);
   const t = inhoud.inspectie;
 
@@ -64,9 +67,20 @@ export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPr
       bron_lead: t.bronLead,
     });
     setBezig(false);
-    if (res.ok) navigate('/bedankt?dienst=' + inhoud.bedanktSlug);
-    else setFout(leadFoutmelding(res, CONTACT.phone.display));
+    if (!res.ok) { setFout(leadFoutmelding(res, CONTACT.phone.display)); return; }
+    /* Zonder toestemming voor marketing eerst de vraag uit Toestemming.tsx, dan pas de bedankpagina. */
+    if (allowsMarketing()) naarBedankt();
+    else setVraagToestemming(true);
   };
+  const naarBedankt = () => navigate('/bedankt?dienst=' + inhoud.bedanktSlug);
+
+  if (vraagToestemming) {
+    return (
+      <div className="kgj-reken kgj-reken--inspectie">
+        <Toestemming verder={naarBedankt} />
+      </div>
+    );
+  }
 
   return (
     <div className={`kgj-reken kgj-reken--inspectie${t.extra?.length ? ' kgj-reken--extra' : ''}`}>

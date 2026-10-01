@@ -4,8 +4,10 @@ import { ArrowRight, BadgePercent, Calculator, Check, Clock, Home, Lock, Plus, S
 import { Icoon } from './Iconen';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
+import { allowsMarketing } from '@/lib/consent';
 import { CONTACT } from '@/data/contact';
 import type { KgjInhoud, Vraag } from './inhoud';
+import Toestemming from './Toestemming';
 
 /**
  * De prijscalculator als eerste handeling van de pagina.
@@ -54,6 +56,7 @@ export default function Rekenaar({ inhoud, plek, voor }: {
   const [antwoorden, setAntwoorden] = useState<Record<string, string>>(vooraf ? { [vooraf.sleutel]: vooraf.label } : {});
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
+  const [vraagToestemming, setVraagToestemming] = useState(false);
   const gestart = useRef(false);
   const kaart = useRef<HTMLDivElement>(null);
   const vorigeStap = useRef(stap);
@@ -170,9 +173,12 @@ export default function Rekenaar({ inhoud, plek, voor }: {
       bron_lead: `${inhoud.bronLead}:${plek}`,
     });
     setBezig(false);
-    if (res.ok) navigate('/bedankt?dienst=' + inhoud.bedanktSlug);
-    else setFout(leadFoutmelding(res, CONTACT.phone.display));
+    if (!res.ok) { setFout(leadFoutmelding(res, CONTACT.phone.display)); return; }
+    /* Zonder toestemming voor marketing eerst de vraag uit Toestemming.tsx, dan pas de bedankpagina. */
+    if (allowsMarketing()) naarBedankt();
+    else setVraagToestemming(true);
   };
+  const naarBedankt = () => navigate('/bedankt?dienst=' + inhoud.bedanktSlug);
 
   const vraag = VRAGEN[stap];
   /* Na bepaalde antwoorden verschijnt onder de volgende vraag een korte melding
@@ -196,12 +202,15 @@ export default function Rekenaar({ inhoud, plek, voor }: {
         <div className="kgj-reken__balk"><i style={{ width: `${(nu / totaal) * 100}%` }} /></div>
         <span className={`kgj-reken__eind${klaar ? ' is-aan' : ''}`}>€</span>
       </div>
-      <div className="kgj-reken__kop">
-        <span className="kgj-reken__tel">{klaar ? 'Laatste stap' : `Vraag ${nu} van ${AANTAL}`}</span>
-        {stap > 0 && (
-          <button type="button" className="kgj-reken__terug" onClick={() => setStap((s) => s - 1)}>‹ Terug</button>
-        )}
-      </div>
+      {/* Na een verstuurde aanvraag geen "‹ Terug" meer: terug naar een vraag zou doen alsof er nog niets verstuurd is. */}
+      {!vraagToestemming && (
+        <div className="kgj-reken__kop">
+          <span className="kgj-reken__tel">{klaar ? 'Laatste stap' : `Vraag ${nu} van ${AANTAL}`}</span>
+          {stap > 0 && (
+            <button type="button" className="kgj-reken__terug" onClick={() => setStap((s) => s - 1)}>‹ Terug</button>
+          )}
+        </div>
+      )}
 
       {!klaar && vraag.afvinken ? (() => {
         const gekozen = vinken[vraag.sleutel] ?? [];
@@ -272,6 +281,8 @@ export default function Rekenaar({ inhoud, plek, voor }: {
               zelf (Mohammed: 'hoe kan iemand niet weten wat hij wilt'). */}
           {stap > 0 && <p className="kgj-reken__gerust">{inhoud.rekenaar.gerust}</p>}
         </div>
+      ) : vraagToestemming ? (
+        <Toestemming verder={naarBedankt} />
       ) : (
         <form className="kgj-reken__stap kgj-reken__form" onSubmit={verstuur} noValidate>
           {/* Vervaagde richtprijs bovenaan de laatste stap, met een slot (Mohammed,

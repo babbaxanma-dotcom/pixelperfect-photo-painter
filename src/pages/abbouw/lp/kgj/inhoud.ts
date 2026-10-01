@@ -20,8 +20,8 @@ import type { Divisie } from '@/lib/leads';
 import panRood from '@/assets/dak/lp-dak-panrood.jpg';
 import antraciet from '@/assets/dak/lp-real-det-2.jpg';
 import heroNok from '@/assets/dak/hero-antraciet-nok.jpg';
-import dakwerker from '@/assets/dak/dakwerker-pannen.jpg';
-import pannenDichtbij from '@/assets/dak/pannen-dichtbij.jpg';
+import waaromDakwerker from '@/assets/dak/waarom-dakwerker.jpg';
+import waaromPannendak from '@/assets/dak/waarom-pannendak.jpg';
 import antraciet3 from '@/assets/dak/lp-real-det-3.jpg';
 import platdak from '@/assets/dak/platdak-tegel.jpg';
 import droneAntraciet from '@/assets/dak/drone-antraciet.jpg';
@@ -174,9 +174,10 @@ export const DAKWERKEN: KgjInhoud = {
          renovatie, isolatie, en dan pas de rest". Elk antwoord heeft een eigen
          vervolg: bij herstelling vragen we wat er NU op het dak ligt, bij
          isolatie vervalt de bedekking en de vraag of er isolatie nodig is. */
+      /* Volgorde (Mohammed, 1 okt 2026): renovatie, isolatie, herstelling. */
       { sleutel: 'Werk', vraag: 'Wat moet er aan uw dak gebeuren?', keuzes: [
-        { label: 'Herstelling', icoon: 'herstel' }, { label: 'Renovatie', icoon: 'nieuwdak' },
-        { label: 'Isolatie', icoon: 'isolatie' },
+        { label: 'Renovatie', icoon: 'nieuwdak' }, { label: 'Isolatie', icoon: 'isolatie' },
+        { label: 'Herstelling', icoon: 'herstel' },
       ] },
       /* Mohammed, 27 sep: "als je klikt op herstelling of renovatie, dat je kan kiezen, met
          isolatie of zonder", want "nu is isolatie enkel en alleen apart". De keuze staat dus meteen
@@ -263,9 +264,11 @@ export const DAKWERKEN: KgjInhoud = {
        lp-real-det-1, en dat bestand bleek op een pixelvergelijking hetzelfde
        frame als de eerste hero-dia (verschil 1,8 van 255): dezelfde woning
        stond dus twee keer op één pagina. */
+    /* Mohammed, 1 okt 2026: "dakwerken als bovenste, dakwerken roof als onderste"
+       (Downloads/dakwerken.jpg en dakwerkenroof.jpg). */
     duo: [
-      { src: dakwerker, alt: 'Dakwerker die nieuwe antraciet pannen legt op de tengellatten' },
-      { src: pannenDichtbij, alt: 'Hetzelfde pannendak van bovenaf, tot op de nokpannen' },
+      { src: waaromDakwerker, alt: 'Dakwerker die nieuwe antraciet pannen legt op de panlatten' },
+      { src: waaromPannendak, alt: 'Pannendak met rode keramische pannen en zinken goot' },
     ],
   },
 

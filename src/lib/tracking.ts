@@ -149,7 +149,22 @@ function normalizePhoneBE(raw?: unknown): string | undefined {
   return '+' + digits;
 }
 
-export function fireConversion(kind: 'contact_form' | 'newsletter' | 'landing_page', payload: Record<string, unknown>) {
+/* De laatste conversie van dit bezoek. Zonder toestemming voor marketing vertrekt er
+   niets naar Google Ads (gemeten 1 okt 2026); geeft de bezoeker na zijn aanvraag alsnog
+   toestemming, dan stuurt herhaalConversie dezelfde conversie opnieuw, met hetzelfde
+   transaction_id, zodat Google ze nooit dubbel telt. */
+let laatsteConversie: { kind: 'contact_form' | 'newsletter' | 'landing_page'; payload: Record<string, unknown>; tid: string } | null = null;
+
+export function herhaalConversie(): boolean {
+  if (!laatsteConversie) return false;
+  const { kind, payload, tid } = laatsteConversie;
+  fireConversion(kind, payload, tid);
+  return true;
+}
+
+export function fireConversion(kind: 'contact_form' | 'newsletter' | 'landing_page', payload: Record<string, unknown>, tid?: string) {
+  const transactionId = tid ?? `${kind}-${Date.now()}`;
+  laatsteConversie = { kind, payload, tid: transactionId };
   const gadsId = GADS_ID;
   const labelForm = GADS_LABEL_FORM;
   const labelNews = GADS_LABEL_NEWS;
@@ -191,7 +206,7 @@ export function fireConversion(kind: 'contact_form' | 'newsletter' | 'landing_pa
       send_to: `${gadsId}/${label}`,
       value: kind === 'newsletter' ? 1 : 50,
       currency: 'EUR',
-      transaction_id: `${kind}-${Date.now()}`,
+      transaction_id: transactionId,
     });
     console.info('[tracking] Google Ads conversie afgevuurd:', kind, `${gadsId}/${label}`, { ec: !!(email || phone) });
   } else {
