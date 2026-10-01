@@ -804,8 +804,8 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
           <div className="pc-werk-spoor" ref={werkSpoor} role="group" aria-label="Uitgevoerde projecten"
             data-lus="1" onScroll={(e) => volgStand(e.currentTarget, setWerkPos)}>
             {[0, 1].map((reeks) => inhoud.werk.fotos.map((f) => (
-              <figure className="pc-werk-foto" key={reeks + f.naam} aria-hidden={reeks === 1 ? true : undefined}>
-                <img src={beeld(f.naam)} alt={reeks === 1 ? '' : f.alt} loading="lazy"
+              <figure className="pc-werk-foto" key={reeks + (f.naam ?? f.src ?? '')} aria-hidden={reeks === 1 ? true : undefined}>
+                <img src={f.src ?? beeld(f.naam ?? '')} alt={reeks === 1 ? '' : f.alt} loading="lazy"
                   style={f.pos ? { objectPosition: f.pos } : undefined} />
               </figure>
             )))}

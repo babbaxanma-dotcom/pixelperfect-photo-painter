@@ -28,7 +28,10 @@ import svcInterieur from '@/assets/home/svc-interieur.jpg';
 import svcConstruct from '@/assets/home/svc-construct.jpg';
 import svcEco from '@/assets/home/svc-eco.jpg';
 import homeHero from '@/assets/home/hero-steenstrips.jpg';
-import homeOver from '@/assets/lp-diensten/realisaties/totaalrenovatie-p6-a.jpg';
+/* 1 okt: de keuken met barkrukken (p6-a) is dezelfde opname als IMG_9027 in het
+   fotospoor, dat sinds vandaag alle LP-foto's toont. Hier dus de afgewerkte
+   woonkeuken uit de voor/na van de totaalrenovatie-LP (IMG_0119). */
+import homeOver from '@/assets/lp-diensten/woonkeuken-na.jpg';
 import heroFoto from '@/assets/lp-diensten/totaalrenovatie-hero.jpg';
 import overFoto from '@/assets/lp-diensten/totaalrenovatie-g1.jpg';
 import dienstenBg from '@/assets/lp-diensten/totaalrenovatie-g2.jpg';
@@ -71,8 +74,14 @@ import bkWerf from '@/assets/lp-diensten/badkamer-werf.jpg';
 import bkUitbraak from '@/assets/bad/ruwbouw.jpg';
 import bkLeidingen from '@/assets/construct/technieken.jpg';
 import bkTegelzetter from '@/assets/bad/tegelwerk.jpg';
+import dakAfgewerkt from '@/assets/lp-diensten/dak-na.jpg';
+/* De echte foto's van uitgevoerd werk staan op de totaalrenovatie-LP (kgj); de
+   homepage toont dezelfde lijst, zodat ze niet uit elkaar lopen. */
+import { TOTAALRENOVATIE as RENO_LP } from '../kgj/inhoud-totaalrenovatie';
 
-export type Werkfoto = { naam: string; alt: string; pos?: string };
+/** naam: bestand in assets/lp-diensten/realisaties; src: een geïmporteerd beeld
+    (de echte foto's van de totaalrenovatie-LP). Precies één van beide. */
+export type Werkfoto = { naam?: string; src?: string; alt: string; pos?: string };
 
 export type PaginaInhoud = {
   /** Titel in het browsertabblad. */
@@ -625,7 +634,7 @@ export const HOME: PaginaInhoud = {
     tekst: 'Of uw plannen nu vastliggen of nog moeten groeien: wij begeleiden u van het eerste gesprek tot de oplevering. U schakelt één afdeling in of ze allemaal. Wij coördineren alle bouwactiviteiten die nodig zijn voor de realisatie van uw bouwwerk.',
     slot: '',
     foto: homeOver,
-    alt: 'Leefruimte met open keuken en glazen pui na een totaalrenovatie door AB Bouw Groep',
+    alt: 'Open woonkeuken met lichtkoepel, lichte vloer en een glazen deur naar de tuin, door AB Bouw Groep',
   },
 
   /* De zes divisies, niet de onderdelen van een enkele renovatie: op de
@@ -665,12 +674,14 @@ export const HOME: PaginaInhoud = {
    */
   werk: {
     ...TOTAALRENOVATIE.werk,
+    /* 1 okt 2026, Mohammed: "al het uitgevoerd werk van totaalrenovatie lp + de
+       dakwerk foto afgewerkt". De zeventien eigen foto's van de LP, met de
+       afgewerkte dakfoto van de dak-LP (de na-foto van de voor/na) op plek drie,
+       zodat het dak vroeg in beeld komt. */
     fotos: [
-      ...TOTAALRENOVATIE.werk.fotos.slice(0, 2),
-      { naam: 'dak-rood-drone', alt: 'Vernieuwd pannendak in rode keramische pannen met dakvensters, door AB Bouw Groep' },
-      /* De keuken staat op deze pagina al bij "Waarom kiezen voor". Twee keer
-         hetzelfde beeld op een pagina leest slordig, dus hier eruit. */
-      ...TOTAALRENOVATIE.werk.fotos.slice(2).filter((f) => f.naam !== 'totaalrenovatie-p6-a'),
+      ...RENO_LP.uitgevoerd!.fotos.slice(0, 2),
+      { src: dakAfgewerkt, alt: 'Vernieuwd pannendak met nieuwe pannen en dakvensters, door AB Bouw Groep' },
+      ...RENO_LP.uitgevoerd!.fotos.slice(2),
     ],
     schuif: {
       voor: uitbreidingVoor, na: uitbreidingNa,

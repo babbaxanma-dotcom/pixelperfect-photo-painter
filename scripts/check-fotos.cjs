@@ -33,6 +33,28 @@ const sharp = require('sharp');
 const WORTEL = path.join(__dirname, '..');
 const MAP = path.join(WORTEL, 'src/assets/lp-diensten/realisaties');
 const BRON = path.join(WORTEL, 'src/pages/abbouw/lp/replica/inhoud.ts');
+/* Sinds 1 okt 2026 toont de homepage de echte foto's van de totaalrenovatie-LP
+   (kgj) via ...RENO_LP.uitgevoerd. Die lijst staat in dit bestand. */
+const KGJ = path.join(WORTEL, 'src/pages/abbouw/lp/kgj/inhoud-totaalrenovatie.ts');
+
+/** De foto's uit "uitgevoerd" van de totaalrenovatie-LP: {label, pad}. */
+function lpUitgevoerd() {
+  const kgj = fs.readFileSync(KGJ, 'utf8');
+  const invoer = {};
+  for (const m of kgj.matchAll(/^import (\w+) from '@\/(.+?)';$/gm)) invoer[m[1]] = path.join(WORTEL, 'src', m[2]);
+  const begin = kgj.indexOf('uitgevoerd: {');
+  const blok = kgj.slice(begin, kgj.indexOf('],', begin));
+  const namen = [...blok.matchAll(/\{ src: (\w+)/g)].map((m) => m[1]);
+  const regels = (blok.match(/\{ src: /g) || []).length;
+  /* Positieve controle: evenveel namen als regels, en minstens tien. */
+  if (begin < 0 || namen.length < 10 || namen.length !== regels) {
+    console.error(`FOUT: ${namen.length} foto's gelezen uit uitgevoerd van de LP (${regels} regels) — de meting is ongeldig`);
+    process.exit(2);
+  }
+  const onbekend = namen.filter((x) => !invoer[x]);
+  if (onbekend.length) { console.error(`FOUT: LP-foto zonder invoerregel: ${onbekend.join(', ')} — de meting is ongeldig`); process.exit(2); }
+  return namen.map((x) => ({ label: 'lp:' + x, pad: invoer[x] }));
+}
 
 /** Grens waaronder twee foto's als bijna dezelfde gelden. */
 const HAMMING_GRENS = 12;
@@ -112,9 +134,29 @@ const SPOORNAAM = /naam: '([a-z0-9-]+)'/g;
        er beelden bij. Alleen die extra beelden staan er letterlijk, dus de
        geerfde namen komen hier van TOTAALRENOVATIE erbij. */
     const erft = /\.\.\.TOTAALRENOVATIE\.werk\.fotos/.test(spoor);
-    if (naam === 'HOME' && !erft) {
-      console.error('FOUT: HOME erft het fotospoor niet meer met een spread — de meting is ongeldig');
+    const vanLp = /\.\.\.RENO_LP\.uitgevoerd!?\.fotos/.test(spoor);
+    if (naam === 'HOME' && !erft && !vanLp) {
+      console.error('FOUT: HOME haalt het fotospoor niet meer van de replica of van de LP — de meting is ongeldig');
       process.exit(2);
+    }
+    if (vanLp) {
+      /* Spoor = de LP-foto's + de eigen src-regels (bv. de afgewerkte dakfoto). */
+      const lp = lpUitgevoerd();
+      const eigenSrc = [...spoor.matchAll(/\{ src: (\w+)/g)].map((m) => m[1]);
+      const zonder = eigenSrc.filter((x) => !invoer[x]);
+      if (zonder.length) { console.error(`FOUT: ${naam}: src zonder invoerregel: ${zonder.join(', ')} — de meting is ongeldig`); process.exit(2); }
+      const velden = [...stuk.matchAll(FOTOVELDEN)].map((m) => m[1]);
+      const onbekend = velden.filter((v) => !invoer[v]);
+      if (onbekend.length || velden.length < 5) {
+        console.error(`FOUT: ${naam}: losse foto's niet te lezen (${velden.length}, onbekend: ${onbekend.join(', ')}) — de meting is ongeldig`);
+        process.exit(2);
+      }
+      paginas.push({
+        naam,
+        spoornamen: [],
+        gebruikt: [...lp, ...eigenSrc.map((x) => ({ label: x, pad: invoer[x] })), ...velden.map((v) => ({ label: v, pad: invoer[v] }))],
+      });
+      continue;
     }
     let geerfd = [];
     if (erft) {
