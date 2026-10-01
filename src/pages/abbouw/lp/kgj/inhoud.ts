@@ -54,6 +54,10 @@ export type Vraag = {
   /** Afvinkvraag: meerdere keuzes, met een knop Volgende. `alles` is het label van
       het vakje bovenaan dat alle keuzes in één keer aanvinkt. */
   afvinken?: { alles: string; tip?: { bij: string[]; tekst: string } };
+  /** Een zekerheid als bulletpoint onder de keuzes van deze vraag (zelfde stijl als de
+      troeven op de laatste stap). De regel onderaan de kaart valt dan weg, anders staat
+      hij er twee keer. */
+  punt?: string;
 };
 export type Foto = { src: string; alt: string };
 export type Review = { tekst: string; naam: string; bron: string };
@@ -225,7 +229,8 @@ export const DAKWERKEN: KgjInhoud = {
       { sleutel: 'Asbest', vraag: 'Is er asbest aanwezig in het dak?', keuzes: [
         { label: 'Ja, vermoedelijk', icoon: 'asbest' }, { label: 'Nee', icoon: 'veilig' }, { label: 'Weet ik niet zeker', icoon: 'twijfel' },
       ] },
-      { sleutel: 'Start', vraag: 'Wanneer wilt u beginnen?', keuzes: [
+      /* 1 okt, Mohammed: "doe bij deze stap duidelijk een puntje gratis en vrijblijvend". */
+      { sleutel: 'Start', vraag: 'Wanneer wilt u beginnen?', punt: 'Gratis en vrijblijvend', keuzes: [
         /* 30 sep, Mohammed: "duidelijker, zo snel mogelijk, dit jaar, volgend jaar".
            1 okt: "verwijder aub de optie ik verken nog", dus drie keuzes. */
         { label: 'Zo snel mogelijk', icoon: 'snel' }, { label: 'Dit jaar', icoon: 'drie' },

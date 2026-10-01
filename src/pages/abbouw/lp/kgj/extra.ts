@@ -145,6 +145,8 @@ export const KGJ_EXTRA = `
 @media (max-width: 420px) { .kgjx .kgj-reken__richt-bedrag { font-size: 22px; gap: 8px; } }
 
 /* ── drie zekerheden net boven de knop ── */
+/* Het puntje onder de keuzes van een gewone vraag (startvraag, 1 okt). */
+.kgjx .kgj-reken__troeven.kgj-reken__troeven--vraag { margin: 18px 0 2px; }
 .kgjx .kgj-reken__troeven { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; margin: 6px 0 14px;
   padding: 0; list-style: none; }
 .kgjx .kgj-reken__troeven li { display: inline-flex; align-items: center; gap: 6px; font-family: "Plus Jakarta Sans",

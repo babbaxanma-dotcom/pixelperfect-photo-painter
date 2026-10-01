@@ -154,7 +154,8 @@ export const TOTAALRENOVATIE: KgjInhoud = {
         { label: 'Enkel de afwerking', uitleg: 'pleister en verf', icoon: 'afwerking' },
         { label: 'Weet ik niet', icoon: 'twijfel' },
       ] },
-      { sleutel: 'Start', vraag: 'Wanneer wilt u beginnen?', keuzes: [
+      /* 1 okt, Mohammed: "doe bij deze stap duidelijk een puntje gratis en vrijblijvend". */
+      { sleutel: 'Start', vraag: 'Wanneer wilt u beginnen?', punt: 'Gratis en vrijblijvend', keuzes: [
         /* 30 sep, Mohammed: "duidelijker, zo snel mogelijk, dit jaar, volgend jaar".
            1 okt: "verwijder aub de optie ik verken nog", dus drie keuzes. */
         { label: 'Zo snel mogelijk', icoon: 'snel' }, { label: 'Dit jaar', icoon: 'drie' },

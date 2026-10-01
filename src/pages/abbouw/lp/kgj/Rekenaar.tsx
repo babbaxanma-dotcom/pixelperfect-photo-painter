@@ -277,6 +277,11 @@ export default function Rekenaar({ inhoud, plek, voor }: {
             ))}
           </div>
           {tip && <p className="kgj-reken__tip"><BadgePercent aria-hidden="true" />{tip}</p>}
+          {vraag.punt && (
+            <ul className="kgj-reken__troeven kgj-reken__troeven--vraag">
+              <li><Check aria-hidden="true" />{vraag.punt}</li>
+            </ul>
+          )}
           {/* Niet bij vraag 1: wat er aan het dak moet gebeuren, weet de bezoeker
               zelf (Mohammed: 'hoe kan iemand niet weten wat hij wilt'). */}
           {stap > 0 && <p className="kgj-reken__gerust">{inhoud.rekenaar.gerust}</p>}
@@ -331,7 +336,7 @@ export default function Rekenaar({ inhoud, plek, voor }: {
         </form>
       )}
       {/* "Gratis en vrijblijvend" staat op de laatste stap al bij de zekerheden. */}
-      {!(klaar && inhoud.rekenaar.troeven) && <p className="kgj-reken__zeker"><ShieldCheck aria-hidden="true" />{inhoud.rekenaar.zeker}</p>}
+      {!(klaar && inhoud.rekenaar.troeven) && !(!klaar && vraag?.punt) && <p className="kgj-reken__zeker"><ShieldCheck aria-hidden="true" />{inhoud.rekenaar.zeker}</p>}
     </div>
   );
 }
