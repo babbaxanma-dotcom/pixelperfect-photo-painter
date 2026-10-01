@@ -2,159 +2,115 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import '@/styles/roofpro.css';
 import { CONTACT } from '@/data/contact';
-import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
+import { ic, LOGO } from './_rp';
 
-type DienstSleutel = 'dakwerken' | 'gevel' | 'default';
-type Review = { name: string; role: string; text: string };
+/**
+ * Bedankpagina na elke aanvraag: abgroep.be/bedankt.
+ *
+ * Mohammed, 1 okt 2026: "bedankt pagina gewoon verbeteren, simpele bedanktpagina,
+ * en praktische zaken", "ipv wat er nu is". Zelfde opbouw als /afspraak: logo,
+ * kop in het midden, één zin, dan alleen wat de klant nu kan doen. Geen menu,
+ * geen footer.
+ *
+ * Elke zin heeft een bron:
+ * - de bevestigings-sms: GHL W01b stuurt na elke aanvraag een sms (K1a, K1b,
+ *   K1c of K1 Standaard);
+ * - "zo snel mogelijk": de woorden van die sms'en, zonder termijn;
+ * - zelf een moment kiezen: /dakinspectie en /afspraak boeken in de GHL-kalender
+ *   (dezelfde links als in K1c en K1 Standaard);
+ * - telefoon en mail: src/data/contact.ts.
+ * Wat hier eerder stond (fase-termijnen, "binnen het uur een bevestigingsmail",
+ * zekerheden en 9 reviews met naam die niet op AB's Google-profiel staan) had
+ * geen bron en is weg.
+ *
+ * ?dienst= komt van de rekenaars en de chat, ?service= van de oude calculators.
+ */
+type Soort = 'dakinspectie' | 'plaatsbezoek';
 
-const KOP: Record<DienstSleutel, { r1: string; r2: string }> = {
-  dakwerken: { r1: 'Bedankt, uw aanvraag', r2: 'voor dakwerken is binnen' },
-  gevel: { r1: 'Bedankt, uw aanvraag', r2: 'voor gevelrenovatie is binnen' },
-  default: { r1: 'Bedankt,', r2: 'uw aanvraag is binnen' },
+const AFSPRAAK: Record<Soort, { link: string; zin: string }> = {
+  dakinspectie: { link: '/dakinspectie', zin: 'Plan uw gratis dakinspectie meteen in onze agenda.' },
+  plaatsbezoek: { link: '/afspraak', zin: 'Plan uw plaatsbezoek meteen in onze agenda.' },
 };
 
-/* 30 sep: hier stonden 9 reviews met naam en een Google-icoon. Ze staan NIET op
-   het Google-profiel van AB (dat heeft één review, 5,0, gecontroleerd 22 sep
-   2026). Zolang dat zo is blijven de lijsten leeg en toont de pagina de sectie
-   niet, net als de landingspagina (lp/kgj/inhoud.ts, reviews). Echte reviews
-   komen hier alleen met naam en toestemming van de klant. */
-const REVIEWS: Record<DienstSleutel, Review[]> = {
-  dakwerken: [],
-  gevel: [],
-  default: [],
-};
+const vink = '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+const sms = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
+const agenda = ic.cal.replace('width="15" height="15"', 'width="20" height="20"');
+const vraag = ic.phone(20);
 
-const FASES = [
-  { n: '01', t: 'Bevestiging', tijd: 'Vandaag, binnen het uur', d: 'Een mail met de samenvatting van uw aanvraag en onze contactgegevens.' },
-  { n: '02', t: 'Telefonische intake', tijd: 'Eerstvolgende werkdag', d: 'Een gesprek van tien à vijftien minuten waarin we uw plannen doornemen en aangeven wat haalbaar is.' },
-  { n: '03', t: 'Plaatsbezoek', tijd: 'Binnen vijf werkdagen', d: 'De projectleider komt langs, meet op, neemt foto\'s en bespreekt de opties met u.' },
-  /* Geen premiedossier in de gedeelde fase-tekst: deze pagina krijgt ook
-     tegelwerk- en pleisterwerk-leads, en daar bestaat geen premie voor. De
-     premie-belofte staat alleen nog in de dakwerken-variant hieronder. */
-  { n: '04', t: 'Offerte', tijd: 'Vijf à tien dagen later', d: 'Vaste prijs, dertig dagen geldig, met een fotorapport van het plaatsbezoek.' },
-];
+const HTML = (soort: Soort) => {
+  const a = AFSPRAAK[soort];
+  return `<div class="rp rp-afs">
+<header class="rp-afs__kop">
+  <a href="/" aria-label="AB Bouw Groep"><img src="${LOGO}" alt="AB Bouw Groep" width="150" /></a>
+</header>
 
-/* Vier zekerheden per dienst. De kop zegt letterlijk "Vier", dus elke variant
-   telt er vier. Beloof per dienst alleen wat die dienst waarmaakt: de tienjarige
-   garantie en het premiedossier gelden bij AB voor dakwerken, niet voor interieur
-   (LpDienst toont die garantie zelf ook enkel bij ab_dakwerken). */
-const ZEKERHEDEN_BASIS = [
-  { t: 'Vaste prijs, bindend', d: 'De offerte is de eindfactuur. Meerwerk gaat pas door na uw schriftelijke akkoord.' },
-  { t: 'Startdatum op contract', d: 'De dag waarop wij beginnen staat vast voor u tekent.' },
-];
-const ZEKERHEDEN: Record<DienstSleutel, { t: string; d: string }[]> = {
-  dakwerken: [
-    ...ZEKERHEDEN_BASIS,
-    { t: '10 jaar garantie', d: 'Op de uitvoering van ons werk, schriftelijk vastgelegd in de offerte.' },
-    { t: 'Premies en attesten', d: 'Wij dienen het premiedossier mee in en leveren de attesten die u nodig heeft.' },
-  ],
-  gevel: [
-    ...ZEKERHEDEN_BASIS,
-    { t: 'Eigen vaste ploeg', d: 'Uw werf wordt uitgevoerd door onze eigen mensen, niet doorgegeven aan onderaannemers.' },
-    { t: '6% btw waar het kan', d: 'Is uw woning ouder dan tien jaar, dan rekenen wij 6% btw. Het papierwerk regelen wij.' },
-  ],
-  default: [
-    ...ZEKERHEDEN_BASIS,
-    { t: 'Eigen vaste ploeg', d: 'Uw werf wordt uitgevoerd door onze eigen mensen, niet doorgegeven aan onderaannemers.' },
-    { t: '6% btw waar het kan', d: 'Is uw woning ouder dan tien jaar, dan rekenen wij 6% btw. Het papierwerk regelen wij.' },
-  ],
-};
+<main class="rp-afs__main rp-bed">
+  <div class="rp-bed__vink">${vink}</div>
+  <h1 class="rp-afs__t">Bedankt, uw aanvraag is binnen</h1>
+  <p class="rp-afs__lede">Wij bekijken uw aanvraag en nemen zo snel mogelijk contact met u op.</p>
 
-const vink = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
-
-const HTML = (sleutel: DienstSleutel) => {
-  const kop = KOP[sleutel];
-  const reviews = REVIEWS[sleutel];
-  return `<div class="rp">
-${rpNav('')}
-
-<section class="rp-phero">
-  <div class="rp-wrap">
-    <span class="rp-eyebrow">${ic.mark} Aanvraag ontvangen</span>
-    <h1 class="rp-phero__t">${kop.r1}<span class="rp-dim">${kop.r2}</span></h1>
-    <p class="rp-phero__lede">U krijgt binnen het uur een bevestigingsmail. Wilt u ons intussen spreken, bel dan gerust.</p>
-    <div style="margin-top:30px;display:flex;flex-wrap:wrap;gap:12px">
-      <a class="rp-btn rp-btn--primary" href="${CONTACT.phone.href}">${ic.phone(17)} ${CONTACT.phone.display}</a>
-      <a class="rp-btn rp-btn--ghost" href="/realisaties">Bekijk onze realisaties</a>
-    </div>
-  </div>
-</section>
-
-<section class="rp-section">
-  <div class="rp-wrap">
-    <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
+  <ul class="rp-bed__lijst">
+    <li>
+      <span class="rp-bed__ic">${sms}</span>
       <div>
-        <span class="rp-eyebrow">${ic.mark} Wat er nu gebeurt</span>
-        <h2 class="rp-head__title">Van bevestiging<span class="rp-dim">tot offerte</span></h2>
+        <p class="rp-bed__t">Bevestiging per sms</p>
+        <p class="rp-bed__d">U krijgt meteen een sms van AB Bouw Groep op het nummer dat u invulde.</p>
       </div>
-    </div>
-    <div class="rp-steps">
-      ${FASES.map((f) => `
-      <article class="rp-step">
-        <div class="rp-step__body">
-          <div class="rp-step__n">${f.n}</div>
-          <h3 class="rp-step__t">${f.t}</h3>
-          <p class="rp-step__d">${f.d}</p>
-          <p class="rp-step__tijd">${f.tijd}</p>
-        </div>
-      </article>`).join('')}
-    </div>
-  </div>
-</section>
-
-${reviews.length ? `<section class="rp-section rp-section--soft">
-  <div class="rp-wrap">
-    <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
+    </li>
+    <li>
+      <span class="rp-bed__ic">${agenda}</span>
       <div>
-        <span class="rp-eyebrow">${ic.mark} Beoordelingen</span>
-        <h2 class="rp-head__title">Wat klanten zeggen<span class="rp-dim">na hun project</span></h2>
+        <p class="rp-bed__t">Liever zelf een moment kiezen?</p>
+        <p class="rp-bed__d">${a.zin}</p>
+        <a class="rp-btn rp-btn--primary rp-bed__knop" href="${a.link}">Kies een moment</a>
       </div>
-    </div>
-    <div class="rp-why__tiles rp-tiles-3">
-      ${reviews.map((r) => `
-      <article class="rp-rev">
-        <div class="rp-rev__stars" aria-label="5 van 5 sterren">${ic.star().repeat(5)}</div>
-        <p class="rp-rev__text">${r.text}</p>
-        <div class="rp-rev__foot">
-          <span class="rp-rev__who">
-            <span class="rp-rev__name">${r.name}</span><br/>
-            <span class="rp-rev__role">${r.role}</span>
-          </span>
-          <span class="rp-rev__g" aria-label="Google-beoordeling">${ic.google}</span>
-        </div>
-      </article>`).join('')}
-    </div>
-  </div>
-</section>` : ''}
-
-<section class="rp-section">
-  <div class="rp-wrap">
-    <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
+    </li>
+    <li>
+      <span class="rp-bed__ic">${vraag}</span>
       <div>
-        <span class="rp-eyebrow">${ic.mark} Schriftelijk vastgelegd</span>
-        <h2 class="rp-head__title">Vier zekerheden<span class="rp-dim">voor u als opdrachtgever</span></h2>
+        <p class="rp-bed__t">Een vraag of iets vergeten?</p>
+        <p class="rp-bed__d">Bel <a href="${CONTACT.phone.href}">${CONTACT.phone.display}</a> of mail naar <a href="mailto:${CONTACT.email}">${CONTACT.email}</a>.</p>
       </div>
-    </div>
-    <div class="rp-why__tiles rp-tiles-4">
-      ${ZEKERHEDEN[sleutel].map((z) => `
-      <div class="rp-tile">
-        <div class="rp-tile__ic" aria-hidden="true">${vink}</div>
-        <h3 class="rp-tile__t">${z.t}</h3>
-        <p class="rp-tile__d">${z.d}</p>
-      </div>`).join('')}
-    </div>
-  </div>
-</section>
+    </li>
+  </ul>
 
-${rpFooter()}
+  <a class="rp-bed__terug" href="/">Terug naar de website</a>
+</main>
 </div>`;
 };
 
+const STIJL = `
+.rp-afs { min-height: 100vh; background: var(--rp-bg-soft); }
+.rp-afs__kop { display: flex; justify-content: center; padding: 28px 16px 8px; }
+.rp-afs__kop img { display: block; height: auto; }
+.rp-afs__main { max-width: 880px; margin: 0 auto; padding: 24px 16px 56px; text-align: center; }
+.rp-afs__t { font-size: clamp(30px, 5vw, 46px); line-height: 1.1; margin: 0; }
+.rp-afs__lede { max-width: 560px; margin: 14px auto 32px; font-size: 17px; line-height: 1.55; text-wrap: balance; }
+.rp-bed { max-width: 600px; }
+.rp-bed__vink { width: 64px; height: 64px; margin: 0 auto 20px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--rp-accent); color: var(--rp-accent-ink); }
+.rp-bed__lijst { list-style: none; margin: 0; padding: 0; background: #fff; border: 1px solid var(--rp-line-soft); border-radius: 14px; text-align: left; }
+.rp-bed__lijst li { display: flex; gap: 16px; padding: 22px; }
+.rp-bed__lijst li + li { border-top: 1px solid var(--rp-line-soft); }
+.rp-bed__ic { flex: none; width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center;
+  background: var(--rp-accent-tint); color: var(--rp-accent-text); }
+.rp-bed__t { margin: 0; font-weight: 700; font-size: 17px; line-height: 1.3; color: var(--rp-ink); }
+.rp-bed__d { margin: 4px 0 0; font-size: 15.5px; line-height: 1.5; }
+.rp-bed__d a { color: var(--rp-ink); font-weight: 600; white-space: nowrap; }
+.rp-bed__knop { margin-top: 14px; }
+.rp-bed__terug { display: inline-block; margin-top: 26px; font-weight: 600; color: var(--rp-ink); }
+@media (max-width: 640px) {
+  .rp-afs__kop img { width: 120px; }
+  .rp-bed__lijst { border-radius: 10px; }
+  .rp-bed__lijst li { padding: 18px 16px; gap: 14px; }
+  .rp-bed__knop { width: 100%; justify-content: center; }
+}
+`;
+
 export default function Bedankt() {
   const [params] = useSearchParams();
-  const ruw = (params.get('dienst') || '').toLowerCase();
-  const sleutel: DienstSleutel =
-    ruw.includes('dak') ? 'dakwerken' : ruw.includes('gevel') ? 'gevel' : 'default';
+  const ruw = (params.get('dienst') || params.get('service') || '').toLowerCase();
+  const soort: Soort = ruw.includes('dak') ? 'dakinspectie' : 'plaatsbezoek';
 
   useEffect(() => {
     document.title = 'Bedankt voor uw aanvraag · AB Bouw Groep';
@@ -162,9 +118,12 @@ export default function Bedankt() {
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'robots'); document.head.appendChild(m); }
     m.setAttribute('content', 'noindex, nofollow');
     window.scrollTo(0, 0);
-    const op = wireMobielMenu();
-    return () => op();
   }, []);
 
-  return <div dangerouslySetInnerHTML={{ __html: HTML(sleutel) }} />;
+  return (
+    <>
+      <style>{STIJL}</style>
+      <div dangerouslySetInnerHTML={{ __html: HTML(soort) }} />
+    </>
+  );
 }
