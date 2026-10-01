@@ -30,7 +30,10 @@ const SCHERMEN = [[390, 844], [375, 667]];
   let srv = null;
   let basis = process.env.LP_BASIS;
   if (!basis) {
-    srv = spawn('npx', ['vite', '--port', String(POORT), '--strictPort'], { shell: true, stdio: 'ignore' });
+    /* vite rechtstreeks met node, zonder shell: dan is srv.pid de server zelf en stopt
+       srv.kill() hem echt (via npx en een shell bleef hij op Windows draaien). */
+    const vite = require('node:path').join(__dirname, '..', 'node_modules', 'vite', 'bin', 'vite.js');
+    srv = spawn(process.execPath, [vite, '--port', String(POORT), '--strictPort'], { stdio: 'ignore' });
     basis = `http://localhost:${POORT}`;
     let op = false;
     for (let i = 0; i < 90 && !op; i++) {
@@ -81,7 +84,7 @@ const SCHERMEN = [[390, 844], [375, 667]];
     }
   } finally {
     await br.close();
-    if (srv) { try { process.kill(-srv.pid); } catch { /* */ } try { srv.kill(); } catch { /* */ } if (process.platform === 'win32') { try { require('node:child_process').execSync(`taskkill /pid ${srv.pid} /T /F`, { stdio: 'ignore' }); } catch { /* */ } } }
+    if (srv) { try { srv.kill(); } catch { /* */ } }
   }
   if (metingen === 0) { console.log('ONGELDIGE METING: 0 metingen'); process.exit(2); }
   console.log(`check-rekenaar-scroll: ${metingen} keuzes over ${SCHERMEN.length} schermen en ${Object.keys(PADEN).length} pagina's (${basis})`);
