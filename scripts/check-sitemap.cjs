@@ -20,12 +20,13 @@
  * Draaien: node scripts/check-sitemap.cjs   (start zelf een preview-server)
  */
 const { spawn, execSync } = require('node:child_process');
+const { startPreview } = require('./_preview.cjs');
 const fs = require('node:fs');
 const path = require('node:path');
 const puppeteer = require('puppeteer-core');
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-const POORT = 4383;
+let POORT = 4383;
 
 const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
 
@@ -43,8 +44,8 @@ if (paden.length < 10) stop(2, `FOUT: maar ${paden.length} adressen uit de sitem
 const MAG_ONTBREKEN = new Set(['/index', '/bedankt', '/afspraak', '/dakinspectie', '/review', '/lp/totaalrenovatie', '/lp/badkamerrenovatie', '/lp/dakwerken']);
 
 (async () => {
-  const server = spawn('npx', ['vite', 'preview', '--port', String(POORT), '--strictPort'],
-    { shell: true, stdio: 'ignore' });
+  /* Eigen build, vrije poort, en nagaan dat de server de eigen site serveert (scripts/_preview.cjs). */
+  const server = await startPreview(POORT); POORT = server.poort;
   let browser;
   try {
     let op = false;

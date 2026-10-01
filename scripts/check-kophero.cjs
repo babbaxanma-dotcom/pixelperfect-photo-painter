@@ -25,10 +25,11 @@
  * Draaien: node scripts/check-kophero.cjs   (start zelf een preview-server)
  */
 const { spawn, execSync } = require('node:child_process');
+const { startPreview } = require('./_preview.cjs');
 const puppeteer = require('puppeteer-core');
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-const POORT = 4382;
+let POORT = 4382;
 
 /* De landingspaginas met een heroformulier, plus een gewone pagina zodat de
    kop daar ook meegemeten wordt. */
@@ -56,8 +57,8 @@ const SPELING = 2;
 const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
 
 (async () => {
-  const server = spawn('npx', ['vite', 'preview', '--port', String(POORT), '--strictPort'],
-    { shell: true, stdio: 'ignore' });
+  /* Eigen build, vrije poort, en nagaan dat de server de eigen site serveert (scripts/_preview.cjs). */
+  const server = await startPreview(POORT); POORT = server.poort;
   let browser;
   try {
     let op = false;

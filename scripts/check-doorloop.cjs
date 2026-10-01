@@ -20,14 +20,15 @@
  * Draaien: node doorloop-test.cjs   (start zelf een preview-server)
  */
 const { spawn, execSync } = require('node:child_process');
+const { startPreview } = require('./_preview.cjs');
 const puppeteer = require('puppeteer-core');
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-const POORT = 4420;
+let POORT = 4420;
 const SP = process.argv[2];
 
 (async () => {
-  const srv = spawn('npx', ['vite', 'preview', '--port', String(POORT), '--strictPort'],
-    { shell: true, stdio: 'ignore' });
+  /* Eigen build, vrije poort, en nagaan dat de server de eigen site serveert (scripts/_preview.cjs). */
+  const srv = await startPreview(POORT); POORT = srv.poort;
   let br, stuk = 0, metingen = 0;
   const fout = (m) => { stuk++; console.log('  FOUT: ' + m); };
   try {

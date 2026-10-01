@@ -22,10 +22,11 @@
  * Draaien: node scripts/check-ankers.cjs   (start zelf een preview-server)
  */
 const { spawn, execSync } = require('node:child_process');
+const { startPreview } = require('./_preview.cjs');
 const puppeteer = require('puppeteer-core');
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-const POORT = 4384;
+let POORT = 4384;
 
 /* Elk anker waar een navigatielink of een sitelink naartoe wijst. De sitelinks
    komen rechtstreeks uit ads/<campagne>/3-advertenties.json: op 26 sep liep de
@@ -63,8 +64,8 @@ const SPELING = 145;
 const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
 
 (async () => {
-  const server = spawn('npx', ['vite', 'preview', '--port', String(POORT), '--strictPort'],
-    { shell: true, stdio: 'ignore' });
+  /* Eigen build, vrije poort, en nagaan dat de server de eigen site serveert (scripts/_preview.cjs). */
+  const server = await startPreview(POORT); POORT = server.poort;
   let browser;
   try {
     let op = false;
