@@ -149,6 +149,23 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
   const SOORT_WERK = DIENSTEN[inhoud.dienst].typeWerkOpties;
   const navigate = useNavigate();
   const [mobOpen, setMobOpen] = useState(false);
+  /* Fotorol in de hero (homepage): zelfde ritme als de totaalrenovatie-LP, om de
+     zes seconden de volgende, stil als het tabblad niet zichtbaar is en bij
+     "minder beweging". */
+  const DIAS = inhoud.hero.dias ?? [];
+  const rol = DIAS.length > 0;
+  const [dia, setDia] = useState(0);
+  useEffect(() => {
+    const n = DIAS.length;
+    if (n < 2 || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    let klok: number | null = null;
+    const stop = () => { if (klok !== null) { window.clearInterval(klok); klok = null; } };
+    const start = () => { stop(); klok = window.setInterval(() => setDia((d) => (d + 1) % n), 6000); };
+    const zicht = () => (document.hidden ? stop() : start());
+    document.addEventListener('visibilitychange', zicht);
+    start();
+    return () => { stop(); document.removeEventListener('visibilitychange', zicht); };
+  }, [DIAS.length]);
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
   const startGemeld = useRef(false);
@@ -593,13 +610,27 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
         </div>
       </div>
 
-      <section className={`pc-hero${inhoud.nav ? ' pc-hero--ruim' : ''}`}>
-        <div className="pc-hero-vlak" />
-        <div className="pc-hero-foto">
-          <img src={inhoud.hero.foto} alt={inhoud.hero.alt}
-            style={inhoud.hero.focus ? ({ '--pc-hero-focus': inhoud.hero.focus } as React.CSSProperties) : undefined} />
-        </div>
-        <div className="pc-hero-sluier" />
+      <section className={`pc-hero${inhoud.nav ? ' pc-hero--ruim' : ''}${rol ? ' pc-hero--rol' : ''}`}>
+        {rol ? (
+          /* 1 okt: de foto vult de hele hero en wisselt, zoals op de totaalrenovatie-LP. */
+          <div className="pc-rol">
+            {DIAS.map((d, i) => (
+              <figure className={`pc-rol-dia${i === dia ? ' is-aan' : ''}`} key={d.src}>
+                <img src={d.src} alt={d.alt} loading={i === 0 ? 'eager' : 'lazy'} decoding="async"
+                  style={d.pos ? { objectPosition: d.pos } : undefined} />
+              </figure>
+            ))}
+          </div>
+        ) : (
+          <>
+            <div className="pc-hero-vlak" />
+            <div className="pc-hero-foto">
+              <img src={inhoud.hero.foto} alt={inhoud.hero.alt}
+                style={inhoud.hero.focus ? ({ '--pc-hero-focus': inhoud.hero.focus } as React.CSSProperties) : undefined} />
+            </div>
+            <div className="pc-hero-sluier" />
+          </>
+        )}
 
         <div className="pc-vat pc-hero-vat">
           {/* De referentie zet 'New' in de pil: een nieuwheidsclaim die voor AB
@@ -610,14 +641,23 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
           <a className="pc-knop pc-knop--accent" href="#contact">{inhoud.hero.knop}<IcPijl /></a>
         </div>
 
-        <div className="pc-scroll">
-          <button type="button" aria-label="Terug naar boven"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}><IcChevron richting="boven" /></button>
-          <button type="button" className="is-accent" aria-label="Naar de diensten"
-            onClick={() => document.getElementById('diensten')?.scrollIntoView({ behavior: 'smooth' })}>
-            <IcChevron richting="onder" />
-          </button>
-        </div>
+        {rol ? (
+          /* Geen pijlen: de rol loopt vanzelf, zoals op de LP. De streepjes tonen waar hij staat. */
+          <div className="pc-rol-streep" aria-hidden="true">
+            <div className="pc-vat">
+              {DIAS.map((d, i) => <span className={`pc-rol-tik${i === dia ? ' is-aan' : ''}`} key={d.src} />)}
+            </div>
+          </div>
+        ) : (
+          <div className="pc-scroll">
+            <button type="button" aria-label="Terug naar boven"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}><IcChevron richting="boven" /></button>
+            <button type="button" className="is-accent" aria-label="Naar de diensten"
+              onClick={() => document.getElementById('diensten')?.scrollIntoView({ behavior: 'smooth' })}>
+              <IcChevron richting="onder" />
+            </button>
+          </div>
+        )}
       </section>
 
       {/* ── Formulierbalk die over de onderrand van de hero valt ── */}

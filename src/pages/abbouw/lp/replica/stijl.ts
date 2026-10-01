@@ -1472,4 +1472,35 @@ export const REPLICA_CSS = `
   .pc-schets-doorloop .pc-schets-stalen__rij img { height: 58px; }
   .pc-schets-doorloop .pc-schets-stalen__anders { min-height: 90px; }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Homepage-hero met fotorol (1 okt 2026). Mohammed: "de foto roll graag
+   dezelfde als op totaalrenovatie lp", "de scroll feel", "bij binnenkomen
+   mooier cleaner". Zelfde opbouw als de LP: foto over de volle breedte, een
+   donkere waas van links, witte kop, elke zes seconden de volgende foto met een
+   zachte overgang. De hero scrolt gewoon mee weg (niet meer sticky), zoals op de
+   LP. Maten en het formulier boven de vouw blijven die van .pc-hero--ruim.
+   ───────────────────────────────────────────────────────────── */
+.pc-hero--rol { position: relative; background: #0a101c; }
+.pc-hero--rol .pc-rol { position: absolute; inset: 0; overflow: hidden; }
+.pc-rol-dia { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity 1.1s ease; }
+.pc-rol-dia.is-aan { opacity: 1; }
+.pc-rol-dia img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pc-hero--rol::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(95deg, rgba(10, 16, 28, .62) 0%, rgba(10, 16, 28, .56) 55%, rgba(10, 16, 28, .06) 100%); }
+.pc-hero--rol .pc-hero-vat { z-index: 2; }
+.pcx .pc-hero--rol .pc-h1 { color: #fff; }
+.pc-rol-streep { position: absolute; left: 0; right: 0; bottom: 134px; z-index: 3; pointer-events: none; }
+.pc-rol-streep .pc-vat { display: flex; gap: 7px; }
+.pc-rol-tik { width: 26px; height: 3px; border-radius: 2px; background: rgba(255, 255, 255, .3); transition: background .3s ease, width .3s ease; }
+.pc-rol-tik.is-aan { background: #fff; width: 46px; }
+/* Op een laag venster zou het streepje tegen de knop komen. */
+@media (max-height: 680px) { .pc-rol-streep { display: none; } }
+@media (prefers-reduced-motion: reduce) { .pc-rol-dia { transition: none; } }
+@media (max-width: 900px) {
+  /* Op een telefoon ligt de foto achter de tekst, zoals op de LP; geen band. */
+  .pc-hero--rol { min-height: 440px; justify-content: flex-end; }
+  .pc-hero--rol .pc-hero-vat { padding-block: 150px 48px; }
+  .pc-rol-streep { bottom: 20px; }
+}
 `;

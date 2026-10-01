@@ -158,6 +158,12 @@ export type PaginaInhoud = {
     alt: string;
     /** Waar de telefoonuitsnede op inzoomt; leeg laat de standaard staan. */
     focus?: string;
+    /**
+     * Fotorol over de volle breedte, zoals de hero van de totaalrenovatie-LP:
+     * elke zes seconden de volgende foto, met een donkere waas en witte kop.
+     * Leeg = de gesplitste hero met één foto (foto, alt).
+     */
+    dias?: { src: string; alt: string; pos?: string }[];
   };
   over: { kop: string[]; tekst: string; slot: string; foto: string; alt: string };
   diensten: { kop: string[]; achtergrond: string; kaarten: Dienstkaart[] };
@@ -625,6 +631,9 @@ export const HOME: PaginaInhoud = {
   hero: {
     regels: ['De oplossing voor uw', 'bouwwerkzaamheden', 'en renovatie'],
     knop: 'Vraag een plaatsbezoek aan',
+    /* 1 okt 2026, Mohammed: "de foto roll graag dezelfde als op totaalrenovatie lp".
+       Dezelfde drie foto's, uit de LP zelf, zodat ze niet uit elkaar lopen. */
+    dias: RENO_LP.hero.dias,
     foto: homeHero,
     alt: 'Woning met vernieuwde gevel in steenstrips en een nieuw pannendak, door AB Bouw Groep',
   },
