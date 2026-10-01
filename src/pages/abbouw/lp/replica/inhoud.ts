@@ -113,6 +113,13 @@ export type PaginaInhoud = {
   toonDivisies?: boolean;
   /** Toont de realisatieteller in de over-sectie. Standaard aan. */
   toonTeller?: boolean;
+  /** Toont de oranje band "Bel ons vandaag" die door het beeld loopt. Standaard aan. */
+  toonBand?: boolean;
+  /**
+   * Google-score in het blok op de foto (bv. '5,0'). Leeg = geen blok. Alleen
+   * invullen met het cijfer dat op het Google-profiel van AB staat, met datum.
+   */
+  googleScore?: string;
   /** Toont de sectie met uitgevoerd werk. Standaard aan. */
   toonWerk?: boolean;
   /** Toont de badkamerschetser. */
@@ -222,7 +229,7 @@ export const TOTAALRENOVATIE: PaginaInhoud = {
       { titel: 'U doet een aanvraag', Icoon: IcStapBel,
         tekst: 'Laat uw gegevens achter en vertel kort wat u wil laten doen. Een foto van de ruimte helpt. Bellen mag ook.' },
       { titel: 'Gratis plaatsbezoek', Icoon: IcStapBezoek,
-        tekst: 'Meestal binnen vijf werkdagen staat er iemand bij u thuis. We bekijken de ruimte samen met u, luisteren naar wat u voor ogen hebt en zeggen meteen wat haalbaar is.' },
+        tekst: 'We bekijken de ruimte samen met u, luisteren naar wat u voor ogen hebt en zeggen meteen wat haalbaar is.' },
       { titel: 'Opmeten en offerte', Icoon: IcStapMeten,
         tekst: 'U krijgt de volledige prijs op papier, met per onderdeel wat erin zit. Ook de materialen die wij voorzien en de vermoedelijke doorlooptijd staan erbij.' },
       { titel: 'De werf start', Icoon: IcStapWerf,
@@ -277,9 +284,6 @@ export const TOTAALRENOVATIE: PaginaInhoud = {
       { badge: ['6%', 'btw'], titel: '6% btw in plaats van 21%',
         tekst: 'Bij een woning ouder dan tien jaar.', knop: 'Bekijk of uw woning telt',
         href: '#contact', foto: aanbod1, alt: 'Afgewerkte woonkamer na renovatie' },
-      { badge: ['5', 'werkdagen'], titel: 'Plaatsbezoek binnen vijf werkdagen',
-        tekst: "Opmeten, foto's van de opbouw, knelpunten.", knop: 'Gratis offerte',
-        href: '#contact', foto: plaatsbezoekFoto, alt: 'Woning in uitvoering: vloerverwarming gelegd, klaar voor de chape' },
       { badge: ['Eigen', 'ploeg'], titel: 'Eigen ploeg op de werf',
         tekst: 'Dezelfde mensen, elke dag.', knop: 'Gratis offerte',
         href: '#contact', foto: aanbod3, alt: 'Gepleisterde ruimte tijdens de afwerking' },
@@ -445,7 +449,7 @@ export const BADKAMER: PaginaInhoud = {
       { titel: 'U doet een aanvraag', Icoon: IcStapBel,
         tekst: 'Laat uw gegevens achter en vertel kort wat er nu staat en wat weg mag. Een foto van de badkamer helpt. Bellen mag ook.' },
       { titel: 'Gratis plaatsbezoek', Icoon: IcStapBezoek,
-        tekst: 'Meestal binnen vijf werkdagen staat er iemand bij u thuis. Hij meet de ruimte op, bekijkt waar de afvoer ligt en luistert naar wat u voor ogen hebt.' },
+        tekst: 'Wij meten de ruimte op, bekijken waar de afvoer ligt en luisteren naar wat u voor ogen hebt.' },
       { titel: 'Opmeten en offerte', Icoon: IcStapMeten,
         tekst: 'U krijgt een vaste prijs op papier, met per onderdeel wat erin zit: uitbraak, leidingen, tegelwerk, sanitair en de afvoer van het puin.' },
       { titel: 'De werf start', Icoon: IcStapWerf,
@@ -587,12 +591,17 @@ export const HOME: PaginaInhoud = {
      die een klant typt, en een ervan noemde de papierwinkel. Deze vier
      noemen een stookkost, een seizoen, een twijfel of de buren -- dat is
      hoe iemand over zijn eigen verbouwing praat. */
-  reviews: [
-    { text: 'Isolatie, dak en ramen in één keer aangepakt. Veel warmer nu, en zij regelden het hele papierwerk. Echt ontzorgd.', name: 'Nathalie Aerts', role: 'Energetische renovatie · Bonheiden' },
-    { text: 'Vier weken stof, en dan een prachtige badkamer. Inloopdouche, zwevend meubel, vloerverwarming. De tegelzetter heeft hier echt zijn handtekening gezet.', name: 'Inge Vermeiren', role: 'Badkamer en toilet · Kontich' },
-    { text: 'Ik dacht aan een nieuw dak, maar na hun bezoek bleek herstellen genoeg. Ze hadden me makkelijk meer kunnen aansmeren. Dat noem ik eerlijk werken.', name: 'Dirk Maes', role: 'Plat dak · Antwerpen' },
-    { text: 'Witte crepi op buitenisolatie. Onze stookkost is bijna gehalveerd deze winter. Net en proper gewerkt.', name: 'Hilde Goossens', role: 'Gevelisolatie · Boom' },
-  ],
+  /* 1 okt 2026: hier stonden vier reviews met naam. Ze kwamen van de oude site
+     (Lovable-tekst) en staan niet op het Google-profiel van AB, dat één review
+     heeft (gecontroleerd 22 sep). Regel 1: geen verzonnen reviews. De sectie
+     verschijnt weer zodra hier echte reviews met toestemming staan. */
+  reviews: [],
+  /* Ook weg tot er een bron is: de teller "120+ realisaties", de merkenrij
+     (Velux, Knauf, Isover: niet bevestigd door AB) en de lopende telefoonband
+     (rustiger; het nummer staat al in de kop, de over-sectie en het contact). */
+  toonTeller: false,
+  toonMerken: false,
+  toonBand: false,
   toonCalculator: false,
   toonDiensten: false,
   footer: '',

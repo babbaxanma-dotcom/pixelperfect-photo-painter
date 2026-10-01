@@ -293,6 +293,13 @@ export const REPLICA_CSS = `
    avatarrij eruit is, anders zakt de tekst naar de onderkant van de rij. */
 .pc-over-grid > .pc-rij2 { align-self: end; }
 .pc-over-grid > .pc-over-tekst { align-self: start; margin-top: 22px; }
+/* Zonder teller (homepage, 1 okt): kop en tekst links onder elkaar, de foto
+   rechts over beide rijen. Anders blijft er een leeg vak naast de kop. */
+@media (min-width: 1001px) {
+  .pc-over-grid--zonder-teller { grid-template-rows: auto auto; row-gap: 0; }
+  .pc-over-grid--zonder-teller > .pc-over-foto { grid-column: 2; grid-row: 1 / span 2; align-self: start; }
+  .pc-over-grid--zonder-teller > .pc-over-tekst { grid-column: 1; grid-row: 2; margin-top: 30px; }
+}
 
 .pc-chip--vlak { display: inline-flex; align-items: center; gap: 6px; height: 29px;
   padding: 0 13px 0 8px; border-radius: 6px; background: var(--pc-cream);
@@ -335,6 +342,11 @@ export const REPLICA_CSS = `
   display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; }
 .pc-divisies li { position: relative; padding-left: 17px; font-size: 16px; line-height: 22px;
   color: var(--pc-ink); }
+/* 1 okt: de afdelingen zijn links. Een pijltje zegt dat je kan doorklikken. */
+.pc-divisies a { display: inline-flex; align-items: center; gap: 6px; color: inherit; text-decoration: none; }
+.pc-divisies a svg { width: 11px; height: 11px; color: var(--pc-accent); transition: transform .2s; }
+.pc-divisies a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.pc-divisies a:hover svg { transform: translate(2px, -2px); }
 .pc-divisies li::before { content: ""; position: absolute; left: 0; top: 8px;
   width: 7px; height: 7px; border-radius: 50%; background: var(--pc-accent); }
 .pc-over-slot { margin-top: 20px; }
@@ -916,7 +928,10 @@ export const REPLICA_CSS = `
   .pc-score-sterren svg { width: 12px; height: 11px; }
   .pc-score-cijfer { font-size: 56px; line-height: 40px; margin-top: 20px; }
   .pc-score-bij { margin-top: 16px; font-size: 14px; }
-  .pc-divisies { grid-template-columns: 1fr; }
+  .pc-divisies { grid-template-columns: 1fr; gap: 0; }
+  .pc-divisies li { padding: 0 0 0 17px; border-bottom: 1px solid rgba(0, 0, 0, .08); }
+  .pc-divisies li::before { top: 21px; }
+  .pc-divisies a { display: flex; justify-content: space-between; padding: 13px 0; }
   .pc-diensten { padding: 44px 0 48px; }
   .pc-kaarten { grid-template-columns: 1fr; height: auto; gap: 16px; }
   .pc-kaarten-kolom { gap: 16px; }

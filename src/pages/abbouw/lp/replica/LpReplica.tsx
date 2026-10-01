@@ -76,8 +76,11 @@ const MERKEN = [
 const GLYPH_TEKENS = ['1', '2', '0', '+'];
 const GLYPH_STANDAARD = [glyph1, glyph2, glyph3, glyph4];
 /** De zes divisies van AB Bouw Groep. */
-const DIVISIES = ['AB Construct', 'AB Dakwerken', 'AB Gevelbekleding',
-  'AB Interieurwerken', 'AB Bad & Wellness', 'AB Ecologisch'];
+const DIVISIES = [
+  { naam: 'AB Construct', href: '/construct' }, { naam: 'AB Dakwerken', href: '/dakwerken' },
+  { naam: 'AB Gevelbekleding', href: '/gevel' }, { naam: 'AB Interieurwerken', href: '/interieur' },
+  { naam: 'AB Bad & Wellness', href: '/bad' }, { naam: 'AB Ecologisch', href: '/ecologisch' },
+];
 
 
 
@@ -644,7 +647,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
 
       {/* ── Over ons ── */}
       <section className="pc-over" id="over">
-        <div className="pc-vat pc-over-grid">
+        <div className={`pc-vat pc-over-grid${inhoud.toonTeller === false ? ' pc-over-grid--zonder-teller' : ''}`}>
           <div>
             <h2 className="pc-h2">{regels(inhoud.over.kop)}</h2>
             <a className="pc-knop pc-knop--accent pc-over-knop" href={CONTACT.phone.href}>
@@ -670,13 +673,17 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
 
           <div className="pc-rij2 pc-over-foto">
             <img src={inhoud.over.foto} alt={inhoud.over.alt} loading="lazy" />
+            {/* Alleen met de score die echt op het Google-profiel van AB staat.
+                Hier stond vast "4,9"; het profiel heeft één review (22 sep). */}
+            {inhoud.googleScore && (
             <div className="pc-score">
               <div className="pc-score-sterren">
                 {[0, 1, 2, 3, 4].map((i) => <IcSter key={i} />)}
               </div>
-              <div className="pc-score-cijfer">4,9</div>
+              <div className="pc-score-cijfer">{inhoud.googleScore}</div>
               <div className="pc-score-bij">Google-score</div>
             </div>
+            )}
           </div>
 
           <div className="pc-rij2 pc-over-tekst">
@@ -685,7 +692,8 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
                 één oogopslag te zien wat er onder één dak zit. */}
             {inhoud.toonDivisies !== false && (
             <ul className="pc-divisies">
-              {DIVISIES.map((d) => <li key={d}>{d}</li>)}
+              {/* 1 okt: elke afdeling is een link naar haar eigen pagina. */}
+              {DIVISIES.map((d) => <li key={d.naam}><a href={d.href}>{d.naam}<IcPijl /></a></li>)}
             </ul>
             )}
             {inhoud.over.slot && <p className="pc-over-slot">{inhoud.over.slot}</p>}
@@ -736,6 +744,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       {/* ── Aanbod: kaartenspoor dat rechts uit beeld loopt ── */}
       {/* ── Marquee-band. De referentie herhaalt hier een telefoonoproep;
            het spoor staat twee keer in de DOM zodat de lus naadloos is. ── */}
+      {inhoud.toonBand !== false && (
       <div className="pc-marquee" aria-hidden="true">
         <div className="pc-marquee-spoor">
           {[0, 1].map((lus) => (
@@ -751,6 +760,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
           ))}
         </div>
       </div>
+      )}
 
       {/* ── Werkwijze: vijf stappen in 3 + 2 ── */}
       <section className="pc-werkwijze" id="werkwijze">
@@ -848,22 +858,27 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       )}
 
       {/* ── Reviews: scoreblok links, kaartenspoor rechts ── */}
+      {REVIEWS.length > 0 && (
       <section className="pc-reviews">
         <div className="pc-vat pc-midden">
-          <span className="pc-chip--rand">4,9<IcChevron richting="rechts" /></span>
+          {inhoud.googleScore && <span className="pc-chip--rand">{inhoud.googleScore}<IcChevron richting="rechts" /></span>}
           <h2 className="pc-h2--groot">Wat klanten schrijven</h2>
         </div>
         <div className="pc-vat pc-reviews-blok">
+          {/* 1 okt: hier stond vast "Gemiddeld 4,9 van 5". Alleen met de echte
+              score van het Google-profiel (googleScore). */}
+          {inhoud.googleScore && (
           <div className="pc-score-kolom">
             {/* De referentie zet 'EXCELLENT' in kapitalen. Zo'n all-caps
                 mini-opschrift is precies de tell die Mohammed heeft verbannen. */}
             <div className="pc-score-woord">Uitstekend</div>
             <div className="pc-score-rij">{[0, 1, 2, 3, 4].map((i) => <IcSter key={i} />)}</div>
-            <div className="pc-score-onder">Gemiddeld 4,9 van 5</div>
+            <div className="pc-score-onder">Gemiddeld {inhoud.googleScore} van 5</div>
             {/* Als woord, niet als logo: het Google-beeldmerk staat niet in de
                 repo en een nagetekend merk is een nagemaakt merk. */}
             <div className="pc-score-bron">Google</div>
           </div>
+          )}
           <div className="pc-review-spoor" ref={reviewSpoor}
             onScroll={(e) => volgStand(e.currentTarget, setReviewPos)}>
             {REVIEWS.map((r) => (
@@ -885,6 +900,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
         </div>
         <Bediening spoor={reviewSpoor} pos={reviewPos} schuif={schuif} wat="review" />
       </section>
+      )}
 
       {/* ── Uw zekerheden: de vier voorwaarden die vastliggen ──
           Deze sectie stond eerst boven de werkwijze, dus vóór elk bewijs. Wie
