@@ -26,7 +26,7 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-hero__sub { margin-top: 20px; color: rgba(255, 255, 255, .9); font-size: 18px; max-width: 40ch; }
 
 /* ── de calculatorkaart ── */
-.kgjx .kgj-reken { background: var(--wit); color: var(--inkt); border-radius: var(--r-vak);
+.kgjx .kgj-reken { overflow-anchor: none; background: var(--wit); color: var(--inkt); border-radius: var(--r-vak);
   padding: 26px 28px 24px; box-shadow: 0 30px 70px -30px rgba(5, 11, 20, .6); text-align: left; }
 .kgj-reken__kop { display: flex; justify-content: space-between; align-items: center; min-height: 28px;
   font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 13px; font-weight: 700; color: var(--zacht); }

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, BadgePercent, Calculator, Check, Clock, Home, Lock, Plus, ShieldCheck } from 'lucide-react';
 import { Icoon } from './Iconen';
@@ -55,6 +55,8 @@ export default function Rekenaar({ inhoud, plek, voor }: {
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
   const gestart = useRef(false);
+  const kaart = useRef<HTMLDivElement>(null);
+  const vorigeStap = useRef(stap);
 
   /* Vragen met een voorwaarde (als) verschijnen pas als de antwoorden waarop ze
      wachten gegeven zijn: de bedekking hangt af van het soort dak én van het
@@ -66,6 +68,30 @@ export default function Rekenaar({ inhoud, plek, voor }: {
   const AANTAL = langstePad(ALLE, antwoorden);
 
   const klaar = stap >= VRAGEN.length;
+
+  /* Mohammed, 1 okt: "bij vraag 2 of 3 paar pixels naar onder ... waardoor je de
+     form kwijtraakt". Een vraag is soms veel korter dan de vorige (totaalrenovatie:
+     vraag 2 is 923 px, vraag 3 620 px op 390 px breed). Wie naar onder scrolde om
+     te tikken, zag daarna de kop van de rekenaar niet meer: die viel onder de vaste
+     menubalk of boven het scherm. Na elke stap (ook Terug) komt de kop daarom
+     terug in beeld, net onder de menubalk, maar alleen als hij verdwenen is. */
+  useEffect(() => {
+    if (vorigeStap.current === stap) return;
+    vorigeStap.current = stap;
+    const el = kaart.current;
+    if (!el) return;
+    const kop = el.querySelector<HTMLElement>('.kgj-reken__kop') ?? el;
+    const gedrag: ScrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    /* In het venster ("Bereken uw prijs") scrolt het venster zelf, niet de pagina erachter. */
+    const venster = el.closest<HTMLElement>('.kgj-venster__in');
+    if (venster) {
+      if (kop.getBoundingClientRect().top < venster.getBoundingClientRect().top + 4) venster.scrollTo({ top: 0, behavior: gedrag });
+      return;
+    }
+    const balkH = document.querySelector('.kgj-kop')?.getBoundingClientRect().height ?? 0;
+    if (kop.getBoundingClientRect().top >= balkH + 4) return;
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - balkH - 8, behavior: gedrag });
+  }, [stap]);
   const totaal = AANTAL + 1;
   const nu = klaar ? totaal : stap + 1;
 
@@ -155,7 +181,7 @@ export default function Rekenaar({ inhoud, plek, voor }: {
   const tip = vorige?.tip && vorige.tip.bij.includes(antwoorden[vorige.sleutel]) ? vorige.tip.tekst : null;
 
   return (
-    <div className={`kgj-reken kgj-reken--${plek}`}>
+    <div ref={kaart} className={`kgj-reken kgj-reken--${plek}`}>
       <div className="kgj-reken__hoofd">
         <span className="kgj-reken__logo" aria-hidden="true"><Calculator /></span>
         <div>

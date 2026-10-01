@@ -155,9 +155,10 @@ export const TOTAALRENOVATIE: KgjInhoud = {
         { label: 'Weet ik niet', icoon: 'twijfel' },
       ] },
       { sleutel: 'Start', vraag: 'Wanneer wilt u beginnen?', keuzes: [
-        /* 30 sep, Mohammed: "duidelijker, zo snel mogelijk, dit jaar, volgend jaar". */
+        /* 30 sep, Mohammed: "duidelijker, zo snel mogelijk, dit jaar, volgend jaar".
+           1 okt: "verwijder aub de optie ik verken nog", dus drie keuzes. */
         { label: 'Zo snel mogelijk', icoon: 'snel' }, { label: 'Dit jaar', icoon: 'drie' },
-        { label: 'Volgend jaar', icoon: 'later' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
+        { label: 'Volgend jaar', icoon: 'later' },
       ] },
     ],
     gerust: 'Weet u het niet zeker? Een schatting volstaat.',
@@ -320,7 +321,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
          zonder dat t overwhelming word". Nog altijd één keuzelijst, nu per ruimte, in
          dezelfde woorden als de rekenaar. */
       { naam: 'omvang', label: 'Wat wilt u renoveren?', opties: ['De hele woning (totaalrenovatie)', 'Keuken', 'Badkamer', 'Keuken en badkamer', 'Meerdere ruimtes', 'Nog niet beslist'] },
-      { naam: 'start', label: 'Wanneer wilt u starten?', opties: ['Zo snel mogelijk', 'Dit jaar', 'Volgend jaar', 'Weet ik nog niet'] },
+      { naam: 'start', label: 'Wanneer wilt u starten?', opties: ['Zo snel mogelijk', 'Dit jaar', 'Volgend jaar'] },
       { naam: 'budget', label: 'Uw budget', opties: ['Tot € 50.000', '€ 50.000 tot € 100.000', '€ 100.000 tot € 200.000', 'Meer dan € 200.000', 'Weet ik nog niet'] },
     ],
   },
