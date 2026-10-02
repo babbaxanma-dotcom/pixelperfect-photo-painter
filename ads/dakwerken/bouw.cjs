@@ -46,6 +46,10 @@ const GROEPEN = {
        tenzij het zoekwoord pannen, leien, hellend of sarking noemt. */
     achtervoegsel: SUFFIX + '&dienst=nieuw-dak',
     pin2: 'Wij vernieuwen het hele dak',
+    /* 2 okt (Mohammed: "strategisch met koppen filteren, kopers moeten blijven komen"):
+       beschrijving 1 vast, zodat elke vertoning drie keer zegt dat het om een nieuw dak gaat
+       (kop 1 zoekwoord, kop 2 "hele dak", beschrijving 1 "Nieuw dak nodig?"). */
+    pinD1: 'Nieuw dak nodig? Bereken in 2 minuten uw dakprijs. Gratis en vrijblijvend.',
     lpKop: 'Dé specialist voor uw nieuwe dak',
     koppen: [
       'Dak vernieuwen?',                // positie 1, gepind (samen met Pannendak vervangen en Kostprijs nieuw dak)
@@ -95,6 +99,7 @@ const GROEPEN = {
     // Elk zoekwoord van deze groep noemt het platte dak (kruislijst van Hellend), dus vraag 1 vult zich in.
     achtervoegsel: SUFFIX + '&dak=plat',
     pin2: 'Uw hele platte dak vernieuwd',
+    pinD1: 'Wat kost een nieuw plat dak? Bereken het op onze website in 2 minuten.',  // 2 okt, zie Hellend
     lpKop: 'Dé specialist voor uw plat dak',
     koppen: [
       'Plat dak vernieuwen?',           // positie 1, gepind (samen met Wat kost een nieuw plat dak? en Roofing of EPDM vernieuwen)
@@ -247,6 +252,55 @@ BRON['12 Uitleg en inspiratie (28 sep)'] = [
   ['ideeën', 'w', 'inspiratie'], ['ideeen', 'w', 'inspiratie'], ['inspiratie', 'w', 'inspiratie'],
   ['voorbeelden', 'w', 'inspiratie'], ['voorbeeld', 'w', 'inspiratie'], ['voor en na', 'w', 'inspiratie'],
 ];
+/* 2 okt (Mohammed: "meer uitsluitingen, maar geen die klanten blokken", "hogere klikkwaliteit").
+   Bron: zoektermenrapport 14 mei - 2 okt (936 termen). Elk woord getoetst op Google-autocomplete
+   (hl=nl, gl=be, woord + a..z): geen aanvulling van iemand die een heel dak laat vernieuwen
+   (scratchpad audit/ac-dak-2okt.log). Afgevallen na die toets: resitrix, derbigum, firestone,
+   alphator ("resitrix plaatsen" kan een nieuw plat dak zijn), "online" (te breed: "prijs dak
+   berekenen online"), premie en isolatie (besluit 27 sep), roofing/epdm per m2 (prijs van een
+   geplaatst plat dak = koper). */
+BRON['13 Zoektermen 14 mei - 2 okt (2 okt)'] = [
+  ['dakgoot', 'w', 'losse dakgoot, kleine klus; 5 betaalde klikken'],
+  ['velux plaatser', 'w', 'alleen dakraam, betaalde klik'], ['velux installateur', 'w', 'alleen dakraam'],
+  ['installateur velux', 'w', 'alleen dakraam'], ['velux rolluik', 'w', 'alleen dakraamtoebehoren'],
+  ['velux technieker', 'w', 'alleen dakraam'],
+  ['online kopen', 'w', 'materiaalkoper, betaalde klik'],
+  ['dakplaat', 'w', 'bijgebouw, camper of doe-het-zelf'], ['dakpanelen', 'w', 'bijgebouw of doe-het-zelf'],
+  ['ecopaneel', 'w', 'bijgebouw'], ['ecopanelen', 'w', 'bijgebouw'], ['profielplaten', 'w', 'bijgebouw of loods'],
+  ['reparatiepasta', 'w', 'doe-het-zelf'], ['vloeibaar rubber', 'w', 'doe-het-zelf'], ['zelfklevende', 'w', 'doe-het-zelf'],
+  ['celrubberband', 'w', 'doe-het-zelf'], ['loodvervanger', 'w', 'doe-het-zelf'],
+  ['isolatiemateriaal', 'w', 'materiaalkoper'], ['dakisolatieplaten', 'w', 'materiaalkoper'],
+  ['powerroof', 'w', 'isolatieplaat, materiaalkoper'], ['eurothane', 'w', 'isolatieplaat, materiaalkoper'], ['utherm', 'w', 'isolatieplaat, materiaalkoper'],
+  ['technische fiche', 'w', 'infozoeker'], ['montagehandleiding', 'w', 'doe-het-zelf'],
+  ['rd waarde', 'w', 'infozoeker'], ['u waarde', 'w', 'infozoeker'],
+  ['meldingsplicht', 'w', 'regels voor aannemers'], ['limburg', 'w', 'buiten het werkgebied'],
+  // Materiaalprijs van pannen of leien, EXACT: blokkeert alleen precies deze zoekopdracht,
+  // niet "prijs dakpannen vervangen" of "leien dak prijs per m2" (kopers).
+  ['dakpannen prijs per m2', 'e', 'materiaalprijs, betaalde klik'], ['prijs dakpannen per m2', 'e', 'materiaalprijs'],
+  ['wat kosten dakpannen per m2', 'e', 'materiaalprijs'], ['wat kosten pannen per m2', 'e', 'materiaalprijs'],
+  ['natuurleien prijs per m2', 'e', 'materiaalprijs'], ['prijs leien per m2', 'e', 'materiaalprijs'],
+  ['prijs dakleien', 'e', 'materiaalprijs'], ['kostprijs dakpannen', 'e', 'materiaalprijs'],
+];
+/* Concurrenten uit hetzelfde rapport (toegestaan volgens CLAUDE.md: concurrent-merknamen).
+   Alleen namen die geen gemeente uit het werkgebied en geen dakwoord zijn ("boomse", "lierse",
+   "de nok", "grint" en "reno" bewust weggelaten). Betaalde klikken: easyroof 2, tuyteleers,
+   kastelse, leemans, venco. */
+BRON['14 Concurrenten uit zoektermen (2 okt)'] = [
+  'easyroof', 'tuyteleers', 'kastelse', 'leemans', 'venco', 'zelfdakstore', 'cralux', 'solvari', 'adc dakwerken',
+  'adw dakwerken', 'adw lochristi', 'coban', 'alpha dakwerken', 'arco dakwerken', 'baert', 'hermans dakwerken', 'vaes',
+  'boba dakwerken', 'leirs', 'bryon', 'bulotte', 'cdc dakwerken', 'cerpentier', 'tecta', 'overloop', 'dakalex',
+  'dakconstruct', 'beirsmans', 'verbist', 'bernaerts', 'cleemput', 'daems', 'clerck', 'coster', 'maeseneer',
+  'dieltjens', 'fredje', 'haepers', 'heylen', 'hofman', 'janssens dakwerken', 'kiekens', 'nahon',
+  'nuyens', 'peeters dakwerken', 'stroobants', 'calster', 'ransbeeck', 'vanhooren', 'vercauteren', 'verlinden',
+  'paridaens', 'engelen dakwerken', 'meyer dakwerken', 'wever dakwerken', 'donzo', 'dorodak',
+  'drc dakwerken', 'duratop', 'dvh dakwerken', 'energylux', 'guna dakwerken', 'jebo', 'jero dakwerken',
+  'pauwels dakwerken', 'lapage', 'leflot', 'mady', 'maes dakwerken', 'caluwe', 'vercruyssen',
+  'nieuwlandt', 'omti', 'parret', 'vleeshouwers', 'polyplast', 'prodak', 'prodakwerken', 'renabo', 'rhila', 'guyse',
+  'roofcover', 'roofix', 'roozenburg', 'sandak', 'bombeke', 'stetor', 'kustermans', 'dakdekkertje', 'tectum',
+  'podevijn', 'vabo dakwerken', 'van dyck dakwerken', 'elshocht', 'veenstra', 'verhoeven michael',
+  'hebbelinck', 'brems dakwerken', 'klusgemak', 'evm dakwerken', 'ddg renovaties', 'vds renovatie', 'mgk dakwerken',
+  'wbi dakwerken', 'hdl dakwerken', 'europa clean', 'roof service company',
+].map((t) => [t, 'w', 'concurrent']);
 
 const tok = (s) => s.toLowerCase().replace(/[’']/g, "'").split(/\s+/).filter(Boolean);
 function blokkeert(neg, type, query) {
@@ -350,6 +404,8 @@ for (const [naam, g] of Object.entries(GROEPEN)) {
   if (g.beschrijvingen.filter((b) => /50%/.test(b)).length !== 1) fouten.push(`${naam}: premiebedrag moet in precies één beschrijving staan`);
   // Filterkop op positie 2 (27 sep): staat in de koppen en zegt dat het om het hele dak gaat.
   if (naam !== 'Dakisolatie' && !(g.pin2 && g.koppen.includes(g.pin2) && /\bhele\b/.test(g.pin2))) fouten.push(`${naam}: filterkop op positie 2 ontbreekt`);
+  // 2 okt: beschrijving 1 vast, en die noemt het nieuwe dak.
+  if (naam !== 'Dakisolatie' && !(g.pinD1 && g.beschrijvingen.includes(g.pinD1) && /\bnieuw (plat )?dak\b/i.test(g.pinD1))) fouten.push(`${naam}: vaste beschrijving 1 ontbreekt of noemt geen nieuw dak`);
   // Kop 1 moet het zoekwoord van de groep dragen.
   if (!g.koppen[0].toLowerCase().includes(naam.toLowerCase().replace('hellend ', ''))) fouten.push(`${naam}: kop 1 "${g.koppen[0]}" draagt het zoekwoord niet`);
 }
