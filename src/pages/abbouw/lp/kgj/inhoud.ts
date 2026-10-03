@@ -234,9 +234,10 @@ export const DAKWERKEN: KgjInhoud = {
       /* 1 okt, Mohammed: "doe bij deze stap duidelijk een puntje gratis en vrijblijvend". */
       { sleutel: 'Start', vraag: 'Wanneer wilt u beginnen?', punt: 'Gratis en vrijblijvend', keuzes: [
         /* 30 sep, Mohammed: "duidelijker, zo snel mogelijk, dit jaar, volgend jaar".
-           1 okt: "verwijder aub de optie ik verken nog", dus drie keuzes. */
+           1 okt: "verwijder aub de optie ik verken nog", dus drie keuzes.
+           3 okt: "voeg de optie ik verken nog ook gewoon terug toe". */
         { label: 'Zo snel mogelijk', icoon: 'snel' }, { label: 'Dit jaar', icoon: 'drie' },
-        { label: 'Volgend jaar', icoon: 'later' },
+        { label: 'Volgend jaar', icoon: 'later' }, { label: 'Ik verken nog', icoon: 'verken' },
       ] },
     ],
     gerust: 'Weet u het niet zeker? Een schatting volstaat.',
