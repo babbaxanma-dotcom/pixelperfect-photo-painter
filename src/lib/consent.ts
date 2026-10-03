@@ -158,22 +158,13 @@ export function installConsentBanner() {
   const wrap = document.createElement('div');
   wrap.id = BANNER_ID;
   wrap.innerHTML = BANNER_HTML;
-  /* Advertentiepagina's (/lp/): op de telefoon lag de banner bij het openen over de
-     antwoorden van de eerste rekenaarvraag (gemeten 1 okt 2026). Daar verschijnt hij pas
-     zodra de bezoeker voorbij het eerste scherm scrolt. Tot dan staat alles op "geweigerd"
-     (Consent Mode-standaard in index.html), dus er wordt niets gemeten zonder toestemming. */
-  let wachtOpScroll: (() => void) | null = null;
-  if (window.location.pathname.startsWith('/lp/')) {
-    wachtOpScroll = () => {
-      if (window.scrollY < window.innerHeight * 0.9) return;
-      window.removeEventListener('scroll', wachtOpScroll!);
-      wachtOpScroll = null;
-      if (!hasDecided()) document.body.appendChild(wrap);
-    };
-    window.addEventListener('scroll', wachtOpScroll, { passive: true });
-  } else {
-    document.body.appendChild(wrap);
-  }
+  /* Overal meteen, ook op de advertentiepagina's (/lp/).
+     1 okt 2026 verscheen hij op /lp/ pas na het eerste scherm, omdat hij op de telefoon
+     over de eerste rekenaarvraag lag. Gemeten 3 okt: wie de rekenaar invult, scrolt
+     hoogstens 361 px (drempel 760 px) en zag de banner dus nooit. Zonder toestemming
+     telt Google de aanvraag niet: totaalrenovatie ging van 9 conversies (28 sep - 1 okt)
+     naar 0 (2-3 okt). Daarom weer meteen, zoals vóór 1 okt. */
+  document.body.appendChild(wrap);
 
   const onClick = (e: Event) => {
     const t = e.target;
@@ -190,8 +181,6 @@ export function installConsentBanner() {
   wrap.addEventListener('click', onClick);
 
   removeBanner = () => {
-    if (wachtOpScroll) window.removeEventListener('scroll', wachtOpScroll);
-    wachtOpScroll = null;
     wrap.removeEventListener('click', onClick);
     wrap.remove();
     styleEl.remove();
