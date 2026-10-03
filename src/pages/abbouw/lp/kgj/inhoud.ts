@@ -28,8 +28,6 @@ import droneAntraciet from '@/assets/dak/drone-antraciet.jpg';
 import pannenDicht from '@/assets/dak/hellend-pannen.jpg';
 import dakVoor from '@/assets/lp-diensten/dak-voor.jpg';
 import dakNa from '@/assets/lp-diensten/dak-na.jpg';
-import dienstRenovatie from '@/assets/dak/dienst-renovatie.jpg';
-import dienstIsolatie from '@/assets/dak/dienst-isolatie.jpg';
 /* Foto's bij de eerste calculatorvraag (Mohammed, 24 sep). Hellend: de
    dakwerkenfoto van getnorvo.com (norvo-website sectoren/niche-dak.jpg).
    Plat: een plat dak op de achterbouw van een rijwoning
@@ -80,8 +78,9 @@ export type KgjInhoud = {
   waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto] };
   /** Diensten onder "Waarom": id is het anker voor een sitelink (/lp/dakwerken#nieuw-dak). */
   /** onder: optionele zin onder de kop. Een lege tekst toont alleen icoon en naam (totaalrenovatie, 27 sep).
-   *  foto: met een foto wordt de dienst een fotokaart zonder icoon (dakwerken, 2 okt). */
-  diensten: { kop: string; onder?: string; lijst: { id: string; icoon: IcoonNaam; naam: string; tekst: string; foto?: Foto }[] };
+   *  foto: met een foto wordt de dienst een fotokaart zonder icoon (dakwerken, 2 okt).
+   *  vlakken: kaarten met het icoon op een groot licht vlak, ook zonder foto (dakwerken, 3 okt). */
+  diensten: { kop: string; onder?: string; vlakken?: boolean; lijst: { id: string; icoon: IcoonNaam; naam: string; tekst: string; foto?: Foto }[] };
   /** Voordelen tussen "Waarom" en de diensten: elk voordeel een gekleurde bol met icoon. */
   voordelen?: { kop: string; lijst: { icoon: IcoonNaam; kleur: 'oranje' | 'blauw' | 'groen'; titel: string; tekst: string }[] };
   /** Veelgestelde vragen vlak voor het slotblok; alleen op pagina's die ze invullen (29 sep). */
@@ -312,15 +311,16 @@ export const DAKWERKEN: KgjInhoud = {
      "visueel mooier en beter, clean", "wees creatief". Elke dienst kreeg een foto
      (de conventie van de dienstkaarten op de homepage); het icoon valt dan weg.
      3 okt, Mohammed: "haal die fotos weg bij diensten, laat enkel die van dakrenovatie
-     en isolatie". Nieuw dak en dakherstelling tonen hun icoon op een licht vlak. */
+     en isolatie". Nieuw dak en dakherstelling tonen hun icoon op een licht vlak.
+     3 okt, Mohammed: "doe maar die twee fotos bij diensten ook weg". Alle vier tonen
+     hun icoon op een licht vlak (vlakken: true). */
   diensten: {
     kop: 'Onze diensten',
+    vlakken: true,
     lijst: [
       { id: 'nieuw-dak', icoon: 'dienst-nieuw', naam: 'Nieuw dak', tekst: 'Volledig nieuw dak, met pannen of leien, of als plat dak in EPDM, roofing of bitumen.' },
-      { id: 'renovatie', icoon: 'dienst-renovatie', naam: 'Dakrenovatie', tekst: 'Uw dakstructuur blijft staan. Wij vernieuwen de pannen of leien, samen met het onderdak en de panlatten.',
-        foto: { src: dienstRenovatie, alt: 'Dak in renovatie: nieuw onderdak en panlatten, de pannen worden opnieuw gelegd' } },
-      { id: 'isolatie', icoon: 'dienst-isolatie', naam: 'Dakisolatie', tekst: 'Wij isoleren uw dak tijdens de renovatie of als aparte opdracht.',
-        foto: { src: dienstIsolatie, alt: 'Zolder met isolatieplaten tussen de kepers en een dakraam' } },
+      { id: 'renovatie', icoon: 'dienst-renovatie', naam: 'Dakrenovatie', tekst: 'Uw dakstructuur blijft staan. Wij vernieuwen de pannen of leien, samen met het onderdak en de panlatten.' },
+      { id: 'isolatie', icoon: 'dienst-isolatie', naam: 'Dakisolatie', tekst: 'Wij isoleren uw dak tijdens de renovatie of als aparte opdracht.' },
       { id: 'herstelling', icoon: 'dienst-herstel', naam: 'Dakherstelling', tekst: 'Wij herstellen een lek of schade aan uw hellend of plat dak.' },
     ],
   },

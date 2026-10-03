@@ -349,9 +349,9 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-dienst__foto { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; margin: 0 0 20px;
   border-radius: var(--r-vak); background: var(--band); }
 .kgjx .kgj-dienst--foto h3 { font-size: 20px; }
-/* 3 okt: alleen dakrenovatie en dakisolatie houden hun foto. Een dienst zonder
-   foto krijgt op die plek een licht goudvlak met zijn icoon, zodat de kaarten
-   gelijk blijven staan. Icoon op vlak: 3,3:1 (minimum 3:1). */
+/* 3 okt: de foto's zijn weg ("doe maar die twee fotos bij diensten ook weg"). Een
+   dienst zonder foto krijgt op die plek een licht goudvlak met zijn icoon; zo
+   blijft de kaart even groot. Icoon op vlak: 3,3:1 (minimum 3:1). */
 .kgjx .kgj-dienst__foto--leeg { display: grid; place-items: center; background: var(--accent-licht); color: var(--accent-diep); }
 .kgjx .kgj-dienst__foto--leeg svg { width: 64px; height: 64px; stroke-width: 1.4; }
 @media (max-width: 1000px) {

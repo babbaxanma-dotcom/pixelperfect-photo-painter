@@ -87,9 +87,9 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
      de bezoeker is. Mohammed: 'elke knop moet rechtstreeks in het form komen,
      niet eerst naar boven gestuurd worden'. */
   const [venster, setVenster] = useState(false);
-  /* Heeft één dienst een foto, dan staan alle diensten als fotokaart. Een dienst
-     zonder foto krijgt een licht vlak met zijn icoon, even groot als een foto. */
-  const dienstFotos = inhoud.diensten.lijst.some((d) => d.foto);
+  /* Met vlakken of met één foto staan alle diensten als kaart met een groot vlak
+     bovenaan: de foto, of een licht vlak met het icoon van de dienst. */
+  const dienstFotos = !!inhoud.diensten.vlakken || inhoud.diensten.lijst.some((d) => d.foto);
   useEffect(() => {
     if (!venster) return;
     const toets = (e: KeyboardEvent) => { if (e.key === 'Escape') setVenster(false); };
