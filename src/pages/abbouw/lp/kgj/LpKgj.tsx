@@ -87,6 +87,9 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
      de bezoeker is. Mohammed: 'elke knop moet rechtstreeks in het form komen,
      niet eerst naar boven gestuurd worden'. */
   const [venster, setVenster] = useState(false);
+  /* Heeft één dienst een foto, dan staan alle diensten als fotokaart. Een dienst
+     zonder foto krijgt een licht vlak met zijn icoon, even groot als een foto. */
+  const dienstFotos = inhoud.diensten.lijst.some((d) => d.foto);
   useEffect(() => {
     if (!venster) return;
     const toets = (e: KeyboardEvent) => { if (e.key === 'Escape') setVenster(false); };
@@ -324,7 +327,8 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       </section>
 
       {/* Mohammed, 26 sep: voordelen tussen "Waarom" en de diensten, elk met een
-          gekleurde bol en een korte uitleg. Alleen op pagina's die ze invullen. */}
+          gekleurde bol en een korte uitleg. Alleen op pagina's die ze invullen.
+          2 okt: een donkere band zonder kaarten (zie extra.ts). */}
       {inhoud.voordelen && (
         <section className="kgj-band kgj-voordelen" id="voordelen">
           <div className="kgj-breed">
@@ -345,7 +349,8 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       )}
 
       {/* Mohammed, 25 sep: korte dienstensectie onder "Waarom", met iconen. De
-          id's per dienst zijn de ankers van de sitelinks. */}
+          id's per dienst zijn de ankers van de sitelinks. 2 okt: een dienst met een
+          foto wordt een fotokaart (dakwerken). */}
       <section className="kgj-band kgj-diensten" id="diensten">
         <div className="kgj-breed">
           <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
@@ -356,10 +361,24 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               tekst") staan icoon en naam naast elkaar in een compact raster. */}
           <ul className={`kgj-dienstraster${inhoud.diensten.lijst.every((d) => !d.tekst) ? ' kgj-dienstraster--kort' : ''}`}>
             {inhoud.diensten.lijst.map((d) => (
-              <li className="kgj-dienst kgj-op" id={d.id} key={d.id}>
-                <span className="kgj-dienst__icoon"><Icoon naam={d.icoon} /></span>
-                <h3>{d.naam}</h3>
-                {d.tekst && <p>{d.tekst}</p>}
+              <li className={`kgj-dienst${dienstFotos ? ' kgj-dienst--foto' : ''} kgj-op`} id={d.id} key={d.id}>
+                {dienstFotos ? (
+                  <>
+                    {d.foto
+                      ? <img className="kgj-dienst__foto" src={d.foto.src} alt={d.foto.alt} loading="lazy" decoding="async" />
+                      : <span className="kgj-dienst__foto kgj-dienst__foto--leeg" aria-hidden="true"><Icoon naam={d.icoon} /></span>}
+                    <div className="kgj-dienst__body">
+                      <h3>{d.naam}</h3>
+                      {d.tekst && <p>{d.tekst}</p>}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <span className="kgj-dienst__icoon"><Icoon naam={d.icoon} /></span>
+                    <h3>{d.naam}</h3>
+                    {d.tekst && <p>{d.tekst}</p>}
+                  </>
+                )}
               </li>
             ))}
           </ul>
