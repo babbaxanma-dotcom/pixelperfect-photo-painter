@@ -237,6 +237,21 @@ const UITSLUITEN = [
   // bouwmarkten en materiaal
   ['gamma', 'w'], ['brico', 'w'], ['hubo', 'w'], ['praxis', 'w'], ['hornbach', 'w'], ['ikea', 'w'],
   ['materiaal', 'w'], ['materialen', 'w'], ['bouwmaterialen', 'w'],
+  /* 3 okt (Mohammed: "niet kopers uitsluiten in hoeverre je kan", "het doel is de klikken kwaliteit
+     verhogen en geen budget verspillen", "er is niets vast beslist"). Bron: zoektermen 28 sep - 3 okt
+     (228 termen, 86 klikken, 9 conversies). Premie en subsidie: Google-autocomplete gaf 495
+     aanvullingen, waarvan 0 met aannemer, offerte, laten, bedrijf of firma; de vraag gaat over de
+     regeling, niet over het werk. Het besluit van 27 sep (premie = koper) is hiermee herzien. */
+  // premie en subsidie
+  ['premie', 'w'], ['premies', 'w'], ['subsidie', 'w'], ['subsidies', 'w'], ['renovatiepremie', 'w'], ['renovatiepremies', 'w'], ['verbouwpremie', 'w'], ['verbouwloket', 'w'], ['verbouwlening', 'w'], ['mijnverbouwlening', 'w'], ['isolatiepremie', 'w'],
+  // concurrenten uit het zoektermenrapport (wie een merk zoekt, zoekt dat bedrijf)
+  ['portas', 'w'], ['vermeiren', 'w'], ['laerhoven', 'w'], ['dcs stekene', 'w'], ['bouwmakkers', 'w'], ['renotec', 'w'], ['vimmo', 'w'], ['bm renovaties', 'w'], ['ddg renovaties', 'w'], ['rebuilding team', 'w'], ['bowson', 'w'], ['mrw bouw', 'w'], ['manova', 'w'], ['ibo mechelen', 'w'], ['jef brabants', 'w'], ['vepreno', 'w'], ['zinder', 'w'], ['thuismakers', 'w'], ['linea projects', 'w'], ['inframe', 'w'], ['asobi', 'w'], ['avrs', 'w'], ['bart loos', 'w'], ['ben aerden', 'w'], ['bert van goethem', 'w'], ['brebuild', 'w'], ['van buggenhout', 'w'], ['carson', 'w'], ['de beule', 'w'], ['de peuter', 'w'], ['dero construct', 'w'], ['dhulst', 'w'], ['energco', 'w'], ['feys', 'w'], ['fixitom', 'w'], ['jv reno', 'w'], ['kmi aanbouw', 'w'], ['mcm malle', 'w'], ['rafal', 'w'], ['renisol', 'w'], ['rombouts', 'w'], ['rvh projects', 'w'], ['sam lingier', 'w'], ['slw solutions', 'w'], ['stijn grootjans', 'w'], ['tom tilleman', 'w'], ['valckenborgh', 'w'], ['versluys', 'w'], ['vdb verbouwingen', 'w'], ['vds', 'w'], ['willemen', 'w'], ['alltech', 'w'], ['van gorp', 'w'], ['abc renovatie', 'w'],
+  // buiten het werkgebied (Nederland, West-Vlaanderen, Limburg, kust)
+  ['geleen', 'w'], ['oosterhout', 'w'], ['hulst', 'w'], ['zulte', 'w'], ['westende', 'w'], ['kust', 'w'], ['lummen', 'w'],
+  // geen dienst van AB of geen aannemer gezocht
+  ['veranda', 'w'], ['woonunit', 'w'], ['architecten', 'w'], ['keukendeuren', 'w'], ['keukendeurtjes', 'w'], ['keukenfronten', 'w'], ['keukenkastdeuren', 'w'], ['keukenkast deuren', 'w'], ['remodeling', 'w'], ['elektriciteit', 'w'], ['mag je', 'w'],
+  // losse infovragen, exact
+  ['renovatie 6 btw', 'e'], ['wanneer renoveren epc', 'e'], ['duurzaam renoveren nu', 'e'], ['all renovations', 'e'], ['renovatie experts', 'e'], ['binnendeuren renoveren', 'e'], ['vloerverwarming renovatie beperkte hoogte', 'e'],
 ];
 /* 28 sep: elke soort niet-koper moet in de lijst staan. Zo kan een lijst niet meer groot lijken terwijl
    de grote groepen ontbreken. */
@@ -279,11 +294,14 @@ for (const [naam, g] of Object.entries(GROEPEN)) for (const [kw] of g.zoekwoorde
 }
 /* Koperzoekopdrachten die NIET geblokkeerd mogen worden. */
 const KOPER = ['renovatie woning epc label', 'renovatieplicht woning aannemer', 'totaalrenovatie woning prijs', 'aannemer totaalrenovatie antwerpen', 'wat kost een totaalrenovatie per m2', 'huis gekocht volledig renoveren',
-  'renovatie oude woning kostprijs', 'totaalrenovatie offerte', 'renovatie woning 6 btw', 'aannemer renovatie in de buurt', 'woning renoveren premie'];
+  'renovatie oude woning kostprijs', 'totaalrenovatie offerte', 'renovatie woning 6 btw', 'aannemer renovatie in de buurt'];
+/* 3 okt: 'woning renoveren premie' is geen koper meer (premie en subsidie uitgesloten, zie UITSLUITEN). */
 for (const q of KOPER) for (const [t, ty] of UITSLUITEN) if (blokkeert(t, ty, q)) fouten.push(`uitsluiting "${t}" blokkeert koper "${q}"`);
 /* 27 sep: ook geen enkele koper uit het autocomplete-onderzoek (491 kopers plus wie een premie of
    subsidie voor de renovatie zoekt). */
-const ONDERZOEK = require('./onderzoek-27sep/zoekwoorden.json').aanvullingen.filter((a) => a.klasse === 'KOPER' || a.koopnabij);
+const ONDERZOEK = require('./onderzoek-27sep/zoekwoorden.json').aanvullingen.filter((a) => a.klasse === 'KOPER' || a.koopnabij)
+  /* 3 okt: premie- en subsidievragen tellen niet meer als koper (zie UITSLUITEN). */
+  .filter((a) => !/premie|subsidie/i.test(a.tekst));
 if (ONDERZOEK.length < 400) { console.error(`TOETS DEFECT: ${ONDERZOEK.length} kopers uit het onderzoek`); process.exit(2); }
 for (const a of ONDERZOEK) for (const [t, ty] of UITSLUITEN) if (blokkeert(t, ty, a.tekst)) fouten.push(`uitsluiting "${t}" blokkeert koper "${a.tekst}" (autocomplete)`);
 const dubbel = UITSLUITEN.map(([t, ty]) => ty + t).filter((x, i, l) => l.indexOf(x) !== i);

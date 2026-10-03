@@ -301,6 +301,67 @@ BRON['14 Concurrenten uit zoektermen (2 okt)'] = [
   'hebbelinck', 'brems dakwerken', 'klusgemak', 'evm dakwerken', 'ddg renovaties', 'vds renovatie', 'mgk dakwerken',
   'wbi dakwerken', 'hdl dakwerken', 'europa clean', 'roof service company',
 ].map((t) => [t, 'w', 'concurrent']);
+/* 3 okt (Mohammed: "niet kopers uitsluiten in hoeverre je kan", "het doel is de klikken kwaliteit
+   verhogen en geen budget verspillen", "er is niets vast beslist"). Bron: zoektermen 25 sep - 3 okt
+   (142 termen, 58 klikken, 1 conversie). Premie en subsidie: 13 van de 58 klikken, 0 conversies;
+   Google-autocomplete (hl=nl, gl=be) gaf 495 aanvullingen met premie of subsidie, waarvan 0 met
+   aannemer, dakwerker, offerte, laten, bedrijf of firma. Wie naar de premie vraagt, vraagt naar de
+   regeling, niet naar het werk. Opbouw plat dak: de 32 technische aanvullingen exact; de 3 met een
+   kostwoord ("wat kost een opbouw plat dak") blijven open. */
+BRON['15 Premie, subsidie en technische vragen (3 okt)'] = [
+  ['premie', 'w', 'vraagt naar de premie, niet naar het werk'],
+  ['premies', 'w', 'vraagt naar de premie, niet naar het werk'],
+  ['subsidie', 'w', 'vraagt naar de premie, niet naar het werk'],
+  ['subsidies', 'w', 'vraagt naar de premie, niet naar het werk'],
+  ['dakpremie', 'w', 'vraagt naar de premie, niet naar het werk'],
+  ['isolatiepremie', 'w', 'vraagt naar de premie, niet naar het werk'],
+  ['renovatiepremie', 'w', 'vraagt naar de premie, niet naar het werk'],
+  ['renovatiepremies', 'w', 'vraagt naar de premie, niet naar het werk'],
+  ['verbouwpremie', 'w', 'vraagt naar de premie, niet naar het werk'],
+  ['dak opbouw plat dak', 'e', 'technische opbouw, geen koper'],
+  ['dikte opbouw plat dak', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak aanbouw', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak beton', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak bitumen', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak buildwise', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak carport', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak constructie', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak dakkapel', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak dampscherm', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak detail', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak epdm', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak garage', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak hout', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak houtskelet', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak houtskeletbouw', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak hsb', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak in hout', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak isolatie', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak met epdm', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak met isolatie', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak met pir isolatie', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak met roofing', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak nieuwbouw', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak overkapping', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak roofing', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak steeldeck', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak tuinhuis', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak welfsels', 'e', 'technische opbouw, geen koper'],
+  ['opbouw plat dak zonder isolatie', 'e', 'technische opbouw, geen koper'],
+  ['prefab dakopbouw plat dak', 'e', 'technische opbouw, geen koper'],
+  ['hoe dik isolatie plat dak', 'e', 'technische vraag of materiaalprijs'],
+  ['pir platen bevestigen plat dak', 'e', 'technische vraag of materiaalprijs'],
+  ['plat dak isoleren langs buiten', 'e', 'technische vraag of materiaalprijs'],
+  ['plat dak beton isoleren', 'e', 'technische vraag of materiaalprijs'],
+  ['wanneer roofing vervangen', 'e', 'technische vraag of materiaalprijs'],
+  ['oud dak isoleren', 'e', 'technische vraag of materiaalprijs'],
+  ['dakisolatie bestaande woning', 'e', 'technische vraag of materiaalprijs'],
+  ['overzetdak', 'e', 'technische vraag of materiaalprijs'],
+  ['asbest dak vervangen verplicht belgië', 'e', 'technische vraag of materiaalprijs'],
+  ['prijs nieuwe dakpannen', 'e', 'technische vraag of materiaalprijs'],
+  ['nieuwe boomse pannen prijs', 'e', 'technische vraag of materiaalprijs'],
+];
 
 const tok = (s) => s.toLowerCase().replace(/[’']/g, "'").split(/\s+/).filter(Boolean);
 function blokkeert(neg, type, query) {
@@ -339,6 +400,8 @@ const BEWUST_GEBLOKT = new Set([
   'dak vernieuwen verzekering', // schadedossier
   'dak vernieuwen en schouw afbreken', // schouw
   'dak vernieuwen wanneer', // oriëntatie, geen koopmoment
+  // 3 okt: premie en subsidie eruit (zie BRON 15); deze vijf vragen naar de regeling.
+  'dak vernieuwen subsidie', 'dak vernieuwen premie', 'dakrenovatie premie aanvragen', 'asbest dak vervangen premie', 'premie dakwerken vlaanderen',
 ]);
 const geblokt = [];
 for (const q of KOPER) for (const n of negs) if (blokkeert(n.t, n.ty, q)) { geblokt.push(`${q} <- ${n.t}`); if (!BEWUST_GEBLOKT.has(q)) fouten.push(`uitsluiting "${n.t}" blokkeert koper "${q}"`); }
