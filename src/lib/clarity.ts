@@ -19,6 +19,31 @@ function stuurToestemming() {
   });
 }
 
+/* Mohammed, 4 okt: "koppel het dan met de ads dat ik alle data zie van elke klik via de ads".
+   Elke advertentieklik zet zijn gegevens in de link: gclid (automatische tagging) en het
+   achtervoegsel van de campagne (ads/dakwerken/bouw.cjs): utm_campaign, utm_term = het zoekwoord,
+   dienst= of dak= = de advertentiegroep of sitelink. Die gaan als tags mee met de opname,
+   zodat je in Clarity filtert op Filters > Aangepaste tags (bron = Google Ads, zoekwoord, ...).
+   Een advertentiebezoek krijgt ook "upgrade": Clarity bewaart die opname altijd. */
+function zetAdvertentie() {
+  const p = new URLSearchParams(window.location.search);
+  const klik = p.get('gclid') || p.get('gbraid') || p.get('wbraid');
+  const advertentie = Boolean(klik) || (p.get('utm_source') === 'google' && p.get('utm_medium') === 'cpc');
+  const zet = (sleutel: string, waarde: string | null) => { if (waarde) window.clarity?.('set', sleutel, waarde); };
+  zet('bron', advertentie ? 'Google Ads' : 'geen advertentie');
+  zet('zoekwoord', p.get('utm_term'));
+  zet('campagne', p.get('utm_campaign'));
+  zet('dienst', p.get('dienst') || (p.get('dak') ? 'dak-' + p.get('dak') : null));
+  zet('klik-id', klik);
+  if (advertentie) window.clarity?.('upgrade', 'Google Ads-klik');
+}
+
+/* Een stap in de opname (rekenaar: vraag-2 ... contactgegevens, aanvraag-verstuurd). In Clarity
+   te filteren via Filters > Aangepaste gebeurtenissen. Zonder Clarity op de pagina: niets. */
+export function meldClarity(gebeurtenis: string) {
+  if (typeof window !== 'undefined') window.clarity?.('event', gebeurtenis);
+}
+
 export function laadClarity() {
   if (typeof window === 'undefined' || window.clarity) return;
   // De officiële Clarity-code, als functie.
@@ -30,5 +55,6 @@ export function laadClarity() {
   const y = document.getElementsByTagName('script')[0];
   if (y?.parentNode) y.parentNode.insertBefore(t, y); else document.head.appendChild(t);
   stuurToestemming();
+  zetAdvertentie();
   window.addEventListener('ab-bouw-consent-changed', stuurToestemming);
 }

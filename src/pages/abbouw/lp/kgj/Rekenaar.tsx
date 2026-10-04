@@ -5,6 +5,7 @@ import { Icoon } from './Iconen';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
 import { allowsMarketing } from '@/lib/consent';
+import { meldClarity } from '@/lib/clarity';
 import { CONTACT } from '@/data/contact';
 import type { KgjInhoud, Vraag } from './inhoud';
 import Toestemming from './Toestemming';
@@ -95,6 +96,15 @@ export default function Rekenaar({ inhoud, plek, voor }: {
     if (kop.getBoundingClientRect().top >= balkH + 4) return;
     window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - balkH - 8, behavior: gedrag });
   }, [stap]);
+
+  /* Clarity (alleen op dakwerken geladen): de verste stap van deze bezoeker als gebeurtenis
+     in de opname, zodat je per advertentieklik ziet hoe ver hij kwam. Terug telt niet. */
+  const versteStap = useRef(stap);
+  useEffect(() => {
+    if (stap <= versteStap.current) return;
+    versteStap.current = stap;
+    meldClarity(stap >= VRAGEN.length ? 'rekenaar-contactgegevens' : `rekenaar-vraag-${stap + 1}`);
+  }, [stap, VRAGEN.length]);
   const totaal = AANTAL + 1;
   const nu = klaar ? totaal : stap + 1;
 
@@ -174,6 +184,7 @@ export default function Rekenaar({ inhoud, plek, voor }: {
     });
     setBezig(false);
     if (!res.ok) { setFout(leadFoutmelding(res, CONTACT.phone.display)); return; }
+    meldClarity('aanvraag-verstuurd');
     /* Zonder toestemming voor marketing eerst de vraag uit Toestemming.tsx, dan pas de bedankpagina. */
     if (allowsMarketing()) naarBedankt();
     else setVraagToestemming(true);

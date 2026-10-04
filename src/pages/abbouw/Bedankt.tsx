@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import '@/styles/roofpro.css';
 import { CONTACT } from '@/data/contact';
+import { meldClarity } from '@/lib/clarity';
 import { ic, LOGO } from './_rp';
 
 /**
@@ -156,6 +157,9 @@ export default function Bedankt() {
     if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'robots'); document.head.appendChild(m); }
     m.setAttribute('content', 'noindex, nofollow');
     window.scrollTo(0, 0);
+    /* Clarity: de aanvraag via de chat of de dakinspectie als gebeurtenis in de opname. De
+       rekenaar meldt die zelf bij het versturen (van=rekenaar). Zonder Clarity: niets. */
+    if (params.get('van') !== 'rekenaar') meldClarity('aanvraag-verstuurd');
   }, []);
 
   useEffect(() => {
