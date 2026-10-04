@@ -16,7 +16,7 @@ const DAK = [
   ['Start', 'Wanneer wilt u beginnen?', ['Zo snel mogelijk', 'Binnen drie maanden', 'Later dit jaar', 'Ik verken nog']],
 ];
 const RENO = [
-  ['Woning', 'Wat voor woning is het?', ['Appartement', 'Rijwoning', 'Halfopen woning', 'Open bebouwing']],
+  ['Woning', 'Wat voor woning wilt u renoveren?', ['Appartement', 'Rijwoning', 'Halfopen bebouwing', 'Open bebouwing']],
   ['Renoveren', 'Wat wilt u renoveren?', ['Alles (totaalrenovatie)', 'Keuken', 'Badkamer', 'Meerdere ruimtes']],
   ['Gemeente', 'In welke gemeente ligt de woning?', []],
   ['Grootte', 'Hoe groot is de woning ongeveer?', ['Kleiner dan 100 m²', '100 tot 150 m²', '150 tot 200 m²', 'Groter dan 200 m²', 'Weet ik niet']],

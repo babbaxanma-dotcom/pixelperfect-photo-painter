@@ -77,12 +77,13 @@ export const TOTAALRENOVATIE: KgjInhoud = {
   bedanktSlug: 'totaalrenovatie',
 
   hero: {
-    /* Mohammeds eigen kop, letterlijk (26 sep). */
-    kop: 'Expert in totaalrenovaties en totaalprojecten',
+    /* Mohammeds eigen kop, letterlijk (26 sep). 4 okt, plan desktop-hero: nieuwe kop. */
+    kop: 'Uw totaalrenovatie zorgeloos geregeld van A tot Z',
     /* Zelfde opbouw als Mohammeds subkop op dakwerken. Het mechanisme: AB heeft
        voor elk vak een eigen ploeg (homepage), dus één planning. */
     /* Mohammed, 26 sep: de subkop "eruit". Leeg = geen regel onder de kop. */
-    onder: '',
+    /* 4 okt, plan desktop-hero: subheadline. */
+    onder: 'Bereken binnen 2 minuten een realistische prijsindicatie voor uw woning.',
     /* Mohammeds eigen drie vinkjes, letterlijk (26 sep). */
     bewijs: ['1 vast aanspreekpunt van ontwerp tot oplevering', 'Transparante offerte & strikte planning', 'Echt vakmanschap en perfecte afwerking'],
     /* Mohammed, 26 sep: "laat enkel de keuken foto, badkamerrenovatie foto van
@@ -101,13 +102,14 @@ export const TOTAALRENOVATIE: KgjInhoud = {
        dakwerken: iconen, een tik gaat meteen door, de 6% btw-melding na een
        woning ouder dan tien jaar. De leeftijd is, zoals op dakwerken, alleen
        "jonger of ouder dan 10 jaar": dat is de grens van de 6% btw. */
-    titel: 'Bereken uw renovatieprijs',
-    tijd: 'Klaar in 2 minuten',
+    /* 4 okt, plan desktop-hero: kaarttitel en subtekst. */
+    titel: 'Ontvang een realistische prijsindicatie',
+    tijd: 'Klaar in 2 minuten • 100% vrijblijvend',
     zeker: 'Gratis en vrijblijvend',
     vragen: [
-      { sleutel: 'Woning', vraag: 'Wat voor woning is het?', raster: true, keuzes: [
+      { sleutel: 'Woning', vraag: 'Wat voor woning wilt u renoveren?', raster: true, keuzes: [
         { label: 'Appartement', icoon: 'appartement' }, { label: 'Rijwoning', icoon: 'rijwoning' },
-        { label: 'Halfopen woning', icoon: 'halfopen' }, { label: 'Open bebouwing', icoon: 'vrijstaand' },
+        { label: 'Halfopen bebouwing', icoon: 'halfopen' }, { label: 'Open bebouwing', icoon: 'vrijstaand' },
       ] },
       /* Mohammed, 28 sep: "bij vraag 2, wat wilt u renoveren, krijg je afvinksysteem
          van de kamers etc" en "een afvink erbij van, alles, totaalrenovatie, en alles

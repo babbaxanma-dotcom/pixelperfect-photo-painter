@@ -48,7 +48,7 @@ export const PAGINAS = {
     naam: '/lp/totaalrenovatie',
     aanvraag: 'gratis plaatsbezoek',
     velden: [
-      'Woning: Appartement | Rijwoning | Halfopen woning | Open bebouwing',
+      'Woning: Appartement | Rijwoning | Halfopen bebouwing | Open bebouwing',
       'Renoveren: Alles (totaalrenovatie) | Keuken | Badkamer | Meerdere ruimtes (vraag welke) ',
       'Gemeente: vrije tekst',
       'Grootte: Kleiner dan 100 m² | 100 tot 150 m² | 150 tot 200 m² | Groter dan 200 m² | Weet ik niet',

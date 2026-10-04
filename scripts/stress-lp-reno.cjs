@@ -63,7 +63,7 @@ async function tik(page, label, sel = '#rekenaar') {
   await page.touchscreen.tap(p.x, p.y); await wacht(260); return true;
 }
 const vraag = (page) => page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__vraag')?.textContent.trim());
-const ANTWOORDEN = ['Halfopen woning', 'De hele woning', '150 tot 200 m²', 'Ouder dan 10 jaar', 'Een groot deel', 'Zo snel mogelijk'];
+const ANTWOORDEN = ['Halfopen bebouwing', 'De hele woning', '150 tot 200 m²', 'Ouder dan 10 jaar', 'Een groot deel', 'Zo snel mogelijk'];
 
 (async () => {
   const browser = await puppeteer.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: 'new' });
@@ -95,7 +95,7 @@ const ANTWOORDEN = ['Halfopen woning', 'De hele woning', '150 tot 200 m²', 'Oud
     const body = ghl ? ghl.body : '';
     meld(/AB Construct/.test(body), 'type werk in GHL = AB Construct', (body.match(/"type_werk":"[^"]*"/) || [''])[0]);
     meld(/lp:totaalrenovatie:rekenaar:hero/.test(body), 'bron = lp:totaalrenovatie:rekenaar:hero');
-    meld(/Woning: Halfopen woning/.test(body) && /Staat: Een groot deel/.test(body) && /Start: Zo snel mogelijk/.test(body), 'alle antwoorden gaan mee met de lead');
+    meld(/Woning: Halfopen bebouwing/.test(body) && /Staat: Een groot deel/.test(body) && /Start: Zo snel mogelijk/.test(body), 'alle antwoorden gaan mee met de lead');
     meld(/0470 12 34 56|0470123456/.test(body.replace(/\\u00a0/g, ' ')), 'telefoonnummer gaat mee');
     meld(page.url().includes('/bedankt?dienst=totaalrenovatie'), 'naar de bedankpagina', page.url().replace(BASIS, ''));
     meld(ontsnapt.length === 0, 'geen leadverzoek het netwerk op (geen server-IP in de antwoorden)', ontsnapt.join(' '));

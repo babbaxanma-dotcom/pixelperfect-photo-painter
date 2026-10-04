@@ -26,7 +26,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
 
   const kop = await page.evaluate(() => ({ titel: document.title, h1: document.querySelector('h1')?.textContent.trim() }));
   meld(kop.titel === 'Dé specialist voor uw renovatie | AB Bouw Groep', 'tabbladtitel', kop.titel);
-  meld(kop.h1 === 'Expert in totaalrenovaties en totaalprojecten', 'kop', kop.h1);
+  meld(kop.h1 === 'Uw totaalrenovatie zorgeloos geregeld van A tot Z', 'kop', kop.h1);
 
   /* Zoals op dakwerken: alle antwoorden van vraag 1 boven de vouw. */
   const vouw = await page.evaluate(() => { const k = [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')]; return Math.round(Math.max(...k.map((e) => e.getBoundingClientRect().bottom))); });
@@ -46,7 +46,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
 
   /* De hele calculator door, met de verwachte vraag op elke stap. */
   const pad = [
-    ['Wat voor woning is het?', 'Rijwoning', 'Vraag 1 van 6'],
+    ['Wat voor woning wilt u renoveren?', 'Rijwoning', 'Vraag 1 van 6'],
     ['Wat wilt u renoveren?', 'Alles (totaalrenovatie)', 'Vraag 2 van 6'],
     ['Hoe groot is de woning?', '100 tot 150 m²', 'Vraag 3 van 6'],
     ['Hoe oud is de woning?', 'Ouder dan 10 jaar', 'Vraag 4 van 6'],
@@ -58,7 +58,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     const nu = await vraag(); const t = await tel();
     meld(nu === v && t === teller, `vraag: ${v}`, `${nu} / ${t}`);
     if (v === 'Hoeveel moet er vernieuwd worden?') tip = await page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__tip')?.textContent.trim() || '');
-    if (v === 'Wat voor woning is het?') meld((await keuzes()).join('|') === 'Appartement|Rijwoning|Halfopen woning|Open bebouwing', 'vier soorten woning', (await keuzes()).join(', '));
+    if (v === 'Wat voor woning wilt u renoveren?') meld((await keuzes()).join('|') === 'Appartement|Rijwoning|Halfopen bebouwing|Open bebouwing', 'vier soorten woning', (await keuzes()).join(', '));
     if (v === 'Wat wilt u renoveren?') {
       /* Mohammed, 28 sep: afvinken per ruimte en onderdeel, met "Alles
          (totaalrenovatie)" dat alles aanvinkt. */
@@ -343,7 +343,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     const q = await browser.newPage(); await q.setViewport({ width: 1440, height: 900 });
     await q.goto(URL.replace(/\/lp\/totaalrenovatie.*$/, '/lp/dakwerken'), { waitUntil: 'networkidle0' }); await wacht(300);
     const d = await q.evaluate(() => ({ h1: document.querySelector('h1')?.textContent.trim(), uit: !!document.querySelector('#uitgevoerd') }));
-    meld(d.h1 === 'Dé specialist voor uw dakwerk' && !d.uit, '/lp/dakwerken zonder sectie uitgevoerd werk', JSON.stringify(d));
+    meld(d.h1 === 'Bereken in 1 minuut de richtprijs van uw dak' && !d.uit, '/lp/dakwerken zonder sectie uitgevoerd werk', JSON.stringify(d));
     await q.close();
   }
 

@@ -21,6 +21,13 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-kop--lp .kgj-kop__bel-kort { display: none; }
 /* De vinkjes onder de rekenaar bestaan alleen op telefoon en tablet. */
 .kgjx .kgj-hero__vertrouwen { display: none; }
+/* 4 okt, plan desktop-hero totaalrenovatie: een gekozen kaart krijgt een gouden rand (#E59819)
+   en een lichte gloed. */
+/* Telefoon (totaalrenovatie): geen kaarttitel, zoals op dakwerken; de kop en subkop zeggen het al.
+   Met de subkop eindigde het laatste antwoord van vraag 1 op 857 van 844 px (check-lp-reno). */
+@media (max-width: 640px) { .kgjx.kgj-lp--totaalrenovatie .kgj-reken--hero .kgj-reken__hoofd { display: none; } }
+.kgjx.kgj-lp--totaalrenovatie .kgj-reken__keuze.is-aan { border-color: #e59819;
+  box-shadow: 0 0 0 1px #e59819, 0 0 0 6px rgba(229, 152, 25, .16); background: #fdf6ea; }
 
 /* ── hero: kop links, calculator rechts ── */
 .kgjx .kgj-hero--lp { min-height: calc(100svh - 84px); }
