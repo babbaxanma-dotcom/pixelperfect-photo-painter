@@ -281,7 +281,8 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         <div className="kgj-breed kgj-hero__in">
           <div className="kgj-hero__raster">
             <div>
-              <h1>{kop}</h1>
+              {/* Tekst tussen [ ] in de accentkleur (4 okt: "2 minuten in kleur"). */}
+              <h1>{kop.split(/\[([^\]]+)\]/).map((deel, i) => (i % 2 ? <span className="kgj-hero__accent" key={i}>{deel}</span> : deel))}</h1>
               {inhoud.hero.ondertitel && <p className="kgj-hero__ondertitel">{inhoud.hero.ondertitel}</p>}
               {inhoud.hero.onder && <p className="kgj-hero__sub">{inhoud.hero.onder}</p>}
               <ul className="kgj-hero__bewijs">

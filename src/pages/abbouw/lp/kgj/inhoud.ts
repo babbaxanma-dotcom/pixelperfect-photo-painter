@@ -74,7 +74,9 @@ export type KgjInhoud = {
   /** dias.pos: uitsnede in de brede hero (object-position), bijvoorbeeld om een nok in beeld te houden. */
   hero: { kop: string; ondertitel?: string; onder: string; bewijs: string[]; dias: (Foto & { pos?: string })[] };
   /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart. */
-  rekenaar: { titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string; troeven?: string[] };
+  rekenaar: { titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string; troeven?: string[];
+    /** Trust signals onderaan de kaart, met vinkje; vervangen de regel `zeker` (dakwerken, 4 okt). */
+    vertrouwen?: string[] };
   waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto] };
   /** Diensten onder "Waarom": id is het anker voor een sitelink (/lp/dakwerken#nieuw-dak). */
   /** onder: optionele zin onder de kop. Een lege tekst toont alleen icoon en naam (totaalrenovatie, 27 sep).
@@ -125,12 +127,16 @@ export const DAKWERKEN: KgjInhoud = {
     /* De calculator staat ernaast en zegt zelf wat hij doet. Mohammed: 'de
        berekening is toch ernaast dat hoef je niet te verwoorden'. De kop gaat
        over het resultaat aan zijn huis. */
-    kop: 'Dé specialist voor uw dakwerk',
+    /* 4 okt, Mohammed: "headline, bereken in 2 minuten de richtprijs van uw dak, met 2 minuten in kleur".
+       Tussen [ ] = in de accentkleur. */
+    kop: 'Bereken in [2 minuten] de richtprijs van uw dak',
     /* Mohammeds eigen zin, letterlijk (24 sep): "doe daar gewoon subheadline
        van de specialisatie". De vorige subkop ("u weet direct wat het kost",
        daarna "wij bellen u met de prijs") ging over de calculator, die ernaast
        staat en zichzelf uitlegt. */
-    onder: 'De specialist voor daken in Regio Antwerpen en omstreken. Wij zorgen voor perfect afgewerkte dakrenovaties, herstellingen en isolaties.',
+    /* 4 okt, Mohammed: "subheadline, beantwoord 8 korte vragen voor een heldere en vrijblijvende
+       prijsindicatie van uw dakrenovatie". Het pad van een dakrenovatie telt 8 vragen. */
+    onder: 'Beantwoord 8 korte vragen voor een heldere en vrijblijvende prijsindicatie van uw dakrenovatie.',
     /* Drie controleerbare feiten onder de kop. Een bezoeker die uit een
        advertentie komt, kent AB niet; dit is het enige bewijs dat boven de
        vouw past zolang er geen geverifieerde Google-score is.
@@ -167,8 +173,11 @@ export const DAKWERKEN: KgjInhoud = {
        de uitkomst zichtbaar aan het einde van de balk, een geruststelling
        bij de knop). */
     titel: 'Bereken uw dakprijs',
-    tijd: 'Klaar in 2 minuten',
+    /* 4 okt, Mohammed: "de calculator, bereken uw dakprijs, klaar in 2 minuten, vrijblijvend",
+       daarna "trust signals erbij": "gratis & vrijblijvende richtprijs", "begeleiding bij premie-aanvragen". */
+    tijd: 'Klaar in 2 minuten, vrijblijvend',
     zeker: 'Gratis en vrijblijvend',
+    vertrouwen: ['Gratis & vrijblijvende richtprijs', 'Begeleiding bij premie-aanvragen', '6% btw-tarief (woningen > 10 jaar)', '10 jaar garantie'],
     vragen: [
       /* Geen hellingshoek meer onder hellend en plat (Mohammed, 24 sep: "mensen
          weten wat een hellend dak is en plat dak"); de foto zegt het al. */
@@ -402,10 +411,11 @@ export const DAKWERKEN: KgjInhoud = {
      "plat dak isoleren" is een isolatievraag. Isolatie, renovatie en nieuw vragen het woord
      dak erbij: "badkamer renoveren" of "gevel isoleren" houdt de standaardkop. */
   boodschap: [
-    { zoek: 'dak.*isol|isol.*dak|sarking', kop: 'Dé specialist voor uw dakisolatie' },
-    { zoek: 'plat|epdm|roofing|bitumen', kop: 'Dé specialist voor uw plat dak', voor: { sleutel: 'Dak', label: 'Plat dak' } },
-    { zoek: 'hellend|pannen|leien|sarking', kop: 'Dé specialist voor uw hellend dak', voor: { sleutel: 'Dak', label: 'Hellend dak' } },
-    { zoek: 'dak.*renov|^renovatie$', kop: 'Dé specialist voor uw dakrenovatie' },
-    { zoek: 'dak.*(nieuw|vervang)|(nieuw|vervang).*dak', kop: 'Dé specialist voor uw nieuwe dak' },
+    /* 4 okt: de varianten volgen Mohammeds nieuwe kop; alleen het dakwoord wisselt. */
+    { zoek: 'dak.*isol|isol.*dak|sarking', kop: 'Bereken in [2 minuten] de richtprijs van uw dakisolatie' },
+    { zoek: 'plat|epdm|roofing|bitumen', kop: 'Bereken in [2 minuten] de richtprijs van uw plat dak', voor: { sleutel: 'Dak', label: 'Plat dak' } },
+    { zoek: 'hellend|pannen|leien|sarking', kop: 'Bereken in [2 minuten] de richtprijs van uw hellend dak', voor: { sleutel: 'Dak', label: 'Hellend dak' } },
+    { zoek: 'dak.*renov|^renovatie$', kop: 'Bereken in [2 minuten] de richtprijs van uw dakrenovatie' },
+    { zoek: 'dak.*(nieuw|vervang)|(nieuw|vervang).*dak', kop: 'Bereken in [2 minuten] de richtprijs van uw nieuwe dak' },
   ],
 };

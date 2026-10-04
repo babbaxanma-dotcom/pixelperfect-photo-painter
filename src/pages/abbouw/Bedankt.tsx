@@ -25,9 +25,9 @@ import { ic, LOGO } from './_rp';
  *
  * ?dienst= komt van de rekenaars en de chat, ?service= van de oude calculators.
  */
-type Soort = 'dakinspectie' | 'plaatsbezoek';
+type Soort = 'dakinspectie' | 'plaatsbezoek' | 'richtprijs-dak';
 
-const AFSPRAAK: Record<Soort, { link: string; zin: string }> = {
+const AFSPRAAK: Record<Exclude<Soort, 'richtprijs-dak'>, { link: string; zin: string }> = {
   dakinspectie: { link: '/dakinspectie', zin: 'Plan uw gratis dakinspectie meteen in onze agenda.' },
   plaatsbezoek: { link: '/afspraak', zin: 'Plan uw plaatsbezoek meteen in onze agenda.' },
 };
@@ -37,7 +37,31 @@ const sms = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke=
 const agenda = ic.cal.replace('width="15" height="15"', 'width="20" height="20"');
 const vraag = ic.phone(20);
 
+/* 4 okt, Mohammed, na de dak-rekenaar: "Uw prijsaanvraag is ontvangen en we sturen zo snel
+   mogelijk een vrijblijvende richtprijs", "elk dak is uniek. Om een definitieve prijs op te stellen
+   komt onze dakexpert graag de exacte staat van het dak opmeten", dan "plan uw gratis dakinspectie"
+   met de knop "krijg mijn gratis dakinspectie"; "dit is het eigenlijk". Het aantal vrije
+   inspectiemomenten staat er niet bij: Bardhs agenda toont nu 8 vrije uren per werkdag. */
+const HTML_RICHTPRIJS_DAK = `<div class="rp rp-afs">
+<header class="rp-afs__kop">
+  <a href="/" aria-label="AB Bouw Groep"><img src="${LOGO}" alt="AB Bouw Groep" width="150" /></a>
+</header>
+
+<main class="rp-afs__main rp-bed">
+  <div class="rp-bed__vink">${vink}</div>
+  <h1 class="rp-afs__t">Uw prijsaanvraag is ontvangen</h1>
+  <p class="rp-afs__lede">We sturen u zo snel mogelijk een vrijblijvende richtprijs.</p>
+
+  <div class="rp-bed__kaart">
+    <p class="rp-bed__uniek">Elk dak is uniek. Om een definitieve prijs op te stellen, komt onze dakexpert graag de exacte staat van het dak opmeten.</p>
+    <h2 class="rp-bed__cta-t">Plan uw gratis dakinspectie</h2>
+    <a class="rp-btn rp-btn--primary rp-bed__cta" href="/dakinspectie">Krijg mijn gratis dakinspectie</a>
+  </div>
+</main>
+</div>`;
+
 const HTML = (soort: Soort) => {
+  if (soort === 'richtprijs-dak') return HTML_RICHTPRIJS_DAK;
   const a = AFSPRAAK[soort];
   return `<div class="rp rp-afs">
 <header class="rp-afs__kop">
@@ -99,18 +123,26 @@ const STIJL = `
 .rp-bed__d a { color: var(--rp-ink); font-weight: 600; white-space: nowrap; }
 .rp-bed__knop { margin-top: 14px; }
 .rp-bed__terug { display: inline-block; margin-top: 26px; font-weight: 600; color: var(--rp-ink); }
+.rp-bed__kaart { background: #fff; border: 1px solid var(--rp-line-soft); border-radius: 14px; padding: 28px 26px; }
+.rp-bed__uniek { margin: 0; font-size: 17px; line-height: 1.55; color: var(--rp-ink); text-wrap: pretty; }
+.rp-bed__cta-t { margin: 22px 0 14px; font-size: 22px; line-height: 1.25; }
+.rp-bed__cta { justify-content: center; }
 @media (max-width: 640px) {
   .rp-afs__kop img { width: 120px; }
   .rp-bed__lijst { border-radius: 10px; }
   .rp-bed__lijst li { padding: 18px 16px; gap: 14px; }
   .rp-bed__knop { width: 100%; justify-content: center; }
+  .rp-bed__kaart { padding: 22px 18px; border-radius: 10px; }
+  .rp-bed__uniek { font-size: 16px; }
+  .rp-bed__cta-t { font-size: 20px; }
+  .rp-bed__cta { width: 100%; }
 }
 `;
 
 export default function Bedankt() {
   const [params] = useSearchParams();
   const ruw = (params.get('dienst') || params.get('service') || '').toLowerCase();
-  const soort: Soort = ruw.includes('dak') ? 'dakinspectie' : 'plaatsbezoek';
+  const soort: Soort = ruw.includes('dak') ? (params.get('van') === 'rekenaar' ? 'richtprijs-dak' : 'dakinspectie') : 'plaatsbezoek';
 
   useEffect(() => {
     document.title = 'Bedankt voor uw aanvraag · AB Bouw Groep';

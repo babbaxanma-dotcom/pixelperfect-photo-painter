@@ -178,7 +178,8 @@ export default function Rekenaar({ inhoud, plek, voor }: {
     if (allowsMarketing()) naarBedankt();
     else setVraagToestemming(true);
   };
-  const naarBedankt = () => navigate('/bedankt?dienst=' + inhoud.bedanktSlug);
+  /* van=rekenaar: de bedankpagina toont dan de richtprijs-tekst en de dakinspectie (4 okt). */
+  const naarBedankt = () => navigate('/bedankt?dienst=' + inhoud.bedanktSlug + '&van=rekenaar');
 
   const vraag = VRAGEN[stap];
   /* Na bepaalde antwoorden verschijnt onder de volgende vraag een korte melding
@@ -336,7 +337,11 @@ export default function Rekenaar({ inhoud, plek, voor }: {
         </form>
       )}
       {/* "Gratis en vrijblijvend" staat op de laatste stap al bij de zekerheden. */}
-      {!(klaar && inhoud.rekenaar.troeven) && !(!klaar && vraag?.punt) && <p className="kgj-reken__zeker"><ShieldCheck aria-hidden="true" />{inhoud.rekenaar.zeker}</p>}
+      {!(klaar && inhoud.rekenaar.troeven) && !(!klaar && vraag?.punt) && (inhoud.rekenaar.vertrouwen ? (
+        <ul className="kgj-reken__vertrouwen">
+          {inhoud.rekenaar.vertrouwen.map((t) => <li key={t}><Check aria-hidden="true" />{t}</li>)}
+        </ul>
+      ) : <p className="kgj-reken__zeker"><ShieldCheck aria-hidden="true" />{inhoud.rekenaar.zeker}</p>)}
     </div>
   );
 }

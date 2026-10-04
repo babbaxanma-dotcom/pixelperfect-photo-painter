@@ -290,6 +290,16 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-reken__zeker { display: flex; align-items: center; gap: 7px; margin: 16px 0 0; padding-top: 12px;
   border-top: 1px solid var(--lijn); font-family: Lato, system-ui, sans-serif; font-size: 13.5px; color: var(--zacht); }
 .kgjx .kgj-reken__zeker svg { flex: none; width: 16px; height: 16px; color: var(--merk); }
+/* Trust signals onderaan de rekenaar (4 okt): zelfde vinkje als de zekerheden boven de knop,
+   op de plek van de regel "Gratis en vrijblijvend". */
+.kgjx .kgj-reken__vertrouwen { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin: 16px 0 0;
+  padding: 12px 0 0; list-style: none; border-top: 1px solid var(--lijn); }
+.kgjx .kgj-reken__vertrouwen li { display: inline-flex; align-items: center; gap: 6px; font-family: "Plus Jakarta Sans",
+  system-ui, sans-serif; font-size: 13.5px; font-weight: 700; color: var(--inkt); }
+.kgjx .kgj-reken__vertrouwen svg { flex: none; width: 16px; height: 16px; padding: 2px; border-radius: 999px;
+  background: var(--accent); color: var(--merk-diep); stroke-width: 3; }
+/* "2 minuten" in de kop (4 okt). */
+.kgjx .kgj-hero__accent { color: var(--accent); }
 /* Geen los woord op de laatste regel ("prijs.", "15°"). */
 .kgjx .kgj-hero__sub, .kgjx .kgj-reken__keuze span { text-wrap: pretty; }
 
