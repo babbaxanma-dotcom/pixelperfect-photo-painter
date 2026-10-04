@@ -10,6 +10,7 @@ import { Icoon } from './Iconen';
 import { IcChevron } from '../replica/Iconen';
 import { DAKWERKEN, type KgjInhoud, type Review } from './inhoud';
 import logo from '@/assets/home/logo-trim.png';
+import { laadClarity } from '@/lib/clarity';
 
 /**
  * Landingspagina in de vormtaal van de KGJ Projects-demo, met de inhoud van AB.
@@ -96,6 +97,8 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   /* Met vlakken of met één foto staan alle diensten als kaart met een groot vlak
      bovenaan: de foto, of een licht vlak met het icoon van de dienst. */
   const dienstFotos = !!inhoud.diensten.vlakken || inhoud.diensten.lijst.some((d) => d.foto);
+  /* Microsoft Clarity alleen op de dakwerken-LP (Mohammed, 4 okt). */
+  useEffect(() => { if (inhoud.bedanktSlug === 'dakwerken') laadClarity(); }, [inhoud.bedanktSlug]);
   useEffect(() => {
     if (!venster) return;
     const toets = (e: KeyboardEvent) => { if (e.key === 'Escape') setVenster(false); };
