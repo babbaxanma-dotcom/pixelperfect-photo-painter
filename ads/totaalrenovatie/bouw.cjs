@@ -69,6 +69,10 @@ const INSTELLINGEN = {
      0 conversies; de andere zoekwoorden samen 78 klikken, 9 conversies. De zoekopdracht noemt geen renovatie, dus
      de pagina past er niet bij. Regel (Mohammed, 4 okt): zoekwoorden met slechte message match gaan eruit, de pagina
      wordt niet breder gemaakt. Hij staat nog in GROEPEN hieronder, want die lijst is de upload van 28 sep. */
+  /* 5 okt: ook "renovatie bedrijf" en "verbouwingswerken" op pauze (Mohammed: "oke doe maar"). Samen 16 klikken, € 43,18,
+     0 conversies; zoekwoorden die de woning noemen 64 klikken, 8 conversies. Regel: het budget is elke dag op, dus een
+     zoekwoord dat zwakker is dan de rest mag eruit, ook zonder bewijs dat het slecht is. "aannemer renovatiewerken" blijft
+     (2 klikken, 1 conversie). Pauze, geen uitsluiting: een uitsluiting blokkeert ook "verbouwingswerken woning". */
 };
 
 /* ---------- Zoekwoorden: twee groepen op zoekintentie ---------- */
