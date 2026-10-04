@@ -57,7 +57,12 @@ const INSTELLINGEN = {
   netwerk: 'Alleen Google Zoeken (geen zoekpartners, geen Display)',
   aiMax: 'uit', breedZoeken: 'uit',
   taal: 'Nederlands',
-  locatie: 'Dezelfde 42 gemeenten als de dakcampagne (arrondissementen Antwerpen en Mechelen, Beveren-Kruibeke-Zwijndrecht), stad Antwerpen uitgesloten (Bardh, 23 sep), optie Aanwezigheid',
+  locatie: 'Dezelfde 36 gemeenten als de dakcampagne (arrondissementen Antwerpen en Mechelen, Beveren-Kruibeke-Zwijndrecht, zonder de 6 verste), stad Antwerpen uitgesloten (Bardh, 23 sep), optie Aanwezigheid',
+  /* 5 okt: Essen, Wuustwezel, Brecht, Kalmthout, Malle en Zoersel verwijderd uit dak EN totaalrenovatie (Mohammed: "ja eruit").
+     Dat zijn de 6 gemeenten op meer dan 33 km in vogelvlucht van AB (Dokter Persoonslaan 33, Willebroek): 46,0 tot 34,0 km;
+     daarna komen Stabroek en Kapellen op 30,3 km. Reden: beide campagnes geven elk dag hun volle budget uit en verliezen
+     14 tot 22% van de vertoningen door budget, terwijl de 6 samen 14% van de vertoningen waren. Een kleiner gebied kost dus
+     geen klikken; het geld gaat naar zoekers dichter bij Willebroek. Hun 0 conversies op 30 klikken is toeval (2 verwacht). */
   doelen: 'Leadformulieren, Leads van telefoongesprekken, Offertes aanvragen (zoals dak)',
   urlAchtervoegsel: 'utm_source=google&utm_medium=cpc&utm_campaign=totaalrenovatie&utm_term={keyword}',
   /* 4 okt 23:55: woordgroep "algemene aannemer" op pauze (Mohammed: "oke"). 28 sep - 4 okt: 20 klikken, € 53,83,
