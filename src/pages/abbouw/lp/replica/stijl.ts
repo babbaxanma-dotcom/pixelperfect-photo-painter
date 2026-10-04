@@ -1503,4 +1503,43 @@ export const REPLICA_CSS = `
   .pc-hero--rol .pc-hero-vat { padding-block: 150px 48px; }
   .pc-rol-streep { bottom: 20px; }
 }
+
+/* 4 okt 2026, homepage met de tekst van Mohammed.
+   Hero: de regel onder de kop en de belregel staan wit op de fotorol; het
+   grijs van de gewone hero haalt daar geen leesbaar contrast. */
+.pcx .pc-hero--rol .pc-hero-sub { color: #fff; max-width: 52ch; font-size: 17px; line-height: 27px; }
+.pc-hero-bel { margin-top: 16px; font-size: 15px; line-height: 22px; color: var(--pc-grijs); }
+.pc-hero-bel a { color: inherit; font-weight: 700; text-decoration: none; }
+.pcx .pc-hero--rol .pc-hero-bel, .pcx .pc-hero--rol .pc-hero-bel a { color: #fff; }
+@media (max-width: 900px) { .pcx .pc-hero--rol .pc-hero-sub { font-size: 15px; line-height: 23px; } }
+/* De kop van Mohammed breekt na de komma: twee regels. Met de 620px van de
+   gewone ruime hero werden het er drie, en duwde de hero het formulier op een
+   laptop onder de vouw (check:kophero, 1366x620 en 1440x520). */
+.pcx .pc-hero--rol .pc-h1 { max-width: 780px; }
+/* Op een laag venster een kleinere regel onder de kop, zodat het formulier
+   boven de vouw blijft. */
+@media (min-width: 901px) and (max-height: 760px) {
+  .pcx .pc-hero--rol .pc-hero-sub { font-size: 15px; line-height: 22px; max-width: 760px; margin-top: 10px; }
+}
+/* Onder 600px vensterhoogte past de belregel er niet meer bij; hetzelfde
+   nummer staat dan vlak erboven in de kop (Bel ons vandaag). */
+@media (min-width: 901px) and (max-height: 600px) { .pc-hero-bel { display: none; } }
+/* Werkwijze en zekerheid als lopende tekst: gecentreerd blok op leesbreedte.
+   De vaste minimumhoogtes waren voor de stappen en het kaartenspoor. */
+.pc-werkwijze--proza, .pc-aanbod--proza { min-height: 0; }
+.pc-proza { max-width: 760px; margin-top: 34px; }
+.pc-proza p { font-size: 16px; line-height: 26px; color: var(--pc-grijs); text-align: center; }
+.pc-proza p + p { margin-top: 16px; }
+@media (max-width: 700px) { .pc-proza p { text-align: left; } }
+/* Contact: de inleiding onder de kop, en zonder afsluitband eronder geen
+   ruimte meer vrijhouden voor de cirkelfoto die over de bandrand stak. */
+.pc-contact-tekst { margin: 16px auto 0; max-width: 60ch; font-size: 16px; line-height: 26px; color: var(--pc-grijs); }
+.pc-contact--laatste { padding-bottom: 96px; }
+@media (max-width: 900px) { .pc-contact--laatste { padding-bottom: 60px; } }
+/* Zonder eigen kop is het formulier lager dan de vaste fotohoogte van 603px;
+   dan bleef er wit onder de knop. De foto volgt hier de hoogte van het formulier. */
+@media (min-width: 901px) {
+  .pc-contact--laatste .pc-contact-foto { position: relative; }
+  .pc-contact--laatste .pc-contact-foto img { position: absolute; inset: 0; height: 100%; }
+}
 `;

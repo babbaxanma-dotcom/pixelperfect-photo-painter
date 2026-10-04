@@ -639,6 +639,9 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
           <h1 className="pc-h1">{regels(inhoud.hero.regels)}</h1>
           {inhoud.hero.sub && <p className="pc-hero-sub">{inhoud.hero.sub}</p>}
           <a className="pc-knop pc-knop--accent" href="#contact">{inhoud.hero.knop}<IcPijl /></a>
+          {inhoud.hero.bel && (
+            <p className="pc-hero-bel">{inhoud.hero.bel} <a href={CONTACT.phone.href}>{CONTACT.phone.display}</a></p>
+          )}
         </div>
 
         {rol ? (
@@ -727,7 +730,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
           </div>
 
           <div className="pc-rij2 pc-over-tekst">
-            <p>{inhoud.over.tekst}</p>
+            {inhoud.over.tekst.split('\n\n').map((alinea) => <p key={alinea}>{alinea}</p>)}
             {/* De zes divisies stonden in één doorlopende zin. Als lijst is in
                 één oogopslag te zien wat er onder één dak zit. */}
             {inhoud.toonDivisies !== false && (
@@ -803,10 +806,15 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       )}
 
       {/* ── Werkwijze: vijf stappen in 3 + 2 ── */}
-      <section className="pc-werkwijze" id="werkwijze">
+      <section className={`pc-werkwijze${inhoud.werkwijze.alineas ? ' pc-werkwijze--proza' : ''}`} id="werkwijze">
         <div className="pc-vat pc-midden">
           <h2 className="pc-h2--midden">{regels(inhoud.werkwijze.kop)}</h2>
         </div>
+        {inhoud.werkwijze.alineas ? (
+          <div className="pc-vat pc-proza">
+            {inhoud.werkwijze.alineas.map((alinea) => <p key={alinea}>{alinea}</p>)}
+          </div>
+        ) : (
         <div className="pc-stappen">
           {/* De bogen staan absoluut: hun plek komt uit de gemeten
               tussenruimtes tussen de cirkels, niet uit de rasterstroom. */}
@@ -820,6 +828,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
             {inhoud.werkwijze.stappen.slice(3).map((s, i) => <Stap key={s.titel} {...s} nr={i + 4} />)}
           </div>
         </div>
+        )}
       </section>
 
       {/* ── Realisaties: één spoor met alle werffoto's, daaronder de dakschuif ──
@@ -948,15 +957,23 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
           voordelen als reclame. Nu komt hij ná het stappenplan, het werk en de
           reviews: dezelfde vier punten lezen dan als voorwaarden waarop je
           tekent, en de bezoeker scrolt langs het bewijs om er te komen. */}
-      <section className="pc-aanbod" id="aanbod">
+      <section className={`pc-aanbod${inhoud.aanbod.alineas ? ' pc-aanbod--proza' : ''}`} id="aanbod">
         <div className="pc-vat">
           <h2 className="pc-h2--midden">{inhoud.aanbod.kop}</h2>
         </div>
+        {inhoud.aanbod.alineas ? (
+          <div className="pc-vat pc-proza">
+            {inhoud.aanbod.alineas.map((alinea) => <p key={alinea}>{alinea}</p>)}
+          </div>
+        ) : (
+        <>
         <div className="pc-spoor" ref={aanbodSpoor}
           onScroll={(e) => volgStand(e.currentTarget, setAanbodPos)}>
           {inhoud.aanbod.kaarten.map((k, i) => <SpoorKaart key={k.titel} {...k} gevuld={i === 0} />)}
         </div>
         <Bediening spoor={aanbodSpoor} pos={aanbodPos} schuif={schuif} wat="kaart" />
+        </>
+        )}
       </section>
 
       {/* ── Contact ── */}
@@ -1022,10 +1039,11 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
         </section>
       )}
 
-      <section className="pc-contact" id="contact">
+      <section className={`pc-contact${inhoud.toonEind === false ? ' pc-contact--laatste' : ''}`} id="contact">
         <div className="pc-vat pc-midden">
           <span className="pc-chip--vlak">{CONTACT.phone.display}<IcChevron richting="rechts" /></span>
           <h2 className="pc-h2--groot">{inhoud.contact.kop}</h2>
+          {inhoud.contact.tekst && <p className="pc-contact-tekst">{inhoud.contact.tekst}</p>}
         </div>
         <div className="pc-vat">
           <div className="pc-info">
@@ -1045,8 +1063,10 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
 
           <div className="pc-contact-rij">
             <form className="pc-form" onSubmit={verstuurContact} onFocusCapture={meldStart}>
+              {!inhoud.contact.tekst && (<>
               <h3>Zeg wat er moet gebeuren</h3>
               <p className="pc-form-sub">Vul in wat u weet, ook als het nog niet vastligt.</p>
+              </>)}
               <div className="pc-form-paar">
                 <label className="pc-form-veld"><span>Voornaam</span>
                   <input name="voornaam" placeholder="Voornaam" autoComplete="given-name" /></label>
@@ -1068,7 +1088,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
               <label className="pc-form-veld pc-form-enkel"><span>Bericht (optioneel)</span>
                 <textarea name="bericht" placeholder="Bericht (optioneel)" /></label>
               <button className="pc-knop pc-knop--accent" type="submit" disabled={bezig}>
-                {bezig ? 'Bezig…' : 'Verstuur'}<IcPijl maat={13} />
+                {bezig ? 'Bezig…' : (inhoud.contact.knop ?? 'Verstuur')}<IcPijl maat={13} />
               </button>
               {fout && <p className="pc-form-melding" style={{ color: '#a3231a' }}>{fout}</p>}
             </form>
@@ -1080,6 +1100,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       </section>
 
       {/* ── Eind-CTA met de cirkelfoto die over de bandrand steekt ── */}
+      {inhoud.toonEind !== false && (
       <section className="pc-eind">
         <div className="pc-eind-bg">
           <img src={inhoud.eind.achtergrond} alt="" aria-hidden="true" loading="lazy" />
@@ -1102,6 +1123,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
           </div>
         </div>
       </section>
+      )}
 
       {/* ── Footer ── */}
       <footer className="pc-footer">

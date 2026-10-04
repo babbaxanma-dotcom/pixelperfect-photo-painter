@@ -154,6 +154,8 @@ export type PaginaInhoud = {
     /** Regel onder de kop. Blijft dit leeg, dan staat er niets. */
     sub?: string;
     knop: string;
+    /** Regel onder de knop, gevolgd door het telefoonnummer ("Of bel direct:"). */
+    bel?: string;
     foto: string;
     alt: string;
     /** Waar de telefoonuitsnede op inzoomt; leeg laat de standaard staan. */
@@ -165,16 +167,22 @@ export type PaginaInhoud = {
      */
     dias?: { src: string; alt: string; pos?: string }[];
   };
+  /** tekst: twee regeleinden na elkaar beginnen een nieuwe alinea. */
   over: { kop: string[]; tekst: string; slot: string; foto: string; alt: string };
   diensten: { kop: string[]; achtergrond: string; kaarten: Dienstkaart[] };
-  werkwijze: { kop: string[]; stappen: Stapgegevens[] };
+  /** alineas: lopende tekst in plaats van de stappen (homepage, 4 okt 2026). */
+  werkwijze: { kop: string[]; stappen: Stapgegevens[]; alineas?: string[] };
   werk: {
     kop: string;
     fotos: Werkfoto[];
     schuif?: { voor: string; na: string; altVoor: string; altNa: string; labelLinks: string; labelRechts: string };
   };
-  aanbod: { kop: string; kaarten: Aanbodkaart[] };
-  contact: { kop: string; foto: string; alt: string };
+  /** alineas: lopende tekst in plaats van het kaartenspoor (homepage, 4 okt 2026). */
+  aanbod: { kop: string; kaarten: Aanbodkaart[]; alineas?: string[] };
+  /** tekst: alinea onder de kop; dan vervalt de eigen kop van het formulier. knop: tekst op de verzendknop. */
+  contact: { kop: string; foto: string; alt: string; tekst?: string; knop?: string };
+  /** Zet de donkere afsluitband onder het contactformulier uit. */
+  toonEind?: boolean;
   eind: { kop: string[]; tekst: string; achtergrond: string; cirkel: string; cirkelAlt: string };
   calculator: {
     badge: string; kop: string; onder: string; knop: string;
@@ -587,12 +595,21 @@ export const HOME: PaginaInhoud = {
   omschrijving: 'Algemene aannemer voor dakwerken, gevelrenovatie, badkamers, interieur, totaalrenovatie en energiewerken. Eén vaste ploeg, vaste prijs na het plaatsbezoek. Gratis plaatsbezoek in heel Vlaanderen.',
   pad: '/',
   bronPrefix: 'home',
+  /* 4 okt 2026: alle zichtbare tekst van de homepage is de tekst die Mohammed
+     aanleverde, letterlijk ("op de home page"). Hij koos bewust "letterlijk"
+     voor punten die Bardh nog niet bevestigde. De secties die zijn tekst niet
+     noemt (uitgevoerd werk, de zes afdelingen als links, de formulierbalk)
+     blijven staan: dat zijn foto's en bediening, geen copy. De afsluitband
+     onder het contactformulier is weg: zijn pagina eindigt bij het formulier. */
   /* De gerenoveerde keuken uit het uitgevoerde werk van de landingspagina. */
   contact: {
-    kop: 'Vraag een plaatsbezoek',
+    kop: 'Laten we uw plannen bespreken',
+    tekst: 'Vul hieronder uw gegevens in en vertel ons kort wat u voor ogen heeft. We nemen snel contact met u op om een vrijblijvend plaatsbezoek in te plannen.',
+    knop: 'Verstuur aanvraag',
     foto: heroFoto,
     alt: 'Gerenoveerde keuken met zicht op de tuin, door AB Bouw Groep',
   },
+  toonEind: false,
   /* De beoordelingen van de bestaande homepage: dak, gevel, interieur,
      totaalrenovatie en badkamer door elkaar, zodat een bezoeker het vak
      terugvindt waarvoor hij komt. Niet geschreven, niet aangepast --
@@ -629,8 +646,10 @@ export const HOME: PaginaInhoud = {
   ],
 
   hero: {
-    regels: ['De oplossing voor uw', 'bouwwerkzaamheden', 'en renovatie'],
+    regels: ['Uw bouw- of renovatieproject,', 'perfect geregeld'],
+    sub: 'Van een enkele ingreep tot een complete totaalrenovatie. Wij nemen de uitvoering en de coördinatie volledig uit handen, zodat u zonder zorgen kunt uitkijken naar het eindresultaat.',
     knop: 'Vraag een plaatsbezoek aan',
+    bel: 'Of bel direct:',
     /* 1 okt 2026, Mohammed: "de foto roll graag dezelfde als op totaalrenovatie lp".
        Dezelfde drie foto's, uit de LP zelf, zodat ze niet uit elkaar lopen. */
     dias: RENO_LP.hero.dias,
@@ -639,8 +658,9 @@ export const HOME: PaginaInhoud = {
   },
 
   over: {
-    kop: ['Waarom kiezen voor', 'AB Bouw Groep'],
-    tekst: 'Of uw plannen nu vastliggen of nog moeten groeien: wij begeleiden u van het eerste gesprek tot de oplevering. U schakelt één afdeling in of ze allemaal. Wij coördineren alle bouwactiviteiten die nodig zijn voor de realisatie van uw bouwwerk.',
+    kop: ['Alle vakmensen', 'onder één dak'],
+    tekst: 'Een geslaagde verbouwing vraagt om overzicht. Of uw plannen nu al concreet zijn of nog volop in de ontwerpfase zitten, wij denken graag met u mee.'
+      + '\n\n' + 'U kunt ons inschakelen voor één specifieke opdracht — zoals een nieuw dak, een badkamerrenovatie of het plaatsen van een warmtepomp — maar evengoed voor het volledige plaatje. Omdat wij alle disciplines (ruwbouw, dakwerken, gevelbekleding, interieur, sanitair en ecologie) in huis hebben, sluiten de werkzaamheden naadloos op elkaar aan. Geen wachttijden tussen verschillende aannemers, maar één vlotte planning en één vast aanspreekpunt.',
     slot: '',
     foto: homeOver,
     alt: 'Open woonkeuken met lichtkoepel, lichte vloer en een glazen deur naar de tuin, door AB Bouw Groep',
@@ -702,7 +722,19 @@ export const HOME: PaginaInhoud = {
 
   werkwijze: {
     ...TOTAALRENOVATIE.werkwijze,
-    kop: ['Van eerste telefoon', 'tot oplevering'],
+    kop: ['Van het eerste gesprek', 'tot de laatste afwerking'],
+    alineas: [
+      'Alles begint met een goed beeld van de situatie. Daarom komen we altijd eerst vrijblijvend ter plaatse kijken. We luisteren naar uw wensen, bekijken de ruimte en geven direct aan wat de mogelijkheden zijn. Daarna ontvangt u een heldere offerte waarin alle kosten duidelijk staan omschreven.',
+      'Zodra de werken van start gaan, kunt u rekenen op onze vaste ploegen. We hechten veel belang aan een nette werkomgeving: we schermen andere ruimtes af tegen stof en laten de werf elke dag opgeruimd achter. Bij de oplevering overlopen we samen de volledige woning. Pas wanneer u helemaal tevreden bent en de laatste details in orde zijn, sluiten we het project af.',
+    ],
+  },
+
+  aanbod: {
+    ...TOTAALRENOVATIE.aanbod,
+    kop: 'Bouwen op zekerheid',
+    alineas: [
+      'Als erkend aannemer zorgen we niet alleen voor een goede uitvoering, maar ook voor een sluitende administratie. We zijn VCA-gecertificeerd en werken altijd met de wettelijke tienjarige aansprakelijkheid. Waar mogelijk passen we direct het voordelige 6% btw-tarief toe. Daarnaast bezorgen we u alle nodige attesten om uw premies vlot aan te kunnen vragen.',
+    ],
   },
 
   eind: {
@@ -712,18 +744,16 @@ export const HOME: PaginaInhoud = {
   },
 
   faq: {
-    kop: ['Wat klanten ons', 'het vaakst vragen'],
+    kop: ['Veelgestelde vragen'],
     vragen: [
-      { v: 'Werken jullie in heel Vlaanderen?',
-        a: 'Ja. We werken in heel Vlaanderen en in Brussel. Voor een plaatsbezoek maken we een afspraak die past, ook in de vooravond.' },
-      { v: 'Wat kost een plaatsbezoek en een offerte?',
-        a: 'Niets. We komen langs, meten op en bezorgen u een gedetailleerde offerte. Daar zijn geen kosten aan verbonden en u bent tot niets verplicht.' },
-      { v: 'Kan ik een enkel werk laten doen, of moet het een volledige renovatie zijn?',
-        a: 'Beide kan. Alleen een dak of alleen een badkamer is prima. Loopt uw project over meerdere vakken, dan coordineren wij die onderling.' },
-      { v: 'Hoe zit het met premies?',
-        a: 'We bekijken bij het plaatsbezoek welke premies op uw situatie van toepassing zijn en leveren de attesten aan die u nodig heeft. De premievoorwaarden wijzigen geregeld, dus we toetsen ze per dossier opnieuw.' },
-      { v: 'Hoe lang op voorhand moet ik boeken?',
-        a: 'Dat hangt af van het vak en het seizoen. Bij het plaatsbezoek zeggen we meteen welke startperiode realistisch is, en die zetten we in de offerte.' },
+      { v: 'Werken jullie overal in Vlaanderen?',
+        a: 'Ja, wij zijn actief in heel Vlaanderen en in het Brussels Gewest. Een afspraak voor een plaatsbezoek plannen we in wanneer het u het beste uitkomt.' },
+      { v: 'Zijn er kosten verbonden aan de offerte?',
+        a: 'Nee, het plaatsbezoek en de offerte die we daarna opmaken, zijn altijd volledig kosteloos en vrijblijvend.' },
+      { v: 'Moet het altijd om een grote renovatie gaan?',
+        a: 'Zeker niet. We voeren evengoed kleinere, losse werken uit, zoals het vernieuwen van een gevel of het plaatsen van isolatie.' },
+      { v: 'Helpen jullie met de Mijn VerbouwPremie?',
+        a: 'We adviseren u graag over de actuele normen en zorgen ervoor dat u de juiste technische fiches en facturen heeft om uw aanvraag in te dienen.' },
     ],
   },
 
