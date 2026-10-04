@@ -73,6 +73,12 @@ function Boog({ delta }: { delta: number }) {
   );
 }
 
+/* "Titel: uitleg" toont de titel in het vet (USP's totaalrenovatie, 4 okt). */
+const metVet = (t: string) => {
+  const i = t.indexOf(': ');
+  return i > 0 ? <><strong>{t.slice(0, i + 1)}</strong>{t.slice(i + 1)}</> : t;
+};
+
 export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   const vat = useRef<HTMLDivElement>(null);
   const [dia, setDia] = useState(0);
@@ -293,7 +299,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                     <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor"
                       strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <path d="m4 10.5 4 4 8-9" />
-                    </svg>{b}
+                    </svg><span>{metVet(b)}</span>
                   </li>
                 ))}
               </ul>
@@ -303,14 +309,14 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               <Rekenaar inhoud={inhoud} plek="hero" voor={match?.voor} />
               {/* 4 okt, plan mobiele hero: de vinkjes direct ONDER de rekenaar. Alleen op telefoon en
                   tablet zichtbaar (extra.ts); op de computer staan ze in de kaart. */}
-              {inhoud.rekenaar.vertrouwen && (
+              {(inhoud.rekenaar.vertrouwen || inhoud.hero.bewijs.length > 0) && (
                 <ul className="kgj-hero__vertrouwen">
-                  {inhoud.rekenaar.vertrouwen.map((t) => (
+                  {(inhoud.rekenaar.vertrouwen ?? inhoud.hero.bewijs).map((t) => (
                     <li key={t}>
                       <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor"
                         strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                         <path d="m4 10.5 4 4 8-9" />
-                      </svg>{t}
+                      </svg><span>{metVet(t)}</span>
                     </li>
                   ))}
                 </ul>

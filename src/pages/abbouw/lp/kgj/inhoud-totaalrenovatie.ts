@@ -78,14 +78,14 @@ export const TOTAALRENOVATIE: KgjInhoud = {
 
   hero: {
     /* Mohammeds eigen kop, letterlijk (26 sep). 4 okt, plan desktop-hero: nieuwe kop. */
-    kop: 'Uw totaalrenovatie zorgeloos geregeld van A tot Z',
+    kop: 'Uw totaalrenovatie [zorgeloos] geregeld van A tot Z',
     /* Zelfde opbouw als Mohammeds subkop op dakwerken. Het mechanisme: AB heeft
        voor elk vak een eigen ploeg (homepage), dus één planning. */
     /* Mohammed, 26 sep: de subkop "eruit". Leeg = geen regel onder de kop. */
     /* 4 okt, plan desktop-hero: subheadline. */
     onder: 'Bereken binnen 2 minuten een realistische prijsindicatie voor uw woning.',
-    /* Mohammeds eigen drie vinkjes, letterlijk (26 sep). */
-    bewijs: ['1 vast aanspreekpunt van ontwerp tot oplevering', 'Transparante offerte & strikte planning', 'Echt vakmanschap en perfecte afwerking'],
+    /* 4 okt, plan desktop-hero (Mohammed): drie USP's, het deel voor de dubbelepunt in het vet. */
+    bewijs: ['100% Budgetgarantie: Geen onverwachte meerkosten achteraf.', 'Complete A-tot-Z Begeleiding: Van ontwerp en vergunning tot afwerking.', 'Maximale Premie-ondersteuning: Volledige begeleiding bij de Mijn VerbouwPremie.'],
     /* Mohammed, 26 sep: "laat enkel de keuken foto, badkamerrenovatie foto van
        abgroep die we bij badkamerrenovatie lp in de sectie hebben onder hero, en
        dan nog die leefruimte echte foto". De badkamer is de foto uit de sectie

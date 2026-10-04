@@ -41,7 +41,8 @@ const vraag = ic.phone(20);
    mogelijk een vrijblijvende richtprijs", "elk dak is uniek. Om een definitieve prijs op te stellen
    komt onze dakexpert graag de exacte staat van het dak opmeten", dan "plan uw gratis dakinspectie"
    met de knop "krijg mijn gratis dakinspectie"; "dit is het eigenlijk". Het aantal vrije
-   inspectiemomenten staat er niet bij: Bardhs agenda toont nu 8 vrije uren per werkdag. */
+   inspectiemomenten: Mohammed "4 gratis inspectieslots beschikbaar". Het getal komt live uit Bardhs
+   agenda (vrije momenten de komende 7 dagen), hoogstens 4; minder vrij = het echte aantal, 0 = geen regel. */
 const HTML_RICHTPRIJS_DAK = `<div class="rp rp-afs">
 <header class="rp-afs__kop">
   <a href="/" aria-label="AB Bouw Groep"><img src="${LOGO}" alt="AB Bouw Groep" width="150" /></a>
@@ -55,6 +56,7 @@ const HTML_RICHTPRIJS_DAK = `<div class="rp rp-afs">
   <div class="rp-bed__kaart">
     <p class="rp-bed__uniek">Elk dak is uniek. Om een definitieve prijs op te stellen, komt onze dakexpert graag de exacte staat van het dak opmeten.</p>
     <h2 class="rp-bed__cta-t">Plan uw gratis dakinspectie</h2>
+    <p class="rp-bed__slots" id="rp-bed-slots" hidden></p>
     <a class="rp-btn rp-btn--primary rp-bed__cta" href="/dakinspectie">Krijg mijn gratis dakinspectie</a>
   </div>
 </main>
@@ -127,6 +129,10 @@ const STIJL = `
 .rp-bed__uniek { margin: 0; font-size: 17px; line-height: 1.55; color: var(--rp-ink); text-wrap: pretty; }
 .rp-bed__cta-t { margin: 22px 0 14px; font-size: 22px; line-height: 1.25; }
 .rp-bed__cta { justify-content: center; }
+.rp-bed__slots { display: flex; align-items: center; justify-content: center; gap: 8px; margin: -4px 0 14px;
+  font-weight: 700; font-size: 15px; color: var(--rp-ink); }
+.rp-bed__slots::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: #1f9d55; box-shadow: 0 0 0 4px rgba(31, 157, 85, .18); }
+.rp-bed__slots[hidden] { display: none; }
 @media (max-width: 640px) {
   .rp-afs__kop img { width: 120px; }
   .rp-bed__lijst { border-radius: 10px; }
@@ -151,6 +157,20 @@ export default function Bedankt() {
     m.setAttribute('content', 'noindex, nofollow');
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (soort !== 'richtprijs-dak') return;
+    const nu = Date.now();
+    const url = `https://backend.leadconnectorhq.com/calendars/ST3uIpAM7kFEokIm2NM7/free-slots?startDate=${nu}&endDate=${nu + 7 * 864e5}&timezone=Europe%2FBrussels`;
+    fetch(url).then((r) => r.json()).then((d: Record<string, { slots?: string[] }>) => {
+      const vrij = Object.values(d || {}).reduce((n, dag) => n + (Array.isArray(dag?.slots) ? dag.slots.length : 0), 0);
+      const n = Math.min(4, vrij);
+      const el = document.getElementById('rp-bed-slots');
+      if (!el || n < 1) return;
+      el.textContent = n === 1 ? '1 gratis inspectieslot beschikbaar' : `${n} gratis inspectieslots beschikbaar`;
+      el.hidden = false;
+    }).catch(() => {});
+  }, [soort]);
 
   return (
     <>

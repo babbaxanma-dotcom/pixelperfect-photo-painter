@@ -222,6 +222,15 @@ export const KGJ_EXTRA = `
   .kgj-hero__bewijs { gap: 10px; margin-top: 20px; }
   .kgjx .kgj-hero__bewijs li { font-size: 15px; }
 }
+/* 4 okt: USP's als "Titel: uitleg" (totaalrenovatie): titel vet, uitleg gewoon, vinkje bij de eerste regel. */
+.kgjx .kgj-hero__bewijs li:has(strong), .kgjx .kgj-hero__vertrouwen li:has(strong) { align-items: flex-start; font-weight: 500; }
+.kgjx .kgj-hero__bewijs strong, .kgjx .kgj-hero__vertrouwen strong { font-weight: 800; }
+.kgjx .kgj-hero__bewijs li:has(strong) svg { margin-top: -2px; }
+/* Telefoon en tablet (totaalrenovatie): de USP's onder de rekenaar, zodat de kaart boven de vouw staat. */
+@media (max-width: 1000px) {
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero__bewijs { display: none; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero__vertrouwen { display: grid; gap: 10px; margin: 16px 2px 0; padding: 0; list-style: none; }
+}
 
 /* ── keuze met een verduidelijking eronder (het btw-tarief) ── */
 .kgjx .kgj-reken__keuze { display: flex; flex-direction: column; gap: 3px; }
