@@ -39,13 +39,15 @@ export function Kaart({ titel, tekst, foto, alt, href, hoogte, gevuld }: Dienstk
 }
 
 /** Eén stap uit de werkwijze: icooncirkel met stapnummer, titel en tekst. */
-export function Stap({ titel, tekst, Icoon, nr, actief }: Stapgegevens & { nr: number; actief?: boolean }) {
+/* Zonder nr staat er geen "Stap n"-pil op het bolletje: zo gebruikt de
+   zekerhedensectie dezelfde vorm voor punten die geen volgorde hebben. */
+export function Stap({ titel, tekst, Icoon, nr, actief }: Stapgegevens & { nr?: number; actief?: boolean }) {
   return (
     <div className={actief ? 'pc-stap pc-stap--actief' : 'pc-stap'}>
       <div className="pc-stap-badge">
         {actief && <span className="pc-stap-schijf" />}
         <Icoon />
-        <span className="pc-stap-pil">Stap {nr}</span>
+        {nr !== undefined && <span className="pc-stap-pil">Stap {nr}</span>}
       </div>
       <h3>{titel}</h3>
       <p>{tekst}</p>

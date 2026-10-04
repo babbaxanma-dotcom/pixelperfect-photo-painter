@@ -1524,22 +1524,45 @@ export const REPLICA_CSS = `
 /* Onder 600px vensterhoogte past de belregel er niet meer bij; hetzelfde
    nummer staat dan vlak erboven in de kop (Bel ons vandaag). */
 @media (min-width: 901px) and (max-height: 600px) { .pc-hero-bel { display: none; } }
-/* Werkwijze en zekerheid als lopende tekst: gecentreerd blok op leesbreedte.
-   De vaste minimumhoogtes waren voor de stappen en het kaartenspoor. */
-.pc-werkwijze--proza, .pc-aanbod--proza { min-height: 0; }
-.pc-proza { max-width: 760px; margin-top: 34px; }
-.pc-proza p { font-size: 16px; line-height: 26px; color: var(--pc-grijs); text-align: center; }
-.pc-proza p + p { margin-top: 16px; }
-@media (max-width: 700px) { .pc-proza p { text-align: left; } }
+/* Zekerheden als bolletjes (5 okt 2026): dezelfde .pc-stap als de werkwijze,
+   vier naast elkaar, zonder bogen en zonder stapnummer. De vaste
+   minimumhoogte van 812px was voor het kaartenspoor. */
+.pc-aanbod--bolletjes { min-height: 0; }
+.pc-aanbod-lede { margin: 16px auto 0; max-width: 60ch; text-align: center; font-size: 16px; line-height: 26px; color: var(--pc-grijs); }
+.pc-zeker { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; max-width: 1024px; margin: 50px auto 0; }
+.pc-zeker .pc-stap p { max-width: 240px; }
+@media (max-width: 1000px) { .pc-zeker { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; } }
+@media (max-width: 600px) { .pc-zeker { grid-template-columns: 1fr; gap: 32px; margin-top: 32px; } }
 /* Contact: de inleiding onder de kop, en zonder afsluitband eronder geen
    ruimte meer vrijhouden voor de cirkelfoto die over de bandrand stak. */
 .pc-contact-tekst { margin: 16px auto 0; max-width: 60ch; font-size: 16px; line-height: 26px; color: var(--pc-grijs); }
 .pc-contact--laatste { padding-bottom: 96px; }
 @media (max-width: 900px) { .pc-contact--laatste { padding-bottom: 60px; } }
-/* Zonder eigen kop is het formulier lager dan de vaste fotohoogte van 603px;
-   dan bleef er wit onder de knop. De foto volgt hier de hoogte van het formulier. */
+/* Staat de inleiding onder de sectiekop, dan heeft het formulier geen eigen
+   kop en is het lager dan de vaste fotohoogte van 603px; dan bleef er wit
+   onder de knop. De foto volgt hier de hoogte van het formulier. */
 @media (min-width: 901px) {
-  .pc-contact--laatste .pc-contact-foto { position: relative; }
-  .pc-contact--laatste .pc-contact-foto img { position: absolute; inset: 0; height: 100%; }
+  .pc-contact--tekst .pc-contact-foto { position: relative; }
+  .pc-contact--tekst .pc-contact-foto img { position: absolute; inset: 0; height: 100%; }
+}
+
+/* Kopbalk die bovenaan weg is (homepage, 5 okt 2026). Mohammed: "de nav bar
+   moet daar niet zichtbaar zijn, die moet gewoon clean komen als je scrolt" en
+   "moet volledig weg zijn bovenaan". wireVasteKop zet .is-weg zolang de pagina
+   bovenaan staat. Eén korte schuif naar beneden, geen vervaging of vertraging;
+   220ms zodat de kop na een sprong meteen op zijn plek staat. */
+.pc-kop--wegbaar { transition: transform .22s cubic-bezier(.25, .46, .45, .94), visibility 0s linear 0s,
+  background .22s ease, box-shadow .22s ease; }
+.pc-kop--wegbaar.is-weg { transform: translateY(-100%); visibility: hidden; pointer-events: none;
+  box-shadow: none; transition: transform .22s cubic-bezier(.25, .46, .45, .94), visibility 0s linear .22s; }
+@media (prefers-reduced-motion: reduce) { .pc-kop--wegbaar, .pc-kop--wegbaar.is-weg { transition: none; } }
+/* Het merk in de hero zolang de kopbalk weg is: wit op de foto, op dezelfde
+   plek als het logo in de balk. */
+.pc-hero-merk { position: absolute; top: 0; left: 0; right: 0; z-index: 3; padding-top: 44px; pointer-events: none; }
+.pc-hero-merk a { display: inline-block; pointer-events: auto; }
+.pc-hero-merk img { height: 46px; width: auto; filter: brightness(0) invert(1); }
+@media (max-width: 900px) {
+  .pc-hero-merk { padding-top: 22px; padding-inline: 20px; }
+  .pc-hero-merk img { height: 36px; }
 }
 `;

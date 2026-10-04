@@ -52,6 +52,10 @@ const UITZONDERINGEN = [
     reden: 'staat live op de totaalrenovatiepagina en is door Mohammed goedgekeurd',
   },
   {
+    tekst: 'Waar mogelijk passen we direct het voordelige 6% btw-tarief toe',
+    reden: 'letterlijke tekst van Mohammed voor de homepage (4 okt 2026, "deze copy ... op de home page")',
+  },
+  {
     tekst: 'Bij een totaalrenovatie werken die zes op dezelfde werf',
     reden: 'verwijst naar de divisielijst er direct boven; door Mohammed gelaten na de "zes divisies"-correctie',
   },

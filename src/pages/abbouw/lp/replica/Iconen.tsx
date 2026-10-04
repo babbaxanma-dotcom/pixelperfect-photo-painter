@@ -172,6 +172,46 @@ export const IcStapOplevering = ({ className }: P) => (
   </svg>
 );
 
+/* ── De vier zekerheden (homepage, 5 okt 2026): zelfde maat en lijn als de
+   stapiconen, zodat de bolletjes van beide secties één familie zijn. ── */
+
+/** VCA: een schild met een vinkje. */
+export const IcZekerVca = ({ className }: P) => (
+  <svg className={className} width="28" height="27" viewBox="0 0 28 27" {...stap} aria-hidden="true">
+    <path d="M14 2.2 4.6 5.8v6.6c0 6 4 10.4 9.4 12.2 5.4-1.8 9.4-6.2 9.4-12.2V5.8Z" />
+    <path d="m9.6 13.4 3.2 3.2 5.8-6" />
+  </svg>
+);
+
+/** Tienjarige aansprakelijkheid: een woning met een vinkje. */
+export const IcZekerWoning = ({ className }: P) => (
+  <svg className={className} width="28" height="27" viewBox="0 0 28 27" {...stap} aria-hidden="true">
+    <path d="M2 12.2 14 2.6l12 9.6" />
+    <path d="M5.2 10v13.4a1.4 1.4 0 0 0 1.4 1.4h14.8a1.4 1.4 0 0 0 1.4-1.4V10" />
+    <path d="m9.8 17 3 3 5.4-5.6" />
+  </svg>
+);
+
+/** 6% btw: een procentteken in een cirkel. */
+export const IcZekerBtw = ({ className }: P) => (
+  <svg className={className} width="28" height="27" viewBox="0 0 28 27" {...stap} aria-hidden="true">
+    <circle cx="14" cy="13.5" r="11.2" />
+    <path d="m9.2 18.3 9.6-9.6" />
+    <circle cx="9.8" cy="9.3" r="1.7" />
+    <circle cx="18.2" cy="17.7" r="1.7" />
+  </svg>
+);
+
+/** Attesten: een document met een zegel. */
+export const IcZekerAttest = ({ className }: P) => (
+  <svg className={className} width="28" height="27" viewBox="0 0 28 27" {...stap} aria-hidden="true">
+    <path d="M17.4 24.4H5a1.6 1.6 0 0 1-1.6-1.6V4.2A1.6 1.6 0 0 1 5 2.6h13a1.6 1.6 0 0 1 1.6 1.6v6.6" />
+    <path d="M7.4 8h8.2M7.4 12.4h6" />
+    <circle cx="20.6" cy="16.6" r="4" />
+    <path d="m18.4 20 -1 5 3.2-1.8 3.2 1.8-1-5" />
+  </svg>
+);
+
 /**
  * De handgetekende boog tussen twee stappen: 174x32, lijndikte 1,6, met een
  * open pijlpunt. `bol` keert de kromming om, net als in de referentie waar de

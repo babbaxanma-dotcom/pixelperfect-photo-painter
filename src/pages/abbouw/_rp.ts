@@ -281,8 +281,15 @@ export function wireVasteKop(): () => void {
      hij dat ook zodra je scrollt, terwijl hij daar over de hero ligt. */
   const wikkel = kop.closest<HTMLElement>('.pc-chrome')
     ?? kop.parentElement as HTMLElement | null;
+  /* 5 okt 2026, Mohammed: "de nav bar moet daar niet zichtbaar zijn, die moet
+     gewoon clean komen als je scrolt", "volledig weg bovenaan". Een kop met
+     .pc-kop--wegbaar is bovenaan weg en neemt dan ook geen ruimte in; hij
+     schuift in beeld zodra de bezoeker voorbij WEG_TOT pixels scrolt. */
+  const wegbaar = kop.classList.contains('pc-kop--wegbaar');
+  const WEG_TOT = 64;
   const zetRuimte = () => {
     if (!wikkel) return;
+    if (wegbaar) { wikkel.style.paddingTop = ''; return; }
     /* Meten in ongescrollde toestand: gescrolld is de kop kleiner, en dan zou
        de pagina onder hem wegspringen. */
     const was = kop.classList.contains('is-vast');
@@ -294,6 +301,7 @@ export function wireVasteKop(): () => void {
 
   let vast = false;
   const meet = () => {
+    if (wegbaar) kop.classList.toggle('is-weg', window.scrollY <= WEG_TOT);
     const nu = window.scrollY > 24;
     if (nu === vast) return;
     vast = nu;

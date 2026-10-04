@@ -241,6 +241,26 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
         }
         await p.evaluate(() => window.scrollTo(0, 0));
 
+        /* 4c. Een kop met .pc-kop--wegbaar hoort bovenaan VOLLEDIG weg te zijn
+               (Mohammed 5 okt 2026: "de nav bar moet daar niet zichtbaar zijn",
+               "moet volledig weg zijn bovenaan"). Niet half doorzichtig, niet
+               een randje: onzichtbaar en niet aan te klikken. */
+        const wegbaar = await p.evaluate(() => !!document.querySelector('.pc-kop--wegbaar'));
+        if (wegbaar) {
+          await new Promise((k) => setTimeout(k, 300));
+          const boven = await p.evaluate(() => {
+            const k = document.querySelector('.pc-kop');
+            const r = k.getBoundingClientRect();
+            return { zichtbaar: getComputedStyle(k).visibility !== 'hidden' && r.bottom > 0, onder: Math.round(r.bottom) };
+          });
+          metingen++;
+          if (boven.zichtbaar) fouten.push(`${waar}: de kop staat bovenaan in beeld (onderrand ${boven.onder}px), hij hoort daar weg te zijn`);
+          /* Het menu bestaat pas na het scrollen; daar meet stap 5 het dan ook,
+             zoals een bezoeker het tegenkomt. */
+          await p.evaluate(() => window.scrollTo(0, 400));
+          await new Promise((k) => setTimeout(k, 300));
+        }
+
         /* 5. Op een telefoon verdwijnt de navigatierij. Dan moet de menuknop
               hem terugbrengen, anders is er geen weg naar een andere pagina. */
         if (breedte < 500) {

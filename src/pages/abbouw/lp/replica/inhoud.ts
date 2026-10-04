@@ -16,6 +16,7 @@
 import type { Aanbodkaart, Dienstkaart, Stapgegevens } from './Onderdelen';
 import {
   IcStapBel, IcStapBezoek, IcStapMeten, IcStapOplevering, IcStapWerf,
+  IcZekerVca, IcZekerWoning, IcZekerBtw, IcZekerAttest,
 } from './Iconen';
 
 /* ── Beelden ──────────────────────────────────────────────────────────────
@@ -170,19 +171,22 @@ export type PaginaInhoud = {
   /** tekst: twee regeleinden na elkaar beginnen een nieuwe alinea. */
   over: { kop: string[]; tekst: string; slot: string; foto: string; alt: string };
   diensten: { kop: string[]; achtergrond: string; kaarten: Dienstkaart[] };
-  /** alineas: lopende tekst in plaats van de stappen (homepage, 4 okt 2026). */
-  werkwijze: { kop: string[]; stappen: Stapgegevens[]; alineas?: string[] };
+  werkwijze: { kop: string[]; stappen: Stapgegevens[] };
   werk: {
     kop: string;
     fotos: Werkfoto[];
     schuif?: { voor: string; na: string; altVoor: string; altNa: string; labelLinks: string; labelRechts: string };
   };
-  /** alineas: lopende tekst in plaats van het kaartenspoor (homepage, 4 okt 2026). */
-  aanbod: { kop: string; kaarten: Aanbodkaart[]; alineas?: string[] };
+  /** bolletjes: punten in dezelfde vorm als de werkwijze, in plaats van het
+      kaartenspoor; lede: de zin onder de kop (homepage, 5 okt 2026). */
+  aanbod: { kop: string; kaarten: Aanbodkaart[]; lede?: string; bolletjes?: Stapgegevens[] };
   /** tekst: alinea onder de kop; dan vervalt de eigen kop van het formulier. knop: tekst op de verzendknop. */
   contact: { kop: string; foto: string; alt: string; tekst?: string; knop?: string };
   /** Zet de donkere afsluitband onder het contactformulier uit. */
   toonEind?: boolean;
+  /** De kopbalk is bovenaan weg en schuift pas in beeld bij het scrollen; het
+      logo staat dan wit in de hero (homepage, 5 okt 2026). */
+  kopBovenaanWeg?: boolean;
   eind: { kop: string[]; tekst: string; achtergrond: string; cirkel: string; cirkelAlt: string };
   calculator: {
     badge: string; kop: string; onder: string; knop: string;
@@ -595,12 +599,17 @@ export const HOME: PaginaInhoud = {
   omschrijving: 'Algemene aannemer voor dakwerken, gevelrenovatie, badkamers, interieur, totaalrenovatie en energiewerken. Eén vaste ploeg, vaste prijs na het plaatsbezoek. Gratis plaatsbezoek in heel Vlaanderen.',
   pad: '/',
   bronPrefix: 'home',
+  /* 5 okt 2026, Mohammed: "de nav bar moet daar niet zichtbaar zijn, die moet gewoon
+     clean komen als je scrolt" en "moet volledig weg zijn bovenaan". */
+  kopBovenaanWeg: true,
   /* 4 okt 2026: alle zichtbare tekst van de homepage is de tekst die Mohammed
      aanleverde, letterlijk ("op de home page"). Hij koos bewust "letterlijk"
      voor punten die Bardh nog niet bevestigde. De secties die zijn tekst niet
-     noemt (uitgevoerd werk, de zes afdelingen als links, de formulierbalk)
-     blijven staan: dat zijn foto's en bediening, geen copy. De afsluitband
-     onder het contactformulier is weg: zijn pagina eindigt bij het formulier. */
+     noemt (uitgevoerd werk, de zes afdelingen als links, de formulierbalk,
+     de afsluitband) blijven staan: dat zijn foto's en bediening.
+     5 okt 2026, Mohammed: "je hebt visuele aanpassingen gedaan terwijl ik
+     daar niet om vroeg". De werkwijze en de zekerheden zijn daarom weer
+     bolletjes, met zijn tekst erover verdeeld, en de afsluitband staat terug. */
   /* De gerenoveerde keuken uit het uitgevoerde werk van de landingspagina. */
   contact: {
     kop: 'Laten we uw plannen bespreken',
@@ -609,7 +618,6 @@ export const HOME: PaginaInhoud = {
     foto: heroFoto,
     alt: 'Gerenoveerde keuken met zicht op de tuin, door AB Bouw Groep',
   },
-  toonEind: false,
   /* De beoordelingen van de bestaande homepage: dak, gevel, interieur,
      totaalrenovatie en badkamer door elkaar, zodat een bezoeker het vak
      terugvindt waarvoor hij komt. Niet geschreven, niet aangepast --
@@ -723,17 +731,38 @@ export const HOME: PaginaInhoud = {
   werkwijze: {
     ...TOTAALRENOVATIE.werkwijze,
     kop: ['Van het eerste gesprek', 'tot de laatste afwerking'],
-    alineas: [
-      'Alles begint met een goed beeld van de situatie. Daarom komen we altijd eerst vrijblijvend ter plaatse kijken. We luisteren naar uw wensen, bekijken de ruimte en geven direct aan wat de mogelijkheden zijn. Daarna ontvangt u een heldere offerte waarin alle kosten duidelijk staan omschreven.',
-      'Zodra de werken van start gaan, kunt u rekenen op onze vaste ploegen. We hechten veel belang aan een nette werkomgeving: we schermen andere ruimtes af tegen stof en laten de werf elke dag opgeruimd achter. Bij de oplevering overlopen we samen de volledige woning. Pas wanneer u helemaal tevreden bent en de laatste details in orde zijn, sluiten we het project af.',
+    /* Zijn twee alinea's, in dezelfde volgorde over de vijf bolletjes verdeeld.
+       De titels zijn korte woorden uit zijn eigen zinnen. */
+    stappen: [
+      { titel: 'Eerste gesprek', Icoon: IcStapBel,
+        tekst: 'Alles begint met een goed beeld van de situatie.' },
+      { titel: 'Plaatsbezoek', Icoon: IcStapBezoek,
+        tekst: 'Daarom komen we altijd eerst vrijblijvend ter plaatse kijken. We luisteren naar uw wensen, bekijken de ruimte en geven direct aan wat de mogelijkheden zijn.' },
+      { titel: 'Offerte', Icoon: IcStapMeten,
+        tekst: 'Daarna ontvangt u een heldere offerte waarin alle kosten duidelijk staan omschreven.' },
+      { titel: 'De werken', Icoon: IcStapWerf,
+        tekst: 'Zodra de werken van start gaan, kunt u rekenen op onze vaste ploegen. We hechten veel belang aan een nette werkomgeving: we schermen andere ruimtes af tegen stof en laten de werf elke dag opgeruimd achter.' },
+      { titel: 'Oplevering', Icoon: IcStapOplevering,
+        tekst: 'Bij de oplevering overlopen we samen de volledige woning. Pas wanneer u helemaal tevreden bent en de laatste details in orde zijn, sluiten we het project af.' },
     ],
   },
 
+  /* 5 okt 2026, Mohammed: "en bij zekerheden op home page ook ... bolletjes".
+     Dezelfde vorm als de werkwijze, zonder stapnummer: deze punten hebben geen
+     volgorde. Elke zin komt uit zijn eigen tekst (homepage en Over ons). */
   aanbod: {
     ...TOTAALRENOVATIE.aanbod,
     kop: 'Bouwen op zekerheid',
-    alineas: [
-      'Als erkend aannemer zorgen we niet alleen voor een goede uitvoering, maar ook voor een sluitende administratie. We zijn VCA-gecertificeerd en werken altijd met de wettelijke tienjarige aansprakelijkheid. Waar mogelijk passen we direct het voordelige 6% btw-tarief toe. Daarnaast bezorgen we u alle nodige attesten om uw premies vlot aan te kunnen vragen.',
+    lede: 'Als erkend aannemer zorgen we niet alleen voor een goede uitvoering, maar ook voor een sluitende administratie.',
+    bolletjes: [
+      { titel: 'VCA-gecertificeerd', Icoon: IcZekerVca,
+        tekst: 'Veilig werken staat voorop, gecontroleerd en gecertificeerd.' },
+      { titel: 'Tienjarige aansprakelijkheid', Icoon: IcZekerWoning,
+        tekst: 'Wettelijke garantie op stabiliteit en waterdichtheid.' },
+      { titel: '6% btw-tarief', Icoon: IcZekerBtw,
+        tekst: 'Waar mogelijk passen we direct het voordelige 6% btw-tarief toe.' },
+      { titel: 'Attesten voor uw premies', Icoon: IcZekerAttest,
+        tekst: 'We bezorgen u alle nodige attesten om uw premies vlot aan te kunnen vragen.' },
     ],
   },
 

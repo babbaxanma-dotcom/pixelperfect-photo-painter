@@ -523,7 +523,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
           zit hij opgesloten in diens stapelcontext, en dan schuift de inhoud
           die eroverheen hoort te komen ook over de navigatie heen. */}
 
-      <header className={`pc-kop${inhoud.nav ? ' pc-kop--site' : ''}`}>
+      <header className={`pc-kop${inhoud.nav ? ' pc-kop--site' : ''}${inhoud.kopBovenaanWeg ? ' pc-kop--wegbaar is-weg' : ''}`}>
         <div className="pc-vat pc-kop-vat">
           <div className="pc-kop-logo">
             <a href="/"><img src={logo} alt="AB Bouw Groep" /></a>
@@ -611,6 +611,13 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       </div>
 
       <section className={`pc-hero${inhoud.nav ? ' pc-hero--ruim' : ''}${rol ? ' pc-hero--rol' : ''}`}>
+        {/* Zonder kopbalk bovenaan staat het merk in de hero zelf, wit op de
+            foto: het logo, geen balk en geen navigatie. */}
+        {inhoud.kopBovenaanWeg && (
+          <div className="pc-vat pc-hero-merk">
+            <a href="/"><img src={logo} alt="AB Bouw Groep" /></a>
+          </div>
+        )}
         {rol ? (
           /* 1 okt: de foto vult de hele hero en wisselt, zoals op de totaalrenovatie-LP. */
           <div className="pc-rol">
@@ -806,15 +813,10 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       )}
 
       {/* ── Werkwijze: vijf stappen in 3 + 2 ── */}
-      <section className={`pc-werkwijze${inhoud.werkwijze.alineas ? ' pc-werkwijze--proza' : ''}`} id="werkwijze">
+      <section className="pc-werkwijze" id="werkwijze">
         <div className="pc-vat pc-midden">
           <h2 className="pc-h2--midden">{regels(inhoud.werkwijze.kop)}</h2>
         </div>
-        {inhoud.werkwijze.alineas ? (
-          <div className="pc-vat pc-proza">
-            {inhoud.werkwijze.alineas.map((alinea) => <p key={alinea}>{alinea}</p>)}
-          </div>
-        ) : (
         <div className="pc-stappen">
           {/* De bogen staan absoluut: hun plek komt uit de gemeten
               tussenruimtes tussen de cirkels, niet uit de rasterstroom. */}
@@ -828,7 +830,6 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
             {inhoud.werkwijze.stappen.slice(3).map((s, i) => <Stap key={s.titel} {...s} nr={i + 4} />)}
           </div>
         </div>
-        )}
       </section>
 
       {/* ── Realisaties: één spoor met alle werffoto's, daaronder de dakschuif ──
@@ -957,13 +958,18 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
           voordelen als reclame. Nu komt hij ná het stappenplan, het werk en de
           reviews: dezelfde vier punten lezen dan als voorwaarden waarop je
           tekent, en de bezoeker scrolt langs het bewijs om er te komen. */}
-      <section className={`pc-aanbod${inhoud.aanbod.alineas ? ' pc-aanbod--proza' : ''}`} id="aanbod">
+      <section className={`pc-aanbod${inhoud.aanbod.bolletjes ? ' pc-aanbod--bolletjes' : ''}`} id="aanbod">
         <div className="pc-vat">
           <h2 className="pc-h2--midden">{inhoud.aanbod.kop}</h2>
+          {inhoud.aanbod.lede && <p className="pc-aanbod-lede">{inhoud.aanbod.lede}</p>}
         </div>
-        {inhoud.aanbod.alineas ? (
-          <div className="pc-vat pc-proza">
-            {inhoud.aanbod.alineas.map((alinea) => <p key={alinea}>{alinea}</p>)}
+        {/* 5 okt: op de homepage dezelfde bolletjes als de werkwijze, zonder
+            stapnummer. Het kaartenspoor blijft voor de badkamerpagina. */}
+        {inhoud.aanbod.bolletjes ? (
+          <div className="pc-vat">
+            <div className="pc-zeker">
+              {inhoud.aanbod.bolletjes.map((b) => <Stap key={b.titel} {...b} />)}
+            </div>
           </div>
         ) : (
         <>
@@ -1039,7 +1045,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
         </section>
       )}
 
-      <section className={`pc-contact${inhoud.toonEind === false ? ' pc-contact--laatste' : ''}`} id="contact">
+      <section className={`pc-contact${inhoud.toonEind === false ? ' pc-contact--laatste' : ''}${inhoud.contact.tekst ? ' pc-contact--tekst' : ''}`} id="contact">
         <div className="pc-vat pc-midden">
           <span className="pc-chip--vlak">{CONTACT.phone.display}<IcChevron richting="rechts" /></span>
           <h2 className="pc-h2--groot">{inhoud.contact.kop}</h2>
