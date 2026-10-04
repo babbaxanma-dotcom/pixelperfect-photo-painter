@@ -97,7 +97,7 @@ export default function Rekenaar({ inhoud, plek, voor }: {
     window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - balkH - 8, behavior: gedrag });
   }, [stap]);
 
-  /* Clarity (alleen op dakwerken geladen): de verste stap van deze bezoeker als gebeurtenis
+  /* Clarity (geladen op de LP's met een eigen project, zie lib/clarity.ts): de verste stap van deze bezoeker als gebeurtenis
      in de opname, zodat je per advertentieklik ziet hoe ver hij kwam. Terug telt niet. */
   const versteStap = useRef(stap);
   useEffect(() => {

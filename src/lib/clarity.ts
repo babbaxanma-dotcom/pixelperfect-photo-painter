@@ -1,11 +1,16 @@
 import { allowsAnalytics, allowsMarketing } from '@/lib/consent';
 
-/* Microsoft Clarity (heatmaps en sessie-opnames), alleen op /lp/dakwerken.
-   Mohammed, 4 okt: "microsoft clarity, zet op dakwerken lp", project ysh2tr1qtp.
+/* Microsoft Clarity (heatmaps en sessie-opnames), één project per advertentiepagina.
+   Mohammed, 4 okt: "microsoft clarity, zet op dakwerken lp" (ysh2tr1qtp) en "we gaan een
+   andere aanmaken voor totaalrenovatie" (ysjtjyakao). Sleutel = bedanktSlug van de LP;
+   een LP zonder project laadt niets.
    Sinds 31 okt 2025 werkt Clarity voor bezoekers uit de EER pas volledig met een
    toestemmingssignaal (Consent API v2). Zonder toestemming neemt Clarity op zonder cookies;
    met toestemming (analytics + marketing) volledig. Bij een nieuwe keuze gaat het signaal opnieuw. */
-const CLARITY_ID = 'ysh2tr1qtp';
+export const CLARITY_PROJECT: Record<string, string> = {
+  dakwerken: 'ysh2tr1qtp',
+  totaalrenovatie: 'ysjtjyakao',
+};
 
 type ClarityFn = ((...args: unknown[]) => void) & { q?: unknown[][] };
 declare global {
@@ -21,7 +26,7 @@ function stuurToestemming() {
 
 /* Mohammed, 4 okt: "koppel het dan met de ads dat ik alle data zie van elke klik via de ads".
    Elke advertentieklik zet zijn gegevens in de link: gclid (automatische tagging) en het
-   achtervoegsel van de campagne (ads/dakwerken/bouw.cjs): utm_campaign, utm_term = het zoekwoord,
+   achtervoegsel van de campagne (ads/dakwerken/bouw.cjs, ads/totaalrenovatie/bouw.cjs): utm_campaign, utm_term = het zoekwoord,
    dienst= of dak= = de advertentiegroep of sitelink. Die gaan als tags mee met de opname,
    zodat je in Clarity filtert op Filters > Aangepaste tags (bron = Google Ads, zoekwoord, ...).
    Een advertentiebezoek krijgt ook "upgrade": Clarity bewaart die opname altijd. */
@@ -44,14 +49,14 @@ export function meldClarity(gebeurtenis: string) {
   if (typeof window !== 'undefined') window.clarity?.('event', gebeurtenis);
 }
 
-export function laadClarity() {
+export function laadClarity(id: string) {
   if (typeof window === 'undefined' || window.clarity) return;
   // De officiële Clarity-code, als functie.
   const c = window as Window & { clarity?: ClarityFn };
   c.clarity = c.clarity || (function (...args: unknown[]) { (c.clarity!.q = c.clarity!.q || []).push(args); } as ClarityFn);
   const t = document.createElement('script');
   t.async = true;
-  t.src = 'https://www.clarity.ms/tag/' + CLARITY_ID;
+  t.src = 'https://www.clarity.ms/tag/' + id;
   const y = document.getElementsByTagName('script')[0];
   if (y?.parentNode) y.parentNode.insertBefore(t, y); else document.head.appendChild(t);
   stuurToestemming();
