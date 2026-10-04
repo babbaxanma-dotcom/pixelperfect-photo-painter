@@ -60,6 +60,10 @@ const INSTELLINGEN = {
   locatie: 'Dezelfde 42 gemeenten als de dakcampagne (arrondissementen Antwerpen en Mechelen, Beveren-Kruibeke-Zwijndrecht), stad Antwerpen uitgesloten (Bardh, 23 sep), optie Aanwezigheid',
   doelen: 'Leadformulieren, Leads van telefoongesprekken, Offertes aanvragen (zoals dak)',
   urlAchtervoegsel: 'utm_source=google&utm_medium=cpc&utm_campaign=totaalrenovatie&utm_term={keyword}',
+  /* 4 okt 23:55: woordgroep "algemene aannemer" op pauze (Mohammed: "oke"). 28 sep - 4 okt: 20 klikken, € 53,83,
+     0 conversies; de andere zoekwoorden samen 78 klikken, 9 conversies. De zoekopdracht noemt geen renovatie, dus
+     de pagina past er niet bij. Regel (Mohammed, 4 okt): zoekwoorden met slechte message match gaan eruit, de pagina
+     wordt niet breder gemaakt. Hij staat nog in GROEPEN hieronder, want die lijst is de upload van 28 sep. */
 };
 
 /* ---------- Zoekwoorden: twee groepen op zoekintentie ---------- */
