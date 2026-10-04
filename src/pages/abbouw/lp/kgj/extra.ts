@@ -565,6 +565,20 @@ export const KGJ_EXTRA = `
   .kgj-reken__rij { grid-template-columns: 1fr; gap: 0; }
   .kgjx .kgj-reken__keuze { min-height: 52px; padding: 10px 12px; font-size: 15px; }
 }
+/* 4 okt, Mohammed: "above the fold op telefoon maar voor 70 procent gevuld". Dakwerken op telefoon:
+   de foto vult het hele eerste scherm onder de kopbalk (69 px). Kop en rekenaar blijven bovenaan
+   staan en de vinkjes zakken naar de onderrand, zodat er niets verspringt als de kaart groeit.
+   Op een scherm vanaf 760 px hoog krijgen de antwoordfoto's ook meer hoogte (4:3). */
+@media (max-width: 640px) {
+  .kgjx.kgj-lp--dakwerken .kgj-hero--lp { min-height: calc(100svh - 69px); align-items: stretch; }
+  .kgjx.kgj-lp--dakwerken .kgj-hero--lp .kgj-hero__in { display: flex; flex-direction: column; padding-block: 34px 28px; }
+  .kgjx.kgj-lp--dakwerken .kgj-hero__raster { flex: 1; grid-template-rows: auto 1fr; align-items: stretch; }
+  .kgjx.kgj-lp--dakwerken #rekenaar { display: flex; flex-direction: column; }
+  .kgjx.kgj-lp--dakwerken .kgj-hero__vertrouwen { margin-top: auto; padding-top: 18px; }
+}
+@media (max-width: 640px) and (min-height: 760px) {
+  .kgjx.kgj-lp--dakwerken .kgj-reken__foto { aspect-ratio: 4 / 3; }
+}
 /* ── werkwijze: vijf stappen op één rij ──
    De demo had er vier. Met Nazorg erbij zijn het er vijf; op een groot scherm
    blijven ze naast elkaar, zodat de golf één lijn blijft. Kleiner dan 1000px
