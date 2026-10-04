@@ -129,14 +129,16 @@ export const DAKWERKEN: KgjInhoud = {
        over het resultaat aan zijn huis. */
     /* 4 okt, Mohammed: "headline, bereken in 2 minuten de richtprijs van uw dak, met 2 minuten in kleur".
        Tussen [ ] = in de accentkleur. */
-    kop: 'Bereken in [2 minuten] de richtprijs van uw dak',
+    /* 4 okt, plan mobiele hero: "Bereken in 1 minuut de richtprijs van uw dak" (maak "1 minuut" oranje/goud). */
+    kop: 'Bereken in [1 minuut] de richtprijs van uw dak',
     /* Mohammeds eigen zin, letterlijk (24 sep): "doe daar gewoon subheadline
        van de specialisatie". De vorige subkop ("u weet direct wat het kost",
        daarna "wij bellen u met de prijs") ging over de calculator, die ernaast
        staat en zichzelf uitlegt. */
     /* 4 okt, Mohammed: "subheadline, beantwoord 8 korte vragen voor een heldere en vrijblijvende
        prijsindicatie van uw dakrenovatie". Het pad van een dakrenovatie telt 8 vragen. */
-    onder: 'Beantwoord 8 korte vragen voor een heldere en vrijblijvende prijsindicatie van uw dakrenovatie.',
+    /* 4 okt, plan mobiele hero: subheadline "Snel, gratis en 100% vrijblijvend." (vervangt de zin met het aantal vragen). */
+    onder: 'Snel, gratis en 100% vrijblijvend.',
     /* Drie controleerbare feiten onder de kop. Een bezoeker die uit een
        advertentie komt, kent AB niet; dit is het enige bewijs dat boven de
        vouw past zolang er geen geverifieerde Google-score is.
@@ -145,7 +147,10 @@ export const DAKWERKEN: KgjInhoud = {
        zet "gratis en vrijblijvend" vooraan. Het VCA-attest staat nu in het
        waarom-blok: een certificaat overtuigt lager op de pagina, een
        toezegging overtuigt boven de vouw. */
-    bewijs: ['Gratis dakinspectie en offerte', 'Volledige premiebegeleiding (Mijn VerbouwPremie)', '6% btw vanaf tien jaar oud', '10 jaar garantie'],
+    /* 4 okt: leeg. Premie, 6% btw en 10 jaar garantie staan als trust signals in de rekenaar;
+       twee keer op het eerste scherm "ziet er niet uit" (Mohammed). Zo staat de rekenaar op de
+       telefoon hoger. */
+    bewijs: [],
     dias: [
       /* 29 sep, Mohammed: de eerste foto "vind ik maar niks", vervangen door een
          echte foto uit de afbeeldingen van de Google Ads-campagne Dakrenovatie
@@ -175,9 +180,9 @@ export const DAKWERKEN: KgjInhoud = {
     titel: 'Bereken uw dakprijs',
     /* 4 okt, Mohammed: "de calculator, bereken uw dakprijs, klaar in 2 minuten, vrijblijvend",
        daarna "trust signals erbij": "gratis & vrijblijvende richtprijs", "begeleiding bij premie-aanvragen". */
-    tijd: 'Klaar in 2 minuten, vrijblijvend',
+    tijd: 'Klaar in 1 minuut, vrijblijvend',
     zeker: 'Gratis en vrijblijvend',
-    vertrouwen: ['Gratis & vrijblijvende richtprijs', 'Begeleiding bij premie-aanvragen', '6% btw-tarief (woningen > 10 jaar)', '10 jaar garantie'],
+    vertrouwen: ['Gratis & vrijblijvende richtprijs', 'Begeleiding bij premie-aanvragen', '6% btw-tarief (woningen > 10 jaar)', '10 jaar garantie'],
     vragen: [
       /* Geen hellingshoek meer onder hellend en plat (Mohammed, 24 sep: "mensen
          weten wat een hellend dak is en plat dak"); de foto zegt het al. */
@@ -412,10 +417,10 @@ export const DAKWERKEN: KgjInhoud = {
      dak erbij: "badkamer renoveren" of "gevel isoleren" houdt de standaardkop. */
   boodschap: [
     /* 4 okt: de varianten volgen Mohammeds nieuwe kop; alleen het dakwoord wisselt. */
-    { zoek: 'dak.*isol|isol.*dak|sarking', kop: 'Bereken in [2 minuten] de richtprijs van uw dakisolatie' },
-    { zoek: 'plat|epdm|roofing|bitumen', kop: 'Bereken in [2 minuten] de richtprijs van uw plat dak', voor: { sleutel: 'Dak', label: 'Plat dak' } },
-    { zoek: 'hellend|pannen|leien|sarking', kop: 'Bereken in [2 minuten] de richtprijs van uw hellend dak', voor: { sleutel: 'Dak', label: 'Hellend dak' } },
-    { zoek: 'dak.*renov|^renovatie$', kop: 'Bereken in [2 minuten] de richtprijs van uw dakrenovatie' },
-    { zoek: 'dak.*(nieuw|vervang)|(nieuw|vervang).*dak', kop: 'Bereken in [2 minuten] de richtprijs van uw nieuwe dak' },
+    { zoek: 'dak.*isol|isol.*dak|sarking', kop: 'Bereken in [1 minuut] de richtprijs van uw dakisolatie' },
+    { zoek: 'plat|epdm|roofing|bitumen', kop: 'Bereken in [1 minuut] de richtprijs van uw plat dak', voor: { sleutel: 'Dak', label: 'Plat dak' } },
+    { zoek: 'hellend|pannen|leien|sarking', kop: 'Bereken in [1 minuut] de richtprijs van uw hellend dak', voor: { sleutel: 'Dak', label: 'Hellend dak' } },
+    { zoek: 'dak.*renov|^renovatie$', kop: 'Bereken in [1 minuut] de richtprijs van uw dakrenovatie' },
+    { zoek: 'dak.*(nieuw|vervang)|(nieuw|vervang).*dak', kop: 'Bereken in [1 minuut] de richtprijs van uw nieuwe dak' },
   ],
 };

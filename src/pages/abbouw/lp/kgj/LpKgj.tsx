@@ -257,14 +257,15 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   const veeg = useRef(0);
 
   return (
-    <div className="kgjx" ref={vat}>
+    <div className={`kgjx kgj-lp--${inhoud.bedanktSlug}`} ref={vat}>
       <style>{KGJ_CSS + KGJ_EXTRA}</style>
 
       <header className="kgj-kop kgj-kop--lp" id="kop">
         <div className="kgj-breed kgj-kop__in">
           <a className="kgj-logo" href="#top" aria-label="AB Bouw Groep"><img src={logo} alt="Logo van AB Bouw Groep" /></a>
           <a className="kgj-knop kgj-knop--vol kgj-kop__bel" href={CONTACT.phone.href}>
-            <IcBel /><span>Bel {CONTACT.phone.display}</span>
+            {/* 4 okt: op de telefoon "Bel direct" (plan mobiele hero), op de computer het nummer. */}
+            <IcBel /><span className="kgj-kop__bel-lang">Bel {CONTACT.phone.display}</span><span className="kgj-kop__bel-kort">Bel direct</span>
           </a>
         </div>
       </header>
@@ -285,6 +286,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               <h1>{kop.split(/\[([^\]]+)\]/).map((deel, i) => (i % 2 ? <span className="kgj-hero__accent" key={i}>{deel}</span> : deel))}</h1>
               {inhoud.hero.ondertitel && <p className="kgj-hero__ondertitel">{inhoud.hero.ondertitel}</p>}
               {inhoud.hero.onder && <p className="kgj-hero__sub">{inhoud.hero.onder}</p>}
+              {inhoud.hero.bewijs.length > 0 && (
               <ul className="kgj-hero__bewijs">
                 {inhoud.hero.bewijs.map((b) => (
                   <li key={b}>
@@ -295,8 +297,25 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                   </li>
                 ))}
               </ul>
+              )}
             </div>
-            <div id="rekenaar"><Rekenaar inhoud={inhoud} plek="hero" voor={match?.voor} /></div>
+            <div id="rekenaar">
+              <Rekenaar inhoud={inhoud} plek="hero" voor={match?.voor} />
+              {/* 4 okt, plan mobiele hero: de vinkjes direct ONDER de rekenaar. Alleen op telefoon en
+                  tablet zichtbaar (extra.ts); op de computer staan ze in de kaart. */}
+              {inhoud.rekenaar.vertrouwen && (
+                <ul className="kgj-hero__vertrouwen">
+                  {inhoud.rekenaar.vertrouwen.map((t) => (
+                    <li key={t}>
+                      <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor"
+                        strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="m4 10.5 4 4 8-9" />
+                      </svg>{t}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
         </div>
         {/* Geen pijlen: de diashow loopt vanzelf (Mohammed: "doe die onderste pijlen weg"). */}

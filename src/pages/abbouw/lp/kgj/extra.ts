@@ -14,6 +14,13 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-kop--lp .kgj-kop__in { justify-content: space-between; }
 .kgjx .kgj-kop--lp .kgj-kop__bel { display: inline-flex; gap: 10px; }
 .kgjx .kgj-kop--lp .kgj-kop__bel svg { flex: none; }
+/* 4 okt: belknop goud (#E59819), donkere tekst (contrast 8,4:1). Op de computer het nummer,
+   op de telefoon "Bel direct". */
+.kgjx .kgj-kop--lp .kgj-kop__bel { background: #e59819; border-color: #e59819; color: var(--merk-diep); }
+.kgjx .kgj-kop--lp .kgj-kop__bel:hover { background: #cf8812; border-color: #cf8812; color: var(--merk-diep); }
+.kgjx .kgj-kop--lp .kgj-kop__bel-kort { display: none; }
+/* De vinkjes onder de rekenaar bestaan alleen op telefoon en tablet. */
+.kgjx .kgj-hero__vertrouwen { display: none; }
 
 /* ── hero: kop links, calculator rechts ── */
 .kgjx .kgj-hero--lp { min-height: calc(100svh - 84px); }
@@ -290,16 +297,20 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-reken__zeker { display: flex; align-items: center; gap: 7px; margin: 16px 0 0; padding-top: 12px;
   border-top: 1px solid var(--lijn); font-family: Lato, system-ui, sans-serif; font-size: 13.5px; color: var(--zacht); }
 .kgjx .kgj-reken__zeker svg { flex: none; width: 16px; height: 16px; color: var(--merk); }
-/* Trust signals onderaan de rekenaar (4 okt): zelfde vinkje als de zekerheden boven de knop,
-   op de plek van de regel "Gratis en vrijblijvend". */
-.kgjx .kgj-reken__vertrouwen { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin: 16px 0 0;
-  padding: 12px 0 0; list-style: none; border-top: 1px solid var(--lijn); }
-.kgjx .kgj-reken__vertrouwen li { display: inline-flex; align-items: center; gap: 6px; font-family: "Plus Jakarta Sans",
-  system-ui, sans-serif; font-size: 13.5px; font-weight: 700; color: var(--inkt); }
-.kgjx .kgj-reken__vertrouwen svg { flex: none; width: 16px; height: 16px; padding: 2px; border-radius: 999px;
+/* Trust signals onderaan de rekenaar (4 okt): onder elkaar, links uitgelijnd, elk op één regel.
+   Vier gecentreerde regels "ziet er niet uit" (Mohammed); een 2x2-raster brak de teksten over
+   2 tot 3 regels af. */
+.kgjx .kgj-reken__vertrouwen { display: grid; gap: 8px; margin: 16px 0 0; padding: 14px 0 0; list-style: none;
+  border-top: 1px solid var(--lijn); }
+.kgjx .kgj-reken__vertrouwen li { display: flex; align-items: flex-start; gap: 8px; font-family: "Plus Jakarta Sans",
+  system-ui, sans-serif; font-size: 13px; font-weight: 600; line-height: 1.35; color: var(--inkt); text-align: left; }
+.kgjx .kgj-reken__vertrouwen svg { flex: none; width: 16px; height: 16px; margin-top: 1px; padding: 2px; border-radius: 999px;
   background: var(--accent); color: var(--merk-diep); stroke-width: 3; }
-/* "2 minuten" in de kop (4 okt). */
-.kgjx .kgj-hero__accent { color: var(--accent); }
+/* "2 minuten" in de kop (4 okt): helder goud met een getekende streep eronder; de twee woorden
+   breken nooit uit elkaar ("2" stond op de telefoon alleen op de eerste regel). */
+.kgjx .kgj-hero__accent { position: relative; display: inline-block; white-space: nowrap; color: #f5b432; }
+.kgjx .kgj-hero__accent::after { content: ""; position: absolute; left: -1%; right: -1%; bottom: -0.16em; height: 0.3em;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 24' preserveAspectRatio='none'%3E%3Cpath d='M4 17 C 46 7, 118 5, 196 12' fill='none' stroke='%23f5b432' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%; pointer-events: none; }
 /* Geen los woord op de laatste regel ("prijs.", "15°"). */
 .kgjx .kgj-hero__sub, .kgjx .kgj-reken__keuze span { text-wrap: pretty; }
 
@@ -521,6 +532,16 @@ export const KGJ_EXTRA = `
   .kgjx .kgj-reken__titel { font-size: 20px; }
   .kgjx .kgj-kop--lp .kgj-kop__bel { display: inline-flex; height: 44px; padding: 0 16px; font-size: 14px; }
   .kgjx .kgj-kop--lp .kgj-kop__bel span { display: none; }
+  .kgjx .kgj-kop--lp .kgj-kop__bel .kgj-kop__bel-kort { display: inline; }
+  /* 4 okt, plan mobiele hero (dak): geen titel in de kaart (staat al in de kop), de kaart
+     begint met de voortgang en "Vraag 1 van 8"; de vinkjes staan onder de kaart. */
+  .kgjx.kgj-lp--dakwerken .kgj-reken--hero .kgj-reken__hoofd { display: none; }
+  .kgjx.kgj-lp--dakwerken .kgj-reken--hero .kgj-reken__vertrouwen { display: none; }
+  .kgjx.kgj-lp--dakwerken .kgj-hero__vertrouwen { display: grid; gap: 9px; margin: 16px 2px 0; padding: 0; list-style: none; }
+  .kgjx .kgj-hero__vertrouwen li { display: flex; align-items: flex-start; gap: 9px; font-family: "Plus Jakarta Sans",
+    system-ui, sans-serif; font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--wit); }
+  .kgjx .kgj-hero__vertrouwen svg { flex: none; width: 20px; height: 20px; padding: 3px; border-radius: 999px;
+    background: var(--accent); color: var(--merk-diep); }
   .kgjx .kgj-hero--lp .kgj-hero__bediening, .kgjx .kgj-hero--lp .kgj-hero__streep { display: none; }
   .kgjx .kgj-voet--lp .kgj-voet__in { grid-template-columns: 1fr; }
 }
