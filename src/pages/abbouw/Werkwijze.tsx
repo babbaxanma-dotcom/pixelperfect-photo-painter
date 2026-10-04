@@ -6,25 +6,31 @@ import hero from '@/assets/home/hero-diensten.jpg';
 // met mensen erop, en mensen overtuigend genereren lukt niet. De stapkaarten
 // zijn nu tekst; het nummer draagt de kaart.
 import { CONTACT } from '@/data/contact';
-import { ic, icStap, icPad, rpNav, rpFooter, wireMobielMenu } from './_rp';
+import { icStap, icPad, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
+/* 4 okt 2026: alle tekst op deze pagina is de tekst die Mohammed aanleverde,
+   letterlijk, in de u-vorm van de rest van de site (zijn keuze). Zijn regel
+   "Beoordeeld met 4,9/5 op Google · Al 120+ woningen" staat er niet op: AB
+   heeft één Google-review, en die twee claims zijn op 1 okt van de site
+   gehaald (check:claims). Daarmee is ook de oude proefchip met dezelfde
+   claims onder de afsluitband weg. */
 const STAPPEN = [
-  { n: '01', ic: icStap.bel, t: 'Eerste contact', tag: 'Dag 1 tot 2',
-    d: 'U belt of vult het formulier in. We bellen terug, bespreken samen wat u van plan bent en spreken een moment af voor het plaatsbezoek.' },
-  { n: '02', ic: icStap.bezoek, t: 'Plaatsbezoek', tag: 'Week 1',
-    d: 'We komen langs, meten op en fotograferen de bestaande toestand. U hoort ter plaatse al welke aanpak realistisch is.' },
-  { n: '03', ic: icStap.meten, t: 'Offerte', tag: 'Week 2 tot 3',
-    d: 'U krijgt een offerte waarin elke post apart staat: afbraak, materiaal, uitvoering en afvoer. We nemen ze samen door.' },
-  { n: '04', ic: icStap.planning, t: 'Voorbereiding', tag: 'Week 3 en verder',
-    d: 'Materiaal bestellen, ploegen inplannen en waar nodig vergunning en EPB regelen. U krijgt de startdatum op papier.' },
-  { n: '05', ic: icStap.werf, t: 'Uitvoering', tag: 'Duur hangt af van het werk',
-    d: 'De werfleider volgt de planning op en stuurt wekelijks een werfrapport. De werf gaat elke vrijdag opgeruimd het weekend in.' },
-  { n: '06', ic: icStap.lijst, t: 'Controle', tag: 'Laatste week',
-    d: 'We lopen samen rond en zetten de laatste punten op een lijst. Die werken we af voor de officiële oplevering.' },
-  { n: '07', ic: icStap.sleutel, t: 'Oplevering', tag: 'Laatste dag',
-    d: 'Samen een rondgang, en het dossier erbij: garanties, attesten en de gegevens van de gebruikte materialen.' },
-  { n: '08', ic: icStap.garantie, t: 'Nazorg', tag: '10 jaar',
-    d: 'Op structurele renovaties geldt tien jaar garantie. Merkt u iets op, dan komen we kijken.' },
+  { n: '01', ic: icStap.bel, t: 'Eerste contact', tag: 'Binnen 1 tot 2 dagen',
+    d: 'U laat uw gegevens achter of belt ons op. We nemen snel contact met u op om uw plannen kort te bespreken en direct een afspraak in te plannen voor een plaatsbezoek.' },
+  { n: '02', ic: icStap.bezoek, t: 'Plaatsbezoek en technisch advies', tag: 'Binnen de eerste week',
+    d: 'We komen persoonlijk langs om de situatie op te meten en de bestaande toestand in kaart te brengen. U krijgt ter plaatse al eerlijk, haalbaar advies over welke aanpak technisch en financieel het meest logisch is.' },
+  { n: '03', ic: icStap.meten, t: 'Transparante offerte', tag: 'Week 2 tot 3',
+    d: 'Geen vage totaalbedragen. U ontvangt een uiterst gedetailleerde offerte waarin elke post (materialen, uitvoering, afbraak en afvoer) helder is gesplitst. We nemen deze samen door zodat u exact weet waar uw budget naartoe gaat.' },
+  { n: '04', ic: icStap.planning, t: 'Voorbereiding en planning', tag: 'Vanaf week 3',
+    d: 'Na uw akkoord schieten wij in actie. We bestellen de materialen, plannen onze vaste ploegen in en regelen waar nodig de EPB-verslaggeving. Het belangrijkste: u krijgt de exacte startdatum zwart op wit.' },
+  { n: '05', ic: icStap.werf, t: 'Uitvoering van de werken', tag: 'Duur afhankelijk van het project',
+    d: 'De werken starten op de afgesproken dag. Onze werfleider bewaakt de planning streng en houdt u op de hoogte van de voortgang. Elke vrijdag ruimen we de werf grondig op, zodat uw huis netjes en veilig het weekend in gaat.' },
+  { n: '06', ic: icStap.lijst, t: 'Vooroplevering en controle', tag: 'De laatste week',
+    d: 'Voor we de werken definitief afronden, lopen we samen de volledige werf over. We noteren de laatste details op een afwerkingslijst en zorgen dat deze puntjes direct worden opgelost.' },
+  { n: '07', ic: icStap.sleutel, t: 'Officiële oplevering', tag: 'De laatste dag',
+    d: 'Het project is afgerond. We overlopen samen het eindresultaat en overhandigen u het complete opleverdossier. Hierin zitten alle attesten, garantiebewijzen en de specificaties van de gebruikte materialen.' },
+  { n: '08', ic: icStap.garantie, t: 'Nazorg en garantie', tag: 'Voor de komende 10 jaar',
+    d: 'Onze verantwoordelijkheid stopt niet wanneer we de oprit afrijden. U krijgt 10 jaar wettelijke, schriftelijke garantie op structurele renovaties en daken. Merkt u nadien toch iets op? Eén telefoontje en we komen het oplossen.' },
 ];
 
 /** Een stapkaart. Staat zowel in de hero (de eerste) als in het pad. */
@@ -34,7 +40,7 @@ const kaart = (s: typeof STAPPEN[number], kant?: string) => `
           <div class="rp-step__badge">${s.ic}
             <span class="rp-step__pil">Stap ${s.n}</span>
           </div>
-          <h2 class="rp-step__t">${s.t}</h2>
+          <h3 class="rp-step__t">${s.t}</h3>
           <p class="rp-step__d">${s.d}</p>
           <p class="rp-step__tijd">${s.tag}</p>
         </div>
@@ -46,13 +52,10 @@ ${rpNav('/werkwijze')}
 <section class="rp-phero rp-phero--pad">
   <div class="rp-wrap rp-phero__pad-wrap">
     <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Werkwijze</span></nav>
-    <span class="rp-eyebrow">${ic.mark} Werkwijze</span>
-    <h1 class="rp-phero__t">Acht stappen<span class="rp-dim">van telefoon tot nazorg</span></h1>
-    <p class="rp-phero__lede">Hieronder staat wat er in welke volgorde gebeurt, en wanneer u van ons hoort. Zo weet u op elk moment waar uw dossier staat.</p>
-    <div style="margin-top:30px;display:flex;flex-wrap:wrap;gap:12px">
-      <a class="rp-btn rp-btn--primary" href="/contact">Start bij stap 1</a>
-      <a class="rp-btn rp-btn--ghost" href="${CONTACT.phone.href}">${ic.phone(17)} ${CONTACT.phone.display}</a>
-    </div>
+    <h1 class="rp-phero__t">Onze werkwijze</h1>
+    <p class="rp-phero__sub">Van uw eerste telefoontje tot 10 jaar na oplevering.</p>
+    <p class="rp-phero__lede">Verbouwen brengt vaak stress met zich mee door onduidelijke planningen, onbereikbare aannemers en vage afspraken. Bij AB Bouw Groep doen we daar niet aan mee. Wij werken volgens een transparant stappenplan. Zo weet u op elk moment in het proces exact wat er gebeurt en wanneer u iets van ons mag verwachten.</p>
+    <h2 class="rp-phero__h2">8 stappen naar een zorgeloze oplevering</h2>
 
     <!-- Het pad begint hier: de eerste kaart staat naast de kop, in de ruimte
          die de tekst vrijlaat. De boog eronder loopt door naar stap twee. -->
@@ -89,17 +92,11 @@ ${rpNav('/werkwijze')}
       </div>
       <div class="rp-cta__inner">
         <h2 class="rp-cta__t">Klaar voor stap 1?</h2>
-        <p class="rp-cta__p">Het plaatsbezoek en de offerte erna zijn kosteloos. U beslist daarna of u verdergaat.</p>
+        <p class="rp-cta__p">Het plaatsbezoek en de gedetailleerde offerte zijn volledig kosteloos. Daarna beslist u in alle rust of u de samenwerking aangaat.</p>
         <div style="margin-top:26px;display:flex;flex-wrap:wrap;gap:12px">
-          <a class="rp-btn rp-btn--primary" href="/contact">Plan een plaatsbezoek</a>
-          <a class="rp-btn rp-btn--ghost" href="${CONTACT.phone.href}" style="color:#fff;border-color:rgba(255,255,255,.34)">${ic.phone(17)} ${CONTACT.phone.display}</a>
+          <a class="rp-btn rp-btn--primary" href="/contact">Plan een kosteloos plaatsbezoek</a>
         </div>
-        <div style="margin-top:20px">
-          <span class="rp-proofchip">
-            <span class="rp-proofchip__sterren" aria-hidden="true">${ic.star(13).repeat(5)}</span>
-            <span class="rp-proofchip__t">4,9 op Google &middot; 120+ woningen gerenoveerd</span>
-          </span>
-        </div>
+        <p class="rp-cta__bel">Of bel ons op <a href="${CONTACT.phone.href}">${CONTACT.phone.display}</a></p>
       </div>
     </div>
   </div>

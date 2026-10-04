@@ -988,7 +988,7 @@
    anders zweeft hij los in de witruimte tussen de hero en de eerste kaart. */
 .rp-pad__boog--start {
   align-self: flex-start;
-  margin: -184px 0 0 199px;
+  margin: -162px 0 0 199px;
   /* De hero erboven is een gepositioneerd element met een eigen achtergrond en
      ligt daardoor over alles wat niet gepositioneerd is. Het stuk van de boog
      dat de hero in steekt werd zo weggedekt: de pijl leek pas onder de hero te
@@ -1882,3 +1882,35 @@ body[data-pagina="contact"] .rp-fab { display: none; }
   .rp .rp-tiles-3:has(> :nth-child(5)) { grid-template-columns: 1fr; }
 }
 
+
+/* 4 okt 2026: paginakop met een ondertitel (Diensten, Werkwijze). De zin onder
+   de kop is langer dan een tweede kopregel, dus staat hij kleiner, wel in de
+   kopkleur. */
+.rp .rp-phero__sub { margin-top: 14px; max-width: 34ch; font-size: 22px; line-height: 30px; font-weight: 600; color: var(--pc-ink, #131311); }
+@media (max-width: 700px) { .rp .rp-phero__sub { font-size: 19px; line-height: 26px; } }
+/* Werkwijze: de kop boven de acht stappen staat onder de inleiding, naast de
+   eerste stapkaart. */
+.rp .rp-phero__h2 { margin-top: 34px; max-width: 560px; font-size: 24px; line-height: 32px; font-weight: 600; letter-spacing: -0.01em; }
+@media (max-width: 700px) { .rp .rp-phero__h2 { margin-top: 28px; font-size: 21px; line-height: 28px; } }
+/* Diensten: de knop en de contactregel sluiten de sectie "Onze belofte" af,
+   in plaats van een aparte donkere band. */
+.rp .rp-slot { margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+.rp .rp-slot__contact { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 10px; font-size: 15px; line-height: 22px; }
+.rp .rp-slot__contact a { color: var(--pc-ink, #131311); font-weight: 600; text-decoration: none; }
+.rp .rp-slot__contact a:hover { color: var(--rp-accent-text); }
+/* Werkwijze: de eerste stapkaart hangt aan de ONDERkant van de kopkolom, niet
+   aan de bovenkant. De boog naar stap twee start op een vaste afstand onder de
+   hero; met de kaart onderaan sluit hij aan, hoe lang de inleiding ook is.
+   (Met top:0 kwam er 70px lucht tussen kaart en boog zodra de tekst groeide.) */
+@media (min-width: 901px) {
+  .rp-phero--pad .rp-phero__stap { top: auto; bottom: 0; }
+  .rp-phero--pad .rp-phero__sub { max-width: 560px; }
+  /* De kaart is 430px breed en hangt rechts: de tekstkolom blijft er 30px van
+     weg. Op 1000px liep de inleiding anders 14px onder de kaart door. */
+  .rp .rp-phero--pad .rp-phero__t, .rp .rp-phero--pad .rp-phero__sub,
+  .rp .rp-phero--pad .rp-phero__lede, .rp .rp-phero--pad .rp-phero__h2 { max-width: min(560px, calc(100% - 460px)); }
+}
+.rp .rp-cta__bel { margin-top: 16px; font-size: 15px; line-height: 22px; color: #fff; }
+.rp .rp-cta__bel a { color: #fff; font-weight: 700; text-decoration: none; }
+/* Over ons: twee cijfers naast elkaar, niet over de volle breedte gespreid. */
+.rp .rp-about__stats--twee { grid-template-columns: repeat(2, max-content) !important; column-gap: 120px; }

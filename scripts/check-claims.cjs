@@ -22,7 +22,9 @@ const POORT = 4432;
 const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* Pagina's die al schoon zijn. Een pagina komt er pas bij als ze schoon is. */
-const PAGINAS = ['/', '/bedankt?dienst=dakwerken', '/bedankt?dienst=totaalrenovatie', '/lp/dakwerken', '/lp/totaalrenovatie'];
+const PAGINAS = ['/', '/bedankt?dienst=dakwerken', '/bedankt?dienst=totaalrenovatie', '/lp/dakwerken', '/lp/totaalrenovatie',
+  /* 4 okt 2026: na de nieuwe teksten van Mohammed zonder 4,9 en 120+. */
+  '/diensten', '/werkwijze', '/over'];
 
 const VERBODEN = [
   { naam: 'Google-score zonder bron', re: /\b4,9\b|Google-score|Gemiddeld \d,\d van 5/ },

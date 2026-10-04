@@ -12,80 +12,72 @@ import svcGevel from '@/assets/gevel/uitbreiding-gevel.jpg';
 
 const vink = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
 
+/* 4 okt 2026: alle tekst op deze pagina is de tekst die Mohammed aanleverde,
+   letterlijk, alleen omgezet naar de u-vorm van de rest van de site (zijn
+   keuze). Hij koos ook bewust "letterlijk" voor de punten die Bardh nog niet
+   bevestigde (eigen ploegen, warmtepompen, premiebegeleiding, startdatum,
+   garantie). */
 const DIENSTEN = [
   {
     n: '01', t: 'Totaalrenovatie en nieuwbouw', kort: 'totaalrenovatie', href: '/construct', img: svcConstruct,
-    lede: 'Onze grootste afdeling. Een woning die volledig op de schop gaat, een aanbouw, of bouwen van nul. Wij coördineren alle vakken en houden één planning bij, zodat het ene werk niet op het andere staat te wachten.',
+    lede: 'Een ingrijpend bouwproject vraagt om strakke regie en overzicht. Wij nemen de volledige werfcoördinatie in handen, van de eerste grondwerken tot de schilderklare oplevering. Uw voordeel? Eén centrale projectleider die de voortgang bewaakt, overlegt met de architect en zorgt dat de ruwbouw naadloos overgaat in de afwerking.',
     punten: [
-      'Sleutel-op-de-deur woningen vanaf 180 m²',
-      'Totaalrenovatie tot op de ruwe muren',
-      'Aanbouw, dakopbouw en kelderuitbreiding',
-      'Samenwerking met uw architect of die van ons',
-      'Vergunning, EPB-verslag en oplevering inbegrepen',
+      'Volledige renovaties en sleutel-op-de-deur nieuwbouw',
+      'Aanbouwen en volume-uitbreidingen',
+      'Eén vast aanspreekpunt voor het hele traject',
     ],
   },
   {
     n: '02', t: 'Ecologisch en energetisch', kort: 'energetisch renoveren', href: '/ecologisch', img: svcEco,
-    lede: 'Een warmer huis en een lagere factuur, in één traject. Wij rekenen vooraf uit wat elke ingreep opbrengt.',
+    lede: 'De normen voor energiezuinig wonen worden steeds strenger. Wij helpen u om uw EPC-label drastisch te verbeteren met toekomstgerichte ingrepen. We kijken naar het totaalplaatje van uw woning en adviseren welke oplossingen het hoogste rendement opleveren, terwijl we u tegelijkertijd door het doolhof van de Vlaamse premies loodsen.',
     punten: [
-      'Lucht/water-warmtepompen (Daikin, Mitsubishi, Vaillant)',
-      'Dakisolatie in PIR, PUR of cellulose tot K30',
-      'Spouwmuurisolatie en na-isolatie van buitengevels',
-      'Houtskeletbouw op aanvraag',
-      'Wij checken uw premierecht en dienen het dossier mee in',
+      'Installatie van warmtepompen en efficiënte technieken',
+      'Hoogwaardige isolatieschil (dak, vloer en wand)',
+      'Actieve begeleiding bij het aanvragen van de Mijn VerbouwPremie',
     ],
   },
   {
-    n: '03', t: 'Interieurwerken', kort: 'interieurwerken', href: '/interieur', img: svcInterieur,
-    lede: 'De afwerking waar u dagelijks tegenaan kijkt: wanden, plafonds, vloeren en maatwerk. Onze eigen schrijnwerker maakt de kasten, dus wat getekend is, past ook.',
+    n: '03', t: 'Dakwerken', kort: 'dakwerken', href: '/dakwerken', img: svcDak,
+    lede: 'Het dak is de belangrijkste beschermlaag van uw pand. Wij bouwen, vernieuwen en isoleren dakkappen volgens de strengste normen voor waterdichtheid en windbestendigheid. We werken uitsluitend met robuuste, weersbestendige materialen voor een resultaat dat decennia meegaat.',
     punten: [
-      'Gyproc wanden, ook akoestisch geïsoleerd',
-      'Verlaagde plafonds met inbouwspots en ledstrips',
-      'Parket: massief, meerlaags, visgraat of kuierplank',
-      'Maatwerk: dressings, inbouwkasten, tv-meubels',
-      'Binnendeuren stomp of opdek, door eigen schrijnwerker',
+      'Hellende daken met kwalitatieve pannen en zinkwerk',
+      'Platte daken voorzien van naadloze, duurzame EPDM',
+      'Plaatsing van dakramen en dakkapellen',
     ],
   },
   {
-    n: '04', t: 'Dakwerken', kort: 'dakwerken', href: '/dakwerken', img: svcDak,
-    lede: 'Van een lek dat hersteld moet worden tot een dak dat volledig vernieuwd wordt. Bij het plaatsbezoek zeggen we of herstellen volstaat of vervangen nodig is.',
+    n: '04', t: 'Gevelrenovatie', kort: 'gevelrenovatie', href: '/gevel', img: svcGevel,
+    lede: 'Een nieuwe gevel geeft uw woning niet alleen visueel een complete upgrade, het is hét moment om de buitenschil thermisch te optimaliseren. Wij combineren hoogwaardige esthetische afwerkingen direct met de juiste buitengevelisolatie, zodat uw woning zowel qua look als energieprestatie weer helemaal bij de tijd is.',
     punten: [
-      'Pannendaken volledig vernieuwen',
-      'Platte daken in EPDM uit één stuk, dus zonder lasnaden',
-      'Dakisolatie tot onder K30',
-      'Zinkwerk: dakgoten, mastgoten, kilgoten en slabben',
-      'Dakvensters Velux en Fakro, dakkapellen op maat',
+      'Afwerking in moderne crepi of traditionele steenstrips',
+      'Houten en composiet gevelbekledingen',
+      'Geïntegreerde isolatiesystemen (ETICS)',
     ],
   },
   {
     n: '05', t: 'Badkamer en wellness', kort: 'badkamers', href: '/bad', img: svcBad,
-    lede: 'Eén ploeg voor sanitair, tegelwerk en vloerverwarming. U ziet het ontwerp in 3D voor er iets besteld wordt, zodat u niet achteraf ontdekt dat het meubel net te breed is.',
+    lede: 'Uw badkamer moet een plek van comfort en rust zijn. Wij verzorgen de complete transformatie van de ruimte. Omdat onze eigen ploegen zowel het breekwerk, de leidingen, als het precieze tegel- en kitwerk voor hun rekening nemen, werken we efficiënt door. Zo zit u geen dag langer in het stof dan nodig.',
     punten: [
-      '3D-ontwerp ter goedkeuring vóór de bestelling',
-      'Vloerverwarming standaard inbegrepen',
-      'Tegels in keramiek, natuursteen of microcement',
-      'Inloopdouches, vrijstaande baden, regendouches',
-      'Sanitair van Villeroy & Boch, Hansgrohe en Geberit',
+      'Complete renovaties van afbraak tot afwerking',
+      'Plaatsing van inloopdouches en grootformaat tegels',
+      'Installatie van hoogwaardig sanitair en vloerverwarming',
     ],
   },
   {
-    n: '06', t: 'Gevelrenovatie', kort: 'gevelrenovatie', href: '/gevel', img: svcGevel,
-    lede: 'Een nieuwe gevel is het moment om er buitenisolatie achter te zetten: de stelling staat er toch. Dat scheelt later een tweede werf.',
+    n: '06', t: 'Interieurwerken', kort: 'interieurwerken', href: '/interieur', img: svcInterieur,
+    lede: 'De perfecte afwerking zit in de details. Onze interieurbouwers en eigen schrijnwerkers tillen de binnenkant van uw woning naar een hoger niveau. Met millimeterprecisie zorgen we voor een feilloze afwerking die perfect integreert met de rest van het huis.',
     punten: [
-      'Crepi in mineraal, silicaat of siliconen',
-      'Steenstrips in keramiek of klei',
-      'Houten gevels in lariks, ceder of thermohout',
-      'Composietplaten zoals Trespa, Rockpanel en Eternit',
-      'Buitenisolatie volgens ETICS',
+      'Vakkundige Gyproc-werken, scheidingswanden en (akoestische) plafonds',
+      'Maatwerk door eigen schrijnwerkers: inbouwkasten en binnendeuren',
+      'Plaatsing van kwalitatieve parket- en houten vloeren',
     ],
   },
 ];
 
-const INBEGREPEN = [
-  { t: 'Plaatsbezoek en offerte', d: 'Kosteloos, en de offerte splitst elke post apart uit.' },
-  { t: 'Startdatum op contract', d: 'De dag waarop wij beginnen staat vast voor u tekent.' },
-  { t: 'Werf opgeruimd', d: 'Elke vrijdag opgeruimd achtergelaten, afvoer inbegrepen.' },
-  { t: '10 jaar garantie', d: 'Op de uitvoering, schriftelijk vastgelegd in de offerte.' },
+const BELOFTE = [
+  { t: 'Gedetailleerde afspraken', d: 'Een heldere offerte en een vastgelegde startdatum. Geen verrassingen.' },
+  { t: 'Respect voor uw woning', d: 'Een gestructureerde werf die aan het einde van de week netjes wordt achtergelaten.' },
+  { t: 'Volledige dekking', d: '10 jaar wettelijke garantie op de uitgevoerde werken.' },
 ];
 
 const HTML = () => `<div class="rp">
@@ -94,9 +86,9 @@ ${rpNav('/diensten')}
 <section class="rp-phero">
   <div class="rp-wrap">
     <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Diensten</span></nav>
-    <span class="rp-eyebrow">${ic.mark} Onze diensten</span>
-    <h1 class="rp-phero__t">Van ruwbouw<span class="rp-dim">tot afwerking</span></h1>
-    <p class="rp-phero__lede">Zes afdelingen. U kunt er één inschakelen of ze allemaal: loopt uw project over meerdere vakken, dan stemmen wij die onderling af.</p>
+    <h1 class="rp-phero__t">Onze diensten</h1>
+    <p class="rp-phero__sub">Eén betrouwbare partner voor al uw bouw- en renovatieplannen.</p>
+    <p class="rp-phero__lede">Bij AB Bouw Groep brengen we alle bouwspecialisaties samen onder één dak. Of u ons nu inschakelt voor een gerichte ingreep, of voor een project waarbij de hele woning op de schop gaat: wij hebben de juiste vakmensen in huis. Omdat onze afdelingen intern met elkaar communiceren, garanderen we een strakke, doorlopende planning zonder stiltes op de werf.</p>
   </div>
 </section>
 
@@ -123,33 +115,22 @@ ${rpNav('/diensten')}
 <section class="rp-section rp-section--soft">
   <div class="rp-wrap">
     <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
-      <div>
-        <span class="rp-eyebrow">${ic.mark} Bij elke opdracht</span>
-        <h2 class="rp-head__title">Wat er altijd<span class="rp-dim">inbegrepen zit</span></h2>
+      <div style="max-width:760px">
+        <h2 class="rp-head__title">Onze belofte bij elk project</h2>
+        <p class="rp-split__lede">Hoe groot of klein de opdracht ook is, wij werken altijd volgens dezelfde vaste principes:</p>
       </div>
     </div>
-    <div class="rp-why__tiles rp-tiles-4">
-      ${INBEGREPEN.map((t) => `
+    <div class="rp-why__tiles rp-tiles-3">
+      ${BELOFTE.map((t) => `
       <div class="rp-tile">
         <div class="rp-tile__ic" aria-hidden="true">${vink}</div>
         <h3 class="rp-tile__t">${t.t}</h3>
         <p class="rp-tile__d">${t.d}</p>
       </div>`).join('')}
     </div>
-  </div>
-</section>
-
-<section class="rp-cta">
-  <div class="rp-wrap">
-    <div class="rp-cta__box" style="min-height:270px">
-      <div class="rp-cta__inner">
-        <h2 class="rp-cta__t">Weten wat uw plan kost?</h2>
-        <p class="rp-cta__p">We komen langs, meten op en bezorgen u een offerte waarin elke post apart staat. Het plaatsbezoek is vrijblijvend.</p>
-        <div style="margin-top:26px;display:flex;flex-wrap:wrap;gap:12px">
-          <a class="rp-btn rp-btn--primary" href="/contact">Plan een plaatsbezoek</a>
-          <a class="rp-btn rp-btn--ghost" href="${CONTACT.phone.href}" style="color:#fff;border-color:rgba(255,255,255,.34)">${ic.phone(17)} ${CONTACT.phone.display}</a>
-        </div>
-      </div>
+    <div class="rp-slot">
+      <a class="rp-btn rp-btn--primary" href="/contact">Bespreek uw project met ons ${ic.arrowUpRight()}</a>
+      <p class="rp-slot__contact"><a href="${CONTACT.phone.href}">${CONTACT.phone.display}</a><span aria-hidden="true">&middot;</span><a href="mailto:${CONTACT.email}">${CONTACT.email}</a></p>
     </div>
   </div>
 </section>

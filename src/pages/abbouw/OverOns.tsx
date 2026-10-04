@@ -1,50 +1,42 @@
 import { useEffect } from 'react';
 import '@/styles/roofpro.css';
 import hero from '@/assets/home/hero-over.jpg';
-import about from '@/assets/home/about.jpg';
 import why from '@/assets/home/why-nieuw.jpg';
 import { CONTACT } from '@/data/contact';
 import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
 const vink = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
 
+/* 4 okt 2026: alle tekst op deze pagina is de tekst die Mohammed aanleverde,
+   letterlijk, in de u-vorm. "120+ woningen gerenoveerd" uit zijn cijferregel
+   staat er niet op: niet na te trekken, en op 1 okt van de site gehaald
+   (check:claims). De andere punten koos hij bewust letterlijk, ook die Bardh
+   nog niet bevestigde. */
 const CIJFERS = [
-  { n: '16', l: 'jaar ervaring in de bouw' },
-  { n: '120+', l: 'woningen gerenoveerd' },
+  { n: '16', l: 'jaar ervaring' },
   { n: '6', l: 'vakdisciplines onder één dak' },
 ];
 
-const PRINCIPES = [
+const STRUCTUUR = [
   {
     n: '01', t: 'Vakmensen in vaste dienst',
-    d: 'Onze metselaars, dakdekkers, tegelzetters en schrijnwerkers zijn in vaste dienst. Daardoor werkt op uw werf iedere dag dezelfde ploeg, met dezelfde standaarden.',
+    d: 'Onze metselaars, dakdekkers, tegelzetters en schrijnwerkers horen bij ons vaste team. Daardoor heeft u op de werf steeds vertrouwde gezichten over de vloer die werken volgens onze eigen vaste kwaliteitsstandaarden.',
   },
   {
-    n: '02', t: 'Eén prijs, uitgesplitst',
-    d: 'De offerte zet elke post apart: afbraak, materiaal, uitvoering en afvoer. Meerwerk gaat pas door na uw schriftelijke akkoord op een aparte prijs.',
+    n: '02', t: 'Eén vaste werfleider',
+    d: 'U hoeft geen zes verschillende mensen na te bellen. U krijgt één direct telefoonnummer. Uw werfleider kent de planning, is vaak aanwezig op de werf en blijft uw vaste aanspreekpunt tot na de oplevering.',
   },
   {
-    n: '03', t: 'Eén werfleider',
-    d: 'U krijgt één nummer dat u belt. Die persoon kent uw dossier en de planning, en blijft uw aanspreekpunt tot na de oplevering.',
+    n: '03', t: 'Eén prijs, helder uitgesplitst',
+    d: 'Onze offertes laten precies zien waar u voor betaalt. Elke post (afbraak, materiaal, uitvoering, afvoer) staat apart genoteerd. Mochten er tijdens de werken extra wensen bij komen, dan voeren we die pas uit na uw schriftelijk akkoord op de prijs.',
   },
-];
-
-const AFSPRAKEN = [
-  'Plaatsbezoek binnen vijf werkdagen',
-  'Offerte binnen zeven werkdagen',
-  'Vaste startdatum in het contract',
-  'Wekelijks een werfrapport',
-  'Eén factuur per afgeronde fase',
-  'Werf elke vrijdag opgeruimd',
-  'Premiedossier dienen wij mee in',
 ];
 
 const ERKENNINGEN = [
-  { t: 'VCA', d: 'Veiligheidscertificaat aannemers, jaarlijks gecontroleerd.' },
-  { t: '6% btw bij renovatie', d: 'Voor woningen ouder dan tien jaar.' },
-  { t: 'Tienjarige aansprakelijkheid', d: 'Op stabiliteit en waterdichtheid.' },
-  { t: 'EPB-verslaggever in huis', d: 'Voor renovaties en nieuwbouw waar een verslag verplicht is.' },
-  { t: 'Eigen ploegen', d: 'Dezelfde mensen op uw werf, elke dag.' },
+  { t: 'Tienjarige aansprakelijkheid', d: 'Wettelijke garantie op stabiliteit en waterdichtheid.' },
+  { t: 'EPB-verslaggever in huis', d: 'Direct de juiste expertise voor renovaties en nieuwbouw waar een verslag verplicht is.' },
+  { t: 'VCA-gecertificeerd', d: 'Veilig werken staat voorop, gecontroleerd en gecertificeerd.' },
+  { t: '6% btw-tarief', d: 'Wij zorgen voor de correcte toepassing bij woningen ouder dan tien jaar.' },
 ];
 
 const HTML = () => `<div class="rp">
@@ -53,14 +45,13 @@ ${rpNav('/over')}
 <section class="rp-phero">
   <div class="rp-wrap">
     <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Over ons</span></nav>
-    <span class="rp-eyebrow">${ic.mark} Over AB Bouw Groep</span>
     <h1 class="rp-phero__t">Het bedrijf achter<span class="rp-dim">uw verbouwing</span></h1>
   </div>
 </section>
 
 
 <section class="rp-section">
-  <div class="rp-wrap rp-about__stats" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+  <div class="rp-wrap rp-about__stats rp-about__stats--twee">
     ${CIJFERS.map((c) => `<div><div class="rp-stat__n">${c.n}</div><div class="rp-stat__l">${c.l}</div></div>`).join('')}
   </div>
 </section>
@@ -79,19 +70,32 @@ ${rpNav('/over')}
   <div class="rp-wrap">
     <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
       <div>
-        <span class="rp-eyebrow">${ic.mark} Onze principes</span>
-        <h2 class="rp-head__title">Hoe wij<span class="rp-dim">werken</span></h2>
+        <h2 class="rp-head__title">Hoe wij werken</h2>
       </div>
     </div>
 
     <div class="rp-uitleg">
-      <p>Een algemeen aannemer neemt het geheel op zich: hij voert alle bouwactiviteiten uit, stemt ze
-      op elkaar af en levert het bouwwerk afgewerkt op voor de prijs die in het contract staat.</p>
-      <p>De verantwoordelijkheid voor alle werken samen ligt bij ons.</p>
+      <p>Verbouwen is een flinke stap. Daarom werken wij als algemeen aannemer: we nemen het volledige
+      traject op ons. Geen gedoe met het afstemmen van losse vakmannen of onduidelijkheid over wie
+      verantwoordelijk is. Wij voeren de werken uit, sturen de planning aan en leveren af tegen de prijs
+      die we vooraf hebben afgesproken.</p>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="rp-section">
+  <div class="rp-wrap">
+    <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
+      <div style="max-width:760px">
+        <h2 class="rp-head__title">De mensen op uw werf</h2>
+        <p class="rp-split__lede">Bij een grote verbouwing wisselen verschillende disciplines elkaar af. Om dat soepel te laten verlopen, werken we met een vaste structuur:</p>
+      </div>
     </div>
 
     <div class="rp-why__tiles rp-tiles-3">
-      ${PRINCIPES.map((p) => `
+      ${STRUCTUUR.map((p) => `
       <div class="rp-tile">
         <div class="rp-split__n">${p.n}</div>
         <h3 class="rp-tile__t">${p.t}</h3>
@@ -101,33 +105,15 @@ ${rpNav('/over')}
   </div>
 </section>
 
-
-
 <section class="rp-section rp-section--soft">
   <div class="rp-wrap">
-    <!-- De groepsfoto-plaatshouder is eruit (aug 2026, op vraag van Mohammed).
-         Zonder tweede kolom bleef de tekst in de linkerhelft hangen, dus dit is
-         nu een gecentreerd tekstblok in plaats van een rp-split. -->
     <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
       <div style="max-width:760px">
-        <span class="rp-eyebrow">${ic.mark} Het team</span>
-        <h2 class="rp-head__title">De mensen die<span class="rp-dim">bij u over de vloer komen</span></h2>
-        <p class="rp-split__lede">Op de werf staan een werfleider die de planning opvolgt en de vakmensen van de betrokken afdelingen. Bij een totaalrenovatie wisselen die afdelingen elkaar af volgens de planning die u vooraf krijgt.</p>
-        <p class="rp-split__lede">De werfleider is ook de persoon die u belt tijdens de werken.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="rp-section">
-  <div class="rp-wrap">
-    <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
-      <div>
-        <span class="rp-eyebrow">${ic.mark} Erkenningen</span>
         <h2 class="rp-head__title">Officieel erkend<span class="rp-dim">en verzekerd</span></h2>
+        <p class="rp-split__lede">We bouwen op zekerheid, voor u en voor ons.</p>
       </div>
     </div>
-    <div class="rp-why__tiles rp-tiles-3">
+    <div class="rp-why__tiles rp-tiles-4">
       ${ERKENNINGEN.map((e) => `
       <div class="rp-tile">
         <div class="rp-tile__ic" aria-hidden="true">${vink}</div>
@@ -146,8 +132,8 @@ ${rpNav('/over')}
         <span class="rp-cta__veil"></span>
       </div>
       <div class="rp-cta__inner">
-        <h2 class="rp-cta__t">Een eerste gesprek kost u niets</h2>
-        <p class="rp-cta__p">We komen langs, luisteren wat u wil en zeggen eerlijk wat haalbaar is binnen uw budget.</p>
+        <h2 class="rp-cta__t">Zullen we uw plannen bespreken?</h2>
+        <p class="rp-cta__p">We komen graag langs. We luisteren naar uw ideeën, kijken naar de huidige situatie en bespreken eerlijk wat er haalbaar is binnen uw budget. Een eerste gesprek kost u niets.</p>
         <div style="margin-top:26px;display:flex;flex-wrap:wrap;gap:12px">
           <a class="rp-btn rp-btn--primary" href="/contact">Plan een plaatsbezoek</a>
           <a class="rp-btn rp-btn--ghost" href="${CONTACT.phone.href}" style="color:#fff;border-color:rgba(255,255,255,.34)">${ic.phone(17)} ${CONTACT.phone.display}</a>
