@@ -1,72 +1,64 @@
 import { useEffect } from 'react';
 import '@/styles/roofpro.css';
+/* 5 okt 2026: een eigen werffoto van Mohammed (woonkamer met haard en
+   visgraatparket), in de hero zoals op de afdelingspagina's. */
+import heroFoto from '@/assets/lp-diensten/eigen/IMG_0102.jpg';
 import hero from '@/assets/home/hero-over.jpg';
-import why from '@/assets/home/why-nieuw.jpg';
 import { CONTACT } from '@/data/contact';
-import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
-
-const vink = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+import { ic, icStap, bolletjes, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
 /* 4 okt 2026: alle tekst op deze pagina is de tekst die Mohammed aanleverde,
    letterlijk, in de u-vorm. "120+ woningen gerenoveerd" uit zijn cijferregel
    staat er niet op: niet na te trekken, en op 1 okt van de site gehaald
    (check:claims). De andere punten koos hij bewust letterlijk, ook die Bardh
-   nog niet bevestigde. */
+   nog niet bevestigde.
+
+   5 okt 2026, "en bij over ons ook visueel verbeteren": de hero kreeg een foto
+   en de twee cijfers, en de structuur en de erkenningen zijn bolletjes in de
+   vorm van de homepage. Geen woord tekst veranderd. */
 const CIJFERS = [
   { n: '16', l: 'jaar ervaring' },
   { n: '6', l: 'vakdisciplines onder één dak' },
 ];
 
 const STRUCTUUR = [
-  {
-    n: '01', t: 'Vakmensen in vaste dienst',
-    d: 'Onze metselaars, dakdekkers, tegelzetters en schrijnwerkers horen bij ons vaste team. Daardoor heeft u op de werf steeds vertrouwde gezichten over de vloer die werken volgens onze eigen vaste kwaliteitsstandaarden.',
-  },
-  {
-    n: '02', t: 'Eén vaste werfleider',
-    d: 'U hoeft geen zes verschillende mensen na te bellen. U krijgt één direct telefoonnummer. Uw werfleider kent de planning, is vaak aanwezig op de werf en blijft uw vaste aanspreekpunt tot na de oplevering.',
-  },
-  {
-    n: '03', t: 'Eén prijs, helder uitgesplitst',
-    d: 'Onze offertes laten precies zien waar u voor betaalt. Elke post (afbraak, materiaal, uitvoering, afvoer) staat apart genoteerd. Mochten er tijdens de werken extra wensen bij komen, dan voeren we die pas uit na uw schriftelijk akkoord op de prijs.',
-  },
+  { ic: icStap.mensen, t: 'Vakmensen in vaste dienst',
+    d: 'Onze metselaars, dakdekkers, tegelzetters en schrijnwerkers horen bij ons vaste team. Daardoor heeft u op de werf steeds vertrouwde gezichten over de vloer die werken volgens onze eigen vaste kwaliteitsstandaarden.' },
+  { ic: icStap.telefoon, t: 'Eén vaste werfleider',
+    d: 'U hoeft geen zes verschillende mensen na te bellen. U krijgt één direct telefoonnummer. Uw werfleider kent de planning, is vaak aanwezig op de werf en blijft uw vaste aanspreekpunt tot na de oplevering.' },
+  { ic: icStap.meten, t: 'Eén prijs, helder uitgesplitst',
+    d: 'Onze offertes laten precies zien waar u voor betaalt. Elke post (afbraak, materiaal, uitvoering, afvoer) staat apart genoteerd. Mochten er tijdens de werken extra wensen bij komen, dan voeren we die pas uit na uw schriftelijk akkoord op de prijs.' },
 ];
 
 const ERKENNINGEN = [
-  { t: 'Tienjarige aansprakelijkheid', d: 'Wettelijke garantie op stabiliteit en waterdichtheid.' },
-  { t: 'EPB-verslaggever in huis', d: 'Direct de juiste expertise voor renovaties en nieuwbouw waar een verslag verplicht is.' },
-  { t: 'VCA-gecertificeerd', d: 'Veilig werken staat voorop, gecontroleerd en gecertificeerd.' },
-  { t: '6% btw-tarief', d: 'Wij zorgen voor de correcte toepassing bij woningen ouder dan tien jaar.' },
+  { ic: icStap.woning, t: 'Tienjarige aansprakelijkheid', d: 'Wettelijke garantie op stabiliteit en waterdichtheid.' },
+  { ic: icStap.attest, t: 'EPB-verslaggever in huis', d: 'Direct de juiste expertise voor renovaties en nieuwbouw waar een verslag verplicht is.' },
+  { ic: icStap.garantie, t: 'VCA-gecertificeerd', d: 'Veilig werken staat voorop, gecontroleerd en gecertificeerd.' },
+  { ic: icStap.btw, t: '6% btw-tarief', d: 'Wij zorgen voor de correcte toepassing bij woningen ouder dan tien jaar.' },
 ];
 
 const HTML = () => `<div class="rp">
 ${rpNav('/over')}
 
-<section class="rp-phero">
+<section class="rp-phero rp-phero--foto">
+  <div class="rp-phero__bg" aria-hidden="true">
+    <img src="${heroFoto}" alt="" width="1179" height="870" fetchpriority="high" decoding="async"/>
+    <span class="rp-phero__veil"></span>
+  </div>
   <div class="rp-wrap">
     <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Over ons</span></nav>
     <h1 class="rp-phero__t">Het bedrijf achter<span class="rp-dim">uw verbouwing</span></h1>
+    <div class="rp-hero-cijfers">
+      ${CIJFERS.map((c) => `<div><span class="rp-hero-cijfers__n">${c.n}</span><span class="rp-hero-cijfers__l">${c.l}</span></div>`).join('')}
+    </div>
+    <div style="margin-top:30px;display:flex;flex-wrap:wrap;gap:12px">
+      <a class="rp-btn rp-btn--primary" href="/contact">Plan een plaatsbezoek</a>
+      <a class="rp-btn rp-btn--ghost" href="${CONTACT.phone.href}">${ic.phone(17)} ${CONTACT.phone.display}</a>
+    </div>
   </div>
 </section>
-
 
 <section class="rp-section">
-  <div class="rp-wrap rp-about__stats rp-about__stats--twee">
-    ${CIJFERS.map((c) => `<div><div class="rp-stat__n">${c.n}</div><div class="rp-stat__l">${c.l}</div></div>`).join('')}
-  </div>
-</section>
-
-
-
-<section class="rp-section rp-section--soft" style="padding-top:56px;padding-bottom:0">
-  <div class="rp-wrap">
-    <figure class="rp-band">
-      <img src="${why}" alt="Afgewerkte leefruimte met verlaagd plafond en lichtlijnen, door AB Bouw Groep"
-        width="1200" height="520" loading="lazy" decoding="async"/>
-    </figure>
-  </div>
-</section>
-<section class="rp-section rp-section--soft">
   <div class="rp-wrap">
     <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
       <div>
@@ -83,9 +75,7 @@ ${rpNav('/over')}
   </div>
 </section>
 
-
-
-<section class="rp-section">
+<section class="rp-section rp-section--soft">
   <div class="rp-wrap">
     <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
       <div style="max-width:760px">
@@ -93,19 +83,11 @@ ${rpNav('/over')}
         <p class="rp-split__lede">Bij een grote verbouwing wisselen verschillende disciplines elkaar af. Om dat soepel te laten verlopen, werken we met een vaste structuur:</p>
       </div>
     </div>
-
-    <div class="rp-why__tiles rp-tiles-3">
-      ${STRUCTUUR.map((p) => `
-      <div class="rp-tile">
-        <div class="rp-split__n">${p.n}</div>
-        <h3 class="rp-tile__t">${p.t}</h3>
-        <p class="rp-tile__d">${p.d}</p>
-      </div>`).join('')}
-    </div>
+    ${bolletjes(STRUCTUUR)}
   </div>
 </section>
 
-<section class="rp-section rp-section--soft">
+<section class="rp-section">
   <div class="rp-wrap">
     <div class="rp-head" style="flex-direction:column;align-items:center;text-align:center">
       <div style="max-width:760px">
@@ -113,14 +95,7 @@ ${rpNav('/over')}
         <p class="rp-split__lede">We bouwen op zekerheid, voor u en voor ons.</p>
       </div>
     </div>
-    <div class="rp-why__tiles rp-tiles-4">
-      ${ERKENNINGEN.map((e) => `
-      <div class="rp-tile">
-        <div class="rp-tile__ic" aria-hidden="true">${vink}</div>
-        <h3 class="rp-tile__t">${e.t}</h3>
-        <p class="rp-tile__d">${e.d}</p>
-      </div>`).join('')}
-    </div>
+    ${bolletjes(ERKENNINGEN)}
   </div>
 </section>
 

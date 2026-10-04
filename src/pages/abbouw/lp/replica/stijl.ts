@@ -1531,8 +1531,12 @@ export const REPLICA_CSS = `
 .pc-aanbod-lede { margin: 16px auto 0; max-width: 60ch; text-align: center; font-size: 16px; line-height: 26px; color: var(--pc-grijs); }
 .pc-zeker { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; max-width: 1024px; margin: 50px auto 0; }
 .pc-zeker .pc-stap p { max-width: 240px; }
+.pc-zeker--drie { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 974px; }
+.pc-zeker--drie .pc-stap p { max-width: 290px; }
 @media (max-width: 1000px) { .pc-zeker { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; } }
 @media (max-width: 600px) { .pc-zeker { grid-template-columns: 1fr; gap: 32px; margin-top: 32px; } }
+/* Drie punten blijven op een tablet naast elkaar; twee plus één liet een gat. */
+@media (min-width: 601px) and (max-width: 1000px) { .pc-zeker--drie { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 20px; } }
 /* Contact: de inleiding onder de kop, en zonder afsluitband eronder geen
    ruimte meer vrijhouden voor de cirkelfoto die over de bandrand stak. */
 .pc-contact-tekst { margin: 16px auto 0; max-width: 60ch; font-size: 16px; line-height: 26px; color: var(--pc-grijs); }

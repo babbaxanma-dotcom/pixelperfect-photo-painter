@@ -187,6 +187,8 @@ export type PaginaInhoud = {
   /** De kopbalk is bovenaan weg en schuift pas in beeld bij het scrollen; het
       logo staat dan wit in de hero (homepage, 5 okt 2026). */
   kopBovenaanWeg?: boolean;
+  /** De voet van de gewone pagina's: pagina's en de zes afdelingen. */
+  siteVoet?: boolean;
   eind: { kop: string[]; tekst: string; achtergrond: string; cirkel: string; cirkelAlt: string };
   calculator: {
     badge: string; kop: string; onder: string; knop: string;
@@ -644,7 +646,9 @@ export const HOME: PaginaInhoud = {
   toonBand: false,
   toonCalculator: false,
   toonDiensten: false,
-  footer: '',
+  /* Dezelfde voet als de andere pagina's (rpFooter), ook de zin onder het logo. */
+  footer: 'Bouw en renovatie voor dak, gevel, badkamer en interieur. Actief in Vlaanderen en Brussel.',
+  siteVoet: true,
 
   nav: [
     { label: 'Over ons', href: '/over' },

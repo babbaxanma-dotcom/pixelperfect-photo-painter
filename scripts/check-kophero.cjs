@@ -90,8 +90,14 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
           const form = q('.pc-hero form, .pc-balk form');
           const verstuur = form && form.querySelector('button[type=submit], .pc-knop');
           const heroknop = q('.pc-hero-vat > .pc-knop');
+          /* Is de kop bovenaan weg (.is-weg), dan is het logo bovenaan de
+             pagina de kop: daaronder hoort de inhoud te beginnen. Zonder dit
+             telde de ruimte waarin het logo staat als leegte. */
+          const merk = q('.pc-merk-boven img');
+          const kopRand = !kop ? null
+            : kop.classList.contains('is-weg') && merk ? R(merk).bottom : R(kop).bottom;
           return {
-            kopOnder: kop ? Math.round(R(kop).bottom) : null,
+            kopOnder: kopRand === null ? null : Math.round(kopRand),
             titelBoven: titel ? Math.round(R(titel).top) : null,
             heroForm: !!form,
             verstuurOnder: verstuur ? Math.round(R(verstuur).bottom) : null,

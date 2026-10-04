@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
 import '@/styles/roofpro.css';
 import { CONTACT } from '@/data/contact';
-import { ic, rpNav, rpFooter, wireMobielMenu } from './_rp';
+import { ic, icStap, bolletjes, rpNav, rpFooter, wireMobielMenu } from './_rp';
+/* 5 okt 2026: een eigen werffoto van Mohammed in de hero, zoals op de
+   afdelingspagina's. */
+import heroFoto from '@/assets/lp-diensten/eigen/IMG_9030.jpg';
 
 import svcConstruct from '@/assets/home/svc-construct-nieuw.jpg';
 import svcEco from '@/assets/eco/achterkant-isolatie.jpg';
@@ -75,20 +78,28 @@ const DIENSTEN = [
 ];
 
 const BELOFTE = [
-  { t: 'Gedetailleerde afspraken', d: 'Een heldere offerte en een vastgelegde startdatum. Geen verrassingen.' },
-  { t: 'Respect voor uw woning', d: 'Een gestructureerde werf die aan het einde van de week netjes wordt achtergelaten.' },
-  { t: 'Volledige dekking', d: '10 jaar wettelijke garantie op de uitgevoerde werken.' },
+  { ic: icStap.meten, t: 'Gedetailleerde afspraken', d: 'Een heldere offerte en een vastgelegde startdatum. Geen verrassingen.' },
+  { ic: icStap.woning, t: 'Respect voor uw woning', d: 'Een gestructureerde werf die aan het einde van de week netjes wordt achtergelaten.' },
+  { ic: icStap.garantie, t: 'Volledige dekking', d: '10 jaar wettelijke garantie op de uitgevoerde werken.' },
 ];
 
 const HTML = () => `<div class="rp">
 ${rpNav('/diensten')}
 
-<section class="rp-phero">
+<section class="rp-phero rp-phero--foto">
+  <div class="rp-phero__bg" aria-hidden="true">
+    <img src="${heroFoto}" alt="" width="1179" height="858" fetchpriority="high" decoding="async"/>
+    <span class="rp-phero__veil"></span>
+  </div>
   <div class="rp-wrap">
     <nav class="rp-crumbs" aria-label="Kruimelpad"><a href="/">Home</a> &rsaquo; <span>Diensten</span></nav>
     <h1 class="rp-phero__t">Onze diensten</h1>
     <p class="rp-phero__sub">Eén betrouwbare partner voor al uw bouw- en renovatieplannen.</p>
     <p class="rp-phero__lede">Bij AB Bouw Groep brengen we alle bouwspecialisaties samen onder één dak. Of u ons nu inschakelt voor een gerichte ingreep, of voor een project waarbij de hele woning op de schop gaat: wij hebben de juiste vakmensen in huis. Omdat onze afdelingen intern met elkaar communiceren, garanderen we een strakke, doorlopende planning zonder stiltes op de werf.</p>
+    <div style="margin-top:30px;display:flex;flex-wrap:wrap;gap:12px">
+      <a class="rp-btn rp-btn--primary" href="/contact">Plan een plaatsbezoek</a>
+      <a class="rp-btn rp-btn--ghost" href="${CONTACT.phone.href}">${ic.phone(17)} ${CONTACT.phone.display}</a>
+    </div>
   </div>
 </section>
 
@@ -120,14 +131,7 @@ ${rpNav('/diensten')}
         <p class="rp-split__lede">Hoe groot of klein de opdracht ook is, wij werken altijd volgens dezelfde vaste principes:</p>
       </div>
     </div>
-    <div class="rp-why__tiles rp-tiles-3">
-      ${BELOFTE.map((t) => `
-      <div class="rp-tile">
-        <div class="rp-tile__ic" aria-hidden="true">${vink}</div>
-        <h3 class="rp-tile__t">${t.t}</h3>
-        <p class="rp-tile__d">${t.d}</p>
-      </div>`).join('')}
-    </div>
+    ${bolletjes(BELOFTE)}
     <div class="rp-slot">
       <a class="rp-btn rp-btn--primary" href="/contact">Bespreek uw project met ons ${ic.arrowUpRight()}</a>
       <p class="rp-slot__contact"><a href="${CONTACT.phone.href}">${CONTACT.phone.display}</a><span aria-hidden="true">&middot;</span><a href="mailto:${CONTACT.email}">${CONTACT.email}</a></p>

@@ -16,7 +16,7 @@
  * Deze pagina staat naast LpDienst.tsx en raakt de andere dertien pagina's niet.
  */
 import { useEffect, useRef, useState } from 'react';
-import { wireVasteKop } from '../../_rp';
+import { wireVasteKop, DIENST_LINKS } from '../../_rp';
 import { useNavigate } from 'react-router-dom';
 import { CONTACT } from '@/data/contact';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
@@ -1148,6 +1148,29 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
               )}
             </div>
 
+            {/* 5 okt 2026: op de homepage dezelfde voet als op elke andere pagina
+                (rpFooter): de pagina's en de zes afdelingen. Hier stonden ankers
+                naar secties die de homepage niet heeft en vier landingspagina's. */}
+            {inhoud.siteVoet ? (
+            <>
+            <div>
+              <h3>Snel naar</h3>
+              <nav className="pc-footer-links">
+                <a href="/over">Over ons</a>
+                <a href="/werkwijze">Werkwijze</a>
+                <a href="/contact">Contact</a>
+              </nav>
+            </div>
+
+            <div>
+              <h3>Onze diensten</h3>
+              <nav className="pc-footer-links">
+                {DIENST_LINKS.map((x) => <a key={x.href} href={x.href}>{x.t}</a>)}
+              </nav>
+            </div>
+            </>
+            ) : (
+            <>
             <div>
               <h3>Snel naar</h3>
               <nav className="pc-footer-links">
@@ -1168,6 +1191,8 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
                 <a href="/lp/gevel">Dakwerken en gevelbekleding</a>
               </nav>
             </div>
+            </>
+            )}
 
             <div>
               <h3>Contact</h3>
@@ -1182,7 +1207,9 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
           <div className="pc-footer-lijn" />
           <div className="pc-footer-onder">
             <span>© {new Date().getFullYear()} AB Bouw Groep. Alle rechten voorbehouden.</span>
-            <a href="/privacy">Privacybeleid</a>
+            {inhoud.siteVoet
+              ? <span><a href="/privacy">Privacy</a> &middot; <a href="/voorwaarden">Voorwaarden</a> &middot; <a href="/cookies">Cookies</a></span>
+              : <a href="/privacy">Privacybeleid</a>}
           </div>
         </div>
       </footer>

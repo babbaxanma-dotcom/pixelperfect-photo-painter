@@ -49,7 +49,7 @@ ${rpNav('/contact')}
               </div>
             </div>
             <details class="rp-faq__item" style="border-radius:8px">
-              <summary class="rp-faq__q" style="padding:14px 16px;font-size:15px">Adres van het project <span style="font-weight:600;color:var(--rp-mute)">&nbsp;, optioneel</span>${ic.plus}</summary>
+              <summary class="rp-faq__q" style="padding:14px 16px;font-size:15px"><span>Adres van het project <span style="font-weight:400;color:var(--rp-mute)">(optioneel)</span></span>${ic.plus}</summary>
               <div style="padding:0 16px 16px;display:grid;gap:16px">
                 <div class="rp-veld">
                   <label for="cf-straat">Straat en nummer</label>
@@ -81,17 +81,14 @@ ${rpNav('/contact')}
             <p class="rp-fout" data-form-fout hidden></p>
             <button class="rp-btn rp-btn--primary rp-btn--block" type="submit" data-form-btn>Verstuur aanvraag</button>
             <p class="rp-form__klein" style="text-align:center">Wij bellen u terug om een moment af te spreken.</p>
-            <div style="display:flex;justify-content:center">
-              <span class="rp-proofchip rp-proofchip--licht">
-                <span class="rp-proofchip__sterren" aria-hidden="true">${ic.star(13).repeat(5)}</span>
-                <span class="rp-proofchip__t">4,9 op Google</span>
-              </span>
-            </div>
+            <!-- 5 okt 2026: hier stond "4,9 op Google". Het Google-profiel van AB
+                 heeft één review; de claim is op 1 okt overal elders weggehaald
+                 (check:claims, die nu ook /contact leest). -->
             <p class="rp-form__klein">Wij gebruiken uw gegevens enkel om uw aanvraag te behandelen. Zie onze <a href="/privacy" style="color:var(--rp-accent-text);text-decoration:underline">privacyverklaring</a>.</p>
           </form>
           <div data-form-ok hidden>
             <h2 class="rp-split__t" style="font-size:24px">Bedankt, uw aanvraag is verstuurd</h2>
-            <p class="rp-split__lede">Wij nemen binnen één werkdag contact met u op. Liever meteen iemand spreken? Bel <a href="${CONTACT.phone.href}" style="color:var(--rp-accent-text);font-weight:700">${CONTACT.phone.display}</a>.</p>
+            <p class="rp-split__lede">Wij nemen zo snel mogelijk contact met u op. Liever meteen iemand spreken? Bel <a href="${CONTACT.phone.href}" style="color:var(--rp-accent-text);font-weight:700">${CONTACT.phone.display}</a>.</p>
           </div>
         </div>
       </div>

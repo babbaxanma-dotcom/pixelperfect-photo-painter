@@ -107,7 +107,34 @@ export const icStap = {
   sleutel: svg('<circle cx="9" cy="9" r="5.6"/><path d="m13 13 10.6 10.6"/><path d="m18.4 18.4-2.6 2.6M21 21l-2.6 2.6"/>'),
   /* Nieuw. Nazorg: schild met vinkje, voor de tienjarige garantie. */
   garantie: svg('<path d="M14 2.2 4.6 6v7.4c0 5.6 3.8 9.6 9.4 11.4 5.6-1.8 9.4-5.8 9.4-11.4V6Z"/><path d="m9.8 13.4 3 3 5.4-5.6"/>'),
+  /* 5 okt 2026: de iconen van de zekerheden op de homepage (Iconen.tsx), hier
+     als tekst voor de binnenpagina's, plus een helm voor de vakmensen. */
+  woning: svg('<path d="M2 12.2 14 2.6l12 9.6"/><path d="M5.2 10v13.4a1.4 1.4 0 0 0 1.4 1.4h14.8a1.4 1.4 0 0 0 1.4-1.4V10"/><path d="m9.8 17 3 3 5.4-5.6"/>'),
+  btw: svg('<circle cx="14" cy="13.5" r="11.2"/><path d="m9.2 18.3 9.6-9.6"/><circle cx="9.8" cy="9.3" r="1.7"/><circle cx="18.2" cy="17.7" r="1.7"/>'),
+  attest: svg('<path d="M17.4 24.4H5a1.6 1.6 0 0 1-1.6-1.6V4.2A1.6 1.6 0 0 1 5 2.6h13a1.6 1.6 0 0 1 1.6 1.6v6.6"/><path d="M7.4 8h8.2M7.4 12.4h6"/><circle cx="20.6" cy="16.6" r="4"/><path d="m18.4 20-1 5 3.2-1.8 3.2 1.8-1-5"/>'),
+  /* Vakmensen: twee personen. */
+  mensen: svg('<circle cx="10" cy="8.4" r="3.8"/><path d="M3.2 23.6v-1.4a6.8 6.8 0 0 1 13.6 0v1.4"/><circle cx="19.6" cy="10.2" r="3"/><path d="M19.2 16.4a5.6 5.6 0 0 1 5.6 5.6v1.6"/>'),
+  /* Werfleider: één telefoonnummer, dus een hoorn. */
+  telefoon: svg('<path d="M8.4 3.4H6a2.2 2.2 0 0 0-2.2 2.4c.7 9.2 8 16.5 17.2 17.2a2.2 2.2 0 0 0 2.4-2.2v-2.4a1.6 1.6 0 0 0-1.2-1.6l-3.4-1a1.6 1.6 0 0 0-1.6.4l-1.4 1.4a12.4 12.4 0 0 1-5.8-5.8l1.4-1.4a1.6 1.6 0 0 0 .4-1.6l-1-3.4a1.6 1.6 0 0 0-1.4-1Z"/>'),
 };
+
+/**
+ * Bolletjes: dezelfde vorm als de werkwijze en de zekerheden op de homepage
+ * (.pc-stap in REPLICA_CSS, dat rpNav al meelaadt). Zo spreekt de hele site
+ * één vormtaal voor punten met een icoon. De .pcx-schil levert de kleuren en
+ * het lettertype van die vorm; zijn witte achtergrond staat uit.
+ */
+export const bolletjes = (punten: { ic: string; t: string; d: string }[]) => `
+<div class="pcx pc-bol-schil">
+  <div class="pc-zeker${punten.length === 3 ? ' pc-zeker--drie' : ''}">
+    ${punten.map((p) => `
+    <div class="pc-stap">
+      <div class="pc-stap-badge">${p.ic}</div>
+      <h3>${p.t}</h3>
+      <p>${p.d}</p>
+    </div>`).join('')}
+  </div>
+</div>`;
 
 /** Zichtbare plek voor een foto die nog moet komen. `hoogte` in px of een
  *  CSS-waarde, `maat` = de gewenste verhouding/resolutie. */
@@ -152,8 +179,11 @@ const NAV_LINKS = [
  */
 export const rpNav = (actief: string) => `
 <style>${REPLICA_CSS}</style>
-<div class="pcx pc-chrome">
-<header class="pc-kop">
+<div class="pcx pc-chrome pc-chrome--wegbaar">
+<!-- 5 okt 2026, Mohammed: de kopbalk is bovenaan volledig weg en komt pas bij
+     het scrollen (wireVasteKop). Zolang staat alleen het logo bovenaan. -->
+<div class="pc-merk-boven"><div class="pc-vat"><a href="/" aria-label="AB Bouw Groep, naar de startpagina"><img src="${LOGO}" alt="AB Bouw Groep" width="161" height="46" decoding="async"/></a></div></div>
+<header class="pc-kop pc-kop--wegbaar is-weg">
   <div class="pc-vat pc-kop-vat">
     <div class="pc-kop-logo">
       <a href="/" aria-label="AB Bouw Groep, naar de startpagina"><img src="${LOGO}" alt="AB Bouw Groep" width="147" height="42" decoding="async"/></a>

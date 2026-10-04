@@ -6,7 +6,7 @@ import hero from '@/assets/home/hero-diensten.jpg';
 // met mensen erop, en mensen overtuigend genereren lukt niet. De stapkaarten
 // zijn nu tekst; het nummer draagt de kaart.
 import { CONTACT } from '@/data/contact';
-import { icStap, icPad, rpNav, rpFooter, wireMobielMenu } from './_rp';
+import { ic, icStap, icPad, rpNav, rpFooter, wireMobielMenu } from './_rp';
 
 /* 4 okt 2026: alle tekst op deze pagina is de tekst die Mohammed aanleverde,
    letterlijk, in de u-vorm van de rest van de site (zijn keuze). Zijn regel
@@ -55,6 +55,10 @@ ${rpNav('/werkwijze')}
     <h1 class="rp-phero__t">Onze werkwijze</h1>
     <p class="rp-phero__sub">Van uw eerste telefoontje tot 10 jaar na oplevering.</p>
     <p class="rp-phero__lede">Verbouwen brengt vaak stress met zich mee door onduidelijke planningen, onbereikbare aannemers en vage afspraken. Bij AB Bouw Groep doen we daar niet aan mee. Wij werken volgens een transparant stappenplan. Zo weet u op elk moment in het proces exact wat er gebeurt en wanneer u iets van ons mag verwachten.</p>
+    <div style="margin-top:30px;display:flex;flex-wrap:wrap;gap:12px">
+      <a class="rp-btn rp-btn--primary" href="/contact">Start bij stap 1</a>
+      <a class="rp-btn rp-btn--ghost" href="${CONTACT.phone.href}">${ic.phone(17)} ${CONTACT.phone.display}</a>
+    </div>
     <h2 class="rp-phero__h2">8 stappen naar een zorgeloze oplevering</h2>
 
     <!-- Het pad begint hier: de eerste kaart staat naast de kop, in de ruimte

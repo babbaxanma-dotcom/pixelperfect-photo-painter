@@ -1912,5 +1912,48 @@ body[data-pagina="contact"] .rp-fab { display: none; }
 }
 .rp .rp-cta__bel { margin-top: 16px; font-size: 15px; line-height: 22px; color: #fff; }
 .rp .rp-cta__bel a { color: #fff; font-weight: 700; text-decoration: none; }
-/* Over ons: twee cijfers naast elkaar, niet over de volle breedte gespreid. */
-.rp .rp-about__stats--twee { grid-template-columns: repeat(2, max-content) !important; column-gap: 120px; }
+/* ── 5 okt 2026: de kopbalk is bovenaan weg (rpNav, wireVasteKop) ──────────
+   Mohammed: "de nav bar moet daar niet zichtbaar zijn, die moet gewoon clean
+   komen als je scrolt", "moet volledig weg zijn bovenaan of na enteren op
+   pagina". Zolang staat alleen het logo bovenaan, op de plek waar het in de
+   balk stond. De eerste sectie krijgt daarvoor ruimte bovenaan. */
+.pc-merk-boven { position: absolute; top: 0; left: 0; right: 0; z-index: 5; padding-top: 34px; pointer-events: none; }
+.pc-merk-boven a { display: inline-block; pointer-events: auto; }
+.pc-merk-boven img { height: 46px; width: auto; }
+.rp > .rp-mob + section { padding-top: 132px; }
+@media (max-width: 900px) {
+  .pc-merk-boven { padding-top: 20px; }
+  .pc-merk-boven img { height: 36px; }
+  .rp > .rp-mob + section { padding-top: 84px; }
+}
+
+/* De afsluitband: de kop en de tekst stonden gecentreerd in een blok van
+   640px dat links in de band hing, de knoppen links daaronder. Nu staat het
+   blok in het midden van de band en de knoppen onder de tekst. */
+.rp .rp-cta__inner { margin-inline: auto; }
+.rp .rp-cta__inner > div { justify-content: center; }
+.rp .rp-cta__p { margin-inline: auto; }
+
+/* De bolletjes van de homepage op een binnenpagina: de .pcx-schil levert
+   kleur en lettertype, maar niet zijn witte vlak. */
+.rp .pc-bol-schil { background: transparent; }
+
+/* De ondertitel in de foto-hero (Diensten) houdt dezelfde tekstkolom als de
+   kop en de inleiding, zodat hij niet onder de foto doorloopt. */
+.rp .rp-phero--foto .rp-phero__sub { max-width: 47%; }
+@media (max-width: 900px) { .rp .rp-phero--foto .rp-phero__sub { max-width: 100%; } }
+
+/* Over ons: de twee cijfers in de hero, groot getal met het label eronder. */
+.rp .rp-hero-cijfers { display: flex; flex-wrap: wrap; gap: 18px 56px; margin-top: 28px; }
+.rp .rp-hero-cijfers > div { display: flex; flex-direction: column; }
+.rp .rp-hero-cijfers__n { font-size: 46px; line-height: 1; font-weight: 700; letter-spacing: -0.03em; color: var(--pc-ink, #131311); }
+.rp .rp-hero-cijfers__l { margin-top: 8px; font-size: 14px; line-height: 20px; color: var(--pc-grijs, #51514c); }
+
+/* De foto in de paginakop was op een telefoon een waas van 16% achter de
+   tekst: je zag er niets van. Hier staat hij als volle band onder de tekst. */
+@media (max-width: 900px) {
+  .rp .rp-phero--foto { display: flex; flex-direction: column; padding-bottom: 0; }
+  .rp .rp-phero--foto > .rp-wrap { order: 1; }
+  .rp .rp-phero--foto .rp-phero__bg { position: relative; order: 2; inset: auto; opacity: 1;
+    width: 100%; height: 240px; margin-top: 32px; }
+}
