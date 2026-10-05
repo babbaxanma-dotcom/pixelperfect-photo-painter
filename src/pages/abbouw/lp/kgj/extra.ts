@@ -852,4 +852,13 @@ html:has(.kgjx .kgj-topbalk) { scroll-padding-top: 132px; }
 .kgjx .kgj-tegenover__probleem { display: flex; flex-direction: column; justify-content: center; }
 /* Dienstkaarten met foto op de renovatiepagina's: drie per rij (3 of 6 kaarten), geen gat rechts. */
 @media (min-width: 1001px) { .kgjx.kgj-lp--totaalrenovatie .kgj-dienstraster { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; } }
+/* Gestripte totaalrenovatie (5 okt): drie zekerheden in kolommen, icoon, kop en een regel. */
+.kgjx .kgj-kolommen { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; margin: 0; padding: 0; list-style: none; }
+.kgjx .kgj-kolommen li { background: var(--wit); border: 1px solid var(--lijn); border-radius: var(--r-vak); padding: 30px 28px; text-align: center; }
+.kgjx .kgj-kolommen .kgj-tegenover__icoon { margin: 0 auto 16px; width: 54px; height: 54px; }
+.kgjx .kgj-kolommen h3 { font-size: 19px; }
+.kgjx .kgj-kolommen p { margin-top: 8px; font-size: 15.5px; line-height: 1.55; }
+@media (max-width: 900px) { .kgjx .kgj-kolommen { grid-template-columns: 1fr; gap: 14px; } .kgjx .kgj-kolommen li { padding: 22px 20px; } }
+/* Diensten in korte blokken: de regel onder de naam iets groter, er staat maar een paar woorden. */
+.kgjx.kgj-lp--totaalrenovatie .kgj-dienst__body p { font-size: 15.5px; }
 `;

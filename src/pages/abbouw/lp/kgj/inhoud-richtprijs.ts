@@ -30,7 +30,8 @@ export const RICHTPRIJS: KgjInhoud = {
 
   /* De pagina is het vangnet; geen tweede verwijzing naar zichzelf. */
   vangnet: undefined,
-  volgorde: ['uitgevoerd', 'voorna', 'werkwijze', 'faq'],
+  /* 5 okt, gestript zoals de moederpagina: alleen de voor/na als bewijs. */
+  volgorde: ['voorna', 'werkwijze', 'faq'],
 
   inspectie: { ...TOTAALRENOVATIE.inspectie, bronLead: 'lp:richtprijs:inspectie' },
 };

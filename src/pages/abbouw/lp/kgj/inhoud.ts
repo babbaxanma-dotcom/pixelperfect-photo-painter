@@ -86,7 +86,9 @@ export type KgjInhoud = {
     vertrouwen?: string[] };
   /** tegenover: de zin boven de redenen; dan staat de tekst (de frustratie) links in een
       donker vak en de redenen (de oplossing) rechts, zonder foto's (totaalrenovatie, 5 okt). */
-  waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto]; tegenover?: string };
+  /** kolommen: alleen de kop en de redenen, als drie kolommen met icoon (gestripte
+      totaalrenovatie, 5 okt); gaat voor `tegenover`. */
+  waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto]; tegenover?: string; kolommen?: boolean };
   /** Diensten onder "Waarom": id is het anker voor een sitelink (/lp/dakwerken#nieuw-dak). */
   /** onder: optionele zin onder de kop. Een lege tekst toont alleen icoon en naam (totaalrenovatie, 27 sep).
    *  foto: met een foto wordt de dienst een fotokaart zonder icoon (dakwerken, 2 okt).

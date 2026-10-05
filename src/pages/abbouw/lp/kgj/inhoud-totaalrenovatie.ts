@@ -79,6 +79,10 @@ import dakNa from '@/assets/lp-diensten/dak-na.jpg';
    overgenomen: "Meer dan 500 Vlamingen gingen u voor" (een aantal zonder
    bron, zoals 4,9 en 120+). De herofoto's blijven ("de visuele foto in hero
    zelfde laten"). Emoji's zijn iconen in de huisstijl. */
+/* 5 okt 2026, later: Mohammeds gestripte versie ("te veel tekst ... ze scannen"). De pagina is
+   gehalveerd: korte subkop en bullets, alleen de voor/na als bewijs, drie zekerheden in kolommen,
+   stappen en diensten in één regel, het telefoonnummer alleen bovenaan en in de voet.
+   "Geen gereciclebel" uit zijn tekst is als tikfout gelezen: "Geen gebel". */
 export const TOTAALRENOVATIE: KgjInhoud = {
   /* Zelfde vorm als het tabblad van dakwerken, dat Mohammed koos ("over het vak"). */
   titel: 'Dé specialist voor uw renovatie | AB Bouw Groep',
@@ -100,11 +104,11 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     /* Mohammed, 26 sep: de subkop "eruit". Leeg = geen regel onder de kop. */
     /* 4 okt: subheadline eerst "Bereken binnen 2 minuten een realistische prijsindicatie voor uw
        woning.", dan Mohammed: "eruit in de subheadline bij totaalrenovatie". Leeg = geen regel. */
-    onder: 'Wij strippen uw woning en bouwen deze volledig opnieuw op. Van het allereerste ontwerp tot een vlekkeloze, sleutel-op-de-deur oplevering. Geen planningsstress en geen onverwachte kosten.',
+    onder: 'Wij strippen uw woning en bouwen deze volledig opnieuw op. Van ontwerp tot sleutel-op-de-deur oplevering. Geen planningsstress of kosten achteraf.',
     /* 4 okt, plan desktop-hero (Mohammed): drie USP's, het deel voor de dubbelepunt in het vet. 5 okt: zijn nieuwe teksten. */
-    bewijs: ['100% Budgetgarantie: Wat op de offerte staat, is wat u betaalt. Geen addertjes onder het gras.', 'Complete A-tot-Z Begeleiding: Wij coördineren álle vakmensen. U heeft slechts één vast aanspreekpunt.', 'Maximale Premie-ondersteuning: Wij regelen de begeleiding bij uw Mijn VerbouwPremie en EPC-attest.'],
+    bewijs: ['100% Budgetgarantie: Wat op de offerte staat, betaalt u.', '1 Vaste contactpersoon: Wij coördineren alle vakmensen.', 'Premie-ondersteuning: Wij regelen uw Mijn VerbouwPremie.'],
     /* 5 okt: een grote knop naar het formulier in plaats van de rekenaar; die staat in het vangnet. */
-    knop: { tekst: 'Vraag uw gratis plaatsbezoek aan', onder: 'Binnen 24 uur reactie • Gratis & vrijblijvend advies op maat' },
+    knop: { tekst: 'Vraag uw gratis plaatsbezoek aan', onder: 'Binnen 24u reactie' },
     /* Mohammed, 26 sep: "laat enkel de keuken foto, badkamerrenovatie foto van
        abgroep die we bij badkamerrenovatie lp in de sectie hebben onder hero, en
        dan nog die leefruimte echte foto". De badkamer is de foto uit de sectie
@@ -202,10 +206,12 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     tekst: 'Veel huiseigenaren zien enorm op tegen een totaalrenovatie. Aannemers die hun afspraken niet nakomen, een huis dat maandenlang een bouwwerf is, en offertes die halverwege het traject plotseling duizenden euro\'s duurder uitvallen.',
     /* 5 okt: de frustratie links in een donker vak, de oplossing rechts. */
     tegenover: 'Bij AB Bouw Groep pakken we dit fundamenteel anders aan:',
+    /* Gestript: alleen de kop en drie korte zekerheden, elk een kolom. */
+    kolommen: true,
     redenen: [
-      { titel: 'Geen communicatiestoringen', tekst: 'U hoeft niet zelf te bellen naar de loodgieter, elektricien en stukadoor. Wij hebben alle expertises in huis en coördineren de hele werf. U spreekt alleen met uw vaste projectleider.' },
-      { titel: 'Vaste ploeg & propere werf', tekst: 'Dezelfde ploeg vakmensen komt elke dag terug. Wij schermen de rest van uw woning professioneel af tegen stof en ruimen de werf élke avond netjes op.' },
-      { titel: 'Zekerheid over uw budget', tekst: 'Wij werken niet met schattingen achteraf. Onze vaste prijsgarantie betekent dat u vooraf exact weet waar u aan toe bent.' },
+      { titel: 'Geen stress', tekst: 'Geen gebel naar loodgieters of stukadoors. Wij regelen alles.' },
+      { titel: 'Propere werf', tekst: 'Dezelfde vaste ploeg, stofvrije afscherming en elke avond netjes opgeruimd.' },
+      { titel: 'Vaste prijs', tekst: 'Geen meerkosten achteraf. Volledige budgetzekerheid.' },
     ],
     duo: [
       { src: keukeneiland, alt: 'Keukeneiland met barkrukken na renovatie door AB Bouw Groep' },
@@ -224,13 +230,13 @@ export const TOTAALRENOVATIE: KgjInhoud = {
        "Aanbouwen", "Energetische Totaalrenovaties"), met de kop en tekst uit de eerste blauwdruk.
        De uitleg per kaart zijn zijn eigen zinnen uit die blauwdrukken. Echte werffoto's van AB. */
     kop: 'Alles onder één dak voor een vlotte oplevering',
-    onder: 'Omdat wij alle disciplines zelf in huis hebben, sluiten de werkzaamheden naadloos op elkaar aan. Dat scheelt u tijd, geld en kopzorgen.',
+    onder: '',
     lijst: [
-      { id: 'bouw', icoon: 'dienst-nieuw', naam: 'Volledige strippings', tekst: 'Uw woning volledig gestript en opnieuw opgebouwd volgens de modernste normen.',
+      { id: 'bouw', icoon: 'dienst-nieuw', naam: 'Volledige strippings', tekst: 'Van A tot Z vernieuwd',
         foto: { src: eigen9022, alt: 'Open leefruimte met keukeneiland, eettafel en glaspui naar de tuin, door AB Bouw Groep' } },
-      { id: 'aanbouw', icoon: 'dienst-ruwbouw', naam: 'Aanbouwen', tekst: 'Meer leefruimte creëren met een strakke aanbouw of het doorbreken van muren.',
+      { id: 'aanbouw', icoon: 'dienst-ruwbouw', naam: 'Aanbouwen & verbouwingen', tekst: 'Meer leefruimte',
         foto: { src: uitbouwNa, alt: 'Afgewerkte uitbouw met witte crepi en een schuifraam over de volle breedte, door AB Bouw Groep' } },
-      { id: 'ecologisch', icoon: 'afd-eco', naam: 'Energetische totaalrenovaties', tekst: 'Duurzame, energiezuinige oplossingen die uw energiefactuur drastisch verlagen.',
+      { id: 'ecologisch', icoon: 'afd-eco', naam: 'Energetische totaalrenovaties', tekst: 'Verlaag uw energiefactuur',
         foto: { src: dakNa, alt: 'Vernieuwd pannendak met dakvensters, door AB Bouw Groep' } },
     ],
   },
@@ -275,8 +281,9 @@ export const TOTAALRENOVATIE: KgjInhoud = {
      pijltje kunnen doen voor andere before after". Eerst de woonkeuken (0117/0119),
      met de pijl daarna de uitbouw. */
   voorna: {
-    kop: '',
-    onder: 'Sleep de balk over de foto.',
+    /* Gestript: alleen de voor/na, met zijn korte zin (eerste zin als kop). */
+    kop: 'Bekijk onze recente transformaties in Vlaanderen.',
+    onder: 'Stuk voor stuk sleutel-op-de-deur opgeleverd.',
     voor: { src: woonkeukenVoor, alt: 'De verbouwing in ruwbouw: nieuwe binnenmuren in snelbouwsteen, houten balken in het plafond en de opening naar de tuin' },
     na: { src: woonkeukenNa, alt: 'Dezelfde doorkijk na de werken: open woonkeuken met lichtkoepel, lichte vloer en een glazen deur naar de tuin' },
     label: '',
@@ -293,15 +300,16 @@ export const TOTAALRENOVATIE: KgjInhoud = {
   /* 5 okt, blauwdruk: het vangnet voor wie nog oriënteert, met de rekenaar achter een knop. */
   vangnet: {
     /* 5 okt, "de drie paginas": de knop gaat naar de losse rekenaar (/lp/richtprijs-berekenen). */
-    kop: 'Wilt u liever eerst een inschatting van de kosten voordat we langskomen?',
-    tekst: 'Gebruik onze interactieve rekenmodule.',
-    knop: 'Bereken mijn richtprijs',
+    kop: 'Twijfelt u nog over het budget?',
+    tekst: '',
+    knop: 'Bereken hier in 2 minuten uw richtprijs',
     href: '/lp/richtprijs-berekenen',
   },
 
   /* 5 okt: de volgorde van de blauwdruk. Bewijs (werk en voor/na) direct na de hero, dan
      frustratie en oplossing, het stappenplan, de diensten, het vangnet en de vragen. */
-  volgorde: ['uitgevoerd', 'voorna', 'waarom', 'werkwijze', 'diensten', 'vangnet', 'faq'],
+  /* Gestript: zonder het fotospoor, alleen de voor/na als bewijs. */
+  volgorde: ['voorna', 'waarom', 'werkwijze', 'diensten', 'vangnet', 'faq'],
 
   /* 29 sep, Mohammed: "meer goeie puntjes? dat de particulier wilt zien", "kijk
      ooms woonrealisaties en verelst en zedreno". Ooms en Verelst hebben allebei
@@ -331,13 +339,13 @@ export const TOTAALRENOVATIE: KgjInhoud = {
   werkwijze: {
     /* 5 okt: de vijf stappen uit de blauwdruk, letterlijk. */
     kop: 'Zo verloopt uw renovatie. Transparant en volgens planning.',
-    onder: 'U weet vooraf exact wat er gebeurt en wanneer. Geen loze beloftes, maar een strakke planning.',
+    onder: '',
     stappen: [
-      { titel: 'Vrijblijvend plaatsbezoek', tekst: 'We komen persoonlijk bij u langs. We bekijken de woning, luisteren naar uw dromen en bespreken direct de technische en financiële mogelijkheden voor uw specifieke situatie.' },
-      { titel: 'Transparante offerte & vaste prijs', tekst: 'Op basis van het plaatsbezoek ontvangt u een helder, gedetailleerd voorstel. Hierin hanteren wij een ijzersterke vaste prijs. Wat op de offerte staat, betaalt u.' },
-      { titel: 'Planning, vergunningen & premies', tekst: 'Zodra u akkoord bent, plannen we de werf in. We nemen ook de administratie uit handen: we helpen u bij vergunningsaanvragen en zorgen dat uw aanvraag voor de Mijn VerbouwPremie vlekkeloos verloopt.' },
-      { titel: 'Vlekkeloze uitvoering', tekst: 'Onze eigen specialisten starten de werken. Dezelfde vertrouwde gezichten komen elke dag terug. U wordt continu op de hoogte gehouden van de voortgang door uw vaste aanspreekpunt.' },
-      { titel: 'Sleutel-op-de-deur oplevering', tekst: 'We lopen samen door de vernieuwde woning. Eventuele laatste details werken we direct af. Pas als u 100% tevreden bent, sluiten we de werf.' },
+      { titel: 'Gratis plaatsbezoek', tekst: 'We bespreken uw wensen en de mogelijkheden ter plaatse.' },
+      { titel: 'Vaste prijs offerte', tekst: 'Een glashelder voorstel zonder verrassingen.' },
+      { titel: 'Planning & premies', tekst: 'Wij regelen vergunningen en de Mijn VerbouwPremie.' },
+      { titel: 'Vlekkeloze uitvoering', tekst: 'Onze eigen vakmensen bouwen uw droomwoning.' },
+      { titel: 'Oplevering', tekst: 'Pas als u 100% tevreden bent, sluiten we de werf.' },
     ],
   },
 

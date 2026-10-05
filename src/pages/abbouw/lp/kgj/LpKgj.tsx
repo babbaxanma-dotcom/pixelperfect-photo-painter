@@ -296,10 +296,13 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         )}
         <div className="kgj-breed kgj-kop__in">
           <a className="kgj-logo" href="#top" aria-label="AB Bouw Groep"><img src={logo} alt="Logo van AB Bouw Groep" /></a>
+          {/* 5 okt (gestript): het nummer één keer bovenaan. Met de topbalk valt deze knop weg. */}
+          {!inhoud.topbalk && (
           <a className="kgj-knop kgj-knop--vol kgj-kop__bel" href={CONTACT.phone.href}>
             {/* 4 okt: op de telefoon "Bel direct" (plan mobiele hero), op de computer het nummer. */}
             <IcBel /><span className="kgj-kop__bel-lang">Bel {CONTACT.phone.display}</span><span className="kgj-kop__bel-kort">Bel direct</span>
           </a>
+          )}
         </div>
       </header>
 
@@ -366,7 +369,23 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       </section>
 
       {(inhoud.volgorde ?? STANDAARD_VOLGORDE).map((naam) => <Fragment key={naam}>{({
-      waarom: inhoud.waarom.tegenover ? (
+      waarom: inhoud.waarom.kolommen ? (
+      /* Gestripte totaalrenovatie (5 okt): de kop en drie zekerheden, elk een kolom met icoon. */
+      <section className="kgj-band kgj-waarom kgj-waarom--kolommen" id="waarom">
+        <div className="kgj-breed">
+          <div className="kgj-kopblok kgj-kopblok--mid kgj-op"><h2>{inhoud.waarom.kop}</h2></div>
+          <ul className="kgj-kolommen">
+            {inhoud.waarom.redenen.map((r, i) => (
+              <li className="kgj-op" key={r.titel}>
+                <span className="kgj-tegenover__icoon">{OPLOSSING_ICONEN[i % OPLOSSING_ICONEN.length]}</span>
+                <h3>{r.titel}</h3>
+                <p>{r.tekst}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+      ) : inhoud.waarom.tegenover ? (
       /* 5 okt (totaalrenovatie): de frustratie links in een donker vak, de oplossing rechts met
          drie iconen. Geen foto's en geen rekenknop: de rekenaar staat in het vangnet. */
       <section className="kgj-band kgj-waarom kgj-waarom--tegenover" id="waarom">
@@ -483,7 +502,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         <div className="kgj-breed">
           <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
             <h2>{inhoud.werkwijze.kop}</h2>
-            <p>{inhoud.werkwijze.onder}</p>
+            {inhoud.werkwijze.onder && <p>{inhoud.werkwijze.onder}</p>}
           </div>
           <ol className="kgj-stappen">
             {inhoud.werkwijze.stappen.map((s, i, alle) => (
@@ -610,7 +629,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           <div className="kgj-breed">
             <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
               <h2>{inhoud.vangnet.kop}</h2>
-              <p>{inhoud.vangnet.tekst}</p>
+              {inhoud.vangnet.tekst && <p>{inhoud.vangnet.tekst}</p>}
               {inhoud.vangnet.href ? (
                 /* De losse rekenaarpagina; de parameters van de advertentieklik gaan mee. */
                 <a className="kgj-knop kgj-knop--rand kgj-vangnet__knop" href={inhoud.vangnet.href + (typeof window !== 'undefined' ? window.location.search : '')}>
@@ -665,7 +684,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               ))}
             </ul>
             )}
-            <a className="kgj-knop kgj-knop--wit" href={CONTACT.phone.href}>Bel {CONTACT.phone.display}</a>
+            {!inhoud.topbalk && <a className="kgj-knop kgj-knop--wit" href={CONTACT.phone.href}>Bel {CONTACT.phone.display}</a>}
           </div>
           <div className="kgj-op"><Inspectie inhoud={inhoud} opPrijs={() => setVenster(true)} /></div>
         </div>
