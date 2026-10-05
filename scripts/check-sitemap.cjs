@@ -41,7 +41,7 @@ if (paden.length < 10) stop(2, `FOUT: maar ${paden.length} adressen uit de sitem
    iets anders niet in, dan is dat een gemis en geen keuze. */
 /* Zelfde lijst als NIET_IN_SITEMAP in maak-sitemap.cjs. /lp/dakwerken is een
    advertentiepagina en zou in Google concurreren met de dienstpagina /dakwerken. */
-const MAG_ONTBREKEN = new Set(['/index', '/bedankt', '/afspraak', '/dakinspectie', '/review', '/lp/totaalrenovatie', '/lp/badkamerrenovatie', '/lp/dakwerken']);
+const MAG_ONTBREKEN = new Set(['/index', '/bedankt', '/afspraak', '/dakinspectie', '/review', '/lp/totaalrenovatie', '/lp/badkamerrenovatie', '/lp/dakwerken', '/lp/aannemer-renovatiewerken', '/lp/richtprijs-berekenen']);
 
 (async () => {
   /* Eigen build, vrije poort, en nagaan dat de server de eigen site serveert (scripts/_preview.cjs). */

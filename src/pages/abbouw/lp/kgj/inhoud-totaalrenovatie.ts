@@ -67,7 +67,18 @@ import eigen0114 from '@/assets/lp-diensten/eigen/IMG_0114.jpg';
    naar de tuin; beide 16:10 uitgesneden met de tuindeur op dezelfde plek. */
 import woonkeukenVoor from '@/assets/lp-diensten/woonkeuken-voor.jpg';
 import woonkeukenNa from '@/assets/lp-diensten/woonkeuken-na.jpg';
+/* 5 okt: de afgewerkte dakfoto (de na-foto van de dak-LP) voor de dienstkaart Dakwerken. */
+import dakNa from '@/assets/lp-diensten/dak-na.jpg';
 
+/* 5 okt 2026: de pagina volgt Mohammeds blauwdrukken ("abgroep landingspagina
+   totaalrenovatie", de herziening voor "renovatiewerken" en daarna "de drie
+   paginas": deze moederpagina voor totaalrenovatie, een kopie voor
+   renovatiewerken in inhoud-renovatiewerken.ts en de losse rekenaar in
+   inhoud-richtprijs.ts). Zijn tekst letterlijk ("maar met mijn copy he"), in de
+   u-vorm en met Nederlandse hoofdletters. Niet
+   overgenomen: "Meer dan 500 Vlamingen gingen u voor" (een aantal zonder
+   bron, zoals 4,9 en 120+). De herofoto's blijven ("de visuele foto in hero
+   zelfde laten"). Emoji's zijn iconen in de huisstijl. */
 export const TOTAALRENOVATIE: KgjInhoud = {
   /* Zelfde vorm als het tabblad van dakwerken, dat Mohammed koos ("over het vak"). */
   titel: 'Dé specialist voor uw renovatie | AB Bouw Groep',
@@ -76,17 +87,24 @@ export const TOTAALRENOVATIE: KgjInhoud = {
   bronLead: 'lp:totaalrenovatie:rekenaar',
   bedanktSlug: 'totaalrenovatie',
 
+  topbalk: 'Direct persoonlijk advies voor uw renovatie? Bel onze expert:',
+
   hero: {
     /* Mohammeds eigen kop, letterlijk (26 sep). 4 okt, plan desktop-hero: nieuwe kop. */
-    kop: 'Uw renovatie [zorgeloos] geregeld van A tot Z',
+    /* 5 okt, "de drie paginas": deze pagina gaat 100% over totaalrenovatie ("Uw Totaalrenovatie
+       Zorgeloos Geregeld. Vaste Prijs, Eén Vaste Partner."); de brede kop staat op de
+       renovatiewerken-pagina. Zorgeloos blijft in de accentkleur. */
+    kop: 'Uw totaalrenovatie [zorgeloos] geregeld. Vaste prijs, één vaste partner.',
     /* Zelfde opbouw als Mohammeds subkop op dakwerken. Het mechanisme: AB heeft
        voor elk vak een eigen ploeg (homepage), dus één planning. */
     /* Mohammed, 26 sep: de subkop "eruit". Leeg = geen regel onder de kop. */
     /* 4 okt: subheadline eerst "Bereken binnen 2 minuten een realistische prijsindicatie voor uw
        woning.", dan Mohammed: "eruit in de subheadline bij totaalrenovatie". Leeg = geen regel. */
-    onder: '',
-    /* 4 okt, plan desktop-hero (Mohammed): drie USP's, het deel voor de dubbelepunt in het vet. */
-    bewijs: ['100% Budgetgarantie: Geen onverwachte meerkosten achteraf.', 'Complete A-tot-Z Begeleiding: Van ontwerp en vergunning tot afwerking.', 'Maximale Premie-ondersteuning: Volledige begeleiding bij de Mijn VerbouwPremie.'],
+    onder: 'Wij strippen uw woning en bouwen deze volledig opnieuw op. Van het allereerste ontwerp tot een vlekkeloze, sleutel-op-de-deur oplevering. Geen planningsstress en geen onverwachte kosten.',
+    /* 4 okt, plan desktop-hero (Mohammed): drie USP's, het deel voor de dubbelepunt in het vet. 5 okt: zijn nieuwe teksten. */
+    bewijs: ['100% Budgetgarantie: Wat op de offerte staat, is wat u betaalt. Geen addertjes onder het gras.', 'Complete A-tot-Z Begeleiding: Wij coördineren álle vakmensen. U heeft slechts één vast aanspreekpunt.', 'Maximale Premie-ondersteuning: Wij regelen de begeleiding bij uw Mijn VerbouwPremie en EPC-attest.'],
+    /* 5 okt: een grote knop naar het formulier in plaats van de rekenaar; die staat in het vangnet. */
+    knop: { tekst: 'Vraag uw gratis plaatsbezoek aan', onder: 'Binnen 24 uur reactie • Gratis & vrijblijvend advies op maat' },
     /* Mohammed, 26 sep: "laat enkel de keuken foto, badkamerrenovatie foto van
        abgroep die we bij badkamerrenovatie lp in de sectie hebben onder hero, en
        dan nog die leefruimte echte foto". De badkamer is de foto uit de sectie
@@ -176,20 +194,18 @@ export const TOTAALRENOVATIE: KgjInhoud = {
   },
 
   waarom: {
-    kop: 'Waarom AB Bouw Groep',
+    kop: 'Een verbouwing hoeft geen nachtmerrie te zijn',
     /* Mohammed, 26 sep: zoals de tekst van Zedreno, "maar iets aanpassen dat het
        niet zelfde tekst lijkt". Eigen woorden en AB's eigen feiten (eigen ploegen
        per vak, uitbreiding: de uitbouw in de voor/na). Geen jaartal: "meer dan 15
        jaar" gaat bij AB over dakwerken. */
-    tekst: 'Wilt u uw woning renoveren? Bij AB Bouw Groep bent u aan het juiste adres voor een volledige renovatie, welke stijl u ook wilt en welk type woning u ook heeft. Voor een totaalrenovatie, een verbouwing of een nieuwe inrichting rekent u op één ervaren aannemer met een sterk team van vakmensen. Kwaliteit, oog voor detail, uw wensen en onze liefde voor het vak staan daarbij altijd voorop.',
+    tekst: 'Veel huiseigenaren zien enorm op tegen een totaalrenovatie. Aannemers die hun afspraken niet nakomen, een huis dat maandenlang een bouwwerf is, en offertes die halverwege het traject plotseling duizenden euro\'s duurder uitvallen.',
+    /* 5 okt: de frustratie links in een donker vak, de oplossing rechts. */
+    tegenover: 'Bij AB Bouw Groep pakken we dit fundamenteel anders aan:',
     redenen: [
-      /* Mohammed, 26 sep: VCA is "een raar puntje"; liever wat een particulier van een
-         totaalaannemer wil horen. Bron: de live homepage ("vaste prijs na het plaatsbezoek")
-         en de badkamerpagina ("Wat op de offerte staat, betaalt u."). */
-      { titel: 'Vaste prijs na het plaatsbezoek', tekst: 'Na het plaatsbezoek krijgt u een vaste prijs. Wat op de offerte staat, betaalt u.' },
-      { titel: 'Gratis plaatsbezoek en offerte', tekst: 'Het plaatsbezoek en de offerte zijn gratis en vrijblijvend.' },
-      /* Premiebegeleiding: dezelfde zin als op dakwerken (AB regelt de aanvraag). Geen bedrag: sinds 1 maart 2026 is de premie versmald. */
-      { titel: 'EPC- en premiebegeleiding', tekst: 'Wij begeleiden u bij uw EPC-attest en regelen de aanvraag van uw Mijn VerbouwPremie.' },
+      { titel: 'Geen communicatiestoringen', tekst: 'U hoeft niet zelf te bellen naar de loodgieter, elektricien en stukadoor. Wij hebben alle expertises in huis en coördineren de hele werf. U spreekt alleen met uw vaste projectleider.' },
+      { titel: 'Vaste ploeg & propere werf', tekst: 'Dezelfde ploeg vakmensen komt elke dag terug. Wij schermen de rest van uw woning professioneel af tegen stof en ruimen de werf élke avond netjes op.' },
+      { titel: 'Zekerheid over uw budget', tekst: 'Wij werken niet met schattingen achteraf. Onze vaste prijsgarantie betekent dat u vooraf exact weet waar u aan toe bent.' },
     ],
     duo: [
       { src: keukeneiland, alt: 'Keukeneiland met barkrukken na renovatie door AB Bouw Groep' },
@@ -204,15 +220,18 @@ export const TOTAALRENOVATIE: KgjInhoud = {
      nummering in _divisies.ts: construct 01, ecologisch 02, interieur 03, dak 04,
      bad 05, gevel 06). */
   diensten: {
-    kop: 'Onze diensten',
-    onder: 'Bij een renovatie stemmen wij onze afdelingen op elkaar af. Omdat we alles in huis hebben, kan u rekenen op een vlot traject.',
+    /* 5 okt, "de drie paginas": op deze pagina de schaal van de projecten ("Volledige strippings",
+       "Aanbouwen", "Energetische Totaalrenovaties"), met de kop en tekst uit de eerste blauwdruk.
+       De uitleg per kaart zijn zijn eigen zinnen uit die blauwdrukken. Echte werffoto's van AB. */
+    kop: 'Alles onder één dak voor een vlotte oplevering',
+    onder: 'Omdat wij alle disciplines zelf in huis hebben, sluiten de werkzaamheden naadloos op elkaar aan. Dat scheelt u tijd, geld en kopzorgen.',
     lijst: [
-      { id: 'bouw', icoon: 'dienst-nieuw', naam: 'Totaalrenovatie en nieuwbouw', tekst: '' },
-      { id: 'ecologisch', icoon: 'afd-eco', naam: 'Ecologisch bouwen', tekst: '' },
-      { id: 'interieur', icoon: 'dienst-interieur', naam: 'Interieurwerken', tekst: '' },
-      { id: 'dakwerken', icoon: 'dienst-renovatie', naam: 'Dakwerken', tekst: '' },
-      { id: 'badkamer', icoon: 'afd-bad', naam: 'Badkamer en wellness', tekst: '' },
-      { id: 'gevel', icoon: 'dienst-ruwbouw', naam: 'Gevelrenovatie', tekst: '' },
+      { id: 'bouw', icoon: 'dienst-nieuw', naam: 'Volledige strippings', tekst: 'Uw woning volledig gestript en opnieuw opgebouwd volgens de modernste normen.',
+        foto: { src: eigen9022, alt: 'Open leefruimte met keukeneiland, eettafel en glaspui naar de tuin, door AB Bouw Groep' } },
+      { id: 'aanbouw', icoon: 'dienst-ruwbouw', naam: 'Aanbouwen', tekst: 'Meer leefruimte creëren met een strakke aanbouw of het doorbreken van muren.',
+        foto: { src: uitbouwNa, alt: 'Afgewerkte uitbouw met witte crepi en een schuifraam over de volle breedte, door AB Bouw Groep' } },
+      { id: 'ecologisch', icoon: 'afd-eco', naam: 'Energetische totaalrenovaties', tekst: 'Duurzame, energiezuinige oplossingen die uw energiefactuur drastisch verlagen.',
+        foto: { src: dakNa, alt: 'Vernieuwd pannendak met dakvensters, door AB Bouw Groep' } },
     ],
   },
 
@@ -225,6 +244,9 @@ export const TOTAALRENOVATIE: KgjInhoud = {
      rondloopt. pos: vierkante uitsnede. */
   uitgevoerd: {
     kop: 'Uitgevoerd werk',
+    /* 5 okt: de tekst van de bewijssectie uit de blauwdruk. Zijn kop "Meer dan 500 Vlamingen gingen
+       u voor" staat er niet op: een aantal zonder bron. */
+    onder: 'Een succesvolle renovatie valt of staat met vakmanschap. Bekijk onze recente transformaties in de regio. Kwaliteit, een scherp oog voor detail en onze liefde voor het vak staan bij elk project voorop. Wij leveren uw woning sleutel-op-de-deur af.',
     fotos: [
       { src: eigen9065, alt: 'Tv-wand in marmerlook tussen houten lamellen, met een zwevend meubel, door AB Bouw Groep' },
       { src: eigen9028, pos: '60% center', alt: 'Badkamer met ligbad onder het raam, hangtoilet, douchebak en wastafelmeubel met zwarte kraan, door AB Bouw Groep' },
@@ -268,6 +290,19 @@ export const TOTAALRENOVATIE: KgjInhoud = {
 
   werk: { kop: '', onder: '', fotos: [] },
 
+  /* 5 okt, blauwdruk: het vangnet voor wie nog oriënteert, met de rekenaar achter een knop. */
+  vangnet: {
+    /* 5 okt, "de drie paginas": de knop gaat naar de losse rekenaar (/lp/richtprijs-berekenen). */
+    kop: 'Wilt u liever eerst een inschatting van de kosten voordat we langskomen?',
+    tekst: 'Gebruik onze interactieve rekenmodule.',
+    knop: 'Bereken mijn richtprijs',
+    href: '/lp/richtprijs-berekenen',
+  },
+
+  /* 5 okt: de volgorde van de blauwdruk. Bewijs (werk en voor/na) direct na de hero, dan
+     frustratie en oplossing, het stappenplan, de diensten, het vangnet en de vragen. */
+  volgorde: ['uitgevoerd', 'voorna', 'waarom', 'werkwijze', 'diensten', 'vangnet', 'faq'],
+
   /* 29 sep, Mohammed: "meer goeie puntjes? dat de particulier wilt zien", "kijk
      ooms woonrealisaties en verelst en zedreno". Ooms en Verelst hebben allebei
      een blok veelgestelde vragen; de vragen hieronder zijn de angsten van wie een
@@ -275,13 +310,18 @@ export const TOTAALRENOVATIE: KgjInhoud = {
      architect, vergunning), met AB's eigen antwoorden. */
   faq: {
     kop: 'Veelgestelde vragen',
+    /* 5 okt: de vijf vragen en antwoorden uit de blauwdruk, letterlijk. */
     lijst: [
-      ...vraag('interieur', 'Kan ik in huis blijven wonen tijdens de werken?'),
-      ...vraag('construct', 'Hoe zit het met meerwerk?'),
-      ...vraag('ecologisch', 'Moet ik alles in één keer doen?'),
-      ...vraag('construct', 'Hebben jullie een eigen architect?'),
-      ...vraag('construct', 'Regelen jullie de vergunning?'),
-      /* 29 sep: "Maken jullie de kasten zelf?" eruit (Mohammed: "onnodig puntje"). */
+      { v: 'Kan ik in huis blijven wonen tijdens de werken?',
+        a: 'In de meeste gevallen is dat mogelijk. Dit is uiteraard afhankelijk van de omvang van de renovatie. We bespreken dit altijd tijdens het plaatsbezoek en plannen de werkzaamheden zo in dat u, indien nodig, de essentiële voorzieningen kunt blijven gebruiken en we de hinder tot een absoluut minimum beperken.' },
+      { v: 'Hoe zit het met meerwerk en de budgetgarantie?',
+        a: 'AB Bouw Groep hanteert een strikte 100% budgetgarantie. De prijs op de offerte na het plaatsbezoek is de prijs die u betaalt. Eventueel meerwerk komt uitsluitend voor als u tijdens het traject zélf besluit om aanpassingen of extra wensen toe te voegen. Dit wordt altijd vooraf en transparant met u besproken.' },
+      { v: 'Moet ik alles in één keer doen?',
+        a: 'Nee, u kunt de renovatie ook in fases laten uitvoeren. Tijdens het adviesgesprek denken we graag met u mee over de meest logische en kostenefficiënte volgorde, bijvoorbeeld eerst de schil (dak en gevel) en later de binnenafwerking.' },
+      { v: 'Hebben jullie een eigen architect en regelen jullie vergunningen?',
+        a: 'Ja, indien uw project architecturale ingrepen of vergunningen vereist, nemen wij dit volledig voor onze rekening. Wij werken nauw samen met ervaren architecten en regelen al het papierwerk met uw gemeente. U heeft er geen omkijken naar.' },
+      { v: 'Hoe werkt de begeleiding bij de Mijn VerbouwPremie?',
+        a: 'Renoveren geeft vaak recht op aanzienlijke overheidspremies. Onze experts kennen de actuele regelgeving in Vlaanderen door en door. Wij leveren u de correcte attesten aan, begeleiden het EPC-traject en helpen u bij de effectieve aanvraag, zodat u maximaal profiteert van de subsidies.' },
     ],
   },
 
@@ -289,34 +329,48 @@ export const TOTAALRENOVATIE: KgjInhoud = {
   reviews: { kop: '', beeld: { src: doorgang, alt: '' }, lijst: [] },
 
   werkwijze: {
-    kop: 'Zo verloopt uw renovatie',
-    onder: 'U weet vooraf wat er gebeurt en wanneer.',
+    /* 5 okt: de vijf stappen uit de blauwdruk, letterlijk. */
+    kop: 'Zo verloopt uw renovatie. Transparant en volgens planning.',
+    onder: 'U weet vooraf exact wat er gebeurt en wanneer. Geen loze beloftes, maar een strakke planning.',
     stappen: [
-      { titel: 'Aanvraag', tekst: 'U doet uw aanvraag via het formulier hieronder of rechtstreeks telefonisch.' },
-      { titel: 'Plaatsbezoek', tekst: 'We bekijken de woning samen met u en overlopen uw wensen.' },
-      { titel: 'Offerte', tekst: 'U ontvangt een vrijblijvende offerte.' },
-      { titel: 'Uitvoering', tekst: 'Dezelfde ploeg komt elke dag terug. Wij schermen de woning af tegen stof en ruimen elke avond op.' },
-      { titel: 'Oplevering', tekst: 'We lopen samen door de woning. Uw opmerkingen werken we af voordat de werf sluit.' },
+      { titel: 'Vrijblijvend plaatsbezoek', tekst: 'We komen persoonlijk bij u langs. We bekijken de woning, luisteren naar uw dromen en bespreken direct de technische en financiële mogelijkheden voor uw specifieke situatie.' },
+      { titel: 'Transparante offerte & vaste prijs', tekst: 'Op basis van het plaatsbezoek ontvangt u een helder, gedetailleerd voorstel. Hierin hanteren wij een ijzersterke vaste prijs. Wat op de offerte staat, betaalt u.' },
+      { titel: 'Planning, vergunningen & premies', tekst: 'Zodra u akkoord bent, plannen we de werf in. We nemen ook de administratie uit handen: we helpen u bij vergunningsaanvragen en zorgen dat uw aanvraag voor de Mijn VerbouwPremie vlekkeloos verloopt.' },
+      { titel: 'Vlekkeloze uitvoering', tekst: 'Onze eigen specialisten starten de werken. Dezelfde vertrouwde gezichten komen elke dag terug. U wordt continu op de hoogte gehouden van de voortgang door uw vaste aanspreekpunt.' },
+      { titel: 'Sleutel-op-de-deur oplevering', tekst: 'We lopen samen door de vernieuwde woning. Eventuele laatste details werken we direct af. Pas als u 100% tevreden bent, sluiten we de werf.' },
     ],
   },
 
   cta: {
-    kop: 'Gratis plaatsbezoek',
-    tekst: '',
-    punten: [
-      'We bekijken uw woning ter plaatse',
-      'Samen overlopen we uw wensen',
-      'U ontvangt een vrijblijvende offerte',
-    ],
+    /* 5 okt, blauwdruk: de conversiesectie. naam blijft "Gratis plaatsbezoek": de knop in de
+       vaste balk op de telefoon en de regel in het CRM. */
+    kop: 'Klaar om uw droomwoning te realiseren?',
+    onderkop: 'Vraag vandaag nog uw gratis plaatsbezoek aan.',
+    tekst: 'Wij komen persoonlijk langs om de woning te inspecteren, met u mee te denken en uw wensen te bespreken. U krijgt direct inzicht in de mogelijkheden.',
+    naam: 'Gratis plaatsbezoek',
+    punten: [],
     foto: { src: doorgang, alt: 'Afgewerkte leefruimte uit een totaalrenovatie van AB Bouw Groep' },
   },
 
   inspectie: {
-    kop: 'Plan uw plaatsbezoek',
-    knop: 'Vraag uw gratis plaatsbezoek aan',
+    kop: '',
+    /* 5 okt, blauwdruk: "Bevestig mijn gratis plaatsbezoek", velden en labels letterlijk. */
+    knop: 'Bevestig mijn gratis plaatsbezoek',
     onder: 'Wij bellen u binnen één werkdag om een moment af te spreken.',
     alt: 'Liever eerst een prijs? Bereken hem in 2 minuten',
     bronLead: 'lp:totaalrenovatie:inspectie',
+    /* 5 okt, "de drie paginas": het uniforme formulier, velden en labels letterlijk. */
+    plaatsbezoek: {
+      naam: 'Voornaam & achternaam', naamHint: 'Uw voor- en achternaam',
+      email: 'E-mailadres', emailHint: 'uw@email.be',
+      gsm: 'GSM-nummer', gsmUitleg: '(Voor de afspraakplanning & gratis Mijn VerbouwPremie-check)', gsmHint: '04xx xx xx xx',
+      postcode: 'Postcode', postcodeHint: 'Bijv. 2800',
+    },
+    vertrouwen: [
+      { icoon: 'slot', tekst: 'Wij gebruiken uw gegevens enkel voor deze aanvraag. Uw privacy is gegarandeerd.' },
+      { icoon: 'telefoon', tekst: 'Wij bellen u binnen 1 werkdag om een moment af te spreken dat ú past.' },
+      { icoon: 'euro', tekst: 'Het plaatsbezoek én de daaropvolgende offerte zijn 100% gratis en vrijblijvend.' },
+    ],
     /* Mohammed, 26 sep: "voeg een paar bijhorende dropdown menus of vragen toe, maar
        hou het wel hoge conversie", "want bij totaalrenovatie willen ze juist meer".
        Drie keuzelijsten, geen enkele verplicht. Het budget is voor AB de sterkste
@@ -325,9 +379,9 @@ export const TOTAALRENOVATIE: KgjInhoud = {
       /* 29 sep, Mohammed: "gelijkvloers eerste verdieping geeft te weinig optie ...
          zonder dat t overwhelming word". Nog altijd één keuzelijst, nu per ruimte, in
          dezelfde woorden als de rekenaar. */
-      { naam: 'omvang', label: 'Wat wilt u renoveren?', opties: ['De hele woning (totaalrenovatie)', 'Keuken', 'Badkamer', 'Keuken en badkamer', 'Meerdere ruimtes', 'Nog niet beslist'] },
-      { naam: 'start', label: 'Wanneer wilt u starten?', opties: ['Zo snel mogelijk', 'Dit jaar', 'Volgend jaar', 'Ik verken nog'] },
-      { naam: 'budget', label: 'Uw budget', opties: ['Tot € 50.000', '€ 50.000 tot € 100.000', '€ 100.000 tot € 200.000', 'Meer dan € 200.000', 'Weet ik nog niet'] },
+      /* 5 okt, "de drie paginas" (Exacte Setup): twee keuzelijsten, geen budget meer. */
+      { naam: 'omvang', label: 'Wat wilt u renoveren?', opties: ['De hele woning (totaalrenovatie)', 'Gedeeltelijke renovatie (meerdere ruimtes)', 'Aanbouw of uitbreiding', 'Specifieke werken (dak, gevel, badkamer)'] },
+      { naam: 'start', label: 'Wanneer wilt u starten?', opties: ['Binnen nu en 3 maanden', 'Binnen 6 maanden', 'Volgend jaar'] },
     ],
   },
 };

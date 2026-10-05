@@ -777,4 +777,79 @@ export const KGJ_EXTRA = `
 .kgjx .kgj-toestemming__knoppen button { min-height: 52px; padding: 10px 12px; border: 2px solid var(--merk); border-radius: var(--r);
   background: var(--wit); color: var(--merk); font: 700 16px/1.2 "Plus Jakarta Sans", system-ui, sans-serif; cursor: pointer; }
 .kgjx .kgj-toestemming__knoppen button:disabled { opacity: .5; cursor: default; }
+
+/* ══ 5 okt 2026: de renovatiepagina's volgens Mohammeds blauwdruk ══════════════════════════ */
+
+/* Smalle donkere balk boven de kop, met het telefoonnummer. Hij zit in de vaste kop en blijft
+   dus staan bij het scrollen. */
+.kgjx .kgj-topbalk { background: var(--merk-diep); color: #fff; }
+.kgjx .kgj-topbalk__in { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 38px;
+  padding-block: 7px; font-size: 14px; line-height: 1.35; text-align: center; }
+.kgjx .kgj-topbalk svg { flex: none; width: 15px; height: 15px; color: #e59819; }
+.kgjx .kgj-topbalk a { color: #fff; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+html:has(.kgjx .kgj-topbalk) { scroll-padding-top: 132px; }
+@media (max-width: 640px) {
+  .kgjx .kgj-topbalk__in { font-size: 13px; min-height: 0; padding-block: 6px; }
+  .kgjx .kgj-topbalk svg { display: none; }
+}
+
+/* Hero met een knop in plaats van de rekenaar: één kolom, de kop breder, de knop groot. */
+.kgjx .kgj-hero--knop .kgj-hero__raster { grid-template-columns: minmax(0, 760px); }
+.kgjx .kgj-hero--knop h1 { max-width: 22ch; font-size: clamp(34px, 4.4vw, 58px); }
+.kgjx .kgj-hero--knop .kgj-hero__sub { max-width: 58ch; }
+.kgjx .kgj-hero__actie { margin-top: 30px; }
+.kgjx .kgj-hero__knop { height: 60px; padding: 0 34px; font-size: 17px; background: #e59819; color: var(--merk-diep); }
+.kgjx .kgj-hero__knop:hover { background: #cf8812; color: var(--merk-diep); }
+.kgjx .kgj-hero__micro { margin-top: 12px; color: rgba(255, 255, 255, .88); font-size: 14px; }
+@media (max-width: 1000px) {
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs { display: grid; }
+  .kgjx .kgj-hero--knop .kgj-hero__knop { width: 100%; }
+}
+
+/* Frustratie tegenover oplossing: links een donker vak, rechts de oplossing met drie iconen. */
+.kgjx .kgj-tegenover { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 26px; align-items: stretch; }
+.kgjx .kgj-tegenover__probleem { background: var(--merk); color: #fff; border-radius: var(--r-vak); padding: 38px 36px; }
+.kgjx .kgj-tegenover__teken { display: inline-grid; place-items: center; width: 46px; height: 46px; border-radius: 999px;
+  background: rgba(229, 72, 77, .16); color: #ff8a8d; }
+.kgjx .kgj-tegenover__probleem p { margin-top: 20px; color: rgba(255, 255, 255, .9); font-size: 18px; line-height: 1.62; }
+.kgjx .kgj-tegenover__oplossing { background: var(--wit); border: 1px solid var(--lijn); border-radius: var(--r-vak); padding: 34px 34px 30px; }
+.kgjx .kgj-tegenover__intro { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 800; font-size: 18px;
+  line-height: 1.35; color: var(--kop); }
+.kgjx .kgj-tegenover__oplossing ul { margin: 22px 0 0; padding: 0; list-style: none; display: grid; gap: 22px; }
+.kgjx .kgj-tegenover__oplossing li { display: flex; gap: 16px; align-items: flex-start; }
+.kgjx .kgj-tegenover__icoon { flex: none; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 999px;
+  background: var(--accent-licht); color: var(--accent-diep); }
+.kgjx .kgj-tegenover__oplossing h3 { font-size: 18px; }
+.kgjx .kgj-tegenover__oplossing li p { margin-top: 5px; font-size: 15.5px; line-height: 1.55; }
+@media (max-width: 900px) {
+  .kgjx .kgj-tegenover { grid-template-columns: 1fr; gap: 16px; }
+  .kgjx .kgj-tegenover__probleem, .kgjx .kgj-tegenover__oplossing { padding: 26px 22px; }
+  .kgjx .kgj-tegenover__probleem p { font-size: 16.5px; }
+}
+
+/* Het vangnet: een rustig licht vlak met een tweede, zachtere knop. */
+.kgjx .kgj-vangnet { background: #f8f2e7; }
+.kgjx .kgj-vangnet .kgj-kopblok { margin-bottom: 0; }
+.kgjx .kgj-vangnet .kgj-kopblok h2 { max-width: 26ch; margin-inline: auto; }
+.kgjx .kgj-vangnet__knop { margin-top: 24px; gap: 10px; background: transparent; border: 2px solid var(--merk); color: var(--merk); cursor: pointer; }
+.kgjx .kgj-vangnet__knop:hover { background: var(--merk); color: #fff; }
+
+/* Slotblok met een regel onder de kop en zonder punten. */
+.kgjx .kgj-cta__onderkop { margin-top: 12px; color: #fff; font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: 21px; font-weight: 700; line-height: 1.3; }
+.kgjx .kgj-cta--ruim .kgj-cta__tekst > p.kgj-cta__onderkop + p { margin-top: 14px; }
+
+/* Het formulier: de uitleg bij het gsm-veld en de geruststellingen onder de knop. */
+.kgjx .kgj-reken__uitleg { font-weight: 400; color: var(--zacht); font-size: 13px; }
+.kgjx .kgj-reken__gerustlijst { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 9px; }
+.kgjx .kgj-reken__gerustlijst li { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; line-height: 1.45; color: var(--tekst); }
+.kgjx .kgj-reken__gerustlijst svg { flex: none; margin-top: 1px; color: var(--accent-diep); }
+/* De voor/na hoort bij het uitgevoerde werk erboven: zelfde wit vlak, zonder de bovenlucht van een
+   nieuwe sectie. Frustratie en oplossing staan op het grijze vlak, zodat de witte kaart opvalt. */
+.kgjx.kgj-lp--totaalrenovatie .kgj-uitgevoerd + .kgj-voorna { background: var(--wit); padding-top: 0; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-uitgevoerd + .kgj-voorna .kgj-kopblok { margin-bottom: 22px; }
+.kgjx .kgj-waarom--tegenover { background: var(--band); }
+.kgjx .kgj-tegenover__probleem { display: flex; flex-direction: column; justify-content: center; }
+/* Dienstkaarten met foto op de renovatiepagina's: drie per rij (3 of 6 kaarten), geen gat rechts. */
+@media (min-width: 1001px) { .kgjx.kgj-lp--totaalrenovatie .kgj-dienstraster { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; } }
 `;

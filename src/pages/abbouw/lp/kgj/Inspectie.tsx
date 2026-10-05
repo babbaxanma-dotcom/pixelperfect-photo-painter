@@ -24,6 +24,14 @@ import Toestemming from './Toestemming';
  * De lead gaat via submitLead: GHL-webhook en Web3Forms-backup tegelijk,
  * conversie alleen bij bezorging.
  */
+/* Iconen voor de geruststellingen onder de knop: slot, telefoon, euro. Lijntekening in de
+   huisstijl in plaats van de emoji's uit de blauwdruk. */
+const VERTROUWEN_ICOON: Record<'slot' | 'telefoon' | 'euro', JSX.Element> = {
+  slot: <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2" /><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7" /></svg>,
+  telefoon: <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7.4 3.4H5.6a2 2 0 0 0-2 2.2c.6 8.3 7.2 14.9 15.5 15.5a2 2 0 0 0 2.2-2v-1.8a1.6 1.6 0 0 0-1.2-1.6l-3-.8a1.6 1.6 0 0 0-1.6.4l-1.2 1.2a11.2 11.2 0 0 1-5.4-5.4l1.2-1.2a1.6 1.6 0 0 0 .4-1.6l-.8-3a1.6 1.6 0 0 0-1.6-1.2Z" /></svg>,
+  euro: <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M17.6 6.4A7.2 7.2 0 1 0 17.6 17.6" /><path d="M4.6 10.2h8.8M4.6 13.8h8.8" /></svg>,
+};
+
 export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPrijs: () => void }) {
   const navigate = useNavigate();
   const [bezig, setBezig] = useState(false);
@@ -31,6 +39,7 @@ export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPr
   const [vraagToestemming, setVraagToestemming] = useState(false);
   const gestart = useRef(false);
   const t = inhoud.inspectie;
+  const pb = t.plaatsbezoek;
 
   const meldStart = () => {
     if (gestart.current) return;
@@ -54,14 +63,14 @@ export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPr
       page_path: window.location.pathname,
       landing_division: inhoud.divisie,
       firstName: String(f.get('naam') || '').trim() || undefined,
-      email: '',
+      email: String(f.get('email') || '').trim(),
       phone: telefoon,
       postcode: String(f.get('postcode') || '').trim() || undefined,
       gemeente: String(f.get('gemeente') || '').trim() || undefined,
       type_werk: inhoud.divisie,
       /* "Aanvraag gratis dakinspectie" of "Aanvraag gratis plaatsbezoek", met de
          ingevulde keuzelijsten erachter (alleen wat de bezoeker koos). */
-      aanvullende_info: ['Aanvraag ' + inhoud.cta.kop.toLowerCase(),
+      aanvullende_info: ['Aanvraag ' + (inhoud.cta.naam ?? inhoud.cta.kop).toLowerCase(),
         ...(t.extra ?? []).map((x) => [x.label, String(f.get(x.naam) || '').trim()] as const)
           .filter(([, w]) => w).map(([l, w]) => `${l.replace(/\?$/, '')}: ${w}`)].join(' · '),
       bron_lead: t.bronLead,
@@ -85,15 +94,30 @@ export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPr
   return (
     <div className={`kgj-reken kgj-reken--inspectie${t.extra?.length ? ' kgj-reken--extra' : ''}`}>
       <form className="kgj-reken__form" onSubmit={verstuur} onFocus={meldStart} noValidate>
-        <p className="kgj-reken__vraag">{t.kop}</p>
-        <label>Telefoon *
-          <input name="telefoon" type="tel" autoComplete="tel" inputMode="tel" placeholder="04xx xx xx xx"
-            aria-required="true" />
-        </label>
-        <div className="kgj-reken__rij">
-          <label>Naam<input name="naam" type="text" autoComplete="name" placeholder="Uw naam" /></label>
-          <PostcodeGemeente />
-        </div>
+        {t.kop && <p className="kgj-reken__vraag">{t.kop}</p>}
+        {pb ? (
+          /* 5 okt (totaalrenovatie en renovatiewerken): Mohammeds velden in zijn volgorde en met
+             zijn labels. Het gsm-nummer blijft het enige verplichte veld (sterretje). */
+          <>
+            <label>{pb.naam}<input name="naam" type="text" autoComplete="name" placeholder={pb.naamHint} /></label>
+            <label>{pb.email}<input name="email" type="email" autoComplete="email" inputMode="email" placeholder={pb.emailHint} /></label>
+            <label>{pb.gsm} * <span className="kgj-reken__uitleg">{pb.gsmUitleg}</span>
+              <input name="telefoon" type="tel" autoComplete="tel" inputMode="tel" placeholder={pb.gsmHint} aria-required="true" />
+            </label>
+            <PostcodeGemeente label={pb.postcode} hint={pb.postcodeHint} />
+          </>
+        ) : (
+          <>
+            <label>Telefoon *
+              <input name="telefoon" type="tel" autoComplete="tel" inputMode="tel" placeholder="04xx xx xx xx"
+                aria-required="true" />
+            </label>
+            <div className="kgj-reken__rij">
+              <label>Naam<input name="naam" type="text" autoComplete="name" placeholder="Uw naam" /></label>
+              <PostcodeGemeente />
+            </div>
+          </>
+        )}
         {t.extra && t.extra.length > 0 && (
           <div className="kgj-reken__rij kgj-reken__rij--extra">
             {t.extra.map((x) => (
@@ -109,10 +133,24 @@ export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPr
         <button className="kgj-knop kgj-knop--vol kgj-reken__knop" type="submit" disabled={bezig}>
           {bezig ? 'Bezig…' : t.knop}
         </button>
-        <p className="kgj-reken__gerust">{t.onder}</p>
-        {fout && <p className="kgj-reken__fout" role="alert">{fout}</p>}
-        <button type="button" className="kgj-reken__alt" onClick={opPrijs}>{t.alt}</button>
-        <p className="kgj-reken__privacy">Wij gebruiken uw gegevens alleen voor deze aanvraag. <a href="/privacy">Privacybeleid</a></p>
+        {t.vertrouwen ? (
+          /* 5 okt: drie geruststellingen met een icoon direct onder de knop. */
+          <>
+          {fout && <p className="kgj-reken__fout" role="alert">{fout}</p>}
+          <ul className="kgj-reken__gerustlijst">
+            {t.vertrouwen.map((v) => (
+              <li key={v.tekst}>{VERTROUWEN_ICOON[v.icoon]}<span>{v.tekst}</span></li>
+            ))}
+          </ul>
+          </>
+        ) : (
+          <>
+            <p className="kgj-reken__gerust">{t.onder}</p>
+            {fout && <p className="kgj-reken__fout" role="alert">{fout}</p>}
+            <button type="button" className="kgj-reken__alt" onClick={opPrijs}>{t.alt}</button>
+            <p className="kgj-reken__privacy">Wij gebruiken uw gegevens alleen voor deze aanvraag. <a href="/privacy">Privacybeleid</a></p>
+          </>
+        )}
       </form>
     </div>
   );

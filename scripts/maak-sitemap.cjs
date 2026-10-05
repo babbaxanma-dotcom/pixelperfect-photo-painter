@@ -38,6 +38,8 @@ const NIET_IN_SITEMAP = new Set([
   '/lp/totaalrenovatie',    // duplicaat van /totaalrenovatie
   '/lp/badkamerrenovatie',  // duplicaat van /badkamerrenovatie
   '/lp/dakwerken',          // advertentiepagina; concurreert anders met /dakwerken
+  '/lp/aannemer-renovatiewerken', // advertentiepagina (5 okt), kopie van /lp/totaalrenovatie
+  '/lp/richtprijs-berekenen',     // advertentiepagina (5 okt), de losse rekenaar
 ]);
 
 /* Hoe vaak een pagina verandert en hoe zwaar ze weegt. Alleen een hint voor

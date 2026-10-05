@@ -54,7 +54,8 @@ function zoek(alle: Regel[], invoer: string): { opties: Regel[]; keuze: Regel | 
   return { opties: [...begin, ...midden].slice(0, 8), keuze: exact.length === 1 && begin.length === 1 ? exact[0] : null };
 }
 
-export default function PostcodeGemeente() {
+/** hint: de voorbeeldtekst in het veld (totaalrenovatie, 5 okt: "Bijv. 2800"). */
+export default function PostcodeGemeente({ hint = 'bv. 2830 of Willebroek', label = 'Postcode of gemeente' }: { hint?: string; label?: string } = {}) {
   const id = useId();
   const [tekst, setTekst] = useState('');
   const [keuze, setKeuze] = useState<Regel | null>(null);
@@ -117,9 +118,9 @@ export default function PostcodeGemeente() {
   const bevestig = keuze && tekst !== toon(keuze);
 
   return (
-    <label className="kgj-pg">Postcode of gemeente
+    <label className="kgj-pg">{label}
       <span className="kgj-pg__veld">
-        <input ref={veld} type="text" value={tekst} placeholder="bv. 2830 of Willebroek" autoComplete="off"
+        <input ref={veld} type="text" value={tekst} placeholder={hint} autoComplete="off"
           autoCorrect="off" autoCapitalize="words" spellCheck={false}
           inputMode="text" role="combobox" aria-autocomplete="list" aria-expanded={open} aria-controls={`${id}-lijst`}
           aria-activedescendant={open ? `${id}-${actief}` : undefined}

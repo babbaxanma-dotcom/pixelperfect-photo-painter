@@ -62,6 +62,8 @@ export type Vraag = {
 export type Foto = { src: string; alt: string };
 export type Review = { tekst: string; naam: string; bron: string };
 
+export type Sectie = 'waarom' | 'voordelen' | 'diensten' | 'werkwijze' | 'uitgevoerd' | 'voorna' | 'reviews' | 'vangnet' | 'faq';
+
 export type KgjInhoud = {
   /** Paginatitel in het tabblad. */
   titel: string;
@@ -72,12 +74,19 @@ export type KgjInhoud = {
   bedanktSlug: string;
   /** ondertitel: eigen regel direct onder de kop, boven de subkop. */
   /** dias.pos: uitsnede in de brede hero (object-position), bijvoorbeeld om een nok in beeld te houden. */
-  hero: { kop: string; ondertitel?: string; onder: string; bewijs: string[]; dias: (Foto & { pos?: string })[] };
+  /** knop: een grote knop naar het formulier in plaats van de rekenaar in de hero, met een
+      regel eronder (totaalrenovatie, 5 okt). De rekenaar staat dan in `vangnet`. */
+  hero: { kop: string; ondertitel?: string; onder: string; bewijs: string[]; dias: (Foto & { pos?: string })[];
+    knop?: { tekst: string; onder: string } };
+  /** Smalle donkere balk boven de kop, gevolgd door het telefoonnummer (totaalrenovatie, 5 okt). */
+  topbalk?: string;
   /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart. */
   rekenaar: { titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string; troeven?: string[];
     /** Trust signals onderaan de kaart, met vinkje; vervangen de regel `zeker` (dakwerken, 4 okt). */
     vertrouwen?: string[] };
-  waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto] };
+  /** tegenover: de zin boven de redenen; dan staat de tekst (de frustratie) links in een
+      donker vak en de redenen (de oplossing) rechts, zonder foto's (totaalrenovatie, 5 okt). */
+  waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto]; tegenover?: string };
   /** Diensten onder "Waarom": id is het anker voor een sitelink (/lp/dakwerken#nieuw-dak). */
   /** onder: optionele zin onder de kop. Een lege tekst toont alleen icoon en naam (totaalrenovatie, 27 sep).
    *  foto: met een foto wordt de dienst een fotokaart zonder icoon (dakwerken, 2 okt).
@@ -93,7 +102,13 @@ export type KgjInhoud = {
       spoor met alleen echte foto's van AB, zonder namen (Mohammed: "zonder de namen").
       Optioneel: dakwerken vult het niet in en toont de sectie niet. pos: object-position
       van de vierkante uitsnede. De herkomst van elke foto staat in scripts/check-lp-reno.cjs. */
-  uitgevoerd?: { kop: string; fotos: (Foto & { pos?: string })[] };
+  uitgevoerd?: { kop: string; onder?: string; fotos: (Foto & { pos?: string })[] };
+  /** Het vangnet (totaalrenovatie, 5 okt): een rustig blok met een knop die de rekenaar in
+      een venster opent, voor wie nog geen plaatsbezoek wil. Draagt het anker #rekenaar. */
+  /** href: de knop gaat naar die pagina (de losse rekenaar) in plaats van het venster te openen. */
+  vangnet?: { kop: string; tekst: string; knop: string; href?: string };
+  /** Volgorde van de secties tussen de hero en het slotblok. Leeg = de standaardvolgorde. */
+  volgorde?: Sectie[];
   /* Foto's van uitgevoerd werk. Dit staat op de plek waar de demo reviews
      heeft: AB heeft één Google-review, dus tot er echte klantenstemmen zijn
      draagt het werk zelf het bewijs. */
@@ -101,12 +116,19 @@ export type KgjInhoud = {
   reviews: { kop: string; beeld: Foto; lijst: Review[] };
   werkwijze: { kop: string; onder: string; stappen: { titel: string; tekst: string }[] };
   /** punten: wat de klant bij de gratis inspectie krijgt, als vinkjes onder de kop. */
-  cta: { kop: string; tekst: string; punten: string[]; foto: Foto };
+  /** naam: korte naam van de aanvraag, voor de knop in de vaste balk op de telefoon en voor het
+      CRM ("Aanvraag gratis plaatsbezoek"); leeg = de kop. onderkop: regel onder de kop. */
+  cta: { kop: string; tekst: string; punten: string[]; foto: Foto; naam?: string; onderkop?: string };
   /** Het formulier onderaan: de gratis dakinspectie, met een link terug naar de calculator. */
   /** extra: optionele keuzelijsten onder de verplichte velden (totaalrenovatie, 26 sep:
       "bij totaalrenovatie willen ze juist meer"). Nooit verplicht: alleen het telefoonnummer is dat. */
+  /** plaatsbezoek: de velden in de volgorde naam, e-mail, gsm, postcode, met deze labels
+      (totaalrenovatie, 5 okt). vertrouwen: regels met een icoon onder de knop; die vervangen
+      onder, alt en de privacyregel. */
   inspectie: { kop: string; knop: string; onder: string; alt: string; bronLead: string;
-    extra?: { naam: string; label: string; opties: string[] }[] };
+    extra?: { naam: string; label: string; opties: string[] }[];
+    plaatsbezoek?: { naam: string; naamHint: string; email: string; emailHint: string; gsm: string; gsmUitleg: string; gsmHint: string; postcode: string; postcodeHint: string };
+    vertrouwen?: { icoon: 'slot' | 'telefoon' | 'euro'; tekst: string }[] };
   /** Message match (Mohammed, 26 sep): wie via een advertentie of sitelink komt, ziet een kop
       die past bij wat hij zocht. `zoek` is een regex, apart getoetst op dienst=, dak= en utm_term;
       voor de kop wint die volgorde (LpKgj.tsx). `voor` beantwoordt vraag 1 al (Terug blijft werken). */

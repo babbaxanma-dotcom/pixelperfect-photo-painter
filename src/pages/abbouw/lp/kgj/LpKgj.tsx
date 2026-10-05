@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { CONTACT } from '@/data/contact';
 import { KGJ_CSS } from './stijl';
 import { KGJ_EXTRA } from './extra';
@@ -8,7 +8,7 @@ import ChatAssistent from './ChatAssistent';
 import Werkspoor from './Werkspoor';
 import { Icoon } from './Iconen';
 import { IcChevron } from '../replica/Iconen';
-import { DAKWERKEN, type KgjInhoud, type Review } from './inhoud';
+import { DAKWERKEN, type KgjInhoud, type Review, type Sectie } from './inhoud';
 import logo from '@/assets/home/logo-trim.png';
 import { CLARITY_PROJECT, laadClarity } from '@/lib/clarity';
 
@@ -60,6 +60,16 @@ const STAP_ICONEN = [
 /* De boog tussen twee rondjes, uitgerekend uit het hoogteverschil. Zo tekent de
    demo ze ook: het kader is 120 hoog met het midden op 60, en het rondje van
    62 heeft zijn middelpunt 31 onder de bovenkant van de stap. */
+/* 5 okt (totaalrenovatie, frustratie tegenover oplossing): de drie iconen van de blauwdruk
+   (schild, bezem, euro) als lijntekening in de huisstijl, geen emoji. */
+const OPLOSSING_ICONEN = [
+  <svg key="schild" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 2.5 4.5 5.6v5.7c0 4.8 3.2 8.3 7.5 9.7 4.3-1.4 7.5-4.9 7.5-9.7V5.6Z" /><path d="m8.6 12 2.4 2.4 4.4-4.6" /></svg>,
+  <svg key="bezem" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m20.5 3.5-8 8" /><path d="M11 10.2 13.8 13c.6.6.6 1.6 0 2.2l-5.4 5.4a1.6 1.6 0 0 1-2.2 0L3.4 17.8a1.6 1.6 0 0 1 0-2.2l5.4-5.4c.6-.6 1.6-.6 2.2 0Z" /><path d="m6.6 14.6 2.8 2.8M4.8 16.4l2.8 2.8" /></svg>,
+  <svg key="euro" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M17.8 6.2A7.4 7.4 0 1 0 17.8 17.8" /><path d="M4.4 10h9.2M4.4 14h9.2" /></svg>,
+];
+/* De volgorde van de secties tussen hero en slotblok, zoals de dak-LP ze altijd had. */
+const STANDAARD_VOLGORDE: Sectie[] = ['waarom', 'voordelen', 'diensten', 'werkwijze', 'uitgevoerd', 'voorna', 'reviews', 'faq'];
+
 function Boog({ delta }: { delta: number }) {
   const begin = 60 - delta / 2;
   const eind = 60 + delta / 2;
@@ -147,7 +157,9 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   useEffect(() => {
     const wortel = vat.current;
     if (!wortel || !('IntersectionObserver' in window)) return;
-    const kaarten = [...wortel.querySelectorAll('.kgj-reken')];
+    /* 5 okt: ook de grote knop in de hero (renovatiepagina's) telt mee; zolang die in beeld
+       staat, herhaalt de balk alleen dezelfde knop. */
+    const kaarten = [...wortel.querySelectorAll('.kgj-reken, .kgj-hero__knop')];
     if (!kaarten.length) return;
     const inBeeld = new Set<Element>();
     const kijker = new IntersectionObserver((rijen) => {
@@ -174,6 +186,9 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   useEffect(() => {
     const id = decodeURIComponent(window.location.hash.slice(1));
     if (!id) return;
+    /* Sitelink "Bereken uw prijs" (#rekenaar): staat de rekenaar in het vangnet, dan springt de
+       pagina daarheen én gaat de rekenaar meteen open in het venster. */
+    if (id === 'rekenaar' && inhoud.vangnet) setVenster(true);
     const t = window.setTimeout(() => document.getElementById(id)?.scrollIntoView({ block: 'start' }), 120);
     return () => window.clearTimeout(t);
   }, []);
@@ -270,6 +285,15 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       <style>{KGJ_CSS + KGJ_EXTRA}</style>
 
       <header className="kgj-kop kgj-kop--lp" id="kop">
+        {/* 5 okt (totaalrenovatie): smalle donkere balk met het telefoonnummer; hij hoort bij de
+            vaste kop en blijft dus ook staan bij het scrollen. */}
+        {inhoud.topbalk && (
+          <div className="kgj-topbalk">
+            <div className="kgj-breed kgj-topbalk__in">
+              <IcBel /><span>{inhoud.topbalk} <a href={CONTACT.phone.href}>{CONTACT.phone.display}</a></span>
+            </div>
+          </div>
+        )}
         <div className="kgj-breed kgj-kop__in">
           <a className="kgj-logo" href="#top" aria-label="AB Bouw Groep"><img src={logo} alt="Logo van AB Bouw Groep" /></a>
           <a className="kgj-knop kgj-knop--vol kgj-kop__bel" href={CONTACT.phone.href}>
@@ -279,7 +303,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         </div>
       </header>
 
-      <section className={`kgj-hero kgj-hero--lp${binnen ? " is-binnen" : ""}`} id="top">
+      <section className={`kgj-hero kgj-hero--lp${inhoud.hero.knop ? ' kgj-hero--knop' : ''}${binnen ? " is-binnen" : ""}`} id="top">
         <div className="kgj-hero__foto">
           {inhoud.hero.dias.map((d, i) => (
             <figure className={`kgj-dia${i === dia ? ' is-aan' : ''}`} key={d.src}>
@@ -307,7 +331,14 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                 ))}
               </ul>
               )}
+              {inhoud.hero.knop && (
+                <div className="kgj-hero__actie">
+                  <a className="kgj-knop kgj-knop--vol kgj-hero__knop" href="#contact">{inhoud.hero.knop.tekst}</a>
+                  <p className="kgj-hero__micro">{inhoud.hero.knop.onder}</p>
+                </div>
+              )}
             </div>
+            {!inhoud.hero.knop && (
             <div id="rekenaar">
               <Rekenaar inhoud={inhoud} plek="hero" voor={match?.voor} />
               {/* 4 okt, plan mobiele hero: de vinkjes direct ONDER de rekenaar. Alleen op telefoon en
@@ -325,6 +356,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                 </ul>
               )}
             </div>
+            )}
           </div>
         </div>
         {/* Geen pijlen: de diashow loopt vanzelf (Mohammed: "doe die onderste pijlen weg"). */}
@@ -333,6 +365,35 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         </div>
       </section>
 
+      {(inhoud.volgorde ?? STANDAARD_VOLGORDE).map((naam) => <Fragment key={naam}>{({
+      waarom: inhoud.waarom.tegenover ? (
+      /* 5 okt (totaalrenovatie): de frustratie links in een donker vak, de oplossing rechts met
+         drie iconen. Geen foto's en geen rekenknop: de rekenaar staat in het vangnet. */
+      <section className="kgj-band kgj-waarom kgj-waarom--tegenover" id="waarom">
+        <div className="kgj-breed">
+          <div className="kgj-kopblok kgj-kopblok--mid kgj-op"><h2>{inhoud.waarom.kop}</h2></div>
+          <div className="kgj-tegenover">
+            <div className="kgj-tegenover__probleem kgj-op">
+              <span className="kgj-tegenover__teken" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 7l10 10M17 7 7 17" /></svg>
+              </span>
+              <p>{inhoud.waarom.tekst}</p>
+            </div>
+            <div className="kgj-tegenover__oplossing kgj-op">
+              <p className="kgj-tegenover__intro">{inhoud.waarom.tegenover}</p>
+              <ul>
+                {inhoud.waarom.redenen.map((r, i) => (
+                  <li key={r.titel}>
+                    <span className="kgj-tegenover__icoon">{OPLOSSING_ICONEN[i % OPLOSSING_ICONEN.length]}</span>
+                    <div><h3>{r.titel}</h3><p>{r.tekst}</p></div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      ) : (
       <section className="kgj-band kgj-band--grijs kgj-waarom" id="waarom">
         <div className="kgj-breed kgj-waarom__in">
           <div className="kgj-waarom__tekst kgj-op">
@@ -354,11 +415,12 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           </figure>
         </div>
       </section>
+      ),
 
-      {/* Mohammed, 26 sep: voordelen tussen "Waarom" en de diensten, elk met een
+      /* Mohammed, 26 sep: voordelen tussen "Waarom" en de diensten, elk met een
           gekleurde bol en een korte uitleg. Alleen op pagina's die ze invullen.
-          2 okt: een donkere band zonder kaarten (zie extra.ts). */}
-      {inhoud.voordelen && (
+          2 okt: een donkere band zonder kaarten (zie extra.ts). */
+      voordelen: inhoud.voordelen && (
         <section className="kgj-band kgj-voordelen" id="voordelen">
           <div className="kgj-breed">
             <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
@@ -375,11 +437,12 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             </ul>
           </div>
         </section>
-      )}
+      ),
 
-      {/* Mohammed, 25 sep: korte dienstensectie onder "Waarom", met iconen. De
+      /* Mohammed, 25 sep: korte dienstensectie onder "Waarom", met iconen. De
           id's per dienst zijn de ankers van de sitelinks. 2 okt: een dienst met een
-          foto wordt een fotokaart (dakwerken). */}
+          foto wordt een fotokaart (dakwerken). */
+      diensten: (
       <section className="kgj-band kgj-diensten" id="diensten">
         <div className="kgj-breed">
           <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
@@ -413,7 +476,9 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           </ul>
         </div>
       </section>
+      ),
 
+      werkwijze: (
       <section className="kgj-band kgj-werkwijze" id="werkwijze">
         <div className="kgj-breed">
           <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
@@ -433,27 +498,32 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               </li>
             ))}
           </ol>
+          {!inhoud.vangnet && (
           <div className="kgj-midknop">
             <button type="button" className="kgj-knop kgj-knop--vol" onClick={() => setVenster(true)}>Bereken uw prijs</button>
           </div>
+          )}
         </div>
       </section>
+      ),
 
-      {/* Mohammed, 28 sep: "net boven de before and after, uitgevoerd werk, maar enkel
+      /* Mohammed, 28 sep: "net boven de before and after, uitgevoerd werk, maar enkel
           abgroep echte fotos", daarna "zonder de namen", "op de manier van de home
           page", "zo dat het horizontaal doorloopt". Het doorlopende spoor van de
-          homepage (Werkspoor.tsx). Alleen op pagina's die het invullen. */}
-      {inhoud.uitgevoerd && inhoud.uitgevoerd.fotos.length > 0 && (
+          homepage (Werkspoor.tsx). Alleen op pagina's die het invullen. */
+      uitgevoerd: inhoud.uitgevoerd && inhoud.uitgevoerd.fotos.length > 0 && (
         <section className="kgj-band kgj-uitgevoerd" id="uitgevoerd">
           <div className="kgj-breed">
             <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
               <h2>{inhoud.uitgevoerd.kop}</h2>
+              {inhoud.uitgevoerd.onder && <p>{inhoud.uitgevoerd.onder}</p>}
             </div>
             <Werkspoor fotos={inhoud.uitgevoerd.fotos} label="Uitgevoerde projecten" />
           </div>
         </section>
-      )}
+      ),
 
+      voorna: (
       <section className="kgj-band kgj-band--grijs kgj-voorna" id="voorna">
         <div className="kgj-breed">
           <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
@@ -495,11 +565,12 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           </div>
         </div>
       </section>
+      ),
 
-      {/* De drie werkfoto's onder de schuif zijn weg (Mohammed, 23 sep: "die 3
-          fotos onder de slider haal die gewoon weg"). inhoud.werk blijft bestaan. */}
+      /* De drie werkfoto's onder de schuif zijn weg (Mohammed, 23 sep: "die 3
+          fotos onder de slider haal die gewoon weg"). inhoud.werk blijft bestaan. */
 
-      {reviews.length > 0 && (
+      reviews: reviews.length > 0 && (
         <section className="kgj-band kgj-reviews" id="reviews">
           <div className="kgj-breed kgj-reviews__in">
             <div className="kgj-reviews__links kgj-op">
@@ -530,11 +601,33 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             </div>
           </div>
         </section>
-      )}
+      ),
 
-      {/* 29 sep: veelgestelde vragen vlak voor het slotblok (zoals Ooms en Verelst),
-          met AB's eigen antwoorden uit _divisies.ts. Alleen waar inhoud.faq bestaat. */}
-      {inhoud.faq && inhoud.faq.lijst.length > 0 && (
+      /* 5 okt (totaalrenovatie): het vangnet, een rustig vlak met een tweede, zachtere knop die
+         de rekenaar in het venster opent. Draagt het anker van de sitelink "Bereken uw prijs". */
+      vangnet: inhoud.vangnet && (
+        <section className="kgj-band kgj-vangnet" id="rekenaar">
+          <div className="kgj-breed">
+            <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
+              <h2>{inhoud.vangnet.kop}</h2>
+              <p>{inhoud.vangnet.tekst}</p>
+              {inhoud.vangnet.href ? (
+                /* De losse rekenaarpagina; de parameters van de advertentieklik gaan mee. */
+                <a className="kgj-knop kgj-knop--rand kgj-vangnet__knop" href={inhoud.vangnet.href + (typeof window !== 'undefined' ? window.location.search : '')}>
+                  {inhoud.vangnet.knop}
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5" /></svg>
+                </a>
+              ) : (
+                <button type="button" className="kgj-knop kgj-knop--rand kgj-vangnet__knop" onClick={() => setVenster(true)}>{inhoud.vangnet.knop}</button>
+              )}
+            </div>
+          </div>
+        </section>
+      ),
+
+      /* 29 sep: veelgestelde vragen vlak voor het slotblok (zoals Ooms en Verelst),
+          met AB's eigen antwoorden uit _divisies.ts. Alleen waar inhoud.faq bestaat. */
+      faq: inhoud.faq && inhoud.faq.lijst.length > 0 && (
         <section className="kgj-band kgj-faq" id="faq">
           <div className="kgj-breed kgj-faq__in">
             <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
@@ -550,14 +643,17 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             </div>
           </div>
         </section>
-      )}
+      ),
+      } as Record<Sectie, React.ReactNode>)[naam]}</Fragment>)}
 
-      <section className="kgj-cta kgj-cta--lp" id="contact">
+      <section className={`kgj-cta kgj-cta--lp${inhoud.cta.onderkop ? ' kgj-cta--ruim' : ''}`} id="contact">
         <div className="kgj-cta__foto"><img src={inhoud.cta.foto.src} alt={inhoud.cta.foto.alt} loading="lazy" /></div>
         <div className="kgj-breed kgj-cta__in">
           <div className="kgj-cta__tekst kgj-op">
             <h2>{inhoud.cta.kop}</h2>
+            {inhoud.cta.onderkop && <p className="kgj-cta__onderkop">{inhoud.cta.onderkop}</p>}
             {inhoud.cta.tekst && <p>{inhoud.cta.tekst}</p>}
+            {inhoud.cta.punten.length > 0 && (
             <ul className="kgj-cta__punten">
               {inhoud.cta.punten.map((p) => (
                 <li key={p}>
@@ -568,6 +664,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                 </li>
               ))}
             </ul>
+            )}
             <a className="kgj-knop kgj-knop--wit" href={CONTACT.phone.href}>Bel {CONTACT.phone.display}</a>
           </div>
           <div className="kgj-op"><Inspectie inhoud={inhoud} opPrijs={() => setVenster(true)} /></div>
@@ -596,7 +693,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                op 390x664 viel de knop anders 1px onder het scherm. */
             window.scrollTo({ top: vorm.getBoundingClientRect().top + window.scrollY - kopH - 8, behavior: 'smooth' });
           }}>
-          {inhoud.cta.kop}
+          {inhoud.cta.naam ?? inhoud.cta.kop}
         </button>
         <a className="kgj-knop kgj-knop--rand" href={CONTACT.phone.href}
           aria-label={'Bel ' + CONTACT.phone.display}><IcBel /></a>

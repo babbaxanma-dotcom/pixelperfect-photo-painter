@@ -22,7 +22,9 @@ const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const PADEN = {
   dakwerken: ['Hellend dak', 'Renovatie', 'Met isolatie', 'Ouder dan 10 jaar', 'Gegolfde pannen', '50 tot 100 m²', 'Nee'],
-  totaalrenovatie: ['Rijwoning', 'Alles (totaalrenovatie)', '@verder', '100 tot 150 m²', 'Ouder dan 10 jaar', 'Alles'],
+  /* 5 okt 2026: de renovatierekenaar staat niet meer in de hero van /lp/totaalrenovatie (daar
+     een knop naar het formulier), maar op de losse rekenaarpagina /lp/richtprijs-berekenen. */
+  'richtprijs-berekenen': ['Rijwoning', 'Alles (totaalrenovatie)', '@verder', '100 tot 150 m²', 'Ouder dan 10 jaar', 'Alles'],
 };
 const SCHERMEN = [[390, 844], [375, 667]];
 
