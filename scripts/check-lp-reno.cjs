@@ -343,7 +343,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     const q = await browser.newPage(); await q.setViewport({ width: 1440, height: 900 });
     await q.goto(URL.replace(/\/lp\/totaalrenovatie.*$/, '/lp/dakwerken'), { waitUntil: 'networkidle0' }); await wacht(300);
     const d = await q.evaluate(() => ({ h1: document.querySelector('h1')?.textContent.trim(), uit: !!document.querySelector('#uitgevoerd') }));
-    meld(d.h1 === 'Bereken in 1 minuut de richtprijs van uw dak' && !d.uit, '/lp/dakwerken zonder sectie uitgevoerd werk', JSON.stringify(d));
+    meld(d.h1 === 'Bereken in 2 minuten de richtprijs van uw dak' && !d.uit, '/lp/dakwerken zonder sectie uitgevoerd werk', JSON.stringify(d));
     await q.close();
   }
 

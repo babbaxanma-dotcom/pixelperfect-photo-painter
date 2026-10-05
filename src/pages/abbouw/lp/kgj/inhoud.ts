@@ -130,7 +130,7 @@ export const DAKWERKEN: KgjInhoud = {
     /* 4 okt, Mohammed: "headline, bereken in 2 minuten de richtprijs van uw dak, met 2 minuten in kleur".
        Tussen [ ] = in de accentkleur. */
     /* 4 okt, plan mobiele hero: "Bereken in 1 minuut de richtprijs van uw dak" (maak "1 minuut" oranje/goud). */
-    kop: 'Bereken in [1 minuut] de richtprijs van uw dak',
+    kop: 'Bereken in [2 minuten] de richtprijs van uw dak',
     /* Mohammeds eigen zin, letterlijk (24 sep): "doe daar gewoon subheadline
        van de specialisatie". De vorige subkop ("u weet direct wat het kost",
        daarna "wij bellen u met de prijs") ging over de calculator, die ernaast
@@ -180,7 +180,7 @@ export const DAKWERKEN: KgjInhoud = {
     titel: 'Bereken uw dakprijs',
     /* 4 okt, Mohammed: "de calculator, bereken uw dakprijs, klaar in 2 minuten, vrijblijvend",
        daarna "trust signals erbij": "gratis & vrijblijvende richtprijs", "begeleiding bij premie-aanvragen". */
-    tijd: 'Klaar in 1 minuut, vrijblijvend',
+    tijd: 'Klaar in 2 minuten, vrijblijvend',
     zeker: 'Gratis en vrijblijvend',
     vertrouwen: ['Gratis & vrijblijvende richtprijs', 'Begeleiding bij premie-aanvragen', '6% btw-tarief (woningen > 10 jaar)', '10 jaar garantie'],
     vragen: [
@@ -417,10 +417,10 @@ export const DAKWERKEN: KgjInhoud = {
      dak erbij: "badkamer renoveren" of "gevel isoleren" houdt de standaardkop. */
   boodschap: [
     /* 4 okt: de varianten volgen Mohammeds nieuwe kop; alleen het dakwoord wisselt. */
-    { zoek: 'dak.*isol|isol.*dak|sarking', kop: 'Bereken in [1 minuut] de richtprijs van uw dakisolatie' },
-    { zoek: 'plat|epdm|roofing|bitumen', kop: 'Bereken in [1 minuut] de richtprijs van uw plat dak', voor: { sleutel: 'Dak', label: 'Plat dak' } },
-    { zoek: 'hellend|pannen|leien|sarking', kop: 'Bereken in [1 minuut] de richtprijs van uw hellend dak', voor: { sleutel: 'Dak', label: 'Hellend dak' } },
-    { zoek: 'dak.*renov|^renovatie$', kop: 'Bereken in [1 minuut] de richtprijs van uw dakrenovatie' },
-    { zoek: 'dak.*(nieuw|vervang)|(nieuw|vervang).*dak', kop: 'Bereken in [1 minuut] de richtprijs van uw nieuwe dak' },
+    { zoek: 'dak.*isol|isol.*dak|sarking', kop: 'Bereken in [2 minuten] de richtprijs van uw dakisolatie' },
+    { zoek: 'plat|epdm|roofing|bitumen', kop: 'Bereken in [2 minuten] de richtprijs van uw plat dak', voor: { sleutel: 'Dak', label: 'Plat dak' } },
+    { zoek: 'hellend|pannen|leien|sarking', kop: 'Bereken in [2 minuten] de richtprijs van uw hellend dak', voor: { sleutel: 'Dak', label: 'Hellend dak' } },
+    { zoek: 'dak.*renov|^renovatie$', kop: 'Bereken in [2 minuten] de richtprijs van uw dakrenovatie' },
+    { zoek: 'dak.*(nieuw|vervang)|(nieuw|vervang).*dak', kop: 'Bereken in [2 minuten] de richtprijs van uw nieuwe dak' },
   ],
 };
