@@ -62,6 +62,7 @@ export type Vraag = {
 export type Foto = { src: string; alt: string };
 export type Review = { tekst: string; naam: string; bron: string };
 
+export type StapIcoon = 'pin' | 'offerte' | 'agenda' | 'helm' | 'sleutel';
 export type Sectie = 'waarom' | 'voordelen' | 'diensten' | 'werkwijze' | 'uitgevoerd' | 'voorna' | 'reviews' | 'vangnet' | 'faq';
 
 export type KgjInhoud = {
@@ -88,7 +89,8 @@ export type KgjInhoud = {
       donker vak en de redenen (de oplossing) rechts, zonder foto's (totaalrenovatie, 5 okt). */
   /** kolommen: alleen de kop en de redenen, als drie kolommen met icoon (gestripte
       totaalrenovatie, 5 okt); gaat voor `tegenover`. */
-  waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto]; tegenover?: string; kolommen?: boolean };
+  /** intro: alinea onder de kop bij de kolommen (definitieve totaalrenovatie, 5 okt). */
+  waarom: { kop: string; tekst: string; redenen: { titel: string; tekst: string }[]; duo: [Foto, Foto]; tegenover?: string; kolommen?: boolean; intro?: string };
   /** Diensten onder "Waarom": id is het anker voor een sitelink (/lp/dakwerken#nieuw-dak). */
   /** onder: optionele zin onder de kop. Een lege tekst toont alleen icoon en naam (totaalrenovatie, 27 sep).
    *  foto: met een foto wordt de dienst een fotokaart zonder icoon (dakwerken, 2 okt).
@@ -99,7 +101,8 @@ export type KgjInhoud = {
   /** Veelgestelde vragen vlak voor het slotblok; alleen op pagina's die ze invullen (29 sep). */
   faq?: { kop: string; lijst: { v: string; a: string }[] };
   /** meer: nog andere voor/na-paren; de schuif krijgt dan pijlen (29 sep). */
-  voorna: { kop: string; onder: string; voor: Foto; na: Foto; label: string; meer?: { voor: Foto; na: Foto; label?: string }[] };
+  /** hint: korte regel onder de schuif ("Sleep de balk over de foto"). */
+  voorna: { kop: string; onder: string; voor: Foto; na: Foto; label: string; meer?: { voor: Foto; na: Foto; label?: string }[]; hint?: string };
   /** Uitgevoerd werk, direct boven de voor/na (totaalrenovatie, 28 sep): een doorlopend
       spoor met alleen echte foto's van AB, zonder namen (Mohammed: "zonder de namen").
       Optioneel: dakwerken vult het niet in en toont de sectie niet. pos: object-position
@@ -116,7 +119,9 @@ export type KgjInhoud = {
      draagt het werk zelf het bewijs. */
   werk: { kop: string; onder: string; fotos: (Foto & { label: string })[] };
   reviews: { kop: string; beeld: Foto; lijst: Review[] };
-  werkwijze: { kop: string; onder: string; stappen: { titel: string; tekst: string }[] };
+  /** icoon per stap: leeg = de iconen van de dak-LP op volgorde (totaalrenovatie, 5 okt: eigen iconen
+      zodat er geen twee huisjes in één rij staan). */
+  werkwijze: { kop: string; onder: string; stappen: { titel: string; tekst: string; icoon?: StapIcoon }[] };
   /** punten: wat de klant bij de gratis inspectie krijgt, als vinkjes onder de kop. */
   /** naam: korte naam van de aanvraag, voor de knop in de vaste balk op de telefoon en voor het
       CRM ("Aanvraag gratis plaatsbezoek"); leeg = de kop. onderkop: regel onder de kop. */
@@ -127,10 +132,11 @@ export type KgjInhoud = {
   /** plaatsbezoek: de velden in de volgorde naam, e-mail, gsm, postcode, met deze labels
       (totaalrenovatie, 5 okt). vertrouwen: regels met een icoon onder de knop; die vervangen
       onder, alt en de privacyregel. */
-  inspectie: { kop: string; knop: string; onder: string; alt: string; bronLead: string;
+  /** knopPijl: een pijl achter de tekst van de verzendknop (zijn ➔). */
+  inspectie: { kop: string; knop: string; onder: string; alt: string; bronLead: string; knopPijl?: boolean;
     extra?: { naam: string; label: string; opties: string[] }[];
     plaatsbezoek?: { naam: string; naamHint: string; email: string; emailHint: string; gsm: string; gsmUitleg: string; gsmHint: string; postcode: string; postcodeHint: string };
-    vertrouwen?: { icoon: 'slot' | 'telefoon' | 'euro'; tekst: string }[] };
+    vertrouwen?: { icoon: 'slot' | 'telefoon' | 'euro' | 'koffie'; tekst: string }[] };
   /** Message match (Mohammed, 26 sep): wie via een advertentie of sitelink komt, ziet een kop
       die past bij wat hij zocht. `zoek` is een regex, apart getoetst op dienst=, dak= en utm_term;
       voor de kop wint die volgorde (LpKgj.tsx). `voor` beantwoordt vraag 1 al (Terug blijft werken). */

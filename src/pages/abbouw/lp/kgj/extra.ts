@@ -861,4 +861,153 @@ html:has(.kgjx .kgj-topbalk) { scroll-padding-top: 132px; }
 @media (max-width: 900px) { .kgjx .kgj-kolommen { grid-template-columns: 1fr; gap: 14px; } .kgjx .kgj-kolommen li { padding: 22px 20px; } }
 /* Diensten in korte blokken: de regel onder de naam iets groter, er staat maar een paar woorden. */
 .kgjx.kgj-lp--totaalrenovatie .kgj-dienst__body p { font-size: 15.5px; }
+
+/* 5 okt, derde versie (Mohammed: "visueel sterker en cleaner ... zowel op mobiel als desktop").
+   Alleen de drie renovatiepagina's; /lp/dakwerken blijft zoals hij is. */
+
+/* Ritme: grijs en wit wisselen af. Twee witte banden na elkaar gaven 172px leegte zonder grens. */
+.kgjx.kgj-lp--totaalrenovatie .kgj-werkwijze { background: var(--band); --ring: var(--band); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-band--grijs + .kgj-werkwijze { background: var(--wit); --ring: var(--wit); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-band--grijs + .kgj-werkwijze + .kgj-faq { background: var(--band); }
+
+/* Werkwijze: vijf bolletjes op één lijn met een rechte verbinding, in plaats van de golf met
+   stippelpijlen. Het nummer is leesbaar vóór de stap oplicht. */
+.kgjx.kgj-lp--totaalrenovatie .kgj-stap { margin-top: 0; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-boog { display: none; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-stap__bol { box-shadow: 0 0 0 7px var(--ring), 0 0 0 8px var(--lijn); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-stap:is(.is-aan, :hover) .kgj-stap__bol { box-shadow: 0 0 0 7px var(--ring), 0 0 0 8px var(--merk), 0 10px 22px rgba(50, 80, 140, .28); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-stap__nr { color: #9aa1ab; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-stap.is-aan .kgj-stap__nr { color: var(--accent-diep); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-stap:not(:last-child)::after { content: ""; position: absolute; background: #d9dce1; transition: background .38s ease; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-stap.is-aan:not(:last-child)::after { background: #9aa6b8; }
+@media (min-width: 1001px) {
+  .kgjx.kgj-lp--totaalrenovatie .kgj-stap:not(:last-child)::after { top: 30px; left: calc(50% + 46px); width: calc(100% + 22px - 92px); height: 2px; }
+}
+/* Telefoon en tablet: een tijdlijn. Bolletje links, tekst rechts, een lijn naar het volgende
+   bolletje. Vijf stappen in de helft van de hoogte, en links uitgelijnd leest sneller. */
+@media (max-width: 1000px) {
+  .kgjx.kgj-lp--totaalrenovatie .kgj-stappen { grid-template-columns: 1fr; gap: 0; max-width: 560px; margin-inline: auto; padding: 0; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-stap { display: grid; grid-template-columns: 52px minmax(0, 1fr); column-gap: 18px; align-content: start; text-align: left; padding-bottom: 26px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-stap:last-child { padding-bottom: 0; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-stap__bol { grid-column: 1; grid-row: 1 / span 3; width: 52px; height: 52px; margin: 0; box-shadow: 0 0 0 5px var(--ring), 0 0 0 6px var(--lijn); }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-stap:is(.is-aan, :hover) .kgj-stap__bol { transform: none; box-shadow: 0 0 0 5px var(--ring), 0 0 0 6px var(--merk); }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-stap__bol svg { width: 22px; height: 22px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-stap__nr { grid-column: 2; margin: 3px 0 1px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-stap h3 { grid-column: 2; font-size: 17.5px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-stap p { grid-column: 2; margin: 5px 0 0; max-width: none; font-size: 15px; line-height: 1.55; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-stap:not(:last-child)::after { left: 25px; top: 64px; bottom: 0; width: 2px; }
+}
+
+/* Drie zekerheden: op de computer drie kaarten, op de telefoon een compacte rij per zekerheid
+   (icoon links, kop en regel rechts) in plaats van drie gecentreerde kaarten onder elkaar. */
+.kgjx .kgj-kolommen p { max-width: 32ch; margin-inline: auto; }
+@media (max-width: 900px) {
+  .kgjx .kgj-kolommen { gap: 12px; }
+  .kgjx .kgj-kolommen li { display: grid; grid-template-columns: 48px minmax(0, 1fr); column-gap: 16px; align-items: start; text-align: left; padding: 18px; }
+  .kgjx .kgj-kolommen .kgj-tegenover__icoon { grid-row: 1 / span 2; margin: 0; width: 48px; height: 48px; }
+  .kgjx .kgj-kolommen h3 { font-size: 17.5px; margin-top: 2px; }
+  .kgjx .kgj-kolommen p { margin: 4px 0 0; max-width: none; font-size: 15px; }
+}
+
+/* Vangnet: de zin onder de kop op leesbare breedte; op de telefoon een volle knop zonder een
+   los woord op de tweede regel. */
+.kgjx .kgj-vangnet .kgj-kopblok p { max-width: 50ch; }
+@media (max-width: 640px) {
+  .kgjx .kgj-vangnet__knop { display: flex; width: 100%; height: auto; min-height: 54px; padding: 12px 18px; line-height: 1.3; text-align: center; text-wrap: balance; }
+}
+
+/* Slotblok (definitief: "witte card met subtiele schaduw, massieve actieknop in de accentkleur"):
+   een licht vlak zonder de foto onder 90% donker (dat gaf een troebel grijs vlak), donkere tekst,
+   de formulierkaart wit met een rand en een zachte schaduw. Op de rekenaarpagina staat de
+   vragenlijst al op grijs, daar is het slotblok wit. */
+.kgjx.kgj-lp--totaalrenovatie .kgj-cta { background: var(--band); color: var(--tekst); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-band--grijs + .kgj-werkwijze + .kgj-faq + .kgj-cta { background: var(--wit); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-cta__foto { display: none; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-cta::after { content: none; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-cta__tekst h2 { color: var(--kop); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-cta__tekst > p { font-size: 18px; line-height: 1.65; color: var(--tekst); max-width: 40ch; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-cta--lp .kgj-reken { border: 1px solid var(--lijn); box-shadow: 0 22px 48px -28px rgba(10, 22, 40, .32); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-reken__knop { gap: 10px; }
+@media (max-width: 1000px) {
+  .kgjx.kgj-lp--totaalrenovatie .kgj-cta__tekst > p { font-size: 16.5px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-stap__bol { box-shadow: 0 0 0 4px var(--ring), 0 0 0 5px var(--lijn); }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-stap:is(.is-aan, :hover) .kgj-stap__bol { box-shadow: 0 0 0 4px var(--ring), 0 0 0 5px var(--merk); }
+}
+
+/* De belofte onder de heroknop met een klokje, zoals de geruststellingen onder het formulier. */
+.kgjx .kgj-hero__micro { display: flex; align-items: center; gap: 8px; }
+.kgjx .kgj-hero__micro svg { flex: none; color: #e59819; }
+
+/* Hero (definitief, 5 okt: "hoge kwaliteit achtergrondfoto, strak wit of lichtgrijs tekstvlak met
+   veel witruimte", en "de knop in het eerste scherm", "de hoofdkop een fractie kleiner of dunner",
+   "meer witruimte tussen de regels", "de gele streep dunner en strakker"). De foto staat zonder
+   donkere laag; de tekst staat op een wit vlak. Alleen de renovatiepagina's met een heroknop. */
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop::after { content: none; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__in { padding-block: 56px; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__raster { grid-template-columns: minmax(0, 660px); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero__vlak { background: var(--wit); border-radius: 18px; padding: 50px 54px 44px;
+  box-shadow: 0 30px 70px -34px rgba(10, 22, 40, .45); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop h1 { color: var(--kop); font-weight: 600; font-size: clamp(32px, 3.3vw, 48px);
+  line-height: 1.16; letter-spacing: -.024em; max-width: none; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__accent { color: var(--accent-diep); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__accent::after { bottom: -0.1em; height: 0.16em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C 60 4.5, 140 3.5, 197 5' fill='none' stroke='%23e59819' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E"); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__sub { color: var(--tekst); font-size: 17.5px; line-height: 1.7; margin-top: 20px; max-width: none; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs { margin-top: 24px; gap: 14px; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs li { color: var(--tekst); text-shadow: none; font-size: 15.5px; line-height: 1.5; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs strong { color: var(--kop); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs li:has(strong) svg { margin-top: 0; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__actie { margin-top: 30px; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__micro { color: var(--zacht); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__streep { left: auto; right: var(--zij); }
+/* Lage laptopschermen (1366 x 680, 1536 x 730): een breder en compacter vlak, zodat de knop in het
+   eerste scherm blijft. */
+@media (min-width: 1001px) and (max-height: 820px) {
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__in { padding-block: 28px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__raster { grid-template-columns: minmax(0, 720px); }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero__vlak { padding: 32px 40px 28px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop h1 { font-size: 40px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__sub { font-size: 16px; line-height: 1.6; margin-top: 14px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs { margin-top: 16px; gap: 10px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs li { font-size: 15px; line-height: 1.45; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__actie { margin-top: 22px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__knop { height: 56px; }
+}
+@media (max-width: 1000px) {
+  /* Telefoon: de tekst op wit, de foto als afgeronde strook onder de knop (als achtergrond onder een
+     kaart toonde de strook onder de kaart alleen de vloer). Kop, tekst, vinkjes én de knop staan in
+     het eerste scherm (390 x 844). */
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop { flex-direction: column; align-items: stretch; background: var(--wit); }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__foto { position: relative; inset: auto; order: 2; height: 230px;
+    margin: 0 16px 28px; border-radius: 14px; overflow: hidden; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__in { order: 1; padding: 22px 22px 24px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero__vlak { background: none; border-radius: 0; padding: 0; box-shadow: none; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__micro { text-wrap: balance; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop h1 { font-size: clamp(26px, 7vw, 40px); max-width: none; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop h1 br { display: inline; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__sub { font-size: 15.5px; line-height: 1.6; margin-top: 12px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs { margin-top: 16px; gap: 10px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs li { font-size: 14.5px; line-height: 1.45; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs svg { width: 22px; height: 22px; padding: 4px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__actie { margin-top: 20px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__knop { height: 56px; font-size: 16px; padding: 0 16px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__micro { margin-top: 10px; font-size: 13.5px; }
+}
+
+/* Zekerheden: de alinea onder de kop. */
+.kgjx .kgj-waarom--kolommen .kgj-kopblok p { max-width: 62ch; }
+
+/* Voor/na: de hint onder de schuif, klein en grijs. */
+.kgjx .kgj-schuif__hint { margin: 12px 0 0; text-align: center; font-size: 14px; color: var(--zacht); }
+
+/* Formulier: de uitleg bij het gsm-veld op een eigen regel, zodat "premie-check" niet breekt. */
+.kgjx.kgj-lp--totaalrenovatie .kgj-reken__uitleg { display: block; margin-top: 1px; }
+/* Smalle telefoon: de pijl achter "Bevestig mijn gratis plaatsbezoek" duwt de tekst naar twee regels. */
+@media (max-width: 420px) { .kgjx.kgj-lp--totaalrenovatie .kgj-reken__knop svg { display: none; } }
+
+/* Onze expertises: vier foto's op één rij op de computer, twee per rij op een tablet. */
+@media (min-width: 1001px) {
+  .kgjx.kgj-lp--totaalrenovatie .kgj-dienstraster:has(> :nth-child(4):last-child) { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+}
+.kgjx.kgj-lp--totaalrenovatie .kgj-dienst--foto h3 { font-size: 18.5px; }
 `;

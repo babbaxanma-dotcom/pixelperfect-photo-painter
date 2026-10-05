@@ -24,12 +24,13 @@ import Toestemming from './Toestemming';
  * De lead gaat via submitLead: GHL-webhook en Web3Forms-backup tegelijk,
  * conversie alleen bij bezorging.
  */
-/* Iconen voor de geruststellingen onder de knop: slot, telefoon, euro. Lijntekening in de
+/* Iconen voor de geruststellingen onder de knop: slot, telefoon, euro, koffie (5 okt). Lijntekening in de
    huisstijl in plaats van de emoji's uit de blauwdruk. */
-const VERTROUWEN_ICOON: Record<'slot' | 'telefoon' | 'euro', JSX.Element> = {
+const VERTROUWEN_ICOON: Record<'slot' | 'telefoon' | 'euro' | 'koffie', JSX.Element> = {
   slot: <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2" /><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7" /></svg>,
   telefoon: <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7.4 3.4H5.6a2 2 0 0 0-2 2.2c.6 8.3 7.2 14.9 15.5 15.5a2 2 0 0 0 2.2-2v-1.8a1.6 1.6 0 0 0-1.2-1.6l-3-.8a1.6 1.6 0 0 0-1.6.4l-1.2 1.2a11.2 11.2 0 0 1-5.4-5.4l1.2-1.2a1.6 1.6 0 0 0 .4-1.6l-.8-3a1.6 1.6 0 0 0-1.6-1.2Z" /></svg>,
   euro: <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M17.6 6.4A7.2 7.2 0 1 0 17.6 17.6" /><path d="M4.6 10.2h8.8M4.6 13.8h8.8" /></svg>,
+  koffie: <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 9.5h12.5v5.2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5Z" /><path d="M16.5 11h1.3a2.6 2.6 0 0 1 0 5.2h-1.6" /><path d="M8 3.5c-.6.8-.6 1.6 0 2.4M11.5 3.5c-.6.8-.6 1.6 0 2.4" /></svg>,
 };
 
 export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPrijs: () => void }) {
@@ -132,6 +133,10 @@ export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPr
         )}
         <button className="kgj-knop kgj-knop--vol kgj-reken__knop" type="submit" disabled={bezig}>
           {bezig ? 'Bezig…' : t.knop}
+          {/* 5 okt, definitieve totaalrenovatie: zijn ➔ achter de tekst. */}
+          {!bezig && t.knopPijl && (
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5" /></svg>
+          )}
         </button>
         {t.vertrouwen ? (
           /* 5 okt: drie geruststellingen met een icoon direct onder de knop. */

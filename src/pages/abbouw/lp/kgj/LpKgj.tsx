@@ -8,7 +8,7 @@ import ChatAssistent from './ChatAssistent';
 import Werkspoor from './Werkspoor';
 import { Icoon } from './Iconen';
 import { IcChevron } from '../replica/Iconen';
-import { DAKWERKEN, type KgjInhoud, type Review, type Sectie } from './inhoud';
+import { DAKWERKEN, type KgjInhoud, type Review, type Sectie, type StapIcoon } from './inhoud';
 import logo from '@/assets/home/logo-trim.png';
 import { CLARITY_PROJECT, laadClarity } from '@/lib/clarity';
 
@@ -56,6 +56,15 @@ const STAP_ICONEN = [
   <svg {...lijn} key="dak"><path d="M2.5 12.5 12 4l9.5 8.5" /><path d="M5.5 10v10h13V10" /><path d="M9 20v-5h6v5" /></svg>,
   <svg {...lijn} key="nazorg"><circle cx="12" cy="12" r="8.6" /><path d="m8.4 12.2 2.4 2.4 4.8-5" /></svg>,
 ];
+/* 5 okt (totaalrenovatie, derde versie): één icoon per stap zoals de stap heet, zodat er geen
+   twee huisjes in één rij staan. Zelfde hand als hierboven. */
+const STAP_ICOON: Record<StapIcoon, JSX.Element> = {
+  pin: <svg {...lijn}><path d="M12 21s-6.6-5.7-6.6-11.2a6.6 6.6 0 0 1 13.2 0C18.6 15.3 12 21 12 21Z" /><circle cx="12" cy="9.8" r="2.5" /></svg>,
+  offerte: STAP_ICONEN[2],
+  agenda: REDEN_ICONEN[1],
+  helm: <svg {...lijn}><path d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5" /><path d="M14 6a6 6 0 0 1 6 6v3" /><path d="M4 15v-3a6 6 0 0 1 6-6" /><rect x="2" y="15" width="20" height="4" rx="1" /></svg>,
+  sleutel: <svg {...lijn}><path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4" /><path d="m21 2-9.6 9.6" /><circle cx="7.5" cy="15.5" r="5.5" /></svg>,
+};
 
 /* De boog tussen twee rondjes, uitgerekend uit het hoogteverschil. Zo tekent de
    demo ze ook: het kader is 120 hoog met het midden op 60, en het rondje van
@@ -317,9 +326,12 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         </div>
         <div className="kgj-breed kgj-hero__in">
           <div className="kgj-hero__raster">
-            <div>
+            <div className="kgj-hero__vlak">
               {/* Tekst tussen [ ] in de accentkleur (4 okt: "2 minuten in kleur"). */}
-              <h1>{kop.split(/\[([^\]]+)\]/).map((deel, i) => (i % 2 ? <span className="kgj-hero__accent" key={i}>{deel}</span> : deel))}</h1>
+              {/* Een regeleinde in de kop (\n) is een vaste breuk (5 okt, totaalrenovatie: "geregeld." /
+                  "Vaste prijs, één partner."). */}
+              <h1>{kop.split(/\[([^\]]+)\]/).map((deel, i) => (i % 2 ? <span className="kgj-hero__accent" key={i}>{deel}</span>
+                : deel.split('\n').map((regel, j, alle) => <Fragment key={`${i}-${j}`}>{regel}{j < alle.length - 1 && <>{' '}<br /></>}</Fragment>)))}</h1>
               {inhoud.hero.ondertitel && <p className="kgj-hero__ondertitel">{inhoud.hero.ondertitel}</p>}
               {inhoud.hero.onder && <p className="kgj-hero__sub">{inhoud.hero.onder}</p>}
               {inhoud.hero.bewijs.length > 0 && (
@@ -337,7 +349,11 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               {inhoud.hero.knop && (
                 <div className="kgj-hero__actie">
                   <a className="kgj-knop kgj-knop--vol kgj-hero__knop" href="#contact">{inhoud.hero.knop.tekst}</a>
-                  <p className="kgj-hero__micro">{inhoud.hero.knop.onder}</p>
+                  <p className="kgj-hero__micro">
+                    <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8"
+                      strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.4" /><path d="M10 6v4.2l2.8 1.8" /></svg>
+                    {inhoud.hero.knop.onder}
+                  </p>
                 </div>
               )}
             </div>
@@ -373,7 +389,10 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       /* Gestripte totaalrenovatie (5 okt): de kop en drie zekerheden, elk een kolom met icoon. */
       <section className="kgj-band kgj-waarom kgj-waarom--kolommen" id="waarom">
         <div className="kgj-breed">
-          <div className="kgj-kopblok kgj-kopblok--mid kgj-op"><h2>{inhoud.waarom.kop}</h2></div>
+          <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
+            <h2>{inhoud.waarom.kop}</h2>
+            {inhoud.waarom.intro && <p>{inhoud.waarom.intro}</p>}
+          </div>
           <ul className="kgj-kolommen">
             {inhoud.waarom.redenen.map((r, i) => (
               <li className="kgj-op" key={r.titel}>
@@ -470,7 +489,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           </div>
           {/* Zonder tekst per dienst (totaalrenovatie, 27 sep: "simpel, zonder al te veel
               tekst") staan icoon en naam naast elkaar in een compact raster. */}
-          <ul className={`kgj-dienstraster${inhoud.diensten.lijst.every((d) => !d.tekst) ? ' kgj-dienstraster--kort' : ''}`}>
+          <ul className={`kgj-dienstraster${!dienstFotos && inhoud.diensten.lijst.every((d) => !d.tekst) ? ' kgj-dienstraster--kort' : ''}`}>
             {inhoud.diensten.lijst.map((d) => (
               <li className={`kgj-dienst${dienstFotos ? ' kgj-dienst--foto' : ''} kgj-op`} id={d.id} key={d.id}>
                 {dienstFotos ? (
@@ -507,7 +526,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           <ol className="kgj-stappen">
             {inhoud.werkwijze.stappen.map((s, i, alle) => (
               <li className="kgj-stap kgj-op" key={s.titel} style={{ '--op': `${STAP_HOOGTE[i % STAP_HOOGTE.length]}px` } as React.CSSProperties}>
-                <span className="kgj-stap__bol">{STAP_ICONEN[i % STAP_ICONEN.length]}</span>
+                <span className="kgj-stap__bol">{s.icoon ? STAP_ICOON[s.icoon] : STAP_ICONEN[i % STAP_ICONEN.length]}</span>
                 <span className="kgj-stap__nr">{String(i + 1).padStart(2, '0')}</span>
                 <h3>{s.titel}</h3>
                 <p>{s.tekst}</p>
@@ -570,6 +589,8 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                   <span className="kgj-schuif__greep" aria-hidden="true">‹ ›</span>
                 </span>
               </div>
+              {/* Definitieve totaalrenovatie (5 okt): "Sleep de balk over de foto" direct onder de foto. */}
+              {inhoud.voorna.hint && <p className="kgj-schuif__hint">{inhoud.voorna.hint}</p>}
               {huidig.label && <figcaption>{huidig.label}</figcaption>}
             </figure>
             {paren.length > 1 && (
@@ -633,8 +654,9 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               {inhoud.vangnet.href ? (
                 /* De losse rekenaarpagina; de parameters van de advertentieklik gaan mee. */
                 <a className="kgj-knop kgj-knop--rand kgj-vangnet__knop" href={inhoud.vangnet.href + (typeof window !== 'undefined' ? window.location.search : '')}>
+                  {/* 5 okt, definitief: zijn 📊 als lijnicoon vooraan. */}
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 20h16" /><path d="M7 16.5V11M12 16.5V6M17 16.5v-8" /></svg>
                   {inhoud.vangnet.knop}
-                  <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5" /></svg>
                 </a>
               ) : (
                 <button type="button" className="kgj-knop kgj-knop--rand kgj-vangnet__knop" onClick={() => setVenster(true)}>{inhoud.vangnet.knop}</button>
