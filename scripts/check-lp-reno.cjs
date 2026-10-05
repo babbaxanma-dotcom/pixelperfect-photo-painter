@@ -26,7 +26,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
 
   const kop = await page.evaluate(() => ({ titel: document.title, h1: document.querySelector('h1')?.textContent.trim() }));
   meld(kop.titel === 'Dé specialist voor uw renovatie | AB Bouw Groep', 'tabbladtitel', kop.titel);
-  meld(kop.h1 === 'Uw totaalrenovatie zorgeloos geregeld van A tot Z', 'kop', kop.h1);
+  meld(kop.h1 === 'Uw renovatie zorgeloos geregeld van A tot Z', 'kop', kop.h1);
 
   /* Zoals op dakwerken: alle antwoorden van vraag 1 boven de vouw. */
   const vouw = await page.evaluate(() => { const k = [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')]; return Math.round(Math.max(...k.map((e) => e.getBoundingClientRect().bottom))); });

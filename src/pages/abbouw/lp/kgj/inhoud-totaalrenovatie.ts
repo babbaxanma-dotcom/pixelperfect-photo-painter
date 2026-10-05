@@ -78,7 +78,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
 
   hero: {
     /* Mohammeds eigen kop, letterlijk (26 sep). 4 okt, plan desktop-hero: nieuwe kop. */
-    kop: 'Uw totaalrenovatie [zorgeloos] geregeld van A tot Z',
+    kop: 'Uw renovatie [zorgeloos] geregeld van A tot Z',
     /* Zelfde opbouw als Mohammeds subkop op dakwerken. Het mechanisme: AB heeft
        voor elk vak een eigen ploeg (homepage), dus één planning. */
     /* Mohammed, 26 sep: de subkop "eruit". Leeg = geen regel onder de kop. */
