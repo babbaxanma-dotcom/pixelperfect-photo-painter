@@ -852,13 +852,6 @@ html:has(.kgjx .kgj-topbalk) { scroll-padding-top: 132px; }
 .kgjx .kgj-tegenover__probleem { display: flex; flex-direction: column; justify-content: center; }
 /* Dienstkaarten met foto op de renovatiepagina's: drie per rij (3 of 6 kaarten), geen gat rechts. */
 @media (min-width: 1001px) { .kgjx.kgj-lp--totaalrenovatie .kgj-dienstraster { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; } }
-/* Gestripte totaalrenovatie (5 okt): drie zekerheden in kolommen, icoon, kop en een regel. */
-.kgjx .kgj-kolommen { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; margin: 0; padding: 0; list-style: none; }
-.kgjx .kgj-kolommen li { background: var(--wit); border: 1px solid var(--lijn); border-radius: var(--r-vak); padding: 30px 28px; text-align: center; }
-.kgjx .kgj-kolommen .kgj-tegenover__icoon { margin: 0 auto 16px; width: 54px; height: 54px; }
-.kgjx .kgj-kolommen h3 { font-size: 19px; }
-.kgjx .kgj-kolommen p { margin-top: 8px; font-size: 15.5px; line-height: 1.55; }
-@media (max-width: 900px) { .kgjx .kgj-kolommen { grid-template-columns: 1fr; gap: 14px; } .kgjx .kgj-kolommen li { padding: 22px 20px; } }
 /* Diensten in korte blokken: de regel onder de naam iets groter, er staat maar een paar woorden. */
 .kgjx.kgj-lp--totaalrenovatie .kgj-dienst__body p { font-size: 15.5px; }
 
@@ -866,8 +859,10 @@ html:has(.kgjx .kgj-topbalk) { scroll-padding-top: 132px; }
    Alleen de drie renovatiepagina's; /lp/dakwerken blijft zoals hij is. */
 
 /* Ritme: grijs en wit wisselen af. Twee witte banden na elkaar gaven 172px leegte zonder grens. */
-.kgjx.kgj-lp--totaalrenovatie .kgj-werkwijze { background: var(--band); --ring: var(--band); }
-.kgjx.kgj-lp--totaalrenovatie .kgj-band--grijs + .kgj-werkwijze { background: var(--wit); --ring: var(--wit); }
+/* 6 okt: grijs voor/na, donkere zekerheden, witte werkwijze, grijze diensten, crème vangnet, witte
+   vragen, donker slotblok. Op de rekenaarpagina: grijs voor/na, witte werkwijze, grijze vragen. */
+.kgjx.kgj-lp--totaalrenovatie .kgj-werkwijze { background: var(--wit); --ring: var(--wit); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-werkwijze + .kgj-diensten { background: var(--band); }
 .kgjx.kgj-lp--totaalrenovatie .kgj-band--grijs + .kgj-werkwijze + .kgj-faq { background: var(--band); }
 
 /* Werkwijze: vijf bolletjes op één lijn met een rechte verbinding, in plaats van de golf met
@@ -898,16 +893,6 @@ html:has(.kgjx .kgj-topbalk) { scroll-padding-top: 132px; }
   .kgjx.kgj-lp--totaalrenovatie .kgj-stap:not(:last-child)::after { left: 25px; top: 64px; bottom: 0; width: 2px; }
 }
 
-/* Drie zekerheden: op de computer drie kaarten, op de telefoon een compacte rij per zekerheid
-   (icoon links, kop en regel rechts) in plaats van drie gecentreerde kaarten onder elkaar. */
-.kgjx .kgj-kolommen p { max-width: 32ch; margin-inline: auto; }
-@media (max-width: 900px) {
-  .kgjx .kgj-kolommen { gap: 12px; }
-  .kgjx .kgj-kolommen li { display: grid; grid-template-columns: 48px minmax(0, 1fr); column-gap: 16px; align-items: start; text-align: left; padding: 18px; }
-  .kgjx .kgj-kolommen .kgj-tegenover__icoon { grid-row: 1 / span 2; margin: 0; width: 48px; height: 48px; }
-  .kgjx .kgj-kolommen h3 { font-size: 17.5px; margin-top: 2px; }
-  .kgjx .kgj-kolommen p { margin: 4px 0 0; max-width: none; font-size: 15px; }
-}
 
 /* Vangnet: de zin onder de kop op leesbare breedte; op de telefoon een volle knop zonder een
    los woord op de tweede regel. */
@@ -924,6 +909,12 @@ html:has(.kgjx .kgj-topbalk) { scroll-padding-top: 132px; }
   .kgjx.kgj-lp--totaalrenovatie .kgj-stap__bol { box-shadow: 0 0 0 4px var(--ring), 0 0 0 5px var(--lijn); }
   .kgjx.kgj-lp--totaalrenovatie .kgj-stap:is(.is-aan, :hover) .kgj-stap__bol { box-shadow: 0 0 0 4px var(--ring), 0 0 0 5px var(--merk); }
 }
+
+/* Het icoon in de heroknop (6 okt). Op een smalle telefoon iets kleinere tekst, zodat icoon en
+   tekst op één regel blijven. */
+.kgjx .kgj-hero__knop { gap: 11px; }
+.kgjx .kgj-hero__knop svg { flex: none; }
+@media (max-width: 380px) { .kgjx .kgj-hero--knop .kgj-hero__knop { font-size: 15px; gap: 9px; padding: 0 12px; } .kgjx .kgj-hero__knop svg { width: 20px; height: 20px; } }
 
 /* De belofte onder de heroknop met een klokje, zoals de geruststellingen onder het formulier. */
 .kgjx .kgj-hero__micro { display: flex; align-items: center; gap: 8px; }
@@ -970,8 +961,10 @@ html:has(.kgjx .kgj-topbalk) { scroll-padding-top: 132px; }
   .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__micro { margin-top: 10px; font-size: 13.5px; text-wrap: balance; }
 }
 
-/* Zekerheden: de alinea onder de kop. */
-.kgjx .kgj-waarom--kolommen .kgj-kopblok p { max-width: 62ch; }
+/* Zekerheden in de donkere band: de alinea onder de kop in zacht wit, en lijniconen die de bol vullen. */
+.kgjx .kgj-waarom--kolommen .kgj-kopblok p { max-width: 62ch; color: rgba(255, 255, 255, .76); }
+.kgjx .kgj-waarom--kolommen .kgj-kopblok { margin-bottom: 48px; }
+@media (max-width: 760px) { .kgjx .kgj-waarom--kolommen .kgj-kopblok { margin-bottom: 14px; } }
 
 /* Voor/na: de hint onder de schuif, klein en grijs. */
 .kgjx .kgj-schuif__hint { margin: 12px 0 0; text-align: center; font-size: 14px; color: var(--zacht); }
@@ -986,4 +979,69 @@ html:has(.kgjx .kgj-topbalk) { scroll-padding-top: 132px; }
   .kgjx.kgj-lp--totaalrenovatie .kgj-dienstraster:has(> :nth-child(4):last-child) { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
 }
 .kgjx.kgj-lp--totaalrenovatie .kgj-dienst--foto h3 { font-size: 18.5px; }
+
+/* 6 okt, Mohammed: "verbeter aanzienlijk visueel de landingspagina en doe cro optimalisatie, copy
+   enkel elimineren waar nodig, niet bijvoegen of omvormen". Alles binnen de huisstijl (dak-LP):
+   één actiekleur voor elke aanvraagknop, de aanvraag altijd één klik weg, sterker ritme. */
+
+/* Eén actiekleur: het goud van de heroknop, op elke knop die naar het formulier leidt of het verstuurt. */
+.kgjx .kgj-kop__actie { display: none; }
+.kgjx :is(.kgj-kop__actie, .kgj-midknop__actie),
+.kgjx.kgj-lp--totaalrenovatie :is(.kgj-reken--inspectie .kgj-reken__knop, .kgj-actiebalk .kgj-knop--vol) {
+  background: #e59819; border-color: #e59819; color: var(--merk-diep); }
+.kgjx :is(.kgj-kop__actie, .kgj-midknop__actie):hover,
+.kgjx.kgj-lp--totaalrenovatie :is(.kgj-reken--inspectie .kgj-reken__knop, .kgj-actiebalk .kgj-knop--vol):hover {
+  background: #cf8812; border-color: #cf8812; color: var(--merk-diep); }
+.kgjx :is(.kgj-kop__actie, .kgj-midknop__actie, .kgj-actiebalk .kgj-knop--vol) svg { flex: none; }
+/* De aanvraagknop in de vaste kop, alleen op de computer (op de telefoon staat hij in de balk onderaan). */
+@media (min-width: 1001px) {
+  .kgjx .kgj-kop__actie { display: inline-flex; gap: 10px; height: 48px; padding: 0 22px; font-size: 15px; white-space: nowrap; }
+  .kgjx .kgj-kop__actie svg { width: 20px; height: 20px; }
+}
+/* De aanvraagknop onder de vijf stappen. */
+.kgjx .kgj-midknop__actie { gap: 11px; height: 58px; padding: 0 30px; font-size: 16.5px; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-werkwijze .kgj-midknop { margin-top: 46px; }
+.kgjx .kgj-actiebalk .kgj-knop--vol { gap: 9px; }
+.kgjx .kgj-actiebalk .kgj-knop--vol svg { width: 20px; height: 20px; }
+@media (max-width: 640px) {
+  .kgjx .kgj-midknop__actie { width: 100%; height: 56px; padding: 0 14px; font-size: 16px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-werkwijze .kgj-midknop { margin-top: 30px; }
+}
+@media (max-width: 380px) { .kgjx .kgj-midknop__actie { font-size: 15px; gap: 9px; padding: 0 12px; } .kgjx .kgj-midknop__actie svg { width: 20px; height: 20px; } }
+
+/* Hero op de computer: 72 px van de volgende sectie blijft in beeld, zodat zichtbaar is dat de
+   pagina verdergaat (de hero vulde het scherm tot 38 px onder de rand). */
+@media (min-width: 1001px) {
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop { min-height: calc(100svh - 122px - 72px); }
+}
+
+/* Hero op telefoon en tablet: de tekst loopt daar over de volle breedte, dus de donkere laag is over
+   de hele foto even sterk (de laag van de computer wordt rechts doorzichtig). */
+@media (max-width: 1000px) {
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop::after { background: linear-gradient(180deg, rgba(10, 16, 28, .66) 0%, rgba(10, 16, 28, .6) 100%); }
+}
+
+/* Voor/na: foto, hint en pijlen als één blok (er zat 68 px tussen de foto en de pijlen). */
+.kgjx.kgj-lp--totaalrenovatie .kgj-voorna .kgj-schuif { row-gap: 0; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-voorna .kgj-schuif__wissel .pc-bediening { margin-top: 18px; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-voorna .kgj-kopblok { margin-bottom: 34px; }
+
+/* Onze expertises op het grijze vlak: witte kaarten met de foto bovenaan en de naam eronder. */
+@media (min-width: 561px) {
+  .kgjx.kgj-lp--totaalrenovatie .kgj-diensten .kgj-dienst--foto { background: var(--wit); border-radius: var(--r-vak); overflow: hidden;
+    box-shadow: 0 1px 2px rgba(10, 22, 40, .05), 0 14px 30px -22px rgba(10, 22, 40, .3); }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-diensten .kgj-dienst__foto { margin: 0; border-radius: 0; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-diensten .kgj-dienst__body { padding: 18px 20px 20px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-diensten .kgj-dienst--foto h3 { margin: 0; text-wrap: balance; }
+  /* Alleen een naam (geen regel eronder): een vak van twee regels hoog met de naam in het midden,
+     zodat een naam van één regel en een naam van twee regels er gelijk uitzien. */
+  .kgjx.kgj-lp--totaalrenovatie .kgj-diensten .kgj-dienst__body:has(> h3:only-child) { display: flex; align-items: center; min-height: 86px; padding-block: 16px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-diensten .kgj-dienst--foto h3 + p { margin-top: 8px; }
+}
+@media (max-width: 560px) {
+  .kgjx.kgj-lp--totaalrenovatie .kgj-diensten .kgj-dienst--foto + .kgj-dienst--foto { border-top-color: #e2e3e6; }
+}
+
+/* Vangnet: de kop op één regel op de computer (het woord "kosten?" stond alleen op regel twee). */
+.kgjx.kgj-lp--totaalrenovatie .kgj-vangnet .kgj-kopblok h2 { max-width: none; text-wrap: balance; }
 `;

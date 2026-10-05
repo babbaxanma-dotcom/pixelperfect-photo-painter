@@ -41,6 +41,15 @@ const IcBel = () => (
   </svg>
 );
 
+/* 6 okt, Mohammed: "knop moet ook een mooi icoon hebben": een agenda met vinkje, want de knop vraagt
+   een afspraak aan. Hetzelfde icoon op elke aanvraagknop (hero, kop, na de stappen). */
+const IcAgenda = () => (
+  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2"
+    strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="3.5" y="5" width="17" height="15.5" rx="2.2" /><path d="M8 3v4M16 3v4M3.5 10h17" /><path d="m9 15 2 2 4-4" />
+  </svg>
+);
+
 /* Dezelfde hand als de iconen van de demo: 24 op 24, lijn 1,6, ronde uiteinden. */
 const lijn = { viewBox: '0 0 24 24', width: 24, height: 24, fill: 'none', stroke: 'currentColor',
   strokeWidth: 1.6, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true };
@@ -76,6 +85,8 @@ const OPLOSSING_ICONEN = [
   <svg key="bezem" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m20.5 3.5-8 8" /><path d="M11 10.2 13.8 13c.6.6.6 1.6 0 2.2l-5.4 5.4a1.6 1.6 0 0 1-2.2 0L3.4 17.8a1.6 1.6 0 0 1 0-2.2l5.4-5.4c.6-.6 1.6-.6 2.2 0Z" /><path d="m6.6 14.6 2.8 2.8M4.8 16.4l2.8 2.8" /></svg>,
   <svg key="euro" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M17.8 6.2A7.4 7.4 0 1 0 17.8 17.8" /><path d="M4.4 10h9.2M4.4 14h9.2" /></svg>,
 ];
+/* De bolkleuren van de donkere band, in de volgorde van de dak-LP. */
+const BOLKLEUREN = ['oranje', 'blauw', 'groen'] as const;
 /* De volgorde van de secties tussen hero en slotblok, zoals de dak-LP ze altijd had. */
 const STANDAARD_VOLGORDE: Sectie[] = ['waarom', 'voordelen', 'diensten', 'werkwijze', 'uitgevoerd', 'voorna', 'reviews', 'faq'];
 
@@ -305,6 +316,12 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         )}
         <div className="kgj-breed kgj-kop__in">
           <a className="kgj-logo" href="#top" aria-label="AB Bouw Groep"><img src={logo} alt="Logo van AB Bouw Groep" /></a>
+          {/* 6 okt (CRO): op de computer staat de aanvraagknop altijd in de vaste kop, zodat het
+              formulier vanaf elke sectie één klik weg is. Alleen op pagina's waar het plaatsbezoek de
+              hoofdactie is (heroknop); op de telefoon doet de vaste balk onderaan dit. */}
+          {inhoud.hero.knop && (
+            <a className="kgj-knop kgj-kop__actie" href="#contact"><IcAgenda />{inhoud.cta.naam ?? inhoud.hero.knop.tekst}</a>
+          )}
           {/* 5 okt (gestript): het nummer één keer bovenaan. Met de topbalk valt deze knop weg. */}
           {!inhoud.topbalk && (
           <a className="kgj-knop kgj-knop--vol kgj-kop__bel" href={CONTACT.phone.href}>
@@ -348,12 +365,18 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               )}
               {inhoud.hero.knop && (
                 <div className="kgj-hero__actie">
-                  <a className="kgj-knop kgj-knop--vol kgj-hero__knop" href="#contact">{inhoud.hero.knop.tekst}</a>
+                  <a className="kgj-knop kgj-knop--vol kgj-hero__knop" href="#contact">
+                    <IcAgenda />
+                    {inhoud.hero.knop.tekst}
+                  </a>
+                  {/* Leeg = geen regel onder de knop (6 okt, Mohammed: "hou enkel headline en puntjes"). */}
+                  {inhoud.hero.knop.onder && (
                   <p className="kgj-hero__micro">
                     <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8"
                       strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.4" /><path d="M10 6v4.2l2.8 1.8" /></svg>
                     {inhoud.hero.knop.onder}
                   </p>
+                  )}
                 </div>
               )}
             </div>
@@ -386,17 +409,19 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
 
       {(inhoud.volgorde ?? STANDAARD_VOLGORDE).map((naam) => <Fragment key={naam}>{({
       waarom: inhoud.waarom.kolommen ? (
-      /* Gestripte totaalrenovatie (5 okt): de kop en drie zekerheden, elk een kolom met icoon. */
-      <section className="kgj-band kgj-waarom kgj-waarom--kolommen" id="waarom">
+      /* Gestripte totaalrenovatie (5 okt): de kop en drie zekerheden, elk een kolom met icoon.
+         6 okt (Mohammed: "verbeter aanzienlijk visueel"): in de donkere band van de dak-LP
+         ("Voordelen van dakrenovatie", 2 okt), hetzelfde component met dezelfde drie bolkleuren. */
+      <section className="kgj-band kgj-voordelen kgj-waarom--kolommen" id="waarom">
         <div className="kgj-breed">
           <div className="kgj-kopblok kgj-kopblok--mid kgj-op">
             <h2>{inhoud.waarom.kop}</h2>
             {inhoud.waarom.intro && <p>{inhoud.waarom.intro}</p>}
           </div>
-          <ul className="kgj-kolommen">
+          <ul className="kgj-voordeelraster">
             {inhoud.waarom.redenen.map((r, i) => (
-              <li className="kgj-op" key={r.titel}>
-                <span className="kgj-tegenover__icoon">{OPLOSSING_ICONEN[i % OPLOSSING_ICONEN.length]}</span>
+              <li className={`kgj-voordeel kgj-voordeel--${BOLKLEUREN[i % BOLKLEUREN.length]} kgj-op`} key={r.titel}>
+                <span className="kgj-voordeel__bol">{OPLOSSING_ICONEN[i % OPLOSSING_ICONEN.length]}</span>
                 <h3>{r.titel}</h3>
                 <p>{r.tekst}</p>
               </li>
@@ -536,7 +561,13 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               </li>
             ))}
           </ol>
-          {!inhoud.vangnet && (
+          {/* 6 okt (CRO): op de plaatsbezoekpagina's sluit de werkwijze af met de aanvraagknop; stap 1
+              is het plaatsbezoek. */}
+          {inhoud.hero.knop ? (
+          <div className="kgj-midknop">
+            <a className="kgj-knop kgj-midknop__actie" href="#contact"><IcAgenda />{inhoud.hero.knop.tekst}</a>
+          </div>
+          ) : !inhoud.vangnet && (
           <div className="kgj-midknop">
             <button type="button" className="kgj-knop kgj-knop--vol" onClick={() => setVenster(true)}>Bereken uw prijs</button>
           </div>
@@ -734,7 +765,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                op 390x664 viel de knop anders 1px onder het scherm. */
             window.scrollTo({ top: vorm.getBoundingClientRect().top + window.scrollY - kopH - 8, behavior: 'smooth' });
           }}>
-          {inhoud.cta.naam ?? inhoud.cta.kop}
+          {inhoud.hero.knop && <IcAgenda />}{inhoud.cta.naam ?? inhoud.cta.kop}
         </button>
         <a className="kgj-knop kgj-knop--rand" href={CONTACT.phone.href}
           aria-label={'Bel ' + CONTACT.phone.display}><IcBel /></a>

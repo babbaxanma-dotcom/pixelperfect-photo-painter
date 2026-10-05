@@ -225,9 +225,12 @@ export const DAKWERKEN: KgjInhoud = {
          vervolg: bij herstelling vragen we wat er NU op het dak ligt, bij
          isolatie vervalt de bedekking en de vraag of er isolatie nodig is. */
       /* Volgorde (Mohammed, 1 okt 2026): renovatie, isolatie, herstelling. */
+      /* 6 okt, Mohammed: "voeg optie toe nieuw dak ... moet je dus hebben, nieuw dak, renovatie,
+         isolatie, herstelling". Nieuw dak volgt het pad van renovatie: met of zonder isolatie, en
+         welke bedekking hij wenst. Icoon: het huis met de plus van de dienstkaart "Nieuw dak". */
       { sleutel: 'Werk', vraag: 'Wat moet er aan uw dak gebeuren?', keuzes: [
-        { label: 'Renovatie', icoon: 'nieuwdak' }, { label: 'Isolatie', icoon: 'isolatie' },
-        { label: 'Herstelling', icoon: 'herstel' },
+        { label: 'Nieuw dak', icoon: 'dienst-nieuw' }, { label: 'Renovatie', icoon: 'nieuwdak' },
+        { label: 'Isolatie', icoon: 'isolatie' }, { label: 'Herstelling', icoon: 'herstel' },
       ] },
       /* Mohammed, 27 sep: "als je klikt op herstelling of renovatie, dat je kan kiezen, met
          isolatie of zonder", want "nu is isolatie enkel en alleen apart". De keuze staat dus meteen
@@ -235,7 +238,7 @@ export const DAKWERKEN: KgjInhoud = {
          Premie (26 sep): de melding verschijnt bij "Met isolatie", want isolatie is de voorwaarde
          (Rd 4,5). Bron: vlaanderen.be, Mijn VerbouwPremie voor dak, aanvragen vanaf 1 maart 2026:
          categorie 4 50% (max. 5.750 euro), categorie 3 35% (max. 4.025 euro), 1 en 2 niets meer. */
-      { sleutel: 'Isolatie', vraag: 'Wilt u het dak ook laten isoleren?', als: { Werk: ['Herstelling', 'Renovatie'] },
+      { sleutel: 'Isolatie', vraag: 'Wilt u het dak ook laten isoleren?', als: { Werk: ['Herstelling', 'Renovatie', 'Nieuw dak'] },
         tip: { bij: ['Met isolatie'], tekst: 'Met isolatie komt uw dak in aanmerking voor Mijn VerbouwPremie: bij inkomenscategorie 3 of 4 tot 50% van de factuur terug, maximaal € 5.750.' }, keuzes: [
         { label: 'Met isolatie', uitleg: 'het dak wordt mee geïsoleerd', icoon: 'isolatie' },
         { label: 'Zonder isolatie', uitleg: 'enkel de dakwerken', icoon: 'geenisolatie' },
@@ -251,11 +254,11 @@ export const DAKWERKEN: KgjInhoud = {
       { sleutel: 'Leeftijd', vraag: 'Hoe oud is uw dak?', keuzes: [
         { label: 'Jonger dan 10 jaar', icoon: 'jong' }, { label: 'Ouder dan 10 jaar', icoon: 'oud' },
       ], tip: { bij: ['Ouder dan 10 jaar'], tekst: 'Dankzij de wettelijke 6% btw-regeling betaalt u 15% minder btw op uw factuur.' } },
-      { sleutel: 'Bedekking', vraag: 'Welke dakbedekking wenst u?', als: { Dak: ['Hellend dak'], Werk: ['Renovatie'] }, keuzes: [
+      { sleutel: 'Bedekking', vraag: 'Welke dakbedekking wenst u?', als: { Dak: ['Hellend dak'], Werk: ['Renovatie', 'Nieuw dak'] }, keuzes: [
         { label: 'Gegolfde pannen', icoon: 'golfpan' }, { label: 'Vlakke pannen of leien', icoon: 'vlakkepan' },
         { label: 'Golfplaten', icoon: 'golfplaat' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
       ] },
-      { sleutel: 'Bedekking', vraag: 'Wat wilt u op uw plat dak?', als: { Dak: ['Plat dak'], Werk: ['Renovatie'] }, keuzes: [
+      { sleutel: 'Bedekking', vraag: 'Wat wilt u op uw plat dak?', als: { Dak: ['Plat dak'], Werk: ['Renovatie', 'Nieuw dak'] }, keuzes: [
         { label: 'Bitumen', icoon: 'bitumen' }, { label: 'Roofing', icoon: 'roofing' },
         { label: 'EPDM', icoon: 'epdm' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
       ] },

@@ -114,11 +114,12 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     /* Mohammed, 26 sep: de subkop "eruit". Leeg = geen regel onder de kop. */
     /* 4 okt: subheadline eerst "Bereken binnen 2 minuten een realistische prijsindicatie voor uw
        woning.", dan Mohammed: "eruit in de subheadline bij totaalrenovatie". Leeg = geen regel. */
-    onder: 'U zoekt een aannemer die wél doet wat hij belooft. Wij coördineren uw volledige project met onze eigen vakmensen, een strakke planning en een budget dat vooraf vaststaat. Van het eerste idee tot de sleutel-op-de-deur oplevering.',
+    /* 6 okt, Mohammed: "teveel tekst in hero, haal alle subtekst weg, hou enkel headline en puntjes". */
+    onder: '',
     /* 4 okt, plan desktop-hero (Mohammed): drie USP's, het deel voor de dubbelepunt in het vet. 5 okt: zijn nieuwe teksten. */
     bewijs: ['100% Budgetgarantie: De prijs op uw offerte is de eindprijs. Geen onaangename verrassingen achteraf.', 'Eén vast aanspreekpunt: U hoeft zelf geen aannemers op elkaar af te stemmen. Wij sturen de hele werf aan.', 'Volledige premiebegeleiding: Wij regelen uw EPC-attest en begeleiden de aanvraag van uw Mijn VerbouwPremie.'],
     /* 5 okt: een grote knop naar het formulier in plaats van de rekenaar; die staat in het vangnet. */
-    knop: { tekst: 'Vraag uw gratis plaatsbezoek aan', onder: 'Binnen 24 uur reactie • Vrijblijvend advies ter plaatse' },
+    knop: { tekst: 'Vraag uw gratis plaatsbezoek aan', onder: '' },
     /* Mohammed, 26 sep: "laat enkel de keuken foto, badkamerrenovatie foto van
        abgroep die we bij badkamerrenovatie lp in de sectie hebben onder hero, en
        dan nog die leefruimte echte foto". De badkamer is de foto uit de sectie
