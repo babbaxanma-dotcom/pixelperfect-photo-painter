@@ -271,12 +271,13 @@ export const rpFooter = () => `
           <span>${ic.phone(17)}<a href="${CONTACT.phone.href}">${CONTACT.phone.display}</a></span>
           <span>${ic.pin}<span>${CONTACT.address.street},<br/>${CONTACT.address.postcode} ${CONTACT.address.city}</span></span>
           <span>${ic.mail}<a href="mailto:${CONTACT.email}">${CONTACT.email}</a></span>
+          <span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="2"/><path d="M8 8.5h8M8 12h8M8 15.5h5"/></svg><span>BTW ${CONTACT.btw.display}</span></span>
         </div>
       </div>
     </div>
     <div class="pc-footer-lijn"></div>
     <div class="pc-footer-onder">
-      <span>&copy; ${new Date().getFullYear()} AB Bouw Groep. Alle rechten voorbehouden.</span>
+      <span>&copy; ${new Date().getFullYear()} AB Bouw Groep &middot; BTW ${CONTACT.btw.display}. Alle rechten voorbehouden.</span>
       <span><a href="/privacy">Privacy</a> &middot; <a href="/voorwaarden">Voorwaarden</a> &middot; <a href="/cookies">Cookies</a></span>
     </div>
   </div>

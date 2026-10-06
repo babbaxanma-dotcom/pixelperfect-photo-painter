@@ -1200,13 +1200,18 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
                 <span><IcTelefoon /><a href={CONTACT.phone.href}>{CONTACT.phone.spaced}</a></span>
                 <span><IcPin />{CONTACT.address.street},<br />{CONTACT.address.postcode} {CONTACT.address.city}</span>
                 <span><IcMail /><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></span>
+                {/* 7 okt 2026, Mohammed: het btw-nummer "duidelijker zichtbaar" onderaan de homepage. */}
+                <span>
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="2" /><path d="M8 8.5h8M8 12h8M8 15.5h5" /></svg>
+                  <span>BTW {CONTACT.btw.display}</span>
+                </span>
               </div>
             </div>
           </div>
 
           <div className="pc-footer-lijn" />
           <div className="pc-footer-onder">
-            <span>© {new Date().getFullYear()} AB Bouw Groep. Alle rechten voorbehouden.</span>
+            <span>© {new Date().getFullYear()} AB Bouw Groep · BTW {CONTACT.btw.display}. Alle rechten voorbehouden.</span>
             {inhoud.siteVoet
               ? <span><a href="/privacy">Privacy</a> &middot; <a href="/voorwaarden">Voorwaarden</a> &middot; <a href="/cookies">Cookies</a></span>
               : <a href="/privacy">Privacybeleid</a>}

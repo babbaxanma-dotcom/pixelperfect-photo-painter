@@ -325,7 +325,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
 
   /* 9. Voet */
   const voet = await page.evaluate(() => document.querySelector('.kgj-voet')?.textContent || '');
-  meld(voet.includes('BE 0712.443.881'), 'btw-nummer in de voet');
+  meld(voet.includes('BE 1010.850.361'), 'btw-nummer in de voet');
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
   await wacht(400);
   await page.screenshot({ path: `${UIT}/06-voet.png` });

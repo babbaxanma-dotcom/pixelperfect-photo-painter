@@ -794,12 +794,14 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               <li>{CONTACT.address.street}<br />{CONTACT.address.city}</li>
               <li><a href={CONTACT.phone.href}>{CONTACT.phone.display}</a></li>
               <li><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></li>
+              {/* 7 okt 2026, Mohammed: het btw-nummer ook in de voet van de landingspagina's. */}
+              <li>BTW {CONTACT.btw.display}</li>
             </ul>
           </div>
         </div>
         <div className="kgj-breed kgj-voet__onder">
-          {/* Btw-nummer uit Voorwaarden.tsx, de enige plek in de code waar het staat. */}
-          <p>© {new Date().getFullYear()} AB Bouw Groep · BTW BE 0712.443.881</p>
+          {/* Btw-nummer uit src/data/contact.ts (7 okt 2026, Mohammed: het oude nummer dat hier hard stond was fout). */}
+          <p>© {new Date().getFullYear()} AB Bouw Groep · BTW {CONTACT.btw.display}</p>
           <a href="/privacy">Privacy</a>
           <a href="/cookies">Cookies</a>
           <a href="/voorwaarden">Voorwaarden</a>

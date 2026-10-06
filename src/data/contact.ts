@@ -21,6 +21,15 @@ export const CONTACT = {
     href: 'tel:+32460207788',
   },
   email: 'info@abgroep.be',
+  /** Btw-nummer, Mohammed 7 okt 2026: "BE1010850361 is het btw nummer" (het oude 0712.443.881 was
+      fout en stond in de voet van de landingspagina's en in de voorwaarden). Controlegetal klopt:
+      97 - (10108503 mod 97) = 61. */
+  btw: {
+    /** "BE 1010.850.361": zoals het op de site staat */
+    display: 'BE 1010.850.361',
+    /** "BE1010850361": zonder spaties en punten, voor facturen en API's */
+    plain: 'BE1010850361',
+  },
   address: {
     street: 'August van Landeghemstraat 63',
     postcode: '2830',

@@ -9,7 +9,7 @@ const ARTIKELEN: Artikel[] = [
   {
     n: 'Artikel 1', t: 'Waarop deze voorwaarden van toepassing zijn',
     p: [
-      `Deze voorwaarden gelden voor elke offerte, overeenkomst en uitvoering van werken door AB Bouw Groep, BTW BE 0712.443.881, met zetel te ${CONTACT.address.full}.`,
+      `Deze voorwaarden gelden voor elke offerte, overeenkomst en uitvoering van werken door AB Bouw Groep, BTW ${CONTACT.btw.display}, met zetel te ${CONTACT.address.full}.`,
       'Wie een offerte aanvaardt, aanvaardt daarmee ook deze voorwaarden in hun geheel.',
     ],
   },
