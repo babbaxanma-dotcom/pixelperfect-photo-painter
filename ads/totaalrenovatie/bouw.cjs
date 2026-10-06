@@ -152,6 +152,47 @@ const GROEPEN = {
       'Tijdens de werken schermen wij de woning af tegen stof en ruimen we elke avond op.',
     ],
   },
+  /* 6 okt 14:00 (Mohammed: "dan krijgen de aannemer robuuste mensen toch ook te zien, bereken in 2 min"): de 16
+     aannemer-zoekwoorden krijgen een eigen groep met een eigen advertentie, zonder de rekenaarbelofte, naar de
+     nieuwe pagina /lp/aannemer-renovatiewerken. Elk woord komt van die pagina (hero, zekerheden, expertises, knop).
+     In de groep Totaalrenovatie gaan dezelfde 16 op pauze (statistieken blijven daar staan). */
+  'Aannemer renovatiewerken': {
+    kern: 'aannemer',
+    url: 'https://www.abgroep.be/lp/aannemer-renovatiewerken',
+    zoekwoorden: [
+      ['algemene aannemer', 'e'], ['renovatie bedrijf', 'e'],   // exact sinds 6 okt 11:45 (Mohammed)
+      ['algemene aannemer renovatie', 'w'], ['renovatiebedrijf', 'w'], ['renovatiefirma', 'w'], ['renovatie firma', 'w'],
+      ['verbouwingswerken', 'w'], ['aannemer renovatiewerken', 'w'], ['aannemer renovatie', 'w'], ['renovatie aannemer', 'w'],
+      ['renovatie aannemers', 'w'], ['aannemer renovaties', 'w'], ['aannemer verbouwing', 'w'], ['bouwbedrijf renovatie', 'w'],
+      ['aannemer voor renovatie', 'w'], ['aannemer energetische renovatie', 'w'],
+    ],
+    pad: ['aannemer', 'renovatiewerken'],
+    pin2: 'Aannemer voor uw hele woning',
+    koppen: [
+      'Aannemer voor renovatiewerken',    // positie 1, gepind met de KeyWord-kop
+      '{KeyWord:Aannemer renovatiewerken}',
+      /* Positie 2, gepind: filterkop. Pagina: "of de hele woning stript". Wie één kamer zoekt, klikt hier niet. */
+      'Aannemer voor uw hele woning',
+      'Eén aannemer voor alle werken',    // "Eén aannemer voor al uw renovatiewerken"
+      'Plaatsbezoek en offerte gratis',   // knop op de pagina
+      'Offerteprijs is de eindprijs',     // "De prijs op uw offerte is de eindprijs"
+      'Alle expertises in eigen huis',    // "Omdat we alle expertises zelf in huis hebben"
+      'Eén planning voor alle vakken',
+      'Totaalrenovatie en nieuwbouw',     // expertise 1
+      'Aanbouw en verbouwing',            // expertise 2
+      'Dak, gevel en badkamer',           // expertises 3, 4, 5
+      'Renovatiewerken in {LOCATION(City):uw regio}',
+      'AB Bouw Groep: aannemer',
+      'Woning 10+ jaar: 6% btw',
+      'Propere werf, elke avond',         // "laat de werf élke avond opgeruimd achter"
+    ],
+    beschrijvingen: [
+      'Eén aannemer voor al uw renovatiewerken: alle expertises in huis, volgens één planning.',
+      'Gratis plaatsbezoek en offerte. De prijs op uw offerte is de eindprijs.',
+      'Totaalrenovatie, aanbouw, dak, gevel, badkamer en interieur door onze vaste ploegen.',
+      'Onze vaste ploeg dekt alles netjes af en laat de werf elke avond opgeruimd achter.',
+    ],
+  },
   'Prijs renovatie': {
     kern: 'renovatie',
     zoekwoorden: [
