@@ -97,6 +97,14 @@ const INSTELLINGEN = {
      AAN naar /lp/aannemer-renovatiewerken blijven: [algemene aannemer], [renovatie bedrijf] (exact) en "aannemer
      renovatiewerken" (2 klikken, 1 conversie). Firmanamen kwamen ook via de kleine zoekwoorden (janco via bouwbedrijf
      renovatie; 6 namen op 5-6 okt via renovatiebedrijf/renovatie aannemer/aannemer verbouwing), dus niet alleen via de drie. */
+  /* 6 okt 13:15, EINDSTAND (Mohammed: "wat al werkte, met de prijs searches etc, VOLLEDIG ZO LATEN, dus al die mensen
+     moeten naar de vorige landingspagina met de rekenaar; de bouncers gaan we opvangen met de nieuwe pagina"):
+     - /lp/richtprijs-berekenen = de totaalrenovatiepagina van vóór 5 okt (rekenaar in de hero, commit 6955c93), zie
+       src/pages/abbouw/lp/kgj/LpRichtprijs.tsx. Alle 42 zoekwoorden van Prijs renovatie en de 50 niet-aannemer-
+       zoekwoorden van Totaalrenovatie hebben die URL op zoekwoordniveau (ook de 5 gepauzeerde brede dubbels).
+     - De 16 aannemer-zoekwoorden staan weer AAN en gaan naar /lp/aannemer-renovatiewerken (nieuwe pagina). De pauze
+       van 12:40 is daarmee ongedaan; [algemene aannemer] en [renovatie bedrijf] blijven exact.
+     - Meting: op 18 okt per zoekwoord klikken/conversies; aannemer-zoekwoorden 0 conversies op 40 klikken = uit. */
 };
 
 /* ---------- Zoekwoorden: twee groepen op zoekintentie ---------- */
