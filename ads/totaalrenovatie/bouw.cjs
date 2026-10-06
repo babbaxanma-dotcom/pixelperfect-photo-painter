@@ -83,6 +83,11 @@ const INSTELLINGEN = {
        renovatie aannemers, aannemer renovaties, aannemer verbouwing, bouwbedrijf renovatie, aannemer voor
        renovatie, aannemer energetische renovatie (alle woordgroep). Algemene aannemer, renovatie bedrijf en
        verbouwingswerken staan weer AAN. De rest van de groep gaat via de advertentie naar /lp/totaalrenovatie. */
+  /* 6 okt 11:45 (Mohammed: "In Google Ads maak je er dit van: [algemene aannemer] en [renovatie bedrijf]", "maak ze gewoon
+     exact match"): beide van woordgroep naar EXACT, via Bewerken > Zoektypen wijzigen (Google verwijdert het oude zoekwoord
+     en maakt een nieuw; de URL /lp/aannemer-renovatiewerken is meegegaan, nagelezen). Statistieken van vóór 6 okt staan op
+     het verwijderde zoekwoord. "verbouwingswerken" blijft woordgroep. Reden: de woordgroep-varianten trokken firmanamen en
+     plaatsen aan (slk projects, jos de jongh, 3bouw via "algemene aannemer"; dcs via "renovatie bedrijf"). */
 };
 
 /* ---------- Zoekwoorden: twee groepen op zoekintentie ---------- */
