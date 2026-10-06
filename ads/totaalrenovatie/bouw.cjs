@@ -263,6 +263,10 @@ const UITSLUITEN = [
   ['geleen', 'w'], ['oosterhout', 'w'], ['hulst', 'w'], ['zulte', 'w'], ['westende', 'w'], ['kust', 'w'], ['lummen', 'w'],
   // geen dienst van AB of geen aannemer gezocht
   ['veranda', 'w'], ['woonunit', 'w'], ['architecten', 'w'], ['keukendeuren', 'w'], ['keukendeurtjes', 'w'], ['keukenfronten', 'w'], ['keukenkastdeuren', 'w'], ['keukenkast deuren', 'w'], ['remodeling', 'w'], ['elektriciteit', 'w'], ['mag je', 'w'],
+  /* 6 okt (Mohammed: "werk dit uit", zwarte lijst klusjes). Getoetst: 0 van de 525 kopers. Bewust NIET uit die lijst:
+     'dakkapel' en 'asbestdak vervangen' (diensten van AB: Diensten.tsx, RealisatiesDakwerken, asbestvraag in de
+     dakrekenaar); premie/subsidie, woonunit en keukendeurtjes stonden er al. */
+  ['klein toilet', 'w'], ['douche plaatsen', 'w'], ['badkamer in 1 dag', 'w'], ['trap renoveren', 'w'], ['terras uitbreken', 'w'],
   // losse infovragen, exact
   ['renovatie 6 btw', 'e'], ['wanneer renoveren epc', 'e'], ['duurzaam renoveren nu', 'e'], ['all renovations', 'e'], ['renovatie experts', 'e'], ['binnendeuren renoveren', 'e'], ['vloerverwarming renovatie beperkte hoogte', 'e'],
 ];

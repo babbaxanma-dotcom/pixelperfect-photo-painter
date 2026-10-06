@@ -317,6 +317,11 @@
 "remodeling"
 "elektriciteit"
 "mag je"
+"klein toilet"
+"douche plaatsen"
+"badkamer in 1 dag"
+"trap renoveren"
+"terras uitbreken"
 [renovatie 6 btw]
 [wanneer renoveren epc]
 [duurzaam renoveren nu]
