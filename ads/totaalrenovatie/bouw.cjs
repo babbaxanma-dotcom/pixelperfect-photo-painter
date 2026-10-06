@@ -73,6 +73,16 @@ const INSTELLINGEN = {
      0 conversies; zoekwoorden die de woning noemen 64 klikken, 8 conversies. Regel: het budget is elke dag op, dus een
      zoekwoord dat zwakker is dan de rest mag eruit, ook zonder bewijs dat het slecht is. "aannemer renovatiewerken" blijft
      (2 klikken, 1 conversie). Pauze, geen uitsluiting: een uitsluiting blokkeert ook "verbouwingswerken woning". */
+  /* 6 okt (Mohammed: "die bouncden ... gaat weer aan, en vervolgens die leiden naar de nieuwe landingspagina",
+     "zoektermen die bij de prijs doorgingen ... naar de landingspagina van de prijs rekenaar"). Uiteindelijke URL op
+     ZOEKWOORDNIVEAU (de advertenties blijven ongewijzigd):
+     - groep Prijs renovatie, alle 42 zoekwoorden -> https://www.abgroep.be/lp/richtprijs-berekenen
+     - groep Totaalrenovatie, 16 aannemer-zoekwoorden -> https://www.abgroep.be/lp/aannemer-renovatiewerken:
+       algemene aannemer, algemene aannemer renovatie, renovatie bedrijf, renovatiebedrijf, renovatiefirma,
+       renovatie firma, verbouwingswerken, aannemer renovatiewerken, aannemer renovatie, renovatie aannemer,
+       renovatie aannemers, aannemer renovaties, aannemer verbouwing, bouwbedrijf renovatie, aannemer voor
+       renovatie, aannemer energetische renovatie (alle woordgroep). Algemene aannemer, renovatie bedrijf en
+       verbouwingswerken staan weer AAN. De rest van de groep gaat via de advertentie naar /lp/totaalrenovatie. */
 };
 
 /* ---------- Zoekwoorden: twee groepen op zoekintentie ---------- */
