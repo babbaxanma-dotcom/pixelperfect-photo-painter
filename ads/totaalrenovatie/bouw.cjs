@@ -88,6 +88,15 @@ const INSTELLINGEN = {
      en maakt een nieuw; de URL /lp/aannemer-renovatiewerken is meegegaan, nagelezen). Statistieken van vóór 6 okt staan op
      het verwijderde zoekwoord. "verbouwingswerken" blijft woordgroep. Reden: de woordgroep-varianten trokken firmanamen en
      plaatsen aan (slk projects, jos de jongh, 3bouw via "algemene aannemer"; dcs via "renovatie bedrijf"). */
+  /* 6 okt 12:40 (verificatie met 5 controleurs op Fable; Mohammed: "het budget is kapot aan het gaan", "doe alle
+     aanpassingen"). De 16 aannemer-zoekwoorden kostten 28 sep-5 okt €139,42 voor 1 conversie (48 klikken, 2,1%) tegen
+     €22,70 (woning, 3/25) en €24,61 (prijs, 5/46); bij vol budget verdringt elke aannemer-klik een woning-klik. Daarom
+     13 woordgroep-aannemer-zoekwoorden op PAUZE: algemene aannemer renovatie, renovatiebedrijf, renovatiefirma,
+     renovatie firma, verbouwingswerken, aannemer renovatie, renovatie aannemer, renovatie aannemers, aannemer
+     renovaties, aannemer verbouwing, bouwbedrijf renovatie, aannemer voor renovatie, aannemer energetische renovatie.
+     AAN naar /lp/aannemer-renovatiewerken blijven: [algemene aannemer], [renovatie bedrijf] (exact) en "aannemer
+     renovatiewerken" (2 klikken, 1 conversie). Firmanamen kwamen ook via de kleine zoekwoorden (janco via bouwbedrijf
+     renovatie; 6 namen op 5-6 okt via renovatiebedrijf/renovatie aannemer/aannemer verbouwing), dus niet alleen via de drie. */
 };
 
 /* ---------- Zoekwoorden: twee groepen op zoekintentie ---------- */
@@ -287,6 +296,11 @@ const UITSLUITEN = [
      geen woningkoper met terras, landelijke stijl, verbouwtips of douchebak. */
   ['dcs interieur', 'w'], ['slk projects', 'w'], ['janco', 'w'], ['reyniers', 'w'], ['3bouw', 'w'], ['all reno interior', 'w'],
   ['djt', 'w'], ['jos de jongh', 'w'], ['baeten van es', 'w'], ['terras', 'w'], ['landelijke stijl', 'w'], ['verbouwtips', 'w'], ['douchebak', 'w'],
+  /* 6 okt 12:30 (verificatie met 5 controleurs; Mohammed: "doe alle aanpassingen"). Bedrijfsvormen (firmanamen komen als
+     "x bvba", "x projects" binnen, 7 verschillende in 8 dagen, 0 herhalingen) en losse klusjes uit de prijsgroep (2-4 okt:
+     7 van 13 zichtbare klikken off-target: badkamer, elektriciteit, gyproc, trap, veranda). Getoetst: 0 van 525 kopers,
+     autocomplete leeg. NIET "nv": koper "renovatie aannemer nv". NIET "dakkapel": dienst van AB. */
+  ['gyproc', 'w'], ['bvba', 'w'], ['bv', 'w'], ['projects', 'w'], ['nieuwe badkamer', 'w'], ['inloopdouche', 'w'],
   // losse infovragen, exact
   ['renovatie 6 btw', 'e'], ['wanneer renoveren epc', 'e'], ['duurzaam renoveren nu', 'e'], ['all renovations', 'e'], ['renovatie experts', 'e'], ['binnendeuren renoveren', 'e'], ['vloerverwarming renovatie beperkte hoogte', 'e'],
 ];

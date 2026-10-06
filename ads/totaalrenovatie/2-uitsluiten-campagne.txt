@@ -335,6 +335,12 @@
 "landelijke stijl"
 "verbouwtips"
 "douchebak"
+"gyproc"
+"bvba"
+"bv"
+"projects"
+"nieuwe badkamer"
+"inloopdouche"
 [renovatie 6 btw]
 [wanneer renoveren epc]
 [duurzaam renoveren nu]
