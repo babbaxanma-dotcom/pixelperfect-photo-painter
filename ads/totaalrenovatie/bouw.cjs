@@ -159,12 +159,14 @@ const GROEPEN = {
   'Aannemer renovatiewerken': {
     kern: 'aannemer',
     url: 'https://www.abgroep.be/lp/aannemer-renovatiewerken',
+    /* Alle 16 EXACT (Mohammed, 6 okt 14:20: "heb je renovatiefirma wel op exact match gedaan? anders is het whack a
+       mole spel"): de woordgroep-varianten trokken firmanamen en plaatsen aan (7 verschillende in 8 dagen). */
     zoekwoorden: [
-      ['algemene aannemer', 'e'], ['renovatie bedrijf', 'e'],   // exact sinds 6 okt 11:45 (Mohammed)
-      ['algemene aannemer renovatie', 'w'], ['renovatiebedrijf', 'w'], ['renovatiefirma', 'w'], ['renovatie firma', 'w'],
-      ['verbouwingswerken', 'w'], ['aannemer renovatiewerken', 'w'], ['aannemer renovatie', 'w'], ['renovatie aannemer', 'w'],
-      ['renovatie aannemers', 'w'], ['aannemer renovaties', 'w'], ['aannemer verbouwing', 'w'], ['bouwbedrijf renovatie', 'w'],
-      ['aannemer voor renovatie', 'w'], ['aannemer energetische renovatie', 'w'],
+      ['algemene aannemer', 'e'], ['renovatie bedrijf', 'e'],
+      ['algemene aannemer renovatie', 'e'], ['renovatiebedrijf', 'e'], ['renovatiefirma', 'e'], ['renovatie firma', 'e'],
+      ['verbouwingswerken', 'e'], ['aannemer renovatiewerken', 'e'], ['aannemer renovatie', 'e'], ['renovatie aannemer', 'e'],
+      ['renovatie aannemers', 'e'], ['aannemer renovaties', 'e'], ['aannemer verbouwing', 'e'], ['bouwbedrijf renovatie', 'e'],
+      ['aannemer voor renovatie', 'e'], ['aannemer energetische renovatie', 'e'],
     ],
     pad: ['aannemer', 'renovatiewerken'],
     pin2: 'Aannemer voor uw hele woning',

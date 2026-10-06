@@ -1,16 +1,16 @@
 [algemene aannemer]
 [renovatie bedrijf]
-"algemene aannemer renovatie"
-"renovatiebedrijf"
-"renovatiefirma"
-"renovatie firma"
-"verbouwingswerken"
-"aannemer renovatiewerken"
-"aannemer renovatie"
-"renovatie aannemer"
-"renovatie aannemers"
-"aannemer renovaties"
-"aannemer verbouwing"
-"bouwbedrijf renovatie"
-"aannemer voor renovatie"
-"aannemer energetische renovatie"
+[algemene aannemer renovatie]
+[renovatiebedrijf]
+[renovatiefirma]
+[renovatie firma]
+[verbouwingswerken]
+[aannemer renovatiewerken]
+[aannemer renovatie]
+[renovatie aannemer]
+[renovatie aannemers]
+[aannemer renovaties]
+[aannemer verbouwing]
+[bouwbedrijf renovatie]
+[aannemer voor renovatie]
+[aannemer energetische renovatie]
