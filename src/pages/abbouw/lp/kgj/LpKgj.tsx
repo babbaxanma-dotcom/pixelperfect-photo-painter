@@ -310,7 +310,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         {inhoud.topbalk && (
           <div className="kgj-topbalk">
             <div className="kgj-breed kgj-topbalk__in">
-              <IcBel /><span>{inhoud.topbalk} <a href={CONTACT.phone.href}>{CONTACT.phone.display}</a></span>
+              <IcBel /><span><span className="kgj-topbalk__zin">{inhoud.topbalk} </span><a href={CONTACT.phone.href}>{CONTACT.phone.display}</a></span>
             </div>
           </div>
         )}
@@ -756,7 +756,8 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           onClick={() => {
             const vorm = document.querySelector<HTMLElement>('.kgj-reken--inspectie');
             if (!vorm) return;
-            const kopH = document.querySelector('.kgj-kop')?.getBoundingClientRect().height ?? 0;
+            /* Het zichtbare deel van de vaste kop: op de telefoon scrolt het logo weg (6 okt). */
+            const kopH = Math.max(0, ...['.kgj-kop', '.kgj-topbalk'].map((s) => document.querySelector(s)?.getBoundingClientRect().bottom ?? 0));
             if (vorm.offsetHeight <= window.innerHeight - kopH) {
               vorm.scrollIntoView({ behavior: 'smooth', block: 'center' });
               return;

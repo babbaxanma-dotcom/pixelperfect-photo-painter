@@ -102,7 +102,7 @@ export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPr
           <>
             <label>{pb.naam}<input name="naam" type="text" autoComplete="name" placeholder={pb.naamHint} /></label>
             <label>{pb.email}<input name="email" type="email" autoComplete="email" inputMode="email" placeholder={pb.emailHint} /></label>
-            <label>{pb.gsm} * <span className="kgj-reken__uitleg">{pb.gsmUitleg}</span>
+            <label>{pb.gsm} *{pb.gsmUitleg && <> <span className="kgj-reken__uitleg">{pb.gsmUitleg}</span></>}
               <input name="telefoon" type="tel" autoComplete="tel" inputMode="tel" placeholder={pb.gsmHint} aria-required="true" />
             </label>
             <PostcodeGemeente label={pb.postcode} hint={pb.postcodeHint} />

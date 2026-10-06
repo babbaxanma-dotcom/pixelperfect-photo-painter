@@ -1042,6 +1042,40 @@ html:has(.kgjx .kgj-topbalk) { scroll-padding-top: 132px; }
   .kgjx.kgj-lp--totaalrenovatie .kgj-diensten .kgj-dienst--foto + .kgj-dienst--foto { border-top-color: #e2e3e6; }
 }
 
+/* 6 okt, Mohammed: "waarom voelt het zo druk op telefoon ... alsof je helemaal ingezoemt bent en
+   alles op je af komt". Gemeten op 390 x 844: 114 px vaste kop + 70 px vaste balk = 22% van het
+   scherm stond vast, de koppen waren 27 px op 346 px tekstbreedte en de zijmarge 22 px.
+   Alleen de renovatiepagina's. */
+@media (max-width: 1000px) {
+  /* Alleen de topbalk met het nummer blijft bovenaan staan (vast); het logo scrolt mee weg. De
+     kop zelf plakt niet meer, de rij met het logo begint onder de vaste balk. */
+  .kgjx.kgj-lp--totaalrenovatie { --topbalk-h: 38px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-kop--lp:has(.kgj-topbalk) { position: static; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-kop--lp .kgj-topbalk { position: fixed; top: 0; left: 0; right: 0; z-index: 60; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-kop--lp:has(.kgj-topbalk) .kgj-kop__in { margin-top: var(--topbalk-h); }
+  /* Rustiger zetwerk: kleinere koppen, iets meer zijmarge, lucht tussen de blokken. */
+  .kgjx.kgj-lp--totaalrenovatie { --zij: 26px; }
+  .kgjx.kgj-lp--totaalrenovatie h2 { font-size: 24px; line-height: 1.2; letter-spacing: -.018em; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-kopblok { margin-bottom: 26px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-kopblok p { font-size: 15.5px; line-height: 1.6; margin-top: 10px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop h1 { font-size: clamp(24px, 6.4vw, 40px); line-height: 1.18; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs { gap: 12px; margin-top: 18px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs li { font-size: 14.5px; line-height: 1.5; gap: 12px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs svg { width: 20px; height: 20px; padding: 4px; margin-top: 1px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-voordeel h3 { font-size: 18px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-voordeel p { font-size: 15px; line-height: 1.6; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-faq__item summary { font-size: 15.5px; }
+}
+@media (max-width: 640px) {
+  /* De topbalk op één regel: alleen het icoon en het nummer (de zin stond op twee regels). */
+  .kgjx.kgj-lp--totaalrenovatie .kgj-topbalk__zin { display: none; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-topbalk__in { min-height: 36px; padding-block: 6px; font-size: 14.5px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-topbalk a { font-weight: 700; }
+  /* Het telefoon-icoon wél tonen: het stond uit toen de zin op twee regels stond. */
+  .kgjx.kgj-lp--totaalrenovatie .kgj-topbalk svg { display: block; }
+  .kgjx.kgj-lp--totaalrenovatie { --topbalk-h: 36px; }
+}
+
 /* Vangnet: de kop op één regel op de computer (het woord "kosten?" stond alleen op regel twee). */
 .kgjx.kgj-lp--totaalrenovatie .kgj-vangnet .kgj-kopblok h2 { max-width: none; text-wrap: balance; }
 `;

@@ -268,7 +268,9 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     kop: 'Uitgevoerd werk',
     /* 5 okt: de tekst van de bewijssectie uit de blauwdruk. Zijn kop "Meer dan 500 Vlamingen gingen
        u voor" staat er niet op: een aantal zonder bron. */
-    onder: 'Een succesvolle renovatie valt of staat met vakmanschap. Bekijk onze recente transformaties in de regio. Kwaliteit, een scherp oog voor detail en onze liefde voor het vak staan bij elk project voorop. Wij leveren uw woning sleutel-op-de-deur af.',
+    /* 6 okt: alleen de kop boven de strook; de alinea uit de blauwdruk van 5 okt staat niet in zijn
+       definitieve tekst. */
+    onder: '',
     fotos: [
       { src: eigen9065, alt: 'Tv-wand in marmerlook tussen houten lamellen, met een zwevend meubel, door AB Bouw Groep' },
       { src: eigen9028, pos: '60% center', alt: 'Badkamer met ligbad onder het raam, hangtoilet, douchebak en wastafelmeubel met zwarte kraan, door AB Bouw Groep' },
@@ -326,7 +328,8 @@ export const TOTAALRENOVATIE: KgjInhoud = {
   /* 5 okt: de volgorde van de blauwdruk. Bewijs (werk en voor/na) direct na de hero, dan
      frustratie en oplossing, het stappenplan, de diensten, het vangnet en de vragen. */
   /* Gestript: zonder het fotospoor, alleen de voor/na als bewijs. */
-  volgorde: ['voorna', 'waarom', 'werkwijze', 'diensten', 'vangnet', 'faq'],
+  /* 6 okt, Mohammed: "onder de hero direct die slider van uitgevoerd werk". */
+  volgorde: ['uitgevoerd', 'voorna', 'waarom', 'werkwijze', 'diensten', 'vangnet', 'faq'],
 
   /* 29 sep, Mohammed: "meer goeie puntjes? dat de particulier wilt zien", "kijk
      ooms woonrealisaties en verelst en zedreno". Ooms en Verelst hebben allebei
@@ -389,7 +392,9 @@ export const TOTAALRENOVATIE: KgjInhoud = {
       naam: 'Voornaam & achternaam', naamHint: 'Uw voor- en achternaam',
       email: 'E-mailadres', emailHint: 'uw@email.be',
       /* ‑ = vast koppelteken: "premie-check" breekt niet over twee regels. */
-      gsm: 'GSM-nummer', gsmUitleg: '(Voor de afspraakplanning & uw gratis premie‑check)', gsmHint: '04xx xx xx xx',
+      /* 6 okt, Mohammed: de uitleg "(Voor de afspraakplanning & uw gratis premie-check)" eruit en
+         "pas aan naar Telefoonnummer". */
+      gsm: 'Telefoonnummer', gsmUitleg: '', gsmHint: '04xx xx xx xx',
       postcode: 'Postcode of gemeente', postcodeHint: 'Bijv. 2800',
     },
     vertrouwen: [
