@@ -109,6 +109,13 @@ const metVet = (t: string) => {
   const i = t.indexOf(': ');
   return i > 0 ? <><strong>{t.slice(0, i + 1)}</strong>{t.slice(i + 1)}</> : t;
 };
+/* 6 okt, Mohammed: "hero moet mooier, de tekst, de puntjes, professioneler". Op de pagina's met een
+   heroknop staat de titel van elk punt op een eigen regel en de uitleg eronder in zachter wit; de
+   dubbele punt vervalt omdat de titel niet meer in de zin staat. Zelfde woorden. */
+const metKop = (t: string) => {
+  const i = t.indexOf(': ');
+  return i > 0 ? <><strong>{t.slice(0, i)}</strong><span className="kgj-hero__uitleg">{t.slice(i + 2)}</span></> : t;
+};
 
 export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   const vat = useRef<HTMLDivElement>(null);
@@ -358,7 +365,7 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                     <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor"
                       strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <path d="m4 10.5 4 4 8-9" />
-                    </svg><span>{metVet(b)}</span>
+                    </svg><span>{inhoud.hero.knop ? metKop(b) : metVet(b)}</span>
                   </li>
                 ))}
               </ul>

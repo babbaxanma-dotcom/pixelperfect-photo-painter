@@ -914,7 +914,7 @@ html:has(.kgjx .kgj-topbalk) { scroll-padding-top: 132px; }
    tekst op één regel blijven. */
 .kgjx .kgj-hero__knop { gap: 11px; }
 .kgjx .kgj-hero__knop svg { flex: none; }
-@media (max-width: 380px) { .kgjx .kgj-hero--knop .kgj-hero__knop { font-size: 15px; gap: 9px; padding: 0 12px; } .kgjx .kgj-hero__knop svg { width: 20px; height: 20px; } }
+@media (max-width: 380px) { .kgjx .kgj-hero--knop .kgj-hero__knop { font-size: 14.5px; gap: 8px; padding: 0 10px; letter-spacing: -.015em; } .kgjx .kgj-hero__knop svg { width: 20px; height: 20px; } }
 
 /* De belofte onder de heroknop met een klokje, zoals de geruststellingen onder het formulier. */
 .kgjx .kgj-hero__micro { display: flex; align-items: center; gap: 8px; }
@@ -1074,6 +1074,37 @@ html:has(.kgjx .kgj-topbalk) { scroll-padding-top: 132px; }
   /* Het telefoon-icoon wél tonen: het stond uit toen de zin op twee regels stond. */
   .kgjx.kgj-lp--totaalrenovatie .kgj-topbalk svg { display: block; }
   .kgjx.kgj-lp--totaalrenovatie { --topbalk-h: 36px; }
+}
+
+/* 6 okt, Mohammed: "hero moet mooier, de tekst, de puntjes, professioneler en mooier". Zelfde
+   woorden, andere hiërarchie: de kop in goud zonder krabbelstreep; elk punt als titel met de uitleg
+   eronder in zachter wit, één icoon op de titelregel; meer lucht tussen kop, punten en knop. */
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__accent::after { content: none; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop h1 { letter-spacing: -.02em; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs { margin-top: 30px; gap: 18px; max-width: 560px; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs li { align-items: flex-start; gap: 14px; font-weight: 400; line-height: 1.5; text-shadow: 0 1px 12px rgba(5, 11, 20, .6); }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs li > span { display: block; min-width: 0; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs strong { display: block; font-size: 17px; font-weight: 700; line-height: 1.3; letter-spacing: -.01em; color: #fff; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__uitleg { display: block; margin-top: 3px; font-family: Lato, "Plus Jakarta Sans", system-ui, sans-serif; font-size: 15.5px; font-weight: 400; line-height: 1.55; color: rgba(255, 255, 255, .84); max-width: 50ch; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs svg { width: 24px; height: 24px; padding: 5px; margin-top: 0; }
+.kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__actie { margin-top: 36px; }
+/* De donkere laag links iets dieper, zodat de uitleg in zachter wit ook op een lichte foto leesbaar blijft. */
+@media (min-width: 1001px) {
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop::after { background: linear-gradient(95deg, rgba(10, 16, 28, .72) 0%, rgba(10, 16, 28, .62) 50%, rgba(10, 16, 28, .08) 100%); }
+}
+@media (min-width: 1001px) and (max-height: 820px) {
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs { margin-top: 20px; gap: 12px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs strong { font-size: 16px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__uitleg { font-size: 14.5px; line-height: 1.45; margin-top: 2px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__actie { margin-top: 26px; }
+}
+@media (max-width: 1000px) {
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs { margin-top: 22px; gap: 14px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs li { gap: 12px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs strong { font-size: 16px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__uitleg { font-size: 14.5px; line-height: 1.5; margin-top: 2px; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__bewijs svg { width: 22px; height: 22px; padding: 4px; margin-top: 0; }
+  .kgjx.kgj-lp--totaalrenovatie .kgj-hero--knop .kgj-hero__actie { margin-top: 26px; }
 }
 
 /* Vangnet: de kop op één regel op de computer (het woord "kosten?" stond alleen op regel twee). */
