@@ -267,6 +267,11 @@ const UITSLUITEN = [
      'dakkapel' en 'asbestdak vervangen' (diensten van AB: Diensten.tsx, RealisatiesDakwerken, asbestvraag in de
      dakrekenaar); premie/subsidie, woonunit en keukendeurtjes stonden er al. */
   ['klein toilet', 'w'], ['douche plaatsen', 'w'], ['badkamer in 1 dag', 'w'], ['trap renoveren', 'w'], ['terras uitbreken', 'w'],
+  /* 6 okt (Mohammed: "doe alles"): lekken uit de zoektermen van 4-5 okt, na de uitsluitingen van 3 okt. "dcs stekene"
+     blokkeerde "dcs interieur stekene" niet (woordgroep = aaneen). Getoetst: 0 van de 525 kopers; autocomplete geeft
+     geen woningkoper met terras, landelijke stijl, verbouwtips of douchebak. */
+  ['dcs interieur', 'w'], ['slk projects', 'w'], ['janco', 'w'], ['reyniers', 'w'], ['3bouw', 'w'], ['all reno interior', 'w'],
+  ['djt', 'w'], ['jos de jongh', 'w'], ['baeten van es', 'w'], ['terras', 'w'], ['landelijke stijl', 'w'], ['verbouwtips', 'w'], ['douchebak', 'w'],
   // losse infovragen, exact
   ['renovatie 6 btw', 'e'], ['wanneer renoveren epc', 'e'], ['duurzaam renoveren nu', 'e'], ['all renovations', 'e'], ['renovatie experts', 'e'], ['binnendeuren renoveren', 'e'], ['vloerverwarming renovatie beperkte hoogte', 'e'],
 ];
