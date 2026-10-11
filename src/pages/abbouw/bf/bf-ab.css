@@ -1,0 +1,162 @@
+/* AB-aanvullingen op bf.css (de geporteerde BF-CSS, scripts/bf-css-port.cjs). Laadt NA bf.css.
+   (a) gescopete reset tegen de globale AB-CSS die op elke pagina meedraait (ab-bouw.css, Tailwind preflight)
+   (b) AB-onderdelen die BF niet heeft: vragen, voor/na-schuif, n-stappenraster, tijdregel, vinkpunten
+   (c) AB-tokens en maten die met het AB-logo en de AB-tekst samenhangen.
+   Desktopmaten in calc(N * var(--u)) zoals BF; een regel die BF op gsm anders zet, staat hier
+   binnen @media (min-width: 1001px), anders zou hij de gsm-regel van bf.css overschrijven. */
+
+/* ---------- (c) tokens ---------- */
+.bf {
+  --merk-op-donker: #e0a83c; /* merkkleur als tekst op navy (spec §5) */
+}
+
+/* ---------- (a) reset: binnen .bf gelden de BF-basiswaarden, niet die van ab-bouw.css of preflight ---------- */
+.bf { font-size: 16px; font-weight: 400; line-height: normal; letter-spacing: normal; text-align: left; }
+.bf :where(h1, h2, h3, h4, h5, h6) { font-family: inherit; font-size: revert; font-weight: revert; letter-spacing: normal; line-height: inherit; color: inherit; text-wrap: wrap; font-feature-settings: normal; }
+.bf :where(p) { font-size: inherit; line-height: inherit; color: inherit; }
+.bf :where(section) { background: none; color: inherit; }
+.bf :where(b, strong) { font-weight: 700; }
+.bf :where(summary) { display: block; }
+.bf [hidden] { display: none !important; }
+/* ankers vallen onder de vaste kop uit, niet erachter */
+.bf [id] { scroll-margin-top: calc(92 * var(--u)); }
+@media (max-width: 1000px) { .bf [id] { scroll-margin-top: 72px; } }
+
+/* ---------- kop en voet: het AB-logo is 3,5 keer zo breed als hoog (BF: 2,5) ---------- */
+@media (min-width: 1001px) {
+  .bf .bf-nav__logo img { width: calc(161 * var(--u)); height: calc(46 * var(--u)); }
+}
+@media (max-width: 1000px) {
+  .bf .bf-nav__logo img { width: 126px; height: 36px; }
+}
+.bf .bf-voet__logo img { width: calc(220 * var(--u)); height: calc(63 * var(--u)); }
+@media (min-width: 1001px) {
+  /* zes diensten in de voet (BF: vijf): de onderregel schuift een regel op */
+  .bf .bf-voet--sub .bf-voet__in { height: calc(570 * var(--u)); }
+  .bf .bf-voet--sub .bf-voet__onder { top: calc(452 * var(--u)); }
+}
+
+/* ---------- hero: de AB-kop is langer dan die van BF; op 2 regels zoals BF ---------- */
+@media (min-width: 1001px) {
+  .bf .bf-hero__kop { font-size: calc(80 * var(--u)); }
+}
+
+/* ---------- over-split: zijn kop op 2 evenwichtige regels ---------- */
+.bf .bf-over__h2 { text-wrap: balance; }
+
+/* ---------- cijferband met 2 tegels (/over) ---------- */
+@media (min-width: 1001px) {
+  .bf .bf-cijfers__band--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); width: calc(800 * var(--u)); }
+}
+
+/* ---------- zekerheid: zijn zin onder de kop (BF heeft geen lede) ---------- */
+.bf .bf-waarom__lede { width: calc(700 * var(--u)); margin: calc(24 * var(--u)) auto 0; text-align: center; font-size: calc(18 * var(--u)); line-height: 1.6; color: var(--tekst-2); }
+@media (max-width: 1000px) { .bf .bf-waarom__lede { width: auto; margin-top: 18px; font-size: 16px; } }
+
+/* ---------- traject met n stappen (BF heeft er 3) ---------- */
+@media (min-width: 1001px) {
+  /* 5 stappen (spec §7.8): 6 kolommen, stap 1-3 elk 2, stap 4-5 elk 3 */
+  .bf .bf-proces__stappen--5 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .bf .bf-proces__stappen--5 > .bf-pstap { grid-column: span 2; }
+  .bf .bf-proces__stappen--5 > .bf-pstap:nth-child(n + 4) { grid-column: span 3; }
+  .bf .bf-proces__stappen--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bf .bf-proces__stappen--4, .bf .bf-proces__stappen--7, .bf .bf-proces__stappen--8 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .bf .bf-proces__stappen--6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.bf .bf-pstap__tijd { display: block; margin-top: calc(6 * var(--u)); font-size: calc(14 * var(--u)); font-weight: 600; line-height: 1.4; color: var(--merk-tekst); }
+@media (max-width: 1000px) { .bf .bf-pstap__tijd { font-size: 14px; } }
+
+/* ---------- uitgevoerd werk: zonder BF-reviewomhulsel; voor/na eronder ---------- */
+.bf .bf-voorna { width: calc(1200 * var(--u)); margin: calc(64 * var(--u)) auto 0; }
+.bf .bf-voorna__vak { position: relative; aspect-ratio: 1178 / 736; border-radius: calc(18 * var(--u)); overflow: hidden; background: var(--sectie); cursor: ew-resize; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.bf .bf-voorna__vak:has(.bf-voorna__bereik:focus-visible) { outline: calc(3 * var(--u)) solid var(--merk-tekst); outline-offset: calc(3 * var(--u)); }
+.bf .bf-voorna__beeld { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; -webkit-user-drag: none; }
+.bf .bf-voorna__voor { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--pos, 50%)) 0 0); }
+.bf .bf-voorna__lijn { position: absolute; top: 0; bottom: 0; left: var(--pos, 50%); width: calc(3 * var(--u)); margin-left: calc(-1.5 * var(--u)); background: var(--wit); box-shadow: 0 0 calc(12 * var(--u)) rgba(0, 0, 0, .28); pointer-events: none; }
+.bf .bf-voorna__greep { position: absolute; left: 50%; top: 50%; width: calc(52 * var(--u)); height: calc(52 * var(--u)); margin: calc(-26 * var(--u)) 0 0 calc(-26 * var(--u)); border-radius: 50%; background: var(--merk); color: var(--op-merk); display: flex; align-items: center; justify-content: center; gap: calc(2 * var(--u)); box-shadow: 0 calc(8 * var(--u)) calc(22 * var(--u)) rgba(0, 0, 0, .28); }
+.bf .bf-voorna__greep svg { width: calc(12 * var(--u)); height: calc(12 * var(--u)); }
+.bf .bf-voorna__label { position: absolute; top: calc(18 * var(--u)); padding: calc(7 * var(--u)) calc(14 * var(--u)); border-radius: calc(999 * var(--u)); background: rgba(255, 255, 255, .95); font-size: calc(14 * var(--u)); font-weight: 600; line-height: 1.2; color: var(--ink-2); pointer-events: none; }
+.bf .bf-voorna__label--voor { left: calc(18 * var(--u)); }
+.bf .bf-voorna__label--na { right: calc(18 * var(--u)); }
+.bf .bf-voorna__bereik { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 1px; margin: 0; opacity: 0; pointer-events: none; }
+@media (max-width: 1000px) {
+  .bf .bf-voorna { width: auto; margin: 32px 16px 0; }
+  .bf .bf-voorna__vak { border-radius: 12px; }
+  .bf .bf-voorna__greep { width: 44px; height: 44px; margin: -22px 0 0 -22px; }
+  .bf .bf-voorna__greep svg { width: 11px; height: 11px; }
+  .bf .bf-voorna__label { top: 12px; font-size: 14px; padding: 6px 12px; }
+  .bf .bf-voorna__label--voor { left: 12px; }
+  .bf .bf-voorna__label--na { right: 12px; }
+}
+
+/* ---------- veelgestelde vragen (BF-kaartstijl: wit, radius 14u, lijn #ececec, plusje in een cirkel, goud als open) ---------- */
+.bf .bf-vragen { padding: calc(110 * var(--u)) 0 calc(10 * var(--u)); }
+.bf .bf-vragen .bf-streep { width: calc(110 * var(--u)); margin-top: calc(24 * var(--u)); }
+.bf .bf-vragen__lijst { width: calc(880 * var(--u)); margin: calc(48 * var(--u)) auto 0; display: grid; gap: calc(14 * var(--u)); }
+.bf .bf-vraag { background: var(--wit); border-radius: calc(14 * var(--u)); box-shadow: 0 0 0 calc(1 * var(--u)) var(--lijn), 0 calc(16 * var(--u)) calc(36 * var(--u)) calc(-28 * var(--u)) rgba(17, 17, 17, .25); }
+.bf .bf-vraag summary { display: flex; align-items: center; justify-content: space-between; gap: calc(20 * var(--u)); padding: calc(22 * var(--u)) calc(24 * var(--u)) calc(22 * var(--u)) calc(28 * var(--u)); font-size: calc(18 * var(--u)); font-weight: 700; line-height: 1.35; color: var(--ink-2); cursor: pointer; list-style: none; border-radius: calc(14 * var(--u)); }
+.bf .bf-vraag summary::-webkit-details-marker { display: none; }
+.bf .bf-vraag summary::marker { content: ''; }
+.bf .bf-vraag__plus { position: relative; flex: none; width: calc(34 * var(--u)); height: calc(34 * var(--u)); border-radius: 50%; color: var(--ink-2); box-shadow: inset 0 0 0 calc(1.5 * var(--u)) #d6d6d6; transition: background-color .2s ease, box-shadow .2s ease, color .2s ease; }
+.bf .bf-vraag__plus::before, .bf .bf-vraag__plus::after { content: ""; position: absolute; left: 50%; top: 50%; width: calc(12 * var(--u)); height: calc(2 * var(--u)); margin: calc(-1 * var(--u)) 0 0 calc(-6 * var(--u)); border-radius: 1px; background: currentColor; transition: transform .2s ease; }
+.bf .bf-vraag__plus::after { transform: rotate(90deg); }
+.bf .bf-vraag[open] .bf-vraag__plus { background: var(--merk); color: var(--op-merk); box-shadow: none; }
+.bf .bf-vraag[open] .bf-vraag__plus::after { transform: rotate(0deg); }
+.bf .bf-vraag p { padding: 0 calc(28 * var(--u)) calc(24 * var(--u)); max-width: calc(780 * var(--u)); font-size: calc(16.5 * var(--u)); line-height: 1.65; color: var(--tekst-2); }
+@media (prefers-reduced-motion: reduce) { .bf .bf-vraag__plus, .bf .bf-vraag__plus::before, .bf .bf-vraag__plus::after { transition: none; } }
+@media (max-width: 1000px) {
+  .bf .bf-vragen { padding: 56px 16px 8px; }
+  .bf .bf-vragen__lijst { width: auto; margin-top: 28px; gap: 10px; }
+  .bf .bf-vraag summary { min-height: 56px; padding: 16px 14px 16px 18px; font-size: 17px; }
+  .bf .bf-vraag__plus { width: 32px; height: 32px; }
+  .bf .bf-vraag__plus::before, .bf .bf-vraag__plus::after { width: 12px; height: 2px; margin: -1px 0 0 -6px; }
+  .bf .bf-vraag p { padding: 0 18px 18px; font-size: 16px; }
+}
+
+/* ---------- paginakop: tweede kopregel lichter (zoals de hero), kruimelpad, knoppen ---------- */
+.bf .bf-paginakop__kop2 { display: block; color: rgba(255, 255, 255, .8); }
+.bf .bf-paginakop .bf-kruimel { display: flex; flex-wrap: wrap; align-items: center; gap: calc(8 * var(--u)); }
+.bf .bf-kruimel__deel { opacity: .6; }
+.bf .bf-paginakop__knoppen { display: flex; flex-wrap: wrap; gap: calc(12 * var(--u)); margin-top: calc(32 * var(--u)); }
+.bf .bf-paginakop__knoppen .bf-knop { height: calc(56 * var(--u)); padding: 0 calc(28 * var(--u)); font-size: calc(16 * var(--u)); }
+.bf .bf-paginakop__knoppen .bf-knop svg { width: calc(14 * var(--u)); height: calc(14 * var(--u)); }
+@media (max-width: 1000px) {
+  .bf .bf-paginakop__knoppen { margin-top: 24px; }
+  .bf .bf-paginakop__knoppen .bf-knop { width: 100%; height: 52px; padding: 0 20px; font-size: 16px; }
+  .bf .bf-paginakop .bf-kruimel a { display: inline-flex; align-items: center; min-height: 44px; }
+}
+
+/* ---------- dienstrij: zonder foto en met vinkpunten ---------- */
+@media (min-width: 1001px) {
+  .bf .bf-dienstrij--zonder { grid-template-columns: minmax(0, 1fr); max-width: calc(820 * var(--u)); }
+}
+.bf .bf-dienstrij__punten { margin-top: calc(22 * var(--u)); display: grid; gap: calc(12 * var(--u)); }
+.bf .bf-dienstrij__punten li { display: grid; grid-template-columns: calc(28 * var(--u)) minmax(0, 1fr); gap: calc(12 * var(--u)); align-items: start; font-size: calc(17 * var(--u)); font-weight: 500; line-height: 1.5; color: var(--ink-2); }
+.bf .bf-dienstrij__punten .bf-belofte__vink { width: calc(28 * var(--u)); height: calc(28 * var(--u)); }
+.bf .bf-dienstrij__punten .bf-belofte__vink svg { width: calc(15 * var(--u)); height: calc(15 * var(--u)); }
+@media (max-width: 1000px) {
+  .bf .bf-dienstrij__punten li { grid-template-columns: 28px minmax(0, 1fr); gap: 12px; font-size: 16px; }
+  .bf .bf-dienstrij__punten .bf-belofte__vink { width: 28px; height: 28px; }
+  .bf .bf-dienstrij__punten .bf-belofte__vink svg { width: 15px; height: 15px; }
+}
+
+/* ---------- waarden-raster met 3 of 4 items, beloftelijst zonder foto, lede onder een middenkop ---------- */
+@media (min-width: 1001px) {
+  .bf .bf-waarden--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: none; }
+  .bf .bf-duo--zonder { grid-template-columns: minmax(0, 1fr); max-width: calc(760 * var(--u)); }
+}
+.bf .bf-sraam__lede { max-width: calc(680 * var(--u)); margin: calc(-24 * var(--u)) auto calc(40 * var(--u)); text-align: center; font-size: calc(18 * var(--u)); line-height: 1.6; color: var(--tekst-2); }
+@media (max-width: 1000px) { .bf .bf-sraam__lede { margin: -12px auto 24px; font-size: 16px; } }
+
+/* ---------- gsm: lopende tekst minstens 16 px (spec §13); BF zet enkele op 14,5-15,5 px ---------- */
+@media (max-width: 1000px) {
+  .bf .bf-dkaart p, .bf .bf-dkaart__link, .bf .bf-wkaart p, .bf .bf-pstap p, .bf .bf-belofte p, .bf .bf-waarde p,
+  .bf .bf-voet__tekst, .bf .bf-voet__onder, .bf .bf-form__uitleg, .bf .bf-form__privacy, .bf .bf-rproject strong { font-size: 16px; }
+}
+
+/* ---------- gsm: de tabs van de formulierkaart passen niet op één regel onder ~430 px ("Gratis plaatsbezoek" is langer
+   dan BF "Gratis inspectie"); de labels lopen dan netjes over twee regels in plaats van uit de kaart te steken ---------- */
+@media (max-width: 1000px) {
+  .bf .bf-fwissel { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .bf .bf-fwissel button { height: auto; min-height: 46px; padding: 6px 8px; white-space: normal; line-height: 1.2; text-wrap: balance; }
+}

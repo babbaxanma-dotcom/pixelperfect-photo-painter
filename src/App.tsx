@@ -5,9 +5,10 @@ import PageTransition from "./components/PageTransition";
 import "./styles/ab-bouw.css";
 
 // LAZY-LOAD alle routes — initial bundle van 1MB -> ~150KB
-// Eager-load alleen Home want LCP-critical (first paint)
-import Home from "./pages/abbouw/Home";
-import HomePc from "./pages/abbouw/HomePc";
+// Eager-load alleen de homepage want LCP-critical (first paint).
+// 11 okt 2026: "/" in de stijl van bfbouw.be (spec/bf-stijl.md). HomePc.tsx (LpReplica) en Home.tsx
+// blijven staan als terugval; teruggaan is deze import en de route hieronder.
+import HomeBf from "./pages/abbouw/bf/HomeBf";
 
 const OverOns = lazy(() => import("./pages/abbouw/OverOns"));
 const Diensten = lazy(() => import("./pages/abbouw/Diensten"));
@@ -84,8 +85,9 @@ const App = () => {
         <PageTransition>
         <Suspense fallback={<RouteLoading />}>
         <Routes>
-          <Route path="/" element={<HomePc />} />
-          <Route path="/index" element={<Home />} />
+          <Route path="/" element={<HomeBf />} />
+          {/* de oude home toonde 8 reviews zonder bron (spec §3) */}
+          <Route path="/index" element={<Navigate to="/" replace />} />
           <Route path="/over" element={<OverOns />} />
           <Route path="/diensten" element={<Diensten />} />
           <Route path="/realisaties" element={<Navigate to="/" replace />} />
