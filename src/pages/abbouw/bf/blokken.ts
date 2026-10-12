@@ -249,11 +249,12 @@ export function duo(o: { id: string; kop: string; alineas: string[]; google?: bo
 </div></section>`;
 }
 
-/* ---------- beloftelijst (BF bouw/paginas.cjs r.143-147, duo met vinkjes) ---------- */
-export function beloftelijst(o: { kop: string; lede?: string; punten: { titel: string; tekst: string }[]; foto?: Foto; om?: boolean; grijs?: boolean }) {
+/* ---------- beloftelijst (BF bouw/paginas.cjs r.143-147, duo met vinkjes) ----------
+   slot: optionele alinea direct onder de punten (/over, 12 okt). Zonder slot is de uitvoer ongewijzigd. */
+export function beloftelijst(o: { kop: string; lede?: string; punten: { titel: string; tekst: string }[]; slot?: string; foto?: Foto; om?: boolean; grijs?: boolean }) {
   return `<section class="bf-sblok${o.grijs ? ' bf-sblok--grijs' : ''}"><div class="bf-duo${o.om ? ' bf-duo--om' : ''}${o.foto ? '' : ' bf-duo--zonder'}">
 <div class="bf-duo__tekst"><h2 class="bf-h2">${esc(o.kop)}</h2>${o.lede ? `<p>${esc(o.lede)}</p>` : ''}
-<ul class="bf-belofte">${o.punten.map((p) => `<li><span class="bf-belofte__vink" aria-hidden="true">${ICOON.vink}</span><div><h3>${esc(p.titel)}</h3><p>${esc(p.tekst)}</p></div></li>`).join('')}</ul></div>
+<ul class="bf-belofte">${o.punten.map((p) => `<li><span class="bf-belofte__vink" aria-hidden="true">${ICOON.vink}</span><div><h3>${esc(p.titel)}</h3><p>${esc(p.tekst)}</p></div></li>`).join('')}</ul>${o.slot ? `<p class="bf-belofte__slot">${esc(o.slot)}</p>` : ''}</div>
 ${o.foto ? `<figure class="bf-duo__foto">${beeld(o.foto.naam, { alt: o.foto.alt, sizes: '(max-width: 1000px) 100vw, 540px', pos: o.foto.pos })}</figure>` : ''}
 </div></section>`;
 }

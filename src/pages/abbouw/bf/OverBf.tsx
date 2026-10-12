@@ -2,12 +2,13 @@
  * /over in de stijl van bfbouw.be (spec/bf-stijl.md §10; BF-tegenhanger /over-ons/, bouw/paginas.cjs r.134-155).
  *
  * Volgorde (spec §10 = volgorde van OverOns.tsx):
- *   paginakop · cijferband (BF .ocijfers, witte balk over de paginakop) · duo "Hoe wij werken" met
- *   Google-badge · beloftelijst "De mensen op uw werf" (duo--om, grijs) · waarden-raster "Officieel erkend
- *   en verzekerd" (2x2 zoals BF "Onze kernwaarden") · plaatsblok · voet + zwevende belknop.
+ *   paginakop · cijferband (BF .ocijfers, witte balk over de paginakop) · duo "Over AB Bouw Groep" met
+ *   Google-badge · beloftelijst "De kracht van onze aanpak" + slotalinea (duo--om, grijs) · waarden-raster
+ *   "Officieel erkend en verzekerd" (2x2 zoals BF "Onze kernwaarden") · plaatsblok · voet + zwevende belknop.
  * Weg ten opzichte van BF: het teamduo (geen AB-tekst) en het reviewblok (spec §1).
  *
- * Alle tekst woordelijk uit OverOns.tsx, met regelnummers in inhoud-over.ts.
+ * Duo en beloftelijst: dictaat Mohammed 12 okt 2026 (geplakte copy), woordelijk. Rest woordelijk uit
+ * OverOns.tsx. Bron per blok in inhoud-over.ts.
  * Duo, waarden-raster en iconen komen uit de gedeelde blokken (blokken.ts, schil.ts ICOON). Lokaal staat
  * alleen de markup van de cijferbalk (BF paginas.cjs r.137); haar CSS zit in bf.css (port), de AB-variant
  * met twee tegels in over.css.
@@ -34,8 +35,11 @@ export function overHtml() {
     paginakop({ kop: O.kop, foto: O.kopFoto }),
     ocijfers(O.cijfers),
     // BF "Waar wij voor staan" (paginas.cjs r.138-142): duo met Google-badge, zonder knop
-    duo({ id: 'werken', kop: O.werken.kop, alineas: [O.werken.alinea], google: true, foto: O.werken.foto }),
-    beloftelijst({ kop: O.mensen.kop, lede: O.mensen.lede, punten: O.mensen.punten, foto: O.mensen.foto, om: true, grijs: true }),
+    duo({ id: 'over-ab', kop: O.overAb.kop, alineas: O.overAb.alineas, google: true, foto: O.overAb.foto }),
+    // BF "Wat u van ons mag verwachten": 3 punten met vinkje, de slotalinea direct onder de punten
+    // "10-jarige" breekt niet na het koppelteken (gemeten 12 okt op 390: "wettelijke 10-" / "jarige"); de tekens blijven woordelijk
+    beloftelijst({ kop: O.aanpak.kop, punten: O.aanpak.punten, slot: O.aanpak.slot, foto: O.aanpak.foto, om: true, grijs: true })
+      .replace('10-jarige', '<span style="white-space:nowrap">10-jarige</span>'),
     // BF "Onze kernwaarden" (paginas.cjs r.143-144): nummer, icoon, kop, tekst; wit vlak na de grijze beloftelijst
     waardenRaster({ id: 'erkend', kop: O.erkend.kop, lede: O.erkend.lede, items: O.erkend.items, grijs: false }),
     onderaan({ pagina: 'over', kop: O.plaats.kop, tekst: O.plaats.tekst, foto: FOTO_OVER }),

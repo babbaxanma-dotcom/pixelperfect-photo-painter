@@ -1,13 +1,16 @@
 /**
  * Tekst en beelden van /over in de stijl van bfbouw.be (spec/bf-stijl.md §10).
  *
- * ALLE tekst komt WOORDELIJK uit src/pages/abbouw/OverOns.tsx (dictaat Mohammed 4 okt 2026,
- * "visueel verbeteren" 5 okt zonder tekstwijziging). Regelnummers hieronder = regels in OverOns.tsx.
- * OverOns.tsx exporteert die lijsten niet en blijft als terugval staan (spec §3); de keuring
- * (werk/over/keur-over.mjs) leest OverOns.tsx en toetst elke zin hier woordelijk tegen de pagina.
+ * Bron per blok:
+ *   - overAb ("Over AB Bouw Groep") en aanpak ("De kracht van onze aanpak" + slotalinea):
+ *     bron = "dictaat Mohammed 12 okt 2026 (geplakte copy)". WOORDELIJK overgenomen, geen woord herschreven,
+ *     ingekort of verbeterd. Deze copy vervangt "Hoe wij werken" en "De mensen op uw werf" (OverOns.tsx).
+ *   - alle andere tekst: WOORDELIJK uit src/pages/abbouw/OverOns.tsx (dictaat Mohammed 4 okt 2026,
+ *     "visueel verbeteren" 5 okt zonder tekstwijziging). Regelnummers hieronder = regels in OverOns.tsx.
+ * OverOns.tsx exporteert die lijsten niet en blijft als terugval staan (spec §3).
  *
- * Volgorde (spec §10, gelijk aan OverOns.tsx): paginakop, cijferband, "Hoe wij werken" met
- * Google-badge, beloftelijst "De mensen op uw werf", waarden-raster "Officieel erkend en
+ * Volgorde (spec §10): paginakop, cijferband, duo "Over AB Bouw Groep" met Google-badge,
+ * beloftelijst "De kracht van onze aanpak" met slotalinea, waarden-raster "Officieel erkend en
  * verzekerd", plaatsblok. Geen team- en geen reviewblok (spec §1, ab-paginas.md /over).
  *
  * Beelden: FOTOPLAN.over (spec §15).
@@ -36,25 +39,33 @@ export const OVER_BF = {
     ] as { icoon: 'jaren' | 'vakmensen'; getal: string; label: string; bron: string }[],
   },
 
-  /* duo met Google-badge (BF "Waar wij voor staan"): kop r.65, alinea r.70-73 */
-  werken: {
-    kop: 'Hoe wij werken',
-    alinea: 'Verbouwen is een flinke stap. Daarom werken wij als algemeen aannemer: we nemen het volledige traject op ons. Geen gedoe met het afstemmen van losse vakmannen of onduidelijkheid over wie verantwoordelijk is. Wij voeren de werken uit, sturen de planning aan en leveren af tegen de prijs die we vooraf hebben afgesproken.',
+  /* duo met Google-badge (BF "Waar wij voor staan"): kop + 2 alinea's.
+     Bron: dictaat Mohammed 12 okt 2026 (geplakte copy), "## Over AB Bouw Groep". Woordelijk, niets herschreven.
+     Vervangt kop "Hoe wij werken" + alinea uit OverOns.tsx r.65-73. Foto blijft. */
+  overAb: {
+    kop: 'Over AB Bouw Groep',
+    alineas: [
+      'Een verbouwing is een prachtig project: het is bouwen aan de plek waar u woont en leeft. Wij begrijpen dat u tijdens dit traject vooral wilt genieten van het proces en het resultaat. Daarom richten wij ons op wat écht telt: duidelijkheid, topkwaliteit en rust in uw hoofd.',
+      'Met 16 jaar ervaring en 6 verschillende vakdisciplines onder één dak brengen we alle expertise samen die nodig is voor uw droomwoning. Als algemeen aannemer coördineren wij uw project van de allereerste afbraak tot de laatste plint. Wij zorgen voor een perfect op elkaar afgestemde planning, zodat u zich volledig kunt focussen op de keuzes die uw huis een thuis maken.',
+    ],
     foto: FOTOPLAN.over.overSplit,
   },
 
-  /* beloftelijst (BF "Wat u van ons mag verwachten", duo--om): kop r.82, lede r.83, punten STRUCTUUR r.25-30 */
-  mensen: {
-    kop: 'De mensen op uw werf',
-    lede: 'Bij een grote verbouwing wisselen verschillende disciplines elkaar af. Om dat soepel te laten verlopen, werken we met een vaste structuur:',
+  /* beloftelijst (BF "Wat u van ons mag verwachten", duo--om): kop, 3 punten, slotalinea direct onder de punten.
+     Bron: dictaat Mohammed 12 okt 2026 (geplakte copy), "## De kracht van onze aanpak". Woordelijk, niets herschreven.
+     Per punt: titel = het vetgedrukte deel vóór de dubbele punt, tekst = de rest. Geen lede (de copy heeft er geen).
+     Vervangt kop "De mensen op uw werf", lede en de 3 punten uit OverOns.tsx r.25-30 en r.82-83. Foto blijft. */
+  aanpak: {
+    kop: 'De kracht van onze aanpak',
     punten: [
-      { titel: 'Vakmensen in vaste dienst',
-        tekst: 'Onze metselaars, dakdekkers, tegelzetters en schrijnwerkers horen bij ons vaste team. Daardoor heeft u op de werf steeds vertrouwde gezichten over de vloer die werken volgens onze eigen vaste kwaliteitsstandaarden.' },
-      { titel: 'Eén vaste werfleider',
-        tekst: 'U hoeft geen zes verschillende mensen na te bellen. U krijgt één direct telefoonnummer. Uw werfleider kent de planning, is vaak aanwezig op de werf en blijft uw vaste aanspreekpunt tot na de oplevering.' },
-      { titel: 'Eén prijs, helder uitgesplitst',
-        tekst: 'Onze offertes laten precies zien waar u voor betaalt. Elke post (afbraak, materiaal, uitvoering, afvoer) staat apart genoteerd. Mochten er tijdens de werken extra wensen bij komen, dan voeren we die pas uit na uw schriftelijk akkoord op de prijs.' },
+      { titel: 'Eén hecht team',
+        tekst: 'Onze metselaars, dakdekkers, tegelzetters en schrijnwerkers zijn bij ons in vaste dienst. Zij zijn perfect op elkaar ingespeeld en werken met dezelfde hoge kwaliteitsstandaard aan uw woning. U ziet steeds vertrouwde, vriendelijke gezichten op de werf.' },
+      { titel: 'Uw persoonlijke werfleider',
+        tekst: 'U krijgt één vast aanspreekpunt dat uw project door en door kent. Uw werfleider bewaakt de planning, stuurt het team aan en staat altijd klaar om uw vragen te beantwoorden – van de start tot ver na de oplevering.' },
+      { titel: 'Transparantie vanaf de start',
+        tekst: 'Onze offertes zijn helder en tot in detail uitgeschreven, zodat u precies weet waar u aan toe bent. Komen er gaandeweg nieuwe ideeën of wensen naar boven? Dan bekijken we die samen en voeren we ze pas uit na uw akkoord.' },
     ],
+    slot: 'Of het nu gaat om een vernieuwd interieur, een duurzame gevelrenovatie of een complete totaalrenovatie: wij realiseren uw plannen met zorg en vakmanschap. Vanzelfsprekend bouwt u met volledige zekerheid dankzij onze officiële erkenningen, certificaten en de wettelijke 10-jarige aansprakelijkheid.',
     foto: FOTOPLAN.over.belofte,
   },
 

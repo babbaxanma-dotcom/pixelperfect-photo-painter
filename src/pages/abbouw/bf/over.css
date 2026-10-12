@@ -22,7 +22,11 @@
   .bf .bf-plaats[data-pagina="over"] .bf-plaats__kop { font-size: calc(46 * var(--u)); }
 }
 
-/* /over: beloftelijst 'De mensen op uw werf' (duo--om). De tekst (lede + 3 punten) is veel langer dan BF 'Wat u van ons mag
+/* /over: slotalinea onder de punten van 'De kracht van onze aanpak' (blokken.ts beloftelijst, veld slot; dictaat 12 okt).
+   Letter en kleur = de alinea's van het duo (bf.css .bf-duo__tekst p); de afstand tot de lijst = de afstand kop/lijst (.bf-belofte 26u). */
+.bf .bf-duo__tekst .bf-belofte__slot { margin-top: calc(26 * var(--u)); }
+
+/* /over: beloftelijst 'De kracht van onze aanpak' (duo--om). De tekst (3 punten + slotalinea) is veel langer dan BF 'Wat u van ons mag
    verwachten'; met de vaste 4:3-foto (540x405u) bleef er boven en onder de foto een leeg grijs vlak. De foto rekt nu mee met de
    tekst; min-height 405u (= 4:3 van 540u, de BF-maat) houdt hem bij korte tekst op de BF-verhouding. Uitsnede 50% 85% blijft.
    Scope = data-track-source van BfPagina: over.css blijft na een SPA-navigatie geladen en mag een duo--om op een andere pagina
