@@ -1,4 +1,4 @@
-/*  GEGENEREERD door scripts/bf-css-port.cjs uit bfbouw-website/src/css/site.css (2065 regels).
+/*  GEGENEREERD door scripts/bf-css-port.cjs uit bfbouw-website/src/css/site.css (2087 regels).
    Niet met de hand wijzigen: draai het script opnieuw. AB-aanvullingen staan in bf-ab.css.
    Elke regel draagt het regelnummer in site.css (L…).  */
 /* L13 */ .bf {
@@ -190,6 +190,7 @@
 /* L459 */ .bf .bf-nav__menu { display: flex; gap: calc(34 * var(--u)); margin-left: calc(64 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 500; line-height: calc(24 * var(--u)); color: var(--ink-2); }
 /* L460 */ .bf .bf-nav__menu a { position: relative; padding: calc(8 * var(--u)) 0; transition: color .25s ease; }
 /* L461 */ .bf .bf-nav__menu a::after { content: ""; position: absolute; left: 0; right: 0; bottom: calc(2 * var(--u)); height: calc(2 * var(--u)); background: var(--merk); transform: scaleX(0); transform-origin: left; transition: transform .2s ease; }
+/* L462 */ .bf .bf-nav__menu a[aria-current="page"]::after { transform: scaleX(1); }
 /* L463 */ .bf .bf-nav__menu a:hover { color: inherit; }
 /* L464 */ .bf .bf-nav__acties { margin-left: auto; display: flex; align-items: center; gap: calc(24 * var(--u)); }
 /* L465 */ .bf .bf-nav__tel { display: inline-flex; align-items: center; gap: calc(8 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 600; color: var(--ink-2); white-space: nowrap; transition: color .25s ease; }
@@ -647,6 +648,14 @@
   .bf .bf-cijfer__label { font-size: 14.5px; }
 }
 /* L1290 */ .bf .bf-cijfers__band { background-color: #0a1628; }
+/* L1293 */ .bf .bf-ocijfers { position: relative; z-index: 2; margin-top: calc(-56 * var(--u)); padding: 0; }
+/* L1294 */ .bf .bf-ocijfers__balk { list-style: none; width: calc(1200 * var(--u)); margin: 0 auto; padding: calc(26 * var(--u)) calc(16 * var(--u)); background: var(--wit); border-radius: calc(18 * var(--u)); box-shadow: 0 calc(24 * var(--u)) calc(60 * var(--u)) calc(-28 * var(--u)) rgba(17, 17, 17, .35), 0 0 0 calc(1 * var(--u)) #ededed; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+/* L1295 */ .bf .bf-ocijfers__balk li { display: flex; align-items: center; justify-content: center; gap: calc(14 * var(--u)); padding: 0 calc(12 * var(--u)); }
+/* L1296 */ .bf .bf-ocijfers__balk li + li { border-left: calc(1 * var(--u)) solid #ececec; }
+/* L1297 */ .bf .bf-ocijfers__icoon { width: calc(48 * var(--u)); height: calc(48 * var(--u)); flex: none; border-radius: calc(14 * var(--u)); display: grid; place-items: center; color: var(--merk-tekst); background: #fbf3e6; }
+/* L1298 */ .bf .bf-ocijfers__icoon svg { width: calc(26 * var(--u)); height: calc(26 * var(--u)); }
+/* L1299 */ .bf .bf-ocijfers__balk b { display: block; font-size: calc(28 * var(--u)); line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; color: var(--ink-2); }
+/* L1300 */ .bf .bf-ocijfers__balk li > span:last-child > span { display: block; margin-top: calc(3 * var(--u)); font-size: calc(14.5 * var(--u)); color: var(--tekst-2); }
 /* L1303 */ .bf .bf-waarden { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(22 * var(--u)); max-width: calc(1000 * var(--u)); margin: 0 auto; }
 /* L1304 */ .bf .bf-waarde { position: relative; overflow: hidden; padding: calc(40 * var(--u)) calc(40 * var(--u)) calc(38 * var(--u)); border-radius: calc(20 * var(--u)); background: var(--wit); box-shadow: 0 0 0 calc(1 * var(--u)) #e9e9e9; transition: transform .3s ease, box-shadow .3s ease; }
 /* L1305 */ .bf .bf-waarde:hover { box-shadow: 0 0 0 calc(1.5 * var(--u)) rgba(217, 140, 3, .45), 0 calc(24 * var(--u)) calc(50 * var(--u)) calc(-28 * var(--u)) rgba(17, 17, 17, .3); }
@@ -656,6 +665,14 @@
 /* L1309 */ .bf .bf-waarde h3 { position: relative; margin-top: calc(24 * var(--u)); font-size: calc(23 * var(--u)); letter-spacing: -0.01em; }
 /* L1310 */ .bf .bf-waarde p { position: relative; margin-top: calc(10 * var(--u)); font-size: calc(17 * var(--u)); line-height: 1.65; max-width: calc(400 * var(--u)); }
 /* L1311 */ @media (max-width: 1000px) {
+  .bf .bf-ocijfers { margin-top: -28px; padding: 0 16px; }
+  .bf .bf-ocijfers__balk { width: auto; grid-template-columns: 1fr 1fr; row-gap: 18px; padding: 20px 6px; border-radius: 14px; }
+  .bf .bf-ocijfers__balk li { justify-content: flex-start; gap: 10px; padding: 0 10px; }
+  .bf .bf-ocijfers__balk li + li { border-left: 0; }
+  .bf .bf-ocijfers__icoon { width: 40px; height: 40px; border-radius: 11px; }
+  .bf .bf-ocijfers__icoon svg { width: 22px; height: 22px; }
+  .bf .bf-ocijfers__balk b { font-size: 22px; }
+  .bf .bf-ocijfers__balk li > span:last-child > span { font-size: 13px; }
   .bf .bf-waarden { grid-template-columns: minmax(0, 1fr); gap: 14px; }
   .bf .bf-waarde { padding: 28px 22px; border-radius: 16px; }
   .bf .bf-waarde__nr { font-size: 56px; right: 18px; top: 14px; }
@@ -664,6 +681,8 @@
   .bf .bf-waarde h3 { margin-top: 18px; font-size: 20px; }
   .bf .bf-waarde p { font-size: 16px; }
 }
+/* L1328 */ .bf .bf-paginakop:has(+ .bf-ocijfers) .bf-paginakop__in { padding-bottom: calc(118 * var(--u)); }
+/* L1329 */ @media (max-width: 1000px) { .bf .bf-paginakop:has(+ .bf-ocijfers) .bf-paginakop__in { padding-bottom: 64px; } }
 /* L1332 */ @media (min-width: 1001px) {
   .bf .bf-proces__stappen { gap: calc(64 * var(--u)); }
   .bf .bf-pstap { text-align: left; background: var(--wit); padding: calc(34 * var(--u)) calc(32 * var(--u)) calc(36 * var(--u)); border-radius: calc(18 * var(--u)); box-shadow: 0 0 0 calc(1 * var(--u)) #e8e8e8; }
@@ -741,7 +760,7 @@
 /* L1687 */ @media (max-width: 1000px) {
   .bf .bf-waarden--3 { grid-template-columns: minmax(0, 1fr); }
 }
-/* L1887 */ .bf [data-dank] [hidden] { display: none !important; }
-/* L2036 */ @media (max-width: 1000px) {
+/* L1901 */ .bf [data-dank] [hidden] { display: none !important; }
+/* L2058 */ @media (max-width: 1000px) {
   .bf .bf-hero__in { padding-bottom: max(104px, calc(40px + (100lvh - 100svh))); padding-bottom: max(104px, calc(40px + (100lvh - 100svh)), calc(80px + env(safe-area-inset-bottom))); }
 }

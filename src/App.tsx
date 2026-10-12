@@ -3,6 +3,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, useLocation, Navigate } from "react-router-dom";
 import PageTransition from "./components/PageTransition";
 import "./styles/ab-bouw.css";
+// roofpro.css globaal, zoals op main (daar via de eager import van Home.tsx r.2). LpReplica/LpBadkamer
+// (/totaalrenovatie, /badkamerrenovatie, /lp/badkamerrenovatie) gebruiken rp-klassen en importeren roofpro.css
+// niet zelf: .rp-mob (gsm-menu), .rp-burger, .rp-fab/.rp-btn. NIET als "ongebruikt" schrappen.
+// Op de BF-pagina's: 0 verschillen (div.bf in bf-ab.css zet roofpro r.651 .bf terug).
+import "./styles/roofpro.css";
 
 // LAZY-LOAD alle routes — initial bundle van 1MB -> ~150KB
 // Eager-load alleen de homepage want LCP-critical (first paint).
@@ -10,22 +15,20 @@ import "./styles/ab-bouw.css";
 // blijven staan als terugval; teruggaan is deze import en de route hieronder.
 import HomeBf from "./pages/abbouw/bf/HomeBf";
 
-const OverOns = lazy(() => import("./pages/abbouw/OverOns"));
-const Diensten = lazy(() => import("./pages/abbouw/Diensten"));
+// 11 okt 2026: de subpagina's in de stijl van bfbouw.be (spec/bf-stijl.md §10). De oude
+// bestanden (OverOns, Diensten, Werkwijze, Contact, Construct, Ecologisch, Interieur,
+// Dakwerken, Bad, Gevel, Privacy, Voorwaarden, Cookies, NotFound) blijven staan als terugval;
+// teruggaan is hun lazy-import terugzetten en de route ernaar laten wijzen.
+const OverBf = lazy(() => import("./pages/abbouw/bf/OverBf"));
+const DienstenBf = lazy(() => import("./pages/abbouw/bf/DienstenBf"));
+const WerkwijzeBf = lazy(() => import("./pages/abbouw/bf/WerkwijzeBf"));
+const ContactBf = lazy(() => import("./pages/abbouw/bf/ContactBf"));
+const DivisieBf = lazy(() => import("./pages/abbouw/bf/DivisieBf"));
+const JuridischBf = lazy(() => import("./pages/abbouw/bf/JuridischBf"));
+const NotFoundBf = lazy(() => import("./pages/abbouw/bf/NotFoundBf"));
 const Realisaties = lazy(() => import("./pages/abbouw/Realisaties"));
 const RealisatiesDakwerken = lazy(() => import("./pages/abbouw/realisaties/RealisatiesDakwerken"));
 const RealisatiesGevel = lazy(() => import("./pages/abbouw/realisaties/RealisatiesGevel"));
-const Werkwijze = lazy(() => import("./pages/abbouw/Werkwijze"));
-const Contact = lazy(() => import("./pages/abbouw/Contact"));
-const Construct = lazy(() => import("./pages/abbouw/Construct"));
-const Ecologisch = lazy(() => import("./pages/abbouw/Ecologisch"));
-const Interieur = lazy(() => import("./pages/abbouw/Interieur"));
-const Dakwerken = lazy(() => import("./pages/abbouw/Dakwerken"));
-const Bad = lazy(() => import("./pages/abbouw/Bad"));
-const Gevel = lazy(() => import("./pages/abbouw/Gevel"));
-const Privacy = lazy(() => import("./pages/abbouw/Privacy"));
-const Voorwaarden = lazy(() => import("./pages/abbouw/Voorwaarden"));
-const Cookies = lazy(() => import("./pages/abbouw/Cookies"));
 const Blog = lazy(() => import("./pages/abbouw/Blog"));
 const BlogPost = lazy(() => import("./pages/abbouw/BlogPost"));
 const LpDakwerken = lazy(() => import("./pages/abbouw/lp/LpDakwerken"));
@@ -45,7 +48,6 @@ const Beoordeling = lazy(() => import("./pages/abbouw/Beoordeling"));
 const Review = lazy(() => import("./pages/abbouw/Review"));
 const CalculatorDak = lazy(() => import("./pages/abbouw/calculator/CalculatorDak"));
 const CalculatorGevel = lazy(() => import("./pages/abbouw/calculator/CalculatorGevel"));
-const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -88,22 +90,22 @@ const App = () => {
           <Route path="/" element={<HomeBf />} />
           {/* de oude home toonde 8 reviews zonder bron (spec §3) */}
           <Route path="/index" element={<Navigate to="/" replace />} />
-          <Route path="/over" element={<OverOns />} />
-          <Route path="/diensten" element={<Diensten />} />
+          <Route path="/over" element={<OverBf />} />
+          <Route path="/diensten" element={<DienstenBf />} />
           <Route path="/realisaties" element={<Navigate to="/" replace />} />
           <Route path="/realisaties/dakwerken" element={<Navigate to="/" replace />} />
           <Route path="/realisaties/gevel" element={<Navigate to="/" replace />} />
-          <Route path="/werkwijze" element={<Werkwijze />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/construct" element={<Construct />} />
-          <Route path="/ecologisch" element={<Ecologisch />} />
-          <Route path="/interieur" element={<Interieur />} />
-          <Route path="/dakwerken" element={<Dakwerken />} />
-          <Route path="/bad" element={<Bad />} />
-          <Route path="/gevel" element={<Gevel />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/voorwaarden" element={<Voorwaarden />} />
-          <Route path="/cookies" element={<Cookies />} />
+          <Route path="/werkwijze" element={<WerkwijzeBf />} />
+          <Route path="/contact" element={<ContactBf />} />
+          <Route path="/construct" element={<DivisieBf slug="construct" />} />
+          <Route path="/ecologisch" element={<DivisieBf slug="ecologisch" />} />
+          <Route path="/interieur" element={<DivisieBf slug="interieur" />} />
+          <Route path="/dakwerken" element={<DivisieBf slug="dakwerken" />} />
+          <Route path="/bad" element={<DivisieBf slug="bad" />} />
+          <Route path="/gevel" element={<DivisieBf slug="gevel" />} />
+          <Route path="/privacy" element={<JuridischBf soort="privacy" />} />
+          <Route path="/voorwaarden" element={<JuridischBf soort="voorwaarden" />} />
+          <Route path="/cookies" element={<JuridischBf soort="cookies" />} />
           <Route path="/blog" element={<Navigate to="/" replace />} />
           <Route path="/blog/:slug" element={<Navigate to="/" replace />} />
           {/* Alleen /totaalrenovatie en /badkamerrenovatie blijven als landingspagina
@@ -144,7 +146,7 @@ const App = () => {
           <Route path="/review" element={<Review />} />
           <Route path="/calculator/dakwerken" element={<CalculatorDak />} />
           <Route path="/calculator/gevel" element={<CalculatorGevel />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFoundBf />} />
         </Routes>
         </Suspense>
         </PageTransition>

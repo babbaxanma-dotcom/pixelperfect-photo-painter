@@ -1,0 +1,53 @@
+{
+  "pad": "/lp/aannemer-renovatiewerken",
+  "bron": "Gemeten 12 okt 2026 op de HUIDIGE LpKgj.tsx (LP-code byte-gelijk aan origin/main 9727a84 = live), meting scratchpad werk/lpkaart/uit-flows.json (meet.mjs), manifest kaart/lp-*.md §c. Vluchtige velden (user_agent, submitted_at, referrer) weggelaten.",
+  "clarity": "ysjtjyakao",
+  "flows": [
+    {
+      "naam": "inspectie",
+      "soort": "inspectie",
+      "query": "?utm_term=renovatiebedrijf",
+      "marketing": false,
+      "wortel": ".kgj-reken--inspectie",
+      "velden": {
+        "telefoon": "0400 00 00 07"
+      },
+      "formStart": "lp:aannemer-renovatiewerken:inspectie",
+      "toestemming": true,
+      "bedankt": "/bedankt?dienst=totaalrenovatie",
+      "fouten": {
+        "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",
+        "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
+      },
+      "ghl": {
+        "phone": "0400 00 00 07",
+        "country": "BE",
+        "type_werk": "AB Construct",
+        "aanvullende_info": "Aanvraag gratis plaatsbezoek",
+        "bron_lead": "Website",
+        "bron_lead_detail": "lp:aannemer-renovatiewerken:inspectie",
+        "page_path": "/lp/aannemer-renovatiewerken",
+        "landing_division": "ab_construct",
+        "source": "landing_page",
+        "utm_term": "renovatiebedrijf"
+      },
+      "web3forms": {
+        "access_key": "b01e4fea-3e73-418b-b65a-acfb1d3ee43c",
+        "subject": "Nieuwe AB Bouw lead (landing_page), undefined",
+        "from_name": "AB Bouw website",
+        "to": "info@abgroep.be",
+        "phone": "0400 00 00 07",
+        "country": "BE",
+        "type_werk": "AB Construct",
+        "aanvullende_info": "Aanvraag gratis plaatsbezoek",
+        "bron_lead": "Website",
+        "bron_lead_detail": "lp:aannemer-renovatiewerken:inspectie",
+        "page_path": "/lp/aannemer-renovatiewerken",
+        "landing_division": "ab_construct",
+        "source": "landing_page",
+        "utm_term": "renovatiebedrijf"
+      },
+      "metingInUitFlows": "aannemer-inspectie"
+    }
+  ]
+}

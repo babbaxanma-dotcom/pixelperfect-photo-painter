@@ -78,7 +78,7 @@ export const DIVISIES: Record<string, DivisionConfig> = {
     faqs: [
       { q: 'Kan crepi op elke gevel?', a: 'Bijna. De ondergrond moet droog en draagkrachtig zijn. Bij optrekkend vocht of loszittend metselwerk pakken we dat eerst aan, anders komt het probleem door de afwerking heen.' },
       { q: 'Wordt mijn woning dan dikker?', a: 'Met buitenisolatie komt de gevel doorgaans 14 tot 20 cm naar buiten. Dat heeft gevolgen voor dakoversteek, raamdorpels en soms de rooilijn. We meten dat op en zeggen vooraf wat het betekent.' },
-      { q: 'Hoe zit het met de premie voor gevelisolatie?', a: 'Mijn VerbouwPremie voor gevelisolatie is sinds 1 maart 2026 afgeschaft voor eigenaar-bewoners. Wat blijft: 6% btw als uw woning ouder is dan tien jaar. Bij het plaatsbezoek rekenen wij door wat de isolatie u oplevert.' },
+      { q: 'Hoe zit het met de premie voor gevelisolatie?', a: 'Sinds 1 maart 2026 krijgen alleen eigenaar-bewoners uit inkomenscategorie 3 en 4 nog Mijn VerbouwPremie voor de buitenmuur: tot 35% (maximaal € 3.500) of tot 50% (maximaal € 5.000) van de factuur zonder btw, voor isolatie en renovatie samen. Voor categorie 1 en 2 is er geen premie meer. Wat voor iedereen blijft: 6% btw als uw woning ouder is dan tien jaar. Bij het plaatsbezoek rekenen wij door wat de isolatie u oplevert.' },
       { q: 'Hoelang gaat crepi mee?', a: 'Een goed uitgevoerde crepi op isolatie gaat vlot 25 jaar mee. Reinigen om de tien jaar houdt de kleur egaal.' },
     ],
     meta: 'Gevelrenovatie door AB Bouw Groep: crepi, steenstrips, houten en composiet gevelbekleding, met buitenisolatie volgens ETICS.',

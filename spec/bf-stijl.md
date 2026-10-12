@@ -70,15 +70,15 @@ Wit op goud is 2,7:1 en zakt door AA: tekst op goud is ALTIJD navy. Letter: Plus
   De oude regel "kop bovenaan weg" (5 okt) hoorde bij het oude ontwerp; de BF-kop staat bovenaan transparant in beeld (aanname A1).
 - **Zwevende belknop** op gsm (BF `belzweef`), `tel:` uit CONTACT, aria-label "Bel AB Bouw Groep op 0460 20 77 88". Niet op /contact.
 - **Voet** (BF `voet--sub`, grijs, 4 kolommen): donker logo + "Bouw en renovatie voor dak, gevel, badkamer en interieur. Actief in Vlaanderen en Brussel." · "Snel naar": Over ons, Diensten, Werkwijze, Contact · "Onze diensten": de 6 `DIENST_LINKS`-teksten/routes uit `_rp.ts:151-158` (importeren, niet kopiëren) · "Contact": telefoon, adres (`CONTACT.address`), e-mail, "BTW " + `CONTACT.btw.display` · onderregel "© {jaar} AB Bouw Groep · BTW {CONTACT.btw.display}" + Privacy · Voorwaarden · Cookies. Geen sociale iconen.
-- **Paginakop** (BF `paginas.cjs:103`): echte foto + donkere laag + kruimelpad + h1 op 2 regels (2e regel lichter, zoals de hero) + subkop. Vlakke variant (geen foto) voor juridisch en 404.
+- **Paginakop** (BF `paginas.cjs:103`): echte foto + donkere laag + h1 op 2 regels (GEEN kruimelpad: DICTAAT MOHAMMED 11 okt "de paths op de paginas subpaginas, weghalen") (2e regel lichter, zoals de hero) + subkop. Vlakke variant (geen foto) voor juridisch en 404.
 - Eén h1 per pagina. `id="offerte"` op het plaatsblok; ankers krijgen `scroll-margin-top` = kophoogte.
 
 ## 7. Homepage `/` (volgorde, tekst, beeld)
 Bron van de tekst: `src/pages/abbouw/lp/replica/inhoud.ts` HOME (r.598-793) = dictaat Mohammed 4 okt. WOORDELIJK overnemen; niet inkorten, niet herschrijven.
 1. **Kop** (§6).
-2. **Hero** (BF hero): 4 dia's (§9). h1 = "Uw bouw- of renovatieproject," + `<span class="bf-hero__kop2">perfect geregeld</span>`. Tekst = HOME.hero.sub (inh:662). Knop 1 "Vraag een plaatsbezoek aan" (`data-kies`, pijl). Knop 2 (rand-wit) "Bel 0460 20 77 88" (`tel:`; vervangt zijn "Of bel direct"-regel als gelijkwaardige knop, regel geen-of-bel). Pijl omlaag naar `#over`.
-3. **Over-split** `id="over"` (BF `.over`): kop "Alle vakmensen onder één dak" (h2, zoals BF één kopregel), alinea 1 en 2 = HOME.over (inh:674-675) woordelijk; knop "Meer over ons" → `/over`; Google-badge (G-icoon, 5 sterren, "5,0 op Google", link §1, target _blank rel noopener). Foto rechts §9.
-4. **Cijferband** (BF `.cijfers`, donker, 4 tegels, statische getallen): "6" · "Vakdisciplines onder één dak" | "5,0" · "Op Google" | "10 jaar" · "Wettelijke aansprakelijkheid" | "Gratis" · "Plaatsbezoek en offerte". Iconen in BF-stijl (gereedschap/huis, ster, schild, huis-met-vergrootglas). `data-claimbron` per tegel: dictaat 4 okt /over · Google Maps 11 okt · wet · FAQ dictaat 4 okt.
+2. **Hero** (BF hero): 4 dia's (§9). h1 = "Uw bouw- of renovatiepartner" + `<span class="bf-hero__kop2">van A tot Z</span>` (DICTAAT MOHAMMED 11 okt: "Uw bouw- of renovatiepartner van A tot Z als headline"; vervangt HOME.hero.regels). Tekst = HOME.hero.sub (inh:662). Knop 1 "Vraag een plaatsbezoek aan" (`data-kies`, pijl). Knop 2 (rand-wit) "Bel 0460 20 77 88" (`tel:`; vervangt zijn "Of bel direct"-regel als gelijkwaardige knop, regel geen-of-bel). Pijl omlaag naar `#over`.
+3. **Over-split** `id="over"` (BF `.over`): kop "Waarom AB Bouw Groep" (h2; DICTAAT MOHAMMED 11 okt: "Alle vakmensen onder één dak naar, waarom AB Bouw Groep"), alinea 1 en 2 = HOME.over (inh:674-675) woordelijk; knop "Meer over ons" → `/over`; Google-badge (G-icoon, 5 sterren, "5,0 op Google", link §1, target _blank rel noopener). Foto rechts §9.
+4. **Cijferband** (BF `.cijfers`, donker, 4 tegels, statische getallen): "6" · "Vakdisciplines onder één dak" | "5,0" · "Op Google" | "10 jaar" · "Garantie" (DICTAAT MOHAMMED 11 okt: "Garantie ipv wettelijke aansprakelijkheid") | "Gratis" · "Plaatsbezoek en offerte". Iconen in BF-stijl (gereedschap/huis, ster, schild, huis-met-vergrootglas). Bron per tegel staat alleen in de TS-bron (inhoud.ts), NOOIT als attribuut in de publieke HTML (vondst ronde 1: naam Mohammed lekte in data-claimbron).
 5. **Diensten** `id="diensten"` (BF `.dsectie` + slider): kop "Onze diensten"; rechts "Eén betrouwbare partner voor al uw bouw- en renovatieplannen." (dictaat /diensten) + knop "Bekijk alle diensten" → `/diensten`. 6 kaarten in deze volgorde (middelste uitgelicht bij start = Gevelrenovatie of Badkamer volgens BF-start floor((n-1)/2)=2):
    Totaalrenovatie en nieuwbouw `/construct` · Dakwerken `/dakwerken` · Gevelrenovatie `/gevel` · Badkamer en wellness `/bad` · Interieurwerken `/interieur` · Ecologisch en energetisch `/ecologisch`.
    Kaarttekst = HOME.diensten.kaarten (inh:687-706) woordelijk, BEHALVE ecologisch: "Installatie van warmtepompen en efficiënte technieken." (dictaat /diensten, past bij de enige echte foto: vloerverwarming). Link "Lees meer over <titel in kleine letters>". Icoon per afdeling in BF-lijnstijl.
@@ -103,6 +103,7 @@ Weg ten opzichte van BF: reviews, blog ("Tips en uitleg"), knop "alle realisatie
 ## 9. Beelden (alleen echt; tweelingen nooit samen op één pagina, zie ab-fotos.md §6)
 Home:
 - Hero: 1 `C:/Users/Mohammed/Downloads/IMG_9019 (1).jpeg` (drone, dak gestript; kopiëren via sharp naar `src/assets/lp-diensten/eigen/IMG_9019.jpg`, metadata weg) · 2 `eigen/IMG_0102.jpg` · 3 `realisaties/totaalrenovatie-p5-a.jpg` · 4 `eigen/IMG_9028.jpg` (object-position 60% center).
+- HERO-VOLGORDE (DICTAAT MOHAMMED 11 okt, wint van de regel hierboven): dia 1 = `totaalrenovatie-p5-a` ("die mooie keuken foto"), dia 2 = `IMG_0102` ("daarna die woonkamer"), dan `IMG_9019` en `IMG_9028` ("daarna de rest").
 - Over-split: `eigen/IMG_0105.jpg` (vakman aan het werk; past bij "Alle vakmensen onder één dak").
 - Dienstenbanner: `realisaties/tegelwerken-p4-a.jpg` (onder donkere laag).
 - Kaarten: Totaalrenovatie `eigen/IMG_9029.jpg` (80% center) · Dak `dak-na.jpg` · Gevel `gevel/uitbreiding-gevel.jpg` · Bad `eigen/IMG_9025.jpg` · Interieur `eigen/IMG_9065.jpg` · Ecologisch `eigen/IMG_9064.jpg`.
@@ -118,14 +119,16 @@ Subpagina's: kies per pagina uit dezelfde echte lijst (ab-fotos.md §3), nooit e
 - `/diensten` (Diensten.tsx): paginakop "Onze diensten" + sub r.97 + lede r.98 · 6 dienstrijen (foto, nummer, titel, lede, 3 vinkpunten r.23-78, knop "Meer over <afdeling>") · inspectieband · belofte-lijst "Onze belofte bij elk project" (r.130, punten r.81-83) · plaatsblok (kop "Bespreek uw project met ons", r.136).
 - `/werkwijze` (Werkwijze.tsx): paginakop "Onze werkwijze" + r.56 · traject met de 8 stappen r.18-33 (titel, tekst, tijdregel klein onder de titel) en kop r.62 · plaatsblok (kop "Klaar voor stap 1?" is een vraag als kop: gebruik HOME.contact-kop; tekst r.99).
 - `/contact` (Contact.tsx): paginakop "Contact" + één zin uit de bestaande pagina · plaatsblok (tabs). Openingsuren NIET (aanname zonder bron). Geen zwevende belknop.
-- 6 divisiepagina's (`_division.tsx` + `_divisies.ts`): paginakop (heroTitle 2 regels, heroLede, kruimelpad Home › Diensten › afdeling, knoppen "Vraag een plaatsbezoek aan" + "Bel 0460 20 77 88") · dienstrij met het verhaal + 3 features · waarden-raster "Wat wij doen" (3) · traject met de 4 processtappen ZONDER tijdlabels ("binnen 5 werkdagen" e.d. heeft geen bron) · FAQ (4) · "Andere diensten": dienstenslider met de 5 andere afdelingen · plaatsblok (standaardkeuze = deze afdeling).
+- 6 divisiepagina's (`_division.tsx` + `_divisies.ts`): paginakop (heroTitle 2 regels, heroLede, geen kruimelpad, knoppen "Vraag een plaatsbezoek aan" + "Bel 0460 20 77 88") · dienstrij met het verhaal + 3 features · waarden-raster "Wat wij doen" (3) · traject met de 4 processtappen ZONDER tijdlabels ("binnen 5 werkdagen" e.d. heeft geen bron) · FAQ (4) · "Andere diensten": dienstenslider met de 5 andere afdelingen · plaatsblok (standaardkeuze = deze afdeling).
   CORRECTIE gevel-FAQ (`_divisies.ts`, vraag "Hoe zit het met de premie voor gevelisolatie?"), bron ruwe HTML vlaanderen.be gelezen 11 okt 2026: "Sinds 1 maart 2026 krijgen alleen eigenaar-bewoners uit inkomenscategorie 3 en 4 nog Mijn VerbouwPremie voor de buitenmuur: tot 35% (maximaal € 3.500) of tot 50% (maximaal € 5.000) van de factuur zonder btw, voor isolatie en renovatie samen. Voor categorie 1 en 2 is er geen premie meer. Wat voor iedereen blijft: 6% btw als uw woning ouder is dan tien jaar. Bij het plaatsbezoek rekenen wij door wat de isolatie u oplevert." Daarna `node scripts/maak-chat-kennis.mjs` (check:chat).
 - `/privacy`, `/voorwaarden`, `/cookies`: vlakke paginakop + BF `.lees`-tekst, WOORDELIJK de bestaande juridische tekst (exporteer de tekst uit het oude bestand of verplaats ze naar een gedeelde module; geen woord wijzigen; btw via CONTACT.btw). Geen plaatsblok.
+- UITZONDERING op woordelijk (KEUZE MOHAMMED 12 okt, klikvraag "10 jaar, zoals de wet"): `/voorwaarden` art. 6, eerste alinea = "Voor de werken die wij zelf uitvoeren, geldt de wettelijke tienjarige aansprakelijkheid uit de artikelen 1792 en 2270 van het oud Burgerlijk Wetboek." De commerciële garantie van vijftien jaar (geen bron) is weg. Nooit terugzetten.
 - 404: vlakke paginakop "Deze pagina bestaat niet" in BF-stijl, knoppen naar `/` en `tel:` uit CONTACT.
 
 ## 11. Kopregels en SEO
 - document.title en meta description per pagina = de huidige waarden (LpReplica/OverOns/... zetten ze nu). Canonical `https://abgroep.be<pad>`.
 - index.html: JSON-LD-adres "Industrieweg 14" → `CONTACT`-adres (August van Landeghemstraat 63, 2830 Willebroek); "15 jaar garantie, gefixeerde offertes" uit description/og/twitter (geen bron).
+- index.html: JSON-LD zonder `openingHoursSpecification` (ma-vr 08:00-18:00 had geen bron) en zonder `priceRange` ("€€" had geen bron); aanname A10.
 
 ## 12. Verboden (grep vóór elke oplevering, met positieve controle)
 reviews/reviewnamen/avatars · "4,9" · aantallen klanten/werven/realisaties ("120+", "100+") · "binnen vijf werkdagen" en andere termijnen op de home · "of bel" · mailto in formulierlogica · AI/stockbeelden uit §9 · uppercase met letter-spacing ≥ 2px als label boven een kop · nieuwe claims die niet in deze spec staan.
@@ -143,3 +146,79 @@ A6 Contact zonder openingsuren en zonder tegel "Werkgebied".
 A7 Tijdlabels "binnen 5 werkdagen" e.d. van de divisiepagina's vallen weg.
 A8 Kaarttekst ecologisch = zijn dienstenzin over warmtepompen (foto = vloerverwarming).
 A9 Bedankpagina, LP's, CRM-pagina's en calculators blijven in hun huidige stijl.
+A10 JSON-LD zonder openingsuren en zonder priceRange (geen bron; zelfde reden als A6).
+
+## 15. Fotoplan subpagina's (voorbereiding)
+Bron in de code: `src/pages/abbouw/bf/fotoplan.ts` (FOTOPLAN). Namen = sleutels in `bf/beelden.ts`. Alleen echte foto's (ab-fotos.md §3), niets uit de verboden lijst (§9).
+Regels: op één pagina nooit dezelfde foto of een tweeling (ab-fotos.md §6); een paginakop is nooit een dia van de homehero (IMG_9019, IMG_0102, totaalrenovatie-p5-a, IMG_9028); een afdeling zonder eigen echte foto krijgt een vlakke paginakop. Elke afdeling houdt over de hele site één vaste kaartfoto (die van de home): op /diensten en in "Andere diensten".
+Nieuw in `scripts/bf-beelden.cjs` (11 okt): IMG_9022, uitbreiding-voor, uitbreiding-na (webp 800/1179 en 800/1440/1600, zonder metadata).
+
+| Pagina | Vak | Beeld | Uitsnede | Waarom |
+|---|---|---|---|---|
+| /over | paginakop | IMG_9027 | 50% 55% | afgewerkt keukeneiland; 9022 toont feestballonnen |
+| /over | over-split "Hoe wij werken" | pleisterwerk-g2 | midden | werf in uitvoering, vloer afgeschermd |
+| /over | beloftelijst "De mensen op uw werf" | IMG_0105 | 50% 85% | de vakman aan het werk (onderaan de foto) |
+| /diensten | paginakop | tegelwerken-p4-a | midden | zelfde beeld als de dienstenbanner van de home |
+| /diensten | dienstrij 01 Totaalrenovatie en nieuwbouw | IMG_9029 | 80% center | homekaart |
+| /diensten | dienstrij 02 Ecologisch en energetisch | IMG_9064 | 50% 70% | homekaart (A8), vloerverwarming in beeld |
+| /diensten | dienstrij 03 Dakwerken | dak-na | midden | homekaart |
+| /diensten | dienstrij 04 Gevelrenovatie | uitbreiding-gevel | midden | homekaart |
+| /diensten | dienstrij 05 Badkamer en wellness | IMG_9025 | midden | homekaart |
+| /diensten | dienstrij 06 Interieurwerken | IMG_9065 | midden | homekaart |
+| /werkwijze | paginakop | uitbreiding-voor | 50% 60% | aanbouw in ruwbouw: een werf onderweg |
+| /werkwijze | traject (8 stappen) | kaart-ruwbouw | midden | zelfde trajectfoto als de home |
+| /contact | paginakop | IMG_9029 | 80% 50% | afgewerkte ruimte; op gsm de glaspui |
+| /construct | paginakop | IMG_9029 | 80% 50% | scherpe afgewerkte ruimte, vaste kaartfoto van de afdeling. GEWIJZIGD 12 okt (was woonkeuken-na: zachte videostill van 1178 px, onscherp op 1265 bij 150 %). BESLISSING MOHAMMED: nee |
+| /construct | dienstrij "Coördinatie van alle vakken" | woonkeuken-voor | midden | werf in ruwbouw. GEWIJZIGD 12 okt (was "dezelfde ruimte in ruwbouw"). BESLISSING MOHAMMED: nee |
+| /dakwerken | paginakop | dak-na | midden | afgewerkt pannendak |
+| /dakwerken | dienstrij "Onze dakwerkers en zinkwerkers" | IMG_9019 | midden | het dak open, houtwerk zichtbaar (zelfde huis) |
+| /gevel | paginakop | uitbreiding-na | midden | enige echte gevelfoto (crepi) |
+| /gevel | dienstrij "Isolatie en afwerking in één werf" | uitbreiding-voor | midden | dezelfde aanbouw vóór de gevelafwerking: de ondergrond |
+| /bad | paginakop | IMG_0106 | 50% 45% | douche met patroontegels |
+| /bad | dienstrij "Van ontwerp tot oplevering" | IMG_9025 | midden | homekaart |
+| /interieur | paginakop | IMG_0111 | midden | maatwerk, gewelfde doorgang |
+| /interieur | dienstrij "Ons eigen schrijnwerkatelier" | IMG_9065 | midden | homekaart: tv-meubel en lamellen |
+| /ecologisch | paginakop | geen (vlak) | | geen echte foto van isolatie, warmtepomp of zonnepanelen |
+| /ecologisch | dienstrij "Schil en technieken in één dossier" | IMG_9064 | 50% 70% | enige verwante echte foto (vloerverwarming) |
+| 6 divisies | traject (4 stappen), voorstel | kaart-ruwbouw | midden | geen tweeling met kop, rij of kaarten op die pagina's |
+| 6 divisies | "Andere diensten" | homekaarten van de 5 andere afdelingen + banner tegelwerken-p4-a | | FOTOPLAN.andereDiensten(slug) |
+| /privacy /voorwaarden /cookies /404 | paginakop | geen (vlak) | | spec §6 |
+
+Getoetst 11 okt (scratchpad werk/fotoplan/routes.mjs, met positieve controle): per pagina nul dubbels, nul tweelingen, nul verboden beelden, geen homehero-dia als paginakop, elk beeld in beelden.ts, elke niet-kopfoto met alt.
+Contrast (werk/fotoplan/contrast-kop.mjs, tekst gemeten tegen de pixels, 1265/1440/1001/1000/390): de laag van BF zakte op ≤1000 tot .45 en dan viel het kruimelpad op lichte foto's onder AA (3,37). `bf-ab.css` houdt de laag op ≤1000 nu op minstens .62; daarna 952 tekstelementen, 0 onder AA.
+
+## 16. Onderste deel "zoals eerst" (KEUZE MOHAMMED 12 okt, wint van §7 punt plaatsblok en §8-opmaak)
+
+Zijn woorden: "die plaatsbezoek ding onderaan wel graag zoals eerst", "dus full width naar de zijkanten", "dat het zoals eerst komt"; klikkeuze "Oud onderste deel terug" (preview: witte sectie met 3 tegels + formulier + foto, daaronder de navy band over de volle breedte).
+- Bouwsteen `src/pages/abbouw/bf/onderaan.ts` + `onderaan.css` vervangt `plaatsBlok()` op elke pagina die er een had (/, /over, /diensten, /werkwijze, /contact, 6 afdelingen). Op /contact zonder eindband (`eind: false`).
+- Opbouw = live home (LpReplica.tsx r.1048-1131): telefoonchip, kop + zin (HOME.contact of de eigen kop/zin van de pagina), 3 tegels Telefoon · Werkgebied "Heel Vlaanderen" · Adres, formulierkaart links (Voornaam, Achternaam, Telefoon, E-mail, Soort werk = de 8 WERK-opties, Bericht (optioneel), knop "Verstuur aanvraag"), foto rechts; daaronder `section.bf-eind`: navy over de volle breedte, kop "Plannen voor uw woning?" / "Laat uw nummer achter", HOME.eind.tekst, knoppen "0460 20 77 88" (tel) en "Vraag een plaatsbezoek aan" (data-kies, scrolt naar het formulier), cirkelfoto over de bovenrand (gsm: weg).
+- Letter en kleuren = nieuwe site (Plus Jakarta Sans, goud #d98c03 met navy tekst, navy #0a1628).
+- Beelden ECHT (de oude waren AI): fotovak IMG_9027, cirkel IMG_0106; /over fotovak IMG_0110; /bad cirkel IMG_9028; op de home gaan IMG_9027 en IMG_0106 uit de realisatierail.
+- Formulier: gedrag.ts stap 10 met data-soort="contact": telefoon OF e-mail verplicht, submitLead (GHL + Web3Forms), firstName = voornaam, lastName = achternaam, landing_division = type_werk = werkKey(Soort werk), aanvullende_info = Soort werk + Bericht, bron_lead "<pagina>:contact" (zoals de oude home "home:contact"), daarna /bedankt?dienst=totaalrenovatie; knop blijft uit na succes (geen tweede lead). Nooit mailto.
+- De inspectieband ("Laat uw nummer achter", zelfde bron HOME.eind) valt weg op pagina's waar de eindband staat (/ en /diensten): dezelfde kop twee keer op één pagina mag niet.
+
+## 17. De 4 landingspagina's in BF-stijl (OPDRACHT MOHAMMED 12 okt)
+
+Zijn woorden: "en doe ook de dakwerken en totaalrenovatie lp in de nieuwe stijl"; klikkeuzes: totaalrenovatie = "Alle drie"; beelden = "Beelden laten zoals nu". Dit heft voor deze 4 routes de NIET-AANRAKEN-regel van §3 op; de andere LP's (/totaalrenovatie, /badkamerrenovatie, /lp/badkamerrenovatie), LpReplica, Onderdelen, Iconen, stijl.ts blijven verboden terrein.
+Kaart (VERPLICHT LEZEN): scratchpad/kaart/lp-overzicht.md + lp-dakwerken.md, lp-richtprijs-berekenen.md, lp-totaalrenovatie.md, lp-aannemer-renovatiewerken.md.
+
+**Routes:** /lp/dakwerken (DAKWERKEN, kgj/inhoud.ts) · /lp/richtprijs-berekenen (TOTAALRENOVATIE_OUD) · /lp/totaalrenovatie (TOTAALRENOVATIE) · /lp/aannemer-renovatiewerken (RENOVATIEWERKEN). Alle 4 draaien nu op LpKgj.tsx.
+
+**Wat verandert:** alleen de stijl. Een nieuw LP-omhulsel in React/JSX (`src/pages/abbouw/lp/kgj/LpBf.tsx` + gescoopte CSS onder `.bf`), dat HETZELFDE inhoudsobject leest en de bestaande logica-componenten gebruikt (Rekenaar, Inspectie, PostcodeGemeente, Toestemming, ChatAssistent). Visueel = BF lp-dak (bfbouw-website/bouw/lp-dak.cjs, live bfbouw.be/lp/dakwerken/) vertaald naar AB: Plus Jakarta Sans, goud #d98c03 met navy tekst, navy vlakken, BF-knoppen, BF-kaarten, BF-schaal (--u vanaf 1001 px). LpKgj.tsx blijft staan als terugval (route terugzetten = één regel). De 4 routes in App.tsx wijzen naar het nieuwe omhulsel.
+
+**Wat IDENTIEK blijft (elke afwijking = fout):**
+- alle tekst woordelijk uit het inhoudsobject, sectievolgorde zoals nu (manifest b);
+- elk formulier en de rekenaar: velden, validatie (telefoon verplicht ≥8 cijfers op de LP's), vragen en volgorde, wazig bedrag;
+- submitLead-payload byte-gelijk aan manifest c (source, page_path, landing_division, type_werk, aanvullende_info, bron_lead incl. `:hero`/`:venster`, postcode/gemeente), /bedankt-URL per formulier, trackFormStart-labels, fireConversion, Toestemming-stap na een lead zonder marketingtoestemming, Clarity via laadClarity (ysh2tr1qtp dak, ysjtjyakao renovatie);
+- ids/ankers: top, rekenaar, waarom, werkwijze, contact (dak) en rekenaar, contact, diensten, werkwijze, voorna, waarom (renovatie); `#rekenaar` opent op /lp/totaalrenovatie en /lp/aannemer-renovatiewerken het venster;
+- message match op /lp/dakwerken (dienst=, dak=, utm_term → h1 en vraag 1);
+- canonical zoals nu (geen canonical per LP), GA4/cookiebanner op het pad /lp/;
+- de kop houdt OOK de klasse `kgj-kop` (Rekenaar.tsx:95 scrolfix en check-rekenaar-scroll.cjs:77 lezen ze);
+- beelden: EXACT zoals nu, ook de AI-beelden (keuze Mohammed 12 okt "Beelden laten zoals nu"; §9 geldt hier NIET);
+- inhoud-totaalrenovatie.ts NIET herstructureren (HOME, HOME_BF werkAlt, check-fotos, maak-chat-kennis lezen het).
+
+**Wat weg mag / moet:** geen menu en geen voetlinkenlijst (LP-kop = logo + telefoon + knop, zoals BF `kop--lp` en de huidige LP), geen reviews of namen, geen cijferband met claims, geen scroll-reveal (lock 3 aug); de Google-badge "5,0 op Google" mag.
+
+**Guards (zelfde ronde, elk met positieve controle):** huisstijl (BF-hero en slotblok-selectors), rekenscroll, ankers, btw, claims + contrast ook voor /lp/richtprijs-berekenen en /lp/aannemer-renovatiewerken, en een NIEUWE payload-toets per LP (bron_lead, aanvullende_info, /bedankt-URL, Toestemming, Clarity-id, onderschepte GHL + Web3Forms). bf-css-port.cjs: eigen LP-blokkenlijst + eigen lokaas.
+
+**Bouwvolgorde:** /lp/dakwerken eerst (directe BF-referentie), dan /lp/richtprijs-berekenen, dan /lp/totaalrenovatie + /lp/aannemer-renovatiewerken samen. Alles lokaal; live pas na Mohammeds ja.

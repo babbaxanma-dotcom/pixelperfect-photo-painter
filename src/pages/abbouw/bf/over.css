@@ -1,0 +1,33 @@
+/* /over (OverBf.tsx): de AB-variant van de cijferbalk. De BF-regels van .ocijfers (site.css r.1292-1300,
+   r.1312-1319, r.1328-1329) staan in bf.css (scripts/bf-css-port.cjs); de paginakop op 601-1000 px in bf-ab.css. */
+
+/* ---------- AB: twee tegels (BF heeft er vier) ----------
+   Desktop: twee kolommen over de volle balkbreedte, zodat de balk lijnt met de blokken eronder (1200u).
+   Gsm: één tegel per helft zoals BF; het label mag hier groter dan BF (13 px), er zijn maar twee tegels. */
+.bf .bf-ocijfers__balk--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 1000px) {
+  .bf .bf-ocijfers__balk--2 { padding: 18px 6px; }
+  .bf .bf-ocijfers__balk--2 li { align-items: flex-start; }
+  .bf .bf-ocijfers__balk--2 li > span:last-child > span { font-size: 14px; line-height: 1.35; }
+}
+
+/* /over: de kop van het plaatsblok 'Zullen we uw plannen bespreken?' (OverOns r.110) is langer dan BF 'Bespreek uw plannen met ons'.
+   Met de BF-letter (48u) liep hij in de kolom van 450u over 3 regels met 'plannen' alleen. De kop blijft in de BF-kolom
+   (geen extra breedte: met 480u stak hij 16-23 px uit de kolom en stond hij 23-33 px van de formulierkaart) en krijgt
+   een letter van 46u: 2 regels 'Zullen we uw' / 'plannen bespreken?'. 45,5u valt af: 'Zullen we uw plannen' past dan
+   op 1 px en 'bespreken?' staat alleen.
+   Gemeten 12 okt (werk/herstel-over-r3/meet.mjs): 1001-1920 telkens 2 regels, 8-12 px binnen de kolom,
+   47-68 px vrij tot de kaart. Alleen /over (data-pagina), de andere plaatsblokken houden de BF-regelbouw. */
+@media (min-width: 1001px) {
+  .bf .bf-plaats[data-pagina="over"] .bf-plaats__kop { font-size: calc(46 * var(--u)); }
+}
+
+/* /over: beloftelijst 'De mensen op uw werf' (duo--om). De tekst (lede + 3 punten) is veel langer dan BF 'Wat u van ons mag
+   verwachten'; met de vaste 4:3-foto (540x405u) bleef er boven en onder de foto een leeg grijs vlak. De foto rekt nu mee met de
+   tekst; min-height 405u (= 4:3 van 540u, de BF-maat) houdt hem bij korte tekst op de BF-verhouding. Uitsnede 50% 85% blijft.
+   Scope = data-track-source van BfPagina: over.css blijft na een SPA-navigatie geladen en mag een duo--om op een andere pagina
+   niet raken. Op ≤1000 px ongewijzigd (BF: foto boven de tekst, 4:3). */
+@media (min-width: 1001px) {
+  .bf[data-track-source="over"] .bf-duo--om .bf-duo__foto { aspect-ratio: auto; align-self: stretch; position: relative; min-height: calc(405 * var(--u)); }
+  .bf[data-track-source="over"] .bf-duo--om .bf-duo__foto img { position: absolute; inset: 0; }
+}

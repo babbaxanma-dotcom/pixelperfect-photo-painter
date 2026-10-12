@@ -29,7 +29,8 @@ export function wireBf(root: HTMLElement, opties: BfOpties): () => void {
   const later = (fn: () => void, ms: number) => { const id = window.setTimeout(fn, ms); opruim.push(() => window.clearTimeout(id)); return id; };
   const elke = (fn: () => void, ms: number) => { const id = window.setInterval(fn, ms); opruim.push(() => window.clearInterval(id)); };
   const stil = !!window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const zacht: ScrollBehavior = stil ? 'auto' : 'smooth';
+  // 'instant' en niet 'auto': 'auto' volgt html { scroll-behavior: smooth } uit ab-bouw.css r.76 en schoof dan toch zacht
+  const zacht: ScrollBehavior = stil ? 'instant' : 'smooth';
   const alle = <T extends Element = HTMLElement>(sel: string, binnen: ParentNode = root) => Array.from(binnen.querySelectorAll<T>(sel) as NodeListOf<T>);
 
   /* 1. kop: transparant over de hero, wit zodra er 24 px gescrold is (site.js r.7-8) */
@@ -53,7 +54,14 @@ export function wireBf(root: HTMLElement, opties: BfOpties): () => void {
     }
   }
 
-  /* 3. gsm-menu (site.js r.21-26) + Escape, sluiten bij een link, scrollslot op body */
+  /* 3. gsm-menu (site.js r.21-26) + Escape, sluiten bij een link, scrollslot op body.
+     Toetsenbord (WCAG 2.4.3/2.4.11; BF heeft dezelfde fout): met het menu open lag de focus na de hamburger op de pagina
+     achter het witte paneel (onzichtbaar), en de menulinks (in de DOM vóór de hamburger) waren alleen met Shift+Tab
+     bereikbaar (gemeten 12 okt op 390 en 1000, elke route). Nu: inhoud, voet en overslaanlink achter het paneel zijn
+     inert, de focus gaat bij het openen naar de eerste menulink (bij klik of tik verschijnt er geen ring), en Tab vanaf
+     de hamburger gaat terug naar die link. De zwevende belknop blijft bruikbaar: hij ligt boven het paneel (z-index 40
+     tegen 30) en is zichtbaar. Alles zit IN zetMenu, zodat elk sluitpad (hamburger, Escape, link, data-kies, venster
+     >= 1001, opruimen) inert weer weghaalt. */
   const burger = root.querySelector<HTMLButtonElement>('.bf-nav__burger');
   const menu = root.querySelector<HTMLElement>('.bf-nav__menu');
   let menuOpen = false;
@@ -64,12 +72,16 @@ export function wireBf(root: HTMLElement, opties: BfOpties): () => void {
     root.classList.toggle('bf-menu-open', open);
     burger.setAttribute('aria-expanded', open ? 'true' : 'false');
     burger.setAttribute('aria-label', open ? 'Menu sluiten' : 'Menu openen');
-    if (open) { vorigeOverflow = document.body.style.overflow; document.body.style.overflow = 'hidden'; }
+    root.querySelectorAll<HTMLElement>(':scope > .bf-overslaan, :scope > main, :scope > .bf-voet').forEach((el) => el.toggleAttribute('inert', open));
+    if (open) { vorigeOverflow = document.body.style.overflow; document.body.style.overflow = 'hidden'; menu?.querySelector<HTMLElement>('a')?.focus({ preventScroll: true }); }
     else document.body.style.overflow = vorigeOverflow;
   };
   if (burger && menu) {
     op(burger, 'click', () => zetMenu(!menuOpen));
-    op(window, 'keydown', (e: KeyboardEvent) => { if (e.key === 'Escape' && menuOpen) { zetMenu(false); burger.focus(); } });
+    op(window, 'keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && menuOpen) { zetMenu(false); burger.focus(); }
+      if (e.key === 'Tab' && !e.shiftKey && menuOpen && document.activeElement === burger) { e.preventDefault(); menu.querySelector<HTMLElement>('a')?.focus(); }
+    });
     op(menu, 'click', (e: Event) => { if ((e.target as Element).closest('a')) zetMenu(false); });
     const breed = window.matchMedia('(min-width: 1001px)');
     const dicht = () => { if (breed.matches) zetMenu(false); };
@@ -110,6 +122,16 @@ export function wireBf(root: HTMLElement, opties: BfOpties): () => void {
     if (vorige) op(vorige, 'click', () => naar(nu - 1, true));
     if (volgende) op(volgende, 'click', () => naar(nu + 1, true));
     op(box, 'keydown', (e: KeyboardEvent) => { if (e.key === 'ArrowRight') { e.preventDefault(); naar(nu + 1, true); } if (e.key === 'ArrowLeft') { e.preventDefault(); naar(nu - 1, true); } });
+    // toetsenbordfocus op een kaartlink: die kaart naar het midden, zoals bij de pijlen (anders staat de focus buiten beeld).
+    // Alleen bij :focus-visible: Chrome focust een link al bij mousedown, en meeschuiven trekt de link
+    // dan onder de cursor weg, waardoor de klik verloren gaat (gemeten 1265/1440, 150 ms).
+    const zichtbaar = (el: Element) => { try { return el.matches(':focus-visible'); } catch { return true; } };
+    op(baan, 'focusin', (e: Event) => {
+      const t = e.target as Element;
+      if (!zichtbaar(t)) return;
+      const i = kaarten.findIndex((k) => k.contains(t));
+      if (i >= 0 && i !== nu) naar(i, true);
+    });
     let sleep: { x: number; l: number; bewogen: boolean } | null = null;
     op(baan, 'pointerdown', (e: PointerEvent) => { if (e.pointerType !== 'mouse') return; sleep = { x: e.clientX, l: baan.scrollLeft, bewogen: false }; });
     op(window, 'pointermove', (e: PointerEvent) => { if (!sleep) return; const dx = e.clientX - sleep.x; if (Math.abs(dx) > 4) { sleep.bewogen = true; baan.classList.add('bf-is-slepen'); } baan.scrollLeft = sleep.l - dx; });
@@ -215,16 +237,18 @@ export function wireBf(root: HTMLElement, opties: BfOpties): () => void {
       e.preventDefault();
       zetMenu(false);
       if (root.querySelector('.bf-plaats__formkern')) wissel('plaatsbezoek', true);
-      else opties.navigate('/contact#offerte');
+      else opties.navigate('/contact#plaatsbezoek'); // ContactBf opent daar de tab Plaatsbezoek
     });
   }
 
   /* 10. formulierverzending (spec §8): submitLead (GHL + Web3Forms parallel), nooit mailto */
-  const plaats = root.querySelector<HTMLElement>('.bf-plaats');
+  // .bf-oc = de contactsectie van het onderste deel (onderaan.ts, spec §16); .bf-plaats = het oude plaatsblok
+  const plaats = root.querySelector<HTMLElement>('.bf-plaats, .bf-oc');
   const pagina = plaats?.getAttribute('data-pagina') || opties.bron;
   const bronLead = (plaats?.getAttribute('data-bron') as 'landing_page' | 'contact_form') || 'landing_page';
   for (const form of alle<HTMLFormElement>('form.js-bf-form')) {
-    op(form, 'focusin', () => trackFormStart(`${pagina}:plaatsblok`));
+    const isContact = form.getAttribute('data-soort') === 'contact';
+    op(form, 'focusin', () => trackFormStart(`${pagina}:${isContact ? 'contact' : 'plaatsblok'}`));
     const melding = form.querySelector<HTMLElement>('.bf-formulier-melding')!;
     const knop = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
     const meld = (t: string) => { melding.textContent = t; melding.hidden = false; };
@@ -248,13 +272,17 @@ export function wireBf(root: HTMLElement, opties: BfOpties): () => void {
         fout.focus();
         return;
       }
-      const soort = form.getAttribute('data-soort') === 'plaatsbezoek' ? 'plaatsbezoek' : 'offerte';
-      const tab = soort === 'plaatsbezoek' ? 'Gratis plaatsbezoek' : 'Offerte aanvragen';
-      const naam = (veld('naam')?.value || '').trim();
+      // de contactsectie onderaan geeft "<pagina>:contact", zoals het oude contactformulier (LpReplica.tsx r.481)
+      const soort = isContact ? 'contact' : form.getAttribute('data-soort') === 'plaatsbezoek' ? 'plaatsbezoek' : 'offerte';
+      const tab = soort === 'plaatsbezoek' ? 'Gratis plaatsbezoek' : soort === 'offerte' ? 'Offerte aanvragen' : '';
       const werk = (veld('werk')?.value || '').trim();
       const postcode = (veld('postcode')?.value || '').trim();
       const project = (veld('project')?.value || '').trim();
-      const [voor, ...rest] = naam.split(/\s+/).filter(Boolean);
+      // aparte velden voornaam/achternaam (contactsectie) of één naamveld (plaatsblok)
+      const vnVeld = veld('voornaam');
+      const [voor, ...rest] = vnVeld
+        ? [(vnVeld.value || '').trim(), (veld('achternaam')?.value || '').trim()]
+        : (veld('naam')?.value || '').trim().split(/\s+/).filter(Boolean);
       const key = werkKey(werk);
       bezig = true; knop.disabled = true; knop.setAttribute('aria-busy', 'true');
       meld('Bezig met versturen…');
@@ -266,14 +294,18 @@ export function wireBf(root: HTMLElement, opties: BfOpties): () => void {
         lastName: rest.join(' ') || undefined,
         email,
         phone: telefoon || undefined,
+        // naar GHL postalCode en adres_project (leads.ts r.127-149), zoals het oude /contact (Contact.tsx r.177) en de LP's
+        postcode: postcode || undefined,
         type_werk: key,
         aanvullende_info: [tab, werk, postcode ? 'Postcode: ' + postcode : '', project].filter(Boolean).join('\n'),
         bron_lead: `${pagina}:${soort}`,
       });
-      bezig = false; knop.disabled = false; knop.removeAttribute('aria-busy');
+      // bij succes blijft de knop uit tot de pagina weg is: anders kon een tweede klik tussen navigate() en de
+      // wissel naar /bedankt een tweede lead sturen (spec §8 "geen dubbele lead"; gemeten 11 okt: 4 POST in plaats van 2)
       if (opgeruimd) return;
-      if (res.ok) { melding.hidden = true; opties.navigate('/bedankt?dienst=totaalrenovatie'); }
-      else meld(leadFoutmelding(res, CONTACT.phone.display));
+      if (res.ok) { melding.hidden = true; opties.navigate('/bedankt?dienst=totaalrenovatie'); return; }
+      bezig = false; knop.disabled = false; knop.removeAttribute('aria-busy');
+      meld(leadFoutmelding(res, CONTACT.phone.display));
     });
   }
 
@@ -301,6 +333,10 @@ export function wireBf(root: HTMLElement, opties: BfOpties): () => void {
     if (!href.startsWith('/') || href.startsWith('//')) return;
     e.preventDefault();
     zetMenu(false);
+    // link naar de pagina waar de bezoeker al is: naar boven, zoals BF (statisch: de pagina herlaadt en staat bovenaan).
+    // 'instant' (direct), geen zacht scrollen (lock 3 aug; 'auto' volgde html { scroll-behavior: smooth } van ab-bouw.css
+    // en schoof 1,0-1,4 s, gemeten 12 okt); geen navigate, dus ook geen dubbele geschiedenisregel.
+    if (href === location.pathname) { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); return; }
     opties.navigate(href);
   });
 
@@ -311,7 +347,7 @@ export function wireBf(root: HTMLElement, opties: BfOpties): () => void {
     let pogingen = 0, klaar = false;
     const spring = () => {
       const doel = document.getElementById(anker);
-      if (doel && root.contains(doel)) { doel.scrollIntoView({ block: 'start' }); klaar = true; }
+      if (doel && root.contains(doel)) { doel.scrollIntoView({ block: 'start', behavior: 'instant' }); klaar = true; }
       pogingen += 1;
       if (pogingen < 20 && !(klaar && pogingen > 8)) later(spring, 100);
     };

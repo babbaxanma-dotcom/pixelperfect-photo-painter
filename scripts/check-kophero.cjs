@@ -33,6 +33,9 @@ let POORT = 4382;
 
 /* De landingspaginas met een heroformulier, plus een gewone pagina zodat de
    kop daar ook meegemeten wordt. */
+/* Sinds 12 okt 2026 zijn / en /over BF-pagina's (spec/bf-stijl.md): hun kop is .bf-kop, de menuknop
+   .bf-nav__burger en het gsm-menu .bf-nav__menu (dicht = display none, zoals .rp-mob). Dezelfde vijf toetsen,
+   alleen de selectors kennen nu beide opmaken. */
 /* Ook de /lp/-adressen. Die wijzen naar dezelfde component, maar het zijn de
    adressen uit de advertenties en dus wat bezoekers werkelijk openen. Ik testte
    alleen /badkamerrenovatie terwijl Mohammed naar /lp/badkamerrenovatie keek:
@@ -86,7 +89,7 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
         const m = await p.evaluate(() => {
           const q = (s) => document.querySelector(s);
           const R = (e) => (e ? e.getBoundingClientRect() : null);
-          const kop = q('.pc-kop'), titel = q('.pc-h1, .rp-phero__t, h1');
+          const kop = q('.pc-kop, .bf-kop'), titel = q('.pc-h1, .rp-phero__t, h1');
           const form = q('.pc-hero form, .pc-balk form');
           const verstuur = form && form.querySelector('button[type=submit], .pc-knop');
           const heroknop = q('.pc-hero-vat > .pc-knop');
@@ -115,14 +118,14 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
             balkBoven: q('.pc-balk') ? Math.round(R(q('.pc-balk')).top) : null,
             /* Het bovenste element in de hero dat werkelijk iets toont. */
             eersteInhoud: (() => {
-              const hero = q('.pc-hero, .rp-phero');
+              const hero = q('.pc-hero, .rp-phero, .bf-hero, .bf-paginakop');
               if (!hero) return null;
               let top = Infinity;
               for (const e of hero.querySelectorAll('*')) {
                 /* De kop staat op een telefoon binnen de hero, als eerste blok
                    in de kolom. Zonder deze uitzondering telt zijn logo als het
                    eerste stuk inhoud en meet deze check altijd nul. */
-                if (e.closest('.pc-kop')) continue;
+                if (e.closest('.pc-kop, .bf-kop')) continue;
                 const r = e.getBoundingClientRect();
                 if (r.height < 4 || r.width < 4) continue;
                 const heeftTekst = [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
@@ -226,7 +229,7 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
           await p.evaluate((v) => window.scrollTo(0, v), hoogte);
           await new Promise((k) => setTimeout(k, 260));
           const kopStand = await p.evaluate(() => {
-            const k = document.querySelector('.pc-kop');
+            const k = document.querySelector('.pc-kop, .bf-kop');
             if (!k) return { er: false };
             const r = k.getBoundingClientRect();
             const boven = document.elementFromPoint(
@@ -271,7 +274,7 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
               hem terugbrengen, anders is er geen weg naar een andere pagina. */
         if (breedte < 500) {
           const menu = await p.evaluate(() => {
-            const b = document.querySelector('.rp-burger');
+            const b = document.querySelector('.rp-burger, .bf-nav__burger');
             if (!b) return { knop: false };
             const zichtbaar = b.getBoundingClientRect().width > 0 && getComputedStyle(b).display !== 'none';
             return { knop: true, zichtbaar, lijnen: (b.querySelector('path')?.getAttribute('d') || '').split('M').length - 1 };
@@ -280,10 +283,10 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
           if (!menu.knop || !menu.zichtbaar) {
             fouten.push(`${waar}: geen zichtbare menuknop, de navigatie is hier onbereikbaar`);
           } else {
-            await p.click('.rp-burger');
+            await p.click('.rp-burger, .bf-nav__burger');
             await new Promise((k) => setTimeout(k, 350));
             const paneel = await p.evaluate(() => {
-              const m = document.querySelector('.rp-mob, [data-mob]');
+              const m = document.querySelector('.rp-mob, [data-mob], .bf-nav__menu');
               if (!m) return { er: false };
               return {
                 er: true,
@@ -299,7 +302,7 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
               await p.keyboard.press('Escape');
               await new Promise((k) => setTimeout(k, 350));
               const dicht = await p.evaluate(() => {
-                const m = document.querySelector('.rp-mob, [data-mob]');
+                const m = document.querySelector('.rp-mob, [data-mob], .bf-nav__menu');
                 return getComputedStyle(m).display === 'none' || m.hidden;
               });
               metingen++;

@@ -1,0 +1,186 @@
+{
+  "pad": "/lp/dakwerken",
+  "bron": "Gemeten 12 okt 2026 op de HUIDIGE LpKgj.tsx (LP-code byte-gelijk aan origin/main 9727a84 = live), meting scratchpad werk/lpkaart/uit-flows.json (meet.mjs), manifest kaart/lp-*.md §c. Vluchtige velden (user_agent, submitted_at, referrer) weggelaten.",
+  "clarity": "ysh2tr1qtp",
+  "flows": [
+    {
+      "naam": "rekenaar-hero",
+      "soort": "rekenaar",
+      "query": "?utm_source=google&utm_medium=cpc&utm_campaign=dakrenovatie&utm_term=dak%20vernieuwen&dienst=nieuw-dak&gclid=TEST-KAART",
+      "marketing": false,
+      "wortel": "#rekenaar",
+      "antwoorden": [
+        "Hellend dak",
+        "Renovatie",
+        "Met isolatie",
+        "Ouder dan 10 jaar",
+        "Gegolfde pannen",
+        "50 tot 100 m²",
+        "Nee",
+        "Zo snel mogelijk"
+      ],
+      "velden": {
+        "naam": "Test Kaart",
+        "telefoon": "0400 00 00 00"
+      },
+      "formStart": "lp:dakwerken:rekenaar:hero",
+      "toestemming": true,
+      "bedankt": "/bedankt?dienst=dakwerken&van=rekenaar",
+      "fouten": {
+        "leeg": "Vul uw telefoonnummer in om uw prijs te ontvangen.",
+        "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
+      },
+      "ghl": {
+        "firstName": "Test Kaart",
+        "name": "Test Kaart",
+        "phone": "0400 00 00 00",
+        "country": "BE",
+        "type_werk": "AB Dakwerken",
+        "aanvullende_info": "Dak: Hellend dak · Werk: Renovatie · Isolatie: Met isolatie · Leeftijd: Ouder dan 10 jaar · Bedekking: Gegolfde pannen · Grootte: 50 tot 100 m² · Asbest: Nee · Start: Zo snel mogelijk",
+        "bron_lead": "Google Ads",
+        "bron_lead_detail": "lp:dakwerken:rekenaar:hero",
+        "page_path": "/lp/dakwerken",
+        "landing_division": "ab_dakwerken",
+        "source": "landing_page",
+        "utm_source": "google",
+        "utm_medium": "cpc",
+        "utm_campaign": "dakrenovatie",
+        "utm_term": "dak vernieuwen",
+        "gclid": "TEST-KAART"
+      },
+      "web3forms": {
+        "access_key": "b01e4fea-3e73-418b-b65a-acfb1d3ee43c",
+        "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
+        "from_name": "AB Bouw website",
+        "to": "info@abgroep.be",
+        "firstName": "Test Kaart",
+        "name": "Test Kaart",
+        "phone": "0400 00 00 00",
+        "country": "BE",
+        "type_werk": "AB Dakwerken",
+        "aanvullende_info": "Dak: Hellend dak · Werk: Renovatie · Isolatie: Met isolatie · Leeftijd: Ouder dan 10 jaar · Bedekking: Gegolfde pannen · Grootte: 50 tot 100 m² · Asbest: Nee · Start: Zo snel mogelijk",
+        "bron_lead": "Google Ads",
+        "bron_lead_detail": "lp:dakwerken:rekenaar:hero",
+        "page_path": "/lp/dakwerken",
+        "landing_division": "ab_dakwerken",
+        "source": "landing_page",
+        "utm_source": "google",
+        "utm_medium": "cpc",
+        "utm_campaign": "dakrenovatie",
+        "utm_term": "dak vernieuwen",
+        "gclid": "TEST-KAART"
+      },
+      "metingInUitFlows": "dak-rekenaar-hero"
+    },
+    {
+      "naam": "inspectie",
+      "soort": "inspectie",
+      "query": "",
+      "marketing": false,
+      "wortel": ".kgj-reken--inspectie",
+      "velden": {
+        "naam": "Test Kaart",
+        "telefoon": "0400 00 00 01",
+        "@pg": "2830"
+      },
+      "formStart": "lp:dakwerken:inspectie",
+      "toestemming": true,
+      "bedankt": "/bedankt?dienst=dakwerken",
+      "fouten": {
+        "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",
+        "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
+      },
+      "ghl": {
+        "firstName": "Test Kaart",
+        "name": "Test Kaart",
+        "phone": "0400 00 00 01",
+        "postalCode": "2830",
+        "country": "BE",
+        "type_werk": "AB Dakwerken",
+        "aanvullende_info": "Aanvraag gratis dakinspectie",
+        "adres_project": "2830",
+        "bron_lead": "Website",
+        "bron_lead_detail": "lp:dakwerken:inspectie",
+        "page_path": "/lp/dakwerken",
+        "landing_division": "ab_dakwerken",
+        "source": "landing_page"
+      },
+      "web3forms": {
+        "access_key": "b01e4fea-3e73-418b-b65a-acfb1d3ee43c",
+        "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
+        "from_name": "AB Bouw website",
+        "to": "info@abgroep.be",
+        "firstName": "Test Kaart",
+        "name": "Test Kaart",
+        "phone": "0400 00 00 01",
+        "postalCode": "2830",
+        "country": "BE",
+        "type_werk": "AB Dakwerken",
+        "aanvullende_info": "Aanvraag gratis dakinspectie",
+        "adres_project": "2830",
+        "bron_lead": "Website",
+        "bron_lead_detail": "lp:dakwerken:inspectie",
+        "page_path": "/lp/dakwerken",
+        "landing_division": "ab_dakwerken",
+        "source": "landing_page"
+      },
+      "metingInUitFlows": "dak-inspectie"
+    },
+    {
+      "naam": "rekenaar-venster",
+      "soort": "rekenaar",
+      "query": "",
+      "marketing": true,
+      "opener": "alt",
+      "wortel": ".kgj-venster",
+      "antwoorden": [
+        "Plat dak",
+        "Isolatie",
+        "Jonger dan 10 jaar",
+        "Kleiner dan 50 m²",
+        "Nee",
+        "Dit jaar"
+      ],
+      "velden": {
+        "telefoon": "0400 00 00 02",
+        "email": "test@voorbeeld.be"
+      },
+      "formStart": "lp:dakwerken:rekenaar:venster",
+      "toestemming": false,
+      "bedankt": "/bedankt?dienst=dakwerken&van=rekenaar",
+      "fouten": {
+        "leeg": "Vul uw telefoonnummer in om uw prijs te ontvangen.",
+        "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
+      },
+      "ghl": {
+        "email": "test@voorbeeld.be",
+        "phone": "0400 00 00 02",
+        "country": "BE",
+        "type_werk": "AB Dakwerken",
+        "aanvullende_info": "Dak: Plat dak · Werk: Isolatie · Leeftijd: Jonger dan 10 jaar · Grootte: Kleiner dan 50 m² · Asbest: Nee · Start: Dit jaar",
+        "bron_lead": "Website",
+        "bron_lead_detail": "lp:dakwerken:rekenaar:venster",
+        "page_path": "/lp/dakwerken",
+        "landing_division": "ab_dakwerken",
+        "source": "landing_page"
+      },
+      "web3forms": {
+        "access_key": "b01e4fea-3e73-418b-b65a-acfb1d3ee43c",
+        "subject": "Nieuwe AB Bouw lead (landing_page), test@voorbeeld.be",
+        "from_name": "AB Bouw website",
+        "to": "info@abgroep.be",
+        "email": "test@voorbeeld.be",
+        "phone": "0400 00 00 02",
+        "country": "BE",
+        "type_werk": "AB Dakwerken",
+        "aanvullende_info": "Dak: Plat dak · Werk: Isolatie · Leeftijd: Jonger dan 10 jaar · Grootte: Kleiner dan 50 m² · Asbest: Nee · Start: Dit jaar",
+        "bron_lead": "Website",
+        "bron_lead_detail": "lp:dakwerken:rekenaar:venster",
+        "page_path": "/lp/dakwerken",
+        "landing_division": "ab_dakwerken",
+        "source": "landing_page"
+      },
+      "metingInUitFlows": "dak-venster-marketing"
+    }
+  ]
+}

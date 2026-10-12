@@ -1,0 +1,13 @@
+/* /werkwijze (WerkwijzeBf.tsx): lokale herstellingen uit de keuring r2 (vondst 3 en 4) voor de velden van het plaatsblok.
+   Ze horen in bf-ab.css, voor elke pagina met een plaatsblok; daar werkten andere agents tegelijk. Wie ze daarheen
+   verhuist, haalt ze hier weg.
+   Scope = data-track-source van BfPagina (zoals over.css): dit bestand blijft na een SPA-navigatie geladen en mag
+   geen andere pagina raken. */
+
+/* vondst 4: veldrand 3,36:1 op wit (WCAG 1.4.11 vraagt 3:1; BF #bdbdbd haalt 1,88:1). Niet op een veld met focus
+   (bf.css L441, rand navy) en niet op een foutveld (L442, rand #b3261e): die houden hun eigen rand. */
+.bf[data-track-source="werkwijze"] .bf-fveld :is(input, select, textarea):not(:focus):not([aria-invalid="true"]) { border-color: #8c8c8c; }
+
+/* vondst 3: na een lege verzending heeft het foutveld de focus; de focusrand (L441, navy) won van de foutrand (L442).
+   Nu blijft het foutveld rood, ook met focus. */
+.bf[data-track-source="werkwijze"] .bf-fveld [aria-invalid="true"]:focus { border-color: #b3261e; }

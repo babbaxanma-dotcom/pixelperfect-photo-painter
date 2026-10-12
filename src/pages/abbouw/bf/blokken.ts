@@ -11,11 +11,17 @@
  */
 import { CONTACT } from '@/data/contact';
 import type { Divisie } from '@/lib/leads';
-import { ICOON, type IcoonNaam, beeld, esc, grootsteUrl, logoInk, GOOGLE_PROFIEL, TEL, TEL_HREF } from './schil';
+import { ICOON, type IcoonNaam, adresHtml, beeld, esc, grootsteUrl, logoInk, GOOGLE_PROFIEL, TEL, TEL_HREF } from './schil';
 /* De paginakop (foto- en vlakke variant) staat in schil.ts (spec §4) en is hier ook bereikbaar, zodat elke pagina haar blokken uit één module haalt. */
-export { paginakop, type Kruimel } from './schil';
+export { paginakop } from './schil';
 
 export type Foto = { naam: string; alt: string; pos?: string };
+
+/** esc() + vaste spatie (U+00A0) waar een regelbreuk een bedrag of maat uit elkaar trekt: "€ 5.000", "180 m²",
+ *  "Mijn VerbouwPremie" (gemeten 12 okt op 1265/1440/1001: "maximaal € / 5.000)" op /gevel, "ongeveer 180 / m²" op
+ *  /construct). Draait NA esc(): een '&nbsp;' vóór esc() zou letterlijk als tekst op de pagina staan. Alleen het soort
+ *  spatie verandert; de woorden blijven woordelijk. */
+const vast = (s: string) => esc(s).replace(/€ (?=\d)/g, '€ ').replace(/(\d) (m²|cm|%)/g, '$1 $2').replace(/Mijn VerbouwPremie/g, 'Mijn VerbouwPremie');
 
 /* ---------- keuzelijst van het formulier (spec §8) en de GHL-sleutel per keuze ---------- */
 export const WERK: { t: string; key: Divisie }[] = [
@@ -33,7 +39,7 @@ export const werkKey = (t: string | null | undefined): Divisie => WERK.find((w) 
 /* ---------- hero (BF build.cjs r.311-322) ---------- */
 export function hero(o: { kop: [string, string]; tekst: string; knop: string; dias: Foto[]; verder: string; heeftPlaats?: boolean }) {
   const dias = o.dias.map((d, i) => beeld(d.naam, { cls: 'bf-hero__beeld' + (i === 0 ? ' bf-is-on' : ''), alt: d.alt, sizes: '100vw', lazy: i !== 0, prio: i === 0, pos: d.pos })).join('');
-  const kies = o.heeftPlaats === false ? 'href="/contact#offerte"' : 'href="#offerte" data-kies';
+  const kies = o.heeftPlaats === false ? 'href="/contact#plaatsbezoek"' : 'href="#offerte" data-kies';
   return `<section class="bf-hero" aria-labelledby="bf-hero-kop">
 <div class="bf-hero__slides" data-hero>${dias}</div>
 <div class="bf-hero__laag" aria-hidden="true"></div>
@@ -67,7 +73,7 @@ ${o.alineas.map((t) => `<p class="bf-over__tekst">${esc(t)}</p>`).join('')}
 /* ---------- cijferband (BF build.cjs r.334): statische getallen, bron per tegel ---------- */
 export type Cijfer = { icoon: IcoonNaam; getal: string; label: string; bron: string };
 export function cijferband(o: { label: string; tegels: Cijfer[] }) {
-  return `<section class="bf-cijfers" aria-label="${esc(o.label)}"><ul class="bf-cijfers__band bf-cijfers__band--${o.tegels.length}">${o.tegels.map((c) => `<li class="bf-cijfer" data-claimbron="${esc(c.bron)}"><span class="bf-cijfer__icoon">${ICOON[c.icoon]}</span><span class="bf-cijfer__getal">${esc(c.getal)}</span><span class="bf-cijfer__label">${esc(c.label)}</span></li>`).join('')}</ul></section>`;
+  return `<section class="bf-cijfers" aria-label="${esc(o.label)}"><ul class="bf-cijfers__band bf-cijfers__band--${o.tegels.length}">${o.tegels.map((c) => `<li class="bf-cijfer"><span class="bf-cijfer__icoon">${ICOON[c.icoon]}</span><span class="bf-cijfer__getal">${esc(c.getal)}</span><span class="bf-cijfer__label">${esc(c.label)}</span></li>`).join('')}</ul></section>`;
 }
 
 /* ---------- dienstenslider (BF build.cjs r.336-344, dkaart r.256) ---------- */
@@ -114,7 +120,7 @@ ${o.kaarten.map((k, i) => `<article class="bf-wkaart bf-wkaart--${i + 1}">${HUIS
 
 /* ---------- inspectieband (BF build.cjs r.257-262), goud verloop, navy tekst ---------- */
 export function inspectieBand(o: { kop: string; tekst: string; knop: string; heeftPlaats: boolean }) {
-  const kies = o.heeftPlaats ? 'href="#offerte" data-kies' : 'href="/contact#offerte"';
+  const kies = o.heeftPlaats ? 'href="#offerte" data-kies' : 'href="/contact#plaatsbezoek"';
   return `<section class="bf-inspectie" aria-labelledby="bf-inspectie-kop"><div class="bf-inspectie__blok">
 <div class="bf-inspectie__tekst"><h2 id="bf-inspectie-kop">${esc(o.kop)}</h2><p>${esc(o.tekst)}</p></div>
 <div class="bf-inspectie__knoppen"><a class="bf-inspectie__knop bf-inspectie__knop--vol" ${kies}>${esc(o.knop)}${ICOON.pijlR}</a><a class="bf-inspectie__knop" href="${TEL_HREF}">Bel ${TEL}${ICOON.pijlR}</a></div>
@@ -157,11 +163,12 @@ ${beeld(o.na.naam, { cls: 'bf-voorna__beeld', alt: o.na.alt, sizes })}
 </div></div>`;
 }
 
-/* ---------- veelgestelde vragen (AB; BF-kaartstijl in bf-ab.css). <details> werkt zonder JS. ---------- */
-export function faq(o: { id: string; kop: string; vragen: { v: string; a: string }[] }) {
-  return `<section class="bf-vragen" id="${o.id}" aria-labelledby="${o.id}-kop">
+/* ---------- veelgestelde vragen (AB; BF-kaartstijl in bf-ab.css). <details> werkt zonder JS. ----------
+   grijs: grijs vlak (BF sblok--grijs), bv. tussen twee witte blokken (divisiepagina's: traject en vragen). */
+export function faq(o: { id: string; kop: string; vragen: { v: string; a: string }[]; grijs?: boolean }) {
+  return `<section class="bf-vragen${o.grijs ? ' bf-vragen--grijs' : ''}" id="${o.id}" aria-labelledby="${o.id}-kop">
 <h2 class="bf-h2 bf-h2--midden" id="${o.id}-kop">${esc(o.kop)}</h2><span class="bf-streep" aria-hidden="true"></span>
-<div class="bf-vragen__lijst">${o.vragen.map((q, i) => `<details class="bf-vraag"${i === 0 ? ' open' : ''}><summary>${esc(q.v)}<span class="bf-vraag__plus" aria-hidden="true"></span></summary><p>${esc(q.a)}</p></details>`).join('')}</div>
+<div class="bf-vragen__lijst">${o.vragen.map((q, i) => `<details class="bf-vraag"${i === 0 ? ' open' : ''}><summary>${vast(q.v)}<span class="bf-vraag__plus" aria-hidden="true"></span></summary><p>${vast(q.a)}</p></details>`).join('')}</div>
 </section>`;
 }
 
@@ -171,7 +178,7 @@ function formulier(soort: Soort, standaardWerk?: string) {
   const id = `bf-f-${soort}`;
   const opties = WERK.map((w) => `<option${w.t === standaardWerk ? ' selected' : ''}>${esc(w.t)}</option>`).join('');
   return `<form id="${id}" class="bf-form js-bf-form" data-soort="${soort}" novalidate>
-<p class="bf-form__uitleg">Vul uw telefoonnummer of e-mailadres in.</p>
+<p class="bf-form__uitleg">Vul uw telefoonnummer of <span style="white-space:nowrap">e-mailadres</span> in.</p>
 <div class="bf-fveld"><label for="${id}-naam">Voornaam en naam</label><input id="${id}-naam" name="naam" autocomplete="name"></div>
 <div class="bf-fveld-rij">
 <div class="bf-fveld"><label for="${id}-te">Telefoonnummer</label><input id="${id}-te" name="telefoon" type="tel" inputmode="tel" autocomplete="tel"></div>
@@ -189,7 +196,8 @@ function formulier(soort: Soort, standaardWerk?: string) {
 /* ---------- plaatsblok (BF build.cjs r.234-253): goud blok, contacttegels, formulierkaart met tabs ----------
    pagina: sleutel van de pagina in bron_lead en trackFormStart ('home', 'over', 'dakwerken', ...).
    bron: LeadPayload.source (spec §8: 'landing_page').
-   standaardWerk: vooraf gekozen werk (divisiepagina: die afdeling). */
+   standaardWerk: vooraf gekozen werk (divisiepagina: die afdeling).
+   Adrestegel: "2830 Willebroek" breekt nooit (gemeten 11 okt op 1265: regel 1 eindigde op "2830"); adresHtml() in schil.ts. */
 export function plaatsBlok(o: { pagina: string; bron?: 'landing_page' | 'contact_form'; standaardWerk?: string; kop: string; tekst: string; knopKies: string }) {
   return `<section class="bf-plaats" id="offerte" aria-labelledby="bf-plaats-kop" data-pagina="${esc(o.pagina)}" data-bron="${o.bron || 'landing_page'}"><div class="bf-plaats__raam" id="contact"><div class="bf-plaats__blok">
 <div class="bf-plaats__tekst">
@@ -198,7 +206,7 @@ export function plaatsBlok(o: { pagina: string; bron?: 'landing_page' | 'contact
 <ul class="bf-plaats__info">
 <li><span class="bf-plaats__ic">${ICOON.tel}</span><span><b>Telefoon</b><a href="${TEL_HREF}">${TEL}</a></span></li>
 <li><span class="bf-plaats__ic">${ICOON.mail}</span><span><b>E-mail</b><a href="mailto:${CONTACT.email}">${CONTACT.email}</a></span></li>
-<li><span class="bf-plaats__ic">${ICOON.pin}</span><span><b>Adres</b><span>${esc(CONTACT.address.full)}</span></span></li>
+<li><span class="bf-plaats__ic">${ICOON.pin}</span><span><b>Adres</b><span>${adresHtml()}</span></span></li>
 </ul>
 <img class="bf-plaats__logo" src="${logoInk()}" width="440" height="125" alt="" loading="lazy" decoding="async">
 </div>
@@ -210,18 +218,35 @@ export function plaatsBlok(o: { pagina: string; bron?: 'landing_page' | 'contact
 </div></div></section>`;
 }
 
-/* ---------- dienstrij (BF bouw/paginas.cjs r.170-173) ---------- */
-export type Dienstrij = { id: string; nr: string; titel: string; alineas: string[]; punten?: string[]; foto?: Foto; icoon: IcoonNaam; knop?: { tekst: string; href: string } };
+/* ---------- dienstrij (BF bouw/paginas.cjs r.170-173) ----------
+   nr: weg bij een pagina met één rij (divisiepagina's). Een punt is platte tekst of een vette titel + tekst
+   (_division.tsx r.66: "<strong>t.</strong> d"). */
+export type Dienstpunt = string | { titel: string; tekst: string };
+/* titel: één string (/diensten) of de regels van de bron (divisies: storyTitle met <br/> in _divisies.ts), met <br>
+   ertussen zoals traject() en BF build.cjs r.274; anders breekt de browser na een voorzetsel ("in / één werf"). */
+export type Dienstrij = { id: string; nr?: string; titel: string | string[]; alineas: string[]; punten?: Dienstpunt[]; foto?: Foto; icoon: IcoonNaam; knop?: { tekst: string; href: string } };
+const dienstpunt = (p: Dienstpunt) => (typeof p === 'string' ? vast(p) : `<strong>${vast(p.titel)}.</strong> ${vast(p.tekst)}`);
 export function dienstRij(rijen: Dienstrij[]) {
   return `<div class="bf-dienstrijen">${rijen.map((d, i) => `<section class="bf-dienstrij${i % 2 ? ' bf-dienstrij--om' : ''}${d.foto ? '' : ' bf-dienstrij--zonder'}" id="${d.id}" aria-labelledby="bf-h-${d.id}">
 ${d.foto ? `<div class="bf-dienstrij__beeld">${beeld(d.foto.naam, { alt: d.foto.alt, sizes: '(max-width: 1000px) 100vw, 560px', pos: d.foto.pos })}<span class="bf-dienstrij__icoon" aria-hidden="true">${ICOON[d.icoon]}</span></div>` : ''}
-<div class="bf-dienstrij__tekst"><span class="bf-dienstrij__nr">${esc(d.nr)}</span><h2 class="bf-h2" id="bf-h-${d.id}">${esc(d.titel)}</h2>${d.alineas.map((t) => `<p>${esc(t)}</p>`).join('')}${d.punten && d.punten.length ? `<ul class="bf-dienstrij__punten">${d.punten.map((p) => `<li><span class="bf-belofte__vink" aria-hidden="true">${ICOON.vink}</span><span>${esc(p)}</span></li>`).join('')}</ul>` : ''}${d.knop ? `<a class="bf-knop bf-dienstrij__knop" href="${d.knop.href}">${esc(d.knop.tekst)}${ICOON.pijlR}</a>` : ''}</div></section>`).join('')}</div>`;
+<div class="bf-dienstrij__tekst">${d.nr ? `<span class="bf-dienstrij__nr">${esc(d.nr)}</span>` : ''}<h2 class="bf-h2" id="bf-h-${d.id}">${Array.isArray(d.titel) ? d.titel.map(esc).join('<br>') : esc(d.titel)}</h2>${d.alineas.map((t) => `<p>${esc(t)}</p>`).join('')}${d.punten && d.punten.length ? `<ul class="bf-dienstrij__punten">${d.punten.map((p) => `<li><span class="bf-belofte__vink" aria-hidden="true">${ICOON.vink}</span><span>${dienstpunt(p)}</span></li>`).join('')}</ul>` : ''}${d.knop ? `<a class="bf-knop bf-dienstrij__knop" href="${d.knop.href}">${esc(d.knop.tekst)}${ICOON.pijlR}</a>` : ''}</div></section>`).join('')}</div>`;
 }
 
-/* ---------- waarden-raster (BF bouw/paginas.cjs r.142) ---------- */
-export function waardenRaster(o: { kop: string; lede?: string; items: { titel: string; tekst: string; icoon?: IcoonNaam }[]; grijs?: boolean }) {
-  return `<section class="bf-sblok${o.grijs === false ? '' : ' bf-sblok--grijs'}"><div class="bf-sraam"><h2 class="bf-h2 bf-h2--midden">${esc(o.kop)}</h2>${o.lede ? `<p class="bf-sraam__lede">${esc(o.lede)}</p>` : ''}
+/* ---------- waarden-raster (BF bouw/paginas.cjs r.142) ----------
+   id: de sectie krijgt id en aria-labelledby (kop = id-kop), zoals de andere blokken. Tegels zonder icoon:
+   bf-ab.css houdt de kop vrij van het grote nummer. */
+export function waardenRaster(o: { id?: string; kop: string; lede?: string; items: { titel: string; tekst: string; icoon?: IcoonNaam }[]; grijs?: boolean }) {
+  return `<section class="bf-sblok${o.grijs === false ? '' : ' bf-sblok--grijs'}"${o.id ? ` id="${o.id}" aria-labelledby="${o.id}-kop"` : ''}><div class="bf-sraam"><h2 class="bf-h2 bf-h2--midden"${o.id ? ` id="${o.id}-kop"` : ''}>${esc(o.kop)}</h2>${o.lede ? `<p class="bf-sraam__lede">${esc(o.lede)}</p>` : ''}
 <div class="bf-waarden bf-waarden--${o.items.length}">${o.items.map((w, i) => `<article class="bf-waarde"><span class="bf-waarde__nr" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>${w.icoon ? `<span class="bf-waarde__icoon">${ICOON[w.icoon]}</span>` : ''}<h3>${esc(w.titel)}</h3><p>${esc(w.tekst)}</p></article>`).join('')}</div></div></section>`;
+}
+
+/* ---------- duo (BF bouw/paginas.cjs r.138-142, "Waar wij voor staan"): tekst + foto, optioneel de Google-badge ----------
+   om: foto links (duo--om); grijs: grijs vlak (sblok--grijs). */
+export function duo(o: { id: string; kop: string; alineas: string[]; google?: boolean; foto: Foto; om?: boolean; grijs?: boolean }) {
+  return `<section class="bf-sblok${o.grijs ? ' bf-sblok--grijs' : ''}" id="${o.id}" aria-labelledby="${o.id}-kop"><div class="bf-duo${o.om ? ' bf-duo--om' : ''}">
+<div class="bf-duo__tekst"><h2 class="bf-h2" id="${o.id}-kop">${esc(o.kop)}</h2>${o.alineas.map((t) => `<p>${esc(t)}</p>`).join('')}${o.google ? googleBadge() : ''}</div>
+<figure class="bf-duo__foto">${beeld(o.foto.naam, { alt: o.foto.alt, sizes: '(max-width: 1000px) 100vw, 540px', pos: o.foto.pos })}</figure>
+</div></section>`;
 }
 
 /* ---------- beloftelijst (BF bouw/paginas.cjs r.143-147, duo met vinkjes) ---------- */

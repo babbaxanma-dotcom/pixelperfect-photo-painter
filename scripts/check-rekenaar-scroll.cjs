@@ -10,6 +10,13 @@
  * Werkt zoals een mens: scrollt alleen als de knop onder het scherm valt, tot hij
  * net in beeld is, en tikt dan op die plek.
  *
+ * De vaste kop heet op elke LP .kgj-kop (LpKgj.tsx, en LpBf.tsx in de BF-stijl, spec §17); Rekenaar.tsx r.95 meet
+ * dezelfde klasse. Ontbreekt die klasse of is de kop 0 px hoog, dan meet de toets "balk = 0" en zou hij stil groen
+ * geven: dat is een ongeldige meting (exit 2).
+ * Positieve controle (12 okt 2026): op /lp/dakwerken (390) wordt na de eerste keuze de kop van de rekenaar
+ * expres onder de vaste kop geschoven; de meting moet dat als fout zien, anders exit 2.
+ * Clarity, Google-tags en de leadverzoeken krijgen een leeg antwoord: geen vervuiling van de statistieken.
+ *
  * Draaien:  node scripts/check-rekenaar-scroll.cjs            (start zelf een dev-server)
  *           LP_BASIS=https://www.abgroep.be node scripts/...  (tegen een bestaande site)
  * Exit 0 = alles in beeld, 1 = een kop viel weg, 2 = ongeldige meting.
@@ -45,18 +52,50 @@ const SCHERMEN = [[390, 844], [375, 667]];
   }
   const br = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox'] });
   let metingen = 0; const fouten = [];
+  const nieuwePagina = async (w, h, lp) => {
+    const p = await br.newPage();
+    await p.setRequestInterception(true);
+    p.on('request', (r) => {
+      const u = r.url();
+      if (/services\.leadconnectorhq\.com|api\.web3forms\.com/.test(u)) return r.respond({ status: 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: '{}' });
+      if (/clarity\.ms|googletagmanager\.com|google-analytics\.com|googleadservices\.com|doubleclick\.net/.test(u)) return r.respond({ status: 200, contentType: 'application/javascript', body: '' });
+      return r.continue();
+    });
+    await p.emulate({ viewport: { width: w, height: h, deviceScaleFactor: 2, isMobile: true, hasTouch: true },
+      userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1' });
+    await p.evaluateOnNewDocument(() =>
+      localStorage.setItem('ab_bouw_consent_v1', JSON.stringify({ analytics: false, marketing: false })));
+    await p.goto(`${basis}/lp/${lp}`, { waitUntil: 'networkidle2' });
+    await wacht(900);
+    await p.evaluate(() => [...document.querySelectorAll('button')].find((b) => b.textContent.trim() === 'Alleen essentiële')?.click());
+    await wacht(300);
+    return p;
+  };
+  const meetKop = (p) => p.evaluate(() => {
+    const kop = document.querySelector('.kgj-reken .kgj-reken__kop');
+    const vast = document.querySelector('.kgj-kop');
+    const balk = vast?.getBoundingClientRect().bottom ?? 0;
+    return { top: Math.round(kop.getBoundingClientRect().top), balk: Math.round(balk), vast: !!vast, vastH: Math.round(vast?.getBoundingClientRect().height ?? 0), h: innerHeight,
+      tel: kop.querySelector('.kgj-reken__tel')?.textContent.trim() };
+  });
+  const isFout = (s) => s.top < s.balk || s.top > s.h - 80;
   try {
+    /* positieve controle: de kop van de rekenaar expres onder de vaste kop */
+    {
+      const p = await nieuwePagina(390, 844, 'dakwerken');
+      const ok = await p.evaluate(() => { const b = [...document.querySelectorAll('.kgj-reken button')].find((x) => x.textContent.trim().startsWith('Hellend dak')); b?.click(); return !!b; });
+      await wacht(1100);
+      await p.evaluate(() => { const kop = document.querySelector('.kgj-reken .kgj-reken__kop'); const balk = document.querySelector('.kgj-kop')?.getBoundingClientRect().bottom ?? 0; window.scrollBy({ top: kop.getBoundingClientRect().top - balk + 30, behavior: 'instant' }); });
+      await wacht(300);
+      const s = await meetKop(p);
+      await p.close();
+      if (!ok || !s.vast || s.vastH < 40) { console.log(`ONGELDIGE METING: positieve controle zonder vaste kop .kgj-kop of zonder rekenaar (${JSON.stringify(s)})`); process.exit(2); }
+      if (!isFout(s)) { console.log(`ONGELDIGE METING: de geplante fout (kop op ${s.top}px onder een balk tot ${s.balk}px) werd niet gezien`); process.exit(2); }
+      console.log(`positieve controle: geplante fout gezien (kop op ${s.top}px, vaste kop .kgj-kop tot ${s.balk}px)`);
+    }
     for (const [w, h] of SCHERMEN) {
       for (const [lp, pad] of Object.entries(PADEN)) {
-        const p = await br.newPage();
-        await p.emulate({ viewport: { width: w, height: h, deviceScaleFactor: 2, isMobile: true, hasTouch: true },
-          userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1' });
-        await p.evaluateOnNewDocument(() =>
-          localStorage.setItem('ab_bouw_consent_v1', JSON.stringify({ analytics: false, marketing: false })));
-        await p.goto(`${basis}/lp/${lp}`, { waitUntil: 'networkidle2' });
-        await wacht(900);
-        await p.evaluate(() => [...document.querySelectorAll('button')].find((b) => b.textContent.trim() === 'Alleen essentiële')?.click());
-        await wacht(300);
+        const p = await nieuwePagina(w, h, lp);
         for (const l of pad) {
           const plek = await p.evaluate((label) => {
             const r = document.querySelector('.kgj-reken');
@@ -72,14 +111,10 @@ const SCHERMEN = [[390, 844], [375, 667]];
           await wacht(200);
           await p.touchscreen.tap(plek.x, plek.y);
           await wacht(1100);
-          const s = await p.evaluate(() => {
-            const kop = document.querySelector('.kgj-reken .kgj-reken__kop');
-            const balk = document.querySelector('.kgj-kop')?.getBoundingClientRect().bottom ?? 0;
-            return { top: Math.round(kop.getBoundingClientRect().top), balk: Math.round(balk), h: innerHeight,
-              tel: kop.querySelector('.kgj-reken__tel')?.textContent.trim() };
-          });
+          const s = await meetKop(p);
+          if (!s.vast || s.vastH < 40) { console.log(`ONGELDIGE METING: ${lp} ${w}x${h}: geen vaste kop .kgj-kop (hoogte ${s.vastH}px), balk = 0 zou stil groen geven`); process.exit(2); }
           metingen++;
-          if (s.top < s.balk || s.top > s.h - 80) fouten.push(`${lp} ${w}x${h} na "${l}": kop op ${s.top}px (balk ${s.balk}px, scherm ${s.h}px, ${s.tel})`);
+          if (isFout(s)) fouten.push(`${lp} ${w}x${h} na "${l}": kop op ${s.top}px (balk ${s.balk}px, scherm ${s.h}px, ${s.tel})`);
         }
         await p.close();
       }

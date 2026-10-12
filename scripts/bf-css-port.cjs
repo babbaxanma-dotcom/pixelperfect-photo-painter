@@ -43,6 +43,8 @@ const BLOKKEN = new Set([
   'plaats', 'fwissel', 'fpaneel', 'form', 'fveld', 'fveld-rij', 'ster', 'formulier-melding',
   // subpagina's
   'paginakop', 'kruimel', 'blok', 'lees', 'sblok', 'sraam', 'duo', 'waarden', 'waarde', 'belofte', 'dienstrijen', 'dienstrij',
+  // /over: de witte cijferbalk over de onderrand van de paginakop (site.css r.1292-1300, 1312-1319, 1328-1329)
+  'ocijfers',
 ]);
 /* Toestandsklassen die BF met JS zet. */
 const TOESTANDEN = new Set(['is-on', 'is-actief', 'is-gescrold', 'is-slepen', 'is-in-beeld', 'is-zichtbaar', 'menu-open']);
@@ -111,7 +113,7 @@ function kleur(waarde) {
 const css = fs.readFileSync(BRON, 'utf8');
 const bron = postcss.parse(css, { from: BRON });
 
-const stats = { regelsIn: 0, regelsUit: 0, selectorsWeg: 0, witOpMerk: 0, hoverLift: 0 };
+const stats = { regelsIn: 0, regelsUit: 0, selectorsWeg: 0, witOpMerk: 0, hoverLift: 0, ariaKloon: 0 };
 const animaties = new Set();
 
 function verwerkRegel(rule) {
@@ -131,17 +133,32 @@ function verwerkRegel(rule) {
     }
   });
   // geen hover-lift en geen hover-zoom (lock 3 aug: "heel die scroll efect dingetje ... mag allemaal weg"); kleurwissel bij hover blijft
+  let ariaKloon = null;
   if (sels.some((s) => s.includes(':hover'))) {
+    // Een toestand is geen hover: deelt een [aria-current]-selector de regel met :hover (site.css L462
+    // ".nav__menu a:hover::after, .nav__menu a[aria-current="page"]::after { transform: scaleX(1) }"), dan krijgt
+    // die selector een eigen kloon MET transform, direct na de originele regel (zelfde cascadeplek).
+    // Bewust alleen [aria-current: een algemene split zou ook L1579 (.pstap.is-in-beeld icoonlift, scrolleffect)
+    // en L845 terugbrengen, en dat verbiedt de lock van 3 aug.
+    const aria = sels.filter((s) => s.includes('[aria-current') && !s.includes(':hover'));
+    if (aria.length && nieuw.some((d) => d.type === 'decl' && d.prop === 'transform')) {
+      ariaKloon = nieuw.clone({ selectors: aria.map(herschrijf) });
+      ariaKloon.raws.selector = undefined;
+      stats.ariaKloon++;
+    }
     nieuw.walkDecls('transform', (d) => { d.remove(); stats.hoverLift++; });
-    if (!nieuw.nodes.length) { stats.regelsUit++; return null; }
-  }
-  // tekst op een merkvlak is navy (wit op goud zakt door AA)
-  const achter = nieuw.nodes.find((d) => d.type === 'decl' && /^background(-color)?$/.test(d.prop) && /var\(--merk(-diep|-ui)?\)/.test(d.value));
-  if (achter) {
-    nieuw.walkDecls('color', (d) => { if (/^(#fff|#ffffff|white)$/i.test(d.value.trim())) { d.value = 'var(--op-merk)'; stats.witOpMerk++; } });
+    if (!nieuw.nodes.length) { stats.regelsUit++; return ariaKloon ? [navyOpMerk(ariaKloon)] : null; }
   }
   stats.regelsUit++;
-  return nieuw;
+  return ariaKloon ? [navyOpMerk(nieuw), navyOpMerk(ariaKloon)] : [navyOpMerk(nieuw)];
+}
+// tekst op een merkvlak is navy (wit op goud zakt door AA)
+function navyOpMerk(regel) {
+  const achter = regel.nodes.find((d) => d.type === 'decl' && /^background(-color)?$/.test(d.prop) && /var\(--merk(-diep|-ui)?\)/.test(d.value));
+  if (achter) {
+    regel.walkDecls('color', (d) => { if (/^(#fff|#ffffff|white)$/i.test(d.value.trim())) { d.value = 'var(--op-merk)'; stats.witOpMerk++; } });
+  }
+  return regel;
 }
 
 const uit = postcss.root();
@@ -153,7 +170,7 @@ for (const node of bron.nodes) {
   if (node.type === 'comment') continue;
   if (node.type === 'rule') {
     const r = verwerkRegel(node);
-    if (r) { r.raws.before = '\n'; uit.append(postcss.comment({ text: `L${lijn}` })); uit.append(r); }
+    if (r) for (const x of r) { x.raws.before = '\n'; uit.append(postcss.comment({ text: `L${lijn}` })); uit.append(x); }
     continue;
   }
   if (node.type === 'atrule') {
@@ -164,7 +181,7 @@ for (const node of bron.nodes) {
       for (const kind of node.nodes || []) {
         if (kind.type !== 'rule') continue;
         const r = verwerkRegel(kind);
-        if (r) at.append(r);
+        if (r) for (const x of r) at.append(x);
       }
       if (at.nodes.length) { uit.append(postcss.comment({ text: `L${lijn}` })); uit.append(at); }
       continue;
@@ -197,13 +214,27 @@ gecontroleerd.walkRules((r) => {
   }
 });
 gecontroleerd.walkAtRules('font-face', () => fouten.push('@font-face in de uitvoer'));
-for (const verboden of ['#fc6607', '#ef6107', '#bd4d05', '#1c1c1c', 'bf-review', 'bf-quote', 'bf-gscore', 'bf-rscore', 'bf-rkaart', 'bf-topbalk', 'bf-lphero', 'bf-crm', 'bf-blog', 'bf-post', 'bf-team', 'bf-lid', 'bf-anim', 'bf-rv', 'bf-ocijfers', 'Lato', 'Playfair']) {
+for (const verboden of ['#fc6607', '#ef6107', '#bd4d05', '#1c1c1c', 'bf-review', 'bf-quote', 'bf-gscore', 'bf-rscore', 'bf-rkaart', 'bf-topbalk', 'bf-lphero', 'bf-crm', 'bf-blog', 'bf-post', 'bf-team', 'bf-lid', 'bf-anim', 'bf-rv', 'Lato', 'Playfair']) {
   if (tekst.toLowerCase().includes(verboden.toLowerCase())) fouten.push('verboden in de uitvoer: ' + verboden);
 }
 // positieve controle: deze moeten erin zitten
-for (const moet of ['.bf .bf-hero {', '.bf .bf-kop--over {', '.bf .bf-plaats__blok {', '.bf .bf-dkaart.bf-is-actief {', '.bf.bf-menu-open .bf-nav__menu {', '.bf .bf-paginakop {', '.bf .bf-lees {', '.bf .bf-dienstrij {', '.bf .bf-waarde {', '.bf .bf-belofte {', '@keyframes bf-fpaneel-in', 'container-type: inline-size', '--merk: #d98c03', '--op-merk: #0a1628', '.bf .bf-over__google {']) {
+for (const moet of ['.bf .bf-hero {', '.bf .bf-kop--over {', '.bf .bf-plaats__blok {', '.bf .bf-dkaart.bf-is-actief {', '.bf.bf-menu-open .bf-nav__menu {', '.bf .bf-paginakop {', '.bf .bf-lees {', '.bf .bf-dienstrij {', '.bf .bf-waarde {', '.bf .bf-belofte {', '@keyframes bf-fpaneel-in', 'container-type: inline-size', '--merk: #d98c03', '--op-merk: #0a1628', '.bf .bf-over__google {', '.bf .bf-ocijfers {', '.bf .bf-paginakop:has(+ .bf-ocijfers) .bf-paginakop__in {', '.bf .bf-nav__menu a[aria-current="page"]::after {']) {
   if (!tekst.includes(moet)) fouten.push('ontbreekt in de uitvoer: ' + moet);
 }
+// actief menu-item: de streep (scaleX(1)) staat in de uitvoer, en NA de basisregel met scaleX(0) (L461)
+{
+  let basis = -1, actief = -1, i = 0;
+  gecontroleerd.walkRules((r) => {
+    i++;
+    if (r.selector === '.bf .bf-nav__menu a::after') r.walkDecls('transform', (d) => { if (/scaleX\(0\)/.test(d.value)) basis = i; });
+    if (r.selector === '.bf .bf-nav__menu a[aria-current="page"]::after') r.walkDecls('transform', (d) => { if (/scaleX\(1\)/.test(d.value)) actief = i; });
+  });
+  if (actief < 0 || basis < 0 || actief < basis) fouten.push(`actief menu-item: streep ontbreekt of staat vóór de basisregel (basis ${basis}, actief ${actief})`);
+}
+// negatieve controle: geen scrollgedreven icoonlift (site.css L1579 .pstap.is-in-beeld .pstap__ic; lock 3 aug)
+const inBeeldLift = (c) => { let n = 0; postcss.parse(c).walkRules((r) => { if (r.selector.includes('bf-is-in-beeld .bf-pstap__ic')) r.walkDecls('transform', () => { n++; }); }); return n; };
+if (inBeeldLift(tekst)) fouten.push('scrollgedreven icoonlift (bf-is-in-beeld .bf-pstap__ic) met transform in de uitvoer');
+if (inBeeldLift('.bf .bf-pstap.bf-is-in-beeld .bf-pstap__ic { transform: translateY(-3px); }') !== 1) fouten.push('in-beeld-controle vangt het lokaas niet');
 // het lokaas: een verboden blok moet het filter echt tegenhouden en een toegelaten blok doorlaten
 const hoverLift = (c) => { let n = 0; postcss.parse(c).walkRules((r) => { if (r.selector.includes(':hover')) r.walkDecls('transform', () => { n++; }); }); return n; };
 if (hoverLift(tekst)) fouten.push('hover-lift in de uitvoer');

@@ -1,0 +1,133 @@
+{
+  "pad": "/lp/richtprijs-berekenen",
+  "bron": "Gemeten 12 okt 2026 op de HUIDIGE LpKgj.tsx (LP-code byte-gelijk aan origin/main 9727a84 = live), meting scratchpad werk/lpkaart/uit-flows.json (meet.mjs), manifest kaart/lp-*.md §c. Vluchtige velden (user_agent, submitted_at, referrer) weggelaten.",
+  "clarity": "ysjtjyakao",
+  "flows": [
+    {
+      "naam": "rekenaar-hero",
+      "soort": "rekenaar",
+      "query": "?utm_source=google&utm_medium=cpc&utm_campaign=totaalrenovatie&utm_term=renovatie%20prijs",
+      "marketing": false,
+      "wortel": "#rekenaar",
+      "antwoorden": [
+        "Rijwoning",
+        "@vink:Keuken",
+        "@vink:Isolatie",
+        "@verder",
+        "100 tot 150 m²",
+        "Ouder dan 10 jaar",
+        "Een groot deel",
+        "Zo snel mogelijk"
+      ],
+      "velden": {
+        "naam": "Test Kaart",
+        "telefoon": "0400 00 00 03"
+      },
+      "formStart": "lp:totaalrenovatie:rekenaar:hero",
+      "toestemming": true,
+      "bedankt": "/bedankt?dienst=totaalrenovatie&van=rekenaar",
+      "fouten": {
+        "leeg": "Vul uw telefoonnummer in om uw prijs te ontvangen.",
+        "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
+      },
+      "ghl": {
+        "firstName": "Test Kaart",
+        "name": "Test Kaart",
+        "phone": "0400 00 00 03",
+        "country": "BE",
+        "type_werk": "AB Construct",
+        "aanvullende_info": "Woning: Rijwoning · Renoveren: Keuken, Isolatie · Grootte: 100 tot 150 m² · Leeftijd: Ouder dan 10 jaar · Staat: Een groot deel · Start: Zo snel mogelijk",
+        "bron_lead": "Google Ads",
+        "bron_lead_detail": "lp:totaalrenovatie:rekenaar:hero",
+        "page_path": "/lp/richtprijs-berekenen",
+        "landing_division": "ab_construct",
+        "source": "landing_page",
+        "utm_source": "google",
+        "utm_medium": "cpc",
+        "utm_campaign": "totaalrenovatie",
+        "utm_term": "renovatie prijs"
+      },
+      "web3forms": {
+        "access_key": "b01e4fea-3e73-418b-b65a-acfb1d3ee43c",
+        "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
+        "from_name": "AB Bouw website",
+        "to": "info@abgroep.be",
+        "firstName": "Test Kaart",
+        "name": "Test Kaart",
+        "phone": "0400 00 00 03",
+        "country": "BE",
+        "type_werk": "AB Construct",
+        "aanvullende_info": "Woning: Rijwoning · Renoveren: Keuken, Isolatie · Grootte: 100 tot 150 m² · Leeftijd: Ouder dan 10 jaar · Staat: Een groot deel · Start: Zo snel mogelijk",
+        "bron_lead": "Google Ads",
+        "bron_lead_detail": "lp:totaalrenovatie:rekenaar:hero",
+        "page_path": "/lp/richtprijs-berekenen",
+        "landing_division": "ab_construct",
+        "source": "landing_page",
+        "utm_source": "google",
+        "utm_medium": "cpc",
+        "utm_campaign": "totaalrenovatie",
+        "utm_term": "renovatie prijs"
+      },
+      "metingInUitFlows": "richtprijs-rekenaar-hero"
+    },
+    {
+      "naam": "inspectie",
+      "soort": "inspectie",
+      "query": "",
+      "marketing": false,
+      "wortel": ".kgj-reken--inspectie",
+      "velden": {
+        "naam": "Test Kaart",
+        "telefoon": "0400 00 00 04",
+        "@pg": "Willebroek",
+        "omvang": "Keuken en badkamer",
+        "start": "Dit jaar",
+        "budget": "€ 50.000 tot € 100.000"
+      },
+      "formStart": "lp:totaalrenovatie:inspectie",
+      "toestemming": true,
+      "bedankt": "/bedankt?dienst=totaalrenovatie",
+      "fouten": {
+        "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",
+        "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
+      },
+      "ghl": {
+        "firstName": "Test Kaart",
+        "name": "Test Kaart",
+        "phone": "0400 00 00 04",
+        "postalCode": "2830",
+        "city": "Willebroek",
+        "country": "BE",
+        "type_werk": "AB Construct",
+        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat wilt u renoveren: Keuken en badkamer · Wanneer wilt u starten: Dit jaar · Uw budget: € 50.000 tot € 100.000",
+        "adres_project": "2830 Willebroek",
+        "bron_lead": "Website",
+        "bron_lead_detail": "lp:totaalrenovatie:inspectie",
+        "page_path": "/lp/richtprijs-berekenen",
+        "landing_division": "ab_construct",
+        "source": "landing_page"
+      },
+      "web3forms": {
+        "access_key": "b01e4fea-3e73-418b-b65a-acfb1d3ee43c",
+        "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
+        "from_name": "AB Bouw website",
+        "to": "info@abgroep.be",
+        "firstName": "Test Kaart",
+        "name": "Test Kaart",
+        "phone": "0400 00 00 04",
+        "postalCode": "2830",
+        "city": "Willebroek",
+        "country": "BE",
+        "type_werk": "AB Construct",
+        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat wilt u renoveren: Keuken en badkamer · Wanneer wilt u starten: Dit jaar · Uw budget: € 50.000 tot € 100.000",
+        "adres_project": "2830 Willebroek",
+        "bron_lead": "Website",
+        "bron_lead_detail": "lp:totaalrenovatie:inspectie",
+        "page_path": "/lp/richtprijs-berekenen",
+        "landing_division": "ab_construct",
+        "source": "landing_page"
+      },
+      "metingInUitFlows": "richtprijs-inspectie"
+    }
+  ]
+}

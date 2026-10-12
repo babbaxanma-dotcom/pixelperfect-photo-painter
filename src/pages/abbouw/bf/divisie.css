@@ -1,0 +1,16 @@
+/* Aanvullingen voor de zes afdelingspagina's (DivisieBf.tsx). Laadt na bf.css en bf-ab.css.
+   Alleen wat de gedeelde blokken niet kunnen; gescoped onder .bf en de id van de verhaalrij (#verhaal, alleen
+   op deze pagina's), zodat geen andere pagina geraakt wordt. Desktopmaten in calc(N * var(--u)) zoals BF.
+   Tegels zonder icoon en het grijze vragenvlak staan sinds de gedeelde ronde in bf-ab.css (faq({ grijs })). */
+
+/* Verhaalfoto: de drone-opname van /dakwerken (IMG_9019) heeft een witte lucht en de badkamer (IMG_9025)
+   wit marmer; op de witte sectie verdwenen de bovenhoeken van de foto. Dezelfde haarlijn als de BF-kaarten
+   (bf-waarde: 0 0 0 1u #e9e9e9) houdt de vorm zichtbaar. */
+.bf .bf-dienstrij#verhaal .bf-dienstrij__beeld img { box-shadow: 0 0 0 calc(1 * var(--u)) #e9e9e9; }
+@media (max-width: 1000px) {
+  .bf .bf-dienstrij#verhaal .bf-dienstrij__beeld img { box-shadow: 0 0 0 1px #e9e9e9; }
+}
+
+/* Verhaalrij gevolgd door het grijze vlak 'Wat wij doen': de ondermarge van BF (40u / 16px) hoort bij de inspectieband die op BF altijd volgt. Hier volgt een grijs vlak, dus dezelfde sectienaad als sblok (110u / 56px). */
+.bf .bf-dienstrijen:has(#verhaal) { padding-bottom: calc(110 * var(--u)); }
+@media (max-width: 1000px) { .bf .bf-dienstrijen:has(#verhaal) { padding-bottom: 56px; } }

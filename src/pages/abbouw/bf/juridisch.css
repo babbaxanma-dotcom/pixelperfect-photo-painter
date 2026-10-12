@@ -1,0 +1,60 @@
+/* /privacy, /voorwaarden, /cookies (JuridischBf.tsx): aanvullingen op BF .bf-lees (bf.css L339-348).
+   BF heeft geen cookietabel, geen cookiegroepen en geen vraagkaart; de oude AB-pagina's wel
+   (Cookies.tsx: tabel + kaart per groep; alle drie: kaart "Een vraag over ...?").
+   Alles gescoped onder .bf en met eigen bf-jur-klassen: na een SPA-navigatie blijft dit bestand
+   geladen, maar het raakt geen andere pagina. Desktopmaten in calc(N * var(--u)) zoals BF. */
+
+/* telefoonnummer in de lopende tekst niet over twee regels */
+.bf .bf-lees a[href^="tel:"] { white-space: nowrap; }
+
+/* een alinea na een lijst: zelfde witruimte als tussen twee alinea's (BF .lees kent alleen p + p) */
+.bf .bf-lees ul + p { margin-top: calc(16 * var(--u)); }
+
+/* cookiegroep: kaart in de BF-kaartstijl (wit, lijn #ececec, radius 14u, zoals de vragen) */
+.bf .bf-jur-groep { margin-top: calc(20 * var(--u)); padding: calc(28 * var(--u)) calc(32 * var(--u)); background: #fff; border: 1px solid var(--lijn); border-radius: calc(14 * var(--u)); }
+.bf .bf-lees .bf-jur-groep h3 { margin: 0; font-size: calc(21 * var(--u)); line-height: calc(29 * var(--u)); font-weight: 700; color: var(--ink); }
+.bf .bf-jur-groep__status { font-size: calc(16 * var(--u)); font-weight: 500; color: var(--grijs); }
+.bf .bf-jur-groep > p { margin-top: calc(8 * var(--u)); }
+.bf .bf-jur-groep + h2 { margin-top: calc(48 * var(--u)); }
+
+/* cookietabel */
+.bf .bf-jur-tabel { width: 100%; table-layout: fixed; margin-top: calc(18 * var(--u)); border-collapse: collapse; font-size: calc(16 * var(--u)); line-height: calc(24 * var(--u)); }
+.bf .bf-jur-tabel th { padding: calc(10 * var(--u)) calc(14 * var(--u)) calc(10 * var(--u)) 0; text-align: left; font-weight: 700; color: var(--ink); border-bottom: 1.5px solid #dcdcdc; }
+.bf .bf-jur-tabel td { padding: calc(12 * var(--u)) calc(14 * var(--u)) calc(12 * var(--u)) 0; vertical-align: top; border-bottom: 1px solid var(--lijn); }
+/* vaste kolombreedtes: de drie tabellen staan onder elkaar en lijnen zo uit */
+.bf .bf-jur-tabel th:nth-child(1) { width: 27%; }
+.bf .bf-jur-tabel th:nth-child(3) { width: 21%; }
+.bf .bf-jur-tabel tr > :last-child { padding-right: 0; }
+.bf .bf-jur-tabel tbody tr:last-child td { border-bottom: 0; padding-bottom: 0; }
+.bf .bf-jur-tabel code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: calc(14.5 * var(--u)); color: var(--ink-2); background: var(--sectie); padding: calc(2 * var(--u)) calc(7 * var(--u)); border-radius: calc(5 * var(--u)); white-space: nowrap; }
+
+/* vraagkaart onderaan (oude pagina's: rp-formkaart "Een vraag over ...?") */
+.bf .bf-jur-vraag { margin-top: calc(56 * var(--u)); padding: calc(32 * var(--u)) calc(36 * var(--u)); background: var(--sectie); border-radius: calc(14 * var(--u)); }
+.bf .bf-lees .bf-jur-vraag h2 { margin: 0 0 calc(8 * var(--u)); font-size: calc(24 * var(--u)); line-height: calc(32 * var(--u)); }
+.bf .bf-jur-vraag a { font-weight: 700; }
+
+@media (max-width: 1000px) {
+  .bf .bf-lees ul + p { margin-top: 16px; }
+  .bf .bf-jur-groep { margin-top: 16px; padding: 20px; border-radius: 14px; }
+  .bf .bf-lees .bf-jur-groep h3 { font-size: 19px; line-height: 27px; }
+  .bf .bf-jur-groep__status { font-size: 16px; }
+  .bf .bf-jur-groep + h2 { margin-top: 40px; }
+  .bf .bf-jur-tabel { font-size: 16px; line-height: 24px; }
+  .bf .bf-jur-tabel code { font-size: 15px; padding: 2px 7px; border-radius: 5px; }
+  /* losse links onder elkaar (browsers): raakvlak 44 px op gsm */
+  .bf .bf-lees .bf-jur-links li + li { margin-top: 0; }
+  .bf .bf-lees .bf-jur-links a { display: inline-block; min-height: 44px; line-height: 44px; }
+  .bf .bf-jur-vraag { margin-top: 40px; padding: 24px 20px; border-radius: 14px; }
+  .bf .bf-lees .bf-jur-vraag h2 { font-size: 21px; line-height: 28px; }
+}
+
+/* smal: elke tabelrij wordt een blok met de kolomkop als label (geen horizontaal schuiven) */
+@media (max-width: 640px) {
+  .bf .bf-jur-tabel thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .bf .bf-jur-tabel, .bf .bf-jur-tabel tbody, .bf .bf-jur-tabel tr { display: block; width: 100%; }
+  .bf .bf-jur-tabel tr { padding: 12px 0; border-bottom: 1px solid var(--lijn); }
+  .bf .bf-jur-tabel tbody tr:last-child { border-bottom: 0; padding-bottom: 0; }
+  .bf .bf-jur-tabel td, .bf .bf-jur-tabel tbody tr:last-child td { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; padding: 3px 0; border: 0; white-space: normal; }
+  .bf .bf-jur-tabel td::before { content: attr(data-label); font-weight: 700; color: var(--ink); }
+  .bf .bf-jur-tabel td > code { justify-self: start; }
+}

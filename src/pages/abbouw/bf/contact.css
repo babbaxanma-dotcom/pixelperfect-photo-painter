@@ -1,0 +1,26 @@
+/*
+ * /contact: herstel van het formulier in het plaatsblok (keuring ronde 2, 12 okt). Alleen op /contact:
+ * elke selector hangt aan .bf-plaats[data-pagina="contact"] (blokken.ts zet data-pagina), zodat de andere pagina's
+ * met hetzelfde plaatsblok (/, /over, /diensten, /werkwijze, afdelingen) en de LP's niets merken.
+ * Dezelfde regels horen eigenlijk voor elk plaatsblok in bf-ab.css (gedeeld bestand, andere agents werken erin).
+ */
+
+/* Veldrand 3,36:1 op wit (WCAG 1.4.11 vraagt 3:1). BF zet #bdbdbd (site.css r.438): 1,88:1.
+   :not(:focus) en :not([aria-invalid]) houden de focusrand (navy, bf.css L441) en de foutrand (rood, L442) zoals ze zijn. */
+.bf .bf-plaats[data-pagina="contact"] .bf-fveld :is(input, select, textarea):not(:focus):not([aria-invalid="true"]) {
+  border-color: #8c8c8c;
+}
+
+/* Foutrand blijft rood ook met de focus erop: na leeg verzenden staat de focus op het foutveld (gedrag.ts stap 10),
+   en de focusregel (bf.css L441, 0-3-1) won van de foutregel (L442, 0-3-0): het veld kreeg een navy rand. */
+.bf .bf-plaats[data-pagina="contact"] .bf-fveld [aria-invalid="true"]:focus {
+  border-color: #b3261e;
+}
+
+/* Foutmelding op desktop leesbaar: BF zet 13u (bf.css L133), op 1265 was dat 11,4 px. Gsm staat al op 16 px (bf-ab.css). */
+@media (min-width: 1001px) {
+  .bf .bf-plaats[data-pagina="contact"] .bf-formulier-melding {
+    font-size: calc(15 * var(--u));
+    line-height: 1.45;
+  }
+}

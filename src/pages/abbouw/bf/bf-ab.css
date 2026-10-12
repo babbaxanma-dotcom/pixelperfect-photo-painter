@@ -18,18 +18,77 @@
 .bf :where(b, strong) { font-weight: 700; }
 .bf :where(summary) { display: block; }
 .bf [hidden] { display: none !important; }
+/* Na een SPA-navigatie vanaf een roofpro-pagina (bv. /bedankt -> /privacy) blijft roofpro.css r.651 actief
+   (.bf: padding-block, overflow hidden, achtergrond #edeff3; gemeten 11 okt: 82 px boven de kop, wit logo op lichtgrijs).
+   div.bf wint, ongeacht welk bestand eerst laadt; de oude <section class="bf"> (Home.tsx) blijft er buiten. */
+div.bf { padding-block: 0; overflow: visible; background: var(--wit); }
 /* ankers vallen onder de vaste kop uit, niet erachter */
 .bf [id] { scroll-margin-top: calc(92 * var(--u)); }
 @media (max-width: 1000px) { .bf [id] { scroll-margin-top: 72px; } }
+
+/* cookiemelding (src/lib/consent.ts; hangt aan body, buiten .bf, en draait ook op de LP's): op een BF-pagina dezelfde
+   letter als de pagina (was Poppins), en op desktop een kaart rechtsonder (gecentreerd lag ze over de heroknoppen en de
+   herotekst, gemeten 11 okt op 1265). body:has(div.bf): de oude Home.tsx heeft een section.bf; zonder div.bf (LP's)
+   blijft de melding zoals ze is. De '*' is nodig: .abc-btn zet 'font: inherit'. Specificiteit wint van consent.ts.
+   Titel 18 px: consent.ts zet hem op 15/14 px en de alinea eronder krijgt 16 px (globale p-regel): de titel was kleiner
+   dan de tekst eronder (gemeten 12 okt op /contact 1265 en 390). */
+body:has(div.bf) #ab-bouw-cookie-banner, body:has(div.bf) #ab-bouw-cookie-banner * { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; }
+body:has(div.bf) .abc-banner-text strong { color: #0a1628; font-size: 18px; }
+@media (min-width: 1001px) {
+  body:has(div.bf) .abc-banner { left: auto; right: 24px; bottom: 24px; transform: none; width: 400px; max-width: calc(100% - 48px); }
+  body:has(div.bf) .abc-banner-inner { grid-template-columns: 1fr; gap: 12px; }
+  body:has(div.bf) .abc-btn { flex: 1; }
+}
+/* knoppen >= 44 px op gsm (spec §13): consent.ts zet ze op <=720 op 41,5 px (padding 10px 12px, 13px x 1,5 + 2 x 10 + 2);
+   gemeten 12 okt op alle 15 BF-routes. Op 721-1000 zijn ze al 45 px, daar doet de regel niets. LP's (geen div.bf) blijven 41,5. */
+@media (max-width: 1000px) { body:has(div.bf) #ab-bouw-cookie-banner .abc-btn { min-height: 44px; } }
 
 /* ---------- kop en voet: het AB-logo is 3,5 keer zo breed als hoog (BF: 2,5) ---------- */
 @media (min-width: 1001px) {
   .bf .bf-nav__logo img { width: calc(161 * var(--u)); height: calc(46 * var(--u)); }
 }
+/* gsm-kop: logo 112x32 in elke stand (boven, gescrold, menu open: geen sprong bij het scrollen). Met 126x36 en de pil
+   "Gratis plaatsbezoek" (168 px) bleef er na scrollen 8 px tussen logo en pil op 390 (BF 60 px), 0 px op 375, en op 360
+   schoof de pil over het logo en kromp de hamburger tot 26 px (gemeten 11 okt). */
 @media (max-width: 1000px) {
-  .bf .bf-nav__logo img { width: 126px; height: 36px; }
+  .bf .bf-nav__logo img { width: 112px; height: 32px; }
+  /* donker logo (absoluut, bf.css L456 top:0) verticaal gecentreerd in het 48px-anker, zoals het witte logo in de flow:
+     0 px sprong bij het scrollen (BF springt 3 px, AB zonder deze regel 6 px) */
+  .bf .bf-kop--over .bf-nav__logo-ink { top: 0; bottom: 0; margin-block: auto; }
+  .bf .bf-nav__burger { flex: none; }
+  .bf .bf-kop--over.bf-is-gescrold .bf-nav__inspectie { padding: 0 12px; }
+}
+@media (max-width: 389px) {
+  .bf .bf-nav__logo img { width: 98px; height: 28px; }
+  .bf .bf-kop--over.bf-is-gescrold .bf-nav__inspectie { padding: 0 10px; }
+}
+/* smaller dan 360 (buiten spec §13): zonder dit liep de kop op 320 na scrollen 26 px buiten het scherm */
+@media (max-width: 359px) {
+  .bf .bf-nav__logo img { width: 84px; height: 24px; }
+  .bf .bf-kop--over.bf-is-gescrold .bf-nav__inspectie { padding: 0 8px; font-size: 13px; }
 }
 .bf .bf-voet__logo img { width: calc(220 * var(--u)); height: calc(63 * var(--u)); }
+/* voetlogo: een inline <a> rond een blok-img tekent de focusring rond lege fragmenten van 0x0 (onzichtbaar, WCAG 2.4.7);
+   als blok zo breed als het logo vallen ring en klikvlak precies op het logo (BF heeft dezelfde fout) */
+.bf .bf-voet__logo { display: block; width: fit-content; }
+@media (max-width: 1000px) {
+  /* zwevende belknop: helemaal onderaan lag hij over de link "Cookies" (AB heeft 3 juridische links, BF 2). Ruimte onder
+     de onderregel alleen als de belknop op de pagina staat (pagina() zet hem direct vóór de voet; niet op /contact). */
+  .bf .bf-belzweef ~ .bf-voet .bf-voet__onder { padding-bottom: 76px; }
+  /* zolang de belknop onzichtbaar is (opacity 0, bf.css L1371), ook geen Tab-stop: visibility pas na het uitfaden */
+  .bf .bf-belzweef:not(.bf-is-zichtbaar) { visibility: hidden; transition: opacity .25s ease, transform .25s ease, visibility 0s linear .25s; }
+}
+
+/* ---------- focusring >= 3:1 op donkere en gouden vlakken (WCAG 1.4.11) ----------
+   De BF-ring (bf.css L47, #915e02) haalt 5,5:1 op wit, maar 1,2-2,8:1 op de transparante kop, de hero, de paginakop en de
+   dienstenbanner, en 2,0:1 op goud (gemeten 11 okt). Open gsm-menu en gescrolde kop zijn wit: daar blijft de BF-ring. */
+.bf:not(.bf-menu-open) .bf-kop--over:not(.bf-is-gescrold) :focus-visible,
+.bf .bf-hero :focus-visible,
+.bf .bf-paginakop :focus-visible,
+.bf .bf-dsectie__band :focus-visible,
+.bf .bf-overslaan:focus-visible { outline-color: #fff; }
+.bf .bf-inspectie :focus-visible,
+.bf .bf-plaats__tekst :focus-visible { outline-color: var(--op-merk); }
 @media (min-width: 1001px) {
   /* zes diensten in de voet (BF: vijf): de onderregel schuift een regel op */
   .bf .bf-voet--sub .bf-voet__in { height: calc(570 * var(--u)); }
@@ -40,14 +99,19 @@
 @media (min-width: 1001px) {
   .bf .bf-hero__kop { font-size: calc(80 * var(--u)); }
 }
+/* dia 1 = totaalrenovatie-p5-a (dictaat Mohammed 11 okt "die mooie keuken foto"); op <=1000 staat bij center 55% alleen
+   bron-x 445-755 van 1200 in beeld (raam + plafondspotje), bij 25% x 223-532 (kasten + eiland); herotekst AA gemeten 12 okt.
+   De regel hangt aan de PLAATS in de carrousel (eerste dia), niet aan de foto: wie de volgorde van de dia's wijzigt, past
+   deze regel mee aan. Geen selector op src (na de build heet het bestand assets/[hash].webp) en geen pos in inhoud.ts
+   (inline style, die zou ook op desktop gelden). */
+@media (max-width: 1000px) { .bf .bf-hero__slides > .bf-hero__beeld:first-child { object-position: 25% 50%; } }
 
 /* ---------- over-split: zijn kop op 2 evenwichtige regels ---------- */
 .bf .bf-over__h2 { text-wrap: balance; }
 
-/* ---------- cijferband met 2 tegels (/over) ---------- */
-@media (min-width: 1001px) {
-  .bf .bf-cijfers__band--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); width: calc(800 * var(--u)); }
-}
+/* ---------- cijferband: labels met een ongelijk aantal regels rekken de rij uit; getallen en labels blijven bovenaan
+   uitgelijnd zoals op BF (gemeten 11 okt op 390: "5,0" stond 6 px lager dan "6", "Op Google" 12 px lager) ---------- */
+.bf .bf-cijfer { align-content: start; }
 
 /* ---------- zekerheid: zijn zin onder de kop (BF heeft geen lede) ---------- */
 .bf .bf-waarom__lede { width: calc(700 * var(--u)); margin: calc(24 * var(--u)) auto 0; text-align: center; font-size: calc(18 * var(--u)); line-height: 1.6; color: var(--tekst-2); }
@@ -59,14 +123,25 @@
   .bf .bf-proces__stappen--5 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
   .bf .bf-proces__stappen--5 > .bf-pstap { grid-column: span 2; }
   .bf .bf-proces__stappen--5 > .bf-pstap:nth-child(n + 4) { grid-column: span 3; }
-  .bf .bf-proces__stappen--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .bf .bf-proces__stappen--4, .bf .bf-proces__stappen--7, .bf .bf-proces__stappen--8 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  /* 8 stappen (/werkwijze) in 2 kolommen: met 4 per rij was de tekstkolom 192u en liep elke kaart over 7-10 regels
+     (BF /werkwijze/: 282u, 1-4 regels; gemeten 11 okt) */
+  .bf .bf-proces__stappen--2, .bf .bf-proces__stappen--8 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bf .bf-proces__stappen--4, .bf .bf-proces__stappen--7 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .bf .bf-proces__stappen--6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 .bf .bf-pstap__tijd { display: block; margin-top: calc(6 * var(--u)); font-size: calc(14 * var(--u)); font-weight: 600; line-height: 1.4; color: var(--merk-tekst); }
 @media (max-width: 1000px) { .bf .bf-pstap__tijd { font-size: 14px; } }
 
-/* ---------- uitgevoerd werk: zonder BF-reviewomhulsel; voor/na eronder ---------- */
+/* ---------- uitgevoerd werk: zonder BF-reviewomhulsel; voor/na eronder ----------
+   Grijs vlak op de plek van de grijze BF-reviewband (BF: proces wit, reviews grijs). Zonder dit liepen traject, rail,
+   voor/na en vragen ~2.940 px door in één wit vlak, met 211 px wit tussen traject en "Uitgevoerd werk" (twee witte
+   secties, elk met eigen padding; BF 106 px). Nu: alleen de padding van het traject wit (105 px op 1265, 64 px op 390,
+   gemeten 11 okt), dan het grijze vlak. */
+.bf .bf-rslider-sectie { background: var(--sectie); padding-bottom: calc(110 * var(--u)); }
+@media (max-width: 1000px) { .bf .bf-rslider-sectie { padding-bottom: 56px; } }
+/* op het grijze vlak: de vorige-pijl wit, zoals een BF .rond op de grijze reviewband (site.css L252); anders grijs op
+   grijs (bf.css L759 zet hem grijs voor een wit vlak). :hover blijft navy (bf.css L761). */
+.bf .bf-rslider-sectie .bf-rslider__pijlen .bf-rond:not(.bf-rond--vol, :hover) { background: var(--wit); }
 .bf .bf-voorna { width: calc(1200 * var(--u)); margin: calc(64 * var(--u)) auto 0; }
 .bf .bf-voorna__vak { position: relative; aspect-ratio: 1178 / 736; border-radius: calc(18 * var(--u)); overflow: hidden; background: var(--sectie); cursor: ew-resize; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
 .bf .bf-voorna__vak:has(.bf-voorna__bereik:focus-visible) { outline: calc(3 * var(--u)) solid var(--merk-tekst); outline-offset: calc(3 * var(--u)); }
@@ -112,18 +187,36 @@
   .bf .bf-vraag__plus::before, .bf .bf-vraag__plus::after { width: 12px; height: 2px; margin: -1px 0 0 -6px; }
   .bf .bf-vraag p { padding: 0 18px 18px; font-size: 16px; }
 }
+/* grijs vlak (faq({ grijs: true }), BF sblok--grijs): wit en grijs wisselen af zoals op BF */
+.bf .bf-vragen--grijs { background: var(--sectie); padding-bottom: calc(110 * var(--u)); }
+@media (max-width: 1000px) { .bf .bf-vragen--grijs { padding-bottom: 56px; } }
 
-/* ---------- paginakop: tweede kopregel lichter (zoals de hero), kruimelpad, knoppen ---------- */
+/* ---------- paginakop: tweede kopregel lichter (zoals de hero), knoppen ---------- */
+/* text-wrap balance: op gsm geen los woord op de tweede regel (bv. 404 "Deze pagina bestaat niet") */
+.bf .bf-paginakop h1 { text-wrap: balance; }
 .bf .bf-paginakop__kop2 { display: block; color: rgba(255, 255, 255, .8); }
-.bf .bf-paginakop .bf-kruimel { display: flex; flex-wrap: wrap; align-items: center; gap: calc(8 * var(--u)); }
-.bf .bf-kruimel__deel { opacity: .6; }
+/* 601-1000 px: in BF (en bf.css) krimpt .paginakop__in in de flex-paginakop tot de breedte van de kop en staat ze
+   gecentreerd (gemeten 11 okt op bfbouw.be/over-ons/ bij 1000: kop op x=285 in plaats van 16). Volle breedte = links. */
+@media (max-width: 1000px) { .bf .bf-paginakop__in { width: 100%; } }
+/* de knoppen (divisies, 404) houden daarbij de breedte van de tekst erboven (620u), zoals vóór de volle breedte */
+@media (max-width: 1000px) { .bf .bf-paginakop__knoppen { max-width: calc(620 * var(--u)); } }
 .bf .bf-paginakop__knoppen { display: flex; flex-wrap: wrap; gap: calc(12 * var(--u)); margin-top: calc(32 * var(--u)); }
 .bf .bf-paginakop__knoppen .bf-knop { height: calc(56 * var(--u)); padding: 0 calc(28 * var(--u)); font-size: calc(16 * var(--u)); }
 .bf .bf-paginakop__knoppen .bf-knop svg { width: calc(14 * var(--u)); height: calc(14 * var(--u)); }
+/* ruimte boven de h1: een volle paginakop (lede en/of 2 knoppen) groeit voorbij de min-height en de h1 kwam dan op de
+   minimale padding-top uit, 43 px onder de kop (/diensten, divisies, 404; gemeten 12 okt op 1265 en 390, sinds het
+   kruimelpad weg is). BF laat 164-243 px (404: 81-85). Een kop met minder inhoud houdt zijn stand (min-height + onderaan). */
+@media (min-width: 1001px) { .bf .bf-paginakop__in { padding-top: calc(250 * var(--u)); } }
+@media (max-width: 1000px) { .bf .bf-paginakop__in { padding-top: 180px; } }
+/* gsm en ≤1000: de laag van BF zakt op 30 % tot .45; bij lichte AB-foto's (woonkeuken-na, IMG_0106,
+   uitbreiding-na, IMG_0111) viel de tekst daar onder AA (gemeten 11 okt: 3,37 tot 4,46 op 4,5).
+   Nergens lichter dan .62, zodat de tekst op elke paginakopfoto AA haalt (spec §13). */
+@media (max-width: 1000px) {
+  .bf .bf-paginakop__laag { background: linear-gradient(180deg, rgba(8, 8, 8, .74) 0%, rgba(8, 8, 8, .62) 30%, rgba(8, 8, 8, .74) 60%, rgba(8, 8, 8, .88) 100%); }
+}
 @media (max-width: 1000px) {
   .bf .bf-paginakop__knoppen { margin-top: 24px; }
   .bf .bf-paginakop__knoppen .bf-knop { width: 100%; height: 52px; padding: 0 20px; font-size: 16px; }
-  .bf .bf-paginakop .bf-kruimel a { display: inline-flex; align-items: center; min-height: 44px; }
 }
 
 /* ---------- dienstrij: zonder foto en met vinkpunten ---------- */
@@ -139,11 +232,28 @@
   .bf .bf-dienstrij__punten .bf-belofte__vink { width: 28px; height: 28px; }
   .bf .bf-dienstrij__punten .bf-belofte__vink svg { width: 15px; height: 15px; }
 }
+/* vinkpunten als lijnring, niet als volle gouden schijf: de BF-dienstrij heeft geen vinkpunten, en 3 volle schijven per rij
+   bovenop nummer, icoon en knop gaven /diensten 36 gouden vlakken (6,0 per 1000 px; BF 2,1). De beloftelijst houdt haar
+   volle vinken. --u is 1px op <=1000, dus geen aparte gsm-regel. */
+.bf .bf-dienstrij__punten .bf-belofte__vink { background: none; color: var(--merk-tekst); box-shadow: inset 0 0 0 calc(1.5 * var(--u)) currentColor; }
 
 /* ---------- waarden-raster met 3 of 4 items, beloftelijst zonder foto, lede onder een middenkop ---------- */
 @media (min-width: 1001px) {
   .bf .bf-waarden--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: none; }
   .bf .bf-duo--zonder { grid-template-columns: minmax(0, 1fr); max-width: calc(760 * var(--u)); }
+}
+/* waarde-tegel zonder icoon (divisiepagina's "Wat wij doen"). Gsm: de kop staat op de hoogte van het grote grijze nummer
+   rechtsboven en houdt die breedte vrij (gemeten 11 okt op 390: "Dakvensters en dakkapellen" liep onder "03"; nummer ~62px
+   op 18px, padding 22px: 72px). Desktop: de kop staat ONDER het nummer, op de plek van de BF-kop onder het icoonvak
+   (marge 82u = 58u icoonvak + 24u marge bij BF; met de 40u padding: h3 op 107 px van de kaarttop op 1265, BF
+   /lp/dakwerken/ ook 107), over de volle breedte. Naast het nummer was hij 184 px smal en braken korte titels ("Zon en bio- / ecologisch") die bij BF op 1 regel
+   staan (gemeten 12 okt op 1265). Subgrid: de titelrij van één rij kaarten is zo hoog als de hoogste titel, zodat de
+   alinea's gelijk beginnen (verschil was 26 px op /dakwerken). */
+.bf .bf-waarde:not(:has(.bf-waarde__icoon)) h3 { margin-top: calc(8 * var(--u)); padding-right: calc(96 * var(--u)); }
+@media (max-width: 1000px) { .bf .bf-waarde:not(:has(.bf-waarde__icoon)) h3 { margin-top: 6px; padding-right: 72px; } }
+@media (min-width: 1001px) {
+  .bf .bf-waarde:not(:has(.bf-waarde__icoon)) { display: grid; grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; align-content: start; }
+  .bf .bf-waarde:not(:has(.bf-waarde__icoon)) h3 { padding-right: 0; margin-top: calc(82 * var(--u)); }
 }
 .bf .bf-sraam__lede { max-width: calc(680 * var(--u)); margin: calc(-24 * var(--u)) auto calc(40 * var(--u)); text-align: center; font-size: calc(18 * var(--u)); line-height: 1.6; color: var(--tekst-2); }
 @media (max-width: 1000px) { .bf .bf-sraam__lede { margin: -12px auto 24px; font-size: 16px; } }
@@ -151,12 +261,32 @@
 /* ---------- gsm: lopende tekst minstens 16 px (spec §13); BF zet enkele op 14,5-15,5 px ---------- */
 @media (max-width: 1000px) {
   .bf .bf-dkaart p, .bf .bf-dkaart__link, .bf .bf-wkaart p, .bf .bf-pstap p, .bf .bf-belofte p, .bf .bf-waarde p,
-  .bf .bf-voet__tekst, .bf .bf-voet__onder, .bf .bf-form__uitleg, .bf .bf-form__privacy, .bf .bf-rproject strong { font-size: 16px; }
+  .bf .bf-voet__tekst, .bf .bf-voet__onder, .bf .bf-form__uitleg, .bf .bf-form__privacy, .bf .bf-rproject strong,
+  .bf .bf-formulier-melding { font-size: 16px; }
+  /* de foutmelding loopt tot 3 regels: met de 18px-regelhoogte van BF (bf.css L133) zat ze te krap */
+  .bf .bf-formulier-melding { line-height: 1.45; }
 }
 
-/* ---------- gsm: de tabs van de formulierkaart passen niet op één regel onder ~430 px ("Gratis plaatsbezoek" is langer
-   dan BF "Gratis inspectie"); de labels lopen dan netjes over twee regels in plaats van uit de kaart te steken ---------- */
+/* ---------- plaatsblok: contacttegels even hoog (de adrestegel loopt over 2 regels, Telefoon en E-mail over 1) ---------- */
+.bf .bf-plaats__info { grid-auto-rows: 1fr; }
+
+/* ---------- gsm: tabs van de formulierkaart op 1 regel zoals BF vanaf 375 px; smaller breekt "Gratis plaatsbezoek" netjes af (nowrap liep op 360 11 px buiten de pil en op 320 buiten het scherm) ---------- */
 @media (max-width: 1000px) {
-  .bf .bf-fwissel { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .bf .bf-fwissel { grid-template-columns: auto auto; }
   .bf .bf-fwissel button { height: auto; min-height: 46px; padding: 6px 8px; white-space: normal; line-height: 1.2; text-wrap: balance; }
 }
+@media (max-width: 420px) {
+  .bf .bf-plaats__formkern { padding-left: 12px; padding-right: 12px; }
+  .bf .bf-fwissel button { font-size: 13px; padding: 6px 4px; }
+}
+@media (max-width: 374px) {
+  .bf .bf-fwissel { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+/* uitlegregel boven de velden: "e-mailadres" breekt nooit (blokken.ts, nowrap); balance houdt "in." niet alleen op regel 2
+   (met de smallere kaartpadding hierboven werd het op 390 "… of e-mailadres" / "in."; gemeten 12 okt) */
+.bf .bf-form__uitleg { text-wrap: balance; }
+
+/* ---------- paginawissel en ankers direct (lock 3 aug: geen scroll-effecten): gedrag.ts en BfPagina.tsx scrollen met
+   'instant'. ab-bouw.css r.76 zet html { scroll-behavior: smooth } op elke pagina; bij prefers-reduced-motion zet BF
+   (site.css r.652) het terug op auto, hier ook, zodat ook de ankerlinks (Gratis offerte, #offerte) dan niet schuiven. ---------- */
+@media (prefers-reduced-motion: reduce) { html:has(div.bf) { scroll-behavior: auto; } }

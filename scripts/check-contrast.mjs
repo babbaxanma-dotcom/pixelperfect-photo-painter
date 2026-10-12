@@ -17,7 +17,9 @@ import sharp from 'sharp';
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const BASIS = process.argv[2] || 'http://localhost:8080';
-const ROUTES = ['/', '/totaalrenovatie', '/badkamerrenovatie', '/lp/pleisterwerk', '/lp/tegelwerken', '/over', '/contact', '/lp/dakwerken', '/lp/totaalrenovatie'];
+/* 12 okt 2026 (spec/bf-stijl.md §17): ook /lp/richtprijs-berekenen en /lp/aannemer-renovatiewerken. */
+const ROUTES = ['/', '/totaalrenovatie', '/badkamerrenovatie', '/lp/pleisterwerk', '/lp/tegelwerken', '/over', '/contact', '/lp/dakwerken', '/lp/totaalrenovatie',
+  '/lp/richtprijs-berekenen', '/lp/aannemer-renovatiewerken'];
 const SCHERMEN = [['desktop', 1440, 900], ['mobiel', 390, 844]];
 
 const lum = (r, g, b) => {
@@ -34,6 +36,14 @@ const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new'
 
 async function meet(route, breedte, hoogte, proefInjectie) {
   const p = await browser.newPage();
+  /* geen echte leads, geen Clarity-opname, geen Google-tags vanuit de toets */
+  await p.setRequestInterception(true);
+  p.on('request', (r) => {
+    const u = r.url();
+    if (/services\.leadconnectorhq\.com|api\.web3forms\.com/.test(u)) return r.respond({ status: 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: '{}' });
+    if (/clarity\.ms|googletagmanager\.com|google-analytics\.com|googleadservices\.com|doubleclick\.net/.test(u)) return r.respond({ status: 200, contentType: 'application/javascript', body: '' });
+    return r.continue();
+  });
   await p.setViewport({ width: breedte, height: hoogte });
   await p.goto(BASIS + route, { waitUntil: 'networkidle2' });
   await p.addStyleTag({ content: '.abc-banner{display:none !important}' });

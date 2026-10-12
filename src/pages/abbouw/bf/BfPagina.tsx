@@ -42,8 +42,9 @@ export default function BfPagina({ html, titel, omschrijving, pad, bron }: Props
 
   useEffect(() => {
     if (!ref.current) return;
-    // bovenaan beginnen, behalve met een #anker in het adres (gedrag.ts springt daar zelf naartoe)
-    if (!window.location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    // bovenaan beginnen, behalve met een #anker in het adres (gedrag.ts springt daar zelf naartoe).
+    // 'instant': 'auto' volgt html { scroll-behavior: smooth } (ab-bouw.css r.76) en schoof bij elke paginawissel zichtbaar door de pagina
+    if (!window.location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     return wireBf(ref.current, { navigate, bron });
     // navigate is stabiel binnen de router; opnieuw aanzetten hoort alleen bij nieuwe markup
     // eslint-disable-next-line react-hooks/exhaustive-deps

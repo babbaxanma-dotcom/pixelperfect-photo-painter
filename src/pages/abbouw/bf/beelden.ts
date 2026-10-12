@@ -384,6 +384,59 @@ export const BEELDEN: Record<string, BfBeeld> = {
       }
     ]
   },
+  "IMG_9022": {
+    "bron": "lp-diensten/eigen/IMG_9022.jpg",
+    "breedte": 1179,
+    "hoogte": 1548,
+    "varianten": [
+      {
+        "bestand": "IMG_9022-800.webp",
+        "breedte": 800
+      },
+      {
+        "bestand": "IMG_9022-1179.webp",
+        "breedte": 1179
+      }
+    ]
+  },
+  "uitbreiding-voor": {
+    "bron": "lp-diensten/uitbreiding-voor.jpg",
+    "breedte": 1600,
+    "hoogte": 1171,
+    "varianten": [
+      {
+        "bestand": "uitbreiding-voor-800.webp",
+        "breedte": 800
+      },
+      {
+        "bestand": "uitbreiding-voor-1440.webp",
+        "breedte": 1440
+      },
+      {
+        "bestand": "uitbreiding-voor-1600.webp",
+        "breedte": 1600
+      }
+    ]
+  },
+  "uitbreiding-na": {
+    "bron": "lp-diensten/uitbreiding-na.jpg",
+    "breedte": 1600,
+    "hoogte": 801,
+    "varianten": [
+      {
+        "bestand": "uitbreiding-na-800.webp",
+        "breedte": 800
+      },
+      {
+        "bestand": "uitbreiding-na-1440.webp",
+        "breedte": 1440
+      },
+      {
+        "bestand": "uitbreiding-na-1600.webp",
+        "breedte": 1600
+      }
+    ]
+  },
   "logo-ink": {
     "bron": "home/logo-trim.png",
     "breedte": 440,

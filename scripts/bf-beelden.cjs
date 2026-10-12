@@ -63,6 +63,10 @@ const FOTOS = [
   // voor/na
   'lp-diensten/woonkeuken-voor.jpg',
   'lp-diensten/woonkeuken-na.jpg',
+  // subpagina's (spec §15 fotoplan): paginakop /over, paginakop /werkwijze + dienstrij /gevel, paginakop /gevel
+  'lp-diensten/eigen/IMG_9022.jpg',
+  'lp-diensten/uitbreiding-voor.jpg',
+  'lp-diensten/uitbreiding-na.jpg',
 ];
 /* Logo's: de kop toont ze op 161 px (desktop), de voet op 220 px. 440 px dekt een scherm met dubbele dichtheid. */
 const LOGOS = [
