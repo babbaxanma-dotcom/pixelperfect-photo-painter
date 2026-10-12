@@ -1,0 +1,40 @@
+/* "Uitgevoerd werk" zoals op de oude home (home-oud.ts), in de letter en kleuren van de nieuwe site.
+   Maten: stijl.ts-px (9727a84) x 1,14 in --u, zodat ze op zijn venster (1265 px) gelijk zijn aan de oude pagina;
+   de breedte volgt het raam van de nieuwe site (1200u), zoals onderaan.css. Gsm (<= 1000 px): de gsm-regels van stijl.ts. */
+
+.bf .bf-ho-raam { display: block; width: calc(1200 * var(--u)); margin: 0 auto; }
+
+/* ---------- uitgevoerd werk: één doorlopend spoor van vierkante tegels (stijl.ts r.589-610, r.769-782) ---------- */
+.bf .bf-ho-werk { background: var(--sectie); padding: calc(91 * var(--u)) 0 calc(92 * var(--u)); }
+/* drie tegels in beeld, zoals op de oude home (gemeten 12 okt op 1265: 3 tegels van 309 px in een raam van 974 px) */
+.bf .bf-ho-spoor { display: flex; gap: calc(27 * var(--u)); margin-top: calc(57 * var(--u)); overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; padding-bottom: calc(4 * var(--u)); }
+.bf .bf-ho-spoor::-webkit-scrollbar { display: none; }
+.bf .bf-ho-foto { flex: 0 0 calc((100% - 2 * 27 * var(--u)) / 3); margin: 0; }
+.bf .bf-ho-foto__beeld { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; border-radius: calc(16 * var(--u)); }
+/* de vullijn: in 4 s vol, dan schuift het spoor een tegel op; bevriest bij een pauze */
+.bf .bf-ho-lijn { height: calc(3.4 * var(--u)); margin-top: calc(25 * var(--u)); border-radius: 999px; background: rgba(10, 22, 40, .10); overflow: hidden; }
+.bf .bf-ho-vul { display: block; width: 100%; height: 100%; border-radius: inherit; background: var(--merk); transform-origin: left center; animation: bf-ho-vullen 4s linear infinite; }
+.bf .bf-ho-werk__vat.is-stil .bf-ho-vul { animation-play-state: paused; }
+@keyframes bf-ho-vullen { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) { .bf .bf-ho-lijn { display: none; } }
+.bf .bf-ho-bediening { display: flex; align-items: center; justify-content: center; gap: calc(18 * var(--u)); margin-top: calc(32 * var(--u)); }
+.bf .bf-ho-bediening button { display: grid; place-items: center; width: calc(50 * var(--u)); height: calc(50 * var(--u)); border: 0; border-radius: 50%; background: var(--wit); color: var(--ink); cursor: pointer; box-shadow: inset 0 0 0 1px #dddddd; transition: background-color .18s ease, color .18s ease; }
+.bf .bf-ho-bediening button svg { width: calc(14 * var(--u)); height: calc(14 * var(--u)); }
+.bf .bf-ho-bediening button:hover { background: var(--merk); color: var(--op-merk); box-shadow: none; }
+/* de voor/na-schuif staat binnen de sectie, onder het spoor (LpReplica.tsx r.878-882; stijl.ts .pc-vgl margin 44px 0 8px) */
+.bf .bf-ho-werk .bf-voorna { margin: calc(50 * var(--u)) auto calc(9 * var(--u)); }
+
+/* ---------- gsm en tablet (stijl.ts r.935-957) ---------- */
+@media (max-width: 1000px) {
+  .bf .bf-ho-raam { width: auto; padding: 0 16px; }
+  .bf .bf-ho-werk { padding: 44px 0 48px; }
+  /* één tegel bijna beeldvullend, met een streep van de volgende ernaast */
+  .bf .bf-ho-spoor { gap: 12px; margin-top: 24px; padding-right: 40px; padding-bottom: 4px; }
+  .bf .bf-ho-foto { flex: 0 0 78%; }
+  .bf .bf-ho-foto__beeld { border-radius: 14px; }
+  .bf .bf-ho-lijn { height: 3px; margin-top: 16px; }
+  .bf .bf-ho-bediening { gap: 12px; margin-top: 20px; }
+  .bf .bf-ho-bediening button { width: 44px; height: 44px; }
+  .bf .bf-ho-bediening button svg { width: 13px; height: 13px; }
+  .bf .bf-ho-werk .bf-voorna { margin: 32px 16px 0; }
+}

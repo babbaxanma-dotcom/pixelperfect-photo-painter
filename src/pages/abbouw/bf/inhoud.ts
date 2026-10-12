@@ -15,6 +15,7 @@ import { HOME } from '../lp/replica/inhoud';
 import { DIVISIES } from '../_divisies';
 import type { Cijfer, Dienstkaart, Foto, RailFoto, Stap } from './blokken';
 import type { IcoonNaam } from './schil';
+import { ONDERAAN_FOTO, ONDERAAN_CIRKEL } from './onderaan';
 
 /* Url van elke eigen foto zoals Vite hem levert. In de build heet een beeld assets/<hash>.jpg (vite.config.ts
    assetFileNames), dus de bestandsnaam staat dan niet in x.src: zoeken op naam alleen gaf in de build een witte
@@ -38,6 +39,39 @@ const kaartTekst = (href: string) => {
 const dienst = (slug: string, icoon: IcoonNaam, foto: Foto, tekst = kaartTekst('/' + slug)): Dienstkaart => {
   const titel = DIVISIES[slug].title;
   return { titel, tekst, href: '/' + slug, foto, icoon, link: 'Lees meer over ' + titel.toLowerCase() };
+};
+
+/* ---------- "Uitgevoerd werk" zoals eerst op de home (home-oud.ts; Mohammed 12 okt) ----------
+   Het spoor van de oude home in die volgorde (HOME.werk.fotos @9727a84 = de 17 eigen foto's van
+   kgj/inhoud-totaalrenovatie.ts r.275-291 met de afgewerkte dakfoto op plek 3, replica/inhoud.ts r.722-726; gemeten
+   op de oude home 12 okt: 18 tegels). Alle 18 staan in de lijst echte foto's (ab-fotos.md §3); geen badkamer-nieuw en
+   geen realisaties/*-p1/p2/p3 (die stonden alleen in het spoor van de LP, TOTAALRENOVATIE.werk). Alt en uitsnede
+   woordelijk uit dezelfde bron. */
+const WERK_OUD: Foto[] = [
+  { naam: 'IMG_9065', alt: werkAlt('IMG_9065') },
+  { naam: 'IMG_9028', alt: werkAlt('IMG_9028'), pos: '60% center' },
+  { naam: 'dak-na', alt: 'Vernieuwd pannendak met nieuwe pannen en dakvensters, door AB Bouw Groep' },
+  { naam: 'IMG_0110', alt: werkAlt('IMG_0110') },
+  { naam: 'IMG_9022', alt: werkAlt('IMG_9022') },
+  { naam: 'IMG_0114', alt: werkAlt('IMG_0114') },
+  { naam: 'IMG_9015', alt: werkAlt('IMG_9015') },
+  { naam: 'IMG_9069', alt: werkAlt('IMG_9069'), pos: '75% center' },
+  { naam: 'IMG_0102', alt: werkAlt('IMG_0102'), pos: '40% center' },
+  { naam: 'IMG_9030', alt: werkAlt('IMG_9030') },
+  { naam: 'IMG_0111', alt: werkAlt('IMG_0111') },
+  { naam: 'IMG_9027', alt: werkAlt('IMG_9027') },
+  { naam: 'IMG_0105', alt: werkAlt('IMG_0105') },
+  { naam: 'IMG_9025', alt: werkAlt('IMG_9025') },
+  { naam: 'IMG_0100', alt: werkAlt('IMG_0100') },
+  { naam: 'IMG_9029', alt: werkAlt('IMG_9029'), pos: '80% center' },
+  { naam: 'IMG_0106', alt: werkAlt('IMG_0106') },
+  { naam: 'IMG_9014', alt: werkAlt('IMG_9014') },
+];
+/* Tweelingen (andere opname van dezelfde ruimte, ab-fotos.md §6) van foto's uit WERK_OUD die op de BF-site kunnen staan. */
+const TWEELING: Record<string, string[]> = {
+  IMG_9022: ['totaalrenovatie-p5-a'],
+  IMG_9015: ['IMG_0105'],
+  IMG_0105: ['IMG_9015'],
 };
 
 const [overAlinea1, overAlinea2] = HOME.over.tekst.split('\n\n');
@@ -158,6 +192,16 @@ export const HOME_BF = {
     },
   },
 
+  /* Uitgevoerd werk op de home sinds 12 okt (Mohammed: "bij uitgevoerd werk, doe dat naar hoe dat eerst was"): kop
+     HOME.werk.kop, het spoor van de oude home (WERK_OUD, zelfde volgorde) in de oude opbouw (home-oud.ts), met de
+     voor/na-schuif van werk.voorNa eronder. spoor = WERK_OUD zonder de foto's die elders op de home al staan of daar
+     een tweeling hebben (geen foto twee keer op één pagina). "werk" hierboven blijft staan voor fotoplan.ts. */
+  werkOud: {
+    kop: HOME.werk.kop,
+    fotos: WERK_OUD,
+    get spoor(): Foto[] { return spoorOud(); },
+  },
+
   /* §7.10 FAQ: HOME.faq (inh r.779-791) woordelijk */
   faq: {
     kop: HOME.faq!.kop[0],
@@ -174,6 +218,18 @@ export const HOME_BF = {
   /* voet: HOME.footer (inh r.650, gelijk aan rpFooter) */
   voet: HOME.footer,
 };
+
+/* Het spoor "zoals eerst" zonder dubbels: een foto die al in de hero (dictaat 11 okt), de over-split, de dienstkaarten,
+   de zekerheid, het traject, de voor/na-schuif of het onderste deel (onderaan.ts, spec §16) staat, of daar een tweeling
+   heeft, valt uit het spoor. De dienstentegels (home-diensten.ts) tonen diensten.kaarten. De rest houdt de oude volgorde. */
+function spoorOud(): Foto[] {
+  const H = HOME_BF;
+  const elders = new Set<string>([
+    ...H.hero.dias, H.over.foto, ...H.diensten.kaarten.map((k) => k.foto), H.zekerheid.inzet, { naam: H.zekerheid.huis },
+    H.werkwijze.foto, H.werk.voorNa.voor, H.werk.voorNa.na, ONDERAAN_FOTO, ONDERAAN_CIRKEL,
+  ].map((f) => f.naam));
+  return WERK_OUD.filter((f) => !elders.has(f.naam) && !(TWEELING[f.naam] || []).some((t) => elders.has(t)));
+}
 
 /* Beschrijving voor de pagina's die er zelf nooit een zetten (OverOns, Diensten, Werkwijze,
    Contact, NotFound): bij een rechtstreeks bezoek gold die van index.html r.8. Die waarde
