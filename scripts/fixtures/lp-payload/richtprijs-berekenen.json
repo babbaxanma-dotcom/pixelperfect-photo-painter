@@ -1,6 +1,6 @@
 {
   "pad": "/lp/richtprijs-berekenen",
-  "bron": "Gemeten 12 okt 2026 op de HUIDIGE LpKgj.tsx (LP-code byte-gelijk aan origin/main 9727a84 = live), meting scratchpad werk/lpkaart/uit-flows.json (meet.mjs), manifest kaart/lp-*.md §c. Vluchtige velden (user_agent, submitted_at, referrer) weggelaten.",
+  "bron": "Gemeten 12 okt 2026 op de HUIDIGE LpKgj.tsx (LP-code byte-gelijk aan origin/main 9727a84 = live), meting scratchpad werk/lpkaart/uit-flows.json (meet.mjs), manifest kaart/lp-*.md §c. Vluchtige velden (user_agent, submitted_at, referrer) weggelaten. 13 okt 2026 avond: /lp/totaalrenovatie, /lp/aannemer-renovatiewerken en /lp/richtprijs-berekenen tonen dezelfde rekenaarpagina (heroRekenaar, Mohammed: \"zoals dakwerken\", \"geen onderverdeling\"); #rekenaar opent geen venster meer maar springt naar de hero. Hero-flow overgenomen van de groene richtprijs-meting, alleen page_path en bron eigen; richtprijs-inspectie = het uniforme formulier zonder budget (zelfde als totaalrenovatie).",
   "clarity": "ysjtjyakao",
   "flows": [
     {
@@ -78,11 +78,11 @@
       "wortel": ".kgj-reken--inspectie",
       "velden": {
         "naam": "Test Kaart",
-        "telefoon": "0400 00 00 04",
-        "@pg": "Willebroek",
-        "omvang": "Keuken en badkamer",
-        "start": "Dit jaar",
-        "budget": "€ 50.000 tot € 100.000"
+        "email": "test@voorbeeld.be",
+        "telefoon": "0400 00 00 05",
+        "@pg": "2800",
+        "omvang": "Aanbouw",
+        "start": "Binnen 6 maanden"
       },
       "formStart": "lp:totaalrenovatie:inspectie",
       "toestemming": true,
@@ -94,13 +94,13 @@
       "ghl": {
         "firstName": "Test Kaart",
         "name": "Test Kaart",
-        "phone": "0400 00 00 04",
-        "postalCode": "2830",
-        "city": "Willebroek",
+        "email": "test@voorbeeld.be",
+        "phone": "0400 00 00 05",
+        "postalCode": "2800",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat wilt u renoveren: Keuken en badkamer · Wanneer wilt u starten: Dit jaar · Uw budget: € 50.000 tot € 100.000",
-        "adres_project": "2830 Willebroek",
+        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat wilt u renoveren: Aanbouw · Wanneer wilt u starten: Binnen 6 maanden",
+        "adres_project": "2800",
         "bron_lead": "Website",
         "bron_lead_detail": "lp:totaalrenovatie:inspectie",
         "page_path": "/lp/richtprijs-berekenen",
@@ -114,90 +114,20 @@
         "to": "info@abgroep.be",
         "firstName": "Test Kaart",
         "name": "Test Kaart",
-        "phone": "0400 00 00 04",
-        "postalCode": "2830",
-        "city": "Willebroek",
+        "email": "test@voorbeeld.be",
+        "phone": "0400 00 00 05",
+        "postalCode": "2800",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat wilt u renoveren: Keuken en badkamer · Wanneer wilt u starten: Dit jaar · Uw budget: € 50.000 tot € 100.000",
-        "adres_project": "2830 Willebroek",
+        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat wilt u renoveren: Aanbouw · Wanneer wilt u starten: Binnen 6 maanden",
+        "adres_project": "2800",
         "bron_lead": "Website",
         "bron_lead_detail": "lp:totaalrenovatie:inspectie",
         "page_path": "/lp/richtprijs-berekenen",
         "landing_division": "ab_construct",
         "source": "landing_page"
       },
-      "metingInUitFlows": "richtprijs-inspectie"
-    },
-    {
-      "naam": "rekenaar-venster",
-      "soort": "rekenaar",
-      "query": "?utm_source=google&utm_medium=cpc&utm_campaign=totaalrenovatie&utm_term=renovatie%20kosten",
-      "marketing": true,
-      "opener": "alt",
-      "wortel": ".kgj-venster",
-      "antwoorden": [
-        "Appartement",
-        "@vink:Alles (totaalrenovatie)",
-        "@verder",
-        "Kleiner dan 100 m²",
-        "Jonger dan 10 jaar",
-        "Enkel de afwerking",
-        "Ik verken nog"
-      ],
-      "velden": {
-        "naam": "Test Kaart",
-        "email": "test@voorbeeld.be",
-        "telefoon": "0400 00 00 08"
-      },
-      "formStart": "lp:totaalrenovatie:rekenaar:venster",
-      "toestemming": false,
-      "bedankt": "/bedankt?dienst=totaalrenovatie&van=rekenaar",
-      "fouten": {
-        "leeg": "Vul uw telefoonnummer in om uw prijs te ontvangen.",
-        "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
-      },
-      "ghl": {
-        "firstName": "Test Kaart",
-        "name": "Test Kaart",
-        "email": "test@voorbeeld.be",
-        "phone": "0400 00 00 08",
-        "country": "BE",
-        "type_werk": "AB Construct",
-        "aanvullende_info": "Woning: Appartement · Renoveren: Alles (totaalrenovatie) · Grootte: Kleiner dan 100 m² · Leeftijd: Jonger dan 10 jaar · Staat: Enkel de afwerking · Start: Ik verken nog",
-        "bron_lead": "Google Ads",
-        "bron_lead_detail": "lp:totaalrenovatie:rekenaar:venster",
-        "page_path": "/lp/richtprijs-berekenen",
-        "landing_division": "ab_construct",
-        "source": "landing_page",
-        "utm_source": "google",
-        "utm_medium": "cpc",
-        "utm_campaign": "totaalrenovatie",
-        "utm_term": "renovatie kosten"
-      },
-      "web3forms": {
-        "access_key": "b01e4fea-3e73-418b-b65a-acfb1d3ee43c",
-        "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
-        "from_name": "AB Bouw website",
-        "to": "info@abgroep.be",
-        "firstName": "Test Kaart",
-        "name": "Test Kaart",
-        "email": "test@voorbeeld.be",
-        "phone": "0400 00 00 08",
-        "country": "BE",
-        "type_werk": "AB Construct",
-        "aanvullende_info": "Woning: Appartement · Renoveren: Alles (totaalrenovatie) · Grootte: Kleiner dan 100 m² · Leeftijd: Jonger dan 10 jaar · Staat: Enkel de afwerking · Start: Ik verken nog",
-        "bron_lead": "Google Ads",
-        "bron_lead_detail": "lp:totaalrenovatie:rekenaar:venster",
-        "page_path": "/lp/richtprijs-berekenen",
-        "landing_division": "ab_construct",
-        "source": "landing_page",
-        "utm_source": "google",
-        "utm_medium": "cpc",
-        "utm_campaign": "totaalrenovatie",
-        "utm_term": "renovatie kosten"
-      },
-      "metingInUitFlows": "gemeten 2026-10-12T22:07 op https://www.abgroep.be (live = LpKgj, referentie spec §17) met scratchpad werk/lp/reno3/vang-flows.mjs, 1265 en 390 gelijk"
+      "metingInUitFlows": "totaal-inspectie"
     }
   ]
 }
