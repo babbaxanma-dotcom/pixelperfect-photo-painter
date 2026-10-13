@@ -17,7 +17,8 @@
 const puppeteer = require('puppeteer-core');
 
 const BASIS = process.argv[2] || 'http://localhost:8080';
-const PADEN = ['/totaalrenovatie', '/badkamerrenovatie'];
+/* /totaalrenovatie toont sinds 13 okt 2026 de nieuwe LP (LpBf, zonder replica-spoor); die toetsen de LP-checks. */
+const PADEN = ['/badkamerrenovatie'];
 const CHROME = process.env.CHROME_PAD || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const BREEDTES = [1200, 768, 390];
 
