@@ -22,7 +22,9 @@ const puppeteer = require('puppeteer-core');
    --pos, regelaar = .bf-voorna__bereik); de replica-schuif (.pc-vgl-vat) staat op geen enkele route meer.
    13 okt avond: de voor/na-sectie is weg van /totaalrenovatie en /lp/aannemer-renovatiewerken (Mohammed: "heel die
    sectie mag weg"); /lp/richtprijs-berekenen (LpBf, standaardvolgorde) heeft dezelfde schuif nog. */
-const URL = process.argv[2] || 'http://localhost:8080/lp/richtprijs-berekenen';
+/* 13 okt avond: /lp/richtprijs-berekenen toont nu dezelfde rekenaarpagina als /lp/totaalrenovatie (zonder voor/na); de
+   dakpagina heeft de BF-schuif nog. */
+const URL = process.argv[2] || 'http://localhost:8080/lp/dakwerken';
 const CHROME = process.env.CHROME_PAD || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 
 /** Waar de scheiding staat, in procenten (--pos op het vak: daaruit tekent de CSS het voor-beeld). Dat is wat de bezoeker ziet. */

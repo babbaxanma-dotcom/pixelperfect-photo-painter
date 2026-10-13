@@ -725,3 +725,16 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
   .bf.bf-lp--dakwerken .kgj-reken--hero .kgj-reken__vertrouwen { margin-top: calc(12 * var(--u)); padding-top: calc(12 * var(--u)); gap: calc(6 * var(--u)); }
   .bf.bf-lp--dakwerken .kgj-reken__trust { margin-top: calc(10 * var(--u)); padding-top: calc(10 * var(--u)); }
 }
+
+/* ---------- tweede knop naast de rekenaar (heroRekenaar, totaalrenovatie, 13 okt 2026) ----------
+   Mohammed: "rekenaar in hero met die cta, en dan secundaire cta gratis plaatsbezoek". Randknop in wit op de donkere
+   hero: duidelijk een tweede keuze naast de oranje knop van de rekenaar. */
+.bf.bf-lp .bf-lphero__tweede { display: inline-flex; align-items: center; gap: calc(10 * var(--u)); width: fit-content; margin-top: calc(26 * var(--u));
+  height: calc(56 * var(--u)); padding: 0 calc(26 * var(--u)); border-radius: calc(999 * var(--u)); border: 1.5px solid rgba(255, 255, 255, .75);
+  background: transparent; color: #fff; font-size: calc(17 * var(--u)); font-weight: 700; text-decoration: none; transition: background-color .18s ease, border-color .18s ease; }
+.bf.bf-lp .bf-lphero__tweede:hover { background: rgba(255, 255, 255, .1); border-color: #fff; }
+.bf.bf-lp .bf-lphero__tweede svg { width: calc(18 * var(--u)); height: calc(18 * var(--u)); }
+@media (max-width: 1000px) {
+  .bf.bf-lp .bf-lphero__tekst > .bf-lphero__tweede { order: 3; width: 100%; justify-content: center; height: 54px; margin-top: 4px; font-size: 16px; padding: 0 18px; }
+  .bf.bf-lp .bf-lphero__tweede svg { width: 18px; height: 18px; }
+}

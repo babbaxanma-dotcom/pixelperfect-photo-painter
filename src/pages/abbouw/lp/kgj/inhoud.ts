@@ -97,6 +97,11 @@ export type KgjInhoud = {
       naast de kop, op de telefoon direct onder de puntjes (13 okt, Mohammed: "is het niet slimmer om een form toe te
       voegen above the fold?"). */
   heroFormulier?: boolean;
+  /** De rekenaar in de hero, ook als de pagina een knop heeft (knop verdwijnt uit de hero; #rekenaar springt naar de
+      hero-rekenaar in plaats van het venster te openen). 13 okt, Mohammed: "gaat een rekenaar niet hoger converteren?",
+      "nummer krijgen is oke, want ik wil voor ab groep een receptionist opbouwen", "na de rekenaar gaan ze toch naar
+      bedankt pagina voor plaatsbezoek". Wint van heroFormulier. */
+  heroRekenaar?: boolean;
   /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart.
       trustrij: rij onderaan de kaart met Google 5,0 + sterren en daarnaast deze cijfers (zoals bfbouw.be rk__trust). */
   rekenaar: { trustrij?: { b: string; s: string }[]; titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string; troeven?: string[];

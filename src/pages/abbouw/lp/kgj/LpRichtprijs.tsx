@@ -1,5 +1,5 @@
 import LpBf from './LpBf';
-import { TOTAALRENOVATIE_OUD } from './inhoud-totaalrenovatie-oud';
+import { TOTAALRENOVATIE } from './inhoud-totaalrenovatie';
 
 /**
  * /lp/richtprijs-berekenen = de totaalrenovatiepagina zoals ze tot 5 okt 2026
@@ -14,7 +14,12 @@ import { TOTAALRENOVATIE_OUD } from './inhoud-totaalrenovatie-oud';
  *
  * 12 okt 2026 (spec/bf-stijl.md §17, bouwstap 4): in de stijl van bfbouw.be via LpBf, met hetzelfde inhoudsobject.
  * Terugval = de regel hieronder terugzetten naar <LpKgj inhoud={TOTAALRENOVATIE_OUD} /> (import LpKgj from './LpKgj').
+ *
+ * 13 okt 2026 avond, Mohammed: "maak de totaalrenovatie pagina weer rekenaar, gefocust om het berekenen, zoals dakwerken"
+ * en "die hele onderverdeling van ad groups onnodig": deze URL (prijs- en woningzoekwoorden) toont dezelfde rekenaarpagina
+ * als /lp/totaalrenovatie. Bron in het CRM blijft lp:totaalrenovatie:rekenaar, zoals voorheen.
+ * Terugval naar de oude pagina = TOTAALRENOVATIE_OUD (inhoud-totaalrenovatie-oud.ts) weer importeren en tonen.
  */
 export default function LpRichtprijs() {
-  return <LpBf inhoud={TOTAALRENOVATIE_OUD} />;
+  return <LpBf inhoud={TOTAALRENOVATIE} />;
 }

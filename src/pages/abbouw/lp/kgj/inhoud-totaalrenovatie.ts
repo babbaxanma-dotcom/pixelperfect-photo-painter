@@ -102,10 +102,12 @@ export const TOTAALRENOVATIE: KgjInhoud = {
 
   /* 13 okt, Mohammed: "die header bovenaan, die nummer lijn, moet weg, het is niet clean". De topbalk is weg; de kop
      toont nu, zoals op de renovatiewerken-pagina, de aanvraagknop en de belknop. */
-  strak: true,
-  /* 13 okt avond, Mohammed: "is het niet slimmer om een form toe te voegen above the fold?" Ja: alle renovatie-
-     aanvragen kwamen tot nu via een pagina met een formulier/rekenaar in de hero; de knop-hero gaf er 0. */
-  heroFormulier: true,
+  /* 13 okt avond: geen 'strak' meer; de pagina volgt de dakpagina (rekenaar in de hero). */
+  /* 13 okt avond, Mohammed: eerst "is het niet slimmer om een form toe te voegen above the fold?" (plaatsbezoekformulier
+     in de hero, 0e4da6a), daarna "gaat een rekenaar niet hoger converteren?" + "nummer krijgen is oke, want ik wil voor ab
+     groep een receptionist opbouwen" + "na de rekenaar gaan ze toch naar bedankt pagina voor plaatsbezoek": de rekenaar
+     staat in de hero. Alle renovatie-aanvragen tot 13 okt kwamen via een pagina met de rekenaar bovenaan. */
+  heroRekenaar: true,
 
   hero: {
     /* Mohammeds eigen kop, letterlijk (26 sep). 4 okt, plan desktop-hero: nieuwe kop. */
@@ -116,19 +118,22 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     /* 13 okt, Mohammed (dictaat): "Jouw complete renovatie, perfect geregeld van A tot Z." als headline, "niet met die
        lelijke stijl, neem stijl over van homepage abgroep.be": wit + tweede regel in gedempt wit (kop2), zonder goud
        en streep, zoals "Uw bouw- of renovatiepartner / van A tot Z" op de homepage. */
-    kop: 'Jouw complete renovatie,',
-    kop2: 'perfect geregeld van A tot Z.',
+    /* 13 okt avond, Mohammed: "maak de totaalrenovatie pagina weer rekenaar, gefocust om het berekenen, zoals dakwerken",
+       "pagina zoals dakwerken er nu voor staat, dus rekenaar in hero met die cta, en dan secundaire cta gratis plaatsbezoek".
+       Kop en subkop in dezelfde vorm als /lp/dakwerken. */
+    kop: 'Bereken in [2 minuten] de richtprijs van uw renovatie',
     /* Zelfde opbouw als Mohammeds subkop op dakwerken. Het mechanisme: AB heeft
        voor elk vak een eigen ploeg (homepage), dus één planning. */
     /* Mohammed, 26 sep: de subkop "eruit". Leeg = geen regel onder de kop. */
     /* 4 okt: subheadline eerst "Bereken binnen 2 minuten een realistische prijsindicatie voor uw
        woning.", dan Mohammed: "eruit in de subheadline bij totaalrenovatie". Leeg = geen regel. */
     /* 6 okt, Mohammed: "teveel tekst in hero, haal alle subtekst weg, hou enkel headline en puntjes". */
-    onder: '',
+    onder: 'Snel, gratis en 100% vrijblijvend.',
     /* 4 okt, plan desktop-hero (Mohammed): drie USP's, het deel voor de dubbelepunt in het vet. 5 okt: zijn nieuwe teksten.
        13 okt, Mohammed: de uitlegzinnen "eruit", "dat enkel de puntjes blijven". 13 okt avond: "Volledige
        premiebegeleiding naar, echt vakmanschap ofzo ... dat expertise uitstraalt", zijn keuze "Vakmanschap tot in de details". */
-    bewijs: ['100% Budgetgarantie', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details'],
+    /* 13 okt avond: de drie puntjes staan nu als vinkjes in de rekenaarkaart (zoals op de dakpagina). */
+    bewijs: [],
     /* 5 okt: een grote knop naar het formulier in plaats van de rekenaar; die staat in het vangnet. */
     /* 13 okt, Mohammed: "de cta moet duidelijk zijn, denk na wat moet een cta bevatten: waarom nu doen, wat krijg je".
        Knop = wat u krijgt (gratis plaatsbezoek, u kiest zelf het moment in de agenda na de aanvraag). Regel eronder =
@@ -155,9 +160,14 @@ export const TOTAALRENOVATIE: KgjInhoud = {
        woning ouder dan tien jaar. De leeftijd is, zoals op dakwerken, alleen
        "jonger of ouder dan 10 jaar": dat is de grens van de 6% btw. */
     /* 4 okt, plan desktop-hero: kaarttitel en subtekst. */
-    titel: 'Ontvang een realistische prijsindicatie',
-    tijd: 'Klaar in 2 minuten • 100% vrijblijvend',
+    titel: 'Bereken uw renovatieprijs',
+    tijd: 'Klaar in 2 minuten, vrijblijvend',
     zeker: 'Gratis en vrijblijvend',
+    /* 13 okt avond: vinkjes en trustrij zoals /lp/dakwerken. Vinkjes = Mohammeds drie hero-puntjes van vandaag. Trustrij:
+       "16 jaar ervaring" en "6 verschillende vakdisciplines onder één dak" = dictaat 4 okt (/over). Geen 10 jaar garantie
+       bij renovatie (Mohammed, 28 sept). */
+    vertrouwen: ['100% Budgetgarantie', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details'],
+    trustrij: [{ b: '16 jaar', s: 'ervaring' }, { b: '6', s: 'vakdisciplines' }],
     vragen: [
       { sleutel: 'Woning', vraag: 'Wat voor woning wilt u renoveren?', raster: true, keuzes: [
         { label: 'Appartement', icoon: 'appartement' }, { label: 'Rijwoning', icoon: 'rijwoning' },

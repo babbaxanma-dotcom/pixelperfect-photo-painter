@@ -84,8 +84,10 @@ const DOELEN = [
 }
 
 /* #rekenaar opent het venster met de rekenaar (VENSTER_OPEN) of laat het dicht (VENSTER_DICHT: rekenaar in de hero). */
-const VENSTER_OPEN = ['/lp/totaalrenovatie', '/lp/aannemer-renovatiewerken'];
-const VENSTER_DICHT = ['/lp/dakwerken', '/lp/richtprijs-berekenen'];
+/* 13 okt 2026 avond: ook /lp/totaalrenovatie en /lp/aannemer-renovatiewerken hebben de rekenaar in de hero (heroRekenaar;
+   Mohammed: "maak de totaalrenovatie pagina weer rekenaar ... zoals dakwerken"), dus #rekenaar springt daar naar de hero. */
+const VENSTER_OPEN = [];
+const VENSTER_DICHT = ['/lp/dakwerken', '/lp/richtprijs-berekenen', '/lp/totaalrenovatie', '/lp/aannemer-renovatiewerken'];
 
 /* Hoe ver de sectie van de bovenrand mag staan na het springen. De vaste kop
    dekt de bovenste 137px af, dus dat is geen fout. */
@@ -220,8 +222,9 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
     const pc2 = oordeel('/lp/dakwerken', 'bestaat-niet', MATEN[0], await meetAnker('/lp/dakwerken', 'bestaat-niet', MATEN[0]));
     const pc3 = oordeel('/lp/dakwerken', 'contact', gsm, geldig('/lp/dakwerken', 'contact', gsm, await meetAnker('/lp/dakwerken', 'contact', gsm, 'oud')));
     if (!pc1 || !pc2 || !pc3) stop(2, `FOUT: positieve controle ziet de geplante fout niet (niet springen: ${pc1 || 'niet gezien'}; geen id: ${pc2 || 'niet gezien'}; zachte sprong zonder correctie op 390: ${pc3 || 'niet gezien'}) — de meting is ongeldig`);
-    /* Positieve controle venster: /lp/totaalrenovatie#contact opent geen venster; als #rekenaar beoordeeld moet dat een fout zijn. */
-    const pc4 = vensterFout('/lp/totaalrenovatie', 'rekenaar', MATEN[0], await meetAnker('/lp/totaalrenovatie', 'contact', MATEN[0]));
+    /* Positieve controle venster: op /lp/totaalrenovatie staat de rekenaar in de hero; een meting met een open venster
+       (lokaas: venster op true gezet) moet een fout zijn. */
+    const pc4 = vensterFout('/lp/totaalrenovatie', 'rekenaar', MATEN[0], { ...(await meetAnker('/lp/totaalrenovatie', 'rekenaar', MATEN[0])), venster: true });
     if (!pc4) stop(2, 'FOUT: positieve controle venster: een pagina zonder open venster werd niet als fout gezien — de meting is ongeldig');
     /* Positieve controle topbalk (13 okt 2026): op de gsm staat op /lp/totaalrenovatie alleen de topbalk (40 px) vast.
        Landt het anker 72 px lager (scroll-padding van de oude kop van 112 px, lokaas 'kop112'), dan moet dat een fout zijn. */

@@ -1,4 +1,5 @@
 import LpBf from './LpBf';
+import { TOTAALRENOVATIE } from './inhoud-totaalrenovatie';
 import { RENOVATIEWERKEN } from './inhoud-renovatiewerken';
 
 /**
@@ -6,8 +7,12 @@ import { RENOVATIEWERKEN } from './inhoud-renovatiewerken';
  * aannemer voor renovatiewerken zoekt (Mohammed, 5 okt 2026, "de drie paginas").
  *
  * 12 okt 2026 (spec/bf-stijl.md §17, bouwstap 6): in de stijl van bfbouw.be via LpBf, met hetzelfde inhoudsobject.
- * Terugval = de regel hieronder terugzetten naar <LpKgj inhoud={RENOVATIEWERKEN} /> (import LpKgj from './LpKgj').
+ *
+ * 13 okt 2026 avond, Mohammed: "die hele onderverdeling van ad groups onnodig", "we gaan gewoon laten wat al werkte
+ * toen we aanvragen kregen": geen aparte aannemerpagina meer. Deze URL (advertentiegroep Aannemer renovatiewerken)
+ * toont dezelfde rekenaarpagina als /lp/totaalrenovatie; alleen de bron in het CRM blijft eigen, zodat te zien is
+ * waar een aanvraag vandaan kwam. Terugval = de regel hieronder terugzetten naar <LpBf inhoud={RENOVATIEWERKEN} />.
  */
 export default function LpRenovatiewerken() {
-  return <LpBf inhoud={RENOVATIEWERKEN} />;
+  return <LpBf inhoud={{ ...TOTAALRENOVATIE, bronLead: RENOVATIEWERKEN.bronLead, inspectie: RENOVATIEWERKEN.inspectie }} />;
 }

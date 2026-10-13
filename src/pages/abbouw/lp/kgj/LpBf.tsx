@@ -291,7 +291,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   useEffect(() => {
     const id = decodeURIComponent(window.location.hash.slice(1));
     if (!id) return;
-    if (id === 'rekenaar' && inhoud.vangnet) setVenster(true);
+    if (id === 'rekenaar' && inhoud.vangnet && !inhoud.heroRekenaar) setVenster(true);
     const ev = ['wheel', 'touchmove', 'keydown'] as const;
     let zelf = false;
     const merk = () => { zelf = true; };
@@ -606,6 +606,11 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   };
 
   const vertrouwen = inhoud.rekenaar.vertrouwen ?? inhoud.hero.bewijs;
+  /* Wat er rechts in de hero staat: de rekenaar (geen knop, of heroRekenaar), het plaatsbezoekformulier (heroFormulier)
+     of alleen de knop in de tekstkolom. heroRekenaar wint (13 okt). */
+  const heroReken = !inhoud.hero.knop || !!inhoud.heroRekenaar;
+  const heroForm = !heroReken && !!inhoud.heroFormulier;
+  const heroKnop = !heroReken && !heroForm;
 
   return (
     <div className={`bf bf-lp bf-lp--${inhoud.bedanktSlug}${inhoud.strak ? ' bf-lp--strak' : ''}`} ref={vat}>
@@ -638,7 +643,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       </header>
 
       <main>
-        <section className={`bf-lphero bf-lphero--algemeen${inhoud.hero.knop && !inhoud.heroFormulier ? ' bf-lphero--knop' : ''}${inhoud.heroFormulier ? ' bf-lphero--form' : ''}`} id="top">
+        <section className={`bf-lphero bf-lphero--algemeen${heroKnop ? ' bf-lphero--knop' : ''}${heroForm ? ' bf-lphero--form' : ''}`} id="top">
           <div className="bf-hero__slides bf-lphero__slides">
             {inhoud.hero.dias.map((d, i) => (
               <img className={`bf-hero__beeld bf-lphero__beeld${i === dia ? ' bf-is-on' : ''}`} key={d.src} src={d.src} alt={d.alt}
@@ -659,7 +664,12 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                   ))}
                 </ul>
               )}
-              {inhoud.hero.knop && !inhoud.heroFormulier && (
+              {/* Rekenaar in de hero op een plaatsbezoekpagina (heroRekenaar, 13 okt): de rekenaar is de hoofdactie, het
+                  plaatsbezoek de tweede ("secundaire cta gratis plaatsbezoek"), als randknop naar het formulier onderaan. */}
+              {heroReken && inhoud.heroRekenaar && inhoud.hero.knop && (
+                <a className="bf-knop bf-lphero__tweede" href="#contact">{inhoud.hero.knop.tekst}<IcPijl /></a>
+              )}
+              {heroKnop && (
                 <div className="bf-lphero__actie">
                   <a className="bf-knop bf-lpcta__knop bf-lphero__knop" href="#contact">{inhoud.hero.knop.tekst}{inhoud.strak && <IcPijl />}</a>
                   {/* Strak (totaalrenovatie, 13 okt): de regel onder de knop als vinkjes, daaronder het eerstvolgende vrije moment. */}
@@ -671,7 +681,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               )}
               <ul className="bf-lphero__vertrouwen"><li><GoogleBadge klasse="bf-lphero__google" /></li></ul>
             </div>
-            {inhoud.heroFormulier && (
+            {heroForm && (
               /* Formulier in de hero (heroFormulier): de kaart zegt wat u krijgt (de knoptekst) en wanneer het kan
                  (eerstvolgend vrij plaatsbezoek); geen aparte knop meer in de tekstkolom. */
               <div id="aanvraag" className="bf-lphero__reken bf-lphero__form">
@@ -679,7 +689,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                   boven={<><p className="bf-lphero__formtitel">{inhoud.hero.knop?.tekst ?? inhoud.cta.kop}</p><VrijMoment /></>} />
               </div>
             )}
-            {!inhoud.hero.knop && (
+            {heroReken && (
               <div id="rekenaar" className="bf-lphero__reken">
                 <Rekenaar inhoud={inhoud} plek="hero" voor={match?.voor} />
                 {/* Telefoon: de vinkjes onder de kaart (4 okt, plan mobiele hero); op de computer staan ze in de kaart. */}
