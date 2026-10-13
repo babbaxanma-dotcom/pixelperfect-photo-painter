@@ -243,7 +243,7 @@ const SITELINKS = [
   { tekst: 'Gratis plaatsbezoek', r1: 'We bekijken uw woning ter plaatse', r2: 'Daarna een vrijblijvende offerte', url: URL + '#contact' },
   { tekst: 'Onze diensten', r1: 'Zes afdelingen in huis', r2: 'Eén planning voor alle werken', url: URL + '#diensten' },  // 27 sep: de sectie toont nu de zes afdelingen
   { tekst: 'Zo verloopt uw renovatie', r1: 'In vijf duidelijke stappen', r2: 'U weet vooraf wat er gebeurt', url: URL + '#werkwijze' },
-  { tekst: 'Voor en na', r1: 'Sleep de balk over de foto', r2: 'Een werf van AB Bouw Groep', url: URL + '#voorna' },  // 27 sep: "uitbouw/aanbouw" van de pagina gehaald
+  /* 13 okt: 'Voor en na' (#voorna) weg: Mohammed liet de voor/na-sectie van de pagina halen ('heel die sectie mag weg'). */
   { tekst: 'EPC- en premiebegeleiding', r1: 'Begeleiding bij uw EPC-attest', r2: 'Hulp bij Mijn VerbouwPremie', url: URL + '#waarom' },
 ];
 const HIGHLIGHTS = ['Gratis plaatsbezoek', 'Eigen ploegen', 'Vaste prijs', 'Volledig verzekerd', 'Zes afdelingen in huis',

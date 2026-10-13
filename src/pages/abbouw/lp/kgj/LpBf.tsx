@@ -67,12 +67,8 @@ const IcGoogle = () => (
 const IcSter = () => (
   <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="m10 1.2 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L10 15l-5.4 2.9 1.1-6.1L1.2 7.6l6.1-.8z" /></svg>
 );
-/* Aanvraagknop op de plaatsbezoekpagina's (LpKgj.tsx r.44-51, 6 okt: "knop moet ook een mooi icoon hebben"). */
-const IcAgenda = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <rect x="3.5" y="5" width="17" height="15.5" rx="2.2" /><path d="M8 3v4M16 3v4M3.5 10h17" /><path d="m9 15 2 2 4-4" />
-  </svg>
-);
+/* 13 okt, Mohammed: "die plaatsbezoek knop, haal de kalender logo weg overal": de plaatsbezoekknoppen (hero, kop,
+   midden, slotblok) hebben geen kalendericoon meer. */
 
 /* Eerstvolgend vrij plaatsbezoek, live uit Bardhs agenda (zelfde GHL-kalender en free-slots-API als BedanktBf.tsx).
    Het antwoord is per dag ("2026-10-15": { slots: ["2026-10-15T10:00:00+02:00", ...] }) plus metavelden. Geen antwoord
@@ -507,7 +503,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           ))}
         </ol>
         {inhoud.hero.knop ? (
-          <div className="bf-lpmidknop"><a className="bf-knop bf-proces__knop" href="#contact"><IcAgenda />{inhoud.hero.knop.tekst}</a></div>
+          <div className="bf-lpmidknop"><a className="bf-knop bf-proces__knop" href="#contact">{inhoud.hero.knop.tekst}</a></div>
         ) : !inhoud.vangnet && (
           <div className="bf-lpmidknop">{rekenKnop('bf-proces__knop')}</div>
         )}
@@ -629,7 +625,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           <div className="bf-nav__acties">
             {/* Plaatsbezoekpagina's: de aanvraagknop staat op de computer altijd in de kop (LpKgj r.326-331). */}
             {inhoud.hero.knop && (
-              <a className="bf-knop bf-lpbel bf-lpkop__actie" href="#contact"><IcAgenda />{inhoud.cta.naam ?? inhoud.hero.knop.tekst}</a>
+              <a className="bf-knop bf-lpbel bf-lpkop__actie" href="#contact">{inhoud.cta.naam ?? inhoud.hero.knop.tekst}</a>
             )}
             {/* Geen aria-label: de zichtbare tekst is de naam, zoals live ("Bel 0460 20 77 88", gsm "Bel direct"; WCAG 2.5.3). */}
             {!inhoud.topbalk && (
@@ -665,7 +661,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               )}
               {inhoud.hero.knop && (
                 <div className="bf-lphero__actie">
-                  <a className="bf-knop bf-lpcta__knop bf-lphero__knop" href="#contact"><IcAgenda />{inhoud.hero.knop.tekst}{inhoud.strak && <IcPijl />}</a>
+                  <a className="bf-knop bf-lpcta__knop bf-lphero__knop" href="#contact">{inhoud.hero.knop.tekst}{inhoud.strak && <IcPijl />}</a>
                   {/* Strak (totaalrenovatie, 13 okt): de regel onder de knop als vinkjes, daaronder het eerstvolgende vrije moment. */}
                   {inhoud.hero.knop.onder && (inhoud.strak
                     ? <ul className="bf-lphero__zeker">{inhoud.hero.knop.onder.split(' · ').map((z) => <li key={z}><IcVink />{z}</li>)}</ul>
@@ -717,7 +713,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       {/* Telefoon: vaste knop naar het formulier + belknop (BF lpsticky + belzweef), met de logica van de
           actiebalk van LpKgj (r.753-780): zichtbaar zolang geen rekenaar, formulier of heroknop in beeld staat. */}
       <button type="button" className={`bf-lpsticky${balk ? ' bf-is-zichtbaar' : ''}`} onClick={naarFormulier} tabIndex={balk ? 0 : -1} aria-hidden={!balk}>
-        {inhoud.hero.knop && <IcAgenda />}{inhoud.cta.naam ?? inhoud.cta.kop}<IcPijl />
+        {inhoud.cta.naam ?? inhoud.cta.kop}<IcPijl />
       </button>
       <a className={`bf-belzweef${balk ? ' bf-is-zichtbaar' : ''}`} href={CONTACT.phone.href} aria-label={'Bel ' + CONTACT.phone.display} tabIndex={balk ? 0 : -1} aria-hidden={!balk}><IcTel /></a>
 

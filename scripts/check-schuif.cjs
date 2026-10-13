@@ -19,8 +19,10 @@
 const puppeteer = require('puppeteer-core');
 
 /* 13 okt 2026: /totaalrenovatie toont de nieuwe LP (LpBf). De schuif is daar de BF-schuif (.bf-voorna__vak, stand =
-   --pos, regelaar = .bf-voorna__bereik); de replica-schuif (.pc-vgl-vat) staat op geen enkele route meer. */
-const URL = process.argv[2] || 'http://localhost:8080/totaalrenovatie';
+   --pos, regelaar = .bf-voorna__bereik); de replica-schuif (.pc-vgl-vat) staat op geen enkele route meer.
+   13 okt avond: de voor/na-sectie is weg van /totaalrenovatie en /lp/aannemer-renovatiewerken (Mohammed: "heel die
+   sectie mag weg"); /lp/richtprijs-berekenen (LpBf, standaardvolgorde) heeft dezelfde schuif nog. */
+const URL = process.argv[2] || 'http://localhost:8080/lp/richtprijs-berekenen';
 const CHROME = process.env.CHROME_PAD || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 
 /** Waar de scheiding staat, in procenten (--pos op het vak: daaruit tekent de CSS het voor-beeld). Dat is wat de bezoeker ziet. */

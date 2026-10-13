@@ -30,6 +30,8 @@ export const RENOVATIEWERKEN: KgjInhoud = {
     /* "De Betrouwbare Aannemer Voor Al Uw Renovatiewerken." Het zoekwoord in de accentkleur:
        wie "aannemer" zocht, leest het meteen. */
     kop: 'De betrouwbare [aannemer] voor al uw renovatiewerken.',
+    /* De tweede kopregel van totaalrenovatie (13 okt) hoort niet bij deze kop. */
+    kop2: undefined,
     /* 6 okt, Mohammed: "haal alle subtekst weg, hou enkel headline en puntjes" (zelfde hero als de
        totaalrenovatiepagina). */
     onder: '',

@@ -123,8 +123,9 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     /* 6 okt, Mohammed: "teveel tekst in hero, haal alle subtekst weg, hou enkel headline en puntjes". */
     onder: '',
     /* 4 okt, plan desktop-hero (Mohammed): drie USP's, het deel voor de dubbelepunt in het vet. 5 okt: zijn nieuwe teksten.
-       13 okt, Mohammed: de uitlegzinnen "eruit", "dat enkel de puntjes blijven". */
-    bewijs: ['100% Budgetgarantie', 'Eén vast aanspreekpunt', 'Volledige premiebegeleiding'],
+       13 okt, Mohammed: de uitlegzinnen "eruit", "dat enkel de puntjes blijven". 13 okt avond: "Volledige
+       premiebegeleiding naar, echt vakmanschap ofzo ... dat expertise uitstraalt", zijn keuze "Vakmanschap tot in de details". */
+    bewijs: ['100% Budgetgarantie', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details'],
     /* 5 okt: een grote knop naar het formulier in plaats van de rekenaar; die staat in het vangnet. */
     /* 13 okt, Mohammed: "de cta moet duidelijk zijn, denk na wat moet een cta bevatten: waarom nu doen, wat krijg je".
        Knop = wat u krijgt (gratis plaatsbezoek, u kiest zelf het moment in de agenda na de aanvraag). Regel eronder =
@@ -341,7 +342,9 @@ export const TOTAALRENOVATIE: KgjInhoud = {
      frustratie en oplossing, het stappenplan, de diensten, het vangnet en de vragen. */
   /* Gestript: zonder het fotospoor, alleen de voor/na als bewijs. */
   /* 6 okt, Mohammed: "onder de hero direct die slider van uitgevoerd werk". */
-  volgorde: ['uitgevoerd', 'voorna', 'waarom', 'werkwijze', 'diensten', 'vangnet', 'faq'],
+  /* 13 okt, Mohammed: "Resultaten waar we trots op zijn — heel die sectie mag weg": de voor/na-sectie (voorna) staat
+     niet meer in de volgorde. De gegevens blijven staan (type), de pagina toont ze niet. */
+  volgorde: ['uitgevoerd', 'waarom', 'werkwijze', 'diensten', 'vangnet', 'faq'],
 
   /* 29 sep, Mohammed: "meer goeie puntjes? dat de particulier wilt zien", "kijk
      ooms woonrealisaties en verelst en zedreno". Ooms en Verelst hebben allebei
