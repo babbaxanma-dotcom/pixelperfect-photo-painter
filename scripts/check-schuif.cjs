@@ -18,13 +18,15 @@
  */
 const puppeteer = require('puppeteer-core');
 
+/* 13 okt 2026: /totaalrenovatie toont de nieuwe LP (LpBf). De schuif is daar de BF-schuif (.bf-voorna__vak, stand =
+   --pos, regelaar = .bf-voorna__bereik); de replica-schuif (.pc-vgl-vat) staat op geen enkele route meer. */
 const URL = process.argv[2] || 'http://localhost:8080/totaalrenovatie';
 const CHROME = process.env.CHROME_PAD || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 
-/** Hoe ver het na-beeld is weggeklipt, in procenten. Dat is wat de bezoeker ziet. */
+/** Waar de scheiding staat, in procenten (--pos op het vak: daaruit tekent de CSS het voor-beeld). Dat is wat de bezoeker ziet. */
 const STAND = () => {
-  const na = document.querySelectorAll('.pc-vgl-vat img')[1];
-  const m = getComputedStyle(na).clipPath.match(/([\d.]+)%/);
+  const vak = document.querySelector('.bf-voorna__vak');
+  const m = vak && (vak.style.getPropertyValue('--pos') || getComputedStyle(vak).getPropertyValue('--pos')).match(/([\d.]+)%/);
   return m ? Math.round(Number(m[1])) : null;
 };
 
@@ -53,11 +55,11 @@ const STAND = () => {
     await pg.evaluate(async () => {
       document.querySelectorAll('img[loading="lazy"]').forEach((i) => { i.loading = 'eager'; });
       await new Promise((r) => setTimeout(r, 900));
-      document.querySelector('.pc-vgl-vat').scrollIntoView({ block: 'center', behavior: 'instant' });
+      document.querySelector('.bf-voorna__vak').scrollIntoView({ block: 'center', behavior: 'instant' });
       await new Promise((r) => setTimeout(r, 300));
     });
     const doos = await pg.evaluate(() => {
-      const r = document.querySelector('.pc-vgl-vat').getBoundingClientRect();
+      const r = document.querySelector('.bf-voorna__vak').getBoundingClientRect();
       return {
         links: Math.round(r.left), rechts: Math.round(r.right), breed: Math.round(r.width),
         midX: Math.round(r.left + r.width / 2), midY: Math.round(r.top + r.height / 2),
@@ -90,7 +92,7 @@ const STAND = () => {
 
     /* ── 3. toetsenbord: de regelaar moet met de pijltjes werken ── */
     const toets = await pg.evaluate(async () => {
-      const inp = document.querySelector('.pc-vgl-bedien');
+      const inp = document.querySelector('.bf-voorna__bereik');
       if (!inp) return { fout: 'geen regelaar' };
       inp.focus();
       const voor = Number(inp.value);

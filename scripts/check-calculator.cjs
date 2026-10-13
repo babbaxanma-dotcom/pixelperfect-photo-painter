@@ -21,7 +21,8 @@ const BASIS = process.argv[2] || 'http://localhost:8080';
 /* Beide replica-pagina's draaien op dezelfde calculator. Eén ervan toetsen
    bewijst niets over de andere: de vragen, de bron en de bedankpagina komen
    per pagina uit inhoud.ts. */
-const PADEN = ['/totaalrenovatie', '/badkamerrenovatie'];
+/* /totaalrenovatie toont sinds 13 okt 2026 de nieuwe LP (eigen rekenaar, getoetst door check:lppayload). */
+const PADEN = ['/badkamerrenovatie'];
 const CHROME = process.env.CHROME_PAD || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 /** Adressen waar een lead naartoe zou gaan. Die mogen nooit echt geraakt worden. */
 const LEADPADEN = [/leadconnectorhq/i, /gohighlevel/i, /web3forms/i, /hooks\./i];

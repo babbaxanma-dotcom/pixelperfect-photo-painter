@@ -85,8 +85,12 @@ export type KgjInhoud = {
       regel eronder (totaalrenovatie, 5 okt). De rekenaar staat dan in `vangnet`. */
   hero: { kop: string; ondertitel?: string; onder: string; bewijs: string[]; dias: (Foto & { pos?: string })[];
     knop?: { tekst: string; onder: string } };
-  /** Smalle donkere balk boven de kop, gevolgd door het telefoonnummer (totaalrenovatie, 5 okt). */
+  /** Smalle donkere balk boven de kop, gevolgd door het telefoonnummer (totaalrenovatie, 5 okt; weg sinds 13 okt). */
   topbalk?: string;
+  /** Strakke hero (totaalrenovatie, 13 okt, Mohammed: "above the fold moet beter", "de cta moet duidelijk zijn,
+      waarom nu doen, wat krijg je"): compactere kop, grotere knop met pijl, de regel onder de knop als vinkjes
+      (delen gescheiden door " · ") en het eerstvolgende vrije plaatsbezoek live uit de agenda. */
+  strak?: boolean;
   /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart. */
   rekenaar: { titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string; troeven?: string[];
     /** Trust signals onderaan de kaart, met vinkje; vervangen de regel `zeker` (dakwerken, 4 okt). */

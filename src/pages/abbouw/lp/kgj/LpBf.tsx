@@ -74,6 +74,41 @@ const IcAgenda = () => (
   </svg>
 );
 
+/* Eerstvolgend vrij plaatsbezoek, live uit Bardhs agenda (zelfde GHL-kalender en free-slots-API als BedanktBf.tsx).
+   Het antwoord is per dag ("2026-10-15": { slots: ["2026-10-15T10:00:00+02:00", ...] }) plus metavelden. Geen antwoord
+   binnen 5 s, een foutcode of geen enkel vrij moment: niets tonen (nooit een verzonnen datum). */
+const KALENDER_ID = 'ST3uIpAM7kFEokIm2NM7';
+const TZ = 'Europe/Brussels';
+function dagIn(ms: number) {
+  const d = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit' })
+    .formatToParts(ms).map((p) => [p.type, p.value]));
+  return `${d.year}-${d.month}-${d.day}`;
+}
+function VrijMoment() {
+  const [tekst, setTekst] = useState<string | null>(null);
+  useEffect(() => {
+    let weg = false;
+    const ctl = new AbortController();
+    const klok = window.setTimeout(() => ctl.abort(), 5000);
+    const nu = Date.now();
+    fetch(`https://backend.leadconnectorhq.com/calendars/${KALENDER_ID}/free-slots?startDate=${nu}&endDate=${nu + 15 * 864e5}&timezone=Europe%2FBrussels`, { signal: ctl.signal })
+      .then((r) => { if (!r.ok) throw new Error(String(r.status)); return r.json(); })
+      .then((d: Record<string, { slots?: unknown }>) => {
+        const eerste = Object.values(d ?? {}).flatMap((v) => (Array.isArray(v?.slots) ? v.slots : []))
+          .map((s) => Date.parse(String(s))).filter((t) => t > nu).sort((a, b) => a - b)[0];
+        if (weg || !eerste) return;
+        const vandaag = dagIn(nu), dag = dagIn(eerste), morgen = dagIn(nu + 864e5);
+        const datum = new Intl.DateTimeFormat('nl-BE', { timeZone: TZ, weekday: 'long', day: 'numeric', month: 'long' }).format(eerste);
+        setTekst(dag === vandaag ? 'vandaag' : dag === morgen ? 'morgen' : datum);
+      })
+      .catch(() => {})
+      .finally(() => window.clearTimeout(klok));
+    return () => { weg = true; ctl.abort(); window.clearTimeout(klok); };
+  }, []);
+  if (!tekst) return null;
+  return <p className="bf-lphero__vrij"><span className="bf-lphero__stip" aria-hidden="true" /><span>Eerstvolgend vrij plaatsbezoek: <b>{tekst}</b></span></p>;
+}
+
 /* Dezelfde iconen als LpKgj.tsx r.53-87 (redenen, stappen, oplossing), lijn 1,8 zoals BF. De key staat VÓÓR de spread:
    na de spread valt JSX terug op createElement en gaf React een key-waarschuwing in de console (ook op LpKgj, gemeten 12 okt). */
 const lijn = { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8,
@@ -575,7 +610,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   const vertrouwen = inhoud.rekenaar.vertrouwen ?? inhoud.hero.bewijs;
 
   return (
-    <div className={`bf bf-lp bf-lp--${inhoud.bedanktSlug}`} ref={vat}>
+    <div className={`bf bf-lp bf-lp--${inhoud.bedanktSlug}${inhoud.strak ? ' bf-lp--strak' : ''}`} ref={vat}>
       <header className={`bf-kop bf-kop--over bf-kop--lp kgj-kop${gescrold ? ' bf-is-gescrold' : ''}${inhoud.topbalk ? ' bf-kop--topbalk' : ''}`} id="kop">
         {/* Totaalrenovatie (5 okt): smalle balk met het telefoonnummer, hoort bij de vaste kop. */}
         {inhoud.topbalk && (
@@ -628,8 +663,12 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               )}
               {inhoud.hero.knop && (
                 <div className="bf-lphero__actie">
-                  <a className="bf-knop bf-lpcta__knop bf-lphero__knop" href="#contact"><IcAgenda />{inhoud.hero.knop.tekst}</a>
-                  {inhoud.hero.knop.onder && <p className="bf-lphero__micro">{inhoud.hero.knop.onder}</p>}
+                  <a className="bf-knop bf-lpcta__knop bf-lphero__knop" href="#contact"><IcAgenda />{inhoud.hero.knop.tekst}{inhoud.strak && <IcPijl />}</a>
+                  {/* Strak (totaalrenovatie, 13 okt): de regel onder de knop als vinkjes, daaronder het eerstvolgende vrije moment. */}
+                  {inhoud.hero.knop.onder && (inhoud.strak
+                    ? <ul className="bf-lphero__zeker">{inhoud.hero.knop.onder.split(' · ').map((z) => <li key={z}><IcVink />{z}</li>)}</ul>
+                    : <p className="bf-lphero__micro">{inhoud.hero.knop.onder}</p>)}
+                  {inhoud.strak && <VrijMoment />}
                 </div>
               )}
               <ul className="bf-lphero__vertrouwen"><li><GoogleBadge klasse="bf-lphero__google" /></li></ul>

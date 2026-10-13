@@ -100,7 +100,9 @@ export const TOTAALRENOVATIE: KgjInhoud = {
   bronLead: 'lp:totaalrenovatie:rekenaar',
   bedanktSlug: 'totaalrenovatie',
 
-  topbalk: 'Direct persoonlijk advies voor uw renovatie? Bel:',
+  /* 13 okt, Mohammed: "die header bovenaan, die nummer lijn, moet weg, het is niet clean". De topbalk is weg; de kop
+     toont nu, zoals op de renovatiewerken-pagina, de aanvraagknop en de belknop. */
+  strak: true,
 
   hero: {
     /* Mohammeds eigen kop, letterlijk (26 sep). 4 okt, plan desktop-hero: nieuwe kop. */
@@ -119,7 +121,12 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     /* 4 okt, plan desktop-hero (Mohammed): drie USP's, het deel voor de dubbelepunt in het vet. 5 okt: zijn nieuwe teksten. */
     bewijs: ['100% Budgetgarantie: De prijs op uw offerte is de eindprijs. Geen onaangename verrassingen achteraf.', 'Eén vast aanspreekpunt: U hoeft zelf geen aannemers op elkaar af te stemmen. Wij sturen de hele werf aan.', 'Volledige premiebegeleiding: Wij regelen uw EPC-attest en begeleiden de aanvraag van uw Mijn VerbouwPremie.'],
     /* 5 okt: een grote knop naar het formulier in plaats van de rekenaar; die staat in het vangnet. */
-    knop: { tekst: 'Vraag uw gratis plaatsbezoek aan', onder: '' },
+    /* 13 okt, Mohammed: "de cta moet duidelijk zijn, denk na wat moet een cta bevatten: waarom nu doen, wat krijg je".
+       Knop = wat u krijgt (gratis plaatsbezoek, u kiest zelf het moment in de agenda na de aanvraag). Regel eronder =
+       wat het kost en wat u in handen krijgt, met woorden die de site al gebruikt ("Gratis en vrijblijvend" op de LP's,
+       "Volledig transparante offerte" op de bedankpagina, dictaat 13 okt). Waarom nu = het eerstvolgende vrije
+       plaatsbezoek uit de agenda (LpBf, VrijMoment), geen verzonnen schaarste. */
+    knop: { tekst: 'Plan uw gratis plaatsbezoek', onder: 'Gratis en vrijblijvend · Volledig transparante offerte' },
     /* Mohammed, 26 sep: "laat enkel de keuken foto, badkamerrenovatie foto van
        abgroep die we bij badkamerrenovatie lp in de sectie hebben onder hero, en
        dan nog die leefruimte echte foto". De badkamer is de foto uit de sectie
