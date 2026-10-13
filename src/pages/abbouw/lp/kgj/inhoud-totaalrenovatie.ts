@@ -110,7 +110,11 @@ export const TOTAALRENOVATIE: KgjInhoud = {
        Zorgeloos Geregeld. Vaste Prijs, Eén Vaste Partner."); de brede kop staat op de
        renovatiewerken-pagina. Zorgeloos blijft in de accentkleur. */
     /* Definitief: "van A tot Z" in de accentkleur. */
-    kop: 'Uw renovatie [van A tot Z] geregeld.\nVaste prijs, één partner.',
+    /* 13 okt, Mohammed (dictaat): "Jouw complete renovatie, perfect geregeld van A tot Z." als headline, "niet met die
+       lelijke stijl, neem stijl over van homepage abgroep.be": wit + tweede regel in gedempt wit (kop2), zonder goud
+       en streep, zoals "Uw bouw- of renovatiepartner / van A tot Z" op de homepage. */
+    kop: 'Jouw complete renovatie,',
+    kop2: 'perfect geregeld van A tot Z.',
     /* Zelfde opbouw als Mohammeds subkop op dakwerken. Het mechanisme: AB heeft
        voor elk vak een eigen ploeg (homepage), dus één planning. */
     /* Mohammed, 26 sep: de subkop "eruit". Leeg = geen regel onder de kop. */

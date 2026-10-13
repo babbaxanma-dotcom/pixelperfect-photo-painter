@@ -150,8 +150,9 @@ const metKop = (t: string) => {
   return i > 0 ? <><strong>{t.slice(0, i)}</strong><span className="bf-lphero__uitleg">{t.slice(i + 2)}</span></> : t;
 };
 
-/* De kop van de hero: tekst tussen [ ] in de merkkleur met de BF-streep eronder, \n = vaste breuk (LpKgj r.354-358). */
-function HeroKop({ kop }: { kop: string }) {
+/* De kop van de hero: tekst tussen [ ] in de merkkleur met de BF-streep eronder, \n = vaste breuk (LpKgj r.354-358).
+   kop2 = tweede regel in gedempt wit, zoals de kop op de homepage (blokken.ts hero: bf-hero__kop2). */
+function HeroKop({ kop, kop2 }: { kop: string; kop2?: string }) {
   return (
     <h1 className="bf-lphero__kop">
       {kop.split(/\[([^\]]+)\]/).map((deel, i) => (i % 2
@@ -161,6 +162,7 @@ function HeroKop({ kop }: { kop: string }) {
           </span>
         )
         : deel.split('\n').map((regel, j, alle) => <Fragment key={`${i}-${j}`}>{regel}{j < alle.length - 1 && <>{' '}<br /></>}</Fragment>)))}
+      {kop2 && <>{' '}<span className="bf-lphero__kop2">{kop2}</span></>}
     </h1>
   );
 }
@@ -651,7 +653,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           <div className="bf-lphero__laag" aria-hidden="true" />
           <div className="bf-lphero__in">
             <div className="bf-lphero__tekst">
-              <HeroKop kop={kop} />
+              <HeroKop kop={kop} kop2={match ? undefined : inhoud.hero.kop2} />
               {inhoud.hero.ondertitel && <p className="bf-lphero__ondertitel">{inhoud.hero.ondertitel}</p>}
               {inhoud.hero.onder && <p className="bf-lphero__sub">{inhoud.hero.onder}</p>}
               {inhoud.hero.bewijs.length > 0 && (

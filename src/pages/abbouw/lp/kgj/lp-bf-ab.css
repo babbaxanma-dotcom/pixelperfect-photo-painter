@@ -662,3 +662,17 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
   .bf.bf-lp--strak .bf-nav__acties .bf-lpbel:not(.bf-lpkop__actie) { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .75); }
   .bf.bf-lp--strak .bf-kop.bf-is-gescrold .bf-nav__acties .bf-lpbel:not(.bf-lpkop__actie) { color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
 }
+
+/* ---------- kop in de stijl van de homepage (totaalrenovatie, 13 okt 2026) ----------
+   Mohammed: "niet met die lelijke stijl, neem stijl over van homepage abgroep.be". bf.css .bf-hero__kop (700, -0.04em,
+   regelhoogte .98, wit) met .bf-hero__kop2 als eigen regel in wit 80 %; geen goud, geen streep. */
+.bf.bf-lp .bf-lphero__kop span.bf-lphero__kop2 { display: block; color: rgba(255, 255, 255, .8); }
+.bf.bf-lp--strak .bf-lphero__kop { font-size: calc(80 * var(--u)); line-height: .98; }
+@media (max-width: 1000px) {
+  .bf.bf-lp--strak .bf-lphero__kop { font-size: clamp(40px, 11vw, 64px); }
+}
+/* Zelfde kolombreedte als de homepage, zodat de kop op twee regels staat (wit / gedempt) en knop, vinkjes en het vrije
+   moment in zijn venster (1280x609) blijven. */
+@media (min-width: 1001px) {
+  .bf.bf-lp--strak .bf-lphero--knop .bf-lphero__in { grid-template-columns: minmax(0, 1fr); }
+}

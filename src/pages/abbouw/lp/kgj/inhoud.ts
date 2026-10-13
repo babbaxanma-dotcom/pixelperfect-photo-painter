@@ -83,7 +83,9 @@ export type KgjInhoud = {
   /** dias.pos: uitsnede in de brede hero (object-position), bijvoorbeeld om een nok in beeld te houden. */
   /** knop: een grote knop naar het formulier in plaats van de rekenaar in de hero, met een
       regel eronder (totaalrenovatie, 5 okt). De rekenaar staat dan in `vangnet`. */
-  hero: { kop: string; ondertitel?: string; onder: string; bewijs: string[]; dias: (Foto & { pos?: string })[];
+  /** kop2: tweede deel van de kop als eigen regel in gedempt wit, zoals de kop op de homepage (bf-hero__kop2);
+      zonder goud en zonder streep (totaalrenovatie, 13 okt). */
+  hero: { kop: string; kop2?: string; ondertitel?: string; onder: string; bewijs: string[]; dias: (Foto & { pos?: string })[];
     knop?: { tekst: string; onder: string } };
   /** Smalle donkere balk boven de kop, gevolgd door het telefoonnummer (totaalrenovatie, 5 okt; weg sinds 13 okt). */
   topbalk?: string;
