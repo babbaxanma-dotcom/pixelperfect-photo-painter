@@ -136,7 +136,10 @@ const App = () => {
           {/* 5 okt 2026 ("de drie paginas"): de kopie voor renovatiewerken en de losse rekenaar. */}
           <Route path="/lp/aannemer-renovatiewerken" element={<LpRenovatiewerken />} />
           <Route path="/lp/richtprijs-berekenen" element={<LpRichtprijs />} />
-          <Route path="/totaalrenovatie" element={<LpReplica />} />
+          {/* 13 okt 2026 (Mohammed: "DE TOTAALRENOVATIE landingspagina nu aanpassen, je hebt daar niets in de nieuwe
+              stijl gezet"): /totaalrenovatie toont dezelfde nieuwe pagina als /lp/totaalrenovatie (LpBf). LpReplica
+              blijft in de code als terugval. */}
+          <Route path="/totaalrenovatie" element={<LpTotaalrenovatie />} />
           <Route path="/lp/badkamerrenovatie" element={<LpBadkamer />} />
           <Route path="/badkamerrenovatie" element={<LpBadkamer />} />
           <Route path="/lp/tegelwerken" element={<Navigate to="/interieur" replace />} />

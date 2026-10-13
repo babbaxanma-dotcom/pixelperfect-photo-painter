@@ -155,7 +155,8 @@ let wachtOpScroll: (() => void) | null = null;
 function bannerNaScroll(pad: string): boolean {
   if (pad.startsWith('/lp/')) return true;
   const p = pad.replace(/\/+$/, '');
-  return p === '/bedankt' || p === '/afspraak' || p === '/dakinspectie';
+  /* /totaalrenovatie toont sinds 13 okt 2026 dezelfde landingspagina als /lp/totaalrenovatie: zelfde bannergedrag. */
+  return p === '/bedankt' || p === '/afspraak' || p === '/dakinspectie' || p === '/totaalrenovatie';
 }
 
 function stopWachten() {

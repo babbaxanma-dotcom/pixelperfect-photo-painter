@@ -43,8 +43,8 @@ let POORT = 4382;
 /* /lp/totaalrenovatie staat sinds 26 sep 2026 in de vorm van /lp/dakwerken (geen menu, met
    opzet: elke menulink is een uitgang). Die pagina's toetsen check-lp-gsm, check-lp-reno en
    stress-lp-reno; deze toets meet de replica-opzet met zijn vaste kop en menu. */
-const PAGINAS = ['/', '/badkamerrenovatie', '/lp/badkamerrenovatie',
-  '/totaalrenovatie', '/over'];
+/* /totaalrenovatie toont sinds 13 okt 2026 dezelfde LP als /lp/totaalrenovatie (geen menu): niet meer hier. */
+const PAGINAS = ['/', '/badkamerrenovatie', '/lp/badkamerrenovatie', '/over'];
 /* Drie soorten scherm plus dat van Mohammed zelf. Zijn venster is breed maar
    laag: 1531x708 na browserbalken en taakbalk. Juist daar valt het formulier
    het eerst weg, en juist daar keek ik niet.
