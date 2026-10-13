@@ -97,8 +97,9 @@ export type KgjInhoud = {
       naast de kop, op de telefoon direct onder de puntjes (13 okt, Mohammed: "is het niet slimmer om een form toe te
       voegen above the fold?"). */
   heroFormulier?: boolean;
-  /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart. */
-  rekenaar: { titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string; troeven?: string[];
+  /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart.
+      trustrij: rij onderaan de kaart met Google 5,0 + sterren en daarnaast deze cijfers (zoals bfbouw.be rk__trust). */
+  rekenaar: { trustrij?: { b: string; s: string }[]; titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string; troeven?: string[];
     /** Trust signals onderaan de kaart, met vinkje; vervangen de regel `zeker` (dakwerken, 4 okt). */
     vertrouwen?: string[] };
   /** tegenover: de zin boven de redenen; dan staat de tekst (de frustratie) links in een
@@ -225,7 +226,12 @@ export const DAKWERKEN: KgjInhoud = {
        daarna "trust signals erbij": "gratis & vrijblijvende richtprijs", "begeleiding bij premie-aanvragen". */
     tijd: 'Klaar in 2 minuten, vrijblijvend',
     zeker: 'Gratis en vrijblijvend',
-    vertrouwen: ['Gratis & vrijblijvende richtprijs', 'Begeleiding bij premie-aanvragen', '6% btw-tarief (woningen > 10 jaar)', '10 jaar garantie'],
+    /* 13 okt, Mohammed: "google logo in de rekenaar form, en 10j garantie, 15 jaar ervaring in de blokje van dakwerken
+       rekenaar, zoals bij bfbouw". 10 jaar garantie staat nu in de trustrij, dus niet meer bij de vinkjes. Premiepuntje ->
+       "Vakmanschap tot in de details" (zijn keuze, doorgegeven via de BF-chat). Bron 15 jaar: Mohammed ("meer dan 15 jaar
+       ervaring in dakwerken", waarom-tekst hieronder). */
+    vertrouwen: ['Gratis & vrijblijvende richtprijs', 'Vakmanschap tot in de details', '6% btw-tarief (woningen > 10 jaar)'],
+    trustrij: [{ b: '10 jaar', s: 'garantie' }, { b: '15 jaar', s: 'ervaring' }],
     vragen: [
       /* Geen hellingshoek meer onder hellend en plat (Mohammed, 24 sep: "mensen
          weten wat een hellend dak is en plat dak"); de foto zegt het al. */
@@ -320,7 +326,7 @@ export const DAKWERKEN: KgjInhoud = {
     tekst: 'Een dak vernieuwt u één keer en vervolgens moet het decennia meegaan. Daarom is het belangrijk dat u een aannemer kiest die het vak kent. Met meer dan 15 jaar ervaring in dakwerken staan we garant voor een eindresultaat van topkwaliteit. U kan rekenen op een zorgeloos traject van A tot Z.',
     redenen: [
       { titel: '10 jaar garantie', tekst: 'Tien jaar garantie op dakrenovatie. We zijn volledig verzekerd en VCA-gecertificeerd.' },
-      { titel: 'Vrijblijvende offerte en dakinspectie', tekst: 'We komen langs en voeren een vrijblijvende dakinspectie uit.' },
+      /* 13 okt, Mohammed: de kaart "Vrijblijvende offerte en dakinspectie" weg ("haal dat puntje weg zelfs, eigenlijk twee is genoeg"). */
       /* Mohammed, 23 sep 2026: 'volledige premiebegeleiding, Mijn VerbouwPremie, zoals
          Kijzer ook doet'. Kijzer noemt het 'Premieservice' en 'volledige omkadering
          met hulp bij premie aanvragen'. Geen bedragen: die hangen af van inkomen en

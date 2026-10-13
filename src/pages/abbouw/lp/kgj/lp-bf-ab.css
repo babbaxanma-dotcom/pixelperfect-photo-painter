@@ -694,3 +694,34 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
   .bf.bf-lp .bf-lphero__form .kgj-reken__form label { margin-top: calc(10 * var(--u)); }
   .bf.bf-lp .bf-lphero__form .kgj-reken__knop { margin-top: calc(16 * var(--u)); }
 }
+
+/* ---------- trustrij onderaan de rekenaarkaart (dakwerken, 13 okt 2026) ----------
+   Mohammed: "google logo in de rekenaar form, en 10j garantie, 15 jaar ervaring in de blokje van dakwerken rekenaar,
+   zoals bij bfbouw". Overgenomen van bfbouw.be (src/css/site.css .rk__trust): drie vakjes met een scheidingslijn,
+   Google-G + 5,0 + sterren, dan twee cijfers. */
+.bf.bf-lp .kgj-reken__trust { list-style: none; margin: calc(14 * var(--u)) 0 0; padding: calc(12 * var(--u)) 0 0; border-top: 1px solid #eeeeee;
+  display: grid; grid-template-columns: 1.15fr 1fr 1fr; align-items: center; }
+.bf.bf-lp .kgj-reken__trust li { display: flex; flex-direction: column; justify-content: center; padding: 0 calc(12 * var(--u)); min-height: calc(38 * var(--u)); }
+.bf.bf-lp .kgj-reken__trust li:first-child { padding-left: 0; }
+.bf.bf-lp .kgj-reken__trust li + li { border-left: 1px solid #ececec; }
+.bf.bf-lp .kgj-reken__trust b { font-size: calc(16 * var(--u)); font-weight: 700; line-height: 1.1; color: var(--ink); }
+.bf.bf-lp .kgj-reken__trust li > span { font-size: calc(13.5 * var(--u)); line-height: 1.2; color: var(--tekst-2); }
+.bf.bf-lp .kgj-reken__trust .kgj-reken__trust-g { flex-direction: row; align-items: center; justify-content: flex-start; gap: calc(8 * var(--u)); }
+.bf.bf-lp .kgj-reken__trust-gic svg { width: calc(24 * var(--u)); height: calc(24 * var(--u)); display: block; }
+.bf.bf-lp .kgj-reken__trust-g > span:last-child { display: flex; flex-direction: column; gap: 2px; }
+.bf.bf-lp .kgj-reken__trust-st { display: flex; gap: 1px; color: #f4b400; }
+.bf.bf-lp .kgj-reken__trust-st svg { width: calc(12 * var(--u)); height: calc(12 * var(--u)); }
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken__trust { margin-top: 14px; padding-top: 12px; }
+  .bf.bf-lp .kgj-reken__trust li { padding: 0 10px; min-height: 36px; }
+  .bf.bf-lp .kgj-reken__trust li:first-child { padding-left: 0; }
+  .bf.bf-lp .kgj-reken__trust b { font-size: 15.5px; }
+  .bf.bf-lp .kgj-reken__trust li > span { font-size: 12.5px; }
+  .bf.bf-lp .kgj-reken__trust-gic svg { width: 22px; height: 22px; }
+  .bf.bf-lp .kgj-reken__trust-st svg { width: 11px; height: 11px; }
+}
+/* Dakwerken op de computer: vinkjes en trustrij iets dichter, zodat de trustrij in zijn venster (1280x609) valt. */
+@media (min-width: 1001px) {
+  .bf.bf-lp--dakwerken .kgj-reken--hero .kgj-reken__vertrouwen { margin-top: calc(12 * var(--u)); padding-top: calc(12 * var(--u)); gap: calc(6 * var(--u)); }
+  .bf.bf-lp--dakwerken .kgj-reken__trust { margin-top: calc(10 * var(--u)); padding-top: calc(10 * var(--u)); }
+}
