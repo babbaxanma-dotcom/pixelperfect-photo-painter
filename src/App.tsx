@@ -41,8 +41,11 @@ const LpKgj = lazy(() => import("./pages/abbouw/lp/kgj/LpKgj"));
 const LpTotaalrenovatie = lazy(() => import("./pages/abbouw/lp/kgj/LpTotaalrenovatie"));
 const LpRenovatiewerken = lazy(() => import("./pages/abbouw/lp/kgj/LpRenovatiewerken"));
 const LpRichtprijs = lazy(() => import("./pages/abbouw/lp/kgj/LpRichtprijs"));
-const Bedankt = lazy(() => import("./pages/abbouw/Bedankt"));
-const Afspraak = lazy(() => import("./pages/abbouw/Afspraak"));
+// 12 okt 2026: funnel in twee stappen in de stijl van bfbouw.be. Stap 1 = /bedankt (BedanktBf: drie keuzes, geen
+// kalender), stap 2 = /afspraak en /dakinspectie (AfspraakBf: de GHL-kalender). Terugval = Bedankt.tsx en Afspraak.tsx
+// (deze imports vervangen door die van ./pages/abbouw/Bedankt en ./pages/abbouw/Afspraak en de routes hieronder terugzetten)
+const BedanktBf = lazy(() => import("./pages/abbouw/bf/BedanktBf"));
+const AfspraakBf = lazy(() => import("./pages/abbouw/bf/AfspraakBf"));
 const Status = lazy(() => import("./pages/abbouw/Status"));
 const Beoordeling = lazy(() => import("./pages/abbouw/Beoordeling"));
 const Review = lazy(() => import("./pages/abbouw/Review"));
@@ -138,9 +141,9 @@ const App = () => {
           <Route path="/lp/oprit" element={<Navigate to="/construct" replace />} />
           <Route path="/lp/zwembad" element={<Navigate to="/bad" replace />} />
           <Route path="/lokaal/:slug" element={<Navigate to="/" replace />} />
-          <Route path="/bedankt" element={<Bedankt />} />
-          <Route path="/afspraak" element={<Afspraak />} />
-          <Route path="/dakinspectie" element={<Afspraak soort="dakinspectie" />} />
+          <Route path="/bedankt" element={<BedanktBf />} />
+          <Route path="/afspraak" element={<AfspraakBf />} />
+          <Route path="/dakinspectie" element={<AfspraakBf soort="dakinspectie" />} />
           <Route path="/status/:tel/:stap?" element={<Status />} />
           <Route path="/beoordeling/:tel/:score" element={<Beoordeling />} />
           <Route path="/review" element={<Review />} />

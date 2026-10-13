@@ -255,6 +255,19 @@ body:has(div.bf) .abc-banner-text strong { color: #0a1628; font-size: 18px; }
   .bf .bf-waarde:not(:has(.bf-waarde__icoon)) { display: grid; grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; align-content: start; }
   .bf .bf-waarde:not(:has(.bf-waarde__icoon)) h3 { padding-right: 0; margin-top: calc(82 * var(--u)); }
 }
+/* waarde-tegel met foto (blokken.ts waardenRaster, item.foto; eerste gebruik /dakwerken "Wat wij doen", 12 okt): de foto
+   staat bovenaan over de volle tegelbreedte (de tegel heeft al overflow hidden en ronde hoeken); daaronder het lijf met
+   dezelfde padding, hetzelfde grote nummer en dezelfde kop- en tekstmaten als de tegel zonder foto, dus de tegel van nu
+   met een foto erboven. Desktop: subgrid over 3 rijen (foto, kop, tekst), zodat de alinea's gelijk beginnen. */
+.bf .bf-waarden .bf-waarde.bf-waarde--foto { padding: 0; }
+.bf .bf-waarde__foto { margin: 0; aspect-ratio: 16 / 10; overflow: hidden; }
+.bf .bf-waarde__foto img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.bf .bf-waarde__lijf { position: relative; padding: calc(40 * var(--u)) calc(40 * var(--u)) calc(38 * var(--u)); }
+@media (max-width: 1000px) { .bf .bf-waarde__lijf { padding: 28px 22px; } }
+@media (min-width: 1001px) {
+  .bf .bf-waarden .bf-waarde.bf-waarde--foto { grid-row: span 3; }
+  .bf .bf-waarde__lijf { display: grid; grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; align-content: start; }
+}
 .bf .bf-sraam__lede { max-width: calc(680 * var(--u)); margin: calc(-24 * var(--u)) auto calc(40 * var(--u)); text-align: center; font-size: calc(18 * var(--u)); line-height: 1.6; color: var(--tekst-2); }
 @media (max-width: 1000px) { .bf .bf-sraam__lede { margin: -12px auto 24px; font-size: 16px; } }
 

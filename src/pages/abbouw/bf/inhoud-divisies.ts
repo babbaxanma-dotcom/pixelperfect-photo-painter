@@ -33,7 +33,7 @@ export type DivisieInhoud = {
   omschrijving: string;
   kop: { regels: [string, string?]; sub: string; foto: KopFoto | null; knop: string };
   verhaal: { titel: string[]; tekst: string; punten: { titel: string; tekst: string }[]; foto: Foto; icoon: IcoonNaam; knop: string };
-  watWijDoen: { kop: string; items: { titel: string; tekst: string }[] };
+  watWijDoen: { kop: string; items: { titel: string; tekst: string; foto?: Foto }[] };
   traject: { kop: string[]; knop: { tekst: string; href: string }; foto: Foto; stappen: Stap[] };
   vragen: { kop: string; vragen: { v: string; a: string }[] };
   andere: { kop: string; tekst: string; knop: { tekst: string; href: string }; banner: { naam: string; pos?: string }; kaarten: Dienstkaart[] };
@@ -73,8 +73,9 @@ export function divisieInhoud(slug: DivisieSlug): DivisieInhoud {
       knop: 'Offerte aanvragen',
     },
 
-    /* waarden-raster "Wat wij doen" (spec §10; _division.tsx r.77), 3 tegels whatWeDo (r.82-88) */
-    watWijDoen: { kop: 'Wat wij doen', items: c.whatWeDo.map((w) => ({ titel: w.t, tekst: w.d })) },
+    /* waarden-raster "Wat wij doen" (spec §10; _division.tsx r.77), 3 tegels whatWeDo (r.82-88). Foto per tegel alleen
+       waar FOTOPLAN er een geeft (/dakwerken: stockfoto's als sfeerbeeld, 12 okt); de tekst blijft woordelijk. */
+    watWijDoen: { kop: 'Wat wij doen', items: c.whatWeDo.map((w, i) => (plan.watWijDoen?.[i] ? { titel: w.t, tekst: w.d, foto: plan.watWijDoen[i] } : { titel: w.t, tekst: w.d })) },
 
     /* traject 4 stappen ZONDER tijdlabels (spec §10, A7): kop r.97, knop r.99, stappen r.102-112 zonder s.time */
     traject: {

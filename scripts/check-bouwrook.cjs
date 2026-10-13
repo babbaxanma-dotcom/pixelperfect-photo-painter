@@ -25,7 +25,9 @@ const ROUTES = ['/', '/over', '/diensten', '/werkwijze', '/contact',
   '/privacy', '/voorwaarden', '/cookies', '/bestaat-niet',
   '/totaalrenovatie', '/badkamerrenovatie', '/lp/badkamerrenovatie',
   '/lp/dakwerken', '/lp/totaalrenovatie', '/lp/richtprijs-berekenen', '/lp/aannemer-renovatiewerken',
-  '/bedankt?dienst=totaalrenovatie', '/afspraak'];
+  '/bedankt?dienst=totaalrenovatie', '/afspraak',
+  /* 13 okt 2026: de dak-kant van de funnel (BedanktBf.tsx, AfspraakBf.tsx). */
+  '/bedankt?dienst=dakwerken&van=rekenaar', '/dakinspectie'];
 /* Analytics en advertentietags blijven dicht: een meting stuurt niets naar buiten. */
 const BLOK = /clarity\.ms|googletagmanager|google-analytics|doubleclick|googleadservices|facebook/;
 
@@ -41,7 +43,14 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
       const p = await browser.newPage();
       await p.setViewport({ width: 1265, height: 720 });
       await p.setRequestInterception(true);
-      p.on('request', (r) => (BLOK.test(r.url()) ? r.abort() : r.continue()));
+      /* De GHL-kalender op /afspraak doet bij het laden zelf een POST (attribution_service): elke POST naar
+         leadconnectorhq of web3forms krijgt een leeg antwoord, OPTIONS met CORS-headers. */
+      p.on('request', (r) => {
+        if (BLOK.test(r.url())) return r.abort();
+        if (/leadconnectorhq|web3forms/.test(r.url()) && r.method() === 'OPTIONS') return r.respond({ status: 204, headers: { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': 'GET,POST,OPTIONS' }, body: '' });
+        if (/leadconnectorhq|web3forms/.test(r.url()) && r.method() !== 'GET' && r.method() !== 'HEAD') return r.respond({ status: 200, headers: { 'access-control-allow-origin': '*' }, contentType: 'application/json', body: '{}' });
+        return r.continue();
+      });
       const fouten = [];
       p.on('pageerror', (e) => fouten.push(String(e.message || e).slice(0, 160)));
       await p.goto(basis + pad, { waitUntil: 'networkidle0', timeout: 60000 });
@@ -61,6 +70,20 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
     for (const pad of ROUTES) {
       const { p, fouten } = await open(pad);
       const m = await p.evaluate(() => ({ h1: document.querySelectorAll('h1').length, tekst: document.body.innerText.length }));
+      /* De tekst in de iframes van de pagina telt mee: op /afspraak staat de inhoud in de GHL-kalender (eigen tekst
+         184 tekens, gemeten 13 okt). Tot 13 okt haalde /afspraak de 300 alleen dankzij de tekst van de cookiebanner;
+         die verschijnt daar nu pas na een scroll (consent.ts). Een lege of kapotte kalender telt dus niet mee.
+         Eerst wachten tot elke iframe tekst heeft (hoogstens 20 s): networkidle0 keert soms terug vóór de widget
+         getekend is (keuring 13 okt: 3 van 35 runs 184 tekens, rood zonder fout; de widget gaat van 0 naar 797 tekens
+         tussen 3,9 en 4,9 s na de start, networkidle0 viel ook op 2,3 s). Een kalender die na 20 s nog leeg is, faalt. */
+      for (const el of await p.$$('iframe')) {
+        const f = await el.contentFrame().catch(() => null);
+        if (f) await f.waitForFunction(() => document.body && document.body.innerText.length > 0, { timeout: 20000 }).catch(() => {});
+      }
+      for (const f of p.frames()) {
+        if (f === p.mainFrame()) continue;
+        try { m.tekst += await f.evaluate(() => (document.body ? document.body.innerText.length : 0)); } catch { /* frame weg */ }
+      }
       await p.close();
       if (fouten.length) mis.push(`${pad}: fout op de pagina: ${fouten.join(' | ')}`);
       if (m.h1 !== 1) mis.push(`${pad}: ${m.h1} h1, verwacht 1`);

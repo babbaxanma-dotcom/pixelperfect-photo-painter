@@ -1,0 +1,171 @@
+/* /bedankt in de BF-stijl (BedanktBf.tsx). Maten en kleuren naar BF dist/css/site.css: .dank* (bedankpagina),
+   .kop--lp + .lpbel (kop met alleen de belknop), .lpvoet (voet van één regel). Klassen met bf-voorvoegsel, alles onder
+   .bf.bf-dankpagina: na een SPA-navigatie raakt dit bestand geen enkele andere pagina.
+   Desktop in calc(N * var(--u)) zoals BF (bf.css: --u = 1440 px-raster vanaf 1001 px), gsm in px onder 1001 px.
+   AB-merk: goud (--merk) met navy tekst (--op-merk) op knoppen, vink en nummers.
+   Het vergrendelde bedrag volgt de opmaak van de rekenaar in BF-stijl (lp/kgj/lp-bf-ab.css .kgj-reken__richt, alleen
+   gelezen, niet gewijzigd). */
+
+/* ---------- kop: logo + belknop, geen menu (BF .kop--lp, .lpbel) ---------- */
+.bf.bf-dankpagina .bf-dankkop .bf-nav__acties { margin-left: auto; }
+.bf.bf-dankpagina .bf-dankbel { height: calc(50 * var(--u)); padding: 0 calc(22 * var(--u)); gap: calc(10 * var(--u)); font-size: calc(16 * var(--u)); border-radius: calc(999 * var(--u)); }
+.bf.bf-dankpagina .bf-dankbel > span:first-child { display: contents; }
+.bf.bf-dankpagina .bf-dankbel svg { flex: none; width: calc(18 * var(--u)); height: calc(18 * var(--u)); }
+.bf.bf-dankpagina .bf-dankbel__kort { display: none; }
+
+/* ---------- heldblok (BF .dank) ---------- */
+.bf.bf-dankpagina .bf-dank { position: relative; overflow: hidden; background: #1c1c1c; min-height: max(calc(760 * var(--u)), 100svh); display: flex; }
+.bf.bf-dankpagina .bf-dank__beeld { position: absolute; inset: 0; }
+.bf.bf-dankpagina .bf-dank__beeld img { width: 100%; height: 100%; object-fit: cover; }
+.bf.bf-dankpagina .bf-dank__laag { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8, 8, 8, .86) 0%, rgba(8, 8, 8, .74) 45%, rgba(8, 8, 8, .45) 100%), linear-gradient(180deg, rgba(8, 8, 8, .6) 0%, rgba(8, 8, 8, .1) 26%); }
+.bf.bf-dankpagina .bf-dank__in { position: relative; z-index: 1; flex: 1; width: calc(1440 * var(--u)); margin: 0 auto; padding: calc(132 * var(--u)) calc(88 * var(--u)) calc(72 * var(--u)); display: grid; grid-template-columns: minmax(0, 1fr) calc(520 * var(--u)); gap: calc(64 * var(--u)); align-items: start; }
+
+/* links: vink + h1, lede of vergrendeld bedrag, brug, stappen */
+.bf.bf-dankpagina .bf-dank__status { display: flex; align-items: center; gap: calc(16 * var(--u)); }
+.bf.bf-dankpagina .bf-dank__vink { width: calc(44 * var(--u)); height: calc(44 * var(--u)); flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--merk); color: var(--op-merk); }
+.bf.bf-dankpagina .bf-dank__vink svg { width: calc(24 * var(--u)); height: calc(24 * var(--u)); }
+.bf.bf-dankpagina .bf-dank__kop { margin: 0; font-size: calc(38 * var(--u)); line-height: 1.1; font-weight: 700; letter-spacing: -0.03em; color: #fff; text-wrap: balance; }
+.bf.bf-dankpagina .bf-dank__lede { margin: calc(12 * var(--u)) 0 0; font-size: calc(18 * var(--u)); line-height: 1.5; color: rgba(255, 255, 255, .9); }
+
+/* het vergrendelde bedrag (BF .dank__prijs: witte kaart; bovenaan het goudvlak van de rekenaar, onderaan de zin) */
+.bf.bf-dankpagina .bf-dank__prijs { margin-top: calc(26 * var(--u)); max-width: calc(560 * var(--u)); border-radius: calc(22 * var(--u)); overflow: hidden; background: #fff; color: var(--ink); box-shadow: 0 calc(40 * var(--u)) calc(80 * var(--u)) calc(-30 * var(--u)) rgba(0, 0, 0, .65); }
+.bf.bf-dankpagina .bf-dank__richt { display: flex; align-items: center; justify-content: space-between; gap: calc(16 * var(--u)); padding: calc(22 * var(--u)) calc(26 * var(--u)); background: linear-gradient(160deg, #fdf8ef 0%, #f8ecd4 100%); box-shadow: inset 0 calc(-1 * var(--u)) 0 #efd9ad; }
+.bf.bf-dankpagina .bf-dank__richt-bedrag { display: flex; align-items: baseline; gap: calc(10 * var(--u)); min-width: 0; font-size: calc(40 * var(--u)); line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); user-select: none; -webkit-user-select: none; }
+.bf.bf-dankpagina .bf-dank__richt-cijfers { filter: blur(calc(8 * var(--u))); white-space: nowrap; }
+.bf.bf-dankpagina .bf-dank__slot { display: grid; place-items: center; flex: none; width: calc(48 * var(--u)); height: calc(48 * var(--u)); border-radius: 50%; background: var(--wit); color: var(--merk-tekst); box-shadow: 0 calc(4 * var(--u)) calc(12 * var(--u)) rgba(17, 17, 17, .1); }
+.bf.bf-dankpagina .bf-dank__slot svg { width: calc(22 * var(--u)); height: calc(22 * var(--u)); }
+.bf.bf-dankpagina .bf-dank__prijszin { margin: 0; padding: calc(16 * var(--u)) calc(26 * var(--u)); font-size: calc(16.5 * var(--u)); line-height: 1.45; font-weight: 600; color: var(--ink-2); }
+
+.bf.bf-dankpagina .bf-dank__brug { margin-top: calc(36 * var(--u)); }
+/* plaatsbezoek: geen brugkop (geen AB-bron), de zin sluit dan dichter aan bij de lede */
+.bf.bf-dankpagina .bf-dank__brug--los { margin-top: calc(22 * var(--u)); }
+.bf.bf-dankpagina .bf-dank__brug h2 { margin: 0 0 calc(10 * var(--u)); font-size: calc(26 * var(--u)); line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; color: var(--merk); }
+.bf.bf-dankpagina .bf-dank__brug p { margin: 0; max-width: calc(600 * var(--u)); font-size: calc(17 * var(--u)); line-height: 1.6; color: rgba(255, 255, 255, .92); }
+/* geen weeswoord op de laatste regel (keuring 13 okt: "plaatse.", "opmeten." en "richtprijs." alleen op hun regel, 5 keer;
+   bij het hermeten ook "plaatse" in stap 1 op 1265 en "bevindingen" in stap 2 op 360) */
+.bf.bf-dankpagina .bf-dank__lede, .bf.bf-dankpagina .bf-dank__prijszin, .bf.bf-dankpagina .bf-dank__brug p, .bf.bf-dankpagina .bf-dank__later p { text-wrap: pretty; }
+/* stappen: korte labels van twee regels, gelijk verdeeld (pretty laat "bevindingen" op 360 alleen staan) */
+.bf.bf-dankpagina .bf-dank__stappen li { text-wrap: balance; }
+.bf.bf-dankpagina .bf-dank__stappen { list-style: none; margin: calc(24 * var(--u)) 0 0; padding: 0; max-width: calc(640 * var(--u)); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(10 * var(--u)); }
+.bf.bf-dankpagina .bf-dank__stappen li { display: flex; flex-direction: column; align-items: flex-start; gap: calc(10 * var(--u)); padding: calc(14 * var(--u)) calc(16 * var(--u)); border-radius: calc(14 * var(--u)); background: rgba(255, 255, 255, .08); box-shadow: inset 0 0 0 calc(1 * var(--u)) rgba(255, 255, 255, .18); font-size: calc(15.5 * var(--u)); line-height: 1.35; font-weight: 600; color: #fff; }
+.bf.bf-dankpagina .bf-dank__stappen span { width: calc(28 * var(--u)); height: calc(28 * var(--u)); flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--merk); color: var(--op-merk); font-size: calc(14 * var(--u)); font-weight: 700; }
+
+/* rechts: witte kaart met de drie keuzes (BF .dank__kaart, .dank__momenten) */
+.bf.bf-dankpagina .bf-dank__kaart { position: relative; padding: calc(32 * var(--u)) calc(30 * var(--u)) calc(24 * var(--u)); border-radius: calc(22 * var(--u)); background: #fff; color: var(--ink); box-shadow: 0 calc(40 * var(--u)) calc(80 * var(--u)) calc(-30 * var(--u)) rgba(0, 0, 0, .65); }
+.bf.bf-dankpagina .bf-dank__gratis { position: absolute; top: calc(-14 * var(--u)); right: calc(24 * var(--u)); padding: calc(6 * var(--u)) calc(14 * var(--u)); border-radius: calc(999 * var(--u)); background: var(--merk); color: var(--op-merk); font-size: calc(14 * var(--u)); font-weight: 800; letter-spacing: .02em; box-shadow: 0 calc(8 * var(--u)) calc(18 * var(--u)) calc(-8 * var(--u)) rgba(217, 140, 3, .8); }
+.bf.bf-dankpagina .bf-dank__kaartkop { margin: 0; font-size: calc(28 * var(--u)); line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+/* teller vrije momenten (Bedankt.tsx .rp-bed__slots): groene stip + vet */
+.bf.bf-dankpagina .bf-dank__slots { display: flex; align-items: center; gap: calc(8 * var(--u)); margin: calc(10 * var(--u)) 0 0; font-size: calc(15 * var(--u)); font-weight: 700; color: var(--ink); }
+.bf.bf-dankpagina .bf-dank__slots::before { content: ""; flex: none; width: calc(9 * var(--u)); height: calc(9 * var(--u)); border-radius: 50%; background: #1f9d55; box-shadow: 0 0 0 calc(4 * var(--u)) rgba(31, 157, 85, .18); }
+
+/* de drie keuzes: grote tegels naast elkaar; één tik = meteen door */
+.bf.bf-dankpagina .bf-dank__keuzes { margin-top: calc(20 * var(--u)); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(10 * var(--u)); }
+.bf.bf-dankpagina .bf-dank__keuze { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: calc(6 * var(--u)); min-height: calc(84 * var(--u)); padding: calc(10 * var(--u)) calc(6 * var(--u)); white-space: nowrap; border-radius: calc(14 * var(--u)); background: #fff; box-shadow: inset 0 0 0 calc(1.5 * var(--u)) #d9d9dc; font-size: calc(16 * var(--u)); line-height: 1.2; font-weight: 700; color: var(--ink); text-align: center; transition: box-shadow .18s ease, background-color .18s ease; -webkit-tap-highlight-color: transparent; }
+.bf.bf-dankpagina .bf-dank__keuze-pijl { display: grid; place-items: center; width: calc(26 * var(--u)); height: calc(26 * var(--u)); border-radius: 50%; background: var(--merk); color: var(--op-merk); }
+.bf.bf-dankpagina .bf-dank__keuze-pijl svg { width: calc(12 * var(--u)); height: calc(12 * var(--u)); }
+.bf.bf-dankpagina .bf-dank__keuze:hover { background: #fdf6e9; box-shadow: inset 0 0 0 calc(2 * var(--u)) var(--merk); }
+.bf.bf-dankpagina .bf-dank__keuze:active { background: #f8ecd4; }
+
+/* na "Later": de zin + de link naar de agenda zonder week */
+.bf.bf-dankpagina .bf-dank__later { margin-top: calc(20 * var(--u)); padding: calc(18 * var(--u)) calc(20 * var(--u)); border-radius: calc(14 * var(--u)); background: #fdf8ef; box-shadow: inset 0 0 0 calc(1 * var(--u)) #efd9ad; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: calc(14 * var(--u)); align-items: start; outline: none; }
+.bf.bf-dankpagina .bf-dank__later .bf-dank__vink { width: calc(32 * var(--u)); height: calc(32 * var(--u)); }
+.bf.bf-dankpagina .bf-dank__later .bf-dank__vink svg { width: calc(18 * var(--u)); height: calc(18 * var(--u)); }
+.bf.bf-dankpagina .bf-dank__later p { margin: calc(4 * var(--u)) 0 0; font-size: calc(16 * var(--u)); line-height: 1.5; font-weight: 600; color: var(--ink-2); }
+.bf.bf-dankpagina .bf-dank__toch { grid-column: 2; justify-self: start; margin-top: calc(8 * var(--u)); font-size: calc(15 * var(--u)); font-weight: 600; color: var(--merk-tekst); text-decoration: underline; text-underline-offset: calc(3 * var(--u)); }
+.bf.bf-dankpagina .bf-dank__toch:hover { color: var(--ink); }
+/* gewone aanvraag: alleen vink + link (de zin staat al als lede onder de h1), op één lijn */
+.bf.bf-dankpagina .bf-dank__later--kort { align-items: center; }
+.bf.bf-dankpagina .bf-dank__later--kort .bf-dank__toch { margin-top: 0; }
+
+.bf.bf-dankpagina .bf-dank__google { display: flex; align-items: center; justify-content: center; gap: calc(8 * var(--u)); margin: calc(20 * var(--u)) 0 0; font-size: calc(14.5 * var(--u)); color: var(--ink-2); }
+.bf.bf-dankpagina .bf-dank__sterren { display: inline-flex; gap: calc(2 * var(--u)); color: var(--merk); }
+.bf.bf-dankpagina .bf-dank__sterren svg { width: calc(15 * var(--u)); height: calc(15 * var(--u)); }
+/* één regel tekst met het icoon ervoor; op gsm breekt het nummer als geheel naar de tweede regel, het icoon blijft bij de tekst */
+.bf.bf-dankpagina .bf-dank__belknop { display: block; margin-top: calc(10 * var(--u)); padding: calc(10 * var(--u)) 0; font-size: calc(15 * var(--u)); line-height: 1.5; font-weight: 600; color: var(--ink-2); text-align: center; }
+.bf.bf-dankpagina .bf-dank__belic { display: inline-block; vertical-align: calc(-3 * var(--u)); margin-right: calc(8 * var(--u)); color: var(--merk-tekst); }
+.bf.bf-dankpagina .bf-dank__belic svg { width: calc(18 * var(--u)); height: calc(18 * var(--u)); }
+.bf.bf-dankpagina .bf-dank__belknop b { white-space: nowrap; }
+.bf.bf-dankpagina .bf-dank__belknop:hover { text-decoration: underline; text-underline-offset: calc(4 * var(--u)); }
+
+/* ---------- voet van één regel (BF .lpvoet) ---------- */
+.bf.bf-dankpagina .bf-dankvoet { background: var(--sectie); }
+.bf.bf-dankpagina .bf-dankvoet__in { width: calc(1200 * var(--u)); margin: 0 auto; padding: calc(28 * var(--u)) 0; display: flex; justify-content: space-between; gap: calc(20 * var(--u)); font-size: calc(14.5 * var(--u)); color: var(--tekst-2); }
+.bf.bf-dankpagina .bf-dankvoet__in p { margin: 0; }
+.bf.bf-dankpagina .bf-dankvoet__plaats { white-space: nowrap; }
+.bf.bf-dankpagina .bf-dankvoet nav { display: flex; gap: calc(22 * var(--u)); }
+.bf.bf-dankpagina .bf-dankvoet a { color: var(--tekst-2); }
+.bf.bf-dankpagina .bf-dankvoet a:hover { color: var(--ink); text-decoration: underline; }
+
+/* ---------- gsm en tablet (BF @media (max-width: 1000px)) ---------- */
+@media (max-width: 1000px) {
+  .bf.bf-dankpagina .bf-dankkop .bf-nav { box-shadow: none; }
+  .bf.bf-dankpagina .bf-dankbel { height: 44px; padding: 0 16px; font-size: 14.5px; gap: 8px; }
+  .bf.bf-dankpagina .bf-dankbel svg { width: 17px; height: 17px; }
+  .bf.bf-dankpagina .bf-dankbel__lang { display: none; }
+  .bf.bf-dankpagina .bf-dankbel__kort { display: inline; }
+
+  .bf.bf-dankpagina .bf-dank { min-height: 0; }
+  /* op gsm ligt de tekst over de hele breedte: de laag van boven naar onder, zonder de lichte rechterkant van desktop */
+  .bf.bf-dankpagina .bf-dank__laag { background: linear-gradient(180deg, rgba(8, 8, 8, .8) 0%, rgba(8, 8, 8, .72) 40%, rgba(8, 8, 8, .86) 100%); }
+  .bf.bf-dankpagina .bf-dank__in { width: auto; padding: 88px 16px 32px; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  /* volgorde zoals BF: tekst, dan de kaart, dan de stappen */
+  .bf.bf-dankpagina .bf-dank__tekst { display: contents; }
+  .bf.bf-dankpagina .bf-dank__status, .bf.bf-dankpagina .bf-dank__lede, .bf.bf-dankpagina .bf-dank__prijs, .bf.bf-dankpagina .bf-dank__brug { order: 1; }
+  .bf.bf-dankpagina .bf-dank__kaart { order: 2; padding: 24px 18px 14px; border-radius: 18px; }
+  .bf.bf-dankpagina .bf-dank__stappen { order: 3; }
+  .bf.bf-dankpagina .bf-dank__status { gap: 12px; }
+  .bf.bf-dankpagina .bf-dank__vink { width: 36px; height: 36px; }
+  .bf.bf-dankpagina .bf-dank__vink svg { width: 20px; height: 20px; }
+  .bf.bf-dankpagina .bf-dank__kop { font-size: 26px; }
+  .bf.bf-dankpagina .bf-dank__lede { margin-top: -8px; font-size: 16px; }
+
+  .bf.bf-dankpagina .bf-dank__prijs { margin-top: 0; max-width: none; border-radius: 16px; }
+  .bf.bf-dankpagina .bf-dank__richt { padding: 16px; gap: 12px; }
+  .bf.bf-dankpagina .bf-dank__richt-bedrag { font-size: 26px; gap: 8px; }
+  .bf.bf-dankpagina .bf-dank__richt-cijfers { filter: blur(6px); }
+  .bf.bf-dankpagina .bf-dank__slot { width: 40px; height: 40px; }
+  .bf.bf-dankpagina .bf-dank__slot svg { width: 18px; height: 18px; }
+  .bf.bf-dankpagina .bf-dank__prijszin { padding: 12px 16px; font-size: 15px; }
+
+  .bf.bf-dankpagina .bf-dank__brug { margin-top: 4px; }
+  .bf.bf-dankpagina .bf-dank__brug h2 { font-size: 22px; margin-bottom: 6px; }
+  .bf.bf-dankpagina .bf-dank__brug p { font-size: 15.5px; }
+  .bf.bf-dankpagina .bf-dank__stappen { margin-top: 0; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .bf.bf-dankpagina .bf-dank__stappen li { flex-direction: row; align-items: center; gap: 12px; padding: 12px 14px; font-size: 15px; }
+  .bf.bf-dankpagina .bf-dank__stappen span { width: 28px; height: 28px; font-size: 14px; }
+  .bf.bf-dankpagina .bf-dank__gratis { top: -12px; right: 16px; font-size: 13px; padding: 5px 12px; }
+  .bf.bf-dankpagina .bf-dank__kaartkop { font-size: 23px; }
+  .bf.bf-dankpagina .bf-dank__slots { font-size: 15px; gap: 8px; }
+  .bf.bf-dankpagina .bf-dank__slots::before { width: 9px; height: 9px; box-shadow: 0 0 0 4px rgba(31, 157, 85, .18); }
+
+  .bf.bf-dankpagina .bf-dank__keuzes { margin-top: 16px; gap: 10px; }
+  .bf.bf-dankpagina .bf-dank__keuze { min-height: 76px; gap: 6px; padding: 10px 6px; border-radius: 14px; font-size: 16px; box-shadow: inset 0 0 0 1.5px #d9d9dc; }
+  .bf.bf-dankpagina .bf-dank__keuze:hover { box-shadow: inset 0 0 0 2px var(--merk); }
+  .bf.bf-dankpagina .bf-dank__keuze-pijl { width: 26px; height: 26px; }
+  .bf.bf-dankpagina .bf-dank__keuze-pijl svg { width: 12px; height: 12px; }
+
+  .bf.bf-dankpagina .bf-dank__later { margin-top: 16px; padding: 16px; column-gap: 12px; border-radius: 14px; }
+  .bf.bf-dankpagina .bf-dank__later .bf-dank__vink { width: 30px; height: 30px; }
+  .bf.bf-dankpagina .bf-dank__later .bf-dank__vink svg { width: 17px; height: 17px; }
+  .bf.bf-dankpagina .bf-dank__later p { margin-top: 3px; font-size: 15.5px; }
+  .bf.bf-dankpagina .bf-dank__toch { margin-top: 2px; min-height: 44px; display: inline-flex; align-items: center; font-size: 15px; }
+
+  .bf.bf-dankpagina .bf-dank__google { font-size: 14px; gap: 8px; margin-top: 16px; }
+  .bf.bf-dankpagina .bf-dank__sterren svg { width: 15px; height: 15px; }
+  .bf.bf-dankpagina .bf-dank__belknop { font-size: 14.5px; margin-top: 4px; padding: 10px 0; min-height: 44px; }
+  .bf.bf-dankpagina .bf-dank__belic { vertical-align: -3px; margin-right: 8px; }
+  .bf.bf-dankpagina .bf-dank__belic svg { width: 17px; height: 17px; }
+
+  .bf.bf-dankpagina .bf-dankvoet__in { width: auto; padding: 22px 16px 28px; flex-direction: column; gap: 6px; font-size: 14px; }
+  .bf.bf-dankpagina .bf-dankvoet nav { flex-wrap: wrap; gap: 0 22px; }
+  .bf.bf-dankpagina .bf-dankvoet nav a { min-height: 44px; display: inline-flex; align-items: center; }
+}
+
+/* smalle gsm: de drie keuzes onder elkaar, elk een volle rij van 56 px met de pijl rechts (grote, duidelijke tikvlakken) */
+@media (max-width: 560px) {
+  .bf.bf-dankpagina .bf-dank__keuzes { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .bf.bf-dankpagina .bf-dank__keuze { flex-direction: row; justify-content: space-between; min-height: 56px; padding: 0 14px 0 18px; text-align: left; font-size: 17px; }
+}
+@media (max-width: 400px) {
+  .bf.bf-dankpagina .bf-dank__richt-bedrag { font-size: 22px; gap: 6px; }
+}

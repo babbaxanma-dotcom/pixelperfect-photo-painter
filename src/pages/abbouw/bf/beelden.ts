@@ -437,6 +437,82 @@ export const BEELDEN: Record<string, BfBeeld> = {
       }
     ]
   },
+  "stock-pannen-stapels": {
+    "bron": "dak-stock/stock-pannen-stapels.jpg",
+    "breedte": 1600,
+    "hoogte": 1067,
+    "varianten": [
+      {
+        "bestand": "stock-pannen-stapels-800.webp",
+        "breedte": 800
+      },
+      {
+        "bestand": "stock-pannen-stapels-1440.webp",
+        "breedte": 1440
+      },
+      {
+        "bestand": "stock-pannen-stapels-1600.webp",
+        "breedte": 1600
+      }
+    ]
+  },
+  "stock-panlatten": {
+    "bron": "dak-stock/stock-panlatten.jpg",
+    "breedte": 1600,
+    "hoogte": 1000,
+    "varianten": [
+      {
+        "bestand": "stock-panlatten-800.webp",
+        "breedte": 800
+      },
+      {
+        "bestand": "stock-panlatten-1440.webp",
+        "breedte": 1440
+      },
+      {
+        "bestand": "stock-panlatten-1600.webp",
+        "breedte": 1600
+      }
+    ]
+  },
+  "stock-zinkwerk": {
+    "bron": "dak-stock/stock-zinkwerk.jpg",
+    "breedte": 1600,
+    "hoogte": 1000,
+    "varianten": [
+      {
+        "bestand": "stock-zinkwerk-800.webp",
+        "breedte": 800
+      },
+      {
+        "bestand": "stock-zinkwerk-1440.webp",
+        "breedte": 1440
+      },
+      {
+        "bestand": "stock-zinkwerk-1600.webp",
+        "breedte": 1600
+      }
+    ]
+  },
+  "stock-daklijn": {
+    "bron": "dak-stock/stock-daklijn.jpg",
+    "breedte": 1600,
+    "hoogte": 1067,
+    "varianten": [
+      {
+        "bestand": "stock-daklijn-800.webp",
+        "breedte": 800
+      },
+      {
+        "bestand": "stock-daklijn-1440.webp",
+        "breedte": 1440
+      },
+      {
+        "bestand": "stock-daklijn-1600.webp",
+        "breedte": 1600
+      }
+    ]
+  },
   "logo-ink": {
     "bron": "home/logo-trim.png",
     "breedte": 440,

@@ -74,6 +74,20 @@ const LOGOS = [
   { bron: 'home/logo-wit-goud.png', naam: 'logo-wit' },
 ];
 const STAPPEN = [800, 1440, 2048];
+/* Stockfoto's als SFEERBEELD op /dakwerken. DICTAAT MOHAMMED 12 okt 2026: "zoek meer mooie dak stock photos ook,
+   zonder dat het stock photo lijkt, echt perfecte voor belgische daken achtig" en "en we gaan die bij dakwerken pagina
+   van abgroep toevoegen". Uitzondering op "alleen echte AB-foto's" (spec/bf-stijl.md §9), alleen op /dakwerken.
+   Bron, fotograaf en licentie per foto: bovenaan src/pages/abbouw/bf/fotoplan.ts. Regels: NOOIT in een blok dat eigen
+   werk toont of suggereert (realisaties, voor/na, rail), nooit een alt of bijschrift die zegt dat AB dit dak maakte.
+   De bron in src/assets/dak-stock/ is de uitsnede uit de download (max 2400 px breed, zonder metadata, zonder personen
+   en zonder merkopdruk). Varianten 800/1440/1600, nooit opgeschaald. Guard: scripts/check-stock.cjs. */
+const STOCK = [
+  'dak-stock/stock-pannen-stapels.jpg',
+  'dak-stock/stock-panlatten.jpg',
+  'dak-stock/stock-zinkwerk.jpg',
+  'dak-stock/stock-daklijn.jpg',
+];
+const STOCK_STAPPEN = [800, 1440, 1600];
 
 async function main() {
   fs.mkdirSync(DOEL, { recursive: true });
@@ -85,7 +99,8 @@ async function main() {
   }
 
   const manifest = {};
-  for (const rel of FOTOS) {
+  const lijst = [...FOTOS.map((rel) => ({ rel, stappen: STAPPEN })), ...STOCK.map((rel) => ({ rel, stappen: STOCK_STAPPEN }))];
+  for (const { rel, stappen } of lijst) {
     const bron = A(rel);
     if (!fs.existsSync(bron)) throw new Error('bron ontbreekt: ' + rel);
     const naam = path.basename(rel).replace(/\.[^.]+$/, '');
@@ -94,8 +109,9 @@ async function main() {
     const gedraaid = (meta.orientation || 1) >= 5;
     const bw = gedraaid ? meta.height : meta.width;
     const bh = gedraaid ? meta.width : meta.height;
-    const breedtes = STAPPEN.filter((w) => w < bw);
-    if (!breedtes.includes(Math.min(bw, 2048))) breedtes.push(Math.min(bw, 2048));
+    const max = stappen[stappen.length - 1];
+    const breedtes = stappen.filter((w) => w < bw);
+    if (!breedtes.includes(Math.min(bw, max))) breedtes.push(Math.min(bw, max));
     const varianten = [];
     for (const w of breedtes) {
       const bestand = `${naam}-${w}.webp`;
@@ -119,7 +135,13 @@ async function main() {
     if (!b.varianten.length) { console.error('geen variant:', naam); fout++; }
     for (const v of b.varianten) if (!fs.existsSync(path.join(DOEL, v.bestand))) { console.error('ontbreekt:', v.bestand); fout++; }
   }
-  if (Object.keys(manifest).length !== FOTOS.length + LOGOS.length) { console.error('aantal klopt niet'); fout++; }
+  if (Object.keys(manifest).length !== FOTOS.length + STOCK.length + LOGOS.length) { console.error('aantal klopt niet'); fout++; }
+  // stock: nooit breder dan 1600 en nooit opgeschaald boven de bron
+  for (const rel of STOCK) {
+    const b = manifest[path.basename(rel).replace(/\.[^.]+$/, '')];
+    const bronBreedte = (await sharp(A(rel)).metadata()).width;
+    if (!b || b.breedte > 1600 || b.breedte > bronBreedte) { console.error('stockvariant te breed of opgeschaald:', rel); fout++; }
+  }
   if (fout) process.exit(1);
 
   const kop = '/* GEGENEREERD door scripts/bf-beelden.cjs. Niet met de hand wijzigen: draai het script opnieuw. */\n';

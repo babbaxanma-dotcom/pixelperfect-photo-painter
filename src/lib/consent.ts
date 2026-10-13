@@ -143,6 +143,49 @@ const BANNER_CSS = `
 
 let installed = false;
 let removeBanner: (() => void) | null = null;
+let bannerEl: HTMLDivElement | null = null;
+let wachtOpScroll: (() => void) | null = null;
+
+/* Pagina's waar de banner pas verschijnt zodra de bezoeker voorbij 90 % van het eerste scherm scrolt.
+   - /lp/: op de telefoon lag de banner bij het openen over de antwoorden van de eerste rekenaarvraag (gemeten 1 okt 2026).
+   - /bedankt, /afspraak, /dakinspectie (de funnel na een aanvraag): op 390 lag hij over de keuzes "Volgende week" en
+     "Later" en over het datumraster van de kalender (gemeten 12 okt 2026). /afspraak en /dakinspectie worden ook vanuit
+     de klant-sms'en geopend, dus vers geladen.
+   Tot de bezoeker kiest staat alles op "geweigerd" (Consent Mode-standaard in index.html). */
+function bannerNaScroll(pad: string): boolean {
+  if (pad.startsWith('/lp/')) return true;
+  const p = pad.replace(/\/+$/, '');
+  return p === '/bedankt' || p === '/afspraak' || p === '/dakinspectie';
+}
+
+function stopWachten() {
+  if (wachtOpScroll) window.removeEventListener('scroll', wachtOpScroll);
+  wachtOpScroll = null;
+}
+
+function wachtTotScroll() {
+  if (wachtOpScroll || !bannerEl) return;
+  wachtOpScroll = () => {
+    if (window.scrollY < window.innerHeight * 0.9) return;
+    stopWachten();
+    if (bannerEl && !hasDecided() && !bannerEl.isConnected) document.body.appendChild(bannerEl);
+  };
+  window.addEventListener('scroll', wachtOpScroll, { passive: true });
+}
+
+/* Voor de funnelpagina's (BedanktBf, AfspraakBf), bij het openen: komt de bezoeker via de SPA binnen terwijl de banner
+   al openstaat (bv. na scrollen op de LP of een siteformulier), dan gaat hij weg tot dezelfde scrollgrens.
+   Geeft de opruimfunctie terug: gaat de bezoeker naar een pagina zonder die regel, dan staat de banner er meteen weer. */
+export function bannerWachtOpScroll(): () => void {
+  if (typeof window === 'undefined' || !bannerEl || hasDecided()) return () => {};
+  if (bannerEl.isConnected) bannerEl.remove();
+  wachtTotScroll();
+  return () => {
+    if (!bannerEl || hasDecided() || bannerNaScroll(window.location.pathname)) return;
+    stopWachten();
+    if (!bannerEl.isConnected) document.body.appendChild(bannerEl);
+  };
+}
 
 export function installConsentBanner() {
   if (typeof document === 'undefined' || installed) return;
@@ -158,22 +201,9 @@ export function installConsentBanner() {
   const wrap = document.createElement('div');
   wrap.id = BANNER_ID;
   wrap.innerHTML = BANNER_HTML;
-  /* Advertentiepagina's (/lp/): op de telefoon lag de banner bij het openen over de
-     antwoorden van de eerste rekenaarvraag (gemeten 1 okt 2026). Daar verschijnt hij pas
-     zodra de bezoeker voorbij het eerste scherm scrolt. Tot dan staat alles op "geweigerd"
-     (Consent Mode-standaard in index.html), dus er wordt niets gemeten zonder toestemming. */
-  let wachtOpScroll: (() => void) | null = null;
-  if (window.location.pathname.startsWith('/lp/')) {
-    wachtOpScroll = () => {
-      if (window.scrollY < window.innerHeight * 0.9) return;
-      window.removeEventListener('scroll', wachtOpScroll!);
-      wachtOpScroll = null;
-      if (!hasDecided()) document.body.appendChild(wrap);
-    };
-    window.addEventListener('scroll', wachtOpScroll, { passive: true });
-  } else {
-    document.body.appendChild(wrap);
-  }
+  bannerEl = wrap;
+  if (bannerNaScroll(window.location.pathname)) wachtTotScroll();
+  else document.body.appendChild(wrap);
 
   const onClick = (e: Event) => {
     const t = e.target;
@@ -195,6 +225,7 @@ export function installConsentBanner() {
     wrap.removeEventListener('click', onClick);
     wrap.remove();
     styleEl.remove();
+    bannerEl = null;
     removeBanner = null;
   };
 }

@@ -1,0 +1,76 @@
+/* /afspraak en /dakinspectie in de BF-stijl (AfspraakBf.tsx): compacte formpagina, logo, kop, één zin, kalender,
+   belregel. Alles onder .bf.bf-afspraakpagina: na een SPA-navigatie raakt dit bestand geen enkele andere pagina.
+   Desktop in calc(N * var(--u)) zoals BF (bf.css: --u = 1440 px-raster vanaf 1001 px), gsm in px onder 1001 px. */
+
+div.bf.bf-afspraakpagina { min-height: 100vh; background: var(--sectie); }
+
+/* kop: alleen het logo, gecentreerd (zoals Afspraak.tsx .rp-afs__kop) */
+.bf.bf-afspraakpagina .bf-afs__kop { display: flex; justify-content: center; padding: calc(28 * var(--u)) 16px calc(6 * var(--u)); }
+.bf.bf-afspraakpagina .bf-afs__logo { display: inline-flex; align-items: center; min-height: 44px; }
+.bf.bf-afspraakpagina .bf-afs__logo img { width: calc(161 * var(--u)); height: calc(46 * var(--u)); }
+
+.bf.bf-afspraakpagina .bf-afs { width: calc(880 * var(--u)); margin: 0 auto; padding: calc(22 * var(--u)) 0 calc(64 * var(--u)); text-align: center; }
+.bf.bf-afspraakpagina .bf-afs__titel { margin: 0; font-size: calc(44 * var(--u)); line-height: 1.12; font-weight: 700; letter-spacing: -0.03em; color: var(--ink); text-wrap: balance; }
+.bf.bf-afspraakpagina .bf-afs__lede { margin: calc(12 * var(--u)) auto 0; max-width: calc(600 * var(--u)); font-size: calc(18 * var(--u)); line-height: 1.55; color: var(--tekst-2); text-wrap: balance; }
+
+/* de keuze van de bedankpagina: één regel in een goudkleurige pil */
+.bf.bf-afspraakpagina .bf-afs__week { display: inline-flex; align-items: center; gap: calc(8 * var(--u)); margin: calc(16 * var(--u)) 0 0; padding: calc(8 * var(--u)) calc(16 * var(--u)); border-radius: calc(999 * var(--u)); background: #fdf6e9; box-shadow: inset 0 0 0 calc(1 * var(--u)) #efd9ad; font-size: calc(15.5 * var(--u)); font-weight: 700; color: var(--ink); }
+.bf.bf-afspraakpagina .bf-afs__week-ic { display: grid; place-items: center; color: var(--merk-tekst); }
+.bf.bf-afspraakpagina .bf-afs__week-ic svg { width: calc(18 * var(--u)); height: calc(18 * var(--u)); }
+
+/* de GHL-kalender in een witte kaart (Afspraak.tsx .rp-afspraak: min-hoogte 560 px) */
+.bf.bf-afspraakpagina .bf-afs__kalender { margin-top: calc(24 * var(--u)); border-radius: calc(22 * var(--u)); overflow: hidden; background: #fff; text-align: left; box-shadow: 0 calc(1 * var(--u)) 0 rgba(17, 17, 17, .04), 0 calc(24 * var(--u)) calc(48 * var(--u)) calc(-28 * var(--u)) rgba(10, 22, 40, .35); }
+.bf.bf-afspraakpagina .bf-afs__kalender iframe { display: block; width: 100%; min-height: 560px; border: 0; }
+/* Desktop: de widget tekent zelf een kaart met een dunne rand, 16 px onder en boven de rand van de iframe en 1 px van
+   de zijkanten (gemeten 12 okt op 1265: lijnen op y+16, y+766 en x+1, x+772). Binnen onze kaart gaf dat een dubbele
+   rand; de iframe schuift 17 px boven, 18 px onder en 2 px opzij weg onder overflow:hidden. Op gsm tekent de widget
+   die rand niet (gemeten op 390). */
+@media (min-width: 1001px) {
+  .bf.bf-afspraakpagina .bf-afs__kalender iframe { width: calc(100% + 4px); margin: -17px -2px -18px; }
+}
+
+/* Desktop compacter (keuring 12 okt: op 1265 x 625 stond geen kiesbare datum in het eerste scherm; logo, titel, lede en
+   weekregel namen 262 px): kleiner logo zonder 44 px-tikvlak (muis), titel 34u, lede en weekregel op één regel (valt
+   terug op twee regels als ze niet naast elkaar passen), minder ruimte boven de kalender. */
+@media (min-width: 1001px) {
+  .bf.bf-afspraakpagina .bf-afs__kop { padding: calc(16 * var(--u)) 16px 0; }
+  .bf.bf-afspraakpagina .bf-afs__logo { min-height: 0; }
+  .bf.bf-afspraakpagina .bf-afs__logo img { width: calc(141 * var(--u)); height: calc(40 * var(--u)); }
+  .bf.bf-afspraakpagina .bf-afs { padding-top: calc(10 * var(--u)); }
+  .bf.bf-afspraakpagina .bf-afs__titel { font-size: calc(34 * var(--u)); }
+  .bf.bf-afspraakpagina .bf-afs__intro { width: calc(1100 * var(--u)); margin: calc(8 * var(--u)) calc(-110 * var(--u)) 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: calc(8 * var(--u)) calc(14 * var(--u)); }
+  .bf.bf-afspraakpagina .bf-afs__lede { margin: 0; max-width: none; font-size: calc(17 * var(--u)); text-wrap: wrap; }
+  .bf.bf-afspraakpagina .bf-afs__week { margin: 0; padding: calc(5 * var(--u)) calc(14 * var(--u)); font-size: calc(15 * var(--u)); }
+  .bf.bf-afspraakpagina .bf-afs__kalender { margin-top: calc(12 * var(--u)); }
+}
+/* Brede widget-indeling (iframe >= 777 px, vanaf 1265 gemeten): de widget tekent zijn kaart met de rand op y+16 en het
+   detailvak op y+70; daartussen is het leeg. Hier gaan 47 px weg, zodat er boven het detailvak evenveel wit staat als
+   ernaast (23 px). Smaller (iframe <= 725 px, tot 1180 gemeten) staat de inhoud hoger: daar blijft de knip 17 px. */
+@media (min-width: 1260px) {
+  .bf.bf-afspraakpagina .bf-afs__kalender iframe { margin-top: -47px; }
+}
+
+.bf.bf-afspraakpagina .bf-afs__onder { margin: calc(22 * var(--u)) 0 0; font-size: calc(16 * var(--u)); color: var(--tekst-2); }
+.bf.bf-afspraakpagina .bf-afs__onder a { display: inline-flex; align-items: center; gap: calc(6 * var(--u)); min-height: 44px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+.bf.bf-afspraakpagina .bf-afs__onder a:hover { text-decoration: underline; text-underline-offset: calc(4 * var(--u)); }
+.bf.bf-afspraakpagina .bf-afs__tel-ic { display: grid; place-items: center; color: var(--merk-tekst); }
+.bf.bf-afspraakpagina .bf-afs__tel-ic svg { width: calc(17 * var(--u)); height: calc(17 * var(--u)); }
+
+/* Staat de cookiebanner er (pas na een scroll voorbij 90 % van het scherm, consent.ts), dan krijgt de pagina onderaan
+   ruimte, zodat de onderkant van de kalender (bv. de bevestigknop na een tijdkeuze) boven de banner kan schuiven.
+   Banner op 390: 215 px hoog, 12 px van de onderrand. */
+body:has(#ab-bouw-cookie-banner .abc-banner) div.bf.bf-afspraakpagina { padding-bottom: 240px; }
+
+@media (max-width: 1000px) {
+  .bf.bf-afspraakpagina .bf-afs__kop { padding: 18px 16px 0; }
+  .bf.bf-afspraakpagina .bf-afs__logo img { width: 126px; height: 36px; }
+  .bf.bf-afspraakpagina .bf-afs { width: auto; max-width: 720px; padding: 14px 16px 40px; }
+  .bf.bf-afspraakpagina .bf-afs__titel { font-size: 28px; }
+  .bf.bf-afspraakpagina .bf-afs__lede { margin-top: 8px; font-size: 16px; }
+  .bf.bf-afspraakpagina .bf-afs__week { margin-top: 12px; gap: 8px; padding: 7px 14px; font-size: 15px; }
+  .bf.bf-afspraakpagina .bf-afs__week-ic svg { width: 17px; height: 17px; }
+  .bf.bf-afspraakpagina .bf-afs__kalender { margin: 18px -6px 0; border-radius: 16px; box-shadow: 0 1px 0 rgba(17, 17, 17, .04), 0 18px 36px -24px rgba(10, 22, 40, .35); }
+  .bf.bf-afspraakpagina .bf-afs__onder { margin-top: 16px; font-size: 15.5px; }
+  .bf.bf-afspraakpagina .bf-afs__onder a { gap: 6px; }
+  .bf.bf-afspraakpagina .bf-afs__tel-ic svg { width: 16px; height: 16px; }
+}

@@ -234,10 +234,19 @@ ${d.foto ? `<div class="bf-dienstrij__beeld">${beeld(d.foto.naam, { alt: d.foto.
 
 /* ---------- waarden-raster (BF bouw/paginas.cjs r.142) ----------
    id: de sectie krijgt id en aria-labelledby (kop = id-kop), zoals de andere blokken. Tegels zonder icoon:
-   bf-ab.css houdt de kop vrij van het grote nummer. */
-export function waardenRaster(o: { id?: string; kop: string; lede?: string; items: { titel: string; tekst: string; icoon?: IcoonNaam }[]; grijs?: boolean }) {
+   bf-ab.css houdt de kop vrij van het grote nummer.
+   foto (optioneel, per tegel): foto bovenaan de tegel, nummer, kop en tekst eronder in .bf-waarde__lijf (bf-ab.css,
+   "waarde-tegel met foto"). Zonder foto is de uitvoer ongewijzigd. Eerste gebruik: /dakwerken "Wat wij doen" met
+   stockfoto's als sfeerbeeld (fotoplan.ts); de alt beschrijft alleen wat te zien is. */
+export type Waarde = { titel: string; tekst: string; icoon?: IcoonNaam; foto?: Foto };
+export function waardenRaster(o: { id?: string; kop: string; lede?: string; items: Waarde[]; grijs?: boolean }) {
+  const tegel = (w: Waarde, i: number) => {
+    const kern = `<span class="bf-waarde__nr" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>${w.icoon ? `<span class="bf-waarde__icoon">${ICOON[w.icoon]}</span>` : ''}<h3>${esc(w.titel)}</h3><p>${esc(w.tekst)}</p>`;
+    if (!w.foto) return `<article class="bf-waarde">${kern}</article>`;
+    return `<article class="bf-waarde bf-waarde--foto"><figure class="bf-waarde__foto">${beeld(w.foto.naam, { alt: w.foto.alt, sizes: '(max-width: 1000px) 100vw, 400px', pos: w.foto.pos })}</figure><div class="bf-waarde__lijf">${kern}</div></article>`;
+  };
   return `<section class="bf-sblok${o.grijs === false ? '' : ' bf-sblok--grijs'}"${o.id ? ` id="${o.id}" aria-labelledby="${o.id}-kop"` : ''}><div class="bf-sraam"><h2 class="bf-h2 bf-h2--midden"${o.id ? ` id="${o.id}-kop"` : ''}>${esc(o.kop)}</h2>${o.lede ? `<p class="bf-sraam__lede">${esc(o.lede)}</p>` : ''}
-<div class="bf-waarden bf-waarden--${o.items.length}">${o.items.map((w, i) => `<article class="bf-waarde"><span class="bf-waarde__nr" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>${w.icoon ? `<span class="bf-waarde__icoon">${ICOON[w.icoon]}</span>` : ''}<h3>${esc(w.titel)}</h3><p>${esc(w.tekst)}</p></article>`).join('')}</div></div></section>`;
+<div class="bf-waarden bf-waarden--${o.items.length}">${o.items.map(tegel).join('')}</div></div></section>`;
 }
 
 /* ---------- duo (BF bouw/paginas.cjs r.138-142, "Waar wij voor staan"): tekst + foto, optioneel de Google-badge ----------
