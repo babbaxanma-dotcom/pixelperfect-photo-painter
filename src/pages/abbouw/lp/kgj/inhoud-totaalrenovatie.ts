@@ -118,8 +118,9 @@ export const TOTAALRENOVATIE: KgjInhoud = {
        woning.", dan Mohammed: "eruit in de subheadline bij totaalrenovatie". Leeg = geen regel. */
     /* 6 okt, Mohammed: "teveel tekst in hero, haal alle subtekst weg, hou enkel headline en puntjes". */
     onder: '',
-    /* 4 okt, plan desktop-hero (Mohammed): drie USP's, het deel voor de dubbelepunt in het vet. 5 okt: zijn nieuwe teksten. */
-    bewijs: ['100% Budgetgarantie: De prijs op uw offerte is de eindprijs. Geen onaangename verrassingen achteraf.', 'Eén vast aanspreekpunt: U hoeft zelf geen aannemers op elkaar af te stemmen. Wij sturen de hele werf aan.', 'Volledige premiebegeleiding: Wij regelen uw EPC-attest en begeleiden de aanvraag van uw Mijn VerbouwPremie.'],
+    /* 4 okt, plan desktop-hero (Mohammed): drie USP's, het deel voor de dubbelepunt in het vet. 5 okt: zijn nieuwe teksten.
+       13 okt, Mohammed: de uitlegzinnen "eruit", "dat enkel de puntjes blijven". */
+    bewijs: ['100% Budgetgarantie', 'Eén vast aanspreekpunt', 'Volledige premiebegeleiding'],
     /* 5 okt: een grote knop naar het formulier in plaats van de rekenaar; die staat in het vangnet. */
     /* 13 okt, Mohammed: "de cta moet duidelijk zijn, denk na wat moet een cta bevatten: waarom nu doen, wat krijg je".
        Knop = wat u krijgt (gratis plaatsbezoek, u kiest zelf het moment in de agenda na de aanvraag). Regel eronder =
