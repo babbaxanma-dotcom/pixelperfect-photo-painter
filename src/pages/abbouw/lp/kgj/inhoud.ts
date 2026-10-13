@@ -93,6 +93,10 @@ export type KgjInhoud = {
       waarom nu doen, wat krijg je"): compactere kop, grotere knop met pijl, de regel onder de knop als vinkjes
       (delen gescheiden door " · ") en het eerstvolgende vrije plaatsbezoek live uit de agenda. */
   strak?: boolean;
+  /** Het aanvraagformulier (Inspectie, zelfde als onderaan) in de hero in plaats van de knop: op de computer rechts
+      naast de kop, op de telefoon direct onder de puntjes (13 okt, Mohammed: "is het niet slimmer om een form toe te
+      voegen above the fold?"). */
+  heroFormulier?: boolean;
   /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart. */
   rekenaar: { titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string; troeven?: string[];
     /** Trust signals onderaan de kaart, met vinkje; vervangen de regel `zeker` (dakwerken, 4 okt). */

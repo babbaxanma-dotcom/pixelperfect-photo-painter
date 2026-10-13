@@ -676,3 +676,21 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
 @media (min-width: 1001px) {
   .bf.bf-lp--strak .bf-lphero--knop .bf-lphero__in { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* ---------- formulier in de hero (heroFormulier, totaalrenovatie, 13 okt 2026) ----------
+   Mohammed: "is het niet slimmer om een form toe te voegen above the fold?". Zelfde formulier als onderaan (Inspectie),
+   met een kop in de kaart: wat u krijgt (de knoptekst) en het eerstvolgende vrije plaatsbezoek. Op de computer de velden
+   in twee kolommen, zodat titel, velden en verzendknop in zijn venster (1280x609) passen. */
+.bf.bf-lp .bf-lphero__form .kgj-reken__boven { margin-bottom: calc(4 * var(--u)); }
+.bf.bf-lp .bf-lphero__formtitel { margin: 0; font-size: calc(26 * var(--u)); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: var(--ink); }
+.bf.bf-lp .bf-lphero__form .bf-lphero__vrij { margin-top: calc(8 * var(--u)); color: var(--tekst-2); }
+.bf.bf-lp .bf-lphero__form .bf-lphero__vrij b { color: var(--ink); }
+@media (min-width: 1001px) {
+  .bf.bf-lp .bf-lphero--form .bf-lphero__in { grid-template-columns: minmax(0, 1fr) calc(560 * var(--u)); gap: calc(56 * var(--u)); }
+  .bf.bf-lp .bf-lphero__form .kgj-reken--inspectie { padding: calc(28 * var(--u)) calc(30 * var(--u)) calc(24 * var(--u)); }
+  .bf.bf-lp .bf-lphero__form .kgj-reken__form { display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(14 * var(--u)); align-items: end; }
+  .bf.bf-lp .bf-lphero__form .kgj-reken__form > :is(.kgj-reken__boven, .kgj-reken__vraag, .kgj-reken__rij, .kgj-reken__knop, .kgj-reken__fout, .kgj-reken__gerustlijst, .kgj-reken__gerust, .kgj-reken__alt, .kgj-reken__privacy) { grid-column: 1 / -1; }
+  .bf.bf-lp .bf-lphero__form .kgj-reken__form input:not([type="hidden"]), .bf.bf-lp .bf-lphero__form .kgj-reken__form select { height: calc(48 * var(--u)); }
+  .bf.bf-lp .bf-lphero__form .kgj-reken__form label { margin-top: calc(10 * var(--u)); }
+  .bf.bf-lp .bf-lphero__form .kgj-reken__knop { margin-top: calc(16 * var(--u)); }
+}

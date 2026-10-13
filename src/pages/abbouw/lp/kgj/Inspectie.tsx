@@ -33,7 +33,8 @@ const VERTROUWEN_ICOON: Record<'slot' | 'telefoon' | 'euro' | 'koffie', JSX.Elem
   koffie: <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 9.5h12.5v5.2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5Z" /><path d="M16.5 11h1.3a2.6 2.6 0 0 1 0 5.2h-1.6" /><path d="M8 3.5c-.6.8-.6 1.6 0 2.4M11.5 3.5c-.6.8-.6 1.6 0 2.4" /></svg>,
 };
 
-export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPrijs: () => void }) {
+/* boven: optionele kop van de kaart (formulier in de hero, 13 okt: titel + eerstvolgend vrij plaatsbezoek). */
+export default function Inspectie({ inhoud, opPrijs, boven }: { inhoud: KgjInhoud; opPrijs: () => void; boven?: React.ReactNode }) {
   const navigate = useNavigate();
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
@@ -95,6 +96,7 @@ export default function Inspectie({ inhoud, opPrijs }: { inhoud: KgjInhoud; opPr
   return (
     <div className={`kgj-reken kgj-reken--inspectie${t.extra?.length ? ' kgj-reken--extra' : ''}`}>
       <form className="kgj-reken__form" onSubmit={verstuur} onFocus={meldStart} noValidate>
+        {boven && <div className="kgj-reken__boven">{boven}</div>}
         {t.kop && <p className="kgj-reken__vraag">{t.kop}</p>}
         {pb ? (
           /* 5 okt (totaalrenovatie en renovatiewerken): Mohammeds velden in zijn volgorde en met

@@ -103,6 +103,9 @@ export const TOTAALRENOVATIE: KgjInhoud = {
   /* 13 okt, Mohammed: "die header bovenaan, die nummer lijn, moet weg, het is niet clean". De topbalk is weg; de kop
      toont nu, zoals op de renovatiewerken-pagina, de aanvraagknop en de belknop. */
   strak: true,
+  /* 13 okt avond, Mohammed: "is het niet slimmer om een form toe te voegen above the fold?" Ja: alle renovatie-
+     aanvragen kwamen tot nu via een pagina met een formulier/rekenaar in de hero; de knop-hero gaf er 0. */
+  heroFormulier: true,
 
   hero: {
     /* Mohammeds eigen kop, letterlijk (26 sep). 4 okt, plan desktop-hero: nieuwe kop. */
