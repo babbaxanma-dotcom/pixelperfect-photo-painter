@@ -38,6 +38,10 @@ const LpDienst = lazy(() => import("./pages/abbouw/lp/LpDienst"));
 const LpReplica = lazy(() => import("./pages/abbouw/lp/replica/LpReplica"));
 const LpBadkamer = lazy(() => import("./pages/abbouw/lp/replica/LpBadkamer"));
 const LpKgj = lazy(() => import("./pages/abbouw/lp/kgj/LpKgj"));
+// /lp/dakwerken in de stijl van bfbouw.be (spec/bf-stijl.md §17); terugval = LpKgj (één regel hieronder terugzetten)
+const LpBf = lazy(() => import("./pages/abbouw/lp/kgj/LpBf"));
+// /lp/totaalrenovatie, /lp/aannemer-renovatiewerken en /lp/richtprijs-berekenen: hun eigen bestand rendert LpBf met hun
+// inhoudsobject (12 okt 2026, spec §17); terugval = in dat bestand LpBf weer LpKgj maken (één regel per pagina)
 const LpTotaalrenovatie = lazy(() => import("./pages/abbouw/lp/kgj/LpTotaalrenovatie"));
 const LpRenovatiewerken = lazy(() => import("./pages/abbouw/lp/kgj/LpRenovatiewerken"));
 const LpRichtprijs = lazy(() => import("./pages/abbouw/lp/kgj/LpRichtprijs"));
@@ -116,7 +120,7 @@ const App = () => {
               onderwerp; NIET verwijderd, want er kan advertentieverkeer op staan en
               een betaalde klik op een 404 is weggegooid geld. Zijn de advertenties
               omgezet naar de nieuwe bestemming, dan kunnen deze regels weg. */}
-          <Route path="/lp/dakwerken" element={<LpKgj />} />
+          <Route path="/lp/dakwerken" element={<LpBf />} />
           <Route path="/lp/gevel" element={<Navigate to="/gevel" replace />} />
           <Route path="/lp/velux" element={<Navigate to="/dakwerken" replace />} />
           <Route path="/lp/gevelreiniging" element={<Navigate to="/gevel" replace />} />

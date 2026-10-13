@@ -111,8 +111,9 @@ Home:
 - Traject: `kaart-ruwbouw.jpg`.
 - Rail (8): `eigen/IMG_0106` · `eigen/IMG_9027` · `eigen/IMG_0114` · `eigen/IMG_9069` (75% center) · `eigen/IMG_0111` · `eigen/IMG_9014` · `eigen/IMG_0100` · `eigen/IMG_0110`.
 - Voor/na: `woonkeuken-voor.jpg` / `woonkeuken-na.jpg` (zoals op de LP, kgj/inhoud-totaalrenovatie.ts:306-307).
-VERBODEN overal: `realisaties/*-p1/p2/p3`, `lp-diensten/totaalrenovatie-hero.jpg`, `badkamer-nieuw.jpg`, `tegelwerken-hero.jpg`, `badkamer-hero.jpg`, `home/svc-*`, `kaart-technieken`, `kaart-vloeren`, `badkamer-werf`, `totaalrenovatie-what`, mappen `interieur/`, `bad/`, `construct/`, `eco/*`, `home/hero-steenstrips`, `dak/drone-antraciet`, elke AI- of stockfoto.
+VERBODEN overal: `realisaties/*-p1/p2/p3`, `lp-diensten/totaalrenovatie-hero.jpg`, `badkamer-nieuw.jpg`, `tegelwerken-hero.jpg`, `badkamer-hero.jpg`, `home/svc-*`, `kaart-technieken`, `kaart-vloeren`, `badkamer-werf`, `totaalrenovatie-what`, mappen `interieur/`, `bad/`, `construct/`, `eco/*`, `home/hero-steenstrips`, `dak/drone-antraciet`, elke AI- of stockfoto (behalve de UITZONDERING stockfoto's hieronder: /dakwerken en /lp/dakwerken).
 Subpagina's: kies per pagina uit dezelfde echte lijst (ab-fotos.md §3), nooit een tweeling op dezelfde pagina; een afdeling zonder eigen foto krijgt geen nepfoto maar een vlakke paginakop.
+UITZONDERING stockfoto's, ALLEEN /dakwerken en /lp/dakwerken (GEWIJZIGD 13 okt 2026, DICTAAT MOHAMMED: "die stock photos ook op landingspagina dakwerken aub": op /lp/dakwerken ALLEEN de 4 hero-dia's (daklijn, zinkwerk, pannen-stapels, panlatten, als `bf/stock-*-1600.webp`) en de slotblokfoto (zinkwerk), nooit in waarom, werk, voor/na, reviews of diensten; bron `lp/kgj/inhoud.ts`) (DICTAAT MOHAMMED 12 okt 2026: "zoek meer mooie dak stock photos ook, zonder dat het stock photo lijkt, echt perfecte voor belgische daken achtig" en "en we gaan die bij dakwerken pagina van abgroep toevoegen"): 4 foto's onder de Unsplash-licentie als sfeerbeeld (`src/assets/dak-stock/`, varianten `stock-*` via `scripts/bf-beelden.cjs`; bron, fotograaf en licentie bovenaan `bf/fotoplan.ts`). NOOIT in een blok dat eigen werk toont of suggereert (paginakop, verhaalrij, traject "Van offerte tot oplevering" (stappen in de wij-vorm; GEWIJZIGD 13 okt), realisaties/rail, voor/na, onderste deel), alt = neutrale beschrijving, nooit "door AB Bouw Groep"; geen personen en geen merklogo in beeld. De eigen dakfoto's (dak-na, IMG_9019, traject kaart-ruwbouw) blijven op hun plek. Guard: `scripts/check-stock.cjs` (`npm run check:stock`).
 
 ## 10. Subpagina's (BF-tegenhanger → AB-inhoud, tekst woordelijk uit het bestaande bestand)
 - `/over` (OverOns.tsx): paginakop "Het bedrijf achter" / "uw verbouwing" · cijferband met 2 tegels (16 jaar ervaring, 6 vakdisciplines onder één dak: zijn tekst, live) · over-split "Hoe wij werken" (r.65-73) + Google-badge · belofte-lijst "De mensen op uw werf" (r.82-83, punten r.25-30) · waarden-raster "Officieel erkend en verzekerd" (r.94-95, erkenningen r.34-37) · plaatsblok met kop "Zullen we uw plannen bespreken?" en tekst r.111.
@@ -172,6 +173,8 @@ Nieuw in `scripts/bf-beelden.cjs` (11 okt): IMG_9022, uitbreiding-voor, uitbreid
 | /construct | dienstrij "Coördinatie van alle vakken" | woonkeuken-voor | midden | werf in ruwbouw. GEWIJZIGD 12 okt (was "dezelfde ruimte in ruwbouw"). BESLISSING MOHAMMED: nee |
 | /dakwerken | paginakop | dak-na | midden | afgewerkt pannendak |
 | /dakwerken | dienstrij "Onze dakwerkers en zinkwerkers" | IMG_9019 | midden | het dak open, houtwerk zichtbaar (zelfde huis) |
+| /dakwerken | "Wat wij doen" 01 Dakvernieuwing / 02 Dakisolatie / 03 Dakvensters en dakkapellen | stock-pannen-stapels / stock-panlatten / stock-zinkwerk | midden | STOCK (§9 uitzondering, 12 okt; 02 en 03 GEWIJZIGD 13 okt: geen personen, geen merklogo, zinkwerk i.p.v. kunststof goten): foto bovenaan de tegel, tekst woordelijk. BEVESTIGD DOOR MOHAMMED: nee |
+| /dakwerken | "Andere diensten" banner | stock-daklijn | 50% 100% | STOCK (12 okt): daklijn i.p.v. tegelwerken-p4-a; kaarten ongewijzigd. BEVESTIGD DOOR MOHAMMED: nee |
 | /gevel | paginakop | uitbreiding-na | midden | enige echte gevelfoto (crepi) |
 | /gevel | dienstrij "Isolatie en afwerking in één werf" | uitbreiding-voor | midden | dezelfde aanbouw vóór de gevelafwerking: de ondergrond |
 | /bad | paginakop | IMG_0106 | 50% 45% | douche met patroontegels |
@@ -215,6 +218,7 @@ Kaart (VERPLICHT LEZEN): scratchpad/kaart/lp-overzicht.md + lp-dakwerken.md, lp-
 - canonical zoals nu (geen canonical per LP), GA4/cookiebanner op het pad /lp/;
 - de kop houdt OOK de klasse `kgj-kop` (Rekenaar.tsx:95 scrolfix en check-rekenaar-scroll.cjs:77 lezen ze);
 - beelden: EXACT zoals nu, ook de AI-beelden (keuze Mohammed 12 okt "Beelden laten zoals nu"; §9 geldt hier NIET);
+  uitzondering: het logo in de LP-kop volgt de BF-kop van §6 (wit `bf/logo-wit-440.webp` over de hero, donker `bf/logo-ink-440.webp` na scrollen; dezelfde bestanden als de kop van de site), want de BF-kop staat transparant over een donkere foto. Het voetlogo blijft `home/logo-trim.png` zoals live. AANNAME 12 okt (Mohammed vetoot);
 - inhoud-totaalrenovatie.ts NIET herstructureren (HOME, HOME_BF werkAlt, check-fotos, maak-chat-kennis lezen het).
 
 **Wat weg mag / moet:** geen menu en geen voetlinkenlijst (LP-kop = logo + telefoon + knop, zoals BF `kop--lp` en de huidige LP), geen reviews of namen, geen cijferband met claims, geen scroll-reveal (lock 3 aug); de Google-badge "5,0 op Google" mag.

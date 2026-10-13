@@ -292,8 +292,10 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   }
   /* Uitgevoerd werk: het spoor van de homepage. Het schuift zelf op (positie na
      6 s is een andere), het stopt onder de muis, de pijl "Volgende" loopt rond
-     zonder muur, en de tegels hebben de maat van de homepage: 309px vierkant met
-     14px afronding op een groot scherm, 78% van de baan op de telefoon. */
+     zonder muur, en de tegels hebben de maat van de homepage: op een groot scherm
+     drie vierkante tegels over de volle breedte van het raam ((baan - 2 x 24 px) / 3,
+     sinds de BF-stijl 13 okt 2026: 384 px op 1440; daarvoor 309 px in een baan van
+     974 px), 14px afronding, 78% van de baan op de telefoon. */
   for (const [naam, vp] of [['desktop', { width: 1440, height: 900 }], ['gsm', { width: 390, height: 844, isMobile: true, hasTouch: true }]]) {
     const q = await browser.newPage(); await q.setViewport(vp);
     await q.evaluateOnNewDocument(() => localStorage.setItem('ab_bouw_consent_v1', JSON.stringify({ analytics: false, marketing: false })));
@@ -308,7 +310,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
       return { b: Math.round(t[0].width), h: Math.round(t[0].height), gelijk: new Set(t.map((r) => `${Math.round(r.width)}x${Math.round(r.height)}`)).size,
         radius: getComputedStyle(img).borderTopLeftRadius, baan: Math.round(baan.width), breed: document.documentElement.scrollWidth };
     });
-    const maatOk = naam === 'desktop' ? maat.b === 309 && maat.h === 309 : Math.abs(maat.b - Math.round((maat.baan - 40) * 0.78)) <= 2 && maat.b === maat.h;
+    const maatOk = naam === 'desktop' ? Math.abs(maat.b - (maat.baan - 48) / 3) <= 1 && maat.b === maat.h : Math.abs(maat.b - Math.round((maat.baan - 40) * 0.78)) <= 2 && maat.b === maat.h;
     meld(maatOk && maat.gelijk === 1 && maat.radius === '14px' && maat.breed <= vp.width, `${naam}: tegels vierkant zoals de homepage, afronding 14px`,
       `${maat.b}x${maat.h}, baan ${maat.baan}, radius ${maat.radius}, paginabreedte ${maat.breed}`);
     const t0 = await stand(); await wacht(6000); const t6 = await stand();

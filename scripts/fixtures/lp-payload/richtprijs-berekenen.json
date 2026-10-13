@@ -128,6 +128,76 @@
         "source": "landing_page"
       },
       "metingInUitFlows": "richtprijs-inspectie"
+    },
+    {
+      "naam": "rekenaar-venster",
+      "soort": "rekenaar",
+      "query": "?utm_source=google&utm_medium=cpc&utm_campaign=totaalrenovatie&utm_term=renovatie%20kosten",
+      "marketing": true,
+      "opener": "alt",
+      "wortel": ".kgj-venster",
+      "antwoorden": [
+        "Appartement",
+        "@vink:Alles (totaalrenovatie)",
+        "@verder",
+        "Kleiner dan 100 m²",
+        "Jonger dan 10 jaar",
+        "Enkel de afwerking",
+        "Ik verken nog"
+      ],
+      "velden": {
+        "naam": "Test Kaart",
+        "email": "test@voorbeeld.be",
+        "telefoon": "0400 00 00 08"
+      },
+      "formStart": "lp:totaalrenovatie:rekenaar:venster",
+      "toestemming": false,
+      "bedankt": "/bedankt?dienst=totaalrenovatie&van=rekenaar",
+      "fouten": {
+        "leeg": "Vul uw telefoonnummer in om uw prijs te ontvangen.",
+        "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
+      },
+      "ghl": {
+        "firstName": "Test Kaart",
+        "name": "Test Kaart",
+        "email": "test@voorbeeld.be",
+        "phone": "0400 00 00 08",
+        "country": "BE",
+        "type_werk": "AB Construct",
+        "aanvullende_info": "Woning: Appartement · Renoveren: Alles (totaalrenovatie) · Grootte: Kleiner dan 100 m² · Leeftijd: Jonger dan 10 jaar · Staat: Enkel de afwerking · Start: Ik verken nog",
+        "bron_lead": "Google Ads",
+        "bron_lead_detail": "lp:totaalrenovatie:rekenaar:venster",
+        "page_path": "/lp/richtprijs-berekenen",
+        "landing_division": "ab_construct",
+        "source": "landing_page",
+        "utm_source": "google",
+        "utm_medium": "cpc",
+        "utm_campaign": "totaalrenovatie",
+        "utm_term": "renovatie kosten"
+      },
+      "web3forms": {
+        "access_key": "b01e4fea-3e73-418b-b65a-acfb1d3ee43c",
+        "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
+        "from_name": "AB Bouw website",
+        "to": "info@abgroep.be",
+        "firstName": "Test Kaart",
+        "name": "Test Kaart",
+        "email": "test@voorbeeld.be",
+        "phone": "0400 00 00 08",
+        "country": "BE",
+        "type_werk": "AB Construct",
+        "aanvullende_info": "Woning: Appartement · Renoveren: Alles (totaalrenovatie) · Grootte: Kleiner dan 100 m² · Leeftijd: Jonger dan 10 jaar · Staat: Enkel de afwerking · Start: Ik verken nog",
+        "bron_lead": "Google Ads",
+        "bron_lead_detail": "lp:totaalrenovatie:rekenaar:venster",
+        "page_path": "/lp/richtprijs-berekenen",
+        "landing_division": "ab_construct",
+        "source": "landing_page",
+        "utm_source": "google",
+        "utm_medium": "cpc",
+        "utm_campaign": "totaalrenovatie",
+        "utm_term": "renovatie kosten"
+      },
+      "metingInUitFlows": "gemeten 2026-10-12T22:07 op https://www.abgroep.be (live = LpKgj, referentie spec §17) met scratchpad werk/lp/reno3/vang-flows.mjs, 1265 en 390 gelijk"
     }
   ]
 }

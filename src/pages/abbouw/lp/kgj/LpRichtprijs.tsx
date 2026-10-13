@@ -1,4 +1,4 @@
-import LpKgj from './LpKgj';
+import LpBf from './LpBf';
 import { TOTAALRENOVATIE_OUD } from './inhoud-totaalrenovatie-oud';
 
 /**
@@ -11,7 +11,10 @@ import { TOTAALRENOVATIE_OUD } from './inhoud-totaalrenovatie-oud';
  * hierheen; de bouncers (aannemer-zoekwoorden) gaan naar de nieuwe pagina's
  * /lp/totaalrenovatie en /lp/aannemer-renovatiewerken. De bron in het CRM
  * blijft lp:totaalrenovatie:rekenaar, zoals vóór 5 okt.
+ *
+ * 12 okt 2026 (spec/bf-stijl.md §17, bouwstap 4): in de stijl van bfbouw.be via LpBf, met hetzelfde inhoudsobject.
+ * Terugval = de regel hieronder terugzetten naar <LpKgj inhoud={TOTAALRENOVATIE_OUD} /> (import LpKgj from './LpKgj').
  */
 export default function LpRichtprijs() {
-  return <LpKgj inhoud={TOTAALRENOVATIE_OUD} />;
+  return <LpBf inhoud={TOTAALRENOVATIE_OUD} />;
 }

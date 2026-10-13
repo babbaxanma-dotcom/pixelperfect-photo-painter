@@ -11,7 +11,7 @@ import { BEELDEN } from './beelden';
 import { hero, overSplit, cijferband, dienstenSlider, zekerheid, traject, realisatieRail, voorNa, faq, type Foto } from './blokken';
 import { onderaan } from './onderaan';
 import { werkOud } from './home-oud';
-import { dienstenRaster } from './home-diensten';
+import { dienstenCarrousel } from './home-diensten';
 import { HOME_BF as H } from './inhoud';
 
 /* Twee aanpassingen aan blokken die ALLEEN op de home staan (hero, cijferband), hier lokaal omdat blokken.ts en bf.css
@@ -53,9 +53,9 @@ export function homeHtml() {
     // bron per tegel staat als commentaar in inhoud.ts; het type Cijfer (blokken.ts, gedeeld) vraagt nog een veld bron,
     // dat cijferband() nergens leest: leeg, zodat er geen interne tekst in de JS-bundel belandt (vondst ronde 2)
     metIcoonCirkel(cijferband({ label: 'AB Bouw Groep in cijfers', tegels: H.cijfers.map((c) => ({ ...c, bron: '' })) }), H.cijfers.length),
-    dienstenRaster({ id: 'diensten', kop: H.diensten.kop, tekst: H.diensten.tekst, knop: H.diensten.knop, kaarten: H.diensten.kaarten }),
+    dienstenCarrousel({ id: 'diensten', kop: H.diensten.kop, tekst: H.diensten.tekst, knop: H.diensten.knop, kaarten: H.diensten.kaarten }),
     zekerheid({ kop: H.zekerheid.kop, lede: H.zekerheid.lede, kaarten: H.zekerheid.kaarten, huis: H.zekerheid.huis, inzet: H.zekerheid.inzet }),
-    traject({ id: 'werkwijze', kop: H.werkwijze.kop, knop: H.werkwijze.knop, foto: H.werkwijze.foto, stappen: H.werkwijze.stappen }),
+    traject({ id: 'werkwijze', kop: H.werkwijze.kop, knop: H.werkwijze.knop, foto: H.werkwijze.foto, stappen: H.werkwijze.stappen, pijlen: false }),
     werkOud({ id: 'realisaties', kop: H.werkOud.kop, fotos: H.werkOud.spoor, na: voorNa(H.werk.voorNa) }),
     faq({ id: 'vragen', kop: H.faq.kop, vragen: H.faq.vragen }),
     onderaan({ pagina: 'home', kop: H.contact.kop, tekst: H.contact.tekst }),

@@ -31,6 +31,22 @@ html:has(.bf.bf-lp) { scroll-padding-top: min(92px, 6.389vw); }
   .bf.bf-lp .bf-lptopbalk { font-size: 14px; min-height: 40px; padding: 8px 16px; }
   .bf.bf-lp .bf-lptopbalk__zin { display: none; }
 }
+/* Met de topbalk is de vaste kop 40u hoger: 132u op de computer (gemeten 12 okt: 132 px op 1440, 116 op 1265). Op gsm
+   staat alleen de topbalk vast (40 px, 13 okt; zie het blok hieronder), de kop is daar 112 px hoog (40 + 72). Ankers (sitelinks #rekenaar #contact #diensten #werkwijze #voorna #waarom) landen dan precies onder de
+   kop, en de herotekst schuift 40u mee naar onder (anders stond de h1 tegen de logorij). */
+html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw); }
+.bf.bf-lp:has(> .bf-kop--topbalk) .bf-lphero__in { padding-top: calc(170 * var(--u)); }
+@media (max-width: 1000px) {
+  html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: 40px; }
+  .bf.bf-lp:has(> .bf-kop--topbalk) .bf-lphero__in { padding-top: 136px; }
+  /* Gsm (<= 1000): alleen de topbalk blijft vast, de logorij scrolt mee weg (live LpKgj extra.ts r.1049-1055, correctie
+     Mohammed 6 okt). Vast bleef 112 px staan: topbalk + een witte logorij met rechts niets (de aanvraagknop is op gsm
+     verborgen, r.24; CTA en belknop staan in bf-lpsticky en bf-belzweef). Specificiteit 0,3,0 wint van
+     '.bf .bf-kop--over { position: fixed }' (0,2,0, bf.css L451) zonder !important. De kop blijft kgj-kop dragen. */
+  .bf.bf-lp > .bf-kop--topbalk { position: absolute; top: 0; left: 0; right: 0; }
+  .bf.bf-lp .bf-kop--topbalk .bf-lptopbalk { position: fixed; top: 0; left: 0; right: 0; z-index: 60; }
+  .bf.bf-lp .bf-kop--topbalk .bf-nav { margin-top: 40px; }
+}
 
 /* ---------- hero ---------- */
 /* Uitsnede zoals nu (LpKgj: object-fit cover, midden; pos uit het inhoudsobject staat inline). bf-ab.css zet de eerste
@@ -105,6 +121,8 @@ html:has(.bf.bf-lp) { scroll-padding-top: min(92px, 6.389vw); }
 .bf.bf-lp .kgj-reken__keuze.is-druk { background: #fbf3e6; box-shadow: inset 0 0 0 calc(2 * var(--u)) var(--merk); }
 /* tip (premie, 6% btw): BF rk--ab rk__tip met icoon */
 .bf.bf-lp .kgj-reken__tip svg { flex: none; width: calc(18 * var(--u)); height: calc(18 * var(--u)); margin-top: calc(1 * var(--u)); }
+/* geen weesregel: op 390 brak de premietip tussen '€' en '5.750.' (gemeten 12 okt) */
+.bf.bf-lp .kgj-reken__tip { text-wrap: pretty; }
 /* vinkjes onderaan de kaart: AB zet het vinkje zonder omhulsel (BF: span-cirkel) */
 .bf.bf-lp .kgj-reken__vertrouwen li > svg { flex: none; width: calc(20 * var(--u)); height: calc(20 * var(--u)); padding: calc(4 * var(--u)); border-radius: 50%; background: var(--merk); color: var(--op-merk); stroke-width: 3.2; }
 /* troeven (laatste stap) en het punt bij de laatste vraag */
@@ -150,7 +168,17 @@ html:has(.bf.bf-lp) { scroll-padding-top: min(92px, 6.389vw); }
 /* laatste stap van de rekenaar: de geruststelling onder de knop gecentreerd zoals de privacyregel eronder (BF rk__knopzeker).
    Alleen het rekenaarformulier: de inspectiekaart (Inspectie.tsx, zonder kgj-reken__stap) en de vraagstappen (div) blijven links. */
 .bf.bf-lp .kgj-reken__stap.kgj-reken__form .kgj-reken__gerust { text-align: center; }
-.bf.bf-lp .kgj-reken__fout { margin-top: calc(12 * var(--u)); padding: calc(10 * var(--u)) calc(14 * var(--u)); border-radius: calc(10 * var(--u)); background: #fdecea; color: #8c1d18; font-size: calc(14.5 * var(--u)); font-weight: 600; line-height: 1.45; }
+/* foutmelding (role=alert): minstens 14 px, ook op 1001 (calc gaf daar 10,1 px) */
+.bf.bf-lp .kgj-reken__fout { margin-top: calc(12 * var(--u)); padding: calc(10 * var(--u)) calc(14 * var(--u)); border-radius: calc(10 * var(--u)); background: #fdecea; color: #8c1d18; font-size: max(14px, calc(14.5 * var(--u))); font-weight: 600; line-height: 1.45; }
+/* Laatste stap van de rekenaar: de foutmelding direct onder het telefoonveld, niet onderaan na knop, geruststelling en
+   privacyregel. Op 390 viel ze na een tik op 'Ontvang mijn richtprijs' onder de onderrand (gemeten 13 okt: top 952 bij een
+   scherm van 844; venster 889 bij een onderrand van 834) en veranderde er in beeld niets. Rekenaar.tsx blijft ongewijzigd:
+   alleen de visuele volgorde. De telefoonlabel is het enige label dat een direct kind van het formulier is; wat erna komt
+   (troeven, knop, gerust, privacy) krijgt order 2, de melding order 1. Alleen het rekenaarformulier (kgj-reken__stap +
+   kgj-reken__form); het inspectieformulier (Inspectie.tsx, zonder kgj-reken__stap) blijft zoals het is. */
+.bf.bf-lp .kgj-reken__stap.kgj-reken__form { display: flex; flex-direction: column; }
+.bf.bf-lp .kgj-reken__stap.kgj-reken__form > label ~ * { order: 2; }
+.bf.bf-lp .kgj-reken__stap.kgj-reken__form > .kgj-reken__fout { order: 1; }
 /* toestemming na een lead zonder marketingtoestemming (Toestemming.tsx) */
 .bf.bf-lp .kgj-toestemming__ok { display: flex; align-items: center; gap: calc(10 * var(--u)); margin-top: calc(6 * var(--u)); font-size: calc(20 * var(--u)); font-weight: 700; color: var(--ink); }
 .bf.bf-lp .kgj-toestemming__ok svg { flex: none; width: calc(26 * var(--u)); height: calc(26 * var(--u)); color: #1c7a43; }
@@ -183,7 +211,7 @@ html:has(.bf.bf-lp) { scroll-padding-top: min(92px, 6.389vw); }
   .bf.bf-lp .kgj-reken__fout { font-size: 16px; }
   /* bodytekst >= 16 px op gsm (spec §13): keuzes, tip, geruststelling, vinkjes */
   .bf.bf-lp .kgj-reken__keuze, .bf.bf-lp .kgj-reken__keuze--icoon { font-size: 16px; }
-  .bf.bf-lp .kgj-reken__tekst span { font-size: 15px; }
+  .bf.bf-lp .kgj-reken__tekst span { font-size: 16px; }
   .bf.bf-lp .kgj-reken .kgj-reken__tip, .bf.bf-lp .kgj-reken__tip { font-size: 16px; }
   .bf.bf-lp .kgj-reken__gerust, .bf.bf-lp .kgj-reken .kgj-reken__gerust { font-size: 16px; }
   .bf.bf-lp .kgj-reken__vertrouwen li, .bf.bf-lp .kgj-reken__troeven li { font-size: 16px; }
@@ -215,6 +243,10 @@ html:has(.bf.bf-lp) { scroll-padding-top: min(92px, 6.389vw); }
   .bf.bf-lp .bf-lpwaarom__fotos { grid-template-columns: 1fr 1fr; gap: 10px; }
   .bf.bf-lp .bf-lpwaarom__fotos img { aspect-ratio: 3 / 4; border-radius: 12px; }
 }
+/* Dak, computer: twee foto's van 3:2 onder elkaar maakten de fotokolom 116 px langer dan de tekst (gemeten 12 okt op 1265:
+   tekst 531, foto's 647, sectie 840). In 16:9 zijn ze even hoog als de tekst. Alleen de dak-LP en alleen vanaf 1001 px;
+   de gsm houdt 3:4 naast elkaar (regel hierboven). */
+@media (min-width: 1001px) { .bf.bf-lp--dakwerken .bf-lpwaarom__fotos img { aspect-ratio: 16 / 9; } }
 
 /* ---------- zin onder een middenkop (diensten, voor/na, uitgevoerd, vangnet) ---------- */
 .bf.bf-lp .bf-sraam > .bf-h2--midden:has(+ .bf-lpsectie__onder) { margin-bottom: 0; }
@@ -236,8 +268,12 @@ html:has(.bf.bf-lp) { scroll-padding-top: min(92px, 6.389vw); }
 @media (max-width: 1000px) {
   /* gsm: vlak links, tekst rechts (zoals de huidige LP op de telefoon): vier kaarten in één scherm in plaats van vier */
   .bf.bf-lp .bf-dkaarten__raster--lp { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-  .bf.bf-lp .bf-dkaarten__raster--lp .bf-dkaart { display: grid; grid-template-columns: 88px minmax(0, 1fr); align-items: stretch; }
-  .bf.bf-lp .bf-dkaarten__raster--lp .bf-dkaart__media { display: flex; }
+  /* Alleen kaarten ZONDER foto (dak: vlak, richtprijs: icoon). Een kaart met een echte dienstfoto (totaalrenovatie,
+     aannemer) valt terug op de geporteerde BF-regels (bf.css L959 flexkolom, L961 foto 100% breed 4:3): op 390 kromp
+     de foto anders tot een duimnagel van 88 px (gemeten 13 okt: 88x77, live 104x104, BF 358x269). */
+  .bf.bf-lp .bf-dkaarten__raster--lp .bf-dkaart:not(:has(.bf-dkaart__beeld)) { display: grid; grid-template-columns: 88px minmax(0, 1fr); align-items: stretch; }
+  .bf.bf-lp .bf-dkaarten__raster--lp .bf-dkaart:not(:has(.bf-dkaart__beeld)) > .bf-dkaart__media { display: flex; }
+  .bf.bf-lp .bf-dkaarten__raster--lp:has(.bf-dkaart__beeld) { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .bf.bf-lp .bf-lpdienst__vlak { aspect-ratio: auto; width: 100%; min-height: 88px; }
   .bf.bf-lp .bf-lpdienst__vlak svg { width: 40px; height: 40px; }
   .bf.bf-lp .bf-dkaarten__raster--lp .bf-dkaart__body { padding: 14px 16px 16px; }
@@ -245,23 +281,36 @@ html:has(.bf.bf-lp) { scroll-padding-top: min(92px, 6.389vw); }
   .bf.bf-lp .bf-dkaart p { font-size: 16px; margin-top: 4px; }
   .bf.bf-lp .bf-lpdienst__ic { width: 48px; height: 48px; margin: 16px 0 0 16px; }
 }
+/* fotokaarten op de smalle gsm: één kolom, foto over de volle breedte zoals BF (358x269 op 390) */
+@media (max-width: 640px) { .bf.bf-lp .bf-dkaarten__raster--lp:has(.bf-dkaart__beeld) { grid-template-columns: minmax(0, 1fr); } }
 
-/* ---------- werkwijze zonder foto: kop links, knop rechts, stappen eronder ---------- */
+/* ---------- werkwijze zonder foto: kop, stappen, knop NA de stappen (midknop zoals live LpKgj r.571-581) ---------- */
+/* 80u alleen op dak: daar volgt de werkwijze een witte sectie met 26 px onderruimte. De renovatie-LP's krijgen de gewone
+   110u / 56 px (blok "renovatie-LP's" onderaan): daar staat de werkwijze na een kleurwissel. */
 .bf.bf-lp .bf-lpproces { padding-top: calc(80 * var(--u)); }
-.bf.bf-lp .bf-lpproces__top { grid-template-columns: minmax(0, 1fr) auto; align-items: end; }
-.bf.bf-lp .bf-lpproces__top .bf-proces__knop { margin-top: 0; }
+.bf.bf-lp .bf-lpproces__top { grid-template-columns: minmax(0, 1fr); align-items: end; }
+.bf.bf-lp .bf-lpmidknop { width: calc(1200 * var(--u)); margin: calc(48 * var(--u)) auto 0; display: flex; justify-content: center; }
+.bf.bf-lp .bf-lpmidknop .bf-proces__knop { margin-top: 0; }
 .bf.bf-lp .bf-proces__knop svg { width: calc(18 * var(--u)); height: calc(18 * var(--u)); }
 .bf.bf-lp .bf-pstap p { font-size: calc(16.5 * var(--u)); }
 @media (max-width: 1000px) {
   .bf.bf-lp .bf-lpproces { padding-top: 48px; }
-  .bf.bf-lp .bf-lpproces__top { grid-template-columns: minmax(0, 1fr); gap: 20px; }
-  .bf.bf-lp .bf-lpproces__top .bf-proces__knop { width: 100%; }
+  .bf.bf-lp .bf-lpproces__top { gap: 20px; }
+  .bf.bf-lp .bf-lpmidknop { width: auto; margin-top: 32px; }
+  .bf.bf-lp .bf-lpmidknop .bf-proces__knop { width: 100%; }
   .bf.bf-lp .bf-pstap p { font-size: 16px; }
 }
 
 /* ---------- voor/na: de schuif van de home (bf-ab.css .bf-voorna) ---------- */
 .bf.bf-lp .bf-lpvoorna .bf-voorna { margin-top: 0; width: auto; }
+/* Computer: 880u breed (zoals de schuif van live LpKgj), niet de volle 1200u. Bij 1200u was het vak op 1265 1054 x 659 en
+   paste het nooit onder de vaste kop (1265 x 657: 576 px zichtbaar). Alleen vanaf 1001 px: daaronder is --u 1px en zou
+   het vak 880 px breed worden. De home (bf-ab.css .bf-voorna, 1200u) blijft ongewijzigd. */
+@media (min-width: 1001px) { .bf.bf-lp .bf-lpvoorna .bf-voorna { width: calc(880 * var(--u)); margin-inline: auto; } }
 .bf.bf-lp .bf-lpvoorna__paar { margin: 0; }
+/* greep met de tekst "‹ ›" zoals live (LpKgj r.627), in de BF-cirkel */
+.bf.bf-lp .bf-voorna__greep--tekst { font-size: calc(22 * var(--u)); font-weight: 700; line-height: 1; letter-spacing: calc(1 * var(--u)); white-space: pre; padding-bottom: calc(2 * var(--u)); }
+@media (max-width: 1000px) { .bf.bf-lp .bf-voorna__greep--tekst { font-size: 20px; letter-spacing: 1px; padding-bottom: 2px; } }
 /* toetsenbord: de (onzichtbare) schuifregelaar beslaat het hele vak, zodat Tab het hele vak met zijn focusring in beeld
    schuift; bf-ab.css zet hem als 1 px onderaan (dan schoof alleen de onderrand in beeld, de rest bleef onder de kop) */
 .bf.bf-lp .bf-voorna__bereik { top: 0; bottom: 0; height: 100%; }
@@ -300,6 +349,10 @@ html:has(.bf.bf-lp) { scroll-padding-top: min(92px, 6.389vw); }
 .bf.bf-lp .bf-lpinsp__stappen span { flex: none; }
 .bf.bf-lp .bf-lpinsp__onderkop { margin-top: calc(14 * var(--u)); font-size: calc(20 * var(--u)); font-weight: 600; color: #fff; }
 .bf.bf-lp .bf-lpinsp__tekst p { color: rgba(255, 255, 255, .92); }
+/* Tekst direct onder de slotkop (totaalrenovatie, aannemer: 'We komen ter plaatse …'): 20u / 16 px. Zonder deze regel stond
+   hij 11 px onder de kop op 1265 en 12 op 390 (gemeten 13 okt); BF, richtprijs en dak hebben op die plek 26 en 30 px. */
+.bf.bf-lp .bf-lpinsp h2 + p { margin-top: calc(20 * var(--u)); }
+@media (max-width: 1000px) { .bf.bf-lp .bf-lpinsp h2 + p { margin-top: 16px; } }
 .bf.bf-lp .bf-lpinsp__tekst :focus-visible { outline-color: #fff; }
 .bf.bf-lp .kgj-reken--inspectie { color: var(--ink); }
 /* kaartkop = BF lpinsp__kaartkop */
@@ -308,13 +361,23 @@ html:has(.bf.bf-lp) { scroll-padding-top: min(92px, 6.389vw); }
 .bf.bf-lp .kgj-reken--inspectie .kgj-reken__form label { margin-top: calc(14 * var(--u)); }
 /* knop = BF lpinsp__knop */
 .bf.bf-lp .kgj-reken--inspectie .kgj-reken__knop { height: calc(60 * var(--u)); margin-top: calc(20 * var(--u)); }
+/* pijl achter de tekst, zoals BF lpinsp__knop en de eindknop van de rekenaar ('Ontvang mijn richtprijs' + ArrowRight):
+   zelfde lucide-pijl en maat (18u) als .kgj-reken__knop svg. Inspectie.tsx blijft ongewijzigd: de pijl is een ::after,
+   alleen waar de knop zelf geen pijl heeft (renovatie: knopPijl) en niet tijdens 'Bezig…' (disabled). */
+.bf.bf-lp .kgj-reken--inspectie .kgj-reken__knop:not(:disabled):not(:has(svg))::after {
+  content: ""; flex: none; width: calc(18 * var(--u)); height: calc(18 * var(--u)); background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") center / contain no-repeat;
+}
 /* onder de knop = BF lpinsp__onder */
 .bf.bf-lp .kgj-reken--inspectie .kgj-reken__gerust { margin-top: calc(14 * var(--u)); font-size: calc(15 * var(--u)); color: var(--tekst-2); }
 .bf.bf-lp .kgj-reken__alt { padding: 0; text-align: left; }
 .bf.bf-lp .kgj-reken__alt + .kgj-reken__privacy, .bf.bf-lp .kgj-reken--inspectie .kgj-reken__privacy { display: block; margin-top: calc(12 * var(--u)); }
-/* geruststellingen met icoon (renovatie) */
+/* geruststellingen met icoon (renovatie). Tekst in gewicht 400 en BF-grijs zoals BF lpinsp__onder en de regel op dezelfde
+   plek op richtprijs en dak (.kgj-reken__gerust: 400, #545458). Met 600 en --ink-2 stond er een donker blok onder de
+   goudknop (gemeten 13 okt: 600, rgb(17,17,19) op 1265 en 390). De iconen houden --merk-tekst (regel hieronder). */
 .bf.bf-lp .kgj-reken__gerustlijst { list-style: none; margin: calc(16 * var(--u)) 0 0; padding: 0; display: grid; gap: calc(10 * var(--u)); }
-.bf.bf-lp .kgj-reken__gerustlijst li { display: flex; align-items: center; gap: calc(10 * var(--u)); font-size: calc(15 * var(--u)); font-weight: 600; color: var(--ink-2); }
+.bf.bf-lp .kgj-reken__gerustlijst li { display: flex; align-items: center; gap: calc(10 * var(--u)); font-size: calc(15 * var(--u)); font-weight: 400; color: var(--tekst-2); }
 .bf.bf-lp .kgj-reken__gerustlijst svg { flex: none; width: calc(20 * var(--u)); height: calc(20 * var(--u)); color: var(--merk-tekst); }
 .bf.bf-lp .kgj-reken__rij--extra { grid-template-columns: repeat(auto-fit, minmax(calc(160 * var(--u)), 1fr)); }
 /* postcode of gemeente (PostcodeGemeente.tsx): wisknop, bevestiging en voorstellenlijst */
@@ -334,6 +397,13 @@ html:has(.bf.bf-lp) { scroll-padding-top: min(92px, 6.389vw); }
 .bf.bf-lp .kgj-pg__lijst li { padding: calc(10 * var(--u)) calc(12 * var(--u)); border-radius: calc(8 * var(--u)); font-size: calc(15 * var(--u)); font-weight: 500; color: var(--ink-2); cursor: pointer; }
 .bf.bf-lp .kgj-pg__lijst li.is-aan, .bf.bf-lp .kgj-pg__lijst li:hover { background: #fbf3e6; }
 @media (max-width: 1000px) {
+  /* slotkaart = BF lpinsp__kaart op gsm (bfbouw site.css r.1726): 24 18 20. lp-bf.css r.418 zette padding-top 16 px op
+     elke .kgj-reken (rekenaarmaat), waardoor de kop 8 px tegen de bovenrand stond. */
+  .bf.bf-lp .kgj-reken--inspectie { padding: 24px 18px 20px; }
+  .bf.bf-lp .kgj-reken--inspectie .kgj-reken__knop:not(:disabled):not(:has(svg))::after { width: 18px; height: 18px; }
+  /* BF lpinsp__knop heeft geen zijmarge (gemeten 12 okt op 390: padding 0): met de pijl past "Vraag uw gratis
+     dakinspectie aan" dan op één regel (met 20 px per kant brak hij in twee) */
+  .bf.bf-lp .kgj-reken--inspectie .kgj-reken__knop { padding: 0 8px; }
   .bf.bf-lp .bf-lpinsp__onderkop { font-size: 18px; }
   .bf.bf-lp .kgj-reken--inspectie .kgj-reken__vraag { font-size: 22px; }
   .bf.bf-lp .kgj-reken--inspectie .kgj-reken__form input:not([type="hidden"]), .bf.bf-lp .kgj-reken--inspectie .kgj-reken__form select { height: 52px; }
@@ -355,13 +425,31 @@ html:has(.bf.bf-lp) { scroll-padding-top: min(92px, 6.389vw); }
   .bf.bf-lp .bf-lpsticky svg:first-child:not(:last-child) { width: 20px; height: 20px; }
 }
 
-/* ---------- voet: één regel (BF lpvoet) ---------- */
+/* ---------- voet: de inhoud van live (LpKgj r.785-809) in de BF-opmaak ----------
+   Bovenaan logo + zin en de kolom Contact (maten en kleuren van BF voet--sub, bf.css L311-L317), daaronder de onderregel
+   van BF lpvoet (© · BTW + Privacy, Cookies, Voorwaarden) met een lijn ertussen. */
+.bf.bf-lp .bf-lpvoet__raster { width: calc(1200 * var(--u)); margin: 0 auto; padding: calc(64 * var(--u)) 0 calc(40 * var(--u)); display: grid; grid-template-columns: minmax(0, 1fr) calc(330 * var(--u)); gap: calc(48 * var(--u)); }
+.bf.bf-lp .bf-lpvoet__logo { display: block; width: calc(220 * var(--u)); height: auto; }
+.bf.bf-lp .bf-lpvoet__merk p { margin-top: calc(16 * var(--u)); max-width: calc(320 * var(--u)); font-size: calc(15.5 * var(--u)); line-height: 1.65; color: var(--tekst-3); }
+.bf.bf-lp .bf-lpvoet__kolom h4 { font-size: calc(24.5 * var(--u)); font-weight: 600; line-height: calc(30 * var(--u)); color: var(--ink-2); }
+.bf.bf-lp .bf-lpvoet__contact { list-style: none; margin: calc(20 * var(--u)) 0 0; padding: 0; display: grid; row-gap: calc(14 * var(--u)); font-size: calc(17 * var(--u)); line-height: 1.5; color: #4c4c4c; }
+.bf.bf-lp .bf-lpvoet__contact a { color: inherit; }
+.bf.bf-lp .bf-lpvoet__contact a:hover { color: var(--merk-tekst); }
+.bf.bf-lp .bf-lpvoet__in { border-top: calc(1.5 * var(--u)) solid #e4e4e4; }
 .bf.bf-lp .bf-lpvoet__in p { margin: 0; }
-.bf.bf-lp .bf-lpvoet__plaats { white-space: nowrap; }
-.bf.bf-lp .bf-lpvoet nav a { color: var(--tekst-2); }
+.bf.bf-lp .bf-lpvoet__links { display: flex; gap: calc(22 * var(--u)); }
+.bf.bf-lp .bf-lpvoet__links a { color: var(--tekst-2); }
 @media (max-width: 1000px) {
-  .bf.bf-lp .bf-lpvoet__in { font-size: 14px; gap: 6px; }
-  .bf.bf-lp .bf-lpvoet nav { flex-wrap: wrap; gap: 0 22px; }
+  .bf.bf-lp .bf-lpvoet__raster { width: auto; padding: 40px 16px 24px; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .bf.bf-lp .bf-lpvoet__logo { width: 176px; }
+  .bf.bf-lp .bf-lpvoet__merk p { max-width: none; font-size: 16px; }
+  .bf.bf-lp .bf-lpvoet__kolom h4 { font-size: 20px; line-height: 1.3; }
+  .bf.bf-lp .bf-lpvoet__contact { margin-top: 12px; row-gap: 2px; font-size: 16px; }
+  /* tikvlak >= 44 px voor telefoon en e-mail (spec §13) */
+  .bf.bf-lp .bf-lpvoet__contact a { display: inline-flex; align-items: center; min-height: 44px; }
+  .bf.bf-lp .bf-lpvoet__in { margin: 0 16px; padding-left: 0; padding-right: 0; font-size: 14px; gap: 6px; }
+  .bf.bf-lp .bf-lpvoet__links { flex-wrap: wrap; gap: 0 22px; }
+  .bf.bf-lp .bf-lpvoet__links a { min-height: 44px; display: inline-flex; align-items: center; }
 }
 
 /* ---------- venster met de rekenaar (LpKgj .kgj-venster): boven kop, balk en chat ---------- */
@@ -370,6 +458,12 @@ html:has(.bf.bf-lp) { scroll-padding-top: min(92px, 6.389vw); }
 .bf.bf-lp .bf-lpvenster__in .kgj-reken { box-shadow: none; padding-top: calc(30 * var(--u)); }
 .bf.bf-lp .bf-lpvenster__dicht { position: absolute; top: calc(10 * var(--u)); right: calc(10 * var(--u)); z-index: 2; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--sectie); color: var(--ink); font-size: 26px; line-height: 1; }
 .bf.bf-lp .bf-lpvenster__dicht:hover { background: var(--merk); color: var(--op-merk); }
+/* Bij het openen krijgt het venster zelf de focus (LpBf.tsx, tabIndex -1), zonder ring: de eerste Tab gaat naar ×, met ring. */
+.bf.bf-lp .bf-lpvenster__in:focus { outline: none; }
+/* De sluitknop (44 px, rechtsboven) stond over de kaarttitel 'Ontvang een realistische prijsindicatie' (gemeten 13 okt:
+   22 px overlap op 1265, 27 op 1001; 'tie' onder de knop). Ruimte rechts in de kaartkop, alleen vanaf 1001 px: op gsm
+   breekt de titel al over 2 regels naast de knop, en daar zou de tijdregel met deze ruimte afbreken na '100%'. */
+@media (min-width: 1001px) { .bf.bf-lp .bf-lpvenster__in .kgj-reken__hoofd { padding-right: 52px; } }
 @media (max-width: 1000px) {
   .bf.bf-lp .bf-lpvenster { padding: 10px; }
   .bf.bf-lp .bf-lpvenster__in { width: 100%; max-height: calc(100dvh - 20px); border-radius: 18px; }
@@ -377,4 +471,151 @@ html:has(.bf.bf-lp) { scroll-padding-top: min(92px, 6.389vw); }
   /* lp-bf.css r.419 zet de balk op gsm tegen de kaartkop (margin-top 0): BF verbergt de kaartkop op gsm, het AB-venster
      houdt hem (r.66-67 verbergen hem alleen in de hero). 16 px zoals live LpKgj (gemeten 12 okt: 0 px op 390, 18 op 1265). */
   .bf.bf-lp .kgj-reken--venster .kgj-reken__weg { margin-top: 16px; }
+}
+
+/* ---------- renovatie-LP's (12 okt, spec §17 bouwstap 4-6): /lp/richtprijs-berekenen, /lp/totaalrenovatie,
+   /lp/aannemer-renovatiewerken. Alleen wat deze drie extra hebben; /lp/dakwerken raakt geen van deze regels
+   (dak: geen keuzelijsten, geen rastervraag, geen afvinkvraag, geen FAQ, lege hero.bewijs, 4 dienstkaarten). ---------- */
+
+/* Hero, punten "Titel: uitleg" (LpKgj metVet/metKop): titel vet, uitleg gewoon, vinkje bij de EERSTE regel (zoals live
+   extra.ts r.226-228). Gemeten 12 okt op 390: het vinkje stond midden naast drie regels. */
+.bf.bf-lp .bf-lphero__bewijs li:has(strong) { align-items: flex-start; font-weight: 500; }
+.bf.bf-lp .bf-lphero__bewijs li:has(strong) .bf-lphero__vink { margin-top: calc(-2 * var(--u)); }
+@media (max-width: 1000px) {
+  .bf.bf-lp .bf-lphero__bewijs li:has(strong) .bf-lphero__vink { margin-top: -2px; }
+  /* Rekenaar in de hero (richtprijs): de punten staan op gsm ONDER de kaart (.bf-lphero__gerust, vertrouwen ?? bewijs),
+     dus niet nog eens erboven (live extra.ts r.231: hero__bewijs weg op ≤1000). Dak heeft geen hero.bewijs. */
+  .bf.bf-lp .bf-lphero__in:has(> .bf-lphero__reken .bf-lphero__gerust) .bf-lphero__bewijs { display: none; }
+  /* Vinkjes onder de kaart met "Titel: uitleg": het li is flex, dan werden <strong> en de rest twee kolommen
+     (gemeten 12 okt op 390). Als blok met het vinkje links ervoor. */
+  .bf.bf-lp .bf-lphero__vinkjes li:has(> strong) { display: block; position: relative; padding-left: 32px; font-weight: 500; }
+  .bf.bf-lp .bf-lphero__vinkjes li:has(> strong) > span { position: absolute; left: 0; top: 0; }
+  /* Heroknop (plaatsbezoekpagina's): de hero zo hoog als de inhoud, zoals live (473 px op 390); schermvullend bleef
+     onder de knop 230 px lege foto staan (gemeten 12 okt op 390x844). */
+  .bf.bf-lp .bf-lphero--knop .bf-lphero__in { min-height: 0; padding-bottom: 44px; }
+}
+
+/* Rastervraag "Wat voor woning wilt u renoveren?" (raster: true): vier tegels 2x2. Op gsm icoon BOVEN het label, zoals
+   live (extra.ts r.297-302); naast elkaar staken de tegels 7 px uit de kaart (gemeten 12 okt op 390, hero en venster). */
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken__keuzes--raster { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bf.bf-lp .kgj-reken__keuzes--raster .kgj-reken__keuze--icoon { flex-direction: column; justify-content: center; gap: 8px; min-height: 96px; padding: 12px 8px; text-align: center; }
+  .bf.bf-lp .kgj-reken__keuzes--raster .kgj-reken__tekst { text-align: center; }
+}
+
+/* Afvinkvraag: de knop "Volgende" (kgj-reken__verder) als BF-pil zoals de verzendknop; zonder deze regel stond er
+   platte tekst met de pijl op een eigen regel (gemeten 12 okt op 1265). Uit = grijs (regel hierboven). */
+.bf.bf-lp .kgj-reken__verder { display: inline-flex; align-items: center; justify-content: center; gap: calc(10 * var(--u)); height: calc(56 * var(--u)); padding: 0 calc(20 * var(--u)); border-radius: calc(999 * var(--u)); background: var(--merk); color: var(--op-merk); font-size: calc(17 * var(--u)); font-weight: 700; transition: background-color .18s ease; }
+.bf.bf-lp .kgj-reken__verder:not(:disabled):hover { background: var(--merk-diep); }
+.bf.bf-lp .kgj-reken__verder svg { flex: none; width: calc(18 * var(--u)); height: calc(18 * var(--u)); }
+@media (max-width: 1000px) { .bf.bf-lp .kgj-reken__verder { height: 56px; font-size: 16px; } .bf.bf-lp .kgj-reken__verder svg { width: 18px; height: 18px; } }
+
+/* Slotformulier met keuzelijsten: een oneven laatste lijst ("Uw budget" op richtprijs) over de volle breedte; los in de
+   halve kolom stond hij 12 px lager dan de rij erboven (gemeten 12 okt op 1265). */
+.bf.bf-lp .kgj-reken__rij--extra > label:last-child:nth-child(odd) { grid-column: 1 / -1; }
+/* tussen twee rijen keuzelijsten dezelfde afstand als tussen de andere velden (label margin-top), geen extra rijgap */
+.bf.bf-lp .kgj-reken__rij--extra { row-gap: 0; }
+
+/* Diensten: 5 of 6 kaarten in 3 kolommen (3+3) in plaats van 4+2 met twee lege plekken (aannemer, richtprijs).
+   Zonder foto en zonder tekst (richtprijs, "simpel, zonder al te veel tekst" 27 sep): icoon en naam naast elkaar, zoals
+   live kgj-dienstraster--kort; als hoge kaart stond het icoon op gsm los onderaan (gemeten 12 okt op 390). */
+@media (min-width: 1001px) {
+  .bf.bf-lp .bf-dkaarten__raster--lp:has(> .bf-dkaart:nth-child(5)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.bf.bf-lp .bf-dkaarten__raster--lp.bf-lpdiensten--kort .bf-dkaart { display: flex; flex-direction: row; align-items: center; gap: calc(18 * var(--u)); padding: calc(20 * var(--u)) calc(22 * var(--u)); text-align: left; }
+.bf.bf-lp .bf-dkaarten__raster--lp.bf-lpdiensten--kort .bf-dkaart__body { text-align: left; }
+.bf.bf-lp .bf-dkaarten__raster--lp.bf-lpdiensten--kort .bf-lpdienst__ic { flex: none; margin: 0; }
+.bf.bf-lp .bf-dkaarten__raster--lp.bf-lpdiensten--kort .bf-dkaart__body { padding: 0; }
+@media (max-width: 1000px) {
+  .bf.bf-lp .bf-dkaarten__raster--lp.bf-lpdiensten--kort .bf-dkaart { gap: 14px; padding: 14px 16px; }
+  .bf.bf-lp .bf-dkaarten__raster--lp.bf-lpdiensten--kort .bf-lpdienst__ic { width: 48px; height: 48px; }
+}
+/* Renovatie-LP's: geen BF-knop onder de dienstkaarten en de volgende band heeft een andere kleur, dus de gewone
+   sblok-onderruimte (= boven). Dak houdt 30u/8px (lp-bf.css r.256/258). Gemeten 13 okt: 26 px onder de laatste kaart op
+   1265, 8 op 390, tegen 97 en 56 erboven. Alle 3 renovatie-LP's dragen bf-lp--totaalrenovatie (bedanktSlug). */
+.bf.bf-lp--totaalrenovatie .bf-lpdiensten { padding-bottom: calc(110 * var(--u)); }
+@media (max-width: 1000px) { .bf.bf-lp--totaalrenovatie .bf-lpdiensten { padding-bottom: 56px; } }
+
+/* Wit en grijs wisselen af zoals op BF (bf-ab.css r.190). Zonder deze regels: op totaalrenovatie twee grijze vlakken na
+   elkaar (voor/na + waarom), op richtprijs vier witte (waarom, diensten, werkwijze, uitgevoerd). Volgorde = inhoud.volgorde,
+   dus op buurschap: dak (waarom -> voordelen -> diensten) matcht geen van deze selectors. */
+.bf.bf-lp .bf-lpvoorna + .bf-lpwaarom--kolommen { background: var(--wit); }
+.bf.bf-lp .bf-lpwaarom--kolommen + .bf-lpproces { background: var(--sectie); }
+.bf.bf-lp .bf-lpwaarom + .bf-lpdiensten { background: var(--sectie); }
+
+/* FAQ vóór het slotblok: bf-vragen heeft op de home 10u onderaan (daar volgt een wit vlak); hier volgt het donkere
+   slotblok en stond de laatste vraag er 7 px boven (gemeten 12 okt op 1265). */
+.bf.bf-lp .bf-vragen { padding-bottom: calc(110 * var(--u)); }
+@media (max-width: 1000px) { .bf.bf-lp .bf-vragen { padding-bottom: 56px; } }
+
+/* Zin onder een middenkop zonder weesregel (aannemer diensten: "aan." alleen op de derde regel, gemeten 12 okt op 1265). */
+.bf.bf-lp--totaalrenovatie .bf-lpsectie__onder { text-wrap: pretty; }
+
+/* Bodytekst >= 16 px op gsm (spec §13), gemeten 12 okt op 390 en 1000: de heropunten van de plaatsbezoekpagina's (15 px),
+   de regel "Gratis en vrijblijvend" onder de rekenaarkaart (14 px) en het nummer in de topbalk (14 px). Dak heeft geen
+   heropunten, geen zeker-regel (wel vertrouwen) en geen topbalk: daar verandert niets. De topbalk blijft 40 px hoog
+   (16 px x 1,5 + 2 x 8 px), dus de vaste kop en de ankerafstand (112 px) blijven gelijk. */
+@media (max-width: 1000px) {
+  .bf.bf-lp .bf-lphero__bewijs li { font-size: 16px; }
+  .bf.bf-lp .kgj-reken__zeker { font-size: 16px; }
+  .bf.bf-lp .bf-lptopbalk { font-size: 16px; line-height: 1.5; }
+}
+
+/* ---------- herstel ronde 2 (13 okt): keuring 4 LP's, gemeten op 1265, 1440, 1001, 1000 en 390 ---------- */
+
+/* Werkwijze -> Uitgevoerd werk op richtprijs: twee witte secties na elkaar. Met de volle sblok-ruimte (105 + 97) stond er
+   202 px wit op 1265 en 120 px op 390, meer dan bij een kleurwissel (193). BF verkleint de ruimte bij wit-wit: lpdaken
+   padding-top 40u, op gsm 24 px (bfbouw site.css r.1774 en r.1777). Alleen deze buren: op totaalrenovatie, aannemer en
+   dak staat de werkwijze nooit vlak voor #uitgevoerd. */
+.bf.bf-lp .bf-lpproces + .bf-lpuitgevoerd { padding-top: calc(40 * var(--u)); }
+@media (max-width: 1000px) { .bf.bf-lp .bf-lpproces + .bf-lpuitgevoerd { padding-top: 24px; } }
+
+/* Werkwijze op de renovatie-LP's: de gewone sectieruimte boven (110u / 56 px) zoals elke andere sectie op deze pagina's en
+   BF proces (96,6 px op 1265). Met 80u stond de kop 26 px dichter bij de kleurgrens dan alle andere koppen (gemeten 13 okt:
+   inhoud 70 tegen 97 op 1265, 48 tegen 56 op 390). Dak houdt 80u: daar volgt de werkwijze een witte sectie met 26 px onderruimte. */
+.bf.bf-lp:not(.bf-lp--dakwerken) .bf-lpproces { padding-top: calc(110 * var(--u)); }
+@media (max-width: 1000px) { .bf.bf-lp:not(.bf-lp--dakwerken) .bf-lpproces { padding-top: 56px; } }
+
+/* Werkwijze zonder foto op de renovatie-LP's (computer): kop en ondertitel gecentreerd zoals de andere sectiekoppen op deze
+   pagina's. BF zet de kop alleen links omdat er rechts een trajectfoto naast staat; hier is er geen foto en bleef rechts een
+   leeg vlak tot de rand van het raam. Op <= 1000 px blijft de kop links zoals BF. Dak blijft zoals het is (geen regressie). */
+@media (min-width: 1001px) {
+  .bf.bf-lp:not(.bf-lp--dakwerken) .bf-lpproces__top { text-align: center; }
+  .bf.bf-lp:not(.bf-lp--dakwerken) .bf-lpproces__top .bf-proces__tekst { margin-inline: auto; }
+}
+
+/* Uitgevoerd werk: zelfde breedte en 3 tegels als de rail op de home (bf-ho-raam 1200u). lp-bf.css r.505/509 houdt de vaste
+   974/309 px van LpKgj. Op <= 1000 blijft 78 % (zoals de home). */
+.bf.bf-lp .bf-lpkgj .kgj-werkspoor { max-width: none; }
+@media (min-width: 1001px) { .bf.bf-lp .bf-lpkgj .kgj-werkspoor__foto { flex-basis: calc((100% - 48px) / 3); } }
+/* Pijlen en teller in AB-inkt en BF-grijs (spec §5). Zelfde specificiteit als lp-bf.css r.521 (0,5,1) en r.518 (0,5,0), dus
+   de laadvolgorde beslist. Binnen .bf-lpkgj is --ink #0a1628 en --tekst-2 #545458. De hover-regel (r.525, 0,6,1) blijft winnen. */
+.bf.bf-lp .bf-lpkgj :is(.kgj-werkspoor, .kgj-schuif__wissel) .pc-bediening button { color: var(--ink); }
+.bf.bf-lp .bf-lpkgj .kgj-schuif__wissel .pc-bediening-tel { color: var(--tekst-2); }
+
+/* Fotodienstkaarten (totaalrenovatie, aannemer): de ronde icoonbadge op de fotorand zoals BF dkaart__icoon (bf.css L962-964).
+   De badge steekt 26u onder de foto uit, dus de kaarttekst krijgt de BF-bovenruimte (40u, ook 40 px op gsm: BF L965) in plaats
+   van 22u / 14 px, anders lag de badge over de kaartkop. Kaarten zonder foto (dak, richtprijs) hebben geen badge. */
+.bf.bf-lp .bf-dkaarten__raster--lp .bf-dkaart:has(> .bf-dkaart__media > .bf-dkaart__icoon) .bf-dkaart__body { padding-top: calc(40 * var(--u)); }
+
+/* Gsm: wie met Tab door de pagina gaat, ziet het element met focus volledig, niet half onder de vaste kop of de vaste
+   gsm-balk onderaan (gemeten 13 okt op 390: FAQ-vraag 83 % onder de balk, keuze 'Halfopen bebouwing' 39 % onder de kop).
+   Alleen focusbare elementen: de ankers van de sitelinks (section, div#rekenaar, li) houden hun eigen afstand. Het fotospoor
+   (kgj-werkspoor__spoor) is een scrollvak zonder focusbare kinderen; Chrome zet het zelf in de Tab-volgorde (gemeten: 23 %
+   onder de balk op richtprijs). */
+@media (max-width: 1000px) {
+  .bf.bf-lp a, .bf.bf-lp button, .bf.bf-lp summary, .bf.bf-lp input, .bf.bf-lp select, .bf.bf-lp .kgj-werkspoor__spoor { scroll-margin-top: 80px; scroll-margin-bottom: 96px; }
+}
+
+/* Gsm: het nummer in de vaste topbalk (totaalrenovatie, aannemer) is de enige bellink bovenaan. Tikvlak >= 44 px hoog (spec
+   §13); de negatieve marge houdt de balk 40 px hoog (gemeten 13 okt: link 110 x 21 px). */
+@media (max-width: 1000px) {
+  .bf.bf-lp .bf-lptopbalk a { display: inline-block; padding: 12px 6px; margin: -12px -6px; }
+}
+
+/* Gsm: bodytekst >= 16 px (spec §13) voor de antwoorden van de afvinkvraag en de privacyzin onder het formulier (gemeten
+   13 okt op 390: 15 en 14 px). Staat NA de regels r.200 en r.210 (zelfde specificiteit): de volgorde beslist. */
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken__vink { font-size: 16px; }
+  .bf.bf-lp .kgj-reken__privacy { font-size: 16px; }
 }

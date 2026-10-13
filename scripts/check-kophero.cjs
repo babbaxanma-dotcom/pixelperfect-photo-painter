@@ -80,6 +80,17 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
         const waar = `${pad} @${breedte}x${hoogte}`;
         const p = await browser.newPage();
         await p.setViewport({ width: breedte, height: hoogte, isMobile: breedte < 500, hasTouch: breedte < 500 });
+        /* Niets naar buiten (13 okt 2026): met toestemming aan laadde index.html gtag (Google Ads) en Clarity op elke
+           meting vanaf localhost. Tags en leadverzoeken krijgen een leeg antwoord, tel: en mailto: worden afgebroken. */
+        await p.setRequestInterception(true);
+        p.on('request', (r) => {
+          const u = r.url();
+          if (/^(tel|mailto):/.test(u)) return r.abort();
+          if (/clarity\.ms|googletagmanager\.com|google-analytics\.com|googleadservices\.com|doubleclick\.net|leadconnectorhq\.com|web3forms\.com/.test(u)) {
+            return r.respond({ status: 200, contentType: 'application/javascript', headers: { 'access-control-allow-origin': '*' }, body: '' });
+          }
+          return r.continue();
+        });
         await p.evaluateOnNewDocument(() =>
           localStorage.setItem('ab_bouw_consent_v1', JSON.stringify({ analytics: true, marketing: true })));
         await p.goto(`http://localhost:${POORT}${pad}`, { waitUntil: 'networkidle0', timeout: 60000 });

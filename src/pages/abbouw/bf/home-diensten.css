@@ -1,8 +1,9 @@
-/* Dienstensectie van de home: rustig fotoraster (home-diensten.ts). Letter, kleuren en maateenheid (--u) van de nieuwe
-   site; breedte = het raam van 1200u. Desktop: 18 kolommen, zodat de grote tegel een derde breed is, de bovenste rij twee
-   tegels van een derde en de onderste rij drie tegels van twee negende heeft, met dezelfde tussenruimte overal. */
+/* Dienstensectie van de home: één horizontale rij fotokaarten (home-diensten.ts, <ab-dienstenrij>). Letter, kleuren en
+   maateenheid (--u) van de nieuwe site. Kop, intro en knop staan in het raam van 1200u (ongewijzigd); de rij loopt over
+   de volle breedte van het scherm, zodat er links en rechts van de middelste kaart kaarten staan.
+   Desktop: kaart 480u breed (421 px op 1265), 10:11. Gsm: kaart 78 % van de schermbreedte (hoogstens 420 px), 4:5. */
 
-.bf .bf-hd { background: var(--sectie); padding: calc(110 * var(--u)) 0 calc(120 * var(--u)); }
+.bf .bf-hd { background: var(--sectie); padding: calc(110 * var(--u)) 0 calc(88 * var(--u)); }
 .bf .bf-hd-raam { width: calc(1200 * var(--u)); margin: 0 auto; }
 
 .bf .bf-hd-kop { display: flex; align-items: flex-end; justify-content: space-between; gap: calc(48 * var(--u)); }
@@ -10,56 +11,78 @@
 .bf .bf-hd-kop__rechts p { font-size: calc(18 * var(--u)); line-height: calc(28 * var(--u)); color: var(--tekst-2); }
 .bf .bf-hd-knop { margin-top: calc(20 * var(--u)); height: calc(52 * var(--u)); padding: 0 calc(24 * var(--u)); font-size: calc(16 * var(--u)); }
 
-.bf .bf-hd-raster { display: grid; grid-template-columns: repeat(18, minmax(0, 1fr)); grid-template-rows: repeat(2, calc(285 * var(--u))); gap: calc(24 * var(--u)); margin-top: calc(48 * var(--u)); padding: 0; list-style: none; }
-.bf .bf-hd-cel { min-width: 0; }
-.bf .bf-hd-cel--1 { grid-column: 1 / span 6; grid-row: 1 / span 2; }
-.bf .bf-hd-cel--2 { grid-column: 7 / span 6; grid-row: 1; }
-.bf .bf-hd-cel--3 { grid-column: 13 / span 6; grid-row: 1; }
-.bf .bf-hd-cel--4 { grid-column: 7 / span 4; grid-row: 2; }
-.bf .bf-hd-cel--5 { grid-column: 11 / span 4; grid-row: 2; }
-.bf .bf-hd-cel--6 { grid-column: 15 / span 4; grid-row: 2; }
+/* ---------- de rij ---------- */
+.bf .bf-hd-rij { --kaart: calc(480 * var(--u)); --tussen: calc(24 * var(--u)); display: block; position: relative; margin-top: calc(16 * var(--u)); }
+/* Binnenmarge links en rechts = de helft van wat naast één kaart overblijft: zo kan ook de eerste en de laatste kaart in
+   het midden staan. Boven en onder ruimte voor de schaduw van de middelste kaart (de baan knipt wat buiten haar valt). */
+.bf .bf-hd-baan { position: relative; display: flex; gap: var(--tussen); margin: 0; padding: calc(32 * var(--u)) calc((100% - var(--kaart)) / 2); list-style: none; overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.bf .bf-hd-baan::-webkit-scrollbar { display: none; }
+/* De li is het vastklikpunt en schaalt zelf nooit: Chrome rekent de schaal van het snap-element mee, en dan stopte
+   "vorige" op 1265 17 px naast het midden (0,04 x 422 px, gemeten 13 okt). De schaal zit op de link erin. */
+.bf .bf-hd-kaart { flex: 0 0 var(--kaart); min-width: 0; aspect-ratio: 10 / 11; scroll-snap-align: center; }
 
-/* de hele tegel is één link */
-.bf .bf-hd-tegel { position: relative; isolation: isolate; display: block; height: 100%; border-radius: calc(16 * var(--u)); overflow: hidden; background: var(--ink); color: #fff; }
+/* de hele kaart is één link */
+.bf .bf-hd-tegel { position: relative; isolation: isolate; display: block; height: 100%; border-radius: calc(16 * var(--u)); overflow: hidden; background: var(--ink); color: #fff; transform: scale(1); transition: transform .25s ease, box-shadow .25s ease; }
+/* de kaarten naast het midden: iets kleiner, naar het midden toe verankerd (zo blijft de tussenruimte naast de middelste
+   kaart gelijk en gluren de buren zo ver mogelijk in beeld) */
+.bf .bf-hd-kaart.is-links .bf-hd-tegel { transform-origin: 100% 50%; }
+.bf .bf-hd-kaart.is-rechts .bf-hd-tegel { transform-origin: 0 50%; }
+.bf .bf-hd-kaart:not(.is-midden) .bf-hd-tegel { transform: scale(.92); }
+.bf .bf-hd-kaart:not(.is-midden):hover .bf-hd-tegel, .bf .bf-hd-kaart:not(.is-midden):focus-within .bf-hd-tegel { transform: scale(1); }
+.bf .bf-hd-kaart.is-midden .bf-hd-tegel { box-shadow: 0 calc(18 * var(--u)) calc(34 * var(--u)) calc(-18 * var(--u)) rgba(10, 22, 40, .45); }
 .bf .bf-hd-tegel__beeld { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; transform: scale(1); transition: transform .6s cubic-bezier(.2, .7, .2, 1); }
-/* donkere verlooplaag onderaan; de tekst staat altijd op het donkere deel (contrast wit op de lichtste pixel onder de tekst >= 4,5:1, gemeten 12 okt op 1265 en 390) */
-.bf .bf-hd-tegel::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(10, 22, 40, 0) 28%, rgba(10, 22, 40, .62) 55%, rgba(10, 22, 40, .92) 100%); }
-.bf .bf-hd-tegel__tekst { position: absolute; left: calc(26 * var(--u)); right: calc(26 * var(--u)); bottom: calc(24 * var(--u)); display: block; }
-.bf .bf-hd-tegel h3 { font-size: calc(22 * var(--u)); font-weight: 700; line-height: calc(28 * var(--u)); color: #fff; }
-.bf .bf-hd-cel--1 .bf-hd-tegel h3 { font-size: calc(30 * var(--u)); line-height: calc(36 * var(--u)); }
-.bf .bf-hd-tegel__zin { display: block; margin-top: calc(6 * var(--u)); font-size: calc(16 * var(--u)); line-height: calc(24 * var(--u)); color: #fff; }
-.bf .bf-hd-tegel__pijl { position: absolute; top: calc(18 * var(--u)); right: calc(18 * var(--u)); display: grid; place-items: center; width: calc(44 * var(--u)); height: calc(44 * var(--u)); border-radius: 50%; background: rgba(255, 255, 255, .94); color: var(--ink); transition: background-color .2s ease, color .2s ease; }
+/* donkere verlooplaag onderaan; de tekst staat altijd op het donkere deel (contrast gemeten 13 okt op 1265 en 390) */
+.bf .bf-hd-tegel::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(10, 22, 40, 0) 42%, rgba(10, 22, 40, .64) 66%, rgba(10, 22, 40, .93) 100%); }
+/* de dimlaag van de kaarten naast het midden: over foto en pijl, onder de tekst (de tekst blijft wit en leesbaar) */
+.bf .bf-hd-tegel__sluier { position: absolute; inset: 0; background: rgba(10, 22, 40, .4); opacity: 0; transition: opacity .25s ease; pointer-events: none; }
+.bf .bf-hd-kaart:not(.is-midden) .bf-hd-tegel__sluier { opacity: 1; }
+.bf .bf-hd-kaart:not(.is-midden):hover .bf-hd-tegel__sluier, .bf .bf-hd-kaart:not(.is-midden):focus-within .bf-hd-tegel__sluier { opacity: 0; }
+.bf .bf-hd-tegel__tekst { position: absolute; left: calc(30 * var(--u)); right: calc(30 * var(--u)); bottom: calc(28 * var(--u)); display: block; }
+.bf .bf-hd-tegel h3 { font-size: calc(26 * var(--u)); font-weight: 700; line-height: calc(32 * var(--u)); color: #fff; }
+.bf .bf-hd-tegel__zin { display: block; margin-top: calc(8 * var(--u)); font-size: calc(17 * var(--u)); line-height: calc(25 * var(--u)); color: #fff; }
+.bf .bf-hd-tegel__pijl { position: absolute; top: calc(20 * var(--u)); right: calc(20 * var(--u)); display: grid; place-items: center; width: calc(46 * var(--u)); height: calc(46 * var(--u)); border-radius: 50%; background: rgba(255, 255, 255, .94); color: var(--ink); transition: background-color .2s ease, color .2s ease; }
 .bf .bf-hd-tegel__pijl svg { width: calc(16 * var(--u)); height: calc(16 * var(--u)); }
 .bf .bf-hd-tegel:hover .bf-hd-tegel__beeld, .bf .bf-hd-tegel:focus-visible .bf-hd-tegel__beeld { transform: scale(1.035); }
 .bf .bf-hd-tegel:hover .bf-hd-tegel__pijl, .bf .bf-hd-tegel:focus-visible .bf-hd-tegel__pijl { background: var(--merk); color: var(--op-merk); }
-/* de drie smalle tegels onderaan (alleen desktop): de tekst neemt daar een groter deel van de hoogte, dus begint het donker hoger */
-@media (min-width: 1001px) {
-  .bf .bf-hd-cel--4 .bf-hd-tegel::after, .bf .bf-hd-cel--5 .bf-hd-tegel::after, .bf .bf-hd-cel--6 .bf-hd-tegel::after { background: linear-gradient(180deg, rgba(10, 22, 40, 0) 16%, rgba(10, 22, 40, .68) 42%, rgba(10, 22, 40, .93) 100%); }
-  .bf .bf-hd-cel--4 .bf-hd-tegel h3, .bf .bf-hd-cel--5 .bf-hd-tegel h3, .bf .bf-hd-cel--6 .bf-hd-tegel h3 { font-size: calc(20 * var(--u)); line-height: calc(26 * var(--u)); }
-  .bf .bf-hd-cel--4 .bf-hd-tegel__zin, .bf .bf-hd-cel--5 .bf-hd-tegel__zin, .bf .bf-hd-cel--6 .bf-hd-tegel__zin { font-size: calc(15 * var(--u)); line-height: calc(22 * var(--u)); }
+
+/* ---------- vorige / volgende: rond, wit, grijze rand; goud bij hover (zoals .bf-ho-bediening in home-oud.css) ---------- */
+.bf .bf-hd-schuif { position: absolute; top: 50%; z-index: 2; display: grid; place-items: center; width: calc(50 * var(--u)); height: calc(50 * var(--u)); margin-top: calc(-25 * var(--u)); padding: 0; border: 0; border-radius: 50%; background: var(--wit); color: var(--ink); cursor: pointer; box-shadow: inset 0 0 0 1px #dddddd; transition: background-color .18s ease, color .18s ease, opacity .18s ease; }
+.bf .bf-hd-schuif svg { width: calc(14 * var(--u)); height: calc(14 * var(--u)); }
+.bf .bf-hd-schuif--vorige { left: calc(50% - 600 * var(--u)); }
+.bf .bf-hd-schuif--volgende { right: calc(50% - 600 * var(--u)); }
+.bf .bf-hd-schuif:hover { background: var(--merk); color: var(--op-merk); box-shadow: none; }
+/* aan het begin of het einde van de rij: zichtbaar maar zwak, blijft bereikbaar met het toetsenbord */
+.bf .bf-hd-schuif[aria-disabled="true"] { opacity: .4; cursor: default; }
+.bf .bf-hd-schuif[aria-disabled="true"]:hover { background: var(--wit); color: var(--ink); box-shadow: inset 0 0 0 1px #dddddd; }
+
+/* minder beweging: geen schaal en geen zoom, wel het helderheidsverschil */
+@media (prefers-reduced-motion: reduce) {
+  .bf .bf-hd-tegel, .bf .bf-hd-kaart:not(.is-midden) .bf-hd-tegel, .bf .bf-hd-kaart:not(.is-midden):hover .bf-hd-tegel { transform: none; transition: box-shadow .25s ease; }
+  .bf .bf-hd-tegel__beeld { transition: none; }
+  .bf .bf-hd-tegel:hover .bf-hd-tegel__beeld, .bf .bf-hd-tegel:focus-visible .bf-hd-tegel__beeld { transform: none; }
 }
-@media (prefers-reduced-motion: reduce) { .bf .bf-hd-tegel__beeld { transition: none; } }
 
 /* ---------- gsm en tablet ---------- */
 @media (max-width: 1000px) {
-  .bf .bf-hd { padding: 56px 0 64px; }
+  .bf .bf-hd { padding: 56px 0 40px; }
   .bf .bf-hd-raam { width: auto; padding: 0 16px; }
   .bf .bf-hd-kop { display: block; }
   .bf .bf-hd-kop__rechts { max-width: none; margin-top: 12px; }
   .bf .bf-hd-kop__rechts p { font-size: 16px; line-height: 25px; }
   .bf .bf-hd-knop { margin-top: 16px; height: 52px; padding: 0 22px; font-size: 16px; }
-  .bf .bf-hd-raster { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; gap: 12px; margin-top: 28px; }
-  .bf .bf-hd-cel { grid-column: auto; grid-row: auto; aspect-ratio: 1 / 1; }
-  /* eerste tegel groot over de volle breedte; een oneven laatste tegel ook over de volle breedte */
-  .bf .bf-hd-cel--1 { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 4 / 3; }
-  .bf .bf-hd-cel:nth-child(even):last-child { grid-column: 1 / -1; aspect-ratio: 2 / 1; }
+  .bf .bf-hd-rij { --kaart: min(78vw, 420px); --tussen: 12px; margin-top: 8px; }
+  .bf .bf-hd-baan { padding-top: 20px; padding-bottom: 24px; }
+  .bf .bf-hd-kaart { aspect-ratio: 4 / 5; }
   .bf .bf-hd-tegel { border-radius: 14px; }
-  .bf .bf-hd-tegel::after { background: linear-gradient(180deg, rgba(10, 22, 40, 0) 18%, rgba(10, 22, 40, .64) 42%, rgba(10, 22, 40, .93) 100%); }
-  .bf .bf-hd-cel--1 .bf-hd-tegel::after, .bf .bf-hd-cel:nth-child(even):last-child .bf-hd-tegel::after { background: linear-gradient(180deg, rgba(10, 22, 40, 0) 25%, rgba(10, 22, 40, .66) 52%, rgba(10, 22, 40, .93) 100%); }
-  .bf .bf-hd-tegel__tekst { left: 14px; right: 14px; bottom: 14px; }
-  .bf .bf-hd-tegel h3 { font-size: 16px; line-height: 21px; }
-  .bf .bf-hd-cel--1 .bf-hd-tegel h3 { font-size: 22px; line-height: 28px; }
-  .bf .bf-hd-tegel__zin { margin-top: 4px; font-size: 14px; line-height: 20px; }
-  .bf .bf-hd-tegel__pijl { top: 10px; right: 10px; width: 36px; height: 36px; }
+  .bf .bf-hd-kaart.is-midden .bf-hd-tegel { box-shadow: 0 14px 24px -14px rgba(10, 22, 40, .45); }
+  .bf .bf-hd-tegel__tekst { left: 18px; right: 18px; bottom: 18px; }
+  .bf .bf-hd-tegel h3 { font-size: 20px; line-height: 26px; }
+  .bf .bf-hd-tegel__zin { margin-top: 4px; font-size: 15px; line-height: 22px; }
+  .bf .bf-hd-tegel__pijl { top: 12px; right: 12px; width: 40px; height: 40px; }
   .bf .bf-hd-tegel__pijl svg { width: 14px; height: 14px; }
+  /* de knoppen staan over de gluurstrook van de buren, niet over de middelste kaart */
+  .bf .bf-hd-schuif { width: 36px; height: 36px; margin-top: -18px; }
+  .bf .bf-hd-schuif svg { width: 12px; height: 12px; }
+  .bf .bf-hd-schuif--vorige { left: 4px; }
+  .bf .bf-hd-schuif--volgende { right: 4px; }
 }

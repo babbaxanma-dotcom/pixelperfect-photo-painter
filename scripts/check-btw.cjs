@@ -16,7 +16,7 @@
  *   3. een van de voeten of de voorwaarden het nummer niet uit CONTACT.btw haalt:
  *      LpReplica.tsx (homepage), _rp.ts (informatiepagina's), LpKgj.tsx (landingspagina's),
  *      Voorwaarden.tsx, en de voorwaarden in de BF-stijl (bf/JuridischBf.tsx), en de voet van de
- *      landingspagina's in de BF-stijl (lp/kgj/LpBf.tsx, één regel: © · BTW · adres, zoals BF lpvoet).
+ *      landingspagina's in de BF-stijl (lp/kgj/LpBf.tsx, 2x: de contactkolom en de onderregel, zoals de voet van live LpKgj).
  *
  * Positieve controle (zonder: exit 2): het patroon van stap 2 vangt een geplant oud nummer en de telling van
  * stap 3 vangt een geplante voet zonder CONTACT.btw.display.
@@ -62,7 +62,7 @@ loop(WORTEL);
 for (const [bestand, minimaal] of [
   ['pages/abbouw/lp/replica/LpReplica.tsx', 2], ['pages/abbouw/_rp.ts', 2],
   ['pages/abbouw/lp/kgj/LpKgj.tsx', 2], ['pages/abbouw/Voorwaarden.tsx', 1],
-  ['pages/abbouw/bf/JuridischBf.tsx', 1], ['pages/abbouw/lp/kgj/LpBf.tsx', 1],
+  ['pages/abbouw/bf/JuridischBf.tsx', 1], ['pages/abbouw/lp/kgj/LpBf.tsx', 2],
 ]) {
   const t = fs.readFileSync(path.join(WORTEL, bestand), 'utf8');
   const n = telBron(t);

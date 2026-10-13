@@ -127,17 +127,20 @@ export function inspectieBand(o: { kop: string; tekst: string; knop: string; hee
 </div></section>`;
 }
 
-/* ---------- traject (BF build.cjs r.270-279) met n stappen en een optionele tijdregel ---------- */
+/* ---------- traject (BF build.cjs r.270-279) met n stappen en een optionele tijdregel ----------
+   pijlen: false laat de verbindingspijlen tussen de stappen weg (home, Mohammed 13 okt: "op home page haal de pijltjes
+   tussen stap 1 2 3 4 5 weg"). Zonder de optie is de uitvoer ongewijzigd (/werkwijze, afdelingspagina's). */
 export type Stap = { titel: string; tekst: string; icoon: IcoonNaam; tijd?: string };
 const PIJL = '<svg class="bf-pstap__pijl" viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 22c6-12 16-17 27-14 5 1.5 8 4 10 7"/><path d="M33 16l7 .5 1-7"/></svg>';
-export function traject(o: { id: string; kop: string[]; tekst?: string; knop?: { tekst: string; href: string }; foto: Foto; stappen: Stap[] }) {
+export function traject(o: { id: string; kop: string[]; tekst?: string; knop?: { tekst: string; href: string }; foto: Foto; stappen: Stap[]; pijlen?: boolean }) {
   const n = o.stappen.length;
+  const pijl = o.pijlen === false ? '' : PIJL;
   return `<section class="bf-proces" id="${o.id}" aria-labelledby="${o.id}-kop">
 <div class="bf-proces__top">
 <div class="bf-proces__intro"><h2 class="bf-h2" id="${o.id}-kop">${o.kop.map(esc).join('<br>')}</h2>${o.tekst ? `<p class="bf-proces__tekst">${esc(o.tekst)}</p>` : ''}${o.knop ? `<a class="bf-knop bf-proces__knop" href="${o.knop.href}">${esc(o.knop.tekst)}${ICOON.pijlR}</a>` : ''}</div>
 <figure class="bf-proces__foto">${beeld(o.foto.naam, { alt: o.foto.alt, sizes: '(max-width: 1000px) 100vw, 600px', pos: o.foto.pos })}</figure>
 </div>
-<ol class="bf-proces__stappen bf-proces__stappen--${n}">${o.stappen.map((st, i) => `<li class="bf-pstap"><div class="bf-pstap__top"><span class="bf-pstap__ic" aria-hidden="true">${ICOON[st.icoon]}</span><span class="bf-pstap__nr">Stap ${i + 1}</span></div><h3>${esc(st.titel)}</h3>${st.tijd ? `<span class="bf-pstap__tijd">${esc(st.tijd)}</span>` : ''}<p>${esc(st.tekst)}</p>${i < n - 1 ? PIJL : ''}</li>`).join('')}</ol>
+<ol class="bf-proces__stappen bf-proces__stappen--${n}">${o.stappen.map((st, i) => `<li class="bf-pstap"><div class="bf-pstap__top"><span class="bf-pstap__ic" aria-hidden="true">${ICOON[st.icoon]}</span><span class="bf-pstap__nr">Stap ${i + 1}</span></div><h3>${esc(st.titel)}</h3>${st.tijd ? `<span class="bf-pstap__tijd">${esc(st.tijd)}</span>` : ''}<p>${esc(st.tekst)}</p>${i < n - 1 ? pijl : ''}</li>`).join('')}</ol>
 </section>`;
 }
 

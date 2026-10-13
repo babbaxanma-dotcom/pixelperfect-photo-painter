@@ -14,8 +14,8 @@
  *   - document.title, robots noindex,nofollow en scrollTo(0,0) (r.76-81);
  *   - kop en lede per soort (TEKST r.30-41) en de belregel "Liever telefonisch? Bel ons op" (r.55-56).
  * De klant-sms'en uit het CRM linken naar deze adressen ZONDER parameter: zonder ?week werkt de pagina precies zoals
- * Afspraak.tsx. Nieuw is alleen de regel "U koos: deze week." / "U koos: volgende week." wanneer de bezoeker op de
- * bedankpagina een week koos (?week=deze|volgende).
+ * Afspraak.tsx. Nieuw is alleen de regel "U koos: deze week." / "U koos volgende week: tik in de agenda op een dag in
+ * de week van <maandag>." wanneer de bezoeker op de bedankpagina een week koos (?week=deze|volgende).
  */
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -45,10 +45,24 @@ const TEKST: Record<AfspraakSoort, { kop: string; lede: string; titel: string }>
   },
 };
 
-/* De keuze van de bedankpagina (BedanktBf.tsx: "Deze week" / "Volgende week"). Andere waarden: geen regel. */
-const WEEK: Record<string, string> = {
-  deze: 'U koos: deze week.',
-  volgende: 'U koos: volgende week.',
+/* De keuze van de bedankpagina (BedanktBf.tsx: "Plan deze week" / "Plan volgende week"). Andere waarden: geen regel.
+   De GHL-widget heeft geen parameter voor de startdatum (13 okt gemeten: de widgetcode zet calendarStartingDate op
+   vandaag en leest geen datum uit de url; date, startDate, start_date, selectedDate, appointmentDate, day en een
+   startDate in ms gaven alle 7 dezelfde dag) en hij selecteert zelf de eerste vrije dag. Deze week: die dag ligt in
+   deze week (de bedankpagina toont "Plan deze week" alleen met vrije momenten deze week). Volgende week: de regel
+   zegt welke dag de bezoeker zelf aantikt. De widget is een MAANDkalender (de pijl gaat naar de volgende maand), dus
+   de regel noemt de week bij naam ("de week van 19 oktober"), niet de pijl. */
+function weekVanVolgende(nu = Date.now()) {
+  const d = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Brussels', year: 'numeric', month: 'numeric', day: 'numeric' })
+    .formatToParts(nu).map((p) => [p.type, Number(p.value)]));
+  const ma = (new Date(Date.UTC(d.year, d.month - 1, d.day)).getUTCDay() + 6) % 7; // 0 = maandag
+  const maandag = Date.UTC(d.year, d.month - 1, d.day + 7 - ma);
+  return new Intl.DateTimeFormat('nl-BE', { timeZone: 'UTC', day: 'numeric', month: 'long' }).format(maandag);
+}
+const weekRegel = (w: string) => {
+  if (w === 'deze') return 'U koos: deze week.';
+  if (w === 'volgende') return `U koos volgende week: tik in de agenda op een dag in de week van ${weekVanVolgende()}.`;
+  return '';
 };
 
 /* Berichten van een GHL-kalender die al van de pagina weg is, gaan niet meer naar form_embed.js. In de funnel gaat de
@@ -76,7 +90,7 @@ const Ic = ({ svg, className }: { svg: string; className?: string }) => (
 export default function AfspraakBf({ soort = 'plaatsbezoek' }: { soort?: AfspraakSoort }) {
   const t = TEKST[soort];
   const [params] = useSearchParams();
-  const week = WEEK[(params.get('week') || '').toLowerCase()] || '';
+  const week = weekRegel((params.get('week') || '').toLowerCase());
 
   useEffect(() => {
     document.title = t.titel;
@@ -113,7 +127,7 @@ export default function AfspraakBf({ soort = 'plaatsbezoek' }: { soort?: Afspraa
         {/* lede + weekregel: op desktop op één regel (afspraak.css), zodat het datumraster hoger in beeld komt */}
         <div className="bf-afs__intro">
           <p className="bf-afs__lede">{t.lede}</p>
-          {week && <p className="bf-afs__week"><Ic svg={ICOON.planning} className="bf-afs__week-ic" />{week}</p>}
+          {week && <p className={`bf-afs__week${week.length > 30 ? " bf-afs__week--lang" : ""}`}><Ic svg={ICOON.planning} className="bf-afs__week-ic" /><span>{week}</span></p>}
         </div>
         <div className="bf-afs__kalender">
           <iframe src={KALENDER_URL} id={`${KALENDER_ID}_afspraak`} title="Kalender plaatsbezoek AB Bouw Groep"

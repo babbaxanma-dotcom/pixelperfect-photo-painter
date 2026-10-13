@@ -9,13 +9,27 @@
  * verdere pagina waar ze het moment zelf kunnen prikken in de agenda via de calender, want de kans is groot dat als je
  * direct calendar doet dat ze de klus kwijt raken de meeste mensen, en perongeluk niet verder gaan" + "ik laat jou je
  * gang gaan".
- *   Stap 1 = deze pagina: drie keuzes ("Deze week", "Volgende week", "Later", de woorden van BF dank__momenten). Eén tik
- *     is meteen door, zonder verzendknop. GEEN kalender op deze pagina.
+ *   Stap 1 = deze pagina: de keuzekaart. GEEN kalender op deze pagina. Eén tik is meteen door, zonder verzendknop.
  *   Stap 2 = /dakinspectie of /afspraak (AfspraakBf.tsx) met ?week=deze|volgende: daar staat de GHL-kalender.
- *   "Later" = geen kalender: de kaart toont een vink en een link naar de agenda zonder week; na de rekenaar ook de zin
- *     uit Bedankt.tsx r.77 (bij de gewone aanvraag staat die zin al als lede onder de h1).
+ *
+ * Keuzekaart na het CRO-advies dat Mohammed op 13 okt 2026 plakte ("behalve dat review dingetje, dat is al oke hoe je
+ * het nu hebt" + "doe basis cro, doe ook zelf dingen om cro te verbeteren voor de cta"):
+ *   - "Plan deze week" (hoofdknop, goud met navy tekst zoals elke goudknop van de site) en "Plan volgende week"
+ *     (omlijnd in goud), elk met het aantal vrije momenten uit Bardhs agenda in die week (maandag t/m zondag,
+ *     Europe/Brussels), hoogstens 4 zoals de teller ("4 gratis inspectieslots beschikbaar"). Een week met 0 vrije
+ *     momenten: die knop weg. Faalt de API (of antwoordt hij niet binnen 5 s): knoppen zonder aantal, nooit een getal.
+ *     Staat er maar één planknop, dan is die de hoofdknop; staan er geen, dan is "Bel mij terug" de hoofdknop.
+ *   - "Later" is weg (nodigt uit tot uitstel); "Bel mij terug" in de plaats. Die tik stuurt NIETS: Bardh krijgt bij
+ *     elke aanvraag al een beltaak. De kaart toont dan de zin uit Bedankt.tsx r.77, de belregel en "Toch nu een
+ *     moment kiezen" (agenda zonder week).
+ *   - Onder de planknoppen de microcopy uit het advies in de u-vorm van de site, en twee vinkpunten: "Gratis en
+ *     vrijblijvend" (LP's: kgj/inhoud.ts en inhoud-totaalrenovatie.ts, velden zeker en troeven) en "Volledig
+ *     transparante offerte" (dictaat Mohammed 13 okt; /over: "Onze offertes zijn helder en tot in detail
+ *     uitgeschreven", inhoud-over.ts r.66).
+ *   - "5,0 op Google" blijft zoals het was (geen aantal reviews).
  *   Een tik stuurt NIETS naar GHL of Web3Forms (elke webhook start W01: nieuwe opportunity + sms aan klant en Bardh).
- *   Wel één Clarity-gebeurtenis "bedankt-moment-<keuze>", zodat de uitval te meten is (meldClarity: niets zonder Clarity).
+ *   Wel één Clarity-gebeurtenis "bedankt-moment-deze|volgende|bellen", zodat de uitval te meten is (meldClarity: niets
+ *   zonder Clarity).
  *
  * Opbouw zoals BF: heldfoto over de volle breedte met donkere laag; links vink + h1 + lede + brugtekst + 3 genummerde
  * stappen; rechts een witte kaart; kop met alleen logo + belknop, geen menu; voet van één regel.
@@ -27,11 +41,12 @@
  *   ?dienst= / ?service= bevat "dak" -> dakinspectie, anders (totaalrenovatie-LP's, siteformulieren, chat) -> plaatsbezoek;
  *   ?van=rekenaar -> de richtprijs-variant (vergrendeld bedrag: dak vijf cijfers, renovatie zes, zoals de rekenaar).
  * Gedrag gelijk aan Bedankt.tsx r.154-177: titel, robots noindex,nofollow, scrollTo(0,0), meldClarity('aanvraag-verstuurd')
- * behalve bij van=rekenaar, de live teller van vrije inspectiemomenten (dak + rekenaar). CalcPopup blijft weg
- * (SKIP_PATTERNS /bedankt).
+ * behalve bij van=rekenaar, de live teller van vrije inspectiemomenten (dak + rekenaar, komende 7 dagen). CalcPopup
+ * blijft weg (SKIP_PATTERNS /bedankt).
+ * Gsm: de keuzekaart staat direct onder de h1 (en onder het vergrendelde bedrag), vóór de brugtekst en de stappen.
  *
  * Elke zin heeft een bron (per regel hieronder). Een BF-vak zonder AB-bron is weggelaten: geen brugkop bij het
- * plaatsbezoek, geen vraag boven de drie keuzes ("Wanneer past een bezoek?" is BF-tekst), geen label boven het bedrag.
+ * plaatsbezoek, geen vraag boven de keuzes ("Wanneer past een bezoek?" is BF-tekst), geen label boven het bedrag.
  */
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
@@ -48,14 +63,60 @@ import './bedankt.css';
 const KALENDER_ID = 'ST3uIpAM7kFEokIm2NM7';
 
 type Dienst = 'dakinspectie' | 'plaatsbezoek';
-type Keuze = 'deze-week' | 'volgende-week' | 'later';
+type Week = 'deze' | 'volgende';
 
-/* De drie keuzes: de woorden van BF dank__momenten (bfbouw-website dist/lp/dakwerken/bedankt). */
-const KEUZES: { k: Keuze; t: string }[] = [
-  { k: 'deze-week', t: 'Deze week' },
-  { k: 'volgende-week', t: 'Volgende week' },
-  { k: 'later', t: 'Later' },
+/* De planknoppen: woorden uit het CRO-advies (13 okt). De week gaat als ?week= mee naar de agendapagina. */
+const PLAN: { k: Week; t: string }[] = [
+  { k: 'deze', t: 'Plan deze week' },
+  { k: 'volgende', t: 'Plan volgende week' },
 ];
+/* CRO-advies 13 okt ("Kies direct een dag en tijdstip die jou uitkomen."), in de u-vorm van de site. */
+const MICRO = 'Kies direct een dag en tijdstip die u uitkomen.';
+/* Vinkpunten: "Gratis en vrijblijvend" staat op de LP's (kgj/inhoud.ts, zeker en troeven), "Volledig transparante offerte" is
+   het dictaat van 13 okt ("Volledig transparante offerte als trust bolletje toevoegen"), bron /over inhoud-over.ts r.66. */
+const ZEKER = ['Gratis en vrijblijvend', 'Volledig transparante offerte'];
+
+/* Vrije momenten per week. De free-slots-API antwoordt per dag ("2026-10-14": { slots: [...] }) in de gevraagde
+   tijdzone, plus metavelden (traceId, podName: dezelfde lijst als de GHL-widget negeert). Een andere sleutel of vorm
+   = geen bruikbaar antwoord: dan geen getal (nooit een verzonnen 0). */
+const TZ = 'Europe/Brussels';
+const META = ['traceId', 'podName'];
+const DAG = /^\d{4}-\d{2}-\d{2}$/;
+type Vrij = { deze: number; volgende: number; zeven: number };
+
+/** 'JJJJ-MM-DD' van een tijdstip in Brussel */
+function dagIn(ms: number) {
+  const d = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit' })
+    .formatToParts(ms).map((p) => [p.type, p.value]));
+  return `${d.year}-${d.month}-${d.day}`;
+}
+const plusDagen = (dag: string, n: number) => {
+  const [j, m, d] = dag.split('-').map(Number);
+  return new Date(Date.UTC(j, m - 1, d + n)).toISOString().slice(0, 10);
+};
+/** deze week = vandaag t/m zondag, volgende week = maandag t/m zondag daarna (Brussel) */
+function weken(nu: number) {
+  const vandaag = dagIn(nu);
+  const [j, m, d] = vandaag.split('-').map(Number);
+  const ma = (new Date(Date.UTC(j, m - 1, d)).getUTCDay() + 6) % 7; // 0 = maandag
+  return { vandaag, zondag: plusDagen(vandaag, 6 - ma), volgMa: plusDagen(vandaag, 7 - ma), volgZo: plusDagen(vandaag, 13 - ma) };
+}
+function telVrij(d: unknown, nu: number): Vrij | null {
+  if (!d || typeof d !== 'object' || Array.isArray(d)) return null;
+  const w = weken(nu);
+  const v: Vrij = { deze: 0, volgende: 0, zeven: 0 };
+  for (const [dag, waarde] of Object.entries(d as Record<string, unknown>)) {
+    if (META.includes(dag)) continue;
+    const slots = (waarde as { slots?: unknown } | null)?.slots;
+    if (!DAG.test(dag) || !Array.isArray(slots)) return null;
+    if (dag >= w.vandaag && dag <= w.zondag) v.deze += slots.length;
+    else if (dag >= w.volgMa && dag <= w.volgZo) v.volgende += slots.length;
+    /* teller na de dak-rekenaar: zoals Bedankt.tsx r.165-177, de komende 7 dagen */
+    v.zeven += slots.filter((s) => { const t = Date.parse(String(s)); return t >= nu && t <= nu + 7 * 864e5; }).length;
+  }
+  return v;
+}
+const momenten = (n: number) => (n === 1 ? 'nog 1 vrij moment' : `nog ${n} vrije momenten`);
 
 type Tekst = {
   /** '' = geen bron, vak weg */
@@ -122,9 +183,10 @@ export default function BedanktBf() {
   const soort = rekenaar ? (dienst === 'dakinspectie' ? 'richtprijs-dak' : 'richtprijs-plaatsbezoek') : dienst;
 
   const [gescrold, setGescrold] = useState(false);
-  const [later, setLater] = useState(false);
-  const [slots, setSlots] = useState(0);
-  const laterRef = useRef<HTMLDivElement>(null);
+  const [bellen, setBellen] = useState(false);
+  /* null = laden of mislukt: knoppen zonder aantal */
+  const [vrij, setVrij] = useState<Vrij | null>(null);
+  const bellenRef = useRef<HTMLDivElement>(null);
 
   /* Zelfde als Bedankt.tsx r.154-163. */
   useEffect(() => {
@@ -163,29 +225,38 @@ export default function BedanktBf() {
     return () => window.removeEventListener('scroll', schakel);
   }, []);
 
-  /* Aantal vrije inspectiemomenten, alleen na de dak-rekenaar: Bedankt.tsx r.165-177 (Mohammed "4 gratis
-     inspectieslots beschikbaar"; live uit Bardhs agenda, de komende 7 dagen, hoogstens 4; 0 = geen regel). */
+  /* Vrije momenten uit Bardhs agenda, één vraag voor alles: deze week en volgende week (planknoppen, elke variant) en
+     de komende 7 dagen (teller na de dak-rekenaar, Bedankt.tsx r.165-177: Mohammed "4 gratis inspectieslots
+     beschikbaar"). Alles hoogstens 4. 15 dagen vooruit dekt volgende week altijd (op maandag: t/m dag 13). Geen
+     antwoord binnen 5 s, een foutcode of een onbekende vorm: vrij blijft null, de knoppen staan er zonder aantal. */
   useEffect(() => {
-    if (soort !== 'richtprijs-dak') return;
     let weg = false;
+    const ctl = new AbortController();
+    const klok = window.setTimeout(() => ctl.abort(), 5000);
     const nu = Date.now();
-    const url = `https://backend.leadconnectorhq.com/calendars/${KALENDER_ID}/free-slots?startDate=${nu}&endDate=${nu + 7 * 864e5}&timezone=Europe%2FBrussels`;
-    fetch(url).then((r) => r.json()).then((d: Record<string, { slots?: string[] }>) => {
-      if (weg) return;
-      const vrij = Object.values(d || {}).reduce((n, dag) => n + (Array.isArray(dag?.slots) ? dag.slots.length : 0), 0);
-      setSlots(Math.min(4, vrij));
-    }).catch(() => {});
-    return () => { weg = true; };
-  }, [soort]);
+    const url = `https://backend.leadconnectorhq.com/calendars/${KALENDER_ID}/free-slots?startDate=${nu}&endDate=${nu + 15 * 864e5}&timezone=Europe%2FBrussels`;
+    fetch(url, { signal: ctl.signal })
+      .then((r) => { if (!r.ok) throw new Error(String(r.status)); return r.json(); })
+      .then((d: unknown) => { if (!weg) setVrij(telVrij(d, nu)); })
+      .catch(() => {})
+      .finally(() => window.clearTimeout(klok));
+    return () => { weg = true; ctl.abort(); window.clearTimeout(klok); };
+  }, []);
 
-  /* Na "Later" verdwijnen de knoppen: de focus gaat naar de melding, niet terug naar het begin van de pagina. */
-  useEffect(() => { if (later) laterRef.current?.focus(); }, [later]);
+  /* Na "Bel mij terug" verdwijnen de knoppen: de focus gaat naar de melding, niet terug naar het begin van de pagina. */
+  useEffect(() => { if (bellen) bellenRef.current?.focus(); }, [bellen]);
 
-  const kies = (k: Keuze) => {
+  const plan = (k: Week) => {
     meldClarity('bedankt-moment-' + k);
-    if (k === 'later') { setLater(true); return; }
-    navigate(`${t.agenda}?week=${k === 'deze-week' ? 'deze' : 'volgende'}`);
+    navigate(`${t.agenda}?week=${k}`);
   };
+  const belMij = () => {
+    meldClarity('bedankt-moment-bellen');
+    setBellen(true);
+  };
+  /* Een week met 0 vrije momenten valt weg; zonder bruikbaar antwoord blijven beide knoppen, zonder aantal. */
+  const knoppen = PLAN.filter(({ k }) => !vrij || vrij[k] > 0);
+  const teller = soort === 'richtprijs-dak' && vrij ? Math.min(4, vrij.zeven) : 0;
 
   return (
     <div className="bf bf-dankpagina" data-soort={soort}>
@@ -246,26 +317,43 @@ export default function BedanktBf() {
             <div className="bf-dank__kaart" id="plannen">
               <span className="bf-dank__gratis">Gratis</span>
               <h2 className="bf-dank__kaartkop" id="bf-dank-kaartkop">{t.kaartKop}</h2>
-              {soort === 'richtprijs-dak' && slots > 0 && (
-                <p className="bf-dank__slots">{slots === 1 ? '1 gratis inspectieslot beschikbaar' : `${slots} gratis inspectieslots beschikbaar`}</p>
+              {teller > 0 && (
+                <p className="bf-dank__slots">{teller === 1 ? '1 gratis inspectieslot beschikbaar' : `${teller} gratis inspectieslots beschikbaar`}</p>
               )}
-              {later ? (
-                /* De zin uit Bedankt.tsx r.77 alleen na de rekenaar: bij de gewone aanvraag staat hij al als lede onder de
-                   h1, en stond hij na "Later" 2 keer in hetzelfde scherm (keuring 12 okt, 3 van 5 varianten). */
-                <div className={`bf-dank__later${rekenaar ? '' : ' bf-dank__later--kort'}`} ref={laterRef} tabIndex={-1} role="status">
+              {bellen ? (
+                /* "Bel mij terug": de zin uit Bedankt.tsx r.77 (bron: de bevestigings-sms van GHL W01b); de belregel staat
+                   onderaan de kaart. Er gaat niets naar GHL: Bardh heeft voor deze aanvraag al een beltaak. */
+                <div className="bf-dank__bellen" ref={bellenRef} tabIndex={-1} role="status">
                   <Ic svg={ICOON.vink} className="bf-dank__vink" />
-                  {rekenaar && <p>{LEDE_GEWOON}</p>}
+                  {/* Zonder rekenaar staat LEDE_GEWOON al onder de h1: dan geen tweede keer dezelfde zin in één scherm
+                      (keuring 13 okt), wel een korte bevestiging van de knop. Bardh belt elke aanvraag (beltaak W01). */}
+                  <p>{rekenaar ? LEDE_GEWOON : 'Genoteerd: wij bellen u zo snel mogelijk terug.'}</p>
                   <Link className="bf-dank__toch" to={t.agenda}>Toch nu een moment kiezen</Link>
                 </div>
               ) : (
-                <div className="bf-dank__keuzes" role="group" aria-labelledby="bf-dank-kaartkop">
-                  {KEUZES.map(({ k, t: label }) => (
-                    <button type="button" key={k} className="bf-dank__keuze" data-keuze={k} onClick={() => kies(k)}>
-                      <span>{label}</span>
-                      <Ic svg={ICOON.chevR} className="bf-dank__keuze-pijl" />
-                    </button>
-                  ))}
-                </div>
+                <>
+                  {knoppen.length > 0 && (
+                    <div className="bf-dank__plan" role="group" aria-labelledby="bf-dank-kaartkop">
+                      {knoppen.map(({ k, t: label }, i) => (
+                        <button type="button" key={k} className={`bf-dank__planknop bf-dank__planknop--${i === 0 ? 'hoofd' : 'twee'}`} data-keuze={k} onClick={() => plan(k)}>
+                          <Ic svg={ICOON.planning} className="bf-dank__plan-ic" />
+                          <span className="bf-dank__plan-tekst">
+                            <span className="bf-dank__plan-label">{label}</span>
+                            {vrij && <span className="bf-dank__plan-aantal">{momenten(Math.min(4, vrij[k]))}</span>}
+                          </span>
+                          <Ic svg={ICOON.chevR} className="bf-dank__plan-pijl" />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  {knoppen.length > 0 && <p className="bf-dank__micro">{MICRO}</p>}
+                  <ul className="bf-dank__zeker">
+                    {ZEKER.map((z) => <li key={z}><Ic svg={ICOON.vink} className="bf-dank__zeker-vink" />{z}</li>)}
+                  </ul>
+                  <button type="button" className={`bf-dank__terug${knoppen.length === 0 ? ' bf-dank__terug--hoofd' : ''}`} data-keuze="bellen" onClick={belMij}>
+                    <Ic svg={ICOON.tel} className="bf-dank__terug-ic" />Bel mij terug
+                  </button>
+                </>
               )}
               <p className="bf-dank__google">
                 <Ic svg={ICOON.ster.repeat(5)} className="bf-dank__sterren" />

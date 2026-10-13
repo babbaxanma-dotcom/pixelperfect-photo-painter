@@ -1,5 +1,6 @@
 /**
- * STOCKFOTO'S — LICENTIELIJST (sfeerbeeld, alleen op /dakwerken).
+ * STOCKFOTO'S — LICENTIELIJST (sfeerbeeld, alleen op /dakwerken en, GEWIJZIGD 13 okt 2026, op /lp/dakwerken alleen in de
+ * hero-dia's en de slotblokfoto: lp/kgj/inhoud.ts, DICTAAT MOHAMMED "die stock photos ook op landingspagina dakwerken aub").
  * DICTAAT MOHAMMED 12 okt 2026: "zoek meer mooie dak stock photos ook, zonder dat het stock photo lijkt, echt perfecte
  * voor belgische daken achtig" en "en we gaan die bij dakwerken pagina van abgroep toevoegen".
  * Per foto: naam in beelden.ts · fotopagina · fotograaf · licentie · bewerking (bron in src/assets/dak-stock/, zonder

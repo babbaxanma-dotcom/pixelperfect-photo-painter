@@ -19,13 +19,19 @@ import type { Divisie } from '@/lib/leads';
 
 import panRood from '@/assets/dak/lp-dak-panrood.jpg';
 import antraciet from '@/assets/dak/lp-real-det-2.jpg';
-import heroNok from '@/assets/dak/hero-antraciet-nok.jpg';
 import waaromDakwerker from '@/assets/dak/waarom-dakwerker.jpg';
 import waaromPannendak from '@/assets/dak/waarom-pannendak.jpg';
 import antraciet3 from '@/assets/dak/lp-real-det-3.jpg';
 import platdak from '@/assets/dak/platdak-tegel.jpg';
-import droneAntraciet from '@/assets/dak/drone-antraciet.jpg';
-import pannenDicht from '@/assets/dak/hellend-pannen.jpg';
+/* Stockfoto's (sfeerbeeld), DICTAAT MOHAMMED 13 okt 2026: "die stock photos ook op landingspagina dakwerken aub".
+   Bron, fotograaf en licentie: bovenaan src/pages/abbouw/bf/fotoplan.ts. Alleen in hero.dias en cta.foto, nooit in een
+   blok dat eigen werk toont (waarom, werk, voor/na, reviews, diensten). Guard: scripts/check-stock.cjs.
+   De 1600-webp-varianten (scripts/bf-beelden.cjs) en niet de jpg's uit src/assets/dak-stock: betaald advertentieverkeer,
+   de laadtijd van dia 1 telt meer dan de laatste scherpte (13 okt: 4 dia's samen 802 KB i.p.v. 2.699 KB). */
+import stockDaklijn from '@/assets/bf/stock-daklijn-1600.webp';
+import stockZinkwerk from '@/assets/bf/stock-zinkwerk-1600.webp';
+import stockPannenStapels from '@/assets/bf/stock-pannen-stapels-1600.webp';
+import stockPanlatten from '@/assets/bf/stock-panlatten-1600.webp';
 import dakVoor from '@/assets/lp-diensten/dak-voor.jpg';
 import dakNa from '@/assets/lp-diensten/dak-na.jpg';
 /* Foto's bij de eerste calculatorvraag (Mohammed, 24 sep). Hellend: de
@@ -181,18 +187,15 @@ export const DAKWERKEN: KgjInhoud = {
        twee keer op het eerste scherm "ziet er niet uit" (Mohammed). Zo staat de rekenaar op de
        telefoon hoger. */
     bewijs: [],
+    /* 13 okt 2026 (dictaat hierboven bij de imports): de vier stockfoto's van /dakwerken vervangen de gegenereerde
+       dia's (heroNok, panRood, droneAntraciet, pannenDicht). Alt = neutrale beschrijving van wat te zien is; de laatste
+       drie woordelijk uit fotoplan.ts (STOCK). Daklijn: lucht bovenaan voor de kop; pos 75% 100% houdt de daklijn in
+       beeld (1265: de onderkant met de daken; 390: de oranje dakhelling met de schouwen). */
     dias: [
-      /* 29 sep, Mohammed: de eerste foto "vind ik maar niks", vervangen door een
-         echte foto uit de afbeeldingen van de Google Ads-campagne Dakrenovatie
-         (pimgad 10985073941082978780, 1200x1200): "deze is mooi ... zet juist".
-         pos 15%: in de brede hero blijft de nok met de lucht erboven in beeld. */
-      { src: heroNok, pos: '50% 15%', alt: 'Nieuw antraciet pannendak met de nok tegen een blauwe lucht' },
-      { src: panRood, alt: 'Rijwoning met een nieuw rood pannendak en een dakvenster' },
-      /* Het platte dak staat niet in de diashow: van dichtbij is het een zwart
-         vlak van rand tot rand, en onder de donkere laag leek de hero dan leeg.
-         Het staat wel als werktegel. */
-      { src: droneAntraciet, alt: 'Dronefoto boven een nieuw antraciet pannendak' },
-      { src: pannenDicht, alt: 'Nieuw hellend dak met pannen, schuin van onderaf' },
+      { src: stockDaklijn, pos: '75% 100%', alt: 'Daken van oude rijwoningen met rode en grijze pannen, bakstenen schouwen en witte dakkapellen onder een grijze lucht' },
+      { src: stockZinkwerk, alt: 'Daken van rijwoningen met twee dakramen, een zinken dakkapel en een dakkapel met pannen' },
+      { src: stockPannenStapels, alt: 'Rode vlakke dakpannen op de panlatten: onderaan gelegd, bovenaan in stapeltjes over het dakvlak verdeeld' },
+      { src: stockPanlatten, alt: 'Houtvezelplaten op het dakvlak met tengels en panlatten, waarop een baan zwarte dakpannen ligt' },
     ],
   },
 
@@ -433,7 +436,10 @@ export const DAKWERKEN: KgjInhoud = {
       'Samen overlopen we de bevindingen',
       'U ontvangt een vrijblijvende offerte',
     ],
-    foto: { src: pannenDicht, alt: 'Nieuw hellend dak met pannen' },
+    /* 13 okt 2026: stock in plaats van het gegenereerde pannenDicht. Niet daklijn: die is dia 1. Vier stockfoto's op
+       vijf plekken (4 dia's + slotblok) geeft precies één herhaling, zoals voorheen (pannenDicht stond in dia 4 én hier).
+       Zinkwerk: bestaande daken van rijwoningen ("we bekijken uw dak"), geen dak in opbouw dat als een eigen werf leest. */
+    foto: { src: stockZinkwerk, alt: 'Daken van rijwoningen met twee dakramen, een zinken dakkapel en een dakkapel met pannen' },
   },
 
   inspectie: {

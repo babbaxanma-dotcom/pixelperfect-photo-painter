@@ -22,6 +22,11 @@
  * Positieve controle (zonder: exit 2): dezelfde flow draait één keer met een geplante fout in de pagina (het
  * GHL-verzoek krijgt een ander bron_lead_detail); de toets moet die afwijking vinden.
  *
+ * Niet gemount (12 okt 2026: de eerste run gaf één keer inspectie @1001 zonder wortel en zonder Clarity-verzoek, bij
+ * herhaling groen): ontbreekt de wortel van de flow EN is er geen Clarity-verzoek, dan herhaalt de toets die flow één
+ * keer. Blijft het zo, dan is de meting ongeldig (exit 2), geen afwijking van de pagina (exit 1). Positieve controle:
+ * een pad zonder landingspagina moet als niet gemount herkend worden, anders exit 2.
+ *
  * Draaien:  node scripts/check-lp-payload.mjs                         (start zelf een vite dev-server)
  *           LP_BASIS=http://127.0.0.1:4610 node scripts/check-lp-payload.mjs
  *           LP_PAGINAS=dakwerken LP_BREEDTES=1265,1440,1001,1000,390 node scripts/check-lp-payload.mjs
@@ -140,7 +145,9 @@ async function doeFlow(browser, basis, lp, f, breedte, lokaas = false) {
     }
     if (f.hash) await wacht(500);
     const wortel = f.wortel;
-    if (!(await p.$(wortel))) { fouten.push(`wortel ${wortel} niet gevonden`); return { fouten, log }; }
+    /* Wortel weg EN geen Clarity-verzoek = de pagina is niet gemount (12 okt: één keer op inspectie @1001, bij herhaling
+       groen). Dat is geen afwijking van de pagina maar een mislukte meting: de hoofdlus herhaalt de flow dan één keer. */
+    if (!(await p.$(wortel))) { fouten.push(`wortel ${wortel} niet gevonden`); return { fouten, log, ongemount: log.clarity.length === 0 }; }
     if (f.soort === 'inspectie') { await p.evaluate((w) => document.querySelector(w).scrollIntoView({ block: 'center' }), wortel); await wacht(300); }
 
     for (const a of f.antwoorden || []) {
@@ -232,7 +239,7 @@ async function doeFlow(browser, basis, lp, f, breedte, lokaas = false) {
   const server = await startServer();
   const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox', '--hide-scrollbars'] });
   const fouten = [];
-  let flows = 0, leads = 0;
+  let flows = 0, leads = 0, ongeldig = null;
   try {
     /* positieve controle, end-to-end: geplante fout in de pagina */
     const eerste = fixtures[PAGINAS[0]];
@@ -241,14 +248,25 @@ async function doeFlow(browser, basis, lp, f, breedte, lokaas = false) {
     const dubbel = pc.fouten.filter((x) => /aantal verzoeken na dubbelklik: 2 GHL/.test(x));
     if (!gevonden.length || !dubbel.length) { console.log(`ONGELDIGE METING: positieve controle vond de geplante fout niet (${pc.fouten.join(' | ') || 'geen afwijking'})`); process.exit(2); }
     console.log(`positieve controle: geplante fouten gevonden ("${gevonden[0]}"; "${dubbel[0]}")`);
+    /* positieve controle op de herkenning van een niet-gemounte pagina: een pad zonder LP moet als ongemount tellen */
+    const leegPc = await doeFlow(browser, server.basis, { ...eerste, pad: '/lp/__geen-landingspagina__' }, eerste.flows[0], BREEDTES[0]);
+    if (!leegPc.ongemount) { console.log(`ONGELDIGE METING: positieve controle herkent een niet-gemounte pagina niet (${leegPc.fouten.join(' | ') || 'geen afwijking'})`); process.exit(2); }
+    console.log('positieve controle: een pagina zonder LP telt als niet gemount (geen wortel, geen Clarity)');
 
     for (const slug of PAGINAS) {
+      if (ongeldig) break;
       const lp = fixtures[slug];
       for (const breedte of BREEDTES) {
+        if (ongeldig) break;
         for (const f of lp.flows) {
-          const r = await doeFlow(browser, server.basis, lp, f, breedte);
-          flows++; leads += r.log.ghl.length;
           const label = `${lp.pad} ${f.naam} @${breedte}`;
+          let r = await doeFlow(browser, server.basis, lp, f, breedte);
+          if (r.ongemount) {
+            console.log(`  HERHAAL ${label}: pagina niet gemount (geen wortel, geen Clarity-verzoek)`);
+            r = await doeFlow(browser, server.basis, lp, f, breedte);
+            if (r.ongemount) { ongeldig = `${label}: twee keer niet gemount (geen wortel ${f.wortel}, geen Clarity-verzoek)`; break; }
+          }
+          flows++; leads += r.log.ghl.length;
           if (r.fouten.length) r.fouten.forEach((x) => fouten.push(`${label}: ${x}`));
           else console.log(`  AF  ${label}: payload GHL + Web3Forms gelijk, ${f.formStart}, ${f.toestemming ? 'Toestemming' : 'geen Toestemming'}, ${f.bedankt}, Clarity ${lp.clarity}`);
         }
@@ -258,6 +276,7 @@ async function doeFlow(browser, basis, lp, f, breedte, lokaas = false) {
     await browser.close();
     server.stop();
   }
+  if (ongeldig) { console.log(`ONGELDIGE METING: ${ongeldig}`); process.exit(2); }
   if (!flows || !leads) { console.log('ONGELDIGE METING: geen enkele lead onderschept'); process.exit(2); }
   console.log(`check-lp-payload: ${flows} flows, ${leads} onderschepte GHL-leads (nul echte), ${PAGINAS.length} LP's x ${BREEDTES.length} breedtes (${server.basis})`);
   if (fouten.length) { fouten.forEach((x) => console.log('  FOUT: ' + x)); process.exit(1); }

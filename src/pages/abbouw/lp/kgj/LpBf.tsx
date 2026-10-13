@@ -10,6 +10,8 @@ import { DAKWERKEN, type KgjInhoud, type Sectie, type StapIcoon } from './inhoud
 import { CLARITY_PROJECT, laadClarity } from '@/lib/clarity';
 import logoWit from '@/assets/bf/logo-wit-440.webp';
 import logoInk from '@/assets/bf/logo-ink-440.webp';
+/* Voetlogo: hetzelfde bestand als de voet van LpKgj (r.12, r.788): "beelden EXACT zoals nu" (spec §17). */
+import logo from '@/assets/home/logo-trim.png';
 import '../../bf/bf.css';
 import '../../bf/bf-ab.css';
 import './lp-bf.css';
@@ -30,7 +32,8 @@ import './lp-bf-ab.css';
  * gescoopt onder .bf.bf-lp (CSS: lp-bf.css gegenereerd door scripts/bf-css-port-lp.cjs, plus lp-bf-ab.css).
  * De kop draagt OOK de klasse kgj-kop: Rekenaar.tsx (scrolfix) en check-rekenaar-scroll.cjs meten die.
  *
- * Bewust weg (§17): menu, voetlinkenlijst, reviews, cijferband met claims, scroll-reveal (lock 3 aug).
+ * Bewust weg (§17): menu, voetlinkenlijst, reviews, cijferband met claims, scroll-reveal (lock 3 aug);
+ * contactkolom blijft (live-inhoud): voetlogo, zin, Contact met adres, telefoon, e-mail en btw, zoals LpKgj r.785-809.
  * De Google-badge "5,0 op Google" mag (spec §1). Beelden exact zoals in het inhoudsobject (keuze Mohammed 12 okt).
  * Geen canonical (zoals LpKgj; index.html houdt https://abgroep.be/).
  *
@@ -145,7 +148,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   const [schuif, setSchuif] = useState(50);
   /* De rekenaar in een venster (LpKgj r.130-133): elke knop "Bereken uw prijs" opent hem waar de bezoeker is. */
   const [venster, setVenster] = useState(false);
-  const vensterSluit = useRef<HTMLButtonElement>(null);
+  const vensterVak = useRef<HTMLDivElement>(null);
   const vensterTerug = useRef<HTMLElement | null>(null);
   const dienstFotos = !!inhoud.diensten.vlakken || inhoud.diensten.lijst.some((d) => d.foto);
 
@@ -153,15 +156,38 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   useEffect(() => { const id = CLARITY_PROJECT[inhoud.bedanktSlug]; if (id) laadClarity(id); }, [inhoud.bedanktSlug]);
 
   /* Venster: Escape sluit, de pagina erachter scrolt niet (LpKgj r.139-146). Toegankelijkheid: de focus gaat
-     naar de sluitknop en na het sluiten terug naar de knop die het venster opende. */
+     naar het venster zelf (tabIndex -1, geen ring) en na het sluiten terug naar de knop die het venster opende.
+     Herstel 13 okt: de focus ging naar de sluitknop; bij binnenkomst via de sitelink #rekenaar toonde de browser dan een
+     bruine focusring rond × (2 px op 1265, 3 px op 390), het eerste wat het oog trof, vóór de eerste vraag. De eerste Tab
+     gaat nu naar de sluitknop, met de ring.
+     Focusval (aria-modal, herstel 12 okt: na 'Plat dak' sprong Tab naar de belknop in de kop achter het venster):
+     alles naast het venster krijgt inert zolang het open is, en Tab / Shift+Tab gaan rond binnen het venster. */
   useEffect(() => {
     if (!venster) return;
-    const toets = (e: KeyboardEvent) => { if (e.key === 'Escape') setVenster(false); };
+    const vak = () => document.querySelector<HTMLElement>('.bf-lpvenster__in');
+    const toets = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { setVenster(false); return; }
+      if (e.key !== 'Tab') return;
+      const v = vak();
+      if (!v) return;
+      const stops = [...v.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')]
+        .filter((el) => el.getClientRects().length > 0);
+      if (!stops.length) return;
+      const eerste = stops[0], laatste = stops[stops.length - 1];
+      const actief = document.activeElement as HTMLElement | null;
+      const binnen = !!actief && v.contains(actief);
+      /* Focus op het venster zelf (net geopend): Tab gaat naar de eerste stop (de browser doet dat zelf), Shift+Tab naar de laatste. */
+      if (e.shiftKey && (!binnen || actief === eerste || actief === v)) { e.preventDefault(); laatste.focus(); }
+      else if (!e.shiftKey && (!binnen || actief === laatste)) { e.preventDefault(); eerste.focus(); }
+    };
+    const buren = vat.current ? [...vat.current.children].filter((k) => !k.classList.contains('bf-lpvenster')) : [];
+    buren.forEach((k) => k.setAttribute('inert', ''));
     const vorig = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     document.addEventListener('keydown', toets);
-    vensterSluit.current?.focus({ preventScroll: true });
+    vensterVak.current?.focus({ preventScroll: true });
     return () => {
+      buren.forEach((k) => k.removeAttribute('inert'));
       document.body.style.overflow = vorig;
       document.removeEventListener('keydown', toets);
       vensterTerug.current?.focus?.({ preventScroll: true });
@@ -307,7 +333,9 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
 
   const secties: Record<Sectie, React.ReactNode> = {
     waarom: inhoud.waarom.kolommen ? (
-      /* Totaalrenovatie (5 okt): kop, intro en drie zekerheden als kolommen. BF: waarden--3 op grijs. */
+      /* Totaalrenovatie (5 okt): kop, intro en drie zekerheden als kolommen. BF: waarden--3 op grijs, met het grote grijze
+         nummer 01-03 rechtsboven (BF lp-dak.cjs r.236 waarde__nr). Het nummer is aria-hidden versiering, geen tekst: de
+         woorden blijven die van live (LpKgj r.428-435, spec §17). Herstel 13 okt: de rechterbovenhoek bleef leeg. */
       <section className="bf-sblok bf-sblok--grijs bf-lpvoordelen bf-lpwaarom--kolommen" id="waarom" aria-labelledby="waarom-kop">
         <div className="bf-sraam">
           <h2 className="bf-h2 bf-h2--midden" id="waarom-kop">{inhoud.waarom.kop}</h2>
@@ -342,21 +370,22 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         </div>
       </section>
     ) : (
-      /* Dak: BF lpwaarom (duo: tekst + foto), met de drie AB-redenen en de knop die het venster opent. */
+      /* Dak: BF lpwaarom (duo: tekst + foto), met de drie AB-redenen en de knop die het venster opent. De knop staat
+         direct onder de alinea en vóór de redenen, zoals live (LpKgj r.469-481); de Google-badge ernaast mag (§1). */
       <section className="bf-sblok bf-lpwaarom" id="waarom" aria-labelledby="waarom-kop">
         <div className="bf-duo">
           <div className="bf-duo__tekst">
             <h2 className="bf-h2" id="waarom-kop">{inhoud.waarom.kop}</h2>
             <p>{inhoud.waarom.tekst}</p>
+            <div className="bf-lpwaarom__acties">
+              {rekenKnop('bf-lpwaarom__knop')}
+              <GoogleBadge klasse="bf-over__google" />
+            </div>
             <ul className="bf-lpredenen">
               {inhoud.waarom.redenen.map((r, i) => (
                 <li key={r.titel}><span className="bf-lpredenen__ic">{REDEN_ICONEN[i % REDEN_ICONEN.length]}</span><div><h3>{r.titel}</h3><p>{r.tekst}</p></div></li>
               ))}
             </ul>
-            <div className="bf-lpwaarom__acties">
-              {rekenKnop('bf-lpwaarom__knop')}
-              <GoogleBadge klasse="bf-over__google" />
-            </div>
           </div>
           <figure className="bf-duo__foto bf-lpwaarom__fotos">
             <img src={inhoud.waarom.duo[0].src} alt={inhoud.waarom.duo[0].alt} loading="lazy" decoding="async" />
@@ -366,15 +395,15 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       </section>
     ),
 
-    /* Voordelen (26 sep): BF lpvoordelen, drie kaarten met nummer en icoon op grijs. */
+    /* Voordelen (26 sep): BF lpvoordelen, drie kaarten met icoon op grijs. Zonder de BF-nummers 01/02/03: live
+       (LpKgj r.499-507) toont er geen (tekst woordelijk, spec §17). */
     voordelen: inhoud.voordelen && (
       <section className="bf-sblok bf-sblok--grijs bf-lpvoordelen" id="voordelen" aria-labelledby="voordelen-kop">
         <div className="bf-sraam">
           <h2 className="bf-h2 bf-h2--midden" id="voordelen-kop">{inhoud.voordelen.kop}</h2>
           <div className="bf-waarden bf-waarden--3">
-            {inhoud.voordelen.lijst.map((v, i) => (
+            {inhoud.voordelen.lijst.map((v) => (
               <article className="bf-waarde" key={v.titel}>
-                <span className="bf-waarde__nr" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                 <span className="bf-waarde__icoon"><Icoon naam={v.icoon} /></span>
                 <h3>{v.titel}</h3><p>{v.tekst}</p>
               </article>
@@ -385,7 +414,8 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
     ),
 
     /* Diensten: BF lpdiensten (dkaarten zonder link). De id per dienst is het anker van een sitelink. Zonder
-       foto staat het icoon op een licht vlak (Mohammed, 3 okt), zoals nu. */
+       foto staat het icoon op een licht vlak (Mohammed, 3 okt), zoals nu. Met foto: de ronde BF-badge met het
+       dienst-icoon op de fotorand (BF build.cjs r.262 dkaart__icoon, aria-hidden; herstel 13 okt). */
     diensten: (
       <section className="bf-sblok bf-lpdiensten" id="diensten" aria-labelledby="diensten-kop">
         <div className="bf-sraam">
@@ -397,7 +427,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                 {dienstFotos ? (
                   <div className="bf-dkaart__media">
                     {d.foto
-                      ? <img className="bf-dkaart__beeld" src={d.foto.src} alt={d.foto.alt} loading="lazy" decoding="async" />
+                      ? <><img className="bf-dkaart__beeld" src={d.foto.src} alt={d.foto.alt} loading="lazy" decoding="async" /><span className="bf-dkaart__icoon" aria-hidden="true"><Icoon naam={d.icoon} /></span></>
                       : <span className="bf-lpdienst__vlak" aria-hidden="true"><Icoon naam={d.icoon} /></span>}
                   </div>
                 ) : <span className="bf-lpdienst__ic" aria-hidden="true"><Icoon naam={d.icoon} /></span>}
@@ -412,8 +442,9 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       </section>
     ),
 
-    /* Werkwijze: BF procesBlok (intro + stapkaarten met icoon en "Stap N"), zonder foto: het inhoudsobject
-       heeft er geen (beelden zoals nu). De knop blijft die van LpKgj r.571-581. */
+    /* Werkwijze: BF procesBlok (intro + stapkaarten met icoon en nummer), zonder foto: het inhoudsobject
+       heeft er geen (beelden zoals nu). Nummer "01"-"05" zoals live (LpKgj r.562). De knop staat NA de stappen,
+       zoals live (LpKgj r.571-581, midknop): op de gsm leest de bezoeker eerst de uitleg. */
     werkwijze: (
       <section className="bf-proces bf-lpproces" id="werkwijze" aria-labelledby="werkwijze-kop">
         <div className="bf-proces__top bf-lpproces__top">
@@ -421,16 +452,13 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             <h2 className="bf-h2" id="werkwijze-kop">{inhoud.werkwijze.kop}</h2>
             {inhoud.werkwijze.onder && <p className="bf-proces__tekst">{inhoud.werkwijze.onder}</p>}
           </div>
-          {inhoud.hero.knop ? (
-            <a className="bf-knop bf-proces__knop" href="#contact"><IcAgenda />{inhoud.hero.knop.tekst}</a>
-          ) : !inhoud.vangnet && rekenKnop('bf-proces__knop')}
         </div>
         <ol className={`bf-proces__stappen bf-proces__stappen--${inhoud.werkwijze.stappen.length}`}>
           {inhoud.werkwijze.stappen.map((s, i) => (
             <li className="bf-pstap" key={s.titel}>
               <div className="bf-pstap__top">
                 <span className="bf-pstap__ic" aria-hidden="true">{s.icoon ? STAP_ICOON[s.icoon] : STAP_ICONEN[i % STAP_ICONEN.length]}</span>
-                <span className="bf-pstap__nr">Stap {i + 1}</span>
+                <span className="bf-pstap__nr">{String(i + 1).padStart(2, '0')}</span>
               </div>
               <h3>{s.titel}</h3>
               <p>{s.tekst}</p>
@@ -441,6 +469,11 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             </li>
           ))}
         </ol>
+        {inhoud.hero.knop ? (
+          <div className="bf-lpmidknop"><a className="bf-knop bf-proces__knop" href="#contact"><IcAgenda />{inhoud.hero.knop.tekst}</a></div>
+        ) : !inhoud.vangnet && (
+          <div className="bf-lpmidknop">{rekenKnop('bf-proces__knop')}</div>
+        )}
       </section>
     ),
 
@@ -470,13 +503,12 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                 onPointerCancel={() => { sleept.current = false; }}>
                 <img className="bf-voorna__beeld" src={huidig.na.src} alt={huidig.na.alt} loading="lazy" decoding="async" />
                 <div className="bf-voorna__voor"><img className="bf-voorna__beeld" src={huidig.voor.src} alt={huidig.voor.alt} loading="lazy" decoding="async" /></div>
-                <span className="bf-voorna__label bf-voorna__label--voor">Voor</span>
+                {/* Zelfde woorden en volgorde als live (LpKgj r.616-627): "Na", "Voor", greep "‹ ›". De plek in beeld
+                    (Voor links, Na rechts) komt uit de CSS, niet uit de volgorde. */}
                 <span className="bf-voorna__label bf-voorna__label--na">Na</span>
+                <span className="bf-voorna__label bf-voorna__label--voor">Voor</span>
                 <span className="bf-voorna__lijn" aria-hidden="true">
-                  <span className="bf-voorna__greep">
-                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 2.5 4.5 7 9 11.5" /></svg>
-                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 2.5 9.5 7 5 11.5" /></svg>
-                  </span>
+                  <span className="bf-voorna__greep bf-voorna__greep--tekst" aria-hidden="true">‹ ›</span>
                 </span>
                 <input className="bf-voorna__bereik" type="range" min={0} max={100} step={0.1} value={schuif}
                   aria-label={inhoud.voorna.onder} onChange={(e) => setSchuif(Number(e.target.value))} />
@@ -522,14 +554,15 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       </section>
     ),
 
-    /* Veelgestelde vragen (29 sep): de BF-vragenkaarten van de home (bf-ab.css .bf-vragen), <details> zonder JS. */
+    /* Veelgestelde vragen (29 sep): de BF-vragenkaarten van de home (bf-ab.css .bf-vragen), <details> zonder JS.
+       Alle vragen dicht bij het laden, zoals live (LpKgj r.716-721). Zonder de gouden streep van de home onder de kop:
+       geen andere kop op de LP's en op BF lp-dak draagt er een (herstel 13 okt). */
     faq: inhoud.faq && inhoud.faq.lijst.length > 0 && (
       <section className="bf-vragen" id="faq" aria-labelledby="faq-kop">
         <h2 className="bf-h2 bf-h2--midden" id="faq-kop">{inhoud.faq.kop}</h2>
-        <span className="bf-streep" aria-hidden="true" />
         <div className="bf-vragen__lijst">
-          {inhoud.faq.lijst.map((f, i) => (
-            <details className="bf-vraag" key={f.v} open={i === 0}>
+          {inhoud.faq.lijst.map((f) => (
+            <details className="bf-vraag" key={f.v}>
               <summary>{f.v}<span className="bf-vraag__plus" aria-hidden="true" /></summary>
               <p>{f.a}</p>
             </details>
@@ -550,7 +583,8 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             <IcTel /><span><span className="bf-lptopbalk__zin">{inhoud.topbalk} </span><a href={CONTACT.phone.href}>{CONTACT.phone.display}</a></span>
           </div>
         )}
-        <nav className="bf-nav" aria-label="AB Bouw Groep">
+        {/* Geen nav-landmark: de LP-kop is geen menu (live LpKgj r.324 is een div). */}
+        <div className="bf-nav">
           <a className="bf-nav__logo" href="#top" aria-label="AB Bouw Groep">
             <img className="bf-nav__logo-wit" src={logoWit} width={440} height={125} alt="Logo van AB Bouw Groep" decoding="async" />
             <img className="bf-nav__logo-ink" src={logoInk} width={440} height={125} alt="" decoding="async" />
@@ -560,13 +594,14 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             {inhoud.hero.knop && (
               <a className="bf-knop bf-lpbel bf-lpkop__actie" href="#contact"><IcAgenda />{inhoud.cta.naam ?? inhoud.hero.knop.tekst}</a>
             )}
+            {/* Geen aria-label: de zichtbare tekst is de naam, zoals live ("Bel 0460 20 77 88", gsm "Bel direct"; WCAG 2.5.3). */}
             {!inhoud.topbalk && (
-              <a className="bf-knop bf-lpbel" href={CONTACT.phone.href} aria-label={`Bel AB Bouw Groep op ${CONTACT.phone.display}`}>
+              <a className="bf-knop bf-lpbel" href={CONTACT.phone.href}>
                 <IcTel /><span className="bf-lpbel__lang">Bel {CONTACT.phone.display}</span><span className="bf-lpbel__kort">Bel direct</span>
               </a>
             )}
           </div>
-        </nav>
+        </div>
       </header>
 
       <main>
@@ -648,19 +683,36 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       {/* Digitale assistent (28 sep): verschijnt alleen als api/chat een sleutel heeft. Vorm: kgj/extra.ts via de port. */}
       <div className="bf-lpkgj"><ChatAssistent inhoud={inhoud} balk={balk} opRekenaar={openVenster} /></div>
 
-      <footer className="bf-lpvoet">
+      {/* Voet: de inhoud van live (LpKgj r.785-809) woordelijk, in de BF-opmaak (grijs vlak, logo + zin, kolom Contact,
+          onderregel). Geen voetlinkenlijst (§17); de klasse kgj-voet leest check-lp-gsm.cjs (btw in de voet). */}
+      <footer className="bf-lpvoet kgj-voet">
+        <div className="bf-lpvoet__raster">
+          <div className="bf-lpvoet__merk">
+            <img className="bf-lpvoet__logo" src={logo} width={1071} height={305} alt="Logo van AB Bouw Groep" loading="lazy" decoding="async" />
+            <p>Dakwerken, gevelwerken en renovatie in heel Vlaanderen.</p>
+          </div>
+          <div className="bf-lpvoet__kolom">
+            <h4>Contact</h4>
+            <ul className="bf-lpvoet__contact">
+              <li>{CONTACT.address.street}<br />{CONTACT.address.city}</li>
+              <li><a href={CONTACT.phone.href}>{CONTACT.phone.display}</a></li>
+              <li><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></li>
+              {/* 7 okt 2026, Mohammed: het btw-nummer ook in de voet van de landingspagina's (src/data/contact.ts). */}
+              <li>BTW {CONTACT.btw.display}</li>
+            </ul>
+          </div>
+        </div>
         <div className="bf-lpvoet__in">
-          {/* Btw-nummer uit src/data/contact.ts (7 okt 2026, Mohammed: het btw-nummer ook in de voet van de landingspagina's). */}
-          <p>© {new Date().getFullYear()} AB Bouw Groep · BTW {CONTACT.btw.display} · {CONTACT.address.street}, <span className="bf-lpvoet__plaats">{CONTACT.address.postcode} {CONTACT.address.city}</span></p>
-          <nav aria-label="Juridisch"><a href="/privacy">Privacy</a><a href="/cookies">Cookies</a><a href="/voorwaarden">Voorwaarden</a></nav>
+          <p>© {new Date().getFullYear()} AB Bouw Groep · BTW {CONTACT.btw.display}</p>
+          <div className="bf-lpvoet__links"><a href="/privacy">Privacy</a><a href="/cookies">Cookies</a><a href="/voorwaarden">Voorwaarden</a></div>
         </div>
       </footer>
 
       {venster && (
         <div className="bf-lpvenster kgj-venster" role="dialog" aria-modal="true" aria-label="Bereken uw prijs"
           onClick={(e) => { if (e.target === e.currentTarget) setVenster(false); }}>
-          <div className="bf-lpvenster__in kgj-venster__in">
-            <button type="button" className="bf-lpvenster__dicht" aria-label="Sluiten" ref={vensterSluit} onClick={() => setVenster(false)}>×</button>
+          <div className="bf-lpvenster__in kgj-venster__in" tabIndex={-1} ref={vensterVak}>
+            <button type="button" className="bf-lpvenster__dicht" aria-label="Sluiten" onClick={() => setVenster(false)}>×</button>
             <Rekenaar inhoud={inhoud} plek="venster" />
           </div>
         </div>

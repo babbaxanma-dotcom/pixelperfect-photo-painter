@@ -48,6 +48,67 @@
         "utm_term": "renovatiebedrijf"
       },
       "metingInUitFlows": "aannemer-inspectie"
+    },
+    {
+      "naam": "rekenaar-venster",
+      "soort": "rekenaar",
+      "query": "?utm_term=renovatiebedrijf",
+      "hash": "#rekenaar",
+      "marketing": false,
+      "wortel": ".kgj-venster",
+      "antwoorden": [
+        "Halfopen bebouwing",
+        "@vink:Badkamer",
+        "@verder",
+        "150 tot 200 m²",
+        "Ouder dan 10 jaar",
+        "Weet ik niet",
+        "Dit jaar"
+      ],
+      "velden": {
+        "naam": "Test Kaart",
+        "telefoon": "0400 00 00 09"
+      },
+      "formStart": "lp:aannemer-renovatiewerken:rekenaar:venster",
+      "toestemming": true,
+      "bedankt": "/bedankt?dienst=totaalrenovatie&van=rekenaar",
+      "fouten": {
+        "leeg": "Vul uw telefoonnummer in om uw prijs te ontvangen.",
+        "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
+      },
+      "ghl": {
+        "firstName": "Test Kaart",
+        "name": "Test Kaart",
+        "phone": "0400 00 00 09",
+        "country": "BE",
+        "type_werk": "AB Construct",
+        "aanvullende_info": "Woning: Halfopen bebouwing · Renoveren: Badkamer · Grootte: 150 tot 200 m² · Leeftijd: Ouder dan 10 jaar · Staat: Weet ik niet · Start: Dit jaar",
+        "bron_lead": "Website",
+        "bron_lead_detail": "lp:aannemer-renovatiewerken:rekenaar:venster",
+        "page_path": "/lp/aannemer-renovatiewerken",
+        "landing_division": "ab_construct",
+        "source": "landing_page",
+        "utm_term": "renovatiebedrijf"
+      },
+      "web3forms": {
+        "access_key": "b01e4fea-3e73-418b-b65a-acfb1d3ee43c",
+        "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
+        "from_name": "AB Bouw website",
+        "to": "info@abgroep.be",
+        "firstName": "Test Kaart",
+        "name": "Test Kaart",
+        "phone": "0400 00 00 09",
+        "country": "BE",
+        "type_werk": "AB Construct",
+        "aanvullende_info": "Woning: Halfopen bebouwing · Renoveren: Badkamer · Grootte: 150 tot 200 m² · Leeftijd: Ouder dan 10 jaar · Staat: Weet ik niet · Start: Dit jaar",
+        "bron_lead": "Website",
+        "bron_lead_detail": "lp:aannemer-renovatiewerken:rekenaar:venster",
+        "page_path": "/lp/aannemer-renovatiewerken",
+        "landing_division": "ab_construct",
+        "source": "landing_page",
+        "utm_term": "renovatiebedrijf"
+      },
+      "metingInUitFlows": "gemeten 2026-10-12T22:07 op https://www.abgroep.be (live = LpKgj, referentie spec §17) met scratchpad werk/lp/reno3/vang-flows.mjs, 1265 en 390 gelijk"
     }
   ]
 }
