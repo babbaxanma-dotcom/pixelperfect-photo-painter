@@ -399,16 +399,18 @@ export default function Rekenaar({ inhoud, plek, voor }: {
       ) : metStappen && vork ? (() => {
         /* Het slotvak van abgroep.be (Mohammed 14 okt: "zo met dat slotje ofzo, zoals bij abgroep"), nu met de echte vork
            vervaagd: aantal cijfers en vorm kloppen met zijn antwoorden. */
+        /* 14 okt laat, Mohammed ("visueel gezien ... daar hebben we bij bfbouw enkele aanpassingen gedaan"): zoals bfbouw.be
+           699886d een donker vak met het slot in het midden (gloedring), basisregel en kop gecentreerd, eerste bolletje vet. */
         const slotvak = (
           <>
-            <div className="kgj-reken__richt" aria-hidden="true">
+            <div className="kgj-reken__richt kgj-reken__richt--kluis" aria-hidden="true">
               <span className="kgj-reken__richt-bedrag">
                 <span className="kgj-reken__richt-euro">€</span>
                 <span className="kgj-reken__richt-cijfers">{bedrag(vork.min)} – {bedrag(vork.max)}</span>
               </span>
               <span className="kgj-reken__slot"><Lock /></span>
             </div>
-            <p className="kgj-reken__richt-onder">Op basis van uw {Object.values(antwoorden).filter(Boolean).length} antwoorden</p>
+            <p className="kgj-reken__richt-onder kgj-reken__richt-onder--kluis">Op basis van uw <span>{Object.values(antwoorden).filter(Boolean).length}</span> antwoorden</p>
           </>
         );
         const google = <li className="kgj-reken__troef-google"><span className="kgj-reken__trust-st" aria-hidden="true"><IcSter /><IcSter /><IcSter /><IcSter /><IcSter /></span>5,0 op Google</li>;
@@ -422,14 +424,14 @@ export default function Rekenaar({ inhoud, plek, voor }: {
         if (fase === 'contact') return (
           <form className="kgj-reken__stap kgj-reken__form" onSubmit={naarLaden} noValidate>
             {slotvak}
-            <p className="kgj-reken__vraag kgj-reken__vraag--richt">Uw richtprijs is bijna klaar</p>
+            <p className="kgj-reken__vraag kgj-reken__vraag--richt kgj-reken__vraag--kluis">Uw richtprijs is bijna klaar</p>
             {/* Geen autoFocus: op een telefoon sprong het toetsenbord dan meteen open (Mohammed, 24 sep). */}
             <div className="kgj-reken__rij">
               <label>Naam *<input name="naam" type="text" autoComplete="name" placeholder="Uw naam" aria-required="true" /></label>
               <label>E-mail *<input name="email" type="email" autoComplete="email" inputMode="email" placeholder="uw@email.be" aria-required="true" /></label>
             </div>
             <ul className="kgj-reken__troeven kgj-reken__troeven--richt">
-              <li><Check aria-hidden="true" />Uw richtprijs is binnen enkele seconden klaar</li>
+              <li><Check aria-hidden="true" /><b>Uw richtprijs is binnen enkele seconden klaar</b></li>
               <li><Check aria-hidden="true" />Gratis en vrijblijvend</li>
               {google}
             </ul>

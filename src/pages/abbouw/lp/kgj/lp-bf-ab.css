@@ -789,3 +789,21 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
   .bf.bf-lp .kgj-reken__telveld > svg { left: 15px; width: 20px; height: 20px; }
   .bf.bf-lp .kgj-reken__form .kgj-reken__telveld input { padding-left: 46px; height: 56px; font-size: 18px; }
 }
+/* Slotvak stap naam + e-mail (14 okt laat, zoals bfbouw.be 699886d): donker vak, € en slot in AB-goud, slot in het midden. */
+.bf.bf-lp .kgj-reken__richt--kluis { position: relative; display: grid; place-items: center; justify-content: center; height: calc(78 * var(--u)); padding: 0; border-radius: calc(14 * var(--u)); background: radial-gradient(120% 140% at 50% 0%, #1b2f52 0%, #0a1628 55%, #050b14 100%); box-shadow: none; overflow: hidden; }
+.bf.bf-lp .kgj-reken__richt--kluis .kgj-reken__richt-bedrag { display: inline-flex; align-items: baseline; gap: calc(10 * var(--u)); font-size: calc(26 * var(--u)); font-weight: 800; line-height: 1; color: #fff; }
+.bf.bf-lp .kgj-reken__richt--kluis .kgj-reken__richt-euro { color: #d98c03; }
+.bf.bf-lp .kgj-reken__richt--kluis .kgj-reken__richt-cijfers { color: #fff; opacity: .85; filter: blur(calc(7 * var(--u))); }
+.bf.bf-lp .kgj-reken__richt--kluis .kgj-reken__slot { position: absolute; inset: 0; margin: auto; width: calc(46 * var(--u)); height: calc(46 * var(--u)); background: #d98c03; color: #0a1628; box-shadow: 0 0 0 calc(6 * var(--u)) rgba(217, 140, 3, .25), 0 calc(8 * var(--u)) calc(20 * var(--u)) calc(-6 * var(--u)) rgba(0, 0, 0, .55); }
+.bf.bf-lp .kgj-reken__richt--kluis .kgj-reken__slot svg { width: calc(20 * var(--u)); height: calc(20 * var(--u)); stroke-width: 2.4; }
+.bf.bf-lp .kgj-reken__richt-onder--kluis { margin-top: calc(8 * var(--u)); text-align: center; }
+.bf.bf-lp .kgj-reken__richt-onder--kluis span { font-weight: 700; color: #b87502; }
+.bf.bf-lp .kgj-reken .kgj-reken__vraag--kluis { text-align: center; }
+.bf.bf-lp .kgj-reken__troeven--richt li b { font-weight: 700; color: var(--ink); }
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken__richt--kluis { height: 76px; padding: 0; border-radius: 14px; }
+  .bf.bf-lp .kgj-reken__richt--kluis .kgj-reken__richt-bedrag { font-size: 24px; gap: 8px; }
+  .bf.bf-lp .kgj-reken__richt--kluis .kgj-reken__richt-cijfers { filter: blur(6px); }
+  .bf.bf-lp .kgj-reken__richt--kluis .kgj-reken__slot { width: 44px; height: 44px; box-shadow: 0 0 0 6px rgba(217, 140, 3, .25), 0 8px 20px -6px rgba(0, 0, 0, .55); }
+  .bf.bf-lp .kgj-reken__richt-onder--kluis { margin-top: 8px; }
+}
