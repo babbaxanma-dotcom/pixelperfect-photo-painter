@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, BadgePercent, Calculator, Check, Clock, Home, Lock, Plus, ShieldCheck } from 'lucide-react';
+import { ArrowRight, BadgePercent, Calculator, Check, Clock, Home, Lock, Phone, Plus, ShieldCheck } from 'lucide-react';
 import { Icoon } from './Iconen';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
@@ -90,6 +90,20 @@ export default function Rekenaar({ inhoud, plek, voor }: {
      (herstelling, of een combinatie zonder eerlijke prijs) = de oude, eerlijke laatste stap: Bardh bezorgt de prijs. */
   const vork: Vork | null = klaar ? berekenVork(inhoud.divisie, antwoorden) : null;
 
+  /* 14 okt avond, Mohammed (BF-chat, "voer dezelfde fixes uit op abgroep.be"): "we vragen bij de form om email en naam, maar
+     daarna gaan ze verder, dat was lead capture, voordat ze prijs krijgen laad het even en moeten ze telefoonnummer invullen
+     (om misbruik te voorkomen)" en "3 seconden ofzo totaal, maar iets aanzienlijk visueel doen". Met een prijs: naam + e-mail
+     (contact) → laden (3 s) → telefoon (gsm) → bedankpagina met de prijs. Zonder prijs (dak herstelling): de oude ene stap.
+     Eén aanvraag per bezoeker (GHL slaat een tweede aanvraag over zolang het contact nog in de workflow zit): met telefoon
+     bij "Onthul mijn richtprijs", of zonder telefoon zodra hij de pagina verlaat op de telefoonstap. */
+  const [fase, setFase] = useState<'contact' | 'laden' | 'gsm'>('contact');
+  const contact = useRef<{ naam: string; email: string } | null>(null);
+  const wacht = useRef(false);
+  const contactHoogte = useRef(0);
+  const [pct, setPct] = useState(0);
+  const [afgevinkt, setAfgevinkt] = useState(0);
+  const metStappen = klaar && !!vork;
+
   /* Mohammed, 1 okt: "bij vraag 2 of 3 paar pixels naar onder ... waardoor je de
      form kwijtraakt". Een vraag is soms veel korter dan de vorige (totaalrenovatie:
      vraag 2 is 923 px, vraag 3 620 px op 390 px breed). Wie naar onder scrolde om
@@ -175,6 +189,65 @@ export default function Rekenaar({ inhoud, plek, voor }: {
     setStap((s) => s + 1);
   };
 
+  const info = () => VRAGEN.map((v) => `${v.sleutel}: ${antwoorden[v.sleutel] || '-'}`).join(' · ')
+    + (vork ? ` · Getoonde richtprijs: € ${bedrag(vork.min)} tot € ${bedrag(vork.max)} incl. btw` : '');
+
+  /* Stap naam + e-mail: zelfde e-mailcontrole als de lead-pijplijn (leads.ts). Er vertrekt hier nog niets. */
+  const naarLaden = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const f = new FormData(e.currentTarget);
+    const naam = String(f.get('naam') || '').trim();
+    const email = String(f.get('email') || '').trim();
+    if (!naam) { setFout('Vul uw naam in.'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setFout('Vul een geldig e-mailadres in.'); return; }
+    setFout(null);
+    contact.current = { naam, email };
+    wacht.current = true;
+    contactHoogte.current = e.currentTarget.offsetHeight; // de kaart blijft even hoog tijdens het laden: de pagina verspringt niet
+    meldClarity('rekenaar-laden');
+    setFase('laden');
+  };
+
+  /* Laden, 3,0 s (zoals bfbouw.be): de ring loopt in 2,8 s vol (ease-in-out), de drie regels vinken af op 0,8 / 1,7 / 2,6 s. */
+  useEffect(() => {
+    if (fase !== 'laden') return;
+    let raf = 0;
+    const t0 = performance.now();
+    const loop = (t: number) => {
+      const x = Math.min(1, (t - t0) / 2800);
+      setPct(Math.round((x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2) * 100));
+      if (x < 1) raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    const klokken = [800, 1700, 2600].map((ms, i) => window.setTimeout(() => setAfgevinkt(i + 1), ms));
+    klokken.push(window.setTimeout(() => { meldClarity('rekenaar-gsm'); setFase('gsm'); }, 3000));
+    return () => { cancelAnimationFrame(raf); klokken.forEach((k) => window.clearTimeout(k)); };
+  }, [fase]);
+
+  /* Weg op de telefoonstap (tabblad dicht of weg): de aanvraag met naam en e-mail toch naar het CRM (lead capture).
+     postJSON in leads.ts verstuurt met keepalive, dus het verzoek overleeft het sluiten van de pagina. */
+  useEffect(() => {
+    if (fase !== 'gsm') return;
+    const spoel = () => {
+      if (!wacht.current || !contact.current) return;
+      wacht.current = false;
+      void submitLead({
+        source: 'landing_page',
+        page_path: window.location.pathname,
+        landing_division: inhoud.divisie,
+        firstName: contact.current.naam,
+        email: contact.current.email,
+        type_werk: inhoud.divisie,
+        aanvullende_info: info() + ' · Geen telefoonnummer: weggegaan bij de stap telefoonnummer',
+        bron_lead: `${inhoud.bronLead}:${plek}`,
+      });
+    };
+    const verborgen = () => { if (document.visibilityState === 'hidden') spoel(); };
+    document.addEventListener('visibilitychange', verborgen);
+    window.addEventListener('pagehide', spoel);
+    return () => { document.removeEventListener('visibilitychange', verborgen); window.removeEventListener('pagehide', spoel); };
+  });
+
   const verstuur = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (bezig) return;
@@ -185,24 +258,26 @@ export default function Rekenaar({ inhoud, plek, voor }: {
        telefoonnummer verplicht, ik heb veel liever hun telefoonnummer"). */
     const telefoon = String(f.get('telefoon') || '').trim();
     const cijfers = telefoon.replace(/\D/g, '').length;
-    if (!telefoon) { setFout('Vul uw telefoonnummer in om uw prijs te ontvangen.'); return; }
+    if (!telefoon) { setFout(metStappen ? 'Vul uw telefoonnummer in.' : 'Vul uw telefoonnummer in om uw prijs te ontvangen.'); return; }
     if (cijfers < 8) { setFout('Dat telefoonnummer lijkt niet volledig. Controleer het even.'); return; }
     setFout(null);
     setBezig(true);
+    /* Met prijs komen naam en e-mail uit de stap ervoor; de stille aanvraag bij weggaan vervalt nu (één aanvraag). */
+    const c = metStappen ? contact.current : null;
+    wacht.current = false;
     const res = await submitLead({
       source: 'landing_page',
       page_path: window.location.pathname,
       landing_division: inhoud.divisie,
-      firstName: String(f.get('naam') || '').trim() || undefined,
-      email: String(f.get('email') || '').trim(),
+      firstName: c ? c.naam : String(f.get('naam') || '').trim() || undefined,
+      email: c ? c.email : String(f.get('email') || '').trim(),
       phone: telefoon,
       type_werk: inhoud.divisie,
-      aanvullende_info: VRAGEN.map((v) => `${v.sleutel}: ${antwoorden[v.sleutel] || '-'}`).join(' · ')
-        + (vork ? ` · Getoonde richtprijs: € ${bedrag(vork.min)} tot € ${bedrag(vork.max)} incl. btw` : ''),
+      aanvullende_info: info(),
       bron_lead: `${inhoud.bronLead}:${plek}`,
     });
     setBezig(false);
-    if (!res.ok) { setFout(leadFoutmelding(res, CONTACT.phone.display)); return; }
+    if (!res.ok) { if (c) wacht.current = true; setFout(leadFoutmelding(res, CONTACT.phone.display)); return; }
     meldClarity('aanvraag-verstuurd');
     if (vork) bewaarVork(vork);
     /* Zonder toestemming voor marketing eerst de vraag uit Toestemming.tsx, dan pas de bedankpagina. */
@@ -231,14 +306,15 @@ export default function Rekenaar({ inhoud, plek, voor }: {
           staat er vanaf de eerste vraag (zoals bij Airadvisor het bedrag). */}
       <div className="kgj-reken__weg" aria-hidden="true">
         <Home className="kgj-reken__begin" />
-        <div className="kgj-reken__balk"><i style={{ width: `${(nu / totaal) * 100}%` }} /></div>
+        {/* Met prijs: 90 % bij naam + e-mail, 97 % vanaf het laden (er volgen nog stappen; een volle balk was een valse belofte). */}
+        <div className="kgj-reken__balk"><i style={{ width: `${metStappen ? (fase === 'contact' ? 90 : 97) : (nu / totaal) * 100}%` }} /></div>
         <span className={`kgj-reken__eind${klaar ? ' is-aan' : ''}`}>€</span>
       </div>
       {/* Na een verstuurde aanvraag geen "‹ Terug" meer: terug naar een vraag zou doen alsof er nog niets verstuurd is. */}
       {!vraagToestemming && (
         <div className="kgj-reken__kop">
-          <span className="kgj-reken__tel">{klaar ? 'Laatste stap' : `Vraag ${nu} van ${AANTAL}`}</span>
-          {stap > 0 && (
+          <span className="kgj-reken__tel">{metStappen ? { contact: 'Bijna klaar', laden: 'Even geduld', gsm: 'Laatste stap' }[fase] : klaar ? 'Laatste stap' : `Vraag ${nu} van ${AANTAL}`}</span>
+          {stap > 0 && !(metStappen && fase !== 'contact') && (
             <button type="button" className="kgj-reken__terug" onClick={() => setStap((s) => s - 1)}>‹ Terug</button>
           )}
         </div>
@@ -320,7 +396,93 @@ export default function Rekenaar({ inhoud, plek, voor }: {
         </div>
       ) : vraagToestemming ? (
         <Toestemming verder={naarBedankt} />
-      ) : (
+      ) : metStappen && vork ? (() => {
+        /* Het slotvak van abgroep.be (Mohammed 14 okt: "zo met dat slotje ofzo, zoals bij abgroep"), nu met de echte vork
+           vervaagd: aantal cijfers en vorm kloppen met zijn antwoorden. */
+        const slotvak = (
+          <>
+            <div className="kgj-reken__richt" aria-hidden="true">
+              <span className="kgj-reken__richt-bedrag">
+                <span className="kgj-reken__richt-euro">€</span>
+                <span className="kgj-reken__richt-cijfers">{bedrag(vork.min)} – {bedrag(vork.max)}</span>
+              </span>
+              <span className="kgj-reken__slot"><Lock /></span>
+            </div>
+            <p className="kgj-reken__richt-onder">Op basis van uw {Object.values(antwoorden).filter(Boolean).length} antwoorden</p>
+          </>
+        );
+        const google = <li className="kgj-reken__troef-google"><span className="kgj-reken__trust-st" aria-hidden="true"><IcSter /><IcSter /><IcSter /><IcSter /><IcSter /></span>5,0 op Google</li>;
+        const privacy = <p className="kgj-reken__privacy">Wij gebruiken uw gegevens alleen voor deze aanvraag. <a href="/privacy">Privacybeleid</a></p>;
+        const n = Object.values(antwoorden).filter(Boolean).length;
+        /* regel 2: Mohammed 14 okt, "Materiaalkosten berekenen voor ..." zonder postcode; het woord komt uit zijn eigen antwoord */
+        const waarvoor = inhoud.divisie === 'ab_dakwerken'
+          ? (antwoorden.Dak || 'dak').toLowerCase()
+          : ({ Appartement: 'appartement', Rijwoning: 'rijwoning', 'Halfopen bebouwing': 'halfopen woning', 'Open bebouwing': 'vrijstaande woning' } as Record<string, string>)[antwoorden.Woning] || 'woning';
+        const regels = [`Uw ${n} antwoorden verwerken`, `Materiaalkosten berekenen voor uw ${waarvoor}`, 'Btw-tarief toepassen'];
+        if (fase === 'contact') return (
+          <form className="kgj-reken__stap kgj-reken__form" onSubmit={naarLaden} noValidate>
+            {slotvak}
+            <p className="kgj-reken__vraag kgj-reken__vraag--richt">Uw richtprijs is bijna klaar</p>
+            {/* Geen autoFocus: op een telefoon sprong het toetsenbord dan meteen open (Mohammed, 24 sep). */}
+            <div className="kgj-reken__rij">
+              <label>Naam *<input name="naam" type="text" autoComplete="name" placeholder="Uw naam" aria-required="true" /></label>
+              <label>E-mail *<input name="email" type="email" autoComplete="email" inputMode="email" placeholder="uw@email.be" aria-required="true" /></label>
+            </div>
+            <ul className="kgj-reken__troeven kgj-reken__troeven--richt">
+              <li><Check aria-hidden="true" />Uw richtprijs is binnen enkele seconden klaar</li>
+              <li><Check aria-hidden="true" />Gratis en vrijblijvend</li>
+              {google}
+            </ul>
+            <button className="kgj-knop kgj-knop--vol kgj-reken__knop kgj-reken__knop--richt" type="submit">
+              Bereken mijn richtprijs<ArrowRight aria-hidden="true" />
+            </button>
+            {privacy}
+            {fout && <p className="kgj-reken__fout" role="alert">{fout}</p>}
+          </form>
+        );
+        if (fase === 'laden') return (
+          <div className="kgj-reken__stap kgj-reken__laden" style={{ minHeight: contactHoogte.current || undefined }} role="status">
+            <div className="kgj-reken__ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120"><circle className="kgj-reken__ring-bg" cx="60" cy="60" r="52" /><circle className="kgj-reken__ring-vol" cx="60" cy="60" r="52" style={{ strokeDashoffset: 326.7 * (1 - pct / 100) }} /></svg>
+              <span className="kgj-reken__ring-pct">{pct}%</span>
+            </div>
+            <p className="kgj-reken__vraag kgj-reken__vraag--laden">Uw richtprijs wordt berekend</p>
+            <ul className="kgj-reken__laadlijst">
+              {regels.map((r, i) => (
+                <li key={r} className={i < afgevinkt ? 'is-klaar' : undefined}><span className="kgj-reken__laad-ic" aria-hidden="true"><Check /></span><span>{r}</span></li>
+              ))}
+            </ul>
+          </div>
+        );
+        return (
+          <form className="kgj-reken__stap kgj-reken__form kgj-reken__telstap" onSubmit={verstuur} noValidate>
+            {/* Mohammed 14 okt: "dat moet aanzienlijk anders eruitzien dan de vorige stap" en "het moet telefoonnummer zijn"
+                (zoals bfbouw.be): groen klaar-vak met de vork als donkere strook, beveiligingsvak, groot telefoonveld. */}
+            <div className="kgj-reken__klaarvak">
+              <span className="kgj-reken__klaarvak-ic" aria-hidden="true"><Check /></span>
+              <p className="kgj-reken__vraag kgj-reken__vraag--klaar">Uw richtprijs staat klaar</p>
+              <p className="kgj-reken__klaarvak-prijs" aria-hidden="true"><span className="kgj-reken__klaarvak-euro">€</span><b>{bedrag(vork.min)} – {bedrag(vork.max)}</b><Lock /></p>
+              <p className="kgj-reken__richt-onder">Op basis van uw {n} antwoorden</p>
+            </div>
+            <div className="kgj-reken__beveilig"><ShieldCheck aria-hidden="true" /><p>Om misbruik te voorkomen tonen we de richtprijs na het invullen van uw telefoonnummer.</p></div>
+            <label>Telefoonnummer *
+              <span className="kgj-reken__telveld"><Phone aria-hidden="true" />
+                <input name="telefoon" type="tel" autoComplete="tel" inputMode="tel" placeholder="0470 12 34 56" aria-required="true" />
+              </span>
+            </label>
+            <ul className="kgj-reken__troeven kgj-reken__troeven--richt">
+              <li><Check aria-hidden="true" />Gratis en vrijblijvend</li>
+              {google}
+            </ul>
+            <button className="kgj-knop kgj-knop--vol kgj-reken__knop kgj-reken__knop--richt" type="submit" disabled={bezig}>
+              {/* Mohammed 14 okt: "onthul mijn richtprijs ipv ontvang". */}
+              {bezig ? 'Bezig…' : <>Onthul mijn richtprijs<ArrowRight aria-hidden="true" /></>}
+            </button>
+            {privacy}
+            {fout && <p className="kgj-reken__fout" role="alert">{fout}</p>}
+          </form>
+        );
+      })() : (
         <form className="kgj-reken__stap kgj-reken__form" onSubmit={verstuur} noValidate>
           {/* Vervaagde richtprijs bovenaan de laatste stap, met een slot (Mohammed,
               28 sept; naar zijn voorbeeld, zonder het sterretje en de hoofdletters).
@@ -339,8 +501,8 @@ export default function Rekenaar({ inhoud, plek, voor }: {
           </div>
           {/* Direct onder het bedrag, zodat de regel bij de prijs hoort (Mohammed, 28 sept). */}
           <p className="kgj-reken__richt-onder">Op basis van uw {Object.values(antwoorden).filter(Boolean).length} antwoorden</p>
-          {/* Met prijs geen "Waar mogen we ... verzenden?" meer (Mohammed 14 okt: "dat wijst op verzenden, dus lang duren"). */}
-          {!vork && <p className="kgj-reken__vraag kgj-reken__vraag--richt">{inhoud.rekenaar.uitkomstKop}</p>}
+          {/* Alleen zonder prijs (met prijs: de stappen hierboven). */}
+          <p className="kgj-reken__vraag kgj-reken__vraag--richt">{inhoud.rekenaar.uitkomstKop}</p>
           {/* Mohammed, 26 sep: "naam en email bovenaan, telefoon onderaan, maar
               telefoon wel verplichting". 14 okt bevestigd: "behoud maar telefoonnummer verplicht". */}
           <div className="kgj-reken__rij">
@@ -353,23 +515,15 @@ export default function Rekenaar({ inhoud, plek, voor }: {
             <input name="telefoon" type="tel" autoComplete="tel" inputMode="tel" placeholder="04xx xx xx xx"
               aria-required="true" />
           </label>
-          {/* Met prijs: de drie regels van bfbouw.be boven de knop (BF 5cf6cb1; 5,0 op Google mag, spec abgroep-bfstijl). */}
-          {vork ? (
-            <ul className="kgj-reken__troeven kgj-reken__troeven--richt">
-              <li><Check aria-hidden="true" />Uw richtprijs verschijnt meteen op het volgende scherm</li>
-              <li><Check aria-hidden="true" />Gratis en vrijblijvend</li>
-              <li className="kgj-reken__troef-google"><span className="kgj-reken__trust-st" aria-hidden="true"><IcSter /><IcSter /><IcSter /><IcSter /><IcSter /></span>5,0 op Google</li>
-            </ul>
-          ) : inhoud.rekenaar.troeven && (
+          {inhoud.rekenaar.troeven && (
             <ul className="kgj-reken__troeven">
               {inhoud.rekenaar.troeven.map((t) => <li key={t}><Check aria-hidden="true" />{t}</li>)}
             </ul>
           )}
           <button className="kgj-knop kgj-knop--vol kgj-reken__knop kgj-reken__knop--richt" type="submit" disabled={bezig}>
-            {/* Mohammed 14 okt: "onthul mijn richtprijs ipv ontvang" (alleen als er echt een prijs verschijnt). */}
-            {bezig ? 'Bezig…' : <>{vork ? 'Onthul mijn richtprijs' : inhoud.rekenaar.knop}<ArrowRight aria-hidden="true" /></>}
+            {bezig ? 'Bezig…' : <>{inhoud.rekenaar.knop}<ArrowRight aria-hidden="true" /></>}
           </button>
-          {!vork && inhoud.rekenaar.uitkomstOnder && <p className="kgj-reken__gerust">{inhoud.rekenaar.uitkomstOnder}</p>}
+          {inhoud.rekenaar.uitkomstOnder && <p className="kgj-reken__gerust">{inhoud.rekenaar.uitkomstOnder}</p>}
           {/* AVG: informatie bij het verzamelen (art. 13), klein en rustig (Mohammed, 25 sep:
               "niet opeens super duidelijk aan de prospect"). */}
           <p className="kgj-reken__privacy">Wij gebruiken uw gegevens alleen voor deze aanvraag. <a href="/privacy">Privacybeleid</a></p>

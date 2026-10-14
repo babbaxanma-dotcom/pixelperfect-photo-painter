@@ -12,6 +12,8 @@
  * en vergelijkt veld voor veld met de vaste referentie in scripts/fixtures/lp-payload/<lp>.json (gemeten op de
  * HUIDIGE LpKgj, 12 okt 2026). Verder per flow:
  *   - validatie: leeg telefoonnummer en < 8 cijfers geven de vaste foutmelding en versturen NIETS;
+ *   - rekenaar met prijs (14 okt): naam + e-mail (leeg geeft de vaste melding, er vertrekt niets) → laadscherm → telefoonstap;
+ *     flow met weg:true = weggaan op de telefoonstap geeft precies 1 stille aanvraag met naam + e-mail, zonder telefoon;
  *   - dubbelklik op de verzendknop = precies 1 GHL- en 1 Web3Forms-verzoek;
  *   - trackFormStart: het form_start-label in de dataLayer;
  *   - Toestemming-stap na een lead zonder marketingtoestemming ("Liever niet"), geen stap met toestemming;
@@ -160,9 +162,38 @@ async function doeFlow(browser, basis, lp, f, breedte, lokaas = false) {
     }
     const form = `${wortel} form.kgj-reken__form`;
     if (!(await p.$(form))) { fouten.push(`formulier ${form} niet gevonden na de antwoorden`); return { fouten, log }; }
+    const foutTekst = async () => p.evaluate((w) => document.querySelector(w + ' .kgj-reken__fout')?.textContent.trim() ?? null, wortel);
+
+    /* Rekenaar met prijs (14 okt): eerst naam + e-mail (er vertrekt niets), dan laden (3 s), dan de telefoonstap. */
+    if (f.contact) {
+      await p.evaluate((s) => document.querySelector(s + ' button[type=submit]').click(), form);
+      await wacht(350);
+      const leegC = await foutTekst();
+      if (leegC !== f.contactFout) fouten.push(`validatie naam + e-mail leeg: "${leegC}" in plaats van "${f.contactFout}"`);
+      for (const [naam, waarde] of Object.entries(f.contact)) await p.type(`${form} [name="${naam}"]`, waarde);
+      await p.evaluate((s) => document.querySelector(s + ' button[type=submit]').click(), form);
+      await wacht(1200);
+      if (!(await p.$(`${wortel} .kgj-reken__laden`))) fouten.push('laden: het laadscherm verscheen niet na naam + e-mail');
+      await p.waitForSelector(`${form} [name="telefoon"]`, { timeout: 8000 }).catch(() => {});
+      await wacht(300);
+      if (!(await p.$(`${form} [name="telefoon"]`))) { fouten.push('telefoonstap: geen telefoonveld na het laden'); return { fouten, log }; }
+      if (log.ghl.length || log.w3f.length) fouten.push(`naam + e-mail: er vertrok al een verzoek vóór de telefoonstap (${log.ghl.length} GHL, ${log.w3f.length} Web3Forms)`);
+      if (f.weg) {
+        /* Weg op de telefoonstap: precies één stille aanvraag met naam + e-mail, ook bij een tweede signaal. */
+        await p.evaluate(() => { Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => 'hidden' }); document.dispatchEvent(new Event('visibilitychange')); });
+        await wacht(1500);
+        await p.evaluate(() => { document.dispatchEvent(new Event('visibilitychange')); window.dispatchEvent(new Event('pagehide')); });
+        await wacht(1200);
+        if (log.ghl.length !== 1 || log.w3f.length !== 1) fouten.push(`weg op de telefoonstap: ${log.ghl.length} GHL en ${log.w3f.length} Web3Forms (verwacht 1 en 1)`);
+        for (const d of vergelijk(f.ghl, log.ghl[0])) fouten.push('GHL ' + d);
+        for (const d of vergelijk(f.web3forms, log.w3f[0])) fouten.push('Web3Forms ' + d);
+        if (log.extern.length) fouten.push(`verzoek naar buiten tegengehouden: ${log.extern.join(', ')}`);
+        if (log.fouten.length) fouten.push(`paginafout: ${log.fouten.join(' | ')}`);
+        return { fouten, log };
+      }
+    }
 
     /* validatie: leeg en te kort versturen niets */
-    const foutTekst = async () => p.evaluate((w) => document.querySelector(w + ' .kgj-reken__fout')?.textContent.trim() ?? null, wortel);
     await p.evaluate((s) => document.querySelector(s + ' button[type=submit]').click(), form);
     await wacht(350);
     const leeg = await foutTekst();
@@ -268,6 +299,7 @@ async function doeFlow(browser, basis, lp, f, breedte, lokaas = false) {
           }
           flows++; leads += r.log.ghl.length;
           if (r.fouten.length) r.fouten.forEach((x) => fouten.push(`${label}: ${x}`));
+          else if (f.weg) console.log(`  AF  ${label}: weg op de telefoonstap = 1 stille aanvraag (naam + e-mail, geen telefoon), Clarity ${lp.clarity}`);
           else console.log(`  AF  ${label}: payload GHL + Web3Forms gelijk, ${f.formStart}, ${f.toestemming ? 'Toestemming' : 'geen Toestemming'}, ${f.bedankt}, Clarity ${lp.clarity}`);
         }
       }

@@ -738,3 +738,54 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
   .bf.bf-lp .bf-lphero__tekst > .bf-lphero__tweede { order: 3; width: 100%; justify-content: center; height: 54px; margin-top: 4px; font-size: 16px; padding: 0 18px; }
   .bf.bf-lp .bf-lphero__tweede svg { width: 18px; height: 18px; }
 }
+
+/* Rekenaar met prijs, 14 okt (Mohammed, zoals bfbouw.be): naam + e-mail → laden (3 s) → telefoon. Goud = AB-accent. */
+.bf.bf-lp .kgj-reken__laden { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: calc(28 * var(--u)); }
+.bf.bf-lp .kgj-reken__ring { position: relative; width: calc(132 * var(--u)); height: calc(132 * var(--u)); margin-bottom: calc(14 * var(--u)); }
+.bf.bf-lp .kgj-reken__ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.bf.bf-lp .kgj-reken__ring circle { fill: none; stroke-width: 10; }
+.bf.bf-lp .kgj-reken__ring-bg { stroke: #f1ece6; }
+.bf.bf-lp .kgj-reken__ring-vol { stroke: #d98c03; stroke-linecap: round; stroke-dasharray: 326.7; }
+.bf.bf-lp .kgj-reken__ring-pct { position: absolute; inset: 0; display: grid; place-items: center; font-size: calc(30 * var(--u)); font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; }
+.bf.bf-lp .kgj-reken .kgj-reken__vraag--laden { margin: 0; text-align: center; font-size: calc(19 * var(--u)); }
+.bf.bf-lp .kgj-reken__laadlijst { align-self: stretch; list-style: none; margin: calc(18 * var(--u)) 0 calc(6 * var(--u)); padding: 0; display: grid; gap: calc(14 * var(--u)); }
+.bf.bf-lp .kgj-reken__laadlijst li { display: flex; align-items: center; gap: calc(12 * var(--u)); font-size: calc(16 * var(--u)); color: var(--tekst-2); transition: color .3s; }
+.bf.bf-lp .kgj-reken__laadlijst li.is-klaar { color: var(--ink); font-weight: 600; }
+.bf.bf-lp .kgj-reken__laad-ic { position: relative; width: calc(26 * var(--u)); height: calc(26 * var(--u)); flex: none; border-radius: 50%; border: 2px solid #e6e2dc; border-top-color: #d98c03; animation: kgj-laad-draai .8s linear infinite; }
+.bf.bf-lp .kgj-reken__laad-ic svg { position: absolute; inset: 0; width: 100%; height: 100%; padding: 22%; opacity: 0; stroke-width: 3.2; }
+.bf.bf-lp .kgj-reken__laadlijst li.is-klaar .kgj-reken__laad-ic { animation: none; border-color: #d98c03; background: #d98c03; color: #fff; }
+.bf.bf-lp .kgj-reken__laadlijst li.is-klaar .kgj-reken__laad-ic svg { opacity: 1; }
+@keyframes kgj-laad-draai { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .bf.bf-lp .kgj-reken__laad-ic { animation: none; } }
+.bf.bf-lp .kgj-reken__klaarvak { margin-top: calc(6 * var(--u)); padding: calc(18 * var(--u)) calc(14 * var(--u)) calc(14 * var(--u)); border-radius: calc(14 * var(--u)); background: #f1faf4; box-shadow: inset 0 0 0 1px #cbeed7; text-align: center; }
+.bf.bf-lp .kgj-reken__klaarvak-ic { display: inline-grid; place-items: center; width: calc(52 * var(--u)); height: calc(52 * var(--u)); border-radius: 50%; background: #1e9a52; color: #fff; box-shadow: 0 0 0 calc(6 * var(--u)) rgba(30, 154, 82, .15); }
+.bf.bf-lp .kgj-reken__klaarvak-ic svg { width: calc(26 * var(--u)); height: calc(26 * var(--u)); stroke-width: 3; }
+.bf.bf-lp .kgj-reken .kgj-reken__vraag--klaar { margin: calc(12 * var(--u)) 0 0; font-size: calc(20 * var(--u)); font-weight: 800; color: var(--ink); }
+.bf.bf-lp .kgj-reken__klaarvak-prijs { display: inline-flex; align-items: center; gap: calc(8 * var(--u)); margin: calc(10 * var(--u)) 0 0; padding: calc(7 * var(--u)) calc(16 * var(--u)); border-radius: 999px; background: #0a1628; font-size: calc(18 * var(--u)); font-weight: 800; line-height: 1.2; white-space: nowrap; user-select: none; -webkit-user-select: none; }
+.bf.bf-lp .kgj-reken__klaarvak-euro { color: #d98c03; }
+.bf.bf-lp .kgj-reken__klaarvak-prijs b { color: #fff; filter: blur(calc(5 * var(--u))); }
+.bf.bf-lp .kgj-reken__klaarvak-prijs svg { width: calc(16 * var(--u)); height: calc(16 * var(--u)); color: #d98c03; stroke-width: 2.4; }
+.bf.bf-lp .kgj-reken__klaarvak .kgj-reken__richt-onder { margin: calc(8 * var(--u)) 0 0; }
+.bf.bf-lp .kgj-reken__beveilig { display: flex; align-items: flex-start; gap: calc(10 * var(--u)); margin: calc(14 * var(--u)) 0 calc(4 * var(--u)); padding: calc(12 * var(--u)) calc(14 * var(--u)); border-radius: calc(12 * var(--u)); background: #f5f5f6; box-shadow: inset calc(3 * var(--u)) 0 0 #d98c03; }
+.bf.bf-lp .kgj-reken__beveilig > svg { flex: none; width: calc(22 * var(--u)); height: calc(22 * var(--u)); color: var(--ink); stroke-width: 2; }
+.bf.bf-lp .kgj-reken__beveilig p { margin: 0; font-size: calc(14.5 * var(--u)); line-height: 1.45; font-weight: 600; color: var(--ink-2); }
+.bf.bf-lp .kgj-reken__telveld { position: relative; display: block; }
+.bf.bf-lp .kgj-reken__telveld > svg { position: absolute; left: calc(15 * var(--u)); top: 50%; transform: translateY(-50%); width: calc(20 * var(--u)); height: calc(20 * var(--u)); color: var(--tekst-2); pointer-events: none; }
+.bf.bf-lp .kgj-reken__form .kgj-reken__telveld input { width: 100%; padding-left: calc(46 * var(--u)); height: calc(56 * var(--u)); font-size: calc(18 * var(--u)); letter-spacing: .02em; }
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken__laadlijst li { font-size: 16px; }
+  .bf.bf-lp .kgj-reken__ring { width: 120px; height: 120px; margin-bottom: 12px; }
+  .bf.bf-lp .kgj-reken__ring-pct { font-size: 28px; }
+  .bf.bf-lp .kgj-reken .kgj-reken__vraag--laden { font-size: 18px; }
+  .bf.bf-lp .kgj-reken__laad-ic { width: 26px; height: 26px; }
+  .bf.bf-lp .kgj-reken__klaarvak { padding: 16px 12px 12px; }
+  .bf.bf-lp .kgj-reken__klaarvak-ic { width: 48px; height: 48px; box-shadow: 0 0 0 6px rgba(30, 154, 82, .15); }
+  .bf.bf-lp .kgj-reken__klaarvak-ic svg { width: 24px; height: 24px; }
+  .bf.bf-lp .kgj-reken .kgj-reken__vraag--klaar { font-size: 19px; }
+  .bf.bf-lp .kgj-reken__klaarvak-prijs { font-size: 17px; padding: 7px 14px; }
+  .bf.bf-lp .kgj-reken__klaarvak-prijs b { filter: blur(5px); }
+  .bf.bf-lp .kgj-reken__beveilig { padding: 12px; box-shadow: inset 3px 0 0 #d98c03; }
+  .bf.bf-lp .kgj-reken__beveilig p { font-size: 16px; }
+  .bf.bf-lp .kgj-reken__telveld > svg { left: 15px; width: 20px; height: 20px; }
+  .bf.bf-lp .kgj-reken__form .kgj-reken__telveld input { padding-left: 46px; height: 56px; font-size: 18px; }
+}

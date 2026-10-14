@@ -20,19 +20,19 @@
         "Zo snel mogelijk"
       ],
       "velden": {
-        "naam": "Test Kaart",
         "telefoon": "0400 00 00 03"
       },
       "formStart": "lp:totaalrenovatie:rekenaar:hero",
       "toestemming": true,
       "bedankt": "/bedankt?dienst=totaalrenovatie&van=rekenaar",
       "fouten": {
-        "leeg": "Vul uw telefoonnummer in om uw prijs te ontvangen.",
+        "leeg": "Vul uw telefoonnummer in.",
         "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
       },
       "ghl": {
         "firstName": "Test Kaart",
         "name": "Test Kaart",
+        "email": "test@voorbeeld.be",
         "phone": "0400 00 00 03",
         "country": "BE",
         "type_werk": "AB Construct",
@@ -54,6 +54,7 @@
         "to": "info@abgroep.be",
         "firstName": "Test Kaart",
         "name": "Test Kaart",
+        "email": "test@voorbeeld.be",
         "phone": "0400 00 00 03",
         "country": "BE",
         "type_werk": "AB Construct",
@@ -68,7 +69,12 @@
         "utm_campaign": "totaalrenovatie",
         "utm_term": "renovatie prijs"
       },
-      "metingInUitFlows": "richtprijs-rekenaar-hero"
+      "metingInUitFlows": "richtprijs-rekenaar-hero",
+      "contact": {
+        "naam": "Test Kaart",
+        "email": "test@voorbeeld.be"
+      },
+      "contactFout": "Vul uw naam in."
     },
     {
       "naam": "inspectie",

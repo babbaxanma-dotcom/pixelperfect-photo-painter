@@ -20,19 +20,19 @@
         "Zo snel mogelijk"
       ],
       "velden": {
-        "naam": "Test Kaart",
         "telefoon": "0400 00 00 00"
       },
       "formStart": "lp:dakwerken:rekenaar:hero",
       "toestemming": true,
       "bedankt": "/bedankt?dienst=dakwerken&van=rekenaar",
       "fouten": {
-        "leeg": "Vul uw telefoonnummer in om uw prijs te ontvangen.",
+        "leeg": "Vul uw telefoonnummer in.",
         "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
       },
       "ghl": {
         "firstName": "Test Kaart",
         "name": "Test Kaart",
+        "email": "test@voorbeeld.be",
         "phone": "0400 00 00 00",
         "country": "BE",
         "type_werk": "AB Dakwerken",
@@ -55,6 +55,7 @@
         "to": "info@abgroep.be",
         "firstName": "Test Kaart",
         "name": "Test Kaart",
+        "email": "test@voorbeeld.be",
         "phone": "0400 00 00 00",
         "country": "BE",
         "type_werk": "AB Dakwerken",
@@ -70,7 +71,86 @@
         "utm_term": "dak vernieuwen",
         "gclid": "TEST-KAART"
       },
-      "metingInUitFlows": "dak-rekenaar-hero"
+      "metingInUitFlows": "dak-rekenaar-hero",
+      "contact": {
+        "naam": "Test Kaart",
+        "email": "test@voorbeeld.be"
+      },
+      "contactFout": "Vul uw naam in."
+    },
+    {
+      "naam": "rekenaar-weg",
+      "soort": "rekenaar",
+      "query": "?utm_source=google&utm_medium=cpc&utm_campaign=dakrenovatie&utm_term=dak%20vernieuwen&dienst=nieuw-dak&gclid=TEST-KAART",
+      "marketing": false,
+      "wortel": "#rekenaar",
+      "antwoorden": [
+        "Hellend dak",
+        "Renovatie",
+        "Met isolatie",
+        "Ouder dan 10 jaar",
+        "Gegolfde pannen",
+        "50 tot 100 m²",
+        "Nee",
+        "Zo snel mogelijk"
+      ],
+      "velden": {
+        "telefoon": "0400 00 00 00"
+      },
+      "formStart": "lp:dakwerken:rekenaar:hero",
+      "toestemming": true,
+      "bedankt": "/bedankt?dienst=dakwerken&van=rekenaar",
+      "fouten": {
+        "leeg": "Vul uw telefoonnummer in.",
+        "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
+      },
+      "ghl": {
+        "firstName": "Test Kaart",
+        "name": "Test Kaart",
+        "email": "test@voorbeeld.be",
+        "country": "BE",
+        "type_werk": "AB Dakwerken",
+        "aanvullende_info": "Dak: Hellend dak · Werk: Renovatie · Isolatie: Met isolatie · Leeftijd: Ouder dan 10 jaar · Bedekking: Gegolfde pannen · Grootte: 50 tot 100 m² · Asbest: Nee · Start: Zo snel mogelijk · Getoonde richtprijs: € 8.500 tot € 31.000 incl. btw · Geen telefoonnummer: weggegaan bij de stap telefoonnummer",
+        "bron_lead": "Google Ads",
+        "bron_lead_detail": "lp:dakwerken:rekenaar:hero",
+        "page_path": "/lp/dakwerken",
+        "landing_division": "ab_dakwerken",
+        "source": "landing_page",
+        "utm_source": "google",
+        "utm_medium": "cpc",
+        "utm_campaign": "dakrenovatie",
+        "utm_term": "dak vernieuwen",
+        "gclid": "TEST-KAART"
+      },
+      "web3forms": {
+        "access_key": "b01e4fea-3e73-418b-b65a-acfb1d3ee43c",
+        "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
+        "from_name": "AB Bouw website",
+        "to": "info@abgroep.be",
+        "firstName": "Test Kaart",
+        "name": "Test Kaart",
+        "email": "test@voorbeeld.be",
+        "country": "BE",
+        "type_werk": "AB Dakwerken",
+        "aanvullende_info": "Dak: Hellend dak · Werk: Renovatie · Isolatie: Met isolatie · Leeftijd: Ouder dan 10 jaar · Bedekking: Gegolfde pannen · Grootte: 50 tot 100 m² · Asbest: Nee · Start: Zo snel mogelijk · Getoonde richtprijs: € 8.500 tot € 31.000 incl. btw · Geen telefoonnummer: weggegaan bij de stap telefoonnummer",
+        "bron_lead": "Google Ads",
+        "bron_lead_detail": "lp:dakwerken:rekenaar:hero",
+        "page_path": "/lp/dakwerken",
+        "landing_division": "ab_dakwerken",
+        "source": "landing_page",
+        "utm_source": "google",
+        "utm_medium": "cpc",
+        "utm_campaign": "dakrenovatie",
+        "utm_term": "dak vernieuwen",
+        "gclid": "TEST-KAART"
+      },
+      "metingInUitFlows": "dak-rekenaar-hero",
+      "contact": {
+        "naam": "Test Kaart",
+        "email": "test@voorbeeld.be"
+      },
+      "contactFout": "Vul uw naam in.",
+      "weg": true
     },
     {
       "naam": "inspectie",
@@ -142,17 +222,18 @@
         "Dit jaar"
       ],
       "velden": {
-        "telefoon": "0400 00 00 02",
-        "email": "test@voorbeeld.be"
+        "telefoon": "0400 00 00 02"
       },
       "formStart": "lp:dakwerken:rekenaar:venster",
       "toestemming": false,
       "bedankt": "/bedankt?dienst=dakwerken&van=rekenaar",
       "fouten": {
-        "leeg": "Vul uw telefoonnummer in om uw prijs te ontvangen.",
+        "leeg": "Vul uw telefoonnummer in.",
         "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
       },
       "ghl": {
+        "firstName": "Test Kaart",
+        "name": "Test Kaart",
         "email": "test@voorbeeld.be",
         "phone": "0400 00 00 02",
         "country": "BE",
@@ -166,9 +247,11 @@
       },
       "web3forms": {
         "access_key": "b01e4fea-3e73-418b-b65a-acfb1d3ee43c",
-        "subject": "Nieuwe AB Bouw lead (landing_page), test@voorbeeld.be",
+        "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
         "from_name": "AB Bouw website",
         "to": "info@abgroep.be",
+        "firstName": "Test Kaart",
+        "name": "Test Kaart",
         "email": "test@voorbeeld.be",
         "phone": "0400 00 00 02",
         "country": "BE",
@@ -180,7 +263,12 @@
         "landing_division": "ab_dakwerken",
         "source": "landing_page"
       },
-      "metingInUitFlows": "dak-venster-marketing"
+      "metingInUitFlows": "dak-venster-marketing",
+      "contact": {
+        "naam": "Test Kaart",
+        "email": "test@voorbeeld.be"
+      },
+      "contactFout": "Vul uw naam in."
     }
   ]
 }
