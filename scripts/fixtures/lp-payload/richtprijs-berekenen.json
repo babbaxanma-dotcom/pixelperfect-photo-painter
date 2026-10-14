@@ -21,22 +21,22 @@
       ],
       "velden": {
         "naam": "Test Kaart",
-        "telefoon": "0400 00 00 03"
+        "email": "test@voorbeeld.be"
       },
       "formStart": "lp:totaalrenovatie:rekenaar:hero",
       "toestemming": true,
       "bedankt": "/bedankt?dienst=totaalrenovatie&van=rekenaar",
       "fouten": {
-        "leeg": "Vul uw telefoonnummer in om uw prijs te ontvangen.",
-        "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
+        "leeg": "Vul uw naam in.",
+        "kort": "Vul een geldig e-mailadres in."
       },
       "ghl": {
         "firstName": "Test Kaart",
         "name": "Test Kaart",
-        "phone": "0400 00 00 03",
+        "email": "test@voorbeeld.be",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Woning: Rijwoning · Renoveren: Keuken, Isolatie · Grootte: 100 tot 150 m² · Leeftijd: Ouder dan 10 jaar · Staat: Een groot deel · Start: Zo snel mogelijk",
+        "aanvullende_info": "Woning: Rijwoning · Renoveren: Keuken, Isolatie · Grootte: 100 tot 150 m² · Leeftijd: Ouder dan 10 jaar · Staat: Een groot deel · Start: Zo snel mogelijk · Getoonde richtprijs: € 12.000 tot € 35.500 incl. btw",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:totaalrenovatie:rekenaar:hero",
         "page_path": "/lp/richtprijs-berekenen",
@@ -54,10 +54,10 @@
         "to": "info@abgroep.be",
         "firstName": "Test Kaart",
         "name": "Test Kaart",
-        "phone": "0400 00 00 03",
+        "email": "test@voorbeeld.be",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Woning: Rijwoning · Renoveren: Keuken, Isolatie · Grootte: 100 tot 150 m² · Leeftijd: Ouder dan 10 jaar · Staat: Een groot deel · Start: Zo snel mogelijk",
+        "aanvullende_info": "Woning: Rijwoning · Renoveren: Keuken, Isolatie · Grootte: 100 tot 150 m² · Leeftijd: Ouder dan 10 jaar · Staat: Een groot deel · Start: Zo snel mogelijk · Getoonde richtprijs: € 12.000 tot € 35.500 incl. btw",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:totaalrenovatie:rekenaar:hero",
         "page_path": "/lp/richtprijs-berekenen",
@@ -68,7 +68,11 @@
         "utm_campaign": "totaalrenovatie",
         "utm_term": "renovatie prijs"
       },
-      "metingInUitFlows": "richtprijs-rekenaar-hero"
+      "metingInUitFlows": "richtprijs-rekenaar-hero",
+      "ongeldig": {
+        "naam": "Test Kaart",
+        "email": "test@voorbeeld"
+      }
     },
     {
       "naam": "inspectie",

@@ -167,4 +167,15 @@ describe('submitLead, conversie vuurt enkel bij bezorging', () => {
     expect(res.via).toBe('none');
     expect(fireConversion).not.toHaveBeenCalled();
   });
+
+  it('bezorgt een aanvulling (zonderConversie) wel, maar vuurt GEEN tweede conversie', async () => {
+    const f = fetchMock();
+    vi.stubGlobal('fetch', f);
+
+    const res = await submitLead({ ...base, zonderConversie: true });
+
+    expect(res.ok).toBe(true);
+    expect(f).toHaveBeenCalled();
+    expect(fireConversion).not.toHaveBeenCalled();
+  });
 });

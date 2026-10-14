@@ -7,6 +7,7 @@ import { trackFormStart } from '@/lib/tracking';
 import { allowsMarketing } from '@/lib/consent';
 import { meldClarity } from '@/lib/clarity';
 import { CONTACT } from '@/data/contact';
+import { bedrag, berekenVork, bewaarContact, bewaarVork, type Vork } from '@/lib/richtprijs';
 import type { KgjInhoud, Vraag } from './inhoud';
 import Toestemming from './Toestemming';
 
@@ -85,6 +86,9 @@ export default function Rekenaar({ inhoud, plek, voor }: {
   const AANTAL = langstePad(ALLE, antwoorden);
 
   const klaar = stap >= VRAGEN.length;
+  /* 14 okt (Mohammed: "zoals bf ... veilige richtprijzen"): na de laatste vraag de richtprijs uit src/lib/richtprijs.ts. Geen vork
+     (herstelling, of een combinatie zonder eerlijke prijs) = de oude, eerlijke laatste stap: Bardh bezorgt de prijs. */
+  const vork: Vork | null = klaar ? berekenVork(inhoud.divisie, antwoorden) : null;
 
   /* Mohammed, 1 okt: "bij vraag 2 of 3 paar pixels naar onder ... waardoor je de
      form kwijtraakt". Een vraag is soms veel korter dan de vorige (totaalrenovatie:
@@ -175,29 +179,31 @@ export default function Rekenaar({ inhoud, plek, voor }: {
     e.preventDefault();
     if (bezig) return;
     const f = new FormData(e.currentTarget);
-    const telefoon = String(f.get('telefoon') || '').trim();
-    /* Dezelfde drempel als de lead-pijplijn zelf, acht cijfers: een voorkant die
-       iets doorlaat wat de achterkant weigert, laat de bezoeker denken dat hij
-       verstuurd heeft terwijl er niets aankomt. */
-    const cijfers = telefoon.replace(/\D/g, '').length;
-    if (!telefoon) { setFout('Vul uw telefoonnummer in om uw prijs te ontvangen.'); return; }
-    if (cijfers < 8) { setFout('Dat telefoonnummer lijkt niet volledig. Controleer het even.'); return; }
+    /* 14 okt (Mohammed: "doe mail dat gevraagd wordt ipv telefoonnummer"; Clarity BF 14 okt: 4 van 4 die de rekenaar afmaakten,
+       stopten bij het telefoonveld): naam en e-mail verplicht, geen telefoon. Het nummer vraagt de bedankpagina (Bel mij terug).
+       Zelfde e-mailcontrole als de lead-pijplijn (leads.ts), zodat er nooit een aanvraag 'verstuurd' lijkt die niet aankomt. */
+    const naam = String(f.get('naam') || '').trim();
+    const email = String(f.get('email') || '').trim();
+    if (!naam) { setFout('Vul uw naam in.'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setFout('Vul een geldig e-mailadres in.'); return; }
     setFout(null);
     setBezig(true);
     const res = await submitLead({
       source: 'landing_page',
       page_path: window.location.pathname,
       landing_division: inhoud.divisie,
-      firstName: String(f.get('naam') || '').trim() || undefined,
-      email: String(f.get('email') || '').trim(),
-      phone: telefoon,
+      firstName: naam,
+      email,
       type_werk: inhoud.divisie,
-      aanvullende_info: VRAGEN.map((v) => `${v.sleutel}: ${antwoorden[v.sleutel] || '-'}`).join(' · '),
+      aanvullende_info: VRAGEN.map((v) => `${v.sleutel}: ${antwoorden[v.sleutel] || '-'}`).join(' · ')
+        + (vork ? ` · Getoonde richtprijs: € ${bedrag(vork.min)} tot € ${bedrag(vork.max)} incl. btw` : ''),
       bron_lead: `${inhoud.bronLead}:${plek}`,
     });
     setBezig(false);
     if (!res.ok) { setFout(leadFoutmelding(res, CONTACT.phone.display)); return; }
     meldClarity('aanvraag-verstuurd');
+    if (vork) bewaarVork(vork);
+    bewaarContact({ naam, email, bron: inhoud.bronLead, divisie: inhoud.divisie });
     /* Zonder toestemming voor marketing eerst de vraag uit Toestemming.tsx, dan pas de bedankpagina. */
     if (allowsMarketing()) naarBedankt();
     else setVraagToestemming(true);
@@ -332,28 +338,31 @@ export default function Rekenaar({ inhoud, plek, voor }: {
           </div>
           {/* Direct onder het bedrag, zodat de regel bij de prijs hoort (Mohammed, 28 sept). */}
           <p className="kgj-reken__richt-onder">Op basis van uw {Object.values(antwoorden).filter(Boolean).length} antwoorden</p>
-          <p className="kgj-reken__vraag kgj-reken__vraag--richt">{inhoud.rekenaar.uitkomstKop}</p>
-          {/* Mohammed, 26 sep: "naam en email bovenaan, telefoon onderaan, maar
-              telefoon wel verplichting". */}
+          {/* Met prijs geen "Waar mogen we ... verzenden?" meer (Mohammed 14 okt: "dat wijst op verzenden, dus lang duren"). */}
+          {!vork && <p className="kgj-reken__vraag kgj-reken__vraag--richt">{inhoud.rekenaar.uitkomstKop}</p>}
+          {/* 14 okt: naam en e-mail verplicht, geen telefoon (zie verstuur). Geen autoFocus: op een telefoon sprong het
+              toetsenbord dan meteen open over de vraag heen (Mohammed, 24 sep: "oude mensen gaan vastraken"). */}
           <div className="kgj-reken__rij">
-            <label>Naam<input name="naam" type="text" autoComplete="name" placeholder="Uw naam" /></label>
-            <label>E-mail<input name="email" type="email" autoComplete="email" placeholder="uw@email.be" /></label>
+            <label>Naam *<input name="naam" type="text" autoComplete="name" placeholder="Uw naam" aria-required="true" /></label>
+            <label>E-mail *<input name="email" type="email" autoComplete="email" inputMode="email" placeholder="uw@email.be" aria-required="true" /></label>
           </div>
-          <label>Telefoon *
-            {/* Geen autoFocus: op een telefoon sprong het toetsenbord dan meteen open
-                over de vraag heen (Mohammed, 24 sep: "oude mensen gaan vastraken"). */}
-            <input name="telefoon" type="tel" autoComplete="tel" inputMode="tel" placeholder="04xx xx xx xx"
-              aria-required="true" />
-          </label>
-          {inhoud.rekenaar.troeven && (
+          {/* Met prijs: de drie regels van bfbouw.be boven de knop (BF 5cf6cb1; 5,0 op Google mag, spec abgroep-bfstijl). */}
+          {vork ? (
+            <ul className="kgj-reken__troeven kgj-reken__troeven--richt">
+              <li><Check aria-hidden="true" />Uw richtprijs verschijnt meteen op het volgende scherm</li>
+              <li><Check aria-hidden="true" />Gratis en vrijblijvend</li>
+              <li className="kgj-reken__troef-google"><span className="kgj-reken__trust-st" aria-hidden="true"><IcSter /><IcSter /><IcSter /><IcSter /><IcSter /></span>5,0 op Google</li>
+            </ul>
+          ) : inhoud.rekenaar.troeven && (
             <ul className="kgj-reken__troeven">
               {inhoud.rekenaar.troeven.map((t) => <li key={t}><Check aria-hidden="true" />{t}</li>)}
             </ul>
           )}
           <button className="kgj-knop kgj-knop--vol kgj-reken__knop kgj-reken__knop--richt" type="submit" disabled={bezig}>
-            {bezig ? 'Bezig…' : <>{inhoud.rekenaar.knop}<ArrowRight aria-hidden="true" /></>}
+            {/* Mohammed 14 okt: "onthul mijn richtprijs ipv ontvang" (alleen als er echt een prijs verschijnt). */}
+            {bezig ? 'Bezig…' : <>{vork ? 'Onthul mijn richtprijs' : inhoud.rekenaar.knop}<ArrowRight aria-hidden="true" /></>}
           </button>
-          {inhoud.rekenaar.uitkomstOnder && <p className="kgj-reken__gerust">{inhoud.rekenaar.uitkomstOnder}</p>}
+          {!vork && inhoud.rekenaar.uitkomstOnder && <p className="kgj-reken__gerust">{inhoud.rekenaar.uitkomstOnder}</p>}
           {/* AVG: informatie bij het verzamelen (art. 13), klein en rustig (Mohammed, 25 sep:
               "niet opeens super duidelijk aan de prospect"). */}
           <p className="kgj-reken__privacy">Wij gebruiken uw gegevens alleen voor deze aanvraag. <a href="/privacy">Privacybeleid</a></p>

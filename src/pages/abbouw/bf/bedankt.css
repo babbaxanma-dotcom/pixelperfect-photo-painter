@@ -197,3 +197,35 @@
 @media (max-width: 400px) {
   .bf.bf-dankpagina .bf-dank__richt-bedrag { font-size: 22px; gap: 6px; }
 }
+
+/* ---------- echte richtprijs na de rekenaar (14 okt 2026, Mohammed: "zoals bf") ----------
+   Zelfde witte kaart als het vergrendelde bedrag, nu met de richtindicatie uit src/lib/richtprijs.ts: label, bedrag groot,
+   "incl. btw" klein ernaast. */
+.bf.bf-dankpagina .bf-dank__prijslabel { margin: 0; padding: calc(18 * var(--u)) calc(26 * var(--u)) 0; font-size: calc(15 * var(--u)); font-weight: 700; letter-spacing: .02em; text-transform: uppercase; color: var(--tekst-2); }
+.bf.bf-dankpagina .bf-dank__echt { margin: 0; padding: calc(6 * var(--u)) calc(26 * var(--u)) calc(18 * var(--u)); display: flex; flex-wrap: wrap; align-items: baseline; gap: calc(6 * var(--u)) calc(12 * var(--u)); }
+.bf.bf-dankpagina .bf-dank__echt-bedrag { font-size: calc(40 * var(--u)); line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); white-space: nowrap; }
+.bf.bf-dankpagina .bf-dank__echt-btw { font-size: calc(15 * var(--u)); font-weight: 600; color: var(--tekst-2); }
+.bf.bf-dankpagina .bf-dank__prijs--echt .bf-dank__prijszin { border-top: 1px solid #eeeeee; }
+@media (max-width: 1000px) {
+  .bf.bf-dankpagina .bf-dank__prijslabel { padding: 14px 16px 0; font-size: 13px; }
+  .bf.bf-dankpagina .bf-dank__echt { padding: 4px 16px 14px; }
+  .bf.bf-dankpagina .bf-dank__echt-bedrag { font-size: 28px; white-space: normal; }
+  /* lang bedrag (14 okt, 390 px): breken na het streepje, nooit tussen € en het getal */
+  .bf.bf-dankpagina .bf-dank__echt-bedrag > span { white-space: nowrap; }
+  .bf.bf-dankpagina .bf-dank__echt-btw { font-size: 13px; }
+}
+.bf.bf-dankpagina .bf-dank__prijs--echt { background: linear-gradient(160deg, #fdf8ef 0%, #f8ecd4 100%); }
+.bf.bf-dankpagina .bf-dank__prijs--echt .bf-dank__prijszin { background: #fff; }
+/* "Bel mij terug" na de rekenaar (14 okt): één telefoonveld in de kaart. */
+.bf.bf-dankpagina .bf-dank__nummer { display: grid; gap: calc(12 * var(--u)); margin-top: calc(16 * var(--u)); }
+.bf.bf-dankpagina .bf-dank__nummer label { display: grid; gap: calc(8 * var(--u)); font-size: calc(15 * var(--u)); font-weight: 600; color: var(--ink); }
+.bf.bf-dankpagina .bf-dank__nummer input { height: calc(54 * var(--u)); padding: 0 calc(16 * var(--u)); border: 1px solid #d9d9d9; border-radius: calc(12 * var(--u)); font: inherit; font-size: calc(17 * var(--u)); color: var(--ink); background: #fff; }
+.bf.bf-dankpagina .bf-dank__nummer input:focus { outline: 2px solid var(--merk); outline-offset: 1px; border-color: transparent; }
+.bf.bf-dankpagina .bf-dank__fout { margin: 0; font-size: calc(14.5 * var(--u)); font-weight: 600; color: #b42318; }
+.bf.bf-dankpagina .bf-dank__nummer .bf-dank__toch { justify-self: start; background: none; border: 0; padding: 0; cursor: pointer; font: inherit; }
+@media (max-width: 1000px) {
+  .bf.bf-dankpagina .bf-dank__nummer label { font-size: 15px; }
+  .bf.bf-dankpagina .bf-dank__nummer input { height: 52px; font-size: 16px; }
+  .bf.bf-dankpagina .bf-dank__fout { font-size: 14px; }
+}
+.bf.bf-dankpagina .bf-dank__nummer .bf-dank__toch { grid-column: auto; margin-top: 0; }

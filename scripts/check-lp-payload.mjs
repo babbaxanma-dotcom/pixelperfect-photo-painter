@@ -11,7 +11,8 @@
  * bezoeker doet, onderschept elk verzoek naar services.leadconnectorhq.com en api.web3forms.com (nul echte leads)
  * en vergelijkt veld voor veld met de vaste referentie in scripts/fixtures/lp-payload/<lp>.json (gemeten op de
  * HUIDIGE LpKgj, 12 okt 2026). Verder per flow:
- *   - validatie: leeg telefoonnummer en < 8 cijfers geven de vaste foutmelding en versturen NIETS;
+ *   - validatie: leeg en ongeldig geven de vaste foutmelding en versturen NIETS (rekenaar sinds 14 okt: naam + e-mail,
+ *     geen telefoon; inspectie: telefoonnummer < 8 cijfers);
  *   - dubbelklik op de verzendknop = precies 1 GHL- en 1 Web3Forms-verzoek;
  *   - trackFormStart: het form_start-label in de dataLayer;
  *   - Toestemming-stap na een lead zonder marketingtoestemming ("Liever niet"), geen stap met toestemming;
@@ -161,20 +162,24 @@ async function doeFlow(browser, basis, lp, f, breedte, lokaas = false) {
     const form = `${wortel} form.kgj-reken__form`;
     if (!(await p.$(form))) { fouten.push(`formulier ${form} niet gevonden na de antwoorden`); return { fouten, log }; }
 
-    /* validatie: leeg en te kort versturen niets */
+    /* validatie: leeg en ongeldig versturen niets. Ongeldig = f.ongeldig (rekenaar sinds 14 okt: naam + e-mail zonder
+       domein), anders een telefoonnummer van < 8 cijfers (inspectie). */
     const foutTekst = async () => p.evaluate((w) => document.querySelector(w + ' .kgj-reken__fout')?.textContent.trim() ?? null, wortel);
     await p.evaluate((s) => document.querySelector(s + ' button[type=submit]').click(), form);
     await wacht(350);
     const leeg = await foutTekst();
     if (leeg !== f.fouten.leeg) fouten.push(`validatie leeg: "${leeg}" in plaats van "${f.fouten.leeg}"`);
-    await p.type(`${form} [name="telefoon"]`, '0400 00');
+    const ongeldig = f.ongeldig || { telefoon: '0400 00' };
+    for (const [naam, waarde] of Object.entries(ongeldig)) await p.type(`${form} [name="${naam}"]`, waarde);
     await p.evaluate((s) => document.querySelector(s + ' button[type=submit]').click(), form);
     await wacht(350);
     const kort = await foutTekst();
-    if (kort !== f.fouten.kort) fouten.push(`validatie < 8 cijfers: "${kort}" in plaats van "${f.fouten.kort}"`);
-    if (log.ghl.length || log.w3f.length) fouten.push(`validatie: er vertrok een verzoek bij een ongeldig nummer (${log.ghl.length} GHL, ${log.w3f.length} Web3Forms)`);
-    await p.evaluate((s) => { const i = document.querySelector(s + ' [name="telefoon"]'); i.focus(); i.select(); }, form);
-    await p.keyboard.press('Backspace');
+    if (kort !== f.fouten.kort) fouten.push(`validatie ongeldig (${JSON.stringify(ongeldig)}): "${kort}" in plaats van "${f.fouten.kort}"`);
+    if (log.ghl.length || log.w3f.length) fouten.push(`validatie: er vertrok een verzoek bij ongeldige gegevens (${log.ghl.length} GHL, ${log.w3f.length} Web3Forms)`);
+    for (const naam of Object.keys(ongeldig)) {
+      await p.evaluate((s, n) => { const i = document.querySelector(`${s} [name="${n}"]`); i.focus(); i.select(); }, form, naam);
+      await p.keyboard.press('Backspace');
+    }
 
     /* velden zoals de referentie */
     for (const [naam, waarde] of Object.entries(f.velden)) {
