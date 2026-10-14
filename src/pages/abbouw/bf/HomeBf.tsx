@@ -4,7 +4,8 @@
  * traject, uitgevoerd werk + voor/na, vragen, contactsectie + eindband (onderaan.ts, spec §16), voet + zwevende belknop.
  * Alle tekst komt uit inhoud.ts (HOME_BF), met de bron per blok.
  */
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { CLARITY_PROJECT, laadClarity } from '@/lib/clarity';
 import BfPagina from './BfPagina';
 import { pagina } from './schil';
 import { BEELDEN } from './beelden';
@@ -65,5 +66,7 @@ export function homeHtml() {
 
 export default function HomeBf() {
   const html = useMemo(homeHtml, []);
+  /* Microsoft Clarity, project "AB Bouw Groep - Home" (src/lib/clarity.ts, 14 okt). */
+  useEffect(() => { laadClarity(CLARITY_PROJECT.home); }, []);
   return <BfPagina html={html} titel={H.titel} omschrijving={H.omschrijving} pad="/" bron="home" />;
 }

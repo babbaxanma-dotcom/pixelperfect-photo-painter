@@ -4,12 +4,17 @@ import { allowsAnalytics, allowsMarketing } from '@/lib/consent';
    Mohammed, 4 okt: "microsoft clarity, zet op dakwerken lp" (ysh2tr1qtp) en "we gaan een
    andere aanmaken voor totaalrenovatie" (ysjtjyakao). Sleutel = bedanktSlug van de LP;
    een LP zonder project laadt niets.
+   14 okt, Mohammed: "voeg ook de twee landingspaginas en de home page toe aan clarity": drie nieuwe projecten in zijn
+   nieuwe Clarity-account (zelfde account als bfbouw.be). De oude projecten ysh2tr1qtp en ysjtjyakao (ander account)
+   krijgen geen nieuwe data meer. Home = de homepagina /. Eén project per bezoek: wie van home naar een LP klikt, blijft
+   in het home-project (Clarity wisselt niet van project binnen een sessie).
    Sinds 31 okt 2025 werkt Clarity voor bezoekers uit de EER pas volledig met een
    toestemmingssignaal (Consent API v2). Zonder toestemming neemt Clarity op zonder cookies;
    met toestemming (analytics + marketing) volledig. Bij een nieuwe keuze gaat het signaal opnieuw. */
 export const CLARITY_PROJECT: Record<string, string> = {
-  dakwerken: 'ysh2tr1qtp',
-  totaalrenovatie: 'ysjtjyakao',
+  dakwerken: 'yxp88pzo3i',
+  totaalrenovatie: 'yxp8qe0p9u',
+  home: 'yxp937b4f2',
 };
 
 type ClarityFn = ((...args: unknown[]) => void) & { q?: unknown[][] };

@@ -1,7 +1,7 @@
 {
   "pad": "/lp/richtprijs-berekenen",
   "bron": "Gemeten 12 okt 2026 op de HUIDIGE LpKgj.tsx (LP-code byte-gelijk aan origin/main 9727a84 = live), meting scratchpad werk/lpkaart/uit-flows.json (meet.mjs), manifest kaart/lp-*.md §c. Vluchtige velden (user_agent, submitted_at, referrer) weggelaten. 13 okt 2026 avond: /lp/totaalrenovatie, /lp/aannemer-renovatiewerken en /lp/richtprijs-berekenen tonen dezelfde rekenaarpagina (heroRekenaar, Mohammed: \"zoals dakwerken\", \"geen onderverdeling\"); #rekenaar opent geen venster meer maar springt naar de hero. Hero-flow overgenomen van de groene richtprijs-meting, alleen page_path en bron eigen; richtprijs-inspectie = het uniforme formulier zonder budget (zelfde als totaalrenovatie).",
-  "clarity": "ysjtjyakao",
+  "clarity": "yxp8qe0p9u",
   "flows": [
     {
       "naam": "rekenaar-hero",

@@ -212,7 +212,7 @@ Kaart (VERPLICHT LEZEN): scratchpad/kaart/lp-overzicht.md + lp-dakwerken.md, lp-
 **Wat IDENTIEK blijft (elke afwijking = fout):**
 - alle tekst woordelijk uit het inhoudsobject, sectievolgorde zoals nu (manifest b);
 - elk formulier en de rekenaar: velden, validatie (telefoon verplicht ≥8 cijfers op de LP's), vragen en volgorde, wazig bedrag;
-- submitLead-payload byte-gelijk aan manifest c (source, page_path, landing_division, type_werk, aanvullende_info, bron_lead incl. `:hero`/`:venster`, postcode/gemeente), /bedankt-URL per formulier, trackFormStart-labels, fireConversion, Toestemming-stap na een lead zonder marketingtoestemming, Clarity via laadClarity (ysh2tr1qtp dak, ysjtjyakao renovatie);
+- submitLead-payload byte-gelijk aan manifest c (source, page_path, landing_division, type_werk, aanvullende_info, bron_lead incl. `:hero`/`:venster`, postcode/gemeente), /bedankt-URL per formulier, trackFormStart-labels, fireConversion, Toestemming-stap na een lead zonder marketingtoestemming, Clarity via laadClarity (14 okt nieuw account: yxp88pzo3i dak, yxp8qe0p9u renovatie, yxp937b4f2 home; eerder ysh2tr1qtp en ysjtjyakao);
 - ids/ankers: top, rekenaar, waarom, werkwijze, contact (dak) en rekenaar, contact, diensten, werkwijze, voorna, waarom (renovatie); `#rekenaar` opent op /lp/totaalrenovatie en /lp/aannemer-renovatiewerken het venster;
 - message match op /lp/dakwerken (dienst=, dak=, utm_term → h1 en vraag 1);
 - canonical zoals nu (geen canonical per LP), GA4/cookiebanner op het pad /lp/;
