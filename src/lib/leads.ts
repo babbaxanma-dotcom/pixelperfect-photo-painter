@@ -109,10 +109,6 @@ export interface LeadPayload {
 
   // Marketing
   bron_lead?: string;
-
-  /** Aanvulling op een al getelde aanvraag (14 okt: telefoonnummer bij "Bel mij terug" na de rekenaar): bezorgen zoals
-      altijd, maar GEEN tweede conversie in Google Ads/GA4, anders telt dezelfde aanvraag twee keer. */
-  zonderConversie?: boolean;
 }
 
 interface SubmitResult {
@@ -262,7 +258,7 @@ export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
 
   // Conversie vuurt bij geslaagde bezorging via WELK transport dan ook.
   if (ghlOk || w3Ok) {
-    if (!p.zonderConversie) fireConversion(p.source, body);
+    fireConversion(p.source, body);
     return { ok: true, via };
   }
 

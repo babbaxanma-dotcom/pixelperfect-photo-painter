@@ -21,19 +21,19 @@
       ],
       "velden": {
         "naam": "Test Kaart",
-        "email": "test@voorbeeld.be"
+        "telefoon": "0400 00 00 00"
       },
       "formStart": "lp:dakwerken:rekenaar:hero",
       "toestemming": true,
       "bedankt": "/bedankt?dienst=dakwerken&van=rekenaar",
       "fouten": {
-        "leeg": "Vul uw naam in.",
-        "kort": "Vul een geldig e-mailadres in."
+        "leeg": "Vul uw telefoonnummer in om uw prijs te ontvangen.",
+        "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
       },
       "ghl": {
         "firstName": "Test Kaart",
         "name": "Test Kaart",
-        "email": "test@voorbeeld.be",
+        "phone": "0400 00 00 00",
         "country": "BE",
         "type_werk": "AB Dakwerken",
         "aanvullende_info": "Dak: Hellend dak · Werk: Renovatie · Isolatie: Met isolatie · Leeftijd: Ouder dan 10 jaar · Bedekking: Gegolfde pannen · Grootte: 50 tot 100 m² · Asbest: Nee · Start: Zo snel mogelijk · Getoonde richtprijs: € 8.500 tot € 31.000 incl. btw",
@@ -55,7 +55,7 @@
         "to": "info@abgroep.be",
         "firstName": "Test Kaart",
         "name": "Test Kaart",
-        "email": "test@voorbeeld.be",
+        "phone": "0400 00 00 00",
         "country": "BE",
         "type_werk": "AB Dakwerken",
         "aanvullende_info": "Dak: Hellend dak · Werk: Renovatie · Isolatie: Met isolatie · Leeftijd: Ouder dan 10 jaar · Bedekking: Gegolfde pannen · Grootte: 50 tot 100 m² · Asbest: Nee · Start: Zo snel mogelijk · Getoonde richtprijs: € 8.500 tot € 31.000 incl. btw",
@@ -70,11 +70,7 @@
         "utm_term": "dak vernieuwen",
         "gclid": "TEST-KAART"
       },
-      "metingInUitFlows": "dak-rekenaar-hero",
-      "ongeldig": {
-        "naam": "Test Kaart",
-        "email": "test@voorbeeld"
-      }
+      "metingInUitFlows": "dak-rekenaar-hero"
     },
     {
       "naam": "inspectie",
@@ -146,20 +142,19 @@
         "Dit jaar"
       ],
       "velden": {
-        "naam": "Test Kaart",
+        "telefoon": "0400 00 00 02",
         "email": "test@voorbeeld.be"
       },
       "formStart": "lp:dakwerken:rekenaar:venster",
       "toestemming": false,
       "bedankt": "/bedankt?dienst=dakwerken&van=rekenaar",
       "fouten": {
-        "leeg": "Vul uw naam in.",
-        "kort": "Vul een geldig e-mailadres in."
+        "leeg": "Vul uw telefoonnummer in om uw prijs te ontvangen.",
+        "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
       },
       "ghl": {
-        "firstName": "Test Kaart",
-        "name": "Test Kaart",
         "email": "test@voorbeeld.be",
+        "phone": "0400 00 00 02",
         "country": "BE",
         "type_werk": "AB Dakwerken",
         "aanvullende_info": "Dak: Plat dak · Werk: Isolatie · Leeftijd: Jonger dan 10 jaar · Grootte: Kleiner dan 50 m² · Asbest: Nee · Start: Dit jaar · Getoonde richtprijs: € 3.500 tot € 14.000 incl. btw",
@@ -171,12 +166,11 @@
       },
       "web3forms": {
         "access_key": "b01e4fea-3e73-418b-b65a-acfb1d3ee43c",
-        "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
+        "subject": "Nieuwe AB Bouw lead (landing_page), test@voorbeeld.be",
         "from_name": "AB Bouw website",
         "to": "info@abgroep.be",
-        "firstName": "Test Kaart",
-        "name": "Test Kaart",
         "email": "test@voorbeeld.be",
+        "phone": "0400 00 00 02",
         "country": "BE",
         "type_werk": "AB Dakwerken",
         "aanvullende_info": "Dak: Plat dak · Werk: Isolatie · Leeftijd: Jonger dan 10 jaar · Grootte: Kleiner dan 50 m² · Asbest: Nee · Start: Dit jaar · Getoonde richtprijs: € 3.500 tot € 14.000 incl. btw",
@@ -186,11 +180,7 @@
         "landing_division": "ab_dakwerken",
         "source": "landing_page"
       },
-      "metingInUitFlows": "dak-venster-marketing",
-      "ongeldig": {
-        "naam": "Test Kaart",
-        "email": "test@voorbeeld"
-      }
+      "metingInUitFlows": "dak-venster-marketing"
     }
   ]
 }

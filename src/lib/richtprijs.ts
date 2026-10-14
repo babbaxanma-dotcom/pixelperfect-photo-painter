@@ -59,14 +59,3 @@ export function bewaarVork(v: Vork) {
 export function leesVork(): Vork | null {
   try { const s = sessionStorage.getItem(SLEUTEL); return s ? (JSON.parse(s) as Vork) : null; } catch { return null; }
 }
-
-/** Naam, e-mail en bron van de rekenaaraanvraag, voor "Bel mij terug" op de bedankpagina (de rekenaar vraagt sinds 14 okt
-    geen telefoon meer). Alleen in deze tab, wordt nooit getoond. */
-export type RekenaarContact = { naam: string; email: string; bron: string; divisie: string };
-const CONTACT_SLEUTEL = 'ab_rekenaar_contact';
-export function bewaarContact(c: RekenaarContact) {
-  try { sessionStorage.setItem(CONTACT_SLEUTEL, JSON.stringify(c)); } catch { /* geen opslag: Bel mij terug werkt dan zoals vroeger */ }
-}
-export function leesContact(): RekenaarContact | null {
-  try { const s = sessionStorage.getItem(CONTACT_SLEUTEL); return s ? (JSON.parse(s) as RekenaarContact) : null; } catch { return null; }
-}

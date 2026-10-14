@@ -67,19 +67,19 @@
       ],
       "velden": {
         "naam": "Test Kaart",
-        "email": "test@voorbeeld.be"
+        "telefoon": "0400 00 00 03"
       },
       "formStart": "lp:aannemer-renovatiewerken:rekenaar:hero",
       "toestemming": true,
       "bedankt": "/bedankt?dienst=totaalrenovatie&van=rekenaar",
       "fouten": {
-        "leeg": "Vul uw naam in.",
-        "kort": "Vul een geldig e-mailadres in."
+        "leeg": "Vul uw telefoonnummer in om uw prijs te ontvangen.",
+        "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
       },
       "ghl": {
         "firstName": "Test Kaart",
         "name": "Test Kaart",
-        "email": "test@voorbeeld.be",
+        "phone": "0400 00 00 03",
         "country": "BE",
         "type_werk": "AB Construct",
         "aanvullende_info": "Woning: Rijwoning · Renoveren: Keuken, Isolatie · Grootte: 100 tot 150 m² · Leeftijd: Ouder dan 10 jaar · Staat: Een groot deel · Start: Zo snel mogelijk · Getoonde richtprijs: € 12.000 tot € 35.500 incl. btw",
@@ -100,7 +100,7 @@
         "to": "info@abgroep.be",
         "firstName": "Test Kaart",
         "name": "Test Kaart",
-        "email": "test@voorbeeld.be",
+        "phone": "0400 00 00 03",
         "country": "BE",
         "type_werk": "AB Construct",
         "aanvullende_info": "Woning: Rijwoning · Renoveren: Keuken, Isolatie · Grootte: 100 tot 150 m² · Leeftijd: Ouder dan 10 jaar · Staat: Een groot deel · Start: Zo snel mogelijk · Getoonde richtprijs: € 12.000 tot € 35.500 incl. btw",
@@ -114,11 +114,7 @@
         "utm_campaign": "totaalrenovatie",
         "utm_term": "renovatie prijs"
       },
-      "metingInUitFlows": "kloon van richtprijs-rekenaar-hero (13 okt), page_path en bron eigen",
-      "ongeldig": {
-        "naam": "Test Kaart",
-        "email": "test@voorbeeld"
-      }
+      "metingInUitFlows": "kloon van richtprijs-rekenaar-hero (13 okt), page_path en bron eigen"
     }
   ]
 }

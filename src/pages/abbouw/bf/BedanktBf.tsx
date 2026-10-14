@@ -55,8 +55,7 @@ import { CONTACT } from '@/data/contact';
 import { meldClarity } from '@/lib/clarity';
 import { bannerWachtOpScroll } from '@/lib/consent';
 import { ICOON, NAAM, TEL, TEL_HREF, beeld, grootsteUrl, logoInk } from './schil';
-import { bedrag, leesContact, leesVork } from '@/lib/richtprijs';
-import { submitLead, type LeadPayload } from '@/lib/leads';
+import { bedrag, leesVork } from '@/lib/richtprijs';
 import './bf.css';
 import './bf-ab.css';
 import './bedankt.css';
@@ -190,12 +189,6 @@ export default function BedanktBf() {
   const soort = rekenaar ? (dienst === 'dakinspectie' ? 'richtprijs-dak' : 'richtprijs-plaatsbezoek') : dienst;
 
   const [vork] = useState(() => (rekenaar ? leesVork() : null));
-  /* 14 okt: de rekenaar vraagt geen telefoon meer. "Bel mij terug" vraagt dan hier het nummer en stuurt het als aanvulling
-     (zelfde e-mail en bron + ":terugbellen", zonder tweede conversie). Zonder bewaard contact: zoals vroeger (stuurt niets). */
-  const [contact] = useState(() => (rekenaar ? leesContact() : null));
-  const [vraagNummer, setVraagNummer] = useState(false);
-  const [telFout, setTelFout] = useState<string | null>(null);
-  const [telBezig, setTelBezig] = useState(false);
   const [gescrold, setGescrold] = useState(false);
   const [bellen, setBellen] = useState(false);
   /* null = laden of mislukt: knoppen zonder aantal */
@@ -265,32 +258,6 @@ export default function BedanktBf() {
     navigate(`${t.agenda}?week=${k}`);
   };
   const belMij = () => {
-    if (contact) { setVraagNummer(true); return; }
-    meldClarity('bedankt-moment-bellen');
-    setBellen(true);
-  };
-  const stuurNummer = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (telBezig || !contact) return;
-    const tel = String(new FormData(e.currentTarget).get('telefoon') || '').trim();
-    /* zelfde drempel als de lead-pijplijn: acht cijfers */
-    if (tel.replace(/\D/g, '').length < 8) { setTelFout('Dat telefoonnummer lijkt niet volledig. Controleer het even.'); return; }
-    setTelFout(null);
-    setTelBezig(true);
-    const res = await submitLead({
-      source: 'landing_page',
-      page_path: window.location.pathname,
-      landing_division: contact.divisie as LeadPayload['landing_division'],
-      firstName: contact.naam,
-      email: contact.email,
-      phone: tel,
-      type_werk: contact.divisie as LeadPayload['type_werk'],
-      aanvullende_info: 'Wil teruggebeld worden (na de rekenaar)',
-      bron_lead: `${contact.bron}:terugbellen`,
-      zonderConversie: true,
-    });
-    setTelBezig(false);
-    if (!res.ok) { setTelFout('Versturen lukte niet. Bel gerust ' + TEL + '.'); return; }
     meldClarity('bedankt-moment-bellen');
     setBellen(true);
   };
@@ -377,21 +344,9 @@ export default function BedanktBf() {
                   <Ic svg={ICOON.vink} className="bf-dank__vink" />
                   {/* Zonder rekenaar staat LEDE_GEWOON al onder de h1: dan geen tweede keer dezelfde zin in één scherm
                       (keuring 13 okt), wel een korte bevestiging van de knop. Bardh belt elke aanvraag (beltaak W01). */}
-                  <p>{rekenaar && !contact ? LEDE_GEWOON : 'Genoteerd: wij bellen u zo snel mogelijk terug.'}</p>
+                  <p>{rekenaar ? LEDE_GEWOON : 'Genoteerd: wij bellen u zo snel mogelijk terug.'}</p>
                   <Link className="bf-dank__toch" to={t.agenda}>Toch nu een moment kiezen</Link>
                 </div>
-              ) : vraagNummer ? (
-                /* Bel mij terug na de rekenaar: één veld, het nummer gaat als aanvulling naar GHL (zie stuurNummer). */
-                <form className="bf-dank__nummer" onSubmit={stuurNummer} noValidate>
-                  <label>Op welk nummer mogen we u bellen? *
-                    <input name="telefoon" type="tel" autoComplete="tel" inputMode="tel" placeholder="04xx xx xx xx" aria-required="true" />
-                  </label>
-                  <button type="submit" className="bf-dank__terug bf-dank__terug--hoofd" disabled={telBezig}>
-                    <Ic svg={ICOON.tel} className="bf-dank__terug-ic" />{telBezig ? 'Bezig…' : 'Bel mij terug'}
-                  </button>
-                  {telFout && <p className="bf-dank__fout" role="alert">{telFout}</p>}
-                  <button type="button" className="bf-dank__toch" onClick={() => setVraagNummer(false)}>Toch liever een moment kiezen</button>
-                </form>
               ) : (
                 <>
                   {knoppen.length > 0 && (
