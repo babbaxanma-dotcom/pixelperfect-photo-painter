@@ -115,7 +115,9 @@ async function bel(body) {
      een digitale assistent is. */
   const voornaam = (contact.firstName || '').trim();
   const aanvraag = veld(contact, VELD.bronDetail).includes(':rekenaar') ? `een richtprijs voor ${s.onderwerp}` : `een ${s.soort}`;
-  const eersteZin = `Goeiedag, u spreekt met de digitale assistent van AB Bouw Groep.${voornaam ? ` Spreek ik met ${voornaam}?` : ''}`;
+  /* Opening = dictaat Mohammed 14 okt: "Goeiedag, spreek ik met ...". De assistent zegt in zijn volgende beurt dat hij de
+     digitale assistent van AB is (prompt, stap 2). Zonder voornaam meteen voorstellen. */
+  const eersteZin = voornaam ? `Goeiedag, spreek ik met ${voornaam}?` : 'Goeiedag, met de digitale assistent van AB Bouw Groep. Ik bel even over uw aanvraag van daarnet.';
   const r = await fetch('https://api.elevenlabs.io/v1/convai/twilio/outbound-call', {
     method: 'POST',
     headers: { 'xi-api-key': process.env.ELEVENLABS_API_KEY, 'Content-Type': 'application/json' },
