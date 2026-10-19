@@ -16,6 +16,7 @@
  * uitbouw van de homepage (uitbreiding-voor/na) in de voor/na-schuif.
  */
 import type { KgjInhoud } from './inhoud';
+import type { IcoonNaam } from './Iconen';
 import { DIVISIES } from '../../_divisies';
 
 /* Veelgestelde vragen: de antwoorden die AB al op zijn afdelingspagina's geeft,
@@ -92,7 +93,10 @@ import dakNa from '@/assets/lp-diensten/dak-na.jpg';
    hoofdletters ("Totaalrenovaties & nieuwbouw"). Eén aanpassing in een antwoord: de vraag werd
    "Kan ik de werken ook in fases laten uitvoeren?", dus het antwoord begint met "Ja" in plaats van
    "Nee". */
-export const TOTAALRENOVATIE: KgjInhoud = {
+/* 19 okt 2026: dit object = de pagina met de rekenaar in de hero, zoals ze tot 19 okt op /lp/totaalrenovatie stond. Alleen
+   /lp/richtprijs-berekenen toont het nog, ongewijzigd (LpRichtprijs.tsx). TOTAALRENOVATIE onderaan dit bestand = dit object
+   met de aanvraagkaart in plaats van de rekenaar. */
+export const TOTAALRENOVATIE_REKENAAR: KgjInhoud = {
   /* Zelfde vorm als het tabblad van dakwerken, dat Mohammed koos ("over het vak"). */
   titel: 'Dé specialist voor uw renovatie | AB Bouw Groep',
   omschrijving: 'Bereken in 2 minuten de prijs van uw renovatie. Gratis plaatsbezoek en offerte, werken aan 6% btw.',
@@ -444,4 +448,49 @@ export const TOTAALRENOVATIE: KgjInhoud = {
       { naam: 'start', label: 'Wanneer wilt u starten?', opties: ['Zo snel mogelijk', 'Binnen 6 maanden', 'Volgend jaar', 'Ik verken nog'] },
     ],
   },
+};
+
+/* Iconen bij de klikvragen van de aanvraagkaart: zelfde set als de rekenaar (Iconen.tsx). Omvang: het hele huis, een deel
+   (muur half weg), een huis met een plus (aanbouw), een sleutel (specifieke werken). Start: dezelfde iconen als de startvraag van de rekenaar. */
+const AANVRAAG_ICOON: Record<string, IcoonNaam> = {
+  'De hele woning (totaalrenovatie)': 'heelhuis', 'Gedeeltelijke renovatie': 'deel', Aanbouw: 'dienst-nieuw', 'Specifieke werken': 'herstel',
+  'Zo snel mogelijk': 'snel', 'Binnen 6 maanden': 'drie', 'Volgend jaar': 'later', 'Ik verken nog': 'verken',
+};
+
+/* 19 okt 2026, opdracht Mohammed: "bouw de abgroep totaalrenovatie en dakwerken lp naar de nieuwe, dus rekenaar weg, en doe
+   dat naar dakinspectie en gratis plaatsbezoek form bovenaan en andere headline en subheadline". "De nieuwe" = bfbouw.be
+   /lp/dakwerken: bovenaan een aanvraagkaart met klikvragen en daarna de contactstap (Aanvraag.tsx), geen rekenaar.
+   /lp/totaalrenovatie, /totaalrenovatie en /lp/aannemer-renovatiewerken tonen dit object. De rekenaarpagina
+   /lp/richtprijs-berekenen blijft TOTAALRENOVATIE_REKENAAR hierboven, ongewijzigd. */
+export const TOTAALRENOVATIE: KgjInhoud = {
+  ...TOTAALRENOVATIE_REKENAAR,
+  /* Zonder "Bereken in 2 minuten de prijs van uw renovatie." (er is hier geen rekenaar meer); de rest woordelijk. */
+  omschrijving: 'Gratis plaatsbezoek en offerte, werken aan 6% btw.',
+  heroRekenaar: undefined,
+  heroAanvraag: true,
+  hero: {
+    ...TOTAALRENOVATIE_REKENAAR.hero,
+    /* Kop en subkop: de tekstvoorstellen van de opdracht van 19 okt, woordelijk. [ ] = accentkleur. */
+    kop: 'Plan een [gratis] plaatsbezoek voor uw renovatie',
+    onder: 'Wij komen langs, bekijken uw woning en bespreken uw plannen. Daarna krijgt u een offerte voor precies wat u wilt laten doen.',
+  },
+  aanvraag: {
+    titel: 'Gratis plaatsbezoek',
+    tijd: 'Klaar in 1 minuut, vrijblijvend',
+    /* De klikvragen = de keuzelijsten van het formulier onderaan (inspectie.extra), met dezelfde labels en opties, in die
+       volgorde. De sleutel is het label zonder vraagteken, zodat aanvullende_info in GHL er hetzelfde uitziet als bij het
+       formulier onderaan ("Wat wilt u renoveren: Aanbouw · Wanneer wilt u starten: Volgend jaar"). */
+    vragen: (TOTAALRENOVATIE_REKENAAR.inspectie.extra ?? []).map((x) => ({
+      sleutel: x.label.replace(/\?$/, ''), vraag: x.label,
+      keuzes: x.opties.map((o) => ({ label: o, icoon: AANVRAAG_ICOON[o] })),
+    })),
+    contactKop: 'Bijna klaar! Bevestig uw gratis plaatsbezoek',
+    /* Vinkjes en trustrij: dezelfde als op de rekenaarkaart die hier stond (13 okt). */
+    vertrouwen: TOTAALRENOVATIE_REKENAAR.rekenaar.vertrouwen,
+    trustrij: TOTAALRENOVATIE_REKENAAR.rekenaar.trustrij,
+    vrijMoment: true,
+  },
+  /* Het vangnet ("Liever eerst een indicatie van de kosten?", knop naar de rekenaarpagina) is een rekenaar-ingang: weg. */
+  vangnet: undefined,
+  volgorde: ['uitgevoerd', 'waarom', 'werkwijze', 'diensten', 'faq'],
 };

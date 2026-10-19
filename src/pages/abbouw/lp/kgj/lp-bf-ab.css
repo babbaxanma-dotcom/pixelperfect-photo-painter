@@ -807,3 +807,37 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
   .bf.bf-lp .kgj-reken__richt--kluis .kgj-reken__slot { width: 44px; height: 44px; box-shadow: 0 0 0 6px rgba(217, 140, 3, .25), 0 8px 20px -6px rgba(0, 0, 0, .55); }
   .bf.bf-lp .kgj-reken__richt-onder--kluis { margin-top: 8px; }
 }
+
+/* ---------- aanvraagkaart in de hero (Aanvraag.tsx, heroAanvraag, 19 okt 2026) ----------
+   Mohammed: "rekenaar weg, en doe dat naar dakinspectie en gratis plaatsbezoek form bovenaan". Dezelfde kaart als de
+   rekenaar (kgj-reken). Anders dan de rekenaar in de hero blijft de kaartkop ook op de gsm staan: de titel zegt wat de
+   bezoeker krijgt (gratis dakinspectie of gratis plaatsbezoek). De vinkjes staan op de gsm onder de kaart (bf-lphero__gerust),
+   zoals bij de rekenaar. De contactstap opent met een band zoals bfbouw.be (rk__intro: licht vlak over de volle breedte van
+   de kaart, "Bijna klaar!" in de merkkleur). Het eerstvolgende vrije plaatsbezoek (VrijMoment) staat in de witte kaart. */
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__eind svg { width: calc(16 * var(--u)); height: calc(16 * var(--u)); stroke-width: 2.6; }
+/* de vraag krijgt na elke stap de focus voor een schermlezer (Aanvraag.tsx); geen ring, het is geen bedieningselement (zoals bfbouw.be .rk__vraag:focus) */
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__vraag:focus { outline: none; }
+.bf.bf-lp .kgj-reken__band { margin: calc(4 * var(--u)) calc(-26 * var(--u)) 0; padding: calc(14 * var(--u)) calc(26 * var(--u)) calc(16 * var(--u));
+  background: #fbf3e6; border-top: 1px solid #efd9ad; border-bottom: 1px solid #efd9ad; }
+.bf.bf-lp .kgj-reken .kgj-reken__vraag--band { margin: 0; font-size: calc(22 * var(--u)); line-height: 1.2; font-weight: 800; letter-spacing: -0.015em; color: var(--ink-2); text-wrap: balance; }
+.bf.bf-lp .kgj-reken__bijna { display: block; margin-bottom: calc(2 * var(--u)); color: var(--merk-tekst); }
+.bf.bf-lp .kgj-reken__contact .kgj-reken__gerust { text-align: center; }
+.bf.bf-lp .kgj-reken--aanvraag .bf-lphero__vrij { display: flex; align-items: center; gap: calc(10 * var(--u)); margin: calc(12 * var(--u)) 0 0;
+  font-size: calc(15 * var(--u)); line-height: 1.35; color: var(--tekst-2); }
+.bf.bf-lp .kgj-reken--aanvraag .bf-lphero__vrij b { font-weight: 700; color: var(--ink); }
+/* de regel houdt vanaf het eerste beeld de hoogte van de langste datum vrij (VrijMoment ruimte): maatregel en antwoord in
+   dezelfde rastercel, de maatregel onzichtbaar; zolang er geen antwoord is, is de hele regel onzichtbaar */
+.bf.bf-lp .kgj-reken--aanvraag .bf-lphero__vrijtekst { display: grid; }
+.bf.bf-lp .kgj-reken--aanvraag .bf-lphero__vrijtekst > span { grid-area: 1 / 1; }
+.bf.bf-lp .kgj-reken--aanvraag .bf-lphero__vrijmaat, .bf.bf-lp .kgj-reken--aanvraag .bf-lphero__vrij--wacht { visibility: hidden; }
+.bf.bf-lp .kgj-reken--aanvraag .bf-lphero__stip { position: relative; flex: none; width: 10px; height: 10px; border-radius: 50%; background: #22c55e; }
+.bf.bf-lp .kgj-reken--aanvraag .bf-lphero__stip::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: #22c55e; animation: bf-lpstip 1.8s ease-out infinite; }
+@media (prefers-reduced-motion: reduce) { .bf.bf-lp .kgj-reken--aanvraag .bf-lphero__stip::after { animation: none; } }
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__weg { margin-top: 14px; }
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__vertrouwen { display: none; }
+  .bf.bf-lp .kgj-reken__band { margin: 4px -16px 0; padding: 12px 16px 14px; }
+  .bf.bf-lp .kgj-reken .kgj-reken__vraag--band { font-size: 20px; }
+  .bf.bf-lp .kgj-reken--aanvraag .bf-lphero__vrij { margin-top: 10px; font-size: 15px; }
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__eind svg { width: 15px; height: 15px; }
+}

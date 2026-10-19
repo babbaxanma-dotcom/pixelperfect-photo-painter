@@ -1,6 +1,6 @@
 /**
- * check-rekenaar-scroll: na elke keuze in de rekenaar staat de kop ("Vraag X van Y")
- * in beeld, onder de vaste menubalk.
+ * check-rekenaar-scroll: na elke keuze in de rekenaar (en sinds 19 okt 2026 in de aanvraagkaart van /lp/dakwerken en
+ * /lp/totaalrenovatie) staat de kop ("Vraag X van Y", "Stap X van Y") in beeld, onder de vaste menubalk.
  *
  * Aanleiding: Mohammed, 1 okt 2026: "bij vraag 2 of 3 paar pixels naar onder ...
  * waardoor je de form kwijtraakt". Op /lp/totaalrenovatie is vraag 2 (afvinken)
@@ -28,7 +28,12 @@ const POORT = 4431;
 const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const PADEN = {
-  dakwerken: ['Hellend dak', 'Renovatie', 'Met isolatie', 'Ouder dan 10 jaar', 'Gegolfde pannen', '50 tot 100 m²', 'Nee'],
+  /* 19 okt 2026 (Mohammed: "rekenaar weg, en doe dat naar dakinspectie en gratis plaatsbezoek form bovenaan"): op
+     /lp/dakwerken en /lp/totaalrenovatie staat bovenaan de aanvraagkaart (Aanvraag.tsx). Zelfde kaart (.kgj-reken), zelfde
+     kop (.kgj-reken__kop, "Stap X van Y") en dezelfde scrolfix na elke stap: dezelfde meting, met hun klikvragen tot en met
+     de contactstap. De rekenaar zelf staat alleen nog op /lp/richtprijs-berekenen en blijft hier gemeten. */
+  dakwerken: ['Hellend dak', 'Dakrenovatie / Nieuw dak', 'Ja', 'Nee'],
+  totaalrenovatie: ['Gedeeltelijke renovatie', 'Zo snel mogelijk'],
   /* 5 okt 2026: de renovatierekenaar staat niet meer in de hero van /lp/totaalrenovatie (daar
      een knop naar het formulier), maar op de losse rekenaarpagina /lp/richtprijs-berekenen. */
   'richtprijs-berekenen': ['Rijwoning', 'Alles (totaalrenovatie)', '@verder', '100 tot 150 m²', 'Ouder dan 10 jaar', 'Alles'],

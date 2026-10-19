@@ -81,7 +81,8 @@ const laatsteAi = (p) => p.evaluate(() => [...document.querySelectorAll('.kgj-ch
   await p.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.45)); await wacht(700);
   const hoog = await p.evaluate(() => {
     const k = document.querySelector('.kgj-chatknop').getBoundingClientRect();
-    const b = document.querySelector('.kgj-actiebalk.is-aan')?.getBoundingClientRect();
+    /* LpBf (BF-stijl, 12 okt): de vaste balk heet .bf-lpsticky, zichtbaar met .bf-is-zichtbaar (was .kgj-actiebalk.is-aan van LpKgj). */
+    const b = document.querySelector('.bf-lpsticky.bf-is-zichtbaar')?.getBoundingClientRect();
     return { knop: Math.round(k.bottom), balk: b ? Math.round(b.top) : null };
   });
   meld(hoog.balk !== null && hoog.knop <= hoog.balk - 8, 'knop staat boven de vaste actiebalk', JSON.stringify(hoog));
@@ -96,7 +97,8 @@ const laatsteAi = (p) => p.evaluate(() => [...document.querySelectorAll('.kgj-ch
   });
   meld(open.b === 390 && open.h === 844, 'op de telefoon vult het venster het scherm', `${open.b}x${open.h}`);
   meld(/welkom bij AB Bouw Groep/.test(open.welkom) && /dak/.test(open.welkom) && !/ik/i.test(open.welkom), 'welkom in de wij-vorm, noemt AB Bouw Groep en het dak', open.welkom);
-  meld(open.snel.join('|') === 'Bereken mijn prijs|Gratis dakinspectie aanvragen|Bel 0460 20 77 88', 'drie snelle functies', open.snel.join(' | '));
+  /* 19 okt 2026: /lp/dakwerken heeft geen rekenaar meer (aanvraagkaart bovenaan): geen snelknop "Bereken mijn prijs". */
+  meld(open.snel.join('|') === 'Gratis dakinspectie aanvragen|Bel 0460 20 77 88', 'twee snelle functies, geen rekenaarknop', open.snel.join(' | '));
   meld(open.vaak.length === 4, 'vier vaak gestelde vragen', open.vaak.join(' | '));
   meld(open.breed <= 390, 'geen horizontaal scrollen met open chat', String(open.breed));
   await p.screenshot({ path: `${UIT}/03-open-gsm.png` });
@@ -137,7 +139,7 @@ const laatsteAi = (p) => p.evaluate(() => [...document.querySelectorAll('.kgj-ch
   await p.type('.kgj-chat__kaart input[name=naam]', 'Test Chat');
   await p.click('.kgj-chat__kaart button[type=submit]'); await wacht(1500);
   const inPagina = await p.evaluate(() => window.__leads);
-  const ghl = inPagina.find((l) => /leadconnectorhq|msgsvc/.test(l.url));
+  const ghl = inPagina.find((l) => /services\.leadconnectorhq\.com\/hooks|msgsvc/.test(l.url));
   let data = {};
   try { data = JSON.parse(ghl?.body || '{}'); } catch { /* geen JSON */ }
   const info = JSON.stringify(data);
@@ -155,8 +157,11 @@ const laatsteAi = (p) => p.evaluate(() => [...document.querySelectorAll('.kgj-ch
   const prijs = await laatsteAi(p);
   meld(!/€|euro|\d{1,3}\.\d{3}/i.test(prijs), 'prijsvraag: geen bedrag in het antwoord', prijs.slice(0, 80));
   await p.screenshot({ path: `${UIT}/07-prijsvraag.png` });
-  await p.click('.kgj-chat__actie'); await wacht(500);
-  meld(!(await p.$('.kgj-chat')) && !!(await p.$('.kgj-venster')), 'knop "Bereken mijn prijs": chat dicht, prijsberekening open');
+  /* 19 okt 2026: zonder rekenaar op de pagina wordt de knop bij een prijsantwoord de aanvraagknop; geen venster. */
+  const prijsKnop = await p.evaluate(() => document.querySelector('.kgj-chat__actie')?.textContent.trim());
+  await p.click('.kgj-chat__actie'); await wachtAntwoord(p);
+  meld(prijsKnop === 'Gratis dakinspectie aanvragen' && !(await p.$('.kgj-venster')) && /Wat moet er aan uw dak gebeuren/.test(await laatsteAi(p)),
+    'prijsvraag zonder rekenaar: knop "Gratis dakinspectie aanvragen" start de aanvraag, geen venster', prijsKnop);
   meld(fouten.length === 0, 'geen fouten in de console (dakwerken)', fouten.join(' | '));
   await p.close();
 
@@ -175,7 +180,7 @@ const laatsteAi = (p) => p.evaluate(() => [...document.querySelectorAll('.kgj-ch
   const r = await pagina(browser, BASIS + '/lp/totaalrenovatie', gsm);
   await r.p.click('.kgj-chatknop'); await wacht(300);
   const reno = await r.p.evaluate(() => ({ welkom: document.querySelector('.kgj-chat__bel--ai').textContent, snel: [...document.querySelectorAll('.kgj-chat__snel > *')].map((e) => e.textContent.trim()) }));
-  meld(/renovatie/.test(reno.welkom) && reno.snel[1] === 'Gratis plaatsbezoek aanvragen', 'totaalrenovatie: eigen welkom en plaatsbezoek', reno.snel.join(' | '));
+  meld(/renovatie/.test(reno.welkom) && reno.snel.join('|') === 'Gratis plaatsbezoek aanvragen|Bel 0460 20 77 88', 'totaalrenovatie: eigen welkom en plaatsbezoek, geen rekenaarknop', reno.snel.join(' | '));
   await klikTekst(r.p, '.kgj-chat__snel button', 'Gratis plaatsbezoek aanvragen'); await wachtAntwoord(r.p);
   meld(/Wat voor woning/.test(await laatsteAi(r.p)), 'totaalrenovatie: aanvraag begint bij de woning', await laatsteAi(r.p));
   await r.p.screenshot({ path: `${UIT}/09-reno-gsm.png` });
@@ -186,11 +191,22 @@ const laatsteAi = (p) => p.evaluate(() => [...document.querySelectorAll('.kgj-ch
   meld(renoKaart.velden === 5 && /plaatsbezoek/.test(renoKaart.knop || ''), 'totaalrenovatie: kaart met vijf velden en knop plaatsbezoek', JSON.stringify(renoKaart));
   await r.p.type('.kgj-chat__kaart input[name=telefoon]', '0400 00 00 00');
   await r.p.click('.kgj-chat__kaart button[type=submit]'); await wacht(1500);
-  const renoLead = (await r.p.evaluate(() => window.__leads)).find((l) => /leadconnectorhq|msgsvc/.test(l.url));
+  /* De GHL-webhook (services.leadconnectorhq.com/hooks/...), niet de agenda: sinds 19 okt vraagt de aanvraagkaart op deze
+     pagina het eerstvolgende vrije plaatsbezoek op bij backend.leadconnectorhq.com/calendars (GET, geen lead). */
+  const renoLead = (await r.p.evaluate(() => window.__leads)).find((l) => /services\.leadconnectorhq\.com\/hooks|msgsvc/.test(l.url));
   meld(!!renoLead && /lp:totaalrenovatie:inspectie/.test(renoLead.body) && /Kontich/.test(renoLead.body) && r.leads.length === 0,
     'totaalrenovatie: lead met bron lp:totaalrenovatie:inspectie (tegengehouden, niets op het netwerk)');
   meld(r.fouten.length === 0, 'geen fouten in de console (totaalrenovatie)', r.fouten.join(' | '));
   await r.p.close();
+
+  /* ── richtprijs-berekenen: de rekenaarpagina houdt de rekenaarknop (de positieve kant van de toetsen hierboven) ── */
+  const rp = await pagina(browser, BASIS + '/lp/richtprijs-berekenen', gsm);
+  await rp.p.click('.kgj-chatknop'); await wacht(300);
+  const rpSnel = await rp.p.evaluate(() => [...document.querySelectorAll('.kgj-chat__snel > *')].map((e) => e.textContent.trim()));
+  meld(rpSnel[0] === 'Bereken mijn prijs', 'richtprijs-berekenen: snelknop "Bereken mijn prijs" staat er', rpSnel.join(' | '));
+  await klikTekst(rp.p, '.kgj-chat__snel button', 'Bereken mijn prijs'); await wacht(500);
+  meld(!(await rp.p.$('.kgj-chat')) && !!(await rp.p.$('.kgj-venster')), 'richtprijs-berekenen: "Bereken mijn prijs" sluit de chat en opent de rekenaar');
+  await rp.p.close();
 
   await browser.close();
   console.log(uitslag.join('\n'));

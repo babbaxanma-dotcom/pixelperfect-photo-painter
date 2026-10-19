@@ -1,5 +1,5 @@
 import LpBf from './LpBf';
-import { TOTAALRENOVATIE } from './inhoud-totaalrenovatie';
+import { TOTAALRENOVATIE_REKENAAR } from './inhoud-totaalrenovatie';
 
 /**
  * /lp/richtprijs-berekenen = de totaalrenovatiepagina zoals ze tot 5 okt 2026
@@ -19,7 +19,11 @@ import { TOTAALRENOVATIE } from './inhoud-totaalrenovatie';
  * en "die hele onderverdeling van ad groups onnodig": deze URL (prijs- en woningzoekwoorden) toont dezelfde rekenaarpagina
  * als /lp/totaalrenovatie. Bron in het CRM blijft lp:totaalrenovatie:rekenaar, zoals voorheen.
  * Terugval naar de oude pagina = TOTAALRENOVATIE_OUD (inhoud-totaalrenovatie-oud.ts) weer importeren en tonen.
+ *
+ * 19 okt 2026: /lp/totaalrenovatie en /lp/aannemer-renovatiewerken krijgen bovenaan de aanvraagkaart (rekenaar weg, opdracht
+ * Mohammed). Deze URL blijft EXACT zoals ze was: TOTAALRENOVATIE_REKENAAR = het totaalrenovatie-object van vóór die wijziging,
+ * met de rekenaar in de hero en de bron lp:totaalrenovatie:rekenaar.
  */
 export default function LpRichtprijs() {
-  return <LpBf inhoud={TOTAALRENOVATIE} />;
+  return <LpBf inhoud={TOTAALRENOVATIE_REKENAAR} />;
 }

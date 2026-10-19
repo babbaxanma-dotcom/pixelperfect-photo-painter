@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { CONTACT } from '@/data/contact';
 import Rekenaar from './Rekenaar';
+import Aanvraag from './Aanvraag';
 import Inspectie from './Inspectie';
 import ChatAssistent from './ChatAssistent';
 import Werkspoor from './Werkspoor';
@@ -38,6 +39,10 @@ import './lp-bf-ab.css';
  * Geen canonical (zoals LpKgj; index.html houdt https://abgroep.be/).
  *
  * LpKgj.tsx blijft ongewijzigd staan als terugval: de route terugzetten in App.tsx is één regel.
+ *
+ * 19 okt 2026 (heroAanvraag, Mohammed: "bouw de abgroep totaalrenovatie en dakwerken lp naar de nieuwe, dus rekenaar weg,
+ * en doe dat naar dakinspectie en gratis plaatsbezoek form bovenaan"): de aanvraagkaart (Aanvraag.tsx) staat in de hero op
+ * de plek van de rekenaar, en de pagina heeft geen enkele rekenaar-ingang meer (zie zonderRekenaar hieronder).
  */
 
 /* Google-profiel van AB (spec §1, zelfde plaats als bf/schil.ts GOOGLE_PROFIEL). */
@@ -80,8 +85,14 @@ function dagIn(ms: number) {
     .formatToParts(ms).map((p) => [p.type, p.value]));
   return `${d.year}-${d.month}-${d.day}`;
 }
-function VrijMoment() {
+/* ruimte (aanvraagkaart, 19 okt 2026): de regel houdt zijn plek vanaf het eerste beeld vrij, zo hoog als de langst mogelijke
+   datum ("donderdag 30 september"), en het antwoord komt erin zonder dat de kaart verschuift. Zonder die ruimte schoof de
+   kaart een tel na het laden: op de gsm zakten de keuzes ongeveer 40 px (een tik kon op de verkeerde keuze vallen), op de
+   computer schoof de gecentreerde kaart 16 px omhoog (check-ankers: /lp/totaalrenovatie#rekenaar op 76 px in plaats van 92).
+   Komt er geen vrij moment, dan valt de regel weg, zoals zonder ruimte. */
+function VrijMoment({ ruimte = false }: { ruimte?: boolean }) {
   const [tekst, setTekst] = useState<string | null>(null);
+  const [mislukt, setMislukt] = useState(false);
   useEffect(() => {
     let weg = false;
     const ctl = new AbortController();
@@ -92,17 +103,30 @@ function VrijMoment() {
       .then((d: Record<string, { slots?: unknown }>) => {
         const eerste = Object.values(d ?? {}).flatMap((v) => (Array.isArray(v?.slots) ? v.slots : []))
           .map((s) => Date.parse(String(s))).filter((t) => t > nu).sort((a, b) => a - b)[0];
-        if (weg || !eerste) return;
+        if (weg) return;
+        if (!eerste) { setMislukt(true); return; }
         const vandaag = dagIn(nu), dag = dagIn(eerste), morgen = dagIn(nu + 864e5);
         const datum = new Intl.DateTimeFormat('nl-BE', { timeZone: TZ, weekday: 'long', day: 'numeric', month: 'long' }).format(eerste);
         setTekst(dag === vandaag ? 'vandaag' : dag === morgen ? 'morgen' : datum);
       })
-      .catch(() => {})
+      .catch(() => { if (!weg) setMislukt(true); })
       .finally(() => window.clearTimeout(klok));
     return () => { weg = true; ctl.abort(); window.clearTimeout(klok); };
   }, []);
-  if (!tekst) return null;
-  return <p className="bf-lphero__vrij"><span className="bf-lphero__stip" aria-hidden="true" /><span>Eerstvolgend vrij plaatsbezoek: <b>{tekst}</b></span></p>;
+  if (!ruimte) {
+    if (!tekst) return null;
+    return <p className="bf-lphero__vrij"><span className="bf-lphero__stip" aria-hidden="true" /><span>Eerstvolgend vrij plaatsbezoek: <b>{tekst}</b></span></p>;
+  }
+  if (!tekst && mislukt) return null;
+  return (
+    <p className={`bf-lphero__vrij${tekst ? '' : ' bf-lphero__vrij--wacht'}`} aria-hidden={tekst ? undefined : true}>
+      <span className="bf-lphero__stip" aria-hidden="true" />
+      <span className="bf-lphero__vrijtekst">
+        <span className="bf-lphero__vrijmaat" aria-hidden="true">Eerstvolgend vrij plaatsbezoek: <b>donderdag 30 september</b></span>
+        {tekst && <span>Eerstvolgend vrij plaatsbezoek: <b>{tekst}</b></span>}
+      </span>
+    </p>
+  );
 }
 
 /* Dezelfde iconen als LpKgj.tsx r.53-87 (redenen, stappen, oplossing), lijn 1,8 zoals BF. De key staat VÓÓR de spread:
@@ -184,6 +208,11 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   const vensterVak = useRef<HTMLDivElement>(null);
   const vensterTerug = useRef<HTMLElement | null>(null);
   const dienstFotos = !!inhoud.diensten.vlakken || inhoud.diensten.lijst.some((d) => d.foto);
+  /* Aanvraagkaart in de hero (heroAanvraag, 19 okt 2026): dan nergens een ingang naar de rekenaar. Geen rekenaarknop in
+     waarom en werkwijze (daar een knop naar het formulier onderaan), geen vangnet, geen venster, geen knop "Liever eerst een
+     prijs?" in het formulier onderaan en geen rekenaarknop in de chat. */
+  const heroAanvraag = !!inhoud.heroAanvraag && !!inhoud.aanvraag;
+  const zonderRekenaar = heroAanvraag;
 
   /* Microsoft Clarity (LpKgj r.137-138): project per bedanktSlug, via laadClarity. */
   useEffect(() => { const id = CLARITY_PROJECT[inhoud.bedanktSlug]; if (id) laadClarity(id); }, [inhoud.bedanktSlug]);
@@ -291,7 +320,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   useEffect(() => {
     const id = decodeURIComponent(window.location.hash.slice(1));
     if (!id) return;
-    if (id === 'rekenaar' && inhoud.vangnet && !inhoud.heroRekenaar) setVenster(true);
+    if (id === 'rekenaar' && inhoud.vangnet && !inhoud.heroRekenaar && !zonderRekenaar) setVenster(true);
     const ev = ['wheel', 'touchmove', 'keydown'] as const;
     let zelf = false;
     const merk = () => { zelf = true; };
@@ -360,8 +389,13 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
     window.scrollTo({ top: vorm.getBoundingClientRect().top + window.scrollY - kopH - 8, behavior: 'smooth' });
   };
 
-  const rekenKnop = (klasse: string) => (
-    <button type="button" className={`bf-knop bf-lpcta__knop ${klasse}`} onClick={openVenster}>Bereken uw prijs<IcPijl /></button>
+  /* Zonder rekenaar (heroAanvraag, 19 okt 2026): op dezelfde plek een knop naar het aanvraagformulier onderaan (#contact),
+     met de knoptekst van dat formulier. Zo doet bfbouw.be/lp/dakwerken het met de aanvraag bovenaan: de knoppen verderop
+     scrollen naar het formulier onderaan (Mohammed 9 okt, bouw/lp-dak.cjs cta), en de werkwijze zegt "via het formulier
+     hieronder". */
+  const rekenKnop = (klasse: string) => (zonderRekenaar
+    ? <a className={`bf-knop bf-lpcta__knop ${klasse}`} href="#contact">{inhoud.inspectie.knop}<IcPijl /></a>
+    : <button type="button" className={`bf-knop bf-lpcta__knop ${klasse}`} onClick={openVenster}>Bereken uw prijs<IcPijl /></button>
   );
 
   const secties: Record<Sectie, React.ReactNode> = {
@@ -570,7 +604,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
 
     /* Vangnet (totaalrenovatie, 5 okt): draagt het anker #rekenaar; de knop opent het venster of gaat naar de
        losse rekenaarpagina met de parameters van de advertentieklik (LpKgj r.684-705). */
-    vangnet: inhoud.vangnet && (
+    vangnet: !zonderRekenaar && inhoud.vangnet && (
       <section className="bf-sblok bf-sblok--grijs bf-lpvangnet" id="rekenaar" aria-labelledby="vangnet-kop">
         <div className="bf-sraam bf-lpvangnet__in">
           <h2 className="bf-h2 bf-h2--midden" id="vangnet-kop">{inhoud.vangnet.kop}</h2>
@@ -605,12 +639,12 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
     ),
   };
 
-  const vertrouwen = inhoud.rekenaar.vertrouwen ?? inhoud.hero.bewijs;
-  /* Wat er rechts in de hero staat: de rekenaar (geen knop, of heroRekenaar), het plaatsbezoekformulier (heroFormulier)
-     of alleen de knop in de tekstkolom. heroRekenaar wint (13 okt). */
-  const heroReken = !inhoud.hero.knop || !!inhoud.heroRekenaar;
-  const heroForm = !heroReken && !!inhoud.heroFormulier;
-  const heroKnop = !heroReken && !heroForm;
+  const vertrouwen = heroAanvraag ? (inhoud.aanvraag?.vertrouwen ?? []) : (inhoud.rekenaar.vertrouwen ?? inhoud.hero.bewijs);
+  /* Wat er rechts in de hero staat: de aanvraagkaart (heroAanvraag, 19 okt), de rekenaar (geen knop, of heroRekenaar), het
+     plaatsbezoekformulier (heroFormulier) of alleen de knop in de tekstkolom. heroAanvraag wint, dan heroRekenaar (13 okt). */
+  const heroReken = !heroAanvraag && (!inhoud.hero.knop || !!inhoud.heroRekenaar);
+  const heroForm = !heroAanvraag && !heroReken && !!inhoud.heroFormulier;
+  const heroKnop = !heroAanvraag && !heroReken && !heroForm;
 
   return (
     <div className={`bf bf-lp bf-lp--${inhoud.bedanktSlug}${inhoud.strak ? ' bf-lp--strak' : ''}`} ref={vat}>
@@ -643,7 +677,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       </header>
 
       <main>
-        <section className={`bf-lphero bf-lphero--algemeen${heroKnop ? ' bf-lphero--knop' : ''}${heroForm ? ' bf-lphero--form' : ''}`} id="top">
+        <section className={`bf-lphero bf-lphero--algemeen${heroKnop ? ' bf-lphero--knop' : ''}${heroForm ? ' bf-lphero--form' : ''}${heroAanvraag ? ' bf-lphero--aanvraag' : ''}`} id="top">
           <div className="bf-hero__slides bf-lphero__slides">
             {inhoud.hero.dias.map((d, i) => (
               <img className={`bf-hero__beeld bf-lphero__beeld${i === dia ? ' bf-is-on' : ''}`} key={d.src} src={d.src} alt={d.alt}
@@ -689,6 +723,22 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                   boven={<><p className="bf-lphero__formtitel">{inhoud.hero.knop?.tekst ?? inhoud.cta.kop}</p><VrijMoment /></>} />
               </div>
             )}
+            {heroAanvraag && (
+              /* Aanvraagkaart (19 okt 2026): op de computer rechts naast de kop, op de telefoon onder de subkop, zoals de rekenaar
+                 die hier stond. Het anker blijft #rekenaar: de sitelinks "Bereken uw dakprijs" en "Bereken uw renovatieprijs"
+                 (ads/dakwerken en ads/totaalrenovatie) wijzen er nog naar; zo landen ze op de kaart in plaats van op niets. */
+              <div id="rekenaar" className="bf-lphero__reken bf-lphero__aanvraag">
+                <Aanvraag inhoud={inhoud} voor={match?.voor} boven={inhoud.aanvraag?.vrijMoment ? <VrijMoment ruimte /> : undefined} />
+                {/* Telefoon: de vinkjes onder de kaart (zoals bij de rekenaar); op de computer staan ze in de kaart. */}
+                {vertrouwen.length > 0 && (
+                  <div className="bf-lphero__gerust">
+                    <ul className="bf-lphero__vinkjes">
+                      {vertrouwen.map((t) => <li key={t}><span><IcVink /></span>{metVet(t)}</li>)}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
             {heroReken && (
               <div id="rekenaar" className="bf-lphero__reken">
                 <Rekenaar inhoud={inhoud} plek="hero" voor={match?.voor} />
@@ -723,7 +773,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               )}
               {!inhoud.topbalk && <a className="bf-lpinsp__bel" href={CONTACT.phone.href}><IcTel />Bel {CONTACT.phone.display}</a>}
             </div>
-            <div className="bf-lpinsp__kaartvak"><Inspectie inhoud={inhoud} opPrijs={openVenster} /></div>
+            <div className="bf-lpinsp__kaartvak"><Inspectie inhoud={inhoud} opPrijs={zonderRekenaar ? undefined : openVenster} /></div>
           </div>
         </section>
       </main>
@@ -736,7 +786,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       <a className={`bf-belzweef${balk ? ' bf-is-zichtbaar' : ''}`} href={CONTACT.phone.href} aria-label={'Bel ' + CONTACT.phone.display} tabIndex={balk ? 0 : -1} aria-hidden={!balk}><IcTel /></a>
 
       {/* Digitale assistent (28 sep): verschijnt alleen als api/chat een sleutel heeft. Vorm: kgj/extra.ts via de port. */}
-      <div className="bf-lpkgj"><ChatAssistent inhoud={inhoud} balk={balk} opRekenaar={openVenster} /></div>
+      <div className="bf-lpkgj"><ChatAssistent inhoud={inhoud} balk={balk} opRekenaar={zonderRekenaar ? undefined : openVenster} /></div>
 
       {/* Voet: de inhoud van live (LpKgj r.785-809) woordelijk, in de BF-opmaak (grijs vlak, logo + zin, kolom Contact,
           onderregel). Geen voetlinkenlijst (§17); de klasse kgj-voet leest check-lp-gsm.cjs (btw in de voet). */}
@@ -763,7 +813,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         </div>
       </footer>
 
-      {venster && (
+      {venster && !zonderRekenaar && (
         <div className="bf-lpvenster kgj-venster" role="dialog" aria-modal="true" aria-label="Bereken uw prijs"
           onClick={(e) => { if (e.target === e.currentTarget) setVenster(false); }}>
           <div className="bf-lpvenster__in kgj-venster__in" tabIndex={-1} ref={vensterVak}>

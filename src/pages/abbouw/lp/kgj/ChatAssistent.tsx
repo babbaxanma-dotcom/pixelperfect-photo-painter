@@ -53,7 +53,10 @@ export default function ChatAssistent({ inhoud, balk, opRekenaar }: {
   inhoud: KgjInhoud;
   /** De vaste actiebalk onderaan de telefoon staat in beeld: de knop schuift erboven. */
   balk: boolean;
-  opRekenaar: () => void;
+  /** Opent de rekenaar. Leeg op een pagina zonder rekenaar (19 okt 2026: /lp/dakwerken, /lp/totaalrenovatie,
+      /lp/aannemer-renovatiewerken): dan geen snelknop "Bereken mijn prijs", en een antwoord met actie "rekenaar" krijgt
+      de aanvraagknop (gratis dakinspectie of plaatsbezoek). */
+  opRekenaar?: () => void;
 }) {
   const pagina = inhoud.bedanktSlug === 'totaalrenovatie' ? 'totaalrenovatie' : 'dakwerken';
   const t = TEKST[pagina];
@@ -128,8 +131,8 @@ export default function ChatAssistent({ inhoud, balk, opRekenaar }: {
   };
 
   const actie = (a: Actie) => {
-    if (a === 'rekenaar') { setOpen(false); opRekenaar(); }
-    else if (a === 'aanvraag') stuur(t.start);
+    if (a === 'rekenaar' && opRekenaar) { setOpen(false); opRekenaar(); }
+    else if (a === 'aanvraag' || a === 'rekenaar') stuur(t.start);
     else if (a === 'bellen') window.location.href = CONTACT.phone.href;
   };
 
@@ -160,7 +163,7 @@ export default function ChatAssistent({ inhoud, balk, opRekenaar }: {
           <div className="kgj-chat__lijst" ref={lijst} aria-live="polite">
             <div className="kgj-chat__bel kgj-chat__bel--ai">{t.welkom}</div>
             <div className="kgj-chat__snel">
-              <button type="button" onClick={() => actie('rekenaar')}><Calculator aria-hidden="true" />Bereken mijn prijs</button>
+              {opRekenaar && <button type="button" onClick={() => actie('rekenaar')}><Calculator aria-hidden="true" />Bereken mijn prijs</button>}
               <button type="button" onClick={() => actie('aanvraag')} disabled={bezig}><CalendarCheck aria-hidden="true" />{t.afspraak}</button>
               <a href={CONTACT.phone.href}><Phone aria-hidden="true" />Bel {CONTACT.phone.display}</a>
             </div>
@@ -186,7 +189,9 @@ export default function ChatAssistent({ inhoud, balk, opRekenaar }: {
                       )}
                       {!b.aanvraag?.klaar && b.actie && b.actie !== 'geen' && (
                         <button type="button" className="kgj-chat__actie" onClick={() => actie(b.actie!)}>
-                          {b.actie === 'rekenaar' && <><Calculator aria-hidden="true" />Bereken mijn prijs</>}
+                          {b.actie === 'rekenaar' && (opRekenaar
+                            ? <><Calculator aria-hidden="true" />Bereken mijn prijs</>
+                            : <><CalendarCheck aria-hidden="true" />{t.afspraak}</>)}
                           {b.actie === 'aanvraag' && <><CalendarCheck aria-hidden="true" />{t.afspraak}</>}
                           {b.actie === 'bellen' && <><Phone aria-hidden="true" />Bel {CONTACT.phone.display}</>}
                         </button>

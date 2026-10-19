@@ -1,6 +1,6 @@
 {
   "pad": "/lp/aannemer-renovatiewerken",
-  "bron": "Gemeten 12 okt 2026 op de HUIDIGE LpKgj.tsx (LP-code byte-gelijk aan origin/main 9727a84 = live), meting scratchpad werk/lpkaart/uit-flows.json (meet.mjs), manifest kaart/lp-*.md §c. Vluchtige velden (user_agent, submitted_at, referrer) weggelaten. 13 okt 2026 avond: /lp/totaalrenovatie, /lp/aannemer-renovatiewerken en /lp/richtprijs-berekenen tonen dezelfde rekenaarpagina (heroRekenaar, Mohammed: \"zoals dakwerken\", \"geen onderverdeling\"); #rekenaar opent geen venster meer maar springt naar de hero. Hero-flow overgenomen van de groene richtprijs-meting, alleen page_path en bron eigen; richtprijs-inspectie = het uniforme formulier zonder budget (zelfde als totaalrenovatie).",
+  "bron": "Gemeten 12 okt 2026 op de HUIDIGE LpKgj.tsx (LP-code byte-gelijk aan origin/main 9727a84 = live), meting scratchpad werk/lpkaart/uit-flows.json (meet.mjs), manifest kaart/lp-*.md §c. Vluchtige velden (user_agent, submitted_at, referrer) weggelaten. 13 okt 2026 avond: /lp/totaalrenovatie, /lp/aannemer-renovatiewerken en /lp/richtprijs-berekenen tonen dezelfde rekenaarpagina (heroRekenaar, Mohammed: \"zoals dakwerken\", \"geen onderverdeling\"); #rekenaar opent geen venster meer maar springt naar de hero. Hero-flow overgenomen van de groene richtprijs-meting, alleen page_path en bron eigen; richtprijs-inspectie = het uniforme formulier zonder budget (zelfde als totaalrenovatie). 19 okt 2026: /lp/dakwerken, /lp/totaalrenovatie en /lp/aannemer-renovatiewerken hebben geen rekenaar meer (opdracht Mohammed: \"rekenaar weg ... dakinspectie en gratis plaatsbezoek form bovenaan\"): de rekenaarflows zijn vervangen door de aanvraagkaart bovenaan (Aanvraag.tsx, zelfde bron_lead als het formulier onderaan). De rekenaar staat alleen nog op /lp/richtprijs-berekenen (richtprijs-berekenen.json ongewijzigd).",
   "clarity": "yxp8qe0p9u",
   "flows": [
     {
@@ -50,48 +50,39 @@
       "metingInUitFlows": "aannemer-inspectie"
     },
     {
-      "naam": "rekenaar-hero",
-      "soort": "rekenaar",
-      "query": "?utm_source=google&utm_medium=cpc&utm_campaign=totaalrenovatie&utm_term=renovatie%20prijs",
-      "marketing": false,
-      "wortel": "#rekenaar",
+      "naam": "aanvraag-hero",
+      "soort": "aanvraag",
+      "query": "?utm_term=renovatiebedrijf",
+      "marketing": true,
+      "wortel": "#rekenaar .kgj-reken--aanvraag",
       "antwoorden": [
-        "Rijwoning",
-        "@vink:Keuken",
-        "@vink:Isolatie",
-        "@verder",
-        "100 tot 150 m²",
-        "Ouder dan 10 jaar",
-        "Een groot deel",
-        "Zo snel mogelijk"
+        "Aanbouw",
+        "Volgend jaar"
       ],
       "velden": {
-        "telefoon": "0400 00 00 03"
+        "naam": "Test Kaart",
+        "telefoon": "0400 00 00 08"
       },
-      "formStart": "lp:aannemer-renovatiewerken:rekenaar:hero",
-      "toestemming": true,
-      "bedankt": "/bedankt?dienst=totaalrenovatie&van=rekenaar",
+      "formStart": "lp:aannemer-renovatiewerken:inspectie:hero",
+      "toestemming": false,
+      "bedankt": "/bedankt?dienst=totaalrenovatie",
       "fouten": {
-        "leeg": "Vul uw telefoonnummer in.",
+        "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",
         "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
       },
       "ghl": {
         "firstName": "Test Kaart",
         "name": "Test Kaart",
-        "email": "test@voorbeeld.be",
-        "phone": "0400 00 00 03",
+        "phone": "0400 00 00 08",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Woning: Rijwoning · Renoveren: Keuken, Isolatie · Grootte: 100 tot 150 m² · Leeftijd: Ouder dan 10 jaar · Staat: Een groot deel · Start: Zo snel mogelijk · Getoonde richtprijs: € 12.000 tot € 35.500 incl. btw",
-        "bron_lead": "Google Ads",
-        "bron_lead_detail": "lp:aannemer-renovatiewerken:rekenaar:hero",
+        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat wilt u renoveren: Aanbouw · Wanneer wilt u starten: Volgend jaar",
+        "bron_lead": "Website",
+        "bron_lead_detail": "lp:aannemer-renovatiewerken:inspectie",
         "page_path": "/lp/aannemer-renovatiewerken",
         "landing_division": "ab_construct",
         "source": "landing_page",
-        "utm_source": "google",
-        "utm_medium": "cpc",
-        "utm_campaign": "totaalrenovatie",
-        "utm_term": "renovatie prijs"
+        "utm_term": "renovatiebedrijf"
       },
       "web3forms": {
         "access_key": "b01e4fea-3e73-418b-b65a-acfb1d3ee43c",
@@ -100,27 +91,18 @@
         "to": "info@abgroep.be",
         "firstName": "Test Kaart",
         "name": "Test Kaart",
-        "email": "test@voorbeeld.be",
-        "phone": "0400 00 00 03",
+        "phone": "0400 00 00 08",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Woning: Rijwoning · Renoveren: Keuken, Isolatie · Grootte: 100 tot 150 m² · Leeftijd: Ouder dan 10 jaar · Staat: Een groot deel · Start: Zo snel mogelijk · Getoonde richtprijs: € 12.000 tot € 35.500 incl. btw",
-        "bron_lead": "Google Ads",
-        "bron_lead_detail": "lp:aannemer-renovatiewerken:rekenaar:hero",
+        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat wilt u renoveren: Aanbouw · Wanneer wilt u starten: Volgend jaar",
+        "bron_lead": "Website",
+        "bron_lead_detail": "lp:aannemer-renovatiewerken:inspectie",
         "page_path": "/lp/aannemer-renovatiewerken",
         "landing_division": "ab_construct",
         "source": "landing_page",
-        "utm_source": "google",
-        "utm_medium": "cpc",
-        "utm_campaign": "totaalrenovatie",
-        "utm_term": "renovatie prijs"
+        "utm_term": "renovatiebedrijf"
       },
-      "metingInUitFlows": "kloon van richtprijs-rekenaar-hero (13 okt), page_path en bron eigen",
-      "contact": {
-        "naam": "Test Kaart",
-        "email": "test@voorbeeld.be"
-      },
-      "contactFout": "Vul uw naam in."
+      "metingInUitFlows": "19 okt 2026: aanvraagkaart bovenaan (Aanvraag.tsx). Verwacht = de payload van het formulier onderaan (Inspectie.tsx, zelfde bron_lead lp:aannemer-renovatiewerken:inspectie) met de antwoorden van de klikvragen in aanvullende_info; veldvolgorde van leads.ts buildBody."
     }
   ]
 }

@@ -17,6 +17,8 @@ import Toestemming from './Toestemming';
  *
  * Wie toch eerst een prijs wil, opent onder de knop de calculator in een
  * venster. Zo zijn er twee wegen en geen doodlopende.
+ * Alleen op een pagina met rekenaar (opPrijs): sinds 19 okt 2026 hebben /lp/dakwerken,
+ * /lp/totaalrenovatie en /lp/aannemer-renovatiewerken geen rekenaar meer, dan staat die knop er niet.
  *
  * Draagt de klasse kgj-reken, zodat de vaste actiebalk op de telefoon
  * wegvalt zodra dit formulier in beeld komt, net als bij de calculator.
@@ -34,7 +36,7 @@ const VERTROUWEN_ICOON: Record<'slot' | 'telefoon' | 'euro' | 'koffie', JSX.Elem
 };
 
 /* boven: optionele kop van de kaart (formulier in de hero, 13 okt: titel + eerstvolgend vrij plaatsbezoek). */
-export default function Inspectie({ inhoud, opPrijs, boven }: { inhoud: KgjInhoud; opPrijs: () => void; boven?: React.ReactNode }) {
+export default function Inspectie({ inhoud, opPrijs, boven }: { inhoud: KgjInhoud; opPrijs?: () => void; boven?: React.ReactNode }) {
   const navigate = useNavigate();
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
@@ -154,7 +156,7 @@ export default function Inspectie({ inhoud, opPrijs, boven }: { inhoud: KgjInhou
           <>
             <p className="kgj-reken__gerust">{t.onder}</p>
             {fout && <p className="kgj-reken__fout" role="alert">{fout}</p>}
-            <button type="button" className="kgj-reken__alt" onClick={opPrijs}>{t.alt}</button>
+            {opPrijs && <button type="button" className="kgj-reken__alt" onClick={opPrijs}>{t.alt}</button>}
             <p className="kgj-reken__privacy">Wij gebruiken uw gegevens alleen voor deze aanvraag. <a href="/privacy">Privacybeleid</a></p>
           </>
         )}

@@ -7,7 +7,12 @@
  * (dakwerken:rekenaar, totaalrenovatie:rekenaar, dakwerken:inspectie); aanvullende_info staat letterlijk in de sms
  * aan Bardh. Eén afwijking stuurt de verkeerde sms of verliest de conversie.
  *
- * Per LP en per flow (rekenaar in de hero, rekenaar in het venster, het slotformulier) doet deze toets wat een
+ * 19 okt 2026: /lp/dakwerken, /lp/totaalrenovatie en /lp/aannemer-renovatiewerken hebben geen rekenaar meer maar bovenaan
+ * de aanvraagkaart (Aanvraag.tsx, soort "aanvraag", wortel #rekenaar .kgj-reken--aanvraag): klikvragen, dan de contactstap,
+ * met hetzelfde bron_lead_detail als het slotformulier (lp:<pagina>:inspectie) en de antwoorden in aanvullende_info. De
+ * rekenaarflows staan alleen nog in richtprijs-berekenen.json.
+ *
+ * Per LP en per flow (rekenaar in de hero, rekenaar in het venster, aanvraagkaart, het slotformulier) doet deze toets wat een
  * bezoeker doet, onderschept elk verzoek naar services.leadconnectorhq.com en api.web3forms.com (nul echte leads)
  * en vergelijkt veld voor veld met de vaste referentie in scripts/fixtures/lp-payload/<lp>.json (gemeten op de
  * HUIDIGE LpKgj, 12 okt 2026). Verder per flow:

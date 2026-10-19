@@ -12,6 +12,9 @@ import { RENOVATIEWERKEN } from './inhoud-renovatiewerken';
  * toen we aanvragen kregen": geen aparte aannemerpagina meer. Deze URL (advertentiegroep Aannemer renovatiewerken)
  * toont dezelfde rekenaarpagina als /lp/totaalrenovatie; alleen de bron in het CRM blijft eigen, zodat te zien is
  * waar een aanvraag vandaan kwam. Terugval = de regel hieronder terugzetten naar <LpBf inhoud={RENOVATIEWERKEN} />.
+ *
+ * 19 okt 2026: volgt de nieuwe /lp/totaalrenovatie (aanvraagkaart bovenaan, geen rekenaar). De kaart en het formulier
+ * onderaan sturen allebei inspectie.bronLead = lp:aannemer-renovatiewerken:inspectie.
  */
 export default function LpRenovatiewerken() {
   return <LpBf inhoud={{ ...TOTAALRENOVATIE, bronLead: RENOVATIEWERKEN.bronLead, inspectie: RENOVATIEWERKEN.inspectie }} />;

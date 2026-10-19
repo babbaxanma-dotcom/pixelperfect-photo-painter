@@ -102,6 +102,17 @@ export type KgjInhoud = {
       "nummer krijgen is oke, want ik wil voor ab groep een receptionist opbouwen", "na de rekenaar gaan ze toch naar
       bedankt pagina voor plaatsbezoek". Wint van heroFormulier. */
   heroRekenaar?: boolean;
+  /** De aanvraagkaart in de hero (Aanvraag.tsx) in plaats van de rekenaar: eerst klikvragen, dan de contactstap, zoals
+      bfbouw.be/lp/dakwerken. 19 okt 2026, Mohammed: "bouw de abgroep totaalrenovatie en dakwerken lp naar de nieuwe, dus
+      rekenaar weg, en doe dat naar dakinspectie en gratis plaatsbezoek form bovenaan". Met deze vlag (en `aanvraag`) staat
+      er nergens op de pagina een ingang naar de rekenaar: geen rekenaarknop, geen vangnet, geen venster, geen knop
+      "Liever eerst een prijs?" in het formulier onderaan, geen rekenaarknop in de chat. Wint van heroRekenaar en heroFormulier. */
+  heroAanvraag?: boolean;
+  /** De inhoud van de aanvraagkaart. titel + tijd: kop van de kaart; vragen: één tik = antwoord en meteen de volgende
+      vraag (geen afvinkvragen); contactKop: kop van de laatste stap ("Bijna klaar! ..."); vertrouwen en trustrij: zoals op
+      de rekenaarkaart; vrijMoment: het eerstvolgende vrije plaatsbezoek uit de agenda onder de kaartkop (renovatie). */
+  aanvraag?: { titel: string; tijd: string; vragen: Vraag[]; contactKop: string; vertrouwen?: string[];
+    trustrij?: { b: string; s: string }[]; vrijMoment?: boolean };
   /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart.
       trustrij: rij onderaan de kaart met Google 5,0 + sterren en daarnaast deze cijfers (zoals bfbouw.be rk__trust). */
   rekenaar: { trustrij?: { b: string; s: string }[]; titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string; troeven?: string[];
@@ -170,7 +181,8 @@ export const DAKWERKEN: KgjInhoud = {
   titel: 'Dé specialist voor uw dakwerk | AB Bouw Groep',
   /* 24 sep: "zes antwoorden" klopt niet meer (6 tot 8 vragen per pad) en
      "binnen één werkdag" is als belofte van de pagina gehaald. */
-  omschrijving: 'Bereken in 2 minuten de prijs van uw dak. Gratis dakinspectie en offerte, werken aan 6% btw.',
+  /* 19 okt 2026: zonder "Bereken in 2 minuten de prijs van uw dak." (rekenaar weg, opdracht Mohammed); de rest woordelijk. */
+  omschrijving: 'Gratis dakinspectie en offerte, werken aan 6% btw.',
   divisie: 'ab_dakwerken',
   bronLead: 'lp:dakwerken:rekenaar',
   bedanktSlug: 'dakwerken',
@@ -182,7 +194,9 @@ export const DAKWERKEN: KgjInhoud = {
     /* 4 okt, Mohammed: "headline, bereken in 2 minuten de richtprijs van uw dak, met 2 minuten in kleur".
        Tussen [ ] = in de accentkleur. */
     /* 4 okt, plan mobiele hero: "Bereken in 1 minuut de richtprijs van uw dak" (maak "1 minuut" oranje/goud). */
-    kop: 'Bereken in [2 minuten] de richtprijs van uw dak',
+    /* 19 okt 2026, opdracht Mohammed: "rekenaar weg, en doe dat naar dakinspectie ... form bovenaan en andere headline en
+       subheadline". Kop en subkop = de tekstvoorstellen van die opdracht, woordelijk. */
+    kop: 'Laat uw dak [gratis] inspecteren',
     /* Mohammeds eigen zin, letterlijk (24 sep): "doe daar gewoon subheadline
        van de specialisatie". De vorige subkop ("u weet direct wat het kost",
        daarna "wij bellen u met de prijs") ging over de calculator, die ernaast
@@ -190,7 +204,7 @@ export const DAKWERKEN: KgjInhoud = {
     /* 4 okt, Mohammed: "subheadline, beantwoord 8 korte vragen voor een heldere en vrijblijvende
        prijsindicatie van uw dakrenovatie". Het pad van een dakrenovatie telt 8 vragen. */
     /* 4 okt, plan mobiele hero: subheadline "Snel, gratis en 100% vrijblijvend." (vervangt de zin met het aantal vragen). */
-    onder: 'Snel, gratis en 100% vrijblijvend.',
+    onder: 'Een vakman van AB Bouw Groep bekijkt uw dak ter plaatse. U weet daarna precies wat er moet gebeuren en wat het kost.',
     /* Drie controleerbare feiten onder de kop. Een bezoeker die uit een
        advertentie komt, kent AB niet; dit is het enige bewijs dat boven de
        vouw past zolang er geen geverifieerde Google-score is.
@@ -213,6 +227,38 @@ export const DAKWERKEN: KgjInhoud = {
       { src: stockPannenStapels, alt: 'Rode vlakke dakpannen op de panlatten: onderaan gelegd, bovenaan in stapeltjes over het dakvlak verdeeld' },
       { src: stockPanlatten, alt: 'Houtvezelplaten op het dakvlak met tengels en panlatten, waarop een baan zwarte dakpannen ligt' },
     ],
+  },
+
+  /* 19 okt 2026 (opdracht Mohammed, zie hero): bovenaan de aanvraagkaart voor de gratis dakinspectie, zoals
+     bfbouw.be/lp/dakwerken: vier klikvragen, dan naam, gsm, postcode of gemeente en e-mail. De rekenaar hieronder staat op
+     deze pagina nergens meer (de inhoud blijft voor LpKgj, de terugval). */
+  heroAanvraag: true,
+  aanvraag: {
+    titel: 'Gratis dakinspectie',
+    tijd: 'Klaar in 1 minuut, vrijblijvend',
+    /* De vragen en antwoorden van de opdracht, woordelijk. Vraag 1 met de foto's van de eerste rekenaarvraag; de sleutel
+       Dak is die van de message match (boodschap.voor). De sleutels staan zo in aanvullende_info ("Dak: ... · Werk: ..."). */
+    vragen: [
+      { sleutel: 'Dak', vraag: 'Wat voor dak heeft u?', keuzes: [
+        { label: 'Hellend dak', foto: keuzeHellend },
+        { label: 'Plat dak', foto: keuzePlat },
+      ] },
+      { sleutel: 'Werk', vraag: 'Wat moet er aan uw dak gebeuren?', keuzes: [
+        { label: 'Dakrenovatie / Nieuw dak', icoon: 'dienst-nieuw' }, { label: 'Herstelling', icoon: 'herstel' },
+        { label: 'Ik wil dat een expert mijn dak inspecteert', icoon: 'verken' },
+      ] },
+      { sleutel: 'Isolatie', vraag: 'Wilt u ook isoleren?', keuzes: [
+        { label: 'Ja', icoon: 'isolatie' }, { label: 'Nee', icoon: 'geenisolatie' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
+      ] },
+      { sleutel: 'Asbest', vraag: 'Zit er asbest in uw dak?', keuzes: [
+        { label: 'Ja', icoon: 'asbest' }, { label: 'Nee', icoon: 'veilig' }, { label: 'Weet ik niet', icoon: 'twijfel' },
+      ] },
+    ],
+    contactKop: 'Bijna klaar! Bevestig uw gratis dakinspectie',
+    /* De vinkjes en de trustrij van de rekenaarkaart die hier stond (13 okt). Alleen "Gratis & vrijblijvende richtprijs"
+       werd "... dakinspectie": er is geen richtprijs meer, wel de gratis dakinspectie (kop van de kaart en van het slotblok). */
+    vertrouwen: ['Gratis & vrijblijvende dakinspectie', 'Vakmanschap tot in de details', '6% btw-tarief (woningen > 10 jaar)'],
+    trustrij: [{ b: '10 jaar', s: 'garantie' }, { b: '15 jaar', s: 'ervaring' }],
   },
 
   rekenaar: {
@@ -477,10 +523,12 @@ export const DAKWERKEN: KgjInhoud = {
      dak erbij: "badkamer renoveren" of "gevel isoleren" houdt de standaardkop. */
   boodschap: [
     /* 4 okt: de varianten volgen Mohammeds nieuwe kop; alleen het dakwoord wisselt. */
-    { zoek: 'dak.*isol|isol.*dak|sarking', kop: 'Bereken in [2 minuten] de richtprijs van uw dakisolatie' },
-    { zoek: 'plat|epdm|roofing|bitumen', kop: 'Bereken in [2 minuten] de richtprijs van uw plat dak', voor: { sleutel: 'Dak', label: 'Plat dak' } },
-    { zoek: 'hellend|pannen|leien|sarking', kop: 'Bereken in [2 minuten] de richtprijs van uw hellend dak', voor: { sleutel: 'Dak', label: 'Hellend dak' } },
-    { zoek: 'dak.*renov|^renovatie$', kop: 'Bereken in [2 minuten] de richtprijs van uw dakrenovatie' },
-    { zoek: 'dak.*(nieuw|vervang)|(nieuw|vervang).*dak', kop: 'Bereken in [2 minuten] de richtprijs van uw nieuwe dak' },
+    /* 19 okt 2026: de varianten volgen de nieuwe kop "Laat uw dak [gratis] inspecteren" (rekenaar weg). Plat en hellend
+       noemen hun dak; isolatie, renovatie en nieuw dak krijgen de standaardkop. voor (vraag 1 van de aanvraagkaart) blijft. */
+    { zoek: 'dak.*isol|isol.*dak|sarking', kop: 'Laat uw dak [gratis] inspecteren' },
+    { zoek: 'plat|epdm|roofing|bitumen', kop: 'Laat uw [plat dak] gratis inspecteren', voor: { sleutel: 'Dak', label: 'Plat dak' } },
+    { zoek: 'hellend|pannen|leien|sarking', kop: 'Laat uw [hellend dak] gratis inspecteren', voor: { sleutel: 'Dak', label: 'Hellend dak' } },
+    { zoek: 'dak.*renov|^renovatie$', kop: 'Laat uw dak [gratis] inspecteren' },
+    { zoek: 'dak.*(nieuw|vervang)|(nieuw|vervang).*dak', kop: 'Laat uw dak [gratis] inspecteren' },
   ],
 };
