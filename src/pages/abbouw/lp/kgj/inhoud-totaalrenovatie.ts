@@ -470,9 +470,12 @@ export const TOTAALRENOVATIE: KgjInhoud = {
   heroAanvraag: true,
   hero: {
     ...TOTAALRENOVATIE_REKENAAR.hero,
-    /* Kop en subkop: de tekstvoorstellen van de opdracht van 19 okt, woordelijk. [ ] = accentkleur. */
-    kop: 'Plan een [gratis] plaatsbezoek voor uw renovatie',
-    onder: 'Wij komen langs, bekijken uw woning en bespreken uw plannen. Daarna krijgt u een offerte voor precies wat u wilt laten doen.',
+    /* 19 okt: kop "Plan een gratis plaatsbezoek voor uw renovatie" (mijn tekst). 20 okt 2026, Mohammed over dezelfde fout
+       op de dakpagina: "je kan toch zelf ook redeneren dat dit niet goed is". Nu zijn dictaat van 13 okt, woordelijk:
+       "Jouw complete renovatie, perfect geregeld van A tot Z."; "van A tot Z" in de accentkleur ("Definitief", hierboven).
+       Subkop kort (6 okt: "teveel tekst in hero") met het aanbod, dat ook in de kaart staat. [ ] = accentkleur. */
+    kop: 'Jouw complete renovatie, perfect geregeld [van A tot Z].',
+    onder: 'Gratis plaatsbezoek en offerte, 100% vrijblijvend.',
   },
   aanvraag: {
     titel: 'Gratis plaatsbezoek',

@@ -195,8 +195,12 @@ export const DAKWERKEN: KgjInhoud = {
        Tussen [ ] = in de accentkleur. */
     /* 4 okt, plan mobiele hero: "Bereken in 1 minuut de richtprijs van uw dak" (maak "1 minuut" oranje/goud). */
     /* 19 okt 2026, opdracht Mohammed: "rekenaar weg, en doe dat naar dakinspectie ... form bovenaan en andere headline en
-       subheadline". Kop en subkop = de tekstvoorstellen van die opdracht, woordelijk. */
-    kop: 'Laat uw dak [gratis] inspecteren',
+       subheadline". Kop en subkop waren mijn tekst ("Laat uw dak gratis inspecteren").
+       20 okt 2026, Mohammed: "Laat uw dak gratis inspecteren??? wat is dat voor een headline" en "je kan toch zelf ook
+       redeneren dat dit niet goed is". De kop was een opdracht over de werkwijze (de inspectie) in plaats van over zijn dak,
+       en herhaalde het aanbod dat de kaart ernaast al noemt. Nu: wie AB is + zijn dak, zoals bfbouw.be ("De nr. 1 in
+       dakwerken" + het aanbod in de subkop) en het tabblad van 25 sep. Het aanbod staat in de subkop en in de kaart. */
+    kop: 'Dé specialist voor [uw nieuwe dak]',
     /* Mohammeds eigen zin, letterlijk (24 sep): "doe daar gewoon subheadline
        van de specialisatie". De vorige subkop ("u weet direct wat het kost",
        daarna "wij bellen u met de prijs") ging over de calculator, die ernaast
@@ -204,7 +208,7 @@ export const DAKWERKEN: KgjInhoud = {
     /* 4 okt, Mohammed: "subheadline, beantwoord 8 korte vragen voor een heldere en vrijblijvende
        prijsindicatie van uw dakrenovatie". Het pad van een dakrenovatie telt 8 vragen. */
     /* 4 okt, plan mobiele hero: subheadline "Snel, gratis en 100% vrijblijvend." (vervangt de zin met het aantal vragen). */
-    onder: 'Een vakman van AB Bouw Groep bekijkt uw dak ter plaatse. U weet daarna precies wat er moet gebeuren en wat het kost.',
+    onder: 'Vraag uw gratis dakinspectie aan. U weet daarna precies wat er moet gebeuren en wat het kost.',
     /* Drie controleerbare feiten onder de kop. Een bezoeker die uit een
        advertentie komt, kent AB niet; dit is het enige bewijs dat boven de
        vouw past zolang er geen geverifieerde Google-score is.
@@ -523,12 +527,12 @@ export const DAKWERKEN: KgjInhoud = {
      dak erbij: "badkamer renoveren" of "gevel isoleren" houdt de standaardkop. */
   boodschap: [
     /* 4 okt: de varianten volgen Mohammeds nieuwe kop; alleen het dakwoord wisselt. */
-    /* 19 okt 2026: de varianten volgen de nieuwe kop "Laat uw dak [gratis] inspecteren" (rekenaar weg). Plat en hellend
-       noemen hun dak; isolatie, renovatie en nieuw dak krijgen de standaardkop. voor (vraag 1 van de aanvraagkaart) blijft. */
-    { zoek: 'dak.*isol|isol.*dak|sarking', kop: 'Laat uw dak [gratis] inspecteren' },
-    { zoek: 'plat|epdm|roofing|bitumen', kop: 'Laat uw [plat dak] gratis inspecteren', voor: { sleutel: 'Dak', label: 'Plat dak' } },
-    { zoek: 'hellend|pannen|leien|sarking', kop: 'Laat uw [hellend dak] gratis inspecteren', voor: { sleutel: 'Dak', label: 'Hellend dak' } },
-    { zoek: 'dak.*renov|^renovatie$', kop: 'Laat uw dak [gratis] inspecteren' },
-    { zoek: 'dak.*(nieuw|vervang)|(nieuw|vervang).*dak', kop: 'Laat uw dak [gratis] inspecteren' },
+    /* 20 okt 2026: de varianten volgen de kop "Dé specialist voor [uw nieuwe dak]"; alleen het dakwoord wisselt.
+       voor (vraag 1 van de aanvraagkaart) blijft. */
+    { zoek: 'dak.*isol|isol.*dak|sarking', kop: 'Dé specialist voor [uw dakisolatie]' },
+    { zoek: 'plat|epdm|roofing|bitumen', kop: 'Dé specialist voor [uw platte dak]', voor: { sleutel: 'Dak', label: 'Plat dak' } },
+    { zoek: 'hellend|pannen|leien|sarking', kop: 'Dé specialist voor [uw hellende dak]', voor: { sleutel: 'Dak', label: 'Hellend dak' } },
+    { zoek: 'dak.*renov|^renovatie$', kop: 'Dé specialist voor [uw dakrenovatie]' },
+    { zoek: 'dak.*(nieuw|vervang)|(nieuw|vervang).*dak', kop: 'Dé specialist voor [uw nieuwe dak]' },
   ],
 };

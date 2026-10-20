@@ -17,8 +17,13 @@
  *   4. de contactstap: de band "Bijna klaar! Bevestig uw gratis ...", de velden naam, telefoon (verplicht), postcode of
  *      gemeente en e-mail, de knop = de knop van het formulier onderaan; versturen met een leeg gsm-nummer geeft een
  *      foutmelding en verstuurt NIETS;
- *   5. message match (dak): ?utm_term=plat dak toont de kop "Laat uw plat dak gratis inspecteren" en de kaart begint bij
+ *   5. message match (dak): ?utm_term=plat dak toont de kop "Dé specialist voor uw platte dak" en de kaart begint bij
  *      vraag 2 ("Stap 2 van 5"); Terug geeft vraag 1. Zonder utm_term begint ze bij vraag 1.
+ *   6. de kop (h1) is de afgesproken kop en geen werkwijze-kop. 20 okt 2026, Mohammed over "Laat uw dak gratis
+ *      inspecteren": "wat is dat voor een headline" en "je kan toch zelf ook redeneren dat dit niet goed is". Een kop die
+ *      de bezoeker een opdracht geeft over de inspectie, het plaatsbezoek of de offerte gaat over onze werkwijze, niet over
+ *      zijn huis, en herhaalt het aanbod dat de kaart al noemt (memory feedback_hook_gaat_over_het_huis, punt 5). Het
+ *      aanbod hoort in de subkop en de kaart.
  * Wat er bij een volledige aanvraag naar GHL en Web3Forms gaat (bron_lead, aanvullende_info, Toestemming, /bedankt),
  * toetst check-lp-payload veld voor veld.
  *
@@ -40,14 +45,22 @@ const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const POORT = 4434;
 const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
 const VERBODEN = /rekenaar|richtprijs|bereken/i;
+/* 6. werkwijze-kop: het aanbod of een opdracht in de h1 */
+const WERKWIJZEKOP = /inspect|plaatsbezoek|offerte|bereken|richtprijs|^(laat|plan|vraag|bestel|ontvang)\b/i;
+const kopFouten = (h1, verwacht) => {
+  const uit = [];
+  if (h1 !== verwacht) uit.push(`kop "${h1}" in plaats van "${verwacht}"`);
+  if (WERKWIJZEKOP.test(h1 || '')) uit.push(`werkwijze-kop "${h1}" (aanbod of opdracht in de kop; het aanbod hoort in de subkop en de kaart)`);
+  return uit;
+};
 
 const DAK = {
-  pad: '/lp/dakwerken', woord: 'gratis dakinspectie', vraag1: 'Wat voor dak heeft u?', keuzes1: ['Hellend dak', 'Plat dak'],
+  pad: '/lp/dakwerken', kop: 'Dé specialist voor uw nieuwe dak', woord: 'gratis dakinspectie', vraag1: 'Wat voor dak heeft u?', keuzes1: ['Hellend dak', 'Plat dak'],
   pad1: ['Hellend dak', 'Dakrenovatie / Nieuw dak', 'Ja', 'Nee'], vraag2: 'Wat moet er aan uw dak gebeuren?',
   band: 'Bijna klaar! Bevestig uw gratis dakinspectie', knop: 'Vraag uw gratis dakinspectie aan', stappen: 5,
 };
 const RENO = (pad) => ({
-  pad, woord: 'gratis plaatsbezoek', vraag1: 'Wat wilt u renoveren?',
+  pad, kop: 'Jouw complete renovatie, perfect geregeld van A tot Z.', woord: 'gratis plaatsbezoek', vraag1: 'Wat wilt u renoveren?',
   keuzes1: ['De hele woning (totaalrenovatie)', 'Gedeeltelijke renovatie', 'Aanbouw', 'Specifieke werken'],
   pad1: ['Gedeeltelijke renovatie', 'Zo snel mogelijk'], vraag2: 'Wanneer wilt u starten?',
   band: 'Bijna klaar! Bevestig uw gratis plaatsbezoek', knop: 'Bevestig mijn gratis plaatsbezoek', stappen: 3,
@@ -198,6 +211,13 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       if (!pc3.length) { console.log('ONGELDIGE METING: een tik die niets doet werd niet gezien'); process.exit(2); }
       console.log(`positieve controle 3: tik zonder gevolg gezien (${pc3[0]})`);
     }
+    {
+      const pc4 = kopFouten('Laat uw dak gratis inspecteren', 'Laat uw dak gratis inspecteren');
+      const pc5 = kopFouten('Plan een gratis plaatsbezoek voor uw renovatie', 'Plan een gratis plaatsbezoek voor uw renovatie');
+      if (!pc4.length || !pc5.length) { console.log('ONGELDIGE METING: de afgekeurde koppen van 19 okt werden niet als werkwijze-kop gezien'); process.exit(2); }
+      if (kopFouten(DAK.kop, DAK.kop).length || kopFouten(RENO('').kop, RENO('').kop).length) { console.log('ONGELDIGE METING: de afgesproken koppen vallen zelf onder de werkwijze-regel'); process.exit(2); }
+      console.log(`positieve controle 4: de koppen van 19 okt geweigerd (${pc4[0]})`);
+    }
     const leadsNaControles = leads;
 
     /* ---------- de drie pagina's ---------- */
@@ -208,6 +228,8 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
         if (!(await p.$('.kgj-reken--aanvraag'))) { fouten.push(`${pg.pad} @${maat}: geen aanvraagkaart (.kgj-reken--aanvraag)`); await ctx.close(); continue; }
         metingen++;
         for (const f of await rekenaarSporen(p)) fouten.push(`${pg.pad} @${maat}: rekenaar-ingang: ${f}`);
+        const h1 = await p.evaluate(() => document.querySelector('h1')?.textContent.trim().replace(/\s+/g, ' '));
+        for (const f of kopFouten(h1, pg.kop)) fouten.push(`${pg.pad} @${maat}: ${f}`);
         if (gsm) for (const f of await eersteScherm(p, pg)) fouten.push(`${pg.pad} @${maat}: eerste scherm: ${f}`);
         for (const f of await tikGedrag(p, pg)) fouten.push(`${pg.pad} @${maat}: tik: ${f}`);
         /* 4. tot de contactstap (vraag 1 is al gekozen in tikGedrag; de rest van het pad) */
@@ -238,7 +260,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       const { p, ctx } = await open('/lp/dakwerken?utm_term=plat%20dak%20renoveren');
       const m = await p.evaluate(() => ({ h1: document.querySelector('h1')?.textContent.trim().replace(/\s+/g, ' ') }));
       const s = await stand(p);
-      if (m.h1 !== 'Laat uw plat dak gratis inspecteren') fouten.push(`message match: kop "${m.h1}"`);
+      for (const f of kopFouten(m.h1, 'Dé specialist voor uw platte dak')) fouten.push(`message match: ${f}`);
       if (s.vraag !== DAK.vraag2 || s.tel !== 'Stap 2 van 5' || !s.terug) fouten.push(`message match: kaart ${JSON.stringify(s)} (verwacht vraag 2, Stap 2 van 5, Terug)`);
       await p.evaluate(() => document.querySelector('.kgj-reken--aanvraag .kgj-reken__terug')?.click());
       await wacht(450);
@@ -261,6 +283,6 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
   if (metingen < PAGINAS.length * 2 + 1) { console.log(`ONGELDIGE METING: ${metingen} metingen`); process.exit(2); }
   console.log(`check-lp-aanvraag: ${PAGINAS.length} pagina's x 2 maten + message match (${basis}), ${leads} leadverzoeken`);
   if (fouten.length) { fouten.forEach((f) => console.log('  FOUT: ' + f)); process.exit(1); }
-  console.log('  geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag, contactstap en lege gsm in orde');
+  console.log('  kop zoals afgesproken (geen werkwijze-kop), geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag, contactstap en lege gsm in orde');
   process.exit(0);
 })().catch((e) => { console.log('ONGELDIGE METING: ' + e.message); process.exit(2); });
