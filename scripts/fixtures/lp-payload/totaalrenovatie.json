@@ -25,7 +25,8 @@
         "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
       },
       "ghl": {
-        "firstName": "Test Kaart",
+        "firstName": "Test",
+        "lastName": "Kaart",
         "name": "Test Kaart",
         "email": "test@voorbeeld.be",
         "phone": "0400 00 00 05",
@@ -45,7 +46,8 @@
         "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
         "from_name": "AB Bouw website",
         "to": "info@abgroep.be",
-        "firstName": "Test Kaart",
+        "firstName": "Test",
+        "lastName": "Kaart",
         "name": "Test Kaart",
         "email": "test@voorbeeld.be",
         "phone": "0400 00 00 05",
@@ -83,7 +85,8 @@
         "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
       },
       "ghl": {
-        "firstName": "Test Kaart",
+        "firstName": "Test",
+        "lastName": "Kaart",
         "name": "Test Kaart",
         "phone": "0400 00 00 10",
         "city": "Mechelen",
@@ -106,7 +109,8 @@
         "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
         "from_name": "AB Bouw website",
         "to": "info@abgroep.be",
-        "firstName": "Test Kaart",
+        "firstName": "Test",
+        "lastName": "Kaart",
         "name": "Test Kaart",
         "phone": "0400 00 00 10",
         "city": "Mechelen",
@@ -146,11 +150,13 @@
       "toestemming": true,
       "bedankt": "/bedankt?dienst=totaalrenovatie",
       "fouten": {
+        "leegNaam": "Vul uw naam in.",
         "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",
         "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
       },
       "ghl": {
-        "firstName": "Test Kaart",
+        "firstName": "Test",
+        "lastName": "Kaart",
         "name": "Test Kaart",
         "email": "test@voorbeeld.be",
         "phone": "0400 00 00 03",
@@ -174,7 +180,8 @@
         "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
         "from_name": "AB Bouw website",
         "to": "info@abgroep.be",
-        "firstName": "Test Kaart",
+        "firstName": "Test",
+        "lastName": "Kaart",
         "name": "Test Kaart",
         "email": "test@voorbeeld.be",
         "phone": "0400 00 00 03",

@@ -9,7 +9,7 @@
  * en de conversie vuurt enkel bij geslaagde bezorging.
  */
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { submitLead, ghlBron, type LeadPayload } from './leads';
+import { submitLead, ghlBron, splitNaam, type LeadPayload } from './leads';
 import { fireConversion } from './tracking';
 
 const utm = vi.hoisted(() => ({ nu: {} as Record<string, string> }));
@@ -112,6 +112,71 @@ describe('submitLead, contact-guard', () => {
     expect(res.via).toBe('none');
     expect(f).not.toHaveBeenCalled();
     expect(fireConversion).not.toHaveBeenCalled();
+  });
+});
+
+describe('voornaam en achternaam naar GHL ("Dag {{contact.first_name}},")', () => {
+  async function verstuurd(p: Partial<LeadPayload>) {
+    const f = fetchMock();
+    vi.stubGlobal('fetch', f);
+    const res = await submitLead({ ...base, ...p });
+    const ghl = f.mock.calls.find((c) => String(c[0]) === GHL_URL);
+    return { res, body: JSON.parse(String(ghl?.[1]?.body)), f };
+  }
+
+  it('splitst "jan peeters" in Jan + peeters', async () => {
+    const { body } = await verstuurd({ firstName: 'jan peeters' });
+    expect(body.firstName).toBe('Jan');
+    expect(body.lastName).toBe('peeters');
+    expect(body.name).toBe('Jan peeters');
+  });
+
+  it('laat één voornaam staan en zet er een hoofdletter op', async () => {
+    const { body } = await verstuurd({ firstName: 'jan' });
+    expect(body.firstName).toBe('Jan');
+    expect(body.lastName).toBeUndefined();
+    expect(body.name).toBe('Jan');
+  });
+
+  it('trimt en houdt de rest van de achternaam zoals getypt ("  Marie  Louise Peeters ")', async () => {
+    const { body } = await verstuurd({ firstName: '  Marie  Louise Peeters ' });
+    expect(body.firstName).toBe('Marie');
+    expect(body.lastName).toBe('Louise Peeters');
+    expect(body.name).toBe('Marie Louise Peeters');
+  });
+
+  it('houdt een samengestelde voornaam met koppelteken in één stuk', async () => {
+    expect(splitNaam('Jean-Pierre Dubois').firstName).toBe('Jean-Pierre');
+    expect(splitNaam('jean-pierre').firstName).toBe('Jean-pierre');
+  });
+
+  it('een lege naam blijft leeg en de lead vertrekt toch (telefoon-only)', async () => {
+    const { res, body, f } = await verstuurd({ firstName: '   ', email: '', phone: '0470 12 34 56' });
+    expect(body.firstName).toBeUndefined();
+    expect(body.lastName).toBeUndefined();
+    expect(body.name).toBeUndefined();
+    expect(res.ok).toBe(true);
+    expect(f).toHaveBeenCalledTimes(2);
+  });
+
+  it('firstName en lastName apart meegegeven blijven ongewijzigd (voornaam met hoofdletter)', async () => {
+    const { body } = await verstuurd({ firstName: 'jan', lastName: 'Van den Berg' });
+    expect(body.firstName).toBe('Jan');
+    expect(body.lastName).toBe('Van den Berg');
+    expect(body.name).toBe('Jan Van den Berg');
+  });
+
+  it('splitst NIET als de achternaam apart is meegegeven, ook niet bij twee voornamen', async () => {
+    const { body } = await verstuurd({ firstName: 'Marie Louise', lastName: 'Peeters' });
+    expect(body.firstName).toBe('Marie Louise');
+    expect(body.lastName).toBe('Peeters');
+  });
+
+  it('geeft de conversie dezelfde gesplitste naam door (Enhanced Conversions)', async () => {
+    await verstuurd({ firstName: 'jan peeters' });
+    const doorgegeven = vi.mocked(fireConversion).mock.calls[0][1] as Record<string, unknown>;
+    expect(doorgegeven.firstName).toBe('Jan');
+    expect(doorgegeven.lastName).toBe('peeters');
   });
 });
 

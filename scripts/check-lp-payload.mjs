@@ -16,7 +16,11 @@
  * bezoeker doet, onderschept elk verzoek naar services.leadconnectorhq.com en api.web3forms.com (nul echte leads)
  * en vergelijkt veld voor veld met de vaste referentie in scripts/fixtures/lp-payload/<lp>.json (gemeten op de
  * HUIDIGE LpKgj, 12 okt 2026). Verder per flow:
- *   - validatie: leeg telefoonnummer en < 8 cijfers geven de vaste foutmelding en versturen NIETS;
+ *   - validatie: leeg telefoonnummer en < 8 cijfers geven de vaste foutmelding en versturen NIETS; op de aanvraagkaart
+ *     (soort "aanvraag") komt daar een lege naam voor ("Vul uw naam in.", 20 okt 2026), want de naam staat vóór de gsm;
+ *   - naam (20 okt 2026): de bevestigings-sms begint met "Dag {{contact.first_name}},". leads.ts splitst de naam daarom
+ *     in firstName (eerste woord, hoofdletter) en lastName (de rest); de referenties hebben firstName "Test" en lastName
+ *     "Kaart", en een referentie met een spatie in firstName is zelf een fout;
  *   - rekenaar met prijs (14 okt): naam + e-mail (leeg geeft de vaste melding, er vertrekt niets) → laadscherm → telefoonstap;
  *     flow met weg:true = weggaan op de telefoonstap geeft precies 1 stille aanvraag met naam + e-mail, zonder telefoon;
  *   - dubbelklik op de verzendknop = precies 1 GHL- en 1 Web3Forms-verzoek;
@@ -198,6 +202,17 @@ async function doeFlow(browser, basis, lp, f, breedte, lokaas = false) {
       }
     }
 
+    /* aanvraagkaart (20 okt 2026): de naam is verplicht en staat vóór de gsm. Leeg = "Vul uw naam in." en er vertrekt niets;
+       daarna wordt de naam getypt, zodat de gsm-controles hieronder hun eigen melding geven. */
+    let naamGetypt = false;
+    if (f.fouten.leegNaam) {
+      await p.evaluate((s) => document.querySelector(s + ' button[type=submit]').click(), form);
+      await wacht(350);
+      const leegNaam = await foutTekst();
+      if (leegNaam !== f.fouten.leegNaam) fouten.push(`validatie naam leeg: "${leegNaam}" in plaats van "${f.fouten.leegNaam}"`);
+      await p.type(`${form} [name="naam"]`, f.velden.naam);
+      naamGetypt = true;
+    }
     /* validatie: leeg en te kort versturen niets */
     await p.evaluate((s) => document.querySelector(s + ' button[type=submit]').click(), form);
     await wacht(350);
@@ -224,6 +239,7 @@ async function doeFlow(browser, basis, lp, f, breedte, lokaas = false) {
         continue;
       }
       const tag = await p.$eval(`${form} [name="${naam}"]`, (e) => e.tagName).catch(() => null);
+      if (naam === 'naam' && naamGetypt) continue;
       if (!tag) { fouten.push(`veld ${naam} niet gevonden`); continue; }
       if (tag === 'SELECT') await p.select(`${form} [name="${naam}"]`, waarde);
       else await p.type(`${form} [name="${naam}"]`, waarde);
@@ -268,6 +284,24 @@ async function doeFlow(browser, basis, lp, f, breedte, lokaas = false) {
     fixtures[slug] = JSON.parse(fs.readFileSync(bestand, 'utf8'));
     if (!fixtures[slug].flows?.length) { console.log(`ONGELDIGE METING: referentie zonder flows (${slug})`); process.exit(2); }
   }
+  /* naam (20 okt 2026): geen referentie met een hele naam in firstName; die zou de oude payload als goed aanmerken */
+  const naamFouten = [];
+  const zoekNaam = (o, spoor) => {
+    if (!o || typeof o !== 'object') return;
+    if (typeof o.firstName === 'string' && /\s/.test(o.firstName.trim())) naamFouten.push(`${spoor}: firstName "${o.firstName}" bevat een spatie (de naam hoort gesplitst: firstName + lastName)`);
+    for (const [k, w] of Object.entries(o)) zoekNaam(w, `${spoor}.${k}`);
+  };
+  for (const slug of PAGINAS) zoekNaam(fixtures[slug], slug);
+  /* meteen melden: een hele naam in een referentie maakt de positieve controle hieronder zinloos (ze zou ongeldig worden) */
+  if (naamFouten.length) { naamFouten.forEach((x) => console.log('  FOUT: ' + x)); console.log('check-lp-payload: een referentie heeft een hele naam in firstName'); process.exit(1); }
+  /* positieve controle: een payload zoals vóór de splitsing (hele naam in firstName, geen lastName) moet afwijken van de referentie */
+  const metNaam = PAGINAS.map((s) => fixtures[s].flows.find((x) => x.ghl?.lastName)).find(Boolean);
+  if (!metNaam) { console.log('ONGELDIGE METING: geen referentie met een lastName (de naamsplitsing staat nergens in de fixtures)'); process.exit(2); }
+  const oudeNaam = Object.fromEntries(Object.entries(metNaam.ghl).filter(([k]) => k !== 'lastName').map(([k, w]) => [k, k === 'firstName' ? metNaam.ghl.name : w]));
+  const naamProef = vergelijk(metNaam.ghl, oudeNaam);
+  if (!naamProef.some((d) => /firstName/.test(d)) || !naamProef.some((d) => /lastName/.test(d))) { console.log(`ONGELDIGE METING: een payload met de hele naam in firstName werd niet afgekeurd (${naamProef.join(' | ') || 'geen afwijking'})`); process.exit(2); }
+  console.log(`positieve controle naam: de oude payload (hele naam in firstName) wordt afgekeurd (${naamProef[0]})`);
+
   /* vergelijker zelf: een geplante afwijking moet gevonden worden */
   const proef = vergelijk({ a: 1, b: 'x' }, { a: 1, b: 'y', c: 2 });
   if (proef.length !== 2) { console.log('ONGELDIGE METING: de vergelijker vindt de geplante afwijking niet'); process.exit(2); }

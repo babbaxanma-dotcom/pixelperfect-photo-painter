@@ -25,11 +25,13 @@
       "toestemming": true,
       "bedankt": "/bedankt?dienst=dakwerken",
       "fouten": {
+        "leegNaam": "Vul uw naam in.",
         "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",
         "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
       },
       "ghl": {
-        "firstName": "Test Kaart",
+        "firstName": "Test",
+        "lastName": "Kaart",
         "name": "Test Kaart",
         "email": "test@voorbeeld.be",
         "phone": "0400 00 00 00",
@@ -54,7 +56,8 @@
         "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
         "from_name": "AB Bouw website",
         "to": "info@abgroep.be",
-        "firstName": "Test Kaart",
+        "firstName": "Test",
+        "lastName": "Kaart",
         "name": "Test Kaart",
         "email": "test@voorbeeld.be",
         "phone": "0400 00 00 00",
@@ -88,16 +91,21 @@
         "Weet ik niet"
       ],
       "velden": {
+        "naam": "Test Kaart",
         "telefoon": "0400 00 00 02"
       },
       "formStart": "lp:dakwerken:inspectie:hero",
       "toestemming": false,
       "bedankt": "/bedankt?dienst=dakwerken",
       "fouten": {
+        "leegNaam": "Vul uw naam in.",
         "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",
         "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
       },
       "ghl": {
+        "firstName": "Test",
+        "lastName": "Kaart",
+        "name": "Test Kaart",
         "phone": "0400 00 00 02",
         "country": "BE",
         "type_werk": "AB Dakwerken",
@@ -111,9 +119,12 @@
       },
       "web3forms": {
         "access_key": "b01e4fea-3e73-418b-b65a-acfb1d3ee43c",
-        "subject": "Nieuwe AB Bouw lead (landing_page), undefined",
+        "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
         "from_name": "AB Bouw website",
         "to": "info@abgroep.be",
+        "firstName": "Test",
+        "lastName": "Kaart",
+        "name": "Test Kaart",
         "phone": "0400 00 00 02",
         "country": "BE",
         "type_werk": "AB Dakwerken",
@@ -125,7 +136,7 @@
         "source": "landing_page",
         "utm_term": "plat dak renoveren"
       },
-      "metingInUitFlows": "19 okt 2026: aanvraagkaart bovenaan (Aanvraag.tsx). Verwacht = de payload van het formulier onderaan (Inspectie.tsx, zelfde bron_lead lp:dakwerken:inspectie) met de antwoorden van de klikvragen in aanvullende_info; veldvolgorde van leads.ts buildBody."
+      "metingInUitFlows": "19 okt 2026: aanvraagkaart bovenaan (Aanvraag.tsx). Verwacht = de payload van het formulier onderaan (Inspectie.tsx, zelfde bron_lead lp:dakwerken:inspectie) met de antwoorden van de klikvragen in aanvullende_info; veldvolgorde van leads.ts buildBody. 20 okt 2026: de naam is op de aanvraagkaart verplicht (Vul uw naam in.); deze flow typt dus ook een naam, en leads.ts splitst die in firstName + lastName."
     },
     {
       "naam": "inspectie",
@@ -146,7 +157,8 @@
         "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
       },
       "ghl": {
-        "firstName": "Test Kaart",
+        "firstName": "Test",
+        "lastName": "Kaart",
         "name": "Test Kaart",
         "phone": "0400 00 00 01",
         "postalCode": "2830",
@@ -165,7 +177,8 @@
         "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
         "from_name": "AB Bouw website",
         "to": "info@abgroep.be",
-        "firstName": "Test Kaart",
+        "firstName": "Test",
+        "lastName": "Kaart",
         "name": "Test Kaart",
         "phone": "0400 00 00 01",
         "postalCode": "2830",

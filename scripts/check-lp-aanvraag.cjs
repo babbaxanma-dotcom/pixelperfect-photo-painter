@@ -14,9 +14,10 @@
  *      eerste klikvraag en al haar keuzes staan volledig in beeld;
  *   3. één tik = antwoord en meteen de volgende vraag ("Stap 1 van n" wordt "Stap 2 van n"), een tweede tik binnen
  *      200 ms slaat geen vraag over, Terug brengt de vorige vraag terug;
- *   4. de contactstap: de band "Bijna klaar! Bevestig uw gratis ...", de velden naam, telefoon (verplicht), postcode of
- *      gemeente en e-mail, de knop = de knop van het formulier onderaan; versturen met een leeg gsm-nummer geeft een
- *      foutmelding en verstuurt NIETS;
+ *   4. de contactstap: de band "Bijna klaar! Bevestig uw gratis ...", de velden naam (verplicht), telefoon (verplicht),
+ *      postcode of gemeente en e-mail, de knop = de knop van het formulier onderaan; versturen zonder naam geeft "Vul uw
+ *      naam in." (20 okt 2026: de bevestigings-sms begint met "Dag {{voornaam}},", zonder naam stond er "Dag ,"),
+ *      daarna met naam maar zonder gsm-nummer de gsm-melding; beide verzenden NIETS;
  *   5. message match (dak): ?utm_term=plat dak toont de kop "Dé specialist voor uw platte dak" en de kaart begint bij
  *      vraag 2 ("Stap 2 van 5"); Terug geeft vraag 1. Zonder utm_term begint ze bij vraag 1.
  *   6. de kop (h1) is de afgesproken kop en geen werkwijze-kop. 20 okt 2026, Mohammed over "Laat uw dak gratis
@@ -239,17 +240,36 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
           const f = k.querySelector('form.kgj-reken__form');
           return { tel: k.querySelector('.kgj-reken__tel')?.textContent.trim(), band: k.querySelector('.kgj-reken__band')?.textContent.trim().replace(/\s+/g, ' '),
             velden: f ? [...f.querySelectorAll('input:not([type=hidden]), input[type=hidden]')].map((i) => i.name || (i.closest('.kgj-pg') ? 'postcode-gemeente' : '')).filter(Boolean) : [],
-            knop: f?.querySelector('button[type=submit]')?.textContent.trim(), verplicht: f?.querySelector('[name=telefoon]')?.getAttribute('aria-required') };
+            knop: f?.querySelector('button[type=submit]')?.textContent.trim(), verplicht: f?.querySelector('[name=telefoon]')?.getAttribute('aria-required'),
+            verplichtNaam: f?.querySelector('[name=naam]')?.getAttribute('aria-required') };
         });
         if (c.tel !== `Stap ${pg.stappen} van ${pg.stappen}`) fouten.push(`${pg.pad} @${maat}: contactstap teller "${c.tel}"`);
         if (c.band !== pg.band) fouten.push(`${pg.pad} @${maat}: band "${c.band}" in plaats van "${pg.band}"`);
         for (const v of ['naam', 'telefoon', 'postcode-gemeente', 'postcode', 'gemeente', 'email']) if (!c.velden.includes(v)) fouten.push(`${pg.pad} @${maat}: veld ${v} ontbreekt (${c.velden.join(', ')})`);
         if (c.knop !== pg.knop) fouten.push(`${pg.pad} @${maat}: knop "${c.knop}" in plaats van "${pg.knop}"`);
         if (c.verplicht !== 'true') fouten.push(`${pg.pad} @${maat}: telefoonveld niet als verplicht gemarkeerd`);
+        if (c.verplichtNaam !== 'true') fouten.push(`${pg.pad} @${maat}: naamveld niet als verplicht gemarkeerd`);
         const voor = leads;
-        await p.evaluate(() => document.querySelector('.kgj-reken--aanvraag form button[type=submit]').click());
-        await wacht(500);
-        const melding = await p.evaluate(() => document.querySelector('.kgj-reken--aanvraag .kgj-reken__fout')?.textContent.trim() || '');
+        const meldingNa = async () => { await p.evaluate(() => document.querySelector('.kgj-reken--aanvraag form button[type=submit]').click()); await wacht(500); return p.evaluate(() => document.querySelector('.kgj-reken--aanvraag .kgj-reken__fout')?.textContent.trim() || ''); };
+        /* leeg formulier: de naam staat vóór de gsm, dus eerst "Vul uw naam in." */
+        const zonderNaam = await meldingNa();
+        if (zonderNaam !== 'Vul uw naam in.') fouten.push(`${pg.pad} @${maat}: lege naam gaf "${zonderNaam}" in plaats van "Vul uw naam in."`);
+        /* een gsm zonder naam verstuurt ook niets: dat is precies de lead die "Dag ," zou geven */
+        await p.type('.kgj-reken--aanvraag form [name=telefoon]', '0400 00 00 00');
+        const zonderNaamMetGsm = await meldingNa();
+        if (zonderNaamMetGsm !== 'Vul uw naam in.') fouten.push(`${pg.pad} @${maat}: gsm zonder naam gaf "${zonderNaamMetGsm}" in plaats van "Vul uw naam in."`);
+        /* Vertrok er wel een verzoek, dan is de naam niet verplicht en is het formulier weg: melden en door naar de volgende
+           pagina (geen crash op een ontbrekend veld: dat zou een ongeldige meting lijken in plaats van een afwijking). */
+        if (leads !== voor || !(await p.$('.kgj-reken--aanvraag form [name=telefoon]'))) {
+          fouten.push(`${pg.pad} @${maat}: zonder naam vertrok er een verzoek (${leads - voor} GHL/Web3Forms)`);
+          await ctx.close();
+          continue;
+        }
+        await p.evaluate(() => { const i = document.querySelector('.kgj-reken--aanvraag form [name=telefoon]'); i.focus(); i.select(); });
+        await p.keyboard.press('Backspace');
+        /* naam ingevuld, gsm leeg: de bestaande gsm-melding */
+        await p.type('.kgj-reken--aanvraag form [name=naam]', 'Test Kaart');
+        const melding = await meldingNa();
         if (melding !== 'Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.') fouten.push(`${pg.pad} @${maat}: lege gsm gaf "${melding}"`);
         if (leads !== voor) fouten.push(`${pg.pad} @${maat}: met een lege gsm vertrok er een verzoek`);
         await ctx.close();
@@ -283,6 +303,6 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
   if (metingen < PAGINAS.length * 2 + 1) { console.log(`ONGELDIGE METING: ${metingen} metingen`); process.exit(2); }
   console.log(`check-lp-aanvraag: ${PAGINAS.length} pagina's x 2 maten + message match (${basis}), ${leads} leadverzoeken`);
   if (fouten.length) { fouten.forEach((f) => console.log('  FOUT: ' + f)); process.exit(1); }
-  console.log('  kop zoals afgesproken (geen werkwijze-kop), geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag, contactstap en lege gsm in orde');
+  console.log('  kop zoals afgesproken (geen werkwijze-kop), geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag, contactstap, naam verplicht en lege gsm in orde');
   process.exit(0);
 })().catch((e) => { console.log('ONGELDIGE METING: ' + e.message); process.exit(2); });

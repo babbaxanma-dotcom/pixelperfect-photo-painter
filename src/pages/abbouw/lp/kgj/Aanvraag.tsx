@@ -125,6 +125,9 @@ export default function Aanvraag({ inhoud, voor, boven }: {
     if (verstuurt.current) return;
     const f = new FormData(e.currentTarget);
     const telefoon = String(f.get('telefoon') || '').trim();
+    /* 20 okt 2026 (Mohammed: de bevestigings-sms begint met "Dag {{voornaam}},"): de naam is hier verplicht, zoals op
+       bfbouw.be. Zonder naam stond er "Dag ,". De controle staat vóór die van de gsm: de velden staan in die volgorde. */
+    if (!String(f.get('naam') || '').trim()) { setFout('Vul uw naam in.'); return; }
     /* Dezelfde controle en meldingen als Inspectie.tsx: leeg = fout, minder dan acht cijfers = fout. */
     const cijfers = telefoon.replace(/\D/g, '').length;
     if (!telefoon) { setFout('Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.'); return; }
@@ -219,7 +222,7 @@ export default function Aanvraag({ inhoud, voor, boven }: {
             </div>
             {/* Geen autoFocus: op een telefoon sprong het toetsenbord dan meteen open (Mohammed, 24 sep). */}
             <div className="kgj-reken__rij">
-              <label>Naam<input name="naam" type="text" autoComplete="name" placeholder="Uw naam" /></label>
+              <label>Naam *<input name="naam" type="text" autoComplete="name" placeholder="Uw naam" aria-required="true" /></label>
               <label>Gsm-nummer *
                 <input name="telefoon" type="tel" autoComplete="tel" inputMode="tel" placeholder="04xx xx xx xx" aria-required="true" />
               </label>

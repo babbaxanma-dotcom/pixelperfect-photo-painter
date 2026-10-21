@@ -117,8 +117,33 @@ interface SubmitResult {
   error?: string;
 }
 
+/**
+ * Voornaam en achternaam zoals GHL ze nodig heeft voor "Dag {{contact.first_name}}," in de sms.
+ *
+ * 20 okt 2026 (Mohammed: de sms moet lijken alsof iemand hem zelf stuurde): sommige formulieren (de aanvraagkaart op de
+ * LP's, de chat, het formulier onderaan) hebben één veld "Naam" en sturen de hele naam als firstName. Dan stond er
+ * "Dag jan peeters,". Hier wordt de hele naam gesplitst, zoals bfbouw.be sinds 15 okt doet: het eerste woord wordt de
+ * voornaam, de rest de achternaam (zoals getypt). De voornaam krijgt altijd een hoofdletter vooraan; de rest van het
+ * woord blijft zoals getypt. Een achternaam die apart is meegegeven, blijft ongemoeid.
+ */
+export function splitNaam(firstName?: string, lastName?: string): { firstName?: string; lastName?: string; name?: string } {
+  let voor = (firstName ?? '').trim();
+  let achter = (lastName ?? '').trim();
+  if (!achter) {
+    const m = voor.match(/^(\S+)\s+([\s\S]*)$/);
+    if (m) { voor = m[1]; achter = m[2].trim(); }
+  }
+  if (voor) voor = voor.charAt(0).toUpperCase() + voor.slice(1);
+  return {
+    firstName: voor || undefined,
+    lastName: achter || undefined,
+    name: [voor, achter].filter(Boolean).join(' ') || undefined,
+  };
+}
+
 function buildBody(p: LeadPayload) {
   const utm = getUtmParams();
+  const naam = splitNaam(p.firstName, p.lastName);
 
   // Concat adres voor GHL custom field "Adres project" (Enkele lijn — Norvo sectie 4).
   // Format: "Straat 12, 2830 Willebroek" — alleen niet-lege onderdelen, comma tussen
@@ -131,9 +156,9 @@ function buildBody(p: LeadPayload) {
 
   return {
     // Standaard GHL contact velden
-    firstName: p.firstName?.trim() || undefined,
-    lastName: p.lastName?.trim() || undefined,
-    name: [p.firstName, p.lastName].filter(Boolean).join(' ').trim() || undefined,
+    firstName: naam.firstName,
+    lastName: naam.lastName,
+    name: naam.name,
     email: p.email?.trim().toLowerCase() || undefined,
     phone: p.phone?.trim() || undefined,
 
