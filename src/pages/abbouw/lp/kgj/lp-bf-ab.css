@@ -857,7 +857,7 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
   .bf.bf-lp .kgj-reken--onder .kgj-reken__band { margin-left: -18px; margin-right: -18px; padding-left: 18px; padding-right: 18px; }
 }
 
-/* ---------- disclaimer boven de verzendknop: wat de bezoeker precies krijgt ---------- */
+/* ---------- disclaimer direct onder de band "Bijna klaar! ...": de zin van bfbouw.be in een vlak met vinkje (22 okt 2026) ---------- */
 .bf.bf-lp .kgj-reken__disclaimer { display: flex; align-items: flex-start; gap: calc(12 * var(--u)); margin: calc(18 * var(--u)) 0 0; padding: calc(14 * var(--u)) calc(16 * var(--u));
   border-radius: calc(12 * var(--u)); background: #f8f5ee; box-shadow: inset 0 0 0 1px #ece3cf; font-size: max(14px, calc(14.5 * var(--u))); line-height: 1.5; color: var(--ink-2); }
 .bf.bf-lp .kgj-reken__disclaimer b { font-weight: 700; color: var(--ink); }
@@ -871,7 +871,8 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
 
 /* ---------- trust badges (renovatiepagina's): vaste tegels met iconen, grotere cijfers, sterker contrast. Alleen vorm. ---------- */
 /* vertrouwensrij in de kaart: drie gelijke tegels (Google 5,0 met sterren, 16 jaar ervaring, 6 vakdisciplines) */
-.bf.bf-lp .kgj-reken--badges .kgj-reken__trust { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(10 * var(--u)); margin-top: calc(16 * var(--u)); padding: 0; border-top: 0; }
+/* zoveel even brede tegels als er zijn (renovatie sinds 22 okt 2026: twee, zonder "6 vakdisciplines"; dak: drie) */
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); grid-template-columns: none; gap: calc(10 * var(--u)); margin-top: calc(16 * var(--u)); padding: 0; border-top: 0; }
 .bf.bf-lp .kgj-reken--badges .kgj-reken__trust li { align-items: center; justify-content: center; gap: 2px; min-height: calc(92 * var(--u)); padding: calc(10 * var(--u)) calc(6 * var(--u)); text-align: center;
   border-radius: calc(14 * var(--u)); background: #faf6ec; box-shadow: inset 0 0 0 1px #eadfc2; }
 .bf.bf-lp .kgj-reken--badges .kgj-reken__trust li + li { border-left: 0; }
@@ -896,8 +897,18 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
 .bf.bf-lp--badges .bf-lphero__google .bf-over__g svg { width: calc(28 * var(--u)); height: calc(28 * var(--u)); }
 .bf.bf-lp--badges .bf-lphero__google .bf-over__sterren svg { width: calc(20 * var(--u)); height: calc(20 * var(--u)); }
 .bf.bf-lp--badges .bf-lphero__google b { margin-top: calc(4 * var(--u)); font-size: calc(19 * var(--u)); font-weight: 800; }
+/* De tweede Google-badge in het waarom-blok (dak: naast de knop) in dezelfde vorm als die in de hero, op een licht vlak
+   (22 okt 2026, Mohammed: "trust badges duidelijker visueel mooier en duidelijker over het algemeen"; alleen vorm). */
+.bf.bf-lp--badges .bf-lpwaarom__acties .bf-over__google { gap: calc(12 * var(--u)); padding: calc(10 * var(--u)) calc(20 * var(--u)) calc(10 * var(--u)) calc(10 * var(--u));
+  border-radius: calc(999 * var(--u)); background: #faf6ec; box-shadow: inset 0 0 0 1px #eadfc2; color: var(--ink); }
+.bf.bf-lp--badges .bf-lpwaarom__acties .bf-over__g { width: calc(44 * var(--u)); height: calc(44 * var(--u)); box-shadow: inset 0 0 0 1px #eadfc2; }
+.bf.bf-lp--badges .bf-lpwaarom__acties .bf-over__sterren svg { width: calc(16 * var(--u)); height: calc(16 * var(--u)); }
+.bf.bf-lp--badges .bf-lpwaarom__acties .bf-over__google b { font-size: calc(17 * var(--u)); font-weight: 800; color: var(--ink); }
 /* de vinkjes onder de kaart op de gsm: donkerder vlak, grotere letters en iconen in goud */
 @media (max-width: 1000px) {
+  .bf.bf-lp--badges .bf-lpwaarom__acties .bf-over__google { padding: 8px 18px 8px 8px; gap: 10px; }
+  .bf.bf-lp--badges .bf-lpwaarom__acties .bf-over__g { width: 38px; height: 38px; }
+  .bf.bf-lp--badges .bf-lpwaarom__acties .bf-over__google b { font-size: 15px; }
   .bf.bf-lp--badges .bf-lphero__vinkjes { gap: 11px; padding: 16px 16px; background: rgba(10, 22, 40, .84); border-color: rgba(255, 255, 255, .22); }
   .bf.bf-lp--badges .bf-lphero__vinkjes li { gap: 13px; font-size: 16px; font-weight: 700; }
   .bf.bf-lp--badges .bf-lphero__vinkjes span { width: 32px; height: 32px; }
@@ -921,7 +932,9 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
 
 /* ---------- belblok onder de hero van /lp/dakwerken: "Lekt uw dak?" + belknop + rustige link naar de inspectiekaart ---------- */
 .bf.bf-lp .bf-lpbelblok { background: #f7f8fa; border-top: 1px solid #e3e6ec; border-bottom: 1px solid #e3e6ec; color: var(--ink); }
-.bf.bf-lp .bf-lpbelblok__in { width: calc(1200 * var(--u)); margin: 0 auto; padding: calc(34 * var(--u)) 0; display: flex; align-items: center; justify-content: space-between; gap: calc(32 * var(--u)); }
+/* 22 okt 2026: ook op de computer staat de link onder de belknop (Mohammed 21 okt: "Nood? Bel ..... visueel en daaronder ook gratis
+   dakinspectie"); tot dan stond hij er rechts naast. */
+.bf.bf-lp .bf-lpbelblok__in { width: calc(1200 * var(--u)); margin: 0 auto; padding: calc(34 * var(--u)) 0 calc(26 * var(--u)); display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: calc(10 * var(--u)); }
 .bf.bf-lp .bf-lpbelblok__links { display: flex; align-items: center; gap: calc(30 * var(--u)); min-width: 0; }
 .bf.bf-lp .bf-lpbelblok__kop { margin: 0; font-size: max(26px, calc(36 * var(--u))); line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
 .bf.bf-lp .bf-lpbelblok__knop { min-height: calc(56 * var(--u)); padding: 0 calc(30 * var(--u)); gap: calc(12 * var(--u)); border-radius: 999px; font-size: max(16px, calc(18 * var(--u))); font-weight: 700; background: var(--merk); color: var(--op-merk); }

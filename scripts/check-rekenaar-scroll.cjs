@@ -33,7 +33,8 @@ const PADEN = {
      kop (.kgj-reken__kop, "Stap X van Y") en dezelfde scrolfix na elke stap: dezelfde meting, met hun klikvragen tot en met
      de contactstap. De rekenaar zelf staat alleen nog op /lp/richtprijs-berekenen en blijft hier gemeten. */
   dakwerken: ['Hellend dak', 'Dakrenovatie / Nieuw dak', 'Ja', 'Nee'],
-  totaalrenovatie: ['Gedeeltelijke renovatie', 'Zo snel mogelijk'],
+  /* 22 okt 2026: vraag 1 de woning, vraag 3 de afvinkvraag (de hoogste stap: daar valt de kop het makkelijkst weg), dan start en budget */
+  totaalrenovatie: ['Rijwoning', 'Gedeeltelijke renovatie', 'Keuken', 'Badkamer', '@verder', 'Zo snel mogelijk', '€ 25.000 tot € 75.000'],
   /* 5 okt 2026: de renovatierekenaar staat niet meer in de hero van /lp/totaalrenovatie (daar
      een knop naar het formulier), maar op de losse rekenaarpagina /lp/richtprijs-berekenen. */
   'richtprijs-berekenen': ['Rijwoning', 'Alles (totaalrenovatie)', '@verder', '100 tot 150 m²', 'Ouder dan 10 jaar', 'Alles'],

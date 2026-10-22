@@ -224,7 +224,11 @@ export const DAKWERKEN: KgjInhoud = {
     /* 4 okt, Mohammed: "subheadline, beantwoord 8 korte vragen voor een heldere en vrijblijvende
        prijsindicatie van uw dakrenovatie". Het pad van een dakrenovatie telt 8 vragen. */
     /* 4 okt, plan mobiele hero: subheadline "Snel, gratis en 100% vrijblijvend." (vervangt de zin met het aantal vragen). */
-    onder: 'Vraag uw gratis dakinspectie aan. U weet daarna precies wat er moet gebeuren en wat het kost.',
+    /* 22 okt 2026, Mohammed: "subheadline ... moet eerst zijn, Specialist in platte en hellende daken, renovatie, isolatie, ... (zoiets)
+       kies zelf een mooie zin, pas daarna moet komen, vraag uw gratis dakinspectie aan, u weet daarna precies ... mag eruit".
+       "Expert" in plaats van "Specialist": de kop erboven zegt al "Dé specialist voor uw nieuwe dak". Renovatie, isolatie en
+       herstellingen zijn de keuzes van de vraag "Wat moet er aan uw dak gebeuren?" in de kaart. */
+    onder: 'Expert in platte en hellende daken: renovatie, isolatie en herstellingen. Vraag uw gratis dakinspectie aan.',
     /* Drie controleerbare feiten onder de kop. Een bezoeker die uit een
        advertentie komt, kent AB niet; dit is het enige bewijs dat boven de
        vouw past zolang er geen geverifieerde Google-score is.
@@ -255,7 +259,8 @@ export const DAKWERKEN: KgjInhoud = {
   heroAanvraag: true,
   /* 22 okt 2026, Mohammed: "op de dakwerken-pagina's een visueel mooi en clean blok 'Nood? Bel ....', maar niet letterlijk 'nood'",
      met de kop "Lekt uw dak?" en daaronder de gratis dakinspectie. Letterlijk zijn teksten; geen termijn, geen "24/7". */
-  belBlok: { kop: 'Lekt uw dak?', knop: 'Bel direct', link: 'Geen haast? Vraag uw gratis dakinspectie aan' },
+  /* 22 okt 2026, Mohammed: "Lekt uw dak pas aan naar, in nood?", "en die ding geen haast haal dat weg", "doe gewoon, of". */
+  belBlok: { kop: 'In nood?', knop: 'Bel direct', link: 'Of vraag uw gratis dakinspectie aan' },
   aanvraag: {
     titel: 'Gratis dakinspectie',
     tijd: 'Klaar in 1 minuut, vrijblijvend',
@@ -297,7 +302,10 @@ export const DAKWERKEN: KgjInhoud = {
     contactVelden: { email: false, postcode: false },
     /* "een disclaimer zo wat ze precies krijgen, krijg vrijblijvend advies en weet waar u aan toe bent". Volgt het slotblok
        ("We bekijken uw dak ter plaatse", "Samen overlopen we de bevindingen", "U ontvangt een vrijblijvende offerte"). */
-    disclaimer: 'Wat u krijgt: een gratis dakinspectie met vrijblijvend advies. Daarna weet u waar u aan toe bent en ontvangt u een offerte voor precies wat uw dak nodig heeft.',
+    /* 22 okt 2026, Mohammed: "die disclaimer bedoelde ik van wat er al was visueel verbeteren", "laat uw dak vakkundig controleren en
+       vermijd onnodige kosten", "dat wat er stond": woordelijk de zin onder de contactkop van bfbouw.be/lp/dakwerken (zijn dictaat van
+       17 okt, bouw/lp-dak.cjs contactSub), nu in een vlak met vinkje direct onder "Bijna klaar! Bevestig uw gratis dakinspectie". */
+    disclaimer: 'Laat uw dak vakkundig controleren. Voorkom onvoorziene kosten en weet exact wat er moet gebeuren.',
     /* "onderaan ... de form zo dat je makkelijk kan klikken": onderaan dezelfde klikkaart in plaats van het formulier van Inspectie. */
     onder: true,
   },
@@ -554,7 +562,8 @@ export const DAKWERKEN: KgjInhoud = {
   inspectie: {
     kop: 'Plan uw dakinspectie',
     knop: 'Vraag uw gratis dakinspectie aan',
-    onder: 'Wij nemen zo snel mogelijk contact met u op.',
+    /* 21 okt 2026, Mohammed, woordelijk: "onze dakexpert ... neemt zo snel mogelijk contact met u op" (zoals op bfbouw.be). */
+    onder: 'Onze dakexpert neemt zo snel mogelijk contact met u op.',
     alt: 'Liever eerst een prijs? Bereken hem in 2 minuten',
     bronLead: 'lp:dakwerken:inspectie',
   },

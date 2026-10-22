@@ -377,9 +377,11 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
     if (r.width > 0) setSchuif(Math.min(100, Math.max(0, ((x - r.left) / r.width) * 100)));
   };
 
-  /* De knop in de vaste balk brengt de bezoeker naar het formulier onderaan (LpKgj r.762-775, ongewijzigd). */
+  /* De knop in de vaste balk brengt de bezoeker naar het formulier onderaan (LpKgj r.762-775). Sinds 22 okt 2026 staat daar op
+     /lp/dakwerken en /lp/totaalrenovatie de klikkaart (kgj-reken--onder) in plaats van Inspectie; met alleen de oude selector
+     deed de knop op de gsm niets (gevonden in de controle van 22 okt). */
   const naarFormulier = () => {
-    const vorm = document.querySelector<HTMLElement>('.kgj-reken--inspectie');
+    const vorm = document.querySelector<HTMLElement>('.kgj-reken--onder, .kgj-reken--inspectie');
     if (!vorm) return;
     const kopH = Math.max(0, ...['.kgj-kop', '.kgj-topbalk'].map((s) => document.querySelector(s)?.getBoundingClientRect().bottom ?? 0));
     if (vorm.offsetHeight <= window.innerHeight - kopH) {

@@ -502,19 +502,35 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     /* De klikvragen = de keuzelijsten van het formulier onderaan (inspectie.extra), met dezelfde labels en opties, in die
        volgorde. De sleutel is het label zonder vraagteken, zodat aanvullende_info in GHL er hetzelfde uitziet als bij het
        formulier onderaan ("Wat wilt u renoveren: Aanbouw · Wanneer wilt u starten: Volgend jaar"). */
-    vragen: [
-      ...(TOTAALRENOVATIE_REKENAAR.inspectie.extra ?? []).map((x) => ({
+    /* 22 okt 2026, Mohammed: "doe bij totaalrenovatie landingspagina 2 meer vragen, bij stap 1 graag wat voor woning", "en dan die
+       vraag van dat ze mooi kunnen aanklikken wat er allemaal nodig is, makkelijk en gebruiksvriendelijk". Beide vragen komen
+       woordelijk uit de rekenaar hierboven (keuzes, iconen, groepen, het vakje "Alles (totaalrenovatie)" en de premietip bij Isolatie).
+       De afvinkvraag krijgt een eigen vraagtekst, want "Wat wilt u renoveren?" staat al als vraag 2 (de omvang). Volgorde: woning,
+       omvang, wat er allemaal moet gebeuren, start, budget: 5 vragen + contactstap = 6 stappen. */
+    vragen: (() => {
+      const [omvang, start] = (TOTAALRENOVATIE_REKENAAR.inspectie.extra ?? []).map((x): Vraag => ({
         sleutel: x.label.replace(/\?$/, ''), vraag: x.label,
         keuzes: x.opties.map((o) => ({ label: o, icoon: AANVRAAG_ICOON[o] })),
-      })),
-      BUDGET_VRAAG,
-    ],
+      }));
+      const uitRekenaar = (s: string) => TOTAALRENOVATIE_REKENAAR.rekenaar.vragen.find((v) => v.sleutel === s)!;
+      const woning = uitRekenaar('Woning');
+      const renoveren = uitRekenaar('Renoveren');
+      return [
+        { ...woning, sleutel: woning.vraag.replace(/\?$/, '') },
+        omvang,
+        { ...renoveren, sleutel: 'Wat moet er allemaal gebeuren', vraag: 'Wat moet er allemaal gebeuren?' },
+        start,
+        BUDGET_VRAAG,
+      ];
+    })(),
     contactKop: 'Bijna klaar! Bevestig uw gratis plaatsbezoek',
     /* Vinkjes en trustrij: dezelfde teksten en cijfers als op de rekenaarkaart die hier stond (13 okt, dictaat 4 okt). Alleen de
        vorm verandert (22 okt, Mohammed: "doe de trust badges duidelijker, visueel mooier"): tegels met iconen (badges). De iconen
        staan bij de cijfers: kalender bij de jaren ervaring, gereedschap bij de vakdisciplines. */
     vertrouwen: TOTAALRENOVATIE_REKENAAR.rekenaar.vertrouwen,
-    trustrij: TOTAALRENOVATIE_REKENAAR.rekenaar.trustrij?.map((c, i) => ({ ...c, icoon: (['kalender', 'gereedschap'] as const)[i] })),
+    /* 22 okt 2026, Mohammed: "en 6 vakdisciplines als trust badge bij abgroep landingspagina weg, bij die form", "dat is een rare
+       trust badge". In de kaart blijven Google 5,0 en 16 jaar ervaring; de rekenaarpagina houdt haar trustrij. */
+    trustrij: TOTAALRENOVATIE_REKENAAR.rekenaar.trustrij?.filter((c) => c.s !== 'vakdisciplines').map((c) => ({ ...c, icoon: 'kalender' as const })),
     /* 22 okt 2026, Mohammed: "haal weg bij abgroep die volgende moment": geen "Eerstvolgend vrij plaatsbezoek" meer in de kaart
        (en dus geen free-slots-aanvraag naar de GHL-agenda op deze pagina's). De vlag vrijMoment is hier weg. */
     badges: true,
@@ -522,7 +538,10 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     contactVelden: { email: false, postcode: false },
     /* 22 okt 2026, Mohammed: "een disclaimer zo wat ze precies krijgen, krijg vrijblijvend advies en weet waar u aan toe bent". Volgt de
        subkop van de pagina ("Wij komen langs, bekijken uw woning en bespreken uw plannen. Daarna krijgt u een offerte ..."). */
-    disclaimer: 'Wat u krijgt: een gratis plaatsbezoek met vrijblijvend advies. Daarna weet u waar u aan toe bent en ontvangt u een offerte voor precies wat u wilt laten doen.',
+    /* 22 okt 2026, Mohammed: "die disclaimer bedoelde ik van wat er al was visueel verbeteren", "dat wat er stond", "doe even overal":
+       de zin van bfbouw.be/lp/dakwerken ("Laat uw dak vakkundig controleren. Voorkom onvoorziene kosten en weet exact wat er moet
+       gebeuren."), voor renovatie alleen "uw dak vakkundig controleren" -> "uw woning vakkundig bekijken" (het plaatsbezoek). */
+    disclaimer: 'Laat uw woning vakkundig bekijken. Voorkom onvoorziene kosten en weet exact wat er moet gebeuren.',
     /* 22 okt 2026, Mohammed: "bij abgroep totaalrenovatie ook onderaan bij plaatsbezoek de form zo dat je makkelijk kan klikken". */
     onder: true,
   },

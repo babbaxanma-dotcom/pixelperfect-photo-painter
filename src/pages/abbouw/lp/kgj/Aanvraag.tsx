@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Award, BadgePercent, CalendarCheck, Check, ClipboardCheck, Clock, Hammer, Home, ShieldCheck, UserCheck } from 'lucide-react';
+import { ArrowRight, Award, BadgePercent, CalendarCheck, Check, ClipboardCheck, Clock, Hammer, Home, Plus, ShieldCheck, UserCheck } from 'lucide-react';
 import { Icoon } from './Iconen';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
@@ -134,6 +134,28 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     setStap((s) => s + 1);
   };
 
+  /* Afvinkvraag (22 okt 2026, /lp/totaalrenovatie: "die vraag van dat ze mooi kunnen aanklikken wat er allemaal nodig is, makkelijk
+     en gebruiksvriendelijk"): zelfde gedrag als de afvinkvraag van de rekenaar (Rekenaar.tsx vink/verder). Alles vinkt alles aan of
+     uit; Volgende pas met minstens één vinkje; het antwoord is de lijst, of het label van Alles als alles aan staat. */
+  const [vinken, setVinken] = useState<Record<string, string[]>>({});
+  const vink = (v: (typeof VRAGEN)[number], label: string | null) => {
+    meldStart();
+    const alle = v.keuzes.map((k) => k.label);
+    setVinken((o) => {
+      const nu = o[v.sleutel] ?? [];
+      const volgend = label === null
+        ? (nu.length === alle.length ? [] : alle)
+        : nu.includes(label) ? nu.filter((l) => l !== label) : alle.filter((l) => l === label || nu.includes(l));
+      return { ...o, [v.sleutel]: volgend };
+    });
+  };
+  const verder = (v: (typeof VRAGEN)[number]) => {
+    const gekozen = vinken[v.sleutel] ?? [];
+    if (!gekozen.length || !v.afvinken) return;
+    setAntwoorden((x) => ({ ...x, [v.sleutel]: gekozen.length === v.keuzes.length ? v.afvinken!.alles : gekozen.join(', ') }));
+    setStap((s) => s + 1);
+  };
+
   const verstuur = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (verstuurt.current) return;
@@ -177,9 +199,6 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   /* Welke velden de contactstap naast Naam en Gsm heeft (renovatiepagina's: alleen die twee). Standaard beide aan. */
   const metEmail = a.contactVelden?.email !== false;
   const metPostcode = a.contactVelden?.postcode !== false;
-  /* Disclaimer: het deel voor de eerste dubbele punt komt vet ("Wat u krijgt:"). Tot 22 okt 2026 stonden de backslashes niet in
-     deze regex (s* en [sS]+): hij paste nooit en de hele zin stond zonder vet. check-lp-aanvraag toetst nu het vette deel. */
-  const disc = a.disclaimer?.match(/^([^:]+:)\s*([\s\S]+)$/);
   /* "Bijna klaar! Bevestig uw gratis dakinspectie": het eerste deel op een eigen regel in de merkkleur (bfbouw.be rk__bijna). */
   const band = a.contactKop.match(/^(Bijna klaar!)\s+(.+)$/);
 
@@ -210,7 +229,44 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
 
       {vraagToestemming ? (
         <Toestemming verder={naarBedankt} />
-      ) : !klaar ? (
+      ) : !klaar && vraag.afvinken ? (() => {
+        const gekozen = vinken[vraag.sleutel] ?? [];
+        const alles = gekozen.length === vraag.keuzes.length;
+        return (
+          <div className="kgj-reken__stap" key={stap}>
+            <p className="kgj-reken__vraag kgj-reken__vraag--vink">{vraag.vraag}</p>
+            <p className="kgj-reken__meer">Meerdere keuzes mogelijk</p>
+            <div className="kgj-reken__vinken" role="group" aria-label={vraag.vraag}>
+              <button type="button" role="checkbox" aria-checked={alles}
+                className={`kgj-reken__vink kgj-reken__vink--alles${alles ? ' is-aan' : ''}`} onClick={() => vink(vraag, null)}>
+                <i className="kgj-reken__vakje" aria-hidden="true"><Check /></i>{vraag.afvinken.alles}
+              </button>
+              {[...new Set(vraag.keuzes.map((k) => k.groep ?? ''))].map((groep) => (
+                <div className="kgj-reken__groep" key={groep}>
+                  {groep && <p className="kgj-reken__groepnaam">{groep}</p>}
+                  <div className="kgj-reken__chips">
+                    {vraag.keuzes.filter((k) => (k.groep ?? '') === groep).map((k) => {
+                      const aan = gekozen.includes(k.label);
+                      return (
+                        <button type="button" role="checkbox" aria-checked={aan} key={k.label}
+                          className={`kgj-reken__vink kgj-reken__vink--chip${aan ? ' is-aan' : ''}`} onClick={() => vink(vraag, k.label)}>
+                          {aan ? <Check aria-hidden="true" /> : <Plus aria-hidden="true" />}{k.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+            {vraag.afvinken.tip && vraag.afvinken.tip.bij.some((b) => gekozen.includes(b)) && (
+              <p className="kgj-reken__tip"><BadgePercent aria-hidden="true" />{vraag.afvinken.tip.tekst}</p>
+            )}
+            <button type="button" className="kgj-knop kgj-knop--vol kgj-reken__verder" disabled={!gekozen.length} onClick={() => verder(vraag)}>
+              {gekozen.length ? <>Volgende<ArrowRight aria-hidden="true" /></> : 'Vink minstens één onderdeel aan'}
+            </button>
+          </div>
+        );
+      })() : !klaar ? (
         <div className="kgj-reken__stap" key={stap}>
           <p className="kgj-reken__vraag">{vraag.vraag}</p>
           <div className={`kgj-reken__keuzes${vraag.keuzes.length % 2 === 1 ? ' kgj-reken__keuzes--oneven' : ''}${vraag.raster ? ' kgj-reken__keuzes--raster' : ''}${vraag.lijst ? ' kgj-reken__keuzes--lijst' : ''}`}>
@@ -240,10 +296,20 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
                 {band ? <><span className="kgj-reken__bijna">{band[1]}</span> {band[2]}</> : a.contactKop}
               </p>
             </div>
+            {/* De zin onder "Bijna klaar! Bevestig ..." zoals op bfbouw.be (rk__contactsub), in een duidelijk vlak met vinkje. 22 okt 2026,
+                Mohammed: "die disclaimer bedoelde ik van wat er al was visueel verbeteren", "laat uw dak vakkundig controleren en vermijd
+                onnodige kosten", "dat wat er stond", "doe even overal". */}
+            {a.disclaimer && (
+              <p className="kgj-reken__disclaimer">
+                <Check aria-hidden="true" />
+                <span>{a.disclaimer}</span>
+              </p>
+            )}
             {/* Geen autoFocus: op een telefoon sprong het toetsenbord dan meteen open (Mohammed, 24 sep). */}
             <div className="kgj-reken__rij">
               <label>Naam *<input name="naam" type="text" autoComplete="name" placeholder="Uw naam" aria-required="true" /></label>
-              <label>Gsm-nummer *
+              {/* 22 okt 2026, Mohammed: "en doe naam en telefoonnummer", "niet gsm". */}
+              <label>Telefoonnummer *
                 <input name="telefoon" type="tel" autoComplete="tel" inputMode="tel" placeholder="04xx xx xx xx" aria-required="true" />
               </label>
             </div>
@@ -255,14 +321,6 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
               </div>
             )}
             {fout && <p className="kgj-reken__fout" role="alert">{fout}</p>}
-            {/* Wat de bezoeker precies krijgt, direct boven de knop (22 okt 2026, Mohammed: "een disclaimer zo wat ze precies
-                krijgen, krijg vrijblijvend advies en weet waar u aan toe bent"). */}
-            {a.disclaimer && (
-              <p className="kgj-reken__disclaimer">
-                <Check aria-hidden="true" />
-                <span>{disc ? <><b>{disc[1]}</b> {disc[2]}</> : a.disclaimer}</span>
-              </p>
-            )}
             <button className="kgj-knop kgj-knop--vol kgj-reken__knop" type="submit" disabled={bezig}>
               {bezig ? 'Bezig…' : <>{t.knop}<ArrowRight aria-hidden="true" /></>}
             </button>

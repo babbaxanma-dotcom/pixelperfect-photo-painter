@@ -10,7 +10,11 @@
       "marketing": false,
       "wortel": "#contact .kgj-reken--aanvraag",
       "antwoorden": [
+        "Appartement",
         "Aanbouw",
+        "@vink:Keuken",
+        "@vink:Badkamer",
+        "@verder",
         "Binnen 6 maanden",
         "Weet ik nog niet"
       ],
@@ -33,7 +37,7 @@
         "phone": "0400 00 00 05",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat wilt u renoveren: Aanbouw · Wanneer wilt u starten: Binnen 6 maanden · Welk budget heeft u in gedachten: Weet ik nog niet",
+        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat voor woning wilt u renoveren: Appartement · Wat wilt u renoveren: Aanbouw · Wat moet er allemaal gebeuren: Keuken, Badkamer · Wanneer wilt u starten: Binnen 6 maanden · Welk budget heeft u in gedachten: Weet ik nog niet",
         "bron_lead": "Website",
         "bron_lead_detail": "lp:totaalrenovatie:inspectie",
         "page_path": "/lp/totaalrenovatie",
@@ -51,14 +55,14 @@
         "phone": "0400 00 00 05",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat wilt u renoveren: Aanbouw · Wanneer wilt u starten: Binnen 6 maanden · Welk budget heeft u in gedachten: Weet ik nog niet",
+        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat voor woning wilt u renoveren: Appartement · Wat wilt u renoveren: Aanbouw · Wat moet er allemaal gebeuren: Keuken, Badkamer · Wanneer wilt u starten: Binnen 6 maanden · Welk budget heeft u in gedachten: Weet ik nog niet",
         "bron_lead": "Website",
         "bron_lead_detail": "lp:totaalrenovatie:inspectie",
         "page_path": "/lp/totaalrenovatie",
         "landing_division": "ab_construct",
         "source": "landing_page"
       },
-      "metingInUitFlows": "22 okt 2026: de klikkaart onderaan (Aanvraag.tsx plek=\"onder\", sleutel van het oude formulier met keuzelijsten): zelfde bron_lead_detail en form_start-label als dat formulier (lp:<pagina>:inspectie, zonder :hero), contactstap alleen Naam* en Gsm*, dus zonder e-mail, postalCode, city en adres_project; aanvullende_info met de drie klikvragen."
+      "metingInUitFlows": "22 okt 2026: de klikkaart onderaan (Aanvraag.tsx plek=\"onder\", sleutel van het oude formulier met keuzelijsten): zelfde bron_lead_detail en form_start-label als dat formulier (lp:<pagina>:inspectie, zonder :hero), contactstap alleen Naam* en Gsm*, dus zonder e-mail, postalCode, city en adres_project; aanvullende_info met de drie klikvragen. 22 okt 2026 (Mohammed: \"2 meer vragen, bij stap 1 graag wat voor woning\", \"en dan die vraag van dat ze mooi kunnen aanklikken wat er allemaal nodig is\"): vraag 1 \"Wat voor woning wilt u renoveren?\" en na de omvang de afvinkvraag \"Wat moet er allemaal gebeuren?\" (antwoorden @vink:<keuze> en @verder); in aanvullende_info de vinkjes in de volgorde van de keuzes, of \"Alles (totaalrenovatie)\"."
     },
     {
       "naam": "aanvraag-onder-marketing",
@@ -67,7 +71,10 @@
       "marketing": true,
       "wortel": "#contact .kgj-reken--aanvraag",
       "antwoorden": [
+        "Open bebouwing",
         "De hele woning (totaalrenovatie)",
+        "@vink:Alles (totaalrenovatie)",
+        "@verder",
         "Zo snel mogelijk",
         "Minder dan € 25.000"
       ],
@@ -90,7 +97,7 @@
         "phone": "0400 00 00 10",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat wilt u renoveren: De hele woning (totaalrenovatie) · Wanneer wilt u starten: Zo snel mogelijk · Welk budget heeft u in gedachten: Minder dan € 25.000",
+        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat voor woning wilt u renoveren: Open bebouwing · Wat wilt u renoveren: De hele woning (totaalrenovatie) · Wat moet er allemaal gebeuren: Alles (totaalrenovatie) · Wanneer wilt u starten: Zo snel mogelijk · Welk budget heeft u in gedachten: Minder dan € 25.000",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:totaalrenovatie:inspectie",
         "page_path": "/lp/totaalrenovatie",
@@ -112,7 +119,7 @@
         "phone": "0400 00 00 10",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat wilt u renoveren: De hele woning (totaalrenovatie) · Wanneer wilt u starten: Zo snel mogelijk · Welk budget heeft u in gedachten: Minder dan € 25.000",
+        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat voor woning wilt u renoveren: Open bebouwing · Wat wilt u renoveren: De hele woning (totaalrenovatie) · Wat moet er allemaal gebeuren: Alles (totaalrenovatie) · Wanneer wilt u starten: Zo snel mogelijk · Welk budget heeft u in gedachten: Minder dan € 25.000",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:totaalrenovatie:inspectie",
         "page_path": "/lp/totaalrenovatie",
@@ -123,7 +130,7 @@
         "utm_campaign": "totaalrenovatie",
         "utm_term": "totaalrenovatie woning"
       },
-      "metingInUitFlows": "22 okt 2026: de klikkaart onderaan (Aanvraag.tsx plek=\"onder\", sleutel van het oude formulier met keuzelijsten): zelfde bron_lead_detail en form_start-label als dat formulier (lp:<pagina>:inspectie, zonder :hero), contactstap alleen Naam* en Gsm*, dus zonder e-mail, postalCode, city en adres_project; aanvullende_info met de drie klikvragen."
+      "metingInUitFlows": "22 okt 2026: de klikkaart onderaan (Aanvraag.tsx plek=\"onder\", sleutel van het oude formulier met keuzelijsten): zelfde bron_lead_detail en form_start-label als dat formulier (lp:<pagina>:inspectie, zonder :hero), contactstap alleen Naam* en Gsm*, dus zonder e-mail, postalCode, city en adres_project; aanvullende_info met de drie klikvragen. 22 okt 2026 (Mohammed: \"2 meer vragen, bij stap 1 graag wat voor woning\", \"en dan die vraag van dat ze mooi kunnen aanklikken wat er allemaal nodig is\"): vraag 1 \"Wat voor woning wilt u renoveren?\" en na de omvang de afvinkvraag \"Wat moet er allemaal gebeuren?\" (antwoorden @vink:<keuze> en @verder); in aanvullende_info de vinkjes in de volgorde van de keuzes, of \"Alles (totaalrenovatie)\"."
     },
     {
       "naam": "aanvraag-hero",
@@ -132,7 +139,12 @@
       "marketing": false,
       "wortel": "#rekenaar .kgj-reken--aanvraag",
       "antwoorden": [
+        "Rijwoning",
         "De hele woning (totaalrenovatie)",
+        "@vink:Dak",
+        "@vink:Gevel",
+        "@vink:Isolatie",
+        "@verder",
         "Binnen 6 maanden",
         "€ 25.000 tot € 75.000"
       ],
@@ -155,7 +167,7 @@
         "phone": "0400 00 00 03",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat wilt u renoveren: De hele woning (totaalrenovatie) · Wanneer wilt u starten: Binnen 6 maanden · Welk budget heeft u in gedachten: € 25.000 tot € 75.000",
+        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat voor woning wilt u renoveren: Rijwoning · Wat wilt u renoveren: De hele woning (totaalrenovatie) · Wat moet er allemaal gebeuren: Isolatie, Dak, Gevel · Wanneer wilt u starten: Binnen 6 maanden · Welk budget heeft u in gedachten: € 25.000 tot € 75.000",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:totaalrenovatie:inspectie",
         "page_path": "/lp/totaalrenovatie",
@@ -177,7 +189,7 @@
         "phone": "0400 00 00 03",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat wilt u renoveren: De hele woning (totaalrenovatie) · Wanneer wilt u starten: Binnen 6 maanden · Welk budget heeft u in gedachten: € 25.000 tot € 75.000",
+        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat voor woning wilt u renoveren: Rijwoning · Wat wilt u renoveren: De hele woning (totaalrenovatie) · Wat moet er allemaal gebeuren: Isolatie, Dak, Gevel · Wanneer wilt u starten: Binnen 6 maanden · Welk budget heeft u in gedachten: € 25.000 tot € 75.000",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:totaalrenovatie:inspectie",
         "page_path": "/lp/totaalrenovatie",
@@ -188,7 +200,7 @@
         "utm_campaign": "totaalrenovatie",
         "utm_term": "renovatie prijs"
       },
-      "metingInUitFlows": "22 okt 2026: de aanvraagkaart bovenaan (Aanvraag.tsx): drie klikvragen (renovatie, start, budget) en alleen Naam* en Gsm* in de contactstap; verder gelijk aan het formulier onderaan (zelfde bron_lead_detail, veldvolgorde van leads.ts buildBody)."
+      "metingInUitFlows": "22 okt 2026: de aanvraagkaart bovenaan (Aanvraag.tsx): drie klikvragen (renovatie, start, budget) en alleen Naam* en Gsm* in de contactstap; verder gelijk aan het formulier onderaan (zelfde bron_lead_detail, veldvolgorde van leads.ts buildBody). 22 okt 2026 (Mohammed: \"2 meer vragen, bij stap 1 graag wat voor woning\", \"en dan die vraag van dat ze mooi kunnen aanklikken wat er allemaal nodig is\"): vraag 1 \"Wat voor woning wilt u renoveren?\" en na de omvang de afvinkvraag \"Wat moet er allemaal gebeuren?\" (antwoorden @vink:<keuze> en @verder); in aanvullende_info de vinkjes in de volgorde van de keuzes, of \"Alles (totaalrenovatie)\"."
     }
   ]
 }
