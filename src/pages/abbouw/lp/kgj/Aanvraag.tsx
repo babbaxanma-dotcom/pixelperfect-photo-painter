@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Award, CalendarCheck, Check, Clock, Hammer, Home, ShieldCheck, UserCheck } from 'lucide-react';
+import { ArrowRight, Award, BadgePercent, CalendarCheck, Check, ClipboardCheck, Clock, Hammer, Home, ShieldCheck, UserCheck } from 'lucide-react';
 import { Icoon } from './Iconen';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
@@ -46,6 +46,14 @@ const IcInspectie = () => (
  *
  * Draagt kgj-reken: de vaste balk op de telefoon (LpBf) verdwijnt zodra de kaart in beeld staat.
  */
+/* Badges (22 okt 2026, /lp/totaalrenovatie en /lp/dakwerken): elk vinkje een icoon dat bij zijn tekst past. Een tekst die hier
+   niet staat, krijgt het icoon van zijn plaats. Ook gebruikt voor de vinkjes onder de kaart op de telefoon (LpBf). */
+const BADGE_PER_TEKST: Record<string, typeof Check> = {
+  'Vaste prijs vooraf': ShieldCheck, 'Eén vast aanspreekpunt': UserCheck, 'Vakmanschap tot in de details': Award,
+  'Gratis & vrijblijvende dakinspectie': ClipboardCheck, '6% btw-tarief (woningen > 10 jaar)': BadgePercent,
+};
+export const badgeIcoon = (tekst: string, i: number) => BADGE_PER_TEKST[tekst] ?? [ShieldCheck, UserCheck, Award][i] ?? Check;
+
 export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   inhoud: KgjInhoud;
   /** hero = de kaart bovenaan (form_start-label met :hero, Clarity aanvraag-*); onder = dezelfde kaart in het slotblok
@@ -169,10 +177,9 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   /* Welke velden de contactstap naast Naam en Gsm heeft (renovatiepagina's: alleen die twee). Standaard beide aan. */
   const metEmail = a.contactVelden?.email !== false;
   const metPostcode = a.contactVelden?.postcode !== false;
-  /* Disclaimer: het deel voor de eerste dubbele punt komt vet ("Wat u krijgt:"). */
-  const disc = a.disclaimer?.match(/^([^:]+:)s*([sS]+)$/);
-  /* Badges (renovatiepagina's, 22 okt): vinkjes met een herkenbaar icoon per punt, op volgorde van de tekst. */
-  const BADGE_ICOON = [ShieldCheck, UserCheck, Award];
+  /* Disclaimer: het deel voor de eerste dubbele punt komt vet ("Wat u krijgt:"). Tot 22 okt 2026 stonden de backslashes niet in
+     deze regex (s* en [sS]+): hij paste nooit en de hele zin stond zonder vet. check-lp-aanvraag toetst nu het vette deel. */
+  const disc = a.disclaimer?.match(/^([^:]+:)\s*([\s\S]+)$/);
   /* "Bijna klaar! Bevestig uw gratis dakinspectie": het eerste deel op een eigen regel in de merkkleur (bfbouw.be rk__bijna). */
   const band = a.contactKop.match(/^(Bijna klaar!)\s+(.+)$/);
 
@@ -268,7 +275,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
       {a.vertrouwen && a.vertrouwen.length > 0 && (
         <ul className="kgj-reken__vertrouwen">
           {a.vertrouwen.map((v, i) => {
-            const Teken = a.badges ? BADGE_ICOON[i] ?? Check : Check;
+            const Teken = a.badges ? badgeIcoon(v, i) : Check;
             return <li key={v}><Teken aria-hidden="true" />{v}</li>;
           })}
         </ul>
@@ -282,7 +289,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
           </li>
           {a.trustrij.map((c) => (
             <li key={c.b + c.s}>
-              {a.badges && c.icoon && <span className="kgj-reken__trust-ic" aria-hidden="true">{c.icoon === 'kalender' ? <CalendarCheck /> : <Hammer />}</span>}
+              {a.badges && c.icoon && <span className="kgj-reken__trust-ic" aria-hidden="true">{c.icoon === 'kalender' ? <CalendarCheck /> : c.icoon === 'schild' ? <ShieldCheck /> : <Hammer />}</span>}
               <b>{c.b}</b>{' '}<span>{c.s}</span>
             </li>
           ))}

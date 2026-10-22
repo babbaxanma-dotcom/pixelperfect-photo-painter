@@ -11,6 +11,10 @@
  * heeft alleen nog Naam* en Gsm* ("verwijder email form, verwijder postcode form"); een disclaimer boven de knop; trust badges
  * als tegels met iconen (zelfde teksten); geen "Eerstvolgend vrij plaatsbezoek" en geen free-slots-verzoek meer; geen termijn
  * ("binnen één werkdag") in de kaart. Alleen /lp/dakwerken: het belblok "Lekt uw dak?" direct onder de hero.
+ * 22 okt 2026, Mohammed: "je hebt veel vergeten", "DIE FORMS", "die visuele dingetjes", "EN TIS ENKEL lp dakwerken en lp
+ * totaalrenovatie": /lp/dakwerken krijgt hetzelfde als de renovatiepagina's: klikkaart ook onderaan, een extra vraag (de start,
+ * 5 vragen + contactstap = 6 stappen), alleen Naam* en Gsm*, een disclaimer, trust badges. Deze toets eiste tot dan het omgekeerde
+ * op /lp/dakwerken (Inspectie onderaan, e-mail en postcode, geen disclaimer, geen badges); dat is nu dezelfde eis voor alle drie.
  *
  * Per pagina, zoals een bezoeker:
  *   1. geen enkele rekenaar-ingang: geen rekenaarkaart (kgj-reken--hero / --venster), geen venster, geen vangnet, geen
@@ -21,9 +25,9 @@
  *   3. één tik = antwoord en meteen de volgende vraag ("Stap 1 van n" wordt "Stap 2 van n"), een tweede tik binnen
  *      200 ms slaat geen vraag over, Terug brengt de vorige vraag terug; op de renovatiepagina's geldt dat voor de kaart
  *      bovenaan (#rekenaar) én voor de kaart onderaan (#contact);
- *   4. de contactstap: de band "Bijna klaar! Bevestig uw gratis ...", de velden naam (verplicht) en telefoon (verplicht) en
- *      op /lp/dakwerken ook postcode of gemeente en e-mail; op de renovatiepagina's EXACT twee velden (geen e-mail-, geen
- *      postcodeveld) en een disclaimer direct boven de knop met de vaste tekst; de knop = de knop van het formulier
+ *   4. de contactstap: de band "Bijna klaar! Bevestig uw gratis ...", EXACT twee velden: naam (verplicht) en telefoon
+ *      (verplicht), geen e-mail-, geen postcodeveld; een disclaimer direct boven de knop met de vaste tekst per pagina en
+ *      "Wat u krijgt:" vet; de knop = de knop van het formulier
  *      onderaan; versturen zonder naam geeft "Vul uw naam in." (20 okt 2026: de bevestigings-sms begint met "Dag
  *      {{voornaam}},"), daarna met naam maar zonder gsm-nummer de gsm-melding; beide verzenden NIETS;
  *   5. message match (dak): ?utm_term=plat dak toont de kop "Dé specialist voor uw platte dak" en de kaart begint bij
@@ -33,12 +37,13 @@
  *      de bezoeker een opdracht geeft over de inspectie, het plaatsbezoek of de offerte gaat over onze werkwijze, niet over
  *      zijn huis, en herhaalt het aanbod dat de kaart al noemt (memory feedback_hook_gaat_over_het_huis, punt 5). Het
  *      aanbod hoort in de subkop en de kaart.
- *   7. onderaan (#contact): op de renovatiepagina's de klikkaart en géén keuzelijst (<select>) en geen formulier van
- *      Inspectie; op /lp/dakwerken blijft het formulier van Inspectie; er staat precies één element #rekenaar;
+ *   7. onderaan (#contact): op de drie pagina's de klikkaart en géén keuzelijst (<select>) en geen formulier van
+ *      Inspectie; er staat precies één element #rekenaar;
  *   8. geen "Eerstvolgend vrij ..." in de tekst en geen verzoek naar free-slots (de GHL-agenda) op de drie pagina's
  *      (22 okt 2026, Mohammed: "haal weg bij abgroep die volgende moment");
- *   9. badges (renovatie): de vertrouwensrij in de kaart is drie tegels met een icoon en de teksten/cijfers blijven letterlijk
- *      "5,0", "16 jaar ervaring", "6 vakdisciplines"; de drie vinkjes en "5,0 op Google" idem; /lp/dakwerken heeft ze niet;
+ *   9. badges: de vertrouwensrij in de kaart is drie tegels met een icoon en de teksten/cijfers blijven letterlijk
+ *      (renovatie "5,0", "16 jaar ervaring", "6 vakdisciplines"; dak "5,0", "10 jaar garantie", "15 jaar ervaring"); de drie
+ *      vinkjes letterlijk, elk met een eigen icoon; "5,0 op Google" in de hero;
  *  10. belblok (alleen /lp/dakwerken, 22 okt 2026): kop "Lekt uw dak?", knop "Bel direct <nummer>" met dezelfde tel:-href als
  *      de belknop in de kop, link "Geen haast? Vraag uw gratis dakinspectie aan" naar #rekenaar; staat buiten de hero, na de
  *      hero, binnen de eerste 1500 px op de gsm, zonder schaduw en kaart; geen "24/7", "meteen", "binnen", "nood", tijden;
@@ -50,7 +55,8 @@
  *
  * Positieve controles (zonder: exit 2): /lp/richtprijs-berekenen (de rekenaarpagina) moet op punt 1 falen en op punt 7 en 10;
  * een kaart die 900 px lager staat (geplante CSS) moet op punt 2 falen; een tik die niets doet (geplante pointer-events: none
- * op de keuzes) moet op punt 3 falen; /lp/dakwerken (zonder disclaimer) moet de disclaimertoets laten falen; een geplante
+ * op de keuzes) moet op punt 3 falen; een weggehaalde disclaimer en een disclaimer zonder vet deel moeten de disclaimertoets
+ * laten falen, een gewoon vinkje bij de badges de badgetoets; een geplante
  * tekst "Eerstvolgend ..." plus een geplande free-slots-aanvraag moeten punt 8 laten falen.
  * Niets gaat naar buiten: GHL en Web3Forms krijgen een leeg antwoord (en worden geteld: elke telling > 0 is een fout),
  * de free-slots-aanvraag wordt geteld en beantwoord, Clarity en Google-tags krijgen een leeg script, tel: en mailto: worden
@@ -79,12 +85,14 @@ const kopFouten = (h1, verwacht) => {
 
 const HERO = '#rekenaar .kgj-reken--aanvraag';
 const ONDER = '#contact .kgj-reken--aanvraag';
-const DISCLAIMER = 'Wat u krijgt: een gratis plaatsbezoek met vrijblijvend advies. Daarna weet u waar u aan toe bent en ontvangt u een offerte voor precies wat u wilt laten doen.';
-
 const DAK = {
   pad: '/lp/dakwerken', soort: 'dak', kop: 'Dé specialist voor uw nieuwe dak', woord: 'gratis dakinspectie', vraag1: 'Wat voor dak heeft u?', keuzes1: ['Hellend dak', 'Plat dak'],
-  pad1: ['Hellend dak', 'Dakrenovatie / Nieuw dak', 'Ja', 'Nee'], vraag2: 'Wat moet er aan uw dak gebeuren?',
-  band: 'Bijna klaar! Bevestig uw gratis dakinspectie', knop: 'Vraag uw gratis dakinspectie aan', stappen: 5,
+  /* de vijfde vraag (22 okt 2026): de start, vier keuzes */
+  pad1: ['Hellend dak', 'Dakrenovatie / Nieuw dak', 'Ja', 'Nee', 'Zo snel mogelijk'], vraag2: 'Wat moet er aan uw dak gebeuren?',
+  band: 'Bijna klaar! Bevestig uw gratis dakinspectie', knop: 'Vraag uw gratis dakinspectie aan', stappen: 6,
+  disclaimer: 'Wat u krijgt: een gratis dakinspectie met vrijblijvend advies. Daarna weet u waar u aan toe bent en ontvangt u een offerte voor precies wat uw dak nodig heeft.',
+  tegels: ['5,0', '10 jaar garantie', '15 jaar ervaring'],
+  vinkjes: ['Gratis & vrijblijvende dakinspectie', 'Vakmanschap tot in de details', '6% btw-tarief (woningen > 10 jaar)'],
 };
 const RENO = (pad) => ({
   pad, soort: 'reno', kop: 'Jouw complete renovatie, perfect geregeld van A tot Z.', woord: 'gratis plaatsbezoek', vraag1: 'Wat wilt u renoveren?',
@@ -93,6 +101,9 @@ const RENO = (pad) => ({
   pad1: ['Gedeeltelijke renovatie', 'Zo snel mogelijk', '€ 25.000 tot € 75.000'], vraag2: 'Wanneer wilt u starten?',
   vraag3: 'Welk budget heeft u in gedachten?', keuzes3: ['Minder dan € 25.000', '€ 25.000 tot € 75.000', '€ 75.000 tot € 150.000', 'Meer dan € 150.000', 'Weet ik nog niet'],
   band: 'Bijna klaar! Bevestig uw gratis plaatsbezoek', knop: 'Bevestig mijn gratis plaatsbezoek', stappen: 4,
+  disclaimer: 'Wat u krijgt: een gratis plaatsbezoek met vrijblijvend advies. Daarna weet u waar u aan toe bent en ontvangt u een offerte voor precies wat u wilt laten doen.',
+  tegels: ['5,0', '16 jaar ervaring', '6 vakdisciplines'],
+  vinkjes: ['Vaste prijs vooraf', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details'], // 22 okt 2026: geen budgetgarantie meer
 });
 const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiewerken')];
 
@@ -220,41 +231,38 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     return uit;
   };
 
-  /* 4. Disclaimer direct boven de verzendknop van de contactstap (renovatie), met de vaste tekst. */
-  const disclaimerFouten = (p, root) => p.evaluate((root, verwacht) => {
+  /* 4. Disclaimer direct boven de verzendknop van de contactstap, met de vaste tekst en "Wat u krijgt:" vet. */
+  const disclaimerFouten = (p, root, verwacht) => p.evaluate((root, verwacht) => {
     const k = document.querySelector(root);
     const d = k?.querySelector('form .kgj-reken__disclaimer');
     if (!d) return ['disclaimer ontbreekt op de contactstap'];
     const uit = [];
     const tekst = d.textContent.replace(/\s+/g, ' ').trim();
     if (tekst !== verwacht) uit.push(`disclaimer "${tekst}" in plaats van "${verwacht}"`);
+    /* tot 22 okt 2026 paste de regex in Aanvraag.tsx nooit (backslashes weg) en stond "Wat u krijgt:" niet vet */
+    const vet = d.querySelector('b')?.textContent.trim();
+    if (vet !== 'Wat u krijgt:') uit.push(`het vette deel van de disclaimer is "${vet ?? ''}" in plaats van "Wat u krijgt:"`);
     if (d.nextElementSibling !== k.querySelector('form button[type=submit]')) uit.push('disclaimer staat niet direct boven de verzendknop');
     const px = parseFloat(getComputedStyle(d).fontSize);
     if (px < 14) uit.push(`disclaimer is ${px} px (minstens 14)`);
     if (!d.querySelector('svg')) uit.push('disclaimer zonder vinkje');
     return uit;
-  }, root, DISCLAIMER);
+  }, root, verwacht);
 
-  /* 7. Onderaan: renovatie = klikkaart zonder keuzelijst en zonder formulier van Inspectie; dak = Inspectie; één #rekenaar. */
-  const ondenFouten = (p, soort) => p.evaluate((soort, ONDER) => {
+  /* 7. Onderaan (dak en renovatie, 22 okt 2026): klikkaart zonder keuzelijst en zonder formulier van Inspectie; één #rekenaar. */
+  const ondenFouten = (p) => p.evaluate((ONDER) => {
     const uit = [];
     const slot = document.querySelector('#contact');
     if (!slot) return ['geen slotblok #contact'];
     const keuzelijsten = slot.querySelectorAll('select').length;
-    const kaart = !!slot.querySelector('.kgj-reken--aanvraag');
     const inspectie = !!slot.querySelector('.kgj-reken--inspectie');
-    if (soort === 'reno') {
-      if (!document.querySelector(ONDER)) uit.push('onderaan staat de klikkaart niet (#contact .kgj-reken--aanvraag)');
-      if (keuzelijsten) uit.push(`onderaan staan nog ${keuzelijsten} keuzelijst(en) (select)`);
-      if (inspectie) uit.push('onderaan staat nog het formulier van Inspectie (.kgj-reken--inspectie)');
-    } else if (soort === 'dak') {
-      if (kaart) uit.push('onderaan staat een klikkaart (alleen de renovatiepagina\'s krijgen die)');
-      if (!inspectie) uit.push('onderaan staat het formulier van Inspectie niet meer');
-    }
+    if (!document.querySelector(ONDER)) uit.push('onderaan staat de klikkaart niet (#contact .kgj-reken--aanvraag)');
+    if (keuzelijsten) uit.push(`onderaan staan nog ${keuzelijsten} keuzelijst(en) (select)`);
+    if (inspectie) uit.push('onderaan staat nog het formulier van Inspectie (.kgj-reken--inspectie)');
     const n = document.querySelectorAll('#rekenaar').length;
     if (n > 1) uit.push(`${n} elementen met id="rekenaar" op de pagina`);
     return uit;
-  }, soort, ONDER);
+  }, ONDER);
 
   /* 8. Geen "Eerstvolgend vrij ..." en geen free-slots-verzoek. */
   const vrijFouten = async (p, slots) => {
@@ -266,26 +274,27 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     return uit;
   };
 
-  /* 9. Badges (renovatie): tegels met iconen, teksten en cijfers letterlijk gelijk; dak heeft ze niet. */
-  const badgesFouten = (p, soort) => p.evaluate((soort, HERO) => {
+  /* 9. Badges (dak en renovatie, 22 okt 2026): tegels met iconen, teksten en cijfers letterlijk gelijk; elk vinkje een eigen
+     icoon (geen twee keer hetzelfde, geen gewoon vinkje). */
+  const badgesFouten = (p, pg) => p.evaluate((pg, HERO) => {
     const uit = [];
     const k = document.querySelector(HERO);
     const norm = (e) => e.textContent.replace(/\s+/g, ' ').trim();
-    const heeft = !!document.querySelector('.kgj-reken--badges') || !!document.querySelector('.bf-lp--badges');
-    if (soort === 'dak') { if (heeft) uit.push('/lp/dakwerken heeft badges (alleen de renovatiepagina\'s)'); return uit; }
+    const heeft = !!document.querySelector('.kgj-reken--badges') && !!document.querySelector('.bf-lp--badges');
     if (!heeft) return ['badges ontbreken (.kgj-reken--badges / .bf-lp--badges)'];
     const tegels = [...k.querySelectorAll('.kgj-reken__trust li')];
-    const wil = ['5,0', '16 jaar ervaring', '6 vakdisciplines'];
-    if (tegels.map(norm).join('|') !== wil.join('|')) uit.push(`vertrouwensrij "${tegels.map(norm).join(' | ')}" in plaats van "${wil.join(' | ')}"`);
+    if (tegels.map(norm).join('|') !== pg.tegels.join('|')) uit.push(`vertrouwensrij "${tegels.map(norm).join(' | ')}" in plaats van "${pg.tegels.join(' | ')}"`);
     if (tegels.some((t) => !t.querySelector('svg'))) uit.push('een tegel in de vertrouwensrij heeft geen icoon');
-    const vinkjes = [...k.querySelectorAll('.kgj-reken__vertrouwen li')].map(norm);
-    const wilV = ['Vaste prijs vooraf', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details']; // 22 okt 2026: geen budgetgarantie meer
-    if (vinkjes.join('|') !== wilV.join('|')) uit.push(`vinkjes "${vinkjes.join(' | ')}" in plaats van "${wilV.join(' | ')}"`);
-    if ([...k.querySelectorAll('.kgj-reken__vertrouwen li')].some((l) => !l.querySelector('svg'))) uit.push('een vinkje heeft geen icoon');
+    const li = [...k.querySelectorAll('.kgj-reken__vertrouwen li')];
+    const vinkjes = li.map(norm);
+    if (vinkjes.join('|') !== pg.vinkjes.join('|')) uit.push(`vinkjes "${vinkjes.join(' | ')}" in plaats van "${pg.vinkjes.join(' | ')}"`);
+    if (li.some((l) => !l.querySelector('svg'))) uit.push('een vinkje heeft geen icoon');
+    const iconen = li.map((l) => [...(l.querySelector('svg')?.classList ?? [])].find((c) => /^lucide-(?!icon$)/.test(c)) ?? '');
+    if (new Set(iconen).size !== iconen.length || iconen.some((c) => !c || c === 'lucide-check')) uit.push(`de vinkjes hebben niet elk een eigen icoon (${iconen.join(', ')})`);
     const g = document.querySelector('.bf-lphero__google b')?.textContent.trim();
     if (g !== '5,0 op Google') uit.push(`Google-badge in de hero "${g}" in plaats van "5,0 op Google"`);
     return uit;
-  }, soort, HERO);
+  }, pg, HERO);
 
   /* 10. Belblok op /lp/dakwerken. */
   const belblokFouten = (p, gsm) => p.evaluate((gsm) => {
@@ -370,14 +379,10 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     }, root);
     if (c.tel !== `Stap ${pg.stappen} van ${pg.stappen}`) fouten.push(`${etiket}: contactstap teller "${c.tel}"`);
     if (c.band !== pg.band) fouten.push(`${etiket}: band "${c.band}" in plaats van "${pg.band}"`);
-    if (pg.soort === 'reno') {
-      /* 22 okt 2026: alleen Naam* en Gsm* */
-      if (c.velden.join('|') !== 'naam|telefoon') fouten.push(`${etiket}: de contactstap heeft de velden "${c.velden.join(', ')}" in plaats van precies "naam, telefoon" (geen e-mail, geen postcode/gemeente)`);
-      for (const f of await disclaimerFouten(p, root)) fouten.push(`${etiket}: ${f}`);
-    } else {
-      for (const v of ['naam', 'telefoon', 'postcode-gemeente', 'postcode', 'gemeente', 'email']) if (!c.velden.includes(v)) fouten.push(`${etiket}: veld ${v} ontbreekt (${c.velden.join(', ')})`);
-      if (await p.evaluate((root) => !!document.querySelector(root + ' .kgj-reken__disclaimer'), root)) fouten.push(`${etiket}: de dakkaart heeft een disclaimer (alleen de renovatiepagina's)`);
-    }
+    /* 22 okt 2026 (dak en renovatie): alleen Naam* en Gsm*, geen keuzelijst, en de disclaimer boven de knop */
+    if (c.velden.join('|') !== 'naam|telefoon') fouten.push(`${etiket}: de contactstap heeft de velden "${c.velden.join(', ')}" in plaats van precies "naam, telefoon" (geen e-mail, geen postcode/gemeente)`);
+    if (c.selects) fouten.push(`${etiket}: de contactstap heeft ${c.selects} keuzelijst(en)`);
+    for (const f of await disclaimerFouten(p, root, pg.disclaimer)) fouten.push(`${etiket}: ${f}`);
     if (c.knop !== pg.knop) fouten.push(`${etiket}: knop "${c.knop}" in plaats van "${pg.knop}"`);
     if (c.verplicht !== 'true') fouten.push(`${etiket}: telefoonveld niet als verplicht gemarkeerd`);
     if (c.verplichtNaam !== 'true') fouten.push(`${etiket}: naamveld niet als verplicht gemarkeerd`);
@@ -413,7 +418,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       const { p, ctx } = await open('/lp/richtprijs-berekenen');
       const pc1 = await rekenaarSporen(p);
       const pc6 = await belblokFouten(p, true);
-      const pc7 = await ondenFouten(p, 'reno');
+      const pc7 = await ondenFouten(p);
       await ctx.close();
       if (pc1.length < 2) { console.log(`ONGELDIGE METING: de rekenaarpagina /lp/richtprijs-berekenen gaf ${pc1.length} rekenaarsporen (${pc1.join('; ')})`); process.exit(2); }
       console.log(`positieve controle 1: /lp/richtprijs-berekenen heeft ${pc1.length} rekenaarsporen (${pc1.slice(0, 2).join('; ')})`);
@@ -444,13 +449,23 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       console.log(`positieve controle 4: de koppen van 19 okt geweigerd (${pc4[0]})`);
     }
     {
-      /* disclaimertoets: de dakkaart heeft er geen, dus de toets moet falen */
+      /* disclaimertoets (sinds 22 okt heeft elke kaart er een): een weggehaalde disclaimer, een disclaimer zonder vet deel
+         en een badge met het gewone vinkje moeten elk gezien worden */
       const { p, ctx } = await open('/lp/dakwerken');
       for (const l of DAK.pad1) await tik(p, l, HERO);
-      const pc8 = await disclaimerFouten(p, HERO);
+      const goed = await disclaimerFouten(p, HERO, DAK.disclaimer);
+      if (goed.length) { console.log(`ONGELDIGE METING: de disclaimertoets faalt al op de echte kaart (${goed[0]}); de positieve controle zegt dan niets`); process.exit(2); }
+      await p.evaluate((root) => { const b = document.querySelector(root + ' .kgj-reken__disclaimer b'); b?.replaceWith(document.createTextNode(b.textContent)); }, HERO);
+      const pc8b = await disclaimerFouten(p, HERO, DAK.disclaimer);
+      await p.evaluate((root) => document.querySelector(root + ' .kgj-reken__disclaimer')?.remove(), HERO);
+      const pc8 = await disclaimerFouten(p, HERO, DAK.disclaimer);
+      await p.evaluate((root) => { const s = document.querySelector(root + ' .kgj-reken__vertrouwen li svg'); s?.classList.replace([...s.classList].find((c) => /^lucide-(?!icon$)/.test(c)), 'lucide-check'); }, HERO);
+      const pc10 = await badgesFouten(p, DAK);
       await ctx.close();
-      if (!pc8.length) { console.log('ONGELDIGE METING: een contactstap zonder disclaimer werd door de disclaimertoets goedgekeurd'); process.exit(2); }
-      console.log(`positieve controle 8: een kaart zonder disclaimer gezien (${pc8[0]})`);
+      if (!pc8.length || !pc8b.length) { console.log(`ONGELDIGE METING: een contactstap zonder disclaimer (${pc8.length}) of zonder vet deel (${pc8b.length}) werd door de disclaimertoets goedgekeurd`); process.exit(2); }
+      console.log(`positieve controle 8: een kaart zonder disclaimer gezien (${pc8[0]}); zonder vet deel (${pc8b[0]})`);
+      if (!pc10.length) { console.log('ONGELDIGE METING: een gewoon vinkje bij de badges werd door de badgetoets goedgekeurd'); process.exit(2); }
+      console.log(`positieve controle 10: gewoon vinkje bij de badges gezien (${pc10[0]})`);
     }
     {
       /* 8. een geplante "Eerstvolgend"-regel en een geplante free-slots-aanvraag moeten gevonden worden */
@@ -479,8 +494,8 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
           const h1 = await p.evaluate(() => document.querySelector('h1')?.textContent.trim().replace(/\s+/g, ' '));
           for (const f of kopFouten(h1, pg.kop)) fouten.push(`${pg.pad} @${maat}: ${f}`);
           if (gsm) for (const f of await eersteScherm(p, pg)) fouten.push(`${pg.pad} @${maat}: eerste scherm: ${f}`);
-          for (const f of await ondenFouten(p, pg.soort)) fouten.push(`${pg.pad} @${maat}: onderaan: ${f}`);
-          for (const f of await badgesFouten(p, pg.soort)) fouten.push(`${pg.pad} @${maat}: badges: ${f}`);
+          for (const f of await ondenFouten(p)) fouten.push(`${pg.pad} @${maat}: onderaan: ${f}`);
+          for (const f of await badgesFouten(p, pg)) fouten.push(`${pg.pad} @${maat}: badges: ${f}`);
           const sf = await scrollFout(p); if (sf) fouten.push(`${pg.pad} @${maat}: ${sf}`);
           if (pg.soort === 'dak') {
             for (const f of await belblokFouten(p, gsm)) fouten.push(`${pg.pad} @${maat}: belblok: ${f}`);
@@ -498,8 +513,8 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
           if (pg.soort === 'dak') for (const f of await belblokGedrag(p)) fouten.push(`${pg.pad} @${maat}: belblok: ${f}`);
           await ctx.close();
         }
-        /* kaart onderaan (renovatie) */
-        if (pg.soort === 'reno') {
+        /* kaart onderaan (dak en renovatie, 22 okt 2026) */
+        {
           const { p, ctx } = await open(pg.pad, { gsm });
           await kaartFlow(p, ctx, pg, ONDER, 'onderaan', maat);
         }
@@ -509,7 +524,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     {
       const { p, ctx } = await open('/lp/richtprijs-berekenen');
       if (await p.$('.bf-lpbelblok')) fouten.push('/lp/richtprijs-berekenen: belblok (hoort alleen op /lp/dakwerken)');
-      if (await p.$(ONDER)) fouten.push('/lp/richtprijs-berekenen: klikkaart onderaan (hoort alleen op de renovatiepagina\'s)');
+      if (await p.$(ONDER)) fouten.push('/lp/richtprijs-berekenen: klikkaart onderaan (hoort alleen op de dak- en renovatiepagina\'s)');
       await ctx.close();
     }
     /* 5. message match (dak) */
@@ -518,7 +533,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       const m = await p.evaluate(() => ({ h1: document.querySelector('h1')?.textContent.trim().replace(/\s+/g, ' ') }));
       const s = await stand(p);
       for (const f of kopFouten(m.h1, 'Dé specialist voor uw platte dak')) fouten.push(`message match: ${f}`);
-      if (s.vraag !== DAK.vraag2 || s.tel !== 'Stap 2 van 5' || !s.terug) fouten.push(`message match: kaart ${JSON.stringify(s)} (verwacht vraag 2, Stap 2 van 5, Terug)`);
+      if (s.vraag !== DAK.vraag2 || s.tel !== `Stap 2 van ${DAK.stappen}` || !s.terug) fouten.push(`message match: kaart ${JSON.stringify(s)} (verwacht vraag 2, Stap 2 van ${DAK.stappen}, Terug)`);
       await p.evaluate(() => document.querySelector('.kgj-reken--aanvraag .kgj-reken__terug')?.click());
       await wacht(450);
       const s2 = await stand(p);
@@ -537,11 +552,11 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     await br.close();
     if (srv) { try { srv.kill(); } catch { /* */ } }
   }
-  /* dak: 2 maten x 1 kaart; renovatie: 2 paginas x 2 maten x 2 kaarten; plus message match */
-  const verwacht = 2 + 2 * 2 * 2 + 1;
+  /* 3 paginas x 2 maten x 2 kaarten (bovenaan en onderaan, sinds 22 okt ook op dak); plus message match */
+  const verwacht = 3 * 2 * 2 + 1;
   if (metingen < verwacht) { console.log(`ONGELDIGE METING: ${metingen} metingen (verwacht ${verwacht})`); process.exit(2); }
-  console.log(`check-lp-aanvraag: dak (kaart) en 2 renovatiepagina's (kaart bovenaan en onderaan) x 2 maten + message match (${basis}), ${leads} leadverzoeken`);
+  console.log(`check-lp-aanvraag: dak en 2 renovatiepagina's (kaart bovenaan en onderaan) x 2 maten + message match (${basis}), ${leads} leadverzoeken`);
   if (fouten.length) { fouten.forEach((f) => console.log('  FOUT: ' + f)); process.exit(1); }
-  console.log('  kop zoals afgesproken, geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag (bovenaan en onderaan), contactstap (renovatie: alleen naam en gsm + disclaimer), naam verplicht, lege gsm, badges, geen vrij moment en geen agenda-verzoek, belblok op dak, geen horizontale scroll');
+  console.log('  kop zoals afgesproken, geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag (bovenaan en onderaan), contactstap alleen naam en gsm + disclaimer met vet deel, naam verplicht, lege gsm, badges met eigen iconen, geen vrij moment en geen agenda-verzoek, belblok op dak, geen horizontale scroll');
   process.exit(0);
 })().catch((e) => { console.log('ONGELDIGE METING: ' + e.message); process.exit(2); });

@@ -1,5 +1,13 @@
-Bereken in [2 minuten] de richtprijs van uw dak
-Snel, gratis en 100% vrijblijvend.
+Dé specialist voor [uw nieuwe dak]
+Vraag uw gratis dakinspectie aan. U weet daarna precies wat er moet gebeuren en wat het kost.
+Lekt uw dak?
+Bel direct
+Gratis dakinspectie
+Wat voor dak heeft u?
+Wat moet er aan uw dak gebeuren?
+Wilt u ook isoleren?
+Zit er asbest in uw dak?
+Wanneer wilt u beginnen?
 Bereken uw dakprijs
 Welk soort dak heeft u?
 Wat moet er aan uw dak gebeuren?
@@ -22,8 +30,6 @@ Waarom AB Bouw Groep
 Een dak vernieuwt u één keer en vervolgens moet het decennia meegaan. Daarom is het belangrijk dat u een aannemer kiest die het vak kent. Met meer dan 15 jaar ervaring in dakwerken staan we garant voor een eindresultaat van topkwaliteit. U kan rekenen op een zorgeloos traject van A tot Z.
 10 jaar garantie
 Tien jaar garantie op dakrenovatie. We zijn volledig verzekerd en VCA-gecertificeerd.
-Vrijblijvende offerte en dakinspectie
-We komen langs en voeren een vrijblijvende dakinspectie uit.
 Volledige premiebegeleiding
 Wij regelen de aanvraag van uw Mijn VerbouwPremie. Wordt uw dak mee geïsoleerd, dan krijgt u bij inkomenscategorie 3 of 4 tot 50% van de factuur terug, maximaal € 5.750.
 Voordelen van dakrenovatie
@@ -45,7 +51,7 @@ U weet vooraf wat er gebeurt en wanneer.
 Aanvraag
 U doet uw aanvraag via het formulier hieronder of rechtstreeks telefonisch.
 Dakinspectie
-Binnen enkele werkdagen doen we de inspectie en bekijken we samen de bevindingen.
+We inspecteren uw dak ter plaatse en bekijken samen de bevindingen.
 Offerte
 U krijgt een vrijblijvende offerte.
 Uitvoering
@@ -56,20 +62,36 @@ Gratis dakinspectie
 Plan uw dakinspectie
 Vraag uw gratis dakinspectie aan
 Wij nemen zo snel mogelijk contact met u op.
-Bereken in [2 minuten] de richtprijs van uw dakisolatie
-Bereken in [2 minuten] de richtprijs van uw plat dak
-Bereken in [2 minuten] de richtprijs van uw hellend dak
-Bereken in [2 minuten] de richtprijs van uw dakrenovatie
-Bereken in [2 minuten] de richtprijs van uw nieuwe dak
+Dé specialist voor [uw dakisolatie]
+Dé specialist voor [uw platte dak]
+Dé specialist voor [uw hellende dak]
+Dé specialist voor [uw dakrenovatie]
+Dé specialist voor [uw nieuwe dak]
 We bekijken uw dak ter plaatse
 Samen overlopen we de bevindingen
 U ontvangt een vrijblijvende offerte
 
 --- functioneel ---
 Dé specialist voor uw dakwerk | AB Bouw Groep
-Bereken in 2 minuten de prijs van uw dak. Gratis dakinspectie en offerte, werken aan 6% btw.
+Gratis dakinspectie en offerte, werken aan 6% btw.
 Hellend dak
 Plat dak
+Dakrenovatie / Nieuw dak
+Herstelling
+Ik wil dat een expert mijn dak inspecteert
+Ja
+Nee
+Weet ik nog niet
+Ja
+Nee
+Weet ik niet
+Zo snel mogelijk
+Dit jaar
+Volgend jaar
+Ik verken nog
+Hellend dak
+Plat dak
+Nieuw dak
 Renovatie
 Isolatie
 Herstelling

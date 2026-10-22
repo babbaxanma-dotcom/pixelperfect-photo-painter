@@ -54,6 +54,9 @@ const VERBODEN = [
      meer ("neemt zo snel mogelijk contact met u op"). */
   { naam: 'budgetgarantie (Mohammed 22 okt: eruit)', re: /budget\s*-?\s*garantie|prijsgarantie/i },
   { naam: 'terugbeltermijn (Mohammed 22 okt: eruit)', alleen: /^\/lp\//, re: /binnen (één|een|1) werkdag/i },
+  /* 22 okt 2026, tweede keer dezelfde correctie: op /lp/dakwerken stond nog "Binnen enkele werkdagen doen we de inspectie";
+     Mohammed: "weg". Op de twee advertentiepagina's (en de varianten) geen enkele termijn in werkdagen meer. */
+  { naam: 'termijn in werkdagen (Mohammed 22 okt: "weg")', alleen: /^\/lp\/(dakwerken|totaalrenovatie|aannemer-renovatiewerken)\b/, re: /werkdag/i },
   /* Namen van reviews die niet op het Google-profiel van AB staan (uit de oude site). */
   { naam: 'review met naam zonder bron', re: /Nathalie Aerts|Inge Vermeiren|Dirk Maes|Hilde Goossens|Geert Verbeke|Saïda El Khatib|Yusuf Demir|Jasmien De Backer|Dimitri Maes|Hicham Bouali|Greet Vermeiren|Ahmed Karimi|Tine Maes/ },
   /* Een euroteken met een bedrag waarin een cijfer 1-9 staat ("€ 12.500", "€ 00.000 – 18.000"). Het vergrendelde

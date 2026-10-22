@@ -13,13 +13,12 @@
         "Hellend dak",
         "Dakrenovatie / Nieuw dak",
         "Ja",
-        "Nee"
+        "Nee",
+        "Zo snel mogelijk"
       ],
       "velden": {
         "naam": "Test Kaart",
-        "telefoon": "0400 00 00 00",
-        "@pg": "2830",
-        "email": "test@voorbeeld.be"
+        "telefoon": "0400 00 00 00"
       },
       "formStart": "lp:dakwerken:inspectie:hero",
       "toestemming": true,
@@ -33,13 +32,10 @@
         "firstName": "Test",
         "lastName": "Kaart",
         "name": "Test Kaart",
-        "email": "test@voorbeeld.be",
         "phone": "0400 00 00 00",
-        "postalCode": "2830",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Hellend dak · Werk: Dakrenovatie / Nieuw dak · Isolatie: Ja · Asbest: Nee",
-        "adres_project": "2830",
+        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Hellend dak · Werk: Dakrenovatie / Nieuw dak · Isolatie: Ja · Asbest: Nee · Start: Zo snel mogelijk",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:dakwerken:inspectie",
         "page_path": "/lp/dakwerken",
@@ -59,13 +55,10 @@
         "firstName": "Test",
         "lastName": "Kaart",
         "name": "Test Kaart",
-        "email": "test@voorbeeld.be",
         "phone": "0400 00 00 00",
-        "postalCode": "2830",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Hellend dak · Werk: Dakrenovatie / Nieuw dak · Isolatie: Ja · Asbest: Nee",
-        "adres_project": "2830",
+        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Hellend dak · Werk: Dakrenovatie / Nieuw dak · Isolatie: Ja · Asbest: Nee · Start: Zo snel mogelijk",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:dakwerken:inspectie",
         "page_path": "/lp/dakwerken",
@@ -77,7 +70,7 @@
         "utm_term": "dak vernieuwen",
         "gclid": "TEST-KAART"
       },
-      "metingInUitFlows": "19 okt 2026: aanvraagkaart bovenaan (Aanvraag.tsx). Verwacht = de payload van het formulier onderaan (Inspectie.tsx, zelfde bron_lead lp:dakwerken:inspectie) met de antwoorden van de klikvragen in aanvullende_info; veldvolgorde van leads.ts buildBody."
+      "metingInUitFlows": "19 okt 2026: aanvraagkaart bovenaan (Aanvraag.tsx). Verwacht = de payload van het formulier onderaan (Inspectie.tsx, zelfde bron_lead lp:dakwerken:inspectie) met de antwoorden van de klikvragen in aanvullende_info; veldvolgorde van leads.ts buildBody. 22 okt 2026 (Mohammed: \"EN TIS ENKEL lp dakwerken en lp totaalrenovatie\", de formulierwijzigingen van 21 okt ook op dak): vijfde klikvraag Start (\"Wanneer wilt u beginnen?\"), contactstap alleen Naam* en Gsm*, dus zonder email, postalCode en adres_project; onderaan dezelfde klikkaart (Aanvraag.tsx plek=\"onder\") met het form_start-label en bron_lead_detail van het oude formulier (lp:dakwerken:inspectie, zonder :hero)."
     },
     {
       "naam": "aanvraag-match-plat",
@@ -88,7 +81,8 @@
       "antwoorden": [
         "Herstelling",
         "Weet ik nog niet",
-        "Weet ik niet"
+        "Weet ik niet",
+        "Ik verken nog"
       ],
       "velden": {
         "naam": "Test Kaart",
@@ -109,7 +103,7 @@
         "phone": "0400 00 00 02",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Plat dak · Werk: Herstelling · Isolatie: Weet ik nog niet · Asbest: Weet ik niet",
+        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Plat dak · Werk: Herstelling · Isolatie: Weet ik nog niet · Asbest: Weet ik niet · Start: Ik verken nog",
         "bron_lead": "Website",
         "bron_lead_detail": "lp:dakwerken:inspectie",
         "page_path": "/lp/dakwerken",
@@ -128,7 +122,7 @@
         "phone": "0400 00 00 02",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Plat dak · Werk: Herstelling · Isolatie: Weet ik nog niet · Asbest: Weet ik niet",
+        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Plat dak · Werk: Herstelling · Isolatie: Weet ik nog niet · Asbest: Weet ik niet · Start: Ik verken nog",
         "bron_lead": "Website",
         "bron_lead_detail": "lp:dakwerken:inspectie",
         "page_path": "/lp/dakwerken",
@@ -136,23 +130,30 @@
         "source": "landing_page",
         "utm_term": "plat dak renoveren"
       },
-      "metingInUitFlows": "19 okt 2026: aanvraagkaart bovenaan (Aanvraag.tsx). Verwacht = de payload van het formulier onderaan (Inspectie.tsx, zelfde bron_lead lp:dakwerken:inspectie) met de antwoorden van de klikvragen in aanvullende_info; veldvolgorde van leads.ts buildBody. 20 okt 2026: de naam is op de aanvraagkaart verplicht (Vul uw naam in.); deze flow typt dus ook een naam, en leads.ts splitst die in firstName + lastName."
+      "metingInUitFlows": "19 okt 2026: aanvraagkaart bovenaan (Aanvraag.tsx). Verwacht = de payload van het formulier onderaan (Inspectie.tsx, zelfde bron_lead lp:dakwerken:inspectie) met de antwoorden van de klikvragen in aanvullende_info; veldvolgorde van leads.ts buildBody. 20 okt 2026: de naam is op de aanvraagkaart verplicht (Vul uw naam in.); deze flow typt dus ook een naam, en leads.ts splitst die in firstName + lastName. 22 okt 2026 (Mohammed: \"EN TIS ENKEL lp dakwerken en lp totaalrenovatie\", de formulierwijzigingen van 21 okt ook op dak): vijfde klikvraag Start (\"Wanneer wilt u beginnen?\"), contactstap alleen Naam* en Gsm*, dus zonder email, postalCode en adres_project; onderaan dezelfde klikkaart (Aanvraag.tsx plek=\"onder\") met het form_start-label en bron_lead_detail van het oude formulier (lp:dakwerken:inspectie, zonder :hero)."
     },
     {
-      "naam": "inspectie",
-      "soort": "inspectie",
+      "naam": "aanvraag-onder",
+      "soort": "aanvraag",
       "query": "",
       "marketing": false,
-      "wortel": ".kgj-reken--inspectie",
+      "wortel": "#contact .kgj-reken--aanvraag",
+      "antwoorden": [
+        "Plat dak",
+        "Herstelling",
+        "Nee",
+        "Weet ik niet",
+        "Dit jaar"
+      ],
       "velden": {
         "naam": "Test Kaart",
-        "telefoon": "0400 00 00 01",
-        "@pg": "2830"
+        "telefoon": "0400 00 00 01"
       },
       "formStart": "lp:dakwerken:inspectie",
       "toestemming": true,
       "bedankt": "/bedankt?dienst=dakwerken",
       "fouten": {
+        "leegNaam": "Vul uw naam in.",
         "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",
         "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
       },
@@ -161,11 +162,9 @@
         "lastName": "Kaart",
         "name": "Test Kaart",
         "phone": "0400 00 00 01",
-        "postalCode": "2830",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis dakinspectie",
-        "adres_project": "2830",
+        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Plat dak · Werk: Herstelling · Isolatie: Nee · Asbest: Weet ik niet · Start: Dit jaar",
         "bron_lead": "Website",
         "bron_lead_detail": "lp:dakwerken:inspectie",
         "page_path": "/lp/dakwerken",
@@ -181,18 +180,83 @@
         "lastName": "Kaart",
         "name": "Test Kaart",
         "phone": "0400 00 00 01",
-        "postalCode": "2830",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis dakinspectie",
-        "adres_project": "2830",
+        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Plat dak · Werk: Herstelling · Isolatie: Nee · Asbest: Weet ik niet · Start: Dit jaar",
         "bron_lead": "Website",
         "bron_lead_detail": "lp:dakwerken:inspectie",
         "page_path": "/lp/dakwerken",
         "landing_division": "ab_dakwerken",
         "source": "landing_page"
       },
-      "metingInUitFlows": "dak-inspectie"
+      "metingInUitFlows": "22 okt 2026 (Mohammed: \"EN TIS ENKEL lp dakwerken en lp totaalrenovatie\", de formulierwijzigingen van 21 okt ook op dak): vijfde klikvraag Start (\"Wanneer wilt u beginnen?\"), contactstap alleen Naam* en Gsm*, dus zonder email, postalCode en adres_project; onderaan dezelfde klikkaart (Aanvraag.tsx plek=\"onder\") met het form_start-label en bron_lead_detail van het oude formulier (lp:dakwerken:inspectie, zonder :hero)."
+    },
+    {
+      "naam": "aanvraag-onder-marketing",
+      "soort": "aanvraag",
+      "query": "?utm_source=google&utm_medium=cpc&utm_campaign=dakrenovatie&utm_term=dakwerken",
+      "marketing": true,
+      "wortel": "#contact .kgj-reken--aanvraag",
+      "antwoorden": [
+        "Hellend dak",
+        "Ik wil dat een expert mijn dak inspecteert",
+        "Weet ik nog niet",
+        "Nee",
+        "Volgend jaar"
+      ],
+      "velden": {
+        "naam": "Test Kaart",
+        "telefoon": "0400 00 00 03"
+      },
+      "formStart": "lp:dakwerken:inspectie",
+      "toestemming": false,
+      "bedankt": "/bedankt?dienst=dakwerken",
+      "fouten": {
+        "leegNaam": "Vul uw naam in.",
+        "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",
+        "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
+      },
+      "ghl": {
+        "firstName": "Test",
+        "lastName": "Kaart",
+        "name": "Test Kaart",
+        "phone": "0400 00 00 03",
+        "country": "BE",
+        "type_werk": "AB Dakwerken",
+        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Hellend dak · Werk: Ik wil dat een expert mijn dak inspecteert · Isolatie: Weet ik nog niet · Asbest: Nee · Start: Volgend jaar",
+        "bron_lead": "Google Ads",
+        "bron_lead_detail": "lp:dakwerken:inspectie",
+        "page_path": "/lp/dakwerken",
+        "landing_division": "ab_dakwerken",
+        "source": "landing_page",
+        "utm_source": "google",
+        "utm_medium": "cpc",
+        "utm_campaign": "dakrenovatie",
+        "utm_term": "dakwerken"
+      },
+      "web3forms": {
+        "access_key": "b01e4fea-3e73-418b-b65a-acfb1d3ee43c",
+        "subject": "Nieuwe AB Bouw lead (landing_page), Test Kaart",
+        "from_name": "AB Bouw website",
+        "to": "info@abgroep.be",
+        "firstName": "Test",
+        "lastName": "Kaart",
+        "name": "Test Kaart",
+        "phone": "0400 00 00 03",
+        "country": "BE",
+        "type_werk": "AB Dakwerken",
+        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Hellend dak · Werk: Ik wil dat een expert mijn dak inspecteert · Isolatie: Weet ik nog niet · Asbest: Nee · Start: Volgend jaar",
+        "bron_lead": "Google Ads",
+        "bron_lead_detail": "lp:dakwerken:inspectie",
+        "page_path": "/lp/dakwerken",
+        "landing_division": "ab_dakwerken",
+        "source": "landing_page",
+        "utm_source": "google",
+        "utm_medium": "cpc",
+        "utm_campaign": "dakrenovatie",
+        "utm_term": "dakwerken"
+      },
+      "metingInUitFlows": "22 okt 2026 (Mohammed: \"EN TIS ENKEL lp dakwerken en lp totaalrenovatie\", de formulierwijzigingen van 21 okt ook op dak): vijfde klikvraag Start (\"Wanneer wilt u beginnen?\"), contactstap alleen Naam* en Gsm*, dus zonder email, postalCode en adres_project; onderaan dezelfde klikkaart (Aanvraag.tsx plek=\"onder\") met het form_start-label en bron_lead_detail van het oude formulier (lp:dakwerken:inspectie, zonder :hero)."
     }
   ]
 }

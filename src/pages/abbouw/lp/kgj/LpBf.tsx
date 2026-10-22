@@ -1,14 +1,13 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { CONTACT } from '@/data/contact';
 import Rekenaar from './Rekenaar';
-import Aanvraag from './Aanvraag';
+import Aanvraag, { badgeIcoon } from './Aanvraag';
 import Inspectie from './Inspectie';
 import ChatAssistent from './ChatAssistent';
 import Werkspoor from './Werkspoor';
 import { Icoon } from './Iconen';
 import { IcChevron } from '../replica/Iconen';
 import { DAKWERKEN, type KgjInhoud, type Sectie, type StapIcoon } from './inhoud';
-import { Award, ShieldCheck, UserCheck } from 'lucide-react';
 import { CLARITY_PROJECT, laadClarity, meldClarity } from '@/lib/clarity';
 import logoWit from '@/assets/bf/logo-wit-440.webp';
 import logoInk from '@/assets/bf/logo-ink-440.webp';
@@ -736,7 +735,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                   <div className="bf-lphero__gerust">
                     <ul className="bf-lphero__vinkjes">
                       {vertrouwen.map((t, i) => {
-                        const Teken = inhoud.aanvraag?.badges ? [ShieldCheck, UserCheck, Award][i] : undefined;
+                        const Teken = inhoud.aanvraag?.badges ? badgeIcoon(t, i) : undefined;
                         return <li key={t}><span>{Teken ? <Teken aria-hidden="true" /> : <IcVink />}</span>{metVet(t)}</li>;
                       })}
                     </ul>

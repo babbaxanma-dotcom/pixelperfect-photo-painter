@@ -118,9 +118,9 @@ export type KgjInhoud = {
       de rekenaarkaart; vrijMoment: het eerstvolgende vrije plaatsbezoek uit de agenda onder de kaartkop (sinds 22 okt 2026 op geen enkele
       pagina meer aan, Mohammed: "haal weg ... die volgende moment"; de vlag en VrijMoment in LpBf bestaan nog). */
   aanvraag?: { titel: string; tijd: string; vragen: Vraag[]; contactKop: string; vertrouwen?: string[];
-    trustrij?: { b: string; s: string; icoon?: 'kalender' | 'gereedschap' }[]; vrijMoment?: boolean;
+    trustrij?: { b: string; s: string; icoon?: 'kalender' | 'gereedschap' | 'schild' }[]; vrijMoment?: boolean;
     /** Welke velden de contactstap heeft naast Naam* en Gsm* (22 okt 2026, renovatiepagina's: "verwijder email form,
-        verwijder postcode form"). Zonder deze instelling staan beide aan, zoals op de dakkaart. */
+        verwijder postcode form"; dezelfde dag ook /lp/dakwerken). Zonder deze instelling staan beide aan. */
     contactVelden?: { email?: boolean; postcode?: boolean };
     /** Rustig blokje met vinkje direct boven de verzendknop: wat de bezoeker precies krijgt. Het deel voor de eerste
         dubbele punt komt vet. */
@@ -276,12 +276,30 @@ export const DAKWERKEN: KgjInhoud = {
       { sleutel: 'Asbest', vraag: 'Zit er asbest in uw dak?', keuzes: [
         { label: 'Ja', icoon: 'asbest' }, { label: 'Nee', icoon: 'veilig' }, { label: 'Weet ik niet', icoon: 'twijfel' },
       ] },
+      /* 22 okt 2026, Mohammed: "voeg 1 extra vraag toe dat nuttig is", voor /lp/dakwerken en /lp/totaalrenovatie ("EN TIS ENKEL lp
+         dakwerken en lp totaalrenovatie"). Renovatie kreeg het budget; bij een dak is de start het nuttigst: een lek of "Zo snel
+         mogelijk" belt AB eerst. Vraag, keuzes en iconen woordelijk van de startvraag van de dakrekenaar hieronder (sleutel Start). */
+      { sleutel: 'Start', vraag: 'Wanneer wilt u beginnen?', keuzes: [
+        { label: 'Zo snel mogelijk', icoon: 'snel' }, { label: 'Dit jaar', icoon: 'drie' },
+        { label: 'Volgend jaar', icoon: 'later' }, { label: 'Ik verken nog', icoon: 'verken' },
+      ] },
     ],
     contactKop: 'Bijna klaar! Bevestig uw gratis dakinspectie',
     /* De vinkjes en de trustrij van de rekenaarkaart die hier stond (13 okt). Alleen "Gratis & vrijblijvende richtprijs"
        werd "... dakinspectie": er is geen richtprijs meer, wel de gratis dakinspectie (kop van de kaart en van het slotblok). */
     vertrouwen: ['Gratis & vrijblijvende dakinspectie', 'Vakmanschap tot in de details', '6% btw-tarief (woningen > 10 jaar)'],
-    trustrij: [{ b: '10 jaar', s: 'garantie' }, { b: '15 jaar', s: 'ervaring' }],
+    /* 22 okt 2026, Mohammed (21 okt gevraagd, toen alleen op de renovatiepagina's gezet; 22 okt: "je hebt veel vergeten", "DIE FORMS",
+       "die visuele dingetjes", "EN TIS ENKEL lp dakwerken en lp totaalrenovatie"): hetzelfde als op /lp/totaalrenovatie.
+       Trust badges: tegels met iconen, zelfde teksten en cijfers; schild bij de garantie, kalender bij de jaren ervaring. */
+    trustrij: [{ b: '10 jaar', s: 'garantie', icoon: 'schild' }, { b: '15 jaar', s: 'ervaring', icoon: 'kalender' }],
+    badges: true,
+    /* "verwijder email form, verwijder postcode form": de contactstap heeft alleen nog Naam* en Gsm*. */
+    contactVelden: { email: false, postcode: false },
+    /* "een disclaimer zo wat ze precies krijgen, krijg vrijblijvend advies en weet waar u aan toe bent". Volgt het slotblok
+       ("We bekijken uw dak ter plaatse", "Samen overlopen we de bevindingen", "U ontvangt een vrijblijvende offerte"). */
+    disclaimer: 'Wat u krijgt: een gratis dakinspectie met vrijblijvend advies. Daarna weet u waar u aan toe bent en ontvangt u een offerte voor precies wat uw dak nodig heeft.',
+    /* "onderaan ... de form zo dat je makkelijk kan klikken": onderaan dezelfde klikkaart in plaats van het formulier van Inspectie. */
+    onder: true,
   },
 
   rekenaar: {
@@ -503,7 +521,8 @@ export const DAKWERKEN: KgjInhoud = {
     onder: 'U weet vooraf wat er gebeurt en wanneer.',
     stappen: [
       { titel: 'Aanvraag', tekst: 'U doet uw aanvraag via het formulier hieronder of rechtstreeks telefonisch.' },
-      { titel: 'Dakinspectie', tekst: 'Binnen enkele werkdagen doen we de inspectie en bekijken we samen de bevindingen.' },
+      /* 22 okt 2026, Mohammed: "weg" (de termijn "Binnen enkele werkdagen"). "Ter plaatse" staat al in het slotblok. */
+      { titel: 'Dakinspectie', tekst: 'We inspecteren uw dak ter plaatse en bekijken samen de bevindingen.' },
       /* Stond eerst "Elke post staat apart op papier": dat is nu de derde
          reden in het waarom-blok. Twee keer dezelfde belofte op één pagina
          leest als vulling, dus deze stap draagt het geruststellende deel. */
