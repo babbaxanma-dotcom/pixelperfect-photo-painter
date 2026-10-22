@@ -169,8 +169,9 @@ export const TOTAALRENOVATIE_REKENAAR: KgjInhoud = {
     zeker: 'Gratis en vrijblijvend',
     /* 13 okt avond: vinkjes en trustrij zoals /lp/dakwerken. Vinkjes = Mohammeds drie hero-puntjes van vandaag. Trustrij:
        "16 jaar ervaring" en "6 verschillende vakdisciplines onder één dak" = dictaat 4 okt (/over). Geen 10 jaar garantie
-       bij renovatie (Mohammed, 28 sept). */
-    vertrouwen: ['100% Budgetgarantie', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details'],
+       bij renovatie (Mohammed, 28 sept). 22 okt 2026, Mohammed: "100 procent budget garantie haal dat overal uit, doe gewoon, vaste
+       prijs vooraf". */
+    vertrouwen: ['Vaste prijs vooraf', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details'],
     trustrij: [{ b: '16 jaar', s: 'ervaring' }, { b: '6', s: 'vakdisciplines' }],
     vragen: [
       { sleutel: 'Woning', vraag: 'Wat voor woning wilt u renoveren?', raster: true, keuzes: [
@@ -255,7 +256,7 @@ export const TOTAALRENOVATIE_REKENAAR: KgjInhoud = {
     redenen: [
       { titel: 'Naadloze planning', tekst: 'Omdat we alle expertises zelf in huis hebben, volgen de werken elkaar vlot op zonder wachttijden.' },
       { titel: 'Propere werf', tekst: 'Onze vaste ploeg dekt alles netjes af en laat de werf élke avond opgeruimd achter.' },
-      { titel: 'Zekerheid vooraf', tekst: 'Met onze vaste prijsgarantie weet u vooraf exact wat uw totale renovatie gaat kosten.' },
+      { titel: 'Zekerheid vooraf', tekst: 'Met onze vaste prijs weet u vooraf exact wat uw totale renovatie gaat kosten.' },
     ],
     duo: [
       { src: keukeneiland, alt: 'Keukeneiland met barkrukken na renovatie door AB Bouw Groep' },
@@ -374,8 +375,9 @@ export const TOTAALRENOVATIE_REKENAAR: KgjInhoud = {
     lijst: [
       { v: 'Kan ik in huis blijven wonen tijdens de werken?',
         a: 'In de meeste gevallen is dat mogelijk. Dit is uiteraard afhankelijk van de omvang van de renovatie. We bespreken dit altijd tijdens het plaatsbezoek en plannen de werkzaamheden zo in dat u, indien nodig, de essentiële voorzieningen kunt blijven gebruiken en we de hinder tot een absoluut minimum beperken.' },
-      { v: 'Hoe werkt jullie budgetgarantie precies?',
-        a: 'AB Bouw Groep hanteert een strikte 100% budgetgarantie. De prijs op de offerte na het plaatsbezoek is de prijs die u betaalt. Eventueel meerwerk komt uitsluitend voor als u tijdens het traject zélf besluit om aanpassingen of extra wensen toe te voegen. Dit wordt altijd vooraf en transparant met u besproken.' },
+      /* 22 okt 2026, Mohammed: geen budgetgarantie meer, "vaste prijs vooraf". De rest van het antwoord blijft letterlijk. */
+      { v: 'Hoe werkt de vaste prijs vooraf?',
+        a: 'De prijs op de offerte na het plaatsbezoek is de prijs die u betaalt. Eventueel meerwerk komt uitsluitend voor als u tijdens het traject zélf besluit om aanpassingen of extra wensen toe te voegen. Dit wordt altijd vooraf en transparant met u besproken.' },
       { v: 'Kan ik de werken ook in fases laten uitvoeren?',
         a: 'Ja, u kunt de renovatie ook in fases laten uitvoeren. Tijdens het adviesgesprek denken we graag met u mee over de meest logische en kostenefficiënte volgorde, bijvoorbeeld eerst de schil (dak en gevel) en later de binnenafwerking.' },
       { v: 'Regelen jullie ook de vergunningen?',
@@ -416,7 +418,8 @@ export const TOTAALRENOVATIE_REKENAAR: KgjInhoud = {
     /* 5 okt, blauwdruk: "Bevestig mijn gratis plaatsbezoek", velden en labels letterlijk. */
     knop: 'Bevestig mijn gratis plaatsbezoek',
     knopPijl: true,
-    onder: 'Wij bellen u binnen één werkdag om een moment af te spreken.',
+    /* 22 okt 2026, Mohammed: geen termijn meer, ook niet op /lp/richtprijs-berekenen ("neemt zo snel mogelijk contact met u op"). */
+    onder: 'Wij nemen zo snel mogelijk contact met u op.',
     alt: 'Liever eerst een prijs? Bereken hem in 2 minuten',
     bronLead: 'lp:totaalrenovatie:inspectie',
     /* 5 okt, "de drie paginas": het uniforme formulier, velden en labels letterlijk. */
@@ -431,7 +434,7 @@ export const TOTAALRENOVATIE_REKENAAR: KgjInhoud = {
     },
     vertrouwen: [
       { icoon: 'slot', tekst: 'Wij gebruiken uw gegevens enkel voor deze aanvraag. Uw privacy is veilig.' },
-      { icoon: 'telefoon', tekst: 'We bellen u binnen 1 werkdag om de afspraak in te plannen.' },
+      { icoon: 'telefoon', tekst: 'Wij nemen zo snel mogelijk contact met u op.' },
       { icoon: 'euro', tekst: 'Zowel het plaatsbezoek als de daaropvolgende offerte zijn 100% gratis.' },
     ],
     /* Mohammed, 26 sep: "voeg een paar bijhorende dropdown menus of vragen toe, maar

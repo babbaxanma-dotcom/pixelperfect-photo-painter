@@ -50,6 +50,10 @@ const VERBODEN = [
   /* De teller "120+" staat in losse letters (fotoglyphs), dus met witruimte ertussen. */
   { naam: 'teller zonder bron', re: /1\s*2\s*0\s*\+\s*Realisaties/i },
   { naam: 'termijn zonder bron', re: /binnen vijf werkdagen/i },
+  /* 22 okt 2026, Mohammed: "100 procent budget garantie haal dat overal uit, doe gewoon, vaste prijs vooraf"; en geen terugbeltermijn
+     meer ("neemt zo snel mogelijk contact met u op"). */
+  { naam: 'budgetgarantie (Mohammed 22 okt: eruit)', re: /budget\s*-?\s*garantie|prijsgarantie/i },
+  { naam: 'terugbeltermijn (Mohammed 22 okt: eruit)', alleen: /^\/lp\//, re: /binnen (één|een|1) werkdag/i },
   /* Namen van reviews die niet op het Google-profiel van AB staan (uit de oude site). */
   { naam: 'review met naam zonder bron', re: /Nathalie Aerts|Inge Vermeiren|Dirk Maes|Hilde Goossens|Geert Verbeke|Saïda El Khatib|Yusuf Demir|Jasmien De Backer|Dimitri Maes|Hicham Bouali|Greet Vermeiren|Ahmed Karimi|Tine Maes/ },
   /* Een euroteken met een bedrag waarin een cijfer 1-9 staat ("€ 12.500", "€ 00.000 – 18.000"). Het vergrendelde

@@ -279,7 +279,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     if (tegels.map(norm).join('|') !== wil.join('|')) uit.push(`vertrouwensrij "${tegels.map(norm).join(' | ')}" in plaats van "${wil.join(' | ')}"`);
     if (tegels.some((t) => !t.querySelector('svg'))) uit.push('een tegel in de vertrouwensrij heeft geen icoon');
     const vinkjes = [...k.querySelectorAll('.kgj-reken__vertrouwen li')].map(norm);
-    const wilV = ['100% Budgetgarantie', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details'];
+    const wilV = ['Vaste prijs vooraf', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details']; // 22 okt 2026: geen budgetgarantie meer
     if (vinkjes.join('|') !== wilV.join('|')) uit.push(`vinkjes "${vinkjes.join(' | ')}" in plaats van "${wilV.join(' | ')}"`);
     if ([...k.querySelectorAll('.kgj-reken__vertrouwen li')].some((l) => !l.querySelector('svg'))) uit.push('een vinkje heeft geen icoon');
     const g = document.querySelector('.bf-lphero__google b')?.textContent.trim();

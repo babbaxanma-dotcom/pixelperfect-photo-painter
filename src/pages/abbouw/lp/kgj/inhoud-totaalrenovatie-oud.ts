@@ -86,7 +86,7 @@ export const TOTAALRENOVATIE_OUD: KgjInhoud = {
        woning.", dan Mohammed: "eruit in de subheadline bij totaalrenovatie". Leeg = geen regel. */
     onder: '',
     /* 4 okt, plan desktop-hero (Mohammed): drie USP's, het deel voor de dubbelepunt in het vet. */
-    bewijs: ['100% Budgetgarantie: Geen onverwachte meerkosten achteraf.', 'Complete A-tot-Z Begeleiding: Van ontwerp en vergunning tot afwerking.', 'Maximale Premie-ondersteuning: Volledige begeleiding bij de Mijn VerbouwPremie.'],
+    bewijs: ['Vaste prijs vooraf: Geen onverwachte meerkosten achteraf.', 'Complete A-tot-Z Begeleiding: Van ontwerp en vergunning tot afwerking.', 'Maximale Premie-ondersteuning: Volledige begeleiding bij de Mijn VerbouwPremie.'],
     /* Mohammed, 26 sep: "laat enkel de keuken foto, badkamerrenovatie foto van
        abgroep die we bij badkamerrenovatie lp in de sectie hebben onder hero, en
        dan nog die leefruimte echte foto". De badkamer is de foto uit de sectie
@@ -314,7 +314,7 @@ export const TOTAALRENOVATIE_OUD: KgjInhoud = {
   inspectie: {
     kop: 'Plan uw plaatsbezoek',
     knop: 'Vraag uw gratis plaatsbezoek aan',
-    onder: 'Wij bellen u binnen één werkdag om een moment af te spreken.',
+    onder: 'Wij nemen zo snel mogelijk contact met u op.',
     alt: 'Liever eerst een prijs? Bereken hem in 2 minuten',
     bronLead: 'lp:totaalrenovatie:inspectie',
     /* Mohammed, 26 sep: "voeg een paar bijhorende dropdown menus of vragen toe, maar
