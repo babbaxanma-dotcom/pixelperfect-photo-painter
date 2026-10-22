@@ -15,7 +15,7 @@
  * Foto's: alleen echte werffoto's van AB uit lp-diensten/realisaties, plus de
  * uitbouw van de homepage (uitbreiding-voor/na) in de voor/na-schuif.
  */
-import type { KgjInhoud } from './inhoud';
+import type { KgjInhoud, Vraag } from './inhoud';
 import type { IcoonNaam } from './Iconen';
 import { DIVISIES } from '../../_divisies';
 
@@ -457,6 +457,22 @@ const AANVRAAG_ICOON: Record<string, IcoonNaam> = {
   'Zo snel mogelijk': 'snel', 'Binnen 6 maanden': 'drie', 'Volgend jaar': 'later', 'Ik verken nog': 'verken',
 };
 
+/* 22 okt 2026, Mohammed: "voeg 1 extra vraag toe dat nuttig is"; "Heeft u al een plan of tekening" vond hij "een rare vraag", dus
+   het budget. Vijf klikkeuzes als lijst, de laatste neutraal zodat niemand vastzit. Laatste vraag van de kaart (na de start),
+   alleen op de aanvraagkaart: de rekenaarpagina /lp/richtprijs-berekenen houdt zijn twee keuzelijsten (inspectie.extra).
+   Iconen uit de bestaande set: de vier vakjes van de oppervlaktevraag lopen op van één naar vier gevuld, "Weet ik nog niet" is
+   het vraagteken. De sleutel staat zo in aanvullende_info: "· Welk budget heeft u in gedachten: € 25.000 tot € 75.000". */
+const BUDGET_VRAAG: Vraag = {
+  sleutel: 'Welk budget heeft u in gedachten', vraag: 'Welk budget heeft u in gedachten?', lijst: true,
+  keuzes: [
+    { label: 'Minder dan € 25.000', icoon: 'maat1' },
+    { label: '€ 25.000 tot € 75.000', icoon: 'maat2' },
+    { label: '€ 75.000 tot € 150.000', icoon: 'maat3' },
+    { label: 'Meer dan € 150.000', icoon: 'maat4' },
+    { label: 'Weet ik nog niet', icoon: 'twijfel' },
+  ],
+};
+
 /* 19 okt 2026, opdracht Mohammed: "bouw de abgroep totaalrenovatie en dakwerken lp naar de nieuwe, dus rekenaar weg, en doe
    dat naar dakinspectie en gratis plaatsbezoek form bovenaan en andere headline en subheadline". "De nieuwe" = bfbouw.be
    /lp/dakwerken: bovenaan een aanvraagkaart met klikvragen en daarna de contactstap (Aanvraag.tsx), geen rekenaar.
@@ -483,15 +499,37 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     /* De klikvragen = de keuzelijsten van het formulier onderaan (inspectie.extra), met dezelfde labels en opties, in die
        volgorde. De sleutel is het label zonder vraagteken, zodat aanvullende_info in GHL er hetzelfde uitziet als bij het
        formulier onderaan ("Wat wilt u renoveren: Aanbouw · Wanneer wilt u starten: Volgend jaar"). */
-    vragen: (TOTAALRENOVATIE_REKENAAR.inspectie.extra ?? []).map((x) => ({
-      sleutel: x.label.replace(/\?$/, ''), vraag: x.label,
-      keuzes: x.opties.map((o) => ({ label: o, icoon: AANVRAAG_ICOON[o] })),
-    })),
+    vragen: [
+      ...(TOTAALRENOVATIE_REKENAAR.inspectie.extra ?? []).map((x) => ({
+        sleutel: x.label.replace(/\?$/, ''), vraag: x.label,
+        keuzes: x.opties.map((o) => ({ label: o, icoon: AANVRAAG_ICOON[o] })),
+      })),
+      BUDGET_VRAAG,
+    ],
     contactKop: 'Bijna klaar! Bevestig uw gratis plaatsbezoek',
-    /* Vinkjes en trustrij: dezelfde als op de rekenaarkaart die hier stond (13 okt). */
+    /* Vinkjes en trustrij: dezelfde teksten en cijfers als op de rekenaarkaart die hier stond (13 okt, dictaat 4 okt). Alleen de
+       vorm verandert (22 okt, Mohammed: "doe de trust badges duidelijker, visueel mooier"): tegels met iconen (badges). De iconen
+       staan bij de cijfers: kalender bij de jaren ervaring, gereedschap bij de vakdisciplines. */
     vertrouwen: TOTAALRENOVATIE_REKENAAR.rekenaar.vertrouwen,
-    trustrij: TOTAALRENOVATIE_REKENAAR.rekenaar.trustrij,
-    vrijMoment: true,
+    trustrij: TOTAALRENOVATIE_REKENAAR.rekenaar.trustrij?.map((c, i) => ({ ...c, icoon: (['kalender', 'gereedschap'] as const)[i] })),
+    /* 22 okt 2026, Mohammed: "haal weg bij abgroep die volgende moment": geen "Eerstvolgend vrij plaatsbezoek" meer in de kaart
+       (en dus geen free-slots-aanvraag naar de GHL-agenda op deze pagina's). De vlag vrijMoment is hier weg. */
+    badges: true,
+    /* 22 okt 2026, Mohammed: "verwijder email form, verwijder postcode form": de contactstap heeft alleen nog Naam en Gsm. */
+    contactVelden: { email: false, postcode: false },
+    /* 22 okt 2026, Mohammed: "een disclaimer zo wat ze precies krijgen, krijg vrijblijvend advies en weet waar u aan toe bent". Volgt de
+       subkop van de pagina ("Wij komen langs, bekijken uw woning en bespreken uw plannen. Daarna krijgt u een offerte ..."). */
+    disclaimer: 'Wat u krijgt: een gratis plaatsbezoek met vrijblijvend advies. Daarna weet u waar u aan toe bent en ontvangt u een offerte voor precies wat u wilt laten doen.',
+    /* 22 okt 2026, Mohammed: "bij abgroep totaalrenovatie ook onderaan bij plaatsbezoek de form zo dat je makkelijk kan klikken". */
+    onder: true,
+  },
+  /* 22 okt 2026, Mohammed (zijn dictaat voor BF: "neemt zo snel mogelijk contact met u op", geen termijn meer): geen "binnen één
+     werkdag" meer op /lp/totaalrenovatie en /lp/aannemer-renovatiewerken. /lp/richtprijs-berekenen houdt TOTAALRENOVATIE_REKENAAR
+     en dus zijn zinnen; de eigen versie staat hier. */
+  inspectie: {
+    ...TOTAALRENOVATIE_REKENAAR.inspectie,
+    onder: 'Wij nemen zo snel mogelijk contact met u op.',
+    vertrouwen: TOTAALRENOVATIE_REKENAAR.inspectie.vertrouwen?.map((v) => (v.icoon === 'telefoon' ? { ...v, tekst: 'Wij nemen zo snel mogelijk contact met u op.' } : v)),
   },
   /* Het vangnet ("Liever eerst een indicatie van de kosten?", knop naar de rekenaarpagina) is een rekenaar-ingang: weg. */
   vangnet: undefined,

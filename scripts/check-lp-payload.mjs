@@ -12,6 +12,12 @@
  * met hetzelfde bron_lead_detail als het slotformulier (lp:<pagina>:inspectie) en de antwoorden in aanvullende_info. De
  * rekenaarflows staan alleen nog in richtprijs-berekenen.json.
  *
+ * 22 okt 2026 (Mohammed): op /lp/totaalrenovatie en /lp/aannemer-renovatiewerken is ook de kaart onderaan (#contact) de klikkaart
+ * (Aanvraag.tsx plek="onder"): de flows "inspectie" en "inspectie-marketing" met keuzelijsten zijn vervangen door
+ * "aanvraag-onder" en "aanvraag-onder-marketing" (zelfde bron_lead_detail en form_start-label als het oude formulier, dus
+ * zonder :hero). De kaart bovenaan en onderaan hebben drie klikvragen (renovatie, start, budget) en alleen Naam* en Gsm* in
+ * de contactstap: de payloads hebben dan geen email, postalCode, city en adres_project (een extra of ontbrekend veld is een afwijking).
+ *
  * Per LP en per flow (rekenaar in de hero, rekenaar in het venster, aanvraagkaart, het slotformulier) doet deze toets wat een
  * bezoeker doet, onderschept elk verzoek naar services.leadconnectorhq.com en api.web3forms.com (nul echte leads)
  * en vergelijkt veld voor veld met de vaste referentie in scripts/fixtures/lp-payload/<lp>.json (gemeten op de

@@ -1,10 +1,16 @@
 #!/usr/bin/env node
 /**
- * check-lp-aanvraag: de aanvraagkaart bovenaan /lp/dakwerken, /lp/totaalrenovatie en /lp/aannemer-renovatiewerken.
+ * check-lp-aanvraag: de aanvraagkaart bovenaan (en op de renovatiepagina's ook onderaan) /lp/dakwerken, /lp/totaalrenovatie
+ * en /lp/aannemer-renovatiewerken.
  *
  * Aanleiding (19 okt 2026, opdracht Mohammed): "bouw de abgroep totaalrenovatie en dakwerken lp naar de nieuwe, dus
  * rekenaar weg, en doe dat naar dakinspectie en gratis plaatsbezoek form bovenaan en andere headline en subheadline".
  * De rekenaar blijft alleen op /lp/richtprijs-berekenen (prijs- en woningzoekwoorden, Mohammed 6 okt: "VOLLEDIG ZO LATEN").
+ * 22 okt 2026 (Mohammed), alleen /lp/totaalrenovatie en /lp/aannemer-renovatiewerken: onderaan bij het plaatsbezoek dezelfde
+ * klikkaart ("zo dat je makkelijk kan klikken") met een extra vraag (budget, 3 vragen + contactstap = 4 stappen); de contactstap
+ * heeft alleen nog Naam* en Gsm* ("verwijder email form, verwijder postcode form"); een disclaimer boven de knop; trust badges
+ * als tegels met iconen (zelfde teksten); geen "Eerstvolgend vrij plaatsbezoek" en geen free-slots-verzoek meer; geen termijn
+ * ("binnen één werkdag") in de kaart. Alleen /lp/dakwerken: het belblok "Lekt uw dak?" direct onder de hero.
  *
  * Per pagina, zoals een bezoeker:
  *   1. geen enkele rekenaar-ingang: geen rekenaarkaart (kgj-reken--hero / --venster), geen venster, geen vangnet, geen
@@ -13,11 +19,13 @@
  *   2. eerste gsm-scherm (390x844): het woord "gratis dakinspectie" (dak) of "gratis plaatsbezoek" (renovatie), de
  *      eerste klikvraag en al haar keuzes staan volledig in beeld;
  *   3. één tik = antwoord en meteen de volgende vraag ("Stap 1 van n" wordt "Stap 2 van n"), een tweede tik binnen
- *      200 ms slaat geen vraag over, Terug brengt de vorige vraag terug;
- *   4. de contactstap: de band "Bijna klaar! Bevestig uw gratis ...", de velden naam (verplicht), telefoon (verplicht),
- *      postcode of gemeente en e-mail, de knop = de knop van het formulier onderaan; versturen zonder naam geeft "Vul uw
- *      naam in." (20 okt 2026: de bevestigings-sms begint met "Dag {{voornaam}},", zonder naam stond er "Dag ,"),
- *      daarna met naam maar zonder gsm-nummer de gsm-melding; beide verzenden NIETS;
+ *      200 ms slaat geen vraag over, Terug brengt de vorige vraag terug; op de renovatiepagina's geldt dat voor de kaart
+ *      bovenaan (#rekenaar) én voor de kaart onderaan (#contact);
+ *   4. de contactstap: de band "Bijna klaar! Bevestig uw gratis ...", de velden naam (verplicht) en telefoon (verplicht) en
+ *      op /lp/dakwerken ook postcode of gemeente en e-mail; op de renovatiepagina's EXACT twee velden (geen e-mail-, geen
+ *      postcodeveld) en een disclaimer direct boven de knop met de vaste tekst; de knop = de knop van het formulier
+ *      onderaan; versturen zonder naam geeft "Vul uw naam in." (20 okt 2026: de bevestigings-sms begint met "Dag
+ *      {{voornaam}},"), daarna met naam maar zonder gsm-nummer de gsm-melding; beide verzenden NIETS;
  *   5. message match (dak): ?utm_term=plat dak toont de kop "Dé specialist voor uw platte dak" en de kaart begint bij
  *      vraag 2 ("Stap 2 van 5"); Terug geeft vraag 1. Zonder utm_term begint ze bij vraag 1.
  *   6. de kop (h1) is de afgesproken kop en geen werkwijze-kop. 20 okt 2026, Mohammed over "Laat uw dak gratis
@@ -25,14 +33,28 @@
  *      de bezoeker een opdracht geeft over de inspectie, het plaatsbezoek of de offerte gaat over onze werkwijze, niet over
  *      zijn huis, en herhaalt het aanbod dat de kaart al noemt (memory feedback_hook_gaat_over_het_huis, punt 5). Het
  *      aanbod hoort in de subkop en de kaart.
+ *   7. onderaan (#contact): op de renovatiepagina's de klikkaart en géén keuzelijst (<select>) en geen formulier van
+ *      Inspectie; op /lp/dakwerken blijft het formulier van Inspectie; er staat precies één element #rekenaar;
+ *   8. geen "Eerstvolgend vrij ..." in de tekst en geen verzoek naar free-slots (de GHL-agenda) op de drie pagina's
+ *      (22 okt 2026, Mohammed: "haal weg bij abgroep die volgende moment");
+ *   9. badges (renovatie): de vertrouwensrij in de kaart is drie tegels met een icoon en de teksten/cijfers blijven letterlijk
+ *      "5,0", "16 jaar ervaring", "6 vakdisciplines"; de drie vinkjes en "5,0 op Google" idem; /lp/dakwerken heeft ze niet;
+ *  10. belblok (alleen /lp/dakwerken, 22 okt 2026): kop "Lekt uw dak?", knop "Bel direct <nummer>" met dezelfde tel:-href als
+ *      de belknop in de kop, link "Geen haast? Vraag uw gratis dakinspectie aan" naar #rekenaar; staat buiten de hero, na de
+ *      hero, binnen de eerste 1500 px op de gsm, zonder schaduw en kaart; geen "24/7", "meteen", "binnen", "nood", tijden;
+ *      op de gsm gestapeld met een knop van minstens 48 px en volle breedte; Clarity-events dak-bel-blok en
+ *      dak-bel-blok-inspectie bij een klik; NIET op de renovatiepagina's en NIET op /lp/richtprijs-berekenen;
+ *  11. geen horizontale scroll.
  * Wat er bij een volledige aanvraag naar GHL en Web3Forms gaat (bron_lead, aanvullende_info, Toestemming, /bedankt),
  * toetst check-lp-payload veld voor veld.
  *
- * Positieve controles (zonder: exit 2): /lp/richtprijs-berekenen (de rekenaarpagina) moet op punt 1 falen; een kaart
- * die 900 px lager staat (geplante CSS) moet op punt 2 falen; een tik die niets doet (geplante pointer-events: none op de
- * keuzes) moet op punt 3 falen.
+ * Positieve controles (zonder: exit 2): /lp/richtprijs-berekenen (de rekenaarpagina) moet op punt 1 falen en op punt 7 en 10;
+ * een kaart die 900 px lager staat (geplante CSS) moet op punt 2 falen; een tik die niets doet (geplante pointer-events: none
+ * op de keuzes) moet op punt 3 falen; /lp/dakwerken (zonder disclaimer) moet de disclaimertoets laten falen; een geplante
+ * tekst "Eerstvolgend ..." plus een geplande free-slots-aanvraag moeten punt 8 laten falen.
  * Niets gaat naar buiten: GHL en Web3Forms krijgen een leeg antwoord (en worden geteld: elke telling > 0 is een fout),
- * Clarity en Google-tags een leeg script, tel: en mailto: worden afgebroken.
+ * de free-slots-aanvraag wordt geteld en beantwoord, Clarity en Google-tags krijgen een leeg script, tel: en mailto: worden
+ * afgebroken.
  *
  * Draaien:  node scripts/check-lp-aanvraag.cjs                       (start zelf een vite dev-server)
  *           LP_BASIS=http://localhost:8080 node scripts/check-lp-aanvraag.cjs
@@ -55,16 +77,22 @@ const kopFouten = (h1, verwacht) => {
   return uit;
 };
 
+const HERO = '#rekenaar .kgj-reken--aanvraag';
+const ONDER = '#contact .kgj-reken--aanvraag';
+const DISCLAIMER = 'Wat u krijgt: een gratis plaatsbezoek met vrijblijvend advies. Daarna weet u waar u aan toe bent en ontvangt u een offerte voor precies wat u wilt laten doen.';
+
 const DAK = {
-  pad: '/lp/dakwerken', kop: 'Dé specialist voor uw nieuwe dak', woord: 'gratis dakinspectie', vraag1: 'Wat voor dak heeft u?', keuzes1: ['Hellend dak', 'Plat dak'],
+  pad: '/lp/dakwerken', soort: 'dak', kop: 'Dé specialist voor uw nieuwe dak', woord: 'gratis dakinspectie', vraag1: 'Wat voor dak heeft u?', keuzes1: ['Hellend dak', 'Plat dak'],
   pad1: ['Hellend dak', 'Dakrenovatie / Nieuw dak', 'Ja', 'Nee'], vraag2: 'Wat moet er aan uw dak gebeuren?',
   band: 'Bijna klaar! Bevestig uw gratis dakinspectie', knop: 'Vraag uw gratis dakinspectie aan', stappen: 5,
 };
 const RENO = (pad) => ({
-  pad, kop: 'Jouw complete renovatie, perfect geregeld van A tot Z.', woord: 'gratis plaatsbezoek', vraag1: 'Wat wilt u renoveren?',
+  pad, soort: 'reno', kop: 'Jouw complete renovatie, perfect geregeld van A tot Z.', woord: 'gratis plaatsbezoek', vraag1: 'Wat wilt u renoveren?',
   keuzes1: ['De hele woning (totaalrenovatie)', 'Gedeeltelijke renovatie', 'Aanbouw', 'Specifieke werken'],
-  pad1: ['Gedeeltelijke renovatie', 'Zo snel mogelijk'], vraag2: 'Wanneer wilt u starten?',
-  band: 'Bijna klaar! Bevestig uw gratis plaatsbezoek', knop: 'Bevestig mijn gratis plaatsbezoek', stappen: 3,
+  /* de derde vraag (22 okt 2026): het budget, vijf keuzes als lijst, de laatste neutraal */
+  pad1: ['Gedeeltelijke renovatie', 'Zo snel mogelijk', '€ 25.000 tot € 75.000'], vraag2: 'Wanneer wilt u starten?',
+  vraag3: 'Welk budget heeft u in gedachten?', keuzes3: ['Minder dan € 25.000', '€ 25.000 tot € 75.000', '€ 75.000 tot € 150.000', 'Meer dan € 150.000', 'Weet ik nog niet'],
+  band: 'Bijna klaar! Bevestig uw gratis plaatsbezoek', knop: 'Bevestig mijn gratis plaatsbezoek', stappen: 4,
 });
 const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiewerken')];
 
@@ -86,6 +114,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
   const open = async (url, { gsm = true, css = null } = {}) => {
     const ctx = await br.createBrowserContext();
     const p = await ctx.newPage();
+    const slots = [];
     await p.setRequestInterception(true);
     p.on('request', (r) => {
       const u = r.url();
@@ -94,6 +123,8 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
         if (r.method() !== 'OPTIONS') leads++;
         return r.respond({ status: 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*', 'access-control-allow-headers': 'content-type' }, body: '{}' });
       }
+      /* de agenda van GHL (eerstvolgend vrij moment): tellen en leeg beantwoorden, nooit het echte verzoek */
+      if (/free-slots/.test(u)) { slots.push(u); return r.respond({ status: 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: '{}' }); }
       if (/clarity\.ms|googletagmanager\.com|google-analytics\.com|googleadservices\.com|doubleclick\.net/.test(u)) return r.respond({ status: 200, contentType: 'application/javascript', body: '' });
       if (!/^(127\.0\.0\.1|localhost)$/.test(new URL(u).hostname) && r.method() !== 'GET') return r.abort();
       return r.continue();
@@ -109,7 +140,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     /* geplante fout voor een positieve controle: CSS na het laden */
     if (css) await p.addStyleTag({ content: css });
     await wacht(700);
-    return { p, ctx };
+    return { p, ctx, slots };
   };
 
   /* 1. Rekenaar-ingangen en rekenaarwoorden. */
@@ -130,13 +161,13 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
   }, VERBODEN.source);
 
   /* 2. Eerste gsm-scherm: woord, vraag 1 en elke keuze volledig binnen 0-844. */
-  const eersteScherm = (p, pg) => p.evaluate((pg) => {
+  const eersteScherm = (p, pg) => p.evaluate((pg, HERO) => {
     const H = innerHeight;
     const zicht = (el) => { const r = el.getBoundingClientRect(); const cs = getComputedStyle(el); return r.height > 0 && r.top >= 0 && r.bottom <= H && cs.visibility !== 'hidden' && cs.display !== 'none' && Number(cs.opacity) > 0.5; };
     const uit = [];
     const metWoord = [...document.querySelectorAll('h1, p, span, b, strong, li')].filter((e) => e.textContent.toLowerCase().includes(pg.woord) && zicht(e));
     if (!metWoord.length) uit.push(`"${pg.woord}" staat niet in het eerste scherm`);
-    const kaart = document.querySelector('.kgj-reken--aanvraag');
+    const kaart = document.querySelector(HERO);
     if (!kaart) return [...uit, 'geen aanvraagkaart'];
     const vraag = kaart.querySelector('.kgj-reken__vraag');
     if (!vraag || vraag.textContent.trim() !== pg.vraag1) uit.push(`eerste vraag is "${vraag?.textContent.trim()}" in plaats van "${pg.vraag1}"`);
@@ -147,22 +178,22 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     const buiten = keuzes.filter((k) => !zicht(k));
     if (buiten.length) uit.push(`${buiten.length} keuze(s) buiten het eerste scherm (laatste onderkant ${Math.round(keuzes.at(-1).getBoundingClientRect().bottom)} van ${H})`);
     return uit;
-  }, pg);
+  }, pg, HERO);
 
-  const stand = (p) => p.evaluate(() => {
-    const k = document.querySelector('.kgj-reken--aanvraag');
+  const stand = (p, root = HERO) => p.evaluate((root) => {
+    const k = document.querySelector(root);
     return { tel: k.querySelector('.kgj-reken__tel')?.textContent.trim(), vraag: k.querySelector('.kgj-reken__stap .kgj-reken__vraag')?.textContent.trim().replace(/\s+/g, ' '),
       terug: !!k.querySelector('.kgj-reken__terug'), form: !!k.querySelector('form.kgj-reken__form') };
-  });
+  }, root);
   /* Een echte tik op het midden van de keuze (touchscreen), nadat die in beeld staat. */
-  const tik = async (p, label) => {
-    const plek = await p.evaluate((l) => {
-      const b = [...document.querySelectorAll('.kgj-reken--aanvraag .kgj-reken__keuze')].find((x) => x.textContent.trim().startsWith(l));
+  const tik = async (p, label, root = HERO) => {
+    const plek = await p.evaluate((l, root) => {
+      const b = [...document.querySelectorAll(root + ' .kgj-reken__keuze')].find((x) => x.textContent.trim().startsWith(l));
       if (!b) return null;
       b.scrollIntoView({ block: 'center', behavior: 'instant' });
       const r = b.getBoundingClientRect();
       return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
-    }, label);
+    }, label, root);
     if (!plek) return false;
     await wacht(150);
     await p.touchscreen.tap(plek.x, plek.y);
@@ -170,23 +201,210 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     return true;
   };
   /* 3. Tikgedrag: tik, dubbele tik, Terug. */
-  const tikGedrag = async (p, pg) => {
+  const tikGedrag = async (p, pg, root = HERO) => {
     const uit = [];
-    const s0 = await stand(p);
+    const s0 = await stand(p, root);
     if (s0.tel !== `Stap 1 van ${pg.stappen}` || s0.vraag !== pg.vraag1 || s0.terug) uit.push(`begin: ${JSON.stringify(s0)}`);
-    if (!(await tik(p, pg.pad1[0]))) return [...uit, `keuze "${pg.pad1[0]}" niet gevonden`];
-    const s1 = await stand(p);
+    if (!(await tik(p, pg.pad1[0], root))) return [...uit, `keuze "${pg.pad1[0]}" niet gevonden`];
+    const s1 = await stand(p, root);
     if (s1.tel !== `Stap 2 van ${pg.stappen}` || s1.vraag !== pg.vraag2 || !s1.terug) uit.push(`na één tik: ${JSON.stringify(s1)} (verwacht Stap 2 van ${pg.stappen}, "${pg.vraag2}", Terug)`);
-    await p.evaluate(() => document.querySelector('.kgj-reken--aanvraag .kgj-reken__terug')?.click());
+    await p.evaluate((root) => document.querySelector(root + ' .kgj-reken__terug')?.click(), root);
     await wacht(450);
-    const s2 = await stand(p);
+    const s2 = await stand(p, root);
     if (s2.tel !== `Stap 1 van ${pg.stappen}` || s2.vraag !== pg.vraag1) uit.push(`na Terug: ${JSON.stringify(s2)}`);
     /* dubbele tik: twee klikken binnen 50 ms = één stap */
-    await p.evaluate((l) => { const b = [...document.querySelectorAll('.kgj-reken--aanvraag .kgj-reken__keuze')].find((x) => x.textContent.trim().startsWith(l)); b.click(); setTimeout(() => { const c = [...document.querySelectorAll('.kgj-reken--aanvraag .kgj-reken__keuze')][0]; c?.click(); }, 40); }, pg.pad1[0]);
+    await p.evaluate((l, root) => { const b = [...document.querySelectorAll(root + ' .kgj-reken__keuze')].find((x) => x.textContent.trim().startsWith(l)); b.click(); setTimeout(() => { const c = [...document.querySelectorAll(root + ' .kgj-reken__keuze')][0]; c?.click(); }, 40); }, pg.pad1[0], root);
     await wacht(500);
-    const s3 = await stand(p);
+    const s3 = await stand(p, root);
     if (s3.tel !== `Stap 2 van ${pg.stappen}`) uit.push(`dubbele tik: ${s3.tel} (verwacht Stap 2 van ${pg.stappen}: een tweede tik binnen 200 ms telt niet)`);
     return uit;
+  };
+
+  /* 4. Disclaimer direct boven de verzendknop van de contactstap (renovatie), met de vaste tekst. */
+  const disclaimerFouten = (p, root) => p.evaluate((root, verwacht) => {
+    const k = document.querySelector(root);
+    const d = k?.querySelector('form .kgj-reken__disclaimer');
+    if (!d) return ['disclaimer ontbreekt op de contactstap'];
+    const uit = [];
+    const tekst = d.textContent.replace(/\s+/g, ' ').trim();
+    if (tekst !== verwacht) uit.push(`disclaimer "${tekst}" in plaats van "${verwacht}"`);
+    if (d.nextElementSibling !== k.querySelector('form button[type=submit]')) uit.push('disclaimer staat niet direct boven de verzendknop');
+    const px = parseFloat(getComputedStyle(d).fontSize);
+    if (px < 14) uit.push(`disclaimer is ${px} px (minstens 14)`);
+    if (!d.querySelector('svg')) uit.push('disclaimer zonder vinkje');
+    return uit;
+  }, root, DISCLAIMER);
+
+  /* 7. Onderaan: renovatie = klikkaart zonder keuzelijst en zonder formulier van Inspectie; dak = Inspectie; één #rekenaar. */
+  const ondenFouten = (p, soort) => p.evaluate((soort, ONDER) => {
+    const uit = [];
+    const slot = document.querySelector('#contact');
+    if (!slot) return ['geen slotblok #contact'];
+    const keuzelijsten = slot.querySelectorAll('select').length;
+    const kaart = !!slot.querySelector('.kgj-reken--aanvraag');
+    const inspectie = !!slot.querySelector('.kgj-reken--inspectie');
+    if (soort === 'reno') {
+      if (!document.querySelector(ONDER)) uit.push('onderaan staat de klikkaart niet (#contact .kgj-reken--aanvraag)');
+      if (keuzelijsten) uit.push(`onderaan staan nog ${keuzelijsten} keuzelijst(en) (select)`);
+      if (inspectie) uit.push('onderaan staat nog het formulier van Inspectie (.kgj-reken--inspectie)');
+    } else if (soort === 'dak') {
+      if (kaart) uit.push('onderaan staat een klikkaart (alleen de renovatiepagina\'s krijgen die)');
+      if (!inspectie) uit.push('onderaan staat het formulier van Inspectie niet meer');
+    }
+    const n = document.querySelectorAll('#rekenaar').length;
+    if (n > 1) uit.push(`${n} elementen met id="rekenaar" op de pagina`);
+    return uit;
+  }, soort, ONDER);
+
+  /* 8. Geen "Eerstvolgend vrij ..." en geen free-slots-verzoek. */
+  const vrijFouten = async (p, slots) => {
+    const uit = [];
+    const tekst = await p.evaluate(() => document.body.innerText);
+    const m = tekst.match(/.{0,25}eerstvolgend.{0,40}/i);
+    if (m) uit.push(`tekst "${m[0].replace(/\s+/g, ' ')}" staat op de pagina`);
+    if (slots.length) uit.push(`${slots.length} free-slots-verzoek(en) naar de GHL-agenda (${slots[0].slice(0, 80)})`);
+    return uit;
+  };
+
+  /* 9. Badges (renovatie): tegels met iconen, teksten en cijfers letterlijk gelijk; dak heeft ze niet. */
+  const badgesFouten = (p, soort) => p.evaluate((soort, HERO) => {
+    const uit = [];
+    const k = document.querySelector(HERO);
+    const norm = (e) => e.textContent.replace(/\s+/g, ' ').trim();
+    const heeft = !!document.querySelector('.kgj-reken--badges') || !!document.querySelector('.bf-lp--badges');
+    if (soort === 'dak') { if (heeft) uit.push('/lp/dakwerken heeft badges (alleen de renovatiepagina\'s)'); return uit; }
+    if (!heeft) return ['badges ontbreken (.kgj-reken--badges / .bf-lp--badges)'];
+    const tegels = [...k.querySelectorAll('.kgj-reken__trust li')];
+    const wil = ['5,0', '16 jaar ervaring', '6 vakdisciplines'];
+    if (tegels.map(norm).join('|') !== wil.join('|')) uit.push(`vertrouwensrij "${tegels.map(norm).join(' | ')}" in plaats van "${wil.join(' | ')}"`);
+    if (tegels.some((t) => !t.querySelector('svg'))) uit.push('een tegel in de vertrouwensrij heeft geen icoon');
+    const vinkjes = [...k.querySelectorAll('.kgj-reken__vertrouwen li')].map(norm);
+    const wilV = ['100% Budgetgarantie', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details'];
+    if (vinkjes.join('|') !== wilV.join('|')) uit.push(`vinkjes "${vinkjes.join(' | ')}" in plaats van "${wilV.join(' | ')}"`);
+    if ([...k.querySelectorAll('.kgj-reken__vertrouwen li')].some((l) => !l.querySelector('svg'))) uit.push('een vinkje heeft geen icoon');
+    const g = document.querySelector('.bf-lphero__google b')?.textContent.trim();
+    if (g !== '5,0 op Google') uit.push(`Google-badge in de hero "${g}" in plaats van "5,0 op Google"`);
+    return uit;
+  }, soort, HERO);
+
+  /* 10. Belblok op /lp/dakwerken. */
+  const belblokFouten = (p, gsm) => p.evaluate((gsm) => {
+    const blokken = document.querySelectorAll('.bf-lpbelblok');
+    if (blokken.length !== 1) return [`belblok staat ${blokken.length} keer op de pagina (verwacht 1)`];
+    const uit = [];
+    const blok = blokken[0];
+    const norm = (e) => (e?.textContent ?? '').replace(/\s+/g, ' ').trim();
+    const kop = norm(blok.querySelector('.bf-lpbelblok__kop'));
+    if (kop !== 'Lekt uw dak?') uit.push(`kop "${kop}" in plaats van "Lekt uw dak?"`);
+    const knop = blok.querySelector('a.bf-lpbelblok__knop');
+    const link = blok.querySelector('a.bf-lpbelblok__link');
+    const kopKnop = document.querySelector('.bf-kop .bf-lpbel');
+    const nummer = norm(kopKnop?.querySelector('.bf-lpbel__lang')).replace(/^Bel\s+/, '');
+    if (!knop) uit.push('geen belknop in het blok');
+    else {
+      if (norm(knop) !== `Bel direct ${nummer}`) uit.push(`belknop "${norm(knop)}" in plaats van "Bel direct ${nummer}"`);
+      if (!/^tel:/.test(knop.getAttribute('href') || '') || knop.getAttribute('href') !== kopKnop?.getAttribute('href')) uit.push(`tel:-link van het blok "${knop.getAttribute('href')}" is niet die van de kopknop "${kopKnop?.getAttribute('href')}"`);
+      const r = knop.getBoundingClientRect();
+      if (r.height < (gsm ? 48 : 44) - 0.5) uit.push(`belknop is ${Math.round(r.height)} px hoog`);
+      if (gsm && r.width < blok.getBoundingClientRect().width * 0.85) uit.push(`belknop op de gsm niet over de volle breedte (${Math.round(r.width)} px)`);
+      if (getComputedStyle(knop).backgroundColor !== 'rgb(217, 140, 3)') uit.push(`belknop heeft achtergrond ${getComputedStyle(knop).backgroundColor} (verwacht de gouden knop rgb(217, 140, 3))`);
+    }
+    if (!link) uit.push('geen link naar de inspectiekaart');
+    else {
+      if (norm(link) !== 'Geen haast? Vraag uw gratis dakinspectie aan') uit.push(`link "${norm(link)}" in plaats van "Geen haast? Vraag uw gratis dakinspectie aan"`);
+      if (link.getAttribute('href') !== '#rekenaar' || !document.querySelector('#rekenaar')) uit.push(`link wijst naar "${link.getAttribute('href')}", een element dat niet bestaat`);
+      if (link.getBoundingClientRect().height < 44 - 0.5) uit.push(`link is ${Math.round(link.getBoundingClientRect().height)} px hoog`);
+    }
+    if (knop && link) {
+      const a = knop.getBoundingClientRect(), b = link.getBoundingClientRect();
+      if (gsm && b.top < a.bottom - 1) uit.push('op de gsm staat de link niet onder de belknop');
+      if (!gsm && (Math.abs((a.top + a.height / 2) - (b.top + b.height / 2)) > 30 || b.left < a.right)) uit.push('op de computer staan knop en link niet naast elkaar (link rechts)');
+    }
+    const hero = document.querySelector('.bf-lphero');
+    if (hero.contains(blok)) uit.push('het blok staat in de hero');
+    else if (!(hero.compareDocumentPosition(blok) & Node.DOCUMENT_POSITION_FOLLOWING)) uit.push('het blok staat niet na de hero');
+    const top = blok.getBoundingClientRect().top + scrollY;
+    if (gsm && top >= 1500) uit.push(`het blok begint op ${Math.round(top)} px (binnen de eerste 1500 px op de gsm)`);
+    const tekst = blok.innerText;
+    const v = tekst.match(/24\s*\/\s*7|meteen|binnen|nood|\buur\b|werkdag|\d\s*min/i);
+    if (v) uit.push(`verboden woord of belofte "${v[0]}" in het blok`);
+    const cs = getComputedStyle(blok);
+    if (cs.boxShadow !== 'none') uit.push(`schaduw op het blok (${cs.boxShadow})`);
+    if (blok.querySelector('.kgj-reken')) uit.push('een tweede kaart in het blok');
+    return uit;
+  }, gsm);
+  /* klik op de link en op de knop: hash, Clarity-events (de tel:-navigatie wordt tegengehouden) */
+  const belblokGedrag = async (p) => {
+    const uit = [];
+    await p.evaluate(() => { document.querySelector('.bf-lpbelblok__knop')?.addEventListener('click', (e) => e.preventDefault(), true); });
+    await p.evaluate(() => document.querySelector('.bf-lpbelblok__knop')?.click());
+    await p.evaluate(() => document.querySelector('.bf-lpbelblok__link')?.click());
+    await wacht(700);
+    const r = await p.evaluate(() => ({ hash: location.hash, top: document.querySelector('#rekenaar')?.getBoundingClientRect().top ?? null, h: innerHeight,
+      events: window.clarity?.q ? [...window.clarity.q].map((a) => Array.from(a).join(':')) : [] }));
+    if (r.hash !== '#rekenaar') uit.push(`na een klik op de link is de hash "${r.hash}" in plaats van "#rekenaar"`);
+    if (r.top === null || r.top < -2 || r.top > r.h * 0.6) uit.push(`na een klik op de link staat de kaart op ${r.top === null ? '?' : Math.round(r.top)} px (niet in beeld)`);
+    for (const e of ['event:dak-bel-blok', 'event:dak-bel-blok-inspectie']) if (!r.events.includes(e)) uit.push(`Clarity-event "${e.slice(6)}" niet gemeld (gezien: ${r.events.join(', ') || 'niets'})`);
+    return uit;
+  };
+
+  /* 11. horizontale scroll */
+  const scrollFout = (p) => p.evaluate(() => (document.documentElement.scrollWidth > innerWidth + 1 ? `horizontale scroll (${document.documentElement.scrollWidth} px breed op ${innerWidth})` : null));
+
+  /* Eén kaart (hero of onder) van begin tot contactstap en validatie. */
+  const kaartFlow = async (p, ctx, pg, root, naam, maat) => {
+    const etiket = `${pg.pad} @${maat} ${naam}`;
+    if (!(await p.$(root))) { fouten.push(`${etiket}: geen aanvraagkaart (${root})`); await ctx.close(); return; }
+    metingen++;
+    for (const f of await tikGedrag(p, pg, root)) fouten.push(`${etiket}: tik: ${f}`);
+    /* 4. tot de contactstap (vraag 1 is al gekozen in tikGedrag; de rest van het pad) */
+    for (const l of pg.pad1.slice(1)) if (!(await tik(p, l, root))) fouten.push(`${etiket}: keuze "${l}" niet gevonden`);
+    const c = await p.evaluate((root) => {
+      const k = document.querySelector(root);
+      const f = k.querySelector('form.kgj-reken__form');
+      return { tel: k.querySelector('.kgj-reken__tel')?.textContent.trim(), band: k.querySelector('.kgj-reken__band')?.textContent.trim().replace(/\s+/g, ' '),
+        velden: f ? [...f.querySelectorAll('input:not([type=hidden]), input[type=hidden]')].map((i) => i.name || (i.closest('.kgj-pg') ? 'postcode-gemeente' : '')).filter(Boolean) : [],
+        selects: f ? f.querySelectorAll('select').length : 0,
+        knop: f?.querySelector('button[type=submit]')?.textContent.trim(), verplicht: f?.querySelector('[name=telefoon]')?.getAttribute('aria-required'),
+        verplichtNaam: f?.querySelector('[name=naam]')?.getAttribute('aria-required') };
+    }, root);
+    if (c.tel !== `Stap ${pg.stappen} van ${pg.stappen}`) fouten.push(`${etiket}: contactstap teller "${c.tel}"`);
+    if (c.band !== pg.band) fouten.push(`${etiket}: band "${c.band}" in plaats van "${pg.band}"`);
+    if (pg.soort === 'reno') {
+      /* 22 okt 2026: alleen Naam* en Gsm* */
+      if (c.velden.join('|') !== 'naam|telefoon') fouten.push(`${etiket}: de contactstap heeft de velden "${c.velden.join(', ')}" in plaats van precies "naam, telefoon" (geen e-mail, geen postcode/gemeente)`);
+      for (const f of await disclaimerFouten(p, root)) fouten.push(`${etiket}: ${f}`);
+    } else {
+      for (const v of ['naam', 'telefoon', 'postcode-gemeente', 'postcode', 'gemeente', 'email']) if (!c.velden.includes(v)) fouten.push(`${etiket}: veld ${v} ontbreekt (${c.velden.join(', ')})`);
+      if (await p.evaluate((root) => !!document.querySelector(root + ' .kgj-reken__disclaimer'), root)) fouten.push(`${etiket}: de dakkaart heeft een disclaimer (alleen de renovatiepagina's)`);
+    }
+    if (c.knop !== pg.knop) fouten.push(`${etiket}: knop "${c.knop}" in plaats van "${pg.knop}"`);
+    if (c.verplicht !== 'true') fouten.push(`${etiket}: telefoonveld niet als verplicht gemarkeerd`);
+    if (c.verplichtNaam !== 'true') fouten.push(`${etiket}: naamveld niet als verplicht gemarkeerd`);
+    const voor = leads;
+    const meldingNa = async () => { await p.evaluate((root) => document.querySelector(root + ' form button[type=submit]').click(), root); await wacht(500); return p.evaluate((root) => document.querySelector(root + ' .kgj-reken__fout')?.textContent.trim() || '', root); };
+    /* leeg formulier: de naam staat vóór de gsm, dus eerst "Vul uw naam in." */
+    const zonderNaam = await meldingNa();
+    if (zonderNaam !== 'Vul uw naam in.') fouten.push(`${etiket}: lege naam gaf "${zonderNaam}" in plaats van "Vul uw naam in."`);
+    /* een gsm zonder naam verstuurt ook niets: dat is precies de lead die "Dag ," zou geven */
+    await p.type(`${root} form [name=telefoon]`, '0400 00 00 00');
+    const zonderNaamMetGsm = await meldingNa();
+    if (zonderNaamMetGsm !== 'Vul uw naam in.') fouten.push(`${etiket}: gsm zonder naam gaf "${zonderNaamMetGsm}" in plaats van "Vul uw naam in."`);
+    /* Vertrok er wel een verzoek, dan is de naam niet verplicht en is het formulier weg: melden en door naar de volgende
+       pagina (geen crash op een ontbrekend veld: dat zou een ongeldige meting lijken in plaats van een afwijking). */
+    if (leads !== voor || !(await p.$(`${root} form [name=telefoon]`))) {
+      fouten.push(`${etiket}: zonder naam vertrok er een verzoek (${leads - voor} GHL/Web3Forms)`);
+      await ctx.close();
+      return;
+    }
+    await p.evaluate((root) => { const i = document.querySelector(root + ' form [name=telefoon]'); i.focus(); i.select(); }, root);
+    await p.keyboard.press('Backspace');
+    /* naam ingevuld, gsm leeg: de bestaande gsm-melding */
+    await p.type(`${root} form [name=naam]`, 'Test Kaart');
+    const melding = await meldingNa();
+    if (melding !== 'Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.') fouten.push(`${etiket}: lege gsm gaf "${melding}"`);
+    if (leads !== voor) fouten.push(`${etiket}: met een lege gsm vertrok er een verzoek`);
+    await ctx.close();
   };
 
   try {
@@ -194,9 +412,15 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     {
       const { p, ctx } = await open('/lp/richtprijs-berekenen');
       const pc1 = await rekenaarSporen(p);
+      const pc6 = await belblokFouten(p, true);
+      const pc7 = await ondenFouten(p, 'reno');
       await ctx.close();
       if (pc1.length < 2) { console.log(`ONGELDIGE METING: de rekenaarpagina /lp/richtprijs-berekenen gaf ${pc1.length} rekenaarsporen (${pc1.join('; ')})`); process.exit(2); }
       console.log(`positieve controle 1: /lp/richtprijs-berekenen heeft ${pc1.length} rekenaarsporen (${pc1.slice(0, 2).join('; ')})`);
+      if (!pc6.length) { console.log('ONGELDIGE METING: een pagina zonder belblok (/lp/richtprijs-berekenen) werd door de belblok-toets goedgekeurd'); process.exit(2); }
+      console.log(`positieve controle 6: /lp/richtprijs-berekenen heeft geen belblok (${pc6[0]})`);
+      if (!pc7.length) { console.log('ONGELDIGE METING: de rekenaarpagina met keuzelijsten onderaan werd door de onderaan-toets goedgekeurd'); process.exit(2); }
+      console.log(`positieve controle 7: /lp/richtprijs-berekenen houdt het formulier met keuzelijsten onderaan (${pc7[0]})`);
     }
     {
       const { p, ctx } = await open('/lp/dakwerken', { css: '.kgj-reken--aanvraag{margin-top:900px!important}' });
@@ -219,61 +443,74 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       if (kopFouten(DAK.kop, DAK.kop).length || kopFouten(RENO('').kop, RENO('').kop).length) { console.log('ONGELDIGE METING: de afgesproken koppen vallen zelf onder de werkwijze-regel'); process.exit(2); }
       console.log(`positieve controle 4: de koppen van 19 okt geweigerd (${pc4[0]})`);
     }
+    {
+      /* disclaimertoets: de dakkaart heeft er geen, dus de toets moet falen */
+      const { p, ctx } = await open('/lp/dakwerken');
+      for (const l of DAK.pad1) await tik(p, l, HERO);
+      const pc8 = await disclaimerFouten(p, HERO);
+      await ctx.close();
+      if (!pc8.length) { console.log('ONGELDIGE METING: een contactstap zonder disclaimer werd door de disclaimertoets goedgekeurd'); process.exit(2); }
+      console.log(`positieve controle 8: een kaart zonder disclaimer gezien (${pc8[0]})`);
+    }
+    {
+      /* 8. een geplante "Eerstvolgend"-regel en een geplante free-slots-aanvraag moeten gevonden worden */
+      const { p, ctx, slots } = await open('/lp/totaalrenovatie');
+      await p.evaluate(() => {
+        const e = document.createElement('p'); e.textContent = 'Eerstvolgend vrij plaatsbezoek: morgen'; document.body.append(e);
+        fetch('https://backend.leadconnectorhq.com/calendars/PLANT/free-slots?startDate=1&endDate=2').catch(() => {});
+      });
+      await wacht(600);
+      const pc9 = await vrijFouten(p, slots);
+      await ctx.close();
+      if (pc9.length < 2) { console.log(`ONGELDIGE METING: een geplante "Eerstvolgend"-regel en free-slots-aanvraag werden niet allebei gevonden (${pc9.join(' | ') || 'niets'})`); process.exit(2); }
+      console.log(`positieve controle 9: geplante vrij-moment-regel en agenda-aanvraag gevonden (${pc9.join('; ')})`);
+    }
     const leadsNaControles = leads;
 
     /* ---------- de drie pagina's ---------- */
     for (const pg of PAGINAS) {
       for (const gsm of [true, false]) {
         const maat = gsm ? '390x844' : '1265x800';
-        const { p, ctx } = await open(pg.pad, { gsm });
-        if (!(await p.$('.kgj-reken--aanvraag'))) { fouten.push(`${pg.pad} @${maat}: geen aanvraagkaart (.kgj-reken--aanvraag)`); await ctx.close(); continue; }
-        metingen++;
-        for (const f of await rekenaarSporen(p)) fouten.push(`${pg.pad} @${maat}: rekenaar-ingang: ${f}`);
-        const h1 = await p.evaluate(() => document.querySelector('h1')?.textContent.trim().replace(/\s+/g, ' '));
-        for (const f of kopFouten(h1, pg.kop)) fouten.push(`${pg.pad} @${maat}: ${f}`);
-        if (gsm) for (const f of await eersteScherm(p, pg)) fouten.push(`${pg.pad} @${maat}: eerste scherm: ${f}`);
-        for (const f of await tikGedrag(p, pg)) fouten.push(`${pg.pad} @${maat}: tik: ${f}`);
-        /* 4. tot de contactstap (vraag 1 is al gekozen in tikGedrag; de rest van het pad) */
-        for (const l of pg.pad1.slice(1)) if (!(await tik(p, l))) fouten.push(`${pg.pad} @${maat}: keuze "${l}" niet gevonden`);
-        const c = await p.evaluate(() => {
-          const k = document.querySelector('.kgj-reken--aanvraag');
-          const f = k.querySelector('form.kgj-reken__form');
-          return { tel: k.querySelector('.kgj-reken__tel')?.textContent.trim(), band: k.querySelector('.kgj-reken__band')?.textContent.trim().replace(/\s+/g, ' '),
-            velden: f ? [...f.querySelectorAll('input:not([type=hidden]), input[type=hidden]')].map((i) => i.name || (i.closest('.kgj-pg') ? 'postcode-gemeente' : '')).filter(Boolean) : [],
-            knop: f?.querySelector('button[type=submit]')?.textContent.trim(), verplicht: f?.querySelector('[name=telefoon]')?.getAttribute('aria-required'),
-            verplichtNaam: f?.querySelector('[name=naam]')?.getAttribute('aria-required') };
-        });
-        if (c.tel !== `Stap ${pg.stappen} van ${pg.stappen}`) fouten.push(`${pg.pad} @${maat}: contactstap teller "${c.tel}"`);
-        if (c.band !== pg.band) fouten.push(`${pg.pad} @${maat}: band "${c.band}" in plaats van "${pg.band}"`);
-        for (const v of ['naam', 'telefoon', 'postcode-gemeente', 'postcode', 'gemeente', 'email']) if (!c.velden.includes(v)) fouten.push(`${pg.pad} @${maat}: veld ${v} ontbreekt (${c.velden.join(', ')})`);
-        if (c.knop !== pg.knop) fouten.push(`${pg.pad} @${maat}: knop "${c.knop}" in plaats van "${pg.knop}"`);
-        if (c.verplicht !== 'true') fouten.push(`${pg.pad} @${maat}: telefoonveld niet als verplicht gemarkeerd`);
-        if (c.verplichtNaam !== 'true') fouten.push(`${pg.pad} @${maat}: naamveld niet als verplicht gemarkeerd`);
-        const voor = leads;
-        const meldingNa = async () => { await p.evaluate(() => document.querySelector('.kgj-reken--aanvraag form button[type=submit]').click()); await wacht(500); return p.evaluate(() => document.querySelector('.kgj-reken--aanvraag .kgj-reken__fout')?.textContent.trim() || ''); };
-        /* leeg formulier: de naam staat vóór de gsm, dus eerst "Vul uw naam in." */
-        const zonderNaam = await meldingNa();
-        if (zonderNaam !== 'Vul uw naam in.') fouten.push(`${pg.pad} @${maat}: lege naam gaf "${zonderNaam}" in plaats van "Vul uw naam in."`);
-        /* een gsm zonder naam verstuurt ook niets: dat is precies de lead die "Dag ," zou geven */
-        await p.type('.kgj-reken--aanvraag form [name=telefoon]', '0400 00 00 00');
-        const zonderNaamMetGsm = await meldingNa();
-        if (zonderNaamMetGsm !== 'Vul uw naam in.') fouten.push(`${pg.pad} @${maat}: gsm zonder naam gaf "${zonderNaamMetGsm}" in plaats van "Vul uw naam in."`);
-        /* Vertrok er wel een verzoek, dan is de naam niet verplicht en is het formulier weg: melden en door naar de volgende
-           pagina (geen crash op een ontbrekend veld: dat zou een ongeldige meting lijken in plaats van een afwijking). */
-        if (leads !== voor || !(await p.$('.kgj-reken--aanvraag form [name=telefoon]'))) {
-          fouten.push(`${pg.pad} @${maat}: zonder naam vertrok er een verzoek (${leads - voor} GHL/Web3Forms)`);
-          await ctx.close();
-          continue;
+        /* kaart bovenaan */
+        {
+          const { p, ctx, slots } = await open(pg.pad, { gsm });
+          if (!(await p.$(HERO))) { fouten.push(`${pg.pad} @${maat}: geen aanvraagkaart (${HERO})`); await ctx.close(); continue; }
+          for (const f of await rekenaarSporen(p)) fouten.push(`${pg.pad} @${maat}: rekenaar-ingang: ${f}`);
+          const h1 = await p.evaluate(() => document.querySelector('h1')?.textContent.trim().replace(/\s+/g, ' '));
+          for (const f of kopFouten(h1, pg.kop)) fouten.push(`${pg.pad} @${maat}: ${f}`);
+          if (gsm) for (const f of await eersteScherm(p, pg)) fouten.push(`${pg.pad} @${maat}: eerste scherm: ${f}`);
+          for (const f of await ondenFouten(p, pg.soort)) fouten.push(`${pg.pad} @${maat}: onderaan: ${f}`);
+          for (const f of await badgesFouten(p, pg.soort)) fouten.push(`${pg.pad} @${maat}: badges: ${f}`);
+          const sf = await scrollFout(p); if (sf) fouten.push(`${pg.pad} @${maat}: ${sf}`);
+          if (pg.soort === 'dak') {
+            for (const f of await belblokFouten(p, gsm)) fouten.push(`${pg.pad} @${maat}: belblok: ${f}`);
+          } else if (await p.$('.bf-lpbelblok')) fouten.push(`${pg.pad} @${maat}: belblok staat op een renovatiepagina (alleen /lp/dakwerken)`);
+          /* het belblok-gedrag (hash, Clarity) loopt als laatste in een eigen pagina, zodat de kaartflow niet verstoord wordt */
+          await kaartFlow(p, ctx, pg, HERO, 'bovenaan', maat);
+          /* na alle stappen (meer dan 2,5 s na het laden): nog steeds geen free-slots-verzoek en geen "Eerstvolgend"-tekst */
+          const vf = slots.length;
+          if (vf) fouten.push(`${pg.pad} @${maat}: ${vf} free-slots-verzoek(en) naar de GHL-agenda`);
         }
-        await p.evaluate(() => { const i = document.querySelector('.kgj-reken--aanvraag form [name=telefoon]'); i.focus(); i.select(); });
-        await p.keyboard.press('Backspace');
-        /* naam ingevuld, gsm leeg: de bestaande gsm-melding */
-        await p.type('.kgj-reken--aanvraag form [name=naam]', 'Test Kaart');
-        const melding = await meldingNa();
-        if (melding !== 'Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.') fouten.push(`${pg.pad} @${maat}: lege gsm gaf "${melding}"`);
-        if (leads !== voor) fouten.push(`${pg.pad} @${maat}: met een lege gsm vertrok er een verzoek`);
-        await ctx.close();
+        {
+          const { p, ctx, slots } = await open(pg.pad, { gsm });
+          await wacht(2500);
+          for (const f of await vrijFouten(p, slots)) fouten.push(`${pg.pad} @${maat}: vrij moment: ${f}`);
+          if (pg.soort === 'dak') for (const f of await belblokGedrag(p)) fouten.push(`${pg.pad} @${maat}: belblok: ${f}`);
+          await ctx.close();
+        }
+        /* kaart onderaan (renovatie) */
+        if (pg.soort === 'reno') {
+          const { p, ctx } = await open(pg.pad, { gsm });
+          await kaartFlow(p, ctx, pg, ONDER, 'onderaan', maat);
+        }
       }
+    }
+    /* de richtprijspagina blijft zoals hij was: geen belblok, geen klikkaart onderaan */
+    {
+      const { p, ctx } = await open('/lp/richtprijs-berekenen');
+      if (await p.$('.bf-lpbelblok')) fouten.push('/lp/richtprijs-berekenen: belblok (hoort alleen op /lp/dakwerken)');
+      if (await p.$(ONDER)) fouten.push('/lp/richtprijs-berekenen: klikkaart onderaan (hoort alleen op de renovatiepagina\'s)');
+      await ctx.close();
     }
     /* 5. message match (dak) */
     {
@@ -300,9 +537,11 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     await br.close();
     if (srv) { try { srv.kill(); } catch { /* */ } }
   }
-  if (metingen < PAGINAS.length * 2 + 1) { console.log(`ONGELDIGE METING: ${metingen} metingen`); process.exit(2); }
-  console.log(`check-lp-aanvraag: ${PAGINAS.length} pagina's x 2 maten + message match (${basis}), ${leads} leadverzoeken`);
+  /* dak: 2 maten x 1 kaart; renovatie: 2 paginas x 2 maten x 2 kaarten; plus message match */
+  const verwacht = 2 + 2 * 2 * 2 + 1;
+  if (metingen < verwacht) { console.log(`ONGELDIGE METING: ${metingen} metingen (verwacht ${verwacht})`); process.exit(2); }
+  console.log(`check-lp-aanvraag: dak (kaart) en 2 renovatiepagina's (kaart bovenaan en onderaan) x 2 maten + message match (${basis}), ${leads} leadverzoeken`);
   if (fouten.length) { fouten.forEach((f) => console.log('  FOUT: ' + f)); process.exit(1); }
-  console.log('  kop zoals afgesproken (geen werkwijze-kop), geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag, contactstap, naam verplicht en lege gsm in orde');
+  console.log('  kop zoals afgesproken, geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag (bovenaan en onderaan), contactstap (renovatie: alleen naam en gsm + disclaimer), naam verplicht, lege gsm, badges, geen vrij moment en geen agenda-verzoek, belblok op dak, geen horizontale scroll');
   process.exit(0);
 })().catch((e) => { console.log('ONGELDIGE METING: ' + e.message); process.exit(2); });

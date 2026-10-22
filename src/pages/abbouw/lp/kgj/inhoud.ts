@@ -57,6 +57,8 @@ export type Vraag = {
   tip?: { bij: string[]; tekst: string };
   /** Op een telefoon twee tegels naast elkaar in plaats van één kolom (alleen voor korte labels). */
   raster?: boolean;
+  /** Altijd één kolom, ook op de computer (lange labels zoals bedragen breken anders midden in "€ 25.000"). */
+  lijst?: boolean;
   /** Afvinkvraag: meerdere keuzes, met een knop Volgende. `alles` is het label van
       het vakje bovenaan dat alle keuzes in één keer aanvinkt. */
   afvinken?: { alles: string; tip?: { bij: string[]; tekst: string } };
@@ -108,11 +110,25 @@ export type KgjInhoud = {
       er nergens op de pagina een ingang naar de rekenaar: geen rekenaarknop, geen vangnet, geen venster, geen knop
       "Liever eerst een prijs?" in het formulier onderaan, geen rekenaarknop in de chat. Wint van heroRekenaar en heroFormulier. */
   heroAanvraag?: boolean;
+  /** Belblok direct onder de hero (alleen /lp/dakwerken, 22 okt 2026): kop, de tekst vóór het nummer op de belknop en een
+      rustige link naar de aanvraagkaart. Het nummer en de tel:-link komen uit CONTACT.phone, niet uit deze inhoud. */
+  belBlok?: { kop: string; knop: string; link: string };
   /** De inhoud van de aanvraagkaart. titel + tijd: kop van de kaart; vragen: één tik = antwoord en meteen de volgende
       vraag (geen afvinkvragen); contactKop: kop van de laatste stap ("Bijna klaar! ..."); vertrouwen en trustrij: zoals op
-      de rekenaarkaart; vrijMoment: het eerstvolgende vrije plaatsbezoek uit de agenda onder de kaartkop (renovatie). */
+      de rekenaarkaart; vrijMoment: het eerstvolgende vrije plaatsbezoek uit de agenda onder de kaartkop (sinds 22 okt 2026 op geen enkele
+      pagina meer aan, Mohammed: "haal weg ... die volgende moment"; de vlag en VrijMoment in LpBf bestaan nog). */
   aanvraag?: { titel: string; tijd: string; vragen: Vraag[]; contactKop: string; vertrouwen?: string[];
-    trustrij?: { b: string; s: string }[]; vrijMoment?: boolean };
+    trustrij?: { b: string; s: string; icoon?: 'kalender' | 'gereedschap' }[]; vrijMoment?: boolean;
+    /** Welke velden de contactstap heeft naast Naam* en Gsm* (22 okt 2026, renovatiepagina's: "verwijder email form,
+        verwijder postcode form"). Zonder deze instelling staan beide aan, zoals op de dakkaart. */
+    contactVelden?: { email?: boolean; postcode?: boolean };
+    /** Rustig blokje met vinkje direct boven de verzendknop: wat de bezoeker precies krijgt. Het deel voor de eerste
+        dubbele punt komt vet. */
+    disclaimer?: string;
+    /** Het slotblok onderaan (#contact) toont dezelfde klikkaart als de hero, in plaats van het formulier van Inspectie.tsx. */
+    onder?: boolean;
+    /** Vertrouwensrij, vinkjes en Google-badge als duidelijke tegels met iconen (alleen vorm, zelfde teksten en cijfers). */
+    badges?: boolean };
   /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart.
       trustrij: rij onderaan de kaart met Google 5,0 + sterren en daarnaast deze cijfers (zoals bfbouw.be rk__trust). */
   rekenaar: { trustrij?: { b: string; s: string }[]; titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string; troeven?: string[];
@@ -237,6 +253,9 @@ export const DAKWERKEN: KgjInhoud = {
      bfbouw.be/lp/dakwerken: vier klikvragen, dan naam, gsm, postcode of gemeente en e-mail. De rekenaar hieronder staat op
      deze pagina nergens meer (de inhoud blijft voor LpKgj, de terugval). */
   heroAanvraag: true,
+  /* 22 okt 2026, Mohammed: "op de dakwerken-pagina's een visueel mooi en clean blok 'Nood? Bel ....', maar niet letterlijk 'nood'",
+     met de kop "Lekt uw dak?" en daaronder de gratis dakinspectie. Letterlijk zijn teksten; geen termijn, geen "24/7". */
+  belBlok: { kop: 'Lekt uw dak?', knop: 'Bel direct', link: 'Geen haast? Vraag uw gratis dakinspectie aan' },
   aanvraag: {
     titel: 'Gratis dakinspectie',
     tijd: 'Klaar in 1 minuut, vrijblijvend',
@@ -516,7 +535,7 @@ export const DAKWERKEN: KgjInhoud = {
   inspectie: {
     kop: 'Plan uw dakinspectie',
     knop: 'Vraag uw gratis dakinspectie aan',
-    onder: 'Wij bellen u binnen één werkdag om een moment af te spreken.',
+    onder: 'Wij nemen zo snel mogelijk contact met u op.',
     alt: 'Liever eerst een prijs? Bereken hem in 2 minuten',
     bronLead: 'lp:dakwerken:inspectie',
   },

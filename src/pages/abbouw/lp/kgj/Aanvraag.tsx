@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Check, Clock, Home } from 'lucide-react';
+import { ArrowRight, Award, CalendarCheck, Check, Clock, Hammer, Home, ShieldCheck, UserCheck } from 'lucide-react';
 import { Icoon } from './Iconen';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
@@ -46,8 +46,12 @@ const IcInspectie = () => (
  *
  * Draagt kgj-reken: de vaste balk op de telefoon (LpBf) verdwijnt zodra de kaart in beeld staat.
  */
-export default function Aanvraag({ inhoud, voor, boven }: {
+export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   inhoud: KgjInhoud;
+  /** hero = de kaart bovenaan (form_start-label met :hero, Clarity aanvraag-*); onder = dezelfde kaart in het slotblok
+      (#contact, 22 okt 2026: "onderaan bij plaatsbezoek de form zo dat je makkelijk kan klikken"): form_start-label = de
+      bron_lead zelf, zoals het formulier van Inspectie.tsx dat daar had, en eigen Clarity-events (aanvraag-onder-*). */
+  plek?: 'hero' | 'onder';
   /** Message match (LpBf match.voor): past dit bij vraag 1, dan begint de kaart bij vraag 2 met dat antwoord. */
   voor?: { sleutel: string; label: string };
   /** Optioneel onder de kaartkop: het eerstvolgende vrije plaatsbezoek (VrijMoment in LpBf). */
@@ -69,6 +73,8 @@ export default function Aanvraag({ inhoud, voor, boven }: {
   const vorigeStap = useRef(stap);
   const versteStap = useRef(stap);
 
+  const onder = plek === 'onder';
+  const clarityNaam = onder ? 'aanvraag-onder' : 'aanvraag';
   const klaar = stap >= VRAGEN.length;
   /* De contactstap telt mee: "Stap 1 van 5" bij vier vragen. De balk staat bij het laden al op de eerste stap. */
   const totaal = VRAGEN.length + 1;
@@ -95,15 +101,15 @@ export default function Aanvraag({ inhoud, voor, boven }: {
   useEffect(() => {
     if (stap <= versteStap.current) return;
     versteStap.current = stap;
-    meldClarity(stap >= VRAGEN.length ? 'aanvraag-contact' : `aanvraag-vraag-${stap + 1}`);
-  }, [stap, VRAGEN.length]);
+    meldClarity(stap >= VRAGEN.length ? `${clarityNaam}-contact` : `${clarityNaam}-vraag-${stap + 1}`);
+  }, [stap, VRAGEN.length, clarityNaam]);
 
   /* De eerste tik telt als start van het formulier (GA4 form_start). Eigen label voor de kaart bovenaan, zodat in GA4
      te zien is welk formulier begonnen werd; de bron in GHL (bron_lead) blijft die van het formulier onderaan. */
   const meldStart = () => {
     if (gestart.current) return;
     gestart.current = true;
-    trackFormStart(`${t.bronLead}:hero`);
+    trackFormStart(onder ? t.bronLead : `${t.bronLead}:hero`);
   };
 
   /* Tik = antwoord + volgende vraag (Rekenaar.tsx, Mohammed 25 sep): het antwoord kleurt op zodra de vinger het raakt,
@@ -152,7 +158,7 @@ export default function Aanvraag({ inhoud, voor, boven }: {
     });
     setBezig(false);
     if (!res.ok) { verstuurt.current = false; setFout(leadFoutmelding(res, CONTACT.phone.display)); return; }
-    meldClarity('aanvraag-verstuurd');
+    meldClarity(`${clarityNaam}-verstuurd`);
     /* Zonder toestemming voor marketing eerst de vraag uit Toestemming.tsx, dan pas de bedankpagina. */
     if (allowsMarketing()) naarBedankt();
     else setVraagToestemming(true);
@@ -160,11 +166,18 @@ export default function Aanvraag({ inhoud, voor, boven }: {
   const naarBedankt = () => navigate('/bedankt?dienst=' + inhoud.bedanktSlug);
 
   const vraag = VRAGEN[stap];
+  /* Welke velden de contactstap naast Naam en Gsm heeft (renovatiepagina's: alleen die twee). Standaard beide aan. */
+  const metEmail = a.contactVelden?.email !== false;
+  const metPostcode = a.contactVelden?.postcode !== false;
+  /* Disclaimer: het deel voor de eerste dubbele punt komt vet ("Wat u krijgt:"). */
+  const disc = a.disclaimer?.match(/^([^:]+:)s*([sS]+)$/);
+  /* Badges (renovatiepagina's, 22 okt): vinkjes met een herkenbaar icoon per punt, op volgorde van de tekst. */
+  const BADGE_ICOON = [ShieldCheck, UserCheck, Award];
   /* "Bijna klaar! Bevestig uw gratis dakinspectie": het eerste deel op een eigen regel in de merkkleur (bfbouw.be rk__bijna). */
   const band = a.contactKop.match(/^(Bijna klaar!)\s+(.+)$/);
 
   return (
-    <div ref={kaart} className={`kgj-reken kgj-reken--aanvraag${klaar ? ' is-contact' : ''}`}>
+    <div ref={kaart} className={`kgj-reken kgj-reken--aanvraag${onder ? ' kgj-reken--onder' : ''}${a.badges ? ' kgj-reken--badges' : ''}${klaar ? ' is-contact' : ''}`}>
       <div className="kgj-reken__hoofd">
         <span className="kgj-reken__logo" aria-hidden="true"><IcInspectie /></span>
         <div>
@@ -193,7 +206,7 @@ export default function Aanvraag({ inhoud, voor, boven }: {
       ) : !klaar ? (
         <div className="kgj-reken__stap" key={stap}>
           <p className="kgj-reken__vraag">{vraag.vraag}</p>
-          <div className={`kgj-reken__keuzes${vraag.keuzes.length % 2 === 1 ? ' kgj-reken__keuzes--oneven' : ''}${vraag.raster ? ' kgj-reken__keuzes--raster' : ''}`}>
+          <div className={`kgj-reken__keuzes${vraag.keuzes.length % 2 === 1 ? ' kgj-reken__keuzes--oneven' : ''}${vraag.raster ? ' kgj-reken__keuzes--raster' : ''}${vraag.lijst ? ' kgj-reken__keuzes--lijst' : ''}`}>
             {vraag.keuzes.map((k) => (
               <button type="button" key={k.label}
                 className={`kgj-reken__keuze${k.icoon ? ' kgj-reken__keuze--icoon' : ''}${antwoorden[vraag.sleutel] === k.label ? ' is-aan' : ''}${druk === k.label ? ' is-druk' : ''}`}
@@ -227,12 +240,22 @@ export default function Aanvraag({ inhoud, voor, boven }: {
                 <input name="telefoon" type="tel" autoComplete="tel" inputMode="tel" placeholder="04xx xx xx xx" aria-required="true" />
               </label>
             </div>
-            <div className="kgj-reken__rij">
-              {/* Korte voorbeeldtekst: op de computer staat het veld in een halve kolom (de standaardhint werd afgekapt). */}
-              <PostcodeGemeente hint="bv. 2830" />
-              <label>E-mail<input name="email" type="email" autoComplete="email" inputMode="email" placeholder="uw@email.be" /></label>
-            </div>
+            {(metPostcode || metEmail) && (
+              <div className="kgj-reken__rij">
+                {/* Korte voorbeeldtekst: op de computer staat het veld in een halve kolom (de standaardhint werd afgekapt). */}
+                {metPostcode && <PostcodeGemeente hint="bv. 2830" />}
+                {metEmail && <label>E-mail<input name="email" type="email" autoComplete="email" inputMode="email" placeholder="uw@email.be" /></label>}
+              </div>
+            )}
             {fout && <p className="kgj-reken__fout" role="alert">{fout}</p>}
+            {/* Wat de bezoeker precies krijgt, direct boven de knop (22 okt 2026, Mohammed: "een disclaimer zo wat ze precies
+                krijgen, krijg vrijblijvend advies en weet waar u aan toe bent"). */}
+            {a.disclaimer && (
+              <p className="kgj-reken__disclaimer">
+                <Check aria-hidden="true" />
+                <span>{disc ? <><b>{disc[1]}</b> {disc[2]}</> : a.disclaimer}</span>
+              </p>
+            )}
             <button className="kgj-knop kgj-knop--vol kgj-reken__knop" type="submit" disabled={bezig}>
               {bezig ? 'Bezig…' : <>{t.knop}<ArrowRight aria-hidden="true" /></>}
             </button>
@@ -244,7 +267,10 @@ export default function Aanvraag({ inhoud, voor, boven }: {
 
       {a.vertrouwen && a.vertrouwen.length > 0 && (
         <ul className="kgj-reken__vertrouwen">
-          {a.vertrouwen.map((v) => <li key={v}><Check aria-hidden="true" />{v}</li>)}
+          {a.vertrouwen.map((v, i) => {
+            const Teken = a.badges ? BADGE_ICOON[i] ?? Check : Check;
+            return <li key={v}><Teken aria-hidden="true" />{v}</li>;
+          })}
         </ul>
       )}
       {/* Trustrij zoals op de rekenaarkaart (Google 5,0 + sterren, dan de cijfers). Nooit het aantal reviews. */}
@@ -254,7 +280,12 @@ export default function Aanvraag({ inhoud, voor, boven }: {
             <span className="kgj-reken__trust-gic"><IcGoogle /></span>
             <span><b>5,0</b><span className="kgj-reken__trust-st" aria-hidden="true"><IcSter /><IcSter /><IcSter /><IcSter /><IcSter /></span></span>
           </li>
-          {a.trustrij.map((c) => <li key={c.b + c.s}><b>{c.b}</b><span>{c.s}</span></li>)}
+          {a.trustrij.map((c) => (
+            <li key={c.b + c.s}>
+              {a.badges && c.icoon && <span className="kgj-reken__trust-ic" aria-hidden="true">{c.icoon === 'kalender' ? <CalendarCheck /> : <Hammer />}</span>}
+              <b>{c.b}</b>{' '}<span>{c.s}</span>
+            </li>
+          ))}
         </ul>
       )}
     </div>

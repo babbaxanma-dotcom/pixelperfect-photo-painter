@@ -841,3 +841,110 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
   .bf.bf-lp .kgj-reken--aanvraag .bf-lphero__vrij { margin-top: 10px; font-size: 15px; }
   .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__eind svg { width: 15px; height: 15px; }
 }
+
+/* ======================================================================================================================
+   22 okt 2026 (Mohammed): renovatiepagina's (/lp/totaalrenovatie, /lp/aannemer-renovatiewerken) en het belblok op /lp/dakwerken.
+   ====================================================================================================================== */
+
+/* ---------- kaart onderaan (Aanvraag plek="onder"): de witte kaart die Inspectie.tsx daar had ---------- */
+.bf.bf-lp .kgj-reken--onder { display: block; padding: calc(36 * var(--u)) calc(36 * var(--u)) calc(30 * var(--u)); border-radius: calc(24 * var(--u));
+  background: #fff; color: var(--ink); box-shadow: 0 calc(40 * var(--u)) calc(80 * var(--u)) calc(-30 * var(--u)) rgba(0, 0, 0, .65); }
+.bf.bf-lp .kgj-reken--onder .kgj-reken__band { margin-left: calc(-36 * var(--u)); margin-right: calc(-36 * var(--u)); padding-left: calc(36 * var(--u)); padding-right: calc(36 * var(--u)); }
+/* de vinkjes en de trustrij staan hier ook op de gsm in de kaart: onderaan staat er geen aparte rij onder de kaart */
+.bf.bf-lp .kgj-reken--onder .kgj-reken__vertrouwen { display: grid; }
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken--onder { padding: 24px 18px 20px; border-radius: 18px; }
+  .bf.bf-lp .kgj-reken--onder .kgj-reken__band { margin-left: -18px; margin-right: -18px; padding-left: 18px; padding-right: 18px; }
+}
+
+/* ---------- disclaimer boven de verzendknop: wat de bezoeker precies krijgt ---------- */
+.bf.bf-lp .kgj-reken__disclaimer { display: flex; align-items: flex-start; gap: calc(12 * var(--u)); margin: calc(18 * var(--u)) 0 0; padding: calc(14 * var(--u)) calc(16 * var(--u));
+  border-radius: calc(12 * var(--u)); background: #f8f5ee; box-shadow: inset 0 0 0 1px #ece3cf; font-size: max(14px, calc(14.5 * var(--u))); line-height: 1.5; color: var(--ink-2); }
+.bf.bf-lp .kgj-reken__disclaimer b { font-weight: 700; color: var(--ink); }
+.bf.bf-lp .kgj-reken__disclaimer > svg { flex: none; width: max(20px, calc(22 * var(--u))); height: max(20px, calc(22 * var(--u))); padding: max(4px, calc(4.5 * var(--u))); margin-top: 1px;
+  border-radius: 50%; background: var(--merk); color: var(--op-merk); stroke-width: 3.2; }
+.bf.bf-lp .kgj-reken__disclaimer + .kgj-reken__knop { margin-top: calc(14 * var(--u)); }
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken__disclaimer { margin-top: 16px; padding: 13px 14px; gap: 10px; font-size: 14px; }
+  .bf.bf-lp .kgj-reken__disclaimer + .kgj-reken__knop { margin-top: 12px; }
+}
+
+/* ---------- trust badges (renovatiepagina's): vaste tegels met iconen, grotere cijfers, sterker contrast. Alleen vorm. ---------- */
+/* vertrouwensrij in de kaart: drie gelijke tegels (Google 5,0 met sterren, 16 jaar ervaring, 6 vakdisciplines) */
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(10 * var(--u)); margin-top: calc(16 * var(--u)); padding: 0; border-top: 0; }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust li { align-items: center; justify-content: center; gap: 2px; min-height: calc(92 * var(--u)); padding: calc(10 * var(--u)) calc(6 * var(--u)); text-align: center;
+  border-radius: calc(14 * var(--u)); background: #faf6ec; box-shadow: inset 0 0 0 1px #eadfc2; }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust li + li { border-left: 0; }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust li:first-child { padding-left: calc(6 * var(--u)); }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust b { font-size: calc(22 * var(--u)); font-weight: 800; line-height: 1.05; letter-spacing: -0.015em; color: var(--ink); }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust li > span:not(.kgj-reken__trust-ic):not(.kgj-reken__trust-gic) { font-size: calc(14 * var(--u)); font-weight: 600; line-height: 1.2; color: var(--ink-2); }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust-ic { display: grid; place-items: center; width: calc(34 * var(--u)); height: calc(34 * var(--u)); margin-bottom: calc(2 * var(--u)); border-radius: 50%; background: var(--merk); color: var(--op-merk); }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust-ic svg { width: calc(19 * var(--u)); height: calc(19 * var(--u)); stroke-width: 2.2; }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust .kgj-reken__trust-g { flex-direction: column; align-items: center; justify-content: center; gap: calc(4 * var(--u)); }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust-gic { display: grid; place-items: center; width: calc(34 * var(--u)); height: calc(34 * var(--u)); border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 1px #e6dcc3; }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust-gic svg { width: calc(20 * var(--u)); height: calc(20 * var(--u)); }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust-g > span:last-child { align-items: center; gap: calc(3 * var(--u)); }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust-st svg { width: calc(14 * var(--u)); height: calc(14 * var(--u)); }
+/* de drie vinkjes in de kaart (computer; op de gsm staan ze onder de kaart): herkenbaar icoon per punt, groter en vetter */
+.bf.bf-lp .kgj-reken--badges .kgj-reken__vertrouwen { gap: calc(11 * var(--u)); }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__vertrouwen li { gap: calc(12 * var(--u)); font-size: max(15px, calc(16 * var(--u))); font-weight: 700; color: var(--ink); }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__vertrouwen li > svg { width: calc(30 * var(--u)); height: calc(30 * var(--u)); padding: calc(6 * var(--u)); stroke-width: 2.2; }
+/* Google-badge in de hero: een duidelijk blok met de G, vijf sterren en "5,0 op Google" in grotere letters */
+.bf.bf-lp--badges .bf-lphero__google, .bf.bf-lp--badges .bf-lphero__vertrouwen .bf-lphero__google { gap: calc(14 * var(--u)); padding: calc(12 * var(--u)) calc(24 * var(--u)) calc(12 * var(--u)) calc(12 * var(--u));
+  border-radius: calc(999 * var(--u)); background: rgba(10, 22, 40, .78); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .28); }
+.bf.bf-lp--badges .bf-lphero__google .bf-over__g { width: calc(52 * var(--u)); height: calc(52 * var(--u)); }
+.bf.bf-lp--badges .bf-lphero__google .bf-over__g svg { width: calc(28 * var(--u)); height: calc(28 * var(--u)); }
+.bf.bf-lp--badges .bf-lphero__google .bf-over__sterren svg { width: calc(20 * var(--u)); height: calc(20 * var(--u)); }
+.bf.bf-lp--badges .bf-lphero__google b { margin-top: calc(4 * var(--u)); font-size: calc(19 * var(--u)); font-weight: 800; }
+/* de vinkjes onder de kaart op de gsm: donkerder vlak, grotere letters en iconen in goud */
+@media (max-width: 1000px) {
+  .bf.bf-lp--badges .bf-lphero__vinkjes { gap: 11px; padding: 16px 16px; background: rgba(10, 22, 40, .84); border-color: rgba(255, 255, 255, .22); }
+  .bf.bf-lp--badges .bf-lphero__vinkjes li { gap: 13px; font-size: 16px; font-weight: 700; }
+  .bf.bf-lp--badges .bf-lphero__vinkjes span { width: 32px; height: 32px; }
+  .bf.bf-lp--badges .bf-lphero__vinkjes svg { width: 18px; height: 18px; stroke-width: 2.2; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust { gap: 8px; margin-top: 14px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust li { min-height: 88px; padding: 10px 4px; border-radius: 12px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust b { font-size: 20px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust li > span:not(.kgj-reken__trust-ic):not(.kgj-reken__trust-gic) { font-size: 13px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust-ic, .bf.bf-lp .kgj-reken--badges .kgj-reken__trust-gic { width: 32px; height: 32px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust-ic svg { width: 18px; height: 18px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust-gic svg { width: 19px; height: 19px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust-st svg { width: 13px; height: 13px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__vertrouwen li { font-size: 15px; gap: 10px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__vertrouwen li > svg { width: 30px; height: 30px; padding: 6px; }
+  .bf.bf-lp--badges .bf-lphero__vertrouwen .bf-lphero__google { padding: 8px 18px 8px 8px; gap: 10px; }
+  .bf.bf-lp--badges .bf-lphero__google .bf-over__g { width: 40px; height: 40px; }
+  .bf.bf-lp--badges .bf-lphero__google .bf-over__g svg { width: 22px; height: 22px; }
+  .bf.bf-lp--badges .bf-lphero__google .bf-over__sterren svg { width: 15px; height: 15px; }
+  .bf.bf-lp--badges .bf-lphero__google b { font-size: 15px; }
+}
+
+/* ---------- belblok onder de hero van /lp/dakwerken: "Lekt uw dak?" + belknop + rustige link naar de inspectiekaart ---------- */
+.bf.bf-lp .bf-lpbelblok { background: #f7f8fa; border-top: 1px solid #e3e6ec; border-bottom: 1px solid #e3e6ec; color: var(--ink); }
+.bf.bf-lp .bf-lpbelblok__in { width: calc(1200 * var(--u)); margin: 0 auto; padding: calc(34 * var(--u)) 0; display: flex; align-items: center; justify-content: space-between; gap: calc(32 * var(--u)); }
+.bf.bf-lp .bf-lpbelblok__links { display: flex; align-items: center; gap: calc(30 * var(--u)); min-width: 0; }
+.bf.bf-lp .bf-lpbelblok__kop { margin: 0; font-size: max(26px, calc(36 * var(--u))); line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
+.bf.bf-lp .bf-lpbelblok__knop { min-height: calc(56 * var(--u)); padding: 0 calc(30 * var(--u)); gap: calc(12 * var(--u)); border-radius: 999px; font-size: max(16px, calc(18 * var(--u))); font-weight: 700; background: var(--merk); color: var(--op-merk); }
+.bf.bf-lp .bf-lpbelblok__knop:hover { background: var(--merk-diep); }
+.bf.bf-lp .bf-lpbelblok__knop svg { flex: none; width: calc(20 * var(--u)); height: calc(20 * var(--u)); }
+.bf.bf-lp .bf-lpbelblok__knop b { font-weight: 800; }
+.bf.bf-lp .bf-lpbelblok__link { display: block; min-height: 44px; padding: calc(8 * var(--u)) 0; font-size: max(16px, calc(18 * var(--u))); font-weight: 600; line-height: 1.35; color: var(--ink); text-wrap: balance; }
+.bf.bf-lp .bf-lpbelblok__tekst { text-decoration: underline; text-decoration-color: var(--merk); text-decoration-thickness: 2px; text-underline-offset: 5px; }
+.bf.bf-lp .bf-lpbelblok__link:hover { color: var(--merk-tekst); }
+.bf.bf-lp .bf-lpbelblok__link svg { display: inline-block; vertical-align: -3px; margin-left: calc(10 * var(--u)); width: calc(18 * var(--u)); height: calc(18 * var(--u)); color: var(--merk-tekst); }
+@media (max-width: 1000px) {
+  .bf.bf-lp .bf-lpbelblok__in { width: auto; padding: 26px 16px 22px; flex-direction: column; align-items: stretch; gap: 8px; }
+  .bf.bf-lp .bf-lpbelblok__links { flex-direction: column; align-items: stretch; gap: 14px; }
+  .bf.bf-lp .bf-lpbelblok__kop { font-size: 28px; }
+  .bf.bf-lp .bf-lpbelblok__knop { width: 100%; min-height: 52px; padding: 0 20px; font-size: 17px; }
+  .bf.bf-lp .bf-lpbelblok__knop svg { width: 20px; height: 20px; }
+  .bf.bf-lp .bf-lpbelblok__link { min-height: 48px; padding: 12px 0 8px; font-size: 16px; }
+  .bf.bf-lp .bf-lpbelblok__link svg { margin-left: 8px; width: 18px; height: 18px; }
+}
+
+/* vraag met lange labels (budget): één kolom op elk scherm, rijen iets lager zodat de kaart in het eerste scherm blijft */
+.bf.bf-lp .kgj-reken__keuzes--lijst { grid-template-columns: minmax(0, 1fr); gap: calc(8 * var(--u)); }
+.bf.bf-lp .kgj-reken__keuzes--lijst .kgj-reken__keuze { min-height: calc(50 * var(--u)); padding-top: calc(8 * var(--u)); padding-bottom: calc(8 * var(--u)); }
+@media (max-width: 1000px) { .bf.bf-lp .kgj-reken__keuzes--lijst .kgj-reken__keuze { min-height: 50px; padding-top: 8px; padding-bottom: 8px; } }
+/* geen weesregel ("u / op.") in de zinnen onder de verzendknop */
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__gerust, .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__privacy, .bf.bf-lp .kgj-reken__disclaimer { text-wrap: balance; }

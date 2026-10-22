@@ -8,7 +8,8 @@ import Werkspoor from './Werkspoor';
 import { Icoon } from './Iconen';
 import { IcChevron } from '../replica/Iconen';
 import { DAKWERKEN, type KgjInhoud, type Sectie, type StapIcoon } from './inhoud';
-import { CLARITY_PROJECT, laadClarity } from '@/lib/clarity';
+import { Award, ShieldCheck, UserCheck } from 'lucide-react';
+import { CLARITY_PROJECT, laadClarity, meldClarity } from '@/lib/clarity';
 import logoWit from '@/assets/bf/logo-wit-440.webp';
 import logoInk from '@/assets/bf/logo-ink-440.webp';
 /* Voetlogo: hetzelfde bestand als de voet van LpKgj (r.12, r.788): "beelden EXACT zoals nu" (spec §17). */
@@ -647,7 +648,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   const heroKnop = !heroAanvraag && !heroReken && !heroForm;
 
   return (
-    <div className={`bf bf-lp bf-lp--${inhoud.bedanktSlug}${inhoud.strak ? ' bf-lp--strak' : ''}`} ref={vat}>
+    <div className={`bf bf-lp bf-lp--${inhoud.bedanktSlug}${inhoud.strak ? ' bf-lp--strak' : ''}${heroAanvraag && inhoud.aanvraag?.badges ? ' bf-lp--badges' : ''}`} ref={vat}>
       <header className={`bf-kop bf-kop--over bf-kop--lp kgj-kop${gescrold ? ' bf-is-gescrold' : ''}${inhoud.topbalk ? ' bf-kop--topbalk' : ''}`} id="kop">
         {/* Totaalrenovatie (5 okt): smalle balk met het telefoonnummer, hoort bij de vaste kop. */}
         {inhoud.topbalk && (
@@ -729,11 +730,15 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                  (ads/dakwerken en ads/totaalrenovatie) wijzen er nog naar; zo landen ze op de kaart in plaats van op niets. */
               <div id="rekenaar" className="bf-lphero__reken bf-lphero__aanvraag">
                 <Aanvraag inhoud={inhoud} voor={match?.voor} boven={inhoud.aanvraag?.vrijMoment ? <VrijMoment ruimte /> : undefined} />
-                {/* Telefoon: de vinkjes onder de kaart (zoals bij de rekenaar); op de computer staan ze in de kaart. */}
+                {/* Telefoon: de vinkjes onder de kaart (zoals bij de rekenaar); op de computer staan ze in de kaart. Met badges
+                    (renovatiepagina's, 22 okt 2026) heeft elk punt een herkenbaar icoon in plaats van een vinkje. */}
                 {vertrouwen.length > 0 && (
                   <div className="bf-lphero__gerust">
                     <ul className="bf-lphero__vinkjes">
-                      {vertrouwen.map((t) => <li key={t}><span><IcVink /></span>{metVet(t)}</li>)}
+                      {vertrouwen.map((t, i) => {
+                        const Teken = inhoud.aanvraag?.badges ? [ShieldCheck, UserCheck, Award][i] : undefined;
+                        return <li key={t}><span>{Teken ? <Teken aria-hidden="true" /> : <IcVink />}</span>{metVet(t)}</li>;
+                      })}
                     </ul>
                   </div>
                 )}
@@ -755,6 +760,25 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           </div>
         </section>
 
+        {/* Belblok (alleen /lp/dakwerken, 22 okt 2026, Mohammed: "Lekt uw dak? Bel ..., en daaronder ook de gratis dakinspectie"):
+            direct onder de hero. Nummer en tel:-link uit CONTACT.phone, dezelfde bron als de belknop in de kop; de link springt naar
+            de aanvraagkaart (#rekenaar, het bestaande anker van de hero). */}
+        {inhoud.belBlok && (
+          <section className="bf-lpbelblok" aria-label={inhoud.belBlok.kop}>
+            <div className="bf-lpbelblok__in">
+              <div className="bf-lpbelblok__links">
+                <p className="bf-lpbelblok__kop">{inhoud.belBlok.kop}</p>
+                <a className="bf-knop bf-lpbelblok__knop" href={CONTACT.phone.href} onClick={() => meldClarity('dak-bel-blok')}>
+                  <IcTel /><span>{inhoud.belBlok.knop} <b>{CONTACT.phone.display}</b></span>
+                </a>
+              </div>
+              <a className="bf-lpbelblok__link" href="#rekenaar" onClick={() => meldClarity('dak-bel-blok-inspectie')}>
+                <span className="bf-lpbelblok__tekst">{inhoud.belBlok.link}</span><IcPijl />
+              </a>
+            </div>
+          </section>
+        )}
+
         {(inhoud.volgorde ?? STANDAARD_VOLGORDE).map((naam) => <Fragment key={naam}>{secties[naam]}</Fragment>)}
 
         {/* Slotblok: BF lpinsp (foto, donkere laag, vinkjes, witte belknop, witte kaart), met Inspectie.tsx. */}
@@ -773,7 +797,13 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
               )}
               {!inhoud.topbalk && <a className="bf-lpinsp__bel" href={CONTACT.phone.href}><IcTel />Bel {CONTACT.phone.display}</a>}
             </div>
-            <div className="bf-lpinsp__kaartvak"><Inspectie inhoud={inhoud} opPrijs={zonderRekenaar ? undefined : openVenster} /></div>
+            {/* Renovatiepagina's (22 okt 2026, Mohammed: "onderaan bij plaatsbezoek de form zo dat je makkelijk kan klikken"):
+                dezelfde klikkaart als bovenaan, in plaats van het formulier met keuzelijsten. De rest (dak) houdt Inspectie. */}
+            <div className="bf-lpinsp__kaartvak">
+              {heroAanvraag && inhoud.aanvraag?.onder
+                ? <Aanvraag inhoud={inhoud} plek="onder" />
+                : <Inspectie inhoud={inhoud} opPrijs={zonderRekenaar ? undefined : openVenster} />}
+            </div>
           </div>
         </section>
       </main>

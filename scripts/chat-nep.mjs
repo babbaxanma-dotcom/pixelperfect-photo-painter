@@ -40,7 +40,7 @@ function antwoord(params) {
     }
     const g = ingevuld.find((v) => v.label === 'Gemeente')?.waarde || '';
     return uit({
-      antwoord: 'Dank u. Uw aanvraag staat klaar. Vul hieronder uw telefoonnummer in, dan bellen wij u binnen één werkdag om een moment af te spreken.',
+      antwoord: 'Dank u. Uw aanvraag staat klaar. Vul hieronder uw telefoonnummer in, dan nemen wij zo snel mogelijk contact met u op.',
       aanvraag: {
         klaar: true,
         titel: reno ? `${ingevuld[1].waarde} – ${g}` : `${ingevuld[0].waarde} ${ingevuld[1].waarde.toLowerCase()} – ${g}`,
