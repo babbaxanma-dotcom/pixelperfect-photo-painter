@@ -544,6 +544,9 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     disclaimer: 'Laat uw woning vakkundig bekijken. Voorkom onvoorziene kosten en weet exact wat er moet gebeuren.',
     /* 22 okt 2026, Mohammed: "bij abgroep totaalrenovatie ook onderaan bij plaatsbezoek de form zo dat je makkelijk kan klikken". */
     onder: true,
+    /* 23 okt 2026 (Mohammed: "algemene psychologie cro optimalisatie toepassen"): onder de verzendknop bewijs en risico weg op het
+       moment van beslissen. Woordelijk bfbouw.be (LP.kaart.zeker, rk__knopzeker); de subkop hierboven zegt "100% vrijblijvend". */
+    zeker: 'Gratis en vrijblijvend',
   },
   /* 22 okt 2026, Mohammed (zijn dictaat voor BF: "neemt zo snel mogelijk contact met u op", geen termijn meer): geen "binnen één
      werkdag" meer op /lp/totaalrenovatie en /lp/aannemer-renovatiewerken. /lp/richtprijs-berekenen houdt TOTAALRENOVATIE_REKENAAR

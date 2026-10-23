@@ -2,6 +2,7 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { CONTACT } from '@/data/contact';
 import Rekenaar from './Rekenaar';
 import Aanvraag, { badgeIcoon } from './Aanvraag';
+import { AanvraagStaat, beginStand, useAanvraagVoortgang } from './AanvraagStaat';
 import Inspectie from './Inspectie';
 import ChatAssistent from './ChatAssistent';
 import Werkspoor from './Werkspoor';
@@ -184,6 +185,23 @@ function HeroKop({ kop, kop2 }: { kop: string; kop2?: string }) {
         : deel.split('\n').map((regel, j, alle) => <Fragment key={`${i}-${j}`}>{regel}{j < alle.length - 1 && <>{' '}<br /></>}</Fragment>)))}
       {kop2 && <>{' '}<span className="bf-lphero__kop2">{kop2}</span></>}
     </h1>
+  );
+}
+
+/* De vaste knop onderaan de telefoon (BF lpsticky). Is de bezoeker aan de aanvraag begonnen en nog niet klaar, dan staat onder de
+   knoptekst waar hij is ("Stap 3 van 6", zoals in de kaart): een onafgemaakte aanvraag blijft in beeld terwijl hij verder leest
+   (23 okt 2026, Mohammed: "algemene psychologie cro optimalisatie toepassen"). De knoptekst zelf blijft cta.naam. */
+function VasteKnop({ tekst, zichtbaar, totaal, onClick }: { tekst: string; zichtbaar: boolean; totaal: number; onClick: () => void }) {
+  const voortgang = useAanvraagVoortgang();
+  const bezig = !!voortgang && totaal > 1 && voortgang.gestart && voortgang.stap > 0 && !voortgang.verstuurd;
+  return (
+    <button type="button" className={`bf-lpsticky${zichtbaar ? ' bf-is-zichtbaar' : ''}${bezig ? ' bf-lpsticky--bezig' : ''}`} onClick={onClick} tabIndex={zichtbaar ? 0 : -1} aria-hidden={!zichtbaar}>
+      <span className="bf-lpsticky__tekst">
+        {tekst}
+        {bezig && <>{' '}<span className="bf-lpsticky__stap">Stap {Math.min(voortgang.stap, totaal - 1) + 1} van {totaal}</span></>}
+      </span>
+      <IcPijl />
+    </button>
   );
 }
 
@@ -384,12 +402,37 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
     const vorm = document.querySelector<HTMLElement>('.kgj-reken--onder, .kgj-reken--inspectie');
     if (!vorm) return;
     const kopH = Math.max(0, ...['.kgj-kop', '.kgj-topbalk'].map((s) => document.querySelector(s)?.getBoundingClientRect().bottom ?? 0));
+    /* 23 okt 2026: is de bezoeker al begonnen (de kaarten delen de stap, AanvraagStaat.tsx), dan "Stap x van y" direct onder de
+       balk: de vraag waar hij was en haar keuzes staan meteen in beeld, zonder de kaartkop erboven. */
+    const rij = vorm.classList.contains('is-bezig') ? vorm.querySelector<HTMLElement>('.kgj-reken__kop') : null;
+    if (rij) {
+      window.scrollTo({ top: rij.getBoundingClientRect().top + window.scrollY - kopH - 8, behavior: 'smooth' });
+      return;
+    }
     if (vorm.offsetHeight <= window.innerHeight - kopH) {
       vorm.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
     window.scrollTo({ top: vorm.getBoundingClientRect().top + window.scrollY - kopH - 8, behavior: 'smooth' });
   };
+
+  /* Gsm, klikkaart onderaan (23 okt 2026, Clarity /lp/totaalrenovatie 01:52): "Plan uw gratis plaatsbezoek" sprong naar de kop van het
+     slotblok; de kaart stond daaronder buiten beeld en de bezoeker moest haar zoeken. Elke link naar #contact doet op de gsm nu wat de
+     vaste knop doet: de kaart (op de stap waar de bezoeker is) meteen in beeld. Op de computer blijft de gewone sprong: daar staat de
+     kaart naast de kop. */
+  useEffect(() => {
+    const wortel = vat.current;
+    if (!wortel || !heroAanvraag || !inhoud.aanvraag?.onder) return;
+    const klik = (e: MouseEvent) => {
+      const link = (e.target as HTMLElement | null)?.closest?.('a[href="#contact"]');
+      if (!link || !window.matchMedia('(max-width: 1000px)').matches) return;
+      e.preventDefault();
+      naarFormulier();
+    };
+    wortel.addEventListener('click', klik);
+    return () => wortel.removeEventListener('click', klik);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [heroAanvraag]);
 
   /* Zonder rekenaar (heroAanvraag, 19 okt 2026): op dezelfde plek een knop naar het aanvraagformulier onderaan (#contact),
      met de knoptekst van dat formulier. Zo doet bfbouw.be/lp/dakwerken het met de aanvraag bovenaan: de knoppen verderop
@@ -648,7 +691,9 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   const heroForm = !heroAanvraag && !heroReken && !!inhoud.heroFormulier;
   const heroKnop = !heroAanvraag && !heroReken && !heroForm;
 
+  /* De kaart bovenaan en die onderaan delen één stand (AanvraagStaat.tsx, 23 okt 2026); de zoekterm kan vraag 1 al beantwoorden. */
   return (
+    <AanvraagStaat begin={() => beginStand(inhoud, match?.voor)}>
     <div className={`bf bf-lp bf-lp--${inhoud.bedanktSlug}${inhoud.strak ? ' bf-lp--strak' : ''}${heroAanvraag && inhoud.aanvraag?.badges ? ' bf-lp--badges' : ''}`} ref={vat}>
       <header className={`bf-kop bf-kop--over bf-kop--lp kgj-kop${gescrold ? ' bf-is-gescrold' : ''}${inhoud.topbalk ? ' bf-kop--topbalk' : ''}`} id="kop">
         {/* Totaalrenovatie (5 okt): smalle balk met het telefoonnummer, hoort bij de vaste kop. */}
@@ -811,9 +856,8 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
 
       {/* Telefoon: vaste knop naar het formulier + belknop (BF lpsticky + belzweef), met de logica van de
           actiebalk van LpKgj (r.753-780): zichtbaar zolang geen rekenaar, formulier of heroknop in beeld staat. */}
-      <button type="button" className={`bf-lpsticky${balk ? ' bf-is-zichtbaar' : ''}`} onClick={naarFormulier} tabIndex={balk ? 0 : -1} aria-hidden={!balk}>
-        {inhoud.cta.naam ?? inhoud.cta.kop}<IcPijl />
-      </button>
+      <VasteKnop tekst={inhoud.cta.naam ?? inhoud.cta.kop} zichtbaar={balk} onClick={naarFormulier}
+        totaal={heroAanvraag ? (inhoud.aanvraag?.vragen.length ?? 0) + 1 : 0} />
       <a className={`bf-belzweef${balk ? ' bf-is-zichtbaar' : ''}`} href={CONTACT.phone.href} aria-label={'Bel ' + CONTACT.phone.display} tabIndex={balk ? 0 : -1} aria-hidden={!balk}><IcTel /></a>
 
       {/* Digitale assistent (28 sep): verschijnt alleen als api/chat een sleutel heeft. Vorm: kgj/extra.ts via de port. */}
@@ -854,5 +898,6 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         </div>
       )}
     </div>
+    </AanvraagStaat>
   );
 }

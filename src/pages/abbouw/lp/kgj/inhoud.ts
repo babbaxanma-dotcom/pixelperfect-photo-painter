@@ -127,6 +127,8 @@ export type KgjInhoud = {
     disclaimer?: string;
     /** Het slotblok onderaan (#contact) toont dezelfde klikkaart als de hero, in plaats van het formulier van Inspectie.tsx. */
     onder?: boolean;
+    /** Regel direct onder de verzendknop, na "★★★★★ 5,0 op Google ·" (bfbouw.be rk__knopzeker, 23 okt 2026). */
+    zeker?: string;
     /** Vertrouwensrij, vinkjes en Google-badge als duidelijke tegels met iconen (alleen vorm, zelfde teksten en cijfers). */
     badges?: boolean };
   /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart.
@@ -308,6 +310,9 @@ export const DAKWERKEN: KgjInhoud = {
     disclaimer: 'Laat uw dak vakkundig controleren. Voorkom onvoorziene kosten en weet exact wat er moet gebeuren.',
     /* "onderaan ... de form zo dat je makkelijk kan klikken": onderaan dezelfde klikkaart in plaats van het formulier van Inspectie. */
     onder: true,
+    /* 23 okt 2026 (Mohammed: "algemene psychologie cro optimalisatie toepassen"): onder de verzendknop bewijs en risico weg op het
+       moment van beslissen. Woordelijk bfbouw.be (LP.kaart.zeker, rk__knopzeker) en het vinkje "Gratis & vrijblijvende dakinspectie". */
+    zeker: 'Gratis en vrijblijvend',
   },
 
   rekenaar: {

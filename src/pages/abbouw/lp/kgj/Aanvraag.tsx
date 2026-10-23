@@ -10,6 +10,7 @@ import { CONTACT } from '@/data/contact';
 import type { KgjInhoud } from './inhoud';
 import PostcodeGemeente from './PostcodeGemeente';
 import Toestemming from './Toestemming';
+import { beginStand, useAanvraagStaat } from './AanvraagStaat';
 
 /* Google-G en ster voor de trustrij (zelfde tekening als Rekenaar.tsx en LpBf.tsx). */
 const IcGoogle = () => (
@@ -69,17 +70,19 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   const t = inhoud.inspectie;
   const VRAGEN = a.vragen;
   const navigate = useNavigate();
-  const vooraf = voor && VRAGEN[0]?.sleutel === voor.sleutel && VRAGEN[0].keuzes.some((k) => k.label === voor.label) ? voor : undefined;
-  const [stap, setStap] = useState(vooraf ? 1 : 0);
-  const [antwoorden, setAntwoorden] = useState<Record<string, string>>(vooraf ? { [vooraf.sleutel]: vooraf.label } : {});
+  /* Stap, antwoorden, vinkjes, naam en telefoonnummer delen de kaart bovenaan en die onderaan (AanvraagStaat.tsx, 23 okt 2026):
+     wie bovenaan begon en via "Plan uw gratis plaatsbezoek" onderaan landt, staat daar op dezelfde stap. */
+  const { stand, zet, actief, gestart, verste, verstuurt } = useAanvraagStaat(() => beginStand(inhoud, voor));
+  const { stap, antwoorden, vinken, vraagToestemming } = stand;
   const [bezig, setBezig] = useState(false);
-  const verstuurt = useRef(false);
   const [fout, setFout] = useState<string | null>(null);
-  const [vraagToestemming, setVraagToestemming] = useState(false);
-  const gestart = useRef(false);
   const kaart = useRef<HTMLDivElement>(null);
+  const balk = useRef<HTMLDivElement>(null);
+  const telVeld = useRef<HTMLInputElement>(null);
   const vorigeStap = useRef(stap);
-  const versteStap = useRef(stap);
+  const vorigeBalk = useRef(stap);
+  /* Deze kaart gebruikt de bezoeker nu: alleen zij scrolt na een stap en meldt de stap aan Clarity. */
+  const gebruik = () => { actief.current = plek; };
 
   const onder = plek === 'onder';
   const clarityNaam = onder ? 'aanvraag-onder' : 'aanvraag';
@@ -90,10 +93,16 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
 
   /* Na elke stap (ook Terug) de kop van de kaart terug in beeld als hij onder de vaste kop of boven het scherm viel
      (Rekenaar.tsx, Mohammed 1 okt: "paar pixels naar onder ... waardoor je de form kwijtraakt"). De nieuwe vraag krijgt
-     de focus zonder te scrollen (zoals bfbouw.be focusVraag): een schermlezer verliest zijn plek niet. */
+     de focus zonder te scrollen (zoals bfbouw.be focusVraag): een schermlezer verliest zijn plek niet.
+     23 okt 2026 (Clarity /lp/totaalrenovatie, gsm): ook omgekeerd. Op het contactscherm stond de verzendknop onder het scherm
+     (iPhone in Safari, 390 x 664 zichtbaar: onderkant knop 897 px). De bezoeker zag "Bijna klaar!", de zin eronder en het
+     naamveld, scrolde zoekend naar de knop en vertrok. Valt de laatste keuze, Volgende of de verzendknop onder het scherm, dan
+     schuift de pagina net genoeg omhoog zolang "Stap x van y" onder de vaste balk zichtbaar blijft; past de stap niet, dan staat
+     "Stap x van y" direct onder de balk. Alleen de kaart die de bezoeker gebruikt, scrolt (de twee kaarten delen de stap). */
   useEffect(() => {
     if (vorigeStap.current === stap) return;
     vorigeStap.current = stap;
+    if (actief.current !== plek) return;
     const el = kaart.current;
     if (!el) return;
     const vraag = el.querySelector<HTMLElement>('.kgj-reken__stap .kgj-reken__vraag');
@@ -101,19 +110,42 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     const kop = el.querySelector<HTMLElement>('.kgj-reken__kop') ?? el;
     const gedrag: ScrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
     const balkH = document.querySelector('.kgj-kop')?.getBoundingClientRect().height ?? 0;
-    if (kop.getBoundingClientRect().top >= balkH + 4) return;
-    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - balkH - 8, behavior: gedrag });
+    const boven = balkH + 8;
+    const kopTop = kop.getBoundingClientRect().top;
+    /* onderkant van wat de bezoeker nu moet tikken: de keuzes, Volgende, of de verzendknop met de regel eronder */
+    const doelen = [...el.querySelectorAll<HTMLElement>('.kgj-reken__stap :is(.kgj-reken__keuze, .kgj-reken__vink, .kgj-reken__verder, .kgj-reken__knop, .kgj-reken__knopzeker)')];
+    const onderkant = doelen.length ? Math.max(...doelen.map((d) => d.getBoundingClientRect().bottom)) : kopTop;
+    const tekort = onderkant - (window.innerHeight - 12);
+    const kopWeg = kopTop < balkH + 4;
+    if (!kopWeg && tekort <= 0) return;
+    let naar = kopWeg ? el.getBoundingClientRect().top - boven : Math.min(tekort, kopTop - boven);
+    if (kopWeg && tekort - naar > 0) naar = kopTop - boven;
+    window.scrollTo({ top: window.scrollY + naar, behavior: gedrag });
+  }, [stap, actief, plek]);
+
+  /* Beloning bij elke gezette stap (bfbouw.be beloon(), Mohammed 10 okt: endowed progress + beloning per stap): een korte gloed
+     en glans over de balk, alleen vooruit, nooit bij Terug, niet bij "minder beweging". */
+  useEffect(() => {
+    const vooruit = stap > vorigeBalk.current;
+    vorigeBalk.current = stap;
+    const el = balk.current;
+    if (!vooruit || !el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    el.classList.remove('is-beloning');
+    void el.offsetWidth;
+    el.classList.add('is-beloning');
   }, [stap]);
 
-  /* Clarity: de verste stap van deze bezoeker (Terug telt niet), zoals de rekenaar dat deed. */
+  /* Clarity: de verste stap van deze bezoeker (Terug telt niet), zoals de rekenaar dat deed. Eén melding per stap, van de kaart
+     waarin de bezoeker die stap haalde. */
   useEffect(() => {
-    if (stap <= versteStap.current) return;
-    versteStap.current = stap;
+    if (actief.current !== plek || stap <= verste.current) return;
+    verste.current = stap;
     meldClarity(stap >= VRAGEN.length ? `${clarityNaam}-contact` : `${clarityNaam}-vraag-${stap + 1}`);
-  }, [stap, VRAGEN.length, clarityNaam]);
+  }, [stap, VRAGEN.length, clarityNaam, actief, verste, plek]);
 
-  /* De eerste tik telt als start van het formulier (GA4 form_start). Eigen label voor de kaart bovenaan, zodat in GA4
-     te zien is welk formulier begonnen werd; de bron in GHL (bron_lead) blijft die van het formulier onderaan. */
+  /* De eerste tik telt als start van het formulier (GA4 form_start), één keer per bezoek, ook als de bezoeker in de andere
+     kaart verdergaat. Eigen label voor de kaart bovenaan, zodat in GA4 te zien is welk formulier begonnen werd; de bron in GHL
+     (bron_lead) blijft die van het formulier onderaan. */
   const meldStart = () => {
     if (gestart.current) return;
     gestart.current = true;
@@ -129,35 +161,37 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     if (tijd - laatsteTik.current < 200) return;
     laatsteTik.current = tijd;
     setDruk(null);
+    gebruik();
     meldStart();
-    setAntwoorden((x) => ({ ...x, [sleutel]: label }));
-    setStap((s) => s + 1);
+    zet((s) => ({ ...s, antwoorden: { ...s.antwoorden, [sleutel]: label }, stap: s.stap + 1 }));
   };
 
   /* Afvinkvraag (22 okt 2026, /lp/totaalrenovatie: "die vraag van dat ze mooi kunnen aanklikken wat er allemaal nodig is, makkelijk
      en gebruiksvriendelijk"): zelfde gedrag als de afvinkvraag van de rekenaar (Rekenaar.tsx vink/verder). Alles vinkt alles aan of
      uit; Volgende pas met minstens één vinkje; het antwoord is de lijst, of het label van Alles als alles aan staat. */
-  const [vinken, setVinken] = useState<Record<string, string[]>>({});
   const vink = (v: (typeof VRAGEN)[number], label: string | null) => {
+    gebruik();
     meldStart();
     const alle = v.keuzes.map((k) => k.label);
-    setVinken((o) => {
-      const nu = o[v.sleutel] ?? [];
+    zet((s) => {
+      const nu = s.vinken[v.sleutel] ?? [];
       const volgend = label === null
         ? (nu.length === alle.length ? [] : alle)
         : nu.includes(label) ? nu.filter((l) => l !== label) : alle.filter((l) => l === label || nu.includes(l));
-      return { ...o, [v.sleutel]: volgend };
+      return { ...s, vinken: { ...s.vinken, [v.sleutel]: volgend } };
     });
   };
   const verder = (v: (typeof VRAGEN)[number]) => {
     const gekozen = vinken[v.sleutel] ?? [];
     if (!gekozen.length || !v.afvinken) return;
-    setAntwoorden((x) => ({ ...x, [v.sleutel]: gekozen.length === v.keuzes.length ? v.afvinken!.alles : gekozen.join(', ') }));
-    setStap((s) => s + 1);
+    gebruik();
+    const antwoord = gekozen.length === v.keuzes.length ? v.afvinken.alles : gekozen.join(', ');
+    zet((s) => ({ ...s, antwoorden: { ...s.antwoorden, [v.sleutel]: antwoord }, stap: s.stap + 1 }));
   };
 
   const verstuur = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    gebruik();
     if (verstuurt.current) return;
     const f = new FormData(e.currentTarget);
     const telefoon = String(f.get('telefoon') || '').trim();
@@ -189,9 +223,10 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     setBezig(false);
     if (!res.ok) { verstuurt.current = false; setFout(leadFoutmelding(res, CONTACT.phone.display)); return; }
     meldClarity(`${clarityNaam}-verstuurd`);
-    /* Zonder toestemming voor marketing eerst de vraag uit Toestemming.tsx, dan pas de bedankpagina. */
+    /* Zonder toestemming voor marketing eerst de vraag uit Toestemming.tsx, dan pas de bedankpagina (in beide kaarten: de andere
+       kaart toont dan ook de vraag, geen tweede formulier). */
     if (allowsMarketing()) naarBedankt();
-    else setVraagToestemming(true);
+    else zet((s) => ({ ...s, vraagToestemming: true }));
   };
   const naarBedankt = () => navigate('/bedankt/' + inhoud.bedanktSlug);
 
@@ -203,7 +238,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   const band = a.contactKop.match(/^(Bijna klaar!)\s+(.+)$/);
 
   return (
-    <div ref={kaart} className={`kgj-reken kgj-reken--aanvraag${onder ? ' kgj-reken--onder' : ''}${a.badges ? ' kgj-reken--badges' : ''}${klaar ? ' is-contact' : ''}`}>
+    <div ref={kaart} className={`kgj-reken kgj-reken--aanvraag${onder ? ' kgj-reken--onder' : ''}${a.badges ? ' kgj-reken--badges' : ''}${stap > 0 ? ' is-bezig' : ''}${klaar ? ' is-contact' : ''}`}>
       <div className="kgj-reken__hoofd">
         <span className="kgj-reken__logo" aria-hidden="true"><IcInspectie /></span>
         <div>
@@ -214,7 +249,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
       {boven}
       <div className="kgj-reken__weg" aria-hidden="true">
         <Home className="kgj-reken__begin" />
-        <div className="kgj-reken__balk"><i style={{ width: `${(nu / totaal) * 100}%` }} /></div>
+        <div className="kgj-reken__balk" ref={balk} onAnimationEnd={(e) => { if (e.animationName === 'kgj-glans') e.currentTarget.classList.remove('is-beloning'); }}><i style={{ width: `${(nu / totaal) * 100}%` }} /></div>
         <span className={`kgj-reken__eind${klaar ? ' is-aan' : ''}`}><Check /></span>
       </div>
       {/* Na een verstuurde aanvraag geen Terug meer: terug naar een vraag zou doen alsof er nog niets verstuurd is. */}
@@ -222,7 +257,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
         <div className="kgj-reken__kop">
           <span className="kgj-reken__tel" aria-live="polite">Stap {nu} van {totaal}</span>
           {stap > 0 && (
-            <button type="button" className="kgj-reken__terug" onClick={() => { setFout(null); setStap((s) => s - 1); }}>‹ Terug</button>
+            <button type="button" className="kgj-reken__terug" onClick={() => { gebruik(); setFout(null); zet((s) => ({ ...s, stap: Math.max(0, s.stap - 1) })); }}>‹ Terug</button>
           )}
         </div>
       )}
@@ -305,12 +340,17 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
                 <span>{a.disclaimer}</span>
               </p>
             )}
-            {/* Geen autoFocus: op een telefoon sprong het toetsenbord dan meteen open (Mohammed, 24 sep). */}
+            {/* Geen autoFocus: op een telefoon sprong het toetsenbord dan meteen open (Mohammed, 24 sep).
+                23 okt 2026: naam en nummer staan in de gedeelde stand (een kaart wisselen of Terug wist niets); op de gsm zet het
+                toetsenbord een hoofdletter bij elke naam en gaat "Volgende" van Naam naar Telefoonnummer, waar "Verstuur" verstuurt. */}
             <div className="kgj-reken__rij">
-              <label>Naam *<input name="naam" type="text" autoComplete="name" placeholder="Uw naam" aria-required="true" /></label>
+              <label>Naam *<input name="naam" type="text" autoComplete="name" autoCapitalize="words" enterKeyHint="next" placeholder="Uw naam" aria-required="true"
+                value={stand.naam} onFocus={gebruik} onChange={(e) => { const v = e.target.value; zet((s) => ({ ...s, naam: v })); }}
+                onKeyDown={(e) => { if (e.key === 'Enter' && !e.nativeEvent.isComposing) { e.preventDefault(); telVeld.current?.focus(); } }} /></label>
               {/* 22 okt 2026, Mohammed: "en doe naam en telefoonnummer", "niet gsm". */}
               <label>Telefoonnummer *
-                <input name="telefoon" type="tel" autoComplete="tel" inputMode="tel" placeholder="04xx xx xx xx" aria-required="true" />
+                <input ref={telVeld} name="telefoon" type="tel" autoComplete="tel" inputMode="tel" enterKeyHint="send" placeholder="04xx xx xx xx" aria-required="true"
+                  value={stand.telefoon} onFocus={gebruik} onChange={(e) => { const v = e.target.value; zet((s) => ({ ...s, telefoon: v })); }} />
               </label>
             </div>
             {(metPostcode || metEmail) && (
@@ -324,6 +364,14 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
             <button className="kgj-knop kgj-knop--vol kgj-reken__knop" type="submit" disabled={bezig}>
               {bezig ? 'Bezig…' : <>{t.knop}<ArrowRight aria-hidden="true" /></>}
             </button>
+            {/* 23 okt 2026: direct onder de verzendknop het bewijs en het risico weg, op het moment van beslissen (bfbouw.be rk__knopzeker:
+                "5,0 op Google · Gratis en vrijblijvend"). Op de gsm staat de kaartkop met "vrijblijvend" dan boven het scherm. */}
+            {a.zeker && (
+              <p className="kgj-reken__knopzeker">
+                <span className="kgj-reken__trust-st" aria-hidden="true"><IcSter /><IcSter /><IcSter /><IcSter /><IcSter /></span>
+                <b>5,0 op Google</b>{' '}<span aria-hidden="true">·</span>{' '}{a.zeker}
+              </p>
+            )}
             <p className="kgj-reken__gerust">{t.onder}</p>
             <p className="kgj-reken__privacy">Wij gebruiken uw gegevens alleen voor deze aanvraag. <a href="/privacy">Privacybeleid</a></p>
           </form>
