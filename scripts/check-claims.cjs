@@ -97,6 +97,10 @@ const TOEGESTAAN = []; // { re, bron } — alleen met een bron die Mohammed of B
     });
     await p.setViewport({ width: 1366, height: 900 });
     await p.goto(basis + pad, { waitUntil: 'networkidle2' });
+    /* 23 okt 2026: in npm run verify (koude dev-server, volle belasting) stond /bedankt?dienst=dakwerken na 900 ms nog leeg (0 tekens,
+       "ongeldige meting"); apart gedraaid las dezelfde toets 15 van 15 pagina's. Eerst wachten tot de pagina tekst heeft (hoogstens
+       20 s), dan pas lezen. Blijft ze leeg, dan blijft het hieronder een ongeldige meting (niets wordt goedgekeurd). */
+    await p.waitForFunction(() => document.body && document.body.innerText.trim().length >= 200, { timeout: 20000 }).catch(() => {});
     await wacht(900);
     if (lokaas) await p.evaluate(...[].concat(lokaas));
     /* Ook wat pas bij het scrollen verschijnt. */

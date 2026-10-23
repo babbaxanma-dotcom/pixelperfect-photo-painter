@@ -567,7 +567,12 @@ export const DAKWERKEN: KgjInhoud = {
 
   inspectie: {
     kop: 'Plan uw dakinspectie',
-    knop: 'Vraag uw gratis dakinspectie aan',
+    /* 23 okt 2026, Mohammed: "doe ook optimalisatie van de knoppen, wat de knoppen zeggen, om meer inzendingen te krijgen", "ga na WAT
+       DE BESTE is", "doe goede research op alles". Onderzoek 23 okt (54 sites letterlijk gelezen + A/B-tests): de infinitief "aanvragen"
+       zoals de Vlaamse bouwbedrijven (18 van 43; Dakrubbercentrale exact zo), het werkwoord is wat er echt gebeurt (aanvragen, daarna belt
+       AB), "gratis" erin. "Bevestig" en "Plan" beloven een vast moment (0 van 54 sites met "Bevestig"); "Vraag mijn ... aan" mengt twee
+       stemmen (0 van 46 Belgische sites). Ook de knop in het waarom-blok en de vaste knop (LpBf) dragen deze tekst. */
+    knop: 'Gratis dakinspectie aanvragen',
     /* 21 okt 2026, Mohammed, woordelijk: "onze dakexpert ... neemt zo snel mogelijk contact met u op" (zoals op bfbouw.be). */
     onder: 'Onze dakexpert neemt zo snel mogelijk contact met u op.',
     alt: 'Liever eerst een prijs? Bereken hem in 2 minuten',

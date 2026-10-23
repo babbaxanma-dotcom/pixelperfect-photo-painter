@@ -495,6 +495,9 @@ export const TOTAALRENOVATIE: KgjInhoud = {
        Subkop kort (6 okt: "teveel tekst in hero") met het aanbod, dat ook in de kaart staat. [ ] = accentkleur. */
     kop: 'Jouw complete renovatie, perfect geregeld [van A tot Z].',
     onder: 'Gratis plaatsbezoek en offerte, 100% vrijblijvend.',
+    /* 23 okt 2026 (zie inspectie.knop hieronder): de knop onder de werkwijze zegt hetzelfde als de verzendknop. "Plan" beloofde een
+       moment kiezen; de knop brengt de bezoeker naar de klikkaart en het moment spreekt AB telefonisch af. */
+    knop: { ...TOTAALRENOVATIE_REKENAAR.hero.knop!, tekst: 'Gratis plaatsbezoek aanvragen' },
   },
   aanvraag: {
     titel: 'Gratis plaatsbezoek',
@@ -553,6 +556,12 @@ export const TOTAALRENOVATIE: KgjInhoud = {
      en dus zijn zinnen; de eigen versie staat hier. */
   inspectie: {
     ...TOTAALRENOVATIE_REKENAAR.inspectie,
+    /* 23 okt 2026, Mohammed: "doe ook optimalisatie van de knoppen, wat de knoppen zeggen, om meer inzendingen te krijgen", "ga na WAT
+       DE BESTE is", "doe goede research op alles". Onderzoek 23 okt (54 sites letterlijk gelezen + A/B-tests): "Bevestig mijn gratis
+       plaatsbezoek" beloofde een vastgelegd moment, terwijl AB eerst belt om af te spreken (0 van 54 sites met "Bevestig"); de infinitief
+       "aanvragen" is wat er echt gebeurt en wat Vlaamse bedrijven gebruiken (18 van 43; Energylux exact zo, zelfde verloop: formulier,
+       dan bellen). Alleen deze pagina's: /lp/richtprijs-berekenen houdt TOTAALRENOVATIE_REKENAAR. */
+    knop: 'Gratis plaatsbezoek aanvragen',
     onder: 'Wij nemen zo snel mogelijk contact met u op.',
     vertrouwen: TOTAALRENOVATIE_REKENAAR.inspectie.vertrouwen?.map((v) => (v.icoon === 'telefoon' ? { ...v, tekst: 'Wij nemen zo snel mogelijk contact met u op.' } : v)),
   },

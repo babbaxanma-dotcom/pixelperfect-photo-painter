@@ -188,16 +188,18 @@ function HeroKop({ kop, kop2 }: { kop: string; kop2?: string }) {
   );
 }
 
-/* De vaste knop onderaan de telefoon (BF lpsticky). Is de bezoeker aan de aanvraag begonnen en nog niet klaar, dan staat onder de
-   knoptekst waar hij is ("Stap 3 van 6", zoals in de kaart): een onafgemaakte aanvraag blijft in beeld terwijl hij verder leest
-   (23 okt 2026, Mohammed: "algemene psychologie cro optimalisatie toepassen"). De knoptekst zelf blijft cta.naam. */
+/* De vaste knop onderaan de telefoon (BF lpsticky). Is de bezoeker aan de aanvraag begonnen en nog niet klaar, dan zegt de knop
+   "Verder met uw aanvraag" met daaronder waar hij is ("Stap 3 van 6", zoals in de kaart): een onafgemaakte aanvraag blijft in beeld
+   terwijl hij verder leest (23 okt 2026, Mohammed: "algemene psychologie cro optimalisatie toepassen", "optimalisatie van de knoppen").
+   "Verder met ..." zoals de winnaar van de Nederlandstalige test van Lucardi ("Verder met bestellen", +7,3%); een kaal "Ga verder"
+   verloor in de enige test met cijfers (Insound). */
 function VasteKnop({ tekst, zichtbaar, totaal, onClick }: { tekst: string; zichtbaar: boolean; totaal: number; onClick: () => void }) {
   const voortgang = useAanvraagVoortgang();
   const bezig = !!voortgang && totaal > 1 && voortgang.aangetikt && voortgang.stap > 0 && !voortgang.verstuurd;
   return (
     <button type="button" className={`bf-lpsticky${zichtbaar ? ' bf-is-zichtbaar' : ''}${bezig ? ' bf-lpsticky--bezig' : ''}`} onClick={onClick} tabIndex={zichtbaar ? 0 : -1} aria-hidden={!zichtbaar}>
       <span className="bf-lpsticky__tekst">
-        {tekst}
+        {bezig ? 'Verder met uw aanvraag' : tekst}
         {bezig && <>{' '}<span className="bf-lpsticky__stap">Stap {Math.min(voortgang.stap, totaal - 1) + 1} van {totaal}</span></>}
       </span>
       <IcPijl />
@@ -718,7 +720,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           <div className="bf-nav__acties">
             {/* Plaatsbezoekpagina's: de aanvraagknop staat op de computer altijd in de kop (LpKgj r.326-331). */}
             {inhoud.hero.knop && (
-              <a className="bf-knop bf-lpbel bf-lpkop__actie" href="#contact">{inhoud.cta.naam ?? inhoud.hero.knop.tekst}</a>
+              <a className="bf-knop bf-lpbel bf-lpkop__actie" href="#contact">{heroAanvraag ? inhoud.inspectie.knop : (inhoud.cta.naam ?? inhoud.hero.knop.tekst)}</a>
             )}
             {/* Geen aria-label: de zichtbare tekst is de naam, zoals live ("Bel 0460 20 77 88", gsm "Bel direct"; WCAG 2.5.3). */}
             {!inhoud.topbalk && (
@@ -863,7 +865,9 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
 
       {/* Telefoon: vaste knop naar het formulier + belknop (BF lpsticky + belzweef), met de logica van de
           actiebalk van LpKgj (r.753-780): zichtbaar zolang geen rekenaar, formulier of heroknop in beeld staat. */}
-      <VasteKnop tekst={inhoud.cta.naam ?? inhoud.cta.kop} zichtbaar={balk} onClick={naarFormulier}
+      {/* 23 okt 2026 (knoppenonderzoek, zie inhoud.inspectie.knop): op de aanvraagpagina's dezelfde tekst als de verzendknop, met werkwoord;
+          cta.naam blijft de naam van de aanvraag in het CRM ("Aanvraag gratis plaatsbezoek"). */}
+      <VasteKnop tekst={heroAanvraag ? inhoud.inspectie.knop : (inhoud.cta.naam ?? inhoud.cta.kop)} zichtbaar={balk} onClick={naarFormulier}
         totaal={heroAanvraag ? (inhoud.aanvraag?.vragen.length ?? 0) + 1 : 0} />
       <a className={`bf-belzweef${balk ? ' bf-is-zichtbaar' : ''}`} href={CONTACT.phone.href} aria-label={'Bel ' + CONTACT.phone.display} tabIndex={balk ? 0 : -1} aria-hidden={!balk}><IcTel /></a>
 

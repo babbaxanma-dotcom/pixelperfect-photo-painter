@@ -65,6 +65,9 @@
  *      keuzes, Volgende of de verzendknop binnen het scherm.
  *  17. geen sprong onderaan (review 23 okt): zonder scroll anchoring (Safari) blijft "Stap x van y" van de kaart onderaan binnen
  *      40 px na een antwoord onderaan; de kaart bovenaan is dan bevroren zolang ze buiten beeld is.
+ *  18. één belofte (23 okt 2026, Mohammed: "optimalisatie van de knoppen, wat de knoppen zeggen ... ga na WAT DE BESTE is"):
+ *      de verzendknop is "Gratis dakinspectie aanvragen" / "Gratis plaatsbezoek aanvragen" (punt 4) en elke zichtbare knop naar het
+ *      formulier draagt dezelfde tekst, ook de vaste knop zolang de bezoeker niet begon (punt 15); daarna "Verder met uw aanvraag".
  * Wat er bij een volledige aanvraag naar GHL en Web3Forms gaat (bron_lead, aanvullende_info, Toestemming, /bedankt),
  * toetst check-lp-payload veld voor veld.
  *
@@ -106,7 +109,8 @@ const DAK = {
   pad: '/lp/dakwerken', soort: 'dak', kop: 'Dé specialist voor uw nieuwe dak', woord: 'gratis dakinspectie', vraag1: 'Wat voor dak heeft u?', keuzes1: ['Hellend dak', 'Plat dak'],
   /* de vijfde vraag (22 okt 2026): de start, vier keuzes */
   pad1: ['Hellend dak', 'Dakrenovatie / Nieuw dak', 'Ja', 'Nee', 'Zo snel mogelijk'], vraag2: 'Wat moet er aan uw dak gebeuren?',
-  band: 'Bijna klaar! Bevestig uw gratis dakinspectie', knop: 'Vraag uw gratis dakinspectie aan', stappen: 6,
+  /* knop 23 okt 2026 (Mohammed: "optimalisatie van de knoppen ... ga na WAT DE BESTE is"; onderzoek: Vlaamse infinitief "aanvragen") */
+  band: 'Bijna klaar! Bevestig uw gratis dakinspectie', knop: 'Gratis dakinspectie aanvragen', stappen: 6,
   /* 22 okt 2026: de zin van bfbouw.be (contactSub, zijn dictaat 17 okt), "dat wat er stond" */
   disclaimer: 'Laat uw dak vakkundig controleren. Voorkom onvoorziene kosten en weet exact wat er moet gebeuren.',
   tegels: ['5,0', '10 jaar garantie', '15 jaar ervaring'],
@@ -120,7 +124,7 @@ const RENO = (pad) => ({
      er allemaal nodig is": woning, omvang, afvinkvraag (een lijst in pad1 = die vinkjes en dan Volgende), start, budget */
   vraag1: 'Wat voor woning wilt u renoveren?', keuzes1: ['Appartement', 'Rijwoning', 'Halfopen bebouwing', 'Open bebouwing'],
   pad1: ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'], vraag2: 'Wat wilt u renoveren?',
-  band: 'Bijna klaar! Bevestig uw gratis plaatsbezoek', knop: 'Bevestig mijn gratis plaatsbezoek', stappen: 6,
+  band: 'Bijna klaar! Bevestig uw gratis plaatsbezoek', knop: 'Gratis plaatsbezoek aanvragen', stappen: 6,
   disclaimer: 'Laat uw woning vakkundig bekijken. Voorkom onvoorziene kosten en weet exact wat er moet gebeuren.',
   /* 22 okt 2026: "6 vakdisciplines ... weg, bij die form", "dat is een rare trust badge" */
   tegels: ['5,0', '16 jaar ervaring'],
@@ -504,7 +508,9 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     await wacht(900);
     if (plant === 'na') await p.evaluate(() => document.querySelector('.bf-lpsticky__stap')?.remove());
     const t1 = await tekst();
-    if (t1 !== `${basis} Stap 3 van ${pg.stappen}`) uit.push(`vaste knop na twee antwoorden "${t1}" (verwacht "${basis} Stap 3 van ${pg.stappen}")`);
+    if (basis !== pg.knop) uit.push(`vaste knop "${basis}" in plaats van de tekst van de verzendknop "${pg.knop}"`);
+    /* 23 okt 2026: wie begon, ziet "Verder met uw aanvraag" met de stap eronder (Lucardi, "Verder met bestellen") */
+    if (t1 !== `Verder met uw aanvraag Stap 3 van ${pg.stappen}`) uit.push(`vaste knop na twee antwoorden "${t1}" (verwacht "Verder met uw aanvraag Stap 3 van ${pg.stappen}")`);
     await ctx.close();
     return uit;
   };
@@ -572,6 +578,18 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     await ctx.close();
     if (!r) return `keuze "${pg.pad1[1]}" onderaan niet gevonden`;
     return r.max - r.voor > 40 ? `de kaart onderaan sprong ${r.max - r.voor} px omlaag na een antwoord onderaan ("Stap x van y" van ${r.voor} naar ${r.max} px)` : null;
+  };
+
+  /* 18. Eén belofte op elke knop naar het formulier (23 okt 2026, knoppenonderzoek): elke zichtbare link naar #contact (kopknop op de
+     computer, knop onder de werkwijze of in het waarom-blok) draagt exact de tekst van de verzendknop. Uitzondering: de rustige link in
+     het belblok ("Of vraag uw gratis dakinspectie aan", zijn dictaat 22 okt, punt 10). plant = positieve controle (andere tekst). */
+  const knoppenFouten = async (p, pg, plant = null) => {
+    if (plant) await p.evaluate((t) => { const a = [...document.querySelectorAll('a[href="#contact"]')].find((x) => x.getClientRects().length && !x.closest('.bf-lpbelblok')); if (a) a.textContent = t; }, plant);
+    const teksten = await p.evaluate(() => [...document.querySelectorAll('a[href="#contact"]')]
+      .filter((x) => x.getClientRects().length && !x.closest('.bf-lpbelblok'))
+      .map((x) => x.textContent.replace(/\s+/g, ' ').trim()));
+    if (!teksten.length) return ['geen zichtbare knop naar het formulier'];
+    return teksten.filter((t) => t !== pg.knop).map((t) => `knop "${t}" in plaats van "${pg.knop}" (één belofte: de tekst van de verzendknop)`);
   };
 
   /* 11. horizontale scroll */
@@ -728,6 +746,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
         ['15b: geen stap op de vaste knop na twee antwoorden', await vasteKnopStapFouten(DAK, { plant: 'na' }), 'vaste knop na twee antwoorden'],
         ['16: keuzes 500 px lager', await alleStappenFouten(RENO1, HERO, '.kgj-reken--aanvraag .kgj-reken__keuzes{margin-top:500px!important}'), 'laatste knop tot'],
         ['17: kaart bovenaan niet bevroren (alles altijd in beeld)', [await sprongFout(RENO1, { zonderBevriezen: true })].filter(Boolean), 'sprong'],
+        ['18: een knop naar het formulier met de oude tekst', await (async () => { const { p, ctx } = await open(RENO1.pad, { gsm: false }); const f = await knoppenFouten(p, RENO1, 'Plan uw gratis plaatsbezoek'); await ctx.close(); return f; })(), 'Plan uw gratis plaatsbezoek'],
       ];
       for (const [naam, f, stuk] of pcs) {
         if (!f.some((x) => x.includes(stuk))) { console.log(`ONGELDIGE METING: positieve controle ${naam} werd niet als fout gezien (verwacht "${stuk}", gezien: ${f.join(' | ') || 'niets'})`); process.exit(2); }
@@ -750,6 +769,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
           if (gsm) for (const f of await eersteScherm(p, pg)) fouten.push(`${pg.pad} @${maat}: eerste scherm: ${f}`);
           for (const f of await ondenFouten(p)) fouten.push(`${pg.pad} @${maat}: onderaan: ${f}`);
           for (const f of await badgesFouten(p, pg)) fouten.push(`${pg.pad} @${maat}: badges: ${f}`);
+          for (const f of await knoppenFouten(p, pg)) fouten.push(`${pg.pad} @${maat}: knoppen: ${f}`);
           const sf = await scrollFout(p); if (sf) fouten.push(`${pg.pad} @${maat}: ${sf}`);
           if (pg.soort === 'dak') {
             for (const f of await belblokFouten(p, gsm)) fouten.push(`${pg.pad} @${maat}: belblok: ${f}`);

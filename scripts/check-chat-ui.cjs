@@ -127,7 +127,7 @@ const laatsteAi = (p) => p.evaluate(() => [...document.querySelectorAll('.kgj-ch
       bericht: k.querySelector('textarea').value, knop: k.querySelector('button[type=submit]').textContent };
   });
   meld(!!kaart && kaart.velden.length === 5 && /Mortsel/.test(kaart.titel), 'aanvraag klaar: kaart met vijf velden', kaart && `${kaart.titel} / ${kaart.velden.join(', ')}`);
-  meld(!!kaart && /Vraag uw gratis dakinspectie aan/.test(kaart.knop), 'knop van de kaart = knop van het formulier onderaan', kaart && kaart.knop);
+  meld(!!kaart && /Gratis dakinspectie aanvragen/.test(kaart.knop), 'knop van de kaart = knop van het formulier onderaan', kaart && kaart.knop);
   await p.evaluate(() => document.querySelector('.kgj-chat__kaart').scrollIntoView({ block: 'start' })); await wacht(300);
   await p.screenshot({ path: `${UIT}/06-kaart-gsm.png` });
 
