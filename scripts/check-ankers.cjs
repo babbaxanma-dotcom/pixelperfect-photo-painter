@@ -28,6 +28,9 @@
  * onderkant van de vaste kop (.kgj-kop) staan; elders blijft de grens 145 px. Is Plus Jakarta Sans op een
  * .bf-lp-pagina niet geladen, dan is de meting ongeldig (exit 2): zonder lettersprong geen drift, dus vals groen.
  *
+ * 23 okt 2026: op de gsm (<= 1000 px) landt #contact op de LP's met de klikkaart onderaan op die kaart (LpBf.tsx); de meting
+ * neemt dan de bovenrand van de kaart (#contact .kgj-reken--onder) in plaats van die van het slotblok.
+ *
  * Positieve controle op de meting zelf (12 okt 2026, LP's in de BF-stijl, spec §17): /lp/dakwerken#contact
  * opent één keer met een pagina die niet springt (scrollIntoView uitgeschakeld), één keer met een anker dat
  * niet bestaat, en één keer op 390 px koud met de code van vóór 12 okt (één zachte sprong, geen correctie na
@@ -166,8 +169,11 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
         /* Ruim wachten: de sprong herhaalt zichzelf terwijl beelden nalaadeen. */
         await new Promise((k) => setTimeout(k, 2600));
         return await p.evaluate((a) => {
-          const e = document.getElementById(a);
-          if (!e) return { er: false };
+          /* 23 okt 2026: op de gsm landt #contact op een LP met de klikkaart onderaan op die kaart (LpBf), niet op de kop van het
+             slotblok (daaronder stond de kaart buiten beeld). Dan telt de bovenrand van de kaart. */
+          const kaart = a === 'contact' && innerWidth <= 1000 ? document.querySelector('#contact .kgj-reken--onder') : null;
+          if (!document.getElementById(a)) return { er: false };
+          const e = kaart ?? document.getElementById(a);
           const top = e.getBoundingClientRect().top;
           /* De onderkant van wat VAST staat. Op de renovatie-LP's met topbalk blijft op de gsm (<= 1000) alleen de topbalk
              (.kgj-topbalk, 40 px) vast en scrolt de logorij (header.kgj-kop, dan position absolute) mee weg, zoals live
@@ -182,7 +188,8 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
           const max = document.documentElement.scrollHeight - window.innerHeight;
           const verwacht = kop == null ? null : docTop - Math.min(Math.max(docTop - kop, 0), max);
           return {
-            er: true, top: Math.round(top), kop: kop == null ? null : Math.round(kop), verwacht: verwacht == null ? null : Math.round(verwacht),
+            er: true, doel: kaart ? 'de klikkaart onderaan' : 'de sectie',
+            top: Math.round(top), kop: kop == null ? null : Math.round(kop), verwacht: verwacht == null ? null : Math.round(verwacht),
             bfLp: !!document.querySelector('.bf-lp'), font: document.fonts.check('700 38px "Plus Jakarta Sans"'),
             venster: !!document.querySelector('[role="dialog"].kgj-venster .kgj-reken--venster'),
           };
@@ -204,7 +211,7 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
       if (vf) return vf;
       if (m.bfLp) {
         if (m.kop == null) return `${waar}: de LP-kop draagt de klasse kgj-kop niet (spec §17)`;
-        if (Math.abs(m.top - m.verwacht) > STRAK || Math.abs(m.top) > SPELING) return `${waar}: de sectie staat op ${m.top}px, onder de kop hoort ${m.verwacht}px — ${m.top - m.verwacht}px ernaast`;
+        if (Math.abs(m.top - m.verwacht) > STRAK || Math.abs(m.top) > SPELING) return `${waar}: ${m.doel} staat op ${m.top}px, onder de kop hoort ${m.verwacht}px — ${m.top - m.verwacht}px ernaast`;
         return null;
       }
       return Math.abs(m.top) > SPELING ? `${waar}: de sectie staat ${Math.abs(m.top)}px van de bovenrand — er is niet gesprongen` : null;
@@ -220,7 +227,10 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
     const gsm = MATEN.find((m) => m.width === 390);
     const pc1 = oordeel('/lp/dakwerken', 'contact', MATEN[0], geldig('/lp/dakwerken', 'contact', MATEN[0], await meetAnker('/lp/dakwerken', 'contact', MATEN[0], 'geen')));
     const pc2 = oordeel('/lp/dakwerken', 'bestaat-niet', MATEN[0], await meetAnker('/lp/dakwerken', 'bestaat-niet', MATEN[0]));
-    const pc3 = oordeel('/lp/dakwerken', 'contact', gsm, geldig('/lp/dakwerken', 'contact', gsm, await meetAnker('/lp/dakwerken', 'contact', gsm, 'oud')));
+    /* 23 okt 2026: op #werkwijze in plaats van #contact. #contact landt op de gsm sinds vandaag op de klikkaart onderaan, en daar was
+       de lettersprong met het lokaas niet elke keer meetbaar (eigen meting: 111 px de ene keer, 0 px de andere); #werkwijze heeft
+       dezelfde sprong (12 okt: 187 px) en dezelfde sprongcode. */
+    const pc3 = oordeel('/lp/dakwerken', 'werkwijze', gsm, geldig('/lp/dakwerken', 'werkwijze', gsm, await meetAnker('/lp/dakwerken', 'werkwijze', gsm, 'oud')));
     if (!pc1 || !pc2 || !pc3) stop(2, `FOUT: positieve controle ziet de geplante fout niet (niet springen: ${pc1 || 'niet gezien'}; geen id: ${pc2 || 'niet gezien'}; zachte sprong zonder correctie op 390: ${pc3 || 'niet gezien'}) — de meting is ongeldig`);
     /* Positieve controle venster: op /lp/totaalrenovatie staat de rekenaar in de hero; een meting met een open venster
        (lokaas: venster op true gezet) moet een fout zijn. */

@@ -852,9 +852,10 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
 .bf.bf-lp .kgj-reken--onder .kgj-reken__band { margin-left: calc(-36 * var(--u)); margin-right: calc(-36 * var(--u)); padding-left: calc(36 * var(--u)); padding-right: calc(36 * var(--u)); }
 /* de vinkjes en de trustrij staan hier ook op de gsm in de kaart: onderaan staat er geen aparte rij onder de kaart */
 .bf.bf-lp .kgj-reken--onder .kgj-reken__vertrouwen { display: grid; }
-/* zijkant 16 px zoals de kaart bovenaan (23 okt 2026: met 18 px viel "Gevel" op een eigen rij en "Volgende" onder het scherm) */
+/* zijkant 16 px zoals de kaart bovenaan (23 okt 2026: met 18 px viel "Gevel" op een eigen rij en "Volgende" onder het scherm);
+   #contact landt op de gsm op deze kaart (LpBf): bovenrand op de vaste kop, zoals elk anker (scroll-padding-top 72 px van de pagina) */
 @media (max-width: 1000px) {
-  .bf.bf-lp .kgj-reken--onder { padding: 24px 16px 20px; border-radius: 18px; }
+  .bf.bf-lp .kgj-reken--onder { padding: 24px 16px 20px; border-radius: 18px; scroll-margin-top: 0; }
   .bf.bf-lp .kgj-reken--onder .kgj-reken__band { margin-left: -16px; margin-right: -16px; padding-left: 16px; padding-right: 16px; }
 }
 
@@ -1005,4 +1006,14 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
   .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__vinken { gap: 10px; }
   .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__groepnaam { margin-bottom: 4px; }
   .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__verder { margin-top: 12px; }
+}
+
+/* korte gsm-schermen (zichtbare hoogte tot 700 px; Clarity 23 okt: iPhone 390 x 637): de afvinkvraag met "Volgende" volledig in beeld.
+   Alleen tussenruimte; tikvlak 44 px en tekst 16 px blijven (spec §13). */
+@media (max-width: 1000px) and (max-height: 700px) {
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__meer { margin-top: 2px; }
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__vinken { gap: 8px; margin-top: 10px; }
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__chips { row-gap: 6px; }
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__groepnaam { margin-bottom: 3px; }
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__verder { margin-top: 10px; }
 }

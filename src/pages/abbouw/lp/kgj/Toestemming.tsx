@@ -15,7 +15,9 @@ import { herhaalConversie } from '@/lib/tracking';
  * klik-ID van Google in het adres staat. Bij "Liever niet" gebeurt er niets meer.
  * Daarna gaat de bezoeker naar de bedankpagina, zoals voorheen.
  */
-export default function Toestemming({ verder }: { verder: () => void }) {
+/* stil (23 okt 2026): de aanvraagkaart bovenaan en die onderaan delen hun stand (AanvraagStaat.tsx), dus na het versturen staat
+   deze vraag in beide kaarten. Alleen de kaart die de bezoeker gebruikt, is een dialoog voor een schermlezer. */
+export default function Toestemming({ verder, stil = false }: { verder: () => void; stil?: boolean }) {
   const [bezig, setBezig] = useState(false);
   const kies = (ja: boolean) => {
     if (bezig) return;
@@ -29,7 +31,7 @@ export default function Toestemming({ verder }: { verder: () => void }) {
     }
   };
   return (
-    <div className="kgj-reken__stap kgj-toestemming" role="dialog" aria-live="polite" aria-label="Toestemming advertentiemeting">
+    <div className="kgj-reken__stap kgj-toestemming" role={stil ? undefined : 'dialog'} aria-live={stil ? undefined : 'polite'} aria-label={stil ? undefined : 'Toestemming advertentiemeting'}>
       <p className="kgj-toestemming__ok"><CircleCheck aria-hidden="true" />Uw aanvraag is verstuurd</p>
       <p className="kgj-toestemming__tekst">
         Mag AB Bouw Groep aan Google doorgeven dat uw aanvraag via een advertentie kwam? Daarvoor gebruiken we een

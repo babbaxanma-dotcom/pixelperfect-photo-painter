@@ -193,7 +193,7 @@ function HeroKop({ kop, kop2 }: { kop: string; kop2?: string }) {
    (23 okt 2026, Mohammed: "algemene psychologie cro optimalisatie toepassen"). De knoptekst zelf blijft cta.naam. */
 function VasteKnop({ tekst, zichtbaar, totaal, onClick }: { tekst: string; zichtbaar: boolean; totaal: number; onClick: () => void }) {
   const voortgang = useAanvraagVoortgang();
-  const bezig = !!voortgang && totaal > 1 && voortgang.gestart && voortgang.stap > 0 && !voortgang.verstuurd;
+  const bezig = !!voortgang && totaal > 1 && voortgang.aangetikt && voortgang.stap > 0 && !voortgang.verstuurd;
   return (
     <button type="button" className={`bf-lpsticky${zichtbaar ? ' bf-is-zichtbaar' : ''}${bezig ? ' bf-lpsticky--bezig' : ''}`} onClick={onClick} tabIndex={zichtbaar ? 0 : -1} aria-hidden={!zichtbaar}>
       <span className="bf-lpsticky__tekst">
@@ -344,7 +344,11 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
     const merk = () => { zelf = true; };
     const los = () => ev.forEach((e) => window.removeEventListener(e, merk));
     const t = window.setTimeout(() => {
-      const doel = document.getElementById(id);
+      /* Gsm, #contact (sitelinks "Gratis plaatsbezoek" en "Gratis dakinspectie"; review 23 okt): meteen de klikkaart onderaan in plaats
+         van de kop van het slotblok, waaronder de kaart buiten beeld stond. Op de computer staat de kaart naast de kop. */
+      const kaartOnder = id === 'contact' && window.matchMedia('(max-width: 1000px)').matches
+        ? document.querySelector<HTMLElement>('#contact .kgj-reken--onder') : null;
+      const doel = kaartOnder ?? document.getElementById(id);
       if (!doel) return;
       doel.scrollIntoView({ block: 'start', behavior: 'instant' });
       ev.forEach((e) => window.addEventListener(e, merk, { passive: true }));
@@ -405,6 +409,9 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
     /* 23 okt 2026: is de bezoeker al begonnen (de kaarten delen de stap, AanvraagStaat.tsx), dan "Stap x van y" direct onder de
        balk: de vraag waar hij was en haar keuzes staan meteen in beeld, zonder de kaartkop erboven. */
     const rij = vorm.classList.contains('is-bezig') ? vorm.querySelector<HTMLElement>('.kgj-reken__kop') : null;
+    /* Toetsenbord (review 23 okt): de volgende Tab begint in de kaart, zoals na een gewone ankersprong. Geen ring: .kgj-reken__vraag:focus. */
+    const vraag = vorm.querySelector<HTMLElement>('.kgj-reken__stap .kgj-reken__vraag');
+    if (vraag) { vraag.setAttribute('tabindex', '-1'); vraag.focus({ preventScroll: true }); }
     if (rij) {
       window.scrollTo({ top: rij.getBoundingClientRect().top + window.scrollY - kopH - 8, behavior: 'smooth' });
       return;

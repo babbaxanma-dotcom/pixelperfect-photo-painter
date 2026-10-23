@@ -53,13 +53,18 @@
  *  11. geen horizontale scroll;
  *  12. vaste knop onderaan de gsm: een tik brengt de klikkaart onderaan in beeld (tot 22 okt 2026 deed hij niets meer).
  *  13. één stand voor de twee kaarten (23 okt 2026, Clarity /lp/totaalrenovatie 01:52: bovenaan "Rijwoning", dan "Plan uw gratis
- *      plaatsbezoek", en de kaart onderaan stond weer op vraag 1; de bezoeker vertrok). Gsm 390x664 (iPhone in Safari): vraag 1
- *      bovenaan, dan een tik op een link naar #contact: de kaart onderaan staat op vraag 2, "Stap x van y" direct onder de vaste
- *      balk en alle keuzes in beeld; een antwoord onderaan zet ook de kaart bovenaan een stap verder.
- *  14. contactscherm in beeld (23 okt 2026, Clarity: 8 bezoekers op het contactscherm, 0 verstuurd; de verzendknop stond op
- *      390x664 tot 897 px): op 390x664 staan "Bijna klaar!", Naam, Telefoonnummer, de verzendknop en de regel eronder
+ *      plaatsbezoek", en de kaart onderaan stond weer op vraag 1; de bezoeker vertrok). Gsm 390x637 (iPhone in Safari, gemeten in
+ *      Clarity 23 okt): vraag 1 bovenaan, dan een tik op een link naar #contact: de kaart onderaan staat op vraag 2, "Stap x van y"
+ *      direct onder de vaste balk en alle keuzes in beeld; een antwoord onderaan zet ook de kaart bovenaan een stap verder.
+ *  14. contactscherm in beeld (23 okt 2026, Clarity: 6 echte bezoekers op het contactscherm, 0 verstuurd; de verzendknop stond op
+ *      390x664 tot 897 px): op 390x637 staan "Bijna klaar!", Naam, Telefoonnummer, de verzendknop en de regel eronder
  *      ("5,0 op Google · Gratis en vrijblijvend", bfbouw.be rk__knopzeker) in beeld, voor de kaart bovenaan en onderaan.
- *  15. vaste knop met de stap: zolang de bezoeker niets aantikte geen stap op de knop; na twee antwoorden "Stap 3 van n".
+ *  15. vaste knop met de stap: zolang de bezoeker niets aantikte geen stap op de knop, ook niet als de zoekterm vraag 1 al
+ *      beantwoordde (dak, ?utm_term=plat dak); na twee antwoorden "Stap 3 van n".
+ *  16. elke stap volledig in beeld op 390x637, kaart bovenaan en onderaan: na elk antwoord de vraag onder de vaste balk en alle
+ *      keuzes, Volgende of de verzendknop binnen het scherm.
+ *  17. geen sprong onderaan (review 23 okt): zonder scroll anchoring (Safari) blijft "Stap x van y" van de kaart onderaan binnen
+ *      40 px na een antwoord onderaan; de kaart bovenaan is dan bevroren zolang ze buiten beeld is.
  * Wat er bij een volledige aanvraag naar GHL en Web3Forms gaat (bron_lead, aanvullende_info, Toestemming, /bedankt),
  * toetst check-lp-payload veld voor veld.
  *
@@ -67,8 +72,9 @@
  * een kaart die 900 px lager staat (geplante CSS) moet op punt 2 falen; een tik die niets doet (geplante pointer-events: none
  * op de keuzes) moet op punt 3 falen; een weggehaalde disclaimer en een disclaimer zonder vet deel moeten de disclaimertoets
  * laten falen, een gewoon vinkje bij de badges de badgetoets; een geplante
- * tekst "Eerstvolgend ..." plus een geplande free-slots-aanvraag moeten punt 8 laten falen; een tik die niets doet moet punt 13
- * laten falen, een disclaimer met 420 px marge eronder punt 14.
+ * tekst "Eerstvolgend ..." plus een geplande free-slots-aanvraag moeten punt 8 laten falen. Punt 13-17: elke bewering op een
+ * eigen geplante fout (tik onderaan zonder gevolg, link vóór de tik bovenaan, keuzes onderaan 500 px lager, disclaimer met 420 px
+ * marge, een stap op de vaste knop vóór de eerste tik, de stap weg na de antwoorden, keuzes 500 px lager, geen bevroren kaart).
  * Niets gaat naar buiten: GHL en Web3Forms krijgen een leeg antwoord (en worden geteld: elke telling > 0 is een fout),
  * de free-slots-aanvraag wordt geteld en beantwoord, Clarity en Google-tags krijgen een leeg script, tel: en mailto: worden
  * afgebroken.
@@ -138,7 +144,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
   const fouten = [];
   let leads = 0, metingen = 0;
 
-  const open = async (url, { gsm = true, css = null, hoogte = 844 } = {}) => {
+  const open = async (url, { gsm = true, css = null, hoogte = 844, voorLaden = null, beweging = false } = {}) => {
     const ctx = await br.createBrowserContext();
     const p = await ctx.newPage();
     const slots = [];
@@ -157,10 +163,12 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       return r.continue();
     });
     /* minder beweging: de kaart scrolt na een stap meteen (geen zachte scroll onder de vinger), de herofoto's wisselen niet */
-    await p.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+    /* beweging = zoals de meeste bezoekers (zachte scroll); toets 17 meet daarmee de sprong die een bezoeker ziet */
+    if (!beweging) await p.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
     if (gsm) await p.setViewport({ width: 390, height: hoogte, isMobile: true, hasTouch: true, deviceScaleFactor: 1 });
     else await p.setViewport({ width: 1265, height: 800 });
     await p.evaluateOnNewDocument(() => { try { localStorage.setItem('ab_bouw_consent_v1', JSON.stringify({ analytics: false, marketing: false, ts: Date.now() })); } catch { /* */ } });
+    if (voorLaden) await p.evaluateOnNewDocument(voorLaden);
     await p.goto(basis + url, { waitUntil: 'load', timeout: 60000 });
     await p.waitForSelector('.bf-lp', { timeout: 20000 }).catch(() => {});
     await p.evaluate(() => document.fonts.ready);
@@ -405,13 +413,16 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     return null;
   };
 
-  /* 13. Eén stand voor de kaart bovenaan en onderaan (zie de kop van dit script). */
-  const eenStandFouten = async (pg, css = null) => {
-    const { p, ctx } = await open(pg.pad, { gsm: true, hoogte: 664, css });
+  /* 13. Eén stand voor de kaart bovenaan en onderaan (zie de kop van dit script). linkEerst = positieve controle: de link naar
+     #contact vóór de tik bovenaan, dan hoort de kaart onderaan op stap 1 te staan en moet de toets dat als fout zien. */
+  const eenStandFouten = async (pg, { css = null, linkEerst = false } = {}) => {
+    const { p, ctx } = await open(pg.pad, { gsm: true, hoogte: 637, css });
     const uit = [];
-    if (!(await tik(p, pg.pad1[0], HERO))) { await ctx.close(); return [`keuze "${pg.pad1[0]}" bovenaan niet gevonden`]; }
-    const s0 = await stand(p, HERO);
-    if (s0.tel !== `Stap 2 van ${pg.stappen}`) uit.push(`bovenaan na één tik: ${s0.tel}`);
+    if (!linkEerst) {
+      if (!(await tik(p, pg.pad1[0], HERO))) { await ctx.close(); return [`keuze "${pg.pad1[0]}" bovenaan niet gevonden`]; }
+      const s0 = await stand(p, HERO);
+      if (s0.tel !== `Stap 2 van ${pg.stappen}`) uit.push(`bovenaan na één tik: ${s0.tel}`);
+    }
     /* zoals een bezoeker: de eerste zichtbare link naar #contact buiten de kop (renovatie: onder de werkwijze, dak: in het waarom-blok) */
     const link = await p.evaluate(() => {
       const a = [...document.querySelectorAll('a[href="#contact"]')].find((x) => x.getClientRects().length && !x.closest('.bf-kop'));
@@ -436,16 +447,19 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     if (m.kop < m.balk || m.kop > m.balk + 60) uit.push(`"Stap x van y" van de kaart onderaan op ${m.kop} px (verwacht direct onder de vaste balk, ${m.balk} px)`);
     if (m.onder > m.vh) uit.push(`keuzes van de kaart onderaan tot ${m.onder} px (scherm ${m.vh})`);
     if (!(await tik(p, pg.pad1[1], ONDER))) uit.push(`keuze "${pg.pad1[1]}" onderaan niet gevonden`);
+    /* de kaart bovenaan is bevroren zolang ze buiten beeld is (toets 17); terug in beeld toont ze de stap van nu */
+    await p.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    await wacht(700);
     const s2 = await stand(p, HERO);
-    if (s2.tel !== `Stap 3 van ${pg.stappen}`) uit.push(`na een antwoord onderaan staat de kaart bovenaan op ${s2.tel} (verwacht Stap 3 van ${pg.stappen})`);
+    if (s2.tel !== `Stap 3 van ${pg.stappen}`) uit.push(`na een antwoord onderaan staat de kaart bovenaan (terug in beeld) op ${s2.tel} (verwacht Stap 3 van ${pg.stappen})`);
     await ctx.close();
     return uit;
   };
 
-  /* 14. Contactscherm in beeld op 390x664 (zie de kop van dit script). */
+  /* 14. Contactscherm in beeld op 390x637 (zie de kop van dit script). */
   const ZEKER = '5,0 op Google · Gratis en vrijblijvend';
   const contactInBeeldFouten = async (pg, root, css = null) => {
-    const { p, ctx } = await open(pg.pad, { gsm: true, hoogte: 664, css });
+    const { p, ctx } = await open(pg.pad, { gsm: true, hoogte: 637, css });
     if (root === ONDER) { await p.evaluate((r) => document.querySelector(r).scrollIntoView({ block: 'start', behavior: 'instant' }), root); await wacht(300); }
     for (const l of pg.pad1) if (!(await tik(p, l, root))) { await ctx.close(); return [`keuze "${l}" niet gevonden`]; }
     await wacht(900);
@@ -468,25 +482,96 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     return uit;
   };
 
-  /* 15. Vaste knop met de stap (zie de kop van dit script). */
-  const vasteKnopStapFouten = async (pg) => {
-    const { p, ctx } = await open(pg.pad, { gsm: true });
+  /* 15. Vaste knop met de stap (zie de kop van dit script). zoek = een zoekterm die vraag 1 al beantwoordt (message match): ook dan
+     geen stap op de knop zolang de bezoeker niets aantikte. plant = positieve controle: 'voor' zet een stap op de knop vóór de eerste
+     tik, 'na' haalt de stap weg na de antwoorden; de toets moet dat als fout zien. */
+  const vasteKnopStapFouten = async (pg, { zoek = '', plant = null } = {}) => {
+    const { p, ctx } = await open(pg.pad + zoek, { gsm: true });
     const tekst = () => p.evaluate(() => document.querySelector('.bf-lpsticky')?.textContent.replace(/\s+/g, ' ').trim() ?? '');
     const uit = [];
     await p.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight * 0.45));
     await wacht(900);
+    if (plant === 'voor') await p.evaluate(() => document.querySelector('.bf-lpsticky__tekst')?.append(' Stap 9 van 9'));
     const t0 = await tekst();
     if (!t0) uit.push('geen vaste knop');
     if (/Stap \d/.test(t0)) uit.push(`de vaste knop toont "${t0}" voordat de bezoeker iets aantikte`);
+    const basis = t0.replace(/\s*Stap \d+ van \d+$/, '');
+    if (zoek) { await ctx.close(); return uit; }
     await p.evaluate(() => window.scrollTo(0, 0));
     await wacht(500);
     for (const l of pg.pad1.slice(0, 2)) if (!(await tik(p, l, HERO))) uit.push(`keuze "${l}" niet gevonden`);
     await p.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight * 0.45));
     await wacht(900);
+    if (plant === 'na') await p.evaluate(() => document.querySelector('.bf-lpsticky__stap')?.remove());
     const t1 = await tekst();
-    if (t1 !== `${t0} Stap 3 van ${pg.stappen}`) uit.push(`vaste knop na twee antwoorden "${t1}" (verwacht "${t0} Stap 3 van ${pg.stappen}")`);
+    if (t1 !== `${basis} Stap 3 van ${pg.stappen}`) uit.push(`vaste knop na twee antwoorden "${t1}" (verwacht "${basis} Stap 3 van ${pg.stappen}")`);
     await ctx.close();
     return uit;
+  };
+
+  /* 16. Elke stap volledig in beeld op 390x637 (iPhone in Safari, Clarity 23 okt): na elk antwoord staan de vraag (onder de vaste
+     balk) en alle keuzes, Volgende of de verzendknop in beeld; voor de kaart bovenaan en onderaan. */
+  const alleStappenFouten = async (pg, root, css = null) => {
+    const { p, ctx } = await open(pg.pad, { gsm: true, hoogte: 637, css });
+    const uit = [];
+    if (root === ONDER) { await p.evaluate((r) => document.querySelector(r).scrollIntoView({ block: 'start', behavior: 'instant' }), root); await wacht(300); }
+    for (const l of pg.pad1) {
+      if (!(await tikZonderScroll(p, l, root))) { uit.push(`keuze "${l}" niet gevonden`); break; }
+      const m = await p.evaluate((root) => {
+        const k = document.querySelector(root);
+        const balk = document.querySelector('.kgj-kop').getBoundingClientRect().bottom;
+        const vraag = k.querySelector('.kgj-reken__stap .kgj-reken__vraag')?.getBoundingClientRect();
+        const doelen = [...k.querySelectorAll('.kgj-reken__stap :is(.kgj-reken__keuze, .kgj-reken__vink, .kgj-reken__verder, .kgj-reken__knop)')];
+        return { tel: k.querySelector('.kgj-reken__tel')?.textContent.trim(), balk: Math.round(balk), vraag: Math.round(vraag?.top ?? -1),
+          onder: doelen.length ? Math.round(Math.max(...doelen.map((d) => d.getBoundingClientRect().bottom))) : 9999, vh: innerHeight };
+      }, root);
+      if (m.vraag < m.balk || m.onder > m.vh) uit.push(`${m.tel}: vraag op ${m.vraag} px (balk ${m.balk}), laatste knop tot ${m.onder} px (scherm ${m.vh})`);
+    }
+    await ctx.close();
+    return uit;
+  };
+  /* Zoals de bezoeker na de vorige stap: tikken waar de keuze nu staat, zonder zelf te scrollen (anders meet 16 de eigen scroll). */
+  const tikZonderScroll = async (p, label, root) => {
+    if (Array.isArray(label)) {
+      for (const l of label) {
+        const ok = await p.evaluate((root, l) => { const b = [...document.querySelectorAll(root + ' .kgj-reken__vink--chip')].find((x) => x.textContent.trim() === l); b?.click(); return !!b; }, root, l);
+        if (!ok) return false;
+        await wacht(150);
+      }
+      await p.evaluate((root) => document.querySelector(root + ' .kgj-reken__verder')?.click(), root);
+    } else {
+      const ok = await p.evaluate((l, root) => { const b = [...document.querySelectorAll(root + ' .kgj-reken__keuze')].find((x) => x.textContent.trim().startsWith(l)); b?.click(); return !!b; }, label, root);
+      if (!ok) return false;
+    }
+    await wacht(600);
+    return true;
+  };
+
+  /* 17. De kaart onderaan verspringt niet als de bezoeker daar antwoordt (review 23 okt: werkt de bezoeker onderaan, dan veranderde
+     de kaart bovenaan mee van hoogte; Safari corrigeert de scrollpositie niet en de kaart onderaan sprong 248 px omlaag). Gemeten
+     zonder scroll anchoring (overflow-anchor: none, zoals Safari): na een antwoord onderaan blijft "Stap x van y" binnen 40 px.
+     zonderBevriezen = positieve controle: elke kaart altijd "in beeld" (geen bevroren kaart bovenaan) moet de sprong laten zien. */
+  const sprongFout = async (pg, { zonderBevriezen = false } = {}) => {
+    const voorLaden = zonderBevriezen ? () => { window.IntersectionObserver = class { constructor(cb) { this.cb = cb; } observe(el) { setTimeout(() => this.cb([{ target: el, isIntersecting: true, intersectionRatio: 1 }]), 0); } unobserve() {} disconnect() {} }; } : null;
+    const { p, ctx } = await open(pg.pad, { gsm: true, hoogte: 637, css: '*{overflow-anchor:none!important}', voorLaden, beweging: true });
+    if (!(await tikZonderScroll(p, pg.pad1[0], HERO))) { await ctx.close(); return `keuze "${pg.pad1[0]}" bovenaan niet gevonden`; }
+    await p.evaluate(() => { const a = [...document.querySelectorAll('a[href="#contact"]')].find((x) => x.getClientRects().length && !x.closest('.bf-kop')); a?.scrollIntoView({ block: 'center', behavior: 'instant' }); a?.click(); });
+    await wacht(1200);
+    const r = await p.evaluate((ONDER, label) => new Promise((klaar) => {
+      const k = document.querySelector(ONDER);
+      const kop = () => k.querySelector('.kgj-reken__kop').getBoundingClientRect().top;
+      const voor = kop();
+      const spoor = [];
+      const t0 = performance.now();
+      const meet = () => { spoor.push(kop()); if (performance.now() - t0 < 1200) requestAnimationFrame(meet); else klaar({ voor: Math.round(voor), max: Math.round(Math.max(...spoor)) }); };
+      const b = [...k.querySelectorAll('.kgj-reken__keuze')].find((x) => x.textContent.trim().startsWith(label));
+      if (!b) { klaar(null); return; }
+      b.click();
+      requestAnimationFrame(meet);
+    }), ONDER, pg.pad1[1]);
+    await ctx.close();
+    if (!r) return `keuze "${pg.pad1[1]}" onderaan niet gevonden`;
+    return r.max - r.voor > 40 ? `de kaart onderaan sprong ${r.max - r.voor} px omlaag na een antwoord onderaan ("Stap x van y" van ${r.voor} naar ${r.max} px)` : null;
   };
 
   /* 11. horizontale scroll */
@@ -632,14 +717,22 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       console.log(`positieve controle 12: vaste knop zonder doel gezien (${pc12})`);
     }
     {
-      /* 13. een tik die niets doet: de kaart onderaan staat dan niet op vraag 2 */
-      const pc13 = await eenStandFouten(RENO('/lp/totaalrenovatie'), '.kgj-reken__keuze{pointer-events:none!important}');
-      if (!pc13.length) { console.log('ONGELDIGE METING: een tik zonder gevolg werd door de toets "één stand" goedgekeurd'); process.exit(2); }
-      console.log(`positieve controle 13: tik zonder gevolg gezien (${pc13[0]})`);
-      /* 14. 420 px marge onder de disclaimer: de verzendknop valt onder het scherm */
-      const pc14 = await contactInBeeldFouten(DAK, HERO, '.kgj-reken--aanvraag .kgj-reken__disclaimer{margin-bottom:420px!important}');
-      if (!pc14.length) { console.log('ONGELDIGE METING: een verzendknop onder het scherm werd door de toets "contactscherm in beeld" goedgekeurd'); process.exit(2); }
-      console.log(`positieve controle 14: verzendknop onder het scherm gezien (${pc14[0]})`);
+      /* 13-17 (23 okt 2026): elke bewering van de nieuwe toetsen moet op een geplante fout rood worden. pc = [naam, fouten, verwacht stuk tekst] */
+      const RENO1 = RENO('/lp/totaalrenovatie');
+      const pcs = [
+        ['13a: een tik onderaan die niets doet', await eenStandFouten(RENO1, { css: '.kgj-reken--onder .kgj-reken__keuze{pointer-events:none!important}' }), 'kaart bovenaan (terug in beeld) op'],
+        ['13b: de link naar #contact vóór de tik bovenaan', await eenStandFouten(RENO1, { linkEerst: true }), 'staat de kaart onderaan op Stap 1'],
+        ['13c: keuzes onderaan 500 px lager', await eenStandFouten(RENO1, { css: '#contact .kgj-reken--aanvraag .kgj-reken__keuzes{margin-top:500px!important}' }), 'keuzes van de kaart onderaan tot'],
+        ['14: 420 px marge onder de disclaimer', await contactInBeeldFouten(DAK, HERO, '.kgj-reken--aanvraag .kgj-reken__disclaimer{margin-bottom:420px!important}'), 'valt onder het scherm'],
+        ['15a: een stap op de vaste knop vóór de eerste tik', await vasteKnopStapFouten(DAK, { plant: 'voor' }), 'voordat de bezoeker iets aantikte'],
+        ['15b: geen stap op de vaste knop na twee antwoorden', await vasteKnopStapFouten(DAK, { plant: 'na' }), 'vaste knop na twee antwoorden'],
+        ['16: keuzes 500 px lager', await alleStappenFouten(RENO1, HERO, '.kgj-reken--aanvraag .kgj-reken__keuzes{margin-top:500px!important}'), 'laatste knop tot'],
+        ['17: kaart bovenaan niet bevroren (alles altijd in beeld)', [await sprongFout(RENO1, { zonderBevriezen: true })].filter(Boolean), 'sprong'],
+      ];
+      for (const [naam, f, stuk] of pcs) {
+        if (!f.some((x) => x.includes(stuk))) { console.log(`ONGELDIGE METING: positieve controle ${naam} werd niet als fout gezien (verwacht "${stuk}", gezien: ${f.join(' | ') || 'niets'})`); process.exit(2); }
+        console.log(`positieve controle ${naam}: gezien (${f.find((x) => x.includes(stuk))})`);
+      }
     }
     const leadsNaControles = leads;
 
@@ -687,15 +780,21 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
         }
       }
     }
-    /* 13-15 (23 okt 2026): één stand, contactscherm in beeld, vaste knop met de stap */
+    /* 13-17 (23 okt 2026): één stand, contactscherm in beeld, vaste knop met de stap, elke stap in beeld, geen sprong onderaan */
     for (const pg of PAGINAS) {
-      for (const f of await eenStandFouten(pg)) fouten.push(`${pg.pad} @390x664: één stand: ${f}`);
+      for (const f of await eenStandFouten(pg)) fouten.push(`${pg.pad} @390x637: één stand: ${f}`);
       metingen++;
       for (const [root, naam] of [[HERO, 'bovenaan'], [ONDER, 'onderaan']]) {
-        for (const f of await contactInBeeldFouten(pg, root)) fouten.push(`${pg.pad} @390x664 ${naam}: contactscherm: ${f}`);
-        metingen++;
+        for (const f of await contactInBeeldFouten(pg, root)) fouten.push(`${pg.pad} @390x637 ${naam}: contactscherm: ${f}`);
+        for (const f of await alleStappenFouten(pg, root)) fouten.push(`${pg.pad} @390x637 ${naam}: stap niet in beeld: ${f}`);
+        metingen += 2;
       }
       for (const f of await vasteKnopStapFouten(pg)) fouten.push(`${pg.pad} @390x844: vaste knop: ${f}`);
+      metingen++;
+      /* dak: de zoekterm "plat dak" beantwoordt vraag 1 al; dat is geen begonnen aanvraag */
+      if (pg.soort === 'dak') for (const f of await vasteKnopStapFouten(pg, { zoek: '?utm_term=plat%20dak' })) fouten.push(`${pg.pad}?utm_term=plat dak @390x844: vaste knop: ${f}`);
+      const sf = await sprongFout(pg);
+      if (sf) fouten.push(`${pg.pad} @390x637 zonder scroll anchoring: ${sf}`);
       metingen++;
     }
     /* de richtprijspagina blijft zoals hij was: geen belblok, geen klikkaart onderaan */
@@ -731,11 +830,11 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     if (srv) { try { srv.kill(); } catch { /* */ } }
   }
   /* 3 paginas x 2 maten x 2 kaarten (bovenaan en onderaan, sinds 22 okt ook op dak); plus message match */
-  /* + per pagina (23 okt 2026): één stand, contactscherm bovenaan en onderaan, vaste knop */
-  const verwacht = 3 * 2 * 2 + 1 + 3 * 4;
+  /* + per pagina (23 okt 2026): één stand, contactscherm en elke stap bovenaan en onderaan, vaste knop, geen sprong onderaan */
+  const verwacht = 3 * 2 * 2 + 1 + 3 * 7;
   if (metingen < verwacht) { console.log(`ONGELDIGE METING: ${metingen} metingen (verwacht ${verwacht})`); process.exit(2); }
   console.log(`check-lp-aanvraag: dak en 2 renovatiepagina's (kaart bovenaan en onderaan) x 2 maten + message match (${basis}), ${leads} leadverzoeken`);
   if (fouten.length) { fouten.forEach((f) => console.log('  FOUT: ' + f)); process.exit(1); }
-  console.log('  kop zoals afgesproken, geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag (bovenaan en onderaan), contactstap alleen naam en telefoonnummer + disclaimer zonder kop, naam verplicht, lege gsm, badges met eigen iconen, geen vrij moment en geen agenda-verzoek, belblok op dak, geen horizontale scroll, één stand voor de kaart bovenaan en onderaan, contactscherm volledig in beeld op 390x664, vaste knop met de stap');
+  console.log('  kop zoals afgesproken, geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag (bovenaan en onderaan), contactstap alleen naam en telefoonnummer + disclaimer zonder kop, naam verplicht, lege gsm, badges met eigen iconen, geen vrij moment en geen agenda-verzoek, belblok op dak, geen horizontale scroll, één stand voor de kaart bovenaan en onderaan, contactscherm en elke stap volledig in beeld op 390x637, vaste knop met de stap, geen sprong onderaan zonder scroll anchoring');
   process.exit(0);
 })().catch((e) => { console.log('ONGELDIGE METING: ' + e.message); process.exit(2); });
