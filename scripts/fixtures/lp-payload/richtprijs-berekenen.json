@@ -24,7 +24,7 @@
       },
       "formStart": "lp:totaalrenovatie:rekenaar:hero",
       "toestemming": true,
-      "bedankt": "/bedankt?dienst=totaalrenovatie&van=rekenaar",
+      "bedankt": "/bedankt/totaalrenovatie?van=rekenaar",
       "fouten": {
         "leeg": "Vul uw telefoonnummer in.",
         "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."
@@ -94,7 +94,7 @@
       },
       "formStart": "lp:totaalrenovatie:inspectie",
       "toestemming": true,
-      "bedankt": "/bedankt?dienst=totaalrenovatie",
+      "bedankt": "/bedankt/totaalrenovatie",
       "fouten": {
         "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",
         "kort": "Dat telefoonnummer lijkt niet volledig. Controleer het even."

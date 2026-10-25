@@ -49,7 +49,7 @@
  * plaatsbezoek, geen vraag boven de keuzes ("Wanneer past een bezoek?" is BF-tekst), geen label boven het bedrag.
  */
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Lock } from 'lucide-react';
 import { CONTACT } from '@/data/contact';
 import { meldClarity } from '@/lib/clarity';
@@ -182,7 +182,9 @@ const Ic = ({ svg, className }: { svg: string; className?: string }) => (
 export default function BedanktBf() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  const ruw = (params.get('dienst') || params.get('service') || '').toLowerCase();
+  // 25 okt 2026: elk formulier heeft een eigen adres /bedankt/<dienst> (conversiemeting per formulier via GTM); ?dienst= blijft werken
+  const { dienst: padDienst } = useParams();
+  const ruw = (padDienst || params.get('dienst') || params.get('service') || '').toLowerCase();
   const dienst: Dienst = ruw.includes('dak') ? 'dakinspectie' : 'plaatsbezoek';
   const rekenaar = params.get('van') === 'rekenaar';
   const t = TEKST[dienst];

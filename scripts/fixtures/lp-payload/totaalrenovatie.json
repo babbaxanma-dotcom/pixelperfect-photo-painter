@@ -24,7 +24,7 @@
       },
       "formStart": "lp:totaalrenovatie:inspectie",
       "toestemming": true,
-      "bedankt": "/bedankt?dienst=totaalrenovatie",
+      "bedankt": "/bedankt/totaalrenovatie",
       "fouten": {
         "leegNaam": "Vul uw naam in.",
         "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",
@@ -84,7 +84,7 @@
       },
       "formStart": "lp:totaalrenovatie:inspectie",
       "toestemming": false,
-      "bedankt": "/bedankt?dienst=totaalrenovatie",
+      "bedankt": "/bedankt/totaalrenovatie",
       "fouten": {
         "leegNaam": "Vul uw naam in.",
         "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",
@@ -154,7 +154,7 @@
       },
       "formStart": "lp:totaalrenovatie:inspectie:hero",
       "toestemming": true,
-      "bedankt": "/bedankt?dienst=totaalrenovatie",
+      "bedankt": "/bedankt/totaalrenovatie",
       "fouten": {
         "leegNaam": "Vul uw naam in.",
         "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",

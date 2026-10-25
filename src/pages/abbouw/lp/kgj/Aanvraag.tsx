@@ -193,7 +193,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     if (allowsMarketing()) naarBedankt();
     else setVraagToestemming(true);
   };
-  const naarBedankt = () => navigate('/bedankt?dienst=' + inhoud.bedanktSlug);
+  const naarBedankt = () => navigate('/bedankt/' + inhoud.bedanktSlug);
 
   const vraag = VRAGEN[stap];
   /* Welke velden de contactstap naast Naam en Gsm heeft (renovatiepagina's: alleen die twee). Standaard beide aan. */

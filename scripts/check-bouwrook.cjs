@@ -25,9 +25,9 @@ const ROUTES = ['/', '/over', '/diensten', '/werkwijze', '/contact',
   '/privacy', '/voorwaarden', '/cookies', '/bestaat-niet',
   '/totaalrenovatie', '/badkamerrenovatie', '/lp/badkamerrenovatie',
   '/lp/dakwerken', '/lp/totaalrenovatie', '/lp/richtprijs-berekenen', '/lp/aannemer-renovatiewerken',
-  '/bedankt?dienst=totaalrenovatie', '/afspraak',
+  '/bedankt/totaalrenovatie', '/afspraak',
   /* 13 okt 2026: de dak-kant van de funnel (BedanktBf.tsx, AfspraakBf.tsx). */
-  '/bedankt?dienst=dakwerken&van=rekenaar', '/dakinspectie'];
+  '/bedankt/dakwerken?van=rekenaar', '/dakinspectie'];
 /* Analytics en advertentietags blijven dicht: een meting stuurt niets naar buiten. */
 const BLOK = /clarity\.ms|googletagmanager|google-analytics|doubleclick|googleadservices|facebook/;
 

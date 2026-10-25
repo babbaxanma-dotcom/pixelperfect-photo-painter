@@ -149,6 +149,7 @@ const App = () => {
           <Route path="/lp/zwembad" element={<Navigate to="/bad" replace />} />
           <Route path="/lokaal/:slug" element={<Navigate to="/" replace />} />
           <Route path="/bedankt" element={<BedanktBf />} />
+          <Route path="/bedankt/:dienst" element={<BedanktBf />} />
           <Route path="/afspraak" element={<AfspraakBf />} />
           <Route path="/dakinspectie" element={<AfspraakBf soort="dakinspectie" />} />
           <Route path="/status/:tel/:stap?" element={<Status />} />

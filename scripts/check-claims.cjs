@@ -32,14 +32,14 @@ const POORT = 4432;
 const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* Pagina's die al schoon zijn. Een pagina komt er pas bij als ze schoon is. */
-const PAGINAS = ['/', '/bedankt?dienst=dakwerken', '/bedankt?dienst=totaalrenovatie', '/lp/dakwerken', '/lp/totaalrenovatie',
+const PAGINAS = ['/', '/bedankt/dakwerken', '/bedankt/totaalrenovatie', '/lp/dakwerken', '/lp/totaalrenovatie',
   /* 4 okt 2026: na de nieuwe teksten van Mohammed zonder 4,9 en 120+. */
   '/diensten', '/werkwijze', '/over', '/contact',
   /* 12 okt 2026: de twee andere LP's (spec §17). */
   '/lp/richtprijs-berekenen', '/lp/aannemer-renovatiewerken',
   /* 13 okt 2026: de rest van de funnel. Na de rekenaar staat op /bedankt het vergrendelde bedrag (alleen nullen, de
      richtprijs komt van Bardh); stap 2 is de agendapagina (BedanktBf.tsx, AfspraakBf.tsx). */
-  '/bedankt?dienst=dakwerken&van=rekenaar', '/bedankt?dienst=totaalrenovatie&van=rekenaar', '/afspraak', '/dakinspectie'];
+  '/bedankt/dakwerken?van=rekenaar', '/bedankt/totaalrenovatie?van=rekenaar', '/afspraak', '/dakinspectie'];
 
 /* Funnelpagina's: daar mag geen enkel echt bedrag staan (regel 'echt bedrag' hieronder). */
 const FUNNEL = /^\/(bedankt|afspraak|dakinspectie)\b/;
@@ -129,7 +129,7 @@ const TOEGESTAAN = []; // { re, bron } — alleen met een bron die Mohammed of B
     console.log(`positieve controle: ${proef.join('; ')}`);
     /* Positieve controle bedrag: een echt bedrag op de bedankpagina na de rekenaar moet gevonden worden; het
        vergrendelde nullen-bedrag in dezelfde opbouw niet (anders faalt de guard op de pagina zoals ze hoort). */
-    const RP = '/bedankt?dienst=dakwerken&van=rekenaar';
+    const RP = '/bedankt/dakwerken?van=rekenaar';
     const echt = vind(await lees(RP, bedrag('12.500 – 18.000')), RP).filter(([v]) => v.alleen);
     if (echt.length !== 1) { console.log(`ONGELDIGE METING: positieve controle bedrag vond ${echt.length} van 1 geplant bedrag ("€ 12.500 – 18.000")`); process.exit(2); }
     const nul = vind(await lees(RP, bedrag('00.000 – 00.000')), RP).filter(([v]) => v.alleen);

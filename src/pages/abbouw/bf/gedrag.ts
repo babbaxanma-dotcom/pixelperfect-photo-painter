@@ -303,7 +303,7 @@ export function wireBf(root: HTMLElement, opties: BfOpties): () => void {
       // bij succes blijft de knop uit tot de pagina weg is: anders kon een tweede klik tussen navigate() en de
       // wissel naar /bedankt een tweede lead sturen (spec §8 "geen dubbele lead"; gemeten 11 okt: 4 POST in plaats van 2)
       if (opgeruimd) return;
-      if (res.ok) { melding.hidden = true; opties.navigate('/bedankt?dienst=totaalrenovatie'); return; }
+      if (res.ok) { melding.hidden = true; opties.navigate('/bedankt/website'); return; }
       bezig = false; knop.disabled = false; knop.removeAttribute('aria-busy');
       meld(leadFoutmelding(res, CONTACT.phone.display));
     });

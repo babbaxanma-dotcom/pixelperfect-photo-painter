@@ -61,7 +61,7 @@ const ROUTES = ['/', '/over', '/diensten', '/werkwijze', '/contact',
   '/dakwerken', '/gevel', '/bad', '/interieur', '/construct', '/ecologisch',
   '/privacy', '/voorwaarden', '/cookies', '/totaalrenovatie', '/badkamerrenovatie',
   '/lp/badkamerrenovatie', '/lp/dakwerken', '/lp/totaalrenovatie', '/lp/richtprijs-berekenen', '/lp/aannemer-renovatiewerken',
-  '/bedankt?dienst=dakwerken'];
+  '/bedankt/dakwerken'];
 /* /afspraak en /dakinspectie worden NIET geopend: daar staat de GHL-kalender (een meting raakt die nooit aan). Ze, en
    elke andere pagina, vallen onder de bronscan hieronder: "stock-" mag in src/ alleen in fotoplan.ts en beelden.ts staan. */
 const BRON_TOEGESTAAN = new Set([FOTOPLAN, path.join(WORTEL, 'src', 'pages', 'abbouw', 'bf', 'beelden.ts')].map((p) => path.normalize(p)));

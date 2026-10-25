@@ -97,7 +97,7 @@ const ANTWOORDEN = ['Halfopen bebouwing', 'De hele woning', '150 tot 200 m²', '
     meld(/lp:totaalrenovatie:rekenaar:hero/.test(body), 'bron = lp:totaalrenovatie:rekenaar:hero');
     meld(/Woning: Halfopen bebouwing/.test(body) && /Staat: Een groot deel/.test(body) && /Start: Zo snel mogelijk/.test(body), 'alle antwoorden gaan mee met de lead');
     meld(/0470 12 34 56|0470123456/.test(body.replace(/\\u00a0/g, ' ')), 'telefoonnummer gaat mee');
-    meld(page.url().includes('/bedankt?dienst=totaalrenovatie'), 'naar de bedankpagina', page.url().replace(BASIS, ''));
+    meld(page.url().includes('/bedankt/totaalrenovatie'), 'naar de bedankpagina', page.url().replace(BASIS, ''));
     meld(ontsnapt.length === 0, 'geen leadverzoek het netwerk op (geen server-IP in de antwoorden)', ontsnapt.join(' '));
     meld(fouten.length === 0, 'geen fouten in de console (aanvraag)', fouten.join(' | '));
     await page.close();

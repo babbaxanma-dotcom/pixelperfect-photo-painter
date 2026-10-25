@@ -481,7 +481,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       bron_lead: inhoud.bronPrefix + ':contact',
     });
     setBezig(false);
-    if (res.ok) navigate('/bedankt?dienst=' + inhoud.dienst);
+    if (res.ok) navigate('/bedankt/' + inhoud.dienst);
     else setFout(leadFoutmelding(res, CONTACT.phone.display));
   };
 
@@ -509,7 +509,7 @@ export default function LpReplica({ inhoud = TOTAALRENOVATIE }: { inhoud?: Pagin
       bron_lead: inhoud.bronPrefix + ':balk',
     });
     setBezig(false);
-    if (res.ok) navigate('/bedankt?dienst=' + inhoud.dienst);
+    if (res.ok) navigate('/bedankt/' + inhoud.dienst);
     else setFout(leadFoutmelding(res, CONTACT.phone.display));
   };
 

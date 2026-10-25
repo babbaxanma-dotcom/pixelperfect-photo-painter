@@ -433,7 +433,7 @@ export default function Schetser() {
       bron_lead: 'lp:badkamerrenovatie:schetser',
     });
     setBezig(false);
-    if (res.ok) navigate('/bedankt?dienst=badkamerrenovatie');
+    if (res.ok) navigate('/bedankt/badkamerrenovatie');
     else setFout(leadFoutmelding(res, CONTACT.phone.display));
   };
 

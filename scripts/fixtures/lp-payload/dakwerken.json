@@ -22,7 +22,7 @@
       },
       "formStart": "lp:dakwerken:inspectie:hero",
       "toestemming": true,
-      "bedankt": "/bedankt?dienst=dakwerken",
+      "bedankt": "/bedankt/dakwerken",
       "fouten": {
         "leegNaam": "Vul uw naam in.",
         "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",
@@ -90,7 +90,7 @@
       },
       "formStart": "lp:dakwerken:inspectie:hero",
       "toestemming": false,
-      "bedankt": "/bedankt?dienst=dakwerken",
+      "bedankt": "/bedankt/dakwerken",
       "fouten": {
         "leegNaam": "Vul uw naam in.",
         "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",
@@ -151,7 +151,7 @@
       },
       "formStart": "lp:dakwerken:inspectie",
       "toestemming": true,
-      "bedankt": "/bedankt?dienst=dakwerken",
+      "bedankt": "/bedankt/dakwerken",
       "fouten": {
         "leegNaam": "Vul uw naam in.",
         "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",
@@ -210,7 +210,7 @@
       },
       "formStart": "lp:dakwerken:inspectie",
       "toestemming": false,
-      "bedankt": "/bedankt?dienst=dakwerken",
+      "bedankt": "/bedankt/dakwerken",
       "fouten": {
         "leegNaam": "Vul uw naam in.",
         "leeg": "Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.",

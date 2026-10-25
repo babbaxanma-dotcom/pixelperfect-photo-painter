@@ -182,7 +182,7 @@ export default function CalculatorDak({ onClose }: CalculatorDakProps = {}) {
     setSubmitting(false);
 
     if (result.ok) {
-      navigate('/bedankt?service=dakwerken');
+      navigate('/bedankt/dakwerken');
     } else {
       setSubmitError(`Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced} of mail naar ${CONTACT.email}.`);
     }

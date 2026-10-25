@@ -85,7 +85,7 @@ export default function Inspectie({ inhoud, opPrijs, boven }: { inhoud: KgjInhou
     if (allowsMarketing()) naarBedankt();
     else setVraagToestemming(true);
   };
-  const naarBedankt = () => navigate('/bedankt?dienst=' + inhoud.bedanktSlug);
+  const naarBedankt = () => navigate('/bedankt/' + inhoud.bedanktSlug);
 
   if (vraagToestemming) {
     return (

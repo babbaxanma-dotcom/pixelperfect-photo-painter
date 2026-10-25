@@ -285,7 +285,7 @@ export default function Rekenaar({ inhoud, plek, voor }: {
     else setVraagToestemming(true);
   };
   /* van=rekenaar: de bedankpagina toont dan de richtprijs-tekst en de dakinspectie (4 okt). */
-  const naarBedankt = () => navigate('/bedankt?dienst=' + inhoud.bedanktSlug + '&van=rekenaar');
+  const naarBedankt = () => navigate('/bedankt/' + inhoud.bedanktSlug + '?van=rekenaar');
 
   const vraag = VRAGEN[stap];
   /* Na bepaalde antwoorden verschijnt onder de volgende vraag een korte melding

@@ -8,7 +8,7 @@
  * EIGEN, dienst-specifieke vragen i.p.v. één blanket-calculator. CalculatorDak
  * blijft ongemoeid (live).
  *
- * Submit → zelfde submitLead() (GHL-webhook + Ads-conversie) → /bedankt?dienst=<slug>.
+ * Submit → zelfde submitLead() (GHL-webhook + Ads-conversie) → /bedankt/<slug>.
  */
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -178,7 +178,7 @@ export default function CalculatorWizard({ config, onClose }: CalculatorWizardPr
       /* Bedankt.tsx leest de param `dienst` (niet `service`). Zolang hier
          `service` stond, kwam elke calculator-lead op de algemene variant uit
          en deed thanksService niets. */
-      navigate(`/bedankt?dienst=${config.thanksService ?? config.slug}`);
+      navigate(`/bedankt/${config.thanksService ?? config.slug}`);
     } else {
       setSubmitError(`Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced} of mail naar ${CONTACT.email}.`);
     }

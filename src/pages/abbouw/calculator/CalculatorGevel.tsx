@@ -156,7 +156,7 @@ export default function CalculatorGevel({ onClose }: CalculatorGevelProps = {}) 
     setSubmitting(false);
 
     if (result.ok) {
-      navigate('/bedankt?service=gevel');
+      navigate('/bedankt/gevel');
     } else {
       setSubmitError(`Er ging iets mis. Bel ons gerust op ${CONTACT.phone.spaced} of mail naar ${CONTACT.email}.`);
     }

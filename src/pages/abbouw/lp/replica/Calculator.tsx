@@ -70,7 +70,7 @@ export default function Calculator({ inhoud }: { inhoud: Inhoud }) {
       bron_lead: inhoud.bronLead,
     });
     setBezig(false);
-    if (res.ok) navigate('/bedankt?dienst=' + inhoud.bedanktSlug);
+    if (res.ok) navigate('/bedankt/' + inhoud.bedanktSlug);
     else setFout(leadFoutmelding(res, CONTACT.phone.display));
   };
 

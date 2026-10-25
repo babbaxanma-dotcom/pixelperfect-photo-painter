@@ -208,7 +208,7 @@ export default function ChatAssistent({ inhoud, balk, opRekenaar }: {
               );
             })}
             {bezig && <div className="kgj-chat__bel kgj-chat__bel--ai kgj-chat__typt" aria-label="Aan het typen"><i /><i /><i /></div>}
-            {kaart && !bezig && <AanvraagKaart inhoud={inhoud} aanvraag={kaart} gesprek={berichten} onVerstuurd={(slug) => navigate('/bedankt?dienst=' + slug)} />}
+            {kaart && !bezig && <AanvraagKaart inhoud={inhoud} aanvraag={kaart} gesprek={berichten} onVerstuurd={(slug) => navigate('/bedankt/' + slug)} />}
           </div>
 
           <form className="kgj-chat__invoer" onSubmit={(e) => { e.preventDefault(); stuur(invoer); }}>
