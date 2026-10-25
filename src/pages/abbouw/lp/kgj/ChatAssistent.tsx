@@ -254,7 +254,7 @@ function AanvraagKaart({ inhoud, aanvraag, gesprek, onVerstuurd }: {
       gemeente: gemeente || undefined,
       type_werk: inhoud.divisie,
       aanvullende_info: [
-        `Aanvraag ${inhoud.cta.kop.toLowerCase()} via de chat (${vragen} berichten)`,
+        `Aanvraag ${inhoud.cta.kop.replace(/ en (offerte|advies)$/, '').toLowerCase()} via de chat (${vragen} berichten)`,
         ...aanvraag.velden.map((v) => `${v.label}: ${v.waarde}`),
         bericht.trim() ? `Bericht: ${bericht.trim()}` : '',
       ].filter(Boolean).join(' · '),
@@ -268,7 +268,7 @@ function AanvraagKaart({ inhoud, aanvraag, gesprek, onVerstuurd }: {
 
   return (
     <form className="kgj-chat__kaart" onSubmit={verstuur} noValidate>
-      <p className="kgj-chat__kaartkop">{aanvraag.titel || inhoud.cta.kop}</p>
+      <p className="kgj-chat__kaartkop">{aanvraag.titel || inhoud.cta.kop.replace(/ en (offerte|advies)$/, '')}</p>
       {aanvraag.velden.length > 0 && (
         <dl className="kgj-chat__velden">
           {aanvraag.velden.map((v) => (<div key={v.label}><dt>{v.label}</dt><dd>{v.waarde}</dd></div>))}

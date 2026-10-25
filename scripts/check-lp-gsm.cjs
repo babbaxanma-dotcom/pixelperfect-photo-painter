@@ -238,7 +238,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     knop: document.querySelector('.kgj-reken--inspectie .kgj-reken__knop')?.textContent.trim(),
     balk: getComputedStyle(document.querySelector('.kgj-actiebalk')).display !== 'none',
   }));
-  meld(slot.kop === 'Gratis dakinspectie', 'slotblok-kop', slot.kop);
+  meld(slot.kop === 'Gratis dakinspectie en offerte', 'slotblok-kop', slot.kop);
   meld(slot.punten.length === 3, 'drie vinkjes bij de inspectie', slot.punten.join(' | '));
   meld(slot.knop === 'Vraag uw gratis dakinspectie aan', 'knop inspectieformulier', slot.knop);
 

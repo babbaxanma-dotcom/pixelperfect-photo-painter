@@ -406,7 +406,7 @@ export const TOTAALRENOVATIE_REKENAAR: KgjInhoud = {
   cta: {
     /* 5 okt, blauwdruk: de conversiesectie. naam blijft "Gratis plaatsbezoek": de knop in de
        vaste balk op de telefoon en de regel in het CRM. */
-    kop: 'Plan uw gratis plaatsbezoek',
+    kop: 'Plan uw gratis plaatsbezoek en advies', // 25 okt, Mohammed: 'bij totaalrenovatie, gratis plaatsbezoek en advies', 'letterlijk 2 woorden toevoegen', enkel onderaan
     tekst: 'We komen ter plaatse om uw project te bespreken en u direct inzicht te geven in de mogelijkheden en het budget.',
     naam: 'Gratis plaatsbezoek',
     punten: [],

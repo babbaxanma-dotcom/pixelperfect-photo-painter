@@ -543,7 +543,8 @@ export const DAKWERKEN: KgjInhoud = {
   },
 
   cta: {
-    kop: 'Gratis dakinspectie',
+    kop: 'Gratis dakinspectie en offerte', // 25 okt, Mohammed: 'gratis dakinspectie en offerte', 'enkel onderaan', 'letterlijk 2 woorden toevoegen'
+    naam: 'Gratis dakinspectie', // vaste balk op de gsm en de regel in het CRM blijven zoals ze waren
     /* Mohammed: 'gratis dakinspectie onderaan moet duidelijker'. Wat de klant
        bij de inspectie krijgt, staat nu als drie vinkjes in plaats van in één
        lopende zin. Alles komt uit de werkwijze en de redenen hierboven. */
