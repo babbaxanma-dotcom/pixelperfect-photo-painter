@@ -587,6 +587,8 @@ export const DAKWERKEN: KgjInhoud = {
     /* 4 okt: de varianten volgen Mohammeds nieuwe kop; alleen het dakwoord wisselt. */
     /* 20 okt 2026: de varianten volgen de kop "Dé specialist voor [uw nieuwe dak]"; alleen het dakwoord wisselt.
        voor (vraag 1 van de aanvraagkaart) blijft. */
+    /* 26 okt 2026, Mohammed: sitelink "Stormschade Dakherstel" (?dienst=stormschade) krijgt een kop die erbij past. */
+    { zoek: 'storm|herstel', kop: 'Dé specialist voor [dakherstel na stormschade]' },
     { zoek: 'dak.*isol|isol.*dak|sarking', kop: 'Dé specialist voor [uw dakisolatie]' },
     { zoek: 'plat|epdm|roofing|bitumen', kop: 'Dé specialist voor [uw platte dak]', voor: { sleutel: 'Dak', label: 'Plat dak' } },
     { zoek: 'hellend|pannen|leien|sarking', kop: 'Dé specialist voor [uw hellende dak]', voor: { sleutel: 'Dak', label: 'Hellend dak' } },
