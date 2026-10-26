@@ -1020,3 +1020,5 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
   .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__groepnaam { margin-bottom: 3px; }
   .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__verder { margin-top: 10px; }
 }
+/* 26 okt 2026: privacyregel onder de trustsignalen (Aanvraag.tsx). */
+.bf.bf-lp .kgj-reken__privacy--na { display: block; margin-top: calc(12 * var(--u)); }

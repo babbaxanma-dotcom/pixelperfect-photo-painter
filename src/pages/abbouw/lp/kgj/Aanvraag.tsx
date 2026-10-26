@@ -402,7 +402,6 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
               </p>
             )}
             <p className="kgj-reken__gerust">{t.onder}</p>
-            <p className="kgj-reken__privacy">Wij gebruiken uw gegevens alleen voor deze aanvraag. <a href="/privacy">Privacybeleid</a></p>
           </form>
         </div>
       )}
@@ -430,6 +429,8 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
           ))}
         </ul>
       )}
+      {/* 26 okt 2026, Mohammed: privacyregel onder de trustsignalen, zodat die op de laatste stap meteen onder de knop in beeld staan. */}
+      {klaar && <p className="kgj-reken__privacy kgj-reken__privacy--na">Wij gebruiken uw gegevens alleen voor deze aanvraag. <a href="/privacy">Privacybeleid</a></p>}
     </div>
   );
 }
