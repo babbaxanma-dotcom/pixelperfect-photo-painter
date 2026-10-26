@@ -122,9 +122,9 @@ export type KgjInhoud = {
     /** Welke velden de contactstap heeft naast Naam* en Gsm* (22 okt 2026, renovatiepagina's: "verwijder email form,
         verwijder postcode form"; dezelfde dag ook /lp/dakwerken). Zonder deze instelling staan beide aan. */
     contactVelden?: { email?: boolean; postcode?: boolean };
-    /** Rustig blokje met vinkje direct boven de verzendknop: wat de bezoeker precies krijgt. Het deel voor de eerste
-        dubbele punt komt vet. */
-    disclaimer?: string;
+    /** Wat de bezoeker krijgt, direct onder "Bijna klaar!": sinds 26 okt 2026 drie vinkjes in een eigen vlak (Mohammed: "moet
+        visueel duidelijker en apart, en visueel mooi"), zelfde woorden als de zin van 22 okt. */
+    disclaimer?: string[];
     /** Het slotblok onderaan (#contact) toont dezelfde klikkaart als de hero, in plaats van het formulier van Inspectie.tsx. */
     onder?: boolean;
     /** Regel direct onder de verzendknop, na "★★★★★ 5,0 op Google ·" (bfbouw.be rk__knopzeker, 23 okt 2026). */
@@ -307,7 +307,7 @@ export const DAKWERKEN: KgjInhoud = {
     /* 22 okt 2026, Mohammed: "die disclaimer bedoelde ik van wat er al was visueel verbeteren", "laat uw dak vakkundig controleren en
        vermijd onnodige kosten", "dat wat er stond": woordelijk de zin onder de contactkop van bfbouw.be/lp/dakwerken (zijn dictaat van
        17 okt, bouw/lp-dak.cjs contactSub), nu in een vlak met vinkje direct onder "Bijna klaar! Bevestig uw gratis dakinspectie". */
-    disclaimer: 'Laat uw dak vakkundig controleren. Voorkom onvoorziene kosten en weet exact wat er moet gebeuren.',
+    disclaimer: ['Laat uw dak vakkundig controleren', 'Voorkom onvoorziene kosten', 'Weet exact wat er moet gebeuren'],
     /* "onderaan ... de form zo dat je makkelijk kan klikken": onderaan dezelfde klikkaart in plaats van het formulier van Inspectie. */
     onder: true,
     /* 23 okt 2026 (Mohammed: "algemene psychologie cro optimalisatie toepassen"): onder de verzendknop bewijs en risico weg op het

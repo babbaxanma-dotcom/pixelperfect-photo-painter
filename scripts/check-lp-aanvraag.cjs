@@ -112,7 +112,7 @@ const DAK = {
   /* knop 23 okt 2026 (Mohammed: "optimalisatie van de knoppen ... ga na WAT DE BESTE is"; onderzoek: Vlaamse infinitief "aanvragen") */
   band: 'Bijna klaar! Bevestig uw gratis dakinspectie', knop: 'Gratis dakinspectie aanvragen', stappen: 6,
   /* 22 okt 2026: de zin van bfbouw.be (contactSub, zijn dictaat 17 okt), "dat wat er stond" */
-  disclaimer: 'Laat uw dak vakkundig controleren. Voorkom onvoorziene kosten en weet exact wat er moet gebeuren.',
+  disclaimer: 'Laat uw dak vakkundig controleren | Voorkom onvoorziene kosten | Weet exact wat er moet gebeuren',
   tegels: ['5,0', '10 jaar garantie', '15 jaar ervaring'],
   /* 21 okt, Mohammed woordelijk: "onze dakexpert ... neemt zo snel mogelijk contact met u op" */
   onder: 'Onze dakexpert neemt zo snel mogelijk contact met u op.',
@@ -125,7 +125,7 @@ const RENO = (pad) => ({
   vraag1: 'Wat voor woning wilt u renoveren?', keuzes1: ['Appartement', 'Rijwoning', 'Halfopen bebouwing', 'Open bebouwing'],
   pad1: ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'], vraag2: 'Wat wilt u renoveren?',
   band: 'Bijna klaar! Bevestig uw gratis plaatsbezoek', knop: 'Gratis plaatsbezoek aanvragen', stappen: 6,
-  disclaimer: 'Laat uw woning vakkundig bekijken. Voorkom onvoorziene kosten en weet exact wat er moet gebeuren.',
+  disclaimer: 'Laat uw woning vakkundig bekijken | Voorkom onvoorziene kosten | Weet exact wat er moet gebeuren',
   /* 22 okt 2026: "6 vakdisciplines ... weg, bij die form", "dat is een rare trust badge" */
   tegels: ['5,0', '16 jaar ervaring'],
   onder: 'Wij nemen zo snel mogelijk contact met u op.',
@@ -280,7 +280,10 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     const d = k?.querySelector('form .kgj-reken__disclaimer');
     if (!d) return ['disclaimer ontbreekt op de contactstap'];
     const uit = [];
-    const tekst = d.textContent.replace(/\s+/g, ' ').trim();
+    /* 26 okt 2026: drie vinkjes (li), elk met een eigen vinkje */
+    const punten = [...d.querySelectorAll('li')];
+    const tekst = punten.length ? punten.map((l) => l.textContent.replace(/\s+/g, ' ').trim()).join(' | ') : d.textContent.replace(/\s+/g, ' ').trim();
+    if (punten.some((l) => !l.querySelector('svg'))) uit.push('een punt van de disclaimer zonder vinkje');
     if (tekst !== verwacht) uit.push(`disclaimer "${tekst}" in plaats van "${verwacht}"`);
     /* 22 okt 2026, Mohammed over "Wat u krijgt:": "haal dat weg" */
     if (/wat u krijgt/i.test(tekst)) uit.push('de disclaimer heeft nog de kop "Wat u krijgt"');

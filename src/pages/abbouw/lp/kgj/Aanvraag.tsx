@@ -363,11 +363,11 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
             {/* De zin onder "Bijna klaar! Bevestig ..." zoals op bfbouw.be (rk__contactsub), in een duidelijk vlak met vinkje. 22 okt 2026,
                 Mohammed: "die disclaimer bedoelde ik van wat er al was visueel verbeteren", "laat uw dak vakkundig controleren en vermijd
                 onnodige kosten", "dat wat er stond", "doe even overal". */}
+            {/* 26 okt 2026, Mohammed: "moet visueel duidelijker en apart, en visueel mooi": drie vinkjes in een eigen vlak (bfbouw.be rk__punten). */}
             {a.disclaimer && (
-              <p className="kgj-reken__disclaimer">
-                <Check aria-hidden="true" />
-                <span>{a.disclaimer}</span>
-              </p>
+              <ul className="kgj-reken__disclaimer">
+                {a.disclaimer.map((p) => <li key={p}><Check aria-hidden="true" /><span>{p}</span></li>)}
+              </ul>
             )}
             {/* Geen autoFocus: op een telefoon sprong het toetsenbord dan meteen open (Mohammed, 24 sep).
                 23 okt 2026: naam en nummer staan in de gedeelde stand (een kaart wisselen of Terug wist niets); op de gsm zet het

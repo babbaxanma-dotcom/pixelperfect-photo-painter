@@ -544,7 +544,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     /* 22 okt 2026, Mohammed: "die disclaimer bedoelde ik van wat er al was visueel verbeteren", "dat wat er stond", "doe even overal":
        de zin van bfbouw.be/lp/dakwerken ("Laat uw dak vakkundig controleren. Voorkom onvoorziene kosten en weet exact wat er moet
        gebeuren."), voor renovatie alleen "uw dak vakkundig controleren" -> "uw woning vakkundig bekijken" (het plaatsbezoek). */
-    disclaimer: 'Laat uw woning vakkundig bekijken. Voorkom onvoorziene kosten en weet exact wat er moet gebeuren.',
+    disclaimer: ['Laat uw woning vakkundig bekijken', 'Voorkom onvoorziene kosten', 'Weet exact wat er moet gebeuren'],
     /* 22 okt 2026, Mohammed: "bij abgroep totaalrenovatie ook onderaan bij plaatsbezoek de form zo dat je makkelijk kan klikken". */
     onder: true,
     /* 23 okt 2026 (Mohammed: "algemene psychologie cro optimalisatie toepassen"): onder de verzendknop bewijs en risico weg op het

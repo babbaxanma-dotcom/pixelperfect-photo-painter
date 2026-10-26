@@ -860,14 +860,17 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
 }
 
 /* ---------- disclaimer direct onder de band "Bijna klaar! ...": de zin van bfbouw.be in een vlak met vinkje (22 okt 2026) ---------- */
-.bf.bf-lp .kgj-reken__disclaimer { display: flex; align-items: flex-start; gap: calc(12 * var(--u)); margin: calc(18 * var(--u)) 0 0; padding: calc(14 * var(--u)) calc(16 * var(--u));
-  border-radius: calc(12 * var(--u)); background: #f8f5ee; box-shadow: inset 0 0 0 1px #ece3cf; font-size: max(14px, calc(14.5 * var(--u))); line-height: 1.5; color: var(--ink-2); }
-.bf.bf-lp .kgj-reken__disclaimer b { font-weight: 700; color: var(--ink); }
-.bf.bf-lp .kgj-reken__disclaimer > svg { flex: none; width: max(20px, calc(22 * var(--u))); height: max(20px, calc(22 * var(--u))); padding: max(4px, calc(4.5 * var(--u))); margin-top: 1px;
+/* 26 okt 2026 (Mohammed: "moet visueel duidelijker en apart, en visueel mooi"): drie vinkjes in een eigen wit vlak met merkrand,
+   een gouden bolletje per punt (bfbouw.be rk__punten, in AB-kleuren). */
+.bf.bf-lp .kgj-reken__disclaimer { list-style: none; display: grid; gap: calc(8 * var(--u)); margin: calc(14 * var(--u)) 0 0; padding: calc(12 * var(--u)) calc(14 * var(--u));
+  border-radius: calc(14 * var(--u)); background: #fff; border: 1px solid #ecd9ad; box-shadow: 0 calc(4 * var(--u)) calc(14 * var(--u)) rgba(217, 140, 3, .1); }
+.bf.bf-lp .kgj-reken__disclaimer li { display: flex; align-items: center; gap: calc(10 * var(--u)); font-size: max(14.5px, calc(15.5 * var(--u))); line-height: 1.3; font-weight: 600; color: var(--ink); }
+.bf.bf-lp .kgj-reken__disclaimer li > svg { flex: none; width: max(20px, calc(22 * var(--u))); height: max(20px, calc(22 * var(--u))); padding: max(4px, calc(4.5 * var(--u)));
   border-radius: 50%; background: var(--merk); color: var(--op-merk); stroke-width: 3.2; }
 .bf.bf-lp .kgj-reken__disclaimer + .kgj-reken__knop { margin-top: calc(14 * var(--u)); }
 @media (max-width: 1000px) {
-  .bf.bf-lp .kgj-reken__disclaimer { margin-top: 16px; padding: 13px 14px; gap: 10px; font-size: 14px; }
+  .bf.bf-lp .kgj-reken__disclaimer { margin-top: 12px; padding: 10px 12px; gap: 6px; }
+  .bf.bf-lp .kgj-reken__disclaimer li { font-size: 14.5px; gap: 10px; }
   .bf.bf-lp .kgj-reken__disclaimer + .kgj-reken__knop { margin-top: 12px; }
 }
 
