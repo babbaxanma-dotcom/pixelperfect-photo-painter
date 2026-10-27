@@ -4,7 +4,6 @@ import { KGJ_CSS } from './stijl';
 import { KGJ_EXTRA } from './extra';
 import Rekenaar from './Rekenaar';
 import Inspectie from './Inspectie';
-import ChatAssistent from './ChatAssistent';
 import Werkspoor from './Werkspoor';
 import { Icoon } from './Iconen';
 import { IcChevron } from '../replica/Iconen';
@@ -779,8 +778,6 @@ export default function LpKgj({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           aria-label={'Bel ' + CONTACT.phone.display}><IcBel /></a>
       </div>
 
-      {/* Digitale assistent (28 sep). Verschijnt alleen als api/chat een sleutel heeft. */}
-      <ChatAssistent inhoud={inhoud} balk={balk} opRekenaar={() => setVenster(true)} />
 
       <footer className="kgj-voet kgj-voet--lp">
         <div className="kgj-breed kgj-voet__in">

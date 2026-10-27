@@ -4,7 +4,6 @@ import Rekenaar from './Rekenaar';
 import Aanvraag, { badgeIcoon } from './Aanvraag';
 import { AanvraagStaat, beginStand, useAanvraagVoortgang } from './AanvraagStaat';
 import Inspectie from './Inspectie';
-import ChatAssistent from './ChatAssistent';
 import Werkspoor from './Werkspoor';
 import { Icoon } from './Iconen';
 import { IcChevron } from '../replica/Iconen';
@@ -25,7 +24,7 @@ import './lp-bf-ab.css';
  *
  * Alleen de stijl verandert. Dit omhulsel leest HETZELFDE inhoudsobject als LpKgj.tsx (KgjInhoud) en
  * gebruikt dezelfde logica-componenten: Rekenaar, Inspectie (met PostcodeGemeente en Toestemming),
- * ChatAssistent en Werkspoor. Velden, validatie, payload (bron_lead incl. :hero/:venster), /bedankt-URL,
+ * Werkspoor. Velden, validatie, payload (bron_lead incl. :hero/:venster), /bedankt-URL,
  * trackFormStart, Toestemming en Clarity zitten in die componenten en in de effecten hieronder, die
  * LpKgj.tsx regel voor regel volgen: message match, Clarity via laadClarity, ankers na het laden,
  * vaste balk op de telefoon, het venster met de rekenaar.
@@ -871,8 +870,6 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         totaal={heroAanvraag ? (inhoud.aanvraag?.vragen.length ?? 0) + 1 : 0} />
       <a className={`bf-belzweef${balk ? ' bf-is-zichtbaar' : ''}`} href={CONTACT.phone.href} aria-label={'Bel ' + CONTACT.phone.display} tabIndex={balk ? 0 : -1} aria-hidden={!balk}><IcTel /></a>
 
-      {/* Digitale assistent (28 sep): verschijnt alleen als api/chat een sleutel heeft. Vorm: kgj/extra.ts via de port. */}
-      <div className="bf-lpkgj"><ChatAssistent inhoud={inhoud} balk={balk} opRekenaar={zonderRekenaar ? undefined : openVenster} /></div>
 
       {/* Voet: de inhoud van live (LpKgj r.785-809) woordelijk, in de BF-opmaak (grijs vlak, logo + zin, kolom Contact,
           onderregel). Geen voetlinkenlijst (§17); de klasse kgj-voet leest check-lp-gsm.cjs (btw in de voet). */}

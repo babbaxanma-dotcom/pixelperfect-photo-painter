@@ -159,7 +159,7 @@ const stijlTs = fs.readFileSync(path.join(KGJ, 'stijl.ts'), 'utf8');
 const kgjCss = JSON.parse(stijlTs.slice(stijlTs.indexOf('"'), stijlTs.lastIndexOf('"') + 1));
 const tokens = postcss.parse(kgjCss).nodes.find((n) => n.type === 'rule' && n.selector === '.kgjx' && n.nodes.some((d) => d.prop === '--merk'));
 if (!tokens) { console.error('kgj/stijl.ts: tokenregel .kgjx { --merk … } niet gevonden'); process.exit(1); }
-const KGJ_DEEL = /kgj-chat|kgj-werkspoor|pc-bediening/;
+const KGJ_DEEL = /kgj-werkspoor|pc-bediening/;
 const kgjRegel = (r) => r.selectors.every((s) => KGJ_DEEL.test(s) && !/^\.kgjx\.kgj-lp--/.test(s.trim()));
 const kgjHerschrijf = (r) => {
   const n = r.clone({ selectors: r.selectors.map((s) => SCOPE + ' .bf-lpkgj ' + s.trim().replace(/^\.kgjx\s+/, '')) });
