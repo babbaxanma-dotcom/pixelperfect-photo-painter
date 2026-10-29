@@ -1059,5 +1059,47 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
 @media (max-width: 1000px) {
   .bf.bf-lp .kgj-reken__samen { margin-top: 8px; font-size: 13px; line-height: 1.4; }
   .bf.bf-lp .kgj-reken__samen li, .bf.bf-lp .kgj-reken__samen-wijzig { font-size: 13px; }
-  .bf.bf-lp .kgj-reken__samen + .kgj-reken__disclaimer { margin-top: 8px; gap: 4px; padding-top: 8px; padding-bottom: 8px; }
+  .bf.bf-lp .kgj-reken__disclaimer:has(+ .kgj-reken__samen) { margin-top: 8px; gap: 4px; padding-top: 8px; padding-bottom: 8px; }
+}
+
+/* 29 okt 2026, Mohammed: "maak het visueel sterker die overzicht van hun aanvraag": eigen vlak, icoon, vette antwoorden met vinkje */
+.bf.bf-lp .kgj-reken__samen { display: block; margin: calc(12 * var(--u)) 0 0; padding: calc(12 * var(--u)) calc(14 * var(--u)); border-radius: calc(14 * var(--u)); background: linear-gradient(160deg, #fdf8ef 0%, #f8ecd4 100%); box-shadow: inset 0 0 0 calc(1.5 * var(--u)) #e7cf9c; }
+.bf.bf-lp .kgj-reken__samen-hoofd { display: flex; align-items: center; justify-content: space-between; gap: calc(10 * var(--u)); }
+.bf.bf-lp .kgj-reken__samen-kop { display: inline-flex; align-items: center; gap: calc(6 * var(--u)); margin: 0; font-size: calc(14 * var(--u)); font-weight: 800; letter-spacing: .02em; text-transform: none; color: var(--ink); }
+.bf.bf-lp .kgj-reken__samen-kop svg { width: calc(18 * var(--u)); height: calc(18 * var(--u)); color: var(--merk-tekst); }
+.bf.bf-lp .kgj-reken__samen-wijzig { margin: 0; padding: 0; }
+.bf.bf-lp .kgj-reken__samen ul { display: flex; flex-wrap: wrap; gap: calc(6 * var(--u)); list-style: none; margin: calc(8 * var(--u)) 0 0; padding: 0; }
+.bf.bf-lp .kgj-reken__samen li { display: inline-flex; align-items: center; gap: calc(5 * var(--u)); padding: calc(5 * var(--u)) calc(10 * var(--u)); border-radius: 999px; background: #fff; box-shadow: 0 1px 2px rgba(17, 17, 17, .08), inset 0 0 0 1px #ecd9ad; font-size: calc(13.5 * var(--u)); font-weight: 700; color: var(--ink); line-height: 1.25; }
+.bf.bf-lp .kgj-reken__samen li svg { flex: none; width: calc(13 * var(--u)); height: calc(13 * var(--u)); color: var(--merk-tekst); stroke-width: 3; }
+.bf.bf-lp .kgj-reken__samen li + li::before { content: none; }
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken__samen { display: block; margin-top: 8px; padding: 8px 10px 9px; border-radius: 12px; font-size: 13px; line-height: 1.3; }
+  .bf.bf-lp .kgj-reken__samen-kop { display: inline-flex; margin: 0; font-size: 13px; }
+  .bf.bf-lp .kgj-reken__samen-kop svg { width: 16px; height: 16px; }
+  .bf.bf-lp .kgj-reken__samen-wijzig { display: inline-flex; margin: 0; font-size: 13px; }
+  .bf.bf-lp .kgj-reken__samen ul { display: flex; gap: 4px; margin-top: 6px; }
+  .bf.bf-lp .kgj-reken__samen li { display: inline-flex; padding: 3px 8px; background: #fff; box-shadow: inset 0 0 0 1px #ecd9ad; font-size: 12.5px; font-weight: 700; }
+  .bf.bf-lp .kgj-reken__samen li svg { width: 11px; height: 11px; }
+  .bf.bf-lp .kgj-reken__samen li + li::before { content: none; }
+  .bf.bf-lp .kgj-reken__disclaimer:has(+ .kgj-reken__samen) { margin-top: 6px; gap: 2px; padding-top: 6px; padding-bottom: 6px; }
+}
+
+/* 29 okt 2026, Mohammed: "niet zo raar speels tech achtig maken, gewoon robuust": rustig vlak, kop + Wijzigen, antwoorden vet op een regel */
+.bf.bf-lp .kgj-reken__samen { display: block; margin: calc(12 * var(--u)) 0 0; padding: calc(12 * var(--u)) calc(14 * var(--u)); border-radius: calc(10 * var(--u)); background: #f6f6f4; box-shadow: none; border: 1px solid #e4e2dc; }
+.bf.bf-lp .kgj-reken__samen-hoofd { display: flex; align-items: center; justify-content: space-between; gap: calc(10 * var(--u)); }
+.bf.bf-lp .kgj-reken__samen-kop { margin: 0; font-size: calc(13 * var(--u)); font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--tekst-2); }
+.bf.bf-lp .kgj-reken__samen-tekst { margin: calc(4 * var(--u)) 0 0; font-size: calc(15 * var(--u)); line-height: 1.4; font-weight: 700; color: var(--ink); text-wrap: pretty; }
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken__samen { margin-top: 8px; padding: 8px 12px; border-radius: 10px; }
+  .bf.bf-lp .kgj-reken__samen-kop { font-size: 12px; }
+  .bf.bf-lp .kgj-reken__samen-wijzig { font-size: 13px; }
+  .bf.bf-lp .kgj-reken__samen-tekst { margin-top: 2px; font-size: 13.5px; line-height: 1.35; }
+}
+
+.bf.bf-lp .kgj-reken__samen-wijzig { float: right; margin: 0 0 0 calc(10 * var(--u)); }
+.bf.bf-lp .kgj-reken__samen-tekst { margin: 0; }
+.bf.bf-lp .kgj-reken__samen-kop { display: block; margin: 0 0 calc(2 * var(--u)); }
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken__samen-wijzig { margin-left: 8px; }
+  .bf.bf-lp .kgj-reken__samen-kop { display: inline; margin: 0 6px 0 0; }
 }

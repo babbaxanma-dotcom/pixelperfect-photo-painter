@@ -386,19 +386,18 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
                 Mohammed: "die disclaimer bedoelde ik van wat er al was visueel verbeteren", "laat uw dak vakkundig controleren en vermijd
                 onnodige kosten", "dat wat er stond", "doe even overal". */}
             {/* 26 okt 2026, Mohammed: "moet visueel duidelijker en apart, en visueel mooi": drie vinkjes in een eigen vlak (bfbouw.be rk__punten). */}
-            {samen.length > 0 && (
-              <div className="kgj-reken__samen">
-                <p className="kgj-reken__samen-kop">Uw aanvraag</p>
-                <ul>{samen.map((s) => <li key={s}>{s}</li>)}</ul>
-                <button type="button" className="kgj-reken__samen-wijzig" onClick={() => { gebruik(); zet((s) => ({ ...s, aangetikt: true, fout: null, stap: 0 })); }}>
-                  <Pencil aria-hidden="true" />Wijzigen
-                </button>
-              </div>
-            )}
             {a.disclaimer && !offerte && (
               <ul className="kgj-reken__disclaimer">
                 {a.disclaimer.map((p) => <li key={p}><Check aria-hidden="true" /><span>{p}</span></li>)}
               </ul>
+            )}
+            {samen.length > 0 && (
+              <div className="kgj-reken__samen">
+                <button type="button" className="kgj-reken__samen-wijzig" onClick={() => { gebruik(); zet((s) => ({ ...s, aangetikt: true, fout: null, stap: 0 })); }}>
+                  <Pencil aria-hidden="true" />Wijzigen
+                </button>
+                <p className="kgj-reken__samen-tekst"><span className="kgj-reken__samen-kop">Uw aanvraag</span>{samen.join(' · ')}</p>
+              </div>
             )}
             {/* Geen autoFocus: op een telefoon sprong het toetsenbord dan meteen open (Mohammed, 24 sep).
                 23 okt 2026: naam en nummer staan in de gedeelde stand (een kaart wisselen of Terug wist niets); op de gsm zet het
