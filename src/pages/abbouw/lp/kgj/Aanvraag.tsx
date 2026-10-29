@@ -251,12 +251,13 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     });
     if (!res.ok) { verstuurt.current = false; zet((s) => ({ ...s, bezig: false, fout: leadFoutmelding(res, CONTACT.phone.display) })); return; }
     meldClarity(`${clarityNaam}-verstuurd`);
-    /* Zonder toestemming voor marketing eerst de vraag uit Toestemming.tsx, dan pas de bedankpagina (in beide kaarten: de andere
-       kaart toont dan ook de vraag, geen tweede formulier). */
-    if (allowsMarketing()) { zet((s) => ({ ...s, bezig: false })); naarBedankt(); }
-    else zet((s) => ({ ...s, bezig: false, vraagToestemming: true }));
+    /* 29 okt 2026 (bureau: na versturen geen bedankpagina, Clarity 29 okt 07:22 sessie yd92yn): altijd meteen naar de
+       bedankpagina. Zonder toestemming voor marketing staat de vraag uit Toestemming.tsx daar bovenaan (BedanktBf,
+       navigatiestaat abToestemming); in de kaart hield ze de bezoeker op de adpagina tot hij antwoordde. */
+    zet((s) => ({ ...s, bezig: false }));
+    naarBedankt(!allowsMarketing());
   };
-  const naarBedankt = () => navigate('/bedankt/' + inhoud.bedanktSlug);
+  const naarBedankt = (vraag = false) => navigate('/bedankt/' + inhoud.bedanktSlug, vraag ? { state: { abToestemming: true } } : undefined);
 
   const vraag = VRAGEN[stap];
   /* Welke velden de contactstap naast Naam en Gsm heeft (renovatiepagina's: alleen die twee). Standaard beide aan. */

@@ -49,11 +49,12 @@
  * plaatsbezoek, geen vraag boven de keuzes ("Wanneer past een bezoek?" is BF-tekst), geen label boven het bedrag.
  */
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Lock } from 'lucide-react';
 import { CONTACT } from '@/data/contact';
 import { meldClarity } from '@/lib/clarity';
-import { bannerWachtOpScroll } from '@/lib/consent';
+import { allowsMarketing, bannerWachtOpScroll } from '@/lib/consent';
+import Toestemming from '../lp/kgj/Toestemming';
 import { ICOON, NAAM, TEL, TEL_HREF, beeld, grootsteUrl, logoInk } from './schil';
 import { bedrag, leesVork } from '@/lib/richtprijs';
 import './bf.css';
@@ -196,6 +197,17 @@ export default function BedanktBf() {
   /* null = laden of mislukt: knoppen zonder aantal */
   const [vrij, setVrij] = useState<Vrij | null>(null);
   const bellenRef = useRef<HTMLDivElement>(null);
+  /* 29 okt 2026 (bureau: "after submitting it, the thank-you page that was previously displayed is no longer appearing"):
+     na een aanvraag gaat elke bezoeker meteen naar deze pagina. De vraag uit Toestemming.tsx stond tot nu in de kaart op de
+     adpagina, vóór deze pagina; wie ze niet beantwoordde, kwam hier nooit (Clarity 29 okt 07:22, sessie yd92yn). Nu staat
+     ze hier bovenaan, alleen na een verse aanvraag (navigatiestaat abToestemming) en zonder marketingtoestemming. */
+  const plaats = useLocation();
+  const [vraag, setVraag] = useState(() => Boolean((plaats.state as { abToestemming?: boolean } | null)?.abToestemming) && !allowsMarketing());
+  const vraagKlaar = () => {
+    setVraag(false);
+    /* niet opnieuw na herladen of terugkeren; de vlag abBedanktGemeld op dezelfde regel blijft staan */
+    try { window.history.replaceState({ ...(window.history.state || {}), usr: null }, ''); } catch { /* niets */ }
+  };
 
   /* Zelfde als Bedankt.tsx r.154-163. */
   useEffect(() => {
@@ -296,6 +308,8 @@ export default function BedanktBf() {
                 <Ic svg={ICOON.vink} className="bf-dank__vink" />
                 <h1 className="bf-dank__kop">{vork ? KOP_PRIJS : rekenaar ? KOP_REKENAAR : KOP_GEWOON}</h1>
               </div>
+
+              {vraag && <div className="bf-dank__vraag"><Toestemming verder={vraagKlaar} /></div>}
 
               {vork ? (
                 /* De richtprijs uit de rekenaar, incl. btw (zelfde rekenregel als bfbouw.be). */

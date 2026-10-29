@@ -6,7 +6,6 @@ import { allowsMarketing } from '@/lib/consent';
 import { CONTACT } from '@/data/contact';
 import type { KgjInhoud } from './inhoud';
 import PostcodeGemeente from './PostcodeGemeente';
-import Toestemming from './Toestemming';
 
 /**
  * Aanvraag voor de gratis dakinspectie, onderaan de pagina.
@@ -40,7 +39,6 @@ export default function Inspectie({ inhoud, opPrijs, boven }: { inhoud: KgjInhou
   const navigate = useNavigate();
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
-  const [vraagToestemming, setVraagToestemming] = useState(false);
   const gestart = useRef(false);
   const t = inhoud.inspectie;
   const pb = t.plaatsbezoek;
@@ -81,19 +79,11 @@ export default function Inspectie({ inhoud, opPrijs, boven }: { inhoud: KgjInhou
     });
     setBezig(false);
     if (!res.ok) { setFout(leadFoutmelding(res, CONTACT.phone.display)); return; }
-    /* Zonder toestemming voor marketing eerst de vraag uit Toestemming.tsx, dan pas de bedankpagina. */
-    if (allowsMarketing()) naarBedankt();
-    else setVraagToestemming(true);
+    /* 29 okt 2026: altijd meteen naar de bedankpagina. Zonder toestemming voor marketing staat de vraag uit Toestemming.tsx
+       daar bovenaan (BedanktBf, navigatiestaat abToestemming); in de kaart hield ze de bezoeker op de adpagina. */
+    naarBedankt(!allowsMarketing());
   };
-  const naarBedankt = () => navigate('/bedankt/' + inhoud.bedanktSlug);
-
-  if (vraagToestemming) {
-    return (
-      <div className="kgj-reken kgj-reken--inspectie">
-        <Toestemming verder={naarBedankt} />
-      </div>
-    );
-  }
+  const naarBedankt = (vraag = false) => navigate('/bedankt/' + inhoud.bedanktSlug, vraag ? { state: { abToestemming: true } } : undefined);
 
   return (
     <div className={`kgj-reken kgj-reken--inspectie${t.extra?.length ? ' kgj-reken--extra' : ''}`}>

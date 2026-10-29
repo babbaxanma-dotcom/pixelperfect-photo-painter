@@ -216,3 +216,26 @@
 }
 .bf.bf-dankpagina .bf-dank__prijs--echt { background: linear-gradient(160deg, #fdf8ef 0%, #f8ecd4 100%); }
 .bf.bf-dankpagina .bf-dank__prijs--echt .bf-dank__prijszin { background: #fff; }
+
+/* 29 okt 2026: de vraag na een aanvraag (Toestemming.tsx) staat nu bovenaan deze pagina, in een witte kaart onder de kop. */
+.bf.bf-dankpagina .bf-dank__vraag { margin-top: calc(24 * var(--u)); max-width: calc(560 * var(--u)); padding: calc(22 * var(--u)) calc(24 * var(--u)); border-radius: calc(20 * var(--u)); background: #fff; color: var(--ink); box-shadow: 0 calc(30 * var(--u)) calc(70 * var(--u)) calc(-30 * var(--u)) rgba(0, 0, 0, .6); }
+.bf.bf-dankpagina .kgj-toestemming { display: grid; gap: calc(12 * var(--u)); }
+.bf.bf-dankpagina .kgj-toestemming__ok { display: flex; align-items: center; gap: calc(8 * var(--u)); margin: 0; font-size: calc(17 * var(--u)); font-weight: 700; color: var(--ink); }
+.bf.bf-dankpagina .kgj-toestemming__ok svg { flex: none; width: calc(22 * var(--u)); height: calc(22 * var(--u)); color: #1c7a4a; }
+.bf.bf-dankpagina .kgj-toestemming__tekst { margin: 0; font-size: calc(15.5 * var(--u)); line-height: 1.5; color: var(--ink-2); }
+.bf.bf-dankpagina .kgj-toestemming__tekst a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.bf.bf-dankpagina .kgj-toestemming__knoppen { display: grid; grid-template-columns: 1fr 1fr; gap: calc(10 * var(--u)); }
+.bf.bf-dankpagina .kgj-toestemming__knoppen button { min-height: calc(52 * var(--u)); padding: calc(10 * var(--u)) calc(12 * var(--u)); border: 2px solid var(--merk); border-radius: 999px; background: #fff; color: var(--ink); font: inherit; font-size: calc(15.5 * var(--u)); font-weight: 700; cursor: pointer; }
+.bf.bf-dankpagina .kgj-toestemming__knoppen button:first-child { background: var(--merk); color: var(--op-merk); }
+.bf.bf-dankpagina .kgj-toestemming__knoppen button:disabled { opacity: .5; cursor: default; }
+@media (max-width: 1000px) {
+  .bf.bf-dankpagina .bf-dank__vraag { order: 1; margin-top: 0; max-width: none; padding: 18px 16px; border-radius: 16px; }
+  .bf.bf-dankpagina .kgj-toestemming { gap: 10px; }
+  .bf.bf-dankpagina .kgj-toestemming__ok { gap: 8px; font-size: 16px; }
+  .bf.bf-dankpagina .kgj-toestemming__ok svg { width: 20px; height: 20px; }
+  .bf.bf-dankpagina .kgj-toestemming__tekst { font-size: 15px; }
+  .bf.bf-dankpagina .kgj-toestemming__knoppen { gap: 8px; }
+  .bf.bf-dankpagina .kgj-toestemming__knoppen button { min-height: 48px; padding: 10px; font-size: 15px; }
+}
+/* de kop zegt al dat de aanvraag binnen is */
+.bf.bf-dankpagina .bf-dank__vraag .kgj-toestemming__ok { display: none; }
