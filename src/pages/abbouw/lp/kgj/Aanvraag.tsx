@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Award, BadgePercent, CalendarCheck, Check, ClipboardCheck, Clock, Hammer, Home, Plus, ShieldCheck, UserCheck } from 'lucide-react';
+import { ArrowRight, Award, BadgePercent, CalendarCheck, Check, ClipboardCheck, Clock, Hammer, Home, Pencil, Plus, SearchCheck, ShieldCheck, UserCheck } from 'lucide-react';
 import { Icoon } from './Iconen';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
@@ -52,6 +52,7 @@ const IcInspectie = () => (
 const BADGE_PER_TEKST: Record<string, typeof Check> = {
   'Vaste prijs vooraf': ShieldCheck, 'Eén vast aanspreekpunt': UserCheck, 'Vakmanschap tot in de details': Award,
   'Gratis & vrijblijvende dakinspectie': ClipboardCheck, '6% btw-tarief (woningen > 10 jaar)': BadgePercent,
+  'Weet de exacte staat van uw dak': SearchCheck, 'Weet waar u aan toe bent': SearchCheck,
 };
 export const badgeIcoon = (tekst: string, i: number) => BADGE_PER_TEKST[tekst] ?? [ShieldCheck, UserCheck, Award][i] ?? Check;
 
@@ -218,6 +219,14 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     zet((s) => ({ ...s, aangetikt: true, antwoorden: { ...s.antwoorden, [v.sleutel]: antwoord }, stap: s.stap + 1 }));
   };
   const zetFout = (f: string | null) => zet((s) => ({ ...s, fout: f }));
+  /* Offerte (29 okt 2026): wie al weet wat er moet gebeuren, gaat meteen naar de contactstap. Terug brengt hem bij vraag 1. */
+  const naarOfferte = () => {
+    gebruik();
+    meldStart();
+    meldClarity(`${clarityNaam}-offerte`);
+    zet((s) => ({ ...s, aangetikt: true, fout: null, offerte: true, stap: VRAGEN.length }));
+  };
+  const offerte = Boolean(stand.offerte && a.offerte);
 
   const verstuur = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -245,8 +254,9 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
       gemeente: String(f.get('gemeente') || '').trim() || undefined,
       type_werk: inhoud.divisie,
       /* "Aanvraag gratis dakinspectie · Dak: Hellend dak · Werk: ..." (zelfde begin als Inspectie.tsx). */
-      aanvullende_info: ['Aanvraag ' + (inhoud.cta.naam ?? inhoud.cta.kop).toLowerCase(),
-        ...VRAGEN.filter((v) => antwoorden[v.sleutel]).map((v) => `${v.sleutel}: ${antwoorden[v.sleutel]}`)].join(' · '),
+      aanvullende_info: (offerte ? ['Aanvraag offerte (weet al wat er moet gebeuren)']
+        : ['Aanvraag ' + (inhoud.cta.naam ?? inhoud.cta.kop).toLowerCase(),
+          ...VRAGEN.filter((v) => antwoorden[v.sleutel]).map((v) => `${v.sleutel}: ${antwoorden[v.sleutel]}`)]).join(' · '),
       bron_lead: t.bronLead,
     });
     if (!res.ok) { verstuurt.current = false; zet((s) => ({ ...s, bezig: false, fout: leadFoutmelding(res, CONTACT.phone.display) })); return; }
@@ -264,7 +274,12 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   const metEmail = a.contactVelden?.email !== false;
   const metPostcode = a.contactVelden?.postcode !== false;
   /* "Bijna klaar! Bevestig uw gratis dakinspectie": het eerste deel op een eigen regel in de merkkleur (bfbouw.be rk__bijna). */
-  const band = a.contactKop.match(/^(Bijna klaar!)\s+(.+)$/);
+  const contactKop = offerte && a.offerte ? a.offerte.contactKop : a.contactKop;
+  const band = contactKop.match(/^(Bijna klaar!)\s+(.+)$/);
+  /* Samenvatting boven de velden (29 okt 2026, Mohammed: "ja dit zeker"): de eigen antwoorden. Een kaal Ja/Nee krijgt het
+     onderwerp erbij ("Isolatie: Ja"), anders zegt het niets. */
+  const KAAL = /^(ja|nee|weet ik (nog )?niet)$/i;
+  const samen = offerte ? [] : VRAGEN.filter((v) => antwoorden[v.sleutel]).map((v) => (KAAL.test(antwoorden[v.sleutel]) ? `${v.sleutel}: ${antwoorden[v.sleutel]}` : antwoorden[v.sleutel]));
 
   return (
     <div ref={kaart} className={`kgj-reken kgj-reken--aanvraag${onder ? ' kgj-reken--onder' : ''}${a.badges ? ' kgj-reken--badges' : ''}${stand.aangetikt && stap > 0 ? ' is-bezig' : ''}${klaar ? ' is-contact' : ''}`}>
@@ -287,7 +302,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
           {/* Uitgesproken door een schermlezer alleen in de kaart die de bezoeker gebruikt (de andere kaart verandert mee). */}
           <span className="kgj-reken__tel" aria-live={actiefHier ? 'polite' : 'off'}>Stap {nu} van {totaal}</span>
           {stap > 0 && (
-            <button type="button" className="kgj-reken__terug" onClick={() => { gebruik(); zet((s) => ({ ...s, aangetikt: true, fout: null, stap: Math.max(0, s.stap - 1) })); }}>‹ Terug</button>
+            <button type="button" className="kgj-reken__terug" onClick={() => { gebruik(); zet((s) => (s.offerte ? { ...s, aangetikt: true, fout: null, offerte: false, stap: 0 } : { ...s, aangetikt: true, fout: null, stap: Math.max(0, s.stap - 1) })); }}>‹ Terug</button>
           )}
         </div>
       )}
@@ -352,20 +367,35 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
               </button>
             ))}
           </div>
+          {stap === 0 && a.offerte && (
+            <p className="kgj-reken__offerte">
+              <span>{a.offerte.vraag}</span>{' '}
+              <button type="button" onClick={naarOfferte}>{a.offerte.knop}<ArrowRight aria-hidden="true" /></button>
+            </p>
+          )}
         </div>
       ) : (
         <div className="kgj-reken__stap" key="contact">
           <form className="kgj-reken__form kgj-reken__contact" onSubmit={verstuur} noValidate>
             <div className="kgj-reken__band">
               <p className="kgj-reken__vraag kgj-reken__vraag--band">
-                {band ? <><span className="kgj-reken__bijna">{band[1]}</span> {band[2]}</> : a.contactKop}
+                {band ? <><span className="kgj-reken__bijna">{band[1]}</span> {band[2]}</> : contactKop}
               </p>
             </div>
             {/* De zin onder "Bijna klaar! Bevestig ..." zoals op bfbouw.be (rk__contactsub), in een duidelijk vlak met vinkje. 22 okt 2026,
                 Mohammed: "die disclaimer bedoelde ik van wat er al was visueel verbeteren", "laat uw dak vakkundig controleren en vermijd
                 onnodige kosten", "dat wat er stond", "doe even overal". */}
             {/* 26 okt 2026, Mohammed: "moet visueel duidelijker en apart, en visueel mooi": drie vinkjes in een eigen vlak (bfbouw.be rk__punten). */}
-            {a.disclaimer && (
+            {samen.length > 0 && (
+              <div className="kgj-reken__samen">
+                <p className="kgj-reken__samen-kop">Uw aanvraag</p>
+                <ul>{samen.map((s) => <li key={s}>{s}</li>)}</ul>
+                <button type="button" className="kgj-reken__samen-wijzig" onClick={() => { gebruik(); zet((s) => ({ ...s, aangetikt: true, fout: null, stap: 0 })); }}>
+                  <Pencil aria-hidden="true" />Wijzigen
+                </button>
+              </div>
+            )}
+            {a.disclaimer && !offerte && (
               <ul className="kgj-reken__disclaimer">
                 {a.disclaimer.map((p) => <li key={p}><Check aria-hidden="true" /><span>{p}</span></li>)}
               </ul>
@@ -392,7 +422,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
             )}
             {fout && <p className="kgj-reken__fout" role={actiefHier ? 'alert' : undefined}>{fout}</p>}
             <button className="kgj-knop kgj-knop--vol kgj-reken__knop" type="submit" disabled={bezig}>
-              {bezig ? 'Bezig…' : <>{t.knop}<ArrowRight aria-hidden="true" /></>}
+              {bezig ? 'Bezig…' : <>{offerte && a.offerte ? a.offerte.verzend : t.knop}<ArrowRight aria-hidden="true" /></>}
             </button>
             {/* 23 okt 2026: direct onder de verzendknop het bewijs en het risico weg, op het moment van beslissen (bfbouw.be rk__knopzeker:
                 "5,0 op Google · Gratis en vrijblijvend"). Op de gsm staat de kaartkop met "vrijblijvend" dan boven het scherm. */}

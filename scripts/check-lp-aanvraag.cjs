@@ -125,7 +125,7 @@ const RENO = (pad) => ({
   vraag1: 'Wat voor woning wilt u renoveren?', keuzes1: ['Appartement', 'Rijwoning', 'Halfopen bebouwing', 'Open bebouwing'],
   pad1: ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'], vraag2: 'Wat wilt u renoveren?',
   band: 'Bijna klaar! Bevestig uw gratis plaatsbezoek', knop: 'Gratis plaatsbezoek aanvragen', stappen: 6,
-  disclaimer: 'Laat uw woning vakkundig bekijken | Voorkom onvoorziene kosten | Weet exact wat er moet gebeuren',
+  disclaimer: 'Laat uw woning vakkundig bekijken | Voorkom onvoorziene kosten | Weet waar u aan toe bent',
   /* 22 okt 2026: "6 vakdisciplines ... weg, bij die form", "dat is een rare trust badge" */
   tegels: ['5,0', '16 jaar ervaring'],
   onder: 'Wij nemen zo snel mogelijk contact met u op.',

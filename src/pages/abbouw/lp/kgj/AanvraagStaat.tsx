@@ -32,6 +32,8 @@ export type AanvraagStand = {
   bezig: boolean;
   /** De aanvraag is verstuurd en de vraag uit Toestemming.tsx staat open (in beide kaarten). */
   vraagToestemming: boolean;
+  /** 29 okt 2026: de bezoeker koos "Klik dan hier" (offerte) en sloeg de vragen over. */
+  offerte?: boolean;
 };
 
 export type GedeeldeAanvraag = {

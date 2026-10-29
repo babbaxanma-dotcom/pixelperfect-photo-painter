@@ -530,7 +530,10 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     /* Vinkjes en trustrij: dezelfde teksten en cijfers als op de rekenaarkaart die hier stond (13 okt, dictaat 4 okt). Alleen de
        vorm verandert (22 okt, Mohammed: "doe de trust badges duidelijker, visueel mooier"): tegels met iconen (badges). De iconen
        staan bij de cijfers: kalender bij de jaren ervaring, gereedschap bij de vakdisciplines. */
-    vertrouwen: TOTAALRENOVATIE_REKENAAR.rekenaar.vertrouwen,
+    /* 29 okt 2026, Mohammed: "meer badges" (dakwerken: "weet de exacte staat van uw dak"); hier zijn woorden van 22 okt: "weet waar u aan toe bent" ("weet exact wat er moet gebeuren" afgekeurd 29 okt: de bezoeker kiest zelf wat er moet gebeuren). */
+    vertrouwen: ['Weet waar u aan toe bent', ...(TOTAALRENOVATIE_REKENAAR.rekenaar.vertrouwen ?? [])],
+    offerte: { vraag: 'Weet u al wat er moet gebeuren en wilt u een offerte aanvragen?', knop: 'Klik dan hier',
+      contactKop: 'Bijna klaar! Vraag uw vrijblijvende offerte aan', verzend: 'Vrijblijvende offerte aanvragen' },
     /* 22 okt 2026, Mohammed: "en 6 vakdisciplines als trust badge bij abgroep landingspagina weg, bij die form", "dat is een rare
        trust badge". In de kaart blijven Google 5,0 en 16 jaar ervaring; de rekenaarpagina houdt haar trustrij. */
     trustrij: TOTAALRENOVATIE_REKENAAR.rekenaar.trustrij?.filter((c) => c.s !== 'vakdisciplines').map((c) => ({ ...c, icoon: 'kalender' as const })),
@@ -544,7 +547,8 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     /* 22 okt 2026, Mohammed: "die disclaimer bedoelde ik van wat er al was visueel verbeteren", "dat wat er stond", "doe even overal":
        de zin van bfbouw.be/lp/dakwerken ("Laat uw dak vakkundig controleren. Voorkom onvoorziene kosten en weet exact wat er moet
        gebeuren."), voor renovatie alleen "uw dak vakkundig controleren" -> "uw woning vakkundig bekijken" (het plaatsbezoek). */
-    disclaimer: ['Laat uw woning vakkundig bekijken', 'Voorkom onvoorziene kosten', 'Weet exact wat er moet gebeuren'],
+    /* 29 okt 2026, Mohammed: "Weet exact wat er moet gebeuren bij renovatie klopt niet, want daar heb je ook het dingetje dat zij kiezen"; zijn woorden van 22 okt. */
+    disclaimer: ['Laat uw woning vakkundig bekijken', 'Voorkom onvoorziene kosten', 'Weet waar u aan toe bent'],
     /* 22 okt 2026, Mohammed: "bij abgroep totaalrenovatie ook onderaan bij plaatsbezoek de form zo dat je makkelijk kan klikken". */
     onder: true,
     /* 23 okt 2026 (Mohammed: "algemene psychologie cro optimalisatie toepassen"): onder de verzendknop bewijs en risico weg op het

@@ -1022,3 +1022,42 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
 }
 /* 26 okt 2026: privacyregel onder de trustsignalen (Aanvraag.tsx). */
 .bf.bf-lp .kgj-reken__privacy--na { display: block; margin-top: calc(12 * var(--u)); }
+
+/* ── 29 okt 2026: samenvatting van de antwoorden op de contactstap, "Volgende" in beeld, offerte-optie ── */
+.bf.bf-lp .kgj-reken__samen { display: flex; flex-wrap: wrap; align-items: center; gap: calc(6 * var(--u)) calc(8 * var(--u)); margin: calc(12 * var(--u)) 0 0; }
+.bf.bf-lp .kgj-reken__samen-kop { flex: none; margin: 0; font-size: calc(13 * var(--u)); font-weight: 700; color: var(--tekst-2); text-transform: uppercase; letter-spacing: .04em; }
+.bf.bf-lp .kgj-reken__samen ul { display: contents; list-style: none; margin: 0; padding: 0; }
+.bf.bf-lp .kgj-reken__samen li { padding: calc(4 * var(--u)) calc(10 * var(--u)); border-radius: 999px; background: #f6efe0; box-shadow: inset 0 0 0 1px #ecd9ad; font-size: calc(13.5 * var(--u)); font-weight: 600; color: var(--ink); line-height: 1.3; }
+.bf.bf-lp .kgj-reken__samen-wijzig { display: inline-flex; align-items: center; gap: calc(4 * var(--u)); padding: calc(4 * var(--u)) calc(2 * var(--u)); border: 0; background: none; font: inherit; font-size: calc(13.5 * var(--u)); font-weight: 700; color: var(--merk-tekst); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.bf.bf-lp .kgj-reken__samen-wijzig svg { width: calc(13 * var(--u)); height: calc(13 * var(--u)); }
+/* offerte-optie onder de keuzes van vraag 1 */
+.bf.bf-lp .kgj-reken__offerte { margin: calc(14 * var(--u)) 0 0; padding: calc(12 * var(--u)) calc(14 * var(--u)); border-radius: calc(12 * var(--u)); background: #f8f6f1; font-size: calc(14.5 * var(--u)); line-height: 1.45; color: var(--tekst); text-wrap: pretty; }
+.bf.bf-lp .kgj-reken__offerte button { display: inline-flex; align-items: center; gap: calc(4 * var(--u)); padding: 0; border: 0; background: none; font: inherit; font-weight: 700; color: var(--merk-tekst); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; white-space: nowrap; }
+.bf.bf-lp .kgj-reken__offerte button svg { width: calc(15 * var(--u)); height: calc(15 * var(--u)); }
+.bf.bf-lp .kgj-reken__offerte button:hover { color: var(--ink); }
+/* afvinkvraag: "Volgende" blijft onderaan in beeld zolang de keuzes langer zijn dan het scherm (Clarity 27-28 okt: 2 van 2 zochten hem) */
+.bf.bf-lp .kgj-reken__stap .kgj-reken__verder:not(:disabled) { position: sticky; bottom: calc(12 * var(--u)); z-index: 2; box-shadow: 0 calc(10 * var(--u)) calc(24 * var(--u)) calc(-8 * var(--u)) rgba(17, 17, 17, .35); }
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken__samen { margin-top: 10px; gap: 6px; }
+  .bf.bf-lp .kgj-reken__samen-kop { font-size: 12px; }
+  .bf.bf-lp .kgj-reken__samen li { padding: 3px 9px; font-size: 13px; }
+  .bf.bf-lp .kgj-reken__samen-wijzig { font-size: 13px; }
+  .bf.bf-lp .kgj-reken__samen-wijzig svg { width: 12px; height: 12px; }
+  .bf.bf-lp .kgj-reken__offerte { margin-top: 12px; padding: 10px 12px; font-size: 14.5px; border-radius: 12px; }
+  .bf.bf-lp .kgj-reken__offerte button svg { width: 14px; height: 14px; }
+  .bf.bf-lp .kgj-reken__stap .kgj-reken__verder:not(:disabled) { bottom: calc(12px + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 1000px) {
+  /* gsm: de samenvatting als één doorlopende regel tekst, zodat de verzendknop in het scherm blijft (390x664) */
+  .bf.bf-lp .kgj-reken__samen { display: block; margin-top: 10px; font-size: 13.5px; line-height: 1.5; color: var(--ink); }
+  .bf.bf-lp .kgj-reken__samen-kop { display: inline; margin-right: 6px; }
+  .bf.bf-lp .kgj-reken__samen ul { display: inline; }
+  .bf.bf-lp .kgj-reken__samen li { display: inline; padding: 0; background: none; box-shadow: none; font-size: 13.5px; font-weight: 600; }
+  .bf.bf-lp .kgj-reken__samen li + li::before { content: ' · '; color: var(--tekst-2); font-weight: 400; }
+  .bf.bf-lp .kgj-reken__samen-wijzig { display: inline-flex; margin-left: 8px; padding: 0; vertical-align: baseline; }
+}
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken__samen { margin-top: 8px; font-size: 13px; line-height: 1.4; }
+  .bf.bf-lp .kgj-reken__samen li, .bf.bf-lp .kgj-reken__samen-wijzig { font-size: 13px; }
+  .bf.bf-lp .kgj-reken__samen + .kgj-reken__disclaimer { margin-top: 8px; gap: 4px; padding-top: 8px; padding-bottom: 8px; }
+}

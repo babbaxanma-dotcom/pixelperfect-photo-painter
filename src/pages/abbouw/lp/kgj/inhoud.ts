@@ -130,7 +130,10 @@ export type KgjInhoud = {
     /** Regel direct onder de verzendknop, na "★★★★★ 5,0 op Google ·" (bfbouw.be rk__knopzeker, 23 okt 2026). */
     zeker?: string;
     /** Vertrouwensrij, vinkjes en Google-badge als duidelijke tegels met iconen (alleen vorm, zelfde teksten en cijfers). */
-    badges?: boolean };
+    badges?: boolean;
+    /** 29 okt 2026, Mohammed: "weet u al wat de staat is van uw dak en wilt u een offerte aanvragen, klik dan hier". Onder de
+        keuzes van vraag 1: wie al weet wat er moet gebeuren, slaat de vragen over en vraagt meteen een offerte aan. */
+    offerte?: { vraag: string; knop: string; contactKop: string; verzend: string } };
   /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart.
       trustrij: rij onderaan de kaart met Google 5,0 + sterren en daarnaast deze cijfers (zoals bfbouw.be rk__trust). */
   rekenaar: { trustrij?: { b: string; s: string }[]; titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string; troeven?: string[];
@@ -294,7 +297,10 @@ export const DAKWERKEN: KgjInhoud = {
     contactKop: 'Bijna klaar! Bevestig uw gratis dakinspectie',
     /* De vinkjes en de trustrij van de rekenaarkaart die hier stond (13 okt). Alleen "Gratis & vrijblijvende richtprijs"
        werd "... dakinspectie": er is geen richtprijs meer, wel de gratis dakinspectie (kop van de kaart en van het slotblok). */
-    vertrouwen: ['Gratis & vrijblijvende dakinspectie', 'Vakmanschap tot in de details', '6% btw-tarief (woningen > 10 jaar)'],
+    /* 29 okt 2026, Mohammed: "doe gewoon meer badges als in, weet de exacte staat van uw dak". */
+    vertrouwen: ['Weet de exacte staat van uw dak', 'Gratis & vrijblijvende dakinspectie', 'Vakmanschap tot in de details', '6% btw-tarief (woningen > 10 jaar)'],
+    offerte: { vraag: 'Weet u al wat de staat is van uw dak en wilt u een offerte aanvragen?', knop: 'Klik dan hier',
+      contactKop: 'Bijna klaar! Vraag uw vrijblijvende offerte aan', verzend: 'Vrijblijvende offerte aanvragen' },
     /* 22 okt 2026, Mohammed (21 okt gevraagd, toen alleen op de renovatiepagina's gezet; 22 okt: "je hebt veel vergeten", "DIE FORMS",
        "die visuele dingetjes", "EN TIS ENKEL lp dakwerken en lp totaalrenovatie"): hetzelfde als op /lp/totaalrenovatie.
        Trust badges: tegels met iconen, zelfde teksten en cijfers; schild bij de garantie, kalender bij de jaren ervaring. */
