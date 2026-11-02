@@ -533,7 +533,18 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     /* 29 okt 2026, Mohammed: "meer badges" (dakwerken: "weet de exacte staat van uw dak"); hier zijn woorden van 22 okt: "weet waar u aan toe bent" ("weet exact wat er moet gebeuren" afgekeurd 29 okt: de bezoeker kiest zelf wat er moet gebeuren). */
     vertrouwen: ['Weet waar u aan toe bent', ...(TOTAALRENOVATIE_REKENAAR.rekenaar.vertrouwen ?? [])],
     offerte: { vraag: 'Weet u al wat er moet gebeuren en wilt u een offerte aanvragen?', knop: 'Klik dan hier',
-      contactKop: 'Bijna klaar! Vraag uw vrijblijvende offerte aan', verzend: 'Vrijblijvende offerte aanvragen' },
+      contactKop: 'Bijna klaar! Vraag uw vrijblijvende offerte aan', verzend: 'Vrijblijvende offerte aanvragen',
+      /* 30 okt 2026 (Mohammed: dropdowns, de belangrijkste vragen, dan optioneel extra): dezelfde keuzes als de klikvragen van deze kaart. */
+      stappen: [
+        { kop: 'Over uw woning', velden: [
+          { sleutel: 'Soort renovatie', label: 'Wat wilt u renoveren?', opties: ['De hele woning (totaalrenovatie)', 'Gedeeltelijke renovatie', 'Aanbouw', 'Specifieke werken'] },
+          { sleutel: 'Type woning', label: 'Type woning', opties: ['Appartement', 'Rijwoning', 'Halfopen bebouwing', 'Open bebouwing'] },
+          { sleutel: 'Oppervlakte', label: 'Oppervlakte van de woning (ongeveer)', opties: ['Kleiner dan 100 m²', '100 tot 150 m²', '150 tot 200 m²', 'Groter dan 200 m²', 'Weet ik niet'] },
+        ] },
+        { kop: 'Planning', velden: [
+          { sleutel: 'Start', label: 'Wanneer wilt u starten?', opties: ['Zo snel mogelijk', 'Binnen 6 maanden', 'Volgend jaar', 'Ik verken nog'] },
+        ], extra: { sleutel: 'Extra info', label: 'Extra info (optioneel)', hint: 'Bv. welke ruimtes of wat er precies moet gebeuren' } },
+      ] },
     /* 22 okt 2026, Mohammed: "en 6 vakdisciplines als trust badge bij abgroep landingspagina weg, bij die form", "dat is een rare
        trust badge". In de kaart blijven Google 5,0 en 16 jaar ervaring; de rekenaarpagina houdt haar trustrij. */
     trustrij: TOTAALRENOVATIE_REKENAAR.rekenaar.trustrij?.filter((c) => c.s !== 'vakdisciplines').map((c) => ({ ...c, icoon: 'kalender' as const })),

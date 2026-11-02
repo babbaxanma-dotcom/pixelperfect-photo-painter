@@ -34,6 +34,9 @@ export type AanvraagStand = {
   vraagToestemming: boolean;
   /** 29 okt 2026: de bezoeker koos "Klik dan hier" (offerte) en sloeg de vragen over. */
   offerte?: boolean;
+  /** 30 okt 2026: de stap binnen de offerte (keuzelijsten, Doorgaan) en de antwoorden daar; gelijk aan het aantal stappen = de contactstap. */
+  offerteStap?: number;
+  offerteAntw?: Record<string, string>;
 };
 
 export type GedeeldeAanvraag = {

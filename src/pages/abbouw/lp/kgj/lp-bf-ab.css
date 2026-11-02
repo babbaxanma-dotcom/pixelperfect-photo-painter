@@ -1020,6 +1020,14 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
   .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__groepnaam { margin-bottom: 3px; }
   .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__verder { margin-top: 10px; }
 }
+/* 30 okt 2026: contactstap op korte gsm-schermen (390 x 637): de regel onder de verzendknop viel 22 px onder het scherm (659 van 637).
+   Alleen tussenruimte en veldhoogte; velden blijven minstens 48 px hoog en de tekst 16 px (spec §13). */
+@media (max-width: 1000px) and (max-height: 700px) {
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__stap.kgj-reken__form label { margin-top: 8px; gap: 4px; }
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__stap.kgj-reken__form input:not([type="hidden"]) { height: 48px; }
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__stap.kgj-reken__form .kgj-reken__telveld input { height: 50px; }
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__knopzeker { margin-top: 6px; }
+}
 /* 26 okt 2026: privacyregel onder de trustsignalen (Aanvraag.tsx). */
 .bf.bf-lp .kgj-reken__privacy--na { display: block; margin-top: calc(12 * var(--u)); }
 
@@ -1102,4 +1110,24 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
 @media (max-width: 1000px) {
   .bf.bf-lp .kgj-reken__samen-wijzig { margin-left: 8px; }
   .bf.bf-lp .kgj-reken__samen-kop { display: inline; margin: 0 6px 0 0; }
+}
+
+/* Offertestappen (30 okt 2026, Mohammed: "verschillende vakken met waar mogelijk dropdown"): label boven het veld, native keuzelijst met
+   minstens 48 px tikhoogte, de melding direct onder het veld, zelfde velden als de contactstap. */
+.bf.bf-lp .kgj-reken__oveld { display: grid; gap: calc(6 * var(--u)); margin-top: calc(12 * var(--u)); }
+.bf.bf-lp .kgj-reken__oveld label { font-size: calc(15 * var(--u)); font-weight: 600; color: #111; }
+.bf.bf-lp .kgj-reken__oveld select, .bf.bf-lp .kgj-reken__oveld textarea { width: 100%; min-height: 48px; border: 1px solid #bdbdbd; border-radius: calc(10 * var(--u)); background: var(--wit); font: inherit; font-size: 16px; font-weight: 400; color: var(--ink); }
+.bf.bf-lp .kgj-reken__oveld select { height: calc(52 * var(--u)); padding: 0 calc(40 * var(--u)) 0 calc(14 * var(--u)); appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 18px; }
+.bf.bf-lp .kgj-reken__oveld textarea { height: calc(64 * var(--u)); padding: calc(10 * var(--u)) calc(14 * var(--u)); line-height: 1.4; resize: vertical; }
+.bf.bf-lp .kgj-reken__oveld textarea::placeholder { color: #6b6b6b; }
+.bf.bf-lp .kgj-reken__oveld :is(select, textarea):focus { outline: 2px solid var(--merk-tekst); outline-offset: 1px; border-color: var(--merk-tekst); }
+.bf.bf-lp .kgj-reken__oveld select[aria-invalid="true"] { border-color: #b3261e; border-width: 2px; }
+.bf.bf-lp .kgj-reken__ofout { margin: 0; font-size: max(14px, calc(14.5 * var(--u))); font-weight: 600; color: #8c1d18; }
+.bf.bf-lp .kgj-reken__ostap .kgj-reken__verder { margin-top: calc(16 * var(--u)); }
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken__oveld { margin-top: 10px; gap: 4px; }
+  .bf.bf-lp .kgj-reken__oveld label { font-size: 15px; }
+  .bf.bf-lp .kgj-reken__oveld select { height: 50px; }
+  .bf.bf-lp .kgj-reken__oveld textarea { height: 60px; }
+  .bf.bf-lp .kgj-reken__ostap .kgj-reken__verder { margin-top: 14px; }
 }

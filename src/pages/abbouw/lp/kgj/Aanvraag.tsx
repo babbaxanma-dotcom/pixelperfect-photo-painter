@@ -69,7 +69,6 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
 }) {
   const a = inhoud.aanvraag!;
   const t = inhoud.inspectie;
-  const VRAGEN = a.vragen;
   const navigate = useNavigate();
   /* Stap, antwoorden, vinkjes, naam, telefoonnummer, de foutmelding en "Bezig…" delen de kaart bovenaan en die onderaan
      (AanvraagStaat.tsx, 23 okt 2026): wie bovenaan begon en via "Plan uw gratis plaatsbezoek" onderaan landt, staat daar op
@@ -83,10 +82,19 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   levendRef.current = levend;
   const stand = bevroren ?? levend;
   const { stap, antwoorden, vinken, vraagToestemming, fout, bezig } = stand;
+  /* 30 okt 2026: een vraag met nietAls valt weg zodra een eerder antwoord erin staat (Isolatie bij stap 2 = geen "Wilt u ook isoleren?"). */
+  const VRAGEN = a.vragen.filter((v) => !v.nietAls || !Object.entries(v.nietAls).some(([k, l]) => l.includes(antwoorden[k])));
+  /* Offerte (30 okt 2026, Mohammed: "verschillende vakken met waar mogelijk dropdown is beste ... de meest belangrijke vragen en dan
+     optioneel extra"): eigen stappen met keuzelijsten en Doorgaan, daarna de contactstap. */
+  const OSTAPPEN = a.offerte?.stappen ?? [];
+  const offerte = Boolean(stand.offerte && a.offerte);
+  const oStap = stand.offerteStap ?? 0;
+  const oAntw = stand.offerteAntw ?? {};
+  const [oFout, setOFout] = useState<string[]>([]);
   const kaart = useRef<HTMLDivElement>(null);
   const balk = useRef<HTMLDivElement>(null);
   const telVeld = useRef<HTMLInputElement>(null);
-  const vorigeStap = useRef(levend.stap);
+  const vorigeStap = useRef('');
   const vorigeBalk = useRef(stap);
   /* Clarity per kaart: de verste stap die de bezoeker in DEZE kaart haalde (Terug telt niet). */
   const verste = useRef(levend.stap);
@@ -103,10 +111,12 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     if (s > verste.current) { verste.current = s; meldStap(s); }
   };
   const actiefHier = actief.current === plek || (actief.current === null && !onder);
-  const klaar = stap >= VRAGEN.length;
+  const klaar = offerte ? oStap >= OSTAPPEN.length : stap >= VRAGEN.length;
   /* De contactstap telt mee: "Stap 1 van 5" bij vier vragen. De balk staat bij het laden al op de eerste stap. */
-  const totaal = VRAGEN.length + 1;
-  const nu = Math.min(stap, VRAGEN.length) + 1;
+  const totaal = (offerte ? OSTAPPEN.length : VRAGEN.length) + 1;
+  const nu = (offerte ? Math.min(oStap, OSTAPPEN.length) : Math.min(stap, VRAGEN.length)) + 1;
+  /* Elke stapwissel, ook binnen de offerte: daarop scrollen, focussen en belonen de effecten hieronder. */
+  const stapSleutel = `${levend.offerte ? 'o' : 'v'}${levend.offerte ? levend.offerteStap ?? 0 : levend.stap}`;
 
   /* Het bevroren beeld van de kaart bovenaan: vastzetten zodra ze helemaal uit beeld is, loslaten zodra ze terug in beeld komt. */
   useEffect(() => {
@@ -130,8 +140,8 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
      schuift de pagina net genoeg omhoog zolang "Stap x van y" onder de vaste balk zichtbaar blijft; past de stap niet, dan staat
      "Stap x van y" direct onder de balk. Alleen de kaart die de bezoeker gebruikt, scrolt (de twee kaarten delen de stap). */
   useEffect(() => {
-    if (vorigeStap.current === levend.stap) return;
-    vorigeStap.current = levend.stap;
+    if (vorigeStap.current === stapSleutel) return;
+    vorigeStap.current = stapSleutel;
     if (actief.current !== plek) return;
     const el = kaart.current;
     if (!el) return;
@@ -144,6 +154,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     const kopTop = kop.getBoundingClientRect().top;
     /* onderkant van wat de bezoeker nu moet tikken: de keuzes, Volgende, of de verzendknop met de regel eronder */
     const doelen = [...el.querySelectorAll<HTMLElement>('.kgj-reken__stap :is(.kgj-reken__keuze, .kgj-reken__vink, .kgj-reken__verder, .kgj-reken__knop, .kgj-reken__knopzeker)')];
+    /* een offertestap focust zijn kop (geen veld: op de gsm zou het toetsenbord openspringen) */
     const onderkant = doelen.length ? Math.max(...doelen.map((d) => d.getBoundingClientRect().bottom)) : kopTop;
     const tekort = onderkant - (window.innerHeight - 12);
     const kopWeg = kopTop < balkH + 4;
@@ -151,7 +162,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     let naar = kopWeg ? el.getBoundingClientRect().top - boven : Math.min(tekort, kopTop - boven);
     if (kopWeg && tekort - naar > 0) naar = kopTop - boven;
     window.scrollTo({ top: window.scrollY + naar, behavior: gedrag });
-  }, [levend.stap, actief, plek]);
+  }, [stapSleutel, actief, plek]);
 
   /* Beloning bij elke gezette stap (bfbouw.be beloon(), Mohammed 10 okt: endowed progress + beloning per stap): een korte gloed
      en glans over de balk, alleen vooruit, nooit bij Terug, niet bij "minder beweging". */
@@ -219,14 +230,33 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     zet((s) => ({ ...s, aangetikt: true, antwoorden: { ...s.antwoorden, [v.sleutel]: antwoord }, stap: s.stap + 1 }));
   };
   const zetFout = (f: string | null) => zet((s) => ({ ...s, fout: f }));
-  /* Offerte (29 okt 2026): wie al weet wat er moet gebeuren, gaat meteen naar de contactstap. Terug brengt hem bij vraag 1. */
+  /* Offerte (29 okt 2026): wie al weet wat er moet gebeuren, slaat de klikvragen over. Sinds 30 okt eerst de offertestappen
+     (keuzelijsten + Doorgaan), dan de contactstap. Terug vanaf de eerste offertestap brengt hem bij vraag 1; de antwoorden blijven. */
   const naarOfferte = () => {
     gebruik();
     meldStart();
     meldClarity(`${clarityNaam}-offerte`);
-    zet((s) => ({ ...s, aangetikt: true, fout: null, offerte: true, stap: VRAGEN.length }));
+    setOFout([]);
+    zet((s) => ({ ...s, aangetikt: true, fout: null, offerte: true, offerteStap: 0, stap: VRAGEN.length }));
   };
-  const offerte = Boolean(stand.offerte && a.offerte);
+  const kiesOfferte = (sleutel: string, waarde: string) => {
+    gebruik();
+    if (waarde) setOFout((f) => f.filter((x) => x !== sleutel));
+    zet((s) => ({ ...s, aangetikt: true, offerteAntw: { ...(s.offerteAntw ?? {}), [sleutel]: waarde } }));
+  };
+  const doorgaan = () => {
+    const st = OSTAPPEN[oStap];
+    if (!st) return;
+    gebruik();
+    const open = st.velden.filter((v) => !oAntw[v.sleutel]).map((v) => v.sleutel);
+    setOFout(open);
+    if (open.length) {
+      kaart.current?.querySelector<HTMLElement>(`[data-oveld="${CSS.escape(open[0])}"]`)?.focus();
+      return;
+    }
+    meldClarity(`${clarityNaam}-offerte-${oStap + 2 > OSTAPPEN.length ? 'contact' : `stap-${oStap + 2}`}`);
+    zet((s) => ({ ...s, aangetikt: true, fout: null, offerteStap: (s.offerteStap ?? 0) + 1 }));
+  };
 
   const verstuur = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -254,7 +284,10 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
       gemeente: String(f.get('gemeente') || '').trim() || undefined,
       type_werk: inhoud.divisie,
       /* "Aanvraag gratis dakinspectie · Dak: Hellend dak · Werk: ..." (zelfde begin als Inspectie.tsx). */
-      aanvullende_info: (offerte ? ['Aanvraag offerte (weet al wat er moet gebeuren)']
+      /* Offerte: "Aanvraag offerte · Soort werk: Dak herstellen · Type dak: Plat dak · ... · Extra info: ..." (30 okt 2026: alles leesbaar in GHL). */
+      aanvullende_info: (offerte ? ['Aanvraag offerte (weet al wat er moet gebeuren)',
+        ...OSTAPPEN.flatMap((st) => [...st.velden.map((v) => v.sleutel), ...(st.extra ? [st.extra.sleutel] : [])])
+          .filter((k) => (oAntw[k] ?? '').trim()).map((k) => `${k}: ${oAntw[k].trim().replace(/\s+/g, ' ')}`)]
         : ['Aanvraag ' + (inhoud.cta.naam ?? inhoud.cta.kop).toLowerCase(),
           ...VRAGEN.filter((v) => antwoorden[v.sleutel]).map((v) => `${v.sleutel}: ${antwoorden[v.sleutel]}`)]).join(' · '),
       bron_lead: t.bronLead,
@@ -279,7 +312,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   /* Samenvatting boven de velden (29 okt 2026, Mohammed: "ja dit zeker"): de eigen antwoorden. Een kaal Ja/Nee krijgt het
      onderwerp erbij ("Isolatie: Ja"), anders zegt het niets. */
   const KAAL = /^(ja|nee|weet ik (nog )?niet)$/i;
-  const samen = offerte ? [] : VRAGEN.filter((v) => antwoorden[v.sleutel]).map((v) => (KAAL.test(antwoorden[v.sleutel]) ? `${v.sleutel}: ${antwoorden[v.sleutel]}` : antwoorden[v.sleutel]));
+  const samen = offerte ? OSTAPPEN.flatMap((st) => st.velden.map((v) => oAntw[v.sleutel])).filter(Boolean) : VRAGEN.filter((v) => antwoorden[v.sleutel]).map((v) => (KAAL.test(antwoorden[v.sleutel]) ? `${v.sleutel}: ${antwoorden[v.sleutel]}` : antwoorden[v.sleutel]));
 
   return (
     <div ref={kaart} className={`kgj-reken kgj-reken--aanvraag${onder ? ' kgj-reken--onder' : ''}${a.badges ? ' kgj-reken--badges' : ''}${stand.aangetikt && stap > 0 ? ' is-bezig' : ''}${klaar ? ' is-contact' : ''}`}>
@@ -302,14 +335,47 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
           {/* Uitgesproken door een schermlezer alleen in de kaart die de bezoeker gebruikt (de andere kaart verandert mee). */}
           <span className="kgj-reken__tel" aria-live={actiefHier ? 'polite' : 'off'}>Stap {nu} van {totaal}</span>
           {stap > 0 && (
-            <button type="button" className="kgj-reken__terug" onClick={() => { gebruik(); zet((s) => (s.offerte ? { ...s, aangetikt: true, fout: null, offerte: false, stap: 0 } : { ...s, aangetikt: true, fout: null, stap: Math.max(0, s.stap - 1) })); }}>‹ Terug</button>
+            <button type="button" className="kgj-reken__terug" onClick={() => { gebruik(); setOFout([]); zet((s) => (s.offerte
+              ? ((s.offerteStap ?? 0) > 0 ? { ...s, aangetikt: true, fout: null, offerteStap: (s.offerteStap ?? 0) - 1 } : { ...s, aangetikt: true, fout: null, offerte: false, stap: 0 })
+              : { ...s, aangetikt: true, fout: null, stap: Math.max(0, s.stap - 1) })); }}>‹ Terug</button>
           )}
         </div>
       )}
 
       {vraagToestemming ? (
         <Toestemming verder={naarBedankt} stil={!actiefHier} />
-      ) : !klaar && vraag.afvinken ? (() => {
+      ) : offerte && !klaar ? (() => {
+        /* Offertestap: label boven elk veld, native keuzelijst met "Maak een keuze", de melding direct onder het veld. */
+        const st = OSTAPPEN[oStap];
+        const id = (k: string) => `kgj-o-${plek}-${k.replace(/\W+/g, '-').toLowerCase()}`;
+        return (
+          <div className="kgj-reken__stap kgj-reken__ostap" key={`o${oStap}`}>
+            <p className="kgj-reken__vraag">{st.kop}</p>
+            {st.velden.map((v) => {
+              const mist = oFout.includes(v.sleutel);
+              return (
+                <div className="kgj-reken__oveld" key={v.sleutel}>
+                  <label htmlFor={id(v.sleutel)}>{v.label} *</label>
+                  <select id={id(v.sleutel)} data-oveld={v.sleutel} value={oAntw[v.sleutel] ?? ''} aria-required="true" aria-invalid={mist || undefined}
+                    aria-describedby={mist ? `${id(v.sleutel)}-fout` : undefined} onFocus={gebruik} onChange={(e) => kiesOfferte(v.sleutel, e.target.value)}>
+                    <option value="">Maak een keuze</option>
+                    {v.opties.map((o) => <option key={o} value={o}>{o}</option>)}
+                  </select>
+                  {mist && <p className="kgj-reken__ofout" id={`${id(v.sleutel)}-fout`} role={actiefHier ? 'alert' : undefined}>Kies een antwoord.</p>}
+                </div>
+              );
+            })}
+            {st.extra && (
+              <div className="kgj-reken__oveld">
+                <label htmlFor={id(st.extra.sleutel)}>{st.extra.label}</label>
+                <textarea id={id(st.extra.sleutel)} rows={2} placeholder={st.extra.hint} value={oAntw[st.extra.sleutel] ?? ''}
+                  onFocus={gebruik} onChange={(e) => kiesOfferte(st.extra!.sleutel, e.target.value)} />
+              </div>
+            )}
+            <button type="button" className="kgj-knop kgj-knop--vol kgj-reken__verder" onClick={doorgaan}>Doorgaan<ArrowRight aria-hidden="true" /></button>
+          </div>
+        );
+      })() : !klaar && vraag.afvinken ? (() => {
         const gekozen = vinken[vraag.sleutel] ?? [];
         const alles = gekozen.length === vraag.keuzes.length;
         return (
@@ -393,7 +459,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
             )}
             {samen.length > 0 && (
               <div className="kgj-reken__samen">
-                <button type="button" className="kgj-reken__samen-wijzig" onClick={() => { gebruik(); zet((s) => ({ ...s, aangetikt: true, fout: null, stap: 0 })); }}>
+                <button type="button" className="kgj-reken__samen-wijzig" onClick={() => { gebruik(); zet((s) => (s.offerte ? { ...s, aangetikt: true, fout: null, offerteStap: 0 } : { ...s, aangetikt: true, fout: null, stap: 0 })); }}>
                   <Pencil aria-hidden="true" />Wijzigen
                 </button>
                 <p className="kgj-reken__samen-tekst"><span className="kgj-reken__samen-kop">Uw aanvraag</span>{samen.join(' · ')}</p>

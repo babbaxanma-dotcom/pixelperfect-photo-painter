@@ -116,7 +116,7 @@ const DAK = {
   tegels: ['5,0', '10 jaar garantie', '15 jaar ervaring'],
   /* 21 okt, Mohammed woordelijk: "onze dakexpert ... neemt zo snel mogelijk contact met u op" */
   onder: 'Onze dakexpert neemt zo snel mogelijk contact met u op.',
-  vinkjes: ['Gratis & vrijblijvende dakinspectie', 'Vakmanschap tot in de details', '6% btw-tarief (woningen > 10 jaar)'],
+  vinkjes: ['Weet de exacte staat van uw dak', 'Gratis & vrijblijvende dakinspectie', 'Vakmanschap tot in de details', '6% btw-tarief (woningen > 10 jaar)'],
 };
 const RENO = (pad) => ({
   pad, soort: 'reno', kop: 'Jouw complete renovatie, perfect geregeld van A tot Z.', woord: 'gratis plaatsbezoek',
@@ -129,7 +129,7 @@ const RENO = (pad) => ({
   /* 22 okt 2026: "6 vakdisciplines ... weg, bij die form", "dat is een rare trust badge" */
   tegels: ['5,0', '16 jaar ervaring'],
   onder: 'Wij nemen zo snel mogelijk contact met u op.',
-  vinkjes: ['Vaste prijs vooraf', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details'], // 22 okt 2026: geen budgetgarantie meer
+  vinkjes: ['Weet waar u aan toe bent', 'Vaste prijs vooraf', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details'], // 22 okt 2026: geen budgetgarantie meer
 });
 const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiewerken')];
 

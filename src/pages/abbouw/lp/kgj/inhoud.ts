@@ -54,6 +54,8 @@ export type Keuze = { label: string; uitleg?: string; foto?: string; icoon?: Ico
 export type Vraag = {
   sleutel: string; vraag: string; keuzes: Keuze[];
   als?: Record<string, string[]>;
+  /** Aanvraagkaart (Aanvraag.tsx, 30 okt 2026): de vraag valt weg zodra een eerdere vraag één van deze antwoorden kreeg. */
+  nietAls?: Record<string, string[]>;
   tip?: { bij: string[]; tekst: string };
   /** Op een telefoon twee tegels naast elkaar in plaats van één kolom (alleen voor korte labels). */
   raster?: boolean;
@@ -67,6 +69,8 @@ export type Vraag = {
       hij er twee keer. */
   punt?: string;
 };
+/** Eén stap van de offerte (Aanvraag.tsx): keuzelijsten en eventueel een optioneel tekstvak. */
+export type OfferteStap = { kop: string; velden: { sleutel: string; label: string; opties: string[] }[]; extra?: { sleutel: string; label: string; hint: string } };
 export type Foto = { src: string; alt: string };
 export type Review = { tekst: string; naam: string; bron: string };
 
@@ -133,7 +137,11 @@ export type KgjInhoud = {
     badges?: boolean;
     /** 29 okt 2026, Mohammed: "weet u al wat de staat is van uw dak en wilt u een offerte aanvragen, klik dan hier". Onder de
         keuzes van vraag 1: wie al weet wat er moet gebeuren, slaat de vragen over en vraagt meteen een offerte aan. */
-    offerte?: { vraag: string; knop: string; contactKop: string; verzend: string } };
+    offerte?: { vraag: string; knop: string; contactKop: string; verzend: string;
+      /** 30 okt 2026, Mohammed: "verschillende vakken met waar mogelijk dropdown is beste, dat zorgt voor makkelijkheid, en de meest
+          belangrijke vragen en dan optioneel extra": per stap een paar keuzelijsten (verplicht) en eventueel het tekstvak Extra info
+          (optioneel), met Doorgaan; daarna de contactstap. De sleutel staat zo in aanvullende_info ("Soort werk: Dak herstellen"). */
+      stappen?: OfferteStap[] } };
   /** titel + tijd: kop van de calculator boven de voortgang; zeker: de regel onderaan de kaart.
       trustrij: rij onderaan de kaart met Google 5,0 + sterren en daarnaast deze cijfers (zoals bfbouw.be rk__trust). */
   rekenaar: { trustrij?: { b: string; s: string }[]; titel: string; tijd: string; zeker: string; vragen: Vraag[]; gerust: string; uitkomstKop: string; uitkomstOnder: string; knop: string; troeven?: string[];
@@ -279,8 +287,11 @@ export const DAKWERKEN: KgjInhoud = {
       { sleutel: 'Werk', vraag: 'Wat moet er aan uw dak gebeuren?', keuzes: [
         { label: 'Dakrenovatie / Nieuw dak', icoon: 'dienst-nieuw' }, { label: 'Herstelling', icoon: 'herstel' },
         { label: 'Ik wil dat een expert mijn dak inspecteert', icoon: 'verken' },
+        /* 30 okt 2026, Mohammed: "doe dan aub in stap 2 optie toevoegen Isolatie", "wat ik je zeg ook voor ab he". */
+        { label: 'Isolatie', icoon: 'isolatie' },
       ] },
-      { sleutel: 'Isolatie', vraag: 'Wilt u ook isoleren?', keuzes: [
+      /* Wie bij stap 2 Isolatie koos, krijgt deze vraag niet. */
+      { sleutel: 'Isolatie', vraag: 'Wilt u ook isoleren?', nietAls: { Werk: ['Isolatie'] }, keuzes: [
         { label: 'Ja', icoon: 'isolatie' }, { label: 'Nee', icoon: 'geenisolatie' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
       ] },
       { sleutel: 'Asbest', vraag: 'Zit er asbest in uw dak?', keuzes: [
@@ -300,7 +311,18 @@ export const DAKWERKEN: KgjInhoud = {
     /* 29 okt 2026, Mohammed: "doe gewoon meer badges als in, weet de exacte staat van uw dak". */
     vertrouwen: ['Weet de exacte staat van uw dak', 'Gratis & vrijblijvende dakinspectie', 'Vakmanschap tot in de details', '6% btw-tarief (woningen > 10 jaar)'],
     offerte: { vraag: 'Weet u al wat de staat is van uw dak en wilt u een offerte aanvragen?', knop: 'Klik dan hier',
-      contactKop: 'Bijna klaar! Vraag uw vrijblijvende offerte aan', verzend: 'Vrijblijvende offerte aanvragen' },
+      contactKop: 'Bijna klaar! Vraag uw vrijblijvende offerte aan', verzend: 'Vrijblijvende offerte aanvragen',
+      stappen: [
+        { kop: 'Over uw dak', velden: [
+          { sleutel: 'Soort werk', label: 'Wat moet er gebeuren?', opties: ['Dak vernieuwen', 'Dak herstellen', 'Isolatie', 'Asbest verwijderen', 'Stormschade', 'Iets anders'] },
+          { sleutel: 'Type dak', label: 'Type dak', opties: ['Hellend dak', 'Plat dak'] },
+          { sleutel: 'Huidige dakbedekking', label: 'Wat ligt er nu op het dak?', opties: ['Dakpannen', 'Leien', 'Roofing of EPDM', 'Asbest of golfplaten', 'Weet ik niet'] },
+        ] },
+        { kop: 'Planning', velden: [
+          { sleutel: 'Oppervlakte', label: 'Oppervlakte van het dak (ongeveer)', opties: ['Minder dan 50 m²', '50 tot 100 m²', '100 tot 150 m²', 'Meer dan 150 m²', 'Weet ik niet'] },
+          { sleutel: 'Start', label: 'Wanneer wilt u starten?', opties: ['Zo snel mogelijk', 'Binnen 3 maanden', 'Later'] },
+        ], extra: { sleutel: 'Extra info', label: 'Extra info (optioneel)', hint: 'Bv. waar het lekt of wat u precies wilt' } },
+      ] },
     /* 22 okt 2026, Mohammed (21 okt gevraagd, toen alleen op de renovatiepagina's gezet; 22 okt: "je hebt veel vergeten", "DIE FORMS",
        "die visuele dingetjes", "EN TIS ENKEL lp dakwerken en lp totaalrenovatie"): hetzelfde als op /lp/totaalrenovatie.
        Trust badges: tegels met iconen, zelfde teksten en cijfers; schild bij de garantie, kalender bij de jaren ervaring. */
