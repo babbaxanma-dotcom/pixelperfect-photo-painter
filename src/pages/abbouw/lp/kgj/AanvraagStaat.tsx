@@ -53,7 +53,11 @@ export type GedeeldeAanvraag = {
 export function beginStand(inhoud: KgjInhoud, voor?: { sleutel: string; label: string }): AanvraagStand {
   const vragen = inhoud.aanvraag?.vragen ?? [];
   const vooraf = voor && vragen[0]?.sleutel === voor.sleutel && vragen[0].keuzes.some((k) => k.label === voor.label) ? voor : undefined;
-  return { stap: vooraf ? 1 : 0, antwoorden: vooraf ? { [vooraf.sleutel]: vooraf.label } : {}, vinken: {}, naam: '', telefoon: '',
+  /* 2 nov 2026 (/lp/dakwerken/asbest): een latere vraag kan ook vooraf beantwoord zijn (Asbest = Ja). Het antwoord staat dan meteen in de
+     aanvraag; de vraag zelf valt weg via haar nietAls in het inhoudsobject. De kaart begint gewoon bij vraag 1. */
+  const later = !vooraf && voor && vragen.some((v, i) => i > 0 && v.sleutel === voor.sleutel && v.keuzes.some((k) => k.label === voor.label)) ? voor : undefined;
+  const antwoord = vooraf ?? later;
+  return { stap: vooraf ? 1 : 0, antwoorden: antwoord ? { [antwoord.sleutel]: antwoord.label } : {}, vinken: {}, naam: '', telefoon: '',
     aangetikt: false, fout: null, bezig: false, vraagToestemming: false };
 }
 

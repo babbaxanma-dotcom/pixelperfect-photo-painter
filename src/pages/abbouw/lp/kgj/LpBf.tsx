@@ -760,7 +760,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
 
   /* De kaart bovenaan en die onderaan delen één stand (AanvraagStaat.tsx, 23 okt 2026); de zoekterm kan vraag 1 al beantwoorden. */
   return (
-    <AanvraagStaat begin={() => beginStand(inhoud, match?.voor)}>
+    <AanvraagStaat begin={() => beginStand(inhoud, (match?.voor ?? inhoud.voorAf))}>
     <div className={`bf bf-lp bf-lp--${inhoud.bedanktSlug}${inhoud.strak ? ' bf-lp--strak' : ''}${heroAanvraag && inhoud.aanvraag?.badges ? ' bf-lp--badges' : ''}`} ref={vat}>
       <header className={`bf-kop bf-kop--over bf-kop--lp kgj-kop${gescrold ? ' bf-is-gescrold' : ''}${inhoud.topbalk ? ' bf-kop--topbalk' : ''}`} id="kop">
         {/* Totaalrenovatie (5 okt): smalle balk met het telefoonnummer, hoort bij de vaste kop. */}
@@ -842,7 +842,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                  die hier stond. Het anker blijft #rekenaar: de sitelinks "Bereken uw dakprijs" en "Bereken uw renovatieprijs"
                  (ads/dakwerken en ads/totaalrenovatie) wijzen er nog naar; zo landen ze op de kaart in plaats van op niets. */
               <div id="rekenaar" className="bf-lphero__reken bf-lphero__aanvraag">
-                <Aanvraag inhoud={inhoud} voor={match?.voor} boven={inhoud.aanvraag?.vrijMoment ? <VrijMoment ruimte /> : undefined} />
+                <Aanvraag inhoud={inhoud} voor={(match?.voor ?? inhoud.voorAf)} boven={inhoud.aanvraag?.vrijMoment ? <VrijMoment ruimte /> : undefined} />
                 {/* Telefoon: de vinkjes onder de kaart (zoals bij de rekenaar); op de computer staan ze in de kaart. Met badges
                     (renovatiepagina's, 22 okt 2026) heeft elk punt een herkenbaar icoon in plaats van een vinkje. */}
                 {vertrouwen.length > 0 && (
@@ -859,7 +859,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             )}
             {heroReken && (
               <div id="rekenaar" className="bf-lphero__reken">
-                <Rekenaar inhoud={inhoud} plek="hero" voor={match?.voor} />
+                <Rekenaar inhoud={inhoud} plek="hero" voor={(match?.voor ?? inhoud.voorAf)} />
                 {/* Telefoon: de vinkjes onder de kaart (4 okt, plan mobiele hero); op de computer staan ze in de kaart. */}
                 {vertrouwen.length > 0 && (
                   <div className="bf-lphero__gerust">

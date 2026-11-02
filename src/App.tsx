@@ -40,6 +40,7 @@ const LpBadkamer = lazy(() => import("./pages/abbouw/lp/replica/LpBadkamer"));
 const LpKgj = lazy(() => import("./pages/abbouw/lp/kgj/LpKgj"));
 // /lp/dakwerken in de stijl van bfbouw.be (spec/bf-stijl.md §17); terugval = LpKgj (één regel hieronder terugzetten)
 const LpBf = lazy(() => import("./pages/abbouw/lp/kgj/LpBf"));
+const LpBfAsbest = lazy(() => import("./pages/abbouw/lp/kgj/LpBfAsbest"));
 // /lp/totaalrenovatie, /lp/aannemer-renovatiewerken en /lp/richtprijs-berekenen: hun eigen bestand rendert LpBf met hun
 // inhoudsobject (12 okt 2026, spec §17); terugval = in dat bestand LpBf weer LpKgj maken (één regel per pagina)
 const LpTotaalrenovatie = lazy(() => import("./pages/abbouw/lp/kgj/LpTotaalrenovatie"));
@@ -121,6 +122,8 @@ const App = () => {
               een betaalde klik op een 404 is weggegooid geld. Zijn de advertenties
               omgezet naar de nieuwe bestemming, dan kunnen deze regels weg. */}
           <Route path="/lp/dakwerken" element={<LpBf />} />
+          {/* 2 nov 2026, Mohammed: "die aparte sublp voor asbest" (zoals bfbouw.be /lp/dakwerken/asbest/) */}
+          <Route path="/lp/dakwerken/asbest" element={<LpBfAsbest />} />
           <Route path="/lp/gevel" element={<Navigate to="/gevel" replace />} />
           <Route path="/lp/velux" element={<Navigate to="/dakwerken" replace />} />
           <Route path="/lp/gevelreiniging" element={<Navigate to="/gevel" replace />} />

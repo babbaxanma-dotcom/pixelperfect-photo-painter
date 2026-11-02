@@ -84,6 +84,9 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   const { stap, antwoorden, vinken, vraagToestemming, fout, bezig } = stand;
   /* 30 okt 2026: een vraag met nietAls valt weg zodra een eerder antwoord erin staat (Isolatie bij stap 2 = geen "Wilt u ook isoleren?"). */
   const VRAGEN = a.vragen.filter((v) => !v.nietAls || !Object.entries(v.nietAls).some(([k, l]) => l.includes(antwoorden[k])));
+  /* 2 nov 2026 (/lp/dakwerken/asbest): wat in de aanvraag en de samenvatting staat = de beantwoorde vragen die de bezoeker zag, plus
+     een vraag die de pagina vooraf beantwoordde (voor, bv. Asbest: Ja), in de volgorde van de kaart. */
+  const BEANTWOORD = a.vragen.filter((v) => antwoorden[v.sleutel] && (VRAGEN.includes(v) || v.sleutel === voor?.sleutel));
   /* Offerte (30 okt 2026, Mohammed: "verschillende vakken met waar mogelijk dropdown is beste ... de meest belangrijke vragen en dan
      optioneel extra"): eigen stappen met keuzelijsten en Doorgaan, daarna de contactstap. */
   const OSTAPPEN = a.offerte?.stappen ?? [];
@@ -298,7 +301,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
         ...OSTAPPEN.flatMap((st) => [...st.velden.map((v) => v.sleutel), ...(st.extra ? [st.extra.sleutel] : [])])
           .filter((k) => (oAntw[k] ?? '').trim()).map((k) => `${k}: ${oAntw[k].trim().replace(/\s+/g, ' ')}`)]
         : ['Aanvraag ' + (inhoud.cta.naam ?? inhoud.cta.kop).toLowerCase(),
-          ...VRAGEN.filter((v) => antwoorden[v.sleutel]).map((v) => `${v.sleutel}: ${antwoorden[v.sleutel]}`)]).join(' · '),
+          ...BEANTWOORD.map((v) => `${v.sleutel}: ${antwoorden[v.sleutel]}`)]).join(' · '),
       bron_lead: t.bronLead,
     });
     if (!res.ok) { verstuurt.current = false; zet((s) => ({ ...s, bezig: false, fout: leadFoutmelding(res, CONTACT.phone.display) })); return; }
@@ -322,7 +325,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   /* Samenvatting boven de velden (29 okt 2026, Mohammed: "ja dit zeker"): de eigen antwoorden. Een kaal Ja/Nee krijgt het
      onderwerp erbij ("Isolatie: Ja"), anders zegt het niets. */
   const KAAL = /^(ja|nee|weet ik (nog )?niet)$/i;
-  const samen = offerte ? OSTAPPEN.flatMap((st) => st.velden.map((v) => oAntw[v.sleutel])).filter(Boolean) : VRAGEN.filter((v) => antwoorden[v.sleutel]).map((v) => (KAAL.test(antwoorden[v.sleutel]) ? `${v.sleutel}: ${antwoorden[v.sleutel]}` : antwoorden[v.sleutel]));
+  const samen = offerte ? OSTAPPEN.flatMap((st) => st.velden.map((v) => oAntw[v.sleutel])).filter(Boolean) : BEANTWOORD.map((v) => (KAAL.test(antwoorden[v.sleutel]) ? `${v.sleutel}: ${antwoorden[v.sleutel]}` : antwoorden[v.sleutel]));
 
   return (
     <div ref={kaart} className={`kgj-reken kgj-reken--aanvraag${onder ? ' kgj-reken--onder' : ''}${a.badges ? ' kgj-reken--badges' : ''}${stand.aangetikt && stap > 0 ? ' is-bezig' : ''}${klaar ? ' is-contact' : ''}`}>

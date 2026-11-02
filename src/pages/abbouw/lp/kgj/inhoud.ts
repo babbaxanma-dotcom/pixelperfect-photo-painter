@@ -211,6 +211,8 @@ export type KgjInhoud = {
       die past bij wat hij zocht. `zoek` is een regex, apart getoetst op dienst=, dak= en utm_term;
       voor de kop wint die volgorde (LpKgj.tsx). `voor` beantwoordt vraag 1 al (Terug blijft werken). */
   boodschap?: { zoek: string; kop: string; voor?: { sleutel: string; label: string } }[];
+  /** Vraag die op deze pagina altijd al beantwoord is (sub-LP, bv. /lp/dakwerken/asbest: Asbest = Ja), als er geen message match is. */
+  voorAf?: { sleutel: string; label: string };
 };
 
 /* De kop van /lp/dakwerken (2 nov 2026, zoals bfbouw.be 31 okt). Tussen [ ] = accentkleur. */
@@ -698,4 +700,26 @@ export const DAKWERKEN: KgjInhoud = {
     { zoek: 'dak.*renov|^renovatie$', kop: DAK_KOP },
     { zoek: 'dak.*(nieuw|vervang)|(nieuw|vervang).*dak', kop: DAK_KOP },
   ],
+};
+
+/* /lp/dakwerken/asbest (2 nov 2026, Mohammed: "en dan die aparte sublp voor asbest"; zoals bfbouw.be /lp/dakwerken/asbest/ van
+   30-31 okt): de dakpagina met een eigen kop en subkop voor wie op een asbest-zoekwoord klikt, en de asbestvraag vooraf op Ja (een
+   stap minder). Kop woordelijk de BF-kop van 31 okt ("De specialist voor uw asbestdak"). Subkop in de vorm van de BF-subkop, zonder
+   "onze ploeg haalt eraf": wie het asbest verwijdert, staat voor AB niet in een bron. Bron in GHL lp:dakwerken-asbest:offerte (W01b
+   standaard-sms); bedankpagina en conversietags die van /lp/dakwerken. */
+export const DAKWERKEN_ASBEST: KgjInhoud = {
+  ...DAKWERKEN,
+  titel: 'De specialist voor uw asbestdak | AB Bouw Groep',
+  omschrijving: 'Uw asbestdak vervangen door een nieuw dak. Vraag uw gratis offerte aan bij AB Bouw Groep, werken aan 6% btw.',
+  hero: {
+    ...DAKWERKEN.hero,
+    kop: 'De specialist voor [uw asbestdak]',
+    onder: 'Wij vervangen uw asbestdak door een nieuw dak, vraag nu uw gratis offerte aan.',
+  },
+  inspectie: { ...DAKWERKEN.inspectie, bronLead: 'lp:dakwerken-asbest:offerte' },
+  /* de asbestvraag valt weg: haar antwoord (Ja) staat vooraf in de aanvraag (voorAf + beginStand) */
+  aanvraag: DAKWERKEN.aanvraag && { ...DAKWERKEN.aanvraag,
+    vragen: DAKWERKEN.aanvraag.vragen.map((v) => (v.sleutel === 'Asbest' ? { ...v, nietAls: { ...(v.nietAls ?? {}), Asbest: ['Ja'] } } : v)) },
+  boodschap: undefined,
+  voorAf: { sleutel: 'Asbest', label: 'Ja' },
 };
