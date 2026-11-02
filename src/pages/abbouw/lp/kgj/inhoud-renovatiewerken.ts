@@ -65,5 +65,6 @@ export const RENOVATIEWERKEN: KgjInhoud = {
 
   /* Zelfde formulier, eigen bron: in het CRM staat van welke pagina de lead komt
      ("De CRM-Hack" in de blauwdruk). */
-  inspectie: { ...TOTAALRENOVATIE.inspectie, bronLead: 'lp:aannemer-renovatiewerken:inspectie' },
+  /* 2 nov 2026: :offerte, zoals /lp/totaalrenovatie (offerte i.p.v. plaatsbezoek). */
+  inspectie: { ...TOTAALRENOVATIE.inspectie, bronLead: 'lp:aannemer-renovatiewerken:offerte' },
 };

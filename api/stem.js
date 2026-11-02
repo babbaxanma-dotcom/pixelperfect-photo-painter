@@ -114,7 +114,10 @@ async function bel(body) {
      richtprijs gevraagd; formulier = de inspectie of het bezoek zelf gevraagd. AI Act art. 50: meteen zeggen dat het
      een digitale assistent is. */
   const voornaam = (contact.firstName || '').trim();
-  const aanvraag = veld(contact, VELD.bronDetail).includes(':rekenaar') ? `een richtprijs voor ${s.onderwerp}` : `een ${s.soort}`;
+  /* 2 nov 2026: de adpagina's vragen nu een offerte aan (bron ...:offerte, zoals bfbouw.be 31 okt); de dakinspectie of het
+     plaatsbezoek is dan de volgende stap die de assistent inplant. */
+  const bron = veld(contact, VELD.bronDetail);
+  const aanvraag = bron.includes(':rekenaar') ? `een richtprijs voor ${s.onderwerp}` : bron.includes(':offerte') ? `een offerte voor ${s.onderwerp}` : `een ${s.soort}`;
   /* Opening = dictaat Mohammed 14 okt: "Goeiedag, spreek ik met ...". De assistent zegt in zijn volgende beurt dat hij de
      digitale assistent van AB is (prompt, stap 2). Zonder voornaam meteen voorstellen. */
   const eersteZin = voornaam ? `Goeiedag, spreek ik met ${voornaam}?` : 'Goeiedag, met de digitale assistent van AB Bouw Groep. Ik bel even over uw aanvraag van daarnet.';

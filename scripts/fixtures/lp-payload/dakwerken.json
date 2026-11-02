@@ -14,13 +14,15 @@
         "Dakrenovatie / Nieuw dak",
         "Ja",
         "Nee",
+        "50 tot 100 m²",
         "Zo snel mogelijk"
       ],
       "velden": {
         "naam": "Test Kaart",
-        "telefoon": "0400 00 00 00"
+        "telefoon": "0400 00 00 00",
+        "email": "test@kaart.be"
       },
-      "formStart": "lp:dakwerken:inspectie:hero",
+      "formStart": "lp:dakwerken:offerte:hero",
       "toestemming": true,
       "bedankt": "/bedankt/dakwerken",
       "fouten": {
@@ -32,12 +34,13 @@
         "firstName": "Test",
         "lastName": "Kaart",
         "name": "Test Kaart",
+        "email": "test@kaart.be",
         "phone": "0400 00 00 00",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Hellend dak · Werk: Dakrenovatie / Nieuw dak · Isolatie: Ja · Asbest: Nee · Start: Zo snel mogelijk",
+        "aanvullende_info": "Aanvraag gratis offerte · Dak: Hellend dak · Werk: Dakrenovatie / Nieuw dak · Isolatie: Ja · Asbest: Nee · Oppervlakte: 50 tot 100 m² · Start: Zo snel mogelijk",
         "bron_lead": "Google Ads",
-        "bron_lead_detail": "lp:dakwerken:inspectie",
+        "bron_lead_detail": "lp:dakwerken:offerte",
         "page_path": "/lp/dakwerken",
         "landing_division": "ab_dakwerken",
         "source": "landing_page",
@@ -55,12 +58,13 @@
         "firstName": "Test",
         "lastName": "Kaart",
         "name": "Test Kaart",
+        "email": "test@kaart.be",
         "phone": "0400 00 00 00",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Hellend dak · Werk: Dakrenovatie / Nieuw dak · Isolatie: Ja · Asbest: Nee · Start: Zo snel mogelijk",
+        "aanvullende_info": "Aanvraag gratis offerte · Dak: Hellend dak · Werk: Dakrenovatie / Nieuw dak · Isolatie: Ja · Asbest: Nee · Oppervlakte: 50 tot 100 m² · Start: Zo snel mogelijk",
         "bron_lead": "Google Ads",
-        "bron_lead_detail": "lp:dakwerken:inspectie",
+        "bron_lead_detail": "lp:dakwerken:offerte",
         "page_path": "/lp/dakwerken",
         "landing_division": "ab_dakwerken",
         "source": "landing_page",
@@ -70,7 +74,7 @@
         "utm_term": "dak vernieuwen",
         "gclid": "TEST-KAART"
       },
-      "metingInUitFlows": "19 okt 2026: aanvraagkaart bovenaan (Aanvraag.tsx). Verwacht = de payload van het formulier onderaan (Inspectie.tsx, zelfde bron_lead lp:dakwerken:inspectie) met de antwoorden van de klikvragen in aanvullende_info; veldvolgorde van leads.ts buildBody. 22 okt 2026 (Mohammed: \"EN TIS ENKEL lp dakwerken en lp totaalrenovatie\", de formulierwijzigingen van 21 okt ook op dak): vijfde klikvraag Start (\"Wanneer wilt u beginnen?\"), contactstap alleen Naam* en Gsm*, dus zonder email, postalCode en adres_project; onderaan dezelfde klikkaart (Aanvraag.tsx plek=\"onder\") met het form_start-label en bron_lead_detail van het oude formulier (lp:dakwerken:inspectie, zonder :hero)."
+      "metingInUitFlows": "19 okt 2026: aanvraagkaart bovenaan (Aanvraag.tsx). Verwacht = de payload van het formulier onderaan (Inspectie.tsx, zelfde bron_lead lp:dakwerken:inspectie) met de antwoorden van de klikvragen in aanvullende_info; veldvolgorde van leads.ts buildBody. 22 okt 2026 (Mohammed: \"EN TIS ENKEL lp dakwerken en lp totaalrenovatie\", de formulierwijzigingen van 21 okt ook op dak): vijfde klikvraag Start (\"Wanneer wilt u beginnen?\"), contactstap alleen Naam* en Gsm*, dus zonder email, postalCode en adres_project; onderaan dezelfde klikkaart (Aanvraag.tsx plek=\"onder\") met het form_start-label en bron_lead_detail van het oude formulier (lp:dakwerken:inspectie, zonder :hero). 2 nov 2026 (omvormen zoals bfbouw.be 31 okt, opdracht Mohammed \"landingspaginas van ab omvormen ... nu ab\"): offerte i.p.v. dakinspectie/plaatsbezoek, bron_lead_detail :offerte (GHL W01b standaard-sms), \"Aanvraag gratis offerte\", E-mailadres* op de contactstap, dakvragen zoals bfbouw.be (Isolatie en Weet ik nog niet bij stap 2, Oppervlakte, Start \"Wanneer wilt u starten?\")."
     },
     {
       "naam": "aanvraag-match-plat",
@@ -82,13 +86,15 @@
         "Herstelling",
         "Weet ik nog niet",
         "Weet ik niet",
-        "Ik verken nog"
+        "Weet ik niet",
+        "Later"
       ],
       "velden": {
         "naam": "Test Kaart",
-        "telefoon": "0400 00 00 02"
+        "telefoon": "0400 00 00 02",
+        "email": "test@kaart.be"
       },
-      "formStart": "lp:dakwerken:inspectie:hero",
+      "formStart": "lp:dakwerken:offerte:hero",
       "toestemming": false,
       "bedankt": "/bedankt/dakwerken",
       "fouten": {
@@ -100,12 +106,13 @@
         "firstName": "Test",
         "lastName": "Kaart",
         "name": "Test Kaart",
+        "email": "test@kaart.be",
         "phone": "0400 00 00 02",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Plat dak · Werk: Herstelling · Isolatie: Weet ik nog niet · Asbest: Weet ik niet · Start: Ik verken nog",
+        "aanvullende_info": "Aanvraag gratis offerte · Dak: Plat dak · Werk: Herstelling · Isolatie: Weet ik nog niet · Asbest: Weet ik niet · Oppervlakte: Weet ik niet · Start: Later",
         "bron_lead": "Website",
-        "bron_lead_detail": "lp:dakwerken:inspectie",
+        "bron_lead_detail": "lp:dakwerken:offerte",
         "page_path": "/lp/dakwerken",
         "landing_division": "ab_dakwerken",
         "source": "landing_page",
@@ -119,18 +126,19 @@
         "firstName": "Test",
         "lastName": "Kaart",
         "name": "Test Kaart",
+        "email": "test@kaart.be",
         "phone": "0400 00 00 02",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Plat dak · Werk: Herstelling · Isolatie: Weet ik nog niet · Asbest: Weet ik niet · Start: Ik verken nog",
+        "aanvullende_info": "Aanvraag gratis offerte · Dak: Plat dak · Werk: Herstelling · Isolatie: Weet ik nog niet · Asbest: Weet ik niet · Oppervlakte: Weet ik niet · Start: Later",
         "bron_lead": "Website",
-        "bron_lead_detail": "lp:dakwerken:inspectie",
+        "bron_lead_detail": "lp:dakwerken:offerte",
         "page_path": "/lp/dakwerken",
         "landing_division": "ab_dakwerken",
         "source": "landing_page",
         "utm_term": "plat dak renoveren"
       },
-      "metingInUitFlows": "19 okt 2026: aanvraagkaart bovenaan (Aanvraag.tsx). Verwacht = de payload van het formulier onderaan (Inspectie.tsx, zelfde bron_lead lp:dakwerken:inspectie) met de antwoorden van de klikvragen in aanvullende_info; veldvolgorde van leads.ts buildBody. 20 okt 2026: de naam is op de aanvraagkaart verplicht (Vul uw naam in.); deze flow typt dus ook een naam, en leads.ts splitst die in firstName + lastName. 22 okt 2026 (Mohammed: \"EN TIS ENKEL lp dakwerken en lp totaalrenovatie\", de formulierwijzigingen van 21 okt ook op dak): vijfde klikvraag Start (\"Wanneer wilt u beginnen?\"), contactstap alleen Naam* en Gsm*, dus zonder email, postalCode en adres_project; onderaan dezelfde klikkaart (Aanvraag.tsx plek=\"onder\") met het form_start-label en bron_lead_detail van het oude formulier (lp:dakwerken:inspectie, zonder :hero)."
+      "metingInUitFlows": "19 okt 2026: aanvraagkaart bovenaan (Aanvraag.tsx). Verwacht = de payload van het formulier onderaan (Inspectie.tsx, zelfde bron_lead lp:dakwerken:inspectie) met de antwoorden van de klikvragen in aanvullende_info; veldvolgorde van leads.ts buildBody. 20 okt 2026: de naam is op de aanvraagkaart verplicht (Vul uw naam in.); deze flow typt dus ook een naam, en leads.ts splitst die in firstName + lastName. 22 okt 2026 (Mohammed: \"EN TIS ENKEL lp dakwerken en lp totaalrenovatie\", de formulierwijzigingen van 21 okt ook op dak): vijfde klikvraag Start (\"Wanneer wilt u beginnen?\"), contactstap alleen Naam* en Gsm*, dus zonder email, postalCode en adres_project; onderaan dezelfde klikkaart (Aanvraag.tsx plek=\"onder\") met het form_start-label en bron_lead_detail van het oude formulier (lp:dakwerken:inspectie, zonder :hero). 2 nov 2026 (omvormen zoals bfbouw.be 31 okt, opdracht Mohammed \"landingspaginas van ab omvormen ... nu ab\"): offerte i.p.v. dakinspectie/plaatsbezoek, bron_lead_detail :offerte (GHL W01b standaard-sms), \"Aanvraag gratis offerte\", E-mailadres* op de contactstap, dakvragen zoals bfbouw.be (Isolatie en Weet ik nog niet bij stap 2, Oppervlakte, Start \"Wanneer wilt u starten?\")."
     },
     {
       "naam": "aanvraag-onder",
@@ -140,16 +148,17 @@
       "wortel": "#contact .kgj-reken--aanvraag",
       "antwoorden": [
         "Plat dak",
-        "Herstelling",
-        "Nee",
+        "Isolatie",
         "Weet ik niet",
-        "Dit jaar"
+        "Minder dan 50 m²",
+        "Binnen 3 maanden"
       ],
       "velden": {
         "naam": "Test Kaart",
-        "telefoon": "0400 00 00 01"
+        "telefoon": "0400 00 00 01",
+        "email": "test@kaart.be"
       },
-      "formStart": "lp:dakwerken:inspectie",
+      "formStart": "lp:dakwerken:offerte",
       "toestemming": true,
       "bedankt": "/bedankt/dakwerken",
       "fouten": {
@@ -161,12 +170,13 @@
         "firstName": "Test",
         "lastName": "Kaart",
         "name": "Test Kaart",
+        "email": "test@kaart.be",
         "phone": "0400 00 00 01",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Plat dak · Werk: Herstelling · Isolatie: Nee · Asbest: Weet ik niet · Start: Dit jaar",
+        "aanvullende_info": "Aanvraag gratis offerte · Dak: Plat dak · Werk: Isolatie · Asbest: Weet ik niet · Oppervlakte: Minder dan 50 m² · Start: Binnen 3 maanden",
         "bron_lead": "Website",
-        "bron_lead_detail": "lp:dakwerken:inspectie",
+        "bron_lead_detail": "lp:dakwerken:offerte",
         "page_path": "/lp/dakwerken",
         "landing_division": "ab_dakwerken",
         "source": "landing_page"
@@ -179,17 +189,18 @@
         "firstName": "Test",
         "lastName": "Kaart",
         "name": "Test Kaart",
+        "email": "test@kaart.be",
         "phone": "0400 00 00 01",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Plat dak · Werk: Herstelling · Isolatie: Nee · Asbest: Weet ik niet · Start: Dit jaar",
+        "aanvullende_info": "Aanvraag gratis offerte · Dak: Plat dak · Werk: Isolatie · Asbest: Weet ik niet · Oppervlakte: Minder dan 50 m² · Start: Binnen 3 maanden",
         "bron_lead": "Website",
-        "bron_lead_detail": "lp:dakwerken:inspectie",
+        "bron_lead_detail": "lp:dakwerken:offerte",
         "page_path": "/lp/dakwerken",
         "landing_division": "ab_dakwerken",
         "source": "landing_page"
       },
-      "metingInUitFlows": "22 okt 2026 (Mohammed: \"EN TIS ENKEL lp dakwerken en lp totaalrenovatie\", de formulierwijzigingen van 21 okt ook op dak): vijfde klikvraag Start (\"Wanneer wilt u beginnen?\"), contactstap alleen Naam* en Gsm*, dus zonder email, postalCode en adres_project; onderaan dezelfde klikkaart (Aanvraag.tsx plek=\"onder\") met het form_start-label en bron_lead_detail van het oude formulier (lp:dakwerken:inspectie, zonder :hero)."
+      "metingInUitFlows": "22 okt 2026 (Mohammed: \"EN TIS ENKEL lp dakwerken en lp totaalrenovatie\", de formulierwijzigingen van 21 okt ook op dak): vijfde klikvraag Start (\"Wanneer wilt u beginnen?\"), contactstap alleen Naam* en Gsm*, dus zonder email, postalCode en adres_project; onderaan dezelfde klikkaart (Aanvraag.tsx plek=\"onder\") met het form_start-label en bron_lead_detail van het oude formulier (lp:dakwerken:inspectie, zonder :hero). 2 nov 2026 (omvormen zoals bfbouw.be 31 okt, opdracht Mohammed \"landingspaginas van ab omvormen ... nu ab\"): offerte i.p.v. dakinspectie/plaatsbezoek, bron_lead_detail :offerte (GHL W01b standaard-sms), \"Aanvraag gratis offerte\", E-mailadres* op de contactstap, dakvragen zoals bfbouw.be (Isolatie en Weet ik nog niet bij stap 2, Oppervlakte, Start \"Wanneer wilt u starten?\")."
     },
     {
       "naam": "aanvraag-onder-marketing",
@@ -199,16 +210,18 @@
       "wortel": "#contact .kgj-reken--aanvraag",
       "antwoorden": [
         "Hellend dak",
-        "Ik wil dat een expert mijn dak inspecteert",
+        "Weet ik nog niet",
         "Weet ik nog niet",
         "Nee",
-        "Volgend jaar"
+        "Meer dan 150 m²",
+        "Binnen 6 maanden"
       ],
       "velden": {
         "naam": "Test Kaart",
-        "telefoon": "0400 00 00 03"
+        "telefoon": "0400 00 00 03",
+        "email": "test@kaart.be"
       },
-      "formStart": "lp:dakwerken:inspectie",
+      "formStart": "lp:dakwerken:offerte",
       "toestemming": false,
       "bedankt": "/bedankt/dakwerken",
       "fouten": {
@@ -220,12 +233,13 @@
         "firstName": "Test",
         "lastName": "Kaart",
         "name": "Test Kaart",
+        "email": "test@kaart.be",
         "phone": "0400 00 00 03",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Hellend dak · Werk: Ik wil dat een expert mijn dak inspecteert · Isolatie: Weet ik nog niet · Asbest: Nee · Start: Volgend jaar",
+        "aanvullende_info": "Aanvraag gratis offerte · Dak: Hellend dak · Werk: Weet ik nog niet · Isolatie: Weet ik nog niet · Asbest: Nee · Oppervlakte: Meer dan 150 m² · Start: Binnen 6 maanden",
         "bron_lead": "Google Ads",
-        "bron_lead_detail": "lp:dakwerken:inspectie",
+        "bron_lead_detail": "lp:dakwerken:offerte",
         "page_path": "/lp/dakwerken",
         "landing_division": "ab_dakwerken",
         "source": "landing_page",
@@ -242,12 +256,13 @@
         "firstName": "Test",
         "lastName": "Kaart",
         "name": "Test Kaart",
+        "email": "test@kaart.be",
         "phone": "0400 00 00 03",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis dakinspectie · Dak: Hellend dak · Werk: Ik wil dat een expert mijn dak inspecteert · Isolatie: Weet ik nog niet · Asbest: Nee · Start: Volgend jaar",
+        "aanvullende_info": "Aanvraag gratis offerte · Dak: Hellend dak · Werk: Weet ik nog niet · Isolatie: Weet ik nog niet · Asbest: Nee · Oppervlakte: Meer dan 150 m² · Start: Binnen 6 maanden",
         "bron_lead": "Google Ads",
-        "bron_lead_detail": "lp:dakwerken:inspectie",
+        "bron_lead_detail": "lp:dakwerken:offerte",
         "page_path": "/lp/dakwerken",
         "landing_division": "ab_dakwerken",
         "source": "landing_page",
@@ -256,7 +271,7 @@
         "utm_campaign": "dakrenovatie",
         "utm_term": "dakwerken"
       },
-      "metingInUitFlows": "22 okt 2026 (Mohammed: \"EN TIS ENKEL lp dakwerken en lp totaalrenovatie\", de formulierwijzigingen van 21 okt ook op dak): vijfde klikvraag Start (\"Wanneer wilt u beginnen?\"), contactstap alleen Naam* en Gsm*, dus zonder email, postalCode en adres_project; onderaan dezelfde klikkaart (Aanvraag.tsx plek=\"onder\") met het form_start-label en bron_lead_detail van het oude formulier (lp:dakwerken:inspectie, zonder :hero)."
+      "metingInUitFlows": "22 okt 2026 (Mohammed: \"EN TIS ENKEL lp dakwerken en lp totaalrenovatie\", de formulierwijzigingen van 21 okt ook op dak): vijfde klikvraag Start (\"Wanneer wilt u beginnen?\"), contactstap alleen Naam* en Gsm*, dus zonder email, postalCode en adres_project; onderaan dezelfde klikkaart (Aanvraag.tsx plek=\"onder\") met het form_start-label en bron_lead_detail van het oude formulier (lp:dakwerken:inspectie, zonder :hero). 2 nov 2026 (omvormen zoals bfbouw.be 31 okt, opdracht Mohammed \"landingspaginas van ab omvormen ... nu ab\"): offerte i.p.v. dakinspectie/plaatsbezoek, bron_lead_detail :offerte (GHL W01b standaard-sms), \"Aanvraag gratis offerte\", E-mailadres* op de contactstap, dakvragen zoals bfbouw.be (Isolatie en Weet ik nog niet bij stap 2, Oppervlakte, Start \"Wanneer wilt u starten?\")."
     }
   ]
 }

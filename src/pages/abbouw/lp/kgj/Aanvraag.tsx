@@ -51,7 +51,7 @@ const IcInspectie = () => (
    niet staat, krijgt het icoon van zijn plaats. Ook gebruikt voor de vinkjes onder de kaart op de telefoon (LpBf). */
 const BADGE_PER_TEKST: Record<string, typeof Check> = {
   'Vaste prijs vooraf': ShieldCheck, 'Eén vast aanspreekpunt': UserCheck, 'Vakmanschap tot in de details': Award,
-  'Gratis & vrijblijvende dakinspectie': ClipboardCheck, '6% btw-tarief (woningen > 10 jaar)': BadgePercent,
+  'Gratis & vrijblijvende dakinspectie': ClipboardCheck, 'Gratis & vrijblijvende offerte': ClipboardCheck, '6% btw-tarief (woningen > 10 jaar)': BadgePercent,
   'Weet de exacte staat van uw dak': SearchCheck, 'Weet waar u aan toe bent': SearchCheck,
 };
 export const badgeIcoon = (tekst: string, i: number) => BADGE_PER_TEKST[tekst] ?? [ShieldCheck, UserCheck, Award][i] ?? Check;
@@ -94,6 +94,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   const kaart = useRef<HTMLDivElement>(null);
   const balk = useRef<HTMLDivElement>(null);
   const telVeld = useRef<HTMLInputElement>(null);
+  const mailVeld = useRef<HTMLInputElement>(null);
   const vorigeStap = useRef('');
   const vorigeBalk = useRef(stap);
   /* Clarity per kaart: de verste stap die de bezoeker in DEZE kaart haalde (Terug telt niet). */
@@ -153,7 +154,8 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     const boven = balkH + 8;
     const kopTop = kop.getBoundingClientRect().top;
     /* onderkant van wat de bezoeker nu moet tikken: de keuzes, Volgende, of de verzendknop met de regel eronder */
-    const doelen = [...el.querySelectorAll<HTMLElement>('.kgj-reken__stap :is(.kgj-reken__keuze, .kgj-reken__vink, .kgj-reken__verder, .kgj-reken__knop, .kgj-reken__knopzeker)')];
+    /* 2 nov 2026: ook de regel onder de verzendknop ("Onze dakexpert contacteert u ... over uw offerte."): zegt wat er na de knop gebeurt. */
+    const doelen = [...el.querySelectorAll<HTMLElement>('.kgj-reken__stap :is(.kgj-reken__keuze, .kgj-reken__vink, .kgj-reken__verder, .kgj-reken__knop, .kgj-reken__knopzeker, .kgj-reken__gerust)')];
     /* een offertestap focust zijn kop (geen veld: op de gsm zou het toetsenbord openspringen) */
     const onderkant = doelen.length ? Math.max(...doelen.map((d) => d.getBoundingClientRect().bottom)) : kopTop;
     const tekort = onderkant - (window.innerHeight - 12);
@@ -271,6 +273,13 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     const cijfers = telefoon.replace(/\D/g, '').length;
     if (!telefoon) { zetFout('Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.'); return; }
     if (cijfers < 8) { zetFout('Dat telefoonnummer lijkt niet volledig. Controleer het even.'); return; }
+    /* 2 nov 2026 (offerte, zoals bfbouw.be 31 okt): het e-mailadres is verplicht waar contactVelden.email 'verplicht' is. Alleen een
+       vormcontrole (iets@iets.iets), geen bestaanscontrole. */
+    if (emailVerplicht) {
+      const mail = String(f.get('email') || '').trim();
+      if (!mail) { zetFout('Vul uw e-mailadres in. Daar sturen wij uw offerte naartoe.'); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail)) { zetFout('Dat e-mailadres lijkt niet juist. Controleer het even.'); return; }
+    }
     verstuurt.current = true;
     zet((s) => ({ ...s, fout: null, bezig: true }));
     const res = await submitLead({
@@ -304,7 +313,8 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
 
   const vraag = VRAGEN[stap];
   /* Welke velden de contactstap naast Naam en Gsm heeft (renovatiepagina's: alleen die twee). Standaard beide aan. */
-  const metEmail = a.contactVelden?.email !== false;
+  const emailVerplicht = a.contactVelden?.email === 'verplicht';
+  const metEmail = a.contactVelden?.email !== false && !emailVerplicht;
   const metPostcode = a.contactVelden?.postcode !== false;
   /* "Bijna klaar! Bevestig uw gratis dakinspectie": het eerste deel op een eigen regel in de merkkleur (bfbouw.be rk__bijna). */
   const contactKop = offerte && a.offerte ? a.offerte.contactKop : a.contactKop;
@@ -320,7 +330,8 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
         <span className="kgj-reken__logo" aria-hidden="true"><IcInspectie /></span>
         <div>
           <p className="kgj-reken__titel">{a.titel}</p>
-          <p className="kgj-reken__tijd"><Clock aria-hidden="true" />{a.tijd}</p>
+          {/* 2 nov 2026: zonder tijdregel als tijd leeg is (bfbouw.be 31 okt: kaartkop "Gratis offerte aanvragen" alleen). */}
+          {a.tijd && <p className="kgj-reken__tijd"><Clock aria-hidden="true" />{a.tijd}</p>}
         </div>
       </div>
       {boven}
@@ -474,10 +485,21 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
                 onKeyDown={(e) => { if (e.key === 'Enter' && !e.nativeEvent.isComposing) { e.preventDefault(); telVeld.current?.focus(); } }} /></label>
               {/* 22 okt 2026, Mohammed: "en doe naam en telefoonnummer", "niet gsm". */}
               <label>Telefoonnummer *
-                <input ref={telVeld} name="telefoon" type="tel" autoComplete="tel" inputMode="tel" enterKeyHint="send" placeholder="04xx xx xx xx" aria-required="true"
-                  value={stand.telefoon} onFocus={gebruik} onChange={(e) => { const v = e.target.value; zet((s) => ({ ...s, aangetikt: true, telefoon: v })); }} />
+                <input ref={telVeld} name="telefoon" type="tel" autoComplete="tel" inputMode="tel" enterKeyHint={emailVerplicht ? 'next' : 'send'} placeholder="04xx xx xx xx" aria-required="true"
+                  value={stand.telefoon} onFocus={gebruik} onChange={(e) => { const v = e.target.value; zet((s) => ({ ...s, aangetikt: true, telefoon: v })); }}
+                  onKeyDown={emailVerplicht ? (e) => { if (e.key === 'Enter' && !e.nativeEvent.isComposing) { e.preventDefault(); mailVeld.current?.focus(); } } : undefined} />
               </label>
             </div>
+            {/* 2 nov 2026 (offerte, zoals bfbouw.be 31 okt: "doe ook een vakje emailadres bij de offerte aanvraag indiening"; daar zonder
+                voorbeeldtekst): een eigen rij over de volle breedte. Gedeeld tussen de twee kaarten, zoals naam en nummer. */}
+            {emailVerplicht && (
+              <div className="kgj-reken__rij kgj-reken__rij--een">
+                <label>E-mailadres *
+                  <input ref={mailVeld} name="email" type="email" autoComplete="email" inputMode="email" enterKeyHint="send" aria-required="true"
+                    value={stand.email ?? ''} onFocus={gebruik} onChange={(e) => { const v = e.target.value; zet((s) => ({ ...s, aangetikt: true, email: v })); }} />
+                </label>
+              </div>
+            )}
             {(metPostcode || metEmail) && (
               <div className="kgj-reken__rij">
                 {/* Korte voorbeeldtekst: op de computer staat het veld in een halve kolom (de standaardhint werd afgekapt). */}

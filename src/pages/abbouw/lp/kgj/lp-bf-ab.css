@@ -1131,3 +1131,64 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
   .bf.bf-lp .kgj-reken__oveld textarea { height: 60px; }
   .bf.bf-lp .kgj-reken__ostap .kgj-reken__verder { margin-top: 14px; }
 }
+
+/* ---------- 2 nov 2026: omvorming naar de gratis offerte, zoals bfbouw.be 29 okt - 1 nov ---------- */
+/* Kop: het accent is alleen de kleur (geen streep); accentwoord + leesteken breken niet los (BF site.css .lphero__nw). */
+.bf.bf-lp .bf-lphero__kop span.bf-lphero__nw { display: inline; color: #fff; white-space: nowrap; }
+.bf.bf-lp .bf-lphero__kop span.bf-lphero__nw > span.bf-lphero__accent { display: inline; }
+/* Subkop dikker, met lucht onder de kop en zonder wees op de laatste regel (BF 1 nov: gat >= 14 px, dikte 600, text-wrap pretty). */
+.bf.bf-lp--dakwerken .bf-lphero__sub { font-weight: 600; text-wrap: pretty; }
+@media (max-width: 1000px) { .bf.bf-lp--dakwerken .bf-lphero__sub { margin-top: 14px; } } /* alleen de lange dak-subkop; de korte renovatieregel houdt haar afstand (vraag 1 volledig in beeld op 390x664) */
+
+/* Zekerhedenstrook (BF site.css .zeker), in AB-kleuren. */
+.bf.bf-lp .bf-zeker { background: #fff; border-top: calc(1 * var(--u)) solid #ededed; border-bottom: calc(1 * var(--u)) solid #ededed; }
+.bf.bf-lp .bf-zeker__rij { list-style: none; width: calc(1200 * var(--u)); max-width: 100%; margin: 0 auto; padding: calc(30 * var(--u)) 0; display: grid; grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)); gap: calc(16 * var(--u)); }
+.bf.bf-lp .bf-zeker__rij--3 { --n: 3; }
+.bf.bf-lp .bf-zeker__rij li { display: flex; align-items: center; justify-content: center; gap: calc(14 * var(--u)); font-size: calc(19 * var(--u)); line-height: 1.25; color: var(--ink-2); }
+.bf.bf-lp .bf-zeker__rij b { font-weight: 700; }
+.bf.bf-lp .bf-zeker__ic { width: calc(50 * var(--u)); height: calc(50 * var(--u)); flex: none; border-radius: calc(13 * var(--u)); display: grid; place-items: center; background: #fbf1dd; color: var(--merk-tekst); }
+.bf.bf-lp .bf-zeker__ic svg { width: 58%; height: 58%; }
+@media (max-width: 1000px) {
+  .bf.bf-lp .bf-zeker__rij { width: auto; padding: 20px 16px; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .bf.bf-lp .bf-zeker__rij li { flex-direction: column; justify-content: flex-start; gap: 10px; padding: 16px 10px; border-radius: 14px; background: var(--sectie); text-align: center; font-size: 17px; }
+  .bf.bf-lp .bf-zeker__rij--3 li:last-child { grid-column: 1 / -1; flex-direction: row; justify-content: center; }
+  .bf.bf-lp .bf-zeker__ic { width: 46px; height: 46px; border-radius: 12px; background: #fff; }
+}
+
+/* Dienstkaart met "Lees meer" (BF site.css .dkaart__info): de hele kaart is tikbaar. */
+.bf.bf-lp .bf-dkaart--meer { cursor: pointer; }
+.bf.bf-lp .bf-dkaart--meer .bf-dkaart__body { display: flex; flex-direction: column; }
+.bf.bf-lp .bf-dkaart__info { margin-top: auto; padding-top: calc(10 * var(--u)); }
+.bf.bf-lp .bf-dkaart__info summary { list-style: none; display: inline-flex; align-items: center; gap: calc(6 * var(--u)); min-height: 48px; cursor: pointer; font-size: calc(16 * var(--u)); font-weight: 700; color: var(--merk-tekst); }
+.bf.bf-lp .bf-dkaart__info summary::-webkit-details-marker { display: none; }
+.bf.bf-lp .bf-dkaart__info summary svg { width: 16px; height: 16px; flex: none; transform: rotate(90deg); }
+.bf.bf-lp .bf-dkaart__info[open] summary svg { transform: rotate(-90deg); }
+.bf.bf-lp .bf-dkaart__info-dicht { display: none; }
+.bf.bf-lp .bf-dkaart__info[open] .bf-dkaart__info-open { display: none; }
+.bf.bf-lp .bf-dkaart__info[open] .bf-dkaart__info-dicht { display: inline; }
+.bf.bf-lp .bf-dkaart__info summary:hover { text-decoration: underline; text-underline-offset: calc(4 * var(--u)); }
+.bf.bf-lp .bf-dkaart__info p { margin-top: calc(4 * var(--u)); font-size: calc(15.5 * var(--u)); line-height: 1.6; color: var(--tekst-2); }
+.bf.bf-lp .bf-dkaarten__raster--lp:has(.bf-dkaart__info[open]) { align-items: start; }
+@media (max-width: 1000px) { .bf.bf-lp .bf-dkaart__info summary { font-size: 16px; } .bf.bf-lp .bf-dkaart__info p { font-size: 16px; } }
+
+/* E-mailadres als eigen rij over de volle breedte op de contactstap. */
+.bf.bf-lp .kgj-reken__rij--een { grid-template-columns: minmax(0, 1fr); }
+
+/* Computer: de Google-score staat al in de hero (BF 31 okt "trust badges dubbel"), dus niet nog eens in de kaart. */
+@media (min-width: 1001px) { .bf.bf-lp .kgj-reken__trust .kgj-reken__trust-g { display: none; } }
+/* Gsm, contactstap met E-mailadres (2 nov 2026): Naam en Telefoonnummer naast elkaar, E-mailadres eronder over de volle breedte (zoals
+   bfbouw.be: e-mail fveld--breed). Drie velden onder elkaar duwden de regel onder de verzendknop 55 px onder een iPhone-scherm (390x637). */
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken__contact:has(.kgj-reken__rij--een) .kgj-reken__rij:not(.kgj-reken__rij--een) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 10px; }
+}
+/* Gsm: de knoppen naar het formulier dragen sinds 2 nov de lange tekst "Gratis en vrijblijvende offerte aanvragen". Op één regel was
+   de waarom-knop 391 px breed op een scherm van 390: de telefoon zoomde de hele pagina uit (layout 407 px), en een tik viel 37 px naast
+   de verzendknop (check-lp-payload). De tekst mag nu breken, de knop blijft binnen de kolom. */
+@media (max-width: 1000px) {
+  .bf.bf-lp .bf-lpcta__knop { max-width: 100%; white-space: normal; text-align: center; }
+}
+/* Gsm, renovatiepagina's (2 nov 2026): 8 px minder boven de kop, zodat de tweede rij keuzes van vraag 1 bij het laden volledig in
+   beeld staat op een iPhone (390x664: onderkant was 665). Zelfde ingreep als bfbouw.be 1 nov (padding boven de kop 80 -> 74). */
+@media (max-width: 560px) {
+  .bf.bf-lp--totaalrenovatie .bf-lphero__in { padding-top: 88px; }
+}

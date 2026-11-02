@@ -484,7 +484,9 @@ const BUDGET_VRAAG: Vraag = {
 export const TOTAALRENOVATIE: KgjInhoud = {
   ...TOTAALRENOVATIE_REKENAAR,
   /* Zonder "Bereken in 2 minuten de prijs van uw renovatie." (er is hier geen rekenaar meer); de rest woordelijk. */
-  omschrijving: 'Gratis plaatsbezoek en offerte, werken aan 6% btw.',
+  /* 2 nov 2026 (opdracht Mohammed: "landingspaginas van ab omvormen, we hebben die van bf omgevormd, nu ab", "dus totaalrenovatie lp
+     en dakwerken lp"): het aanbod is de gratis offerte, zoals bfbouw.be sinds 31 okt; het plaatsbezoek komt op de bedankpagina. */
+  omschrijving: 'Gratis offerte voor uw renovatie, werken aan 6% btw.',
   heroRekenaar: undefined,
   heroAanvraag: true,
   hero: {
@@ -494,14 +496,16 @@ export const TOTAALRENOVATIE: KgjInhoud = {
        "Jouw complete renovatie, perfect geregeld van A tot Z."; "van A tot Z" in de accentkleur ("Definitief", hierboven).
        Subkop kort (6 okt: "teveel tekst in hero") met het aanbod, dat ook in de kaart staat. [ ] = accentkleur. */
     kop: 'Jouw complete renovatie, perfect geregeld [van A tot Z].',
-    onder: 'Gratis plaatsbezoek en offerte, 100% vrijblijvend.',
+    /* 2 nov 2026: het nieuwe aanbod in dezelfde korte vorm (6 okt, Mohammed: "teveel tekst in hero"); het plaatsbezoek valt weg. */
+    onder: 'Gratis offerte, 100% vrijblijvend.',
     /* 23 okt 2026 (zie inspectie.knop hieronder): de knop onder de werkwijze zegt hetzelfde als de verzendknop. "Plan" beloofde een
        moment kiezen; de knop brengt de bezoeker naar de klikkaart en het moment spreekt AB telefonisch af. */
-    knop: { ...TOTAALRENOVATIE_REKENAAR.hero.knop!, tekst: 'Gratis plaatsbezoek aanvragen' },
+    knop: { ...TOTAALRENOVATIE_REKENAAR.hero.knop!, tekst: 'Gratis en vrijblijvende offerte aanvragen' },
   },
   aanvraag: {
-    titel: 'Gratis plaatsbezoek',
-    tijd: 'Klaar in 1 minuut, vrijblijvend',
+    /* 2 nov 2026: kaartkop zoals bfbouw.be 31 okt, zonder tijdregel. */
+    titel: 'Gratis offerte aanvragen',
+    tijd: '',
     /* De klikvragen = de keuzelijsten van het formulier onderaan (inspectie.extra), met dezelfde labels en opties, in die
        volgorde. De sleutel is het label zonder vraagteken, zodat aanvullende_info in GHL er hetzelfde uitziet als bij het
        formulier onderaan ("Wat wilt u renoveren: Aanbouw · Wanneer wilt u starten: Volgend jaar"). */
@@ -526,46 +530,37 @@ export const TOTAALRENOVATIE: KgjInhoud = {
         BUDGET_VRAAG,
       ];
     })(),
-    contactKop: 'Bijna klaar! Bevestig uw gratis plaatsbezoek',
+    /* 2 nov 2026: zoals bfbouw.be 31 okt (was "Bijna klaar! Bevestig uw gratis plaatsbezoek"). */
+    contactKop: 'Bijna klaar! Vraag uw gratis offerte aan',
     /* Vinkjes en trustrij: dezelfde teksten en cijfers als op de rekenaarkaart die hier stond (13 okt, dictaat 4 okt). Alleen de
        vorm verandert (22 okt, Mohammed: "doe de trust badges duidelijker, visueel mooier"): tegels met iconen (badges). De iconen
        staan bij de cijfers: kalender bij de jaren ervaring, gereedschap bij de vakdisciplines. */
     /* 29 okt 2026, Mohammed: "meer badges" (dakwerken: "weet de exacte staat van uw dak"); hier zijn woorden van 22 okt: "weet waar u aan toe bent" ("weet exact wat er moet gebeuren" afgekeurd 29 okt: de bezoeker kiest zelf wat er moet gebeuren). */
-    vertrouwen: ['Weet waar u aan toe bent', ...(TOTAALRENOVATIE_REKENAAR.rekenaar.vertrouwen ?? [])],
-    offerte: { vraag: 'Weet u al wat er moet gebeuren en wilt u een offerte aanvragen?', knop: 'Klik dan hier',
-      contactKop: 'Bijna klaar! Vraag uw vrijblijvende offerte aan', verzend: 'Vrijblijvende offerte aanvragen',
-      /* 30 okt 2026 (Mohammed: dropdowns, de belangrijkste vragen, dan optioneel extra): dezelfde keuzes als de klikvragen van deze kaart. */
-      stappen: [
-        { kop: 'Over uw woning', velden: [
-          { sleutel: 'Soort renovatie', label: 'Wat wilt u renoveren?', opties: ['De hele woning (totaalrenovatie)', 'Gedeeltelijke renovatie', 'Aanbouw', 'Specifieke werken'] },
-          { sleutel: 'Type woning', label: 'Type woning', opties: ['Appartement', 'Rijwoning', 'Halfopen bebouwing', 'Open bebouwing'] },
-          { sleutel: 'Oppervlakte', label: 'Oppervlakte van de woning (ongeveer)', opties: ['Kleiner dan 100 m²', '100 tot 150 m²', '150 tot 200 m²', 'Groter dan 200 m²', 'Weet ik niet'] },
-        ] },
-        { kop: 'Planning', velden: [
-          { sleutel: 'Start', label: 'Wanneer wilt u starten?', opties: ['Zo snel mogelijk', 'Binnen 6 maanden', 'Volgend jaar', 'Ik verken nog'] },
-        ], extra: { sleutel: 'Extra info', label: 'Extra info (optioneel)', hint: 'Bv. welke ruimtes of wat er precies moet gebeuren' } },
-      ] },
+    /* 2 nov 2026, zoals bfbouw.be 31 okt: het plaatsbezoek-vinkje ("Weet waar u aan toe bent") wordt de offerte; geen tweede route
+       "Weet u al ... Klik dan hier" meer, de kaart zelf is de offerteaanvraag. */
+    vertrouwen: ['Gratis & vrijblijvende offerte', ...(TOTAALRENOVATIE_REKENAAR.rekenaar.vertrouwen ?? [])],
     /* 22 okt 2026, Mohammed: "en 6 vakdisciplines als trust badge bij abgroep landingspagina weg, bij die form", "dat is een rare
        trust badge". In de kaart blijven Google 5,0 en 16 jaar ervaring; de rekenaarpagina houdt haar trustrij. */
     trustrij: TOTAALRENOVATIE_REKENAAR.rekenaar.trustrij?.filter((c) => c.s !== 'vakdisciplines').map((c) => ({ ...c, icoon: 'kalender' as const })),
     /* 22 okt 2026, Mohammed: "haal weg bij abgroep die volgende moment": geen "Eerstvolgend vrij plaatsbezoek" meer in de kaart
        (en dus geen free-slots-aanvraag naar de GHL-agenda op deze pagina's). De vlag vrijMoment is hier weg. */
     badges: true,
-    /* 22 okt 2026, Mohammed: "verwijder email form, verwijder postcode form": de contactstap heeft alleen nog Naam en Gsm. */
-    contactVelden: { email: false, postcode: false },
-    /* 22 okt 2026, Mohammed: "een disclaimer zo wat ze precies krijgen, krijg vrijblijvend advies en weet waar u aan toe bent". Volgt de
-       subkop van de pagina ("Wij komen langs, bekijken uw woning en bespreken uw plannen. Daarna krijgt u een offerte ..."). */
-    /* 22 okt 2026, Mohammed: "die disclaimer bedoelde ik van wat er al was visueel verbeteren", "dat wat er stond", "doe even overal":
-       de zin van bfbouw.be/lp/dakwerken ("Laat uw dak vakkundig controleren. Voorkom onvoorziene kosten en weet exact wat er moet
-       gebeuren."), voor renovatie alleen "uw dak vakkundig controleren" -> "uw woning vakkundig bekijken" (het plaatsbezoek). */
-    /* 29 okt 2026, Mohammed: "Weet exact wat er moet gebeuren bij renovatie klopt niet, want daar heb je ook het dingetje dat zij kiezen"; zijn woorden van 22 okt. */
-    disclaimer: ['Laat uw woning vakkundig bekijken', 'Voorkom onvoorziene kosten', 'Weet waar u aan toe bent'],
+    /* 22 okt 2026, Mohammed: "verwijder email form, verwijder postcode form": de contactstap heeft alleen nog Naam en Gsm.
+       2 nov 2026: E-mailadres* terug voor de offerte, zoals bfbouw.be 31 okt; postcode blijft weg. */
+    contactVelden: { email: 'verplicht', postcode: false },
+    /* 2 nov 2026: geen disclaimer-vinkjes meer op de laatste stap (bfbouw.be 31 okt); "Laat uw woning vakkundig bekijken" beloofde
+       het plaatsbezoek vóór het versturen. */
     /* 22 okt 2026, Mohammed: "bij abgroep totaalrenovatie ook onderaan bij plaatsbezoek de form zo dat je makkelijk kan klikken". */
     onder: true,
-    /* 23 okt 2026 (Mohammed: "algemene psychologie cro optimalisatie toepassen"): onder de verzendknop bewijs en risico weg op het
-       moment van beslissen. Woordelijk bfbouw.be (LP.kaart.zeker, rk__knopzeker); de subkop hierboven zegt "100% vrijblijvend". */
-    zeker: 'Gratis en vrijblijvend',
+    /* 2 nov 2026: geen regel "5,0 op Google · Gratis en vrijblijvend" meer onder de knop (dubbel met de knoptekst, zie inhoud.ts). */
   },
+  /* 2 nov 2026 (zoals bfbouw.be zekerStrook, 31 okt): AB-feiten met bron: vaste prijs vooraf (Mohammed 22 okt), één vast
+     aanspreekpunt en 16 jaar ervaring (dictaat 4 okt, /over). Nooit 10 jaar garantie bij renovatie (28 sept). */
+  zekerheden: [
+    { icoon: 'prijs', tekst: 'Vaste prijs vooraf' },
+    { icoon: 'aanspreek', tekst: 'Eén vast aanspreekpunt' },
+    { icoon: 'kalender', tekst: '16 jaar ervaring' },
+  ],
   /* 22 okt 2026, Mohammed (zijn dictaat voor BF: "neemt zo snel mogelijk contact met u op", geen termijn meer): geen "binnen één
      werkdag" meer op /lp/totaalrenovatie en /lp/aannemer-renovatiewerken. /lp/richtprijs-berekenen houdt TOTAALRENOVATIE_REKENAAR
      en dus zijn zinnen; de eigen versie staat hier. */
@@ -576,11 +571,25 @@ export const TOTAALRENOVATIE: KgjInhoud = {
        plaatsbezoek" beloofde een vastgelegd moment, terwijl AB eerst belt om af te spreken (0 van 54 sites met "Bevestig"); de infinitief
        "aanvragen" is wat er echt gebeurt en wat Vlaamse bedrijven gebruiken (18 van 43; Energylux exact zo, zelfde verloop: formulier,
        dan bellen). Alleen deze pagina's: /lp/richtprijs-berekenen houdt TOTAALRENOVATIE_REKENAAR. */
-    knop: 'Gratis plaatsbezoek aanvragen',
-    onder: 'Wij nemen zo snel mogelijk contact met u op.',
+    /* 2 nov 2026: knop en regel eronder zoals bfbouw.be 31 okt ("Gratis en vrijblijvende offerte aanvragen"; "over de offerte dan"). */
+    knop: 'Gratis en vrijblijvende offerte aanvragen',
+    onder: 'Wij contacteren u zo snel mogelijk over uw offerte.',
+    /* 2 nov 2026: :offerte zoals bfbouw.be; in GHL W01b de standaard-sms ("bedankt voor uw aanvraag"). */
+    bronLead: 'lp:totaalrenovatie:offerte',
     vertrouwen: TOTAALRENOVATIE_REKENAAR.inspectie.vertrouwen?.map((v) => (v.icoon === 'telefoon' ? { ...v, tekst: 'Wij nemen zo snel mogelijk contact met u op.' } : v)),
+  },
+  /* 2 nov 2026: slotblok zoals bfbouw.be 31 okt (kop "Gratis offerte aanvragen", punten = het formulier en wat de bezoeker krijgt,
+     zonder "binnen 24u": geen bron voor AB). Was "Plan uw gratis plaatsbezoek en advies" met een zin over het plaatsbezoek. */
+  cta: {
+    ...TOTAALRENOVATIE_REKENAAR.cta,
+    kop: 'Gratis offerte aanvragen',
+    tekst: '',
+    naam: 'Gratis offerte',
+    punten: ['Beantwoord een paar korte vragen', 'U ontvangt een vrijblijvende offerte'],
   },
   /* Het vangnet ("Liever eerst een indicatie van de kosten?", knop naar de rekenaarpagina) is een rekenaar-ingang: weg. */
   vangnet: undefined,
-  volgorde: ['uitgevoerd', 'waarom', 'werkwijze', 'diensten', 'faq'],
+  /* 2 nov 2026 (zoals bfbouw.be 31 okt: "maak de pagina eens over het algemeen beter ingedeeld"): zekerheden, dan het werk zelf, dan
+     wat AB doet, waarom AB en hoe het verloopt. */
+  volgorde: ['zekerheden', 'uitgevoerd', 'diensten', 'waarom', 'werkwijze', 'faq'],
 };

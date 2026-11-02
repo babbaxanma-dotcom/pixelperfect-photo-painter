@@ -26,6 +26,8 @@ export type AanvraagStand = {
   vinken: Record<string, string[]>;
   naam: string;
   telefoon: string;
+  /** 2 nov 2026: het e-mailadres op de contactstap (offerte), gedeeld zoals naam en nummer. */
+  email?: string;
   /** De bezoeker tikte of typte al iets. Een vraag die de zoekterm vooraf beantwoordde (message match) telt niet. */
   aangetikt: boolean;
   fout: string | null;
@@ -77,8 +79,8 @@ export function useAanvraagStaat(begin: () => AanvraagStand): GedeeldeAanvraag {
 }
 
 /** Voor de vaste knop op de gsm (LpBf): waar de bezoeker staat, of null zonder AanvraagStaat. */
-export function useAanvraagVoortgang(): { stap: number; aangetikt: boolean; verstuurd: boolean } | null {
+export function useAanvraagVoortgang(): { stap: number; aangetikt: boolean; verstuurd: boolean; antwoorden: Record<string, string> } | null {
   const g = useContext(Gedeeld);
   if (!g) return null;
-  return { stap: g.stand.stap, aangetikt: g.stand.aangetikt, verstuurd: g.stand.bezig || g.stand.vraagToestemming };
+  return { stap: g.stand.stap, aangetikt: g.stand.aangetikt, verstuurd: g.stand.bezig || g.stand.vraagToestemming, antwoorden: g.stand.antwoorden };
 }

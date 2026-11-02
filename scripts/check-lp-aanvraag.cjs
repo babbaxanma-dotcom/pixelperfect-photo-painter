@@ -106,30 +106,28 @@ const kopFouten = (h1, verwacht) => {
 const HERO = '#rekenaar .kgj-reken--aanvraag';
 const ONDER = '#contact .kgj-reken--aanvraag';
 const DAK = {
-  pad: '/lp/dakwerken', soort: 'dak', kop: 'Dé specialist voor uw nieuwe dak', woord: 'gratis dakinspectie', vraag1: 'Wat voor dak heeft u?', keuzes1: ['Hellend dak', 'Plat dak'],
-  /* de vijfde vraag (22 okt 2026): de start, vier keuzes */
-  pad1: ['Hellend dak', 'Dakrenovatie / Nieuw dak', 'Ja', 'Nee', 'Zo snel mogelijk'], vraag2: 'Wat moet er aan uw dak gebeuren?',
-  /* knop 23 okt 2026 (Mohammed: "optimalisatie van de knoppen ... ga na WAT DE BESTE is"; onderzoek: Vlaamse infinitief "aanvragen") */
-  band: 'Bijna klaar! Bevestig uw gratis dakinspectie', knop: 'Gratis dakinspectie aanvragen', stappen: 6,
-  /* 22 okt 2026: de zin van bfbouw.be (contactSub, zijn dictaat 17 okt), "dat wat er stond" */
-  disclaimer: 'Laat uw dak vakkundig controleren | Voorkom onvoorziene kosten | Weet exact wat er moet gebeuren',
+  /* 2 nov 2026 (omvormen zoals bfbouw.be 31 okt): kop "Uw dak laten vernieuwen, renoveren of isoleren?", aanbod "gratis offerte";
+     zes vragen (oppervlakte en start zoals bfbouw.be) + contactstap = 7 stappen */
+  pad: '/lp/dakwerken', soort: 'dak', kop: 'Uw dak laten vernieuwen, renoveren of isoleren?', woord: 'gratis offerte', vraag1: 'Wat voor dak heeft u?', keuzes1: ['Hellend dak', 'Plat dak'],
+  pad1: ['Hellend dak', 'Dakrenovatie / Nieuw dak', 'Ja', 'Nee', '50 tot 100 m²', 'Zo snel mogelijk'], vraag2: 'Wat moet er aan uw dak gebeuren?',
+  /* knop: dictaat Mohammed 31 okt voor bfbouw.be ("Gratis en vrijblijvende offerte aanvragen"; infinitief "aanvragen", onderzoek 23 okt) */
+  band: 'Bijna klaar! Vraag uw gratis offerte aan', knop: 'Gratis en vrijblijvende offerte aanvragen', stappen: 7,
   tegels: ['5,0', '10 jaar garantie', '15 jaar ervaring'],
-  /* 21 okt, Mohammed woordelijk: "onze dakexpert ... neemt zo snel mogelijk contact met u op" */
-  onder: 'Onze dakexpert neemt zo snel mogelijk contact met u op.',
-  vinkjes: ['Weet de exacte staat van uw dak', 'Gratis & vrijblijvende dakinspectie', 'Vakmanschap tot in de details', '6% btw-tarief (woningen > 10 jaar)'],
+  /* 31 okt, bfbouw.be: "moet uiteraard iets anders worden, over de offerte dan" */
+  onder: 'Onze dakexpert contacteert u zo snel mogelijk over uw offerte.',
+  vinkjes: ['Gratis & vrijblijvende offerte', 'Vakmanschap tot in de details', '6% btw-tarief (woningen > 10 jaar)'],
 };
 const RENO = (pad) => ({
-  pad, soort: 'reno', kop: 'Jouw complete renovatie, perfect geregeld van A tot Z.', woord: 'gratis plaatsbezoek',
+  pad, soort: 'reno', kop: 'Jouw complete renovatie, perfect geregeld van A tot Z.', woord: 'gratis offerte',
   /* 22 okt 2026, Mohammed: "2 meer vragen, bij stap 1 graag wat voor woning", "en dan die vraag van dat ze mooi kunnen aanklikken wat
      er allemaal nodig is": woning, omvang, afvinkvraag (een lijst in pad1 = die vinkjes en dan Volgende), start, budget */
   vraag1: 'Wat voor woning wilt u renoveren?', keuzes1: ['Appartement', 'Rijwoning', 'Halfopen bebouwing', 'Open bebouwing'],
   pad1: ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'], vraag2: 'Wat wilt u renoveren?',
-  band: 'Bijna klaar! Bevestig uw gratis plaatsbezoek', knop: 'Gratis plaatsbezoek aanvragen', stappen: 6,
-  disclaimer: 'Laat uw woning vakkundig bekijken | Voorkom onvoorziene kosten | Weet waar u aan toe bent',
+  band: 'Bijna klaar! Vraag uw gratis offerte aan', knop: 'Gratis en vrijblijvende offerte aanvragen', stappen: 6,
   /* 22 okt 2026: "6 vakdisciplines ... weg, bij die form", "dat is een rare trust badge" */
   tegels: ['5,0', '16 jaar ervaring'],
-  onder: 'Wij nemen zo snel mogelijk contact met u op.',
-  vinkjes: ['Weet waar u aan toe bent', 'Vaste prijs vooraf', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details'], // 22 okt 2026: geen budgetgarantie meer
+  onder: 'Wij contacteren u zo snel mogelijk over uw offerte.',
+  vinkjes: ['Gratis & vrijblijvende offerte', 'Vaste prijs vooraf', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details'], // 22 okt 2026: geen budgetgarantie meer; 2 nov: offerte
 });
 const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiewerken')];
 
@@ -274,27 +272,26 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     return uit;
   };
 
-  /* 4. Disclaimer direct onder de band van de contactstap (zoals bfbouw.be), met de vaste tekst, zonder kop "Wat u krijgt". */
-  const disclaimerFouten = (p, root, verwacht) => p.evaluate((root, verwacht) => {
+  /* 4. Offerte (2 nov 2026, omvormen zoals bfbouw.be 31 okt): de kaart is een gewone offerteaanvraag. Op de contactstap geen
+     disclaimer-vinkjes ("geen inspectie of plaatsbezoek voor het versturen") en geen regel "5,0 op Google · Gratis en vrijblijvend"
+     onder de knop (dubbel met "Gratis en vrijblijvende offerte aanvragen"); in de kaart geen tijdregel onder de kaartkop en geen
+     tweede route "Weet u al ... Klik dan hier"; nergens in de zichtbare tekst van de pagina "gratis dakinspectie" of "gratis
+     plaatsbezoek" (dat aanbod staat pas op de bedankpagina). */
+  const offerteFouten = (p, root) => p.evaluate((root) => {
     const k = document.querySelector(root);
-    const d = k?.querySelector('form .kgj-reken__disclaimer');
-    if (!d) return ['disclaimer ontbreekt op de contactstap'];
     const uit = [];
-    /* 26 okt 2026: drie vinkjes (li), elk met een eigen vinkje */
-    const punten = [...d.querySelectorAll('li')];
-    const tekst = punten.length ? punten.map((l) => l.textContent.replace(/\s+/g, ' ').trim()).join(' | ') : d.textContent.replace(/\s+/g, ' ').trim();
-    if (punten.some((l) => !l.querySelector('svg'))) uit.push('een punt van de disclaimer zonder vinkje');
-    if (tekst !== verwacht) uit.push(`disclaimer "${tekst}" in plaats van "${verwacht}"`);
-    /* 22 okt 2026, Mohammed over "Wat u krijgt:": "haal dat weg" */
-    if (/wat u krijgt/i.test(tekst)) uit.push('de disclaimer heeft nog de kop "Wat u krijgt"');
-    if (d.querySelector('b, strong')) uit.push(`de disclaimer heeft een vet deel "${d.querySelector('b, strong').textContent.trim()}"`);
-    /* 22 okt 2026: op de plek van bfbouw.be, direct onder "Bijna klaar! Bevestig ..." */
-    if (!d.previousElementSibling?.classList.contains('kgj-reken__band')) uit.push('disclaimer staat niet direct onder de band "Bijna klaar! ..."');
-    const px = parseFloat(getComputedStyle(d).fontSize);
-    if (px < 14) uit.push(`disclaimer is ${px} px (minstens 14)`);
-    if (!d.querySelector('svg')) uit.push('disclaimer zonder vinkje');
+    if (!k) return ['geen aanvraagkaart'];
+    const tekst = (el) => el.textContent.replace(/\s+/g, ' ').trim();
+    if (k.querySelector('.kgj-reken__disclaimer')) uit.push('disclaimer-vinkjes op de contactstap ("' + tekst(k.querySelector('.kgj-reken__disclaimer')) + '")');
+    if (k.querySelector('.kgj-reken__knopzeker')) uit.push('regel onder de knop "' + tekst(k.querySelector('.kgj-reken__knopzeker')) + '" (dubbel met de knoptekst)');
+    if (k.querySelector('.kgj-reken__tijd')) uit.push('tijdregel onder de kaartkop "' + tekst(k.querySelector('.kgj-reken__tijd')) + '"');
+    if (k.querySelector('.kgj-reken__offerte')) uit.push('tweede route "' + tekst(k.querySelector('.kgj-reken__offerte')) + '"');
+    const OUD = /gratis (dakinspectie|plaatsbezoek)/i;
+    const zicht = (el) => el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden';
+    const oud = [...document.querySelectorAll('h1, h2, h3, p, span, b, strong, li, a, button, summary')].filter((e) => zicht(e) && OUD.test(e.textContent) && ![...e.children].some((c) => OUD.test(c.textContent)));
+    if (oud.length) uit.push('oud aanbod in de tekst: "' + tekst(oud[0]).slice(0, 80) + '"');
     return uit;
-  }, root, verwacht);
+  }, root);
 
   /* 7. Onderaan (dak en renovatie, 22 okt 2026): klikkaart zonder keuzelijst en zonder formulier van Inspectie; één #rekenaar. */
   const ondenFouten = (p) => p.evaluate((ONDER) => {
@@ -369,7 +366,8 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     if (!link) uit.push('geen link naar de inspectiekaart');
     else {
       /* 22 okt 2026: "en die ding geen haast haal dat weg", "doe gewoon, of" */
-      if (norm(link) !== 'Of vraag uw gratis dakinspectie aan') uit.push(`link "${norm(link)}" in plaats van "Of vraag uw gratis dakinspectie aan"`);
+      /* 2 nov 2026: het aanbod is de offerte (bfbouw.be 31 okt: "Of vraag uw gratis offerte aan") */
+      if (norm(link) !== 'Of vraag uw gratis offerte aan') uit.push(`link "${norm(link)}" in plaats van "Of vraag uw gratis offerte aan"`);
       if (link.getAttribute('href') !== '#rekenaar' || !document.querySelector('#rekenaar')) uit.push(`link wijst naar "${link.getAttribute('href')}", een element dat niet bestaat`);
       if (link.getBoundingClientRect().height < 44 - 0.5) uit.push(`link is ${Math.round(link.getBoundingClientRect().height)} px hoog`);
     }
@@ -464,7 +462,6 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
   };
 
   /* 14. Contactscherm in beeld op 390x637 (zie de kop van dit script). */
-  const ZEKER = '5,0 op Google · Gratis en vrijblijvend';
   const contactInBeeldFouten = async (pg, root, css = null) => {
     const { p, ctx } = await open(pg.pad, { gsm: true, hoogte: 637, css });
     if (root === ONDER) { await p.evaluate((r) => document.querySelector(r).scrollIntoView({ block: 'start', behavior: 'instant' }), root); await wacht(300); }
@@ -475,17 +472,16 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       const r = (q) => k.querySelector(q)?.getBoundingClientRect();
       return { tel: k.querySelector('.kgj-reken__tel')?.textContent.trim(), balk: Math.round(document.querySelector('.kgj-kop').getBoundingClientRect().bottom),
         band: Math.round(r('.kgj-reken__band')?.top ?? -1), naam: Math.round(r('input[name=naam]')?.bottom ?? 9999), gsm: Math.round(r('input[name=telefoon]')?.bottom ?? 9999),
-        knop: Math.round(r('.kgj-reken__knop')?.bottom ?? 9999), zeker: k.querySelector('.kgj-reken__knopzeker')?.textContent.replace(/\s+/g, ' ').trim(),
-        zekerOnder: Math.round(r('.kgj-reken__knopzeker')?.bottom ?? 9999), vh: innerHeight };
+        mail: Math.round(r('input[name=email]')?.bottom ?? 9999), knop: Math.round(r('.kgj-reken__knop')?.bottom ?? 9999),
+        gerust: Math.round(r('.kgj-reken__gerust')?.bottom ?? 9999), vh: innerHeight };
     }, root);
     await ctx.close();
     if (m.tel !== `Stap ${pg.stappen} van ${pg.stappen}`) return [`niet op de contactstap (${m.tel})`];
     const uit = [];
     if (m.band < m.balk) uit.push(`"Bijna klaar!" onder de vaste balk (${m.band} px, balk ${m.balk} px)`);
-    for (const [naam, onder] of [['het naamveld', m.naam], ['het telefoonveld', m.gsm], ['de verzendknop', m.knop], ['de regel onder de knop', m.zekerOnder]]) {
+    for (const [naam, onder] of [['het naamveld', m.naam], ['het telefoonveld', m.gsm], ['het e-mailveld', m.mail], ['de verzendknop', m.knop], ['de regel onder de knop', m.gerust]]) {
       if (onder > m.vh) uit.push(`${naam} valt onder het scherm (onderkant ${onder} van ${m.vh} px)`);
     }
-    if (m.zeker !== ZEKER) uit.push(`regel onder de knop "${m.zeker}" in plaats van "${ZEKER}"`);
     return uit;
   };
 
@@ -596,7 +592,13 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
   };
 
   /* 11. horizontale scroll */
-  const scrollFout = (p) => p.evaluate(() => (document.documentElement.scrollWidth > innerWidth + 1 ? `horizontale scroll (${document.documentElement.scrollWidth} px breed op ${innerWidth})` : null));
+  /* 2 nov 2026: op een gsm zoomt de browser een te brede pagina uit; dan zijn scrollWidth en innerWidth allebei 407 en zag deze toets niets
+     (de waarom-knop met "Gratis en vrijblijvende offerte aanvragen" was 391 px op 390). Daarom ook tegen clientWidth (de schermbreedte). */
+  const scrollFout = (p) => p.evaluate(() => {
+    const scherm = document.documentElement.clientWidth;
+    const breed = Math.max(document.documentElement.scrollWidth, innerWidth);
+    return breed > scherm + 1 ? `horizontale scroll of uitgezoomde pagina (${breed} px breed op een scherm van ${scherm})` : null;
+  });
 
   /* Eén kaart (hero of onder) van begin tot contactstap en validatie. */
   const kaartFlow = async (p, ctx, pg, root, naam, maat) => {
@@ -613,21 +615,22 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
         velden: f ? [...f.querySelectorAll('input:not([type=hidden]), input[type=hidden]')].map((i) => i.name || (i.closest('.kgj-pg') ? 'postcode-gemeente' : '')).filter(Boolean) : [],
         selects: f ? f.querySelectorAll('select').length : 0,
         knop: f?.querySelector('button[type=submit]')?.textContent.trim(), verplicht: f?.querySelector('[name=telefoon]')?.getAttribute('aria-required'),
-        verplichtNaam: f?.querySelector('[name=naam]')?.getAttribute('aria-required'),
+        verplichtNaam: f?.querySelector('[name=naam]')?.getAttribute('aria-required'), verplichtMail: f?.querySelector('[name=email]')?.getAttribute('aria-required'),
         labels: f ? [...f.querySelectorAll('label')].map((l) => [...l.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join('').replace(/\s+/g, ' ').trim()) : [],
         onder: k.querySelector('.kgj-reken__gerust')?.textContent.replace(/\s+/g, ' ').trim() };
     }, root);
     if (c.tel !== `Stap ${pg.stappen} van ${pg.stappen}`) fouten.push(`${etiket}: contactstap teller "${c.tel}"`);
     if (c.band !== pg.band) fouten.push(`${etiket}: band "${c.band}" in plaats van "${pg.band}"`);
-    /* 22 okt 2026 (dak en renovatie): alleen Naam* en Telefoonnummer*, geen keuzelijst, en de disclaimer onder de band */
-    if (c.velden.join('|') !== 'naam|telefoon') fouten.push(`${etiket}: de contactstap heeft de velden "${c.velden.join(', ')}" in plaats van precies "naam, telefoon" (geen e-mail, geen postcode/gemeente)`);
+    /* 22 okt 2026 (dak en renovatie): Naam* en Telefoonnummer*, geen postcode. 2 nov 2026 (offerte, bfbouw.be 31 okt): E-mailadres* erbij. */
+    if (c.velden.join('|') !== 'naam|telefoon|email') fouten.push(`${etiket}: de contactstap heeft de velden "${c.velden.join(', ')}" in plaats van precies "naam, telefoon, email" (geen postcode/gemeente)`);
     if (c.selects) fouten.push(`${etiket}: de contactstap heeft ${c.selects} keuzelijst(en)`);
-    for (const f of await disclaimerFouten(p, root, pg.disclaimer)) fouten.push(`${etiket}: ${f}`);
+    if (c.verplichtMail !== 'true') fouten.push(`${etiket}: e-mailveld niet als verplicht gemarkeerd`);
+    for (const f of await offerteFouten(p, root)) fouten.push(`${etiket}: ${f}`);
     if (c.knop !== pg.knop) fouten.push(`${etiket}: knop "${c.knop}" in plaats van "${pg.knop}"`);
     if (c.verplicht !== 'true') fouten.push(`${etiket}: telefoonveld niet als verplicht gemarkeerd`);
     if (c.verplichtNaam !== 'true') fouten.push(`${etiket}: naamveld niet als verplicht gemarkeerd`);
     /* 22 okt 2026, Mohammed: "en doe naam en telefoonnummer", "niet gsm" */
-    if (c.labels.join('|') !== 'Naam *|Telefoonnummer *') fouten.push(`${etiket}: labels "${c.labels.join(' | ')}" in plaats van "Naam * | Telefoonnummer *"`);
+    if (c.labels.join('|') !== 'Naam *|Telefoonnummer *|E-mailadres *') fouten.push(`${etiket}: labels "${c.labels.join(' | ')}" in plaats van "Naam * | Telefoonnummer * | E-mailadres *"`);
     if (c.onder !== pg.onder) fouten.push(`${etiket}: regel onder de knop "${c.onder}" in plaats van "${pg.onder}"`);
     const voor = leads;
     const meldingNa = async () => { await p.evaluate((root) => document.querySelector(root + ' form button[type=submit]').click(), root); await wacht(500); return p.evaluate((root) => document.querySelector(root + ' .kgj-reken__fout')?.textContent.trim() || '', root); };
@@ -652,6 +655,14 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     const melding = await meldingNa();
     if (melding !== 'Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.') fouten.push(`${etiket}: lege gsm gaf "${melding}"`);
     if (leads !== voor) fouten.push(`${etiket}: met een lege gsm vertrok er een verzoek`);
+    /* 2 nov 2026: naam en gsm ingevuld, e-mail leeg of zonder @: de e-mailmelding, en er vertrekt niets */
+    await p.type(`${root} form [name=telefoon]`, '0400 00 00 00');
+    const zonderMail = await meldingNa();
+    if (zonderMail !== 'Vul uw e-mailadres in. Daar sturen wij uw offerte naartoe.') fouten.push(`${etiket}: lege e-mail gaf "${zonderMail}"`);
+    await p.type(`${root} form [name=email]`, 'test.kaart');
+    const fouteMail = await meldingNa();
+    if (fouteMail !== 'Dat e-mailadres lijkt niet juist. Controleer het even.') fouten.push(`${etiket}: e-mail zonder @ gaf "${fouteMail}"`);
+    if (leads !== voor) fouten.push(`${etiket}: zonder geldig e-mailadres vertrok er een verzoek`);
     await ctx.close();
   };
 
@@ -678,6 +689,14 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       console.log(`positieve controle 2: kaart 900 px lager gezien (${pc2[0]})`);
     }
     {
+      /* 11 (2 nov 2026): een knop die 1 px breder is dan het gsm-scherm (zoals de waarom-knop die dag) moet als fout gezien worden */
+      const { p, ctx } = await open('/lp/dakwerken', { gsm: true, css: '.bf-lpwaarom__knop{white-space:nowrap!important;min-width:391px!important;max-width:none!important}' });
+      const pc11 = await scrollFout(p);
+      await ctx.close();
+      if (!pc11) { console.log('ONGELDIGE METING: een knop van 391 px op een gsm van 390 werd door de scrolltoets niet gezien'); process.exit(2); }
+      console.log(`positieve controle 11: te brede knop op de gsm gezien (${pc11})`);
+    }
+    {
       const { p, ctx } = await open('/lp/dakwerken', { css: '.kgj-reken__keuze{pointer-events:none!important}' });
       const pc3 = await tikGedrag(p, DAK);
       await ctx.close();
@@ -692,21 +711,24 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       console.log(`positieve controle 4: de koppen van 19 okt geweigerd (${pc4[0]})`);
     }
     {
-      /* disclaimertoets (sinds 22 okt heeft elke kaart er een): een weggehaalde disclaimer, een geplante kop "Wat u krijgt:"
-         en een badge met het gewone vinkje moeten elk gezien worden */
+      /* offertetoets (2 nov 2026): op de echte kaart groen; een geplante disclaimer, een geplante regel onder de knop en een geplante
+         tekst "gratis dakinspectie" moeten elk gezien worden. En een badge met het gewone vinkje moet de badgetoets laten falen. */
       const { p, ctx } = await open('/lp/dakwerken');
       for (const l of DAK.pad1) await tik(p, l, HERO);
-      const goed = await disclaimerFouten(p, HERO, DAK.disclaimer);
-      if (goed.length) { console.log(`ONGELDIGE METING: de disclaimertoets faalt al op de echte kaart (${goed[0]}); de positieve controle zegt dan niets`); process.exit(2); }
-      await p.evaluate((root) => { const s = document.querySelector(root + ' .kgj-reken__disclaimer span'); const b = document.createElement('b'); b.textContent = 'Wat u krijgt:'; s?.prepend(b, ' '); }, HERO);
-      const pc8b = await disclaimerFouten(p, HERO, DAK.disclaimer);
-      await p.evaluate((root) => document.querySelector(root + ' .kgj-reken__disclaimer')?.remove(), HERO);
-      const pc8 = await disclaimerFouten(p, HERO, DAK.disclaimer);
+      const goed = await offerteFouten(p, HERO);
+      if (goed.length) { console.log(`ONGELDIGE METING: de offertetoets faalt al op de echte kaart (${goed[0]}); de positieve controle zegt dan niets`); process.exit(2); }
+      await p.evaluate((root) => {
+        const band = document.querySelector(root + ' .kgj-reken__band');
+        const d = document.createElement('ul'); d.className = 'kgj-reken__disclaimer'; d.innerHTML = '<li>Laat uw dak vakkundig controleren</li>'; band?.after(d);
+        const z = document.createElement('p'); z.className = 'kgj-reken__knopzeker'; z.textContent = '5,0 op Google · Gratis en vrijblijvend'; document.querySelector(root + ' .kgj-reken__knop')?.after(z);
+        const o = document.createElement('p'); o.textContent = 'Of vraag uw gratis dakinspectie aan'; document.querySelector('main')?.append(o);
+      }, HERO);
+      const pc8 = await offerteFouten(p, HERO);
       await p.evaluate((root) => { const s = document.querySelector(root + ' .kgj-reken__vertrouwen li svg'); s?.classList.replace([...s.classList].find((c) => /^lucide-(?!icon$)/.test(c)), 'lucide-check'); }, HERO);
       const pc10 = await badgesFouten(p, DAK);
       await ctx.close();
-      if (!pc8.length || !pc8b.length) { console.log(`ONGELDIGE METING: een contactstap zonder disclaimer (${pc8.length}) of met de kop "Wat u krijgt:" (${pc8b.length}) werd door de disclaimertoets goedgekeurd`); process.exit(2); }
-      console.log(`positieve controle 8: een kaart zonder disclaimer gezien (${pc8[0]}); met geplante kop (${pc8b[0]})`);
+      if (!pc8.some((x) => x.includes('disclaimer')) || !pc8.some((x) => x.includes('regel onder de knop')) || !pc8.some((x) => x.includes('oud aanbod'))) { console.log(`ONGELDIGE METING: een geplante disclaimer, regel onder de knop of "gratis dakinspectie" werd door de offertetoets niet allemaal gezien (${pc8.join(' | ') || 'niets'})`); process.exit(2); }
+      console.log(`positieve controle 8: geplante disclaimer, regel onder de knop en oud aanbod gezien (${pc8.join('; ')})`);
       if (!pc10.length) { console.log('ONGELDIGE METING: een gewoon vinkje bij de badges werd door de badgetoets goedgekeurd'); process.exit(2); }
       console.log(`positieve controle 10: gewoon vinkje bij de badges gezien (${pc10[0]})`);
     }
@@ -744,7 +766,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
         ['13a: een tik onderaan die niets doet', await eenStandFouten(RENO1, { css: '.kgj-reken--onder .kgj-reken__keuze{pointer-events:none!important}' }), 'kaart bovenaan (terug in beeld) op'],
         ['13b: de link naar #contact vóór de tik bovenaan', await eenStandFouten(RENO1, { linkEerst: true }), 'staat de kaart onderaan op Stap 1'],
         ['13c: keuzes onderaan 500 px lager', await eenStandFouten(RENO1, { css: '#contact .kgj-reken--aanvraag .kgj-reken__keuzes{margin-top:500px!important}' }), 'keuzes van de kaart onderaan tot'],
-        ['14: 420 px marge onder de disclaimer', await contactInBeeldFouten(DAK, HERO, '.kgj-reken--aanvraag .kgj-reken__disclaimer{margin-bottom:420px!important}'), 'valt onder het scherm'],
+        ['14: 420 px marge onder de band', await contactInBeeldFouten(DAK, HERO, '.kgj-reken--aanvraag .kgj-reken__band{margin-bottom:420px!important}'), 'valt onder het scherm'],
         ['15a: een stap op de vaste knop vóór de eerste tik', await vasteKnopStapFouten(DAK, { plant: 'voor' }), 'voordat de bezoeker iets aantikte'],
         ['15b: geen stap op de vaste knop na twee antwoorden', await vasteKnopStapFouten(DAK, { plant: 'na' }), 'vaste knop na twee antwoorden'],
         ['16: keuzes 500 px lager', await alleStappenFouten(RENO1, HERO, '.kgj-reken--aanvraag .kgj-reken__keuzes{margin-top:500px!important}'), 'laatste knop tot'],
@@ -832,7 +854,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       const { p, ctx } = await open('/lp/dakwerken?utm_term=plat%20dak%20renoveren');
       const m = await p.evaluate(() => ({ h1: document.querySelector('h1')?.textContent.trim().replace(/\s+/g, ' ') }));
       const s = await stand(p);
-      for (const f of kopFouten(m.h1, 'Dé specialist voor uw platte dak')) fouten.push(`message match: ${f}`);
+      for (const f of kopFouten(m.h1, DAK.kop)) fouten.push(`message match: ${f}`);
       if (s.vraag !== DAK.vraag2 || s.tel !== `Stap 2 van ${DAK.stappen}` || !s.terug) fouten.push(`message match: kaart ${JSON.stringify(s)} (verwacht vraag 2, Stap 2 van ${DAK.stappen}, Terug)`);
       await p.evaluate(() => document.querySelector('.kgj-reken--aanvraag .kgj-reken__terug')?.click());
       await wacht(450);
@@ -858,6 +880,6 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
   if (metingen < verwacht) { console.log(`ONGELDIGE METING: ${metingen} metingen (verwacht ${verwacht})`); process.exit(2); }
   console.log(`check-lp-aanvraag: dak en 2 renovatiepagina's (kaart bovenaan en onderaan) x 2 maten + message match (${basis}), ${leads} leadverzoeken`);
   if (fouten.length) { fouten.forEach((f) => console.log('  FOUT: ' + f)); process.exit(1); }
-  console.log('  kop zoals afgesproken, geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag (bovenaan en onderaan), contactstap alleen naam en telefoonnummer + disclaimer zonder kop, naam verplicht, lege gsm, badges met eigen iconen, geen vrij moment en geen agenda-verzoek, belblok op dak, geen horizontale scroll, één stand voor de kaart bovenaan en onderaan, contactscherm en elke stap volledig in beeld op 390x637, vaste knop met de stap, geen sprong onderaan zonder scroll anchoring');
+  console.log('  kop zoals afgesproken, geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag (bovenaan en onderaan), contactstap naam, telefoonnummer en e-mailadres (verplicht) zonder disclaimer of regel onder de knop, geen tijdregel, geen tweede route, nergens "gratis dakinspectie/plaatsbezoek", naam verplicht, lege gsm, lege of foute e-mail, badges met eigen iconen, geen vrij moment en geen agenda-verzoek, belblok op dak, geen horizontale scroll, één stand voor de kaart bovenaan en onderaan, contactscherm en elke stap volledig in beeld op 390x637, vaste knop met de stap, geen sprong onderaan zonder scroll anchoring');
   process.exit(0);
 })().catch((e) => { console.log('ONGELDIGE METING: ' + e.message); process.exit(2); });

@@ -7,7 +7,8 @@ import Inspectie from './Inspectie';
 import Werkspoor from './Werkspoor';
 import { Icoon } from './Iconen';
 import { IcChevron } from '../replica/Iconen';
-import { DAKWERKEN, type KgjInhoud, type Sectie, type StapIcoon } from './inhoud';
+import { DAKWERKEN, type KgjInhoud, type Sectie, type StapIcoon, type Zekerheid } from './inhoud';
+import { BadgeEuro, CalendarCheck, ShieldCheck, UserCheck } from 'lucide-react';
 import { CLARITY_PROJECT, laadClarity, meldClarity } from '@/lib/clarity';
 import logoWit from '@/assets/bf/logo-wit-440.webp';
 import logoInk from '@/assets/bf/logo-ink-440.webp';
@@ -172,19 +173,54 @@ const metKop = (t: string) => {
 
 /* De kop van de hero: tekst tussen [ ] in de merkkleur met de BF-streep eronder, \n = vaste breuk (LpKgj r.354-358).
    kop2 = tweede regel in gedempt wit, zoals de kop op de homepage (blokken.ts hero: bf-hero__kop2). */
+/* 2 nov 2026 (zoals bfbouw.be 31 okt, Mohammed: "doe gewoon in oranje die twee eerste woorden en dan de rest normaal"): het accent is
+   alleen de kleur, geen streep meer. Het accentwoord en een leesteken direct erachter ("vernieuwen,") breken niet los (bf-lphero__nw). */
 function HeroKop({ kop, kop2 }: { kop: string; kop2?: string }) {
+  const delen = kop.split(/\[([^\]]+)\]([,?.!]?)/);
+  const stukken: React.ReactNode[] = [];
+  for (let i = 0; i < delen.length; i += 3) {
+    delen[i].split('\n').forEach((regel, j, alle) => stukken.push(<Fragment key={`t${i}-${j}`}>{regel}{j < alle.length - 1 && <>{' '}<br /></>}</Fragment>));
+    if (i + 1 < delen.length) stukken.push(<span className="bf-lphero__nw" key={`w${i}`}><span className="bf-lphero__accent">{delen[i + 1]}</span>{delen[i + 2]}</span>);
+  }
   return (
     <h1 className="bf-lphero__kop">
-      {kop.split(/\[([^\]]+)\]/).map((deel, i) => (i % 2
-        ? (
-          <span className="bf-lphero__accent" key={i}>{deel}
-            <svg className="bf-lphero__streep" viewBox="0 0 300 18" preserveAspectRatio="none" aria-hidden="true"><path d="M4 12C70 4 160 3 296 9" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" /></svg>
-          </span>
-        )
-        : deel.split('\n').map((regel, j, alle) => <Fragment key={`${i}-${j}`}>{regel}{j < alle.length - 1 && <>{' '}<br /></>}</Fragment>)))}
+      {stukken}
       {kop2 && <>{' '}<span className="bf-lphero__kop2">{kop2}</span></>}
     </h1>
   );
+}
+
+/* Iconen van de zekerhedenstrook (2 nov 2026, zoals bfbouw.be zekerStrook): lijnstijl van lucide, zoals de badges in de kaart. */
+const ZEKER_ICOON: Record<Zekerheid['icoon'], JSX.Element> = {
+  prijs: <BadgeEuro aria-hidden="true" />, aanspreek: <UserCheck aria-hidden="true" />,
+  schild: <ShieldCheck aria-hidden="true" />, kalender: <CalendarCheck aria-hidden="true" />,
+};
+
+/* Dienstkaart met uitleg (2 nov 2026, zoals bfbouw.be 31 okt: "als je klikt op dienstkaart, ook op computer, niet alleen op lees meer,
+   dat moet de kaart openen"; "je moet scrollen naar de leesding dat je opent dan, ook op telefoon"). Een tik op de hele kaart klapt de
+   uitleg open of dicht; na het openen komt het einde van de uitleg in beeld, het begin verdwijnt nooit onder de vaste kop. */
+function klapKaart(e: React.MouseEvent<HTMLLIElement>) {
+  const doel = e.target as HTMLElement;
+  if (doel.closest('summary, a, button')) return;
+  if (String(window.getSelection?.() ?? '')) return;
+  const info = e.currentTarget.querySelector('details');
+  if (info) info.open = !info.open;
+}
+function naarUitleg(e: React.SyntheticEvent<HTMLDetailsElement>) {
+  const info = e.currentTarget;
+  if (!info.open) return;
+  const stil = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  requestAnimationFrame(() => {
+    const st = document.querySelector<HTMLElement>('.bf-lpsticky.bf-is-zichtbaar');
+    const sr = st?.getBoundingClientRect();
+    const balk = sr && sr.height > 0 && sr.top < window.innerHeight ? sr.top : window.innerHeight;
+    const r = info.getBoundingClientRect();
+    const boven = Math.max(0, document.querySelector('.kgj-kop')?.getBoundingClientRect().bottom ?? 0) + 12;
+    let dy = 0;
+    if (r.bottom > balk - 16) dy = r.bottom - (balk - 16);
+    if (r.top - dy < boven) dy = r.top - boven;
+    if (Math.abs(dy) > 4) window.scrollBy({ top: dy, behavior: stil ? 'auto' : 'smooth' });
+  });
 }
 
 /* De vaste knop onderaan de telefoon (BF lpsticky). Is de bezoeker aan de aanvraag begonnen en nog niet klaar, dan zegt de knop
@@ -192,8 +228,10 @@ function HeroKop({ kop, kop2 }: { kop: string; kop2?: string }) {
    terwijl hij verder leest (23 okt 2026, Mohammed: "algemene psychologie cro optimalisatie toepassen", "optimalisatie van de knoppen").
    "Verder met ..." zoals de winnaar van de Nederlandstalige test van Lucardi ("Verder met bestellen", +7,3%); een kaal "Ga verder"
    verloor in de enige test met cijfers (Insound). */
-function VasteKnop({ tekst, zichtbaar, totaal, onClick }: { tekst: string; zichtbaar: boolean; totaal: number; onClick: () => void }) {
+function VasteKnop({ tekst, zichtbaar, vragen, onClick }: { tekst: string; zichtbaar: boolean; vragen?: NonNullable<KgjInhoud['aanvraag']>['vragen']; onClick: () => void }) {
   const voortgang = useAanvraagVoortgang();
+  /* Zelfde telling als de kaart (Aanvraag.tsx): een vraag met nietAls valt weg na dat antwoord (Isolatie bij stap 2), + de contactstap. */
+  const totaal = vragen ? vragen.filter((v) => !v.nietAls || !Object.entries(v.nietAls).some(([k, l]) => l.includes(voortgang?.antwoorden[k] ?? ''))).length + 1 : 0;
   const bezig = !!voortgang && totaal > 1 && voortgang.aangetikt && voortgang.stap > 0 && !voortgang.verstuurd;
   return (
     <button type="button" className={`bf-lpsticky${zichtbaar ? ' bf-is-zichtbaar' : ''}${bezig ? ' bf-lpsticky--bezig' : ''}`} onClick={onClick} tabIndex={zichtbaar ? 0 : -1} aria-hidden={!zichtbaar}>
@@ -522,8 +560,10 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         <div className="bf-sraam">
           <h2 className="bf-h2 bf-h2--midden" id="voordelen-kop">{inhoud.voordelen.kop}</h2>
           <div className="bf-waarden bf-waarden--3">
-            {inhoud.voordelen.lijst.map((v) => (
+            {/* 2 nov 2026: met het grote grijze nummer 01-03 rechtsboven, zoals bfbouw.be lpvoordelen (waarde__nr, aria-hidden versiering). */}
+            {inhoud.voordelen.lijst.map((v, i) => (
               <article className="bf-waarde" key={v.titel}>
+                <span className="bf-waarde__nr" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                 <span className="bf-waarde__icoon"><Icoon naam={v.icoon} /></span>
                 <h3>{v.titel}</h3><p>{v.tekst}</p>
               </article>
@@ -543,7 +583,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           {inhoud.diensten.onder && <p className="bf-lpsectie__onder">{inhoud.diensten.onder}</p>}
           <ul className={`bf-dkaarten__raster bf-dkaarten__raster--lp${dienstFotos ? '' : ' bf-lpdiensten--kort'}`}>
             {inhoud.diensten.lijst.map((d) => (
-              <li className="bf-dkaart" id={d.id} key={d.id}>
+              <li className={`bf-dkaart${d.meer?.length ? ' bf-dkaart--meer' : ''}`} id={d.id} key={d.id} onClick={d.meer?.length ? klapKaart : undefined}>
                 {dienstFotos ? (
                   <div className="bf-dkaart__media">
                     {d.foto
@@ -554,11 +594,30 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                 <div className="bf-dkaart__body">
                   <h3>{d.naam}</h3>
                   {d.tekst && <p>{d.tekst}</p>}
+                  {/* 2 nov 2026 (zoals bfbouw.be 31 okt): "Lees meer" klapt de uitleg open in de kaart, "Minder tonen" klapt dicht. */}
+                  {!!d.meer?.length && (
+                    <details className="bf-dkaart__info" onToggle={naarUitleg}>
+                      <summary aria-label={`${d.naam}: lees meer`}>
+                        <span className="bf-dkaart__info-open">Lees meer</span><span className="bf-dkaart__info-dicht">Minder tonen</span><IcPijl />
+                      </summary>
+                      {d.meer.map((t) => <p key={t}>{t}</p>)}
+                    </details>
+                  )}
                 </div>
               </li>
             ))}
           </ul>
         </div>
+      </section>
+    ),
+
+    /* Zekerhedenstrook (2 nov 2026, zoals bfbouw.be zekerStrook van 31 okt): wit vlak met dunne randen, de zekerheden met icoon op
+       één rij; op de gsm tegels van twee naast elkaar. */
+    zekerheden: inhoud.zekerheden && inhoud.zekerheden.length > 0 && (
+      <section className="bf-zeker" aria-label="Uw zekerheden bij AB Bouw Groep">
+        <ul className={`bf-zeker__rij bf-zeker__rij--${inhoud.zekerheden.length}`}>
+          {inhoud.zekerheden.map((z) => <li key={z.tekst}><span className="bf-zeker__ic">{ZEKER_ICOON[z.icoon]}</span><b>{z.tekst}</b></li>)}
+        </ul>
       </section>
     ),
 
@@ -867,7 +926,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       {/* 23 okt 2026 (knoppenonderzoek, zie inhoud.inspectie.knop): op de aanvraagpagina's dezelfde tekst als de verzendknop, met werkwoord;
           cta.naam blijft de naam van de aanvraag in het CRM ("Aanvraag gratis plaatsbezoek"). */}
       <VasteKnop tekst={heroAanvraag ? inhoud.inspectie.knop : (inhoud.cta.naam ?? inhoud.cta.kop)} zichtbaar={balk} onClick={naarFormulier}
-        totaal={heroAanvraag ? (inhoud.aanvraag?.vragen.length ?? 0) + 1 : 0} />
+        vragen={heroAanvraag ? inhoud.aanvraag?.vragen : undefined} />
       <a className={`bf-belzweef${balk ? ' bf-is-zichtbaar' : ''}`} href={CONTACT.phone.href} aria-label={'Bel ' + CONTACT.phone.display} tabIndex={balk ? 0 : -1} aria-hidden={!balk}><IcTel /></a>
 
 

@@ -19,9 +19,10 @@
       ],
       "velden": {
         "naam": "Test Kaart",
-        "telefoon": "0400 00 00 07"
+        "telefoon": "0400 00 00 07",
+        "email": "test@kaart.be"
       },
-      "formStart": "lp:aannemer-renovatiewerken:inspectie",
+      "formStart": "lp:aannemer-renovatiewerken:offerte",
       "toestemming": true,
       "bedankt": "/bedankt/totaalrenovatie",
       "fouten": {
@@ -33,12 +34,13 @@
         "firstName": "Test",
         "lastName": "Kaart",
         "name": "Test Kaart",
+        "email": "test@kaart.be",
         "phone": "0400 00 00 07",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat voor woning wilt u renoveren: Halfopen bebouwing · Wat wilt u renoveren: Specifieke werken · Wat moet er allemaal gebeuren: Muren en plafonds · Wanneer wilt u starten: Ik verken nog · Welk budget heeft u in gedachten: € 75.000 tot € 150.000",
+        "aanvullende_info": "Aanvraag gratis offerte · Wat voor woning wilt u renoveren: Halfopen bebouwing · Wat wilt u renoveren: Specifieke werken · Wat moet er allemaal gebeuren: Muren en plafonds · Wanneer wilt u starten: Ik verken nog · Welk budget heeft u in gedachten: € 75.000 tot € 150.000",
         "bron_lead": "Website",
-        "bron_lead_detail": "lp:aannemer-renovatiewerken:inspectie",
+        "bron_lead_detail": "lp:aannemer-renovatiewerken:offerte",
         "page_path": "/lp/aannemer-renovatiewerken",
         "landing_division": "ab_construct",
         "source": "landing_page",
@@ -52,18 +54,19 @@
         "firstName": "Test",
         "lastName": "Kaart",
         "name": "Test Kaart",
+        "email": "test@kaart.be",
         "phone": "0400 00 00 07",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat voor woning wilt u renoveren: Halfopen bebouwing · Wat wilt u renoveren: Specifieke werken · Wat moet er allemaal gebeuren: Muren en plafonds · Wanneer wilt u starten: Ik verken nog · Welk budget heeft u in gedachten: € 75.000 tot € 150.000",
+        "aanvullende_info": "Aanvraag gratis offerte · Wat voor woning wilt u renoveren: Halfopen bebouwing · Wat wilt u renoveren: Specifieke werken · Wat moet er allemaal gebeuren: Muren en plafonds · Wanneer wilt u starten: Ik verken nog · Welk budget heeft u in gedachten: € 75.000 tot € 150.000",
         "bron_lead": "Website",
-        "bron_lead_detail": "lp:aannemer-renovatiewerken:inspectie",
+        "bron_lead_detail": "lp:aannemer-renovatiewerken:offerte",
         "page_path": "/lp/aannemer-renovatiewerken",
         "landing_division": "ab_construct",
         "source": "landing_page",
         "utm_term": "renovatiebedrijf"
       },
-      "metingInUitFlows": "22 okt 2026: de klikkaart onderaan (Aanvraag.tsx plek=\"onder\", sleutel van het oude formulier met keuzelijsten): zelfde bron_lead_detail en form_start-label als dat formulier (lp:<pagina>:inspectie, zonder :hero), contactstap alleen Naam* en Gsm*, dus zonder e-mail, postalCode, city en adres_project; aanvullende_info met de drie klikvragen. 22 okt 2026 (Mohammed: \"2 meer vragen, bij stap 1 graag wat voor woning\", \"en dan die vraag van dat ze mooi kunnen aanklikken wat er allemaal nodig is\"): vraag 1 \"Wat voor woning wilt u renoveren?\" en na de omvang de afvinkvraag \"Wat moet er allemaal gebeuren?\" (antwoorden @vink:<keuze> en @verder); in aanvullende_info de vinkjes in de volgorde van de keuzes, of \"Alles (totaalrenovatie)\"."
+      "metingInUitFlows": "22 okt 2026: de klikkaart onderaan (Aanvraag.tsx plek=\"onder\", sleutel van het oude formulier met keuzelijsten): zelfde bron_lead_detail en form_start-label als dat formulier (lp:<pagina>:inspectie, zonder :hero), contactstap alleen Naam* en Gsm*, dus zonder e-mail, postalCode, city en adres_project; aanvullende_info met de drie klikvragen. 22 okt 2026 (Mohammed: \"2 meer vragen, bij stap 1 graag wat voor woning\", \"en dan die vraag van dat ze mooi kunnen aanklikken wat er allemaal nodig is\"): vraag 1 \"Wat voor woning wilt u renoveren?\" en na de omvang de afvinkvraag \"Wat moet er allemaal gebeuren?\" (antwoorden @vink:<keuze> en @verder); in aanvullende_info de vinkjes in de volgorde van de keuzes, of \"Alles (totaalrenovatie)\". 2 nov 2026 (omvormen zoals bfbouw.be 31 okt, opdracht Mohammed \"landingspaginas van ab omvormen ... nu ab\"): offerte i.p.v. dakinspectie/plaatsbezoek, bron_lead_detail :offerte (GHL W01b standaard-sms), \"Aanvraag gratis offerte\", E-mailadres* op de contactstap."
     },
     {
       "naam": "aanvraag-hero",
@@ -82,9 +85,10 @@
       ],
       "velden": {
         "naam": "Test Kaart",
-        "telefoon": "0400 00 00 08"
+        "telefoon": "0400 00 00 08",
+        "email": "test@kaart.be"
       },
-      "formStart": "lp:aannemer-renovatiewerken:inspectie:hero",
+      "formStart": "lp:aannemer-renovatiewerken:offerte:hero",
       "toestemming": false,
       "bedankt": "/bedankt/totaalrenovatie",
       "fouten": {
@@ -96,12 +100,13 @@
         "firstName": "Test",
         "lastName": "Kaart",
         "name": "Test Kaart",
+        "email": "test@kaart.be",
         "phone": "0400 00 00 08",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat voor woning wilt u renoveren: Rijwoning · Wat wilt u renoveren: Aanbouw · Wat moet er allemaal gebeuren: Ramen en deuren, Elektriciteit · Wanneer wilt u starten: Volgend jaar · Welk budget heeft u in gedachten: Meer dan € 150.000",
+        "aanvullende_info": "Aanvraag gratis offerte · Wat voor woning wilt u renoveren: Rijwoning · Wat wilt u renoveren: Aanbouw · Wat moet er allemaal gebeuren: Ramen en deuren, Elektriciteit · Wanneer wilt u starten: Volgend jaar · Welk budget heeft u in gedachten: Meer dan € 150.000",
         "bron_lead": "Website",
-        "bron_lead_detail": "lp:aannemer-renovatiewerken:inspectie",
+        "bron_lead_detail": "lp:aannemer-renovatiewerken:offerte",
         "page_path": "/lp/aannemer-renovatiewerken",
         "landing_division": "ab_construct",
         "source": "landing_page",
@@ -115,18 +120,19 @@
         "firstName": "Test",
         "lastName": "Kaart",
         "name": "Test Kaart",
+        "email": "test@kaart.be",
         "phone": "0400 00 00 08",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis plaatsbezoek · Wat voor woning wilt u renoveren: Rijwoning · Wat wilt u renoveren: Aanbouw · Wat moet er allemaal gebeuren: Ramen en deuren, Elektriciteit · Wanneer wilt u starten: Volgend jaar · Welk budget heeft u in gedachten: Meer dan € 150.000",
+        "aanvullende_info": "Aanvraag gratis offerte · Wat voor woning wilt u renoveren: Rijwoning · Wat wilt u renoveren: Aanbouw · Wat moet er allemaal gebeuren: Ramen en deuren, Elektriciteit · Wanneer wilt u starten: Volgend jaar · Welk budget heeft u in gedachten: Meer dan € 150.000",
         "bron_lead": "Website",
-        "bron_lead_detail": "lp:aannemer-renovatiewerken:inspectie",
+        "bron_lead_detail": "lp:aannemer-renovatiewerken:offerte",
         "page_path": "/lp/aannemer-renovatiewerken",
         "landing_division": "ab_construct",
         "source": "landing_page",
         "utm_term": "renovatiebedrijf"
       },
-      "metingInUitFlows": "22 okt 2026: de aanvraagkaart bovenaan (Aanvraag.tsx): drie klikvragen (renovatie, start, budget) en alleen Naam* en Gsm* in de contactstap; verder gelijk aan het formulier onderaan (zelfde bron_lead_detail, veldvolgorde van leads.ts buildBody). 22 okt 2026 (Mohammed: \"2 meer vragen, bij stap 1 graag wat voor woning\", \"en dan die vraag van dat ze mooi kunnen aanklikken wat er allemaal nodig is\"): vraag 1 \"Wat voor woning wilt u renoveren?\" en na de omvang de afvinkvraag \"Wat moet er allemaal gebeuren?\" (antwoorden @vink:<keuze> en @verder); in aanvullende_info de vinkjes in de volgorde van de keuzes, of \"Alles (totaalrenovatie)\"."
+      "metingInUitFlows": "22 okt 2026: de aanvraagkaart bovenaan (Aanvraag.tsx): drie klikvragen (renovatie, start, budget) en alleen Naam* en Gsm* in de contactstap; verder gelijk aan het formulier onderaan (zelfde bron_lead_detail, veldvolgorde van leads.ts buildBody). 22 okt 2026 (Mohammed: \"2 meer vragen, bij stap 1 graag wat voor woning\", \"en dan die vraag van dat ze mooi kunnen aanklikken wat er allemaal nodig is\"): vraag 1 \"Wat voor woning wilt u renoveren?\" en na de omvang de afvinkvraag \"Wat moet er allemaal gebeuren?\" (antwoorden @vink:<keuze> en @verder); in aanvullende_info de vinkjes in de volgorde van de keuzes, of \"Alles (totaalrenovatie)\". 2 nov 2026 (omvormen zoals bfbouw.be 31 okt, opdracht Mohammed \"landingspaginas van ab omvormen ... nu ab\"): offerte i.p.v. dakinspectie/plaatsbezoek, bron_lead_detail :offerte (GHL W01b standaard-sms), \"Aanvraag gratis offerte\", E-mailadres* op de contactstap."
     }
   ]
 }
