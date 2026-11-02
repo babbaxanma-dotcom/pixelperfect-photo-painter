@@ -276,14 +276,23 @@ export const TOTAALRENOVATIE_REKENAAR: KgjInhoud = {
        De uitleg per kaart zijn zijn eigen zinnen uit die blauwdrukken. Echte werffoto's van AB. */
     kop: 'Onze expertises',
     onder: '',
+    /* 2 nov 2026, Mohammed: "bij onze expertises moet ook lees meer met uitleg", "redeneer gewoon", "geen onnutige ai slop".
+       De kaart zelf blijft zonder tekst (27 sep: "zonder al te veel tekst"); de uitleg staat achter "Lees meer", zoals op /lp/dakwerken.
+       Eerste versie afgekeurd ("nee ai slop copy", "creeer vlotte copy"); tweede versie na onderzoek van 22 Vlaamse renovatie-aannemers
+       en copy-experts: wat er met het huis gebeurt en wat de bewoner eraan heeft, in lopende zinnen met "we" en "u". Zonder de versleten
+       sectorwoorden (droom, van A tot Z, zorgeloos, ontzorgen) en zonder de vergunning (staat al in de FAQ van 5 okt). */
     lijst: [
       { id: 'bouw', icoon: 'dienst-nieuw', naam: 'Totaalrenovaties & nieuwbouw', tekst: '',
+        meer: ['Bij een totaalrenovatie strippen we uw woning tot op de ruwbouw en bouwen we ze opnieuw op, met nieuwe technieken en isolatie. Zo woont u straks in een huis dat vanbinnen helemaal nieuw is en een pak minder energie verbruikt.', 'Bouwt u nieuw, dan werken we op de plannen van uw architect.'],
         foto: { src: eigen9022, alt: 'Open leefruimte met keukeneiland, eettafel en glaspui naar de tuin, door AB Bouw Groep' } },
       { id: 'aanbouw', icoon: 'dienst-ruwbouw', naam: 'Aanbouwen & uitbreidingen', tekst: '',
+        meer: ['Wordt uw woning te klein, of wilt u een grotere leefkeuken met zicht op de tuin? Met een aanbouw of een extra verdieping krijgt u die ruimte erbij, in de woning waar u nu al graag woont.', 'Het nieuwe deel sluiten we aan op uw bestaande woning, en binnen voelt het daarna alsof het er altijd al stond.'],
         foto: { src: uitbouwNa, alt: 'Afgewerkte uitbouw met witte crepi en een schuifraam over de volle breedte, door AB Bouw Groep' } },
       { id: 'dak-gevel', icoon: 'dienst-renovatie', naam: 'Dak- en gevelwerken', tekst: '',
+        meer: ['Dak en gevel pakken we samen aan, in één werf en met één stelling rond uw woning. Laat u meteen mee isoleren, dan blijft de warmte voortaan in huis en ziet uw woning er weer verzorgd uit.'],
         foto: { src: dakNa, alt: 'Vernieuwd pannendak met dakvensters, door AB Bouw Groep' } },
       { id: 'badkamer', icoon: 'afd-bad', naam: 'Badkamer & interieur', tekst: '',
+        meer: ['Uw oude badkamer breken we volledig uit en bouwen we opnieuw op, tot u er de eerste keer in kunt douchen. Ook die inloopdouche waar u al lang aan denkt, krijgt daarbij een plek.', 'In de rest van uw woning werken we de vloeren en plafonds af, in dezelfde stijl als uw nieuwe badkamer.'],
         foto: { src: eigen9025, alt: 'Inloopdouche met marmerlook-tegels en een zwevend wastafelmeubel, door AB Bouw Groep' } },
     ],
   },

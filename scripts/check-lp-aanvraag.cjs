@@ -44,7 +44,9 @@
  *      (22 okt 2026, Mohammed: "haal weg bij abgroep die volgende moment");
  *   9. badges: de vertrouwensrij in de kaart is drie tegels met een icoon en de teksten/cijfers blijven letterlijk
  *      (renovatie "5,0", "16 jaar ervaring", zonder "6 vakdisciplines"; dak "5,0", "10 jaar garantie", "15 jaar ervaring"); de drie
- *      vinkjes letterlijk, elk met een eigen icoon; "5,0 op Google" in de hero;
+ *      vinkjes letterlijk; "5,0 op Google" in de hero. Sinds 2 nov 2026 (Mohammed: "door al die tekst en iconen eronder weet je
+ *      niet goed dat je moet klikken", "deel aub op zoals bf") de indeling van bfbouw.be: elk vinkje hetzelfde kleine vinkje
+ *      (lucide-check, max 22 px), de cijfers zonder kader of vlak; alleen de keuzes zien eruit als een knop;
  *  10. belblok (alleen /lp/dakwerken, 22 okt 2026): kop "In nood?" (eerst "Lekt uw dak?"), knop "Bel direct <nummer>" met dezelfde tel:-href als
  *      de belknop in de kop, link "Of vraag uw gratis dakinspectie aan" naar #rekenaar; staat buiten de hero, na de
  *      hero, binnen de eerste 1500 px op de gsm, zonder schaduw en kaart; geen "24/7", "meteen", "binnen", tijden ("nood" mag sinds 22 okt: zijn kop);
@@ -318,8 +320,9 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     return uit;
   };
 
-  /* 9. Badges (dak en renovatie, 22 okt 2026): tegels met iconen, teksten en cijfers letterlijk gelijk; elk vinkje een eigen
-     icoon (geen twee keer hetzelfde, geen gewoon vinkje). */
+  /* 9. Badges (dak en renovatie, 22 okt 2026): teksten en cijfers letterlijk gelijk, elk cijfer met een icoon. 2 nov 2026 (Mohammed:
+     "door al die tekst en iconen eronder weet je niet goed dat je moet klikken", "deel aub op zoals bf"): zoals bfbouw.be (rk__vinkjes,
+     rk__badges) elk vinkje hetzelfde kleine vinkje en de cijfers zonder kader of vlak. Vervangt "elk vinkje een eigen icoon" (22 okt). */
   const badgesFouten = (p, pg) => p.evaluate((pg, HERO) => {
     const uit = [];
     const k = document.querySelector(HERO);
@@ -334,7 +337,11 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     if (vinkjes.join('|') !== pg.vinkjes.join('|')) uit.push(`vinkjes "${vinkjes.join(' | ')}" in plaats van "${pg.vinkjes.join(' | ')}"`);
     if (li.some((l) => !l.querySelector('svg'))) uit.push('een vinkje heeft geen icoon');
     const iconen = li.map((l) => [...(l.querySelector('svg')?.classList ?? [])].find((c) => /^lucide-(?!icon$)/.test(c)) ?? '');
-    if (new Set(iconen).size !== iconen.length || iconen.some((c) => !c || c === 'lucide-check')) uit.push(`de vinkjes hebben niet elk een eigen icoon (${iconen.join(', ')})`);
+    if (iconen.some((c) => c !== 'lucide-check')) uit.push(`de vinkjes hebben een eigen icoon in plaats van het vinkje van bfbouw.be (${iconen.join(', ')})`);
+    const groot = li.map((l) => l.querySelector('svg')?.getBoundingClientRect().height ?? 0).filter((h) => h > 22);
+    if (groot.length) uit.push(`${groot.length} vinkje(s) groter dan 22 px (${groot.map(Math.round).join(', ')} px); bfbouw.be: 20 px`);
+    const kader = tegels.filter((t) => { const st = getComputedStyle(t); return !/^(transparent|rgba(0, 0, 0, 0))$/.test(st.backgroundColor) || st.boxShadow !== 'none'; });
+    if (kader.length) uit.push(`${kader.length} cijfer(s) in de vertrouwensrij staan in een kader of vlak (bfbouw.be: zonder kader)`);
     const g = document.querySelector('.bf-lphero__google b')?.textContent.trim();
     if (g !== '5,0 op Google') uit.push(`Google-badge in de hero "${g}" in plaats van "5,0 op Google"`);
     return uit;
@@ -724,13 +731,16 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
         const o = document.createElement('p'); o.textContent = 'Of vraag uw gratis dakinspectie aan'; document.querySelector('main')?.append(o);
       }, HERO);
       const pc8 = await offerteFouten(p, HERO);
-      await p.evaluate((root) => { const s = document.querySelector(root + ' .kgj-reken__vertrouwen li svg'); s?.classList.replace([...s.classList].find((c) => /^lucide-(?!icon$)/.test(c)), 'lucide-check'); }, HERO);
+      await p.evaluate((root) => {
+        const s = document.querySelector(root + ' .kgj-reken__vertrouwen li svg'); s?.classList.replace([...s.classList].find((c) => /^lucide-(?!icon$)/.test(c)), 'lucide-award');
+        const t = document.querySelector(root + ' .kgj-reken__trust li:last-child'); if (t) { t.style.background = '#faf6ec'; t.style.boxShadow = 'inset 0 0 0 1px #eadfc2'; }
+      }, HERO);
       const pc10 = await badgesFouten(p, DAK);
       await ctx.close();
       if (!pc8.some((x) => x.includes('disclaimer')) || !pc8.some((x) => x.includes('regel onder de knop')) || !pc8.some((x) => x.includes('oud aanbod'))) { console.log(`ONGELDIGE METING: een geplante disclaimer, regel onder de knop of "gratis dakinspectie" werd door de offertetoets niet allemaal gezien (${pc8.join(' | ') || 'niets'})`); process.exit(2); }
       console.log(`positieve controle 8: geplante disclaimer, regel onder de knop en oud aanbod gezien (${pc8.join('; ')})`);
-      if (!pc10.length) { console.log('ONGELDIGE METING: een gewoon vinkje bij de badges werd door de badgetoets goedgekeurd'); process.exit(2); }
-      console.log(`positieve controle 10: gewoon vinkje bij de badges gezien (${pc10[0]})`);
+      if (!pc10.some((x) => x.includes('eigen icoon')) || !pc10.some((x) => x.includes('kader'))) { console.log(`ONGELDIGE METING: een eigen icoon bij een vinkje of een cijfer in een kader werd door de badgetoets niet allebei gezien (${pc10.join(' | ') || 'niets'})`); process.exit(2); }
+      console.log(`positieve controle 10: eigen icoon bij een vinkje en cijfer in een kader gezien (${pc10.join('; ')})`);
     }
     {
       /* 8. een geplante "Eerstvolgend"-regel en een geplante free-slots-aanvraag moeten gevonden worden */

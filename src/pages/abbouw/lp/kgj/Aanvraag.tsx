@@ -526,10 +526,9 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
 
       {a.vertrouwen && a.vertrouwen.length > 0 && (
         <ul className="kgj-reken__vertrouwen">
-          {a.vertrouwen.map((v, i) => {
-            const Teken = a.badges ? badgeIcoon(v, i) : Check;
-            return <li key={v}><Teken aria-hidden="true" />{v}</li>;
-          })}
+          {/* 2 nov 2026, Mohammed: "door al die tekst en iconen eronder weet je niet goed dat je moet klikken", "deel aub op zoals bf":
+              een klein vinkje per punt zoals bfbouw.be (rk__vinkjes), geen eigen icoon meer dat op een keuze lijkt. */}
+          {a.vertrouwen.map((v) => <li key={v}><Check aria-hidden="true" />{v}</li>)}
         </ul>
       )}
       {/* Trustrij zoals op de rekenaarkaart (Google 5,0 + sterren, dan de cijfers). Nooit het aantal reviews. */}

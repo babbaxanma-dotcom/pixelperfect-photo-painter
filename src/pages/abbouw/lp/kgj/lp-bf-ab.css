@@ -1168,6 +1168,8 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
 .bf.bf-lp .bf-dkaart__info[open] .bf-dkaart__info-dicht { display: inline; }
 .bf.bf-lp .bf-dkaart__info summary:hover { text-decoration: underline; text-underline-offset: calc(4 * var(--u)); }
 .bf.bf-lp .bf-dkaart__info p { margin-top: calc(4 * var(--u)); font-size: calc(15.5 * var(--u)); line-height: 1.6; color: var(--tekst-2); }
+/* twee alinea's in één uitleg (renovatie, 2 nov 2026): een witregel ertussen, zoals bfbouw.be lpdienst__uitleg */
+.bf.bf-lp .bf-dkaart__info p + p { margin-top: calc(10 * var(--u)); }
 .bf.bf-lp .bf-dkaarten__raster--lp:has(.bf-dkaart__info[open]) { align-items: start; }
 @media (max-width: 1000px) { .bf.bf-lp .bf-dkaart__info summary { font-size: 16px; } .bf.bf-lp .bf-dkaart__info p { font-size: 16px; } }
 
@@ -1191,4 +1193,39 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
    beeld staat op een iPhone (390x664: onderkant was 665). Zelfde ingreep als bfbouw.be 1 nov (padding boven de kop 80 -> 74). */
 @media (max-width: 560px) {
   .bf.bf-lp--totaalrenovatie .bf-lphero__in { padding-top: 88px; }
+}
+
+/* ======================================================================================================================
+   2 nov 2026, Mohammed: "door al die tekst en iconen eronder weet je niet goed dat je moet klikken", "dat moet je fixen",
+   "deel aub op zoals bf". Onder de keuzes van de aanvraagkaart dezelfde indeling als bfbouw.be (rk__vinkjes + rk__badges):
+   dunne lijn, kleine vinkjes in gewone letter, dunne lijn, de cijfers als kolommen zonder kader (icoon in een licht vierkant,
+   cijfer, woord eronder). Zo blijven de foto's de enige vlakken die op een knop lijken. Gsm: zonder vinkjes, de cijfers op één
+   rij direct onder de foto's (zoals bfbouw.be, met Google 5,0 erbij). Overschrijft de tegels en grote iconen van 22 okt.
+   ====================================================================================================================== */
+.bf.bf-lp .kgj-reken--badges .kgj-reken__vertrouwen { gap: calc(9 * var(--u)); margin-top: calc(18 * var(--u)); padding-top: calc(16 * var(--u)); border-top: 1px solid #eeeeee; }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__vertrouwen li { gap: calc(10 * var(--u)); font-size: calc(14.5 * var(--u)); font-weight: 500; color: var(--ink-2); }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__vertrouwen li > svg { width: calc(20 * var(--u)); height: calc(20 * var(--u)); padding: calc(4 * var(--u)); stroke-width: 3; }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: calc(6 * var(--u)); margin-top: calc(16 * var(--u)); padding-top: calc(14 * var(--u)); border-top: 1px solid #eeeeee; }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust li { gap: calc(2 * var(--u)); min-height: 0; padding: 0; border-radius: 0; background: none; box-shadow: none; }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust li:first-child { padding-left: 0; }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust-ic, .bf.bf-lp .kgj-reken--badges .kgj-reken__trust-gic { width: calc(38 * var(--u)); height: calc(38 * var(--u)); margin-bottom: calc(5 * var(--u)); border-radius: calc(11 * var(--u)); }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust-ic { background: #fbf1dd; color: var(--merk-tekst); }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust-gic { background: #fff; box-shadow: inset 0 0 0 1.5px #e6e6e6; }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust-ic svg { width: calc(21 * var(--u)); height: calc(21 * var(--u)); stroke-width: 2; }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust-gic svg { width: calc(22 * var(--u)); height: calc(22 * var(--u)); }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust b { font-size: max(15px, calc(16 * var(--u))); font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; color: var(--ink-2); }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust li > span:not(.kgj-reken__trust-ic):not(.kgj-reken__trust-gic) { font-size: max(12px, calc(12.5 * var(--u))); font-weight: 400; line-height: 1.2; color: var(--tekst-2); }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust-g > span:last-child { gap: calc(2 * var(--u)); }
+.bf.bf-lp .kgj-reken--badges .kgj-reken__trust-st svg { width: calc(11 * var(--u)); height: calc(11 * var(--u)); }
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust { gap: 4px; margin-top: 14px; padding-top: 12px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust li { min-height: 0; padding: 0; border-radius: 0; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust-ic, .bf.bf-lp .kgj-reken--badges .kgj-reken__trust-gic { width: 34px; height: 34px; margin-bottom: 4px; border-radius: 10px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust-ic svg { width: 19px; height: 19px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust-gic svg { width: 20px; height: 20px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust b { font-size: 14.5px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust li > span:not(.kgj-reken__trust-ic):not(.kgj-reken__trust-gic) { font-size: 11.5px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust-st svg { width: 10px; height: 10px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__vertrouwen li { font-size: 14px; gap: 10px; }
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__vertrouwen li > svg { width: 20px; height: 20px; padding: 4px; }
 }

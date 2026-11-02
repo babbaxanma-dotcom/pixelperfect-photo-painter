@@ -546,13 +546,15 @@ export const DAKWERKEN: KgjInhoud = {
        vlaanderen.be, Mijn VerbouwPremie dak vanaf 1 maart 2026 (categorie 3 en 4; 1 en 2 niets). Copy-guard groen op 2 nov. */
     lijst: [
       { id: 'nieuw-dak', icoon: 'dienst-nieuw', naam: 'Nieuw dak', tekst: 'Volledig nieuw dak, met pannen of leien, of als plat dak in EPDM, roofing of bitumen.',
-        meer: ['Het oude dak gaat er volledig af, tot op de dakstructuur. Op het nieuwe onderdak leggen wij de pannen of leien die u kiest.'] },
+        /* 2 nov 2026, Mohammed: "bij de lees meer van de dienstenkaarten van ab, exacte copy als bf": woordelijk bfbouw.be DAK_TEKST
+           (bouw/paginas.cjs, nieuw-dak, dakrenovatie) en zijn dictaat van 31 okt (UITLEG dakisolatie in bouw/lp-dak.cjs). */
+        meer: ['Een nieuw dak bouwen wij voor nieuwbouw, of wanneer de oude dakstructuur vervangen moet worden. Het dak wordt dan volledig opgebouwd: structuur, isolatie, onderdak en dakbedekking.', 'U kiest de dakbedekking die bij uw woning past, bijvoorbeeld keramische pannen of leien.'] },
       { id: 'renovatie', icoon: 'dienst-renovatie', naam: 'Dakrenovatie', tekst: 'Uw dakstructuur blijft staan. Wij vernieuwen de pannen of leien, samen met het onderdak en de panlatten.',
-        meer: ['Ligt het dak open, dan isoleren wij het in dezelfde werf mee.'] },
+        meer: ['Bij een dakrenovatie blijft de dakstructuur staan. De oude pannen of leien en het oude onderdak gaan eraf, waarna de isolatie, het dampscherm, het onderdak, de panlatten en de nieuwe dakbedekking erop komen.', 'Is de dakstructuur nog gezond, dan is dit de manier om een ouder dak waterdicht en warm te maken.'] },
       { id: 'isolatie', icoon: 'dienst-isolatie', naam: 'Dakisolatie', tekst: 'Wij isoleren uw dak tijdens de renovatie of als aparte opdracht.',
-        meer: ['Wij isoleren van binnenuit of via sarking op het dakvlak. Bij inkomenscategorie 3 of 4 geeft dakisolatie recht op Mijn VerbouwPremie.'] },
+        meer: ['Verlaag uw energiefactuur direct. Wij isoleren uw dak volgens de huidige normen voor een optimaal wooncomfort, inclusief alle nodige attesten voor uw Mijn VerbouwPremie.'] },
       { id: 'herstelling', icoon: 'dienst-herstel', naam: 'Dakherstelling', tekst: 'Wij herstellen een lek of schade aan uw hellend of plat dak.',
-        meer: ['Wij zoeken eerst waar het water binnenkomt en herstellen daarna de oorzaak, ook bij stormschade.'] },
+        meer: ['Ziet u een vochtplek op het plafond, of ligt er na een storm een pan verschoven? Dan zoeken we eerst waar het water echt binnenkomt, want dat is vaak een eind verwijderd van de vlek. Zo herstellen we de oorzaak, en blijft uw plafond voortaan droog.'] },
     ],
   },
 
@@ -567,7 +569,26 @@ export const DAKWERKEN: KgjInhoud = {
   ],
   /* 2 nov 2026 (zoals bfbouw.be 31 okt, Mohammed: "maak de pagina eens over het algemeen beter ingedeeld"): na het bewijs eerst wat AB
      doet, dan waarom AB en hoe het verloopt, de voordelen als laatste duw vlak voor het offerteblok. */
-  volgorde: ['zekerheden', 'voorna', 'diensten', 'waarom', 'werkwijze', 'voordelen'],
+  volgorde: ['zekerheden', 'voorna', 'diensten', 'waarom', 'werkwijze', 'voordelen', 'faq'],
+
+  /* 2 nov 2026, Mohammed: "op dakwerken eruit of doe simpelweg hoe lang duurt dakwerk gemiddeld en nog 2 nuttige vragen",
+     "geen onnutige ai slop", "redeneer gewoon". Eerste versie afgekeurd ("nee ai slop copy", "let op de copy dat ik leverde",
+     "doe onderzoek hoe een copy expert het aanpakt", "kijk naar talloze websites in dezelfde sector", "creeer vlotte copy").
+     Tweede versie in de vorm van zijn goedgekeurde FAQ (totaalrenovatie, 5 okt): eerst het antwoord, dan de voorwaarde, dan wat
+     we doen en wat de klant eraan heeft; korte en lange zinnen afgewisseld, "we" en "u". Duur geijkt op 22 Vlaamse dakwerkers
+     (plat dak 1-2 dagen, hellend dak een week tot drie weken, herstelling één dag). Wonen en winter: de vragen die een eigenaar
+     in november echt stelt. */
+  faq: {
+    kop: 'Veelgestelde vragen',
+    lijst: [
+      { v: 'Hoe lang duurt dakwerk gemiddeld?',
+        a: 'Dat hangt vooral af van het soort dak en de grootte ervan. Een plat dak ligt er meestal in één tot twee werkdagen, en een hellend dak van een gewone gezinswoning volledig vernieuwen en isoleren duurt doorgaans één tot twee weken. Een herstelling is vaak op één dag klaar. De planning voor uw dak bespreken we vooraf met u, zodat u precies weet wanneer we starten en wanneer alles af is.' },
+      { v: 'Kan ik thuis blijven wonen tijdens de werken?',
+        a: 'Ja, in de meeste gevallen gewoon wel. Dakwerken gebeuren grotendeels aan de buitenkant, dus binnen merkt u er weinig van. Ligt het dak aan het einde van de werkdag nog open, dan dekken we het waterdicht af, zodat uw woning ook bij een nachtelijke regenbui droog blijft.' },
+      { v: 'Kunnen dakwerken ook in de winter?',
+        a: 'Ja, dakwerken lopen het hele jaar door. Ook in de winter zijn er genoeg droge dagen om goed op te schieten. Bij hevige regen of harde wind leggen we het werk even stil, en u hoort telkens van ons wanneer we verdergaan.' },
+    ],
+  },
 
   voorna: {
     kop: 'Hetzelfde dak voor en na de werken',
