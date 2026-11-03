@@ -1229,3 +1229,25 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
   .bf.bf-lp .kgj-reken--badges .kgj-reken__vertrouwen li { font-size: 14px; gap: 10px; }
   .bf.bf-lp .kgj-reken--badges .kgj-reken__vertrouwen li > svg { width: 20px; height: 20px; padding: 4px; }
 }
+
+/* ======================================================================================================================
+   Cookiemelding op de LP's compacter (3 nov 2026, Mohammed: "kunnen we de cookiebanner in alle lps iets verkleinen? HET PAKT
+   nu soms heel het beeld"). Gemeten voor: 320x449 241 px = 53,7 % van het scherm, 390x664 215 px = 32,3 %, 1265x800 224 px.
+   Oorzaak: op een pagina met div.bf zet bf-ab.css de titel op 18 px, de alinea erft 16 px en de knoppen 44 px, op desktop een
+   kaart van 400 px breed. Hier (alleen LP's: div.bf.bf-lp): titel visueel weg (de melding houdt aria-label
+   "Cookie-instellingen"), tekst 13 px, minder witruimte, de twee keuzes naast elkaar en even groot. Tekst, keuzes en gedrag
+   ongewijzigd (src/lib/consent.ts). ID-selector: wint van bf-ab.css (body:has(div.bf) ...).
+   ====================================================================================================================== */
+body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-banner-text strong { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-banner-text p { font-size: 13px; line-height: 1.4; }
+body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-banner-inner { grid-template-columns: 1fr; gap: 8px; padding: 10px 12px; }
+body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-banner-actions { flex-direction: row; gap: 8px; }
+body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { flex: 1; padding: 8px 10px; font-size: 13.5px; }
+@media (max-width: 1000px) {
+  body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-banner { left: 8px; right: 8px; bottom: 8px; transform: none; width: auto; max-width: none; border-radius: 12px; }
+}
+@media (min-width: 1001px) {
+  body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-banner { width: 440px; right: 24px; bottom: 24px; }
+  body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-banner-inner { padding: 12px 14px; }
+  body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { min-height: 40px; }
+}

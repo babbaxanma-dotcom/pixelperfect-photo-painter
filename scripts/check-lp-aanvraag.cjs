@@ -117,7 +117,8 @@ const DAK = {
   tegels: ['5,0', '10 jaar garantie', '15 jaar ervaring'],
   /* 31 okt, bfbouw.be: "moet uiteraard iets anders worden, over de offerte dan" */
   onder: 'Onze dakexpert contacteert u zo snel mogelijk over uw offerte.',
-  vinkjes: ['Gratis & vrijblijvende offerte', 'Vakmanschap tot in de details', '6% btw-tarief (woningen > 10 jaar)'],
+  /* 3 nov 2026, Mohammed: "dat puntje 6btw bij woningen ouder dan 10j in de hero weg" */
+  vinkjes: ['Gratis & vrijblijvende offerte', 'Vakmanschap tot in de details'],
 };
 const RENO = (pad) => ({
   pad, soort: 'reno', kop: 'Jouw complete renovatie, perfect geregeld van A tot Z.', woord: 'gratis offerte',

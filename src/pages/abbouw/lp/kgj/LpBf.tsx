@@ -672,7 +672,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       <section className="bf-sblok bf-sblok--grijs bf-lpvoorna" id="voorna" aria-labelledby={inhoud.voorna.kop ? 'voorna-kop' : undefined}>
         <div className="bf-sraam">
           {inhoud.voorna.kop && <h2 className="bf-h2 bf-h2--midden" id="voorna-kop">{inhoud.voorna.kop}</h2>}
-          <p className="bf-lpsectie__onder">{inhoud.voorna.onder}</p>
+          {inhoud.voorna.onder && <p className="bf-lpsectie__onder">{inhoud.voorna.onder}</p>}
           <figure className="bf-lpvoorna__paar">
             <div className="bf-voorna">
               <div className="bf-voorna__vak" ref={schuifVak} style={{ '--pos': `${schuif}%` } as React.CSSProperties}

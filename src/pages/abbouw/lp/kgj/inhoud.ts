@@ -344,7 +344,8 @@ export const DAKWERKEN: KgjInhoud = {
     /* 29 okt 2026, Mohammed: "doe gewoon meer badges als in, weet de exacte staat van uw dak". */
     /* 2 nov 2026, zoals bfbouw.be 31 okt: "Weet de exacte staat van uw dak" (inspectiebelofte) weg, dakinspectie -> offerte.
        "Antwoord binnen 24 uur" van bfbouw.be NIET: een termijn voor AB heeft geen bron (Mohammed 22 okt voor AB: geen termijn). */
-    vertrouwen: ['Gratis & vrijblijvende offerte', 'Vakmanschap tot in de details', '6% btw-tarief (woningen > 10 jaar)'],
+    /* 3 nov 2026, Mohammed: "bij abgroep aub dat puntje 6btw bij woningen ouder dan 10j in de hero weg". */
+    vertrouwen: ['Gratis & vrijblijvende offerte', 'Vakmanschap tot in de details'],
     /* 2 nov 2026, zoals bfbouw.be 31 okt: geen tweede route "Weet u al ... Klik dan hier" meer; de kaart zelf is de offerteaanvraag. */
     /* 22 okt 2026, Mohammed (21 okt gevraagd, toen alleen op de renovatiepagina's gezet; 22 okt: "je hebt veel vergeten", "DIE FORMS",
        "die visuele dingetjes", "EN TIS ENKEL lp dakwerken en lp totaalrenovatie"): hetzelfde als op /lp/totaalrenovatie.
@@ -593,8 +594,9 @@ export const DAKWERKEN: KgjInhoud = {
   },
 
   voorna: {
-    kop: 'Hetzelfde dak voor en na de werken',
-    onder: 'Sleep de balk over de foto.',
+    /* 3 nov 2026, Mohammed: "hetzelfde dak voor en na de werken ook, gewoon de foto laten, en de tekst erboven weg". */
+    kop: '',
+    onder: '',
     voor: { src: dakVoor, alt: 'Het dak met de pannen eraf: alleen het houten gebint staat er nog' },
     na: { src: dakNa, alt: 'Hetzelfde dak na de werken, met nieuwe pannen en dakvensters' },
     label: 'Hellend dak',
