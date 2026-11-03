@@ -1,4 +1,4 @@
-import { createRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { captureUtm, installCallTracking, trackPageView } from "./lib/tracking";
@@ -48,4 +48,17 @@ if (typeof window !== 'undefined') {
 
 bootTracking();
 
-createRoot(document.getElementById("root")!).render(<App />);
+// 3 nov 2026 (witscherm, zie scripts/prerender-lp.mjs): staat de pagina al als HTML in #root, dan neemt React die over
+// (hydrateRoot); de server-HTML blijft zichtbaar tot de route geladen is. Anders, zoals voorheen, een lege root vullen.
+const rootEl = document.getElementById("root")!;
+// Message match (LpBf: dienst=, dak=, utm_term=) geeft een andere kop en vraag 1 dan de voorgerenderde HTML: dan niet
+// hydrateren maar opnieuw opbouwen (zonder dit: React-fouten #418/#425, gevonden door check:lppayload op 3 nov).
+// vercel.json stuurt zulke bezoeken al naar de gewone index.html; dit vangt /lp/dakwerken/?utm_term=... (map-index) op.
+const zoek = new URLSearchParams(window.location.search);
+const metMatch = ["dienst", "dak", "utm_term"].some((k) => (zoek.get(k) || "").trim() !== "");
+if (rootEl.dataset.voorgerenderd && rootEl.firstElementChild && !metMatch) {
+  // eerst laten tekenen, dan hydrateren: anders schuift de lange hydratatietaak het eerste beeld op (gemeten 3 nov)
+  requestAnimationFrame(() => setTimeout(() => hydrateRoot(rootEl, <App />), 0));
+} else {
+  createRoot(rootEl).render(<App />);
+}

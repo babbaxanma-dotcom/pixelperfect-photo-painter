@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender-lp.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -36,7 +36,8 @@
     "check:ankers": "node scripts/check-ankers.cjs",
     "check:lppayload": "node scripts/check-lp-payload.mjs",
     "check:aanvraag": "node scripts/check-lp-aanvraag.cjs",
-    "check:bouwrook": "node scripts/check-bouwrook.cjs"
+    "check:bouwrook": "node scripts/check-bouwrook.cjs",
+    "check:voorgerenderd": "node scripts/check-voorgerenderd.cjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.128.0",

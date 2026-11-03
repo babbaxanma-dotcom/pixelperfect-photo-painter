@@ -4,6 +4,10 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
+    { "source": "/lp/dakwerken", "missing": [{ "type": "query", "key": "utm_term" }, { "type": "query", "key": "dak" }, { "type": "query", "key": "dienst" }], "destination": "/lp/dakwerken/index.html" },
+    { "source": "/lp/dakwerken/asbest", "missing": [{ "type": "query", "key": "utm_term" }, { "type": "query", "key": "dak" }, { "type": "query", "key": "dienst" }], "destination": "/lp/dakwerken/asbest/index.html" },
+    { "source": "/lp/totaalrenovatie", "missing": [{ "type": "query", "key": "utm_term" }, { "type": "query", "key": "dak" }, { "type": "query", "key": "dienst" }], "destination": "/lp/totaalrenovatie/index.html" },
+    { "source": "/lp/aannemer-renovatiewerken", "missing": [{ "type": "query", "key": "utm_term" }, { "type": "query", "key": "dak" }, { "type": "query", "key": "dienst" }], "destination": "/lp/aannemer-renovatiewerken/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [

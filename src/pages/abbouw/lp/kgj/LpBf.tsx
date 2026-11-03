@@ -274,6 +274,20 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   /* Microsoft Clarity (LpKgj r.137-138): project per bedanktSlug, via laadClarity. */
   useEffect(() => { const id = CLARITY_PROJECT[inhoud.bedanktSlug]; if (id) laadClarity(id); }, [inhoud.bedanktSlug]);
 
+  /* Vroege tik (3 nov 2026, scripts/prerender-lp.mjs): de voorgerenderde pagina staat in beeld vóór React klaar is. Een tik op
+     een knop in die tijd houdt het inline script tegen en onthoudt het volgnummer; hier, na het hydrateren, voeren we die tik
+     alsnog uit. __abKlaar zet het onderscheppen uit. */
+  useEffect(() => {
+    const w = window as unknown as { __abKlaar?: boolean; __abVroeg?: number | null };
+    if (w.__abKlaar) return;
+    w.__abKlaar = true;
+    const i = w.__abVroeg;
+    w.__abVroeg = null;
+    if (typeof i !== 'number') return;
+    const knop = document.querySelectorAll<HTMLButtonElement>('#root button')[i];
+    if (knop) setTimeout(() => knop.click(), 0);
+  }, []);
+
   /* Venster: Escape sluit, de pagina erachter scrolt niet (LpKgj r.139-146). Toegankelijkheid: de focus gaat
      naar het venster zelf (tabIndex -1, geen ring) en na het sluiten terug naar de knop die het venster opende.
      Herstel 13 okt: de focus ging naar de sluitknop; bij binnenkomst via de sitelink #rekenaar toonde de browser dan een

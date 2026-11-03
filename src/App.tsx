@@ -87,10 +87,10 @@ const RouteLoading = () => (
   <div style={{ minHeight: "60vh", background: "var(--bg, #faf9f7)" }} aria-hidden="true" />
 );
 
-const App = () => {
-  return (
-  <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+/* 3 nov 2026 (Mohammed: "laad snelheid ab ... het blijft soms witscherm"): de routes los van de router, zodat
+   scripts/prerender-lp.mjs dezelfde boom met een StaticRouter naar HTML kan renderen (src/entry-server.tsx). */
+export const AppInhoud = () => (
+  <>
         <CanonicalUpdater />
         <PageTransition>
         <Suspense fallback={<RouteLoading />}>
@@ -164,6 +164,14 @@ const App = () => {
         </Routes>
         </Suspense>
         </PageTransition>
+  </>
+);
+
+const App = () => {
+  return (
+  <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <AppInhoud />
       </BrowserRouter>
   </QueryClientProvider>
   );
