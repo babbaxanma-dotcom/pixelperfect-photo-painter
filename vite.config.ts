@@ -25,7 +25,11 @@ export default defineConfig(({ mode, isSsrBuild }) => ({
     // zodat er geen bronbestandsnamen publiek staan. De server-build (isSsrBuild) krijgt geen manualChunks (react is daar extern).
     manifest: !isSsrBuild,
     rollupOptions: {
-      output: isSsrBuild ? {} : {
+      // 4 nov 2026: de server-build moet dezelfde beeldnamen geven als de browser-build. Met de standaardnaam
+      // ([name]-[hash]) verwees de voorgerenderde HTML naar /assets/logo-wit-440-C_tok7-p.webp terwijl alleen
+      // /assets/C_tok7-p.webp bestaat: van 3 nov 18:38 tot de herstelling laadde geen foto en geen logo op de 4 LP's.
+      // Bewaakt door scripts/check-lp-assets.mjs (laatste stap van npm run build).
+      output: isSsrBuild ? { assetFileNames: 'assets/[hash][extname]' } : {
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react/jsx-runtime'],
           'router': ['react-router-dom'],
