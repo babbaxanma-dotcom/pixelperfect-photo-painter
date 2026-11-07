@@ -178,6 +178,9 @@ async function doeFlow(browser, basis, lp, f, breedte, lokaas = false) {
       await wacht(260);
     }
     const form = `${wortel} form.kgj-reken__form`;
+    /* 5 nov 2026 (bfbouw.be cad4e57): na de laatste vraag eerst de laadstap van 1,2 s, dan het contactscherm (op de gsm over het volle
+       scherm, op de pc in een venster). De toets wacht er gewoon op, zoals een bezoeker. */
+    if (f.soort === 'aanvraag') await p.waitForSelector(form, { timeout: 6000 }).catch(() => {});
     if (!(await p.$(form))) { fouten.push(`formulier ${form} niet gevonden na de antwoorden`); return { fouten, log }; }
     const foutTekst = async () => p.evaluate((w) => document.querySelector(w + ' .kgj-reken__fout')?.textContent.trim() ?? null, wortel);
 

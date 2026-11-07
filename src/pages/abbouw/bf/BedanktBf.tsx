@@ -203,10 +203,17 @@ export default function BedanktBf() {
      ze hier bovenaan, alleen na een verse aanvraag (navigatiestaat abToestemming) en zonder marketingtoestemming. */
   const plaats = useLocation();
   const [vraag, setVraag] = useState(() => Boolean((plaats.state as { abToestemming?: boolean } | null)?.abToestemming) && !allowsMarketing());
+  /* 5 nov 2026 (zoals bfbouw.be e216830, Mohammed daar: "ja op de thankyou page ook"): na een aanvraag via de kaart van een
+     advertentiepagina (Aanvraag.tsx, navigatiestaat abVolgt) staat hier "Wat nu volgt" met dezelfde twee stappen als "Na uw aanvraag"
+     op het contactscherm, in plaats van de drie inspectiestappen. Het aanbod van de dakinspectie of het plaatsbezoek hieronder blijft. */
+  const [volgt] = useState(() => {
+    const v = (plaats.state as { abVolgt?: unknown } | null)?.abVolgt;
+    return Array.isArray(v) ? (v as { titel: string; tekst: string }[]).filter((x) => x && typeof x.titel === 'string' && typeof x.tekst === 'string') : null;
+  });
   const vraagKlaar = () => {
     setVraag(false);
-    /* niet opnieuw na herladen of terugkeren; de vlag abBedanktGemeld op dezelfde regel blijft staan */
-    try { window.history.replaceState({ ...(window.history.state || {}), usr: null }, ''); } catch { /* niets */ }
+    /* niet opnieuw na herladen of terugkeren; de vlag abBedanktGemeld op dezelfde regel blijft staan; "Wat nu volgt" wel (abVolgt) */
+    try { window.history.replaceState({ ...(window.history.state || {}), usr: volgt?.length ? { abVolgt: volgt } : null }, ''); } catch { /* niets */ }
   };
 
   /* Zelfde als Bedankt.tsx r.154-163. */
@@ -342,9 +349,18 @@ export default function BedanktBf() {
                 {t.brugKop && <h2>{t.brugKop}</h2>}
                 <p>{t.brug}</p>
               </div>
-              <ol className="bf-dank__stappen">
-                {t.stappen.map((s, i) => <li key={s}><span>{i + 1}</span>{s}</li>)}
-              </ol>
+              {volgt?.length ? (
+                <div className="bf-dank__volgt">
+                  <h2>Wat nu volgt</h2>
+                  <ol className="bf-dank__stappen bf-dank__stappen--volgt">
+                    {volgt.map((s, i) => <li key={s.titel}><span>{i + 1}</span><span><b>{s.titel}</b> {s.tekst}</span></li>)}
+                  </ol>
+                </div>
+              ) : (
+                <ol className="bf-dank__stappen">
+                  {t.stappen.map((s, i) => <li key={s}><span>{i + 1}</span>{s}</li>)}
+                </ol>
+              )}
             </div>
 
             <div className="bf-dank__kaart" id="plannen">

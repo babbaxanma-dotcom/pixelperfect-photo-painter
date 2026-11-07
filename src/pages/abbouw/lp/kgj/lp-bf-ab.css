@@ -1251,3 +1251,136 @@ body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { flex: 1; padding: 8px 1
   body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-banner-inner { padding: 12px 14px; }
   body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { min-height: 40px; }
 }
+
+/* ===================================================================================================================================
+   5 nov 2026, Mohammed: "doe bij ab de exact form dingen", "de exacte wijzigingen als bij bf" (bfbouw.be cad4e57, d6cfa42, e216830,
+   91ab7ba, 5638c50; site.css blokken van 4-5 nov, hier met de AB-kleuren en kgj-reken-klassen).
+   =================================================================================================================================== */
+
+/* Vraag 2 "Wat moet er aan uw dak gebeuren?" met vijf keuzes (Dakrenovatie en Nieuw dak apart): op de gsm 2x2 tegels met het icoon
+   boven het woord en "Weet ik nog niet" over de volle breedte, zodat alle keuzes in het eerste scherm (390x664) blijven. */
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuzes--raster { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuzes--raster .kgj-reken__keuze--icoon { flex-direction: column; justify-content: center; align-items: center; gap: 6px; min-height: 78px; padding: 8px 6px; text-align: center; }
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuzes--raster .kgj-reken__keuze--icoon:last-child:nth-child(odd) { grid-column: 1 / -1; flex-direction: row; justify-content: flex-start; text-align: left; gap: 12px; min-height: 56px; padding: 6px 14px 6px 10px; }
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuzes--raster .kgj-reken__keuze--icoon:last-child:nth-child(odd) .kgj-reken__tekst { text-align: left; }
+}
+
+/* Laadstap (1,2 s): "Uw aanvraag wordt klaargezet", drie regels die een voor een afvinken (Aanvraag.tsx zet is-aan per regel). */
+.bf.bf-lp .kgj-reken__laad { padding: calc(14 * var(--u)) 0 calc(8 * var(--u)); }
+.bf.bf-lp .kgj-reken__laad-kop { display: flex; align-items: center; gap: calc(12 * var(--u)); margin: 0; font-size: calc(21 * var(--u)); line-height: 1.3; font-weight: 700; color: var(--ink); }
+.bf.bf-lp .kgj-reken__laad-spin { width: calc(22 * var(--u)); height: calc(22 * var(--u)); flex: none; border-radius: 50%; border: calc(3 * var(--u)) solid #f1e6cf; border-top-color: var(--merk); animation: kgj-laad-draai .75s linear infinite; }
+.bf.bf-lp .kgj-reken__laad-lijst { list-style: none; margin: calc(18 * var(--u)) 0 0; padding: 0; display: grid; gap: calc(14 * var(--u)); }
+.bf.bf-lp .kgj-reken__laad-lijst li { display: flex; align-items: center; gap: calc(12 * var(--u)); font-size: calc(16.5 * var(--u)); line-height: 1.35; font-weight: 600; color: var(--ink); opacity: .4; transition: opacity .2s ease; }
+.bf.bf-lp .kgj-reken__laad-vink { width: calc(24 * var(--u)); height: calc(24 * var(--u)); flex: none; border-radius: 50%; border: calc(2 * var(--u)) solid #e4e2dc; background: #fff; color: transparent; display: grid; place-items: center; transition: background-color .2s ease, border-color .2s ease, color .2s ease, transform .25s ease; }
+.bf.bf-lp .kgj-reken__laad-vink svg { width: calc(13 * var(--u)); height: calc(13 * var(--u)); stroke-width: 3; }
+.bf.bf-lp .kgj-reken__laad-lijst li.is-aan { opacity: 1; }
+.bf.bf-lp .kgj-reken__laad-lijst li.is-aan .kgj-reken__laad-vink { background: var(--merk); border-color: var(--merk); color: var(--op-merk); transform: scale(1.08); }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__stap.is-nieuw { animation: kgj-open .32s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes kgj-open { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken__laad { padding: 12px 0 6px; }
+  .bf.bf-lp .kgj-reken__laad-kop { font-size: 20px; gap: 12px; }
+  .bf.bf-lp .kgj-reken__laad-spin { width: 22px; height: 22px; border-width: 3px; }
+  .bf.bf-lp .kgj-reken__laad-lijst { margin-top: 16px; gap: 14px; }
+  .bf.bf-lp .kgj-reken__laad-lijst li { font-size: 16px; gap: 12px; }
+  .bf.bf-lp .kgj-reken__laad-vink { width: 24px; height: 24px; border-width: 2px; }
+  .bf.bf-lp .kgj-reken__laad-vink svg { width: 13px; height: 13px; }
+}
+
+/* Regel direct boven de verzendknop ("Offerte binnen 24 uur"), alleen in de pagina. */
+.bf.bf-lp .kgj-reken__trigger { margin: calc(12 * var(--u)) 0 0; display: flex; align-items: flex-start; justify-content: center; gap: calc(8 * var(--u)); text-align: left; font-size: calc(15 * var(--u)); line-height: 1.35; font-weight: 700; color: var(--ink); }
+.bf.bf-lp .kgj-reken__trigger-ic { width: calc(20 * var(--u)); height: calc(20 * var(--u)); flex: none; margin-top: calc(1 * var(--u)); border-radius: 50%; background: var(--merk); color: var(--op-merk); display: grid; place-items: center; }
+.bf.bf-lp .kgj-reken__trigger-ic svg { width: calc(12 * var(--u)); height: calc(12 * var(--u)); stroke-width: 3; }
+.bf.bf-lp .kgj-reken__trigger + .kgj-reken__knop { margin-top: calc(8 * var(--u)); }
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken__trigger { margin-top: 6px; gap: 8px; font-size: 14px; line-height: 18px; }
+  .bf.bf-lp .kgj-reken__trigger-ic { width: 20px; height: 20px; margin-top: 0; }
+  .bf.bf-lp .kgj-reken__trigger-ic svg { width: 12px; height: 12px; }
+  .bf.bf-lp .kgj-reken__trigger + .kgj-reken__knop { margin-top: 6px; }
+}
+
+/* De trust badges op het contactscherm in het formulier, boven de regel en de knop (bfbouw.be badgesMini). */
+.bf.bf-lp .kgj-reken__contact > .kgj-reken__trust { margin-top: calc(12 * var(--u)); }
+
+/* "Na uw aanvraag": eigen licht vlak met rand, gevulde nummers met een lijn ertussen (tijdlijn), vette titels. */
+.bf.bf-lp .kgj-reken__volgt { margin-top: calc(12 * var(--u)); padding: calc(12 * var(--u)) calc(14 * var(--u)) calc(10 * var(--u)); border-radius: calc(12 * var(--u)); background: #fbf6ec; border: 1px solid #ecd9ad; }
+.bf.bf-lp .kgj-reken__volgt-kop { margin: 0 0 calc(8 * var(--u)); font-size: calc(17 * var(--u)); line-height: 1.3; font-weight: 800; color: var(--ink); }
+.bf.bf-lp .kgj-reken__volgt-lijst { list-style: none; margin: 0; padding: 0; display: grid; gap: calc(10 * var(--u)); counter-reset: volgt; }
+.bf.bf-lp .kgj-reken__volgt-lijst li { counter-increment: volgt; position: relative; margin: 0; display: grid; grid-template-columns: calc(28 * var(--u)) minmax(0, 1fr); align-items: start; gap: calc(12 * var(--u)); text-align: left; font-size: calc(15 * var(--u)); line-height: 1.4; font-weight: 500; color: var(--tekst-2); }
+.bf.bf-lp .kgj-reken__volgt-lijst li::before { content: counter(volgt); position: relative; z-index: 1; width: calc(28 * var(--u)); height: calc(28 * var(--u)); border-radius: 50%; background: var(--merk); color: var(--op-merk); font-size: calc(14 * var(--u)); font-weight: 800; line-height: 1; display: grid; place-items: center; }
+.bf.bf-lp .kgj-reken__volgt-lijst li:not(:last-child)::after { content: ""; position: absolute; left: calc(13 * var(--u)); top: calc(30 * var(--u)); bottom: calc(-10 * var(--u)); width: calc(2 * var(--u)); background: #e7cf97; }
+.bf.bf-lp .kgj-reken__volgt-lijst li b { display: block; margin-bottom: calc(3 * var(--u)); padding-top: calc(3 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 700; color: var(--ink); text-wrap: balance; }
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken__volgt { margin-top: 12px; padding: 12px 14px 10px; border-radius: 12px; }
+  .bf.bf-lp .kgj-reken__volgt-kop { margin-bottom: 10px; font-size: 17px; }
+  .bf.bf-lp .kgj-reken__volgt-lijst { gap: 12px; }
+  .bf.bf-lp .kgj-reken__volgt-lijst li { grid-template-columns: 28px minmax(0, 1fr); gap: 12px; font-size: 15px; }
+  .bf.bf-lp .kgj-reken__volgt-lijst li::before { width: 28px; height: 28px; font-size: 14px; }
+  .bf.bf-lp .kgj-reken__volgt-lijst li:not(:last-child)::after { left: 13px; top: 30px; bottom: -12px; width: 2px; }
+  .bf.bf-lp .kgj-reken__volgt-lijst li b { font-size: 16px; margin-bottom: 3px; padding-top: 3px; }
+}
+
+/* Veelgestelde vragen: de klikbare zin naar het offerteblok ("Vraag dan een gratis offerte aan."). */
+.bf.bf-lp .bf-vraag__link { color: var(--merk-tekst); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Volle scherm (gsm) en venster (pc) ----------
+   Vanaf de laadstap: Aanvraag.tsx zet .is-vol op de kaart, html.is-formvol en een donkere achtergrond (.kgj-reken__achter; een klik
+   erop sluit). Bovenaan een vaste rij met Terug, de stap en de sluitknop (44 px); de voortgangsbalk, de kaartkop, de vinkjes en de
+   regel boven de knop vallen weg (staan al in het scherm ervoor). */
+.bf.bf-lp .kgj-reken__sluit { display: none; }
+.bf.bf-lp .kgj-reken__achter { position: fixed; inset: 0; z-index: 999; background: rgba(10, 14, 20, .62); animation: kgj-achter .25s ease both; }
+@keyframes kgj-achter { from { opacity: 0; } to { opacity: 1; } }
+@keyframes kgj-vol { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+html.is-formvol, html.is-formvol body { overflow: hidden; }
+html.is-formvol .bf.bf-lp .bf-lphero__in, html.is-formvol .bf.bf-lp .bf-lpinsp__in { z-index: 1000; }
+.bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol :is(.kgj-reken__weg, .kgj-reken__hoofd, .kgj-reken__vertrouwen, .kgj-reken__trigger) { display: none; }
+.bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__kop { position: sticky; top: 0; z-index: 3; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; min-height: 0; margin: 0 -16px; padding: 6px 12px 6px 16px; background: #fff; }
+.bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__tel { grid-column: 2; grid-row: 1; }
+.bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__terug { grid-column: 1; grid-row: 1; justify-self: start; min-height: 44px; }
+.bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__sluit { grid-column: 3; grid-row: 1; justify-self: end; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: #f1eeea; color: var(--ink); cursor: pointer; transition: background-color .15s ease; }
+.bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__sluit:hover { background: #e5e0da; }
+.bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__sluit:focus-visible { outline: 2px solid var(--merk-tekst); outline-offset: 2px; }
+.bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__sluit svg { width: 22px; height: 22px; }
+@media (max-width: 1000px) {
+  /* Gsm: de kaart vult het scherm; volgorde kop, uw aanvraag, "Na uw aanvraag", velden, trust badges, verzendknop vast onderaan. */
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol { position: fixed; inset: 0; z-index: 1000; width: auto; max-width: none; margin: 0; height: 100%; height: 100dvh; border: 0; border-radius: 0; box-shadow: none; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding: 0 16px calc(14px + env(safe-area-inset-bottom)); animation: kgj-vol .3s cubic-bezier(.2, .7, .2, 1) both; scroll-padding-top: 64px; scroll-padding-bottom: 150px; }
+  /* geen padding boven in het scrollvak: een sticky rij plakt onder die padding (gemeten: 4 px over "Bijna klaar!") */
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__kop { margin: 0 -16px; padding: calc(6px + env(safe-area-inset-top)) 12px 6px 16px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact { display: flex; flex-direction: column; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__band { order: 1; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__samen { order: 2; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__volgt { order: 3; margin-top: 10px; padding: 10px 12px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__velden { order: 4; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__trust { order: 5; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__fout { order: 6; margin-top: 12px; position: sticky; bottom: calc(84px + env(safe-area-inset-bottom)); z-index: 2; box-shadow: 0 0 0 6px #fff; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__knop { order: 7; position: sticky; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 2; margin-top: 16px; box-shadow: 0 12px 24px -14px rgba(217, 140, 3, .85), 0 0 0 12px #fff; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__volgt-kop { margin-bottom: 8px; font-size: 16px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__volgt-lijst { gap: 10px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__volgt-lijst li:not(:last-child)::after { bottom: -10px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__volgt-lijst li { font-size: 14px; line-height: 1.35; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__volgt-lijst li b { font-size: 15px; margin-bottom: 1px; padding-top: 3px; }
+}
+@media (min-width: 1001px) {
+  /* Pc: groot venster in het midden (max 880 px), links uw aanvraag en "Na uw aanvraag", rechts de velden en de verzendknop, trust
+     badges in de kopband; op 1265x585 en 1440x800 alles in één scherm. */
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol { position: fixed; inset: 0; z-index: 1000; margin: auto; width: min(880px, calc(100vw - 48px)); max-width: none; height: -webkit-fit-content; height: fit-content; max-height: calc(100vh - 48px); max-height: calc(100dvh - 48px); overflow-y: auto; overscroll-behavior: contain; padding: 0 32px 22px; border: 0; border-radius: 18px; box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .55); animation: kgj-vol .3s cubic-bezier(.2, .7, .2, 1) both; scroll-padding-top: 72px; scroll-padding-bottom: 96px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol.is-laden { min-height: min(440px, calc(100dvh - 48px)); }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__laad { width: -webkit-fit-content; width: fit-content; margin: 84px auto 0; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__kop { margin: 0 -32px; padding: 10px 20px 10px 32px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 32px; align-items: start;
+    grid-template-areas: "intro intro" "samen velden" "volgt velden" "volgt knop" "volgt melding"; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__band { grid-area: intro; margin: 0 -32px 20px; padding: 16px 32px 18px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__samen { grid-area: samen; margin: 0 0 14px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__volgt { grid-area: volgt; margin: 0; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__velden { grid-area: velden; margin: 0; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__velden > .kgj-reken__rij:first-child > label { margin-top: 0; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__trust { grid-area: 1 / 2 / 2 / 3; align-self: center; z-index: 1; margin: 0 0 20px; padding: 0; border: 0; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__knop { grid-area: knop; width: 100%; margin-top: 14px; position: sticky; bottom: 0; z-index: 2; box-shadow: 0 12px 24px -14px rgba(217, 140, 3, .85), 0 0 0 10px #fff; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__fout { grid-area: melding; margin-top: 10px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__privacy { margin-top: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bf.bf-lp .kgj-reken__laad-spin { animation: none; border-color: var(--merk); }
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__stap.is-nieuw, .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol, .bf.bf-lp .kgj-reken__achter { animation: none; }
+}

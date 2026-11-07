@@ -7,7 +7,7 @@ import Inspectie from './Inspectie';
 import Werkspoor from './Werkspoor';
 import { Icoon } from './Iconen';
 import { IcChevron } from '../replica/Iconen';
-import { DAKWERKEN, type KgjInhoud, type Sectie, type StapIcoon, type Zekerheid } from './inhoud';
+import { DAKWERKEN, vraagTelt, type KgjInhoud, type Sectie, type StapIcoon, type Zekerheid } from './inhoud';
 import { BadgeEuro, CalendarCheck, ShieldCheck, UserCheck } from 'lucide-react';
 import { CLARITY_PROJECT, laadClarity, meldClarity } from '@/lib/clarity';
 import logoWit from '@/assets/bf/logo-wit-440.webp';
@@ -231,7 +231,8 @@ function naarUitleg(e: React.SyntheticEvent<HTMLDetailsElement>) {
 function VasteKnop({ tekst, zichtbaar, vragen, onClick }: { tekst: string; zichtbaar: boolean; vragen?: NonNullable<KgjInhoud['aanvraag']>['vragen']; onClick: () => void }) {
   const voortgang = useAanvraagVoortgang();
   /* Zelfde telling als de kaart (Aanvraag.tsx): een vraag met nietAls valt weg na dat antwoord (Isolatie bij stap 2), + de contactstap. */
-  const totaal = vragen ? vragen.filter((v) => !v.nietAls || !Object.entries(v.nietAls).some(([k, l]) => l.includes(voortgang?.antwoorden[k] ?? ''))).length + 1 : 0;
+  /* 5 nov 2026: ook een vraag met `als` (Nieuw dak) telt pas na dat antwoord (vraagTelt, zelfde regel als de kaart). */
+  const totaal = vragen ? vragen.filter((v) => vraagTelt(v, voortgang?.antwoorden ?? {})).length + 1 : 0;
   const bezig = !!voortgang && totaal > 1 && voortgang.aangetikt && voortgang.stap > 0 && !voortgang.verstuurd;
   return (
     <button type="button" className={`bf-lpsticky${zichtbaar ? ' bf-is-zichtbaar' : ''}${bezig ? ' bf-lpsticky--bezig' : ''}`} onClick={onClick} tabIndex={zichtbaar ? 0 : -1} aria-hidden={!zichtbaar}>
@@ -498,8 +499,11 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
      met de knoptekst van dat formulier. Zo doet bfbouw.be/lp/dakwerken het met de aanvraag bovenaan: de knoppen verderop
      scrollen naar het formulier onderaan (Mohammed 9 okt, bouw/lp-dak.cjs cta), en de werkwijze zegt "via het formulier
      hieronder". */
+  /* 5 nov 2026 (zoals bfbouw.be LP.cta.tekst): de knoppen naar het formulier zeggen "Offerte aanvragen"; "gratis" staat alleen nog in
+     de kaarttitel en op de verzendknop (inspectie.knop). */
+  const naarKnop = inhoud.aanvraag?.naarKnop ?? inhoud.inspectie.knop;
   const rekenKnop = (klasse: string) => (zonderRekenaar
-    ? <a className={`bf-knop bf-lpcta__knop ${klasse}`} href="#contact">{inhoud.inspectie.knop}<IcPijl /></a>
+    ? <a className={`bf-knop bf-lpcta__knop ${klasse}`} href="#contact">{naarKnop}<IcPijl /></a>
     : <button type="button" className={`bf-knop bf-lpcta__knop ${klasse}`} onClick={openVenster}>Bereken uw prijs<IcPijl /></button>
   );
 
@@ -754,10 +758,12 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       <section className="bf-vragen" id="faq" aria-labelledby="faq-kop">
         <h2 className="bf-h2 bf-h2--midden" id="faq-kop">{inhoud.faq.kop}</h2>
         <div className="bf-vragen__lijst">
-          {inhoud.faq.lijst.map((f) => (
-            <details className="bf-vraag" key={f.v}>
+          {/* 5 nov 2026 (dakpagina's, zoals bfbouw.be): de eerste vraag open, en een klikbare zin naar het offerteblok (#contact; op de
+              gsm brengt de klikhandler hierboven de kaart onderaan meteen in beeld). */}
+          {inhoud.faq.lijst.map((f, i) => (
+            <details className="bf-vraag" key={f.v} open={inhoud.faq?.eersteOpen && i === 0 ? true : undefined}>
               <summary>{f.v}<span className="bf-vraag__plus" aria-hidden="true" /></summary>
-              <p>{f.a}</p>
+              <p>{f.a}{f.link && <>{' '}<a className="bf-vraag__link" href="#contact">{f.link}</a></>}</p>
             </details>
           ))}
         </div>
@@ -774,7 +780,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
 
   /* De kaart bovenaan en die onderaan delen één stand (AanvraagStaat.tsx, 23 okt 2026); de zoekterm kan vraag 1 al beantwoorden. */
   return (
-    <AanvraagStaat begin={() => beginStand(inhoud, (match?.voor ?? inhoud.voorAf))}>
+    <AanvraagStaat begin={() => beginStand(inhoud, (match?.voor ?? inhoud.voorAf))} inhoud={heroAanvraag ? inhoud : undefined}>
     <div className={`bf bf-lp bf-lp--${inhoud.bedanktSlug}${inhoud.strak ? ' bf-lp--strak' : ''}${heroAanvraag && inhoud.aanvraag?.badges ? ' bf-lp--badges' : ''}`} ref={vat}>
       <header className={`bf-kop bf-kop--over bf-kop--lp kgj-kop${gescrold ? ' bf-is-gescrold' : ''}${inhoud.topbalk ? ' bf-kop--topbalk' : ''}`} id="kop">
         {/* Totaalrenovatie (5 okt): smalle balk met het telefoonnummer, hoort bij de vaste kop. */}
@@ -792,7 +798,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           <div className="bf-nav__acties">
             {/* Plaatsbezoekpagina's: de aanvraagknop staat op de computer altijd in de kop (LpKgj r.326-331). */}
             {inhoud.hero.knop && (
-              <a className="bf-knop bf-lpbel bf-lpkop__actie" href="#contact">{heroAanvraag ? inhoud.inspectie.knop : (inhoud.cta.naam ?? inhoud.hero.knop.tekst)}</a>
+              <a className="bf-knop bf-lpbel bf-lpkop__actie" href="#contact">{heroAanvraag ? naarKnop : (inhoud.cta.naam ?? inhoud.hero.knop.tekst)}</a>
             )}
             {/* Geen aria-label: de zichtbare tekst is de naam, zoals live ("Bel 0460 20 77 88", gsm "Bel direct"; WCAG 2.5.3). */}
             {!inhoud.topbalk && (
@@ -939,7 +945,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           actiebalk van LpKgj (r.753-780): zichtbaar zolang geen rekenaar, formulier of heroknop in beeld staat. */}
       {/* 23 okt 2026 (knoppenonderzoek, zie inhoud.inspectie.knop): op de aanvraagpagina's dezelfde tekst als de verzendknop, met werkwoord;
           cta.naam blijft de naam van de aanvraag in het CRM ("Aanvraag gratis plaatsbezoek"). */}
-      <VasteKnop tekst={heroAanvraag ? inhoud.inspectie.knop : (inhoud.cta.naam ?? inhoud.cta.kop)} zichtbaar={balk} onClick={naarFormulier}
+      <VasteKnop tekst={heroAanvraag ? naarKnop : (inhoud.cta.naam ?? inhoud.cta.kop)} zichtbaar={balk} onClick={naarFormulier}
         vragen={heroAanvraag ? inhoud.aanvraag?.vragen : undefined} />
       <a className={`bf-belzweef${balk ? ' bf-is-zichtbaar' : ''}`} href={CONTACT.phone.href} aria-label={'Bel ' + CONTACT.phone.display} tabIndex={balk ? 0 : -1} aria-hidden={!balk}><IcTel /></a>
 

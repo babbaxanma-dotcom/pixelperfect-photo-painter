@@ -1,16 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Award, BadgePercent, CalendarCheck, Check, ClipboardCheck, Clock, Hammer, Home, Pencil, Plus, SearchCheck, ShieldCheck, UserCheck } from 'lucide-react';
+import { ArrowRight, Award, BadgePercent, CalendarCheck, Check, ClipboardCheck, Clock, Hammer, Home, Pencil, Plus, SearchCheck, ShieldCheck, UserCheck, X } from 'lucide-react';
 import { Icoon } from './Iconen';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
 import { allowsMarketing } from '@/lib/consent';
 import { meldClarity } from '@/lib/clarity';
 import { CONTACT } from '@/data/contact';
-import type { KgjInhoud } from './inhoud';
+import { snoeiAntwoorden, vraagTelt, type KgjInhoud } from './inhoud';
 import PostcodeGemeente from './PostcodeGemeente';
 import Toestemming from './Toestemming';
-import { beginStand, useAanvraagStaat, type AanvraagStand } from './AanvraagStaat';
+import { beginStand, bewaarAanvraag, useAanvraagStaat, wisAanvraag, type AanvraagStand } from './AanvraagStaat';
+
+/* Testhaken (5 nov 2026, zoals bfbouw.be window.__bfLaadMs / __bfVolUit): __abLaadMs = duur van de laadstap (0 = meteen het
+   contactscherm), __abVolUit = de kaart blijft in de pagina (geen volle scherm, geen venster). */
+type AbTest = { __abLaadMs?: number; __abVolUit?: boolean };
 
 /* Google-G en ster voor de trustrij (zelfde tekening als Rekenaar.tsx en LpBf.tsx). */
 const IcGoogle = () => (
@@ -51,7 +55,7 @@ const IcInspectie = () => (
    niet staat, krijgt het icoon van zijn plaats. Ook gebruikt voor de vinkjes onder de kaart op de telefoon (LpBf). */
 const BADGE_PER_TEKST: Record<string, typeof Check> = {
   'Vaste prijs vooraf': ShieldCheck, 'Eén vast aanspreekpunt': UserCheck, 'Vakmanschap tot in de details': Award,
-  'Gratis & vrijblijvende dakinspectie': ClipboardCheck, 'Gratis & vrijblijvende offerte': ClipboardCheck, '6% btw-tarief (woningen > 10 jaar)': BadgePercent,
+  'Gratis & vrijblijvende dakinspectie': ClipboardCheck, 'Gratis & vrijblijvende offerte': ClipboardCheck, 'Vrijblijvende offerte': ClipboardCheck, '6% btw-tarief (woningen > 10 jaar)': BadgePercent,
   'Weet de exacte staat van uw dak': SearchCheck, 'Weet waar u aan toe bent': SearchCheck,
 };
 export const badgeIcoon = (tekst: string, i: number) => BADGE_PER_TEKST[tekst] ?? [ShieldCheck, UserCheck, Award][i] ?? Check;
@@ -82,11 +86,15 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   levendRef.current = levend;
   const stand = bevroren ?? levend;
   const { stap, antwoorden, vinken, vraagToestemming, fout, bezig } = stand;
-  /* 30 okt 2026: een vraag met nietAls valt weg zodra een eerder antwoord erin staat (Isolatie bij stap 2 = geen "Wilt u ook isoleren?"). */
-  const VRAGEN = a.vragen.filter((v) => !v.nietAls || !Object.entries(v.nietAls).some(([k, l]) => l.includes(antwoorden[k])));
+  /* 30 okt 2026: een vraag met nietAls valt weg zodra een eerder antwoord erin staat (Isolatie bij stap 2 = geen "Wilt u ook isoleren?").
+     5 nov 2026 (zoals bfbouw.be 4 nov): een vraag met `als` telt alleen na dat antwoord (Nieuw dak: waarvoor, dakbedekking). */
+  const VRAGEN = a.vragen.filter((v) => vraagTelt(v, antwoorden));
+  /* De vraag die de pagina vooraf beantwoordde: message match (voor, alleen de kaart bovenaan) of de sub-LP (voorAf, bv. Asbest: Ja,
+     ook in de kaart onderaan). */
+  const vooraf = voor?.sleutel ?? inhoud.voorAf?.sleutel;
   /* 2 nov 2026 (/lp/dakwerken/asbest): wat in de aanvraag en de samenvatting staat = de beantwoorde vragen die de bezoeker zag, plus
      een vraag die de pagina vooraf beantwoordde (voor, bv. Asbest: Ja), in de volgorde van de kaart. */
-  const BEANTWOORD = a.vragen.filter((v) => antwoorden[v.sleutel] && (VRAGEN.includes(v) || v.sleutel === voor?.sleutel));
+  const BEANTWOORD = a.vragen.filter((v) => antwoorden[v.sleutel] && (VRAGEN.includes(v) || v.sleutel === vooraf));
   /* Offerte (30 okt 2026, Mohammed: "verschillende vakken met waar mogelijk dropdown is beste ... de meest belangrijke vragen en dan
      optioneel extra"): eigen stappen met keuzelijsten en Doorgaan, daarna de contactstap. */
   const OSTAPPEN = a.offerte?.stappen ?? [];
@@ -143,14 +151,13 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
      naamveld, scrolde zoekend naar de knop en vertrok. Valt de laatste keuze, Volgende of de verzendknop onder het scherm, dan
      schuift de pagina net genoeg omhoog zolang "Stap x van y" onder de vaste balk zichtbaar blijft; past de stap niet, dan staat
      "Stap x van y" direct onder de balk. Alleen de kaart die de bezoeker gebruikt, scrolt (de twee kaarten delen de stap). */
-  useEffect(() => {
-    if (vorigeStap.current === stapSleutel) return;
-    vorigeStap.current = stapSleutel;
-    if (actief.current !== plek) return;
+  const inBeeld = () => {
     const el = kaart.current;
     if (!el) return;
     const vraag = el.querySelector<HTMLElement>('.kgj-reken__stap .kgj-reken__vraag');
     if (vraag) { vraag.setAttribute('tabindex', '-1'); vraag.focus({ preventScroll: true }); }
+    /* Over het volle scherm (gsm) of in het venster (pc) scrolt de kaart zelf, niet de pagina. */
+    if (volRef.current) { el.scrollTop = 0; return; }
     const kop = el.querySelector<HTMLElement>('.kgj-reken__kop') ?? el;
     const gedrag: ScrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
     const balkH = document.querySelector('.kgj-kop')?.getBoundingClientRect().height ?? 0;
@@ -167,7 +174,110 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     let naar = kopWeg ? el.getBoundingClientRect().top - boven : Math.min(tekort, kopTop - boven);
     if (kopWeg && tekort - naar > 0) naar = kopTop - boven;
     window.scrollTo({ top: window.scrollY + naar, behavior: gedrag });
+  };
+  useEffect(() => {
+    if (vorigeStap.current === stapSleutel) return;
+    vorigeStap.current = stapSleutel;
+    if (actief.current !== plek) return;
+    inBeeld();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stapSleutel, actief, plek]);
+
+  /* ---------- Laadstap, volle scherm en venster (5 nov 2026, zoals bfbouw.be cad4e57, 91ab7ba, 5638c50) ----------
+     Mohammed (bfbouw.be, 4-5 nov): "vanaf ze bij de laatste stap zijn, het laad zo 1 second, gegevens opslaan, en dan opent het de
+     contactscherm op een hoge cro manier", "doe dat als je bij de laatste stap bent dat je fullscreen zit in form", "doe nog gewoon dat
+     ze makkelijker uit de fullscreen kunnen gaan als ze dat willen", "en op pc ook fullscreen ofzo, dat je alles mooi ziet"; hier:
+     "doe bij ab de exact form dingen" (5 nov).
+     - Na het laatste antwoord: 1,2 s "Uw aanvraag wordt klaargezet" met drie regels die afvinken (regel 2 = de eigen antwoorden),
+       daarna schuift het contactscherm open. De antwoorden staan dan in sessionStorage (AanvraagStaat.tsx bewaarAanvraag).
+     - Vanaf de laadstap: op de gsm (tot 1000 px) vult de kaart het scherm, de verzendknop staat vast onderaan; op de pc (vanaf
+       1001 px) een venster in het midden over een donkere achtergrond (CSS: lp-bf-ab.css, blok 5 nov).
+     - Sluitknop rechtsboven, Esc en een klik naast het venster: terug in de pagina, contactscherm en antwoorden blijven staan.
+       Terug, Wijzigen en de terugknop van de gsm: naar de vorige vraag in de pagina. Sluiten tijdens de laadstap stopt de laadstap.
+     Alleen de kaart die de bezoeker gebruikt, gaat over het scherm; een teruggezette aanvraag opent in de pagina. */
+  const [laden, setLaden] = useState(false);
+  const [laadFase, setLaadFase] = useState(0);
+  const [nieuw, setNieuw] = useState(false);
+  const laadBeurt = useRef(0);
+  const klokken = useRef<number[]>([]);
+  const [vol, setVol] = useState(false);
+  const volRef = useRef(false);
+  const stopLaad = () => { laadBeurt.current++; klokken.current.forEach((k) => window.clearTimeout(k)); klokken.current = []; setLaden(false); };
+  const zetVol = (aan: boolean) => {
+    if (aan && (window as unknown as AbTest).__abVolUit) return;
+    if (aan === volRef.current) return;
+    volRef.current = aan;
+    setVol(aan);
+    /* Eén regel in de geschiedenis: de terugknop van de gsm sluit het volle scherm in plaats van de pagina te verlaten. De staat van
+       React Router (usr, key, idx) blijft erin staan, zodat de router dezelfde pagina blijft tonen. */
+    if (aan) { try { window.history.pushState({ ...(window.history.state || {}), abVol: plek }, ''); } catch { /* niets */ } }
+    else { try { if ((window.history.state as { abVol?: string } | null)?.abVol === plek) window.history.back(); } catch { /* niets */ } }
+  };
+  const startLaad = (antw: Record<string, string>, vink: Record<string, string[]>) => {
+    bewaarAanvraag(antw, vink);
+    zetVol(true);
+    const t = (window as unknown as AbTest).__abLaadMs;
+    const ms = !a.laden ? 0 : typeof t === 'number' ? t : 1200;
+    if (ms <= 0) return;
+    const beurt = ++laadBeurt.current;
+    setLaadFase(0);
+    setLaden(true);
+    meldClarity(`${clarityNaam}-laden`);
+    klokken.current = [1, 2, 3].map((n) => window.setTimeout(() => { if (beurt === laadBeurt.current) setLaadFase(n); }, Math.round((ms * n) / 4)));
+    klokken.current.push(window.setTimeout(() => {
+      if (beurt !== laadBeurt.current) return;
+      setLaden(false);
+      setNieuw(true);
+    }, ms));
+  };
+  const sluitVol = () => {
+    if (!volRef.current) return;
+    stopLaad();
+    zetVol(false);
+    meldClarity(`${clarityNaam}-sluiten`);
+    requestAnimationFrame(() => inBeeld());
+  };
+  /* html.is-formvol: de pagina erachter scrolt niet en de hero/het slotblok komen boven de kopbalk (CSS). Weg bij het verlaten. */
+  useEffect(() => {
+    document.documentElement.classList.toggle('is-formvol', vol);
+    if (vol && kaart.current) kaart.current.scrollTop = 0;
+  }, [vol]);
+  useEffect(() => () => {
+    if (volRef.current) document.documentElement.classList.remove('is-formvol');
+    klokken.current.forEach((k) => window.clearTimeout(k));
+  }, []);
+  /* Terugknop van gsm of browser: uit het volle scherm, naar de vorige vraag (de laadstap stopt, het formulier opent niet alsnog). */
+  useEffect(() => {
+    const terug = () => {
+      if (!volRef.current) return;
+      volRef.current = false;
+      setVol(false);
+      stopLaad();
+      zet((s) => ({ ...s, fout: null, stap: Math.max(0, Math.min(s.stap, a.vragen.filter((v) => vraagTelt(v, s.antwoorden)).length) - 1) }));
+    };
+    window.addEventListener('popstate', terug);
+    return () => window.removeEventListener('popstate', terug);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  /* Esc sluit, zoals de sluitknop. */
+  useEffect(() => {
+    if (!vol) return;
+    const toets = (e: KeyboardEvent) => { if (e.key === 'Escape') sluitVol(); };
+    document.addEventListener('keydown', toets);
+    return () => document.removeEventListener('keydown', toets);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vol]);
+  /* Na de laadstap: de kop van het contactscherm krijgt de focus (zonder te scrollen). */
+  useEffect(() => {
+    if (!nieuw || actief.current !== plek) return;
+    inBeeld();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nieuw]);
+  /* Terug of Wijzigen vanuit het contactscherm: terug in de pagina (geen volle scherm meer). */
+  useEffect(() => {
+    if (vol && !klaar && !laden) zetVol(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vol, klaar, laden]);
 
   /* Beloning bij elke gezette stap (bfbouw.be beloon(), Mohammed 10 okt: endowed progress + beloning per stap): een korte gloed
      en glans over de balk, alleen vooruit, nooit bij Terug, niet bij "minder beweging". */
@@ -204,12 +314,21 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   const laatsteTik = useRef(0);
   const kies = (sleutel: string, label: string) => {
     const tijd = Date.now();
-    if (tijd - laatsteTik.current < 200) return;
+    if (tijd - laatsteTik.current < 200 || laden) return;
     laatsteTik.current = tijd;
     setDruk(null);
     gebruik();
     meldStart();
-    zet((s) => ({ ...s, aangetikt: true, antwoorden: { ...s.antwoorden, [sleutel]: label }, stap: s.stap + 1 }));
+    /* 5 nov 2026 (zoals bfbouw.be snoei, 4 nov): antwoorden van vragen die na dit antwoord niet meer tellen, gaan weg (Terug en
+       Dakrenovatie in plaats van Nieuw dak: "Nieuwbouw" mag de asbestvraag niet meer wegnemen). De volgende stap = de vraag na deze
+       in de nieuwe reeks; na de laatste vraag de laadstap. */
+    const s0 = levendRef.current;
+    const antw = snoeiAntwoorden(a.vragen, { ...s0.antwoorden, [sleutel]: label }, vooraf);
+    const reeks = a.vragen.filter((v) => vraagTelt(v, antw));
+    const hier = reeks.findIndex((v) => v.sleutel === sleutel);
+    const volgende = (hier >= 0 ? hier : s0.stap) + 1;
+    zet((s) => ({ ...s, aangetikt: true, antwoorden: antw, stap: volgende }));
+    if (volgende >= reeks.length) startLaad(antw, s0.vinken);
   };
 
   /* Afvinkvraag (22 okt 2026, /lp/totaalrenovatie: "die vraag van dat ze mooi kunnen aanklikken wat er allemaal nodig is, makkelijk
@@ -230,9 +349,16 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   const verder = (v: (typeof VRAGEN)[number]) => {
     const gekozen = vinken[v.sleutel] ?? [];
     if (!gekozen.length || !v.afvinken) return;
+    if (laden) return;
     gebruik();
     const antwoord = gekozen.length === v.keuzes.length ? v.afvinken.alles : gekozen.join(', ');
-    zet((s) => ({ ...s, aangetikt: true, antwoorden: { ...s.antwoorden, [v.sleutel]: antwoord }, stap: s.stap + 1 }));
+    const s0 = levendRef.current;
+    const antw = snoeiAntwoorden(a.vragen, { ...s0.antwoorden, [v.sleutel]: antwoord }, vooraf);
+    const reeks = a.vragen.filter((x) => vraagTelt(x, antw));
+    const hier = reeks.findIndex((x) => x.sleutel === v.sleutel);
+    const volgende = (hier >= 0 ? hier : s0.stap) + 1;
+    zet((s) => ({ ...s, aangetikt: true, antwoorden: antw, stap: volgende }));
+    if (volgende >= reeks.length) startLaad(antw, s0.vinken);
   };
   const zetFout = (f: string | null) => zet((s) => ({ ...s, fout: f }));
   /* Offerte (29 okt 2026): wie al weet wat er moet gebeuren, slaat de klikvragen over. Sinds 30 okt eerst de offertestappen
@@ -261,6 +387,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     }
     meldClarity(`${clarityNaam}-offerte-${oStap + 2 > OSTAPPEN.length ? 'contact' : `stap-${oStap + 2}`}`);
     zet((s) => ({ ...s, aangetikt: true, fout: null, offerteStap: (s.offerteStap ?? 0) + 1 }));
+    if (oStap + 1 >= OSTAPPEN.length) startLaad(levendRef.current.antwoorden, levendRef.current.vinken);
   };
 
   const verstuur = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -306,13 +433,19 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     });
     if (!res.ok) { verstuurt.current = false; zet((s) => ({ ...s, bezig: false, fout: leadFoutmelding(res, CONTACT.phone.display) })); return; }
     meldClarity(`${clarityNaam}-verstuurd`);
+    wisAanvraag();
     /* 29 okt 2026 (bureau: na versturen geen bedankpagina, Clarity 29 okt 07:22 sessie yd92yn): altijd meteen naar de
        bedankpagina. Zonder toestemming voor marketing staat de vraag uit Toestemming.tsx daar bovenaan (BedanktBf,
        navigatiestaat abToestemming); in de kaart hield ze de bezoeker op de adpagina tot hij antwoordde. */
     zet((s) => ({ ...s, bezig: false }));
     naarBedankt(!allowsMarketing());
   };
-  const naarBedankt = (vraag = false) => navigate('/bedankt/' + inhoud.bedanktSlug, vraag ? { state: { abToestemming: true } } : undefined);
+  /* 5 nov 2026 (zoals bfbouw.be e216830, Mohammed daar: "ja op de thankyou page ook"): de bedankpagina toont onder "Wat nu volgt"
+     dezelfde twee stappen als "Na uw aanvraag" (navigatiestaat abVolgt); het aanbod van het plaatsbezoek of de dakinspectie blijft. */
+  const naarBedankt = (vraag = false) => {
+    const st = { ...(vraag ? { abToestemming: true } : {}), ...(a.volgt?.length ? { abVolgt: a.volgt } : {}) };
+    navigate('/bedankt/' + inhoud.bedanktSlug, Object.keys(st).length ? { state: st } : undefined);
+  };
 
   const vraag = VRAGEN[stap];
   /* Welke velden de contactstap naast Naam en Gsm heeft (renovatiepagina's: alleen die twee). Standaard beide aan. */
@@ -326,9 +459,31 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
      onderwerp erbij ("Isolatie: Ja"), anders zegt het niets. */
   const KAAL = /^(ja|nee|weet ik (nog )?niet)$/i;
   const samen = offerte ? OSTAPPEN.flatMap((st) => st.velden.map((v) => oAntw[v.sleutel])).filter(Boolean) : BEANTWOORD.map((v) => (KAAL.test(antwoorden[v.sleutel]) ? `${v.sleutel}: ${antwoorden[v.sleutel]}` : antwoorden[v.sleutel]));
+  /* Laadstap regel 2: de eigen antwoorden ("Dakrenovatie · 50 tot 100 m²"); een kaal "Weet ik niet" telt niet. */
+  const laadRegel = a.laden ? (a.laden.sleutels.map((k) => antwoorden[k]).filter((x) => x && !KAAL.test(x)).join(' · ') || a.laden.leeg) : '';
+  /* Trust badges: op het contactscherm in het formulier (boven de knop, zoals bfbouw.be badgesMini), anders onderaan de kaart. */
+  const trustRij = a.trustrij && (
+    <ul className="kgj-reken__trust">
+      <li className="kgj-reken__trust-g">
+        <span className="kgj-reken__trust-gic"><IcGoogle /></span>
+        <span><b>5,0</b><span className="kgj-reken__trust-st" aria-hidden="true"><IcSter /><IcSter /><IcSter /><IcSter /><IcSter /></span></span>
+      </li>
+      {a.trustrij.map((c) => (
+        <li key={c.b + c.s}>
+          {a.badges && c.icoon && <span className="kgj-reken__trust-ic" aria-hidden="true">{c.icoon === 'kalender' ? <CalendarCheck /> : c.icoon === 'schild' ? <ShieldCheck /> : <Hammer />}</span>}
+          <b>{c.b}</b>{' '}<span>{c.s}</span>
+        </li>
+      ))}
+    </ul>
+  );
+  const trustInForm = klaar && !vraagToestemming && !!a.volgt?.length;
 
   return (
-    <div ref={kaart} className={`kgj-reken kgj-reken--aanvraag${onder ? ' kgj-reken--onder' : ''}${a.badges ? ' kgj-reken--badges' : ''}${stand.aangetikt && stap > 0 ? ' is-bezig' : ''}${klaar ? ' is-contact' : ''}`}>
+    <Fragment>
+    {/* Donkere achtergrond achter het volle scherm / het venster: een klik erop sluit (zoals de sluitknop). */}
+    {vol && <div className="kgj-reken__achter" aria-hidden="true" onClick={sluitVol} />}
+    <div ref={kaart} className={`kgj-reken kgj-reken--aanvraag${onder ? ' kgj-reken--onder' : ''}${a.badges ? ' kgj-reken--badges' : ''}${stand.aangetikt && stap > 0 ? ' is-bezig' : ''}${klaar ? ' is-contact' : ''}${vol ? ' is-vol' : ''}${laden ? ' is-laden' : ''}`}
+      {...(vol ? { role: 'dialog', 'aria-modal': true, 'aria-label': 'Uw offerteaanvraag' } : {})}>
       <div className="kgj-reken__hoofd">
         <span className="kgj-reken__logo" aria-hidden="true"><IcInspectie /></span>
         <div>
@@ -348,15 +503,28 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
         <div className="kgj-reken__kop">
           {/* Uitgesproken door een schermlezer alleen in de kaart die de bezoeker gebruikt (de andere kaart verandert mee). */}
           <span className="kgj-reken__tel" aria-live={actiefHier ? 'polite' : 'off'}>Stap {nu} van {totaal}</span>
-          {stap > 0 && (
+          {stap > 0 && !laden && (
             <button type="button" className="kgj-reken__terug" onClick={() => { gebruik(); setOFout([]); zet((s) => (s.offerte
               ? ((s.offerteStap ?? 0) > 0 ? { ...s, aangetikt: true, fout: null, offerteStap: (s.offerteStap ?? 0) - 1 } : { ...s, aangetikt: true, fout: null, offerte: false, stap: 0 })
-              : { ...s, aangetikt: true, fout: null, stap: Math.max(0, s.stap - 1) })); }}>‹ Terug</button>
+              : { ...s, aangetikt: true, fout: null, stap: Math.max(0, Math.min(s.stap, VRAGEN.length) - 1) })); }}>‹ Terug</button>
           )}
+          {/* 5 nov 2026 (bfbouw.be 5638c50, Mohammed daar: "doe nog gewoon dat ze makkelijker uit de fullscreen kunnen gaan als ze
+              dat willen"): sluitknop van 44 px, alleen over het volle scherm en in het venster. */}
+          {vol && <button type="button" className="kgj-reken__sluit" aria-label="Sluiten" onClick={sluitVol}><X aria-hidden="true" /></button>}
         </div>
       )}
 
-      {vraagToestemming ? (
+      {laden && a.laden ? (
+        /* De laadstap (bfbouw.be rk__laad): drie regels die een voor een afvinken, daarna het contactscherm. */
+        <div className={`kgj-reken__laad is-${laadFase}`}>
+          <p className="kgj-reken__laad-kop" role="status"><span className="kgj-reken__laad-spin" aria-hidden="true" />{a.laden.kop}</p>
+          <ul className="kgj-reken__laad-lijst">
+            {[a.laden.eerste, laadRegel, a.laden.laatste].map((r, i) => (
+              <li key={i} className={laadFase > i ? 'is-aan' : undefined}><span className="kgj-reken__laad-vink" aria-hidden="true"><Check /></span><span>{r}</span></li>
+            ))}
+          </ul>
+        </div>
+      ) : vraagToestemming ? (
         <Toestemming verder={naarBedankt} stil={!actiefHier} />
       ) : offerte && !klaar ? (() => {
         /* Offertestap: label boven elk veld, native keuzelijst met "Maak een keuze", de melding direct onder het veld. */
@@ -455,7 +623,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
           )}
         </div>
       ) : (
-        <div className="kgj-reken__stap" key="contact">
+        <div className={`kgj-reken__stap${nieuw ? ' is-nieuw' : ''}`} key="contact" onAnimationEnd={(e) => { if (e.animationName === 'kgj-open') setNieuw(false); }}>
           <form className="kgj-reken__form kgj-reken__contact" onSubmit={verstuur} noValidate>
             <div className="kgj-reken__band">
               <p className="kgj-reken__vraag kgj-reken__vraag--band">
@@ -482,6 +650,8 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
             {/* Geen autoFocus: op een telefoon sprong het toetsenbord dan meteen open (Mohammed, 24 sep).
                 23 okt 2026: naam en nummer staan in de gedeelde stand (een kaart wisselen of Terug wist niets); op de gsm zet het
                 toetsenbord een hoofdletter bij elke naam en gaat "Volgende" van Naam naar Telefoonnummer, waar "Verstuur" verstuurt. */}
+            {/* 5 nov 2026: de velden in één vak, zodat het volle scherm (gsm) en het venster (pc) ze als één blok kunnen plaatsen. */}
+            <div className="kgj-reken__velden">
             <div className="kgj-reken__rij">
               <label>Naam *<input name="naam" type="text" autoComplete="name" autoCapitalize="words" enterKeyHint="next" placeholder="Uw naam" aria-required="true"
                 value={stand.naam} onFocus={gebruik} onChange={(e) => { const v = e.target.value; zet((s) => ({ ...s, aangetikt: true, naam: v })); }}
@@ -510,10 +680,26 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
                 {metEmail && <label>E-mail<input name="email" type="email" autoComplete="email" inputMode="email" placeholder="uw@email.be" /></label>}
               </div>
             )}
+            </div>
             {fout && <p className="kgj-reken__fout" role={actiefHier ? 'alert' : undefined}>{fout}</p>}
+            {trustInForm && trustRij}
+            {/* 5 nov 2026 (bfbouw.be rk__trigger, Mohammed daar: "simpelweg offerte binnen 24 uur"): één regel direct boven de knop,
+                alleen in de pagina (over het volle scherm en in het venster staat het in "Na uw aanvraag"). */}
+            {a.trigger && <p className="kgj-reken__trigger"><span className="kgj-reken__trigger-ic" aria-hidden="true"><Check /></span><span>{a.trigger}</span></p>}
             <button className="kgj-knop kgj-knop--vol kgj-reken__knop" type="submit" disabled={bezig}>
               {bezig ? 'Bezig…' : <>{offerte && a.offerte ? a.offerte.verzend : t.knop}<ArrowRight aria-hidden="true" /></>}
             </button>
+            {/* 5 nov 2026 (bfbouw.be rk__volgt, Mohammed daar: "mensen willen weten wat er daarna gebeurt", "Zo krijgt u uw offerte
+                andere kop" -> "Na uw aanvraag"): de twee stappen na het versturen. In de pagina onder de knop; over het volle scherm
+                boven de velden, in het venster links (CSS). Vervangt de regel onder de knop (t.onder). */}
+            {a.volgt && a.volgt.length > 0 && (
+              <div className="kgj-reken__volgt">
+                <p className="kgj-reken__volgt-kop">{a.volgtKop}</p>
+                <ol className="kgj-reken__volgt-lijst">
+                  {a.volgt.map((v) => <li key={v.titel}><span><b>{v.titel}</b> {v.tekst}</span></li>)}
+                </ol>
+              </div>
+            )}
             {/* 23 okt 2026: direct onder de verzendknop het bewijs en het risico weg, op het moment van beslissen (bfbouw.be rk__knopzeker:
                 "5,0 op Google · Gratis en vrijblijvend"). Op de gsm staat de kaartkop met "vrijblijvend" dan boven het scherm. */}
             {a.zeker && (
@@ -522,7 +708,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
                 <b>5,0 op Google</b>{' '}<span aria-hidden="true">·</span>{' '}{a.zeker}
               </p>
             )}
-            <p className="kgj-reken__gerust">{t.onder}</p>
+            {!a.volgt?.length && <p className="kgj-reken__gerust">{t.onder}</p>}
           </form>
         </div>
       )}
@@ -534,23 +720,12 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
           {a.vertrouwen.map((v) => <li key={v}><Check aria-hidden="true" />{v}</li>)}
         </ul>
       )}
-      {/* Trustrij zoals op de rekenaarkaart (Google 5,0 + sterren, dan de cijfers). Nooit het aantal reviews. */}
-      {a.trustrij && (
-        <ul className="kgj-reken__trust">
-          <li className="kgj-reken__trust-g">
-            <span className="kgj-reken__trust-gic"><IcGoogle /></span>
-            <span><b>5,0</b><span className="kgj-reken__trust-st" aria-hidden="true"><IcSter /><IcSter /><IcSter /><IcSter /><IcSter /></span></span>
-          </li>
-          {a.trustrij.map((c) => (
-            <li key={c.b + c.s}>
-              {a.badges && c.icoon && <span className="kgj-reken__trust-ic" aria-hidden="true">{c.icoon === 'kalender' ? <CalendarCheck /> : c.icoon === 'schild' ? <ShieldCheck /> : <Hammer />}</span>}
-              <b>{c.b}</b>{' '}<span>{c.s}</span>
-            </li>
-          ))}
-        </ul>
-      )}
+      {/* Trustrij zoals op de rekenaarkaart (Google 5,0 + sterren, dan de cijfers). Nooit het aantal reviews.
+          5 nov 2026: op het contactscherm staat ze in het formulier (trustInForm). */}
+      {!trustInForm && trustRij}
       {/* 26 okt 2026, Mohammed: privacyregel onder de trustsignalen, zodat die op de laatste stap meteen onder de knop in beeld staan. */}
-      {klaar && <p className="kgj-reken__privacy kgj-reken__privacy--na">Wij gebruiken uw gegevens alleen voor deze aanvraag. <a href="/privacy">Privacybeleid</a></p>}
+      {klaar && !laden && <p className="kgj-reken__privacy kgj-reken__privacy--na">Wij gebruiken uw gegevens alleen voor deze aanvraag. <a href="/privacy">Privacybeleid</a></p>}
     </div>
+    </Fragment>
   );
 }

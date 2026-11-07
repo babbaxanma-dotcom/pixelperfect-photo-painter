@@ -509,7 +509,8 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     onder: 'Gratis offerte, 100% vrijblijvend.',
     /* 23 okt 2026 (zie inspectie.knop hieronder): de knop onder de werkwijze zegt hetzelfde als de verzendknop. "Plan" beloofde een
        moment kiezen; de knop brengt de bezoeker naar de klikkaart en het moment spreekt AB telefonisch af. */
-    knop: { ...TOTAALRENOVATIE_REKENAAR.hero.knop!, tekst: 'Gratis en vrijblijvende offerte aanvragen' },
+    /* 5 nov 2026, zoals bfbouw.be (Mohammed daar: "andere gewoon offerte aanvragen"): "gratis" alleen in de kaarttitel en de verzendknop. */
+    knop: { ...TOTAALRENOVATIE_REKENAAR.hero.knop!, tekst: 'Offerte aanvragen' },
   },
   aanvraag: {
     /* 2 nov 2026: kaartkop zoals bfbouw.be 31 okt, zonder tijdregel. */
@@ -539,15 +540,29 @@ export const TOTAALRENOVATIE: KgjInhoud = {
         BUDGET_VRAAG,
       ];
     })(),
-    /* 2 nov 2026: zoals bfbouw.be 31 okt (was "Bijna klaar! Bevestig uw gratis plaatsbezoek"). */
-    contactKop: 'Bijna klaar! Vraag uw gratis offerte aan',
+    /* 2 nov 2026: zoals bfbouw.be 31 okt (was "Bijna klaar! Bevestig uw gratis plaatsbezoek").
+       5 nov 2026: zonder "gratis", zoals bfbouw.be (zie inhoud.ts DAKWERKEN.aanvraag.contactKop). */
+    contactKop: 'Bijna klaar! Vraag uw offerte aan',
+    /* 5 nov 2026, de laadstap, "Na uw aanvraag" en de regel boven de knop van bfbouw.be (zie inhoud.ts DAKWERKEN.aanvraag), met de
+       AB-feiten van de renovatiepagina's. "onze dakexpert" wordt "onze expert": zijn goedgekeurde renovatie-FAQ van 5 okt zegt
+       "Onze experts"; "projectleider" of "werfleider" heeft voor AB geen bron. Regel 2 = woning en omvang. */
+    laden: { kop: 'Uw aanvraag wordt klaargezet', eerste: 'Antwoorden opgeslagen', laatste: 'Klaar voor onze expert',
+      sleutels: ['Wat voor woning wilt u renoveren', 'Wat wilt u renoveren'], leeg: 'Gegevens van uw woning' },
+    volgtKop: 'Na uw aanvraag',
+    volgt: [
+      { titel: 'Analyse door onze expert', tekst: 'Onze expert bekijkt uw ingevulde gegevens direct en neemt contact met u op om uw aanvraag te overlopen en eventuele extra informatie te vragen.' },
+      { titel: 'Uw offerte binnen 24 uur', tekst: 'U ontvangt uw offerte rechtstreeks in uw mailbox. Volledig vrijblijvend.' },
+    ],
+    trigger: 'Offerte binnen 24 uur',
+    naarKnop: 'Offerte aanvragen',
     /* Vinkjes en trustrij: dezelfde teksten en cijfers als op de rekenaarkaart die hier stond (13 okt, dictaat 4 okt). Alleen de
        vorm verandert (22 okt, Mohammed: "doe de trust badges duidelijker, visueel mooier"): tegels met iconen (badges). De iconen
        staan bij de cijfers: kalender bij de jaren ervaring, gereedschap bij de vakdisciplines. */
     /* 29 okt 2026, Mohammed: "meer badges" (dakwerken: "weet de exacte staat van uw dak"); hier zijn woorden van 22 okt: "weet waar u aan toe bent" ("weet exact wat er moet gebeuren" afgekeurd 29 okt: de bezoeker kiest zelf wat er moet gebeuren). */
     /* 2 nov 2026, zoals bfbouw.be 31 okt: het plaatsbezoek-vinkje ("Weet waar u aan toe bent") wordt de offerte; geen tweede route
        "Weet u al ... Klik dan hier" meer, de kaart zelf is de offerteaanvraag. */
-    vertrouwen: ['Gratis & vrijblijvende offerte', ...(TOTAALRENOVATIE_REKENAAR.rekenaar.vertrouwen ?? [])],
+    /* 5 nov 2026, zoals bfbouw.be: "Vrijblijvende offerte" ("gratis" staat al in de kaartkop). */
+    vertrouwen: ['Vrijblijvende offerte', ...(TOTAALRENOVATIE_REKENAAR.rekenaar.vertrouwen ?? [])],
     /* 22 okt 2026, Mohammed: "en 6 vakdisciplines als trust badge bij abgroep landingspagina weg, bij die form", "dat is een rare
        trust badge". In de kaart blijven Google 5,0 en 16 jaar ervaring; de rekenaarpagina houdt haar trustrij. */
     trustrij: TOTAALRENOVATIE_REKENAAR.rekenaar.trustrij?.filter((c) => c.s !== 'vakdisciplines').map((c) => ({ ...c, icoon: 'kalender' as const })),
@@ -581,7 +596,8 @@ export const TOTAALRENOVATIE: KgjInhoud = {
        "aanvragen" is wat er echt gebeurt en wat Vlaamse bedrijven gebruiken (18 van 43; Energylux exact zo, zelfde verloop: formulier,
        dan bellen). Alleen deze pagina's: /lp/richtprijs-berekenen houdt TOTAALRENOVATIE_REKENAAR. */
     /* 2 nov 2026: knop en regel eronder zoals bfbouw.be 31 okt ("Gratis en vrijblijvende offerte aanvragen"; "over de offerte dan"). */
-    knop: 'Gratis en vrijblijvende offerte aanvragen',
+    /* 5 nov 2026, zoals bfbouw.be LP.kaart.knop (zie inhoud.ts DAKWERKEN.inspectie.knop). */
+    knop: 'Gratis offerte aanvragen',
     onder: 'Wij contacteren u zo snel mogelijk over uw offerte.',
     /* 2 nov 2026: :offerte zoals bfbouw.be; in GHL W01b de standaard-sms ("bedankt voor uw aanvraag"). */
     bronLead: 'lp:totaalrenovatie:offerte',
@@ -591,7 +607,8 @@ export const TOTAALRENOVATIE: KgjInhoud = {
      zonder "binnen 24u": geen bron voor AB). Was "Plan uw gratis plaatsbezoek en advies" met een zin over het plaatsbezoek. */
   cta: {
     ...TOTAALRENOVATIE_REKENAAR.cta,
-    kop: 'Gratis offerte aanvragen',
+    /* 5 nov 2026, zoals bfbouw.be LP.inspectie.kop ("Offerte aanvragen"). */
+    kop: 'Offerte aanvragen',
     tekst: '',
     naam: 'Gratis offerte',
     punten: ['Beantwoord een paar korte vragen', 'U ontvangt een vrijblijvende offerte'],

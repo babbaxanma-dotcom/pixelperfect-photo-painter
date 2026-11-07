@@ -110,15 +110,18 @@ const ONDER = '#contact .kgj-reken--aanvraag';
 const DAK = {
   /* 2 nov 2026 (omvormen zoals bfbouw.be 31 okt): kop "Uw dak laten vernieuwen, renoveren of isoleren?", aanbod "gratis offerte";
      zes vragen (oppervlakte en start zoals bfbouw.be) + contactstap = 7 stappen */
-  pad: '/lp/dakwerken', soort: 'dak', kop: 'Uw dak laten vernieuwen, renoveren of isoleren?', woord: 'gratis offerte', vraag1: 'Wat voor dak heeft u?', keuzes1: ['Hellend dak', 'Plat dak'],
-  pad1: ['Hellend dak', 'Dakrenovatie / Nieuw dak', 'Ja', 'Nee', '50 tot 100 m²', 'Zo snel mogelijk'], vraag2: 'Wat moet er aan uw dak gebeuren?',
-  /* knop: dictaat Mohammed 31 okt voor bfbouw.be ("Gratis en vrijblijvende offerte aanvragen"; infinitief "aanvragen", onderzoek 23 okt) */
-  band: 'Bijna klaar! Vraag uw gratis offerte aan', knop: 'Gratis en vrijblijvende offerte aanvragen', stappen: 7,
+  /* 5 nov 2026, zoals bfbouw.be 4 nov: vraag 1 "Om welk soort dak gaat het?", Dakrenovatie en Nieuw dak apart */
+  pad: '/lp/dakwerken', soort: 'dak', kop: 'Uw dak laten vernieuwen, renoveren of isoleren?', woord: 'gratis offerte', vraag1: 'Om welk soort dak gaat het?', keuzes1: ['Hellend dak', 'Plat dak'],
+  pad1: ['Hellend dak', 'Dakrenovatie', 'Ja', 'Nee', '50 tot 100 m²', 'Zo snel mogelijk'], vraag2: 'Wat moet er aan uw dak gebeuren?',
+  /* knop: dictaat Mohammed 31 okt voor bfbouw.be ("Gratis en vrijblijvende offerte aanvragen"; infinitief "aanvragen", onderzoek 23 okt).
+     5 nov 2026, zoals bfbouw.be 91ab7ba: verzendknop "Gratis offerte aanvragen", de andere knoppen "Offerte aanvragen" (naarKnop);
+     contactkop zonder "gratis". */
+  band: 'Bijna klaar! Vraag uw offerte aan', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 7,
   tegels: ['5,0', '10 jaar garantie', '15 jaar ervaring'],
-  /* 31 okt, bfbouw.be: "moet uiteraard iets anders worden, over de offerte dan" */
-  onder: 'Onze dakexpert contacteert u zo snel mogelijk over uw offerte.',
-  /* 3 nov 2026, Mohammed: "dat puntje 6btw bij woningen ouder dan 10j in de hero weg" */
-  vinkjes: ['Gratis & vrijblijvende offerte', 'Vakmanschap tot in de details'],
+  /* 5 nov 2026, bfbouw.be: "Na uw aanvraag" (twee stappen) vervangt de regel onder de knop */
+  volgt: ['Analyse door onze dakexpert', 'Uw offerte binnen 24 uur'],
+  /* 3 nov 2026, Mohammed: "dat puntje 6btw bij woningen ouder dan 10j in de hero weg". 5 nov: "Vrijblijvende offerte" (bfbouw.be) */
+  vinkjes: ['Vrijblijvende offerte', 'Vakmanschap tot in de details'],
 };
 const RENO = (pad) => ({
   pad, soort: 'reno', kop: 'Jouw complete renovatie, perfect geregeld van A tot Z.', woord: 'gratis offerte',
@@ -126,11 +129,11 @@ const RENO = (pad) => ({
      er allemaal nodig is": woning, omvang, afvinkvraag (een lijst in pad1 = die vinkjes en dan Volgende), start, budget */
   vraag1: 'Wat voor woning wilt u renoveren?', keuzes1: ['Appartement', 'Rijwoning', 'Halfopen bebouwing', 'Open bebouwing'],
   pad1: ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'], vraag2: 'Wat wilt u renoveren?',
-  band: 'Bijna klaar! Vraag uw gratis offerte aan', knop: 'Gratis en vrijblijvende offerte aanvragen', stappen: 6,
+  band: 'Bijna klaar! Vraag uw offerte aan', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 6,
   /* 22 okt 2026: "6 vakdisciplines ... weg, bij die form", "dat is een rare trust badge" */
   tegels: ['5,0', '16 jaar ervaring'],
-  onder: 'Wij contacteren u zo snel mogelijk over uw offerte.',
-  vinkjes: ['Gratis & vrijblijvende offerte', 'Vaste prijs vooraf', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details'], // 22 okt 2026: geen budgetgarantie meer; 2 nov: offerte
+  volgt: ['Analyse door onze expert', 'Uw offerte binnen 24 uur'],
+  vinkjes: ['Vrijblijvende offerte', 'Vaste prijs vooraf', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details'], // 22 okt 2026: geen budgetgarantie meer; 2 nov: offerte; 5 nov: zonder "gratis"
 });
 const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiewerken')];
 
@@ -173,6 +176,10 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     if (gsm) await p.setViewport({ width: 390, height: hoogte, isMobile: true, hasTouch: true, deviceScaleFactor: 1 });
     else await p.setViewport({ width: 1265, height: 800 });
     await p.evaluateOnNewDocument(() => { try { localStorage.setItem('ab_bouw_consent_v1', JSON.stringify({ analytics: false, marketing: false, ts: Date.now() })); } catch { /* */ } });
+    /* 5 nov 2026: de laadstap (1,2 s) en het volle scherm / venster na de laatste vraag (Aanvraag.tsx) meet check-lp-contact.cjs.
+       Hier staat de laadstap op 0 ms en blijft de kaart in de pagina, zodat de toetsen hieronder de pagina meten zoals voorheen
+       (één stand voor twee kaarten, vaste knop, sprong). Punt 14 zet het volle scherm weer aan (voorLaden). */
+    await p.evaluateOnNewDocument(() => { window.__abLaadMs = 0; window.__abVolUit = true; });
     if (voorLaden) await p.evaluateOnNewDocument(voorLaden);
     await p.goto(basis + url, { waitUntil: 'load', timeout: 60000 });
     await p.waitForSelector('.bf-lp', { timeout: 20000 }).catch(() => {});
@@ -341,7 +348,9 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     if (iconen.some((c) => c !== 'lucide-check')) uit.push(`de vinkjes hebben een eigen icoon in plaats van het vinkje van bfbouw.be (${iconen.join(', ')})`);
     const groot = li.map((l) => l.querySelector('svg')?.getBoundingClientRect().height ?? 0).filter((h) => h > 22);
     if (groot.length) uit.push(`${groot.length} vinkje(s) groter dan 22 px (${groot.map(Math.round).join(', ')} px); bfbouw.be: 20 px`);
-    const kader = tegels.filter((t) => { const st = getComputedStyle(t); return !/^(transparent|rgba(0, 0, 0, 0))$/.test(st.backgroundColor) || st.boxShadow !== 'none'; });
+    /* 5 nov 2026: de haakjes van rgba(...) stonden niet geëscaped, dus een doorzichtige tegel telde altijd als kader (rood sinds 2 nov,
+       ook zonder kader). Positieve controle 10 plant een echt kader en moet blijven falen. */
+    const kader = tegels.filter((t) => { const st = getComputedStyle(t); return !/^(transparent|rgba\(0, 0, 0, 0\))$/.test(st.backgroundColor) || st.boxShadow !== 'none'; });
     if (kader.length) uit.push(`${kader.length} cijfer(s) in de vertrouwensrij staan in een kader of vlak (bfbouw.be: zonder kader)`);
     const g = document.querySelector('.bf-lphero__google b')?.textContent.trim();
     if (g !== '5,0 op Google') uit.push(`Google-badge in de hero "${g}" in plaats van "5,0 op Google"`);
@@ -375,7 +384,8 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     else {
       /* 22 okt 2026: "en die ding geen haast haal dat weg", "doe gewoon, of" */
       /* 2 nov 2026: het aanbod is de offerte (bfbouw.be 31 okt: "Of vraag uw gratis offerte aan") */
-      if (norm(link) !== 'Of vraag uw gratis offerte aan') uit.push(`link "${norm(link)}" in plaats van "Of vraag uw gratis offerte aan"`);
+      /* 5 nov 2026: zonder "gratis" (bfbouw.be 91ab7ba: "Of vraag uw offerte aan") */
+      if (norm(link) !== 'Of vraag uw offerte aan') uit.push(`link "${norm(link)}" in plaats van "Of vraag uw offerte aan"`);
       if (link.getAttribute('href') !== '#rekenaar' || !document.querySelector('#rekenaar')) uit.push(`link wijst naar "${link.getAttribute('href')}", een element dat niet bestaat`);
       if (link.getBoundingClientRect().height < 44 - 0.5) uit.push(`link is ${Math.round(link.getBoundingClientRect().height)} px hoog`);
     }
@@ -470,26 +480,33 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
   };
 
   /* 14. Contactscherm in beeld op 390x637 (zie de kop van dit script). */
+  /* 5 nov 2026 (bfbouw.be 91ab7ba): op de gsm vult het contactscherm het hele scherm (Aanvraag.tsx is-vol) met de verzendknop vast
+     onderaan. Gemeten zoals een bezoeker het ziet: kaart over het volle scherm, "Bijna klaar!" onder de rij met Terug/stap/sluiten,
+     naam, telefoon en de verzendknop in beeld. Het e-mailveld staat onder "Na uw aanvraag" en schuift bij focus boven de vaste knop
+     (scroll-padding), zoals op bfbouw.be; het telt hier niet mee. */
   const contactInBeeldFouten = async (pg, root, css = null) => {
-    const { p, ctx } = await open(pg.pad, { gsm: true, hoogte: 637, css });
+    const { p, ctx } = await open(pg.pad, { gsm: true, hoogte: 637, css, voorLaden: () => { window.__abVolUit = false; } });
     if (root === ONDER) { await p.evaluate((r) => document.querySelector(r).scrollIntoView({ block: 'start', behavior: 'instant' }), root); await wacht(300); }
     for (const l of pg.pad1) if (!(await tik(p, l, root))) { await ctx.close(); return [`keuze "${l}" niet gevonden`]; }
     await wacht(900);
     const m = await p.evaluate((root) => {
       const k = document.querySelector(root);
       const r = (q) => k.querySelector(q)?.getBoundingClientRect();
-      return { tel: k.querySelector('.kgj-reken__tel')?.textContent.trim(), balk: Math.round(document.querySelector('.kgj-kop').getBoundingClientRect().bottom),
+      const kr = k.getBoundingClientRect();
+      return { tel: k.querySelector('.kgj-reken__tel')?.textContent.trim(), vol: k.classList.contains('is-vol'), kaart: [Math.round(kr.top), Math.round(kr.height), Math.round(kr.width)],
+        rij: Math.round(r('.kgj-reken__kop')?.bottom ?? 9999),
         band: Math.round(r('.kgj-reken__band')?.top ?? -1), naam: Math.round(r('input[name=naam]')?.bottom ?? 9999), gsm: Math.round(r('input[name=telefoon]')?.bottom ?? 9999),
-        mail: Math.round(r('input[name=email]')?.bottom ?? 9999), knop: Math.round(r('.kgj-reken__knop')?.bottom ?? 9999),
-        gerust: Math.round(r('.kgj-reken__gerust')?.bottom ?? 9999), vh: innerHeight };
+        knop: Math.round(r('.kgj-reken__knop')?.bottom ?? 9999), knopTop: Math.round(r('.kgj-reken__knop')?.top ?? -1), vh: innerHeight, vw: innerWidth };
     }, root);
     await ctx.close();
     if (m.tel !== `Stap ${pg.stappen} van ${pg.stappen}`) return [`niet op de contactstap (${m.tel})`];
     const uit = [];
-    if (m.band < m.balk) uit.push(`"Bijna klaar!" onder de vaste balk (${m.band} px, balk ${m.balk} px)`);
-    for (const [naam, onder] of [['het naamveld', m.naam], ['het telefoonveld', m.gsm], ['het e-mailveld', m.mail], ['de verzendknop', m.knop], ['de regel onder de knop', m.gerust]]) {
+    if (!m.vol || m.kaart[0] !== 0 || m.kaart[1] !== m.vh || m.kaart[2] !== m.vw) uit.push(`contactscherm niet over het volle scherm (${JSON.stringify(m.kaart)}, is-vol ${m.vol})`);
+    if (m.band < m.rij - 1) uit.push(`"Bijna klaar!" onder de rij met Terug en de stap (${m.band} px, rij tot ${m.rij} px)`);
+    for (const [naam, onder] of [['het naamveld', m.naam], ['het telefoonveld', m.gsm], ['de verzendknop', m.knop]]) {
       if (onder > m.vh) uit.push(`${naam} valt onder het scherm (onderkant ${onder} van ${m.vh} px)`);
     }
+    if (m.knop <= m.vh && m.naam > m.knopTop) uit.push(`het naamveld (${m.naam} px) zit achter de vaste verzendknop (vanaf ${m.knopTop} px)`);
     return uit;
   };
 
@@ -515,7 +532,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     await wacht(900);
     if (plant === 'na') await p.evaluate(() => document.querySelector('.bf-lpsticky__stap')?.remove());
     const t1 = await tekst();
-    if (basis !== pg.knop) uit.push(`vaste knop "${basis}" in plaats van de tekst van de verzendknop "${pg.knop}"`);
+    if (basis !== pg.naarKnop) uit.push(`vaste knop "${basis}" in plaats van "${pg.naarKnop}" (de tekst van de knoppen naar het formulier)`);
     /* 23 okt 2026: wie begon, ziet "Verder met uw aanvraag" met de stap eronder (Lucardi, "Verder met bestellen") */
     if (t1 !== `Verder met uw aanvraag Stap 3 van ${pg.stappen}`) uit.push(`vaste knop na twee antwoorden "${t1}" (verwacht "Verder met uw aanvraag Stap 3 van ${pg.stappen}")`);
     await ctx.close();
@@ -524,15 +541,17 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
 
   /* 16. Elke stap volledig in beeld op 390x637 (iPhone in Safari, Clarity 23 okt): na elk antwoord staan de vraag (onder de vaste
      balk) en alle keuzes, Volgende of de verzendknop in beeld; voor de kaart bovenaan en onderaan. */
+  /* 5 nov 2026: zoals een bezoeker het ziet, met het volle scherm aan (voorLaden); over het volle scherm is de bovenrand de rij met
+     Terug en de stap van de kaart zelf, niet de kopbalk van de pagina. */
   const alleStappenFouten = async (pg, root, css = null) => {
-    const { p, ctx } = await open(pg.pad, { gsm: true, hoogte: 637, css });
+    const { p, ctx } = await open(pg.pad, { gsm: true, hoogte: 637, css, voorLaden: () => { window.__abVolUit = false; } });
     const uit = [];
     if (root === ONDER) { await p.evaluate((r) => document.querySelector(r).scrollIntoView({ block: 'start', behavior: 'instant' }), root); await wacht(300); }
     for (const l of pg.pad1) {
       if (!(await tikZonderScroll(p, l, root))) { uit.push(`keuze "${l}" niet gevonden`); break; }
       const m = await p.evaluate((root) => {
         const k = document.querySelector(root);
-        const balk = document.querySelector('.kgj-kop').getBoundingClientRect().bottom;
+        const balk = k.classList.contains('is-vol') ? k.querySelector('.kgj-reken__kop').getBoundingClientRect().bottom : document.querySelector('.kgj-kop').getBoundingClientRect().bottom;
         const vraag = k.querySelector('.kgj-reken__stap .kgj-reken__vraag')?.getBoundingClientRect();
         const doelen = [...k.querySelectorAll('.kgj-reken__stap :is(.kgj-reken__keuze, .kgj-reken__vink, .kgj-reken__verder, .kgj-reken__knop)')];
         return { tel: k.querySelector('.kgj-reken__tel')?.textContent.trim(), balk: Math.round(balk), vraag: Math.round(vraag?.top ?? -1),
@@ -592,11 +611,15 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
      het belblok ("Of vraag uw gratis dakinspectie aan", zijn dictaat 22 okt, punt 10). plant = positieve controle (andere tekst). */
   const knoppenFouten = async (p, pg, plant = null) => {
     if (plant) await p.evaluate((t) => { const a = [...document.querySelectorAll('a[href="#contact"]')].find((x) => x.getClientRects().length && !x.closest('.bf-lpbelblok')); if (a) a.textContent = t; }, plant);
+    /* 5 nov 2026: de klikbare zin in de veelgestelde vragen ("Vraag dan een gratis offerte aan.", bfbouw.be lpfaq__link) is een
+       tekstlink in een antwoord, geen knop; ze telt niet mee. */
     const teksten = await p.evaluate(() => [...document.querySelectorAll('a[href="#contact"]')]
-      .filter((x) => x.getClientRects().length && !x.closest('.bf-lpbelblok'))
+      .filter((x) => x.getClientRects().length && !x.closest('.bf-lpbelblok') && !x.classList.contains('bf-vraag__link'))
       .map((x) => x.textContent.replace(/\s+/g, ' ').trim()));
     if (!teksten.length) return ['geen zichtbare knop naar het formulier'];
-    return teksten.filter((t) => t !== pg.knop).map((t) => `knop "${t}" in plaats van "${pg.knop}" (één belofte: de tekst van de verzendknop)`);
+    /* 5 nov 2026 (bfbouw.be 91ab7ba, Mohammed daar: "andere gewoon offerte aanvragen"): de knoppen naar het formulier zeggen allemaal
+       "Offerte aanvragen"; "gratis" staat alleen nog in de kaarttitel en op de verzendknop. */
+    return teksten.filter((t) => t !== pg.naarKnop).map((t) => `knop "${t}" in plaats van "${pg.naarKnop}" (één tekst op elke knop naar het formulier)`);
   };
 
   /* 11. horizontale scroll */
@@ -625,7 +648,9 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
         knop: f?.querySelector('button[type=submit]')?.textContent.trim(), verplicht: f?.querySelector('[name=telefoon]')?.getAttribute('aria-required'),
         verplichtNaam: f?.querySelector('[name=naam]')?.getAttribute('aria-required'), verplichtMail: f?.querySelector('[name=email]')?.getAttribute('aria-required'),
         labels: f ? [...f.querySelectorAll('label')].map((l) => [...l.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join('').replace(/\s+/g, ' ').trim()) : [],
-        onder: k.querySelector('.kgj-reken__gerust')?.textContent.replace(/\s+/g, ' ').trim() };
+        onder: k.querySelector('.kgj-reken__gerust')?.textContent.replace(/\s+/g, ' ').trim() ?? null,
+        volgt: [...k.querySelectorAll('.kgj-reken__volgt-lijst b')].map((b) => b.textContent.trim()),
+        volgtKop: k.querySelector('.kgj-reken__volgt-kop')?.textContent.trim(), trigger: k.querySelector('.kgj-reken__trigger')?.textContent.trim() };
     }, root);
     if (c.tel !== `Stap ${pg.stappen} van ${pg.stappen}`) fouten.push(`${etiket}: contactstap teller "${c.tel}"`);
     if (c.band !== pg.band) fouten.push(`${etiket}: band "${c.band}" in plaats van "${pg.band}"`);
@@ -639,7 +664,11 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     if (c.verplichtNaam !== 'true') fouten.push(`${etiket}: naamveld niet als verplicht gemarkeerd`);
     /* 22 okt 2026, Mohammed: "en doe naam en telefoonnummer", "niet gsm" */
     if (c.labels.join('|') !== 'Naam *|Telefoonnummer *|E-mailadres *') fouten.push(`${etiket}: labels "${c.labels.join(' | ')}" in plaats van "Naam * | Telefoonnummer * | E-mailadres *"`);
-    if (c.onder !== pg.onder) fouten.push(`${etiket}: regel onder de knop "${c.onder}" in plaats van "${pg.onder}"`);
+    /* 5 nov 2026 (bfbouw.be e216830/91ab7ba): "Na uw aanvraag" met de twee stappen vervangt de regel onder de knop; direct boven de knop
+       "Offerte binnen 24 uur" (Mohammed 2 nov voor AB: "offerte binnen 24 uur moet ook offerte binnen 24uur bij ab"). */
+    if (c.onder !== null) fouten.push(`${etiket}: nog een regel onder de knop "${c.onder}" (vervangen door "Na uw aanvraag")`);
+    if (c.volgtKop !== 'Na uw aanvraag' || c.volgt.join('|') !== pg.volgt.join('|')) fouten.push(`${etiket}: "Na uw aanvraag" = "${c.volgtKop}" met "${c.volgt.join(' | ')}" in plaats van "${pg.volgt.join(' | ')}"`);
+    if (c.trigger !== 'Offerte binnen 24 uur') fouten.push(`${etiket}: regel boven de knop "${c.trigger}" in plaats van "Offerte binnen 24 uur"`);
     const voor = leads;
     const meldingNa = async () => { await p.evaluate((root) => document.querySelector(root + ' form button[type=submit]').click(), root); await wacht(500); return p.evaluate((root) => document.querySelector(root + ' .kgj-reken__fout')?.textContent.trim() || '', root); };
     /* leeg formulier: de naam staat vóór de gsm, dus eerst "Vul uw naam in." */

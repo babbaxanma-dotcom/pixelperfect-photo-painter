@@ -1,5 +1,6 @@
-import { createContext, useContext, useMemo, useRef, useState, type Dispatch, type MutableRefObject, type ReactNode, type SetStateAction } from 'react';
-import type { KgjInhoud } from './inhoud';
+import { createContext, useContext, useEffect, useMemo, useRef, useState, type Dispatch, type MutableRefObject, type ReactNode, type SetStateAction } from 'react';
+import { meldClarity } from '@/lib/clarity';
+import { vraagTelt, type KgjInhoud } from './inhoud';
 
 /**
  * Eén stand voor de aanvraagkaart bovenaan (hero) en die onderaan (#contact), 23 okt 2026.
@@ -69,10 +70,42 @@ function useMaakGedeeld(begin: () => AanvraagStand): GedeeldeAanvraag {
   return useMemo(() => ({ stand, zet, actief, gestart, verstuurt }), [stand]);
 }
 
+/* 5 nov 2026, zoals bfbouw.be 4 nov (cad4e57, bf_aanvraag): na de laatste vraag staan de antwoorden in sessionStorage, per tabblad.
+   Keert de bezoeker in hetzelfde tabblad terug (vanuit Google, een nieuwe advertentieklik, herladen), dan staat de kaart meteen op
+   het contactscherm met al zijn antwoorden, in de pagina (niet over het volle scherm). "Antwoorden opgeslagen" in de laadstap is
+   dus waar. Na een geslaagde aanvraag gaat de sleutel weg. Naam, telefoon en e-mail worden NIET bewaard. */
+export const BEWAAR_SLEUTEL = 'ab_aanvraag';
+export function bewaarAanvraag(antwoorden: Record<string, string>, vinken: Record<string, string[]>) {
+  try { sessionStorage.setItem(BEWAAR_SLEUTEL, JSON.stringify({ pad: window.location.pathname, antwoorden, vinken })); } catch { /* niets */ }
+}
+export function wisAanvraag() {
+  try { sessionStorage.removeItem(BEWAAR_SLEUTEL); } catch { /* niets */ }
+}
+/** De bewaarde antwoorden van deze pagina als stand op het contactscherm, of null (andere pagina, niets bewaard, een vraag open). */
+export function hersteldeStand(inhoud: KgjInhoud, nu: AanvraagStand): AanvraagStand | null {
+  let b: { pad?: string; antwoorden?: Record<string, string>; vinken?: Record<string, string[]> } | null = null;
+  try { b = JSON.parse(sessionStorage.getItem(BEWAAR_SLEUTEL) || 'null'); } catch { b = null; }
+  if (!b || b.pad !== window.location.pathname || !b.antwoorden) return null;
+  const antwoorden = { ...b.antwoorden, ...nu.antwoorden };
+  const vragen = (inhoud.aanvraag?.vragen ?? []).filter((v) => vraagTelt(v, antwoorden));
+  if (!vragen.length || vragen.some((v) => !antwoorden[v.sleutel])) return null;
+  return { ...nu, antwoorden, vinken: b.vinken ?? {}, stap: vragen.length, aangetikt: true, fout: null };
+}
+
 const Gedeeld = createContext<GedeeldeAanvraag | null>(null);
 
-export function AanvraagStaat({ begin, children }: { begin: () => AanvraagStand; children: ReactNode }) {
+export function AanvraagStaat({ begin, inhoud, children }: { begin: () => AanvraagStand; inhoud?: KgjInhoud; children: ReactNode }) {
   const gedeeld = useMaakGedeeld(begin);
+  const { zet } = gedeeld;
+  /* Terugzetten pas na het hydrateren: de voorgerenderde HTML (scripts/prerender-lp.mjs) staat op vraag 1; een andere eerste stand
+     gaf React-fout #418. Clarity-gebeurtenis aanvraag-hersteld. */
+  useEffect(() => {
+    if (!inhoud?.aanvraag) return;
+    let hersteld = false;
+    zet((s) => { const h = hersteldeStand(inhoud, s); hersteld = !!h; return h ?? s; });
+    if (hersteld) meldClarity('aanvraag-hersteld');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return <Gedeeld.Provider value={gedeeld}>{children}</Gedeeld.Provider>;
 }
 

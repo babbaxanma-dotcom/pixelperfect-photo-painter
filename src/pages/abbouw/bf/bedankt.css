@@ -239,3 +239,20 @@
 }
 /* de kop zegt al dat de aanvraag binnen is */
 .bf.bf-dankpagina .bf-dank__vraag .kgj-toestemming__ok { display: none; }
+
+/* 5 nov 2026 (zoals bfbouw.be e216830, "Wat nu volgt" op de bedankpagina): na een aanvraag via de kaart van een advertentiepagina de
+   twee stappen van "Na uw aanvraag" (titel vet, uitleg eronder), in de plaats van de drie inspectiestappen. Twee kolommen op de pc,
+   onder elkaar op de gsm. Het nummer is de eerste span (zelfde bolletje als de gewone stappen), de tekst de tweede. */
+.bf.bf-dankpagina .bf-dank__volgt { margin-top: calc(28 * var(--u)); max-width: calc(640 * var(--u)); }
+.bf.bf-dankpagina .bf-dank__volgt h2 { margin: 0; font-size: calc(22 * var(--u)); line-height: 1.25; font-weight: 700; letter-spacing: -0.01em; color: #fff; }
+.bf.bf-dankpagina .bf-dank__stappen--volgt { margin-top: calc(14 * var(--u)); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.bf.bf-dankpagina .bf-dank__stappen--volgt li { text-wrap: pretty; }
+.bf.bf-dankpagina .bf-dank__stappen--volgt li > span:last-child { width: auto; height: auto; flex: 1 1 auto; display: block; border-radius: 0; background: none; color: inherit; font-size: inherit; font-weight: 400; line-height: 1.5; }
+.bf.bf-dankpagina .bf-dank__stappen--volgt b { display: block; margin-bottom: calc(3 * var(--u)); font-weight: 700; color: #fff; text-wrap: balance; }
+@media (max-width: 1000px) {
+  .bf.bf-dankpagina .bf-dank__volgt { order: 3; margin-top: 4px; }
+  .bf.bf-dankpagina .bf-dank__volgt h2 { font-size: 20px; }
+  .bf.bf-dankpagina .bf-dank__stappen--volgt { margin-top: 10px; grid-template-columns: minmax(0, 1fr); }
+  .bf.bf-dankpagina .bf-dank__stappen--volgt li { align-items: flex-start; }
+  .bf.bf-dankpagina .bf-dank__stappen--volgt b { margin-bottom: 2px; }
+}
