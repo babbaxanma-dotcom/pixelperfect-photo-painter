@@ -681,7 +681,7 @@ export const DAKWERKEN: KgjInhoud = {
         foto: { src: stockDienstRenovatie, alt: 'Vlakke rode kleipannen die over nieuwe panlatten gelegd worden' },
         meer: ['Bij een dakrenovatie blijft de dakstructuur staan. De oude pannen of leien en het oude onderdak gaan eraf, waarna de isolatie, het dampscherm, het onderdak, de panlatten en de nieuwe dakbedekking erop komen.', 'Is de dakstructuur nog gezond, dan is dit de manier om een ouder dak waterdicht en warm te maken.'] },
       { id: 'isolatie', icoon: 'dienst-isolatie', naam: 'Dakisolatie', tekst: 'Wij isoleren uw dak tijdens de renovatie of als aparte opdracht.',
-        foto: { src: stockDienstIsolatie, alt: 'Lichte, afgewerkte zolder onder het schuine dak, met dakramen en een bakstenen schouw' },
+        foto: { src: stockDienstIsolatie, alt: 'Zolder met isolatie met alufolie tegen de houten kepers en een dakraam' },
         meer: ['Verlaag uw energiefactuur direct. Wij isoleren uw dak volgens de huidige normen voor een optimaal wooncomfort, inclusief alle nodige attesten voor uw Mijn VerbouwPremie.'] },
       { id: 'herstelling', icoon: 'dienst-herstel', naam: 'Dakherstelling', tekst: 'Wij herstellen een lek of schade aan uw hellend of plat dak.',
         foto: { src: stockDienstHerstelling, alt: 'Dak in natuurleien met sneeuwvanger, zinken goot en regenpijp' },

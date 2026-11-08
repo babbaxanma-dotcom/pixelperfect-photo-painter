@@ -223,7 +223,7 @@ function paginaToets(modus) {
     const voor = new Set(lpBronToets(lpBron).fout);
     const geplant = lpBron + "\nimport stockGeplant from '@/assets/dak-stock/stock-geplant.jpg';\nconst geplant = { waarom: { duo: [{ src: stockGeplant, alt: 'x' }] } };\nconst losGeplant = 'stock-zinkwerk';\n";
     const nieuw = lpBronToets(geplant).fout.filter((f) => !voor.has(f));
-    if (!nieuw.some((f) => f.includes('buiten hero.dias en cta.foto')) || !nieuw.some((f) => f.includes('buiten een import'))) stop(2, `ONGELDIGE METING: de LP-bronregel vond de geplante overtredingen in inhoud.ts niet ${JSON.stringify(nieuw)}`);
+    if (!nieuw.some((f) => f.includes('buiten hero.dias, cta.foto en diensten.lijst[].foto')) || !nieuw.some((f) => f.includes('buiten een import'))) stop(2, `ONGELDIGE METING: de LP-bronregel vond de geplante overtredingen in inhoud.ts niet ${JSON.stringify(nieuw)}`);
     console.log(`  inhoud.ts: ${lpBronToets(lpBron).namen.length} stock-imports (${lpBronToets(lpBron).namen.join(', ')})`);
   }
   bronFout.push(...scanFout);

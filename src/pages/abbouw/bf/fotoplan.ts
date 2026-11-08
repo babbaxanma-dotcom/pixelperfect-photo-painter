@@ -22,9 +22,11 @@
  *    vanaf (0, 1150) uit 2120x3770: twee woningen in baksteen, donkere dakpannen, dakraam.
  *  - stock-dienst-renovatie    · https://www.pexels.com/photo/roof-construction-with-red-tiles-and-wooden-framework-31763538/ · fotograaf
  *    niet gelezen (fotopagina weigerde het verzoek, 403) · uitsnede 2400x1800 vanaf (0, 900) uit 2400x3600: vlakke kleipannen op panlatten.
- *  - stock-dienst-isolatie     · https://www.pexels.com/photo/spacious-attic-room-design-8082324/ · Max Vakhtbovych · uitsnede 2136x1602
- *    vanaf (132, 0) uit 2400x1602: afgewerkte zolder met dakramen (het resultaat van dakisolatie; Pexels had geen dakisolatie zonder
- *    herkenbare werklui of buitenlandse opdruk).
+ *  - stock-dienst-isolatie     · https://unsplash.com/photos/attic-interior-with-insulation-and-a-skylight-pXWsbIWgR8Q · Brett Jordan ·
+ *    Unsplash-licentie ("Free to use under the Unsplash License", gelezen op de fotopagina 8 nov; geen Unsplash+) · geheel (2400x1800, 4:3):
+ *    zolder met isolatie met alufolie tegen de kepers en een dakraam. 8 nov, Mohammed: "Die foto van isolatie past er nog niet bij, toch?
+ *    Dus zoek een betere" (de vorige, Pexels 8082324, was een lege afgewerkte zolder zonder zichtbare isolatie). Gezocht in zijn Chrome
+ *    (Unsplash weigert automatische verzoeken), beeld van de Unsplash-CDN.
  *  - stock-dienst-herstelling  · https://www.pexels.com/photo/charming-european-house-with-slate-roof-and-flowers-33843410/ · Arlind D ·
  *    uitsnede 2400x1800 vanaf (0, 450) uit 2400x3600: natuurleien, sneeuwvanger, zinken goot en regenpijp.
  *  Eerste ronde (8 nov, afgekeurd: niet Belgisch genoeg): Pexels 29114658, 31771165, 6124239 (roze glaswol), 17490213 (bemoste bevertjes).

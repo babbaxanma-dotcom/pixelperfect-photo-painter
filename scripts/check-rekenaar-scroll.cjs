@@ -82,10 +82,14 @@ const SCHERMEN = [[390, 844], [375, 667]];
     const kop = document.querySelector('.kgj-reken .kgj-reken__kop');
     const vast = document.querySelector('.kgj-kop');
     const balk = vast?.getBoundingClientRect().bottom ?? 0;
-    return { top: Math.round(kop.getBoundingClientRect().top), balk: Math.round(balk), vast: !!vast, vastH: Math.round(vast?.getBoundingClientRect().height ?? 0), h: innerHeight,
+    /* 8 nov 2026: na het laatste antwoord opent de kaart op de gsm het volle scherm (Aanvraag.tsx zetVol, .is-vol, zoals bfbouw.be 4 nov). Dan staat de rij
+       Terug/Stap/sluiten bovenaan op 0 en ligt de kaart OVER de menubalk: dat is goed, zolang de kop bovenaan in beeld staat en de balk afgedekt is. */
+    const kaart = document.querySelector('.kgj-reken'), vol = !!kaart && kaart.classList.contains('is-vol');
+    const opBalk = vol && balk > 0 ? document.elementFromPoint(Math.round(innerWidth / 2), Math.max(1, Math.round(balk) - 8)) : null;
+    return { top: Math.round(kop.getBoundingClientRect().top), balk: Math.round(balk), vast: !!vast, vastH: Math.round(vast?.getBoundingClientRect().height ?? 0), h: innerHeight, vol, afgedekt: !!opBalk && kaart.contains(opBalk),
       tel: kop.querySelector('.kgj-reken__tel')?.textContent.trim() };
   });
-  const isFout = (s) => s.top < s.balk || s.top > s.h - 80;
+  const isFout = (s) => (s.vol ? s.top < 0 || s.top > 24 || !s.afgedekt : s.top < s.balk || s.top > s.h - 80);
   try {
     /* positieve controle: de kop van de rekenaar expres onder de vaste kop */
     {
@@ -99,6 +103,18 @@ const SCHERMEN = [[390, 844], [375, 667]];
       if (!ok || !s.vast || s.vastH < 40) { console.log(`ONGELDIGE METING: positieve controle zonder vaste kop .kgj-kop of zonder rekenaar (${JSON.stringify(s)})`); process.exit(2); }
       if (!isFout(s)) { console.log(`ONGELDIGE METING: de geplante fout (kop op ${s.top}px onder een balk tot ${s.balk}px) werd niet gezien`); process.exit(2); }
       console.log(`positieve controle: geplante fout gezien (kop op ${s.top}px, vaste kop .kgj-kop tot ${s.balk}px)`);
+    }
+    /* positieve controle volle scherm (8 nov 2026): het dakpad tot het volle scherm, dan de kaart 150 px omlaag geschoven: moet fout zijn */
+    {
+      const p = await nieuwePagina(390, 844, 'dakwerken');
+      for (const l of PADEN.dakwerken) { await p.evaluate((label) => { const b = [...document.querySelectorAll('.kgj-reken button')].find((x) => x.textContent.trim().startsWith(label)); b?.click(); }, l); await wacht(1100); }
+      const goed = await meetKop(p);
+      await p.evaluate(() => { document.querySelector('.kgj-reken').style.setProperty('top', '150px', 'important'); /* geen transform: de openingsanimatie (fill both) overschrijft die */ });
+      await wacht(200);
+      const slecht = await meetKop(p);
+      await p.close();
+      if (!goed.vol || isFout(goed) || !isFout(slecht)) { console.log(`ONGELDIGE METING: positieve controle volle scherm (goed ${JSON.stringify(goed)}, geplant ${JSON.stringify(slecht)})`); process.exit(2); }
+      console.log(`positieve controle volle scherm: kop op ${goed.top}px en balk afgedekt = goed; 150 px omlaag = fout gezien`);
     }
     for (const [w, h] of SCHERMEN) {
       for (const [lp, pad] of Object.entries(PADEN)) {
@@ -121,7 +137,7 @@ const SCHERMEN = [[390, 844], [375, 667]];
           const s = await meetKop(p);
           if (!s.vast || s.vastH < 40) { console.log(`ONGELDIGE METING: ${lp} ${w}x${h}: geen vaste kop .kgj-kop (hoogte ${s.vastH}px), balk = 0 zou stil groen geven`); process.exit(2); }
           metingen++;
-          if (isFout(s)) fouten.push(`${lp} ${w}x${h} na "${l}": kop op ${s.top}px (balk ${s.balk}px, scherm ${s.h}px, ${s.tel})`);
+          if (isFout(s)) fouten.push(`${lp} ${w}x${h} na "${l}": kop op ${s.top}px (balk ${s.balk}px, scherm ${s.h}px, ${s.tel}${s.vol ? ', vol scherm, balk ' + (s.afgedekt ? 'afgedekt' : 'NIET afgedekt') : ''})`);
         }
         await p.close();
       }
