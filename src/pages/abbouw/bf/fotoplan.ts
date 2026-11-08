@@ -15,6 +15,19 @@
  *    uitsnede 2642x1651 vanaf (1950, 800) uit 4592x3056, verkleind naar 2400x1500: 2 dakramen, een zinken dakkapel,
  *    een dakkapel met pannen, zinken en loden aansluitingen (locatie volgens de fotopagina: Maastricht).
  *  - stock-daklijn         · https://unsplash.com/photos/e6zMlgsemcU · Mitchel Lensink · Unsplash-licentie (idem) · geheel.
+ * DIENSTVAKJES /lp/dakwerken (8 nov 2026, Mohammed: "kan je in die vakjes geen mooie fotos doen?", keuze op de klikvraag "Stock in alle
+ * 4", daarna "doe betere fotos, het moet passen bij belgische materialen ook"; AB heeft geen eigen foto van isolatie of herstelling). Pexels-licentie (gratis commercieel gebruik, naamsvermelding niet
+ * verplicht). Bron-jpg 1600x1200 in src/assets/dak-stock/, webp 900x675 in src/assets/bf/ (sharp, scratchpad 8 nov). Geen gezicht in beeld.
+ *  - stock-dienst-nieuw-dak    · https://www.pexels.com/photo/exterior-of-houses-20858565/ · Shehab Al-Qadhi · uitsnede 2120x1590
+ *    vanaf (0, 1150) uit 2120x3770: twee woningen in baksteen, donkere dakpannen, dakraam.
+ *  - stock-dienst-renovatie    · https://www.pexels.com/photo/roof-construction-with-red-tiles-and-wooden-framework-31763538/ · fotograaf
+ *    niet gelezen (fotopagina weigerde het verzoek, 403) · uitsnede 2400x1800 vanaf (0, 900) uit 2400x3600: vlakke kleipannen op panlatten.
+ *  - stock-dienst-isolatie     · https://www.pexels.com/photo/spacious-attic-room-design-8082324/ · Max Vakhtbovych · uitsnede 2136x1602
+ *    vanaf (132, 0) uit 2400x1602: afgewerkte zolder met dakramen (het resultaat van dakisolatie; Pexels had geen dakisolatie zonder
+ *    herkenbare werklui of buitenlandse opdruk).
+ *  - stock-dienst-herstelling  · https://www.pexels.com/photo/charming-european-house-with-slate-roof-and-flowers-33843410/ · Arlind D ·
+ *    uitsnede 2400x1800 vanaf (0, 450) uit 2400x3600: natuurleien, sneeuwvanger, zinken goot en regenpijp.
+ *  Eerste ronde (8 nov, afgekeurd: niet Belgisch genoeg): Pexels 29114658, 31771165, 6124239 (roze glaswol), 17490213 (bemoste bevertjes).
  * NIET MEER GEBRUIKT (13 okt 2026, keuring): stock-schouw-herstel (1V_WuotjRfI, een dakwerker bij de schouw) stond in
  * het traject recht boven stap 1 "We klimmen op het dak" en liet een bezoeker die man lezen als een dakwerker van AB;
  * stock-pannen-leggen (twee dakwerkers, BRAAS leesbaar op de pallet) en stock-dakramen (Pexels 20220498, Nederlands

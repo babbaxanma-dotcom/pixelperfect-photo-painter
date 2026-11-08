@@ -32,6 +32,12 @@ import stockDaklijn from '@/assets/bf/stock-daklijn-1600.webp';
 import stockZinkwerk from '@/assets/bf/stock-zinkwerk-1600.webp';
 import stockPannenStapels from '@/assets/bf/stock-pannen-stapels-1600.webp';
 import stockPanlatten from '@/assets/bf/stock-panlatten-1600.webp';
+/* 8 nov 2026, Mohammed: "Waar kunnen we u mee helpen? kan je in die vakjes geen mooie fotos doen?". AB heeft alleen eigen dakfoto's van de hoeve
+   (geen isolatie, geen herstelling); zijn keuze op de klikvraag: "Stock in alle 4". Vier Pexels-foto's, licentie en uitsnede in fotoplan.ts. */
+import stockDienstNieuwDak from '@/assets/bf/stock-dienst-nieuw-dak-900.webp';
+import stockDienstRenovatie from '@/assets/bf/stock-dienst-renovatie-900.webp';
+import stockDienstIsolatie from '@/assets/bf/stock-dienst-isolatie-900.webp';
+import stockDienstHerstelling from '@/assets/bf/stock-dienst-herstelling-900.webp';
 import dakVoor from '@/assets/lp-diensten/dak-voor.jpg';
 import dakNa from '@/assets/lp-diensten/dak-na.jpg';
 /* Foto's bij de eerste calculatorvraag (Mohammed, 24 sep). Hellend: de
@@ -85,10 +91,7 @@ export type Zekerheid = { icoon: 'prijs' | 'aanspreek' | 'schild' | 'kalender' |
 export type Realisatie = {
   kop: string; project: string; werkenKop: string; werken: string[];
   na: { label: string; video: string; poster: string; alt: string };
-  tijdens: { label: string; src: string; groot: string; alt: string };
-  galerijKop: string;
-  fotos: { src: string; groot: string; alt: string }[];
-  rondgang?: { label: string; video: string; poster: string; alt: string };
+  tijdens: { label: string; src: string; alt: string };
 };
 
 export type KgjInhoud = {
@@ -670,14 +673,18 @@ export const DAKWERKEN: KgjInhoud = {
        vlaanderen.be, Mijn VerbouwPremie dak vanaf 1 maart 2026 (categorie 3 en 4; 1 en 2 niets). Copy-guard groen op 2 nov. */
     lijst: [
       { id: 'nieuw-dak', icoon: 'dienst-nieuw', naam: 'Nieuw dak', tekst: 'Volledig nieuw dak, met pannen of leien, of als plat dak in EPDM, roofing of bitumen.',
+        foto: { src: stockDienstNieuwDak, alt: 'Twee woningen in baksteen met een dak van donkere dakpannen en een dakraam' },
         /* 2 nov 2026, Mohammed: "bij de lees meer van de dienstenkaarten van ab, exacte copy als bf": woordelijk bfbouw.be DAK_TEKST
            (bouw/paginas.cjs, nieuw-dak, dakrenovatie) en zijn dictaat van 31 okt (UITLEG dakisolatie in bouw/lp-dak.cjs). */
         meer: ['Een nieuw dak bouwen wij voor nieuwbouw, of wanneer de oude dakstructuur vervangen moet worden. Het dak wordt dan volledig opgebouwd: structuur, isolatie, onderdak en dakbedekking.', 'U kiest de dakbedekking die bij uw woning past, bijvoorbeeld keramische pannen of leien.'] },
       { id: 'renovatie', icoon: 'dienst-renovatie', naam: 'Dakrenovatie', tekst: 'Uw dakstructuur blijft staan. Wij vernieuwen de pannen of leien, samen met het onderdak en de panlatten.',
+        foto: { src: stockDienstRenovatie, alt: 'Vlakke rode kleipannen die over nieuwe panlatten gelegd worden' },
         meer: ['Bij een dakrenovatie blijft de dakstructuur staan. De oude pannen of leien en het oude onderdak gaan eraf, waarna de isolatie, het dampscherm, het onderdak, de panlatten en de nieuwe dakbedekking erop komen.', 'Is de dakstructuur nog gezond, dan is dit de manier om een ouder dak waterdicht en warm te maken.'] },
       { id: 'isolatie', icoon: 'dienst-isolatie', naam: 'Dakisolatie', tekst: 'Wij isoleren uw dak tijdens de renovatie of als aparte opdracht.',
+        foto: { src: stockDienstIsolatie, alt: 'Lichte, afgewerkte zolder onder het schuine dak, met dakramen en een bakstenen schouw' },
         meer: ['Verlaag uw energiefactuur direct. Wij isoleren uw dak volgens de huidige normen voor een optimaal wooncomfort, inclusief alle nodige attesten voor uw Mijn VerbouwPremie.'] },
       { id: 'herstelling', icoon: 'dienst-herstel', naam: 'Dakherstelling', tekst: 'Wij herstellen een lek of schade aan uw hellend of plat dak.',
+        foto: { src: stockDienstHerstelling, alt: 'Dak in natuurleien met sneeuwvanger, zinken goot en regenpijp' },
         meer: ['Ziet u een vochtplek op het plafond, of ligt er na een storm een pan verschoven? Dan zoeken we eerst waar het water echt binnenkomt, want dat is vaak een eind verwijderd van de vlek. Zo herstellen we de oorzaak, en blijft uw plafond voortaan droog.'] },
     ],
   },
@@ -735,7 +742,9 @@ export const DAKWERKEN: KgjInhoud = {
   /* 8 nov 2026, Mohammed: "ik wil graag op de pagina zo een realisatie sectie maken met die realisatie" (de hoeve, realisatie-hoeve.ts): direct na de
      diensten, waar bfbouw.be zijn recente daken toont; de voor/na van het dak volgt erna. */
   realisatie: HOEVE,
-  volgorde: ['zekerheden', 'diensten', 'realisatie', 'voorna', 'uitleg', 'werkwijze', 'voordelen', 'faq'],
+  /* 8 nov 2026, Mohammed (localhost): "Tijdens de werken MAG ERuit, eronder en die slider ook": de voor/na-schuif ('voorna') onder de realisatie is weg.
+     De gegevens blijven staan (type), de pagina toont ze niet. */
+  volgorde: ['zekerheden', 'diensten', 'realisatie', 'uitleg', 'werkwijze', 'voordelen', 'faq'],
 
   /* 2 nov 2026, Mohammed: "op dakwerken eruit of doe simpelweg hoe lang duurt dakwerk gemiddeld en nog 2 nuttige vragen",
      "geen onnutige ai slop", "redeneer gewoon". Eerste versie afgekeurd ("nee ai slop copy", "let op de copy dat ik leverde",
@@ -753,7 +762,7 @@ export const DAKWERKEN: KgjInhoud = {
      - duur: sectorijk 22 Vlaamse dakwerkers (2 nov). Vaste spatie na €. */
   faq: {
     kop: 'Veelgestelde vragen',
-    eersteOpen: true,
+    eersteOpen: false, // 8 nov 2026, Mohammed (AB localhost): "veelgestelde vragen eerste vraag niet automatisch open aub" (zoals bfbouw.be die dag)
     lijst: [
       { v: 'Wat kost een dakrenovatie?',
         a: 'De prijs hangt af van het type dak (plat of hellend), de oppervlakte, de staat van het dak en of er isolatie bij komt. Gemiddeld kost een dakrenovatie in België € 50 tot € 200 per m², exclusief btw. Vervangt u alleen de dakbedekking, dan rekent u voor een hellend dak op € 30 tot € 120 per m² en voor een plat dak op € 40 tot € 100. Met nieuwe isolatie erbij wordt dat € 80 tot € 170 voor een hellend en € 70 tot € 150 voor een plat dak, en moet ook het dakhout vernieuwd worden, dan zit u tussen € 150 en € 350 per m². Is uw woning ouder dan tien jaar, dan betaalt u 6% btw in plaats van 21%. Wilt u een prijs op maat voor uw dak?',

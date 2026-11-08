@@ -24,6 +24,9 @@ const puppeteer = require('puppeteer-core');
    sectie mag weg"); /lp/richtprijs-berekenen (LpBf, standaardvolgorde) heeft dezelfde schuif nog. */
 /* 13 okt avond: /lp/richtprijs-berekenen toont nu dezelfde rekenaarpagina als /lp/totaalrenovatie (zonder voor/na); de
    dakpagina heeft de BF-schuif nog. */
+/* 8 nov 2026, Mohammed (localhost): "Tijdens de werken MAG ERuit, eronder en die slider ook": de voor/na-schuif staat op geen enkele LP-route
+   meer (/lp/dakwerken, /asbest, /totaalrenovatie, /aannemer-renovatiewerken, /richtprijs-berekenen, /totaalrenovatie: gemeten 8 nov). Daarom niet
+   meer in npm run verify (een test op een schuif die er niet is meet niets). Komt er weer een schuif op een pagina: URL hieronder en terug in verify. */
 const URL = process.argv[2] || 'http://localhost:8080/lp/dakwerken';
 const CHROME = process.env.CHROME_PAD || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 

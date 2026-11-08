@@ -245,7 +245,7 @@ async function faqFlow(br, basis, pad, w, h, plant = null) {
   const uit = [];
   const { ctx, p } = await open(br, basis, w, h, pad);
   try {
-    if (plant) await p.evaluate(() => { const d = document.querySelector('#faq details'); if (d) d.open = false; });
+    if (plant) await p.evaluate(() => { const d = document.querySelector('#faq details'); if (d) d.open = true; }); // positieve controle: een open vraag moet rood geven (8 nov)
     const f = await p.evaluate(() => {
       const s = document.querySelector('#faq');
       const vorige = s?.previousElementSibling;
@@ -256,10 +256,11 @@ async function faqFlow(br, basis, pad, w, h, plant = null) {
     if (!f.er) { uit.push('8. geen veelgestelde vragen'); return uit; }
     if (f.vorige !== 'voordelen' || f.vorigeKop !== 'De voordelen van een dakrenovatie') uit.push(`8. de vragen staan na "${f.vorigeKop}" (#${f.vorige}) in plaats van direct onder "De voordelen van een dakrenovatie"`);
     if (f.vragen.join('|') !== FAQ.join('|')) uit.push(`8. vragen "${f.vragen.join(' | ')}"`);
-    if (f.open.join('|') !== 'true|false|false|false|false') uit.push(`8. open/dicht ${f.open.join(', ')} (verwacht alleen de eerste open)`);
+    // 8 nov 2026, Mohammed: "veelgestelde vragen eerste vraag niet automatisch open aub": alle vragen dicht bij het laden
+    if (f.open.join('|') !== 'false|false|false|false|false') uit.push(`8. open/dicht ${f.open.join(', ')} (verwacht alle vragen dicht)`);
     if (f.link !== '#contact' || f.linkTekst !== 'Vraag dan een gratis offerte aan.') uit.push(`8. link "${f.linkTekst}" naar ${f.link}`);
     if (f.link) {
-      await p.evaluate(() => document.querySelector('#faq a.bf-vraag__link').click());
+      await p.evaluate(() => { document.querySelector('#faq details').open = true; document.querySelector('#faq a.bf-vraag__link').click(); }); // eerst de vraag open, zoals de bezoeker
       await wacht(1400);
       const z = await p.evaluate(() => { const k = document.querySelector('#contact .kgj-reken--aanvraag'); const r = k?.getBoundingClientRect(); return r ? { top: Math.round(r.top), vh: innerHeight } : null; });
       if (!z || z.top < 0 || z.top > z.vh - 120) uit.push(`8. na de link staat de kaart onderaan niet in beeld (${JSON.stringify(z)})`);
@@ -312,9 +313,9 @@ async function faqFlow(br, basis, pad, w, h, plant = null) {
       else console.log(`positieve controle: ${naam}: gevangen`);
     }
     {
-      const r = await faqFlow(br, basis, '/lp/dakwerken', 390, 664, 'dicht');
-      if (!r.some((x) => /^8\. open\/dicht/.test(x))) { console.log(`ONGELDIGE METING: positieve controle "eerste vraag dicht" niet gevangen (${r.join(' | ') || 'geen fout'})`); code = 2; }
-      else console.log('positieve controle: eerste vraag dicht: gevangen');
+      const r = await faqFlow(br, basis, '/lp/dakwerken', 390, 664, 'open');
+      if (!r.some((x) => /^8\. open\/dicht/.test(x))) { console.log(`ONGELDIGE METING: positieve controle "eerste vraag open" niet gevangen (${r.join(' | ') || 'geen fout'})`); code = 2; }
+      else console.log('positieve controle: eerste vraag open: gevangen');
     }
     if (code === 2) return;
 

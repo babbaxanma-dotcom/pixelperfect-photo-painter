@@ -930,7 +930,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                   {inhoud.strak && <VrijMoment />}
                 </div>
               )}
-              <ul className="bf-lphero__vertrouwen"><li><GoogleBadge klasse="bf-lphero__google" /></li></ul>
+              {/* 8 nov 2026, Mohammed: "5 op google onder de subkop bij ab eruit aub": de Google-badge onder de subkop is weg (alle LP's met deze hero). */}
             </div>
             {heroForm && (
               /* Formulier in de hero (heroFormulier): de kaart zegt wat u krijgt (de knoptekst) en wanneer het kan

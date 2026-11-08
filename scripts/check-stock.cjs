@@ -109,12 +109,15 @@ function lpBronToets(tekst) {
   };
   const dias = blok(/^ {4}dias: \[/, /^ {4}\],/);
   const cta = blok(/^ {2}cta: \{/, /^ {2}\},/);
+  /* 8 nov 2026, Mohammed: "kan je in die vakjes geen mooie fotos doen?", keuze "Stock in alle 4": ook de foto van een dienstvakje */
+  const diensten = blok(/^ {2}diensten: \{/, /^ {2}\},/);
   const woord = new RegExp(`\\b(${namen.join('|')})\\b`);
   regels.forEach((r, i) => {
     if (/^import /.test(r) || /^\s*(\/\/|\*|\/\*)/.test(r) || !woord.test(r)) return;
     const inDias = !!dias && i > dias[0] && i < dias[1] && /^\s*\{ src: \w+,/.test(r);
     const inCta = !!cta && i > cta[0] && i < cta[1] && /^\s*foto: \{ src: \w+,/.test(r);
-    if (!inDias && !inCta) fout.push(`inhoud.ts r.${i + 1}: stockbeeld buiten hero.dias en cta.foto: ${r.trim().slice(0, 100)}`);
+    const inDienst = !!diensten && i > diensten[0] && i < diensten[1] && /^\s*foto: \{ src: \w+,/.test(r);
+    if (!inDias && !inCta && !inDienst) fout.push(`inhoud.ts r.${i + 1}: stockbeeld buiten hero.dias, cta.foto en diensten.lijst[].foto: ${r.trim().slice(0, 100)}`);
   });
   return { fout, namen };
 }
@@ -149,6 +152,7 @@ function paginaToets(modus) {
   /* /lp/dakwerken: de dia's van de hero en de foto van het slotblok, in de BF-vorm (LpBf) en de KGJ-vorm (LpKgj) */
   const LP_DIA = '.bf-lphero__slides > img.bf-lphero__beeld, .kgj-hero__foto > .kgj-dia > img';
   const LP_SLOT = '#contact img.bf-lpinsp__beeld, #contact .kgj-cta__foto > img';
+  const LP_DIENST = '#diensten img.bf-dkaart__beeld'; // 8 nov 2026: de foto's van de dienstvakjes (keuze Mohammed "Stock in alle 4")
   const ALT = /\bAB\b|\b(ons|onze|wij|we|door)\b/i;
   const fout = [];
   const beelden = [...document.querySelectorAll('img')].filter((i) => STOCK.test(i.getAttribute('src') || '') || STOCK.test(i.getAttribute('srcset') || ''));
@@ -163,7 +167,7 @@ function paginaToets(modus) {
     if (lp) {
       const dia = i.matches(LP_DIA) ? diaLijst.indexOf(i) + 1 : 0;
       const slot = i.matches(LP_SLOT);
-      if (!dia && !slot) fout.push(`a: ${naam} buiten de hero-dia's en de slotblokfoto (${waar})`);
+      if (!dia && !slot && !i.matches(LP_DIENST)) fout.push(`a: ${naam} buiten de hero-dia's, de slotblokfoto en de dienstvakjes (${waar})`);
       const pl = (lpPlek[naam] = lpPlek[naam] || { dias: [], slot: 0 });
       if (dia) pl.dias.push(dia);
       if (slot) pl.slot++;
