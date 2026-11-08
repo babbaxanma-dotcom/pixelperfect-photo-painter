@@ -40,6 +40,12 @@ export type AanvraagStand = {
   /** 30 okt 2026: de stap binnen de offerte (keuzelijsten, Doorgaan) en de antwoorden daar; gelijk aan het aantal stappen = de contactstap. */
   offerteStap?: number;
   offerteAntw?: Record<string, string>;
+  /** 7 nov 2026: vragen die de pagina vooraf beantwoordde en die in beide kaarten wegvallen (message match op het soort dak, nu vraag 2;
+      zoals bfbouw.be data-voor op plat-dak/hellend-dak). */
+  overslaan?: string[];
+  /** 7 nov 2026 (zoals bfbouw.be rk__gekozen): de knop "Ik ben op zoek naar" die de kaart startte; de kaart toont "Uw keuze: ..." bij de
+      vragen erna, zolang dat antwoord blijft staan. */
+  gekozen?: { sleutel: string; label: string };
 };
 
 export type GedeeldeAanvraag = {
@@ -58,8 +64,9 @@ export function beginStand(inhoud: KgjInhoud, voor?: { sleutel: string; label: s
      aanvraag; de vraag zelf valt weg via haar nietAls in het inhoudsobject. De kaart begint gewoon bij vraag 1. */
   const later = !vooraf && voor && vragen.some((v, i) => i > 0 && v.sleutel === voor.sleutel && v.keuzes.some((k) => k.label === voor.label)) ? voor : undefined;
   const antwoord = vooraf ?? later;
+  /* 7 nov 2026: een vooraf beantwoorde latere vraag valt weg in beide kaarten (overslaan), zoals bfbouw.be data-voor. */
   return { stap: vooraf ? 1 : 0, antwoorden: antwoord ? { [antwoord.sleutel]: antwoord.label } : {}, vinken: {}, naam: '', telefoon: '',
-    aangetikt: false, fout: null, bezig: false, vraagToestemming: false };
+    aangetikt: false, fout: null, bezig: false, vraagToestemming: false, ...(later ? { overslaan: [later.sleutel] } : {}) };
 }
 
 function useMaakGedeeld(begin: () => AanvraagStand): GedeeldeAanvraag {
@@ -87,7 +94,7 @@ export function hersteldeStand(inhoud: KgjInhoud, nu: AanvraagStand): AanvraagSt
   try { b = JSON.parse(sessionStorage.getItem(BEWAAR_SLEUTEL) || 'null'); } catch { b = null; }
   if (!b || b.pad !== window.location.pathname || !b.antwoorden) return null;
   const antwoorden = { ...b.antwoorden, ...nu.antwoorden };
-  const vragen = (inhoud.aanvraag?.vragen ?? []).filter((v) => vraagTelt(v, antwoorden));
+  const vragen = (inhoud.aanvraag?.vragen ?? []).filter((v) => vraagTelt(v, antwoorden) && !nu.overslaan?.includes(v.sleutel));
   if (!vragen.length || vragen.some((v) => !antwoorden[v.sleutel])) return null;
   return { ...nu, antwoorden, vinken: b.vinken ?? {}, stap: vragen.length, aangetikt: true, fout: null };
 }
@@ -116,8 +123,16 @@ export function useAanvraagStaat(begin: () => AanvraagStand): GedeeldeAanvraag {
 }
 
 /** Voor de vaste knop op de gsm (LpBf): waar de bezoeker staat, of null zonder AanvraagStaat. */
-export function useAanvraagVoortgang(): { stap: number; aangetikt: boolean; verstuurd: boolean; antwoorden: Record<string, string> } | null {
+export function useAanvraagVoortgang(): { stap: number; aangetikt: boolean; verstuurd: boolean; antwoorden: Record<string, string>; overslaan?: string[] } | null {
   const g = useContext(Gedeeld);
   if (!g) return null;
-  return { stap: g.stand.stap, aangetikt: g.stand.aangetikt, verstuurd: g.stand.bezig || g.stand.vraagToestemming, antwoorden: g.stand.antwoorden };
+  return { stap: g.stand.stap, aangetikt: g.stand.aangetikt, verstuurd: g.stand.bezig || g.stand.vraagToestemming, antwoorden: g.stand.antwoorden, overslaan: g.stand.overslaan };
+}
+/** Telt deze vraag in deze stand? vraagTelt + de vragen die de pagina vooraf beantwoordde (overslaan). Eén regel voor beide kaarten en de vaste knop. */
+export function telt(v: Parameters<typeof vraagTelt>[0], s: { antwoorden: Record<string, string>; overslaan?: string[] }): boolean {
+  return vraagTelt(v, s.antwoorden) && !s.overslaan?.includes(v.sleutel);
+}
+/** De gedeelde stand zelf (null zonder AanvraagStaat), voor de knoppen "Ik ben op zoek naar" (LpBf, 7 nov 2026). */
+export function useGedeeldeAanvraag(): GedeeldeAanvraag | null {
+  return useContext(Gedeeld);
 }

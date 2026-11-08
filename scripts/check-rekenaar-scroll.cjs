@@ -32,7 +32,8 @@ const PADEN = {
      /lp/dakwerken en /lp/totaalrenovatie staat bovenaan de aanvraagkaart (Aanvraag.tsx). Zelfde kaart (.kgj-reken), zelfde
      kop (.kgj-reken__kop, "Stap X van Y") en dezelfde scrolfix na elke stap: dezelfde meting, met hun klikvragen tot en met
      de contactstap. De rekenaar zelf staat alleen nog op /lp/richtprijs-berekenen en blijft hier gemeten. */
-  dakwerken: ['Hellend dak', 'Dakrenovatie / Nieuw dak', 'Ja', 'Nee'],
+  /* 7 nov 2026: vraag 1 "Ik ben op zoek naar:", vraag 2 het soort dak, tot en met de contactstap */
+  dakwerken: ['Dakrenovatie', 'Hellend dak', 'Ja', 'Nee', '50 tot 100 m²', 'Zo snel mogelijk'],
   /* 22 okt 2026: vraag 1 de woning, vraag 3 de afvinkvraag (de hoogste stap: daar valt de kop het makkelijkst weg), dan start en budget */
   totaalrenovatie: ['Rijwoning', 'Gedeeltelijke renovatie', 'Keuken', 'Badkamer', '@verder', 'Zo snel mogelijk', '€ 25.000 tot € 75.000'],
   /* 5 okt 2026: de renovatierekenaar staat niet meer in de hero van /lp/totaalrenovatie (daar
@@ -89,7 +90,7 @@ const SCHERMEN = [[390, 844], [375, 667]];
     /* positieve controle: de kop van de rekenaar expres onder de vaste kop */
     {
       const p = await nieuwePagina(390, 844, 'dakwerken');
-      const ok = await p.evaluate(() => { const b = [...document.querySelectorAll('.kgj-reken button')].find((x) => x.textContent.trim().startsWith('Hellend dak')); b?.click(); return !!b; });
+      const ok = await p.evaluate(() => { const b = [...document.querySelectorAll('.kgj-reken button')].find((x) => x.textContent.trim().startsWith('Dakrenovatie')); b?.click(); return !!b; }); // 7 nov 2026: vraag 1 = Werk
       await wacht(1100);
       await p.evaluate(() => { const kop = document.querySelector('.kgj-reken .kgj-reken__kop'); const balk = document.querySelector('.kgj-kop')?.getBoundingClientRect().bottom ?? 0; window.scrollBy({ top: kop.getBoundingClientRect().top - balk + 30, behavior: 'instant' }); });
       await wacht(300);

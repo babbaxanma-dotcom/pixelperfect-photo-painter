@@ -111,15 +111,17 @@ const DAK = {
   /* 2 nov 2026 (omvormen zoals bfbouw.be 31 okt): kop "Uw dak laten vernieuwen, renoveren of isoleren?", aanbod "gratis offerte";
      zes vragen (oppervlakte en start zoals bfbouw.be) + contactstap = 7 stappen */
   /* 5 nov 2026, zoals bfbouw.be 4 nov: vraag 1 "Om welk soort dak gaat het?", Dakrenovatie en Nieuw dak apart */
-  pad: '/lp/dakwerken', soort: 'dak', kop: 'Uw dak laten vernieuwen, renoveren of isoleren?', woord: 'gratis offerte', vraag1: 'Om welk soort dak gaat het?', keuzes1: ['Hellend dak', 'Plat dak'],
-  pad1: ['Hellend dak', 'Dakrenovatie', 'Ja', 'Nee', '50 tot 100 m²', 'Zo snel mogelijk'], vraag2: 'Wat moet er aan uw dak gebeuren?',
+  /* 7 nov 2026, zoals bfbouw.be 7 nov ("en doe al deze changes ook bij ab pagina"): vraag 1 "Ik ben op zoek naar:" met Gratis dakinspectie, vraag 2 het soort dak */
+  pad: '/lp/dakwerken', soort: 'dak', kop: 'Uw dak laten vernieuwen, renoveren of isoleren?', woord: 'gratis offerte', vraag1: 'Ik ben op zoek naar:', keuzes1: ['Dakrenovatie', 'Nieuw dak', 'Herstelling', 'Isolatie', 'Gratis dakinspectie'],
+  pad1: ['Dakrenovatie', 'Hellend dak', 'Ja', 'Nee', '50 tot 100 m²', 'Zo snel mogelijk'], vraag2: 'Om welk soort dak gaat het?',
   /* knop: dictaat Mohammed 31 okt voor bfbouw.be ("Gratis en vrijblijvende offerte aanvragen"; infinitief "aanvragen", onderzoek 23 okt).
      5 nov 2026, zoals bfbouw.be 91ab7ba: verzendknop "Gratis offerte aanvragen", de andere knoppen "Offerte aanvragen" (naarKnop);
      contactkop zonder "gratis". */
   band: 'Bijna klaar! Vraag uw offerte aan', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 7,
   tegels: ['5,0', '10 jaar garantie', '15 jaar ervaring'],
   /* 5 nov 2026, bfbouw.be: "Na uw aanvraag" (twee stappen) vervangt de regel onder de knop */
-  volgt: ['Analyse door onze dakexpert', 'Uw offerte binnen 24 uur'],
+  /* 7 nov 2026 (bfbouw.be "oke doe maar die 3 stappen"): contact binnen 24 uur, gratis plaatsbezoek, offerte */
+  volgt: ['Wij nemen binnen 24 uur contact op', 'Gratis plaatsbezoek', 'Uw offerte'],
   /* 3 nov 2026, Mohammed: "dat puntje 6btw bij woningen ouder dan 10j in de hero weg". 5 nov: "Vrijblijvende offerte" (bfbouw.be) */
   vinkjes: ['Vrijblijvende offerte', 'Vakmanschap tot in de details'],
 };
@@ -132,7 +134,7 @@ const RENO = (pad) => ({
   band: 'Bijna klaar! Vraag uw offerte aan', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 6,
   /* 22 okt 2026: "6 vakdisciplines ... weg, bij die form", "dat is een rare trust badge" */
   tegels: ['5,0', '16 jaar ervaring'],
-  volgt: ['Analyse door onze expert', 'Uw offerte binnen 24 uur'],
+  volgt: ['Wij nemen binnen 24 uur contact op', 'Gratis plaatsbezoek', 'Uw offerte'], // 7 nov 2026 (bfbouw.be)
   vinkjes: ['Vrijblijvende offerte', 'Vaste prijs vooraf', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details'], // 22 okt 2026: geen budgetgarantie meer; 2 nov: offerte; 5 nov: zonder "gratis"
 });
 const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiewerken')];
@@ -266,19 +268,19 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
   const tikGedrag = async (p, pg, root = HERO) => {
     const uit = [];
     const s0 = await stand(p, root);
-    if (s0.tel !== `Stap 1 van ${pg.stappen}` || s0.vraag !== pg.vraag1 || s0.terug) uit.push(`begin: ${JSON.stringify(s0)}`);
+    if (s0.tel !== 'Stap 1' || s0.vraag !== pg.vraag1 || s0.terug) uit.push(`begin: ${JSON.stringify(s0)}`);
     if (!(await tik(p, pg.pad1[0], root))) return [...uit, `keuze "${pg.pad1[0]}" niet gevonden`];
     const s1 = await stand(p, root);
-    if (s1.tel !== `Stap 2 van ${pg.stappen}` || s1.vraag !== pg.vraag2 || !s1.terug) uit.push(`na één tik: ${JSON.stringify(s1)} (verwacht Stap 2 van ${pg.stappen}, "${pg.vraag2}", Terug)`);
+    if (s1.tel !== 'Stap 2' || s1.vraag !== pg.vraag2 || !s1.terug) uit.push(`na één tik: ${JSON.stringify(s1)} (verwacht Stap 2, "${pg.vraag2}", Terug)`);
     await p.evaluate((root) => document.querySelector(root + ' .kgj-reken__terug')?.click(), root);
     await wacht(450);
     const s2 = await stand(p, root);
-    if (s2.tel !== `Stap 1 van ${pg.stappen}` || s2.vraag !== pg.vraag1) uit.push(`na Terug: ${JSON.stringify(s2)}`);
+    if (s2.tel !== 'Stap 1' || s2.vraag !== pg.vraag1) uit.push(`na Terug: ${JSON.stringify(s2)}`);
     /* dubbele tik: twee klikken binnen 50 ms = één stap */
     await p.evaluate((l, root) => { const b = [...document.querySelectorAll(root + ' .kgj-reken__keuze')].find((x) => x.textContent.trim().startsWith(l)); b.click(); setTimeout(() => { const c = [...document.querySelectorAll(root + ' .kgj-reken__keuze')][0]; c?.click(); }, 40); }, pg.pad1[0], root);
     await wacht(500);
     const s3 = await stand(p, root);
-    if (s3.tel !== `Stap 2 van ${pg.stappen}`) uit.push(`dubbele tik: ${s3.tel} (verwacht Stap 2 van ${pg.stappen}: een tweede tik binnen 200 ms telt niet)`);
+    if (s3.tel !== 'Stap 2') uit.push(`dubbele tik: ${s3.tel} (verwacht Stap 2: een tweede tik binnen 200 ms telt niet)`);
     return uit;
   };
 
@@ -444,7 +446,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     if (!linkEerst) {
       if (!(await tik(p, pg.pad1[0], HERO))) { await ctx.close(); return [`keuze "${pg.pad1[0]}" bovenaan niet gevonden`]; }
       const s0 = await stand(p, HERO);
-      if (s0.tel !== `Stap 2 van ${pg.stappen}`) uit.push(`bovenaan na één tik: ${s0.tel}`);
+      if (s0.tel !== 'Stap 2') uit.push(`bovenaan na één tik: ${s0.tel}`);
     }
     /* zoals een bezoeker: de eerste zichtbare link naar #contact buiten de kop (renovatie: onder de werkwijze, dak: in het waarom-blok) */
     const link = await p.evaluate(() => {
@@ -459,7 +461,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     await p.touchscreen.tap(link.x, link.y);
     await wacht(1600);
     const s1 = await stand(p, ONDER);
-    if (s1.tel !== `Stap 2 van ${pg.stappen}` || s1.vraag !== pg.vraag2) uit.push(`na "${link.tekst}" staat de kaart onderaan op ${s1.tel}, "${s1.vraag}" (verwacht Stap 2 van ${pg.stappen}, "${pg.vraag2}")`);
+    if (s1.tel !== 'Stap 2' || s1.vraag !== pg.vraag2) uit.push(`na "${link.tekst}" staat de kaart onderaan op ${s1.tel}, "${s1.vraag}" (verwacht Stap 2, "${pg.vraag2}")`);
     const m = await p.evaluate((ONDER) => {
       const k = document.querySelector(ONDER);
       const balk = document.querySelector('.kgj-kop').getBoundingClientRect().bottom;
@@ -474,7 +476,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     await p.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
     await wacht(700);
     const s2 = await stand(p, HERO);
-    if (s2.tel !== `Stap 3 van ${pg.stappen}`) uit.push(`na een antwoord onderaan staat de kaart bovenaan (terug in beeld) op ${s2.tel} (verwacht Stap 3 van ${pg.stappen})`);
+    if (s2.tel !== 'Stap 3') uit.push(`na een antwoord onderaan staat de kaart bovenaan (terug in beeld) op ${s2.tel} (verwacht Stap 3)`);
     await ctx.close();
     return uit;
   };
@@ -499,7 +501,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
         knop: Math.round(r('.kgj-reken__knop')?.bottom ?? 9999), knopTop: Math.round(r('.kgj-reken__knop')?.top ?? -1), vh: innerHeight, vw: innerWidth };
     }, root);
     await ctx.close();
-    if (m.tel !== `Stap ${pg.stappen} van ${pg.stappen}`) return [`niet op de contactstap (${m.tel})`];
+    if (m.tel !== `Stap ${pg.stappen}`) return [`niet op de contactstap (${m.tel})`];
     const uit = [];
     if (!m.vol || m.kaart[0] !== 0 || m.kaart[1] !== m.vh || m.kaart[2] !== m.vw) uit.push(`contactscherm niet over het volle scherm (${JSON.stringify(m.kaart)}, is-vol ${m.vol})`);
     if (m.band < m.rij - 1) uit.push(`"Bijna klaar!" onder de rij met Terug en de stap (${m.band} px, rij tot ${m.rij} px)`);
@@ -519,11 +521,11 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     const uit = [];
     await p.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight * 0.45));
     await wacht(900);
-    if (plant === 'voor') await p.evaluate(() => document.querySelector('.bf-lpsticky__tekst')?.append(' Stap 9 van 9'));
+    if (plant === 'voor') await p.evaluate(() => document.querySelector('.bf-lpsticky__tekst')?.append(' Stap 9'));
     const t0 = await tekst();
     if (!t0) uit.push('geen vaste knop');
     if (/Stap \d/.test(t0)) uit.push(`de vaste knop toont "${t0}" voordat de bezoeker iets aantikte`);
-    const basis = t0.replace(/\s*Stap \d+ van \d+$/, '');
+    const basis = t0.replace(/\s*Stap \d+$/, '');
     if (zoek) { await ctx.close(); return uit; }
     await p.evaluate(() => window.scrollTo(0, 0));
     await wacht(500);
@@ -534,7 +536,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     const t1 = await tekst();
     if (basis !== pg.naarKnop) uit.push(`vaste knop "${basis}" in plaats van "${pg.naarKnop}" (de tekst van de knoppen naar het formulier)`);
     /* 23 okt 2026: wie begon, ziet "Verder met uw aanvraag" met de stap eronder (Lucardi, "Verder met bestellen") */
-    if (t1 !== `Verder met uw aanvraag Stap 3 van ${pg.stappen}`) uit.push(`vaste knop na twee antwoorden "${t1}" (verwacht "Verder met uw aanvraag Stap 3 van ${pg.stappen}")`);
+    if (t1 !== 'Verder met uw aanvraag Stap 3') uit.push(`vaste knop na twee antwoorden "${t1}" (verwacht "Verder met uw aanvraag Stap 3")`);
     await ctx.close();
     return uit;
   };
@@ -652,7 +654,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
         volgt: [...k.querySelectorAll('.kgj-reken__volgt-lijst b')].map((b) => b.textContent.trim()),
         volgtKop: k.querySelector('.kgj-reken__volgt-kop')?.textContent.trim(), trigger: k.querySelector('.kgj-reken__trigger')?.textContent.trim() };
     }, root);
-    if (c.tel !== `Stap ${pg.stappen} van ${pg.stappen}`) fouten.push(`${etiket}: contactstap teller "${c.tel}"`);
+    if (c.tel !== `Stap ${pg.stappen}`) fouten.push(`${etiket}: contactstap teller "${c.tel}"`);
     if (c.band !== pg.band) fouten.push(`${etiket}: band "${c.band}" in plaats van "${pg.band}"`);
     /* 22 okt 2026 (dak en renovatie): Naam* en Telefoonnummer*, geen postcode. 2 nov 2026 (offerte, bfbouw.be 31 okt): E-mailadres* erbij. */
     if (c.velden.join('|') !== 'naam|telefoon|email') fouten.push(`${etiket}: de contactstap heeft de velden "${c.velden.join(', ')}" in plaats van precies "naam, telefoon, email" (geen postcode/gemeente)`);
@@ -668,7 +670,8 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
        "Offerte binnen 24 uur" (Mohammed 2 nov voor AB: "offerte binnen 24 uur moet ook offerte binnen 24uur bij ab"). */
     if (c.onder !== null) fouten.push(`${etiket}: nog een regel onder de knop "${c.onder}" (vervangen door "Na uw aanvraag")`);
     if (c.volgtKop !== 'Na uw aanvraag' || c.volgt.join('|') !== pg.volgt.join('|')) fouten.push(`${etiket}: "Na uw aanvraag" = "${c.volgtKop}" met "${c.volgt.join(' | ')}" in plaats van "${pg.volgt.join(' | ')}"`);
-    if (c.trigger !== 'Offerte binnen 24 uur') fouten.push(`${etiket}: regel boven de knop "${c.trigger}" in plaats van "Offerte binnen 24 uur"`);
+    /* 7 nov 2026 (bfbouw.be): "Antwoord binnen 24 uur" (de offerte volgt na het plaatsbezoek) */
+    if (c.trigger !== 'Antwoord binnen 24 uur') fouten.push(`${etiket}: regel boven de knop "${c.trigger}" in plaats van "Antwoord binnen 24 uur"`);
     const voor = leads;
     const meldingNa = async () => { await p.evaluate((root) => document.querySelector(root + ' form button[type=submit]').click(), root); await wacht(500); return p.evaluate((root) => document.querySelector(root + ' .kgj-reken__fout')?.textContent.trim() || '', root); };
     /* leeg formulier: de naam staat vóór de gsm, dus eerst "Vul uw naam in." */
@@ -727,7 +730,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     }
     {
       /* 11 (2 nov 2026): een knop die 1 px breder is dan het gsm-scherm (zoals de waarom-knop die dag) moet als fout gezien worden */
-      const { p, ctx } = await open('/lp/dakwerken', { gsm: true, css: '.bf-lpwaarom__knop{white-space:nowrap!important;min-width:391px!important;max-width:none!important}' });
+      const { p, ctx } = await open('/lp/dakwerken', { gsm: true, css: '.bf-lpcta__knop{white-space:nowrap!important;min-width:391px!important;max-width:none!important}' /* 8 nov 2026: elke knop naar het formulier (de waarom-knop staat niet meer op /lp/dakwerken) */ });
       const pc11 = await scrollFout(p);
       await ctx.close();
       if (!pc11) { console.log('ONGELDIGE METING: een knop van 391 px op een gsm van 390 werd door de scrolltoets niet gezien'); process.exit(2); }
@@ -895,13 +898,16 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       const m = await p.evaluate(() => ({ h1: document.querySelector('h1')?.textContent.trim().replace(/\s+/g, ' ') }));
       const s = await stand(p);
       for (const f of kopFouten(m.h1, DAK.kop)) fouten.push(`message match: ${f}`);
-      if (s.vraag !== DAK.vraag2 || s.tel !== `Stap 2 van ${DAK.stappen}` || !s.terug) fouten.push(`message match: kaart ${JSON.stringify(s)} (verwacht vraag 2, Stap 2 van ${DAK.stappen}, Terug)`);
+      /* 7 nov 2026 (zoals bfbouw.be data-voor): het soort dak is nu vraag 2; de zoekterm beantwoordt het en die vraag valt weg in de kaart. */
+      if (s.vraag !== DAK.vraag1 || s.tel !== 'Stap 1' || s.terug) fouten.push(`message match: kaart ${JSON.stringify(s)} (verwacht vraag 1, Stap 1, geen Terug)`);
+      if (!(await tik(p, 'Dakrenovatie', HERO))) fouten.push('message match: keuze Dakrenovatie niet gevonden');
+      await wacht(450);
+      const s1 = await stand(p);
+      if (s1.vraag === DAK.vraag2 || s1.tel !== 'Stap 2' || !s1.terug) fouten.push(`message match: na Dakrenovatie ${JSON.stringify(s1)} (verwacht Stap 2 zonder "${DAK.vraag2}": plat dak staat al vast)`);
       await p.evaluate(() => document.querySelector('.kgj-reken--aanvraag .kgj-reken__terug')?.click());
       await wacht(450);
       const s2 = await stand(p);
       if (s2.vraag !== DAK.vraag1) fouten.push(`message match: Terug gaf "${s2.vraag}"`);
-      const isAan = await p.evaluate(() => document.querySelector('.kgj-reken--aanvraag .kgj-reken__keuze.is-aan')?.textContent.trim());
-      if (isAan !== 'Plat dak') fouten.push(`message match: na Terug staat "${isAan}" aangeduid in plaats van Plat dak`);
       await ctx.close();
       const { p: q, ctx: ctx2 } = await open('/lp/dakwerken');
       const z = await stand(q);

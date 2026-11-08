@@ -15,6 +15,7 @@ export type IcoonNaam =
   | 'isolatie' | 'geenisolatie' | 'asbest' | 'veilig' | 'twijfel'
   | 'snel' | 'drie' | 'later' | 'verken'
   | 'herstel' | 'nieuwdak' | 'jong' | 'midden' | 'oud' | 'platdak'
+  | 'inspectie' | 'lek' | 'schade' | 'goot'
   | 'dienst-nieuw' | 'dienst-renovatie' | 'dienst-isolatie' | 'dienst-herstel'
   | 'appartement' | 'rijwoning' | 'halfopen' | 'vrijstaand'
   | 'heelhuis' | 'beneden' | 'boven' | 'strippen' | 'deel' | 'afwerking'
@@ -144,6 +145,31 @@ const ICONEN: Record<IcoonNaam, () => JSX.Element> = {
       <rect x="3.5" y="5" width="17" height="15.5" rx="2" />
       <path d="M3.5 10h17M8 3v4M16 3v4" />
       <path d="M8.5 15.3h6.5M13 13.3l2 2-2 2" />
+    </Svg>
+  ),
+  /* 7 nov 2026 (zoals bfbouw.be, vraag "Wat merkt u aan uw dak?" na Gratis dakinspectie): elk icoon toont het ding zelf.
+     Inspectie: huis met vergrootglas (bfbouw.be ICO.inspectie, ook de kaartkop van Aanvraag.tsx). */
+  inspectie: () => (
+    <Svg>
+      <path d="M3.5 11 12 4l8.5 7" /><path d="M6 9.5V19h4.5" /><circle cx="15.5" cy="15.5" r="3.6" /><path d="m18.2 18.2 2.6 2.6" />
+    </Svg>
+  ),
+  /* Lekkage: een waterdruppel. */
+  lek: () => (
+    <Svg>
+      <path d="M12 3.5c-3.2 4.2-5 7.2-5 9.7a5 5 0 0 0 10 0c0-2.5-1.8-5.5-5-9.7z" />
+    </Svg>
+  ),
+  /* Schade na een storm: waarschuwingsdriehoek (bfbouw.be ICO.let). */
+  schade: () => (
+    <Svg>
+      <path d="M12 4 21 19.5H3z" /><path d="M12 10v4.5M12 17h.01" />
+    </Svg>
+  ),
+  /* Water blijft op het dak staan: goot met afvoer (bfbouw.be ICO.goot). */
+  goot: () => (
+    <Svg>
+      <path d="M3 8h18" /><path d="M5 8v3a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8" /><path d="M16.5 14v6" />
     </Svg>
   ),
   /* Herstelling: een steeksleutel. */

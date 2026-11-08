@@ -7,10 +7,10 @@ import { trackFormStart } from '@/lib/tracking';
 import { allowsMarketing } from '@/lib/consent';
 import { meldClarity } from '@/lib/clarity';
 import { CONTACT } from '@/data/contact';
-import { snoeiAntwoorden, vraagTelt, type KgjInhoud } from './inhoud';
+import { snoeiAntwoorden, type KgjInhoud } from './inhoud';
 import PostcodeGemeente from './PostcodeGemeente';
 import Toestemming from './Toestemming';
-import { beginStand, bewaarAanvraag, useAanvraagStaat, wisAanvraag, type AanvraagStand } from './AanvraagStaat';
+import { beginStand, bewaarAanvraag, telt, useAanvraagStaat, wisAanvraag, type AanvraagStand } from './AanvraagStaat';
 
 /* Testhaken (5 nov 2026, zoals bfbouw.be window.__bfLaadMs / __bfVolUit): __abLaadMs = duur van de laadstap (0 = meteen het
    contactscherm), __abVolUit = de kaart blijft in de pagina (geen volle scherm, geen venster). */
@@ -60,6 +60,18 @@ const BADGE_PER_TEKST: Record<string, typeof Check> = {
 };
 export const badgeIcoon = (tekst: string, i: number) => BADGE_PER_TEKST[tekst] ?? [ShieldCheck, UserCheck, Award][i] ?? Check;
 
+/* Focusstand (7 nov 2026, zoals bfbouw.be src/js/site.js, Mohammed daar: "doe ook als je start aan de form dat de rest wit wordt rond de form,
+   maar als je scrolt ga je eruit", "op pc verzin ook iets"; hier: "en doe al deze changes ook bij ab pagina"). Onze eigen scroll (stapwissel,
+   knop "Ik ben op zoek naar", vaste knop) telt niet als wegscrollen: tot de scroll 250 ms stilstaat, hoogstens 3 s. */
+const FOCUS_UIT_DEEL = 0.5; // deel van de kaart in beeld (afgetopt op de schermhoogte) waaronder de focusstand uitgaat, zoals bfbouw.be
+const eigen = { aan: false, t: 0, cap: 0 };
+function eigenKlaar() { eigen.aan = false; window.clearTimeout(eigen.t); window.clearTimeout(eigen.cap); }
+export function eigenScroll() {
+  eigen.aan = true;
+  window.clearTimeout(eigen.t); eigen.t = window.setTimeout(eigenKlaar, 250);
+  window.clearTimeout(eigen.cap); eigen.cap = window.setTimeout(eigenKlaar, 3000);
+}
+
 export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   inhoud: KgjInhoud;
   /** hero = de kaart bovenaan (form_start-label met :hero, Clarity aanvraag-*); onder = dezelfde kaart in het slotblok
@@ -88,13 +100,14 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   const { stap, antwoorden, vinken, vraagToestemming, fout, bezig } = stand;
   /* 30 okt 2026: een vraag met nietAls valt weg zodra een eerder antwoord erin staat (Isolatie bij stap 2 = geen "Wilt u ook isoleren?").
      5 nov 2026 (zoals bfbouw.be 4 nov): een vraag met `als` telt alleen na dat antwoord (Nieuw dak: waarvoor, dakbedekking). */
-  const VRAGEN = a.vragen.filter((v) => vraagTelt(v, antwoorden));
+  /* 7 nov 2026: ook zonder de vragen die de pagina vooraf beantwoordde (stand.overslaan, message match op het soort dak). */
+  const VRAGEN = a.vragen.filter((v) => telt(v, stand));
   /* De vraag die de pagina vooraf beantwoordde: message match (voor, alleen de kaart bovenaan) of de sub-LP (voorAf, bv. Asbest: Ja,
      ook in de kaart onderaan). */
   const vooraf = voor?.sleutel ?? inhoud.voorAf?.sleutel;
   /* 2 nov 2026 (/lp/dakwerken/asbest): wat in de aanvraag en de samenvatting staat = de beantwoorde vragen die de bezoeker zag, plus
      een vraag die de pagina vooraf beantwoordde (voor, bv. Asbest: Ja), in de volgorde van de kaart. */
-  const BEANTWOORD = a.vragen.filter((v) => antwoorden[v.sleutel] && (VRAGEN.includes(v) || v.sleutel === vooraf));
+  const BEANTWOORD = a.vragen.filter((v) => antwoorden[v.sleutel] && (VRAGEN.includes(v) || v.sleutel === vooraf || !!stand.overslaan?.includes(v.sleutel)));
   /* Offerte (30 okt 2026, Mohammed: "verschillende vakken met waar mogelijk dropdown is beste ... de meest belangrijke vragen en dan
      optioneel extra"): eigen stappen met keuzelijsten en Doorgaan, daarna de contactstap. */
   const OSTAPPEN = a.offerte?.stappen ?? [];
@@ -173,6 +186,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     if (!kopWeg && tekort <= 0) return;
     let naar = kopWeg ? el.getBoundingClientRect().top - boven : Math.min(tekort, kopTop - boven);
     if (kopWeg && tekort - naar > 0) naar = kopTop - boven;
+    eigenScroll(); // 7 nov 2026: onze scroll zet de focusstand niet uit
     window.scrollTo({ top: window.scrollY + naar, behavior: gedrag });
   };
   useEffect(() => {
@@ -204,6 +218,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   const volRef = useRef(false);
   const stopLaad = () => { laadBeurt.current++; klokken.current.forEach((k) => window.clearTimeout(k)); klokken.current = []; setLaden(false); };
   const zetVol = (aan: boolean) => {
+    if (aan) focusUit(); // 7 nov 2026: het volle scherm neemt over, de sluier van de focusstand gaat uit (zoals bfbouw.be)
     if (aan && (window as unknown as AbTest).__abVolUit) return;
     if (aan === volRef.current) return;
     volRef.current = aan;
@@ -253,12 +268,89 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
       volRef.current = false;
       setVol(false);
       stopLaad();
-      zet((s) => ({ ...s, fout: null, stap: Math.max(0, Math.min(s.stap, a.vragen.filter((v) => vraagTelt(v, s.antwoorden)).length) - 1) }));
+      zet((s) => ({ ...s, fout: null, stap: Math.max(0, Math.min(s.stap, a.vragen.filter((v) => telt(v, s)).length) - 1) }));
     };
     window.addEventListener('popstate', terug);
     return () => window.removeEventListener('popstate', terug);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  /* ---------- Focusstand (7 nov 2026, zoals bfbouw.be; zie eigenScroll bovenaan) ----------
+     Bij de klikvragen vóór de laadstap: een sluier over al de rest (gsm wit, pc donker; CSS lp-bf-ab.css blok 7 nov), de kaart blijft in de
+     pagina staan. Aan bij de eerste tik op een knop in de kaart (of een knop "Ik ben op zoek naar", event ab-focus-start) en bij elke tik daarna.
+     Uit zodra de bezoeker zelf wegscrollt (minder dan de helft van de kaart in beeld), bij een tik op de sluier, Esc, het volle scherm, en bij
+     terugkeer van de bedankpagina. Eén kaart tegelijk (event ab-focus). Testhaak: __abVolUit houdt ook de focusstand uit, zoals __bfVolUit. */
+  const [focus, setFocus] = useState(false);
+  const focusRef = useRef(false);
+  const focusGestart = useRef(false);
+  const bijVraag = useRef(false);
+  bijVraag.current = !vol && !laden && !klaar && !offerte && !vraagToestemming && !bevroren;
+  const focusUit = () => { if (!focusRef.current) return; focusRef.current = false; setFocus(false); };
+  const focusAan = () => {
+    if ((window as unknown as AbTest).__abVolUit || focusRef.current) return;
+    focusRef.current = true;
+    setFocus(true);
+    window.dispatchEvent(new CustomEvent('ab-focus', { detail: plek }));
+  };
+  useEffect(() => {
+    const ander = (e: Event) => { if ((e as CustomEvent).detail !== plek) focusUit(); };
+    const start = (e: Event) => { if ((e as CustomEvent).detail === plek) { focusGestart.current = true; actief.current = plek; focusAan(); } };
+    const terug = (e: PageTransitionEvent) => { if (e.persisted) focusUit(); };
+    window.addEventListener('ab-focus', ander);
+    window.addEventListener('ab-focus-start', start);
+    window.addEventListener('pageshow', terug);
+    return () => { window.removeEventListener('ab-focus', ander); window.removeEventListener('ab-focus-start', start); window.removeEventListener('pageshow', terug); };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [plek]);
+  /* De ouder (hero of slotblok) komt boven de kopbalk, html.is-rkfocus zolang een kaart de stand heeft; de ouder pas na het vervagen (0,2 s) terug. */
+  useEffect(() => {
+    const el = kaart.current;
+    const ouder = el?.closest<HTMLElement>('.bf-lphero__in, .bf-lpinsp__in');
+    document.documentElement.classList.toggle('is-rkfocus', !!document.querySelector('.kgj-reken.is-focus'));
+    if (!ouder) return;
+    if (focus) { ouder.classList.add('is-rkfocus'); return; }
+    const t = window.setTimeout(() => { if (!el?.classList.contains('is-focus')) ouder.classList.remove('is-rkfocus'); }, 220);
+    return () => window.clearTimeout(t);
+  }, [focus]);
+  useEffect(() => {
+    if (!focus) return;
+    let raf = 0;
+    const kijk = () => {
+      raf = 0;
+      const el = kaart.current;
+      if (!el || eigen.aan) return;
+      const act = document.activeElement;
+      if (act && el.contains(act) && /^(INPUT|SELECT|TEXTAREA)$/.test(act.tagName)) return; // toetsenbord open: de browser scrolt zelf
+      const r = el.getBoundingClientRect(), vh = window.innerHeight;
+      if (Math.min(r.bottom, vh) - Math.max(r.top, 0) < FOCUS_UIT_DEEL * Math.min(r.height, vh)) focusUit();
+    };
+    const scroll = () => {
+      if (eigen.aan) { window.clearTimeout(eigen.t); eigen.t = window.setTimeout(eigenKlaar, 250); return; }
+      if (!raf) raf = requestAnimationFrame(kijk);
+    };
+    const toets = (e: KeyboardEvent) => { if (e.key === 'Escape') focusUit(); };
+    const vv = () => eigenScroll();
+    window.addEventListener('scroll', scroll, { passive: true });
+    document.addEventListener('keydown', toets);
+    window.visualViewport?.addEventListener('resize', vv);
+    return () => {
+      window.removeEventListener('scroll', scroll);
+      document.removeEventListener('keydown', toets);
+      window.visualViewport?.removeEventListener('resize', vv);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focus]);
+  /* Niet meer bij een vraag (laadstap, contactscherm, volle scherm, bevroren kaart): uit. */
+  useEffect(() => { if (focus && !bijVraag.current) focusUit(); });
+  /* Tik in de kaart (vangfase): de eerste tik op een knop start de stand; na de stapwissel van die tik weer aan als de kaart nog bij een vraag staat
+     (Terug of Wijzigen vanaf het contactscherm). Na het laatste antwoord opent het volle scherm en blijft de sluier uit. */
+  const focusKlik = (e: React.MouseEvent) => {
+    const knop = (e.target as HTMLElement).closest?.('button, a, input, select, textarea, label');
+    if (!focusGestart.current && !knop) return;
+    if (bijVraag.current) { focusGestart.current = true; focusAan(); }
+    window.setTimeout(() => { if (bijVraag.current) { focusGestart.current = true; focusAan(); } }, 0);
+  };
+
   /* Esc sluit, zoals de sluitknop. */
   useEffect(() => {
     if (!vol) return;
@@ -324,7 +416,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
        in de nieuwe reeks; na de laatste vraag de laadstap. */
     const s0 = levendRef.current;
     const antw = snoeiAntwoorden(a.vragen, { ...s0.antwoorden, [sleutel]: label }, vooraf);
-    const reeks = a.vragen.filter((v) => vraagTelt(v, antw));
+    const reeks = a.vragen.filter((v) => telt(v, { antwoorden: antw, overslaan: s0.overslaan }));
     const hier = reeks.findIndex((v) => v.sleutel === sleutel);
     const volgende = (hier >= 0 ? hier : s0.stap) + 1;
     zet((s) => ({ ...s, aangetikt: true, antwoorden: antw, stap: volgende }));
@@ -354,7 +446,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     const antwoord = gekozen.length === v.keuzes.length ? v.afvinken.alles : gekozen.join(', ');
     const s0 = levendRef.current;
     const antw = snoeiAntwoorden(a.vragen, { ...s0.antwoorden, [v.sleutel]: antwoord }, vooraf);
-    const reeks = a.vragen.filter((x) => vraagTelt(x, antw));
+    const reeks = a.vragen.filter((x) => telt(x, { antwoorden: antw, overslaan: s0.overslaan }));
     const hier = reeks.findIndex((x) => x.sleutel === v.sleutel);
     const volgende = (hier >= 0 ? hier : s0.stap) + 1;
     zet((s) => ({ ...s, aangetikt: true, antwoorden: antw, stap: volgende }));
@@ -482,7 +574,9 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     <Fragment>
     {/* Donkere achtergrond achter het volle scherm / het venster: een klik erop sluit (zoals de sluitknop). */}
     {vol && <div className="kgj-reken__achter" aria-hidden="true" onClick={sluitVol} />}
-    <div ref={kaart} className={`kgj-reken kgj-reken--aanvraag${onder ? ' kgj-reken--onder' : ''}${a.badges ? ' kgj-reken--badges' : ''}${stand.aangetikt && stap > 0 ? ' is-bezig' : ''}${klaar ? ' is-contact' : ''}${vol ? ' is-vol' : ''}${laden ? ' is-laden' : ''}`}
+    {/* 7 nov 2026: sluier van de focusstand (vlak vóór de kaart, zoals bfbouw.be rk__sluier); een tik erop zet de stand uit. */}
+    <div className={`kgj-reken__sluier${focus ? ' is-aan' : ''}`} aria-hidden="true" onClick={focusUit} />
+    <div ref={kaart} onClickCapture={focusKlik} className={`kgj-reken kgj-reken--aanvraag${onder ? ' kgj-reken--onder' : ''}${a.badges ? ' kgj-reken--badges' : ''}${stand.aangetikt && stap > 0 ? ' is-bezig' : ''}${klaar ? ' is-contact' : ''}${vol ? ' is-vol' : ''}${laden ? ' is-laden' : ''}${focus ? ' is-focus' : ''}`}
       {...(vol ? { role: 'dialog', 'aria-modal': true, 'aria-label': 'Uw offerteaanvraag' } : {})}>
       <div className="kgj-reken__hoofd">
         <span className="kgj-reken__logo" aria-hidden="true"><IcInspectie /></span>
@@ -495,14 +589,16 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
       {boven}
       <div className="kgj-reken__weg" aria-hidden="true">
         <Home className="kgj-reken__begin" />
-        <div className="kgj-reken__balk" ref={balk} onAnimationEnd={(e) => { if (e.animationName === 'kgj-glans') e.currentTarget.classList.remove('is-beloning'); }}><i style={{ width: `${(nu / totaal) * 100}%` }} /></div>
+        {/* 7 nov 2026, zoals bfbouw.be (Mohammed daar: "maak de balk vanaf de start 40 procent gevuld"): 40 % bij stap 1, 100 % op het contactscherm. */}
+        <div className="kgj-reken__balk" ref={balk} onAnimationEnd={(e) => { if (e.animationName === 'kgj-glans') e.currentTarget.classList.remove('is-beloning'); }}><i style={{ width: `${totaal > 1 ? Math.round((40 + (60 * (nu - 1)) / (totaal - 1)) * 10) / 10 : 100}%` }} /></div>
         <span className={`kgj-reken__eind${klaar ? ' is-aan' : ''}`}><Check /></span>
       </div>
       {/* Na een verstuurde aanvraag geen Terug meer: terug naar een vraag zou doen alsof er nog niets verstuurd is. */}
       {!vraagToestemming && (
         <div className="kgj-reken__kop">
           {/* Uitgesproken door een schermlezer alleen in de kaart die de bezoeker gebruikt (de andere kaart verandert mee). */}
-          <span className="kgj-reken__tel" aria-live={actiefHier ? 'polite' : 'off'}>Stap {nu} van {totaal}</span>
+          {/* 7 nov 2026, zoals bfbouw.be (Mohammed daar: "DOE ipv stap 1 VAN 7 gewoon stap 1"). */}
+          <span className="kgj-reken__tel" aria-live={actiefHier ? 'polite' : 'off'}>Stap {nu}</span>
           {stap > 0 && !laden && (
             <button type="button" className="kgj-reken__terug" onClick={() => { gebruik(); setOFout([]); zet((s) => (s.offerte
               ? ((s.offerteStap ?? 0) > 0 ? { ...s, aangetikt: true, fout: null, offerteStap: (s.offerteStap ?? 0) - 1 } : { ...s, aangetikt: true, fout: null, offerte: false, stap: 0 })
@@ -512,6 +608,12 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
               dat willen"): sluitknop van 44 px, alleen over het volle scherm en in het venster. */}
           {vol && <button type="button" className="kgj-reken__sluit" aria-label="Sluiten" onClick={sluitVol}><X aria-hidden="true" /></button>}
         </div>
+      )}
+      {/* 7 nov 2026, zoals bfbouw.be rk__gekozen (Mohammed daar: "bij de knoppen is het niet duidelijk dat je in de form zit met eerste vraag al
+          ingevuld"; "uw keuze bolletje plakt te hard op het form bij stap 7": niet op het contactscherm). Alleen bij de vragen na de knop. */}
+      {stand.gekozen && !klaar && !laden && !offerte && !vraagToestemming && antwoorden[stand.gekozen.sleutel] === stand.gekozen.label
+        && vraag && vraag.sleutel !== stand.gekozen.sleutel && (
+        <p className="kgj-reken__gekozen"><Check aria-hidden="true" /><span>Uw keuze: <b>{stand.gekozen.label}</b></span></p>
       )}
 
       {laden && a.laden ? (

@@ -1,14 +1,16 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { CONTACT } from '@/data/contact';
 import Rekenaar from './Rekenaar';
-import Aanvraag, { badgeIcoon } from './Aanvraag';
-import { AanvraagStaat, beginStand, useAanvraagVoortgang } from './AanvraagStaat';
+import Aanvraag, { badgeIcoon, eigenScroll } from './Aanvraag';
+import { AanvraagStaat, beginStand, telt, useAanvraagVoortgang, useGedeeldeAanvraag } from './AanvraagStaat';
 import Inspectie from './Inspectie';
 import Werkspoor from './Werkspoor';
+import Realisatie from './Realisatie';
 import { Icoon } from './Iconen';
 import { IcChevron } from '../replica/Iconen';
-import { DAKWERKEN, vraagTelt, type KgjInhoud, type Sectie, type StapIcoon, type Zekerheid } from './inhoud';
-import { BadgeEuro, CalendarCheck, ShieldCheck, UserCheck } from 'lucide-react';
+import { DAKWERKEN, snoeiAntwoorden, type KgjInhoud, type Sectie, type StapIcoon, type Zekerheid } from './inhoud';
+import { BadgeEuro, CalendarCheck, Clock, FileCheck, Medal, ShieldCheck, UserCheck } from 'lucide-react';
+import { trackFormStart } from '@/lib/tracking';
 import { CLARITY_PROJECT, laadClarity, meldClarity } from '@/lib/clarity';
 import logoWit from '@/assets/bf/logo-wit-440.webp';
 import logoInk from '@/assets/bf/logo-ink-440.webp';
@@ -194,7 +196,46 @@ function HeroKop({ kop, kop2 }: { kop: string; kop2?: string }) {
 const ZEKER_ICOON: Record<Zekerheid['icoon'], JSX.Element> = {
   prijs: <BadgeEuro aria-hidden="true" />, aanspreek: <UserCheck aria-hidden="true" />,
   schild: <ShieldCheck aria-hidden="true" />, kalender: <CalendarCheck aria-hidden="true" />,
+  /* 7 nov 2026, zoals bfbouw.be ICOON medaille / klok / premie (lucide medal, clock, file-check). */
+  medaille: <Medal aria-hidden="true" />, klok: <Clock aria-hidden="true" />, premie: <FileCheck aria-hidden="true" />,
 };
+/* "Ik ben op zoek naar:" (7 nov 2026, zoals bfbouw.be LP.zoek + data-kies-kaart in src/js/site.js; Mohammed daar: "of een ik ben op zoek naar en dan
+   vier knoppen ...", "ja doe eens die ik ben op zoek naar", "bij de knoppen is het niet duidelijk dat je in de form zit met eerste vraag al ingevuld").
+   Eén doel: elke knop vult vraag 1 van de kaart onderaan in (gedeelde stand) en brengt die kaart in beeld bij de volgende vraag, met de focusstand
+   aan en "Uw keuze: ..." in de kaart. Clarity: zoek-<label>. */
+function ZoekKnoppen({ inhoud, naar }: { inhoud: KgjInhoud; naar: () => void }) {
+  const g = useGedeeldeAanvraag();
+  const zoek = inhoud.uitleg?.zoek;
+  if (!zoek || !g || !inhoud.aanvraag) return null;
+  const vragen = inhoud.aanvraag.vragen;
+  const kies = (label: string) => {
+    const s0 = g.stand;
+    if (s0.bezig || s0.vraagToestemming) return;
+    const antw = snoeiAntwoorden(vragen, { ...s0.antwoorden, [zoek.sleutel]: label }, inhoud.voorAf?.sleutel);
+    const reeks = vragen.filter((v) => telt(v, { antwoorden: antw, overslaan: s0.overslaan }));
+    /* de eerste vraag zonder antwoord; staat alles al ingevuld, dan de vraag na de knop */
+    const open = reeks.findIndex((v) => !antw[v.sleutel]);
+    const stap = open >= 0 ? open : Math.min(reeks.findIndex((v) => v.sleutel === zoek.sleutel) + 1, reeks.length);
+    g.actief.current = 'onder';
+    if (!g.gestart.current) { g.gestart.current = true; trackFormStart(inhoud.inspectie.bronLead); }
+    g.zet((s) => ({ ...s, aangetikt: true, fout: null, offerte: false, antwoorden: antw, stap, gekozen: { sleutel: zoek.sleutel, label } }));
+    meldClarity('zoek-' + label.toLowerCase().replace(/\s+/g, '-'));
+    requestAnimationFrame(() => { naar(); window.dispatchEvent(new CustomEvent('ab-focus-start', { detail: 'onder' })); });
+  };
+  return (
+    <div className="bf-lpzoek">
+      <p className="bf-lpzoek__kop">{zoek.kop}</p>
+      <div className="bf-lpzoek__knoppen">
+        {zoek.knoppen.map((k) => (
+          <button type="button" className="bf-lpzoek__knop" key={k.label} onClick={() => kies(k.label)}>
+            <span className="bf-lpzoek__ic" aria-hidden="true"><Icoon naam={k.icoon} /></span>{k.tekst}<IcPijl />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 
 /* Dienstkaart met uitleg (2 nov 2026, zoals bfbouw.be 31 okt: "als je klikt op dienstkaart, ook op computer, niet alleen op lees meer,
    dat moet de kaart openen"; "je moet scrollen naar de leesding dat je opent dan, ook op telefoon"). Een tik op de hele kaart klapt de
@@ -232,13 +273,14 @@ function VasteKnop({ tekst, zichtbaar, vragen, onClick }: { tekst: string; zicht
   const voortgang = useAanvraagVoortgang();
   /* Zelfde telling als de kaart (Aanvraag.tsx): een vraag met nietAls valt weg na dat antwoord (Isolatie bij stap 2), + de contactstap. */
   /* 5 nov 2026: ook een vraag met `als` (Nieuw dak) telt pas na dat antwoord (vraagTelt, zelfde regel als de kaart). */
-  const totaal = vragen ? vragen.filter((v) => vraagTelt(v, voortgang?.antwoorden ?? {})).length + 1 : 0;
+  const totaal = vragen ? vragen.filter((v) => telt(v, { antwoorden: voortgang?.antwoorden ?? {}, overslaan: voortgang?.overslaan })).length + 1 : 0;
   const bezig = !!voortgang && totaal > 1 && voortgang.aangetikt && voortgang.stap > 0 && !voortgang.verstuurd;
   return (
     <button type="button" className={`bf-lpsticky${zichtbaar ? ' bf-is-zichtbaar' : ''}${bezig ? ' bf-lpsticky--bezig' : ''}`} onClick={onClick} tabIndex={zichtbaar ? 0 : -1} aria-hidden={!zichtbaar}>
       <span className="bf-lpsticky__tekst">
         {bezig ? 'Verder met uw aanvraag' : tekst}
-        {bezig && <>{' '}<span className="bf-lpsticky__stap">Stap {Math.min(voortgang.stap, totaal - 1) + 1} van {totaal}</span></>}
+        {/* 7 nov 2026: "Stap N" zoals in de kaart (bfbouw.be: "DOE ipv stap 1 VAN 7 gewoon stap 1"). */}
+        {bezig && <>{' '}<span className="bf-lpsticky__stap">Stap {Math.min(voortgang.stap, totaal - 1) + 1}</span></>}
       </span>
       <IcPijl />
     </button>
@@ -466,6 +508,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
     /* Toetsenbord (review 23 okt): de volgende Tab begint in de kaart, zoals na een gewone ankersprong. Geen ring: .kgj-reken__vraag:focus. */
     const vraag = vorm.querySelector<HTMLElement>('.kgj-reken__stap .kgj-reken__vraag');
     if (vraag) { vraag.setAttribute('tabindex', '-1'); vraag.focus({ preventScroll: true }); }
+    eigenScroll(); // 7 nov 2026: onze scroll zet de focusstand niet uit (Aanvraag.tsx)
     if (rij) {
       window.scrollTo({ top: rij.getBoundingClientRect().top + window.scrollY - kopH - 8, behavior: 'smooth' });
       return;
@@ -571,6 +614,28 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       </section>
     ),
 
+    /* "Wat heeft uw dak nodig?" (7 nov 2026, zoals bfbouw.be lpwerk): links de uitleg, de lijst en de slotzin met vink, daaronder de knoppen
+       "Ik ben op zoek naar:"; rechts de foto die meeloopt (sticky op de computer). Staat op de plek van "Waarom AB Bouw Groep". */
+    uitleg: inhoud.uitleg && (
+      <section className="bf-sblok bf-lpwerk" id="uitleg" aria-labelledby="uitleg-kop">
+        <div className="bf-duo">
+          <div className="bf-duo__tekst">
+            <h2 className="bf-h2" id="uitleg-kop">{inhoud.uitleg.kop}</h2>
+            {inhoud.uitleg.tekst.map((t) => <p key={t}>{t}</p>)}
+            <p className="bf-lpwerk__lijstkop">{inhoud.uitleg.lijstKop}</p>
+            <ul className="bf-lpwerk__lijst">
+              {inhoud.uitleg.lijst.map((t) => <li key={t}><b>{t}</b></li>)}
+            </ul>
+            <p className="bf-lpwerk__slot"><span className="bf-lpwerk__slot-ic" aria-hidden="true"><IcVink /></span><span>{inhoud.uitleg.slot}</span></p>
+            <ZoekKnoppen inhoud={inhoud} naar={naarFormulier} />
+          </div>
+          <figure className="bf-duo__foto bf-lpwerk__foto">
+            <img src={inhoud.uitleg.foto.src} alt={inhoud.uitleg.foto.alt} loading="lazy" decoding="async" />
+          </figure>
+        </div>
+      </section>
+    ),
+
     /* Voordelen (26 sep): BF lpvoordelen, drie kaarten met icoon op grijs. Zonder de BF-nummers 01/02/03: live
        (LpKgj r.499-507) toont er geen (tekst woordelijk, spec §17). */
     voordelen: inhoud.voordelen && (
@@ -631,13 +696,28 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
 
     /* Zekerhedenstrook (2 nov 2026, zoals bfbouw.be zekerStrook van 31 okt): wit vlak met dunne randen, de zekerheden met icoon op
        één rij; op de gsm tegels van twee naast elkaar. */
-    zekerheden: inhoud.zekerheden && inhoud.zekerheden.length > 0 && (
+    /* 7 nov 2026 (zoals bfbouw.be zeker--loop): meer dan drie zekerheden lopen als band door (twee keer dezelfde rij, de tweede aria-hidden);
+       stil bij "minder beweging" en onder de muis (CSS). */
+    /* 8 nov 2026: staat het waarom-blok niet op de pagina (/lp/dakwerken sinds 7 nov: "Wat heeft uw dak nodig?" op die plek), dan draagt de
+       zekerhedenband het anker #waarom. De sitelink "Waarom AB Bouw Groep" ("Tien jaar garantie op dakwerk", "Volledige premiebegeleiding";
+       ads/dakwerken/bouw.cjs) landt zo op precies die twee zekerheden in plaats van bovenaan de pagina (check:ankers). */
+    zekerheden: inhoud.zekerheden && inhoud.zekerheden.length > 0 && (inhoud.zekerheden.length > 3 ? (
+      <section className={`bf-zeker bf-zeker--loop bf-zeker--${inhoud.zekerheden.length}`} aria-label="Uw zekerheden bij AB Bouw Groep" id={(inhoud.volgorde ?? []).includes('waarom') ? undefined : 'waarom'}>
+        <div className="bf-zeker__baan">
+          {[0, 1].map((n) => (
+            <ul className="bf-zeker__rij" key={n} aria-hidden={n === 1 ? true : undefined}>
+              {inhoud.zekerheden!.map((z) => <li key={z.tekst}><span className="bf-zeker__ic">{ZEKER_ICOON[z.icoon]}</span><b>{z.tekst}</b></li>)}
+            </ul>
+          ))}
+        </div>
+      </section>
+    ) : (
       <section className="bf-zeker" aria-label="Uw zekerheden bij AB Bouw Groep">
         <ul className={`bf-zeker__rij bf-zeker__rij--${inhoud.zekerheden.length}`}>
           {inhoud.zekerheden.map((z) => <li key={z.tekst}><span className="bf-zeker__ic">{ZEKER_ICOON[z.icoon]}</span><b>{z.tekst}</b></li>)}
         </ul>
       </section>
-    ),
+    )),
 
     /* Werkwijze: BF procesBlok (intro + stapkaarten met icoon en nummer), zonder foto: het inhoudsobject
        heeft er geen (beelden zoals nu). Nummer "01"-"05" zoals live (LpKgj r.562). De knop staat NA de stappen,
@@ -728,6 +808,9 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         </div>
       </section>
     ),
+
+    /* Realisatie in de kijker (8 nov 2026, Realisatie.tsx): de knop gaat naar het formulier onderaan, zoals de andere knoppen. */
+    realisatie: inhoud.realisatie && <Realisatie r={inhoud.realisatie} knop={rekenKnop('bf-real__cta')} />,
 
     /* Reviews: NOOIT (spec §1, §12). Het inhoudsobject heeft overal een lege lijst; ook gevuld komt er niets. */
     reviews: null,

@@ -42,6 +42,7 @@ import keuzeHellend from '@/assets/dak/keuze-hellend.jpg';
 import keuzePlat from '@/assets/dak/keuze-plat.jpg';
 
 import type { IcoonNaam } from './Iconen';
+import { HOEVE } from './realisatie-hoeve';
 
 /** foto: optioneel beeld boven het label; icoon: optioneel icoon links van het label.
     Het label zegt al wat er te zien is, dus geen alt-tekst. */
@@ -75,9 +76,20 @@ export type Foto = { src: string; alt: string };
 export type Review = { tekst: string; naam: string; bron: string };
 
 export type StapIcoon = 'pin' | 'offerte' | 'agenda' | 'helm' | 'sleutel';
-export type Sectie = 'waarom' | 'voordelen' | 'diensten' | 'werkwijze' | 'uitgevoerd' | 'voorna' | 'reviews' | 'vangnet' | 'faq' | 'zekerheden';
+export type Sectie = 'waarom' | 'voordelen' | 'diensten' | 'werkwijze' | 'uitgevoerd' | 'voorna' | 'reviews' | 'vangnet' | 'faq' | 'zekerheden' | 'uitleg' | 'realisatie';
 /** Zekerhedenstrook (2 nov 2026, zoals bfbouw.be zekerStrook van 31 okt): korte zekerheden met icoon op één rij. */
-export type Zekerheid = { icoon: 'prijs' | 'aanspreek' | 'schild' | 'kalender'; tekst: string };
+export type Zekerheid = { icoon: 'prijs' | 'aanspreek' | 'schild' | 'kalender' | 'medaille' | 'klok' | 'premie'; tekst: string };
+
+/** Realisatie in de kijker (8 nov 2026, realisatie-hoeve.ts): één echt project van AB met een video na de werken, een foto tijdens de werken (wissel
+    "Na de werken" / "Tijdens de werken"), de uitgevoerde werken, foto's en een rondgang tijdens de werken (galerij + venster). */
+export type Realisatie = {
+  kop: string; project: string; werkenKop: string; werken: string[];
+  na: { label: string; video: string; poster: string; alt: string };
+  tijdens: { label: string; src: string; groot: string; alt: string };
+  galerijKop: string;
+  fotos: { src: string; groot: string; alt: string }[];
+  rondgang?: { label: string; video: string; poster: string; alt: string };
+};
 
 export type KgjInhoud = {
   /** Paginatitel in het tabblad. */
@@ -177,8 +189,15 @@ export type KgjInhoud = {
   /** meer (2 nov 2026, zoals bfbouw.be 31 okt "dienstkaarten moeten leiden naar info"): de hele kaart is tikbaar en klapt
    *  deze uitleg open ("Lees meer" / "Minder tonen"); niets leidt weg van de aanvraag. */
   diensten: { kop: string; onder?: string; vlakken?: boolean; lijst: { id: string; icoon: IcoonNaam; naam: string; tekst: string; foto?: Foto; meer?: string[] }[] };
-  /** Zekerhedenstrook (2 nov 2026): staat waar 'zekerheden' in de volgorde staat. */
+  /** Zekerhedenstrook (2 nov 2026): staat waar 'zekerheden' in de volgorde staat. Meer dan drie: een band die doorloopt (7 nov 2026, zoals
+      bfbouw.be zeker--loop). */
   zekerheden?: Zekerheid[];
+  /** Realisatie in de kijker (8 nov 2026): staat waar 'realisatie' in de volgorde staat. */
+  realisatie?: Realisatie;
+  /** "Wat heeft uw dak nodig?" (7 nov 2026, zoals bfbouw.be LP.uitleg): twee alinea's, een lijst met kop, een slotzin met vink en de foto rechts.
+      zoek: de knoppen "Ik ben op zoek naar:" eronder; elke knop vult vraag 1 (sleutel) van de kaart onderaan in en brengt die kaart in beeld. */
+  uitleg?: { kop: string; tekst: string[]; lijstKop: string; lijst: string[]; slot: string; foto: Foto;
+    zoek?: { kop: string; sleutel: string; knoppen: { tekst: string; label: string; icoon: IcoonNaam }[] } };
   /** Voordelen tussen "Waarom" en de diensten: elk voordeel een gekleurde bol met icoon. */
   voordelen?: { kop: string; lijst: { icoon: IcoonNaam; kleur: 'oranje' | 'blauw' | 'groen'; titel: string; tekst: string }[] };
   /** Veelgestelde vragen vlak voor het slotblok; alleen op pagina's die ze invullen (29 sep).
@@ -295,7 +314,10 @@ export const DAKWERKEN: KgjInhoud = {
        herstellingen zijn de keuzes van de vraag "Wat moet er aan uw dak gebeuren?" in de kaart. */
     /* 2 nov 2026: de subkop van bfbouw.be (dictaat Mohammed 31 okt / 1 nov, woordelijk) met het AB-feit: "meer dan 15 jaar
        ervaring in dakwerken" (Mohammed, waarom-tekst hieronder). Ervaring, geen leeftijd van het bedrijf (les BF 1 nov). */
-    onder: 'Specialist in platte en hellende daken. Met meer dan 15 jaar ervaring in dakwerk zijn wij de garantie op een vlekkeloze dakrenovatie en een dak dat generaties lang meegaat.',
+    /* 7 nov 2026 (Mohammed in de BF-chat: "en doe al deze changes ook bij ab pagina"): de subkop van bfbouw.be van 7 nov, woordelijk
+       (zijn "van ... tot dakrenovatie moet gaan over de drie dingen dat je in de subkop zegt", zinsbouw van de meeste dakwerkers). Geen
+       bedrijfsfeit erin, dus ook voor AB waar. Was: "Specialist in platte en hellende daken. Met meer dan 15 jaar ervaring in dakwerk ..." */
+    onder: 'Van dakisolatie en dakrenovatie tot een volledig nieuw dak. Met vakmanschap, kwaliteitsvolle materialen en oog voor detail zorgen wij voor een duurzaam en stevig dak.',
     /* Drie controleerbare feiten onder de kop. Een bezoeker die uit een
        advertentie komt, kent AB niet; dit is het enige bewijs dat boven de
        vouw past zolang er geen geverifieerde Google-score is.
@@ -341,19 +363,36 @@ export const DAKWERKEN: KgjInhoud = {
     vragen: [
       /* 5 nov 2026, zoals bfbouw.be 4 nov (Mohammed daar: 'Welk soort dak heeft u?' past niet bij een nieuw dak, "heeft u of zou u
          willen ofzo"): een vraag die past bij een bestaand en een nieuw dak (was "Wat voor dak heeft u?"). */
-      { sleutel: 'Dak', vraag: 'Om welk soort dak gaat het?', keuzes: [
-        { label: 'Hellend dak', foto: keuzeHellend },
-        { label: 'Plat dak', foto: keuzePlat },
-      ] },
       /* 2 nov 2026, zoals bfbouw.be 31 okt: de inspectie-keuze wordt "Weet ik nog niet" (altijd onderaan) en Isolatie staat erboven
          (Mohammed 30 okt: "doe dan aub in stap 2 optie toevoegen Isolatie", "wat ik je zeg ook voor ab he"; 31 okt: "bij stap 2 zet
          isolatie boven weet ik nog niet"). */
       /* 5 nov 2026, zoals bfbouw.be 4 nov (Mohammed daar: "nieuw dak is een aanzienlijk andere prijs dan dakrenovatie" -> "oke"):
          Dakrenovatie en Nieuw dak apart (was "Dakrenovatie / Nieuw dak"); op de gsm 2x2 en "Weet ik nog niet" over de volle breedte. */
-      { sleutel: 'Werk', vraag: 'Wat moet er aan uw dak gebeuren?', raster: true, keuzes: [
+      /* 7 nov 2026, zoals bfbouw.be 7 nov ("en doe al deze changes ook bij ab pagina"): vraag 1 = "Ik ben op zoek naar:" (Mohammed daar: "Wat moet er
+         aan uw dak gebeuren? bovenaan ook naar ik ben op zoek naar:", "doe ook ipv eerste vraag hellend of plat dak, doe dat als twee[de] vraag"), en
+         "Weet ik nog niet" wordt "Gratis dakinspectie" ("vervang die door gratis dakinspectie"). AB-bron voor de gratis dakinspectie: de bedankpagina
+         biedt ze sinds 31 okt aan ("Plan uw gratis dakinspectie"). Zo sluiten de knoppen "Ik ben op zoek naar" in "Wat heeft uw dak nodig?" aan. */
+      { sleutel: 'Werk', vraag: 'Ik ben op zoek naar:', raster: true, keuzes: [
         { label: 'Dakrenovatie', icoon: 'dienst-renovatie' }, { label: 'Nieuw dak', icoon: 'dienst-nieuw' },
         { label: 'Herstelling', icoon: 'herstel' }, { label: 'Isolatie', icoon: 'isolatie' },
-        { label: 'Weet ik nog niet', icoon: 'twijfel' },
+        { label: 'Gratis dakinspectie', icoon: 'inspectie' },
+      ] },
+      { sleutel: 'Dak', vraag: 'Om welk soort dak gaat het?', keuzes: [
+        { label: 'Hellend dak', foto: keuzeHellend },
+        { label: 'Plat dak', foto: keuzePlat },
+      ] },
+      /* 7 nov 2026, zoals bfbouw.be (Mohammed daar: "bij gratis dakinspectie moeten de vragen erna wel veranderen"): wie Gratis dakinspectie kiest,
+         krijgt na het soort dak "Wat merkt u aan uw dak?" (per soort dak een eigen lijst, zelfde sleutel; woordelijk bfbouw.be) en daarna alleen
+         asbest; isoleren, oppervlakte en start vallen weg (nietAls hieronder). */
+      { sleutel: 'Signaal', vraag: 'Wat merkt u aan uw dak?', lijst: true, als: { Werk: ['Gratis dakinspectie'], Dak: ['Hellend dak'] }, keuzes: [
+        { label: 'Lekkage of vochtplekken', icoon: 'lek' }, { label: 'Losse of kapotte pannen', icoon: 'golfpan' },
+        { label: 'Schade na een storm', icoon: 'schade' }, { label: 'Mijn dak is al oud', icoon: 'oud' },
+        { label: 'Ik wil het laten nakijken', icoon: 'inspectie' },
+      ] },
+      { sleutel: 'Signaal', vraag: 'Wat merkt u aan uw dak?', lijst: true, als: { Werk: ['Gratis dakinspectie'], Dak: ['Plat dak'] }, keuzes: [
+        { label: 'Lekkage of vochtplekken', icoon: 'lek' }, { label: 'Scheuren of blazen in de roofing', icoon: 'roofing' },
+        { label: 'Water blijft op het dak staan', icoon: 'goot' }, { label: 'Mijn dak is al oud', icoon: 'oud' },
+        { label: 'Ik wil het laten nakijken', icoon: 'inspectie' },
       ] },
       /* 5 nov 2026, zoals bfbouw.be 4 nov (Mohammed daar: "en bij nieuw stap andere goede perfect aansluitende vragen"): wie Nieuw dak
          kiest, krijgt waarvoor het dak is en de dakbedekking (per soort dak een eigen lijst, zelfde sleutel); "Wilt u ook isoleren?"
@@ -369,7 +408,7 @@ export const DAKWERKEN: KgjInhoud = {
         { label: 'EPDM', icoon: 'epdm' }, { label: 'Roofing', icoon: 'roofing' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
       ] },
       /* Wie bij stap 2 Isolatie of Nieuw dak koos, krijgt deze vraag niet. */
-      { sleutel: 'Isolatie', vraag: 'Wilt u ook isoleren?', nietAls: { Werk: ['Isolatie', 'Nieuw dak'] }, keuzes: [
+      { sleutel: 'Isolatie', vraag: 'Wilt u ook isoleren?', nietAls: { Werk: ['Isolatie', 'Nieuw dak', 'Gratis dakinspectie'] }, keuzes: [
         { label: 'Ja', icoon: 'isolatie' }, { label: 'Nee', icoon: 'geenisolatie' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
       ] },
       { sleutel: 'Asbest', vraag: 'Zit er asbest in uw dak?', nietAls: { Situatie: ['Nieuwbouw', 'Uitbreiding of aanbouw'] }, keuzes: [
@@ -381,7 +420,7 @@ export const DAKWERKEN: KgjInhoud = {
          de vier vakjes lopen op met de oppervlakte. */
       /* 5 nov 2026, zoals bfbouw.be 4 nov (Mohammed daar: 'Hoe groot is uw dak ongeveer?' bij Nieuw dak + Nieuwbouw "is fout toch"): wie
          nog geen dak heeft, krijgt "Hoe groot wordt het dak ongeveer?" (zelfde sleutel en keuzes). */
-      { sleutel: 'Oppervlakte', vraag: 'Hoe groot is uw dak ongeveer?', lijst: true, nietAls: { Situatie: ['Nieuwbouw', 'Uitbreiding of aanbouw'] }, keuzes: [
+      { sleutel: 'Oppervlakte', vraag: 'Hoe groot is uw dak ongeveer?', lijst: true, nietAls: { Situatie: ['Nieuwbouw', 'Uitbreiding of aanbouw'], Werk: ['Gratis dakinspectie'] }, keuzes: [
         { label: 'Minder dan 50 m²', icoon: 'maat1' }, { label: '50 tot 100 m²', icoon: 'maat2' },
         { label: '100 tot 150 m²', icoon: 'maat3' }, { label: 'Meer dan 150 m²', icoon: 'maat4' },
         { label: 'Weet ik niet', icoon: 'twijfel' },
@@ -391,7 +430,7 @@ export const DAKWERKEN: KgjInhoud = {
         { label: '100 tot 150 m²', icoon: 'maat3' }, { label: 'Meer dan 150 m²', icoon: 'maat4' },
         { label: 'Weet ik niet', icoon: 'twijfel' },
       ] },
-      { sleutel: 'Start', vraag: 'Wanneer wilt u starten?', keuzes: [
+      { sleutel: 'Start', vraag: 'Wanneer wilt u starten?', nietAls: { Werk: ['Gratis dakinspectie'] }, keuzes: [
         { label: 'Zo snel mogelijk', icoon: 'snel' }, { label: 'Binnen 3 maanden', icoon: 'drie' },
         { label: 'Binnen 6 maanden', icoon: 'later' }, { label: 'Later', icoon: 'verken' },
       ] },
@@ -407,11 +446,17 @@ export const DAKWERKEN: KgjInhoud = {
        - "dakexpert": de AB-zin onder de knop sinds 21 okt ("Onze dakexpert contacteert u ..."). */
     laden: { kop: 'Uw aanvraag wordt klaargezet', eerste: 'Antwoorden opgeslagen', laatste: 'Klaar voor onze dakexpert', sleutels: ['Werk', 'Oppervlakte'], leeg: 'Gegevens van uw dak' },
     volgtKop: 'Na uw aanvraag',
+    /* 7 nov 2026, zoals bfbouw.be 7 nov (Mohammed daar: "oke doe maar die 3 stappen"; "en doe al deze changes ook bij ab pagina"): eerst contact
+       binnen 24 uur, dan het gratis plaatsbezoek, dan de offerte. AB-feiten: 24 uur = zijn woord voor AB (2 nov, offerte binnen 24 uur; contact
+       binnen 24 uur valt daarbinnen); gratis plaatsbezoek = het aanbod van de AB-bedankpagina; "via WhatsApp of" blijft weg (geen AB-bron).
+       Was: "Analyse door onze dakexpert" + "Uw offerte binnen 24 uur" (5 nov). */
     volgt: [
-      { titel: 'Analyse door onze dakexpert', tekst: 'Onze dakexpert bekijkt uw ingevulde gegevens direct en neemt contact met u op om uw aanvraag te overlopen en eventuele extra informatie te vragen.' },
-      { titel: 'Uw offerte binnen 24 uur', tekst: 'U ontvangt uw offerte rechtstreeks in uw mailbox. Volledig vrijblijvend.' },
+      { titel: 'Wij nemen binnen 24 uur contact op', tekst: 'Onze dakexpert bekijkt uw aanvraag en neemt binnen 24 uur contact met u op om een plaatsbezoek af te spreken.' },
+      { titel: 'Gratis plaatsbezoek', tekst: 'We bekijken uw dak ter plaatse, gratis en vrijblijvend.' },
+      { titel: 'Uw offerte', tekst: 'U ontvangt uw offerte rechtstreeks in uw mailbox. Volledig vrijblijvend.' },
     ],
-    trigger: 'Offerte binnen 24 uur',
+    /* 7 nov 2026, zoals bfbouw.be: de offerte volgt na het plaatsbezoek; binnen 24 uur = het contact (was 'Offerte binnen 24 uur'). */
+    trigger: 'Antwoord binnen 24 uur',
     naarKnop: 'Offerte aanvragen',
     /* De vinkjes en de trustrij van de rekenaarkaart die hier stond (13 okt). Alleen "Gratis & vrijblijvende richtprijs"
        werd "... dakinspectie": er is geen richtprijs meer, wel de gratis dakinspectie (kop van de kaart en van het slotblok). */
@@ -615,7 +660,8 @@ export const DAKWERKEN: KgjInhoud = {
      3 okt, Mohammed: "doe maar die twee fotos bij diensten ook weg". Alle vier tonen
      hun icoon op een licht vlak (vlakken: true). */
   diensten: {
-    kop: 'Onze diensten',
+    /* 7 nov 2026, zoals bfbouw.be (Mohammed daar: "Waar kunnen we jou mee helpen? ipv onze diensten"; u zoals op de hele pagina). */
+    kop: 'Waar kunnen we u mee helpen?',
     vlakken: true,
     /* meer (2 nov 2026, zoals bfbouw.be 31 okt: Clarity toonde tikken op een dienstkaart die niets deden; Mohammed: "dienstkaarten
        moeten leiden naar info"): uitleg die openklapt in de kaart. Alleen wat de dienst is (werkwijze en materiaal, zoals de dienstrij
@@ -636,18 +682,60 @@ export const DAKWERKEN: KgjInhoud = {
     ],
   },
 
+  /* 7 nov 2026, zoals bfbouw.be LP.uitleg en LP.zoek van 7 nov, woordelijk (Mohammed daar: "is er geen betere kandidaat voor een goede hoog sectie",
+     "zoek bij competitors", "ook de exacte schrijfstijl punten en zinsopbouw"; "je gaat ervanuit dat een consument die woorden kent?"; "Wat houdt een
+     dakrenovatie in? sluit toch nieuw dak mensen eruit"; "ja doe eens die ik ben op zoek naar"; "doe daarbij gratis dakinspectie"). Hier: "en doe al
+     deze changes ook bij ab pagina". Geen AB-claim in de tekst: alleen wat er aan een dak gebeurt. Foto = de dakwerker van het waarom-blok
+     (Mohammed 1 okt, Downloads/dakwerken.jpg). De knoppen vullen vraag 1 van de kaart onderaan in (LpBf, AanvraagStaat). */
+  uitleg: {
+    kop: 'Wat heeft uw dak nodig?',
+    tekst: [
+      'Alles begint met kijken in welke staat uw dak is. Soms volstaan nieuwe pannen of een nieuwe roofing, soms moeten ook het hout en de isolatie eronder vernieuwd worden, en soms is een volledig nieuw dak de beste keuze.',
+      'Ligt uw dak open, dan is dat het ideale moment om meteen te isoleren. Zo gebeurt alles in één keer en moet uw dak later niet opnieuw open.',
+    ],
+    lijstKop: 'Wat de werken omvatten',
+    lijst: [
+      'De oude pannen of roofing eraf halen en afvoeren',
+      'Het hout van uw dak nakijken en rot hout vervangen',
+      'Een nieuwe waterdichte laag onder de pannen',
+      'Isolatie, zodat uw zolder warm blijft in de winter en koel in de zomer',
+      'Nieuwe pannen, leien of roofing',
+      'Alles rond de schouw, de dakramen en de goten waterdicht afwerken',
+    ],
+    slot: 'Zo is uw dak weer waterdicht, goed geïsoleerd en klaar voor de komende decennia.',
+    foto: { src: waaromDakwerker, alt: 'Dakwerker die nieuwe antraciet pannen legt op de panlatten' },
+    zoek: { kop: 'Ik ben op zoek naar:', sleutel: 'Werk', knoppen: [
+      { tekst: 'Dakrenovatie', label: 'Dakrenovatie', icoon: 'dienst-renovatie' },
+      { tekst: 'Nieuw dak', label: 'Nieuw dak', icoon: 'dienst-nieuw' },
+      { tekst: 'Dakisolatie', label: 'Isolatie', icoon: 'isolatie' },
+      { tekst: 'Herstelling', label: 'Herstelling', icoon: 'herstel' },
+      { tekst: 'Gratis dakinspectie', label: 'Gratis dakinspectie', icoon: 'inspectie' },
+    ] },
+  },
+
   /* 2 nov 2026 (zoals bfbouw.be zekerStrook, 31 okt "zekerheden na de reviews"): AB heeft geen reviewsectie, dus de strook staat
      direct onder het belblok, vóór het werk zelf (voor/na). Alleen AB-feiten met bron: vaste prijs (troeven van de dakrekenaar,
      Mohammed 28 sept), één vast aanspreekpunt (dictaat 4 okt, vinkje renovatiekaart), 10 jaar garantie (dictaat 13 okt, alleen dak).
      "Antwoord binnen 24 uur" van bfbouw.be niet: geen bron voor AB. */
+  /* 7 nov 2026, zoals bfbouw.be 7 nov ("en doe al deze changes ook bij ab pagina"): vijf zekerheden die als band doorlopen (LpBf: loop bij meer
+     dan drie). Mohammed daar: "Vaste prijs naar kwaliteitsmaterialen"; premiebegeleiding als vijfde ("volledige premiebegeleiding" = zijn woord
+     voor AB, 23 sep); "Antwoord binnen 24 uur" = de regel boven de verzendknop. 10 jaar garantie blijft (AB, niet de 15 jaar van BF). */
   zekerheden: [
-    { icoon: 'prijs', tekst: 'Vaste prijs' },
+    { icoon: 'medaille', tekst: 'Kwaliteitsmaterialen' },
     { icoon: 'aanspreek', tekst: 'Eén vast aanspreekpunt' },
     { icoon: 'schild', tekst: '10 jaar garantie' },
+    { icoon: 'klok', tekst: 'Antwoord binnen 24 uur' },
+    { icoon: 'premie', tekst: 'Volledige premiebegeleiding' },
   ],
   /* 2 nov 2026 (zoals bfbouw.be 31 okt, Mohammed: "maak de pagina eens over het algemeen beter ingedeeld"): na het bewijs eerst wat AB
      doet, dan waarom AB en hoe het verloopt, de voordelen als laatste duw vlak voor het offerteblok. */
-  volgorde: ['zekerheden', 'voorna', 'diensten', 'waarom', 'werkwijze', 'voordelen', 'faq'],
+  /* 7 nov 2026, zoals bfbouw.be 7 nov: de foto's van het werk na de diensten (Mohammed daar: "verplaats recente daken naar sectie 4", "Na Onze
+     diensten"), en "Wat heeft uw dak nodig?" (uitleg) op de plek van "Waarom AB Bouw Groep" (daar: "als het moet zelfs volledig die waarom bfb weg
+     en een betere sectie"). */
+  /* 8 nov 2026, Mohammed: "ik wil graag op de pagina zo een realisatie sectie maken met die realisatie" (de hoeve, realisatie-hoeve.ts): direct na de
+     diensten, waar bfbouw.be zijn recente daken toont; de voor/na van het dak volgt erna. */
+  realisatie: HOEVE,
+  volgorde: ['zekerheden', 'diensten', 'realisatie', 'voorna', 'uitleg', 'werkwijze', 'voordelen', 'faq'],
 
   /* 2 nov 2026, Mohammed: "op dakwerken eruit of doe simpelweg hoe lang duurt dakwerk gemiddeld en nog 2 nuttige vragen",
      "geen onnutige ai slop", "redeneer gewoon". Eerste versie afgekeurd ("nee ai slop copy", "let op de copy dat ik leverde",
@@ -668,12 +756,18 @@ export const DAKWERKEN: KgjInhoud = {
     eersteOpen: true,
     lijst: [
       { v: 'Wat kost een dakrenovatie?',
-        a: 'Gemiddeld kost een dakrenovatie in België € 50 tot € 200 per m², exclusief btw. Vervangt u alleen de dakbedekking, dan rekent u voor een hellend dak op € 30 tot € 120 per m² en voor een plat dak op € 40 tot € 100. Met nieuwe isolatie erbij wordt dat € 80 tot € 170 voor een hellend en € 70 tot € 150 voor een plat dak, en moet ook het dakhout vernieuwd worden, dan zit u tussen € 150 en € 350 per m². Is uw woning ouder dan tien jaar, dan betaalt u 6% btw in plaats van 21%. Wilt u een prijs op maat voor uw dak?',
+        a: 'De prijs hangt af van het type dak (plat of hellend), de oppervlakte, de staat van het dak en of er isolatie bij komt. Gemiddeld kost een dakrenovatie in België € 50 tot € 200 per m², exclusief btw. Vervangt u alleen de dakbedekking, dan rekent u voor een hellend dak op € 30 tot € 120 per m² en voor een plat dak op € 40 tot € 100. Met nieuwe isolatie erbij wordt dat € 80 tot € 170 voor een hellend en € 70 tot € 150 voor een plat dak, en moet ook het dakhout vernieuwd worden, dan zit u tussen € 150 en € 350 per m². Is uw woning ouder dan tien jaar, dan betaalt u 6% btw in plaats van 21%. Wilt u een prijs op maat voor uw dak?',
         link: 'Vraag dan een gratis offerte aan.' },
-      { v: 'Krijg ik een premie voor mijn dakrenovatie?',
+      { v: 'Kan ik een premie krijgen voor mijn dak?',
         a: 'Dat hangt af van uw inkomen. Valt u in inkomenscategorie 3 of 4, dan krijgt u via Mijn VerbouwPremie 35% (categorie 3) of 50% (categorie 4) van de factuur zonder btw terug voor de isolatie en renovatie van uw dak, tot maximaal € 4.025 of € 5.750. Voor categorie 1 en 2 is er sinds 1 maart 2026 geen dakpremie meer. De premie geldt alleen als een aannemer het werk uitvoert. Bij ons krijgt u volledige premiebegeleiding.' },
       { v: 'Hoe lang duurt een dakrenovatie?',
         a: 'Dat hangt vooral af van het soort dak en de grootte ervan. Een plat dak ligt er meestal in één tot twee werkdagen, een hellend dak van een gewone gezinswoning vernieuwen en isoleren duurt doorgaans één tot twee weken. U blijft intussen gewoon thuis wonen. Ligt het dak aan het einde van de werkdag nog open, dan dekken we het waterdicht af, zodat uw woning ook bij een regenbui \'s nachts droog blijft.' },
+      /* 7 nov 2026, zoals bfbouw.be (vragen van Dakwerken Smet en Dakinvest). Garantie: 10 jaar (AB, dictaat 13 okt) + de wet (tienjarige
+         aansprakelijkheid van de aannemer); "Ook na de werken blijven we bereikbaar" = het vaste aanspreekpunt (4 okt). */
+      { v: 'Welke garantie geldt er op dakwerken?',
+        a: 'U krijgt 10 jaar garantie. Voor structurele werken geldt daarnaast de wettelijke tienjarige aansprakelijkheid van de aannemer. Ook na de werken blijven we bereikbaar.' },
+      { v: 'Moet mijn volledige dak altijd vernieuwd worden?',
+        a: 'Niet altijd. Tijdens het plaatsbezoek bekijken we wat technisch nodig is en wat niet. Is het hout onder de pannen nog goed, dan vervangen we alleen wat versleten is. Is een groot deel versleten, dan raden we aan om het dak in één keer te vernieuwen.' },
     ],
   },
 
@@ -710,21 +804,19 @@ export const DAKWERKEN: KgjInhoud = {
     lijst: [],
   },
 
+  /* 7 nov 2026, zoals bfbouw.be LP.stappenKop + LP.stappen van 7 nov (Mohammed daar: "de stappen ook aanpassen aub, ga kijken bij competitors",
+     "Zo verloopt uw dakrenovatie" -> "DAT sluit uit isolatie en nieuw" -> "Zo werken wij"; "DOE" op premiebegeleiding in de laatste stap). Hier: "en doe
+     al deze changes ook bij ab pagina". AB-feiten: 10 jaar garantie (dak, dictaat 13 okt), volledige premiebegeleiding (23 sep), vast aanspreekpunt
+     (4 okt), vaste prijs (28 sept), gratis plaatsbezoek (bedankpagina). Was "Zo verloopt uw dakwerk" in 5 stappen (Aanvraag, Dakinspectie, Offerte,
+     Uitvoering, Oplevering). */
   werkwijze: {
-    kop: 'Zo verloopt uw dakwerk',
-    onder: 'U weet vooraf wat er gebeurt en wanneer.',
+    kop: 'Zo werken wij',
+    onder: '',
     stappen: [
-      { titel: 'Aanvraag', tekst: 'U doet uw aanvraag via het formulier hieronder of rechtstreeks telefonisch.' },
-      /* 22 okt 2026, Mohammed: "weg" (de termijn "Binnen enkele werkdagen"). "Ter plaatse" staat al in het slotblok. */
-      { titel: 'Dakinspectie', tekst: 'We inspecteren uw dak ter plaatse en bekijken samen de bevindingen.' },
-      /* Stond eerst "Elke post staat apart op papier": dat is nu de derde
-         reden in het waarom-blok. Twee keer dezelfde belofte op één pagina
-         leest als vulling, dus deze stap draagt het geruststellende deel. */
-      { titel: 'Offerte', tekst: 'U krijgt een vrijblijvende offerte.' },
-      /* Mohammed: 'wij beginnen aan de werken, meestal duurt dakwerk ...'. De duur
-         (één tot twee weken) is door Claude ingevuld: nog te bevestigen door AB. */
-      { titel: 'Uitvoering', tekst: 'Wij beginnen aan de werken. Meestal duurt dakwerk één tot twee weken.' },
-      { titel: 'Oplevering', tekst: 'Wij ruimen alles netjes op. Het enige wat we achterlaten is een perfect dak.' },
+      { titel: 'Plaatsbezoek', tekst: 'We bekijken uw dak ter plaatse, gratis en vrijblijvend, en bespreken uw wensen en budget.' },
+      { titel: 'Offerte op maat', tekst: 'U ontvangt een duidelijke offerte met de werken, de materialen en een vaste prijs.' },
+      { titel: 'Planning en uitvoering', tekst: 'Na uw akkoord plannen we de werken in. Op de afgesproken datum starten we, en we werken netjes en veilig.' },
+      { titel: 'Oplevering en garantie', tekst: 'We overlopen samen elk detail. U krijgt 10 jaar garantie en volledige premiebegeleiding, en ook later kunt u bij uw vaste aanspreekpunt terecht.' },
     ],
   },
 
@@ -739,9 +831,10 @@ export const DAKWERKEN: KgjInhoud = {
     /* 2 nov 2026: de punten van bfbouw.be (lpStappen, dictaat 31 okt), zonder "binnen 24u" (geen bron voor AB): het formulier zelf en
        wat de bezoeker krijgt. De dakinspectie komt pas na de aanvraag (bedankpagina). */
     tekst: '',
+    /* 7 nov 2026, zoals bfbouw.be lpStappen: zelfde belofte als "Na uw aanvraag" (was 'U ontvangt een vrijblijvende offerte'). */
     punten: [
       'Beantwoord een paar korte vragen',
-      'U ontvangt een vrijblijvende offerte',
+      'Wij nemen binnen 24 uur contact op',
     ],
     /* 13 okt 2026: stock in plaats van het gegenereerde pannenDicht. Niet daklijn: die is dia 1. Vier stockfoto's op
        vijf plekken (4 dia's + slotblok) geeft precies één herhaling, zoals voorheen (pannenDicht stond in dia 4 én hier).

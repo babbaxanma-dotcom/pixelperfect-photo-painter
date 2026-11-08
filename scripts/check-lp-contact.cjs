@@ -8,7 +8,7 @@
  *   1. na het laatste antwoord 1,2 s de laadstap ("Uw aanvraag wordt klaargezet"), daarna het contactscherm; nooit beide tegelijk;
  *   2. 390x664: het contactscherm vult het hele scherm, de verzendknop staat in beeld, de sluitknop rechtsboven is 44x44,
  *      "Na uw aanvraag" staat boven de velden, de regel boven de knop niet over het volle scherm;
- *   3. op het contactscherm staat "gratis" precies 1x (verzendknop) en "vrijblijvend" precies 1x;
+ *   3. op het contactscherm staat "gratis" precies 3x (verzendknop + stap 2 "Gratis plaatsbezoek", 7 nov 2026) en "vrijblijvend" precies 2x;
  *   4. sluiten = terug in de pagina, contactscherm en antwoorden blijven staan; geen horizontale scroll;
  *   5. versturen: leeg verstuurt niets; daarna (dubbelklik) precies 1 GHL- en 1 Web3Forms-verzoek, precies 1 conversie,
  *      de bedankpagina met "Wat nu volgt" en twee stappen, geen is-formvol meer, de bewaarde antwoorden gewist, geen JS-fout;
@@ -36,8 +36,8 @@ const POORT = 4435;
 const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
 const HERO = '#rekenaar .kgj-reken--aanvraag';
 const PADEN = {
-  '/lp/dakwerken': ['Hellend dak', 'Dakrenovatie', 'Ja', 'Nee', '50 tot 100 m²', 'Zo snel mogelijk'],
-  '/lp/dakwerken/asbest': ['Plat dak', 'Nieuw dak', 'Huidig dak vervangen', 'EPDM', '50 tot 100 m²', 'Zo snel mogelijk'],
+  '/lp/dakwerken': ['Dakrenovatie', 'Hellend dak', 'Ja', 'Nee', '50 tot 100 m²', 'Zo snel mogelijk'], // 7 nov 2026: vraag 1 = Ik ben op zoek naar:, vraag 2 = soort dak
+  '/lp/dakwerken/asbest': ['Nieuw dak', 'Plat dak', 'Huidig dak vervangen', 'EPDM', '50 tot 100 m²', 'Zo snel mogelijk'], // 7 nov 2026: vraag 1 = Werk
   '/lp/totaalrenovatie': ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'],
   '/lp/aannemer-renovatiewerken': ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'],
 };
@@ -148,8 +148,9 @@ async function gsmFlow(br, basis, pad, plant = {}, alleenTot = null) {
     if (!(c.sluit && c.sluit.zicht && c.sluit.w === 44 && c.sluit.h === 44 && c.sluit.right >= 370 && c.sluit.top < 60)) uit.push(`2. sluitknop ${JSON.stringify(c.sluit)} (verwacht 44x44 rechtsboven)`);
     if (!(c.volgt && c.naam && c.volgt.bottom <= c.naam.top)) uit.push('2. "Na uw aanvraag" staat niet boven de velden');
     if (c.trigger && c.trigger.zicht) uit.push('2. de regel boven de knop staat ook over het volle scherm');
-    if (c.gratis !== 1) uit.push(`3. "gratis" ${c.gratis}x op het contactscherm (verwacht 1x, de verzendknop)`);
-    if (c.vrij !== 1) uit.push(`3. "vrijblijvend" ${c.vrij}x op het contactscherm (verwacht 1x)`);
+    if (c.gratis !== 3) uit.push(`3. "gratis" ${c.gratis}x op het contactscherm (verwacht 3x: de verzendknop + stap 2 "Gratis plaatsbezoek", 7 nov 2026)`);
+    /* 7 nov 2026 (bfbouw.be "oke doe maar die 3 stappen"): stap 2 "Gratis plaatsbezoek / ... gratis en vrijblijvend." + stap 3 "Volledig vrijblijvend." */
+    if (c.vrij !== 2) uit.push(`3. "vrijblijvend" ${c.vrij}x op het contactscherm (verwacht 2x)`);
     if (alleenTot === 3) return uit;
     const samenVoor = c.samen;
     await p.evaluate((w) => document.querySelector(w).querySelector('.kgj-reken__sluit').click(), HERO);
@@ -172,7 +173,7 @@ async function gsmFlow(br, basis, pad, plant = {}, alleenTot = null) {
     if (!d.pad.startsWith('/bedankt/')) uit.push(`5. geen bedankpagina (${d.pad})`);
     if (tel.ghl !== 1 || tel.w3 !== 1) uit.push(`5. ${tel.ghl} GHL- en ${tel.w3} Web3Forms-verzoeken (verwacht 1 en 1)`);
     if (tel.conv !== 1) uit.push(`5. ${tel.conv} conversies (verwacht 1)`);
-    if (d.kop !== 'Wat nu volgt' || d.stappen !== 2) uit.push(`5. bedankpagina: "${d.kop}" met ${d.stappen} stappen (verwacht "Wat nu volgt" met 2)`);
+    if (d.kop !== 'Wat nu volgt' || d.stappen !== 3) uit.push(`5. bedankpagina: "${d.kop}" met ${d.stappen} stappen (verwacht "Wat nu volgt" met 3, 7 nov 2026)`);
     if (d.html || d.opslag !== null) uit.push(`5. na versturen: is-formvol ${d.html}, bewaarde antwoorden ${d.opslag}`);
     if (fouten.length) uit.push(`5. JS-fout: ${fouten.slice(0, 2).join(' | ')}`);
     return uit;
@@ -215,7 +216,7 @@ async function pcFlow(br, basis, pad, w, h) {
     const midX = (c.kaart.left + c.kaart.right) / 2, midY = (c.kaart.top + c.kaart.bottom) / 2;
     if (!(c.vol && c.contact && Math.abs(midX - w / 2) <= 2 && Math.abs(midY - h / 2) <= 2 && c.kaart.w <= 880)) uit.push(`7. venster niet in het midden ${JSON.stringify(c.kaart)} (is-vol ${c.vol})`);
     if (!(c.kaart.sh <= c.kaart.ch + 1 && c.kaart.top >= 0 && c.kaart.bottom <= h)) uit.push(`7. niet alles zichtbaar zonder scrollen (${c.kaart.sh} > ${c.kaart.ch})`);
-    if (c.gratis !== 1 || c.vrij !== 1) uit.push(`7. gratis ${c.gratis}x, vrijblijvend ${c.vrij}x (verwacht 1x en 1x)`);
+    if (c.gratis !== 3 || c.vrij !== 2) uit.push(`7. gratis ${c.gratis}x, vrijblijvend ${c.vrij}x (verwacht 3x en 2x: verzendknop + stap 2 "Gratis plaatsbezoek", 7 nov 2026)`);
     await p.keyboard.press('Escape');
     await wacht(400);
     const e = await info(p);
@@ -238,7 +239,8 @@ async function pcFlow(br, basis, pad, w, h) {
 
 /* Punt 8 (dakpagina's, bfbouw.be 5638c50/8343954): "Veelgestelde vragen" direct onder "De voordelen van een dakrenovatie", de drie
    vragen in die volgorde, de eerste open, de klikbare zin "Vraag dan een gratis offerte aan." brengt de kaart onderaan in beeld. */
-const FAQ = ['Wat kost een dakrenovatie?', 'Krijg ik een premie voor mijn dakrenovatie?', 'Hoe lang duurt een dakrenovatie?'];
+/* 7 nov 2026, zoals bfbouw.be (Dakwerken Smet, Dakinvest): vijf vragen */
+const FAQ = ['Wat kost een dakrenovatie?', 'Kan ik een premie krijgen voor mijn dak?', 'Hoe lang duurt een dakrenovatie?', 'Welke garantie geldt er op dakwerken?', 'Moet mijn volledige dak altijd vernieuwd worden?'];
 async function faqFlow(br, basis, pad, w, h, plant = null) {
   const uit = [];
   const { ctx, p } = await open(br, basis, w, h, pad);
@@ -254,7 +256,7 @@ async function faqFlow(br, basis, pad, w, h, plant = null) {
     if (!f.er) { uit.push('8. geen veelgestelde vragen'); return uit; }
     if (f.vorige !== 'voordelen' || f.vorigeKop !== 'De voordelen van een dakrenovatie') uit.push(`8. de vragen staan na "${f.vorigeKop}" (#${f.vorige}) in plaats van direct onder "De voordelen van een dakrenovatie"`);
     if (f.vragen.join('|') !== FAQ.join('|')) uit.push(`8. vragen "${f.vragen.join(' | ')}"`);
-    if (f.open.join('|') !== 'true|false|false') uit.push(`8. open/dicht ${f.open.join(', ')} (verwacht alleen de eerste open)`);
+    if (f.open.join('|') !== 'true|false|false|false|false') uit.push(`8. open/dicht ${f.open.join(', ')} (verwacht alleen de eerste open)`);
     if (f.link !== '#contact' || f.linkTekst !== 'Vraag dan een gratis offerte aan.') uit.push(`8. link "${f.linkTekst}" naar ${f.link}`);
     if (f.link) {
       await p.evaluate(() => document.querySelector('#faq a.bf-vraag__link').click());
@@ -303,7 +305,7 @@ async function faqFlow(br, basis, pad, w, h, plant = null) {
         await wacht(1600);
         await p.evaluate((w) => { const b = document.querySelector(w + ' .kgj-reken__band'); if (b) b.append(' Gratis'); }, HERO);
         const c = await info(p);
-        r = c.gratis !== 1 ? ['3. "gratis" ' + c.gratis + 'x'] : [];
+        r = c.gratis !== 3 ? ['3. "gratis" ' + c.gratis + 'x'] : [];
         await ctx.close();
       } else r = await gsmFlow(br, basis, '/lp/dakwerken', plant, 3);
       if (!r.some((x) => verwacht.test(x))) { console.log(`ONGELDIGE METING: positieve controle "${naam}" niet gevangen (${r.join(' | ') || 'geen fout'})`); code = 2; }

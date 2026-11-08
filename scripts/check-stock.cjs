@@ -287,12 +287,13 @@ function paginaToets(modus) {
           const toets = new Function('return (' + tf + ')')();
           const dias = [...document.querySelectorAll('.bf-lphero__slides > img.bf-lphero__beeld, .kgj-hero__foto > .kgj-dia > img')];
           const slot = document.querySelector('#contact img.bf-lpinsp__beeld, #contact .kgj-cta__foto > img');
-          const waarom = document.querySelector('#waarom');
+          /* 7 nov 2026: op /lp/dakwerken staat 'Wat heeft uw dak nodig?' (#uitleg, eigen foto) op de plek van #waarom; de controle plant in het blok dat er is */
+          const waarom = document.querySelector('#waarom, #uitleg');
           const stock = dias.find((i) => /\/stock-/.test(i.getAttribute('src') || ''));
-          if (!stock || !slot || !waarom) return { ok: false, reden: `dia met stock ${!!stock}, slotblokfoto ${!!slot}, #waarom ${!!waarom}` };
+          if (!stock || !slot || !waarom) return { ok: false, reden: `dia met stock ${!!stock}, slotblokfoto ${!!slot}, #waarom of #uitleg ${!!waarom}` };
           const r = { ok: true };
           const a = stock.cloneNode(); a.className = ''; a.alt = 'neutraal'; waarom.appendChild(a);
-          r.a = toets('lp').fout.some((f) => f.startsWith('a: ') && f.includes('#waarom'));
+          r.a = toets('lp').fout.some((f) => f.startsWith('a: ') && f.includes('#' + waarom.id));
           a.remove();
           const c = stock.cloneNode(); c.alt = 'Dak gelegd door AB Bouw Groep'; stock.parentElement.appendChild(c);
           const rc = toets('lp').fout;

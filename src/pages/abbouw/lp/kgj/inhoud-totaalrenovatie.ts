@@ -16,6 +16,7 @@
  * uitbouw van de homepage (uitbreiding-voor/na) in de voor/na-schuif.
  */
 import type { KgjInhoud, Vraag } from './inhoud';
+import { HOEVE } from './realisatie-hoeve';
 import type { IcoonNaam } from './Iconen';
 import { DIVISIES } from '../../_divisies';
 
@@ -549,11 +550,15 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     laden: { kop: 'Uw aanvraag wordt klaargezet', eerste: 'Antwoorden opgeslagen', laatste: 'Klaar voor onze expert',
       sleutels: ['Wat voor woning wilt u renoveren', 'Wat wilt u renoveren'], leeg: 'Gegevens van uw woning' },
     volgtKop: 'Na uw aanvraag',
+    /* 7 nov 2026, zoals bfbouw.be 7 nov (Mohammed daar: "oke doe maar die 3 stappen"; "en doe al deze changes ook bij ab pagina"): contact binnen
+       24 uur, gratis plaatsbezoek, offerte. "onze expert" en "uw woning" op de renovatiepagina's; gratis plaatsbezoek = zijn aanbod hier (25 okt
+       "Plan uw gratis plaatsbezoek en advies", bedankpagina). Was "Analyse door onze expert" + "Uw offerte binnen 24 uur" (5 nov). */
     volgt: [
-      { titel: 'Analyse door onze expert', tekst: 'Onze expert bekijkt uw ingevulde gegevens direct en neemt contact met u op om uw aanvraag te overlopen en eventuele extra informatie te vragen.' },
-      { titel: 'Uw offerte binnen 24 uur', tekst: 'U ontvangt uw offerte rechtstreeks in uw mailbox. Volledig vrijblijvend.' },
+      { titel: 'Wij nemen binnen 24 uur contact op', tekst: 'Onze expert bekijkt uw aanvraag en neemt binnen 24 uur contact met u op om een plaatsbezoek af te spreken.' },
+      { titel: 'Gratis plaatsbezoek', tekst: 'We bekijken uw woning ter plaatse, gratis en vrijblijvend.' },
+      { titel: 'Uw offerte', tekst: 'U ontvangt uw offerte rechtstreeks in uw mailbox. Volledig vrijblijvend.' },
     ],
-    trigger: 'Offerte binnen 24 uur',
+    trigger: 'Antwoord binnen 24 uur', // 7 nov 2026, zoals bfbouw.be (was 'Offerte binnen 24 uur')
     naarKnop: 'Offerte aanvragen',
     /* Vinkjes en trustrij: dezelfde teksten en cijfers als op de rekenaarkaart die hier stond (13 okt, dictaat 4 okt). Alleen de
        vorm verandert (22 okt, Mohammed: "doe de trust badges duidelijker, visueel mooier"): tegels met iconen (badges). De iconen
@@ -580,10 +585,16 @@ export const TOTAALRENOVATIE: KgjInhoud = {
   },
   /* 2 nov 2026 (zoals bfbouw.be zekerStrook, 31 okt): AB-feiten met bron: vaste prijs vooraf (Mohammed 22 okt), één vast
      aanspreekpunt en 16 jaar ervaring (dictaat 4 okt, /over). Nooit 10 jaar garantie bij renovatie (28 sept). */
+  /* 7 nov 2026, zoals bfbouw.be 7 nov: vijf zekerheden als doorlopende band (Mohammed daar: "Vaste prijs naar kwaliteitsmaterialen",
+     premiebegeleiding erbij; "Antwoord binnen 24 uur" = de regel boven de verzendknop). AB-renovatie: 16 jaar ervaring (geen garantiejaren:
+     nooit 10 jaar garantie bij renovatie, 28 sept); premiebegeleiding = zijn renovatie-FAQ ("Hoe helpen jullie bij de aanvraag van premies?")
+     en zijn premietip ("Wij begeleiden u bij de aanvraag", 28 sep). */
   zekerheden: [
-    { icoon: 'prijs', tekst: 'Vaste prijs vooraf' },
+    { icoon: 'medaille', tekst: 'Kwaliteitsmaterialen' },
     { icoon: 'aanspreek', tekst: 'Eén vast aanspreekpunt' },
     { icoon: 'kalender', tekst: '16 jaar ervaring' },
+    { icoon: 'klok', tekst: 'Antwoord binnen 24 uur' },
+    { icoon: 'premie', tekst: 'Volledige premiebegeleiding' },
   ],
   /* 22 okt 2026, Mohammed (zijn dictaat voor BF: "neemt zo snel mogelijk contact met u op", geen termijn meer): geen "binnen één
      werkdag" meer op /lp/totaalrenovatie en /lp/aannemer-renovatiewerken. /lp/richtprijs-berekenen houdt TOTAALRENOVATIE_REKENAAR
@@ -611,11 +622,16 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     kop: 'Offerte aanvragen',
     tekst: '',
     naam: 'Gratis offerte',
-    punten: ['Beantwoord een paar korte vragen', 'U ontvangt een vrijblijvende offerte'],
+    punten: ['Beantwoord een paar korte vragen', 'Wij nemen binnen 24 uur contact op'], // 7 nov 2026, zoals bfbouw.be lpStappen (was 'U ontvangt een vrijblijvende offerte')
   },
   /* Het vangnet ("Liever eerst een indicatie van de kosten?", knop naar de rekenaarpagina) is een rekenaar-ingang: weg. */
   vangnet: undefined,
   /* 2 nov 2026 (zoals bfbouw.be 31 okt: "maak de pagina eens over het algemeen beter ingedeeld"): zekerheden, dan het werk zelf, dan
      wat AB doet, waarom AB en hoe het verloopt. */
-  volgorde: ['zekerheden', 'uitgevoerd', 'diensten', 'waarom', 'werkwijze', 'faq'],
+  /* 7 nov 2026, zoals bfbouw.be 7 nov (Mohammed daar: "verplaats recente daken naar sectie 4", "Na Onze diensten"): het uitgevoerde werk na de diensten. */
+  /* 8 nov 2026: de realisatie van de hoeve (realisatie-hoeve.ts) direct na de diensten, vóór het fotospoor "Uitgevoerd werk". */
+  realisatie: HOEVE,
+  volgorde: ['zekerheden', 'diensten', 'realisatie', 'uitgevoerd', 'waarom', 'werkwijze', 'faq'],
+  /* 7 nov 2026, zoals bfbouw.be (Mohammed daar: "Waar kunnen we jou mee helpen? ipv onze diensten"); was "Onze expertises". */
+  diensten: { ...TOTAALRENOVATIE_REKENAAR.diensten, kop: 'Waar kunnen we u mee helpen?' },
 };
