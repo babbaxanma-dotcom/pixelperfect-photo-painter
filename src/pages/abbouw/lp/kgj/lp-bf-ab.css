@@ -1350,7 +1350,9 @@ html.is-formvol .bf.bf-lp .bf-lphero__in, html.is-formvol .bf.bf-lp .bf-lpinsp__
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact { display: flex; flex-direction: column; }
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__band { order: 1; }
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__samen { order: 2; }
-  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__volgt { order: 3; margin-top: 10px; padding: 10px 12px; }
+  /* 8 nov 2026 (zoals bfbouw.be die dag; Mohammed daar: "bij stap 7 het overlapt 3 4de van het scherm"; check:aanvraag 390x637: het naamveld zat
+     achter de vaste verzendknop): op het volle contactscherm de velden eerst, "Na uw aanvraag" onder de verzendknop. */
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__volgt { order: 9; margin-top: 16px; padding: 10px 12px; }
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__velden { order: 4; }
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__trust { order: 5; }
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__fout { order: 6; margin-top: 12px; position: sticky; bottom: calc(84px + env(safe-area-inset-bottom)); z-index: 2; box-shadow: 0 0 0 6px #fff; }

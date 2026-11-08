@@ -288,7 +288,10 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
      disclaimer-vinkjes ("geen inspectie of plaatsbezoek voor het versturen") en geen regel "5,0 op Google · Gratis en vrijblijvend"
      onder de knop (dubbel met "Gratis en vrijblijvende offerte aanvragen"); in de kaart geen tijdregel onder de kaartkop en geen
      tweede route "Weet u al ... Klik dan hier"; nergens in de zichtbare tekst van de pagina "gratis dakinspectie" of "gratis
-     plaatsbezoek" (dat aanbod staat pas op de bedankpagina). */
+     plaatsbezoek" (dat aanbod staat pas op de bedankpagina).
+     8 nov 2026: sinds de port van bfbouw.be 7 nov (Mohammed: "en doe al deze changes ook bij ab pagina") horen die woorden op drie plekken
+     WEL: de keuze "Gratis dakinspectie" bij vraag 1 (.kgj-reken__keuze), de knoppen "Ik ben op zoek naar" (.bf-lpzoek__knop) en stap 2
+     "Gratis plaatsbezoek" van "Na uw aanvraag" (.kgj-reken__volgt). Elders (kop, subkop, kaartkop, knop) blijft het oud aanbod. */
   const offerteFouten = (p, root) => p.evaluate((root) => {
     const k = document.querySelector(root);
     const uit = [];
@@ -300,7 +303,8 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     if (k.querySelector('.kgj-reken__offerte')) uit.push('tweede route "' + tekst(k.querySelector('.kgj-reken__offerte')) + '"');
     const OUD = /gratis (dakinspectie|plaatsbezoek)/i;
     const zicht = (el) => el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden';
-    const oud = [...document.querySelectorAll('h1, h2, h3, p, span, b, strong, li, a, button, summary')].filter((e) => zicht(e) && OUD.test(e.textContent) && ![...e.children].some((c) => OUD.test(c.textContent)));
+    const MAG = '.kgj-reken__keuze, .bf-lpzoek__knop, .kgj-reken__volgt';
+    const oud = [...document.querySelectorAll('h1, h2, h3, p, span, b, strong, li, a, button, summary')].filter((e) => zicht(e) && OUD.test(e.textContent) && ![...e.children].some((c) => OUD.test(c.textContent)) && !e.closest(MAG));
     if (oud.length) uit.push('oud aanbod in de tekst: "' + tekst(oud[0]).slice(0, 80) + '"');
     return uit;
   }, root);
@@ -354,8 +358,10 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
        ook zonder kader). Positieve controle 10 plant een echt kader en moet blijven falen. */
     const kader = tegels.filter((t) => { const st = getComputedStyle(t); return !/^(transparent|rgba\(0, 0, 0, 0\))$/.test(st.backgroundColor) || st.boxShadow !== 'none'; });
     if (kader.length) uit.push(`${kader.length} cijfer(s) in de vertrouwensrij staan in een kader of vlak (bfbouw.be: zonder kader)`);
-    const g = document.querySelector('.bf-lphero__google b')?.textContent.trim();
-    if (g !== '5,0 op Google') uit.push(`Google-badge in de hero "${g}" in plaats van "5,0 op Google"`);
+    /* 8 nov 2026, Mohammed: "5 op google onder de subkop bij ab eruit aub": de Google-badge onder de subkop hoort WEG (was: verplicht) */
+    /* in de markup van de hero, zichtbaar of niet (op de gsm verbergt de css .bf-lphero__google; een badge die er staat telt toch) */
+    const g = document.querySelector('.bf-lphero .bf-lphero__google');
+    if (g) uit.push('Google-badge onder de subkop staat er nog (' + norm(g).slice(0, 40) + ')');
     return uit;
   }, pg, HERO);
 
@@ -767,12 +773,13 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       await p.evaluate((root) => {
         const s = document.querySelector(root + ' .kgj-reken__vertrouwen li svg'); s?.classList.replace([...s.classList].find((c) => /^lucide-(?!icon$)/.test(c)), 'lucide-award');
         const t = document.querySelector(root + ' .kgj-reken__trust li:last-child'); if (t) { t.style.background = '#faf6ec'; t.style.boxShadow = 'inset 0 0 0 1px #eadfc2'; }
+        const g = document.createElement('a'); g.className = 'bf-lphero__google'; g.textContent = '5,0 op Google'; (document.querySelector('.bf-lphero__tekst') || document.querySelector('main')).append(g); // 8 nov 2026: geplante badge onder de subkop
       }, HERO);
       const pc10 = await badgesFouten(p, DAK);
       await ctx.close();
       if (!pc8.some((x) => x.includes('disclaimer')) || !pc8.some((x) => x.includes('regel onder de knop')) || !pc8.some((x) => x.includes('oud aanbod'))) { console.log(`ONGELDIGE METING: een geplante disclaimer, regel onder de knop of "gratis dakinspectie" werd door de offertetoets niet allemaal gezien (${pc8.join(' | ') || 'niets'})`); process.exit(2); }
       console.log(`positieve controle 8: geplante disclaimer, regel onder de knop en oud aanbod gezien (${pc8.join('; ')})`);
-      if (!pc10.some((x) => x.includes('eigen icoon')) || !pc10.some((x) => x.includes('kader'))) { console.log(`ONGELDIGE METING: een eigen icoon bij een vinkje of een cijfer in een kader werd door de badgetoets niet allebei gezien (${pc10.join(' | ') || 'niets'})`); process.exit(2); }
+      if (!pc10.some((x) => x.includes('eigen icoon')) || !pc10.some((x) => x.includes('kader')) || !pc10.some((x) => x.includes('Google-badge'))) { console.log(`ONGELDIGE METING: een eigen icoon bij een vinkje of een cijfer in een kader werd door de badgetoets niet allebei gezien (${pc10.join(' | ') || 'niets'})`); process.exit(2); }
       console.log(`positieve controle 10: eigen icoon bij een vinkje en cijfer in een kader gezien (${pc10.join('; ')})`);
     }
     {
