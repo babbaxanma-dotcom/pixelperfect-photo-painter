@@ -25,7 +25,6 @@ import dakOpen169 from '@/assets/realisaties/hoeve/hoeve-dak-open-169.webp';
 import type { Realisatie } from './inhoud';
 
 export const HOEVE: Realisatie = {
-  kop: 'Onze realisaties',
   project: 'Ecologische verbouwing van een hoeve',
   werkenKop: 'Uitgevoerde werken',
   werken: ['Nieuw dak met pannen en dakvensters', 'Binnenkant gestript tot op de structuur', 'Nieuwe staalstructuur', 'Nieuwe ramen en schuiframen'],

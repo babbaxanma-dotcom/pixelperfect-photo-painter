@@ -54,9 +54,10 @@ export default function Realisatie({ r, knop }: { r: RealisatieInhoud; knop: Rea
   useEffect(() => { bijwerk(); }, [toon, gepauzeerd]);
 
   return (
+    /* 8 nov 2026, Mohammed: "bij onze realisaties haal de titel weg. Want het is maar één realisatie, dus dat hoeft geen titel": geen sectiekop
+       meer; de projectnaam is de kop van de sectie (h2, zelfde opmaak als voorheen). */
     <section className="bf-sblok bf-lprealisatie" id="realisaties" aria-labelledby="realisaties-kop">
       <div className="bf-sraam">
-        <h2 className="bf-h2 bf-h2--midden" id="realisaties-kop">{r.kop}</h2>
         <div className="bf-real">
           <div className="bf-real__beeld">
             <div className="bf-real__wissel" role="group" aria-label="Beeld van de realisatie">
@@ -82,7 +83,7 @@ export default function Realisatie({ r, knop }: { r: RealisatieInhoud; knop: Rea
             </div>
           </div>
           <div className="bf-real__info">
-            <h3 className="bf-real__project">{r.project}</h3>
+            <h2 className="bf-real__project" id="realisaties-kop">{r.project}</h2>
             <p className="bf-real__werkenkop">{r.werkenKop}</p>
             <ul className="bf-real__werken">
               {r.werken.map((w) => <li key={w}><span className="bf-real__vink" aria-hidden="true"><Check /></span>{w}</li>)}

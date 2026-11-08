@@ -89,7 +89,7 @@ export type Zekerheid = { icoon: 'prijs' | 'aanspreek' | 'schild' | 'kalender' |
 /** Realisatie in de kijker (8 nov 2026, realisatie-hoeve.ts): één echt project van AB met een video na de werken, een foto tijdens de werken (wissel
     "Na de werken" / "Tijdens de werken"), de uitgevoerde werken, foto's en een rondgang tijdens de werken (galerij + venster). */
 export type Realisatie = {
-  kop: string; project: string; werkenKop: string; werken: string[];
+  project: string; werkenKop: string; werken: string[];
   na: { label: string; video: string; poster: string; alt: string };
   tijdens: { label: string; src: string; alt: string };
 };
@@ -684,7 +684,7 @@ export const DAKWERKEN: KgjInhoud = {
         foto: { src: stockDienstIsolatie, alt: 'Zolder met isolatie met alufolie tegen de houten kepers en een dakraam' },
         meer: ['Verlaag uw energiefactuur direct. Wij isoleren uw dak volgens de huidige normen voor een optimaal wooncomfort, inclusief alle nodige attesten voor uw Mijn VerbouwPremie.'] },
       { id: 'herstelling', icoon: 'dienst-herstel', naam: 'Dakherstelling', tekst: 'Wij herstellen een lek of schade aan uw hellend of plat dak.',
-        foto: { src: stockDienstHerstelling, alt: 'Dak in natuurleien met sneeuwvanger, zinken goot en regenpijp' },
+        foto: { src: stockDienstHerstelling, alt: 'Pannendak met oranje dakpannen naast een gemetselde trapgevel, met ventilatiekapjes op de nok' },
         meer: ['Ziet u een vochtplek op het plafond, of ligt er na een storm een pan verschoven? Dan zoeken we eerst waar het water echt binnenkomt, want dat is vaak een eind verwijderd van de vlek. Zo herstellen we de oorzaak, en blijft uw plafond voortaan droog.'] },
     ],
   },

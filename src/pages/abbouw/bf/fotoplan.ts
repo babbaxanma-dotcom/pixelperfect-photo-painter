@@ -27,8 +27,10 @@
  *    zolder met isolatie met alufolie tegen de kepers en een dakraam. 8 nov, Mohammed: "Die foto van isolatie past er nog niet bij, toch?
  *    Dus zoek een betere" (de vorige, Pexels 8082324, was een lege afgewerkte zolder zonder zichtbare isolatie). Gezocht in zijn Chrome
  *    (Unsplash weigert automatische verzoeken), beeld van de Unsplash-CDN.
- *  - stock-dienst-herstelling  · https://www.pexels.com/photo/charming-european-house-with-slate-roof-and-flowers-33843410/ · Arlind D ·
- *    uitsnede 2400x1800 vanaf (0, 450) uit 2400x3600: natuurleien, sneeuwvanger, zinken goot en regenpijp.
+ *  - stock-dienst-herstelling  · https://unsplash.com/photos/the-roof-of-a-building-with-two-chimneys-C1irxCVpuKI · rainathan ·
+ *    Unsplash-licentie ("Free to use under the Unsplash License", gelezen 8 nov) · uitsnede 2400x1800 vanaf (0, 1250) uit 2400x3200:
+ *    oranje pannendak met gemetselde trapgevel. 8 nov, Mohammed: "Doe een nieuwe foto voor dakherstelling, gewoon een normale" (de vorige,
+ *    Pexels 33843410, natuurleien met zinken goot).
  *  Eerste ronde (8 nov, afgekeurd: niet Belgisch genoeg): Pexels 29114658, 31771165, 6124239 (roze glaswol), 17490213 (bemoste bevertjes).
  * NIET MEER GEBRUIKT (13 okt 2026, keuring): stock-schouw-herstel (1V_WuotjRfI, een dakwerker bij de schouw) stond in
  * het traject recht boven stap 1 "We klimmen op het dak" en liet een bezoeker die man lezen als een dakwerker van AB;
