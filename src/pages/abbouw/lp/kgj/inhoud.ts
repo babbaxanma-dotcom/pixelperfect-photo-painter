@@ -857,7 +857,7 @@ export const DAKWERKEN: KgjInhoud = {
        DE BESTE is", "doe goede research op alles". Onderzoek 23 okt (54 sites letterlijk gelezen + A/B-tests): de infinitief "aanvragen"
        zoals de Vlaamse bouwbedrijven (18 van 43; Dakrubbercentrale exact zo), het werkwoord is wat er echt gebeurt (aanvragen, daarna belt
        AB), "gratis" erin. "Bevestig" en "Plan" beloven een vast moment (0 van 54 sites met "Bevestig"); "Vraag mijn ... aan" mengt twee
-       stemmen (0 van 46 Belgische sites). Ook de knop in het waarom-blok en de vaste knop (LpBf) dragen deze tekst. */
+       stemmen (0 van 46 Belgische sites). Ook de knop in het waarom-blok draagt deze tekst (de vaste knop onderaan is weg sinds 8 nov 2026). */
     /* 2 nov 2026: dictaat Mohammed 31 okt voor bfbouw.be, knoppen "Gratis en vrijblijvende offerte aanvragen" ("anders is het veel te
        veel gratis offerte"); de infinitief "aanvragen" van het onderzoek van 23 okt blijft. */
     /* 5 nov 2026, zoals bfbouw.be LP.kaart.knop: "Gratis offerte aanvragen" (Mohammed daar: herhaling van gratis en vrijblijvend wekt

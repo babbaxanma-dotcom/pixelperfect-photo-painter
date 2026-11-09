@@ -122,13 +122,7 @@ export function useAanvraagStaat(begin: () => AanvraagStand): GedeeldeAanvraag {
   return useContext(Gedeeld) ?? eigen;
 }
 
-/** Voor de vaste knop op de gsm (LpBf): waar de bezoeker staat, of null zonder AanvraagStaat. */
-export function useAanvraagVoortgang(): { stap: number; aangetikt: boolean; verstuurd: boolean; antwoorden: Record<string, string>; overslaan?: string[] } | null {
-  const g = useContext(Gedeeld);
-  if (!g) return null;
-  return { stap: g.stand.stap, aangetikt: g.stand.aangetikt, verstuurd: g.stand.bezig || g.stand.vraagToestemming, antwoorden: g.stand.antwoorden, overslaan: g.stand.overslaan };
-}
-/** Telt deze vraag in deze stand? vraagTelt + de vragen die de pagina vooraf beantwoordde (overslaan). Eén regel voor beide kaarten en de vaste knop. */
+/** Telt deze vraag in deze stand? vraagTelt + de vragen die de pagina vooraf beantwoordde (overslaan). Eén regel voor beide kaarten. */
 export function telt(v: Parameters<typeof vraagTelt>[0], s: { antwoorden: Record<string, string>; overslaan?: string[] }): boolean {
   return vraagTelt(v, s.antwoorden) && !s.overslaan?.includes(v.sleutel);
 }

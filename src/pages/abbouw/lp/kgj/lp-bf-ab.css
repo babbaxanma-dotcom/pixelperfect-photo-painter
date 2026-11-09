@@ -41,7 +41,7 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
   .bf.bf-lp:has(> .bf-kop--topbalk) .bf-lphero__in { padding-top: 136px; }
   /* Gsm (<= 1000): alleen de topbalk blijft vast, de logorij scrolt mee weg (live LpKgj extra.ts r.1049-1055, correctie
      Mohammed 6 okt). Vast bleef 112 px staan: topbalk + een witte logorij met rechts niets (de aanvraagknop is op gsm
-     verborgen, r.24; CTA en belknop staan in bf-lpsticky en bf-belzweef). Specificiteit 0,3,0 wint van
+     verborgen, r.24; de belknop staat in bf-belzweef, de vaste CTA bf-lpsticky is weg sinds 8 nov 2026). Specificiteit 0,3,0 wint van
      '.bf .bf-kop--over { position: fixed }' (0,2,0, bf.css L451) zonder !important. De kop blijft kgj-kop dragen. */
   .bf.bf-lp > .bf-kop--topbalk { position: absolute; top: 0; left: 0; right: 0; }
   .bf.bf-lp .bf-kop--topbalk .bf-lptopbalk { position: fixed; top: 0; left: 0; right: 0; z-index: 60; }
@@ -417,12 +417,9 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
   .bf.bf-lp .kgj-reken__rij--extra { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* ---------- gsm: vaste knop + belknop (BF lpsticky + belzweef), zichtbaar samen ---------- */
-.bf.bf-lp .bf-lpsticky { border: 0; font-family: inherit; cursor: pointer; }
-.bf.bf-lp .bf-lpsticky svg { flex: none; }
+/* ---------- gsm: belknop (BF belzweef). De vaste knop naar het formulier (lpsticky) is weg sinds 8 nov 2026 (LpBf.tsx). ---------- */
 @media (max-width: 1000px) {
-  .bf.bf-lp .bf-lpsticky:not(.bf-is-zichtbaar), .bf.bf-lp .bf-belzweef:not(.bf-is-zichtbaar) { visibility: hidden; transition: opacity .25s ease, transform .25s ease, visibility 0s linear .25s; }
-  .bf.bf-lp .bf-lpsticky svg:first-child:not(:last-child) { width: 20px; height: 20px; }
+  .bf.bf-lp .bf-belzweef:not(.bf-is-zichtbaar) { visibility: hidden; transition: opacity .25s ease, transform .25s ease, visibility 0s linear .25s; }
 }
 
 /* ---------- voet: de inhoud van live (LpKgj r.785-809) in de BF-opmaak ----------
@@ -996,10 +993,6 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
   .bf.bf-lp .kgj-reken__knopzeker + .kgj-reken__gerust { margin-top: 6px; }
 }
 
-/* ---------- vaste knop op de gsm: onder de knoptekst de stap waar de bezoeker is, zolang zijn aanvraag niet af is ---------- */
-.bf.bf-lp .bf-lpsticky__tekst { display: inline-flex; flex-direction: column; align-items: center; line-height: 1.15; }
-.bf.bf-lp .bf-lpsticky__stap { margin-top: 3px; font-size: 13px; font-weight: 600; letter-spacing: .01em; }
-
 /* ---------- afvinkvraag in de aanvraagkaart op de gsm: "Volgende" op een iPhone-scherm (390 x 664 zichtbaar) ----------
    Gemeten 23 okt: de vraag was 593 px hoog en "Volgende" viel onder het scherm (onderkant 719 px van 664); "Gevel" stond alleen op
    een rij (7 px te breed). Smallere binnenrand van de keuzes (14 -> 12 px) zet Elektriciteit, Dak en Gevel op één rij; iets minder
@@ -1334,6 +1327,14 @@ body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { flex: 1; padding: 8px 1
 @keyframes kgj-vol { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 html.is-formvol, html.is-formvol body { overflow: hidden; }
 html.is-formvol .bf.bf-lp .bf-lphero__in, html.is-formvol .bf.bf-lp .bf-lpinsp__in { z-index: 1000; }
+/* 9 nov 2026, Mohammed (iPhone): "stap 7 is nogsteeds kapot op abgroep". Zelfde oorzaak als bfbouw.be 8 nov (memory
+   reference_ios_vast_scherm_afgeknipt): Safari op iOS knipt de vaste kaart af op de rand van section.bf-lphero / section.bf-lpinsp
+   (overflow: hidden); buiten die rand bleef het scherm wit. Chrome toont het goed. bfbouw.be zet de kaart dan in <body>; hier hangt alle
+   opmaak aan .bf.bf-lp, dus blijft de kaart staan en knipt geen enkele voorouder af zolang het volle scherm (gsm) open is. Op de gsm dekt
+   de kaart het hele scherm, de pagina erachter is niet te zien. Guard: check-lp-aanvraag punt 14 (voorouders van het volle scherm). */
+@media (max-width: 1000px) {
+  html.is-formvol .bf.bf-lp :has(.kgj-reken--aanvraag.is-vol) { overflow: visible !important; transform: none !important; filter: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; contain: none !important; clip-path: none !important; -webkit-mask-image: none !important; mask-image: none !important; perspective: none !important; will-change: auto !important; }
+}
 .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol :is(.kgj-reken__weg, .kgj-reken__hoofd, .kgj-reken__vertrouwen, .kgj-reken__trigger) { display: none; }
 .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__kop { position: sticky; top: 0; z-index: 3; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; min-height: 0; margin: 0 -16px; padding: 6px 12px 6px 16px; background: #fff; }
 .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__tel { grid-column: 2; grid-row: 1; }
@@ -1364,14 +1365,16 @@ html.is-formvol .bf.bf-lp .bf-lphero__in, html.is-formvol .bf.bf-lp .bf-lpinsp__
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__volgt-lijst li b { font-size: 15px; margin-bottom: 1px; padding-top: 3px; }
 }
 @media (min-width: 1001px) {
-  /* Pc: groot venster in het midden (max 880 px), links uw aanvraag en "Na uw aanvraag", rechts de velden en de verzendknop, trust
-     badges in de kopband; op 1265x585 en 1440x800 alles in één scherm. */
+  /* Pc: groot venster in het midden (max 880 px), links "Na uw aanvraag", rechts uw aanvraag, de velden en de verzendknop, trust
+     badges in de kopband; op 1265x585 en 1440x800 alles in één scherm.
+     9 nov 2026: "Uw aanvraag" van links naar rechts boven de velden. Met de drie stappen van 7 nov was de linkerkolom te hoog: op
+     1265x585 viel de privacyregel onder het venster (check:contact: 562 > 537 px op dak, 580 > 537 op renovatie). */
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol { position: fixed; inset: 0; z-index: 1000; margin: auto; width: min(880px, calc(100vw - 48px)); max-width: none; height: -webkit-fit-content; height: fit-content; max-height: calc(100vh - 48px); max-height: calc(100dvh - 48px); overflow-y: auto; overscroll-behavior: contain; padding: 0 32px 22px; border: 0; border-radius: 18px; box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .55); animation: kgj-vol .3s cubic-bezier(.2, .7, .2, 1) both; scroll-padding-top: 72px; scroll-padding-bottom: 96px; }
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol.is-laden { min-height: min(440px, calc(100dvh - 48px)); }
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__laad { width: -webkit-fit-content; width: fit-content; margin: 84px auto 0; }
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__kop { margin: 0 -32px; padding: 10px 20px 10px 32px; }
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 32px; align-items: start;
-    grid-template-areas: "intro intro" "samen velden" "volgt velden" "volgt knop" "volgt melding"; }
+    grid-template-areas: "intro intro" "volgt samen" "volgt velden" "volgt knop" "volgt melding"; }
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__band { grid-area: intro; margin: 0 -32px 20px; padding: 16px 32px 18px; }
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__samen { grid-area: samen; margin: 0 0 14px; }
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__volgt { grid-area: volgt; margin: 0; }
@@ -1460,15 +1463,19 @@ html.is-formvol .bf.bf-lp .bf-lphero__in, html.is-formvol .bf.bf-lp .bf-lpinsp__
   .bf.bf-lp .bf-zeker--loop .bf-zeker__rij { flex-wrap: wrap; justify-content: center; width: 100%; }
 }
 
-/* Focusstand (bfbouw.be rk__sluier, --rk-sluier-*): gsm wit (dekking 1), pc #111113 (dekking .6). De ouder (hero of slotblok) komt boven de kopbalk. */
+/* Focusstand (bfbouw.be rk__sluier, --rk-sluier-*): gsm wazig (sinds 9 nov, was wit), pc #111113 (dekking .6). De ouder (hero of slotblok) komt boven de kopbalk. */
 .bf.bf-lp .kgj-reken__sluier { position: fixed; top: -25vh; right: 0; bottom: -25vh; left: 0; z-index: 1; background: #111113; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .2s ease, visibility 0s linear .2s; }
 .bf.bf-lp .kgj-reken__sluier.is-aan { opacity: .6; visibility: visible; pointer-events: auto; transition: opacity .2s ease, visibility 0s; }
 .bf.bf-lp .bf-lphero__in.is-rkfocus, .bf.bf-lp .bf-lpinsp__in.is-rkfocus { position: relative; z-index: 1000; }
 .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-focus { position: relative; z-index: 2; box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 40px 100px -24px rgba(0, 0, 0, .7); }
 @media (max-width: 1000px) {
-  .bf.bf-lp .kgj-reken__sluier { background: #fff; }
+  /* 9 nov 2026, Mohammed (abgroep, gsm): "als je klikt op dakrenovatie bij wat houd het in ... dan is het bij abgroep zo vak met volledig wit
+     er rond", "ipv die nieuwe stijl dat we deden": zoals bfbouw.be 8 nov ("doe gewoon dat het form op dezelfde plek blijft maar dat de rest
+     wazig wordt"): de rest wazig (backdrop-filter 10px) met een lichte donkere waas, de kaart scherp en op haar plek. Dekking 1 en de waas in
+     de kleur: opacity zou ook de vervaging laten vervagen. */
+  .bf.bf-lp .kgj-reken__sluier { background: rgba(17, 17, 19, .3); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
   .bf.bf-lp .kgj-reken__sluier.is-aan { opacity: 1; }
-  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-focus { box-shadow: 0 0 0 1px #e4e4e8, 0 16px 40px -22px rgba(17, 17, 19, .35); }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-focus { box-shadow: 0 0 0 1px rgba(255, 255, 255, .16), 0 24px 60px -20px rgba(0, 0, 0, .55); }
 }
 @media (prefers-reduced-motion: reduce) { .bf.bf-lp .kgj-reken__sluier, .bf.bf-lp .kgj-reken__sluier.is-aan { transition: none; } }
 

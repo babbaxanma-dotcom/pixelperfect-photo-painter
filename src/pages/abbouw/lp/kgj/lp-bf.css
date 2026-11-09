@@ -373,14 +373,7 @@
 .bf.bf-lp .bf-lpinsp__laag { background: linear-gradient(90deg, rgba(10, 10, 10, .82) 0%, rgba(10, 10, 10, .62) 48%, rgba(10, 10, 10, .3) 100%); }
 /* L1733 */
 @media (max-width: 1000px) { .bf.bf-lp .bf-lpinsp__laag { background: linear-gradient(180deg, rgba(10, 10, 10, .78) 0%, rgba(10, 10, 10, .6) 45%, rgba(10, 10, 10, .45) 100%); } }
-/* L1736 */
-.bf.bf-lp .bf-lpsticky { display: none; }
-/* L1737 */
-@media (max-width: 1000px) {
-  .bf.bf-lp .bf-lpsticky { display: flex; align-items: center; justify-content: center; gap: 8px; position: fixed; left: 16px; right: 86px; bottom: 16px; z-index: 40; height: 58px; border-radius: 999px; background: var(--merk); color: var(--op-merk); font-size: 16px; font-weight: 700; box-shadow: 0 12px 28px -10px rgba(17, 17, 17, .5); opacity: 0; transform: translateY(16px); pointer-events: none; transition: opacity .25s ease, transform .25s ease; }
-  .bf.bf-lp .bf-lpsticky svg { width: 16px; height: 16px; }
-  .bf.bf-lp .bf-lpsticky.bf-is-zichtbaar { opacity: 1; transform: none; pointer-events: auto; }
-}
+/* L1736-L1741 (lpsticky): weg sinds 8 nov 2026, Mohammed: "bij ab die statische offerte aanvragen onderaan ook weg aub". */
 /* L1742 */
 .bf.bf-lp .bf-lpcta { margin-top: calc(40 * var(--u)); text-align: center; }
 /* L1743 */

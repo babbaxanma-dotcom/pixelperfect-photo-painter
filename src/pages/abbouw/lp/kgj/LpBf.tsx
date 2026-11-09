@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { CONTACT } from '@/data/contact';
 import Rekenaar from './Rekenaar';
 import Aanvraag, { badgeIcoon, eigenScroll } from './Aanvraag';
-import { AanvraagStaat, beginStand, telt, useAanvraagVoortgang, useGedeeldeAanvraag } from './AanvraagStaat';
+import { AanvraagStaat, beginStand, telt, useGedeeldeAanvraag } from './AanvraagStaat';
 import Inspectie from './Inspectie';
 import Werkspoor from './Werkspoor';
 import Realisatie from './Realisatie';
@@ -252,9 +252,8 @@ function naarUitleg(e: React.SyntheticEvent<HTMLDetailsElement>) {
   if (!info.open) return;
   const stil = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   requestAnimationFrame(() => {
-    const st = document.querySelector<HTMLElement>('.bf-lpsticky.bf-is-zichtbaar');
-    const sr = st?.getBoundingClientRect();
-    const balk = sr && sr.height > 0 && sr.top < window.innerHeight ? sr.top : window.innerHeight;
+    /* 8 nov 2026: de vaste knop onderaan is weg, de onderrand is de onderkant van het scherm. */
+    const balk = window.innerHeight;
     const r = info.getBoundingClientRect();
     const boven = Math.max(0, document.querySelector('.kgj-kop')?.getBoundingClientRect().bottom ?? 0) + 12;
     let dy = 0;
@@ -262,29 +261,6 @@ function naarUitleg(e: React.SyntheticEvent<HTMLDetailsElement>) {
     if (r.top - dy < boven) dy = r.top - boven;
     if (Math.abs(dy) > 4) window.scrollBy({ top: dy, behavior: stil ? 'auto' : 'smooth' });
   });
-}
-
-/* De vaste knop onderaan de telefoon (BF lpsticky). Is de bezoeker aan de aanvraag begonnen en nog niet klaar, dan zegt de knop
-   "Verder met uw aanvraag" met daaronder waar hij is ("Stap 3 van 6", zoals in de kaart): een onafgemaakte aanvraag blijft in beeld
-   terwijl hij verder leest (23 okt 2026, Mohammed: "algemene psychologie cro optimalisatie toepassen", "optimalisatie van de knoppen").
-   "Verder met ..." zoals de winnaar van de Nederlandstalige test van Lucardi ("Verder met bestellen", +7,3%); een kaal "Ga verder"
-   verloor in de enige test met cijfers (Insound). */
-function VasteKnop({ tekst, zichtbaar, vragen, onClick }: { tekst: string; zichtbaar: boolean; vragen?: NonNullable<KgjInhoud['aanvraag']>['vragen']; onClick: () => void }) {
-  const voortgang = useAanvraagVoortgang();
-  /* Zelfde telling als de kaart (Aanvraag.tsx): een vraag met nietAls valt weg na dat antwoord (Isolatie bij stap 2), + de contactstap. */
-  /* 5 nov 2026: ook een vraag met `als` (Nieuw dak) telt pas na dat antwoord (vraagTelt, zelfde regel als de kaart). */
-  const totaal = vragen ? vragen.filter((v) => telt(v, { antwoorden: voortgang?.antwoorden ?? {}, overslaan: voortgang?.overslaan })).length + 1 : 0;
-  const bezig = !!voortgang && totaal > 1 && voortgang.aangetikt && voortgang.stap > 0 && !voortgang.verstuurd;
-  return (
-    <button type="button" className={`bf-lpsticky${zichtbaar ? ' bf-is-zichtbaar' : ''}${bezig ? ' bf-lpsticky--bezig' : ''}`} onClick={onClick} tabIndex={zichtbaar ? 0 : -1} aria-hidden={!zichtbaar}>
-      <span className="bf-lpsticky__tekst">
-        {bezig ? 'Verder met uw aanvraag' : tekst}
-        {/* 7 nov 2026: "Stap N" zoals in de kaart (bfbouw.be: "DOE ipv stap 1 VAN 7 gewoon stap 1"). */}
-        {bezig && <>{' '}<span className="bf-lpsticky__stap">Stap {Math.min(voortgang.stap, totaal - 1) + 1}</span></>}
-      </span>
-      <IcPijl />
-    </button>
-  );
 }
 
 /* Google-badge (spec §1: "5,0 op Google" + 5 sterren MAG, aantal reviews NOOIT). */
@@ -1024,12 +1000,9 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         </section>
       </main>
 
-      {/* Telefoon: vaste knop naar het formulier + belknop (BF lpsticky + belzweef), met de logica van de
-          actiebalk van LpKgj (r.753-780): zichtbaar zolang geen rekenaar, formulier of heroknop in beeld staat. */}
-      {/* 23 okt 2026 (knoppenonderzoek, zie inhoud.inspectie.knop): op de aanvraagpagina's dezelfde tekst als de verzendknop, met werkwoord;
-          cta.naam blijft de naam van de aanvraag in het CRM ("Aanvraag gratis plaatsbezoek"). */}
-      <VasteKnop tekst={heroAanvraag ? naarKnop : (inhoud.cta.naam ?? inhoud.cta.kop)} zichtbaar={balk} onClick={naarFormulier}
-        vragen={heroAanvraag ? inhoud.aanvraag?.vragen : undefined} />
+      {/* Telefoon: de ronde belknop (BF belzweef), met de logica van de actiebalk van LpKgj (r.753-780): zichtbaar zolang geen
+          rekenaar, formulier of heroknop in beeld staat. 8 nov 2026, Mohammed: "bij ab die statische offerte aanvragen onderaan ook
+          weg aub" (zoals bfbouw.be die dag): de vaste knop naar het formulier (BF lpsticky) staat niet meer op de pagina. */}
       <a className={`bf-belzweef${balk ? ' bf-is-zichtbaar' : ''}`} href={CONTACT.phone.href} aria-label={'Bel ' + CONTACT.phone.display} tabIndex={balk ? 0 : -1} aria-hidden={!balk}><IcTel /></a>
 
 

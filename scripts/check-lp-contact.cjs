@@ -7,7 +7,7 @@
  * bfbouw.be van 4-5 nov (cad4e57, d6cfa42, e216830, 91ab7ba, 5638c50). Per pagina, zoals een bezoeker:
  *   1. na het laatste antwoord 1,2 s de laadstap ("Uw aanvraag wordt klaargezet"), daarna het contactscherm; nooit beide tegelijk;
  *   2. 390x664: het contactscherm vult het hele scherm, de verzendknop staat in beeld, de sluitknop rechtsboven is 44x44,
- *      "Na uw aanvraag" staat boven de velden, de regel boven de knop niet over het volle scherm;
+ *      de velden eerst en "Na uw aanvraag" onder de verzendknop (8 nov 2026), de regel boven de knop niet over het volle scherm;
  *   3. op het contactscherm staat "gratis" precies 3x (verzendknop + stap 2 "Gratis plaatsbezoek", 7 nov 2026) en "vrijblijvend" precies 2x;
  *   4. sluiten = terug in de pagina, contactscherm en antwoorden blijven staan; geen horizontale scroll;
  *   5. versturen: leeg verstuurt niets; daarna (dubbelklik) precies 1 GHL- en 1 Web3Forms-verzoek, precies 1 conversie,
@@ -16,12 +16,15 @@
  *      niet alsnog en de bezoeker blijft op de pagina;
  *   7. 1265x585 en 1440x800: het venster staat in het midden (max 880 px), alles zichtbaar zonder scrollen, gratis 1x en
  *      vrijblijvend 1x, Esc en een klik naast het venster sluiten (contactscherm blijft).
+ *   9. focusstand op de gsm (9 nov 2026): na een tik op "Ik ben op zoek naar" of vraag 1 een wazige sluier (niet wit, dekking 1),
+ *      de kaart scherp en in de pagina in beeld.
  * Niets gaat naar buiten: GHL en Web3Forms krijgen een leeg antwoord en worden geteld, Clarity en Google-tags een leeg script,
  * tel: en mailto: worden afgebroken.
  *
  * Positieve controles (zonder: exit 2), elk op /lp/dakwerken @390: laadstap op 0 ms moet punt 1 laten falen; de kaart in de pagina
  * (__abVolUit) punt 2; een geplant woord "gratis" in het contactscherm punt 3; een verzendknop die niet vast onderaan staat
- * (geplante CSS) punt 2.
+ * (geplante CSS) punt 2; "Na uw aanvraag" boven de velden (geplante CSS) punt 2; een open eerste vraag punt 8; een witte sluier
+ * zonder vervaging (geplante CSS) punt 9.
  *
  * Draaien:  node scripts/check-lp-contact.cjs                         (start zelf een vite dev-server)
  *           LP_BASIS=http://127.0.0.1:4612 node scripts/check-lp-contact.cjs
@@ -146,7 +149,8 @@ async function gsmFlow(br, basis, pad, plant = {}, alleenTot = null) {
     if (!(c.vol && c.html && c.kaart.top === 0 && c.kaart.left === 0 && c.kaart.w === 390 && c.kaart.h === 664)) uit.push(`2. contactscherm niet over het volle scherm ${JSON.stringify(c.kaart)} (is-vol ${c.vol})`);
     if (!(c.knop && c.knop.top >= 0 && c.knop.bottom <= 664)) uit.push(`2. verzendknop niet in beeld ${JSON.stringify(c.knop)}`);
     if (!(c.sluit && c.sluit.zicht && c.sluit.w === 44 && c.sluit.h === 44 && c.sluit.right >= 370 && c.sluit.top < 60)) uit.push(`2. sluitknop ${JSON.stringify(c.sluit)} (verwacht 44x44 rechtsboven)`);
-    if (!(c.volgt && c.naam && c.volgt.bottom <= c.naam.top)) uit.push('2. "Na uw aanvraag" staat niet boven de velden');
+    /* 8 nov 2026 (23035de, zoals bfbouw.be): over het volle scherm de velden eerst, "Na uw aanvraag" onder de verzendknop. */
+    if (!(c.volgt && c.naam && c.knop && c.naam.bottom <= c.knop.top && c.volgt.top >= c.knop.bottom)) uit.push(`2. velden niet eerst: naam ${JSON.stringify(c.naam)}, verzendknop ${JSON.stringify(c.knop)}, "Na uw aanvraag" ${JSON.stringify(c.volgt)} (verwacht naam boven de knop, "Na uw aanvraag" eronder)`);
     if (c.trigger && c.trigger.zicht) uit.push('2. de regel boven de knop staat ook over het volle scherm');
     if (c.gratis !== 3) uit.push(`3. "gratis" ${c.gratis}x op het contactscherm (verwacht 3x: de verzendknop + stap 2 "Gratis plaatsbezoek", 7 nov 2026)`);
     /* 7 nov 2026 (bfbouw.be "oke doe maar die 3 stappen"): stap 2 "Gratis plaatsbezoek / ... gratis en vrijblijvend." + stap 3 "Volledig vrijblijvend." */
@@ -237,6 +241,46 @@ async function pcFlow(br, basis, pad, w, h) {
   } finally { await ctx.close(); }
 }
 
+/* Punt 9 (9 nov 2026, Mohammed, gsm: "als je klikt op dakrenovatie bij wat houd het in ... dan is het bij abgroep zo vak met volledig wit
+   er rond", "ipv die nieuwe stijl dat we deden"; zoals bfbouw.be 8 nov: "dat het form op dezelfde plek blijft maar dat de rest wazig wordt").
+   Een tik op een knop "Ik ben op zoek naar" (dak) of op vraag 1 in de kaart (renovatie): de sluier staat aan, is wazig (backdrop-filter blur),
+   niet wit en volledig zichtbaar (dekking 1, de waas zit in de kleur); de kaart staat scherp in beeld, in de pagina (geen volle scherm). */
+async function focusFlow(br, basis, pad, css = null) {
+  const { ctx, p } = await open(br, basis, 390, 664, pad, css ? { css } : {});
+  try {
+    const hoe = await p.evaluate((w) => {
+      const z = [...document.querySelectorAll('.bf-lpzoek__knop')].find((b) => /dakrenovatie/i.test(b.textContent)) || document.querySelector('.bf-lpzoek__knop');
+      if (z) { z.scrollIntoView({ block: 'center' }); z.click(); return 'knop ' + z.textContent.replace(/\s+/g, ' ').trim(); }
+      const k = document.querySelector(w + ' .kgj-reken__keuze');
+      if (!k) return null;
+      k.click(); return 'vraag 1 ' + k.textContent.replace(/\s+/g, ' ').trim();
+    }, HERO);
+    if (!hoe) return ['9. geen knop "Ik ben op zoek naar" en geen keuze in de kaart'];
+    await wacht(1400);
+    const m = await p.evaluate(() => {
+      const s = document.querySelector('.kgj-reken__sluier.is-aan');
+      const k = document.querySelector('.kgj-reken.is-focus');
+      if (!s || !k) return { s: !!s, k: !!k };
+      const cs = getComputedStyle(s);
+      const bf = [cs.backdropFilter, cs.webkitBackdropFilter].filter((x) => x && x !== 'none').join(' ');
+      const kl = (cs.backgroundColor.match(/[\d.]+/g) || []).map(Number);
+      const r = k.getBoundingClientRect();
+      /* in beeld zoals de focusstand het zelf meet (Aanvraag.tsx FOCUS_UIT_DEEL): minstens de helft van de kaart, afgetopt op de schermhoogte;
+         de knoppen "Ik ben op zoek naar" zetten de vraag bovenaan, de kaartkop mag erboven vallen */
+      const zicht = Math.min(r.bottom, innerHeight) - Math.max(r.top, 0);
+      return { s: true, k: true, bf, kleur: cs.backgroundColor, wit: kl.length >= 3 && kl[0] > 240 && kl[1] > 240 && kl[2] > 240 && (kl[3] ?? 1) > 0.5, dekking: cs.opacity, vol: k.classList.contains('is-vol'),
+        top: Math.round(r.top), zicht: Math.round(zicht), nodig: Math.round(0.5 * Math.min(r.height, innerHeight)), vh: innerHeight };
+    });
+    const uit = [];
+    if (!m.s || !m.k) return [`9. na een tik (${hoe}) geen focusstand (sluier ${m.s}, kaart ${m.k})`];
+    if (!/blur\(/.test(m.bf)) uit.push(`9. de sluier is niet wazig (backdrop-filter "${m.bf || 'none'}") na een tik (${hoe})`);
+    if (m.wit) uit.push(`9. de sluier is wit (${m.kleur}) na een tik (${hoe})`);
+    if (m.dekking !== '1') uit.push(`9. dekking van de sluier ${m.dekking} (verwacht 1: anders vervaagt ook de vervaging)`);
+    if (m.vol || m.zicht < m.nodig) uit.push(`9. de kaart staat niet in de pagina in beeld (vol ${m.vol}, ${m.zicht} px in beeld, nodig ${m.nodig}; top ${m.top} van ${m.vh})`);
+    return uit;
+  } finally { await ctx.close(); }
+}
+
 /* Punt 8 (dakpagina's, bfbouw.be 5638c50/8343954): "Veelgestelde vragen" direct onder "De voordelen van een dakrenovatie", de drie
    vragen in die volgorde, de eerste open, de klikbare zin "Vraag dan een gratis offerte aan." brengt de kaart onderaan in beeld. */
 /* 7 nov 2026, zoals bfbouw.be (Dakwerken Smet, Dakinvest): vijf vragen */
@@ -295,7 +339,10 @@ async function faqFlow(br, basis, pad, w, h, plant = null) {
       ['laadstap op 0 ms', { laadMs: 0 }, /^1\. laadstap/],
       ['kaart in de pagina (geen volle scherm)', { volUit: true }, /^2\. contactscherm niet over het volle scherm/],
       ['een geplant woord "gratis"', { extra: true }, /^3\. "gratis"/],
-      ['verzendknop niet vast onderaan', { css: '.kgj-reken.is-vol .kgj-reken__contact > .kgj-reken__knop{position:static!important}' }, /^2\. verzendknop niet in beeld/],
+      /* 8 nov 2026: met de velden eerst staat een losse knop nog in beeld; de plant zet er een schermhoogte ruimte boven (een vaste knop
+         blijft dan onderaan staan, een losse zakt eruit). */
+      ['verzendknop niet vast onderaan', { css: '.kgj-reken.is-vol .kgj-reken__contact > .kgj-reken__knop{position:static!important;margin-top:700px!important}' }, /^2\. verzendknop niet in beeld/],
+      ['"Na uw aanvraag" boven de velden', { css: '.kgj-reken.is-vol .kgj-reken__contact > .kgj-reken__volgt{order:-1!important}' }, /^2\. velden niet eerst/],
     ];
     for (const [naam, plant, verwacht] of controles) {
       let r;
@@ -313,14 +360,23 @@ async function faqFlow(br, basis, pad, w, h, plant = null) {
       else console.log(`positieve controle: ${naam}: gevangen`);
     }
     {
+      /* 9 nov 2026: de witte sluier van vóór vandaag moet rood geven */
+      const r = await focusFlow(br, basis, '/lp/dakwerken', '.bf.bf-lp .kgj-reken__sluier{background:#fff!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}');
+      if (!r.some((x) => /^9\. de sluier is (niet wazig|wit)/.test(x))) { console.log(`ONGELDIGE METING: positieve controle "witte sluier" niet gevangen (${r.join(' | ') || 'geen fout'})`); code = 2; }
+      else console.log(`positieve controle: witte sluier: gevangen (${r.join('; ')})`);
+    }
+    {
       const r = await faqFlow(br, basis, '/lp/dakwerken', 390, 664, 'open');
       if (!r.some((x) => /^8\. open\/dicht/.test(x))) { console.log(`ONGELDIGE METING: positieve controle "eerste vraag open" niet gevangen (${r.join(' | ') || 'geen fout'})`); code = 2; }
       else console.log('positieve controle: eerste vraag open: gevangen');
     }
-    if (code === 2) return;
+    /* 8 nov 2026: hier stond `return`. Een return in de try slaat de regels ná de try over, ook process.exit(2): een ongeldige meting
+       gaf exit 0 en verify liep groen door (gezien op 23035de). Een throw komt in de catch, die code 2 zet; daarna exit 2. */
+    if (code === 2) throw new Error('positieve controle niet gevangen (zie hierboven)');
 
     for (const pad of ['/lp/dakwerken', '/lp/dakwerken/asbest']) for (const [w, h] of [[390, 664], [1265, 585]]) for (const f of await faqFlow(br, basis, pad, w, h)) fouten.push(`${pad} @${w}x${h}: ${f}`);
     for (const pad of Object.keys(PADEN)) {
+      for (const f of await focusFlow(br, basis, pad)) fouten.push(`${pad} @390x664: ${f}`);
       for (const f of await gsmFlow(br, basis, pad)) fouten.push(`${pad} @390x664: ${f}`);
       for (const f of await terugFlow(br, basis, pad)) fouten.push(`${pad} @390x664: ${f}`);
       for (const [w, h] of [[1265, 585], [1440, 800]]) for (const f of await pcFlow(br, basis, pad, w, h)) fouten.push(`${pad} @${w}x${h}: ${f}`);

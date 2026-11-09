@@ -53,7 +53,9 @@
  *      op de gsm gestapeld met een knop van minstens 48 px en volle breedte; Clarity-events dak-bel-blok en
  *      dak-bel-blok-inspectie bij een klik; NIET op de renovatiepagina's en NIET op /lp/richtprijs-berekenen;
  *  11. geen horizontale scroll;
- *  12. vaste knop onderaan de gsm: een tik brengt de klikkaart onderaan in beeld (tot 22 okt 2026 deed hij niets meer).
+ *  12. geen vaste offerteknop onderaan de gsm (8 nov 2026, Mohammed: "bij ab die statische offerte aanvragen onderaan ook weg
+ *      aub"): bovenaan, halverwege en onderaan geen vast element met tekst naar het formulier in de onderste helft van het scherm;
+ *      de ronde belknop zonder tekst mag blijven.
  *  13. één stand voor de twee kaarten (23 okt 2026, Clarity /lp/totaalrenovatie 01:52: bovenaan "Rijwoning", dan "Plan uw gratis
  *      plaatsbezoek", en de kaart onderaan stond weer op vraag 1; de bezoeker vertrok). Gsm 390x637 (iPhone in Safari, gemeten in
  *      Clarity 23 okt): vraag 1 bovenaan, dan een tik op een link naar #contact: de kaart onderaan staat op vraag 2, "Stap x van y"
@@ -61,15 +63,16 @@
  *  14. contactscherm in beeld (23 okt 2026, Clarity: 6 echte bezoekers op het contactscherm, 0 verstuurd; de verzendknop stond op
  *      390x664 tot 897 px): op 390x637 staan "Bijna klaar!", Naam, Telefoonnummer, de verzendknop en de regel eronder
  *      ("5,0 op Google · Gratis en vrijblijvend", bfbouw.be rk__knopzeker) in beeld, voor de kaart bovenaan en onderaan.
- *  15. vaste knop met de stap: zolang de bezoeker niets aantikte geen stap op de knop, ook niet als de zoekterm vraag 1 al
- *      beantwoordde (dak, ?utm_term=plat dak); na twee antwoorden "Stap 3 van n".
+ *      9 nov 2026 (iPhone, "stap 7 is nogsteeds kapot op abgroep"): geen voorouder van het volle scherm met overflow, transform,
+ *      filter, backdrop-filter, contain, clip-path, perspective of mask (Safari iOS knipt daar af; Chrome niet).
+ *  15. (vaste knop met de stap) weg sinds 8 nov 2026: er is geen vaste knop meer (punt 12).
  *  16. elke stap volledig in beeld op 390x637, kaart bovenaan en onderaan: na elk antwoord de vraag onder de vaste balk en alle
  *      keuzes, Volgende of de verzendknop binnen het scherm.
  *  17. geen sprong onderaan (review 23 okt): zonder scroll anchoring (Safari) blijft "Stap x van y" van de kaart onderaan binnen
  *      40 px na een antwoord onderaan; de kaart bovenaan is dan bevroren zolang ze buiten beeld is.
  *  18. één belofte (23 okt 2026, Mohammed: "optimalisatie van de knoppen, wat de knoppen zeggen ... ga na WAT DE BESTE is"):
  *      de verzendknop is "Gratis dakinspectie aanvragen" / "Gratis plaatsbezoek aanvragen" (punt 4) en elke zichtbare knop naar het
- *      formulier draagt dezelfde tekst, ook de vaste knop zolang de bezoeker niet begon (punt 15); daarna "Verder met uw aanvraag".
+ *      formulier draagt dezelfde tekst.
  * Wat er bij een volledige aanvraag naar GHL en Web3Forms gaat (bron_lead, aanvullende_info, Toestemming, /bedankt),
  * toetst check-lp-payload veld voor veld.
  *
@@ -79,7 +82,7 @@
  * laten falen, een gewoon vinkje bij de badges de badgetoets; een geplante
  * tekst "Eerstvolgend ..." plus een geplande free-slots-aanvraag moeten punt 8 laten falen. Punt 13-17: elke bewering op een
  * eigen geplante fout (tik onderaan zonder gevolg, link vóór de tik bovenaan, keuzes onderaan 500 px lager, disclaimer met 420 px
- * marge, een stap op de vaste knop vóór de eerste tik, de stap weg na de antwoorden, keuzes 500 px lager, geen bevroren kaart).
+ * marge, keuzes 500 px lager, geen bevroren kaart). Punt 12: een geplante vaste knop "Gratis dakinspectie aanvragen" onderaan.
  * Niets gaat naar buiten: GHL en Web3Forms krijgen een leeg antwoord (en worden geteld: elke telling > 0 is een fout),
  * de free-slots-aanvraag wordt geteld en beantwoord, Clarity en Google-tags krijgen een leeg script, tel: en mailto: worden
  * afgebroken.
@@ -430,18 +433,25 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     return uit;
   };
 
-  /* 12. vaste knop onderaan de gsm (.bf-lpsticky): een tik brengt de klikkaart onderaan in beeld. Tot 22 okt 2026 zocht de knop
-     alleen het formulier van Inspectie; sinds de klikkaart onderaan deed hij niets. */
-  const stickyFout = async (p) => {
-    await p.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight * 0.45));
-    await wacht(900);
-    if (!(await p.evaluate(() => !!document.querySelector('.bf-lpsticky.bf-is-zichtbaar')))) return 'de vaste knop is halverwege de pagina niet zichtbaar';
-    await p.evaluate(() => document.querySelector('.bf-lpsticky').click());
-    await wacht(1600);
-    const r = await p.evaluate(() => { const k = document.querySelector('#contact .kgj-reken--aanvraag'); if (!k) return null; const q = k.getBoundingClientRect(); return { top: q.top, bottom: q.bottom, h: innerHeight }; });
-    if (!r) return 'geen klikkaart onderaan';
-    if (r.top > r.h * 0.5 || r.bottom < 0) return `na een tik op de vaste knop staat de kaart onderaan op ${Math.round(r.top)} px (niet in beeld)`;
-    return null;
+  /* 12. geen vaste offerteknop onderaan de gsm (8 nov 2026, Mohammed: "bij ab die statische offerte aanvragen onderaan ook weg aub",
+     zoals bfbouw.be die dag). Tot dan stond hier de vaste knop .bf-lpsticky. Gemeten zoals een bezoeker scrolt (bovenaan, halverwege,
+     onderaan): geen element met position fixed in de onderste helft van het scherm met tekst naar het formulier. Elke klassenaam telt
+     mee, zodat een vaste knop onder een andere naam ook rood wordt. De ronde belknop (bf-belzweef, zonder tekst) mag blijven. */
+  const vasteOfferteFouten = async (p) => {
+    const uit = [];
+    for (const deel of [0.15, 0.45, 0.8]) {
+      await p.evaluate((d) => window.scrollTo(0, document.documentElement.scrollHeight * d), deel);
+      await wacht(900);
+      const gezien = await p.evaluate(() => [...document.querySelectorAll('body *')].filter((el) => {
+        const cs = getComputedStyle(el);
+        if (cs.position !== 'fixed' || cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) < 0.05) return false;
+        const r = el.getBoundingClientRect();
+        if (r.width < 1 || r.height < 1 || r.bottom <= innerHeight * 0.5 || r.top >= innerHeight) return false;
+        return /offerte|aanvra|plaatsbezoek|inspectie/i.test(el.textContent);
+      }).map((el) => `${el.tagName.toLowerCase()}${el.className && typeof el.className === 'string' ? '.' + el.className.trim().split(/\s+/).join('.') : ''} "${el.textContent.replace(/\s+/g, ' ').trim().slice(0, 50)}"`));
+      for (const g of gezien) uit.push(`vaste knop onderaan op ${Math.round(deel * 100)} % van de pagina: ${g}`);
+    }
+    return uit;
   };
 
   /* 13. Eén stand voor de kaart bovenaan en onderaan (zie de kop van dit script). linkEerst = positieve controle: de link naar
@@ -504,7 +514,26 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       return { tel: k.querySelector('.kgj-reken__tel')?.textContent.trim(), vol: k.classList.contains('is-vol'), kaart: [Math.round(kr.top), Math.round(kr.height), Math.round(kr.width)],
         rij: Math.round(r('.kgj-reken__kop')?.bottom ?? 9999),
         band: Math.round(r('.kgj-reken__band')?.top ?? -1), naam: Math.round(r('input[name=naam]')?.bottom ?? 9999), gsm: Math.round(r('input[name=telefoon]')?.bottom ?? 9999),
-        knop: Math.round(r('.kgj-reken__knop')?.bottom ?? 9999), knopTop: Math.round(r('.kgj-reken__knop')?.top ?? -1), vh: innerHeight, vw: innerWidth };
+        knop: Math.round(r('.kgj-reken__knop')?.bottom ?? 9999), knopTop: Math.round(r('.kgj-reken__knop')?.top ?? -1), vh: innerHeight, vw: innerWidth,
+        /* 9 nov 2026 (iPhone, "stap 7 is nogsteeds kapot op abgroep"): Safari iOS knipt een vaste kaart af op een voorouder met overflow,
+           transform, filter enz.; Chrome niet, dus de maten hierboven zien het niet. Elke voorouder tot body telt (html en body: het
+           vastzetten van de pagina, dat knipt niet). */
+        knip: (() => {
+          const uit = [];
+          for (let e = k.parentElement; e && e !== document.body; e = e.parentElement) {
+            const cs = getComputedStyle(e);
+            const v = [
+              cs.overflowX !== 'visible' || cs.overflowY !== 'visible' ? `overflow ${cs.overflowX}/${cs.overflowY}` : '',
+              cs.transform !== 'none' ? 'transform' : '', cs.filter !== 'none' ? 'filter' : '',
+              (cs.backdropFilter && cs.backdropFilter !== 'none') || (cs.webkitBackdropFilter && cs.webkitBackdropFilter !== 'none') ? 'backdrop-filter' : '',
+              /paint|layout|strict|content/.test(cs.contain) ? 'contain ' + cs.contain : '', cs.clipPath !== 'none' ? 'clip-path' : '',
+              cs.perspective !== 'none' ? 'perspective' : '', /transform|filter|perspective/.test(cs.willChange) ? 'will-change ' + cs.willChange : '',
+              ((cs.maskImage && cs.maskImage !== 'none') || (cs.webkitMaskImage && cs.webkitMaskImage !== 'none')) ? 'mask' : '',
+            ].filter(Boolean);
+            if (v.length) uit.push(`${e.tagName.toLowerCase()}${e.id ? '#' + e.id : ''}.${String(e.className).trim().split(/\s+/)[0]} (${v.join(', ')})`);
+          }
+          return uit;
+        })() };
     }, root);
     await ctx.close();
     if (m.tel !== `Stap ${pg.stappen}`) return [`niet op de contactstap (${m.tel})`];
@@ -515,37 +544,11 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       if (onder > m.vh) uit.push(`${naam} valt onder het scherm (onderkant ${onder} van ${m.vh} px)`);
     }
     if (m.knop <= m.vh && m.naam > m.knopTop) uit.push(`het naamveld (${m.naam} px) zit achter de vaste verzendknop (vanaf ${m.knopTop} px)`);
+    if (m.vol && m.knip.length) uit.push(`een voorouder knipt het volle scherm af op de iPhone: ${m.knip.join('; ')}`);
     return uit;
   };
 
-  /* 15. Vaste knop met de stap (zie de kop van dit script). zoek = een zoekterm die vraag 1 al beantwoordt (message match): ook dan
-     geen stap op de knop zolang de bezoeker niets aantikte. plant = positieve controle: 'voor' zet een stap op de knop vóór de eerste
-     tik, 'na' haalt de stap weg na de antwoorden; de toets moet dat als fout zien. */
-  const vasteKnopStapFouten = async (pg, { zoek = '', plant = null } = {}) => {
-    const { p, ctx } = await open(pg.pad + zoek, { gsm: true });
-    const tekst = () => p.evaluate(() => document.querySelector('.bf-lpsticky')?.textContent.replace(/\s+/g, ' ').trim() ?? '');
-    const uit = [];
-    await p.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight * 0.45));
-    await wacht(900);
-    if (plant === 'voor') await p.evaluate(() => document.querySelector('.bf-lpsticky__tekst')?.append(' Stap 9'));
-    const t0 = await tekst();
-    if (!t0) uit.push('geen vaste knop');
-    if (/Stap \d/.test(t0)) uit.push(`de vaste knop toont "${t0}" voordat de bezoeker iets aantikte`);
-    const basis = t0.replace(/\s*Stap \d+$/, '');
-    if (zoek) { await ctx.close(); return uit; }
-    await p.evaluate(() => window.scrollTo(0, 0));
-    await wacht(500);
-    for (const l of pg.pad1.slice(0, 2)) if (!(await tik(p, l, HERO))) uit.push(`keuze "${l}" niet gevonden`);
-    await p.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight * 0.45));
-    await wacht(900);
-    if (plant === 'na') await p.evaluate(() => document.querySelector('.bf-lpsticky__stap')?.remove());
-    const t1 = await tekst();
-    if (basis !== pg.naarKnop) uit.push(`vaste knop "${basis}" in plaats van "${pg.naarKnop}" (de tekst van de knoppen naar het formulier)`);
-    /* 23 okt 2026: wie begon, ziet "Verder met uw aanvraag" met de stap eronder (Lucardi, "Verder met bestellen") */
-    if (t1 !== 'Verder met uw aanvraag Stap 3') uit.push(`vaste knop na twee antwoorden "${t1}" (verwacht "Verder met uw aanvraag Stap 3")`);
-    await ctx.close();
-    return uit;
-  };
+  /* 15. (vaste knop met de stap) is weg sinds 8 nov 2026: er is geen vaste knop meer (punt 12). */
 
   /* 16. Elke stap volledig in beeld op 390x637 (iPhone in Safari, Clarity 23 okt): na elk antwoord staan de vraag (onder de vaste
      balk) en alle keuzes, Volgende of de verzendknop in beeld; voor de kaart bovenaan en onderaan. */
@@ -796,18 +799,19 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       console.log(`positieve controle 9: geplante vrij-moment-regel en agenda-aanvraag gevonden (${pc9.join('; ')})`);
     }
     {
-      /* 12. vaste knop: zonder herkenbare kaart onderaan (klasse kgj-reken--onder weggehaald, zoals de oude selector die alleen
-         Inspectie zocht) moet de toets falen; met de echte pagina moet hij slagen */
-      const { p, ctx } = await open('/lp/totaalrenovatie');
-      const goed = await stickyFout(p);
+      /* 12. geen vaste offerteknop: een geplante vaste knop onder een andere klassenaam (zoals de oude lpsticky: 58 px hoog, onderaan,
+         met de knoptekst) moet de toets laten falen. */
+      const { p, ctx } = await open('/lp/dakwerken', { gsm: true });
+      await p.evaluate(() => {
+        const a = document.createElement('a');
+        a.href = '#contact'; a.className = 'geplant-vast'; a.textContent = 'Gratis dakinspectie aanvragen';
+        a.style.cssText = 'position:fixed;left:16px;right:86px;bottom:16px;height:58px;z-index:40;background:#f90;display:flex;align-items:center;justify-content:center';
+        document.body.append(a);
+      });
+      const pc12 = await vasteOfferteFouten(p);
       await ctx.close();
-      if (goed) { console.log(`ONGELDIGE METING: de vaste-knoptoets faalt al op de echte pagina (${goed})`); process.exit(2); }
-      const { p: q, ctx: ctx2 } = await open('/lp/totaalrenovatie');
-      await q.evaluate(() => document.querySelector('#contact .kgj-reken--onder')?.classList.remove('kgj-reken--onder'));
-      const pc12 = await stickyFout(q);
-      await ctx2.close();
-      if (!pc12) { console.log('ONGELDIGE METING: een vaste knop die nergens heen gaat werd door de vaste-knoptoets goedgekeurd'); process.exit(2); }
-      console.log(`positieve controle 12: vaste knop zonder doel gezien (${pc12})`);
+      if (!pc12.some((f) => f.includes('geplant-vast'))) { console.log(`ONGELDIGE METING: een geplante vaste offerteknop werd niet gezien (${pc12.join(' | ') || 'niets'})`); process.exit(2); }
+      console.log(`positieve controle 12: geplante vaste offerteknop gezien (${pc12[0]})`);
     }
     {
       /* 13-17 (23 okt 2026): elke bewering van de nieuwe toetsen moet op een geplante fout rood worden. pc = [naam, fouten, verwacht stuk tekst] */
@@ -817,8 +821,9 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
         ['13b: de link naar #contact vóór de tik bovenaan', await eenStandFouten(RENO1, { linkEerst: true }), 'staat de kaart onderaan op Stap 1'],
         ['13c: keuzes onderaan 500 px lager', await eenStandFouten(RENO1, { css: '#contact .kgj-reken--aanvraag .kgj-reken__keuzes{margin-top:500px!important}' }), 'keuzes van de kaart onderaan tot'],
         ['14: 420 px marge onder de band', await contactInBeeldFouten(DAK, HERO, '.kgj-reken--aanvraag .kgj-reken__band{margin-bottom:420px!important}'), 'valt onder het scherm'],
-        ['15a: een stap op de vaste knop vóór de eerste tik', await vasteKnopStapFouten(DAK, { plant: 'voor' }), 'voordat de bezoeker iets aantikte'],
-        ['15b: geen stap op de vaste knop na twee antwoorden', await vasteKnopStapFouten(DAK, { plant: 'na' }), 'vaste knop na twee antwoorden'],
+        /* 9 nov 2026: de stand van live tot vandaag (section#contact met overflow hidden) en een transform op de ouder bovenaan */
+        ['14b: de sectie onderaan knipt af (overflow hidden)', await contactInBeeldFouten(DAK, ONDER, '#contact{overflow:hidden!important}'), 'knipt het volle scherm af'],
+        ['14c: transform op de ouder van de kaart bovenaan', await contactInBeeldFouten(DAK, HERO, '#rekenaar{transform:translateZ(0)!important}'), 'knipt het volle scherm af'],
         ['16: keuzes 500 px lager', await alleStappenFouten(RENO1, HERO, '.kgj-reken--aanvraag .kgj-reken__keuzes{margin-top:500px!important}'), 'laatste knop tot'],
         ['17: kaart bovenaan niet bevroren (alles altijd in beeld)', [await sprongFout(RENO1, { zonderBevriezen: true })].filter(Boolean), 'sprong'],
         ['18: een knop naar het formulier met de oude tekst', await (async () => { const { p, ctx } = await open(RENO1.pad, { gsm: false }); const f = await knoppenFouten(p, RENO1, 'Plan uw gratis plaatsbezoek'); await ctx.close(); return f; })(), 'Plan uw gratis plaatsbezoek'],
@@ -862,12 +867,6 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
           if (pg.soort === 'dak') for (const f of await belblokGedrag(p)) fouten.push(`${pg.pad} @${maat}: belblok: ${f}`);
           await ctx.close();
         }
-        if (gsm) {
-          const { p, ctx } = await open(pg.pad, { gsm });
-          const sf = await stickyFout(p);
-          if (sf) fouten.push(`${pg.pad} @${maat}: vaste knop: ${sf}`);
-          await ctx.close();
-        }
         /* kaart onderaan (dak en renovatie, 22 okt 2026) */
         {
           const { p, ctx } = await open(pg.pad, { gsm });
@@ -884,10 +883,13 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
         for (const f of await alleStappenFouten(pg, root)) fouten.push(`${pg.pad} @390x637 ${naam}: stap niet in beeld: ${f}`);
         metingen += 2;
       }
-      for (const f of await vasteKnopStapFouten(pg)) fouten.push(`${pg.pad} @390x844: vaste knop: ${f}`);
+      /* 12 (8 nov 2026): geen vaste offerteknop onderaan, op de gsm van de Clarity-opnamen (390x664) en op 390x844 */
+      for (const hoogte of [664, 844]) {
+        const { p, ctx } = await open(pg.pad, { gsm: true, hoogte });
+        for (const f of await vasteOfferteFouten(p)) fouten.push(`${pg.pad} @390x${hoogte}: ${f}`);
+        await ctx.close();
+      }
       metingen++;
-      /* dak: de zoekterm "plat dak" beantwoordt vraag 1 al; dat is geen begonnen aanvraag */
-      if (pg.soort === 'dak') for (const f of await vasteKnopStapFouten(pg, { zoek: '?utm_term=plat%20dak' })) fouten.push(`${pg.pad}?utm_term=plat dak @390x844: vaste knop: ${f}`);
       const sf = await sprongFout(pg);
       if (sf) fouten.push(`${pg.pad} @390x637 zonder scroll anchoring: ${sf}`);
       metingen++;
@@ -933,6 +935,6 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
   if (metingen < verwacht) { console.log(`ONGELDIGE METING: ${metingen} metingen (verwacht ${verwacht})`); process.exit(2); }
   console.log(`check-lp-aanvraag: dak en 2 renovatiepagina's (kaart bovenaan en onderaan) x 2 maten + message match (${basis}), ${leads} leadverzoeken`);
   if (fouten.length) { fouten.forEach((f) => console.log('  FOUT: ' + f)); process.exit(1); }
-  console.log('  kop zoals afgesproken, geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag (bovenaan en onderaan), contactstap naam, telefoonnummer en e-mailadres (verplicht) zonder disclaimer of regel onder de knop, geen tijdregel, geen tweede route, nergens "gratis dakinspectie/plaatsbezoek", naam verplicht, lege gsm, lege of foute e-mail, badges met eigen iconen, geen vrij moment en geen agenda-verzoek, belblok op dak, geen horizontale scroll, één stand voor de kaart bovenaan en onderaan, contactscherm en elke stap volledig in beeld op 390x637, vaste knop met de stap, geen sprong onderaan zonder scroll anchoring');
+  console.log('  kop zoals afgesproken, geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag (bovenaan en onderaan), contactstap naam, telefoonnummer en e-mailadres (verplicht) zonder disclaimer of regel onder de knop, geen tijdregel, geen tweede route, nergens "gratis dakinspectie/plaatsbezoek", naam verplicht, lege gsm, lege of foute e-mail, badges met eigen iconen, geen vrij moment en geen agenda-verzoek, belblok op dak, geen horizontale scroll, één stand voor de kaart bovenaan en onderaan, contactscherm en elke stap volledig in beeld op 390x637, geen vaste offerteknop onderaan, geen sprong onderaan zonder scroll anchoring');
   process.exit(0);
 })().catch((e) => { console.log('ONGELDIGE METING: ' + e.message); process.exit(2); });
