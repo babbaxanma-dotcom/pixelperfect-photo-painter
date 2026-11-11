@@ -67,7 +67,9 @@ for (const [route, bron] of Object.entries(ROUTES)) {
       `var gedaan=false;function laad(){if(gedaan)return;gedaan=true;${JSON.stringify(voorladen)}.forEach(function(h){var l=d.createElement('link');l.rel='modulepreload';l.crossOrigin='';l.href=h;d.head.appendChild(l)});` +
       `var s=d.createElement('script');s.type='module';s.crossOrigin='';s.src=${JSON.stringify(hoofd[1])};d.head.appendChild(s)}` +
       `requestAnimationFrame(function(){setTimeout(laad,0)});setTimeout(laad,3000)})()</script>`;
-    const pagina = sjabloon
+    // 11 nov 2026, Mohammed: 'nog alleen in die logo bij tabbladen': de dakpagina's krijgen het teken van AB Dakwerken als tabbladicoon
+    const dakIconen = (h) => { const uit = h.replace('<link rel="icon" type="image/x-icon" href="/favicon.ico" />', '').replace('href="/favicon-16.png"', 'href="/favicon-dak-16.png"').replace('href="/favicon-32.png"', 'href="/favicon-dak-32.png"').replace('href="/apple-touch-icon.png"', 'href="/apple-touch-dak.png"'); if (!uit.includes('/favicon-dak-32.png') || uit.includes('/favicon.ico')) throw new Error('tabbladicoon van de dakpagina niet gezet: ' + route); return uit; };
+    const pagina = (route.startsWith('/lp/dakwerken') ? dakIconen(sjabloon) : sjabloon)
       .replace(hoofd[0], '')
       .replace(/<link rel="modulepreload" crossorigin href="\/assets\/[^"]+\.js">/g, '')
       .replace('</head>', `${extraCss}</head>`)

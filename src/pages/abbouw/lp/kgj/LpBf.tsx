@@ -14,6 +14,10 @@ import { trackFormStart } from '@/lib/tracking';
 import { CLARITY_PROJECT, laadClarity, meldClarity } from '@/lib/clarity';
 import logoWit from '@/assets/bf/logo-wit-440.webp';
 import logoInk from '@/assets/bf/logo-ink-440.webp';
+/* 11 nov 2026, Mohammed: vaklogo "AB Dakwerken" op de dakpagina's ("push nu alles aub naar de landingspagina overal"): kop en voet;
+   de voet houdt de gegevens van AB Bouw Groep (adres, btw). 11 nov, na zijn "je hebt nog op sommige plekken de fout": ook het voetlogo. */
+import logoDakWit from '@/assets/bf/logo-ab-dakwerken-wit.webp';
+import logoDakInk from '@/assets/bf/logo-ab-dakwerken.webp';
 /* Voetlogo: hetzelfde bestand als de voet van LpKgj (r.12, r.788): "beelden EXACT zoals nu" (spec §17). */
 import logo from '@/assets/home/logo-trim.png';
 import '../../bf/bf.css';
@@ -274,6 +278,7 @@ function GoogleBadge({ klasse }: { klasse: string }) {
 }
 
 export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
+  const vakLogo = inhoud.divisie === 'ab_dakwerken'; // dakwerken en de asbestpagina
   const vat = useRef<HTMLDivElement>(null);
   const [dia, setDia] = useState(0);
   const [balk, setBalk] = useState(false);
@@ -395,9 +400,14 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
 
   useEffect(() => {
     document.title = inhoud.titel;
+    /* 11 nov 2026, Mohammed: 'nog alleen in die logo bij tabbladen': op de dakpagina's het teken van AB Dakwerken als tabbladicoon
+       (de voorgerenderde pagina heeft het al in haar head, scripts/prerender-lp.mjs; dit dekt de navigatie binnen de site). */
+    const iconen = vakLogo ? [...document.querySelectorAll<HTMLLinkElement>('link[rel="icon"], link[rel="apple-touch-icon"]')].map((l) => ({ l, oud: l.getAttribute('href') || '' })) : [];
+    iconen.forEach(({ l }) => l.setAttribute('href', l.rel === 'apple-touch-icon' ? '/apple-touch-dak.png' : (l.getAttribute('sizes') === '16x16' ? '/favicon-dak-16.png' : '/favicon-dak-32.png')));
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute('content', inhoud.omschrijving);
-  }, [inhoud]);
+    return () => iconen.forEach(({ l, oud }) => l.setAttribute('href', oud));
+  }, [inhoud, vakLogo]);
 
   /* Anker in de link (sitelinks #contact, #rekenaar, #waarom, #werkwijze, #top): na het laden springen
      (LpKgj r.209-221). Staat de rekenaar in het vangnet, dan opent #rekenaar ook het venster.
@@ -850,9 +860,9 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
         )}
         {/* Geen nav-landmark: de LP-kop is geen menu (live LpKgj r.324 is een div). */}
         <div className="bf-nav">
-          <a className="bf-nav__logo" href="#top" aria-label="AB Bouw Groep">
-            <img className="bf-nav__logo-wit" src={logoWit} width={440} height={125} alt="Logo van AB Bouw Groep" decoding="async" />
-            <img className="bf-nav__logo-ink" src={logoInk} width={440} height={125} alt="" decoding="async" />
+          <a className={`bf-nav__logo${vakLogo ? ' bf-nav__logo--vak' : ''}`} href="#top" aria-label={vakLogo ? 'AB Dakwerken' : 'AB Bouw Groep'}>
+            <img className="bf-nav__logo-wit" src={vakLogo ? logoDakWit : logoWit} width={vakLogo ? 686 : 440} height={vakLogo ? 144 : 125} alt={vakLogo ? 'Logo van AB Dakwerken' : 'Logo van AB Bouw Groep'} decoding="async" />
+            <img className="bf-nav__logo-ink" src={vakLogo ? logoDakInk : logoInk} width={vakLogo ? 686 : 440} height={vakLogo ? 144 : 125} alt="" decoding="async" />
           </a>
           <div className="bf-nav__acties">
             {/* Plaatsbezoekpagina's: de aanvraagknop staat op de computer altijd in de kop (LpKgj r.326-331). */}
@@ -1011,7 +1021,7 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       <footer className="bf-lpvoet kgj-voet">
         <div className="bf-lpvoet__raster">
           <div className="bf-lpvoet__merk">
-            <img className="bf-lpvoet__logo" src={logo} width={1071} height={305} alt="Logo van AB Bouw Groep" loading="lazy" decoding="async" />
+            <img className="bf-lpvoet__logo" src={vakLogo ? logoDakInk : logo} width={vakLogo ? 686 : 1071} height={vakLogo ? 144 : 305} alt={vakLogo ? 'Logo van AB Dakwerken' : 'Logo van AB Bouw Groep'} loading="lazy" decoding="async" />
             <p>Dakwerken, gevelwerken en renovatie in heel Vlaanderen.</p>
           </div>
           <div className="bf-lpvoet__kolom">

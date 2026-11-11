@@ -303,3 +303,10 @@ body:has(div.bf) .abc-banner-text strong { color: #0a1628; font-size: 18px; }
    'instant'. ab-bouw.css r.76 zet html { scroll-behavior: smooth } op elke pagina; bij prefers-reduced-motion zet BF
    (site.css r.652) het terug op auto, hier ook, zodat ook de ankerlinks (Gratis offerte, #offerte) dan niet schuiven. ---------- */
 @media (prefers-reduced-motion: reduce) { html:has(div.bf) { scroll-behavior: auto; } }
+
+/* 11 nov 2026, vaklogo "AB Dakwerken" op de dakpagina's (4,77 keer zo breed als hoog). Op gsm dezelfde breedtes als het gewone logo
+   (112 / 98 / 84 px): die zijn op 11 okt gemeten tegen de pil na het scrollen; een breder logo schuift onder de pil. */
+@media (min-width: 1001px) { .bf .bf-nav__logo--vak img { width: calc(200 * var(--u)); height: calc(42 * var(--u)); } }
+@media (max-width: 1000px) { .bf .bf-nav__logo--vak img { width: 112px; height: 23.5px; } }
+@media (max-width: 389px) { .bf .bf-nav__logo--vak img { width: 98px; height: 20.5px; } }
+@media (max-width: 359px) { .bf .bf-nav__logo--vak img { width: 84px; height: 17.6px; } }
