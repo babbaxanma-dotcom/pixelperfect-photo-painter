@@ -307,6 +307,9 @@ body:has(div.bf) .abc-banner-text strong { color: #0a1628; font-size: 18px; }
 /* 11 nov 2026, vaklogo "AB Dakwerken" op de dakpagina's (4,77 keer zo breed als hoog). Op gsm dezelfde breedtes als het gewone logo
    (112 / 98 / 84 px): die zijn op 11 okt gemeten tegen de pil na het scrollen; een breder logo schuift onder de pil. */
 @media (min-width: 1001px) { .bf .bf-nav__logo--vak img { width: calc(200 * var(--u)); height: calc(42 * var(--u)); } }
-@media (max-width: 1000px) { .bf .bf-nav__logo--vak img { width: 112px; height: 23.5px; } }
-@media (max-width: 389px) { .bf .bf-nav__logo--vak img { width: 98px; height: 20.5px; } }
-@media (max-width: 359px) { .bf .bf-nav__logo--vak img { width: 84px; height: 17.6px; } }
+/* 12 nov 2026, Mohammed: "AB dakwerken op telefoon moet ieeeets groter": 112 / 98 / 84 px werd 140 / 124 / 104 px. De pil van 11 okt staat
+   niet in de kop van de advertentiepagina's (alleen de belknop, 122 px). Gemeten op /lp/dakwerken en /lp/dakwerken/asbest: naast de
+   belknop blijft 62 px vrij op 320, 82 op 360, 97 op 375, 96 op 390 en 120 op 414, boven en na het scrollen. */
+@media (max-width: 1000px) { .bf .bf-nav__logo--vak img { width: 140px; height: 29.4px; } }
+@media (max-width: 389px) { .bf .bf-nav__logo--vak img { width: 124px; height: 26px; } }
+@media (max-width: 359px) { .bf .bf-nav__logo--vak img { width: 104px; height: 21.8px; } }
