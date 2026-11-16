@@ -577,6 +577,9 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     /* 22 okt 2026, Mohammed: "verwijder email form, verwijder postcode form": de contactstap heeft alleen nog Naam en Gsm.
        2 nov 2026: E-mailadres* terug voor de offerte, zoals bfbouw.be 31 okt; postcode blijft weg. */
     contactVelden: { email: 'verplicht', postcode: false },
+    /* 16 nov 2026: hulpregels onder Telefoonnummer en E-mailadres (zie inhoud.ts contactHulp). Bron = volgt hierboven: "Wij nemen
+       binnen 24 uur contact op" en "U ontvangt uw offerte rechtstreeks in uw mailbox." */
+    contactHulp: { telefoon: 'Hierop nemen we binnen 24 uur contact op.', email: 'Hier ontvangt u uw offerte.' },
     /* 2 nov 2026: geen disclaimer-vinkjes meer op de laatste stap (bfbouw.be 31 okt); "Laat uw woning vakkundig bekijken" beloofde
        het plaatsbezoek vóór het versturen. */
     /* 22 okt 2026, Mohammed: "bij abgroep totaalrenovatie ook onderaan bij plaatsbezoek de form zo dat je makkelijk kan klikken". */

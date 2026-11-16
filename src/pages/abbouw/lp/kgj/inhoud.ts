@@ -145,6 +145,10 @@ export type KgjInhoud = {
         email 'verplicht' (2 nov 2026, offerte zoals bfbouw.be 31 okt: "doe ook een vakje emailadres bij de offerte aanvraag
         indiening"): E-mailadres* als eigen rij onder Naam en Telefoonnummer. */
     contactVelden?: { email?: boolean | 'verplicht'; postcode?: boolean };
+    /** 16 nov 2026 (Mohammed: hulpregels aan het einde van het formulier, "dit is voor dit"): één korte regel onder het veld
+        Telefoonnummer en onder het verplichte veld E-mailadres, die zegt waarvoor het gegeven dient. Geen regel onder Naam (zijn
+        woord: "dat is logisch"). De woorden komen uit "Na uw aanvraag" van dezelfde pagina (volgt). */
+    contactHulp?: { telefoon?: string; email?: string };
     /** Wat de bezoeker krijgt, direct onder "Bijna klaar!": sinds 26 okt 2026 drie vinkjes in een eigen vlak (Mohammed: "moet
         visueel duidelijker en apart, en visueel mooi"), zelfde woorden als de zin van 22 okt. */
     disclaimer?: string[];
@@ -479,6 +483,9 @@ export const DAKWERKEN: KgjInhoud = {
        2 nov 2026: E-mailadres* terug voor de offerte, zoals bfbouw.be 31 okt (Mohammed: "doe ook een vakje emailadres bij de
        offerte aanvraag indiening"). Postcode blijft weg (zijn AB-keuze van 22 okt). */
     contactVelden: { email: 'verplicht', postcode: false },
+    /* 16 nov 2026: hulpregels onder Telefoonnummer en E-mailadres. Bron = volgt hierboven: "Wij nemen binnen 24 uur contact op" en
+       "U ontvangt uw offerte rechtstreeks in uw mailbox." */
+    contactHulp: { telefoon: 'Hierop nemen we binnen 24 uur contact op.', email: 'Hier ontvangt u uw offerte.' },
     /* 2 nov 2026: geen disclaimer-vinkjes meer op de laatste stap, zoals bfbouw.be 31 okt ("geen inspectie of plaatsbezoek voor het
        versturen"); de drie punten van 22/26 okt ("Laat uw dak vakkundig controleren" ...) beloofden de inspectie. */
     /* "onderaan ... de form zo dat je makkelijk kan klikken": onderaan dezelfde klikkaart in plaats van het formulier van Inspectie. */

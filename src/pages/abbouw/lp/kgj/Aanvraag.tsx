@@ -544,6 +544,10 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   const emailVerplicht = a.contactVelden?.email === 'verplicht';
   const metEmail = a.contactVelden?.email !== false && !emailVerplicht;
   const metPostcode = a.contactVelden?.postcode !== false;
+  /* 16 nov 2026: hulpregel onder Telefoonnummer en onder het verplichte E-mailadres (inhoud contactHulp). Zonder verplicht
+     e-mailveld is er geen e-mailregel: de offerte gaat alleen naar een adres dat de bezoeker moet invullen. */
+  const hulpTel = a.contactHulp?.telefoon;
+  const hulpMail = emailVerplicht ? a.contactHulp?.email : undefined;
   /* "Bijna klaar! Bevestig uw gratis dakinspectie": het eerste deel op een eigen regel in de merkkleur (bfbouw.be rk__bijna). */
   const contactKop = offerte && a.offerte ? a.offerte.contactKop : a.contactKop;
   const band = contactKop.match(/^(Bijna klaar!)\s+(.+)$/);
@@ -761,9 +765,14 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
               {/* 22 okt 2026, Mohammed: "en doe naam en telefoonnummer", "niet gsm". */}
               <label>Telefoonnummer *
                 <input ref={telVeld} name="telefoon" type="tel" autoComplete="tel" inputMode="tel" enterKeyHint={emailVerplicht ? 'next' : 'send'} placeholder="04xx xx xx xx" aria-required="true"
+                  aria-describedby={hulpTel ? `kgj-hulp-${plek}-tel` : undefined}
                   value={stand.telefoon} onFocus={gebruik} onChange={(e) => { const v = e.target.value; zet((s) => ({ ...s, aangetikt: true, telefoon: v })); }}
                   onKeyDown={emailVerplicht ? (e) => { if (e.key === 'Enter' && !e.nativeEvent.isComposing) { e.preventDefault(); mailVeld.current?.focus(); } } : undefined} />
               </label>
+              {/* 16 nov 2026 (Mohammed: hulpregels aan het einde van het formulier, "dit is voor dit"): waarvoor het nummer dient. Over de
+                  volle rij onder Naam en Telefoonnummer, rechts uitgelijnd onder het telefoonveld: in de halve kolom op de gsm brak de zin
+                  in drie regels. Buiten het label, gekoppeld met aria-describedby. Geen regel onder Naam (zijn woord: "dat is logisch"). */}
+              {hulpTel && <p className="kgj-reken__hulp kgj-reken__hulp--tel" id={`kgj-hulp-${plek}-tel`}>{hulpTel}</p>}
             </div>
             {/* 2 nov 2026 (offerte, zoals bfbouw.be 31 okt: "doe ook een vakje emailadres bij de offerte aanvraag indiening"; daar zonder
                 voorbeeldtekst): een eigen rij over de volle breedte. Gedeeld tussen de twee kaarten, zoals naam en nummer. */}
@@ -771,8 +780,10 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
               <div className="kgj-reken__rij kgj-reken__rij--een">
                 <label>E-mailadres *
                   <input ref={mailVeld} name="email" type="email" autoComplete="email" inputMode="email" enterKeyHint="send" aria-required="true"
+                    aria-describedby={hulpMail ? `kgj-hulp-${plek}-mail` : undefined}
                     value={stand.email ?? ''} onFocus={gebruik} onChange={(e) => { const v = e.target.value; zet((s) => ({ ...s, aangetikt: true, email: v })); }} />
                 </label>
+                {hulpMail && <p className="kgj-reken__hulp" id={`kgj-hulp-${plek}-mail`}>{hulpMail}</p>}
               </div>
             )}
             {(metPostcode || metEmail) && (
