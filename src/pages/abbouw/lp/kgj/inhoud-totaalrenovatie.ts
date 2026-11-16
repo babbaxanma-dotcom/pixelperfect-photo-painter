@@ -17,6 +17,7 @@
  */
 import type { KgjInhoud, Vraag } from './inhoud';
 import { HOEVE } from './realisatie-hoeve';
+import { BEREIKBAAR_VRAAG } from './vraag-bereikbaar';
 import type { IcoonNaam } from './Iconen';
 import { DIVISIES } from '../../_divisies';
 
@@ -539,6 +540,8 @@ export const TOTAALRENOVATIE: KgjInhoud = {
         { ...renoveren, sleutel: 'Wat moet er allemaal gebeuren', vraag: 'Wat moet er allemaal gebeuren?' },
         start,
         BUDGET_VRAAG,
+        /* 16 nov 2026 (staal): de laatste klikvraag vóór het contactscherm, zoals op de dakpagina's. */
+        BEREIKBAAR_VRAAG,
       ];
     })(),
     /* 2 nov 2026: zoals bfbouw.be 31 okt (was "Bijna klaar! Bevestig uw gratis plaatsbezoek").

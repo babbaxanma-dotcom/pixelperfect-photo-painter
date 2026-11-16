@@ -15,7 +15,8 @@
         "Ja",
         "Nee",
         "50 tot 100 m²",
-        "Zo snel mogelijk"
+        "Zo snel mogelijk",
+        "Overdag"
       ],
       "velden": {
         "naam": "Test Kaart",
@@ -38,7 +39,7 @@
         "phone": "0400 00 00 00",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis offerte · Werk: Dakrenovatie · Dak: Hellend dak · Isolatie: Ja · Asbest: Nee · Oppervlakte: 50 tot 100 m² · Start: Zo snel mogelijk",
+        "aanvullende_info": "Aanvraag gratis offerte · Werk: Dakrenovatie · Dak: Hellend dak · Isolatie: Ja · Asbest: Nee · Oppervlakte: 50 tot 100 m² · Start: Zo snel mogelijk · Bereikbaar: Overdag",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:dakwerken:offerte",
         "page_path": "/lp/dakwerken",
@@ -62,7 +63,7 @@
         "phone": "0400 00 00 00",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis offerte · Werk: Dakrenovatie · Dak: Hellend dak · Isolatie: Ja · Asbest: Nee · Oppervlakte: 50 tot 100 m² · Start: Zo snel mogelijk",
+        "aanvullende_info": "Aanvraag gratis offerte · Werk: Dakrenovatie · Dak: Hellend dak · Isolatie: Ja · Asbest: Nee · Oppervlakte: 50 tot 100 m² · Start: Zo snel mogelijk · Bereikbaar: Overdag",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:dakwerken:offerte",
         "page_path": "/lp/dakwerken",
@@ -87,7 +88,8 @@
         "Weet ik nog niet",
         "Weet ik niet",
         "Weet ik niet",
-        "Later"
+        "Later",
+        "Na 17 uur"
       ],
       "velden": {
         "naam": "Test Kaart",
@@ -110,7 +112,7 @@
         "phone": "0400 00 00 02",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis offerte · Werk: Herstelling · Dak: Plat dak · Isolatie: Weet ik nog niet · Asbest: Weet ik niet · Oppervlakte: Weet ik niet · Start: Later",
+        "aanvullende_info": "Aanvraag gratis offerte · Werk: Herstelling · Dak: Plat dak · Isolatie: Weet ik nog niet · Asbest: Weet ik niet · Oppervlakte: Weet ik niet · Start: Later · Bereikbaar: Na 17 uur",
         "bron_lead": "Website",
         "bron_lead_detail": "lp:dakwerken:offerte",
         "page_path": "/lp/dakwerken",
@@ -130,7 +132,7 @@
         "phone": "0400 00 00 02",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis offerte · Werk: Herstelling · Dak: Plat dak · Isolatie: Weet ik nog niet · Asbest: Weet ik niet · Oppervlakte: Weet ik niet · Start: Later",
+        "aanvullende_info": "Aanvraag gratis offerte · Werk: Herstelling · Dak: Plat dak · Isolatie: Weet ik nog niet · Asbest: Weet ik niet · Oppervlakte: Weet ik niet · Start: Later · Bereikbaar: Na 17 uur",
         "bron_lead": "Website",
         "bron_lead_detail": "lp:dakwerken:offerte",
         "page_path": "/lp/dakwerken",
@@ -151,7 +153,8 @@
         "Plat dak",
         "Weet ik niet",
         "Minder dan 50 m²",
-        "Binnen 3 maanden"
+        "Binnen 3 maanden",
+        "Maakt niet uit"
       ],
       "velden": {
         "naam": "Test Kaart",
@@ -174,7 +177,7 @@
         "phone": "0400 00 00 01",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis offerte · Werk: Isolatie · Dak: Plat dak · Asbest: Weet ik niet · Oppervlakte: Minder dan 50 m² · Start: Binnen 3 maanden",
+        "aanvullende_info": "Aanvraag gratis offerte · Werk: Isolatie · Dak: Plat dak · Asbest: Weet ik niet · Oppervlakte: Minder dan 50 m² · Start: Binnen 3 maanden · Bereikbaar: Maakt niet uit",
         "bron_lead": "Website",
         "bron_lead_detail": "lp:dakwerken:offerte",
         "page_path": "/lp/dakwerken",
@@ -193,7 +196,7 @@
         "phone": "0400 00 00 01",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis offerte · Werk: Isolatie · Dak: Plat dak · Asbest: Weet ik niet · Oppervlakte: Minder dan 50 m² · Start: Binnen 3 maanden",
+        "aanvullende_info": "Aanvraag gratis offerte · Werk: Isolatie · Dak: Plat dak · Asbest: Weet ik niet · Oppervlakte: Minder dan 50 m² · Start: Binnen 3 maanden · Bereikbaar: Maakt niet uit",
         "bron_lead": "Website",
         "bron_lead_detail": "lp:dakwerken:offerte",
         "page_path": "/lp/dakwerken",
@@ -212,7 +215,8 @@
         "Gratis dakinspectie",
         "Hellend dak",
         "Losse of kapotte pannen",
-        "Nee"
+        "Nee",
+        "Overdag"
       ],
       "velden": {
         "naam": "Test Kaart",
@@ -235,7 +239,7 @@
         "phone": "0400 00 00 03",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis offerte · Werk: Gratis dakinspectie · Dak: Hellend dak · Signaal: Losse of kapotte pannen · Asbest: Nee",
+        "aanvullende_info": "Aanvraag gratis offerte · Werk: Gratis dakinspectie · Dak: Hellend dak · Signaal: Losse of kapotte pannen · Asbest: Nee · Bereikbaar: Overdag",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:dakwerken:offerte",
         "page_path": "/lp/dakwerken",
@@ -258,7 +262,7 @@
         "phone": "0400 00 00 03",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis offerte · Werk: Gratis dakinspectie · Dak: Hellend dak · Signaal: Losse of kapotte pannen · Asbest: Nee",
+        "aanvullende_info": "Aanvraag gratis offerte · Werk: Gratis dakinspectie · Dak: Hellend dak · Signaal: Losse of kapotte pannen · Asbest: Nee · Bereikbaar: Overdag",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:dakwerken:offerte",
         "page_path": "/lp/dakwerken",

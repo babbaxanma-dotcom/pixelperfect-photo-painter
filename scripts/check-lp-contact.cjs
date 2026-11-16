@@ -39,10 +39,10 @@ const POORT = 4435;
 const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
 const HERO = '#rekenaar .kgj-reken--aanvraag';
 const PADEN = {
-  '/lp/dakwerken': ['Dakrenovatie', 'Hellend dak', 'Ja', 'Nee', '50 tot 100 m²', 'Zo snel mogelijk'], // 7 nov 2026: vraag 1 = Ik ben op zoek naar:, vraag 2 = soort dak
-  '/lp/dakwerken/asbest': ['Nieuw dak', 'Plat dak', 'Huidig dak vervangen', 'EPDM', '50 tot 100 m²', 'Zo snel mogelijk'], // 7 nov 2026: vraag 1 = Werk
-  '/lp/totaalrenovatie': ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'],
-  '/lp/aannemer-renovatiewerken': ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'],
+  '/lp/dakwerken': ['Dakrenovatie', 'Hellend dak', 'Ja', 'Nee', '50 tot 100 m²', 'Zo snel mogelijk', 'Overdag'], // 7 nov 2026: vraag 1 = Ik ben op zoek naar:, vraag 2 = soort dak; 16 nov (staal): + bereikbaar
+  '/lp/dakwerken/asbest': ['Nieuw dak', 'Plat dak', 'Huidig dak vervangen', 'EPDM', '50 tot 100 m²', 'Zo snel mogelijk', 'Na 17 uur'], // 7 nov 2026: vraag 1 = Werk; 16 nov (staal): + bereikbaar
+  '/lp/totaalrenovatie': ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000', 'Maakt niet uit'],
+  '/lp/aannemer-renovatiewerken': ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000', 'Maakt niet uit'],
 };
 
 async function open(br, basis, w, h, pad, plant = {}) {

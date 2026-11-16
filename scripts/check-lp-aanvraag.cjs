@@ -116,11 +116,12 @@ const DAK = {
   /* 5 nov 2026, zoals bfbouw.be 4 nov: vraag 1 "Om welk soort dak gaat het?", Dakrenovatie en Nieuw dak apart */
   /* 7 nov 2026, zoals bfbouw.be 7 nov ("en doe al deze changes ook bij ab pagina"): vraag 1 "Ik ben op zoek naar:" met Gratis dakinspectie, vraag 2 het soort dak */
   pad: '/lp/dakwerken', soort: 'dak', kop: 'Uw dak laten vernieuwen, renoveren of isoleren?', woord: 'gratis offerte', vraag1: 'Ik ben op zoek naar:', keuzes1: ['Dakrenovatie', 'Nieuw dak', 'Herstelling', 'Isolatie', 'Gratis dakinspectie'],
-  pad1: ['Dakrenovatie', 'Hellend dak', 'Ja', 'Nee', '50 tot 100 m²', 'Zo snel mogelijk'], vraag2: 'Om welk soort dak gaat het?',
+  /* 16 nov 2026 (staal): de vraag "Wanneer bent u het best bereikbaar?" als laatste klikvraag: een antwoord erbij, 8 stappen */
+  pad1: ['Dakrenovatie', 'Hellend dak', 'Ja', 'Nee', '50 tot 100 m²', 'Zo snel mogelijk', 'Overdag'], vraag2: 'Om welk soort dak gaat het?',
   /* knop: dictaat Mohammed 31 okt voor bfbouw.be ("Gratis en vrijblijvende offerte aanvragen"; infinitief "aanvragen", onderzoek 23 okt).
      5 nov 2026, zoals bfbouw.be 91ab7ba: verzendknop "Gratis offerte aanvragen", de andere knoppen "Offerte aanvragen" (naarKnop);
      contactkop zonder "gratis". */
-  band: 'Bijna klaar! Vraag uw offerte aan', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 7,
+  band: 'Bijna klaar! Vraag uw offerte aan', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 8,
   tegels: ['5,0', '10 jaar garantie', '15 jaar ervaring'],
   /* 5 nov 2026, bfbouw.be: "Na uw aanvraag" (twee stappen) vervangt de regel onder de knop */
   /* 7 nov 2026 (bfbouw.be "oke doe maar die 3 stappen"): contact binnen 24 uur, gratis plaatsbezoek, offerte */
@@ -133,8 +134,8 @@ const RENO = (pad) => ({
   /* 22 okt 2026, Mohammed: "2 meer vragen, bij stap 1 graag wat voor woning", "en dan die vraag van dat ze mooi kunnen aanklikken wat
      er allemaal nodig is": woning, omvang, afvinkvraag (een lijst in pad1 = die vinkjes en dan Volgende), start, budget */
   vraag1: 'Wat voor woning wilt u renoveren?', keuzes1: ['Appartement', 'Rijwoning', 'Halfopen bebouwing', 'Open bebouwing'],
-  pad1: ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'], vraag2: 'Wat wilt u renoveren?',
-  band: 'Bijna klaar! Vraag uw offerte aan', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 6,
+  pad1: ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000', 'Na 17 uur'], vraag2: 'Wat wilt u renoveren?', // 16 nov 2026 (staal): + bereikbaar, 7 stappen
+  band: 'Bijna klaar! Vraag uw offerte aan', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 7,
   /* 22 okt 2026: "6 vakdisciplines ... weg, bij die form", "dat is een rare trust badge" */
   tegels: ['5,0', '16 jaar ervaring'],
   volgt: ['Wij nemen binnen 24 uur contact op', 'Gratis plaatsbezoek', 'Uw offerte'], // 7 nov 2026 (bfbouw.be)

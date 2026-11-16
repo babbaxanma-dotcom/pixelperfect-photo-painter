@@ -49,6 +49,7 @@ import keuzePlat from '@/assets/dak/keuze-plat.jpg';
 
 import type { IcoonNaam } from './Iconen';
 import { HOEVE } from './realisatie-hoeve';
+import { BEREIKBAAR_VRAAG } from './vraag-bereikbaar';
 
 /** foto: optioneel beeld boven het label; icoon: optioneel icoon links van het label.
     Het label zegt al wat er te zien is, dus geen alt-tekst. */
@@ -75,6 +76,8 @@ export type Vraag = {
       troeven op de laatste stap). De regel onderaan de kaart valt dan weg, anders staat
       hij er twee keer. */
   punt?: string;
+  /** 16 nov 2026: in de samenvatting op het contactscherm staat de sleutel erbij ("Bereikbaar: Overdag"); een los "Overdag" zegt daar niets. */
+  metSleutel?: boolean;
 };
 /** Eén stap van de offerte (Aanvraag.tsx): keuzelijsten en eventueel een optioneel tekstvak. */
 export type OfferteStap = { kop: string; velden: { sleutel: string; label: string; opties: string[] }[]; extra?: { sleutel: string; label: string; hint: string } };
@@ -441,6 +444,8 @@ export const DAKWERKEN: KgjInhoud = {
         { label: 'Zo snel mogelijk', icoon: 'snel' }, { label: 'Binnen 3 maanden', icoon: 'drie' },
         { label: 'Binnen 6 maanden', icoon: 'later' }, { label: 'Later', icoon: 'verken' },
       ] },
+      /* 16 nov 2026 (staal): de laatste klikvraag vóór het contactscherm, op elk pad (ook na Gratis dakinspectie en Nieuw dak). */
+      BEREIKBAAR_VRAAG,
     ],
     /* 2 nov 2026: kop van de laatste stap zoals bfbouw.be 31 okt (was "Bijna klaar! Bevestig uw gratis dakinspectie").
        5 nov 2026, zoals bfbouw.be (Mohammed daar: "het constant herhalen van gratis en vrijblijvend wekt juist argwaan ... behoud het op

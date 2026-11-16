@@ -16,7 +16,8 @@
         "@vink:Badkamer",
         "@verder",
         "Binnen 6 maanden",
-        "Weet ik nog niet"
+        "Weet ik nog niet",
+        "Na 17 uur"
       ],
       "velden": {
         "naam": "Test Kaart",
@@ -39,7 +40,7 @@
         "phone": "0400 00 00 05",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis offerte · Wat voor woning wilt u renoveren: Appartement · Wat wilt u renoveren: Aanbouw · Wat moet er allemaal gebeuren: Keuken, Badkamer · Wanneer wilt u starten: Binnen 6 maanden · Welk budget heeft u in gedachten: Weet ik nog niet",
+        "aanvullende_info": "Aanvraag gratis offerte · Wat voor woning wilt u renoveren: Appartement · Wat wilt u renoveren: Aanbouw · Wat moet er allemaal gebeuren: Keuken, Badkamer · Wanneer wilt u starten: Binnen 6 maanden · Welk budget heeft u in gedachten: Weet ik nog niet · Bereikbaar: Na 17 uur",
         "bron_lead": "Website",
         "bron_lead_detail": "lp:totaalrenovatie:offerte",
         "page_path": "/lp/totaalrenovatie",
@@ -58,7 +59,7 @@
         "phone": "0400 00 00 05",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis offerte · Wat voor woning wilt u renoveren: Appartement · Wat wilt u renoveren: Aanbouw · Wat moet er allemaal gebeuren: Keuken, Badkamer · Wanneer wilt u starten: Binnen 6 maanden · Welk budget heeft u in gedachten: Weet ik nog niet",
+        "aanvullende_info": "Aanvraag gratis offerte · Wat voor woning wilt u renoveren: Appartement · Wat wilt u renoveren: Aanbouw · Wat moet er allemaal gebeuren: Keuken, Badkamer · Wanneer wilt u starten: Binnen 6 maanden · Welk budget heeft u in gedachten: Weet ik nog niet · Bereikbaar: Na 17 uur",
         "bron_lead": "Website",
         "bron_lead_detail": "lp:totaalrenovatie:offerte",
         "page_path": "/lp/totaalrenovatie",
@@ -79,7 +80,8 @@
         "@vink:Alles (totaalrenovatie)",
         "@verder",
         "Zo snel mogelijk",
-        "Minder dan € 25.000"
+        "Minder dan € 25.000",
+        "Maakt niet uit"
       ],
       "velden": {
         "naam": "Test Kaart",
@@ -102,7 +104,7 @@
         "phone": "0400 00 00 10",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis offerte · Wat voor woning wilt u renoveren: Open bebouwing · Wat wilt u renoveren: De hele woning (totaalrenovatie) · Wat moet er allemaal gebeuren: Alles (totaalrenovatie) · Wanneer wilt u starten: Zo snel mogelijk · Welk budget heeft u in gedachten: Minder dan € 25.000",
+        "aanvullende_info": "Aanvraag gratis offerte · Wat voor woning wilt u renoveren: Open bebouwing · Wat wilt u renoveren: De hele woning (totaalrenovatie) · Wat moet er allemaal gebeuren: Alles (totaalrenovatie) · Wanneer wilt u starten: Zo snel mogelijk · Welk budget heeft u in gedachten: Minder dan € 25.000 · Bereikbaar: Maakt niet uit",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:totaalrenovatie:offerte",
         "page_path": "/lp/totaalrenovatie",
@@ -125,7 +127,7 @@
         "phone": "0400 00 00 10",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis offerte · Wat voor woning wilt u renoveren: Open bebouwing · Wat wilt u renoveren: De hele woning (totaalrenovatie) · Wat moet er allemaal gebeuren: Alles (totaalrenovatie) · Wanneer wilt u starten: Zo snel mogelijk · Welk budget heeft u in gedachten: Minder dan € 25.000",
+        "aanvullende_info": "Aanvraag gratis offerte · Wat voor woning wilt u renoveren: Open bebouwing · Wat wilt u renoveren: De hele woning (totaalrenovatie) · Wat moet er allemaal gebeuren: Alles (totaalrenovatie) · Wanneer wilt u starten: Zo snel mogelijk · Welk budget heeft u in gedachten: Minder dan € 25.000 · Bereikbaar: Maakt niet uit",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:totaalrenovatie:offerte",
         "page_path": "/lp/totaalrenovatie",
@@ -152,7 +154,8 @@
         "@vink:Isolatie",
         "@verder",
         "Binnen 6 maanden",
-        "€ 25.000 tot € 75.000"
+        "€ 25.000 tot € 75.000",
+        "Overdag"
       ],
       "velden": {
         "naam": "Test Kaart",
@@ -175,7 +178,7 @@
         "phone": "0400 00 00 03",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis offerte · Wat voor woning wilt u renoveren: Rijwoning · Wat wilt u renoveren: De hele woning (totaalrenovatie) · Wat moet er allemaal gebeuren: Isolatie, Dak, Gevel · Wanneer wilt u starten: Binnen 6 maanden · Welk budget heeft u in gedachten: € 25.000 tot € 75.000",
+        "aanvullende_info": "Aanvraag gratis offerte · Wat voor woning wilt u renoveren: Rijwoning · Wat wilt u renoveren: De hele woning (totaalrenovatie) · Wat moet er allemaal gebeuren: Isolatie, Dak, Gevel · Wanneer wilt u starten: Binnen 6 maanden · Welk budget heeft u in gedachten: € 25.000 tot € 75.000 · Bereikbaar: Overdag",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:totaalrenovatie:offerte",
         "page_path": "/lp/totaalrenovatie",
@@ -198,7 +201,7 @@
         "phone": "0400 00 00 03",
         "country": "BE",
         "type_werk": "AB Construct",
-        "aanvullende_info": "Aanvraag gratis offerte · Wat voor woning wilt u renoveren: Rijwoning · Wat wilt u renoveren: De hele woning (totaalrenovatie) · Wat moet er allemaal gebeuren: Isolatie, Dak, Gevel · Wanneer wilt u starten: Binnen 6 maanden · Welk budget heeft u in gedachten: € 25.000 tot € 75.000",
+        "aanvullende_info": "Aanvraag gratis offerte · Wat voor woning wilt u renoveren: Rijwoning · Wat wilt u renoveren: De hele woning (totaalrenovatie) · Wat moet er allemaal gebeuren: Isolatie, Dak, Gevel · Wanneer wilt u starten: Binnen 6 maanden · Welk budget heeft u in gedachten: € 25.000 tot € 75.000 · Bereikbaar: Overdag",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:totaalrenovatie:offerte",
         "page_path": "/lp/totaalrenovatie",

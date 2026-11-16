@@ -14,7 +14,8 @@ import { beginStand, bewaarAanvraag, telt, useAanvraagStaat, wisAanvraag, type A
 
 /* Testhaken (5 nov 2026, zoals bfbouw.be window.__bfLaadMs / __bfVolUit): __abLaadMs = duur van de laadstap (0 = meteen het
    contactscherm), __abVolUit = de kaart blijft in de pagina (geen volle scherm, geen venster). */
-type AbTest = { __abLaadMs?: number; __abVolUit?: boolean };
+/* 16 nov 2026: __abVeegUit = de regel "vegen is geen tik" uit (positieve controle van scripts/check-lp-veeg.cjs). */
+type AbTest = { __abLaadMs?: number; __abVolUit?: boolean; __abVeegUit?: boolean };
 
 /* Google-G en ster voor de trustrij (zelfde tekening als Rekenaar.tsx en LpBf.tsx). */
 const IcGoogle = () => (
@@ -70,6 +71,57 @@ export function eigenScroll() {
   eigen.aan = true;
   window.clearTimeout(eigen.t); eigen.t = window.setTimeout(eigenKlaar, 250);
   window.clearTimeout(eigen.cap); eigen.cap = window.setTimeout(eigenKlaar, 3000);
+}
+
+/* ---------- Vegen is geen tik (16 nov 2026, staal) ----------
+   Wie op de gsm over de kaart veegt om te scrollen, koos soms ongewild een antwoord en stond een vraag verder. De browser geeft nog een
+   klik zolang de vinger binnen zijn eigen marge blijft, en ook voor de aanraking die een uitlopende scroll stopt. Daarom, alleen voor de
+   antwoordtegels (kies):
+   - een aanraking die meer dan VEEG_PX bewoog (of door de browser werd afgebroken) is een veeg; het einde ervan wordt onthouden;
+   - een tik telt niet als de aanraking zelf meer dan TIK_PX bewoog, of minder dan NA_VEEG_MS na het einde van een veeg begon;
+   - muis, pen en toetsenbord tellen altijd, ook knop.click() (de vroege tik van vóór het hydrateren, LpBf);
+   - alleen de vinger telt: een scroll van de pagina zelf (stapwissel, inBeeld) houdt de volgende tik niet tegen.
+   De aanrakingen worden op het document gevolgd (vangfase, passief), één keer voor beide kaarten. De browser stuurt geen touchmove
+   zolang de vinger binnen zijn marge blijft; de plaats bij het loslaten telt daarom mee. Guard: scripts/check-lp-veeg.cjs. */
+const VEEG_PX = 10;
+const TIK_PX = 4;
+const NA_VEEG_MS = 600;
+type Aanraking = { x: number; y: number; max: number; sindsVeeg: number };
+const tast: { nu: Aanraking | null; laatste: Aanraking | null; veegEinde: number; aan: boolean } = { nu: null, laatste: null, veegEinde: -Infinity, aan: false };
+function tastAan() {
+  if (tast.aan || typeof document === 'undefined') return;
+  tast.aan = true;
+  const opt = { capture: true, passive: true } as const;
+  const ver = (a: Aanraking, t: Touch) => { a.max = Math.max(a.max, Math.hypot(t.clientX - a.x, t.clientY - a.y)); };
+  document.addEventListener('touchstart', (e) => {
+    const t = e.touches[0];
+    if (!t) return;
+    if (e.touches.length > 1) { if (tast.nu) tast.nu.max = Infinity; return; } // tweede vinger (knijpen): geen tik
+    tast.nu = { x: t.clientX, y: t.clientY, max: 0, sindsVeeg: performance.now() - tast.veegEinde };
+  }, opt);
+  document.addEventListener('touchmove', (e) => { if (tast.nu && e.touches[0]) ver(tast.nu, e.touches[0]); }, opt);
+  const einde = (e: TouchEvent) => {
+    const a = tast.nu;
+    if (!a) return;
+    if (e.changedTouches[0]) ver(a, e.changedTouches[0]);
+    if (e.type === 'touchcancel') a.max = Infinity; // de browser nam de aanraking over (scrollen, systeemgebaar)
+    if (e.touches.length) return; // er ligt nog een vinger op het scherm
+    if (a.max > VEEG_PX) tast.veegEinde = performance.now();
+    tast.laatste = a;
+    tast.nu = null;
+  };
+  document.addEventListener('touchend', einde, opt);
+  document.addEventListener('touchcancel', einde, opt);
+}
+/** Is deze klik op een antwoordtegel het staartje van een veeg? soortDruk = het pointerType van de laatste pointerdown op een tegel
+    (Safari gaf lang een klik zonder pointerType). */
+function veegTik(e: React.MouseEvent, soortDruk: string): boolean {
+  if ((window as unknown as AbTest).__abVeegUit) return false;
+  if (e.detail === 0) return false; // toetsenbord (Enter, spatie) en knop.click()
+  const soort = (e.nativeEvent as PointerEvent).pointerType || soortDruk;
+  if (soort !== 'touch') return false; // muis en pen
+  const a = tast.laatste;
+  return !!a && (a.max > TIK_PX || a.sindsVeeg < NA_VEEG_MS);
 }
 
 export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
@@ -404,7 +456,13 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
      een tweede tik binnen 200 ms telt niet (een dubbele tik slaat geen vraag over). */
   const [druk, setDruk] = useState<string | null>(null);
   const laatsteTik = useRef(0);
-  const kies = (sleutel: string, label: string) => {
+  /* 16 nov 2026: vegen is geen tik (tast, bovenaan dit bestand). invoer = het pointerType van de laatste pointerdown op een tegel. */
+  const invoer = useRef('');
+  useEffect(() => { tastAan(); }, []);
+  const kies = (sleutel: string, label: string, e?: React.MouseEvent) => {
+    const soortDruk = invoer.current;
+    invoer.current = '';
+    if (e && veegTik(e, soortDruk)) { setDruk(null); return; }
     const tijd = Date.now();
     if (tijd - laatsteTik.current < 200 || laden) return;
     laatsteTik.current = tijd;
@@ -554,7 +612,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   /* Samenvatting boven de velden (29 okt 2026, Mohammed: "ja dit zeker"): de eigen antwoorden. Een kaal Ja/Nee krijgt het
      onderwerp erbij ("Isolatie: Ja"), anders zegt het niets. */
   const KAAL = /^(ja|nee|weet ik (nog )?niet)$/i;
-  const samen = offerte ? OSTAPPEN.flatMap((st) => st.velden.map((v) => oAntw[v.sleutel])).filter(Boolean) : BEANTWOORD.map((v) => (KAAL.test(antwoorden[v.sleutel]) ? `${v.sleutel}: ${antwoorden[v.sleutel]}` : antwoorden[v.sleutel]));
+  const samen = offerte ? OSTAPPEN.flatMap((st) => st.velden.map((v) => oAntw[v.sleutel])).filter(Boolean) : BEANTWOORD.map((v) => (KAAL.test(antwoorden[v.sleutel]) || v.metSleutel ? `${v.sleutel}: ${antwoorden[v.sleutel]}` : antwoorden[v.sleutel]));
   /* Laadstap regel 2: de eigen antwoorden ("Dakrenovatie · 50 tot 100 m²"); een kaal "Weet ik niet" telt niet. */
   const laadRegel = a.laden ? (a.laden.sleutels.map((k) => antwoorden[k]).filter((x) => x && !KAAL.test(x)).join(' · ') || a.laden.leeg) : '';
   /* Trust badges: op het contactscherm in het formulier (boven de knop, zoals bfbouw.be badgesMini), anders onderaan de kaart. */
@@ -707,11 +765,11 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
             {vraag.keuzes.map((k) => (
               <button type="button" key={k.label}
                 className={`kgj-reken__keuze${k.icoon ? ' kgj-reken__keuze--icoon' : ''}${antwoorden[vraag.sleutel] === k.label ? ' is-aan' : ''}${druk === k.label ? ' is-druk' : ''}`}
-                onPointerDown={() => setDruk(k.label)}
+                onPointerDown={(e) => { invoer.current = e.pointerType; setDruk(k.label); }}
                 onPointerUp={() => setDruk(null)}
                 onPointerCancel={() => setDruk(null)}
                 onPointerLeave={() => setDruk(null)}
-                onClick={() => kies(vraag.sleutel, k.label)}>
+                onClick={(e) => kies(vraag.sleutel, k.label, e)}>
                 {k.foto && <img className="kgj-reken__foto" src={k.foto} alt="" width={640} height={360} decoding="async" />}
                 {k.icoon && <i className="kgj-reken__icoon"><Icoon naam={k.icoon} /></i>}
                 <span className="kgj-reken__tekst">

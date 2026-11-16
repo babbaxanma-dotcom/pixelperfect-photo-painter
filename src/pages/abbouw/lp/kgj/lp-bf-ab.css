@@ -1403,6 +1403,24 @@ html.is-formvol .bf.bf-lp .bf-lphero__in, html.is-formvol .bf.bf-lp .bf-lpinsp__
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__samen { margin-bottom: 10px; }
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__knop { margin-top: 12px; }
   .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__privacy { margin-top: 12px; }
+  /* 16 nov 2026 (staal): met "· Bereikbaar: ..." erbij breekt "Uw aanvraag" op 1265x585 in drie regels (asbest, renovatie): 553 px
+     (plaats 537; check:contact punt 7). Nog 19 px tussenruimte terug in lage pc-vensters: rij met Terug en de stap 10 + 10 -> 6 + 6,
+     kopband 16 + 18 -> 12 + 13, onder "Uw aanvraag" 10 -> 8. */
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__kop { padding-top: 6px; padding-bottom: 6px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__band { padding-top: 12px; padding-bottom: 13px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__samen { margin-bottom: 8px; }
+}
+/* 16 nov 2026 (staal): op de gsm breekt "Uw aanvraag" met "· Bereikbaar: ..." erbij een regel later (renovatie op 360 breed: vier
+   regels). De vaste verzendknop schoof dan over de trust badges (360x642: knop tot 632 px, plaats tot 616; 390x637: plaats tot 611).
+   Op korte gsm-schermen (tot 650 px hoog; op 390x664 past het zonder) 26 px tussenruimte terug: hulpregel 4 + 18 -> 2 + 16 (2 regels,
+   8 px), boven elk veldlabel 12 -> 8 (2 rijen, 8 px), boven de trust badges 12 -> 8, boven de verzendknop 16 -> 12, boven
+   "Uw aanvraag" 12 -> 10. Velden, letters en knop blijven even groot. */
+@media (max-width: 1000px) and (max-height: 650px) {
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__hulp { margin-top: 2px; line-height: 16px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__velden label { margin-top: 8px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__trust { margin-top: 8px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__knop { margin-top: 12px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-vol .kgj-reken__contact > .kgj-reken__samen { margin-top: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .bf.bf-lp .kgj-reken__laad-spin { animation: none; border-color: var(--merk); }

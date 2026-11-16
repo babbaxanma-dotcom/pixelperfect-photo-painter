@@ -13,7 +13,7 @@ export type IcoonNaam =
   | 'golfpan' | 'vlakkepan' | 'golfplaat' | 'bitumen' | 'roofing' | 'epdm'
   | 'maat1' | 'maat2' | 'maat3' | 'maat4'
   | 'isolatie' | 'geenisolatie' | 'asbest' | 'veilig' | 'twijfel'
-  | 'snel' | 'drie' | 'later' | 'verken'
+  | 'snel' | 'drie' | 'later' | 'verken' | 'overdag' | 'avond'
   | 'herstel' | 'nieuwdak' | 'jong' | 'midden' | 'oud' | 'platdak'
   | 'inspectie' | 'lek' | 'schade' | 'goot'
   | 'dienst-nieuw' | 'dienst-renovatie' | 'dienst-isolatie' | 'dienst-herstel'
@@ -397,6 +397,18 @@ const ICONEN: Record<IcoonNaam, () => JSX.Element> = {
     <Svg>
       <path d="M6 3h12M6 21h12" />
       <path d="M7.5 3v2.5c0 2.3 4.5 4.3 4.5 6.5s-4.5 4.2-4.5 6.5V21M16.5 3v2.5c0 2.3-4.5 4.3-4.5 6.5s4.5 4.2 4.5 6.5V21" />
+    </Svg>
+  ),
+  /* 16 nov 2026 ("Wanneer bent u het best bereikbaar?"): de zon voor overdag, de maan voor na 17 uur; "Maakt niet uit" draagt de klok (midden). */
+  overdag: () => (
+    <Svg>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2.5V5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" />
+    </Svg>
+  ),
+  avond: () => (
+    <Svg>
+      <path d="M20 14.2A8.3 8.3 0 1 1 9.8 4a6.6 6.6 0 0 0 10.2 10.2z" />
     </Svg>
   ),
   /* Vergrootglas: ik verken nog. */
