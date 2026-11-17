@@ -458,11 +458,14 @@ export const DAKWERKEN: KgjInhoud = {
     ],
     /* 7 nov 2026, zoals bfbouw.be: de offerte volgt na het plaatsbezoek; binnen 24 uur = het contact (was 'Offerte binnen 24 uur'). */
     trigger: 'Antwoord binnen 24 uur',
-    /* 18 nov 2026, dictaat Mohammed (woordelijk, je-vorm): het stappenblok onder de verzendknop op /lp/dakwerken en /asbest. Bron van de feiten:
-       volgt hierboven (contact binnen 24 uur, gratis plaatsbezoek, offerte in de mailbox). */
+    /* 18 nov 2026, dictaat Mohammed (woordelijk, je-vorm): het stappenblok "Na uw aanvraag" onder de verzendknop op /lp/dakwerken en /asbest.
+       Feiten: volgt hierboven (contact binnen 24 uur, gratis plaatsbezoek, offerte in de mailbox, vrijblijvend). */
     naKort: [
+      /* 18 nov 2026, definitief (Mohammed: "of 4 ofzo", "redeneer een beetje meer"): elke stap = een moment waarop de bezoeker iets krijgt of
+         zelf beslist; woordelijk zijn dictaat */
       { titel: 'We nemen binnen 24 uur contact op', tekst: 'We bellen je om een plaatsbezoek in te plannen op een moment dat jou past.' },
-      { titel: 'Gratis plaatsbezoek met onze dakexpert', tekst: 'Onze dakexpert bekijkt je dak ter plaatse. Daarna ontvang je je offerte in je mailbox.' },
+      { titel: 'Gratis plaatsbezoek met onze dakexpert', tekst: 'Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.' },
+      { titel: 'Je ontvangt je offerte in je mailbox', tekst: 'Vrijblijvend: je beslist zelf, zonder enige verplichting.' },
       { titel: 'Jij geniet zorgeloos van je nieuwe dak', tekst: 'Na je akkoord plannen we de werken in en voeren we ze uit.' },
     ],
     naarKnop: 'Offerte aanvragen',

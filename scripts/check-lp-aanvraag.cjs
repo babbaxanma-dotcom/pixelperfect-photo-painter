@@ -124,9 +124,9 @@ const DAK = {
   /* 18 nov 2026 (v2, Mohammed: het einde van het formulier "gewoon zo"): het contactblok heeft de kop "Contact" (geen band "Bijna klaar!") */
   ckop: 'Contact', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 5,
   /* 18 nov 2026, dictaat Mohammed (woordelijk): de korte regels direct onder de verzendknop op de dakpagina's */
-  nakort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek met onze dakexpert', 'Jij geniet zorgeloos van je nieuwe dak'],
+  nakort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek met onze dakexpert', 'Je ontvangt je offerte in je mailbox', 'Jij geniet zorgeloos van je nieuwe dak'], // 18 nov 2026 definitief ("of 4 ofzo")
   /* 18 nov 2026, dictaat ("doe dat zoals kijzer, zo hoe dat wordt uitgelegd"): één uitlegzin per stap */
-  uitleg: ['We bellen je om een plaatsbezoek in te plannen op een moment dat jou past.', 'Onze dakexpert bekijkt je dak ter plaatse. Daarna ontvang je je offerte in je mailbox.', 'Na je akkoord plannen we de werken in en voeren we ze uit.'],
+  uitleg: ['We bellen je om een plaatsbezoek in te plannen op een moment dat jou past.', 'Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.', 'Vrijblijvend: je beslist zelf, zonder enige verplichting.', 'Na je akkoord plannen we de werken in en voeren we ze uit.'],
   tegels: ['5,0', '10 jaar garantie', '15 jaar ervaring'],
   /* 5 nov 2026, bfbouw.be: "Na uw aanvraag" (twee stappen) vervangt de regel onder de knop */
   /* 7 nov 2026 (bfbouw.be "oke doe maar die 3 stappen"): contact binnen 24 uur, gratis plaatsbezoek, offerte */
@@ -141,8 +141,8 @@ const RENO = (pad) => ({
   vraag1: 'Wat voor woning wilt u renoveren?', keuzes1: ['Appartement', 'Rijwoning', 'Halfopen bebouwing', 'Open bebouwing'],
   pad1: ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'], vraag2: 'Wat wilt u renoveren?', // 18 nov 2026 (v2): de staal-vraag "bereikbaar" weg, 6 stappen
   ckop: 'Contact', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 6,
-  nakort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek'], // 18 nov 2026, dictaat: op de renovatiepagina's alleen regel 1 en 2
-  uitleg: ['We bellen je om een plaatsbezoek in te plannen op een moment dat jou past.', 'Onze expert bekijkt je woning ter plaatse. Daarna ontvang je je offerte in je mailbox.'],
+  nakort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek met onze expert', 'Je ontvangt je offerte in je mailbox', 'Na je akkoord starten de werken'], // 18 nov 2026 definitief ("of 4 ofzo")
+  uitleg: ['We bellen je om een plaatsbezoek in te plannen op een moment dat jou past.', 'Onze expert bekijkt je woning ter plaatse en bespreekt met jou de mogelijkheden.', 'Vrijblijvend: je beslist zelf, zonder enige verplichting.', 'We plannen de werken in en voeren ze uit.'],
   /* 22 okt 2026: "6 vakdisciplines ... weg, bij die form", "dat is een rare trust badge" */
   tegels: ['5,0', '16 jaar ervaring'],
   volgt: ['Wij nemen binnen 24 uur contact op', 'Gratis plaatsbezoek', 'Uw offerte'], // 7 nov 2026 (bfbouw.be)

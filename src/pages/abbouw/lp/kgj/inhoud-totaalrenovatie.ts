@@ -561,10 +561,13 @@ export const TOTAALRENOVATIE: KgjInhoud = {
       { titel: 'Uw offerte', tekst: 'U ontvangt uw offerte rechtstreeks in uw mailbox. Volledig vrijblijvend.' },
     ],
     trigger: 'Antwoord binnen 24 uur', // 7 nov 2026, zoals bfbouw.be (was 'Offerte binnen 24 uur')
-    /* 18 nov 2026, dictaat Mohammed: op de renovatiepagina's alleen regel 1 en 2 (regel 3 van de dakpagina's gaat over een dak) */
+    /* 18 nov 2026, dictaat Mohammed (woordelijk, je-vorm): het stappenblok "Na uw aanvraag" onder de verzendknop op de renovatiepagina's */
     naKort: [
+      /* 18 nov 2026, definitief (Mohammed: "of 4 ofzo", "redeneer een beetje meer"), woordelijk zijn dictaat */
       { titel: 'We nemen binnen 24 uur contact op', tekst: 'We bellen je om een plaatsbezoek in te plannen op een moment dat jou past.' },
-      { titel: 'Gratis plaatsbezoek', tekst: 'Onze expert bekijkt je woning ter plaatse. Daarna ontvang je je offerte in je mailbox.' },
+      { titel: 'Gratis plaatsbezoek met onze expert', tekst: 'Onze expert bekijkt je woning ter plaatse en bespreekt met jou de mogelijkheden.' },
+      { titel: 'Je ontvangt je offerte in je mailbox', tekst: 'Vrijblijvend: je beslist zelf, zonder enige verplichting.' },
+      { titel: 'Na je akkoord starten de werken', tekst: 'We plannen de werken in en voeren ze uit.' },
     ],
     naarKnop: 'Offerte aanvragen',
     /* Vinkjes en trustrij: dezelfde teksten en cijfers als op de rekenaarkaart die hier stond (13 okt, dictaat 4 okt). Alleen de

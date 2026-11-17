@@ -13,7 +13,7 @@
  *      achtergrond, geen extra regel in de geschiedenis (history.length gelijk); het blok staat in de kaart met dezelfde teller ("Stap n")
  *      en "Terug"; kop "Contact", de drie velden en de verzendknop in beeld;
  *   3. in het contactblok staat "gratis" precies 2x (de verzendknop en "Gratis plaatsbezoek" in de korte regels onder de knop, dictaat
- *      Mohammed 18 nov) en "vrijblijvend" 0x;
+ *      Mohammed 18 nov) en "vrijblijvend" 1x ("Vrijblijvend: je beslist zelf ..." in stap 3, definitief dictaat 18 nov);
  *   4. "Terug" vanaf het contactblok = de laatste vraag, met het gekozen antwoord; geen horizontale scroll;
  *   5. versturen: leeg verstuurt niets (meldingen onder de velden); daarna (dubbelklik) precies 1 GHL- en 1 Web3Forms-verzoek, precies 1
  *      conversie, de bedankpagina met "Wat nu volgt" en drie stappen, de bewaarde antwoorden en contactgegevens gewist, geen JS-fout;
@@ -166,7 +166,7 @@ async function gsmFlow(br, basis, pad, plant = {}, alleenTot = null) {
       if (!(r && r.zicht && r.top >= c.balk - 1 && r.bottom <= c.vh)) uit.push(`2. ${naam} niet in beeld ${JSON.stringify(r)} (balk ${c.balk}, scherm ${c.vh})`);
     }
     if (c.gratis !== 2) uit.push(`3. "gratis" ${c.gratis}x in het contactblok (verwacht 2x: de verzendknop en "Gratis plaatsbezoek" onder de knop)`);
-    if (c.vrij !== 0) uit.push(`3. "vrijblijvend" ${c.vrij}x in het contactblok (verwacht 0x: niets anders in het blok)`);
+    if (c.vrij !== 1) uit.push(`3. "vrijblijvend" ${c.vrij}x in het contactblok (verwacht 1x: stap 3 van "Na uw aanvraag")`);
     if (alleenTot === 3) return uit;
     /* 4. Terug = de laatste vraag met het gekozen antwoord; daarna weer naar het contactblok */
     const laatste = st[st.length - 1];
@@ -246,7 +246,7 @@ async function pcFlow(br, basis, pad, w, h) {
     for (const [naam, r] of [['kop "Contact"', c.ckop], ['naamveld', c.naam], ['telefoonveld', c.telv], ['e-mailveld', c.mail], ['verzendknop', c.knop]]) {
       if (!(r && r.zicht && r.top >= c.balk - 1 && r.bottom <= c.vh)) uit.push(`7. ${naam} niet in beeld zonder zelf te scrollen ${JSON.stringify(r)} (balk ${c.balk}, scherm ${c.vh})`);
     }
-    if (c.gratis !== 2 || c.vrij !== 0) uit.push(`7. gratis ${c.gratis}x, vrijblijvend ${c.vrij}x in het contactblok (verwacht 2x en 0x)`);
+    if (c.gratis !== 2 || c.vrij !== 1) uit.push(`7. gratis ${c.gratis}x, vrijblijvend ${c.vrij}x in het contactblok (verwacht 2x en 1x)`);
     if (c.hscroll) uit.push('7. horizontale scroll');
     if (fouten.length) uit.push(`7. JS-fout: ${fouten.slice(0, 2).join(' | ')}`);
     return uit;
@@ -394,6 +394,6 @@ async function faqFlow(br, basis, pad, w, h, plant = null) {
   if (metingen !== 4 + 4 * 5) { console.log(`ONGELDIGE METING: ${metingen} metingen (verwacht ${4 + 4 * 5})`); process.exit(2); }
   console.log(`check-lp-contact: ${Object.keys(PADEN).length} LP's, laadstap, contactblok in de kaart 390x664, 1265x585 en 1440x800, versturen (nul echte verzoeken) (${basis})`);
   if (fouten.length) { for (const f of fouten) console.log('  FOUT: ' + f); process.exit(1); }
-  console.log('  AF: laadstap 1,2 s, contactblok in de kaart zonder pop-up (geen vast scherm, dialoog, sluitknop, achtergrond of geschiedenisregel), kop, velden en verzendknop in beeld, gratis 2x (knop + "Gratis plaatsbezoek") en vrijblijvend 0x in het blok, Terug = laatste vraag, terugknop van de browser verlaat de pagina en terugkomen = contactblok, 1 lead + 1 conversie, bedankpagina "Wat nu volgt", opslag gewist');
+  console.log('  AF: laadstap 1,2 s, contactblok in de kaart zonder pop-up (geen vast scherm, dialoog, sluitknop, achtergrond of geschiedenisregel), kop, velden en verzendknop in beeld, gratis 2x (knop + "Gratis plaatsbezoek") en vrijblijvend 1x in het blok, Terug = laatste vraag, terugknop van de browser verlaat de pagina en terugkomen = contactblok, 1 lead + 1 conversie, bedankpagina "Wat nu volgt", opslag gewist');
   process.exit(0);
 })();
