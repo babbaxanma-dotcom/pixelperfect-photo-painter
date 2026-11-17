@@ -33,7 +33,8 @@ const PADEN = {
      kop (.kgj-reken__kop, "Stap X van Y") en dezelfde scrolfix na elke stap: dezelfde meting, met hun klikvragen tot en met
      de contactstap. De rekenaar zelf staat alleen nog op /lp/richtprijs-berekenen en blijft hier gemeten. */
   /* 7 nov 2026: vraag 1 "Ik ben op zoek naar:", vraag 2 het soort dak, tot en met de contactstap */
-  dakwerken: ['Dakrenovatie', 'Hellend dak', 'Ja', 'Nee', '50 tot 100 m²', 'Zo snel mogelijk'],
+  /* 18 nov 2026 (formulier v2): zonder asbest- en oppervlaktevraag */
+  dakwerken: ['Dakrenovatie', 'Hellend dak', 'Nee', 'Zo snel mogelijk'],
   /* 22 okt 2026: vraag 1 de woning, vraag 3 de afvinkvraag (de hoogste stap: daar valt de kop het makkelijkst weg), dan start en budget */
   totaalrenovatie: ['Rijwoning', 'Gedeeltelijke renovatie', 'Keuken', 'Badkamer', '@verder', 'Zo snel mogelijk', '€ 25.000 tot € 75.000'],
   /* 5 okt 2026: de renovatierekenaar staat niet meer in de hero van /lp/totaalrenovatie (daar
@@ -87,7 +88,7 @@ const SCHERMEN = [[390, 844], [375, 667]];
     const kaart = document.querySelector('.kgj-reken'), vol = !!kaart && kaart.classList.contains('is-vol');
     const opBalk = vol && balk > 0 ? document.elementFromPoint(Math.round(innerWidth / 2), Math.max(1, Math.round(balk) - 8)) : null;
     return { top: Math.round(kop.getBoundingClientRect().top), balk: Math.round(balk), vast: !!vast, vastH: Math.round(vast?.getBoundingClientRect().height ?? 0), h: innerHeight, vol, afgedekt: !!opBalk && kaart.contains(opBalk),
-      tel: kop.querySelector('.kgj-reken__tel')?.textContent.trim() };
+      tel: kop.querySelector('.kgj-reken__tel')?.textContent.trim(), contact: !!document.querySelector('.kgj-reken .kgj-reken__contact') };
   });
   const isFout = (s) => (s.vol ? s.top < 0 || s.top > 24 || !s.afgedekt : s.top < s.balk || s.top > s.h - 80);
   try {
@@ -104,17 +105,18 @@ const SCHERMEN = [[390, 844], [375, 667]];
       if (!isFout(s)) { console.log(`ONGELDIGE METING: de geplante fout (kop op ${s.top}px onder een balk tot ${s.balk}px) werd niet gezien`); process.exit(2); }
       console.log(`positieve controle: geplante fout gezien (kop op ${s.top}px, vaste kop .kgj-kop tot ${s.balk}px)`);
     }
-    /* positieve controle volle scherm (8 nov 2026): het dakpad tot het volle scherm, dan de kaart 150 px omlaag geschoven: moet fout zijn */
+    /* positieve controle contactblok (18 nov 2026; was 8 nov: het volle scherm, dat bestaat niet meer): het dakpad tot het contactblok in
+       de pagina (kop in beeld onder de vaste balk = goed), dan de kaart 2000 px omlaag geschoven: moet fout zijn */
     {
       const p = await nieuwePagina(390, 844, 'dakwerken');
       for (const l of PADEN.dakwerken) { await p.evaluate((label) => { const b = [...document.querySelectorAll('.kgj-reken button')].find((x) => x.textContent.trim().startsWith(label)); b?.click(); }, l); await wacht(1100); }
       const goed = await meetKop(p);
-      await p.evaluate(() => { document.querySelector('.kgj-reken').style.setProperty('top', '150px', 'important'); /* geen transform: de openingsanimatie (fill both) overschrijft die */ });
+      await p.evaluate(() => { document.querySelector('.kgj-reken').style.setProperty('top', '2000px', 'important'); /* geen transform: de openingsanimatie (fill both) overschrijft die */ });
       await wacht(200);
       const slecht = await meetKop(p);
       await p.close();
-      if (!goed.vol || isFout(goed) || !isFout(slecht)) { console.log(`ONGELDIGE METING: positieve controle volle scherm (goed ${JSON.stringify(goed)}, geplant ${JSON.stringify(slecht)})`); process.exit(2); }
-      console.log(`positieve controle volle scherm: kop op ${goed.top}px en balk afgedekt = goed; 150 px omlaag = fout gezien`);
+      if (goed.vol || !goed.contact || isFout(goed) || !isFout(slecht)) { console.log(`ONGELDIGE METING: positieve controle contactblok (goed ${JSON.stringify(goed)}, geplant ${JSON.stringify(slecht)})`); process.exit(2); }
+      console.log(`positieve controle contactblok: kop op ${goed.top}px in de pagina = goed; 2000 px omlaag = fout gezien`);
     }
     for (const [w, h] of SCHERMEN) {
       for (const [lp, pad] of Object.entries(PADEN)) {

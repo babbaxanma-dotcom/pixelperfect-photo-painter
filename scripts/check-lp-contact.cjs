@@ -1,33 +1,38 @@
 #!/usr/bin/env node
 /**
- * check-lp-contact: de laadstap, het volle scherm (gsm) en het venster (pc) van de aanvraagkaart op /lp/dakwerken,
- * /lp/dakwerken/asbest, /lp/totaalrenovatie en /lp/aannemer-renovatiewerken.
+ * check-lp-contact: de laadstap en het contactblok van de aanvraagkaart op /lp/dakwerken, /lp/dakwerken/asbest, /lp/totaalrenovatie en
+ * /lp/aannemer-renovatiewerken.
  *
- * Aanleiding (5 nov 2026, Mohammed: "doe bij ab de exact form dingen", "de exacte wijzigingen als bij bf"): de wijzigingen van
- * bfbouw.be van 4-5 nov (cad4e57, d6cfa42, e216830, 91ab7ba, 5638c50). Per pagina, zoals een bezoeker:
- *   1. na het laatste antwoord 1,2 s de laadstap ("Uw aanvraag wordt klaargezet"), daarna het contactscherm; nooit beide tegelijk;
- *   2. 390x664: het contactscherm vult het hele scherm, de verzendknop staat in beeld, de sluitknop rechtsboven is 44x44,
- *      de velden eerst en "Na uw aanvraag" onder de verzendknop (8 nov 2026), de regel boven de knop niet over het volle scherm;
- *   3. op het contactscherm staat "gratis" precies 3x (verzendknop + stap 2 "Gratis plaatsbezoek", 7 nov 2026) en "vrijblijvend" precies 2x;
- *   4. sluiten = terug in de pagina, contactscherm en antwoorden blijven staan; geen horizontale scroll;
- *   5. versturen: leeg verstuurt niets; daarna (dubbelklik) precies 1 GHL- en 1 Web3Forms-verzoek, precies 1 conversie,
- *      de bedankpagina met "Wat nu volgt" en twee stappen, geen is-formvol meer, de bewaarde antwoorden gewist, geen JS-fout;
- *   6. dubbele tik op het laatste antwoord = 1 laadstap; de terugknop tijdens de laadstap = de vorige vraag, het formulier opent
- *      niet alsnog en de bezoeker blijft op de pagina;
- *   7. 1265x585 en 1440x800: het venster staat in het midden (max 880 px), alles zichtbaar zonder scrollen, gratis 1x en
- *      vrijblijvend 1x, Esc en een klik naast het venster sluiten (contactscherm blijft).
- *   9. focusstand op de gsm (9 nov 2026): na een tik op "Ik ben op zoek naar" of vraag 1 een wazige sluier (niet wit, dekking 1),
- *      de kaart scherp en in de pagina in beeld.
+ * Geschiedenis: 5 nov 2026 (Mohammed: "doe bij ab de exact form dingen") toetste dit script het volle scherm (gsm) en het venster (pc)
+ * met sluitknop. 18 nov 2026 (formulier v2, Mohammed: "die popup kan je weghalen", "doe al di fix van dat het geen popup is"; daarna zijn
+ * referentie: het einde van het formulier "gewoon zo") bestaat dat niet meer: het contactblok is de volgende stap in dezelfde kaart. De
+ * punten die het volle scherm toetsten, toetsen nu het blok in de kaart; elk punt houdt een positieve controle. Per pagina, zoals een
+ * bezoeker:
+ *   1. na het laatste antwoord 1,2 s de laadstap ("Uw aanvraag wordt klaargezet"), daarna het contactblok; nooit beide tegelijk;
+ *   2. 390x664: GEEN pop-up: de kaart staat niet vast over het scherm, geen html.is-formvol, geen dialoog, geen sluitknop, geen donkere
+ *      achtergrond, geen extra regel in de geschiedenis (history.length gelijk); het blok staat in de kaart met dezelfde teller ("Stap n")
+ *      en "Terug"; kop "Contact", de drie velden en de verzendknop in beeld;
+ *   3. in het contactblok staat "gratis" precies 2x (de verzendknop en "Gratis plaatsbezoek" in de korte regels onder de knop, dictaat
+ *      Mohammed 18 nov) en "vrijblijvend" 0x;
+ *   4. "Terug" vanaf het contactblok = de laatste vraag, met het gekozen antwoord; geen horizontale scroll;
+ *   5. versturen: leeg verstuurt niets (meldingen onder de velden); daarna (dubbelklik) precies 1 GHL- en 1 Web3Forms-verzoek, precies 1
+ *      conversie, de bedankpagina met "Wat nu volgt" en drie stappen, de bewaarde antwoorden en contactgegevens gewist, geen JS-fout;
+ *   6. dubbele tik op het laatste antwoord = 1 laadstap; de terugknop van de browser tijdens de laadstap doet wat hij overal doet: hij
+ *      verlaat de pagina (er is geen eigen geschiedenisregel meer); wie terugkomt, staat op het contactblok met zijn antwoorden;
+ *   7. 1265x585 en 1440x800: het contactblok staat in de kaart in de pagina (geen venster), kop, velden en verzendknop zichtbaar zonder
+ *      zelf te scrollen; "gratis" 1x; geen horizontale scroll;
+ *   8. veelgestelde vragen (dakpagina's), ongewijzigd;
+ *   9. focusstand op de gsm (9 nov 2026): na een tik op "Ik ben op zoek naar" of vraag 1 een wazige sluier, de kaart scherp in beeld.
+ * De robuustheid van het formulier (nummers, e-mail, Enter, nieuwe pogingen, time-out, bewaren, toetsenbord) toetst check-lp-formulier.cjs.
  * Niets gaat naar buiten: GHL en Web3Forms krijgen een leeg antwoord en worden geteld, Clarity en Google-tags een leeg script,
  * tel: en mailto: worden afgebroken.
  *
- * Positieve controles (zonder: exit 2), elk op /lp/dakwerken @390: laadstap op 0 ms moet punt 1 laten falen; de kaart in de pagina
- * (__abVolUit) punt 2; een geplant woord "gratis" in het contactscherm punt 3; een verzendknop die niet vast onderaan staat
- * (geplante CSS) punt 2; "Na uw aanvraag" boven de velden (geplante CSS) punt 2; een open eerste vraag punt 8; een witte sluier
- * zonder vervaging (geplante CSS) punt 9.
+ * Positieve controles (zonder: exit 2), op /lp/dakwerken @390: laadstap op 0 ms moet punt 1 laten falen; de kaart vast over het scherm
+ * (geplante CSS) punt 2 (pop-up); een geplant woord "gratis" in het blok punt 3; een verzendknop 700 px lager punt 2 (niet in beeld);
+ * een geplante pushState bij het contactblok punt 2 (geschiedenis); een open eerste vraag punt 8; een witte sluier punt 9.
  *
  * Draaien:  node scripts/check-lp-contact.cjs                         (start zelf een vite dev-server)
- *           LP_BASIS=http://127.0.0.1:4612 node scripts/check-lp-contact.cjs
+ *           LP_BASIS=http://127.0.0.1:8080 node scripts/check-lp-contact.cjs
  * Exit 0 = alles AF, 1 = afwijking, 2 = ongeldige meting.
  */
 const { spawn } = require('node:child_process');
@@ -38,11 +43,12 @@ const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const POORT = 4435;
 const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
 const HERO = '#rekenaar .kgj-reken--aanvraag';
+/* 18 nov 2026 (v2): zonder asbest-, oppervlakte- en bereikbaar-vraag */
 const PADEN = {
-  '/lp/dakwerken': ['Dakrenovatie', 'Hellend dak', 'Ja', 'Nee', '50 tot 100 m²', 'Zo snel mogelijk', 'Overdag'], // 7 nov 2026: vraag 1 = Ik ben op zoek naar:, vraag 2 = soort dak; 16 nov (staal): + bereikbaar
-  '/lp/dakwerken/asbest': ['Nieuw dak', 'Plat dak', 'Huidig dak vervangen', 'EPDM', '50 tot 100 m²', 'Zo snel mogelijk', 'Na 17 uur'], // 7 nov 2026: vraag 1 = Werk; 16 nov (staal): + bereikbaar
-  '/lp/totaalrenovatie': ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000', 'Maakt niet uit'],
-  '/lp/aannemer-renovatiewerken': ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000', 'Maakt niet uit'],
+  '/lp/dakwerken': ['Dakrenovatie', 'Hellend dak', 'Nee', 'Zo snel mogelijk'],
+  '/lp/dakwerken/asbest': ['Nieuw dak', 'Plat dak', 'Huidig dak vervangen', 'EPDM', 'Zo snel mogelijk'],
+  '/lp/totaalrenovatie': ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'],
+  '/lp/aannemer-renovatiewerken': ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'],
 };
 
 async function open(br, basis, w, h, pad, plant = {}) {
@@ -55,7 +61,7 @@ async function open(br, basis, w, h, pad, plant = {}) {
   p.on('request', (r) => {
     const u = r.url();
     if (/^(tel|mailto):/.test(u)) return r.abort();
-    if (/leadconnectorhq\.com|web3forms\.com/.test(u)) {
+    if (/leadconnectorhq\.com|web3forms\.com|gohighlevel|msgsndr/.test(u)) {
       const cors = { 'access-control-allow-origin': '*', 'access-control-allow-methods': 'POST, OPTIONS', 'access-control-allow-headers': 'content-type' };
       if (r.method() === 'OPTIONS') return r.respond({ status: 204, headers: cors, body: '' });
       if (u.includes('web3forms')) tel.w3++; else if (/\/hooks\//.test(u)) tel.ghl++;
@@ -63,6 +69,7 @@ async function open(br, basis, w, h, pad, plant = {}) {
     }
     if (/clarity\.ms|googletagmanager|google-analytics|doubleclick|googleadservices|googlesyndication/.test(u)) return r.respond({ status: 200, contentType: 'application/javascript', body: '' });
     if (!/^(127\.0\.0\.1|localhost)$/.test(new URL(u).hostname) && r.method() !== 'GET') return r.abort();
+    if (/\/api\//.test(u)) return r.respond({ status: 200, contentType: 'application/json', body: '{}' });
     return r.continue();
   });
   p.on('pageerror', (e) => fouten.push('pageerror: ' + String(e.message || e)));
@@ -74,7 +81,7 @@ async function open(br, basis, w, h, pad, plant = {}) {
     window.__ev = [];
     window.clarity = function () { window.__ev.push(Array.from(arguments)); };
     if (o.laadMs !== undefined) window.__abLaadMs = o.laadMs;
-    if (o.volUit) window.__abVolUit = true;
+    if (o.push) { const echt = history.pushState.bind(history); setInterval(() => { if (document.querySelector('.kgj-reken__contact') && !window.__geduwd) { window.__geduwd = true; echt({ geplant: 1 }, ''); } }, 50); }
     try { localStorage.setItem('ab_bouw_consent_v1', JSON.stringify({ analytics: false, marketing: false, ts: Date.now() })); } catch (e) { /* */ }
   }, plant);
   await p.goto(basis + pad, { waitUntil: 'networkidle2', timeout: 60000 });
@@ -101,18 +108,22 @@ async function doorloop(p, pad, metLaatste) {
 }
 const info = (p) => p.evaluate((w) => {
   const k = document.querySelector(w); if (!k) return null;
-  const r = (s) => { const e = k.querySelector(s); if (!e) return null; const b = e.getBoundingClientRect(); return { top: Math.round(b.top), bottom: Math.round(b.bottom), right: Math.round(b.right), w: Math.round(b.width), h: Math.round(b.height), zicht: b.width > 0 && b.height > 0 }; };
-  const kr = k.getBoundingClientRect();
-  const tekst = k.innerText || '';
-  return { vol: k.classList.contains('is-vol'), laden: !!k.querySelector('.kgj-reken__laad'), contact: !!k.querySelector('.kgj-reken__contact'), html: document.documentElement.classList.contains('is-formvol'),
+  const r = (s, ouder = k) => { const e = ouder.querySelector(s); if (!e) return null; const b = e.getBoundingClientRect(); return { top: Math.round(b.top), bottom: Math.round(b.bottom), left: Math.round(b.left), right: Math.round(b.right), w: Math.round(b.width), h: Math.round(b.height), zicht: b.width > 0 && b.height > 0 }; };
+  const vast = (() => { for (let e = k; e && e !== document.body; e = e.parentElement) if (getComputedStyle(e).position === 'fixed') return true; return false; })();
+  const f = k.querySelector('form.kgj-reken__contact');
+  const tekst = f ? f.innerText || '' : '';
+  const kop = document.querySelector('.kgj-kop'), kcs = kop && getComputedStyle(kop);
+  return { vast, laden: !!k.querySelector('.kgj-reken__laad'), contact: !!f, html: document.documentElement.classList.contains('is-formvol'),
+    dialoog: !!document.querySelector('[role="dialog"][aria-modal="true"]'), sluit: !!document.querySelector('.kgj-reken__sluit'), achter: !!document.querySelector('.kgj-reken__achter'),
+    tel: k.querySelector('.kgj-reken__tel')?.textContent.trim(), terug: !!k.querySelector('.kgj-reken__terug'),
     vraag: k.querySelector('.kgj-reken__stap .kgj-reken__vraag')?.textContent?.trim() || null,
-    knop: r('.kgj-reken__knop'), sluit: r('.kgj-reken__sluit'), naam: r('input[name="naam"]'), volgt: r('.kgj-reken__volgt'), trigger: r('.kgj-reken__trigger'),
-    kaart: { top: Math.round(kr.top), bottom: Math.round(kr.bottom), left: Math.round(kr.left), right: Math.round(kr.right), w: Math.round(kr.width), h: Math.round(kr.height), sh: k.scrollHeight, ch: k.clientHeight },
-    gratis: (tekst.match(/gratis/gi) || []).length, vrij: (tekst.match(/vrijblijvend/gi) || []).length,
-    samen: k.querySelector('.kgj-reken__samen-tekst')?.textContent?.trim() || null, vh: innerHeight, vw: innerWidth,
+    ckop: r('.kgj-reken__ckop'), knop: r('.kgj-reken__knop'), naam: r('input[name="naam"]'), telv: r('input[name="telefoon"]'), mail: r('input[name="email"]'),
+    balk: kop && kcs.position === 'fixed' && kcs.visibility !== 'hidden' ? Math.round(kop.getBoundingClientRect().bottom) : 0,
+    gratis: (tekst.match(/gratis/gi) || []).length, vrij: (tekst.match(/vrijblijvend/gi) || []).length, gekozen: k.querySelector('.kgj-reken__keuze.is-aan strong')?.textContent.trim() || null,
+    vh: innerHeight, vw: innerWidth, hist: history.length,
     hscroll: Math.max(document.documentElement.scrollWidth, innerWidth) > document.documentElement.clientWidth + 1 };
 }, HERO);
-/* Tijdlijn in de pagina zelf (MutationObserver, geen pollen): wanneer de laadstap verschijnt en verdwijnt, wanneer het contactscherm komt. */
+/* Tijdlijn in de pagina zelf (MutationObserver, geen pollen): wanneer de laadstap verschijnt en verdwijnt, wanneer het contactblok komt. */
 const laatsteMetTijdlijn = (p, label) => p.evaluate((w, l) => new Promise((klaar) => {
   const k = document.querySelector(w);
   const b = [...k.querySelectorAll('.kgj-reken__keuze')].find((x) => (x.querySelector('strong')?.textContent || '').trim() === l);
@@ -130,40 +141,49 @@ const laatsteMetTijdlijn = (p, label) => p.evaluate((w, l) => new Promise((klaar
   b.click(); kijk();
   setTimeout(() => { mo.disconnect(); kijk(); klaar(t); }, 2200);
 }), HERO, label);
+const geenPopup = (c) => !(c.vast || c.html || c.dialoog || c.sluit || c.achter);
 
 /* Punt 1-5 op 390x664. Geeft de fouten terug. */
 async function gsmFlow(br, basis, pad, plant = {}, alleenTot = null) {
   const uit = [];
   const { ctx, p, tel, fouten } = await open(br, basis, 390, 664, pad, plant);
   try {
+    const hist0 = await p.evaluate(() => history.length);
     await doorloop(p, pad, false);
     const st = PADEN[pad];
     const t = await laatsteMetTijdlijn(p, st[st.length - 1]);
     if (!t) { uit.push('laatste keuze niet gevonden'); return uit; }
     /* laadAan: rendertijd na de tik, gemeten 133 ms op een drukke pc (5 nov); 300 ms = nog altijd "meteen" */
     if (t.laadAan === null || t.laadAan > 300 || t.laadUit === null || t.laadUit < 1150 || t.laadUit > 1600 || t.contact === null || t.contact < t.laadUit || t.samen)
-      uit.push(`1. laadstap ${JSON.stringify(t)} (verwacht: laadstap meteen, weg na 1150-1600 ms, daarna het contactscherm, nooit beide)`);
-    await wacht(200);
-    const c = await info(p);
-    if (!c.contact) { uit.push('geen contactscherm na de laadstap'); return uit; }
-    if (!(c.vol && c.html && c.kaart.top === 0 && c.kaart.left === 0 && c.kaart.w === 390 && c.kaart.h === 664)) uit.push(`2. contactscherm niet over het volle scherm ${JSON.stringify(c.kaart)} (is-vol ${c.vol})`);
-    if (!(c.knop && c.knop.top >= 0 && c.knop.bottom <= 664)) uit.push(`2. verzendknop niet in beeld ${JSON.stringify(c.knop)}`);
-    if (!(c.sluit && c.sluit.zicht && c.sluit.w === 44 && c.sluit.h === 44 && c.sluit.right >= 370 && c.sluit.top < 60)) uit.push(`2. sluitknop ${JSON.stringify(c.sluit)} (verwacht 44x44 rechtsboven)`);
-    /* 8 nov 2026 (23035de, zoals bfbouw.be): over het volle scherm de velden eerst, "Na uw aanvraag" onder de verzendknop. */
-    if (!(c.volgt && c.naam && c.knop && c.naam.bottom <= c.knop.top && c.volgt.top >= c.knop.bottom)) uit.push(`2. velden niet eerst: naam ${JSON.stringify(c.naam)}, verzendknop ${JSON.stringify(c.knop)}, "Na uw aanvraag" ${JSON.stringify(c.volgt)} (verwacht naam boven de knop, "Na uw aanvraag" eronder)`);
-    if (c.trigger && c.trigger.zicht) uit.push('2. de regel boven de knop staat ook over het volle scherm');
-    if (c.gratis !== 3) uit.push(`3. "gratis" ${c.gratis}x op het contactscherm (verwacht 3x: de verzendknop + stap 2 "Gratis plaatsbezoek", 7 nov 2026)`);
-    /* 7 nov 2026 (bfbouw.be "oke doe maar die 3 stappen"): stap 2 "Gratis plaatsbezoek / ... gratis en vrijblijvend." + stap 3 "Volledig vrijblijvend." */
-    if (c.vrij !== 2) uit.push(`3. "vrijblijvend" ${c.vrij}x op het contactscherm (verwacht 2x)`);
-    if (alleenTot === 3) return uit;
-    const samenVoor = c.samen;
-    await p.evaluate((w) => document.querySelector(w).querySelector('.kgj-reken__sluit').click(), HERO);
+      uit.push(`1. laadstap ${JSON.stringify(t)} (verwacht: laadstap meteen, weg na 1150-1600 ms, daarna het contactblok, nooit beide)`);
     await wacht(500);
-    const s = await info(p);
-    if (!(!s.vol && !s.html && s.contact && s.samen === samenVoor)) uit.push(`4. sluiten: ${JSON.stringify({ vol: s.vol, html: s.html, contact: s.contact, samen: s.samen, voor: samenVoor })}`);
-    if (s.hscroll) uit.push('4. horizontale scroll');
+    const c = await info(p);
+    if (!c.contact) { uit.push('geen contactblok na de laadstap'); return uit; }
+    if (!geenPopup(c)) uit.push(`2. pop-up: ${JSON.stringify({ vast: c.vast, formvol: c.html, dialoog: c.dialoog, sluit: c.sluit, achter: c.achter })} (verwacht: het blok in de kaart, in de pagina)`);
+    if (c.hist !== hist0) uit.push(`2. geschiedenis: ${c.hist - hist0} regel(s) erbij (verwacht 0: geen eigen terugregel)`);
+    if (c.tel !== `Stap ${st.length + 1}` || !c.terug) uit.push(`2. teller "${c.tel}" en Terug ${c.terug} (verwacht "Stap ${st.length + 1}" en Terug in dezelfde kaart)`);
+    for (const [naam, r] of [['kop "Contact"', c.ckop], ['naamveld', c.naam], ['telefoonveld', c.telv], ['e-mailveld', c.mail], ['verzendknop', c.knop]]) {
+      if (!(r && r.zicht && r.top >= c.balk - 1 && r.bottom <= c.vh)) uit.push(`2. ${naam} niet in beeld ${JSON.stringify(r)} (balk ${c.balk}, scherm ${c.vh})`);
+    }
+    if (c.gratis !== 2) uit.push(`3. "gratis" ${c.gratis}x in het contactblok (verwacht 2x: de verzendknop en "Gratis plaatsbezoek" onder de knop)`);
+    if (c.vrij !== 0) uit.push(`3. "vrijblijvend" ${c.vrij}x in het contactblok (verwacht 0x: niets anders in het blok)`);
+    if (alleenTot === 3) return uit;
+    /* 4. Terug = de laatste vraag met het gekozen antwoord; daarna weer naar het contactblok */
+    const laatste = st[st.length - 1];
+    await p.evaluate((w) => document.querySelector(w + ' .kgj-reken__terug').click(), HERO);
+    await wacht(500);
+    const tr = await info(p);
+    const verwachtGekozen = Array.isArray(laatste) ? null : laatste;
+    if (tr.contact || (verwachtGekozen && tr.gekozen !== verwachtGekozen)) uit.push(`4. Terug vanaf het contactblok: ${JSON.stringify({ contact: tr.contact, vraag: tr.vraag, gekozen: tr.gekozen })} (verwacht de laatste vraag met "${verwachtGekozen}")`);
+    if (tr.hscroll) uit.push('4. horizontale scroll');
+    if (Array.isArray(laatste)) await p.evaluate((w) => document.querySelector(w + ' .kgj-reken__verder').click(), HERO); else await tik(p, laatste);
+    await p.waitForSelector(HERO + ' form.kgj-reken__contact', { timeout: 5000 }).catch(() => {});
+    await wacht(400);
+    /* 5. versturen */
     await p.evaluate((w) => document.querySelector(w).querySelector('.kgj-reken__knop').click(), HERO);
-    await wacht(300);
+    await wacht(400);
+    const leeg = await p.evaluate((w) => [...document.querySelectorAll(w + ' .kgj-reken__veldfout')].map((m) => m.closest('.kgj-reken__cveld')?.querySelector('input')?.name), HERO);
+    if (leeg.join('|') !== 'naam|telefoon|email') uit.push(`5. leeg versturen: meldingen onder ${leeg.join(', ') || 'geen enkel veld'} (verwacht onder naam, telefoon en e-mail)`);
     if (tel.ghl || tel.w3) uit.push(`5. leeg versturen stuurde ${tel.ghl} GHL / ${tel.w3} Web3Forms`);
     await p.type(`${HERO} input[name="naam"]`, 'Test Kaart');
     await p.type(`${HERO} input[name="telefoon"]`, '0400 00 00 00');
@@ -173,12 +193,12 @@ async function gsmFlow(br, basis, pad, plant = {}, alleenTot = null) {
     await p.waitForSelector('.bf-dank__kop', { timeout: 15000 }).catch(() => {});
     await wacht(600);
     const d = await p.evaluate(() => ({ pad: location.pathname, kop: document.querySelector('.bf-dank__volgt h2')?.textContent, stappen: document.querySelectorAll('.bf-dank__stappen--volgt li').length,
-      html: document.documentElement.classList.contains('is-formvol'), opslag: sessionStorage.getItem('ab_aanvraag') }));
+      html: document.documentElement.classList.contains('is-formvol'), opslag: sessionStorage.getItem('ab_aanvraag'), contact: sessionStorage.getItem('ab_contact') }));
     if (!d.pad.startsWith('/bedankt/')) uit.push(`5. geen bedankpagina (${d.pad})`);
     if (tel.ghl !== 1 || tel.w3 !== 1) uit.push(`5. ${tel.ghl} GHL- en ${tel.w3} Web3Forms-verzoeken (verwacht 1 en 1)`);
     if (tel.conv !== 1) uit.push(`5. ${tel.conv} conversies (verwacht 1)`);
     if (d.kop !== 'Wat nu volgt' || d.stappen !== 3) uit.push(`5. bedankpagina: "${d.kop}" met ${d.stappen} stappen (verwacht "Wat nu volgt" met 3, 7 nov 2026)`);
-    if (d.html || d.opslag !== null) uit.push(`5. na versturen: is-formvol ${d.html}, bewaarde antwoorden ${d.opslag}`);
+    if (d.html || d.opslag !== null || d.contact !== null) uit.push(`5. na versturen: is-formvol ${d.html}, bewaarde antwoorden ${d.opslag}, bewaarde contactgegevens ${d.contact}`);
     if (fouten.length) uit.push(`5. JS-fout: ${fouten.slice(0, 2).join(' | ')}`);
     return uit;
   } finally { await ctx.close(); }
@@ -191,20 +211,24 @@ async function terugFlow(br, basis, pad) {
     await doorloop(p, pad, false);
     const st = PADEN[pad];
     const laatste = st[st.length - 1];
-    const vraagLaatste = (await info(p)).vraag;
-    await p.evaluate((w, l) => {
+    if (Array.isArray(laatste)) await p.evaluate((w) => { const b = document.querySelector(w + ' .kgj-reken__verder'); b.click(); setTimeout(() => b.click(), 40); }, HERO);
+    else await p.evaluate((w, l) => {
       const vind = () => [...document.querySelector(w).querySelectorAll('.kgj-reken__keuze')].find((x) => (x.querySelector('strong')?.textContent || '').trim() === l);
       vind().click(); setTimeout(() => { const b = vind(); if (b) b.click(); }, 40);
     }, HERO, laatste);
     await wacht(300);
     const n = await p.evaluate(() => window.__ev.filter((e) => e[1] === 'aanvraag-laden').length);
     if (n !== 1) uit.push(`6. dubbele tik gaf ${n} laadstappen (verwacht 1)`);
-    await p.goBack({ timeout: 5000 }).catch(() => {});
-    await wacht(1500);
+    /* de terugknop van de browser: de pagina gaat weg (zoals op elke site); wie terugkomt, staat op het contactblok */
+    await p.goBack({ timeout: 8000 }).catch(() => {});
+    await wacht(800);
+    const weg = await p.evaluate(() => location.pathname);
+    if (weg === pad) uit.push(`6. de terugknop van de browser bleef op de pagina (${weg}): er is nog een eigen geschiedenisregel`);
+    await p.goForward({ timeout: 15000, waitUntil: 'networkidle2' }).catch(() => {});
+    await p.waitForSelector(HERO + ' form.kgj-reken__contact', { timeout: 8000 }).catch(() => {});
+    await wacht(600);
     const t = await info(p);
-    if (!t || t.vol || t.contact || t.laden || t.vraag !== vraagLaatste) uit.push(`6. terugknop tijdens de laadstap: ${JSON.stringify({ vraag: t && t.vraag, verwacht: vraagLaatste, vol: t && t.vol, contact: t && t.contact })}`);
-    const pad2 = await p.evaluate(() => location.pathname);
-    if (pad2 !== pad) uit.push(`6. de terugknop verliet de pagina (${pad2})`);
+    if (!t || !t.contact) uit.push(`6. na terugkomen: geen contactblok (${JSON.stringify({ vraag: t && t.vraag, tel: t && t.tel })}); de antwoorden moeten bewaard zijn`);
     if (fouten.length) uit.push(`6. JS-fout: ${fouten.slice(0, 2).join(' | ')}`);
     return uit;
   } finally { await ctx.close(); }
@@ -215,36 +239,21 @@ async function pcFlow(br, basis, pad, w, h) {
   const { ctx, p, fouten } = await open(br, basis, w, h, pad);
   try {
     await doorloop(p, pad, true);
-    await wacht(1600);
+    await wacht(1900);
     const c = await info(p);
-    const midX = (c.kaart.left + c.kaart.right) / 2, midY = (c.kaart.top + c.kaart.bottom) / 2;
-    if (!(c.vol && c.contact && Math.abs(midX - w / 2) <= 2 && Math.abs(midY - h / 2) <= 2 && c.kaart.w <= 880)) uit.push(`7. venster niet in het midden ${JSON.stringify(c.kaart)} (is-vol ${c.vol})`);
-    if (!(c.kaart.sh <= c.kaart.ch + 1 && c.kaart.top >= 0 && c.kaart.bottom <= h)) uit.push(`7. niet alles zichtbaar zonder scrollen (${c.kaart.sh} > ${c.kaart.ch})`);
-    if (c.gratis !== 3 || c.vrij !== 2) uit.push(`7. gratis ${c.gratis}x, vrijblijvend ${c.vrij}x (verwacht 3x en 2x: verzendknop + stap 2 "Gratis plaatsbezoek", 7 nov 2026)`);
-    await p.keyboard.press('Escape');
-    await wacht(400);
-    const e = await info(p);
-    if (!(!e.vol && e.contact && !e.html)) uit.push('7. Esc sloot het venster niet (of het contactscherm verdween)');
-    await p.evaluate((x) => document.querySelector(x).querySelector('.kgj-reken__terug').click(), HERO);
-    await wacht(300);
-    const st = PADEN[pad];
-    await tik(p, st[st.length - 1]);
-    await wacht(1600);
-    const o = await info(p);
-    await p.mouse.click(8, 8);
-    await wacht(400);
-    const n = await info(p);
-    if (!(o.vol && !n.vol && n.contact)) uit.push('7. een klik naast het venster sloot het niet');
-    if (n.hscroll) uit.push('7. horizontale scroll');
+    if (!c.contact) { uit.push('7. geen contactblok'); return uit; }
+    if (!geenPopup(c)) uit.push(`7. pop-up of venster: ${JSON.stringify({ vast: c.vast, formvol: c.html, dialoog: c.dialoog, sluit: c.sluit, achter: c.achter })}`);
+    for (const [naam, r] of [['kop "Contact"', c.ckop], ['naamveld', c.naam], ['telefoonveld', c.telv], ['e-mailveld', c.mail], ['verzendknop', c.knop]]) {
+      if (!(r && r.zicht && r.top >= c.balk - 1 && r.bottom <= c.vh)) uit.push(`7. ${naam} niet in beeld zonder zelf te scrollen ${JSON.stringify(r)} (balk ${c.balk}, scherm ${c.vh})`);
+    }
+    if (c.gratis !== 2 || c.vrij !== 0) uit.push(`7. gratis ${c.gratis}x, vrijblijvend ${c.vrij}x in het contactblok (verwacht 2x en 0x)`);
+    if (c.hscroll) uit.push('7. horizontale scroll');
     if (fouten.length) uit.push(`7. JS-fout: ${fouten.slice(0, 2).join(' | ')}`);
     return uit;
   } finally { await ctx.close(); }
 }
 
-/* Punt 9 (9 nov 2026, Mohammed, gsm: "als je klikt op dakrenovatie bij wat houd het in ... dan is het bij abgroep zo vak met volledig wit
-   er rond", "ipv die nieuwe stijl dat we deden"; zoals bfbouw.be 8 nov: "dat het form op dezelfde plek blijft maar dat de rest wazig wordt").
-   Een tik op een knop "Ik ben op zoek naar" (dak) of op vraag 1 in de kaart (renovatie): de sluier staat aan, is wazig (backdrop-filter blur),
-   niet wit en volledig zichtbaar (dekking 1, de waas zit in de kleur); de kaart staat scherp in beeld, in de pagina (geen volle scherm). */
+/* Punt 9 (9 nov 2026): na een tik op een knop "Ik ben op zoek naar" (dak) of vraag 1 (renovatie) een wazige sluier, de kaart scherp in beeld. */
 async function focusFlow(br, basis, pad, css = null) {
   const { ctx, p } = await open(br, basis, 390, 664, pad, css ? { css } : {});
   try {
@@ -265,10 +274,8 @@ async function focusFlow(br, basis, pad, css = null) {
       const bf = [cs.backdropFilter, cs.webkitBackdropFilter].filter((x) => x && x !== 'none').join(' ');
       const kl = (cs.backgroundColor.match(/[\d.]+/g) || []).map(Number);
       const r = k.getBoundingClientRect();
-      /* in beeld zoals de focusstand het zelf meet (Aanvraag.tsx FOCUS_UIT_DEEL): minstens de helft van de kaart, afgetopt op de schermhoogte;
-         de knoppen "Ik ben op zoek naar" zetten de vraag bovenaan, de kaartkop mag erboven vallen */
       const zicht = Math.min(r.bottom, innerHeight) - Math.max(r.top, 0);
-      return { s: true, k: true, bf, kleur: cs.backgroundColor, wit: kl.length >= 3 && kl[0] > 240 && kl[1] > 240 && kl[2] > 240 && (kl[3] ?? 1) > 0.5, dekking: cs.opacity, vol: k.classList.contains('is-vol'),
+      return { s: true, k: true, bf, kleur: cs.backgroundColor, wit: kl.length >= 3 && kl[0] > 240 && kl[1] > 240 && kl[2] > 240 && (kl[3] ?? 1) > 0.5, dekking: cs.opacity,
         top: Math.round(r.top), zicht: Math.round(zicht), nodig: Math.round(0.5 * Math.min(r.height, innerHeight)), vh: innerHeight };
     });
     const uit = [];
@@ -276,20 +283,19 @@ async function focusFlow(br, basis, pad, css = null) {
     if (!/blur\(/.test(m.bf)) uit.push(`9. de sluier is niet wazig (backdrop-filter "${m.bf || 'none'}") na een tik (${hoe})`);
     if (m.wit) uit.push(`9. de sluier is wit (${m.kleur}) na een tik (${hoe})`);
     if (m.dekking !== '1') uit.push(`9. dekking van de sluier ${m.dekking} (verwacht 1: anders vervaagt ook de vervaging)`);
-    if (m.vol || m.zicht < m.nodig) uit.push(`9. de kaart staat niet in de pagina in beeld (vol ${m.vol}, ${m.zicht} px in beeld, nodig ${m.nodig}; top ${m.top} van ${m.vh})`);
+    if (m.zicht < m.nodig) uit.push(`9. de kaart staat niet in beeld (${m.zicht} px in beeld, nodig ${m.nodig}; top ${m.top} van ${m.vh})`);
     return uit;
   } finally { await ctx.close(); }
 }
 
-/* Punt 8 (dakpagina's, bfbouw.be 5638c50/8343954): "Veelgestelde vragen" direct onder "De voordelen van een dakrenovatie", de drie
-   vragen in die volgorde, de eerste open, de klikbare zin "Vraag dan een gratis offerte aan." brengt de kaart onderaan in beeld. */
-/* 7 nov 2026, zoals bfbouw.be (Dakwerken Smet, Dakinvest): vijf vragen */
+/* Punt 8 (dakpagina's, bfbouw.be 5638c50/8343954): "Veelgestelde vragen" direct onder "De voordelen van een dakrenovatie", de vijf
+   vragen in die volgorde, alle dicht, de klikbare zin "Vraag dan een gratis offerte aan." brengt de kaart onderaan in beeld. */
 const FAQ = ['Wat kost een dakrenovatie?', 'Kan ik een premie krijgen voor mijn dak?', 'Hoe lang duurt een dakrenovatie?', 'Welke garantie geldt er op dakwerken?', 'Moet mijn volledige dak altijd vernieuwd worden?'];
 async function faqFlow(br, basis, pad, w, h, plant = null) {
   const uit = [];
   const { ctx, p } = await open(br, basis, w, h, pad);
   try {
-    if (plant) await p.evaluate(() => { const d = document.querySelector('#faq details'); if (d) d.open = true; }); // positieve controle: een open vraag moet rood geven (8 nov)
+    if (plant) await p.evaluate(() => { const d = document.querySelector('#faq details'); if (d) d.open = true; });
     const f = await p.evaluate(() => {
       const s = document.querySelector('#faq');
       const vorige = s?.previousElementSibling;
@@ -300,11 +306,10 @@ async function faqFlow(br, basis, pad, w, h, plant = null) {
     if (!f.er) { uit.push('8. geen veelgestelde vragen'); return uit; }
     if (f.vorige !== 'voordelen' || f.vorigeKop !== 'De voordelen van een dakrenovatie') uit.push(`8. de vragen staan na "${f.vorigeKop}" (#${f.vorige}) in plaats van direct onder "De voordelen van een dakrenovatie"`);
     if (f.vragen.join('|') !== FAQ.join('|')) uit.push(`8. vragen "${f.vragen.join(' | ')}"`);
-    // 8 nov 2026, Mohammed: "veelgestelde vragen eerste vraag niet automatisch open aub": alle vragen dicht bij het laden
     if (f.open.join('|') !== 'false|false|false|false|false') uit.push(`8. open/dicht ${f.open.join(', ')} (verwacht alle vragen dicht)`);
     if (f.link !== '#contact' || f.linkTekst !== 'Vraag dan een gratis offerte aan.') uit.push(`8. link "${f.linkTekst}" naar ${f.link}`);
     if (f.link) {
-      await p.evaluate(() => { document.querySelector('#faq details').open = true; document.querySelector('#faq a.bf-vraag__link').click(); }); // eerst de vraag open, zoals de bezoeker
+      await p.evaluate(() => { document.querySelector('#faq details').open = true; document.querySelector('#faq a.bf-vraag__link').click(); });
       await wacht(1400);
       const z = await p.evaluate(() => { const k = document.querySelector('#contact .kgj-reken--aanvraag'); const r = k?.getBoundingClientRect(); return r ? { top: Math.round(r.top), vh: innerHeight } : null; });
       if (!z || z.top < 0 || z.top > z.vh - 120) uit.push(`8. na de link staat de kaart onderaan niet in beeld (${JSON.stringify(z)})`);
@@ -328,7 +333,7 @@ async function faqFlow(br, basis, pad, w, h, plant = null) {
   }
   const br = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--disable-lcd-text', '--no-first-run', '--no-default-browser-check'] });
   const fouten = [];
-  let code = 0;
+  let code = 0, metingen = 0;
   try {
     /* opwarmen: de eerste lading van een koude dev-server houdt de klokken van de pagina op (gemeten 5 nov: 2430 ms i.p.v. 1200) */
     for (const pad of Object.keys(PADEN)) { const { ctx } = await open(br, basis, 390, 664, pad); await ctx.close(); }
@@ -337,30 +342,26 @@ async function faqFlow(br, basis, pad, w, h, plant = null) {
     /* positieve controles */
     const controles = [
       ['laadstap op 0 ms', { laadMs: 0 }, /^1\. laadstap/],
-      ['kaart in de pagina (geen volle scherm)', { volUit: true }, /^2\. contactscherm niet over het volle scherm/],
-      ['een geplant woord "gratis"', { extra: true }, /^3\. "gratis"/],
-      /* 8 nov 2026: met de velden eerst staat een losse knop nog in beeld; de plant zet er een schermhoogte ruimte boven (een vaste knop
-         blijft dan onderaan staan, een losse zakt eruit). */
-      ['verzendknop niet vast onderaan', { css: '.kgj-reken.is-vol .kgj-reken__contact > .kgj-reken__knop{position:static!important;margin-top:700px!important}' }, /^2\. verzendknop niet in beeld/],
-      ['"Na uw aanvraag" boven de velden', { css: '.kgj-reken.is-vol .kgj-reken__contact > .kgj-reken__volgt{order:-1!important}' }, /^2\. velden niet eerst/],
+      ['de kaart vast over het scherm (pop-up)', { css: '#rekenaar .kgj-reken--aanvraag.is-contact{position:fixed!important;inset:0!important;z-index:1000!important}' }, /^2\. pop-up/],
+      ['een geplante geschiedenisregel bij het contactblok', { push: true }, /^2\. geschiedenis/],
+      ['verzendknop 700 px lager', { css: '.kgj-reken__contact .kgj-reken__knop{margin-top:700px!important}' }, /^2\. verzendknop niet in beeld/],
+      ['een geplant woord "gratis" en "vrijblijvend" in het blok', { extra: true }, /^3\. "gratis"/],
     ];
     for (const [naam, plant, verwacht] of controles) {
       let r;
       if (plant.extra) {
-        /* "gratis" in het contactscherm planten: na de laadstap een tekst in de band zetten */
         const { ctx, p } = await open(br, basis, 390, 664, '/lp/dakwerken');
         await doorloop(p, '/lp/dakwerken', true);
-        await wacht(1600);
-        await p.evaluate((w) => { const b = document.querySelector(w + ' .kgj-reken__band'); if (b) b.append(' Gratis'); }, HERO);
+        await wacht(1700);
+        await p.evaluate((w) => { const b = document.querySelector(w + ' .kgj-reken__ckop'); if (b) b.append(' Gratis en vrijblijvend'); }, HERO);
         const c = await info(p);
-        r = c.gratis !== 3 ? ['3. "gratis" ' + c.gratis + 'x'] : [];
+        r = c.gratis !== 2 ? ['3. "gratis" ' + c.gratis + 'x'] : [];
         await ctx.close();
       } else r = await gsmFlow(br, basis, '/lp/dakwerken', plant, 3);
       if (!r.some((x) => verwacht.test(x))) { console.log(`ONGELDIGE METING: positieve controle "${naam}" niet gevangen (${r.join(' | ') || 'geen fout'})`); code = 2; }
       else console.log(`positieve controle: ${naam}: gevangen`);
     }
     {
-      /* 9 nov 2026: de witte sluier van vóór vandaag moet rood geven */
       const r = await focusFlow(br, basis, '/lp/dakwerken', '.bf.bf-lp .kgj-reken__sluier{background:#fff!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}');
       if (!r.some((x) => /^9\. de sluier is (niet wazig|wit)/.test(x))) { console.log(`ONGELDIGE METING: positieve controle "witte sluier" niet gevangen (${r.join(' | ') || 'geen fout'})`); code = 2; }
       else console.log(`positieve controle: witte sluier: gevangen (${r.join('; ')})`);
@@ -370,16 +371,17 @@ async function faqFlow(br, basis, pad, w, h, plant = null) {
       if (!r.some((x) => /^8\. open\/dicht/.test(x))) { console.log(`ONGELDIGE METING: positieve controle "eerste vraag open" niet gevangen (${r.join(' | ') || 'geen fout'})`); code = 2; }
       else console.log('positieve controle: eerste vraag open: gevangen');
     }
-    /* 8 nov 2026: hier stond `return`. Een return in de try slaat de regels ná de try over, ook process.exit(2): een ongeldige meting
-       gaf exit 0 en verify liep groen door (gezien op 23035de). Een throw komt in de catch, die code 2 zet; daarna exit 2. */
+    /* 8 nov 2026: een return hier sloeg process.exit(2) over (exit 0 bij een ongeldige meting). Een throw komt in de catch. */
     if (code === 2) throw new Error('positieve controle niet gevangen (zie hierboven)');
 
-    for (const pad of ['/lp/dakwerken', '/lp/dakwerken/asbest']) for (const [w, h] of [[390, 664], [1265, 585]]) for (const f of await faqFlow(br, basis, pad, w, h)) fouten.push(`${pad} @${w}x${h}: ${f}`);
+    for (const pad of ['/lp/dakwerken', '/lp/dakwerken/asbest']) for (const [w, h] of [[390, 664], [1265, 585]]) { for (const f of await faqFlow(br, basis, pad, w, h)) fouten.push(`${pad} @${w}x${h}: ${f}`); metingen++; }
     for (const pad of Object.keys(PADEN)) {
+      if (process.env.LP_SPOOR) console.log('meten: ' + pad);
       for (const f of await focusFlow(br, basis, pad)) fouten.push(`${pad} @390x664: ${f}`);
       for (const f of await gsmFlow(br, basis, pad)) fouten.push(`${pad} @390x664: ${f}`);
       for (const f of await terugFlow(br, basis, pad)) fouten.push(`${pad} @390x664: ${f}`);
       for (const [w, h] of [[1265, 585], [1440, 800]]) for (const f of await pcFlow(br, basis, pad, w, h)) fouten.push(`${pad} @${w}x${h}: ${f}`);
+      metingen += 5;
     }
   } catch (e) {
     console.log('ONGELDIGE METING: ' + (e && e.message ? e.message : e));
@@ -389,8 +391,9 @@ async function faqFlow(br, basis, pad, w, h, plant = null) {
     if (srv) { try { srv.kill(); } catch { /* */ } }
   }
   if (code === 2) process.exit(2);
-  console.log(`check-lp-contact: ${Object.keys(PADEN).length} LP's, laadstap, volle scherm 390x664, venster 1265x585 en 1440x800, versturen (nul echte verzoeken) (${basis})`);
+  if (metingen !== 4 + 4 * 5) { console.log(`ONGELDIGE METING: ${metingen} metingen (verwacht ${4 + 4 * 5})`); process.exit(2); }
+  console.log(`check-lp-contact: ${Object.keys(PADEN).length} LP's, laadstap, contactblok in de kaart 390x664, 1265x585 en 1440x800, versturen (nul echte verzoeken) (${basis})`);
   if (fouten.length) { for (const f of fouten) console.log('  FOUT: ' + f); process.exit(1); }
-  console.log('  AF: laadstap 1,2 s, contactscherm over het volle scherm met verzendknop en sluitknop, gratis 1x en vrijblijvend 1x, sluiten/Esc/klik ernaast houdt het contactscherm, terugknop = vorige vraag, 1 lead + 1 conversie, bedankpagina "Wat nu volgt"');
+  console.log('  AF: laadstap 1,2 s, contactblok in de kaart zonder pop-up (geen vast scherm, dialoog, sluitknop, achtergrond of geschiedenisregel), kop, velden en verzendknop in beeld, gratis 2x (knop + "Gratis plaatsbezoek") en vrijblijvend 0x in het blok, Terug = laatste vraag, terugknop van de browser verlaat de pagina en terugkomen = contactblok, 1 lead + 1 conversie, bedankpagina "Wat nu volgt", opslag gewist');
   process.exit(0);
 })();

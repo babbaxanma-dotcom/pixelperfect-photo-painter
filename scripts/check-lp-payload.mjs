@@ -64,7 +64,8 @@ const FIXTURES = path.join(HIER, 'fixtures', 'lp-payload');
 const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
 const VLUCHTIG = new Set(['user_agent', 'submitted_at', 'referrer']);
 
-const ALLE = ['dakwerken', 'richtprijs-berekenen', 'totaalrenovatie', 'aannemer-renovatiewerken'];
+/* 18 nov 2026: ook /lp/dakwerken/asbest ("Asbest: Ja" moet in de aanvraag blijven nu de asbestvraag weg is) */
+const ALLE = ['dakwerken', 'dakwerken-asbest', 'richtprijs-berekenen', 'totaalrenovatie', 'aannemer-renovatiewerken'];
 const PAGINAS = (process.env.LP_PAGINAS || ALLE.join(',')).split(',').map((s) => s.trim()).filter(Boolean);
 /* Standaard: de breedte van de referentie (1265) en de telefoon (390). */
 const BREEDTES = (process.env.LP_BREEDTES || '1265,390').split(',').map(Number);
@@ -182,7 +183,8 @@ async function doeFlow(browser, basis, lp, f, breedte, lokaas = false) {
        scherm, op de pc in een venster). De toets wacht er gewoon op, zoals een bezoeker. */
     if (f.soort === 'aanvraag') await p.waitForSelector(form, { timeout: 6000 }).catch(() => {});
     if (!(await p.$(form))) { fouten.push(`formulier ${form} niet gevonden na de antwoorden`); return { fouten, log }; }
-    const foutTekst = async () => p.evaluate((w) => document.querySelector(w + ' .kgj-reken__fout')?.textContent.trim() ?? null, wortel);
+    /* 18 nov 2026 (formulier v2): de melding staat onder het veld zelf (.kgj-reken__veldfout, eerste foute veld); de rekenaar houdt .kgj-reken__fout */
+    const foutTekst = async () => p.evaluate((w) => (document.querySelector(w + ' .kgj-reken__veldfout') || document.querySelector(w + ' .kgj-reken__fout'))?.textContent.trim() ?? null, wortel);
 
     /* Rekenaar met prijs (14 okt): eerst naam + e-mail (er vertrekt niets), dan laden (3 s), dan de telefoonstap. */
     if (f.contact) {
