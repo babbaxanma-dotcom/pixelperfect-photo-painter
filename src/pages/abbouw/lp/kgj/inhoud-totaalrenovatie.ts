@@ -562,7 +562,10 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     ],
     trigger: 'Antwoord binnen 24 uur', // 7 nov 2026, zoals bfbouw.be (was 'Offerte binnen 24 uur')
     /* 18 nov 2026, dictaat Mohammed: op de renovatiepagina's alleen regel 1 en 2 (regel 3 van de dakpagina's gaat over een dak) */
-    naKort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek'],
+    naKort: [
+      { titel: 'We nemen binnen 24 uur contact op', tekst: 'We bellen je om een plaatsbezoek in te plannen op een moment dat jou past.' },
+      { titel: 'Gratis plaatsbezoek', tekst: 'Onze expert bekijkt je woning ter plaatse. Daarna ontvang je je offerte in je mailbox.' },
+    ],
     naarKnop: 'Offerte aanvragen',
     /* Vinkjes en trustrij: dezelfde teksten en cijfers als op de rekenaarkaart die hier stond (13 okt, dictaat 4 okt). Alleen de
        vorm verandert (22 okt, Mohammed: "doe de trust badges duidelijker, visueel mooier"): tegels met iconen (badges). De iconen

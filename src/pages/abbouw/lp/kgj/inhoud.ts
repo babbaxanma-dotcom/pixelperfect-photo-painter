@@ -176,9 +176,9 @@ export type KgjInhoud = {
         boven de velden, op de pc in het venster links, in de pagina onder de verzendknop; ook op de bedankpagina ("Wat nu volgt"). */
     volgtKop?: string;
     volgt?: { titel: string; tekst: string }[];
-    /** 18 nov 2026 (Mohammed: "ook kort van wat erna gebeurt", daarna zijn woorden): de korte regels direct onder de verzendknop in het
-        contactblok, genummerd. Woordelijk zijn dictaat; de uitleg per stap (volgt) staat op de bedankpagina. */
-    naKort?: string[];
+    /** 18 nov 2026 (Mohammed: "ook kort van wat erna gebeurt", "doe dat zoals kijzer, zo hoe dat wordt uitgelegd"): het stappenblok "Na uw
+        aanvraag" direct onder de verzendknop: per stap een vette titel en één uitlegzin. Woordelijk zijn dictaat (je-vorm). */
+    naKort?: { titel: string; tekst: string }[];
     /** Eén regel direct boven de verzendknop, alleen in de pagina (bfbouw.be rk__trigger "Offerte binnen 24 uur"). */
     trigger?: string;
     /** Tekst van de knoppen die naar het formulier gaan (kop, waarom, werkwijze, vaste gsm-knop). De verzendknop zelf = inspectie.knop.
@@ -458,8 +458,13 @@ export const DAKWERKEN: KgjInhoud = {
     ],
     /* 7 nov 2026, zoals bfbouw.be: de offerte volgt na het plaatsbezoek; binnen 24 uur = het contact (was 'Offerte binnen 24 uur'). */
     trigger: 'Antwoord binnen 24 uur',
-    /* 18 nov 2026, dictaat Mohammed (woordelijk, ook "Jij" en "je"): de korte regels onder de verzendknop op /lp/dakwerken en /asbest */
-    naKort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek met onze dakexpert', 'Jij geniet zorgeloos van je nieuwe dak'],
+    /* 18 nov 2026, dictaat Mohammed (woordelijk, je-vorm): het stappenblok onder de verzendknop op /lp/dakwerken en /asbest. Bron van de feiten:
+       volgt hierboven (contact binnen 24 uur, gratis plaatsbezoek, offerte in de mailbox). */
+    naKort: [
+      { titel: 'We nemen binnen 24 uur contact op', tekst: 'We bellen je om een plaatsbezoek in te plannen op een moment dat jou past.' },
+      { titel: 'Gratis plaatsbezoek met onze dakexpert', tekst: 'Onze dakexpert bekijkt je dak ter plaatse. Daarna ontvang je je offerte in je mailbox.' },
+      { titel: 'Jij geniet zorgeloos van je nieuwe dak', tekst: 'Na je akkoord plannen we de werken in en voeren we ze uit.' },
+    ],
     naarKnop: 'Offerte aanvragen',
     /* De vinkjes en de trustrij van de rekenaarkaart die hier stond (13 okt). Alleen "Gratis & vrijblijvende richtprijs"
        werd "... dakinspectie": er is geen richtprijs meer, wel de gratis dakinspectie (kop van de kaart en van het slotblok). */

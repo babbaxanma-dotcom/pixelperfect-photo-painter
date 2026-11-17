@@ -245,7 +245,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     /* onderkant van wat de bezoeker nu moet tikken: de keuzes, Volgende, of de verzendknop met de regel eronder */
     /* 2 nov 2026: ook de regel onder de verzendknop ("Onze dakexpert contacteert u ... over uw offerte."): zegt wat er na de knop gebeurt. */
     /* 18 nov 2026 (v2): bij de contactstappen is het doel de knop van die stap ("Verder" of de verzendknop); "Na uw aanvraag" mag onder het scherm staan. */
-    const doelen = [...el.querySelectorAll<HTMLElement>('.kgj-reken__stap :is(.kgj-reken__keuze, .kgj-reken__vink, .kgj-reken__verder, .kgj-reken__knop, .kgj-reken__nakort, .kgj-reken__knopzeker, .kgj-reken__gerust)')];
+    const doelen = [...el.querySelectorAll<HTMLElement>('.kgj-reken__stap :is(.kgj-reken__keuze, .kgj-reken__vink, .kgj-reken__verder, .kgj-reken__knop, .kgj-reken__knopzeker, .kgj-reken__gerust)')];
     /* een offertestap focust zijn kop (geen veld: op de gsm zou het toetsenbord openspringen) */
     const onderkant = doelen.length ? Math.max(...doelen.map((d) => d.getBoundingClientRect().bottom)) : kopTop;
     const tekort = onderkant - (window.innerHeight - 12);
@@ -906,12 +906,17 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
             </button>
             {/* "Versturen lukte niet ..." direct onder de verzendknop, waar de bezoeker tikte (18 nov 2026, v2). */}
             {fout && <p className="kgj-reken__fout" role={actiefHier ? 'alert' : undefined}>{fout}</p>}
-            {/* 18 nov 2026 (Mohammed: "ook kort van wat erna gebeurt", daarna zijn woorden): direct onder de knop, kort en sober, genummerd,
-                zonder uitlegzinnen, kader of bolletjes (inhoud: naKort). De uitleg per stap staat op de bedankpagina ("Wat nu volgt"). */}
+            {/* 18 nov 2026 (Mohammed: "ook kort van wat erna gebeurt", zijn woorden, daarna "niet 1 2 3 zo, meer stappen, zoals kijzer het heeft"):
+                direct onder de knop een licht grijs stappenblok "Na uw aanvraag": per stap een cirkel met alleen een rand in de merkkleur en het
+                cijfer, de tekst rechts, een stippellijn tussen de cirkels (CSS). Tekst = zijn dictaat (inhoud: naKort). Op de gsm mag het blok onder
+                het scherm doorlopen; kop, velden en knop staan bij het openen in beeld. */}
             {a.naKort && a.naKort.length > 0 && (
-              <ol className="kgj-reken__nakort" aria-label={a.volgtKop ?? 'Na uw aanvraag'}>
-                {a.naKort.map((r) => <li key={r}>{r}</li>)}
-              </ol>
+              <div className="kgj-reken__nastap">
+                <p className="kgj-reken__nastap-kop">{a.volgtKop ?? 'Na uw aanvraag'}</p>
+                <ol className="kgj-reken__nakort">
+                  {a.naKort.map((r) => <li key={r.titel}><b>{r.titel}</b><span>{r.tekst}</span></li>)}
+                </ol>
+              </div>
             )}
           </form>
         </div>
