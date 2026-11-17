@@ -7,7 +7,7 @@ const puppeteer = require('puppeteer-core');
 const B = process.env.LP_BASIS || process.argv[2] || 'http://127.0.0.1:8090';
 const BLOK = /clarity\.ms|googletagmanager|google-analytics|doubleclick|googleadservices|leadconnector|web3forms|facebook|fonts\.g/;
 let fout = 0; const t = (n, ok, info = '') => { console.log((ok ? '  ok   ' : '  FOUT ') + n + (ok ? '' : '  (' + info + ')')); if (!ok) fout++; };
-const teller = (p) => p.evaluate(() => { const e = [...document.querySelectorAll('#root *')].find((x) => /^Stap \d+ van \d+$/.test((x.textContent || '').trim()) && x.children.length === 0); return e ? e.textContent.trim() : null; });
+const teller = (p) => p.evaluate(() => { const e = [...document.querySelectorAll('#root *')].find((x) => /^Stap \d+( van \d+)?$/.test( /* 18 nov 2026: sinds 7 nov toont de teller "Stap n" zonder "van m" (Mohammed: "ipv stap 1 VAN 7 gewoon stap 1") */(x.textContent || '').trim()) && x.children.length === 0); return e ? e.textContent.trim() : null; });
 (async () => {
   const b = await puppeteer.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: 'new', args: ['--no-sandbox'] });
   for (const pad of ['/lp/dakwerken', '/lp/dakwerken/asbest', '/lp/totaalrenovatie', '/lp/aannemer-renovatiewerken']) for (const [w, h] of [[390, 664], [1265, 800]]) {
@@ -18,6 +18,8 @@ const teller = (p) => p.evaluate(() => { const e = [...document.querySelectorAll
     // hoofdscript 2,5 s vertragen, zodat er een venster is waarin de pagina zichtbaar maar nog niet gehydrateerd is
     p.on('request', (r) => { const u = r.url(); if (BLOK.test(u)) return r.respond({ status: 204, body: '' }); if (/\/assets\/.+\.js$/.test(u) && !p.__vrij) return setTimeout(() => r.continue(), 2500); r.continue(); });
     await p.setViewport({ width: w, height: h, isMobile: w < 1000, hasTouch: w < 1000 });
+    /* 18 nov 2026: TEGENPROEF=1 = positieve controle: met __abKlaar vooraf op true onthoudt het kopscript de tik niet; de toets moet rood worden */
+    if (process.env.TEGENPROEF) await p.evaluateOnNewDocument(() => { window.__abKlaar = true; });
     await p.goto(B + pad, { waitUntil: 'domcontentloaded' });
     await new Promise((r) => setTimeout(r, 400));
     const voor = await p.evaluate(() => ({ klaar: !!window.__abKlaar, h1: !!document.querySelector('#root h1'), keuze: !!document.querySelector('#root button') }));
