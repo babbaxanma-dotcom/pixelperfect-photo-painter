@@ -115,6 +115,11 @@ interface SubmitResult {
   ok: boolean;
   via: 'ghl' | 'web3forms' | 'none';
   error?: string;
+  /** 18 nov 2026 (formulier v2, zoals bfbouw.be audit f5bc8cc): alleen bij ok=false. true = elk transport faalde op een
+      netwerkfout (geen antwoord, geen time-out) of een serverfout (5xx): de aanvraag kwam zeker niet aan en mag vanzelf
+      opnieuw (Aanvraag.tsx, 2 nieuwe pogingen). false = een time-out (het verzoek kan al aangekomen zijn) of een fout van
+      de aanvraag zelf (4xx): niet vanzelf opnieuw, anders twee leads. */
+  opnieuw?: boolean;
 }
 
 /**
@@ -250,6 +255,13 @@ export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
 
   let ghlOk = false;
   let w3Ok = false;
+  /* 18 nov 2026: mag een mislukte aanvraag vanzelf opnieuw? Alleen als ELK transport een netwerkfout (TypeError: geen
+     verbinding) of een 5xx gaf. Een time-out (AbortError na 8 s) of een 4xx maakt het false. Zie SubmitResult.opnieuw. */
+  let allesVeiligOpnieuw = true;
+  const nietVeilig = (status?: number, err?: unknown) => {
+    if (status !== undefined) { if (status < 500) allesVeiligOpnieuw = false; return; }
+    if (!(err instanceof TypeError)) allesVeiligOpnieuw = false; // AbortError (time-out) of onbekend
+  };
 
   // Beide transporten ALTIJD parallel: GHL (CRM/pipeline) ÉN Web3Forms (email-backup).
   // Geen enkele lead mag verloren gaan als de GHL-webhook/workflow niet afvuurt.
@@ -258,8 +270,8 @@ export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
   if (ghlUrl) {
     tasks.push(
       postJSON(ghlUrl, body)
-        .then((res) => { ghlOk = res.ok; if (!res.ok) console.warn('[lead] GHL niet-ok status:', res.status); })
-        .catch((err) => { console.warn('[lead] GHL submit failed:', err); })
+        .then((res) => { ghlOk = res.ok; if (!res.ok) { nietVeilig(res.status); console.warn('[lead] GHL niet-ok status:', res.status); } })
+        .catch((err) => { nietVeilig(undefined, err); console.warn('[lead] GHL submit failed:', err); })
     );
   }
 
@@ -272,8 +284,8 @@ export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
         ...(w3to ? { to: w3to } : {}),
         ...body,
       })
-        .then((res) => { w3Ok = res.ok; if (!res.ok) console.warn('[lead] Web3Forms niet-ok status:', res.status); })
-        .catch((err) => { console.warn('[lead] Web3Forms submit failed:', err); })
+        .then((res) => { w3Ok = res.ok; if (!res.ok) { nietVeilig(res.status); console.warn('[lead] Web3Forms niet-ok status:', res.status); } })
+        .catch((err) => { nietVeilig(undefined, err); console.warn('[lead] Web3Forms submit failed:', err); })
     );
   }
 
@@ -288,5 +300,5 @@ export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
   }
 
   console.error('[lead] geen enkel transport geslaagd, lead niet bezorgd', { source: p.source });
-  return { ok: false, via: 'none', error: 'no transport succeeded' };
+  return { ok: false, via: 'none', error: 'no transport succeeded', opnieuw: tasks.length > 0 && allesVeiligOpnieuw };
 }

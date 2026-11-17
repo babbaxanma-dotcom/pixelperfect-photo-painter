@@ -233,3 +233,37 @@ describe('submitLead, conversie vuurt enkel bij bezorging', () => {
     expect(fireConversion).not.toHaveBeenCalled();
   });
 });
+
+/* 18 nov 2026 (formulier v2): mag een mislukte aanvraag vanzelf opnieuw (Aanvraag.tsx, 2 nieuwe pogingen)? Alleen als de aanvraag
+   zeker niet aankwam: elk transport een netwerkfout of een 5xx. Een time-out of een 4xx: nooit vanzelf opnieuw (dubbele lead). */
+describe('submitLead, opnieuw na een mislukte bezorging', () => {
+  it('netwerkfout op beide transporten: opnieuw = true, geen conversie', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => { throw new TypeError('Failed to fetch'); }));
+    const res = await submitLead({ ...base });
+    expect(res.ok).toBe(false);
+    expect(res.opnieuw).toBe(true);
+    expect(fireConversion).not.toHaveBeenCalled();
+  });
+  it('503 op beide transporten: opnieuw = true', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => ({ ok: false, status: 503 }) as unknown as Response));
+    const res = await submitLead({ ...base });
+    expect(res.opnieuw).toBe(true);
+  });
+  it('een 4xx op één transport: opnieuw = false (de aanvraag zelf klopt niet)', async () => {
+    vi.stubGlobal('fetch', vi.fn(async (u: string) => ({ ok: false, status: String(u).includes('web3forms') ? 400 : 503 }) as unknown as Response));
+    const res = await submitLead({ ...base });
+    expect(res.ok).toBe(false);
+    expect(res.opnieuw).toBe(false);
+  });
+  it('een time-out (AbortError) op één transport: opnieuw = false (het verzoek kan al aangekomen zijn)', async () => {
+    vi.stubGlobal('fetch', vi.fn(async (u: string) => { if (String(u).includes('web3forms')) throw new DOMException('aborted', 'AbortError'); throw new TypeError('Failed to fetch'); }));
+    const res = await submitLead({ ...base });
+    expect(res.opnieuw).toBe(false);
+  });
+  it('één transport geslaagd: ok, geen opnieuw-vlag', async () => {
+    vi.stubGlobal('fetch', vi.fn(async (u: string) => { if (String(u).includes('web3forms')) throw new TypeError('Failed to fetch'); return { ok: true, status: 200 } as unknown as Response; }));
+    const res = await submitLead({ ...base });
+    expect(res.ok).toBe(true);
+    expect(res.opnieuw).toBeUndefined();
+  });
+});
