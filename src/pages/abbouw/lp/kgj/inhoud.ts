@@ -49,7 +49,6 @@ import keuzePlat from '@/assets/dak/keuze-plat.jpg';
 
 import type { IcoonNaam } from './Iconen';
 import { HOEVE } from './realisatie-hoeve';
-import { BEREIKBAAR_VRAAG } from './vraag-bereikbaar';
 
 /** foto: optioneel beeld boven het label; icoon: optioneel icoon links van het label.
     Het label zegt al wat er te zien is, dus geen alt-tekst. */
@@ -76,7 +75,8 @@ export type Vraag = {
       troeven op de laatste stap). De regel onderaan de kaart valt dan weg, anders staat
       hij er twee keer. */
   punt?: string;
-  /** 16 nov 2026: in de samenvatting op het contactscherm staat de sleutel erbij ("Bereikbaar: Overdag"); een los "Overdag" zegt daar niets. */
+  /** 16 nov 2026: in de samenvatting op het contactscherm staat de sleutel erbij ("Isolatie: Ja"); een los antwoord zegt daar niets.
+      18 nov 2026 (v2): de vraag "Bereikbaar" (staal) is weg; de vlag blijft voor andere vragen. */
   metSleutel?: boolean;
 };
 /** Eén stap van de offerte (Aanvraag.tsx): keuzelijsten en eventueel een optioneel tekstvak. */
@@ -393,7 +393,8 @@ export const DAKWERKEN: KgjInhoud = {
       ] },
       /* 7 nov 2026, zoals bfbouw.be (Mohammed daar: "bij gratis dakinspectie moeten de vragen erna wel veranderen"): wie Gratis dakinspectie kiest,
          krijgt na het soort dak "Wat merkt u aan uw dak?" (per soort dak een eigen lijst, zelfde sleutel; woordelijk bfbouw.be) en daarna alleen
-         asbest; isoleren, oppervlakte en start vallen weg (nietAls hieronder). */
+         asbest; isoleren, oppervlakte en start vallen weg (nietAls hieronder). 18 nov 2026 (v2): ook asbest is weg, na "Wat merkt u aan uw dak?"
+         volgen meteen de contactgegevens. */
       { sleutel: 'Signaal', vraag: 'Wat merkt u aan uw dak?', lijst: true, als: { Werk: ['Gratis dakinspectie'], Dak: ['Hellend dak'] }, keuzes: [
         { label: 'Lekkage of vochtplekken', icoon: 'lek' }, { label: 'Losse of kapotte pannen', icoon: 'golfpan' },
         { label: 'Schade na een storm', icoon: 'schade' }, { label: 'Mijn dak is al oud', icoon: 'oud' },
@@ -421,31 +422,15 @@ export const DAKWERKEN: KgjInhoud = {
       { sleutel: 'Isolatie', vraag: 'Wilt u ook isoleren?', nietAls: { Werk: ['Isolatie', 'Nieuw dak', 'Gratis dakinspectie'] }, keuzes: [
         { label: 'Ja', icoon: 'isolatie' }, { label: 'Nee', icoon: 'geenisolatie' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
       ] },
-      { sleutel: 'Asbest', vraag: 'Zit er asbest in uw dak?', nietAls: { Situatie: ['Nieuwbouw', 'Uitbreiding of aanbouw'] }, keuzes: [
-        { label: 'Ja', icoon: 'asbest' }, { label: 'Nee', icoon: 'veilig' }, { label: 'Weet ik niet', icoon: 'twijfel' },
-      ] },
-      /* 2 nov 2026, zoals bfbouw.be 31 okt (Mohammed: "meer vragen dat erbij horen, op basis van de norm", gewone offerteaanvraag):
-         de oppervlakte en de start, met de vragen en antwoorden van bfbouw.be (zijn offertestap "Planning" van 30 okt, "Binnen 6
-         maanden" op zijn woord). Vervangt de startvraag van 22 okt (Dit jaar / Volgend jaar / Ik verken nog). Iconen uit de eigen set:
-         de vier vakjes lopen op met de oppervlakte. */
-      /* 5 nov 2026, zoals bfbouw.be 4 nov (Mohammed daar: 'Hoe groot is uw dak ongeveer?' bij Nieuw dak + Nieuwbouw "is fout toch"): wie
-         nog geen dak heeft, krijgt "Hoe groot wordt het dak ongeveer?" (zelfde sleutel en keuzes). */
-      { sleutel: 'Oppervlakte', vraag: 'Hoe groot is uw dak ongeveer?', lijst: true, nietAls: { Situatie: ['Nieuwbouw', 'Uitbreiding of aanbouw'], Werk: ['Gratis dakinspectie'] }, keuzes: [
-        { label: 'Minder dan 50 m²', icoon: 'maat1' }, { label: '50 tot 100 m²', icoon: 'maat2' },
-        { label: '100 tot 150 m²', icoon: 'maat3' }, { label: 'Meer dan 150 m²', icoon: 'maat4' },
-        { label: 'Weet ik niet', icoon: 'twijfel' },
-      ] },
-      { sleutel: 'Oppervlakte', vraag: 'Hoe groot wordt het dak ongeveer?', lijst: true, als: { Situatie: ['Nieuwbouw', 'Uitbreiding of aanbouw'] }, keuzes: [
-        { label: 'Minder dan 50 m²', icoon: 'maat1' }, { label: '50 tot 100 m²', icoon: 'maat2' },
-        { label: '100 tot 150 m²', icoon: 'maat3' }, { label: 'Meer dan 150 m²', icoon: 'maat4' },
-        { label: 'Weet ik niet', icoon: 'twijfel' },
-      ] },
+      /* 18 nov 2026 (formulier v2, zoals bfbouw.be c393999; Mohammed: "en het form korter?", "die vraag van oppervlakte en asbest eruit"):
+         "Zit er asbest in uw dak?", "Hoe groot is uw dak ongeveer?" en "Hoe groot wordt het dak ongeveer?" zijn weg op elk pad. Een bezoeker
+         weet dat vaak niet; de dakexpert ziet het bij het plaatsbezoek. Op /lp/dakwerken/asbest blijft "Asbest: Ja" vooraf ingevuld en gaat
+         het mee in de aanvraag (ASBEST_VRAAG hieronder, alleen daar). Oude vragen: git show 9f8ff8e:src/pages/abbouw/lp/kgj/inhoud.ts.
+         "Wanneer bent u het best bereikbaar?" (staal 16 nov) is weg (Mohammed 18 nov: het contactblok = "Contact" + drie velden + knop). */
       { sleutel: 'Start', vraag: 'Wanneer wilt u starten?', nietAls: { Werk: ['Gratis dakinspectie'] }, keuzes: [
         { label: 'Zo snel mogelijk', icoon: 'snel' }, { label: 'Binnen 3 maanden', icoon: 'drie' },
         { label: 'Binnen 6 maanden', icoon: 'later' }, { label: 'Later', icoon: 'verken' },
       ] },
-      /* 16 nov 2026 (staal): de laatste klikvraag vóór het contactscherm, op elk pad (ook na Gratis dakinspectie en Nieuw dak). */
-      BEREIKBAAR_VRAAG,
     ],
     /* 2 nov 2026: kop van de laatste stap zoals bfbouw.be 31 okt (was "Bijna klaar! Bevestig uw gratis dakinspectie").
        5 nov 2026, zoals bfbouw.be (Mohammed daar: "het constant herhalen van gratis en vrijblijvend wekt juist argwaan ... behoud het op
@@ -456,7 +441,8 @@ export const DAKWERKEN: KgjInhoud = {
        - "via WhatsApp of" van bfbouw.be NIET: AB heeft geen WhatsApp-nummer in een bron (contact.ts, GHL Twilio-nummers);
          de offerte gaat naar het e-mailadres dat de bezoeker verplicht invult;
        - "dakexpert": de AB-zin onder de knop sinds 21 okt ("Onze dakexpert contacteert u ..."). */
-    laden: { kop: 'Uw aanvraag wordt klaargezet', eerste: 'Antwoorden opgeslagen', laatste: 'Klaar voor onze dakexpert', sleutels: ['Werk', 'Oppervlakte'], leeg: 'Gegevens van uw dak' },
+    /* 18 nov 2026 (v2): geen oppervlaktevraag meer; regel 2 van de laadstap = werk + soort dak (zoals bfbouw.be dakRegel). */
+    laden: { kop: 'Uw aanvraag wordt klaargezet', eerste: 'Antwoorden opgeslagen', laatste: 'Klaar voor onze dakexpert', sleutels: ['Werk', 'Dak'], leeg: 'Gegevens van uw dak' },
     volgtKop: 'Na uw aanvraag',
     /* 7 nov 2026, zoals bfbouw.be 7 nov (Mohammed daar: "oke doe maar die 3 stappen"; "en doe al deze changes ook bij ab pagina"): eerst contact
        binnen 24 uur, dan het gratis plaatsbezoek, dan de offerte. AB-feiten: 24 uur = zijn woord voor AB (2 nov, offerte binnen 24 uur; contact
@@ -910,6 +896,10 @@ export const DAKWERKEN: KgjInhoud = {
    stap minder). Kop woordelijk de BF-kop van 31 okt ("De specialist voor uw asbestdak"). Subkop in de vorm van de BF-subkop, zonder
    "onze ploeg haalt eraf": wie het asbest verwijdert, staat voor AB niet in een bron. Bron in GHL lp:dakwerken-asbest:offerte (W01b
    standaard-sms); bedankpagina en conversietags die van /lp/dakwerken. */
+/* 18 nov 2026 (v2): alleen nog op /lp/dakwerken/asbest, en daar nooit zichtbaar (nietAls Asbest: Ja; het antwoord staat vooraf op Ja). */
+const ASBEST_VRAAG: Vraag = { sleutel: 'Asbest', vraag: 'Zit er asbest in uw dak?', nietAls: { Situatie: ['Nieuwbouw', 'Uitbreiding of aanbouw'], Asbest: ['Ja'] }, keuzes: [
+  { label: 'Ja', icoon: 'asbest' }, { label: 'Nee', icoon: 'veilig' }, { label: 'Weet ik niet', icoon: 'twijfel' },
+] };
 export const DAKWERKEN_ASBEST: KgjInhoud = {
   ...DAKWERKEN,
   titel: 'De specialist voor uw asbestdak | AB Bouw Groep',
@@ -921,9 +911,11 @@ export const DAKWERKEN_ASBEST: KgjInhoud = {
     onder: 'Wij vervangen uw asbestdak door een nieuw dak, vraag nu uw offerte aan.',
   },
   inspectie: { ...DAKWERKEN.inspectie, bronLead: 'lp:dakwerken-asbest:offerte' },
-  /* de asbestvraag valt weg: haar antwoord (Ja) staat vooraf in de aanvraag (voorAf + beginStand) */
+  /* de asbestvraag wordt nooit getoond: haar antwoord (Ja) staat vooraf in de aanvraag (voorAf + beginStand). 18 nov 2026 (v2): de vraag
+     staat niet meer op /lp/dakwerken; hier staat ze nog in de lijst (op haar oude plaats, vóór Start), alleen zodat "Asbest: Ja" in de
+     aanvraag blijft (Aanvraag.tsx BEANTWOORD) en de kaart haar overslaat (beginStand overslaan + nietAls Asbest: Ja). */
   aanvraag: DAKWERKEN.aanvraag && { ...DAKWERKEN.aanvraag,
-    vragen: DAKWERKEN.aanvraag.vragen.map((v) => (v.sleutel === 'Asbest' ? { ...v, nietAls: { ...(v.nietAls ?? {}), Asbest: ['Ja'] } } : v)) },
+    vragen: DAKWERKEN.aanvraag.vragen.flatMap((v) => (v.sleutel === 'Start' ? [ASBEST_VRAAG, v] : [v])) },
   boodschap: undefined,
   voorAf: { sleutel: 'Asbest', label: 'Ja' },
 };

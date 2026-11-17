@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type Dispatch, type MutableRefObject, type ReactNode, type SetStateAction } from 'react';
 import { meldClarity } from '@/lib/clarity';
 import { vraagTelt, type KgjInhoud } from './inhoud';
+import { CONTACT_SLEUTEL, leesContact } from './contact-controle';
 
 /**
  * Eén stand voor de aanvraagkaart bovenaan (hero) en die onderaan (#contact), 23 okt 2026.
@@ -46,6 +47,9 @@ export type AanvraagStand = {
   /** 7 nov 2026 (zoals bfbouw.be rk__gekozen): de knop "Ik ben op zoek naar" die de kaart startte; de kaart toont "Uw keuze: ..." bij de
       vragen erna, zolang dat antwoord blijft staan. */
   gekozen?: { sleutel: string; label: string };
+  /** 18 nov 2026 (formulier v2): de meldingen onder de velden (rood, onder het veld zelf, pas na een poging om te versturen);
+      fout blijft de melding onder de verzendknop (versturen lukte niet). */
+  veldFout?: Partial<Record<'naam' | 'email' | 'telefoon', string>>;
 };
 
 export type GedeeldeAanvraag = {
@@ -80,13 +84,16 @@ function useMaakGedeeld(begin: () => AanvraagStand): GedeeldeAanvraag {
 /* 5 nov 2026, zoals bfbouw.be 4 nov (cad4e57, bf_aanvraag): na de laatste vraag staan de antwoorden in sessionStorage, per tabblad.
    Keert de bezoeker in hetzelfde tabblad terug (vanuit Google, een nieuwe advertentieklik, herladen), dan staat de kaart meteen op
    het contactscherm met al zijn antwoorden, in de pagina (niet over het volle scherm). "Antwoorden opgeslagen" in de laadstap is
-   dus waar. Na een geslaagde aanvraag gaat de sleutel weg. Naam, telefoon en e-mail worden NIET bewaard. */
+   dus waar. Na een geslaagde aanvraag gaat de sleutel weg.
+   18 nov 2026 (formulier v2, zoals bfbouw.be audit f5bc8cc bf_contact): ook de getypte naam, het telefoonnummer en het e-mailadres
+   staan in de sessie van dit tabblad (contact-controle.ts, sleutel ab_contact): wie herlaadt of met de terugknop van de browser
+   terugkomt, vindt ze terug. Weg na versturen en bij het sluiten van het tabblad. */
 export const BEWAAR_SLEUTEL = 'ab_aanvraag';
 export function bewaarAanvraag(antwoorden: Record<string, string>, vinken: Record<string, string[]>) {
   try { sessionStorage.setItem(BEWAAR_SLEUTEL, JSON.stringify({ pad: window.location.pathname, antwoorden, vinken })); } catch { /* niets */ }
 }
 export function wisAanvraag() {
-  try { sessionStorage.removeItem(BEWAAR_SLEUTEL); } catch { /* niets */ }
+  try { sessionStorage.removeItem(BEWAAR_SLEUTEL); sessionStorage.removeItem(CONTACT_SLEUTEL); } catch { /* niets */ }
 }
 /** De bewaarde antwoorden van deze pagina als stand op het contactscherm, of null (andere pagina, niets bewaard, een vraag open). */
 export function hersteldeStand(inhoud: KgjInhoud, nu: AanvraagStand): AanvraagStand | null {
@@ -97,6 +104,11 @@ export function hersteldeStand(inhoud: KgjInhoud, nu: AanvraagStand): AanvraagSt
   const vragen = (inhoud.aanvraag?.vragen ?? []).filter((v) => vraagTelt(v, antwoorden) && !nu.overslaan?.includes(v.sleutel));
   if (!vragen.length || vragen.some((v) => !antwoorden[v.sleutel])) return null;
   return { ...nu, antwoorden, vinken: b.vinken ?? {}, stap: vragen.length, aangetikt: true, fout: null };
+}
+/** 18 nov 2026 (v2): de bewaarde contactgegevens in de stand zetten (een veld dat al iets bevat, blijft). */
+export function metContact(s: AanvraagStand): AanvraagStand {
+  const c = leesContact();
+  return c ? { ...s, naam: s.naam || c.naam || '', telefoon: s.telefoon || c.telefoon || '', email: s.email || c.email || '' } : s;
 }
 
 const Gedeeld = createContext<GedeeldeAanvraag | null>(null);
@@ -109,7 +121,7 @@ export function AanvraagStaat({ begin, inhoud, children }: { begin: () => Aanvra
   useEffect(() => {
     if (!inhoud?.aanvraag) return;
     let hersteld = false;
-    zet((s) => { const h = hersteldeStand(inhoud, s); hersteld = !!h; return h ?? s; });
+    zet((s) => { const h = hersteldeStand(inhoud, s); hersteld = !!h; return metContact(h ?? s); });
     if (hersteld) meldClarity('aanvraag-hersteld');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
