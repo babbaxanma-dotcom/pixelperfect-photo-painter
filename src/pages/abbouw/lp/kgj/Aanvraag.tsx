@@ -245,7 +245,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     /* onderkant van wat de bezoeker nu moet tikken: de keuzes, Volgende, of de verzendknop met de regel eronder */
     /* 2 nov 2026: ook de regel onder de verzendknop ("Onze dakexpert contacteert u ... over uw offerte."): zegt wat er na de knop gebeurt. */
     /* 18 nov 2026 (v2): bij de contactstappen is het doel de knop van die stap ("Verder" of de verzendknop); "Na uw aanvraag" mag onder het scherm staan. */
-    const doelen = [...el.querySelectorAll<HTMLElement>('.kgj-reken__stap :is(.kgj-reken__keuze, .kgj-reken__vink, .kgj-reken__verder, .kgj-reken__cverder, .kgj-reken__knop, .kgj-reken__knopzeker, .kgj-reken__gerust)')];
+    const doelen = [...el.querySelectorAll<HTMLElement>('.kgj-reken__stap :is(.kgj-reken__keuze, .kgj-reken__vink, .kgj-reken__verder, .kgj-reken__knop, .kgj-reken__nakort, .kgj-reken__knopzeker, .kgj-reken__gerust)')];
     /* een offertestap focust zijn kop (geen veld: op de gsm zou het toetsenbord openspringen) */
     const onderkant = doelen.length ? Math.max(...doelen.map((d) => d.getBoundingClientRect().bottom)) : kopTop;
     const tekort = onderkant - (window.innerHeight - 12);
@@ -263,6 +263,29 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     inBeeld();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stapSleutel, actief, plek]);
+
+  /* ---------- Geen concurrerende belknoppen tijdens het formulier (18 nov 2026) ----------
+     Mohammed: "de bel directjes ctas moeten weg wanneer hij daar is ofzo, gaat het niet zorgen voor problemen meerdere ctas". Vanaf het
+     eerste antwoord (stand.aangetikt) en zolang een aanvraagkaart (ook maar deels) in beeld is: html.is-informulier; de CSS laat dan de
+     belknop in de kopbalk en de ronde belknop wegvagen (de kopbalk zelf verspringt niet). Volledig uit beeld gescrold = terug; na versturen
+     gaat de bezoeker naar de bedankpagina (de klasse gaat weg bij het verlaten). Eén register voor de twee kaarten. */
+  const aangetikt = levend.aangetikt && !levend.vraagToestemming;
+  useEffect(() => {
+    const el = kaart.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const w = window as unknown as { __abKaartInBeeld?: Record<string, boolean>; __abGestart?: boolean };
+    const reg = (w.__abKaartInBeeld ??= {});
+    const zet = () => document.documentElement.classList.toggle('is-informulier', !!w.__abGestart && Object.values(reg).some(Boolean));
+    const io = new IntersectionObserver(([r]) => { reg[plek] = r.isIntersecting; zet(); });
+    io.observe(el);
+    return () => { io.disconnect(); delete reg[plek]; zet(); };
+  }, [plek]);
+  useEffect(() => {
+    const w = window as unknown as { __abKaartInBeeld?: Record<string, boolean>; __abGestart?: boolean };
+    w.__abGestart = aangetikt;
+    document.documentElement.classList.toggle('is-informulier', aangetikt && Object.values(w.__abKaartInBeeld ?? {}).some(Boolean));
+  }, [aangetikt]);
+  useEffect(() => () => { document.documentElement.classList.remove('is-informulier'); (window as unknown as { __abGestart?: boolean }).__abGestart = false; }, []);
 
   /* ---------- Laadstap (5 nov 2026, zoals bfbouw.be cad4e57) ----------
      Mohammed (bfbouw.be, 4-5 nov): "vanaf ze bij de laatste stap zijn, het laad zo 1 second, gegevens opslaan, en dan opent het de
@@ -883,6 +906,13 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
             </button>
             {/* "Versturen lukte niet ..." direct onder de verzendknop, waar de bezoeker tikte (18 nov 2026, v2). */}
             {fout && <p className="kgj-reken__fout" role={actiefHier ? 'alert' : undefined}>{fout}</p>}
+            {/* 18 nov 2026 (Mohammed: "ook kort van wat erna gebeurt", daarna zijn woorden): direct onder de knop, kort en sober, genummerd,
+                zonder uitlegzinnen, kader of bolletjes (inhoud: naKort). De uitleg per stap staat op de bedankpagina ("Wat nu volgt"). */}
+            {a.naKort && a.naKort.length > 0 && (
+              <ol className="kgj-reken__nakort" aria-label={a.volgtKop ?? 'Na uw aanvraag'}>
+                {a.naKort.map((r) => <li key={r}>{r}</li>)}
+              </ol>
+            )}
           </form>
         </div>
       )}

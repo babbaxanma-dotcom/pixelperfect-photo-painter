@@ -1335,9 +1335,9 @@ body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { flex: 1; padding: 8px 1
 .bf.bf-lp .kgj-reken__cvelden { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; margin-top: 12px; }
 .bf.bf-lp .kgj-reken__cveld { position: relative; min-width: 0; }
 .bf.bf-lp .kgj-reken__cveld--breed { grid-column: 1 / -1; }
-.bf.bf-lp .kgj-reken__cic { position: absolute; left: 12px; top: 16px; width: 20px; height: 20px; color: #55565b; pointer-events: none; }
+.bf.bf-lp .kgj-reken__cic { position: absolute; left: 11px; top: 16px; width: 20px; height: 20px; color: #55565b; pointer-events: none; }
 .bf.bf-lp .kgj-reken__cic svg { display: block; width: 20px; height: 20px; stroke-width: 1.75; }
-.bf.bf-lp .kgj-reken__contact .kgj-reken__cveld input:not([type="hidden"]) { display: block; width: 100%; height: 52px; margin: 0; padding: 0 10px 0 40px; border: 1px solid #d4d4d8; border-radius: 8px; background: #fff; box-shadow: none; font: inherit; font-size: 16px; font-weight: 400; line-height: 1.2; color: var(--ink); }
+.bf.bf-lp .kgj-reken__contact .kgj-reken__cveld input:not([type="hidden"]) { display: block; width: 100%; height: 52px; margin: 0; padding: 0 6px 0 38px; border: 1px solid #d4d4d8; border-radius: 8px; background: #fff; box-shadow: none; font: inherit; font-size: 16px; font-weight: 400; line-height: 1.2; color: var(--ink); }
 .bf.bf-lp .kgj-reken__contact .kgj-reken__cveld input::placeholder { color: #7a7b80; opacity: 1; }
 .bf.bf-lp .kgj-reken__contact .kgj-reken__cveld input:focus { outline: 2px solid var(--merk-tekst); outline-offset: 0; border-color: var(--merk-tekst); }
 .bf.bf-lp .kgj-reken__contact .kgj-reken__cveld input[aria-invalid="true"] { border-color: #b3261e; }
@@ -1351,6 +1351,21 @@ body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { flex: 1; padding: 8px 1
   .bf.bf-lp .kgj-reken__cvelden { grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 10px; }
   .bf.bf-lp .kgj-reken__contact .kgj-reken__ckop { font-size: 19px; }
   .bf.bf-lp .kgj-reken__contact .kgj-reken__knop { margin-top: 14px; font-size: 16.5px; }
+}
+/* "Na uw aanvraag" kort onder de knop (18 nov 2026, Mohammed: "ook kort van wat erna gebeurt"): de drie titels genummerd, 15 px, gedempt
+   (#545458 op wit = 7,6:1), geen kader, geen bolletjes, geen uitlegzinnen. */
+.bf.bf-lp .kgj-reken__nakort { list-style: none; margin: 12px 0 0; padding: 0; counter-reset: nakort; }
+.bf.bf-lp .kgj-reken__nakort li { counter-increment: nakort; margin: 0; padding: 0; font-size: 15px; line-height: 21px; font-weight: 500; color: var(--tekst-2); }
+.bf.bf-lp .kgj-reken__nakort li::before { content: counter(nakort) ". "; font-weight: 700; color: var(--tekst-2); }
+/* smalle gsm (tot 340 px breed, bv. 320x568): met het toetsenbord open blijven 278 px over; kop, drie velden en knop passen daar alleen met
+   iets lagere velden (48 px, tikvlak blijft boven 44) en minder tussenruimte. Altijd zo op deze breedte, zodat er niets verspringt als het
+   toetsenbord opent of sluit. */
+@media (max-width: 340px) {
+  .bf.bf-lp .kgj-reken__contact .kgj-reken__ckop { margin-top: 0; }
+  .bf.bf-lp .kgj-reken__cvelden { gap: 6px; margin-top: 8px; }
+  .bf.bf-lp .kgj-reken__contact .kgj-reken__cveld input:not([type="hidden"]) { height: 48px; }
+  .bf.bf-lp .kgj-reken__cic { top: 14px; }
+  .bf.bf-lp .kgj-reken__contact .kgj-reken__knop { height: 50px; margin-top: 10px; }
 }
 /* Typen op de gsm (Aanvraag.tsx zetTyp): de vaste kopbalk is weg zolang het toetsenbord open is en tot de bezoeker daarna zelf scrolt,
    zodat de kop "Contact", het veld en de knop samen in het kleine zichtbare deel passen. */
@@ -1500,7 +1515,7 @@ body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { flex: 1; padding: 8px 1
    Mohammed: "belgen houden niet van die ai stijl dat je hebt", "ook bij die vragen zelf denk ik", "gewoon de algemene stijl robuuster minder
    speels". Verfijnen, niet omgooien: zelfde kleuren, letter, opbouw en teksten. Alleen de vorm: rechthoekig met 8 px afronding, 1 px
    lichtgrijze rand, geen getinte icoonvierkantjes of -bolletjes, geen gloed, geen verloop, geen schaal- of schuifanimaties.
-   Eerst de aanvraagkaart (vraagstappen), daarna de rest van de pagina. */
+   Alleen de aanvraagkaart (vraagstappen en contactblok) en de vinkjes rond de kaart. */
 
 /* -- De kaart -- */
 .bf.bf-lp .kgj-reken.kgj-reken--aanvraag { border-radius: 10px; border: 1px solid #e3e3e6; box-shadow: 0 1px 3px rgba(17, 17, 19, .08); }
@@ -1531,6 +1546,9 @@ body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { flex: 1; padding: 8px 1
 .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__trust .kgj-reken__trust-ic { display: none; }
 .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__trust .kgj-reken__trust-gic { padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
 .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__trust li { min-height: 0; }
+/* knoppen in de kaart (Volgende, Doorgaan): 8 px, geen gloed */
+.bf.bf-lp .kgj-reken--aanvraag .kgj-knop { border-radius: 8px; }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__stap .kgj-reken__verder:not(:disabled) { box-shadow: none; }
 /* een nieuwe stap verschijnt met een korte fade, zonder te schuiven */
 .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__stap.is-nieuw { animation: kgj-fade .2s ease both; }
 @keyframes kgj-fade { from { opacity: 0; } to { opacity: 1; } }
@@ -1543,36 +1561,11 @@ body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { flex: 1; padding: 8px 1
 }
 @media (prefers-reduced-motion: reduce) { .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__stap.is-nieuw { animation: none; } }
 
-/* -- De rest van de pagina (zelfde opbouw, kleuren en teksten; alleen de vorm) -- */
-/* knoppen: rechthoekig met 8 px afronding in plaats van pillen, geen gloed, geen lift of schuivende pijl bij hover */
-.bf.bf-lp .bf-knop, .bf.bf-lp .bf-lpbel, .bf.bf-lp .bf-lpinsp__bel, .bf.bf-lp .bf-lphero__knop, .bf.bf-lp .kgj-knop { border-radius: 8px; box-shadow: none; }
-.bf.bf-lp .bf-knop:hover, .bf.bf-lp .bf-lphero__knop:hover, .bf.bf-lp .kgj-knop:hover, .bf.bf-lp--strak .bf-lphero__knop:hover { transform: none; box-shadow: none; }
-.bf.bf-lp .bf-knop:hover svg, .bf.bf-lp--strak .bf-lphero__knop:hover svg:last-child { transform: none; }
-/* kaarten: 8 px afronding, 1 px rand, geen zwevende schaduw en geen lift */
-.bf.bf-lp .bf-dkaart, .bf.bf-lp .bf-pstap, .bf.bf-lp .bf-waarde, .bf.bf-lp .bf-vraag { border-radius: 8px; border: 1px solid #e3e3e6; box-shadow: none; }
-.bf.bf-lp .bf-dkaart:hover, .bf.bf-lp .bf-pstap:hover, .bf.bf-lp .bf-waarde:hover, .bf.bf-lp .bf-vraag:hover { transform: none; box-shadow: none; }
-.bf.bf-lp .bf-vraag summary { border-radius: 8px; }
-.bf.bf-lp .bf-real__podium, .bf.bf-lp .bf-duo__foto, .bf.bf-lp .bf-lpwerk__foto { border-radius: 8px; box-shadow: none; }
-.bf.bf-lp .bf-lpzoek__knop { border-radius: 8px; box-shadow: inset 0 0 0 1px #d4d4d8; }
-.bf.bf-lp .bf-lpzoek__knop:hover { box-shadow: inset 0 0 0 1px #9b9ba1; }
-.bf.bf-lp .bf-lpwerk .bf-duo__tekst .bf-lpwerk__slot { border-radius: 8px; }
-/* iconen: lijnicoon in de merkkleur, zonder getint vierkantje of bolletje */
-.bf.bf-lp .bf-zeker__ic, .bf.bf-lp .bf-pstap__ic, .bf.bf-lp .bf-waarde__icoon, .bf.bf-lp .bf-lpzoek__ic, .bf.bf-lp .bf-lpredenen__ic, .bf.bf-lp .bf-lpdienst__ic { border-radius: 0; background: none; box-shadow: none; color: var(--merk-tekst); }
-.bf.bf-lp .bf-lpwerk__slot-ic, .bf.bf-lp .bf-real__vink, .bf.bf-lp .bf-lpinsp__stappen span, .bf.bf-lp .bf-lphero__vink { border-radius: 0; background: none; color: var(--merk); }
-.bf.bf-lp .bf-lpwerk__slot-ic { color: var(--merk-tekst); }
-.bf.bf-lp .bf-real__vink { color: var(--merk-tekst); }
-.bf.bf-lp .bf-lpwerk__slot-ic svg, .bf.bf-lp .bf-real__vink svg, .bf.bf-lp .bf-lpinsp__stappen span svg, .bf.bf-lp .bf-lphero__vink svg { width: 100%; height: 100%; stroke-width: 2.6; }
-/* het icoonbolletje op de foto van de dienstkaarten valt weg (de titel eronder zegt het al) */
-.bf.bf-lp .bf-dkaart__icoon { display: none; }
-/* nummers en labels als gewone tekst, niet als pil */
-.bf.bf-lp .bf-pstap__nr { border-radius: 0; background: none; box-shadow: none; padding: 0; }
-.bf.bf-lp .bf-real__label { border-radius: 4px; }
-.bf.bf-lp .bf-real__wissel { border-radius: 8px; }
-.bf.bf-lp .bf-real__wisselknop { border-radius: 6px; }
-.bf.bf-lp .bf-vraag__plus { border-radius: 0; background: none; box-shadow: none; }
-@media (max-width: 1000px) {
-  .bf.bf-lp .bf-zeker__rij li, .bf.bf-lp .bf-zeker__ic { border-radius: 8px; }
-  .bf.bf-lp .bf-zeker__ic { background: none; }
-}
-.bf.bf-lp .bf-dkaarten__raster--lp .bf-dkaart, .bf.bf-lp .bf-dkaart.bf-is-actief { box-shadow: none; transform: none; }
-.bf.bf-lp .bf-dkaart.bf-is-actief { border-color: var(--merk); }
+/* De rest van de pagina (knoppen, kaarten, iconen) blijft zoals ze was: Mohammed 18 nov 2026, "begin NIET aan een grote stijlombouw van de
+   rest van de pagina; dat wordt een aparte opdracht". */
+
+/* Belknoppen weg tijdens het formulier (18 nov 2026, Mohammed: "de bel directjes ctas moeten weg wanneer hij daar is ofzo"; Aanvraag.tsx
+   zet html.is-informulier vanaf het eerste antwoord zolang een aanvraagkaart in beeld is). Korte fade, de plaats blijft (de kopbalk verspringt niet). */
+.bf.bf-lp .bf-kop a.bf-lpbel[href^="tel:"], .bf.bf-lp .bf-belzweef { transition: opacity .2s ease, visibility 0s linear 0s; }
+html.is-informulier .bf.bf-lp .bf-kop a.bf-lpbel[href^="tel:"], html.is-informulier .bf.bf-lp .bf-belzweef { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: opacity .2s ease, visibility 0s linear .2s; }
+@media (prefers-reduced-motion: reduce) { .bf.bf-lp .bf-kop a.bf-lpbel[href^="tel:"], .bf.bf-lp .bf-belzweef, html.is-informulier .bf.bf-lp .bf-kop a.bf-lpbel[href^="tel:"], html.is-informulier .bf.bf-lp .bf-belzweef { transition: none; } }

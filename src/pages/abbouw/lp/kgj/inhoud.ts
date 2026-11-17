@@ -176,6 +176,9 @@ export type KgjInhoud = {
         boven de velden, op de pc in het venster links, in de pagina onder de verzendknop; ook op de bedankpagina ("Wat nu volgt"). */
     volgtKop?: string;
     volgt?: { titel: string; tekst: string }[];
+    /** 18 nov 2026 (Mohammed: "ook kort van wat erna gebeurt", daarna zijn woorden): de korte regels direct onder de verzendknop in het
+        contactblok, genummerd. Woordelijk zijn dictaat; de uitleg per stap (volgt) staat op de bedankpagina. */
+    naKort?: string[];
     /** Eén regel direct boven de verzendknop, alleen in de pagina (bfbouw.be rk__trigger "Offerte binnen 24 uur"). */
     trigger?: string;
     /** Tekst van de knoppen die naar het formulier gaan (kop, waarom, werkwijze, vaste gsm-knop). De verzendknop zelf = inspectie.knop.
@@ -455,6 +458,8 @@ export const DAKWERKEN: KgjInhoud = {
     ],
     /* 7 nov 2026, zoals bfbouw.be: de offerte volgt na het plaatsbezoek; binnen 24 uur = het contact (was 'Offerte binnen 24 uur'). */
     trigger: 'Antwoord binnen 24 uur',
+    /* 18 nov 2026, dictaat Mohammed (woordelijk, ook "Jij" en "je"): de korte regels onder de verzendknop op /lp/dakwerken en /asbest */
+    naKort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek met onze dakexpert', 'Jij geniet zorgeloos van je nieuwe dak'],
     naarKnop: 'Offerte aanvragen',
     /* De vinkjes en de trustrij van de rekenaarkaart die hier stond (13 okt). Alleen "Gratis & vrijblijvende richtprijs"
        werd "... dakinspectie": er is geen richtprijs meer, wel de gratis dakinspectie (kop van de kaart en van het slotblok). */
