@@ -1335,9 +1335,9 @@ body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { flex: 1; padding: 8px 1
 .bf.bf-lp .kgj-reken__cvelden { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; margin-top: 12px; }
 .bf.bf-lp .kgj-reken__cveld { position: relative; min-width: 0; }
 .bf.bf-lp .kgj-reken__cveld--breed { grid-column: 1 / -1; }
-.bf.bf-lp .kgj-reken__cic { position: absolute; left: 14px; top: 16px; width: 20px; height: 20px; color: #55565b; pointer-events: none; }
+.bf.bf-lp .kgj-reken__cic { position: absolute; left: 12px; top: 16px; width: 20px; height: 20px; color: #55565b; pointer-events: none; }
 .bf.bf-lp .kgj-reken__cic svg { display: block; width: 20px; height: 20px; stroke-width: 1.75; }
-.bf.bf-lp .kgj-reken__contact .kgj-reken__cveld input:not([type="hidden"]) { display: block; width: 100%; height: 52px; margin: 0; padding: 0 14px 0 44px; border: 1px solid #d4d4d8; border-radius: 8px; background: #fff; box-shadow: none; font: inherit; font-size: 16px; font-weight: 400; line-height: 1.2; color: var(--ink); }
+.bf.bf-lp .kgj-reken__contact .kgj-reken__cveld input:not([type="hidden"]) { display: block; width: 100%; height: 52px; margin: 0; padding: 0 10px 0 40px; border: 1px solid #d4d4d8; border-radius: 8px; background: #fff; box-shadow: none; font: inherit; font-size: 16px; font-weight: 400; line-height: 1.2; color: var(--ink); }
 .bf.bf-lp .kgj-reken__contact .kgj-reken__cveld input::placeholder { color: #7a7b80; opacity: 1; }
 .bf.bf-lp .kgj-reken__contact .kgj-reken__cveld input:focus { outline: 2px solid var(--merk-tekst); outline-offset: 0; border-color: var(--merk-tekst); }
 .bf.bf-lp .kgj-reken__contact .kgj-reken__cveld input[aria-invalid="true"] { border-color: #b3261e; }
@@ -1496,3 +1496,83 @@ body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { flex: 1; padding: 8px 1
   .bf.bf-lp .bf-real__laag, .bf.bf-lp .bf-real__laag.is-aan { transition: none; animation: none; }
 }
 
+/* ===== 18 nov 2026: robuuste stijl van de landingspagina's (formulier v2) =====
+   Mohammed: "belgen houden niet van die ai stijl dat je hebt", "ook bij die vragen zelf denk ik", "gewoon de algemene stijl robuuster minder
+   speels". Verfijnen, niet omgooien: zelfde kleuren, letter, opbouw en teksten. Alleen de vorm: rechthoekig met 8 px afronding, 1 px
+   lichtgrijze rand, geen getinte icoonvierkantjes of -bolletjes, geen gloed, geen verloop, geen schaal- of schuifanimaties.
+   Eerst de aanvraagkaart (vraagstappen), daarna de rest van de pagina. */
+
+/* -- De kaart -- */
+.bf.bf-lp .kgj-reken.kgj-reken--aanvraag { border-radius: 10px; border: 1px solid #e3e3e6; box-shadow: 0 1px 3px rgba(17, 17, 19, .08); }
+.bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-focus { box-shadow: 0 1px 3px rgba(17, 17, 19, .08); }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__hoofd { gap: 0; }
+/* voortgang: een dunne effen balk zonder iconen aan de uiteinden en zonder glans */
+.bf.bf-lp .kgj-reken.kgj-reken--aanvraag .kgj-reken__weg { display: block; margin-top: 14px; }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__balk { height: 4px; border-radius: 2px; background: #ececee; box-shadow: none; }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__balk i { border-radius: 2px; background: var(--merk); }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__balk i::after { content: none; }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__balk.is-beloning { animation: none; }
+/* "Terug" als gewone tekstlink */
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__terug { padding: 0; border: 0; background: none; color: var(--ink-2); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+/* antwoorden: wit, 1 px lichtgrijze rand, 8 px afronding; gekozen = rand en lichte vlakte in de merkkleur; geen schaal bij een tik */
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze, .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__vink { border-radius: 8px; background: #fff; box-shadow: inset 0 0 0 1px #d4d4d8; transition: box-shadow .12s ease, background-color .12s ease; }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze:hover, .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__vink:hover { box-shadow: inset 0 0 0 1px #9b9ba1; }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze:active { transform: none; }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze.is-aan, .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze.is-druk, .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__vink.is-aan { background: #fdf6ea; box-shadow: inset 0 0 0 2px var(--merk); }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze:has(> .kgj-reken__foto) { border-radius: 8px; }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze:has(> .kgj-reken__foto).is-aan::after { box-shadow: inset 0 0 0 2px var(--merk); }
+/* iconen in de antwoorden: lijnicoon zonder getint vierkantje, ook niet bij gekozen of hover */
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__icoon, .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze--icoon.is-aan .kgj-reken__icoon, .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze--icoon:hover .kgj-reken__icoon { width: 24px; height: 24px; border-radius: 0; background: none; box-shadow: none; color: var(--ink-2); }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__icoon svg { width: 22px; height: 22px; }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze--icoon.is-aan .kgj-reken__icoon { color: var(--merk-tekst); }
+/* de vinkjes in de kaart: een gewoon vinkje in de merkkleur, geen gevuld bolletje */
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__vertrouwen li > svg, .bf.bf-lp .kgj-reken--badges .kgj-reken__vertrouwen li > svg { padding: 0; width: 18px; height: 18px; border-radius: 0; background: none; color: var(--merk-tekst); stroke-width: 2.6; }
+/* cijferrij: gewone tekst, geen icoontegels en geen kader rond het Google-logo */
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__trust .kgj-reken__trust-ic { display: none; }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__trust .kgj-reken__trust-gic { padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__trust li { min-height: 0; }
+/* een nieuwe stap verschijnt met een korte fade, zonder te schuiven */
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__stap.is-nieuw { animation: kgj-fade .2s ease both; }
+@keyframes kgj-fade { from { opacity: 0; } to { opacity: 1; } }
+/* gsm: de vinkjes onder de kaart op de foto zonder donker vlak en zonder gevulde bolletjes */
+@media (max-width: 1000px) {
+  .bf.bf-lp .bf-lphero__vinkjes, .bf.bf-lp--badges .bf-lphero__vinkjes { padding: 4px 2px; border: 0; border-radius: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; }
+  .bf.bf-lp .bf-lphero__vinkjes li, .bf.bf-lp--badges .bf-lphero__vinkjes li { text-shadow: 0 1px 2px rgba(0, 0, 0, .6); }
+  .bf.bf-lp .bf-lphero__vinkjes span, .bf.bf-lp--badges .bf-lphero__vinkjes span { width: 20px; height: 20px; border-radius: 0; background: none; color: var(--merk); }
+  .bf.bf-lp .bf-lphero__vinkjes svg, .bf.bf-lp--badges .bf-lphero__vinkjes svg { width: 20px; height: 20px; stroke-width: 2.6; }
+}
+@media (prefers-reduced-motion: reduce) { .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__stap.is-nieuw { animation: none; } }
+
+/* -- De rest van de pagina (zelfde opbouw, kleuren en teksten; alleen de vorm) -- */
+/* knoppen: rechthoekig met 8 px afronding in plaats van pillen, geen gloed, geen lift of schuivende pijl bij hover */
+.bf.bf-lp .bf-knop, .bf.bf-lp .bf-lpbel, .bf.bf-lp .bf-lpinsp__bel, .bf.bf-lp .bf-lphero__knop, .bf.bf-lp .kgj-knop { border-radius: 8px; box-shadow: none; }
+.bf.bf-lp .bf-knop:hover, .bf.bf-lp .bf-lphero__knop:hover, .bf.bf-lp .kgj-knop:hover, .bf.bf-lp--strak .bf-lphero__knop:hover { transform: none; box-shadow: none; }
+.bf.bf-lp .bf-knop:hover svg, .bf.bf-lp--strak .bf-lphero__knop:hover svg:last-child { transform: none; }
+/* kaarten: 8 px afronding, 1 px rand, geen zwevende schaduw en geen lift */
+.bf.bf-lp .bf-dkaart, .bf.bf-lp .bf-pstap, .bf.bf-lp .bf-waarde, .bf.bf-lp .bf-vraag { border-radius: 8px; border: 1px solid #e3e3e6; box-shadow: none; }
+.bf.bf-lp .bf-dkaart:hover, .bf.bf-lp .bf-pstap:hover, .bf.bf-lp .bf-waarde:hover, .bf.bf-lp .bf-vraag:hover { transform: none; box-shadow: none; }
+.bf.bf-lp .bf-vraag summary { border-radius: 8px; }
+.bf.bf-lp .bf-real__podium, .bf.bf-lp .bf-duo__foto, .bf.bf-lp .bf-lpwerk__foto { border-radius: 8px; box-shadow: none; }
+.bf.bf-lp .bf-lpzoek__knop { border-radius: 8px; box-shadow: inset 0 0 0 1px #d4d4d8; }
+.bf.bf-lp .bf-lpzoek__knop:hover { box-shadow: inset 0 0 0 1px #9b9ba1; }
+.bf.bf-lp .bf-lpwerk .bf-duo__tekst .bf-lpwerk__slot { border-radius: 8px; }
+/* iconen: lijnicoon in de merkkleur, zonder getint vierkantje of bolletje */
+.bf.bf-lp .bf-zeker__ic, .bf.bf-lp .bf-pstap__ic, .bf.bf-lp .bf-waarde__icoon, .bf.bf-lp .bf-lpzoek__ic, .bf.bf-lp .bf-lpredenen__ic, .bf.bf-lp .bf-lpdienst__ic { border-radius: 0; background: none; box-shadow: none; color: var(--merk-tekst); }
+.bf.bf-lp .bf-lpwerk__slot-ic, .bf.bf-lp .bf-real__vink, .bf.bf-lp .bf-lpinsp__stappen span, .bf.bf-lp .bf-lphero__vink { border-radius: 0; background: none; color: var(--merk); }
+.bf.bf-lp .bf-lpwerk__slot-ic { color: var(--merk-tekst); }
+.bf.bf-lp .bf-real__vink { color: var(--merk-tekst); }
+.bf.bf-lp .bf-lpwerk__slot-ic svg, .bf.bf-lp .bf-real__vink svg, .bf.bf-lp .bf-lpinsp__stappen span svg, .bf.bf-lp .bf-lphero__vink svg { width: 100%; height: 100%; stroke-width: 2.6; }
+/* het icoonbolletje op de foto van de dienstkaarten valt weg (de titel eronder zegt het al) */
+.bf.bf-lp .bf-dkaart__icoon { display: none; }
+/* nummers en labels als gewone tekst, niet als pil */
+.bf.bf-lp .bf-pstap__nr { border-radius: 0; background: none; box-shadow: none; padding: 0; }
+.bf.bf-lp .bf-real__label { border-radius: 4px; }
+.bf.bf-lp .bf-real__wissel { border-radius: 8px; }
+.bf.bf-lp .bf-real__wisselknop { border-radius: 6px; }
+.bf.bf-lp .bf-vraag__plus { border-radius: 0; background: none; box-shadow: none; }
+@media (max-width: 1000px) {
+  .bf.bf-lp .bf-zeker__rij li, .bf.bf-lp .bf-zeker__ic { border-radius: 8px; }
+  .bf.bf-lp .bf-zeker__ic { background: none; }
+}
+.bf.bf-lp .bf-dkaarten__raster--lp .bf-dkaart, .bf.bf-lp .bf-dkaart.bf-is-actief { box-shadow: none; transform: none; }
+.bf.bf-lp .bf-dkaart.bf-is-actief { border-color: var(--merk); }
