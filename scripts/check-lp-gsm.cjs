@@ -37,7 +37,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
     const k = [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')].find((b) => b.textContent.trim().startsWith(l));
     if (!k) return false; k.click(); return true;
   }, label);
-  const tel = () => page.$eval('#rekenaar .kgj-reken__tel', (e) => e.textContent.trim());
+  const tel = () => page.$eval('#rekenaar .kgj-reken__tel', (e) => e.dataset.intern ?? e.textContent.trim());
   const vraag = () => page.$eval('#rekenaar .kgj-reken__vraag', (e) => e.textContent.trim());
 
   /* 0. Cookiebanner binnen het scherm. Stond op 23 sep op elke telefoon half

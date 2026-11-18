@@ -118,16 +118,16 @@ const DAK = {
   pad: '/lp/dakwerken', soort: 'dak', kop: 'Uw dak laten vernieuwen, renoveren of isoleren?', woord: 'gratis offerte', vraag1: 'Ik ben op zoek naar:', keuzes1: ['Dakrenovatie', 'Nieuw dak', 'Herstelling', 'Isolatie', 'Gratis dakinspectie'],
   /* 18 nov 2026 (formulier v2, Mohammed: "die vraag van oppervlakte en asbest eruit"; de staal-vraag "bereikbaar" weg): werk, dak, isoleren,
      start + het contactblok = 5 stappen (was 8 op het staal) */
-  pad1: ['Dakrenovatie', 'Hellend dak', 'Nee', 'Zo snel mogelijk'], vraag2: 'Om welk soort dak gaat het?',
+  pad1: ['Dakrenovatie', 'Hellend dak', 'Nee'], vraag2: 'Om welk soort dak gaat het?', // 18 nov 2026: "wanneer wilt u starten eruit"
   /* knop: dictaat Mohammed 31 okt voor bfbouw.be ("Gratis en vrijblijvende offerte aanvragen"; infinitief "aanvragen", onderzoek 23 okt).
      5 nov 2026, zoals bfbouw.be 91ab7ba: verzendknop "Gratis offerte aanvragen", de andere knoppen "Offerte aanvragen" (naarKnop);
      contactkop zonder "gratis". */
   /* 18 nov 2026 (v2, Mohammed: het einde van het formulier "gewoon zo"): het contactblok heeft de kop "Contact" (geen band "Bijna klaar!") */
-  ckop: 'Contact', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 5,
+  ckop: 'Contact', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 4, // 18 nov 2026: werk, dak, isoleren + contact
   /* 18 nov 2026, dictaat Mohammed (woordelijk): de korte regels direct onder de verzendknop op de dakpagina's */
-  nakort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek met onze dakexpert', 'Je ontvangt je offerte in je mailbox', 'Jij geniet zorgeloos van je nieuwe dak'], // 18 nov 2026 definitief ("of 4 ofzo")
+  nakort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek met onze dakexpert', 'Je ontvangt je offerte in je mailbox', 'Na je akkoord starten de werken', 'Je geniet zorgeloos van je nieuwe dak'], // 18 nov 2026: vijf stappen (Kijzer, "en dan 5")
   /* 18 nov 2026, dictaat ("doe dat zoals kijzer, zo hoe dat wordt uitgelegd"): één uitlegzin per stap */
-  uitleg: ['We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.', 'Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.', 'Vrijblijvend: je beslist zelf, zonder enige verplichting.', 'Na je akkoord plannen we de werken in en voeren we ze uit.'],
+  uitleg: ['We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.', 'Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.', 'Vrijblijvend: je beslist zelf, zonder enige verplichting.', 'We plannen de werken in en voeren ze uit.', 'We begeleiden je bij eventuele premies.'],
   tegels: ['5,0', '10 jaar garantie', '15 jaar ervaring'],
   /* 5 nov 2026, bfbouw.be: "Na uw aanvraag" (twee stappen) vervangt de regel onder de knop */
   /* 7 nov 2026 (bfbouw.be "oke doe maar die 3 stappen"): contact binnen 24 uur, gratis plaatsbezoek, offerte */
@@ -140,10 +140,10 @@ const RENO = (pad) => ({
   /* 22 okt 2026, Mohammed: "2 meer vragen, bij stap 1 graag wat voor woning", "en dan die vraag van dat ze mooi kunnen aanklikken wat
      er allemaal nodig is": woning, omvang, afvinkvraag (een lijst in pad1 = die vinkjes en dan Volgende), start, budget */
   vraag1: 'Wat voor woning wilt u renoveren?', keuzes1: ['Appartement', 'Rijwoning', 'Halfopen bebouwing', 'Open bebouwing'],
-  pad1: ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'], vraag2: 'Wat wilt u renoveren?', // 18 nov 2026 (v2): de staal-vraag "bereikbaar" weg, 6 stappen
-  ckop: 'Contact', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 6,
-  nakort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek met onze expert', 'Je ontvangt je offerte in je mailbox', 'Na je akkoord starten de werken'], // 18 nov 2026 definitief ("of 4 ofzo")
-  uitleg: ['We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.', 'Onze expert bekijkt je woning ter plaatse en bespreekt met jou de mogelijkheden.', 'Vrijblijvend: je beslist zelf, zonder enige verplichting.', 'We plannen de werken in en voeren ze uit.'],
+  pad1: ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], '€ 25.000 tot € 75.000'], vraag2: 'Wat wilt u renoveren?', // 18 nov 2026: geen startvraag; // 18 nov 2026 (v2): de staal-vraag "bereikbaar" weg, 6 stappen
+  ckop: 'Contact', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 5, // 18 nov 2026: woning, omvang, onderdelen, budget + contact
+  nakort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek met onze expert', 'Je ontvangt je offerte in je mailbox', 'Na je akkoord starten de werken', 'Je geniet zorgeloos van je vernieuwde woning'], // 18 nov 2026: vijf stappen (Kijzer)
+  uitleg: ['We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.', 'Onze expert bekijkt je woning ter plaatse en bespreekt met jou de mogelijkheden.', 'Vrijblijvend: je beslist zelf, zonder enige verplichting.', 'We plannen de werken in en voeren ze uit.', 'We begeleiden je bij eventuele premies.'],
   /* 22 okt 2026: "6 vakdisciplines ... weg, bij die form", "dat is een rare trust badge" */
   tegels: ['5,0', '16 jaar ervaring'],
   volgt: ['Wij nemen binnen 24 uur contact op', 'Gratis plaatsbezoek', 'Uw offerte'], // 7 nov 2026 (bfbouw.be)
@@ -243,7 +243,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
 
   const stand = (p, root = HERO) => p.evaluate((root) => {
     const k = document.querySelector(root);
-    return { tel: k.querySelector('.kgj-reken__tel')?.textContent.trim(), vraag: k.querySelector('.kgj-reken__stap .kgj-reken__vraag')?.textContent.trim().replace(/\s+/g, ' '),
+    return { tel: (k.querySelector('.kgj-reken__tel')?.dataset.intern ?? k.querySelector('.kgj-reken__tel')?.textContent.trim()), vraag: k.querySelector('.kgj-reken__stap .kgj-reken__vraag')?.textContent.trim().replace(/\s+/g, ' '),
       terug: !!k.querySelector('.kgj-reken__terug'), form: !!k.querySelector('form.kgj-reken__form') };
   }, root);
   /* Een echte tik op het midden van de keuze (touchscreen), nadat die in beeld staat. */
@@ -526,7 +526,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       const kop = document.querySelector('.kgj-kop'), kcs = kop && getComputedStyle(kop);
       const balk = kop && kcs.position === 'fixed' && kcs.visibility !== 'hidden' ? kop.getBoundingClientRect().bottom : 0;
       const kaartVast = (() => { for (let e = k; e && e !== document.body; e = e.parentElement) { const p = getComputedStyle(e).position; if (p === 'fixed') return e.className.toString().split(' ')[0]; } return ''; })();
-      return { tel: k.querySelector('.kgj-reken__tel')?.textContent.trim(), vast: kaartVast, formvol: document.documentElement.classList.contains('is-formvol'),
+      return { tel: (k.querySelector('.kgj-reken__tel')?.dataset.intern ?? k.querySelector('.kgj-reken__tel')?.textContent.trim()), vast: kaartVast, formvol: document.documentElement.classList.contains('is-formvol'),
         dialoog: !!document.querySelector('[role="dialog"][aria-modal="true"]'), sluit: !!k.querySelector('.kgj-reken__sluit'), achter: !!document.querySelector('.kgj-reken__achter'),
         balk: Math.round(balk), ckop: Math.round(r('.kgj-reken__ckop')?.top ?? -1),
         naam: Math.round(r('input[name=naam]')?.bottom ?? 9999), gsm: Math.round(r('input[name=telefoon]')?.bottom ?? 9999), mail: Math.round(r('input[name=email]')?.bottom ?? 9999),
@@ -560,7 +560,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
         const balk = k.classList.contains('is-vol') ? k.querySelector('.kgj-reken__kop').getBoundingClientRect().bottom : document.querySelector('.kgj-kop').getBoundingClientRect().bottom;
         const vraag = k.querySelector('.kgj-reken__stap .kgj-reken__vraag')?.getBoundingClientRect();
         const doelen = [...k.querySelectorAll('.kgj-reken__stap :is(.kgj-reken__keuze, .kgj-reken__vink, .kgj-reken__verder, .kgj-reken__knop)')];
-        return { tel: k.querySelector('.kgj-reken__tel')?.textContent.trim(), balk: Math.round(balk), vraag: Math.round(vraag?.top ?? -1),
+        return { tel: (k.querySelector('.kgj-reken__tel')?.dataset.intern ?? k.querySelector('.kgj-reken__tel')?.textContent.trim()), balk: Math.round(balk), vraag: Math.round(vraag?.top ?? -1),
           onder: doelen.length ? Math.round(Math.max(...doelen.map((d) => d.getBoundingClientRect().bottom))) : 9999, vh: innerHeight };
       }, root);
       if (m.vraag < m.balk || m.onder > m.vh) uit.push(`${m.tel}: vraag op ${m.vraag} px (balk ${m.balk}), laatste knop tot ${m.onder} px (scherm ${m.vh})`);
@@ -656,7 +656,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       const k = document.querySelector(root);
       const f = k.querySelector('form.kgj-reken__form');
       const zicht = (e) => !!e && e.getClientRects().length > 0 && getComputedStyle(e).visibility !== 'hidden';
-      return { tel: k.querySelector('.kgj-reken__tel')?.textContent.trim(), ckop: f?.querySelector('.kgj-reken__ckop')?.textContent.trim().replace(/\s+/g, ' '),
+      return { tel: (k.querySelector('.kgj-reken__tel')?.dataset.intern ?? k.querySelector('.kgj-reken__tel')?.textContent.trim()), ckop: f?.querySelector('.kgj-reken__ckop')?.textContent.trim().replace(/\s+/g, ' '),
         velden: f ? [...f.querySelectorAll('input:not([type=hidden]), input[type=hidden]')].map((i) => i.name || (i.closest('.kgj-pg') ? 'postcode-gemeente' : '')).filter(Boolean) : [],
         selects: f ? f.querySelectorAll('select').length : 0,
         knop: f?.querySelector('button[type=submit]')?.textContent.trim(), verplicht: f?.querySelector('[name=telefoon]')?.getAttribute('aria-required'),

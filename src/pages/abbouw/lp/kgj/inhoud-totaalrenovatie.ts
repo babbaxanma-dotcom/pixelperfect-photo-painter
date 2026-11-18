@@ -526,7 +526,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
        De afvinkvraag krijgt een eigen vraagtekst, want "Wat wilt u renoveren?" staat al als vraag 2 (de omvang). Volgorde: woning,
        omvang, wat er allemaal moet gebeuren, start, budget: 5 vragen + contactstap = 6 stappen. */
     vragen: (() => {
-      const [omvang, start] = (TOTAALRENOVATIE_REKENAAR.inspectie.extra ?? []).map((x): Vraag => ({
+      const [omvang] = (TOTAALRENOVATIE_REKENAAR.inspectie.extra ?? []).map((x): Vraag => ({
         sleutel: x.label.replace(/\?$/, ''), vraag: x.label,
         keuzes: x.opties.map((o) => ({ label: o, icoon: AANVRAAG_ICOON[o] })),
       }));
@@ -537,7 +537,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
         { ...woning, sleutel: woning.vraag.replace(/\?$/, '') },
         omvang,
         { ...renoveren, sleutel: 'Wat moet er allemaal gebeuren', vraag: 'Wat moet er allemaal gebeuren?' },
-        start,
+        /* 18 nov 2026, Mohammed: "wanneer wilt u starten eruit": de startvraag is weg (het formulier onderaan houdt zijn keuzelijst) */
         BUDGET_VRAAG,
         /* 18 nov 2026 (v2, Mohammed): de vraag "Wanneer bent u het best bereikbaar?" van het staal (16 nov) is weg; na het budget volgt
            meteen het contactblok. Geen asbest- of oppervlaktevraag op deze pagina's. */
@@ -549,7 +549,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     /* 5 nov 2026, de laadstap, "Na uw aanvraag" en de regel boven de knop van bfbouw.be (zie inhoud.ts DAKWERKEN.aanvraag), met de
        AB-feiten van de renovatiepagina's. "onze dakexpert" wordt "onze expert": zijn goedgekeurde renovatie-FAQ van 5 okt zegt
        "Onze experts"; "projectleider" of "werfleider" heeft voor AB geen bron. Regel 2 = woning en omvang. */
-    laden: { kop: 'Uw aanvraag wordt klaargezet', eerste: 'Antwoorden opgeslagen',
+    laden: { kop: 'Gegevens analyseren', klaar: 'Gegevens geanalyseerd', // 18 nov 2026 (Solvari)
       sleutels: ['Wat voor woning wilt u renoveren', 'Wat wilt u renoveren'], leeg: 'Gegevens van uw woning' },
     volgtKop: 'Na uw aanvraag',
     /* 7 nov 2026, zoals bfbouw.be 7 nov (Mohammed daar: "oke doe maar die 3 stappen"; "en doe al deze changes ook bij ab pagina"): contact binnen
@@ -568,6 +568,8 @@ export const TOTAALRENOVATIE: KgjInhoud = {
       { titel: 'Gratis plaatsbezoek met onze expert', tekst: 'Onze expert bekijkt je woning ter plaatse en bespreekt met jou de mogelijkheden.' },
       { titel: 'Je ontvangt je offerte in je mailbox', tekst: 'Vrijblijvend: je beslist zelf, zonder enige verplichting.' },
       { titel: 'Na je akkoord starten de werken', tekst: 'We plannen de werken in en voeren ze uit.' },
+      /* 18 nov 2026, Mohammed: "Wij begeleiden u bij eventuele premies. Zoals de Kijzer", "en dan 5", "je geniet zorgeloos van ..." */
+      { titel: 'Je geniet zorgeloos van je vernieuwde woning', tekst: 'We begeleiden je bij eventuele premies.' },
     ],
     naarKnop: 'Offerte aanvragen',
     /* Vinkjes en trustrij: dezelfde teksten en cijfers als op de rekenaarkaart die hier stond (13 okt, dictaat 4 okt). Alleen de

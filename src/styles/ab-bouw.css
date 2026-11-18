@@ -1727,12 +1727,14 @@ body.menu-open .lf-nav {
      translateX(-50%). Zonder deze twee regels bleef de -50% staan terwijl
      left naar 8px ging, en stond de banner op elke telefoon half buiten
      beeld (gemeten 23 sep 2026: x = -175 op 390 breed). */
+  /* 18 nov 2026, Mohammed: "de cookie melding op ab is irritant, fix dat": smalle balk tegen de onderrand (geen zwevende kaart) */
   .abc-banner {
-    bottom: 12px !important;
-    left: 8px !important;
-    right: 8px !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
     transform: none !important;
     width: auto !important;
+    border-radius: 0 !important;
   }
 }
 

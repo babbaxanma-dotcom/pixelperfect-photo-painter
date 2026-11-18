@@ -177,7 +177,7 @@ export type KgjInhoud = {
     /** 5 nov 2026, zoals bfbouw.be 4-5 nov (Mohammed: "doe bij ab de exact form dingen", "de exacte wijzigingen als bij bf"):
         laadstap van 1,2 s tussen de laatste vraag en het contactscherm. kop = de regel met het draaiende rondje; eerste en laatste =
         regel 1 en 3; regel 2 = de antwoorden op `sleutels` (een kaal "Weet ik niet" telt niet), of `leeg` als er geen is. */
-    laden?: { kop: string; eerste: string; laatste?: string; sleutels: string[]; leeg: string }; /* 18 nov 2026: laatste = optioneel ("Klaar voor onze dakexpert" weg) */
+    laden?: { kop: string; klaar?: string; eerste?: string; laatste?: string; sleutels: string[]; leeg: string }; /* 18 nov 2026: klaar = kop na de groene vink (analyse) */ /* 18 nov 2026: laatste = optioneel ("Klaar voor onze dakexpert" weg) */
     /** "Na uw aanvraag": wat er na het versturen gebeurt (bfbouw.be LP.kaart.volgtKop + volgt). Op de gsm over het volle scherm
         boven de velden, op de pc in het venster links, in de pagina onder de verzendknop; ook op de bedankpagina ("Wat nu volgt"). */
     volgtKop?: string;
@@ -436,10 +436,8 @@ export const DAKWERKEN: KgjInhoud = {
          weet dat vaak niet; de dakexpert ziet het bij het plaatsbezoek. Op /lp/dakwerken/asbest blijft "Asbest: Ja" vooraf ingevuld en gaat
          het mee in de aanvraag (ASBEST_VRAAG hieronder, alleen daar). Oude vragen: git show 9f8ff8e:src/pages/abbouw/lp/kgj/inhoud.ts.
          "Wanneer bent u het best bereikbaar?" (staal 16 nov) is weg (Mohammed 18 nov: het contactblok = "Contact" + drie velden + knop). */
-      { sleutel: 'Start', vraag: 'Wanneer wilt u starten?', nietAls: { Werk: ['Gratis dakinspectie'] }, keuzes: [
-        { label: 'Zo snel mogelijk', icoon: 'snel' }, { label: 'Binnen 3 maanden', icoon: 'drie' },
-        { label: 'Binnen 6 maanden', icoon: 'later' }, { label: 'Later', icoon: 'verken' },
-      ] },
+      /* 18 nov 2026, Mohammed: "wanneer wilt u starten eruit, in totaal 3 stappen, met 3 lijnen/vakjes, zoals solvari en cralux": de startvraag
+         is weg op elk pad (vroeger: Zo snel mogelijk / Binnen 3 maanden / Binnen 6 maanden / Later). */
     ],
     /* 2 nov 2026: kop van de laatste stap zoals bfbouw.be 31 okt (was "Bijna klaar! Bevestig uw gratis dakinspectie").
        5 nov 2026, zoals bfbouw.be (Mohammed daar: "het constant herhalen van gratis en vrijblijvend wekt juist argwaan ... behoud het op
@@ -451,7 +449,7 @@ export const DAKWERKEN: KgjInhoud = {
          de offerte gaat naar het e-mailadres dat de bezoeker verplicht invult;
        - "dakexpert": de AB-zin onder de knop sinds 21 okt ("Onze dakexpert contacteert u ..."). */
     /* 18 nov 2026 (v2): geen oppervlaktevraag meer; regel 2 van de laadstap = werk + soort dak (zoals bfbouw.be dakRegel). */
-    laden: { kop: 'Uw aanvraag wordt klaargezet', eerste: 'Antwoorden opgeslagen', sleutels: ['Werk', 'Dak'], leeg: 'Gegevens van uw dak' },
+    laden: { kop: 'Gegevens analyseren', klaar: 'Gegevens geanalyseerd', sleutels: ['Werk', 'Dak'], leeg: 'Gegevens van uw dak' }, // 18 nov 2026 (Solvari)
     volgtKop: 'Na uw aanvraag',
     /* 7 nov 2026, zoals bfbouw.be 7 nov (Mohammed daar: "oke doe maar die 3 stappen"; "en doe al deze changes ook bij ab pagina"): eerst contact
        binnen 24 uur, dan het gratis plaatsbezoek, dan de offerte. AB-feiten: 24 uur = zijn woord voor AB (2 nov, offerte binnen 24 uur; contact
@@ -472,7 +470,11 @@ export const DAKWERKEN: KgjInhoud = {
       { titel: 'We nemen binnen 24 uur contact op', tekst: 'We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.' },
       { titel: 'Gratis plaatsbezoek met onze dakexpert', tekst: 'Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.' },
       { titel: 'Je ontvangt je offerte in je mailbox', tekst: 'Vrijblijvend: je beslist zelf, zonder enige verplichting.' },
-      { titel: 'Jij geniet zorgeloos van je nieuwe dak', tekst: 'Na je akkoord plannen we de werken in en voeren we ze uit.' },
+      /* 18 nov 2026, Mohammed: "Implementeer ook bij die stappen zo. Wij begeleiden u bij eventuele premies. Zoals de Kijzer", "en dan 5",
+         "je geniet zorgeloos van ...", "zoals kijzer dat had" (Kijzer, laatste stap "Na-service": genieten + "helpen je graag bij het aanvragen van premies").
+         Bron premiebegeleiding AB: "volledige premiebegeleiding" in zijn werkwijzestap Oplevering. */
+      { titel: 'Na je akkoord starten de werken', tekst: 'We plannen de werken in en voeren ze uit.' },
+      { titel: 'Je geniet zorgeloos van je nieuwe dak', tekst: 'We begeleiden je bij eventuele premies.' },
     ],
     naarKnop: 'Offerte aanvragen',
     /* De vinkjes en de trustrij van de rekenaarkaart die hier stond (13 okt). Alleen "Gratis & vrijblijvende richtprijs"
@@ -934,7 +936,9 @@ export const DAKWERKEN_ASBEST: KgjInhoud = {
      staat niet meer op /lp/dakwerken; hier staat ze nog in de lijst (op haar oude plaats, vóór Start), alleen zodat "Asbest: Ja" in de
      aanvraag blijft (Aanvraag.tsx BEANTWOORD) en de kaart haar overslaat (beginStand overslaan + nietAls Asbest: Ja). */
   aanvraag: DAKWERKEN.aanvraag && { ...DAKWERKEN.aanvraag,
-    vragen: DAKWERKEN.aanvraag.vragen.flatMap((v) => (v.sleutel === 'Start' ? [ASBEST_VRAAG, v] : [v])) },
+    /* 18 nov 2026: de startvraag is weg ("wanneer wilt u starten eruit"); de asbestvraag staat nu achteraan, zodat "Asbest: Ja" als laatste regel in de
+       aanvraag blijft, zoals vóór vandaag (check:lppayload, positieve controle: zonder deze regel valt "Asbest: Ja" weg). */
+    vragen: [...DAKWERKEN.aanvraag.vragen, ASBEST_VRAAG] },
   boodschap: undefined,
   voorAf: { sleutel: 'Asbest', label: 'Ja' },
 };

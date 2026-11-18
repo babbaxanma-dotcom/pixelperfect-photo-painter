@@ -325,7 +325,8 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     setLaadFase(0);
     setLaden(true);
     meldClarity(`${clarityNaam}-laden`);
-    klokken.current = [1, 2, 3].map((n) => window.setTimeout(() => { if (beurt === laadBeurt.current) setLaadFase(n); }, Math.round((ms * n) / 4)));
+    // 18 nov 2026 (Solvari): de cirkel draait, op 65 % wordt hij een groene vink ("Gegevens geanalyseerd"), dan het contactblok
+    klokken.current = [window.setTimeout(() => { if (beurt === laadBeurt.current) setLaadFase(1); }, Math.round(ms * 0.65))];
     klokken.current.push(window.setTimeout(() => {
       if (beurt !== laadBeurt.current) return;
       setLaden(false);
@@ -671,7 +672,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
         ...OSTAPPEN.flatMap((st) => [...st.velden.map((v) => v.sleutel), ...(st.extra ? [st.extra.sleutel] : [])])
           .filter((k) => (oAntw[k] ?? '').trim()).map((k) => `${k}: ${oAntw[k].trim().replace(/\s+/g, ' ')}`)]
         : ['Aanvraag ' + (inhoud.cta.naam ?? inhoud.cta.kop).toLowerCase(),
-          ...BEANTWOORD.map((v) => `${v.sleutel}: ${antwoorden[v.sleutel]}`)]).join(' · '),
+          ...BEANTWOORD.map((v) => `${v.sleutel}: ${antwoorden[v.sleutel]}`)]).concat(String(f.get('bericht') || '').trim() ? [`Bericht: ${String(f.get('bericht')).trim().replace(/\s+/g, ' ').slice(0, 1000)}`] : []).join(' · '),
       bron_lead: t.bronLead,
     };
     const wachtMs = typeof (window as unknown as AbTest).__abWachtMs === 'number' ? (window as unknown as AbTest).__abWachtMs! : 15000;
@@ -765,14 +766,19 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
       {boven}
       <div className="kgj-reken__weg" aria-hidden="true">
         {/* 7 nov 2026, zoals bfbouw.be (Mohammed daar: "maak de balk vanaf de start 40 procent gevuld"): 40 % bij stap 1, 100 % op het contactscherm. */}
-        <div className="kgj-reken__balk" ref={balk} onAnimationEnd={(e) => { if (e.animationName === 'kgj-glans') e.currentTarget.classList.remove('is-beloning'); }}><i style={{ width: `${totaal > 1 ? Math.round((40 + (60 * (nu - 1)) / (totaal - 1)) * 10) / 10 : 100}%` }} /></div>
+        {/* 18 nov 2026, Mohammed: Solvari-widget ("3 balken bovenaan, en dan heb je gegevens analyseren, dan komt er een groene vink en dan contact"), Cralux ("stap .. van 3, in totaal 3 stappen"), "ook visueel zo met die 3 lijnen, die groen zijn": drie groene lijnen; lijn 1 = de klikvragen (start 40 %, vol pas na het laatste antwoord), lijn 2 = analyse, lijn 3 = contact. */}
+        <div className="kgj-reken__lijnen" ref={balk}>
+          <i><b style={{ width: `${klaar ? 100 : totaal > 1 ? Math.round((40 + (60 * (nu - 1)) / (totaal - 1)) * 10) / 10 : 100}%` }} /></i>
+          <i className={klaar ? 'is-groen' : undefined} />
+          <i className={klaar && !laden ? 'is-groen' : undefined} />
+        </div>
       </div>
       {/* Na een verstuurde aanvraag geen Terug meer: terug naar een vraag zou doen alsof er nog niets verstuurd is. */}
       {!vraagToestemming && (
         <div className="kgj-reken__kop">
           {/* Uitgesproken door een schermlezer alleen in de kaart die de bezoeker gebruikt (de andere kaart verandert mee). */}
           {/* 7 nov 2026, zoals bfbouw.be (Mohammed daar: "DOE ipv stap 1 VAN 7 gewoon stap 1"). */}
-          <span className="kgj-reken__tel" aria-live={actiefHier ? 'polite' : 'off'}>Stap {nu}</span>
+          <span className="kgj-reken__tel" data-intern={`Stap ${nu}`} aria-live={actiefHier ? 'polite' : 'off'}>Stap {klaar ? (laden ? 2 : 3) : 1} van 3</span>
           {stap > 0 && !laden && (
             <button type="button" className="kgj-reken__terug" onClick={() => { gebruik(); setOFout([]); zet((s) => (s.offerte
               ? ((s.offerteStap ?? 0) > 0 ? { ...s, aangetikt: true, fout: null, offerteStap: (s.offerteStap ?? 0) - 1 } : { ...s, aangetikt: true, fout: null, offerte: false, stap: 0 })
@@ -790,13 +796,11 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
 
       {laden && a.laden ? (
         /* De laadstap (bfbouw.be rk__laad): drie regels die een voor een afvinken, daarna het contactscherm. */
-        <div className={`kgj-reken__laad is-${laadFase}`}>
-          <p className="kgj-reken__laad-kop" role="status"><span className="kgj-reken__laad-spin" aria-hidden="true" />{a.laden.kop}</p>
-          <ul className="kgj-reken__laad-lijst">
-            {[a.laden.eerste, laadRegel, ...(a.laden.laatste ? [a.laden.laatste] : [])].map((r, i) => ( /* 18 nov 2026, Mohammed: "Klaar voor onze dakexpert ... dat kan eruit, dat raar": twee regels */
-              <li key={i} className={laadFase > i ? 'is-aan' : undefined}><span className="kgj-reken__laad-vink" aria-hidden="true"><Check /></span><span>{r}</span></li>
-            ))}
-          </ul>
+        /* 18 nov 2026, Mohammed: Solvari-widget ("3 balken bovenaan, en dan heb je gegevens analyseren, dan komt er een groene vink en dan contact"), Cralux ("stap .. van 3, in totaal 3 stappen"), "ook visueel zo met die 3 lijnen, die groen zijn": stap 2 van 3 = analyse (cirkel draait, wordt een groene vink), onder de kop de eigen antwoorden. */
+        <div className={`kgj-reken__laad kgj-reken__analyse${laadFase > 0 ? ' is-klaar' : ''}`}>
+          <span className="kgj-reken__analyse-rond" aria-hidden="true"><span className="kgj-reken__analyse-spin" /><span className="kgj-reken__analyse-vink"><Check /></span></span>
+          <p className="kgj-reken__laad-kop kgj-reken__analyse-kop" role="status">{laadFase > 0 ? (a.laden.klaar ?? a.laden.kop) : a.laden.kop}</p>
+          {laadRegel && <p className="kgj-reken__analyse-sub">{laadRegel}</p>}
         </div>
       ) : vraagToestemming ? (
         <Toestemming verder={naarBedankt} stil={!actiefHier} />
@@ -914,6 +918,13 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
               {cVeld('email', { tekst: 'E-mailadres', icoon: <Mail />, type: 'email', auto: 'email', mode: 'email' })}
               {metPostcode && <div className="kgj-reken__cveld kgj-reken__cveld--breed"><PostcodeGemeente hint="bv. 2830" /></div>}
             </div>
+            {/* 18 nov 2026, Mohammed: "doe bij de laatste stap dat ze ook bericht kunnen doen, optioneel, ga eerst kijken in cro data": een open tekstvak
+                drukt de conversie (HubSpot, 40.000 LP's), ingeklapt won (InsightWhale, 54.697 bezoekers, 72% gsm, +26%; Baymard). Dus ingeklapt. */}
+            <details className="kgj-reken__bericht" onToggle={(e) => { const d = e.currentTarget; if (d.open) d.querySelector('textarea')?.focus({ preventScroll: true }); }}>
+              <summary><Plus aria-hidden="true" /><span>Bericht toevoegen (optioneel)</span></summary>
+              <label className="kgj-reken__bericht-label" htmlFor={`kgj-${plek}-bericht`}>Uw bericht (optioneel)</label>
+              <textarea id={`kgj-${plek}-bericht`} name="bericht" rows={3} maxLength={1000} />
+            </details>
             <button ref={verzendKnop} className="kgj-knop kgj-knop--vol kgj-reken__knop" type="submit" disabled={bezig} aria-busy={bezig || undefined}>
               {bezig ? 'Bezig…' : offerte && a.offerte ? a.offerte.verzend : t.knop}
             </button>

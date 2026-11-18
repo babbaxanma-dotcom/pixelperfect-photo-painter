@@ -1243,7 +1243,9 @@ body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-banner-inner { grid-template-
 body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-banner-actions { flex-direction: row; gap: 8px; }
 body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { flex: 1; padding: 8px 10px; font-size: 13.5px; }
 @media (max-width: 1000px) {
-  body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-banner { left: 8px; right: 8px; bottom: 8px; transform: none; width: auto; max-width: none; border-radius: 12px; }
+  /* 18 nov 2026, Mohammed: "de cookie melding op ab is irritant, fix dat": smalle balk onderaan, geen zwevende kaart (src/lib/consent.ts) */
+  body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-banner { left: 0; right: 0; bottom: 0; transform: none; width: auto; max-width: none; border-radius: 0; border-width: 1px 0 0; }
+  body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-banner-inner { padding: 8px 12px calc(8px + env(safe-area-inset-bottom)); }
 }
 @media (min-width: 1001px) {
   body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-banner { width: 440px; right: 24px; bottom: 24px; }
@@ -1606,3 +1608,36 @@ html.is-informulier .bf.bf-lp .bf-belzweef { opacity: 0 !important; visibility: 
 @media (min-width: 1001px) and (orientation: portrait) {
   .bf.bf-lp .bf-lphero__in { min-height: 0; }
 }
+
+/* 18 nov 2026, Mohammed: Solvari-widget ("3 balken bovenaan, en dan heb je gegevens analyseren, dan komt er een groene vink en dan contact"), Cralux ("stap .. van 3,
+   in totaal 3 stappen"), "ook visueel zo met die 3 lijnen, die groen zijn". Zelfde maten als bfbouw.be en inzichtbouw.be: drie lijnen van 6 px, rond, 8 px ertussen,
+   teller "Stap 1 van 3" (geen hoofdletters: geen eyebrow-labels), analyse met een cirkel die een groene vink wordt, ingeklapt optioneel bericht. */
+.bf.bf-lp .kgj-reken { --lijn-groen: #22a04b; --lijn-grijs: #e5e7eb; }
+.bf.bf-lp .kgj-reken__lijnen { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.bf.bf-lp .kgj-reken__lijnen > i { display: block; height: 6px; border-radius: 999px; background: var(--lijn-grijs); overflow: hidden; transition: background-color .3s cubic-bezier(.4, 0, .2, 1); }
+.bf.bf-lp .kgj-reken__lijnen > i.is-groen { background: var(--lijn-groen); }
+.bf.bf-lp .kgj-reken__lijnen > i > b { display: block; height: 100%; border-radius: 999px; background: var(--lijn-groen); transition: width .3s cubic-bezier(.4, 0, .2, 1); }
+.bf.bf-lp .kgj-reken.kgj-reken--aanvraag .kgj-reken__tel { font-size: 14px; font-weight: 700; color: #3d3d3d; }
+.bf.bf-lp .kgj-reken__analyse { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 26px 0 22px; }
+.bf.bf-lp .kgj-reken__analyse-rond { position: relative; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; transition: background-color .25s ease; }
+.bf.bf-lp .kgj-reken__analyse-spin { position: absolute; inset: 0; border-radius: 50%; border: 4px solid #dff1e5; border-top-color: var(--lijn-groen); animation: kgj-analyse-draai .8s linear infinite; }
+@keyframes kgj-analyse-draai { to { transform: rotate(360deg); } }
+.bf.bf-lp .kgj-reken__analyse-vink { display: grid; place-items: center; color: #fff; opacity: 0; transform: scale(.4); transition: opacity .2s ease, transform .3s cubic-bezier(.34, 1.56, .64, 1); }
+.bf.bf-lp .kgj-reken__analyse-vink svg { width: 30px; height: 30px; stroke-width: 2.6; }
+.bf.bf-lp .kgj-reken__analyse.is-klaar .kgj-reken__analyse-rond { background: var(--lijn-groen); }
+.bf.bf-lp .kgj-reken__analyse.is-klaar .kgj-reken__analyse-spin { display: none; }
+.bf.bf-lp .kgj-reken__analyse.is-klaar .kgj-reken__analyse-vink { opacity: 1; transform: scale(1); }
+.bf.bf-lp .kgj-reken .kgj-reken__analyse-kop { display: block; margin: 16px 0 0; font-size: 20px; line-height: 1.3; font-weight: 700; color: var(--ink, #111); }
+.bf.bf-lp .kgj-reken__analyse-sub { margin: 6px 0 0; max-width: 34ch; font-size: 15px; line-height: 1.45; color: var(--grijs, #555); }
+.bf.bf-lp .kgj-reken__bericht { margin: 10px 0 0; }
+.bf.bf-lp .kgj-reken__bericht > summary { display: inline-flex; align-items: center; gap: 6px; min-height: 48px; padding: 0 2px; list-style: none; cursor: pointer; font-size: 15px; font-weight: 600; color: var(--ink, #111); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: #b5b5b5; }
+.bf.bf-lp .kgj-reken__bericht > summary::-webkit-details-marker { display: none; }
+.bf.bf-lp .kgj-reken__bericht > summary svg { width: 16px; height: 16px; flex: none; }
+.bf.bf-lp .kgj-reken__bericht[open] > summary { display: none; }
+.bf.bf-lp .kgj-reken__bericht:not([open]) > :not(summary) { display: none; } /* dicht = vak echt weg (ook voor metingen) */
+.bf.bf-lp .kgj-reken__form .kgj-reken__bericht-label { display: block; margin: 0 0 6px; font-size: 14px; font-weight: 600; color: var(--ink, #111); }
+.bf.bf-lp .kgj-reken__bericht textarea { display: block; width: 100%; min-height: 96px; margin: 0; padding: 12px 14px; border: 1px solid #d4d4d4; border-radius: 8px; background: #fff; font: inherit; font-size: 16px; line-height: 1.4; color: var(--ink, #111); resize: vertical; }
+.bf.bf-lp .kgj-reken__bericht textarea:focus { outline: none; border-color: #3a3a3a; }
+/* klein scherm met open toetsenbord (zichtbaar <= 420 px): de berichtlink wijkt zolang in een veld getypt wordt, zodat veld en verzendknop samen in beeld staan */
+@media (max-height: 420px) { .bf.bf-lp .kgj-reken__form:focus-within .kgj-reken__bericht:not([open]) { display: none; } }
+@media (prefers-reduced-motion: reduce) { .bf.bf-lp .kgj-reken__analyse-spin { animation: none; } .bf.bf-lp .kgj-reken__analyse-vink { transition: none; } .bf.bf-lp .kgj-reken__lijnen > i, .bf.bf-lp .kgj-reken__lijnen > i > b { transition: none; } }

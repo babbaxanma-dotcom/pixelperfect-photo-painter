@@ -38,7 +38,7 @@ const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const POORT = 4437;
 const PAD = '/lp/dakwerken';
 const HERO = '#rekenaar .kgj-reken--aanvraag';
-const NAAR_CONTACT = ['Dakrenovatie', 'Hellend dak', 'Nee', 'Zo snel mogelijk'];
+const NAAR_CONTACT = ['Dakrenovatie', 'Hellend dak', 'Nee']; // 18 nov 2026: geen startvraag
 const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
 const MELD = { telFout: 'Dat telefoonnummer lijkt niet volledig. Controleer het even.', telLeeg: 'Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.', mailLeeg: 'Vul uw e-mailadres in. Daar sturen wij uw offerte naartoe.' };
 const GOED = ['0470 12 34 56', '0470123456', '0470.12.34.56', '0470/12.34.56', '0470-12-34-56', '0470\u00a012\u00a034\u00a056', '+32 470 12 34 56', '\u202a+32 470 12 34 56\u202c', '0032 470 12 34 56', '015 12 34 56'];
@@ -232,14 +232,14 @@ async function gsmFouten(w, h, plant = {}) {
     const m0 = await maat(null);
     for (const [naam, r] of [['kop "Contact"', m0.ckop], ['naamveld', m0.velden[0]], ['telefoonveld', m0.velden[1]], ['e-mailveld', m0.velden[2]], ['verzendknop', m0.knop]]) if (!inBeeld(m0, r)) uit.push(`F ${w}x${h}. ${naam} niet in beeld zonder toetsenbord ${JSON.stringify(r)} (balk ${m0.balk}, zichtbaar ${m0.hoog})`);
     /* "Na uw aanvraag" kort (18 nov 2026, Mohammed: "ook kort van wat erna gebeurt"): de drie titels van AB, direct onder de knop, in beeld, 15 px, contrast >= 4,5, geen vlak of kader */
-    if (!m0.kort || m0.kort.kop !== 'Na uw aanvraag' || m0.kort.titels.join('|') !== 'We nemen binnen 24 uur contact op|Gratis plaatsbezoek met onze dakexpert|Je ontvangt je offerte in je mailbox|Jij geniet zorgeloos van je nieuwe dak') uit.push(`F ${w}x${h}. stappenblok "Na uw aanvraag" onder de knop ontbreekt of andere tekst (${JSON.stringify(m0.kort)})`);
+    if (!m0.kort || m0.kort.kop !== 'Na uw aanvraag' || m0.kort.titels.join('|') !== 'We nemen binnen 24 uur contact op|Gratis plaatsbezoek met onze dakexpert|Je ontvangt je offerte in je mailbox|Na je akkoord starten de werken|Je geniet zorgeloos van je nieuwe dak') uit.push(`F ${w}x${h}. stappenblok "Na uw aanvraag" onder de knop ontbreekt of andere tekst (${JSON.stringify(m0.kort)})`);
     else {
       /* het blok begint direct onder de knop; op de gsm mag het onder het scherm doorlopen (kop, velden en knop staan hierboven al in beeld) */
       if (!m0.nastap || m0.nastap.top < m0.knop.bottom || m0.nastap.top - m0.knop.bottom > 24) uit.push(`F ${w}x${h}. stappenblok niet direct onder de knop (${JSON.stringify(m0.nastap)}, knop tot ${m0.knop.bottom})`);
       if (m0.kort.vlak !== 'rgb(242, 242, 242)' || m0.kort.schaduw !== 'none') uit.push(`F ${w}x${h}. stappenblok: vlak ${m0.kort.vlak}, schaduw ${m0.kort.schaduw} (verwacht licht grijs #f2f2f2 zonder schaduw)`);
       if (m0.kort.px !== 16 || m0.kort.gewicht !== '700') uit.push(`F ${w}x${h}. stappenblok: titel ${m0.kort.px} px / ${m0.kort.gewicht} (verwacht 16 px vet)`);
       /* 18 nov 2026 (Mohammed: "doe dat zoals kijzer, zo hoe dat wordt uitgelegd"): één uitlegzin per stap, woordelijk, 15-16 px, contrast >= 4,5 */
-      if (m0.kort.uitleg.join('|') !== 'We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.|Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.|Vrijblijvend: je beslist zelf, zonder enige verplichting.|Na je akkoord plannen we de werken in en voeren we ze uit.' || m0.kort.upx < 15 || m0.kort.upx > 16 || m0.kort.ucontrast < 4.5) uit.push(`F ${w}x${h}. stappenblok: uitleg ${JSON.stringify({ uitleg: m0.kort.uitleg, px: m0.kort.upx, contrast: m0.kort.ucontrast })} (verwacht de vier gedicteerde zinnen, 15-16 px, contrast >= 4,5)`);
+      if (m0.kort.uitleg.join('|') !== 'We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.|Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.|Vrijblijvend: je beslist zelf, zonder enige verplichting.|We plannen de werken in en voeren ze uit.|We begeleiden je bij eventuele premies.' || /* 18 nov 2026: vijf stappen (Kijzer) */ m0.kort.upx < 15 || m0.kort.upx > 16 || m0.kort.ucontrast < 4.5) uit.push(`F ${w}x${h}. stappenblok: uitleg ${JSON.stringify({ uitleg: m0.kort.uitleg, px: m0.kort.upx, contrast: m0.kort.ucontrast })} (verwacht de vier gedicteerde zinnen, 15-16 px, contrast >= 4,5)`);
       if (m0.kort.rand < 1 || !/^rgba\(0, 0, 0, 0\)$|^transparent$/.test(m0.kort.cirkel) || m0.kort.cirkelB < 36 || m0.kort.cirkelB > 40) uit.push(`F ${w}x${h}. stappenblok: gevulde cirkel of geen rand (${JSON.stringify(m0.kort)}) (verwacht een cirkel van 36-40 px met alleen een rand)`);
     }
     if (m0.letter < 16) uit.push(`F ${w}x${h}. tekst in de velden ${m0.letter} px (minstens 16)`);
@@ -331,7 +331,7 @@ async function kaartKopFouten(w, h, schuif = false) {
       if (schuif) { await p.evaluate((s) => window.scrollBy({ top: document.querySelector(s).getBoundingClientRect().top - document.querySelector('.kgj-kop').getBoundingClientRect().bottom + 30, behavior: 'instant' }), sel); await wacht(300); rij.push({ na: 'geschoven', ...(await meet()) }); }
       const slecht = rij.filter((m) => m.kaart < m.kop || m.titel < m.kop);
       if (slecht.length) uit.push(`H ${w}x${h} ${sel === HERO ? 'kaart bovenaan' : 'kaart onderaan'}. de kaart of haar titel ligt onder de kopbalk: ${JSON.stringify(slecht)}`);
-      if (rij[rij.length - (schuif ? 2 : 1)].stap !== 'Stap 5') uit.push(`H ${w}x${h}. het contactblok (Stap 5) werd niet bereikt: ${JSON.stringify(rij)}`);
+      if (rij[rij.length - (schuif ? 2 : 1)].stap !== 'Stap 3 van 3') uit.push(`H ${w}x${h}. het contactblok (Stap 3 van 3, zichtbare teller; 18 nov 2026) werd niet bereikt: ${JSON.stringify(rij)}`);
     } finally { await ctx.close(); }
   }
   return uit;
@@ -388,7 +388,7 @@ async function beidePadFouten() {
   const uit = [];
   for (const pad of [PAD, '/lp/dakwerken/asbest']) for (const werk of ['Dakrenovatie', 'Nieuw dak', 'Herstelling', 'Isolatie', 'Gratis dakinspectie']) {
     const hl = await padNa(pad, werk, 'Hellend dak'), be = await padNa(pad, werk, 'Beide / combinatie');
-    const ok = JSON.stringify(be.rij) === JSON.stringify(hl.rij) && be.stap === hl.stap && /^Stap \d+$/.test(be.stap) && hl.info.includes('Dak: Hellend dak') && be.info === hl.info.replace('Dak: Hellend dak', 'Dak: ' + BEIDE);
+    const ok = JSON.stringify(be.rij) === JSON.stringify(hl.rij) && be.stap === hl.stap && /^Stap \d van 3$/.test(be.stap) && hl.info.includes('Dak: Hellend dak') && be.info === hl.info.replace('Dak: Hellend dak', 'Dak: ' + BEIDE);
     if (!ok) uit.push(`I ${pad} ${werk}. het pad of de aanvraag na "Beide" wijkt af van Hellend dak: ${JSON.stringify({ hl, be })}`);
   }
   return uit;

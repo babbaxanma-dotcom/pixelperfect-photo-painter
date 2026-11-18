@@ -84,9 +84,7 @@ const BANNER_HTML = `
 <div class="abc-banner" role="dialog" aria-live="polite" aria-label="Cookie-instellingen">
   <div class="abc-banner-inner">
     <div class="abc-banner-text">
-      <strong>Cookies & privacy</strong>
-      <p>We gebruiken cookies om de site te laten werken en, met uw toestemming, om bezoekers te meten en advertenties bij te houden.
-        Lees meer in onze <a href="/cookies">cookieverklaring</a>.</p>
+      <p>Met uw toestemming meten we bezoeken en advertenties. <a href="/cookies">Cookieverklaring</a></p>
     </div>
     <div class="abc-banner-actions">
       <button type="button" class="abc-btn abc-btn-ghost" data-abc-action="essential">Alleen essentiële</button>
@@ -97,27 +95,32 @@ const BANNER_HTML = `
 `;
 
 const BANNER_CSS = `
+/* 18 nov 2026, Mohammed: "de cookie melding op ab is irritant, fix dat": van een zwevende kaart (titel + drie regels, ± 170 px hoog op de gsm)
+   naar een smalle balk onderaan met één zin; tijdens het invullen van een formulier (html.is-informulier) is hij weg. De keuze blijft even
+   makkelijk (Alleen essentiële naast Alles aanvaarden) en zonder keuze staat alles op geweigerd (Consent Mode in index.html). */
 .abc-banner {
   position: fixed; left: 50%; transform: translateX(-50%); bottom: 12px; z-index: 999;
-  width: calc(100% - 24px); max-width: 760px;
+  width: calc(100% - 24px); max-width: 640px;
   background: #fff; color: #0f1115;
-  border: 1px solid rgba(15,17,21,0.10);
-  border-radius: 14px;
-  box-shadow: 0 24px 60px -18px rgba(10,22,40,0.35);
+  border: 1px solid rgba(15,17,21,0.12);
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(10,22,40,0.14);
   font-family: var(--font-body, system-ui, sans-serif);
   font-size: 14px; line-height: 1.5;
 }
 .abc-banner-inner {
-  display: grid; grid-template-columns: 1fr auto; gap: 16px;
-  padding: 14px 18px; align-items: center;
+  display: grid; grid-template-columns: 1fr auto; gap: 12px;
+  padding: 10px 12px 10px 16px; align-items: center;
 }
+html.is-informulier .abc-banner { display: none; }
+#ab-bouw-cookie-banner .abc-banner-text p { font-size: 13.5px; line-height: 1.4; } /* de globale p-regel (16 px) maakte de zin groter dan nodig */
 .abc-banner-text strong { display: block; font-size: 15px; margin-bottom: 4px; }
 .abc-banner-text p { margin: 0; color: rgba(15,17,21,0.72); }
 .abc-banner-text a { color: var(--accent, #d98c03); text-decoration: underline; }
 .abc-banner-actions { display: flex; gap: 10px; }
 .abc-btn {
-  font: inherit; cursor: pointer; padding: 11px 18px;
-  border-radius: 999px; border: 1px solid transparent;
+  font: inherit; cursor: pointer; padding: 8px 14px; min-height: 40px;
+  border-radius: 6px; border: 1px solid transparent;
   white-space: nowrap; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
 }
 .abc-btn:active { }
@@ -133,11 +136,10 @@ const BANNER_CSS = `
 }
 .abc-btn-primary:hover { background: #b87502; border-color: #b87502; color: #0a1628; }
 @media (max-width: 720px) {
-  .abc-banner { font-size: 13px; }
-  .abc-banner-inner { grid-template-columns: 1fr; gap: 10px; padding: 12px 14px; }
-  .abc-banner-text strong { font-size: 14px; margin-bottom: 2px; }
+  .abc-banner { font-size: 13px; left: 0; right: 0; bottom: 0; transform: none; width: auto; max-width: none; border-radius: 0; border-width: 1px 0 0; box-shadow: 0 -4px 12px rgba(10,22,40,0.08); }
+  .abc-banner-inner { grid-template-columns: 1fr; gap: 8px; padding: 8px 12px calc(8px + env(safe-area-inset-bottom)); }
   .abc-banner-actions { flex-direction: row; }
-  .abc-btn { flex: 1; padding: 10px 12px; }
+  .abc-btn { flex: 1; padding: 6px 10px; min-height: 40px; }
 }
 `;
 

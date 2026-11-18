@@ -34,9 +34,9 @@ const PADEN = {
      de contactstap. De rekenaar zelf staat alleen nog op /lp/richtprijs-berekenen en blijft hier gemeten. */
   /* 7 nov 2026: vraag 1 "Ik ben op zoek naar:", vraag 2 het soort dak, tot en met de contactstap */
   /* 18 nov 2026 (formulier v2): zonder asbest- en oppervlaktevraag */
-  dakwerken: ['Dakrenovatie', 'Hellend dak', 'Nee', 'Zo snel mogelijk'],
+  dakwerken: ['Dakrenovatie', 'Hellend dak', 'Nee'], // 18 nov 2026: geen startvraag
   /* 22 okt 2026: vraag 1 de woning, vraag 3 de afvinkvraag (de hoogste stap: daar valt de kop het makkelijkst weg), dan start en budget */
-  totaalrenovatie: ['Rijwoning', 'Gedeeltelijke renovatie', 'Keuken', 'Badkamer', '@verder', 'Zo snel mogelijk', '€ 25.000 tot € 75.000'],
+  totaalrenovatie: ['Rijwoning', 'Gedeeltelijke renovatie', 'Keuken', 'Badkamer', '@verder', '€ 25.000 tot € 75.000'],
   /* 5 okt 2026: de renovatierekenaar staat niet meer in de hero van /lp/totaalrenovatie (daar
      een knop naar het formulier), maar op de losse rekenaarpagina /lp/richtprijs-berekenen. */
   'richtprijs-berekenen': ['Rijwoning', 'Alles (totaalrenovatie)', '@verder', '100 tot 150 m²', 'Ouder dan 10 jaar', 'Alles'],
@@ -88,7 +88,7 @@ const SCHERMEN = [[390, 844], [375, 667]];
     const kaart = document.querySelector('.kgj-reken'), vol = !!kaart && kaart.classList.contains('is-vol');
     const opBalk = vol && balk > 0 ? document.elementFromPoint(Math.round(innerWidth / 2), Math.max(1, Math.round(balk) - 8)) : null;
     return { top: Math.round(kop.getBoundingClientRect().top), balk: Math.round(balk), vast: !!vast, vastH: Math.round(vast?.getBoundingClientRect().height ?? 0), h: innerHeight, vol, afgedekt: !!opBalk && kaart.contains(opBalk),
-      tel: kop.querySelector('.kgj-reken__tel')?.textContent.trim(), contact: !!document.querySelector('.kgj-reken .kgj-reken__contact') };
+      tel: (kop.querySelector('.kgj-reken__tel')?.dataset.intern ?? kop.querySelector('.kgj-reken__tel')?.textContent.trim()), contact: !!document.querySelector('.kgj-reken .kgj-reken__contact') };
   });
   const isFout = (s) => (s.vol ? s.top < 0 || s.top > 24 || !s.afgedekt : s.top < s.balk || s.top > s.h - 80);
   try {

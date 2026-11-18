@@ -33,7 +33,7 @@ const meld = (ok, wat, detail = '') => uitslag.push(`${ok ? 'AF     ' : 'NIET AF
   meld(vouw <= 844, 'alle antwoorden van vraag 1 boven de vouw', `laatste eindigt op ${vouw} van 844`);
 
   const vraag = () => page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__vraag')?.textContent.trim());
-  const tel = () => page.evaluate(() => document.querySelector('#rekenaar .kgj-reken__tel')?.textContent.trim());
+  const tel = () => page.evaluate(() => (document.querySelector('#rekenaar .kgj-reken__tel')?.dataset.intern ?? document.querySelector('#rekenaar .kgj-reken__tel')?.textContent.trim()));
   const keuzes = () => page.evaluate(() => [...document.querySelectorAll('#rekenaar .kgj-reken__keuze strong')].map((b) => b.textContent.trim()));
   const tik = async (label) => {
     const r = await page.evaluate((l) => { const b = [...document.querySelectorAll('#rekenaar .kgj-reken__keuze')].find((k) => k.textContent.trim().startsWith(l)); if (!b) return null; b.scrollIntoView({ block: 'center', behavior: 'instant' }); return true; }, label);

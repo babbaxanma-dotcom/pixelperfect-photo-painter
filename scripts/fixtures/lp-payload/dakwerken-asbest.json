@@ -12,8 +12,7 @@
       "antwoorden": [
         "Dakrenovatie",
         "Hellend dak",
-        "Nee",
-        "Zo snel mogelijk"
+        "Nee"
       ],
       "velden": {
         "naam": "Test Kaart",
@@ -36,7 +35,7 @@
         "phone": "0400 00 00 00",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis offerte · Werk: Dakrenovatie · Dak: Hellend dak · Isolatie: Nee · Asbest: Ja · Start: Zo snel mogelijk",
+        "aanvullende_info": "Aanvraag gratis offerte · Werk: Dakrenovatie · Dak: Hellend dak · Isolatie: Nee · Asbest: Ja",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:dakwerken-asbest:offerte",
         "page_path": "/lp/dakwerken/asbest",
@@ -60,7 +59,7 @@
         "phone": "0400 00 00 00",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis offerte · Werk: Dakrenovatie · Dak: Hellend dak · Isolatie: Nee · Asbest: Ja · Start: Zo snel mogelijk",
+        "aanvullende_info": "Aanvraag gratis offerte · Werk: Dakrenovatie · Dak: Hellend dak · Isolatie: Nee · Asbest: Ja",
         "bron_lead": "Google Ads",
         "bron_lead_detail": "lp:dakwerken-asbest:offerte",
         "page_path": "/lp/dakwerken/asbest",
@@ -73,7 +72,8 @@
         "gclid": "TEST-KAART"
       },
       "metingInUitFlows": "19 okt 2026: aanvraagkaart bovenaan (Aanvraag.tsx). Verwacht = de payload van het formulier onderaan (Inspectie.tsx, zelfde bron_lead lp:dakwerken:inspectie) met de antwoorden van de klikvragen in aanvullende_info; veldvolgorde van leads.ts buildBody. 22 okt 2026 (Mohammed: \"EN TIS ENKEL lp dakwerken en lp totaalrenovatie\", de formulierwijzigingen van 21 okt ook op dak): vijfde klikvraag Start (\"Wanneer wilt u beginnen?\"), contactstap alleen Naam* en Gsm*, dus zonder email, postalCode en adres_project; onderaan dezelfde klikkaart (Aanvraag.tsx plek=\"onder\") met het form_start-label en bron_lead_detail van het oude formulier (lp:dakwerken:inspectie, zonder :hero). 2 nov 2026 (omvormen zoals bfbouw.be 31 okt, opdracht Mohammed \"landingspaginas van ab omvormen ... nu ab\"): offerte i.p.v. dakinspectie/plaatsbezoek, bron_lead_detail :offerte (GHL W01b standaard-sms), \"Aanvraag gratis offerte\", E-mailadres* op de contactstap, dakvragen zoals bfbouw.be (Isolatie en Weet ik nog niet bij stap 2, Oppervlakte, Start \"Wanneer wilt u starten?\"). 7 nov 2026: vraag 1 = Werk (\"Ik ben op zoek naar:\"), vraag 2 = Dak; Weet ik nog niet -> Gratis dakinspectie (eigen vragen: Signaal, Asbest).",
-      "metingV2": "18 nov 2026 (formulier v2, Mohammed: \"die vraag van oppervlakte en asbest eruit\"; de staal-vraag \"bereikbaar\" weg): antwoorden en aanvullende_info zonder Asbest, Oppervlakte en Bereikbaar; verder ongewijzigd."
+      "metingV2": "18 nov 2026 (formulier v2, Mohammed: \"die vraag van oppervlakte en asbest eruit\"; de staal-vraag \"bereikbaar\" weg): antwoorden en aanvullende_info zonder Asbest, Oppervlakte en Bereikbaar; verder ongewijzigd.",
+      "metingStartWeg": "18 nov 2026, Mohammed: \"wanneer wilt u starten eruit\" -> geen startvraag meer in de aanvraagkaart"
     },
     {
       "naam": "aanvraag-onder",
@@ -84,8 +84,7 @@
       "antwoorden": [
         "Nieuw dak",
         "Plat dak",
-        "Huidig dak vervangen",
-        "Binnen 3 maanden"
+        "Huidig dak vervangen"
       ],
       "velden": {
         "naam": "Test Kaart",
@@ -108,7 +107,7 @@
         "phone": "0400 00 00 01",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis offerte · Werk: Nieuw dak · Dak: Plat dak · Situatie: Huidig dak vervangen · Asbest: Ja · Start: Binnen 3 maanden",
+        "aanvullende_info": "Aanvraag gratis offerte · Werk: Nieuw dak · Dak: Plat dak · Situatie: Huidig dak vervangen · Asbest: Ja",
         "bron_lead": "Website",
         "bron_lead_detail": "lp:dakwerken-asbest:offerte",
         "page_path": "/lp/dakwerken/asbest",
@@ -127,7 +126,7 @@
         "phone": "0400 00 00 01",
         "country": "BE",
         "type_werk": "AB Dakwerken",
-        "aanvullende_info": "Aanvraag gratis offerte · Werk: Nieuw dak · Dak: Plat dak · Situatie: Huidig dak vervangen · Asbest: Ja · Start: Binnen 3 maanden",
+        "aanvullende_info": "Aanvraag gratis offerte · Werk: Nieuw dak · Dak: Plat dak · Situatie: Huidig dak vervangen · Asbest: Ja",
         "bron_lead": "Website",
         "bron_lead_detail": "lp:dakwerken-asbest:offerte",
         "page_path": "/lp/dakwerken/asbest",
@@ -136,7 +135,8 @@
       },
       "metingInUitFlows": "22 okt 2026 (Mohammed: \"EN TIS ENKEL lp dakwerken en lp totaalrenovatie\", de formulierwijzigingen van 21 okt ook op dak): vijfde klikvraag Start (\"Wanneer wilt u beginnen?\"), contactstap alleen Naam* en Gsm*, dus zonder email, postalCode en adres_project; onderaan dezelfde klikkaart (Aanvraag.tsx plek=\"onder\") met het form_start-label en bron_lead_detail van het oude formulier (lp:dakwerken:inspectie, zonder :hero). 2 nov 2026 (omvormen zoals bfbouw.be 31 okt, opdracht Mohammed \"landingspaginas van ab omvormen ... nu ab\"): offerte i.p.v. dakinspectie/plaatsbezoek, bron_lead_detail :offerte (GHL W01b standaard-sms), \"Aanvraag gratis offerte\", E-mailadres* op de contactstap, dakvragen zoals bfbouw.be (Isolatie en Weet ik nog niet bij stap 2, Oppervlakte, Start \"Wanneer wilt u starten?\"). 7 nov 2026: vraag 1 = Werk (\"Ik ben op zoek naar:\"), vraag 2 = Dak; Weet ik nog niet -> Gratis dakinspectie (eigen vragen: Signaal, Asbest).",
       "metingV2": "18 nov 2026 (formulier v2, Mohammed: \"die vraag van oppervlakte en asbest eruit\"; de staal-vraag \"bereikbaar\" weg): antwoorden en aanvullende_info zonder Asbest, Oppervlakte en Bereikbaar; verder ongewijzigd.",
-      "metingBedekkingWeg": "18 nov 2026, Mohammed: \"Welke dakbedekking wilt u? eruit\" -> de vraag is weg op elk pad (Nieuw dak: na \"Waarvoor is het nieuwe dak?\" meteen de start)."
+      "metingBedekkingWeg": "18 nov 2026, Mohammed: \"Welke dakbedekking wilt u? eruit\" -> de vraag is weg op elk pad (Nieuw dak: na \"Waarvoor is het nieuwe dak?\" meteen de start).",
+      "metingStartWeg": "18 nov 2026, Mohammed: \"wanneer wilt u starten eruit\" -> geen startvraag meer in de aanvraagkaart"
     }
   ]
 }

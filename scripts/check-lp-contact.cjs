@@ -45,10 +45,10 @@ const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
 const HERO = '#rekenaar .kgj-reken--aanvraag';
 /* 18 nov 2026 (v2): zonder asbest-, oppervlakte- en bereikbaar-vraag */
 const PADEN = {
-  '/lp/dakwerken': ['Dakrenovatie', 'Hellend dak', 'Nee', 'Zo snel mogelijk'],
-  '/lp/dakwerken/asbest': ['Nieuw dak', 'Plat dak', 'Huidig dak vervangen', 'Zo snel mogelijk'],
-  '/lp/totaalrenovatie': ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'],
-  '/lp/aannemer-renovatiewerken': ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'],
+  '/lp/dakwerken': ['Dakrenovatie', 'Hellend dak', 'Nee'], // 18 nov 2026: geen startvraag
+  '/lp/dakwerken/asbest': ['Nieuw dak', 'Plat dak', 'Huidig dak vervangen'],
+  '/lp/totaalrenovatie': ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], '€ 25.000 tot € 75.000'],
+  '/lp/aannemer-renovatiewerken': ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], '€ 25.000 tot € 75.000'],
 };
 
 async function open(br, basis, w, h, pad, plant = {}) {
@@ -115,7 +115,7 @@ const info = (p) => p.evaluate((w) => {
   const kop = document.querySelector('.kgj-kop'), kcs = kop && getComputedStyle(kop);
   return { vast, laden: !!k.querySelector('.kgj-reken__laad'), contact: !!f, html: document.documentElement.classList.contains('is-formvol'),
     dialoog: !!document.querySelector('[role="dialog"][aria-modal="true"]'), sluit: !!document.querySelector('.kgj-reken__sluit'), achter: !!document.querySelector('.kgj-reken__achter'),
-    tel: k.querySelector('.kgj-reken__tel')?.textContent.trim(), terug: !!k.querySelector('.kgj-reken__terug'),
+    tel: (k.querySelector('.kgj-reken__tel')?.dataset.intern ?? k.querySelector('.kgj-reken__tel')?.textContent.trim()), terug: !!k.querySelector('.kgj-reken__terug'),
     vraag: k.querySelector('.kgj-reken__stap .kgj-reken__vraag')?.textContent?.trim() || null,
     ckop: r('.kgj-reken__ckop'), knop: r('.kgj-reken__knop'), naam: r('input[name="naam"]'), telv: r('input[name="telefoon"]'), mail: r('input[name="email"]'),
     balk: kop && kcs.position === 'fixed' && kcs.visibility !== 'hidden' ? Math.round(kop.getBoundingClientRect().bottom) : 0,

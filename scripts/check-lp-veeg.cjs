@@ -65,7 +65,7 @@ async function open(br, basis, veegUit) {
   await wacht(600);
   return { ctx, p };
 }
-const stand = (p) => p.evaluate((w) => { const k = document.querySelector(w); return { tel: k.querySelector('.kgj-reken__tel')?.textContent.trim() || null, vraag: k.querySelector('.kgj-reken__stap .kgj-reken__vraag')?.textContent.trim() || null }; }, HERO);
+const stand = (p) => p.evaluate((w) => { const k = document.querySelector(w); return { tel: (k.querySelector('.kgj-reken__tel')?.dataset.intern ?? k.querySelector('.kgj-reken__tel')?.textContent.trim()) || null, vraag: k.querySelector('.kgj-reken__stap .kgj-reken__vraag')?.textContent.trim() || null }; }, HERO);
 const midden = (p) => p.evaluate((w, l) => {
   const b = [...document.querySelector(w).querySelectorAll('.kgj-reken__keuze')].find((x) => (x.querySelector('strong')?.textContent || '').trim() === l);
   if (!b) return null;
