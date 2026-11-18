@@ -239,9 +239,15 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     /* 18 nov 2026 (v2): geen volle scherm en geen venster meer; ook de contactstappen staan in de pagina. */
     const kop = el.querySelector<HTMLElement>('.kgj-reken__kop') ?? el;
     const gedrag: ScrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
-    const balkH = document.querySelector('.kgj-kop')?.getBoundingClientRect().height ?? 0;
+    /* 18 nov 2026 (Mohammed: "bij het form invullen zijn de andere forms zo wit"; gemeten op bfbouw.be 1265x585: na het eerste antwoord lag de witte
+       kopbalk over de kaarttitel "Gratis offerte aanvragen", alleen "Stap 2" bleef zichtbaar): het vaste punt is de bovenrand van de KAART (met de
+       titel) 8 px onder de onderkant van de vaste kopbalk, gemeten op het moment zelf (elke breedte, ook als de balk bij het scrollen wit wordt);
+       niet meer "Stap x" onder de balk. Een verborgen balk (html.is-kopweg) telt als 0. */
+    const balkEl = document.querySelector<HTMLElement>('.kgj-kop'), bcs = balkEl && getComputedStyle(balkEl);
+    const balkH = balkEl && bcs && (bcs.position === 'fixed' || bcs.position === 'sticky') && bcs.visibility !== 'hidden' ? Math.max(0, balkEl.getBoundingClientRect().bottom) : 0;
     const boven = balkH + 8;
     const kopTop = kop.getBoundingClientRect().top;
+    const kaartTop = el.getBoundingClientRect().top;
     /* onderkant van wat de bezoeker nu moet tikken: de keuzes, Volgende, of de verzendknop met de regel eronder */
     /* 2 nov 2026: ook de regel onder de verzendknop ("Onze dakexpert contacteert u ... over uw offerte."): zegt wat er na de knop gebeurt. */
     /* 18 nov 2026 (v2): bij de contactstappen is het doel de knop van die stap ("Verder" of de verzendknop); "Na uw aanvraag" mag onder het scherm staan. */
@@ -249,10 +255,15 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     /* een offertestap focust zijn kop (geen veld: op de gsm zou het toetsenbord openspringen) */
     const onderkant = doelen.length ? Math.max(...doelen.map((d) => d.getBoundingClientRect().bottom)) : kopTop;
     const tekort = onderkant - (window.innerHeight - 12);
-    const kopWeg = kopTop < balkH + 4;
+    const kopWeg = kaartTop < balkH; // de kaart (titel) ligt (deels) onder de kopbalk of boven het scherm
     if (!kopWeg && tekort <= 0) return;
-    let naar = kopWeg ? el.getBoundingClientRect().top - boven : Math.min(tekort, kopTop - boven);
-    if (kopWeg && tekort - naar > 0) naar = kopTop - boven;
+    let naar = kopWeg ? kaartTop - boven : Math.min(tekort, kaartTop - boven);
+    /* Past de stap dan niet (de afvinkvraag van de renovatiepagina's op 390x637: "Volgende" viel onder het scherm, check:aanvraag), dan het punt van
+       vóór 18 nov: "Stap x" direct onder de balk, zodat de knop in beeld blijft. Op de dakpagina's past elke stap (check:formulier H). */
+    if (tekort > 0 && onderkant - naar > window.innerHeight - 12) {
+      naar = kopTop < balkH + 4 ? kaartTop - boven : Math.min(tekort, kopTop - boven);
+      if (kopTop < balkH + 4 && tekort - naar > 0) naar = kopTop - boven;
+    }
     eigenScroll(); // 7 nov 2026: onze scroll zet de focusstand niet uit
     window.scrollTo({ top: window.scrollY + naar, behavior: gedrag });
   };
@@ -862,13 +873,15 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
           <p className="kgj-reken__vraag">{vraag.vraag}</p>
           <div className={`kgj-reken__keuzes${vraag.keuzes.length % 2 === 1 ? ' kgj-reken__keuzes--oneven' : ''}${vraag.raster ? ' kgj-reken__keuzes--raster' : ''}${vraag.lijst ? ' kgj-reken__keuzes--lijst' : ''}`}>
             {vraag.keuzes.map((k) => (
-              <button type="button" key={k.label}
-                className={`kgj-reken__keuze${k.icoon ? ' kgj-reken__keuze--icoon' : ''}${antwoorden[vraag.sleutel] === k.label ? ' is-aan' : ''}${druk === k.label ? ' is-druk' : ''}`}
+              /* 18 nov 2026: k.waarde = het antwoord in de aanvraag als dat anders is dan het label ("Beide" -> "Beide (hellend en plat)");
+                 k.breed = een rij over de volle breedte onder de tegels, zonder icoon */
+              <button type="button" key={k.label} data-waarde={k.waarde}
+                className={`kgj-reken__keuze${k.icoon ? ' kgj-reken__keuze--icoon' : ''}${k.breed ? ' kgj-reken__keuze--breed' : ''}${antwoorden[vraag.sleutel] === (k.waarde ?? k.label) ? ' is-aan' : ''}${druk === k.label ? ' is-druk' : ''}`}
                 onPointerDown={(e) => { invoer.current = e.pointerType; setDruk(k.label); }}
                 onPointerUp={() => setDruk(null)}
                 onPointerCancel={() => setDruk(null)}
                 onPointerLeave={() => setDruk(null)}
-                onClick={(e) => kies(vraag.sleutel, k.label, e)}>
+                onClick={(e) => kies(vraag.sleutel, k.waarde ?? k.label, e)}>
                 {k.foto && <img className="kgj-reken__foto" src={k.foto} alt="" width={640} height={360} decoding="async" />}
                 {k.icoon && <i className="kgj-reken__icoon"><Icoon naam={k.icoon} /></i>}
                 <span className="kgj-reken__tekst">

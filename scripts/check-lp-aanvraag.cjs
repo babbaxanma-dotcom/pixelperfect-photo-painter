@@ -67,8 +67,9 @@
  *  15. (vaste knop met de stap) weg sinds 8 nov 2026: er is geen vaste knop meer (punt 12).
  *  16. elke stap volledig in beeld op 390x637, kaart bovenaan en onderaan: na elk antwoord de vraag onder de vaste balk en alle
  *      keuzes, Volgende of de verzendknop binnen het scherm.
- *  17. geen sprong onderaan (review 23 okt): zonder scroll anchoring (Safari) blijft "Stap x van y" van de kaart onderaan binnen
- *      40 px na een antwoord onderaan; de kaart bovenaan is dan bevroren zolang ze buiten beeld is.
+ *  17. geen sprong onderaan (review 23 okt): zonder scroll anchoring (Safari) zakt de bovenrand van de kaart onderaan na een antwoord
+ *      onderaan hoogstens 40 px voorbij het hoogste van haar startpositie en het vaste punt 8 px onder de kopbalk (18 nov 2026: daar
+ *      schuift de kaart met haar titel bewust naartoe); de kaart bovenaan is dan bevroren zolang ze buiten beeld is.
  *  18. één belofte (23 okt 2026, Mohammed: "optimalisatie van de knoppen, wat de knoppen zeggen ... ga na WAT DE BESTE is"):
  *      de verzendknop is "Gratis dakinspectie aanvragen" / "Gratis plaatsbezoek aanvragen" (punt 4) en elke zichtbare knop naar het
  *      formulier draagt dezelfde tekst.
@@ -594,10 +595,15 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     if (!(await tikZonderScroll(p, pg.pad1[0], HERO))) { await ctx.close(); return `keuze "${pg.pad1[0]}" bovenaan niet gevonden`; }
     await p.evaluate(() => { const a = [...document.querySelectorAll('a[href="#contact"]')].find((x) => x.getClientRects().length && !x.closest('.bf-kop')); a?.scrollIntoView({ block: 'center', behavior: 'instant' }); a?.click(); });
     await wacht(1200);
+    /* 18 nov 2026: gemeten op de bovenrand van de kaart. Na een antwoord schuift Aanvraag.tsx de kaart met haar titel bewust tot 8 px onder de vaste
+       kopbalk (Mohammed: "bij het form invullen zijn de andere forms zo wit"); die eigen scroll is geen sprong. Een sprong = de kaart zakt meer dan 40 px
+       voorbij het hoogste van haar startpositie en dat vaste punt (de Safari-sprong van 23 okt: 248 px). */
     const r = await p.evaluate((ONDER, label) => new Promise((klaar) => {
       const k = document.querySelector(ONDER);
-      const kop = () => k.querySelector('.kgj-reken__kop').getBoundingClientRect().top;
-      const voor = kop();
+      const kop = () => k.getBoundingClientRect().top;
+      const balk = document.querySelector('.kgj-kop'), bcs = balk && getComputedStyle(balk);
+      const punt = balk && bcs.position === 'fixed' ? balk.getBoundingClientRect().bottom + 8 : 8;
+      const voor = Math.max(kop(), punt);
       const spoor = [];
       const t0 = performance.now();
       const meet = () => { spoor.push(kop()); if (performance.now() - t0 < 1200) requestAnimationFrame(meet); else klaar({ voor: Math.round(voor), max: Math.round(Math.max(...spoor)) }); };
@@ -608,7 +614,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     }), ONDER, pg.pad1[1]);
     await ctx.close();
     if (!r) return `keuze "${pg.pad1[1]}" onderaan niet gevonden`;
-    return r.max - r.voor > 40 ? `de kaart onderaan sprong ${r.max - r.voor} px omlaag na een antwoord onderaan ("Stap x van y" van ${r.voor} naar ${r.max} px)` : null;
+    return r.max - r.voor > 40 ? `de kaart onderaan sprong ${r.max - r.voor} px omlaag na een antwoord onderaan (bovenrand kaart tot ${r.max} px, verwacht hoogstens ${r.voor + 40})` : null;
   };
 
   /* 18. Eén belofte op elke knop naar het formulier (23 okt 2026, knoppenonderzoek): elke zichtbare link naar #contact (kopknop op de

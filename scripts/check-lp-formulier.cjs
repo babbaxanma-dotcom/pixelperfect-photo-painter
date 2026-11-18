@@ -19,6 +19,12 @@
  * Positieve controles (zonder: exit 2): "0470 12 34" als goed verwacht moet A laten falen; een Enter-blokkade op het naamveld C; een 400
  * waar 3 pogingen verwacht worden D; gewiste opslag vóór herladen E; een verzendknop 400 px lager F (toetsenbord); een scroll van 120 px bij
  * het sluiten van het toetsenbord F (sprong).
+ *   G. belknoppen: de knop in de kopbalk blijft tijdens het formulier (18 nov 2026), de ronde knop gaat weg;
+ *   H. na elk antwoord en op het contactblok staat de kaart met haar titel onder de vaste kopbalk (1265x585 en 390x664, beide kaarten);
+ *   I. "Beide" bij het soort dak: volle-breedte rij zonder icoon in de stijl van "Gratis dakinspectie"; daarna het pad van Hellend dak, ook op
+ *      /lp/dakwerken/asbest; in de aanvraag "Dak: Beide (hellend en plat)".
+ * Positieve controles 18 nov: kopknop verborgen (G), ronde knop zichtbaar (G), kaart 30 px onder de kopbalk (H), "Beide" met icoon of op halve
+ * breedte (I), het pad na Plat dak wijkt af van Hellend dak (I).
  *
  * Draaien:  node scripts/check-lp-formulier.cjs            (start zelf een vite dev-server)
  *           LP_BASIS=http://localhost:8080 node scripts/check-lp-formulier.cjs
@@ -39,7 +45,7 @@ const GOED = ['0470 12 34 56', '0470123456', '0470.12.34.56', '0470/12.34.56', '
 const FOUT = ['0470 12 34', '........', 'abc', '12345678'];
 
 let br, basis;
-async function open({ w = 390, h = 664, antwoord = null, voorLaden = null } = {}) {
+async function open({ w = 390, h = 664, antwoord = null, voorLaden = null, pad = PAD } = {}) {
   const ctx = await br.createBrowserContext();
   const p = await ctx.newPage();
   await p.setViewport({ width: w, height: h, deviceScaleFactor: 1, isMobile: w < 1000, hasTouch: w < 1000 });
@@ -70,7 +76,7 @@ async function open({ w = 390, h = 664, antwoord = null, voorLaden = null } = {}
     try { localStorage.setItem('ab_bouw_consent_v1', JSON.stringify({ analytics: false, marketing: true, ts: Date.now() })); } catch (e) { /* */ }
   });
   if (voorLaden) await p.evaluateOnNewDocument(voorLaden);
-  await p.goto(basis + PAD, { waitUntil: 'networkidle2', timeout: 60000 });
+  await p.goto(basis + pad, { waitUntil: 'networkidle2', timeout: 60000 });
   await p.waitForSelector(HERO + ' .kgj-reken__keuze', { timeout: 20000 });
   await wacht(300);
   return { p, ctx, log };
@@ -258,6 +264,7 @@ async function gsmFouten(w, h, plant = {}) {
 
 /* G. belknoppen (18 nov 2026, Mohammed: "de bel directjes ctas moeten weg wanneer hij daar is ofzo"): vóór het eerste antwoord zichtbaar, vanaf
    het eerste antwoord weg zolang de kaart in beeld is, terug als de kaart volledig uit beeld is, weg op het contactblok, terug na versturen.
+   Sinds 18 nov ("bij het form invullen zijn de andere forms zo wit … bij belknop") geldt dat alleen voor de ronde belknop: de knop in de kopbalk blijft.
    De kopbalk verspringt niet (zelfde hoogte en plaats van het logo). */
 async function belFouten(w, h, css = null) {
   const uit = [];
@@ -276,7 +283,10 @@ async function belFouten(w, h, css = null) {
     await p.evaluate((w) => [...document.querySelectorAll(w + ' .kgj-reken__keuze')][0].click(), HERO);
     await wacht(500);
     const b1 = await bel();
-    if (b1.kop || b1.zweef) uit.push(`G ${w}x${h}. na het eerste antwoord met de kaart in beeld staat er nog een belknop (${JSON.stringify(b1)})`);
+    /* 18 nov 2026 (Mohammed: "bij het form invullen zijn de andere forms zo wit … bij belknop"): de belknop in de kopbalk BLIJFT tijdens het formulier
+       (zonder knop was de kopbalk na de scroll een lege witte balk); alleen de ronde belknop gaat weg */
+    if (!b1.kop) uit.push(`G ${w}x${h}. na het eerste antwoord is de belknop in de kopbalk niet zichtbaar (${JSON.stringify(b1)})`);
+    if (b1.zweef) uit.push(`G ${w}x${h}. na het eerste antwoord met de kaart in beeld staat er nog een ronde belknop (${JSON.stringify(b1)})`);
     if (b1.balkH !== b0.balkH) uit.push(`G ${w}x${h}. de kopbalk verspringt (${b0.balkH} -> ${b1.balkH} px)`);
     await p.evaluate(() => { const k = document.querySelector('#rekenaar .kgj-reken--aanvraag'), o = document.querySelector('#contact .kgj-reken--aanvraag'); const r = k.getBoundingClientRect(); scrollTo(0, scrollY + r.bottom + 40); if (o && o.getBoundingClientRect().top < innerHeight) scrollTo(0, scrollY + 10); });
     await wacht(700);
@@ -287,7 +297,8 @@ async function belFouten(w, h, css = null) {
     await p.waitForSelector(HERO + ' form.kgj-reken__contact', { timeout: 5000 }).catch(() => {});
     await wacht(900);
     const b3 = await bel();
-    if (b3.kop || b3.zweef) uit.push(`G ${w}x${h}. op het contactblok staat een belknop in beeld (${JSON.stringify(b3)})`);
+    if (!b3.kop) uit.push(`G ${w}x${h}. op het contactblok is de belknop in de kopbalk niet zichtbaar (${JSON.stringify(b3)})`);
+    if (b3.zweef) uit.push(`G ${w}x${h}. op het contactblok staat een ronde belknop in beeld (${JSON.stringify(b3)})`);
     await zetVeld(p, 'naam', 'Test Kaart'); await zetVeld(p, 'telefoon', '0470 12 34 56'); await zetVeld(p, 'email', 'test@kaart.be');
     await verstuur(p);
     await p.waitForFunction(() => location.pathname.startsWith('/bedankt'), { timeout: 10000 }).catch(() => {});
@@ -296,6 +307,91 @@ async function belFouten(w, h, css = null) {
     if (!b4.pad.startsWith('/bedankt') || b4.formulier) uit.push(`G ${w}x${h}. na versturen: ${JSON.stringify(b4)} (verwacht de bedankpagina zonder is-informulier)`);
     return uit;
   } finally { await ctx.close(); }
+}
+
+/* H. kaart onder de kopbalk (18 nov 2026, Mohammed: "bij het form invullen zijn de andere forms zo wit"; gemeten op bfbouw.be 1265x585: na het eerste
+   antwoord lag de witte kopbalk over de kaarttitel "Gratis offerte aanvragen"): na elk antwoord en op het contactblok staan de bovenrand van de kaart en
+   de titel onder de kopbalk. Zonder testhaken (focusstand en laadstap zoals een echte bezoeker), beide kaarten. schuif = positieve controle: de kaart
+   30 px onder de kopbalk geschoven. */
+async function kaartKopFouten(w, h, schuif = false) {
+  const uit = [];
+  /* elke kaart in een eigen pagina: de twee kaarten delen hun stap (na de kaart bovenaan staat ook die onderaan op het contactblok) */
+  for (const sel of schuif ? [HERO] : [HERO, '.bf-lpinsp__kaartvak .kgj-reken--aanvraag']) {
+    const { p, ctx } = await open({ w, h, voorLaden: () => { delete window.__abLaadMs; delete window.__abVolUit; } });
+    try {
+      if (sel !== HERO) { await p.evaluate((s) => window.scrollTo({ top: document.querySelector(s).getBoundingClientRect().top + scrollY - 200, behavior: 'instant' }), sel); await wacht(600); }
+      const meet = () => p.evaluate((s) => { const k = document.querySelector(s); return { stap: (k.querySelector('.kgj-reken__kop')?.textContent || '').replace(/\s*‹.*$/, ''), kop: Math.round(document.querySelector('.kgj-kop').getBoundingClientRect().bottom), kaart: Math.round(k.getBoundingClientRect().top), titel: Math.round(k.querySelector('.kgj-reken__hoofd').getBoundingClientRect().top) }; }, sel);
+      const rij = [];
+      for (const l of NAAR_CONTACT) {
+        const ok = await p.evaluate((s, l) => { const b = [...document.querySelectorAll(s + ' .kgj-reken__keuze')].find((x) => (x.querySelector('strong')?.textContent || '').trim() === l); b?.click(); return !!b; }, sel, l);
+        if (!ok) throw new Error(`H: keuze "${l}" niet gevonden`);
+        await wacht(1600); rij.push({ na: l, ...(await meet()) });
+      }
+      await wacht(1600); rij.push({ na: 'contactblok', ...(await meet()) });
+      if (schuif) { await p.evaluate((s) => window.scrollBy({ top: document.querySelector(s).getBoundingClientRect().top - document.querySelector('.kgj-kop').getBoundingClientRect().bottom + 30, behavior: 'instant' }), sel); await wacht(300); rij.push({ na: 'geschoven', ...(await meet()) }); }
+      const slecht = rij.filter((m) => m.kaart < m.kop || m.titel < m.kop);
+      if (slecht.length) uit.push(`H ${w}x${h} ${sel === HERO ? 'kaart bovenaan' : 'kaart onderaan'}. de kaart of haar titel ligt onder de kopbalk: ${JSON.stringify(slecht)}`);
+      if (rij[rij.length - (schuif ? 2 : 1)].stap !== 'Stap 5') uit.push(`H ${w}x${h}. het contactblok (Stap 5) werd niet bereikt: ${JSON.stringify(rij)}`);
+    } finally { await ctx.close(); }
+  }
+  return uit;
+}
+
+/* I. "Beide" bij "Om welk soort dak gaat het?" (18 nov 2026, Mohammed): een volle-breedte rij onder de twee fototegels, zelfde rand, afronding en tekst
+   als de rij "Gratis dakinspectie", zonder icoon, even hoog als die rij; daarna exact het pad van Hellend dak (elk werk, ook op /lp/dakwerken/asbest); in de
+   aanvraag "Dak: Beide (hellend en plat)". plant = positieve controle: 'icoon' (een icoon in de rij) of 'half' (halve breedte). */
+const BEIDE = 'Beide (hellend en plat)';
+async function beideVormFouten(w, h, pad = PAD, plant = null) {
+  const uit = [];
+  const { p, ctx } = await open({ w, h, pad });
+  try {
+    const ref = await p.evaluate((s) => { const b = [...document.querySelectorAll(s + ' .kgj-reken__keuze')].find((x) => (x.querySelector('strong')?.textContent || '').trim() === 'Gratis dakinspectie'), cs = getComputedStyle(b), st = getComputedStyle(b.querySelector('strong')); return { h: Math.round(b.getBoundingClientRect().height), radius: cs.borderTopLeftRadius, rand: cs.boxShadow, fs: st.fontSize, fw: st.fontWeight, kleur: st.color }; }, HERO);
+    await p.evaluate((s) => { const b = [...document.querySelectorAll(s + ' .kgj-reken__keuze')].find((x) => (x.querySelector('strong')?.textContent || '').trim() === 'Dakrenovatie'); b.click(); }, HERO); await wacht(500);
+    if (plant === 'icoon') await p.evaluate((s) => { const b = [...document.querySelectorAll(s + ' .kgj-reken__keuze')].find((x) => (x.querySelector('strong')?.textContent || '').trim() === 'Beide'); b?.insertAdjacentHTML('afterbegin', '<i class="kgj-reken__icoon"><svg viewBox="0 0 24 24"></svg></i>'); }, HERO);
+    if (plant === 'half') await p.addStyleTag({ content: '.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze--breed{grid-column:auto!important}' });
+    await wacht(150);
+    const v = await p.evaluate((s) => { const k = document.querySelector(s), knoppen = [...k.querySelectorAll('.kgj-reken__stap .kgj-reken__keuze')], r = (e) => e.getBoundingClientRect();
+      const b = knoppen.find((x) => (x.querySelector('strong')?.textContent || '').trim() === 'Beide'), tg = knoppen.filter((x) => x.querySelector('.kgj-reken__foto'));
+      if (!b) return { b: false, labels: knoppen.map((x) => x.textContent.trim()) };
+      const cs = getComputedStyle(b), st = getComputedStyle(b.querySelector('strong')), rs = r(b.parentElement);
+      return { b: true, vraag: k.querySelector('.kgj-reken__stap .kgj-reken__vraag')?.textContent, labels: knoppen.map((x) => (x.querySelector('strong')?.textContent || '').trim()), waarde: b.getAttribute('data-waarde'), icoon: b.querySelectorAll('svg, img, .kgj-reken__icoon').length,
+        laatste: knoppen[knoppen.length - 1] === b, breed: Math.round(r(b).width), rasterB: Math.round(rs.width), onderTegels: tg.length === 2 && tg.every((x) => r(b).top >= r(x).bottom), h: Math.round(r(b).height), radius: cs.borderTopLeftRadius, rand: cs.boxShadow, fs: st.fontSize, fw: st.fontWeight, kleur: st.color }; }, HERO);
+    const ok = v.b && v.vraag === 'Om welk soort dak gaat het?' && v.labels.join('|') === 'Hellend dak|Plat dak|Beide' && v.waarde === BEIDE && v.icoon === 0 && v.laatste && Math.abs(v.breed - v.rasterB) <= 1 && v.onderTegels && Math.abs(v.h - ref.h) <= 1 && v.h >= 44
+      && v.radius === ref.radius && v.rand === ref.rand && v.fs === ref.fs && v.fw === ref.fw && v.kleur === ref.kleur;
+    if (!ok) uit.push(`I ${w}x${h} ${pad}. "Beide" niet als volle-breedte rij zonder icoon in de stijl van "Gratis dakinspectie": ${JSON.stringify({ v, ref })}`);
+    return uit;
+  } finally { await ctx.close(); }
+}
+/* het pad (vragen + keuzes) na het soort dak, en de aanvraagtekst die naar GHL gaat */
+async function padNa(pad, werk, dak) {
+  const { p, ctx, log } = await open({ pad });
+  try {
+    const kies = (l) => p.evaluate((s, l) => { const b = [...document.querySelectorAll(s + ' .kgj-reken__stap .kgj-reken__keuze')].find((x) => (x.querySelector('strong')?.textContent || '').trim() === l); b?.click(); return !!b; }, HERO, l);
+    if (!(await kies(werk))) throw new Error(`I: keuze "${werk}" niet gevonden op ${pad}`); await wacht(400);
+    if (!(await kies(dak))) throw new Error(`I: keuze "${dak}" niet gevonden op ${pad}`); await wacht(400);
+    const rij = [];
+    for (let i = 0; i < 6; i++) {
+      if (await p.$(HERO + ' form.kgj-reken__contact')) break;
+      const s = await p.evaluate((s) => { const st = document.querySelector(s + ' .kgj-reken__stap'); return st ? { vraag: st.querySelector('.kgj-reken__vraag')?.textContent || '', keuzes: [...st.querySelectorAll('.kgj-reken__keuze strong')].map((x) => x.textContent.trim()) } : null; }, HERO);
+      if (!s || !s.keuzes.length) break;
+      rij.push(s); await kies(s.keuzes[0]); await wacht(400);
+    }
+    await p.waitForSelector(HERO + ' form.kgj-reken__contact', { timeout: 5000 }).catch(() => {});
+    const stap = await p.evaluate((s) => (document.querySelector(s + ' .kgj-reken__kop')?.textContent || '').replace(/\s*‹.*$/, ''), HERO);
+    await zetVeld(p, 'naam', 'Test Kaart'); await zetVeld(p, 'telefoon', '0470 12 34 56'); await zetVeld(p, 'email', 'test@kaart.be');
+    await verstuur(p);
+    await p.waitForFunction(() => location.pathname.startsWith('/bedankt'), { timeout: 10000 }).catch(() => {});
+    return { rij, stap, info: (log.ghl[0] || {}).aanvullende_info || '' };
+  } finally { await ctx.close(); }
+}
+async function beidePadFouten() {
+  const uit = [];
+  for (const pad of [PAD, '/lp/dakwerken/asbest']) for (const werk of ['Dakrenovatie', 'Nieuw dak', 'Herstelling', 'Isolatie', 'Gratis dakinspectie']) {
+    const hl = await padNa(pad, werk, 'Hellend dak'), be = await padNa(pad, werk, 'Beide');
+    const ok = JSON.stringify(be.rij) === JSON.stringify(hl.rij) && be.stap === hl.stap && /^Stap \d+$/.test(be.stap) && hl.info.includes('Dak: Hellend dak') && be.info === hl.info.replace('Dak: Hellend dak', 'Dak: ' + BEIDE);
+    if (!ok) uit.push(`I ${pad} ${werk}. het pad of de aanvraag na "Beide" wijkt af van Hellend dak: ${JSON.stringify({ hl, be })}`);
+  }
+  return uit;
 }
 
 (async () => {
@@ -325,7 +421,13 @@ async function belFouten(w, h, css = null) {
     pc('gewiste opslag vóór herladen', await bewaarFouten(true), 'na herladen');
     pc('verzendknop 400 px lager', await gsmFouten(390, 664, { css: '.kgj-reken__contact .kgj-reken__knop{margin-top:400px!important}' }), 'verzendknop niet in beeld');
     pc('scroll bij het sluiten van het toetsenbord', await gsmFouten(390, 664, { sprong: true }), 'sprong');
-    pc('belknop geforceerd zichtbaar tijdens het formulier', await belFouten(390, 664, 'html.is-informulier body .bf.bf-lp .bf-kop a.bf-lpbel[href^="tel:"]{opacity:1!important;visibility:visible!important}'), 'staat er nog een belknop');
+    /* 18 nov 2026: de kopknop blijft tijdens het formulier; de regel van vóór de fix (kopknop weg) moet rood geven, net als een zichtbare ronde knop */
+    pc('belknop in de kopbalk verborgen tijdens het formulier', await belFouten(390, 664, 'html.is-informulier body .bf.bf-lp .bf-kop a.bf-lpbel[href^="tel:"]{opacity:0!important;visibility:hidden!important}'), 'in de kopbalk niet zichtbaar');
+    pc('ronde belknop geforceerd zichtbaar tijdens het formulier', await belFouten(390, 664, 'html.is-informulier body .bf.bf-lp .bf-belzweef{opacity:1!important;visibility:visible!important}'), 'ronde belknop');
+    pc('kaart 30 px onder de kopbalk geschoven', await kaartKopFouten(1265, 585, true), 'ligt onder de kopbalk');
+    pc('"Beide" met een icoon', await beideVormFouten(390, 664, PAD, 'icoon'), 'niet als volle-breedte rij');
+    pc('"Beide" op halve breedte', await beideVormFouten(390, 664, PAD, 'half'), 'niet als volle-breedte rij');
+    pc('pad na Plat dak wijkt af van Hellend dak (de vergelijking kan aanslaan)', await (async () => { const hl = await padNa(PAD, 'Nieuw dak', 'Hellend dak'), pl = await padNa(PAD, 'Nieuw dak', 'Plat dak'); return JSON.stringify(pl.rij) !== JSON.stringify(hl.rij) && pl.info.includes('Dak: Plat dak') ? ['I pad wijkt af: ' + JSON.stringify(pl.rij.map((x) => x.vraag))] : []; })(), 'pad wijkt af');
     pc('stappenblok 300 px lager', await gsmFouten(390, 664, { css: '.bf.bf-lp .kgj-reken__nastap{margin-top:300px!important}' }), 'niet direct onder de knop');
     pc('uitleg te licht', await gsmFouten(390, 664, { css: '.bf.bf-lp .kgj-reken__nakort li > span{color:#b5b5b8!important}' }), 'stappenblok: uitleg');
     pc('gevulde cirkels in het stappenblok', await gsmFouten(390, 664, { css: '.bf.bf-lp .kgj-reken__nakort li::before{background:#d98c03!important}' }), 'gevulde cirkel');
@@ -338,6 +440,9 @@ async function belFouten(w, h, css = null) {
     for (const f of await bewaarFouten()) fouten.push(f); metingen++;
     for (const [w, h] of [[360, 642], [390, 664], [320, 568]]) { for (const f of await gsmFouten(w, h)) fouten.push(f); metingen++; }
     for (const [w, h] of [[390, 664], [1265, 585]]) { for (const f of await belFouten(w, h)) fouten.push(f); metingen++; }
+    for (const [w, h] of [[1265, 585], [390, 664]]) { for (const f of await kaartKopFouten(w, h)) fouten.push(f); metingen++; }
+    for (const [w, h] of [[1265, 585], [390, 664]]) for (const pad of [PAD, '/lp/dakwerken/asbest']) { for (const f of await beideVormFouten(w, h, pad)) fouten.push(f); metingen++; }
+    for (const f of await beidePadFouten()) fouten.push(f); metingen++;
   } catch (e) {
     console.log('ONGELDIGE METING: ' + (e && e.message ? e.message : e));
     code = 2;
@@ -346,9 +451,9 @@ async function belFouten(w, h, css = null) {
     if (srv) { try { srv.kill(); } catch { /* */ } }
   }
   if (code === 2) process.exit(2);
-  if (metingen !== 13) { console.log(`ONGELDIGE METING: ${metingen} metingen (verwacht 13)`); process.exit(2); }
+  if (metingen !== 20) { console.log(`ONGELDIGE METING: ${metingen} metingen (verwacht 20)`); process.exit(2); }
   console.log(`check-lp-formulier: ${PAD}, ${GOED.length} goede en ${FOUT.length + 1} foute nummers, payload, Enter, 4 storingen, bewaren, 3 gsm-maten met toetsenbord (${basis})`);
   if (fouten.length) { for (const f of fouten) console.log('  FOUT: ' + f); process.exit(1); }
-  console.log('  AF: nummers en e-mail ruim aanvaard en streng geweigerd, Enter naar het volgende lege veld, bezig-stand, 2 nieuwe pogingen bij netwerk/5xx, geen bij 4xx, time-out, melding onder de knop, gegevens blijven, bewaard na herladen, contactblok in beeld met en zonder toetsenbord op 360, 390 en 320 breed, geen sprong, 16 px en 44 px');
+  console.log('  AF: nummers en e-mail ruim aanvaard en streng geweigerd, Enter naar het volgende lege veld, bezig-stand, 2 nieuwe pogingen bij netwerk/5xx, geen bij 4xx, time-out, melding onder de knop, gegevens blijven, bewaard na herladen, contactblok in beeld met en zonder toetsenbord op 360, 390 en 320 breed, geen sprong, 16 px en 44 px; kopknop blijft, ronde knop weg tijdens het formulier; kaart met titel onder de kopbalk na elk antwoord; "Beide" volle breedte zonder icoon, pad en aanvraag = Hellend dak');
   process.exit(0);
 })();

@@ -49,10 +49,16 @@ import keuzePlat from '@/assets/dak/keuze-plat.jpg';
 
 import type { IcoonNaam } from './Iconen';
 import { HOEVE } from './realisatie-hoeve';
+/** 18 nov 2026: antwoord van de keuze "Beide" bij "Om welk soort dak gaat het?" (aanvraagkaart); volgt het pad van Hellend dak. */
+const BEIDE = 'Beide (hellend en plat)';
 
 /** foto: optioneel beeld boven het label; icoon: optioneel icoon links van het label.
     Het label zegt al wat er te zien is, dus geen alt-tekst. */
 export type Keuze = { label: string; uitleg?: string; foto?: string; icoon?: IcoonNaam;
+  /** Aanvraagkaart (18 nov 2026): het antwoord dat in de aanvraag komt als dat anders is dan het label ("Beide" -> "Beide (hellend en plat)"). */
+  waarde?: string;
+  /** Aanvraagkaart (18 nov 2026): een rij over de volle breedte onder de tegels, zonder icoon ("Beide" bij het soort dak). */
+  breed?: boolean;
   /** Afvinkvraag: de groep waaronder de keuze als knopje staat (Ruimtes, Werken). */
   groep?: string };
 /** als: de vraag verschijnt alleen als elke genoemde eerdere vraag één van de
@@ -393,12 +399,16 @@ export const DAKWERKEN: KgjInhoud = {
       { sleutel: 'Dak', vraag: 'Om welk soort dak gaat het?', keuzes: [
         { label: 'Hellend dak', foto: keuzeHellend },
         { label: 'Plat dak', foto: keuzePlat },
+        /* 18 nov 2026, Mohammed (zoals bfbouw.be): derde keuze "Beide" als volle-breedte rij onder de twee fototegels, zelfde stijl als de rij
+           "Gratis dakinspectie", ZONDER icoon ("dat vernauwd te hard"). Daarna exact het pad van Hellend dak (BEIDE staat bij elke
+           Dak: ['Hellend dak'] hieronder); in de aanvraag "Dak: Beide (hellend en plat)". */
+        { label: 'Beide', waarde: BEIDE, breed: true },
       ] },
       /* 7 nov 2026, zoals bfbouw.be (Mohammed daar: "bij gratis dakinspectie moeten de vragen erna wel veranderen"): wie Gratis dakinspectie kiest,
          krijgt na het soort dak "Wat merkt u aan uw dak?" (per soort dak een eigen lijst, zelfde sleutel; woordelijk bfbouw.be) en daarna alleen
          asbest; isoleren, oppervlakte en start vallen weg (nietAls hieronder). 18 nov 2026 (v2): ook asbest is weg, na "Wat merkt u aan uw dak?"
          volgen meteen de contactgegevens. */
-      { sleutel: 'Signaal', vraag: 'Wat merkt u aan uw dak?', lijst: true, als: { Werk: ['Gratis dakinspectie'], Dak: ['Hellend dak'] }, keuzes: [
+      { sleutel: 'Signaal', vraag: 'Wat merkt u aan uw dak?', lijst: true, als: { Werk: ['Gratis dakinspectie'], Dak: ['Hellend dak', BEIDE] }, keuzes: [
         { label: 'Lekkage of vochtplekken', icoon: 'lek' }, { label: 'Losse of kapotte pannen', icoon: 'golfpan' },
         { label: 'Schade na een storm', icoon: 'schade' }, { label: 'Mijn dak is al oud', icoon: 'oud' },
         { label: 'Ik wil het laten nakijken', icoon: 'inspectie' },
@@ -415,7 +425,7 @@ export const DAKWERKEN: KgjInhoud = {
         { label: 'Nieuwbouw', icoon: 'vrijstaand' }, { label: 'Uitbreiding of aanbouw', icoon: 'dienst-ruwbouw' },
         { label: 'Huidig dak vervangen', icoon: 'dienst-renovatie' },
       ] },
-      { sleutel: 'Dakbedekking', vraag: 'Welke dakbedekking wilt u?', als: { Werk: ['Nieuw dak'], Dak: ['Hellend dak'] }, keuzes: [
+      { sleutel: 'Dakbedekking', vraag: 'Welke dakbedekking wilt u?', als: { Werk: ['Nieuw dak'], Dak: ['Hellend dak', BEIDE] }, keuzes: [
         { label: 'Dakpannen', icoon: 'golfpan' }, { label: 'Leien', icoon: 'vlakkepan' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
       ] },
       { sleutel: 'Dakbedekking', vraag: 'Welke dakbedekking wilt u?', als: { Werk: ['Nieuw dak'], Dak: ['Plat dak'] }, keuzes: [

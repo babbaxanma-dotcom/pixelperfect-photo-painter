@@ -1545,6 +1545,10 @@ body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { flex: 1; padding: 8px 1
 .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze.is-aan, .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze.is-druk, .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__vink.is-aan { background: #fdf6ea; box-shadow: inset 0 0 0 2px var(--merk); }
 .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze:has(> .kgj-reken__foto) { border-radius: 8px; }
 .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze:has(> .kgj-reken__foto).is-aan::after { box-shadow: inset 0 0 0 2px var(--merk); }
+/* 18 nov 2026, Mohammed: "Beide" bij het soort dak = een volle-breedte rij onder de twee fototegels, zelfde rand, afronding en tekst als de rij "Gratis dakinspectie", zonder icoon */
+/* zwaarder dan ".kgj-reken__keuzes--oneven .kgj-reken__keuze:last-child { grid-column: auto }" op de gsm (lp-bf.css) */
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuzes .kgj-reken__keuze.kgj-reken__keuze--breed { grid-column: 1 / -1; min-height: calc(62 * var(--u)); padding: calc(10 * var(--u)) calc(14 * var(--u)); line-height: 1.25; } /* hoogte van de icoonrij (lp-bf.css .kgj-reken__keuze--icoon) */
+@media (max-width: 1000px) { .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuzes .kgj-reken__keuze.kgj-reken__keuze--breed { min-height: 56px; padding: 6px 14px; } }
 /* iconen in de antwoorden: lijnicoon zonder getint vierkantje, ook niet bij gekozen of hover */
 .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__icoon, .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze--icoon.is-aan .kgj-reken__icoon, .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze--icoon:hover .kgj-reken__icoon { width: 24px; height: 24px; border-radius: 0; background: none; box-shadow: none; color: var(--ink-2); }
 .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__icoon svg { width: 22px; height: 22px; }
@@ -1574,7 +1578,9 @@ body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { flex: 1; padding: 8px 1
    rest van de pagina; dat wordt een aparte opdracht". */
 
 /* Belknoppen weg tijdens het formulier (18 nov 2026, Mohammed: "de bel directjes ctas moeten weg wanneer hij daar is ofzo"; Aanvraag.tsx
-   zet html.is-informulier vanaf het eerste antwoord zolang een aanvraagkaart in beeld is). Korte fade, de plaats blijft (de kopbalk verspringt niet). */
+   zet html.is-informulier vanaf het eerste antwoord zolang een aanvraagkaart in beeld is). Korte fade.
+   18 nov 2026 (Mohammed: "bij het form invullen zijn de andere forms zo wit … bij belknop"): de belknop in de kopbalk BLIJFT tijdens het formulier (zonder
+   knop werd de kopbalk na de scroll een lege witte balk met alleen het logo). Alleen de ronde belknop gaat weg. */
 .bf.bf-lp .bf-kop a.bf-lpbel[href^="tel:"], .bf.bf-lp .bf-belzweef { transition: opacity .2s ease, visibility 0s linear 0s; }
-html.is-informulier .bf.bf-lp .bf-kop a.bf-lpbel[href^="tel:"], html.is-informulier .bf.bf-lp .bf-belzweef { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: opacity .2s ease, visibility 0s linear .2s; }
-@media (prefers-reduced-motion: reduce) { .bf.bf-lp .bf-kop a.bf-lpbel[href^="tel:"], .bf.bf-lp .bf-belzweef, html.is-informulier .bf.bf-lp .bf-kop a.bf-lpbel[href^="tel:"], html.is-informulier .bf.bf-lp .bf-belzweef { transition: none; } }
+html.is-informulier .bf.bf-lp .bf-belzweef { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: opacity .2s ease, visibility 0s linear .2s; }
+@media (prefers-reduced-motion: reduce) { .bf.bf-lp .bf-kop a.bf-lpbel[href^="tel:"], .bf.bf-lp .bf-belzweef, html.is-informulier .bf.bf-lp .bf-belzweef { transition: none; } }
