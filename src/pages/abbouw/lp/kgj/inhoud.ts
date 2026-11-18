@@ -473,8 +473,9 @@ export const DAKWERKEN: KgjInhoud = {
       /* 18 nov 2026, Mohammed: "Implementeer ook bij die stappen zo. Wij begeleiden u bij eventuele premies. Zoals de Kijzer", "en dan 5",
          "je geniet zorgeloos van ...", "zoals kijzer dat had" (Kijzer, laatste stap "Na-service": genieten + "helpen je graag bij het aanvragen van premies").
          Bron premiebegeleiding AB: "volledige premiebegeleiding" in zijn werkwijzestap Oplevering. */
-      { titel: 'Na je akkoord starten de werken', tekst: 'We plannen de werken in en voeren ze uit.' },
-      { titel: 'Je geniet zorgeloos van je nieuwe dak', tekst: 'We begeleiden je bij eventuele premies.' },
+      /* 18 nov 2026, Mohammed: "dit is niet zoals het voorbeeld van kijzer", "ga nog eens goed kijken" -> zoals Kijzer "Hoe werkt het?": premies na de oplevering bij stap 4, stap 5 alleen de genietzin */
+      { titel: 'Na je akkoord starten de werken', tekst: 'Na de oplevering begeleiden we je bij eventuele premies.' },
+      { titel: 'Je geniet zorgeloos van je nieuwe dak', tekst: '' },
     ],
     naarKnop: 'Offerte aanvragen',
     /* De vinkjes en de trustrij van de rekenaarkaart die hier stond (13 okt). Alleen "Gratis & vrijblijvende richtprijs"

@@ -768,9 +768,9 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
         {/* 7 nov 2026, zoals bfbouw.be (Mohammed daar: "maak de balk vanaf de start 40 procent gevuld"): 40 % bij stap 1, 100 % op het contactscherm. */}
         {/* 18 nov 2026, Mohammed: Solvari-widget ("3 balken bovenaan, en dan heb je gegevens analyseren, dan komt er een groene vink en dan contact"), Cralux ("stap .. van 3, in totaal 3 stappen"), "ook visueel zo met die 3 lijnen, die groen zijn": drie groene lijnen; lijn 1 = de klikvragen (start 40 %, vol pas na het laatste antwoord), lijn 2 = analyse, lijn 3 = contact. */}
         <div className="kgj-reken__lijnen" ref={balk}>
-          <i><b style={{ width: `${klaar ? 100 : totaal > 1 ? Math.round((40 + (60 * (nu - 1)) / (totaal - 1)) * 10) / 10 : 100}%` }} /></i>
-          <i className={klaar ? 'is-groen' : undefined} />
-          <i className={klaar && !laden ? 'is-groen' : undefined} />
+          {/* 18 nov 2026, Mohammed: "1 2 3 zijn de drie vragen, dat zijn de stappen, en de contactformulier hoeft geen aparte visuele stap": een lijn
+              per vraag van het pad, groen tot en met de huidige vraag; analyse en contactblok: alle lijnen groen. */}
+          {Array.from({ length: Math.max(1, totaal - 1) }, (_, k) => <i key={k} className={klaar || k < nu ? 'is-groen' : undefined} />)}
         </div>
       </div>
       {/* Na een verstuurde aanvraag geen Terug meer: terug naar een vraag zou doen alsof er nog niets verstuurd is. */}
@@ -778,7 +778,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
         <div className="kgj-reken__kop">
           {/* Uitgesproken door een schermlezer alleen in de kaart die de bezoeker gebruikt (de andere kaart verandert mee). */}
           {/* 7 nov 2026, zoals bfbouw.be (Mohammed daar: "DOE ipv stap 1 VAN 7 gewoon stap 1"). */}
-          <span className="kgj-reken__tel" data-intern={`Stap ${nu}`} aria-live={actiefHier ? 'polite' : 'off'}>Stap {klaar ? (laden ? 2 : 3) : 1} van 3</span>
+          <span className="kgj-reken__tel" data-intern={`Stap ${nu}`} aria-live={actiefHier ? 'polite' : 'off'}>{klaar ? '' : `Stap ${nu} van ${totaal - 1}`}</span>
           {stap > 0 && !laden && (
             <button type="button" className="kgj-reken__terug" onClick={() => { gebruik(); setOFout([]); zet((s) => (s.offerte
               ? ((s.offerteStap ?? 0) > 0 ? { ...s, aangetikt: true, fout: null, offerteStap: (s.offerteStap ?? 0) - 1 } : { ...s, aangetikt: true, fout: null, offerte: false, stap: 0 })
@@ -938,7 +938,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
               <div className="kgj-reken__nastap">
                 <p className="kgj-reken__nastap-kop">{a.volgtKop ?? 'Na uw aanvraag'}</p>
                 <ol className="kgj-reken__nakort">
-                  {a.naKort.map((r) => <li key={r.titel}><b>{r.titel}</b><span>{r.tekst}</span></li>)}
+                  {a.naKort.map((r) => <li key={r.titel}><b>{r.titel}</b>{r.tekst && <span>{r.tekst}</span>}</li>)}
                 </ol>
               </div>
             )}

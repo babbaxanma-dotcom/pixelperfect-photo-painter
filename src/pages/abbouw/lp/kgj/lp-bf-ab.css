@@ -1613,7 +1613,7 @@ html.is-informulier .bf.bf-lp .bf-belzweef { opacity: 0 !important; visibility: 
    in totaal 3 stappen"), "ook visueel zo met die 3 lijnen, die groen zijn". Zelfde maten als bfbouw.be en inzichtbouw.be: drie lijnen van 6 px, rond, 8 px ertussen,
    teller "Stap 1 van 3" (geen hoofdletters: geen eyebrow-labels), analyse met een cirkel die een groene vink wordt, ingeklapt optioneel bericht. */
 .bf.bf-lp .kgj-reken { --lijn-groen: #22a04b; --lijn-grijs: #e5e7eb; }
-.bf.bf-lp .kgj-reken__lijnen { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.bf.bf-lp .kgj-reken__lijnen { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 8px; } /* een lijn per vraag */
 .bf.bf-lp .kgj-reken__lijnen > i { display: block; height: 6px; border-radius: 999px; background: var(--lijn-grijs); overflow: hidden; transition: background-color .3s cubic-bezier(.4, 0, .2, 1); }
 .bf.bf-lp .kgj-reken__lijnen > i.is-groen { background: var(--lijn-groen); }
 .bf.bf-lp .kgj-reken__lijnen > i > b { display: block; height: 100%; border-radius: 999px; background: var(--lijn-groen); transition: width .3s cubic-bezier(.4, 0, .2, 1); }

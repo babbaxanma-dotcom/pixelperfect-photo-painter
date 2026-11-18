@@ -567,9 +567,9 @@ export const TOTAALRENOVATIE: KgjInhoud = {
       { titel: 'We nemen binnen 24 uur contact op', tekst: 'We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.' },
       { titel: 'Gratis plaatsbezoek met onze expert', tekst: 'Onze expert bekijkt je woning ter plaatse en bespreekt met jou de mogelijkheden.' },
       { titel: 'Je ontvangt je offerte in je mailbox', tekst: 'Vrijblijvend: je beslist zelf, zonder enige verplichting.' },
-      { titel: 'Na je akkoord starten de werken', tekst: 'We plannen de werken in en voeren ze uit.' },
-      /* 18 nov 2026, Mohammed: "Wij begeleiden u bij eventuele premies. Zoals de Kijzer", "en dan 5", "je geniet zorgeloos van ..." */
-      { titel: 'Je geniet zorgeloos van je vernieuwde woning', tekst: 'We begeleiden je bij eventuele premies.' },
+      /* 18 nov 2026, Mohammed: "dit is niet zoals het voorbeeld van kijzer", "ga nog eens goed kijken" -> zoals Kijzer "Hoe werkt het?": premies na de oplevering bij stap 4, stap 5 alleen de genietzin */
+      { titel: 'Na je akkoord starten de werken', tekst: 'Na de oplevering begeleiden we je bij eventuele premies.' },
+      { titel: 'Je geniet zorgeloos van je vernieuwde woning', tekst: '' },
     ],
     naarKnop: 'Offerte aanvragen',
     /* Vinkjes en trustrij: dezelfde teksten en cijfers als op de rekenaarkaart die hier stond (13 okt, dictaat 4 okt). Alleen de

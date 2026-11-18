@@ -127,7 +127,7 @@ const DAK = {
   /* 18 nov 2026, dictaat Mohammed (woordelijk): de korte regels direct onder de verzendknop op de dakpagina's */
   nakort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek met onze dakexpert', 'Je ontvangt je offerte in je mailbox', 'Na je akkoord starten de werken', 'Je geniet zorgeloos van je nieuwe dak'], // 18 nov 2026: vijf stappen (Kijzer, "en dan 5")
   /* 18 nov 2026, dictaat ("doe dat zoals kijzer, zo hoe dat wordt uitgelegd"): één uitlegzin per stap */
-  uitleg: ['We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.', 'Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.', 'Vrijblijvend: je beslist zelf, zonder enige verplichting.', 'We plannen de werken in en voeren ze uit.', 'We begeleiden je bij eventuele premies.'],
+  uitleg: ['We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.', 'Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.', 'Vrijblijvend: je beslist zelf, zonder enige verplichting.', 'Na de oplevering begeleiden we je bij eventuele premies.'], // stap 5 = één zin zoals Kijzer
   tegels: ['5,0', '10 jaar garantie', '15 jaar ervaring'],
   /* 5 nov 2026, bfbouw.be: "Na uw aanvraag" (twee stappen) vervangt de regel onder de knop */
   /* 7 nov 2026 (bfbouw.be "oke doe maar die 3 stappen"): contact binnen 24 uur, gratis plaatsbezoek, offerte */
@@ -143,7 +143,7 @@ const RENO = (pad) => ({
   pad1: ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], '€ 25.000 tot € 75.000'], vraag2: 'Wat wilt u renoveren?', // 18 nov 2026: geen startvraag; // 18 nov 2026 (v2): de staal-vraag "bereikbaar" weg, 6 stappen
   ckop: 'Contact', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 5, // 18 nov 2026: woning, omvang, onderdelen, budget + contact
   nakort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek met onze expert', 'Je ontvangt je offerte in je mailbox', 'Na je akkoord starten de werken', 'Je geniet zorgeloos van je vernieuwde woning'], // 18 nov 2026: vijf stappen (Kijzer)
-  uitleg: ['We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.', 'Onze expert bekijkt je woning ter plaatse en bespreekt met jou de mogelijkheden.', 'Vrijblijvend: je beslist zelf, zonder enige verplichting.', 'We plannen de werken in en voeren ze uit.', 'We begeleiden je bij eventuele premies.'],
+  uitleg: ['We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.', 'Onze expert bekijkt je woning ter plaatse en bespreekt met jou de mogelijkheden.', 'Vrijblijvend: je beslist zelf, zonder enige verplichting.', 'Na de oplevering begeleiden we je bij eventuele premies.'], // stap 5 = één zin zoals Kijzer
   /* 22 okt 2026: "6 vakdisciplines ... weg, bij die form", "dat is een rare trust badge" */
   tegels: ['5,0', '16 jaar ervaring'],
   volgt: ['Wij nemen binnen 24 uur contact op', 'Gratis plaatsbezoek', 'Uw offerte'], // 7 nov 2026 (bfbouw.be)

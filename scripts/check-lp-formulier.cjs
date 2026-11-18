@@ -239,7 +239,7 @@ async function gsmFouten(w, h, plant = {}) {
       if (m0.kort.vlak !== 'rgb(242, 242, 242)' || m0.kort.schaduw !== 'none') uit.push(`F ${w}x${h}. stappenblok: vlak ${m0.kort.vlak}, schaduw ${m0.kort.schaduw} (verwacht licht grijs #f2f2f2 zonder schaduw)`);
       if (m0.kort.px !== 16 || m0.kort.gewicht !== '700') uit.push(`F ${w}x${h}. stappenblok: titel ${m0.kort.px} px / ${m0.kort.gewicht} (verwacht 16 px vet)`);
       /* 18 nov 2026 (Mohammed: "doe dat zoals kijzer, zo hoe dat wordt uitgelegd"): één uitlegzin per stap, woordelijk, 15-16 px, contrast >= 4,5 */
-      if (m0.kort.uitleg.join('|') !== 'We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.|Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.|Vrijblijvend: je beslist zelf, zonder enige verplichting.|We plannen de werken in en voeren ze uit.|We begeleiden je bij eventuele premies.' || /* 18 nov 2026: vijf stappen (Kijzer) */ m0.kort.upx < 15 || m0.kort.upx > 16 || m0.kort.ucontrast < 4.5) uit.push(`F ${w}x${h}. stappenblok: uitleg ${JSON.stringify({ uitleg: m0.kort.uitleg, px: m0.kort.upx, contrast: m0.kort.ucontrast })} (verwacht de vier gedicteerde zinnen, 15-16 px, contrast >= 4,5)`);
+      if (m0.kort.uitleg.join('|') !== 'We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.|Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.|Vrijblijvend: je beslist zelf, zonder enige verplichting.|Na de oplevering begeleiden we je bij eventuele premies.' || /* stap 5 = één zin zoals Kijzer */ /* 18 nov 2026: vijf stappen (Kijzer) */ m0.kort.upx < 15 || m0.kort.upx > 16 || m0.kort.ucontrast < 4.5) uit.push(`F ${w}x${h}. stappenblok: uitleg ${JSON.stringify({ uitleg: m0.kort.uitleg, px: m0.kort.upx, contrast: m0.kort.ucontrast })} (verwacht de vier gedicteerde zinnen, 15-16 px, contrast >= 4,5)`);
       if (m0.kort.rand < 1 || !/^rgba\(0, 0, 0, 0\)$|^transparent$/.test(m0.kort.cirkel) || m0.kort.cirkelB < 36 || m0.kort.cirkelB > 40) uit.push(`F ${w}x${h}. stappenblok: gevulde cirkel of geen rand (${JSON.stringify(m0.kort)}) (verwacht een cirkel van 36-40 px met alleen een rand)`);
     }
     if (m0.letter < 16) uit.push(`F ${w}x${h}. tekst in de velden ${m0.letter} px (minstens 16)`);
@@ -331,7 +331,7 @@ async function kaartKopFouten(w, h, schuif = false) {
       if (schuif) { await p.evaluate((s) => window.scrollBy({ top: document.querySelector(s).getBoundingClientRect().top - document.querySelector('.kgj-kop').getBoundingClientRect().bottom + 30, behavior: 'instant' }), sel); await wacht(300); rij.push({ na: 'geschoven', ...(await meet()) }); }
       const slecht = rij.filter((m) => m.kaart < m.kop || m.titel < m.kop);
       if (slecht.length) uit.push(`H ${w}x${h} ${sel === HERO ? 'kaart bovenaan' : 'kaart onderaan'}. de kaart of haar titel ligt onder de kopbalk: ${JSON.stringify(slecht)}`);
-      if (rij[rij.length - (schuif ? 2 : 1)].stap !== 'Stap 3 van 3') uit.push(`H ${w}x${h}. het contactblok (Stap 3 van 3, zichtbare teller; 18 nov 2026) werd niet bereikt: ${JSON.stringify(rij)}`);
+      if (rij[rij.length - (schuif ? 2 : 1)].stap !== '') uit.push(`H ${w}x${h}. het contactblok (geen eigen stap: lege teller; 18 nov 2026) werd niet bereikt: ${JSON.stringify(rij)}`);
     } finally { await ctx.close(); }
   }
   return uit;
@@ -388,7 +388,7 @@ async function beidePadFouten() {
   const uit = [];
   for (const pad of [PAD, '/lp/dakwerken/asbest']) for (const werk of ['Dakrenovatie', 'Nieuw dak', 'Herstelling', 'Isolatie', 'Gratis dakinspectie']) {
     const hl = await padNa(pad, werk, 'Hellend dak'), be = await padNa(pad, werk, 'Beide / combinatie');
-    const ok = JSON.stringify(be.rij) === JSON.stringify(hl.rij) && be.stap === hl.stap && /^Stap \d van 3$/.test(be.stap) && hl.info.includes('Dak: Hellend dak') && be.info === hl.info.replace('Dak: Hellend dak', 'Dak: ' + BEIDE);
+    const ok = JSON.stringify(be.rij) === JSON.stringify(hl.rij) && be.stap === hl.stap && be.stap === '' /* contactblok: geen teller */ && hl.info.includes('Dak: Hellend dak') && be.info === hl.info.replace('Dak: Hellend dak', 'Dak: ' + BEIDE);
     if (!ok) uit.push(`I ${pad} ${werk}. het pad of de aanvraag na "Beide" wijkt af van Hellend dak: ${JSON.stringify({ hl, be })}`);
   }
   return uit;
