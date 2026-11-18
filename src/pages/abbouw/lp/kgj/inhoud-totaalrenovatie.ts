@@ -549,7 +549,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     /* 5 nov 2026, de laadstap, "Na uw aanvraag" en de regel boven de knop van bfbouw.be (zie inhoud.ts DAKWERKEN.aanvraag), met de
        AB-feiten van de renovatiepagina's. "onze dakexpert" wordt "onze expert": zijn goedgekeurde renovatie-FAQ van 5 okt zegt
        "Onze experts"; "projectleider" of "werfleider" heeft voor AB geen bron. Regel 2 = woning en omvang. */
-    laden: { kop: 'Uw aanvraag wordt klaargezet', eerste: 'Antwoorden opgeslagen', laatste: 'Klaar voor onze expert',
+    laden: { kop: 'Uw aanvraag wordt klaargezet', eerste: 'Antwoorden opgeslagen',
       sleutels: ['Wat voor woning wilt u renoveren', 'Wat wilt u renoveren'], leeg: 'Gegevens van uw woning' },
     volgtKop: 'Na uw aanvraag',
     /* 7 nov 2026, zoals bfbouw.be 7 nov (Mohammed daar: "oke doe maar die 3 stappen"; "en doe al deze changes ook bij ab pagina"): contact binnen
@@ -564,7 +564,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
     /* 18 nov 2026, dictaat Mohammed (woordelijk, je-vorm): het stappenblok "Na uw aanvraag" onder de verzendknop op de renovatiepagina's */
     naKort: [
       /* 18 nov 2026, definitief (Mohammed: "of 4 ofzo", "redeneer een beetje meer"), woordelijk zijn dictaat */
-      { titel: 'We nemen binnen 24 uur contact op', tekst: 'We bellen je om een plaatsbezoek in te plannen op een moment dat jou past.' },
+      { titel: 'We nemen binnen 24 uur contact op', tekst: 'We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.' },
       { titel: 'Gratis plaatsbezoek met onze expert', tekst: 'Onze expert bekijkt je woning ter plaatse en bespreekt met jou de mogelijkheden.' },
       { titel: 'Je ontvangt je offerte in je mailbox', tekst: 'Vrijblijvend: je beslist zelf, zonder enige verplichting.' },
       { titel: 'Na je akkoord starten de werken', tekst: 'We plannen de werken in en voeren ze uit.' },

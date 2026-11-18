@@ -239,7 +239,7 @@ async function gsmFouten(w, h, plant = {}) {
       if (m0.kort.vlak !== 'rgb(242, 242, 242)' || m0.kort.schaduw !== 'none') uit.push(`F ${w}x${h}. stappenblok: vlak ${m0.kort.vlak}, schaduw ${m0.kort.schaduw} (verwacht licht grijs #f2f2f2 zonder schaduw)`);
       if (m0.kort.px !== 16 || m0.kort.gewicht !== '700') uit.push(`F ${w}x${h}. stappenblok: titel ${m0.kort.px} px / ${m0.kort.gewicht} (verwacht 16 px vet)`);
       /* 18 nov 2026 (Mohammed: "doe dat zoals kijzer, zo hoe dat wordt uitgelegd"): één uitlegzin per stap, woordelijk, 15-16 px, contrast >= 4,5 */
-      if (m0.kort.uitleg.join('|') !== 'We bellen je om een plaatsbezoek in te plannen op een moment dat jou past.|Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.|Vrijblijvend: je beslist zelf, zonder enige verplichting.|Na je akkoord plannen we de werken in en voeren we ze uit.' || m0.kort.upx < 15 || m0.kort.upx > 16 || m0.kort.ucontrast < 4.5) uit.push(`F ${w}x${h}. stappenblok: uitleg ${JSON.stringify({ uitleg: m0.kort.uitleg, px: m0.kort.upx, contrast: m0.kort.ucontrast })} (verwacht de vier gedicteerde zinnen, 15-16 px, contrast >= 4,5)`);
+      if (m0.kort.uitleg.join('|') !== 'We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.|Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.|Vrijblijvend: je beslist zelf, zonder enige verplichting.|Na je akkoord plannen we de werken in en voeren we ze uit.' || m0.kort.upx < 15 || m0.kort.upx > 16 || m0.kort.ucontrast < 4.5) uit.push(`F ${w}x${h}. stappenblok: uitleg ${JSON.stringify({ uitleg: m0.kort.uitleg, px: m0.kort.upx, contrast: m0.kort.ucontrast })} (verwacht de vier gedicteerde zinnen, 15-16 px, contrast >= 4,5)`);
       if (m0.kort.rand < 1 || !/^rgba\(0, 0, 0, 0\)$|^transparent$/.test(m0.kort.cirkel) || m0.kort.cirkelB < 36 || m0.kort.cirkelB > 40) uit.push(`F ${w}x${h}. stappenblok: gevulde cirkel of geen rand (${JSON.stringify(m0.kort)}) (verwacht een cirkel van 36-40 px met alleen een rand)`);
     }
     if (m0.letter < 16) uit.push(`F ${w}x${h}. tekst in de velden ${m0.letter} px (minstens 16)`);
@@ -347,16 +347,16 @@ async function beideVormFouten(w, h, pad = PAD, plant = null) {
   try {
     const ref = await p.evaluate((s) => { const b = [...document.querySelectorAll(s + ' .kgj-reken__keuze')].find((x) => (x.querySelector('strong')?.textContent || '').trim() === 'Gratis dakinspectie'), cs = getComputedStyle(b), st = getComputedStyle(b.querySelector('strong')); return { h: Math.round(b.getBoundingClientRect().height), radius: cs.borderTopLeftRadius, rand: cs.boxShadow, fs: st.fontSize, fw: st.fontWeight, kleur: st.color }; }, HERO);
     await p.evaluate((s) => { const b = [...document.querySelectorAll(s + ' .kgj-reken__keuze')].find((x) => (x.querySelector('strong')?.textContent || '').trim() === 'Dakrenovatie'); b.click(); }, HERO); await wacht(500);
-    if (plant === 'icoon') await p.evaluate((s) => { const b = [...document.querySelectorAll(s + ' .kgj-reken__keuze')].find((x) => (x.querySelector('strong')?.textContent || '').trim() === 'Beide'); b?.insertAdjacentHTML('afterbegin', '<i class="kgj-reken__icoon"><svg viewBox="0 0 24 24"></svg></i>'); }, HERO);
+    if (plant === 'icoon') await p.evaluate((s) => { const b = [...document.querySelectorAll(s + ' .kgj-reken__keuze')].find((x) => (x.querySelector('strong')?.textContent || '').trim() === 'Beide / combinatie'); b?.insertAdjacentHTML('afterbegin', '<i class="kgj-reken__icoon"><svg viewBox="0 0 24 24"></svg></i>'); }, HERO);
     if (plant === 'half') await p.addStyleTag({ content: '.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze--breed{grid-column:auto!important}' });
     await wacht(150);
     const v = await p.evaluate((s) => { const k = document.querySelector(s), knoppen = [...k.querySelectorAll('.kgj-reken__stap .kgj-reken__keuze')], r = (e) => e.getBoundingClientRect();
-      const b = knoppen.find((x) => (x.querySelector('strong')?.textContent || '').trim() === 'Beide'), tg = knoppen.filter((x) => x.querySelector('.kgj-reken__foto'));
+      const b = knoppen.find((x) => (x.querySelector('strong')?.textContent || '').trim() === 'Beide / combinatie'), tg = knoppen.filter((x) => x.querySelector('.kgj-reken__foto'));
       if (!b) return { b: false, labels: knoppen.map((x) => x.textContent.trim()) };
       const cs = getComputedStyle(b), st = getComputedStyle(b.querySelector('strong')), rs = r(b.parentElement);
       return { b: true, vraag: k.querySelector('.kgj-reken__stap .kgj-reken__vraag')?.textContent, labels: knoppen.map((x) => (x.querySelector('strong')?.textContent || '').trim()), waarde: b.getAttribute('data-waarde'), icoon: b.querySelectorAll('svg, img, .kgj-reken__icoon').length,
         laatste: knoppen[knoppen.length - 1] === b, breed: Math.round(r(b).width), rasterB: Math.round(rs.width), onderTegels: tg.length === 2 && tg.every((x) => r(b).top >= r(x).bottom), h: Math.round(r(b).height), radius: cs.borderTopLeftRadius, rand: cs.boxShadow, fs: st.fontSize, fw: st.fontWeight, kleur: st.color }; }, HERO);
-    const ok = v.b && v.vraag === 'Om welk soort dak gaat het?' && v.labels.join('|') === 'Hellend dak|Plat dak|Beide' && v.waarde === BEIDE && v.icoon === 0 && v.laatste && Math.abs(v.breed - v.rasterB) <= 1 && v.onderTegels && Math.abs(v.h - ref.h) <= 1 && v.h >= 44
+    const ok = v.b && v.vraag === 'Om welk soort dak gaat het?' && v.labels.join('|') === 'Hellend dak|Plat dak|Beide / combinatie' && v.waarde === BEIDE && v.icoon === 0 && v.laatste && Math.abs(v.breed - v.rasterB) <= 1 && v.onderTegels && Math.abs(v.h - ref.h) <= 1 && v.h >= 44
       && v.radius === ref.radius && v.rand === ref.rand && v.fs === ref.fs && v.fw === ref.fw && v.kleur === ref.kleur;
     if (!ok) uit.push(`I ${w}x${h} ${pad}. "Beide" niet als volle-breedte rij zonder icoon in de stijl van "Gratis dakinspectie": ${JSON.stringify({ v, ref })}`);
     return uit;
@@ -387,7 +387,7 @@ async function padNa(pad, werk, dak) {
 async function beidePadFouten() {
   const uit = [];
   for (const pad of [PAD, '/lp/dakwerken/asbest']) for (const werk of ['Dakrenovatie', 'Nieuw dak', 'Herstelling', 'Isolatie', 'Gratis dakinspectie']) {
-    const hl = await padNa(pad, werk, 'Hellend dak'), be = await padNa(pad, werk, 'Beide');
+    const hl = await padNa(pad, werk, 'Hellend dak'), be = await padNa(pad, werk, 'Beide / combinatie');
     const ok = JSON.stringify(be.rij) === JSON.stringify(hl.rij) && be.stap === hl.stap && /^Stap \d+$/.test(be.stap) && hl.info.includes('Dak: Hellend dak') && be.info === hl.info.replace('Dak: Hellend dak', 'Dak: ' + BEIDE);
     if (!ok) uit.push(`I ${pad} ${werk}. het pad of de aanvraag na "Beide" wijkt af van Hellend dak: ${JSON.stringify({ hl, be })}`);
   }
@@ -427,7 +427,7 @@ async function beidePadFouten() {
     pc('kaart 30 px onder de kopbalk geschoven', await kaartKopFouten(1265, 585, true), 'ligt onder de kopbalk');
     pc('"Beide" met een icoon', await beideVormFouten(390, 664, PAD, 'icoon'), 'niet als volle-breedte rij');
     pc('"Beide" op halve breedte', await beideVormFouten(390, 664, PAD, 'half'), 'niet als volle-breedte rij');
-    pc('pad na Plat dak wijkt af van Hellend dak (de vergelijking kan aanslaan)', await (async () => { const hl = await padNa(PAD, 'Nieuw dak', 'Hellend dak'), pl = await padNa(PAD, 'Nieuw dak', 'Plat dak'); return JSON.stringify(pl.rij) !== JSON.stringify(hl.rij) && pl.info.includes('Dak: Plat dak') ? ['I pad wijkt af: ' + JSON.stringify(pl.rij.map((x) => x.vraag))] : []; })(), 'pad wijkt af');
+    pc('pad na Plat dak wijkt af van Hellend dak (de vergelijking kan aanslaan)', await (async () => { const hl = await padNa(PAD, 'Gratis dakinspectie', 'Hellend dak'), pl = await padNa(PAD, 'Gratis dakinspectie', 'Plat dak'); return JSON.stringify(pl.rij) !== JSON.stringify(hl.rij) && pl.info.includes('Dak: Plat dak') ? ['I pad wijkt af: ' + JSON.stringify(pl.rij.map((x) => x.vraag))] : []; })(), 'pad wijkt af');
     pc('stappenblok 300 px lager', await gsmFouten(390, 664, { css: '.bf.bf-lp .kgj-reken__nastap{margin-top:300px!important}' }), 'niet direct onder de knop');
     pc('uitleg te licht', await gsmFouten(390, 664, { css: '.bf.bf-lp .kgj-reken__nakort li > span{color:#b5b5b8!important}' }), 'stappenblok: uitleg');
     pc('gevulde cirkels in het stappenblok', await gsmFouten(390, 664, { css: '.bf.bf-lp .kgj-reken__nakort li::before{background:#d98c03!important}' }), 'gevulde cirkel');

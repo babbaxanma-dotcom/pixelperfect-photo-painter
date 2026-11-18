@@ -177,7 +177,7 @@ export type KgjInhoud = {
     /** 5 nov 2026, zoals bfbouw.be 4-5 nov (Mohammed: "doe bij ab de exact form dingen", "de exacte wijzigingen als bij bf"):
         laadstap van 1,2 s tussen de laatste vraag en het contactscherm. kop = de regel met het draaiende rondje; eerste en laatste =
         regel 1 en 3; regel 2 = de antwoorden op `sleutels` (een kaal "Weet ik niet" telt niet), of `leeg` als er geen is. */
-    laden?: { kop: string; eerste: string; laatste: string; sleutels: string[]; leeg: string };
+    laden?: { kop: string; eerste: string; laatste?: string; sleutels: string[]; leeg: string }; /* 18 nov 2026: laatste = optioneel ("Klaar voor onze dakexpert" weg) */
     /** "Na uw aanvraag": wat er na het versturen gebeurt (bfbouw.be LP.kaart.volgtKop + volgt). Op de gsm over het volle scherm
         boven de velden, op de pc in het venster links, in de pagina onder de verzendknop; ook op de bedankpagina ("Wat nu volgt"). */
     volgtKop?: string;
@@ -392,7 +392,7 @@ export const DAKWERKEN: KgjInhoud = {
          "Weet ik nog niet" wordt "Gratis dakinspectie" ("vervang die door gratis dakinspectie"). AB-bron voor de gratis dakinspectie: de bedankpagina
          biedt ze sinds 31 okt aan ("Plan uw gratis dakinspectie"). Zo sluiten de knoppen "Ik ben op zoek naar" in "Wat heeft uw dak nodig?" aan. */
       { sleutel: 'Werk', vraag: 'Ik ben op zoek naar:', raster: true, keuzes: [
-        { label: 'Dakrenovatie', icoon: 'dienst-renovatie' }, { label: 'Nieuw dak', icoon: 'dienst-nieuw' },
+        { label: 'Dakrenovatie', icoon: 'dak-renovatie' }, { label: 'Nieuw dak', icoon: 'dienst-nieuw' },
         { label: 'Herstelling', icoon: 'herstel' }, { label: 'Isolatie', icoon: 'isolatie' },
         { label: 'Gratis dakinspectie', icoon: 'inspectie' },
       ] },
@@ -402,7 +402,8 @@ export const DAKWERKEN: KgjInhoud = {
         /* 18 nov 2026, Mohammed (zoals bfbouw.be): derde keuze "Beide" als volle-breedte rij onder de twee fototegels, zelfde stijl als de rij
            "Gratis dakinspectie", ZONDER icoon ("dat vernauwd te hard"). Daarna exact het pad van Hellend dak (BEIDE staat bij elke
            Dak: ['Hellend dak'] hieronder); in de aanvraag "Dak: Beide (hellend en plat)". */
-        { label: 'Beide', waarde: BEIDE, breed: true },
+        /* 18 nov 2026, Mohammed: knoptekst "Beide / combinatie". */
+        { label: 'Beide / combinatie', waarde: BEIDE, breed: true },
       ] },
       /* 7 nov 2026, zoals bfbouw.be (Mohammed daar: "bij gratis dakinspectie moeten de vragen erna wel veranderen"): wie Gratis dakinspectie kiest,
          krijgt na het soort dak "Wat merkt u aan uw dak?" (per soort dak een eigen lijst, zelfde sleutel; woordelijk bfbouw.be) en daarna alleen
@@ -423,14 +424,9 @@ export const DAKWERKEN: KgjInhoud = {
          valt weg, asbest alleen als het huidige dak vervangen wordt. Vragen en keuzes woordelijk bfbouw.be; iconen uit de eigen set. */
       { sleutel: 'Situatie', vraag: 'Waarvoor is het nieuwe dak?', als: { Werk: ['Nieuw dak'] }, keuzes: [
         { label: 'Nieuwbouw', icoon: 'vrijstaand' }, { label: 'Uitbreiding of aanbouw', icoon: 'dienst-ruwbouw' },
-        { label: 'Huidig dak vervangen', icoon: 'dienst-renovatie' },
+        { label: 'Huidig dak vervangen', icoon: 'dak-vervangen' },
       ] },
-      { sleutel: 'Dakbedekking', vraag: 'Welke dakbedekking wilt u?', als: { Werk: ['Nieuw dak'], Dak: ['Hellend dak', BEIDE] }, keuzes: [
-        { label: 'Dakpannen', icoon: 'golfpan' }, { label: 'Leien', icoon: 'vlakkepan' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
-      ] },
-      { sleutel: 'Dakbedekking', vraag: 'Welke dakbedekking wilt u?', als: { Werk: ['Nieuw dak'], Dak: ['Plat dak'] }, keuzes: [
-        { label: 'EPDM', icoon: 'epdm' }, { label: 'Roofing', icoon: 'roofing' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
-      ] },
+      /* 18 nov 2026, Mohammed: "Welke dakbedekking wilt u? eruit" -> de vraag is weg op elk pad (Nieuw dak: na "Waarvoor is het nieuwe dak?" meteen de start). */
       /* Wie bij stap 2 Isolatie of Nieuw dak koos, krijgt deze vraag niet. */
       { sleutel: 'Isolatie', vraag: 'Wilt u ook isoleren?', nietAls: { Werk: ['Isolatie', 'Nieuw dak', 'Gratis dakinspectie'] }, keuzes: [
         { label: 'Ja', icoon: 'isolatie' }, { label: 'Nee', icoon: 'geenisolatie' }, { label: 'Weet ik nog niet', icoon: 'twijfel' },
@@ -455,7 +451,7 @@ export const DAKWERKEN: KgjInhoud = {
          de offerte gaat naar het e-mailadres dat de bezoeker verplicht invult;
        - "dakexpert": de AB-zin onder de knop sinds 21 okt ("Onze dakexpert contacteert u ..."). */
     /* 18 nov 2026 (v2): geen oppervlaktevraag meer; regel 2 van de laadstap = werk + soort dak (zoals bfbouw.be dakRegel). */
-    laden: { kop: 'Uw aanvraag wordt klaargezet', eerste: 'Antwoorden opgeslagen', laatste: 'Klaar voor onze dakexpert', sleutels: ['Werk', 'Dak'], leeg: 'Gegevens van uw dak' },
+    laden: { kop: 'Uw aanvraag wordt klaargezet', eerste: 'Antwoorden opgeslagen', sleutels: ['Werk', 'Dak'], leeg: 'Gegevens van uw dak' },
     volgtKop: 'Na uw aanvraag',
     /* 7 nov 2026, zoals bfbouw.be 7 nov (Mohammed daar: "oke doe maar die 3 stappen"; "en doe al deze changes ook bij ab pagina"): eerst contact
        binnen 24 uur, dan het gratis plaatsbezoek, dan de offerte. AB-feiten: 24 uur = zijn woord voor AB (2 nov, offerte binnen 24 uur; contact
@@ -473,7 +469,7 @@ export const DAKWERKEN: KgjInhoud = {
     naKort: [
       /* 18 nov 2026, definitief (Mohammed: "of 4 ofzo", "redeneer een beetje meer"): elke stap = een moment waarop de bezoeker iets krijgt of
          zelf beslist; woordelijk zijn dictaat */
-      { titel: 'We nemen binnen 24 uur contact op', tekst: 'We bellen je om een plaatsbezoek in te plannen op een moment dat jou past.' },
+      { titel: 'We nemen binnen 24 uur contact op', tekst: 'We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.' },
       { titel: 'Gratis plaatsbezoek met onze dakexpert', tekst: 'Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.' },
       { titel: 'Je ontvangt je offerte in je mailbox', tekst: 'Vrijblijvend: je beslist zelf, zonder enige verplichting.' },
       { titel: 'Jij geniet zorgeloos van je nieuwe dak', tekst: 'Na je akkoord plannen we de werken in en voeren we ze uit.' },

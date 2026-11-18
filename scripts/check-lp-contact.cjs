@@ -46,7 +46,7 @@ const HERO = '#rekenaar .kgj-reken--aanvraag';
 /* 18 nov 2026 (v2): zonder asbest-, oppervlakte- en bereikbaar-vraag */
 const PADEN = {
   '/lp/dakwerken': ['Dakrenovatie', 'Hellend dak', 'Nee', 'Zo snel mogelijk'],
-  '/lp/dakwerken/asbest': ['Nieuw dak', 'Plat dak', 'Huidig dak vervangen', 'EPDM', 'Zo snel mogelijk'],
+  '/lp/dakwerken/asbest': ['Nieuw dak', 'Plat dak', 'Huidig dak vervangen', 'Zo snel mogelijk'],
   '/lp/totaalrenovatie': ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'],
   '/lp/aannemer-renovatiewerken': ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], 'Zo snel mogelijk', '€ 25.000 tot € 75.000'],
 };

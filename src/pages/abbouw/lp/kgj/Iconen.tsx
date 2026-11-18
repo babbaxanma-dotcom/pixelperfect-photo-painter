@@ -17,6 +17,7 @@ export type IcoonNaam =
   | 'herstel' | 'nieuwdak' | 'jong' | 'midden' | 'oud' | 'platdak'
   | 'inspectie' | 'lek' | 'schade' | 'goot'
   | 'dienst-nieuw' | 'dienst-renovatie' | 'dienst-isolatie' | 'dienst-herstel'
+  | 'dak-renovatie' | 'dak-vervangen'
   | 'appartement' | 'rijwoning' | 'halfopen' | 'vrijstaand'
   | 'heelhuis' | 'beneden' | 'boven' | 'strippen' | 'deel' | 'afwerking'
   | 'dienst-ruwbouw' | 'dienst-technieken' | 'dienst-pleister' | 'dienst-interieur'
@@ -197,6 +198,27 @@ const ICONEN: Record<IcoonNaam, () => JSX.Element> = {
       <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
       <path d="M15 6h6" />
       <path d="M18 3v6" />
+    </Svg>
+  ),
+  /* 18 nov 2026, Mohammed: "icoon van dakrenovatie ook beter", "kies jij de beste" (zelfde tekening als bfbouw.be):
+     huis met een dubbele dakrand (de nieuwe laag) en een schouw. Alleen in de aanvraagkaart. */
+  'dak-renovatie': () => (
+    <Svg>
+      <path d="M2.5 12.5 12 4.5l9.5 8" />
+      <path d="M6 13.2 12 8.2l6 5" />
+      <path d="M15.6 6.7V3.6h2.6v5.2" />
+      <path d="M5 12v8h14v-8" />
+    </Svg>
+  ),
+  /* 18 nov 2026, Mohammed: "de icoon van huidig dak vervangen verbeteren": huis met twee wisselpijlen (oud eruit, nieuw erin). */
+  'dak-vervangen': () => (
+    <Svg>
+      <path d="M3 11.5 12 4.5l9 7" />
+      <path d="M5.5 10v10h13V10" />
+      <path d="M8.5 13.2h7" />
+      <path d="m13.6 11.3 1.9 1.9-1.9 1.9" />
+      <path d="M15.5 17.3h-7" />
+      <path d="m10.4 15.4-1.9 1.9 1.9 1.9" />
     </Svg>
   ),
   /* Dakrenovatie: een bestaand huis met een tweede daklijn erover, de nieuwe

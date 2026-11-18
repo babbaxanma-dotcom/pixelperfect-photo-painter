@@ -1584,3 +1584,25 @@ body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { flex: 1; padding: 8px 1
 .bf.bf-lp .bf-kop a.bf-lpbel[href^="tel:"], .bf.bf-lp .bf-belzweef { transition: opacity .2s ease, visibility 0s linear 0s; }
 html.is-informulier .bf.bf-lp .bf-belzweef { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: opacity .2s ease, visibility 0s linear .2s; }
 @media (prefers-reduced-motion: reduce) { .bf.bf-lp .bf-kop a.bf-lpbel[href^="tel:"], .bf.bf-lp .bf-belzweef, html.is-informulier .bf.bf-lp .bf-belzweef { transition: none; } }
+
+/* 18 nov 2026, Mohammed: "op tablet is het helemaal stretched" + "op tablad moet je dingen fixen". Zelfde fix als bfbouw.be (site.css, einde).
+   641-1000 px kreeg de gsm-opmaak op volle breedte: kaart 736 px, realisatiefoto 478 px hoog, werkfoto 552 px, werkwijze 1 kolom, schermbrede knoppen.
+   Tablet: hero zo hoog als de inhoud, kaart en tekst max 620 px, realisatie foto + tekst naast elkaar, werkfoto 16:9, werkwijze 2 kolommen zonder pijltjes,
+   voordelen 3 kolommen, knoppen op tekstbreedte. Gsm (<= 640 px) en pc (>= 1001 px) ongewijzigd; iPad Pro staand (>= 1001 px, staand) krijgt de hero zonder vol scherm. */
+@media (min-width: 641px) and (max-width: 1000px) {
+  .bf.bf-lp .bf-lphero__in { min-height: 0; padding-bottom: 48px; }
+  .bf.bf-lp .bf-lphero__in > .bf-lphero__reken, .bf.bf-lp .bf-lphero__kop, .bf.bf-lp .bf-lphero__sub, .bf.bf-lp .bf-lpinsp__tekst, .bf.bf-lp .bf-lpinsp__kaartvak { max-width: 620px; width: 100%; }
+  .bf.bf-lp .bf-real { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 28px; align-items: center; }
+  .bf.bf-lp .bf-lpwerk__foto { aspect-ratio: 16 / 9; max-height: none; }
+  .bf.bf-lp .bf-lpwerk__foto img { width: 100%; height: 100%; object-fit: cover; }
+  .bf.bf-lp .bf-duo__tekst { max-width: 680px; }
+  .bf.bf-lp .bf-proces__stappen { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 28px; }
+  .bf.bf-lp .bf-pstap__pijl { display: none; }
+  .bf.bf-lp .bf-lpmidknop, .bf.bf-lp .bf-lpcta { display: flex; justify-content: center; align-items: center; text-align: center; }
+  .bf.bf-lp .bf-lpcta__knop, .bf.bf-lp .bf-lpbelblok__knop, .bf.bf-lp .bf-lpmidknop .bf-proces__knop { width: auto; align-self: center; padding: 0 32px; }
+  .bf.bf-lp .bf-waarden--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .bf.bf-lp .bf-vragen__lijst { max-width: 680px; margin-left: auto; margin-right: auto; }
+}
+@media (min-width: 1001px) and (orientation: portrait) {
+  .bf.bf-lp .bf-lphero__in { min-height: 0; }
+}

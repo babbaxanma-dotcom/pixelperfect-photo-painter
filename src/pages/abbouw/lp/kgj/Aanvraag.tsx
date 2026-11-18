@@ -793,7 +793,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
         <div className={`kgj-reken__laad is-${laadFase}`}>
           <p className="kgj-reken__laad-kop" role="status"><span className="kgj-reken__laad-spin" aria-hidden="true" />{a.laden.kop}</p>
           <ul className="kgj-reken__laad-lijst">
-            {[a.laden.eerste, laadRegel, a.laden.laatste].map((r, i) => (
+            {[a.laden.eerste, laadRegel, ...(a.laden.laatste ? [a.laden.laatste] : [])].map((r, i) => ( /* 18 nov 2026, Mohammed: "Klaar voor onze dakexpert ... dat kan eruit, dat raar": twee regels */
               <li key={i} className={laadFase > i ? 'is-aan' : undefined}><span className="kgj-reken__laad-vink" aria-hidden="true"><Check /></span><span>{r}</span></li>
             ))}
           </ul>
