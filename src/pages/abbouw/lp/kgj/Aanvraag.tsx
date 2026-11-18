@@ -72,9 +72,14 @@ export const badgeIcoon = (tekst: string, i: number) => BADGE_PER_TEKST[tekst] ?
 /* Focusstand (7 nov 2026, zoals bfbouw.be src/js/site.js, Mohammed daar: "doe ook als je start aan de form dat de rest wit wordt rond de form,
    maar als je scrolt ga je eruit", "op pc verzin ook iets"; hier: "en doe al deze changes ook bij ab pagina"). Onze eigen scroll (stapwissel,
    knop "Ik ben op zoek naar", vaste knop) telt niet als wegscrollen: tot de scroll 250 ms stilstaat, hoogstens 3 s. */
-const FOCUS_UIT_DEEL = 0.5; // deel van de kaart in beeld (afgetopt op de schermhoogte) waaronder de focusstand uitgaat, zoals bfbouw.be
-const eigen = { aan: false, t: 0, cap: 0 };
-function eigenKlaar() { eigen.aan = false; window.clearTimeout(eigen.t); window.clearTimeout(eigen.cap); }
+/* 18 nov 2026 avond, Mohammed: "het blijft wazig bij scrollen", "kijk exact hoe solvari dit heeft":
+   exact Solvari (forms.js: useElementVisibility(root, { rootMargin: '-100px' }) + onClickOutside): uit zodra de kaart niet meer zichtbaar is
+   binnen FOCUS_MARGE px van de schermrand, of bij een tik op de sluier. FOCUS_UIT_DEEL geldt niet meer. Na onze eigen scroll: event ab-eigen-klaar = opnieuw kijken. */
+/* De kaart staat in de hero: wie naar de kop erboven scrolt, houdt de kaart in beeld. Daarom ook: zelf meer dan FOCUS_UIT_PX scrollen = uit (vanaf de
+   rustpositie y0: bij aan, na onze eigen scroll, met een veld in focus). */
+const FOCUS_MARGE = 100, FOCUS_UIT_PX = 40;
+const eigen = { aan: false, t: 0, cap: 0, y0: 0 };
+function eigenKlaar() { eigen.aan = false; window.clearTimeout(eigen.t); window.clearTimeout(eigen.cap); eigen.y0 = window.scrollY; window.dispatchEvent(new Event('ab-eigen-klaar')); }
 export function eigenScroll() {
   eigen.aan = true;
   window.clearTimeout(eigen.t); eigen.t = window.setTimeout(eigenKlaar, 250);
@@ -441,6 +446,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   const focusAan = () => {
     if ((window as unknown as AbTest).__abVolUit || focusRef.current) return;
     focusRef.current = true;
+    if (!eigen.aan) eigen.y0 = window.scrollY;
     setFocus(true);
     window.dispatchEvent(new CustomEvent('ab-focus', { detail: plek }));
   };
@@ -472,21 +478,30 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
       const el = kaart.current;
       if (!el || eigen.aan) return;
       const act = document.activeElement;
-      if (act && el.contains(act) && /^(INPUT|SELECT|TEXTAREA)$/.test(act.tagName)) return; // toetsenbord open: de browser scrolt zelf
+      if (act && el.contains(act) && /^(INPUT|SELECT|TEXTAREA)$/.test(act.tagName)) { eigen.y0 = window.scrollY; return; } // toetsenbord open: de browser scrolt zelf
+      if (Math.abs(window.scrollY - eigen.y0) > FOCUS_UIT_PX) { focusUit(); return; } // zelf gescrold: alles weer normaal
       const r = el.getBoundingClientRect(), vh = window.innerHeight;
-      if (Math.min(r.bottom, vh) - Math.max(r.top, 0) < FOCUS_UIT_DEEL * Math.min(r.height, vh)) focusUit();
+      if (r.bottom <= FOCUS_MARGE || r.top >= vh - FOCUS_MARGE) focusUit(); // Solvari: niet meer zichtbaar binnen de marge = alles weer normaal
     };
     const scroll = () => {
       if (eigen.aan) { window.clearTimeout(eigen.t); eigen.t = window.setTimeout(eigenKlaar, 250); return; }
       if (!raf) raf = requestAnimationFrame(kijk);
     };
     const toets = (e: KeyboardEvent) => { if (e.key === 'Escape') focusUit(); };
-    const vv = () => eigenScroll();
+    // alleen een toetsenbord (veld in focus) telt; de adresbalk die bij scrollen meeschuift is ook een resize en telt niet
+    const vv = () => { const a = document.activeElement; if (a && /^(INPUT|SELECT|TEXTAREA)$/.test(a.tagName)) eigenScroll(); };
+    const naEigen = () => { if (!raf) raf = requestAnimationFrame(kijk); };
+    // een veld in de kaart verliest de focus = het toetsenbord gaat dicht; de scroll die daarop volgt is niet van de bezoeker
+    const veldUit = (e: FocusEvent) => { const t = e.target as HTMLElement | null; if (t && kaart.current?.contains(t) && /^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName)) eigenScroll(); };
     window.addEventListener('scroll', scroll, { passive: true });
+    window.addEventListener('ab-eigen-klaar', naEigen);
+    document.addEventListener('focusout', veldUit);
     document.addEventListener('keydown', toets);
     window.visualViewport?.addEventListener('resize', vv);
     return () => {
       window.removeEventListener('scroll', scroll);
+      window.removeEventListener('ab-eigen-klaar', naEigen);
+      document.removeEventListener('focusout', veldUit);
       document.removeEventListener('keydown', toets);
       window.visualViewport?.removeEventListener('resize', vv);
       if (raf) cancelAnimationFrame(raf);
