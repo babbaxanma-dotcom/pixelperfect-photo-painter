@@ -74,6 +74,9 @@ for (const [route, bron] of Object.entries(ROUTES)) {
       .replace(/<link rel="modulepreload" crossorigin href="\/assets\/[^"]+\.js">/g, '')
       .replace('</head>', `${extraCss}</head>`)
       .replace('<div id="root"></div>', `<div id="root" data-voorgerenderd="1">${html}</div>${laadNaBeeld}`);
+    // 14 nov 2026: Clarity start vanuit de head (index.html), vóór de voorgerenderde pagina; zonder die start geen pagina publiceren
+    const clarityOp = pagina.indexOf('https://www.clarity.ms/tag/');
+    if (clarityOp < 0 || clarityOp > pagina.indexOf('<div id="root"') || !pagina.includes(`'${route}':`)) throw new Error('Clarity-start ontbreekt vóór #root of kent dit adres niet: ' + route);
     const doel = path.join(DIST, route.slice(1), 'index.html');
     fs.mkdirSync(path.dirname(doel), { recursive: true });
     fs.writeFileSync(doel, pagina);

@@ -60,6 +60,32 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-W9CB4ZHK');</script>
     <!-- End Google Tag Manager -->
+    <!-- Microsoft Clarity: start hier, vóór de pagina in beeld staat (14 nov 2026, Mohammed: "fixen dat we bij ab bouw groep
+         website alle klikken krijgen in clarity"). Tot 14 nov startte Clarity pas in een React-effect, ná het laden van de app:
+         gemeten op de live dakpagina (gsm, trage 4G) stond de pagina na 3,0 s in beeld en vertrok het Clarity-verzoek na 6,3 s;
+         tikken en korte bezoeken in die tijd stonden in geen enkele opname. Project per adres; de lijst is dezelfde als
+         CLARITY_PAD in src/lib/clarity.ts (scripts/check-clarity-start.cjs bewaakt dat). Adressen met een telefoonnummer in het
+         pad (/status, /beoordeling) en de pagina's uit de klant-sms'en (/afspraak, /dakinspectie, /review) staan er niet in. -->
+    <script>
+    (function(w,d){
+      var H='yxp937b4f2',D='yxp88pzo3i',T='yxp8qe0p9u';
+      var P={'/':H,'/over':H,'/diensten':H,'/werkwijze':H,'/contact':H,'/construct':H,'/ecologisch':H,'/interieur':H,'/dakwerken':H,'/bad':H,'/gevel':H,'/privacy':H,'/voorwaarden':H,'/cookies':H,'/lp/badkamerrenovatie':H,'/badkamerrenovatie':H,'/lp/dakwerken':D,'/lp/dakwerken/asbest':D,'/lp/totaalrenovatie':T,'/totaalrenovatie':T,'/lp/aannemer-renovatiewerken':T,'/lp/richtprijs-berekenen':T};
+      var p=w.location.pathname.replace(/\/+$/,'')||'/';
+      var id=P[p]||(p==='/bedankt'||p.indexOf('/bedankt/')===0?H:null);
+      if(!id||w.clarity)return;
+      w.clarity=function(){(w.clarity.q=w.clarity.q||[]).push(arguments)};
+      var t=d.createElement('script');t.async=1;t.src='https://www.clarity.ms/tag/'+id;
+      var y=d.getElementsByTagName('script')[0];y.parentNode.insertBefore(t,y);
+      var c=null;try{c=JSON.parse(w.localStorage.getItem('ab_bouw_consent_v1'))}catch(e){}
+      w.clarity('consentv2',{ad_Storage:c&&c.marketing===true?'granted':'denied',analytics_Storage:c&&c.analytics===true?'granted':'denied'});
+      var q=new URLSearchParams(w.location.search),k=q.get('gclid')||q.get('gbraid')||q.get('wbraid');
+      var a=!!k||(q.get('utm_source')==='google'&&q.get('utm_medium')==='cpc');
+      function z(n,v){if(v)w.clarity('set',n,v)}
+      z('bron',a?'Google Ads':'geen advertentie');z('zoekwoord',q.get('utm_term'));z('campagne',q.get('utm_campaign'));
+      z('dienst',q.get('dienst')||(q.get('dak')?'dak-'+q.get('dak'):null));z('klik-id',k);
+      if(a)w.clarity('upgrade','Google Ads-klik');
+    })(window,document);
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

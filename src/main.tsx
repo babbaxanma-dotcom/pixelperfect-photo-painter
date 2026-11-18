@@ -3,6 +3,7 @@ import App from "./App.tsx";
 import "./index.css";
 import { captureUtm, installCallTracking, trackPageView } from "./lib/tracking";
 import { installConsentBanner, syncConsentToGtag } from "./lib/consent";
+import { stuurClarityToestemming } from "./lib/clarity";
 
 // gtag.js + Consent Mode v2 zijn al in index.html geladen (zie <head>). Hier
 // alleen: SPA page-view tracking, UTM capture, tel: click listener, en de
@@ -35,7 +36,8 @@ function bootTracking() {
     return r;
   };
 
-  window.addEventListener('ab-bouw-consent-changed', () => syncConsentToGtag());
+  // 14 nov 2026: Clarity start vanuit index.html; een nieuwe keuze gaat hier naar Clarity, op elke pagina (zonder Clarity: niets).
+  window.addEventListener('ab-bouw-consent-changed', () => { syncConsentToGtag(); stuurClarityToestemming(); });
 }
 
 if (typeof window !== 'undefined') {

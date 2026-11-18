@@ -22,7 +22,8 @@ declare global {
   interface Window { clarity?: ClarityFn }
 }
 
-function stuurToestemming() {
+export function stuurClarityToestemming() {
+  if (typeof window === 'undefined') return;
   window.clarity?.('consentv2', {
     ad_Storage: allowsMarketing() ? 'granted' : 'denied',
     analytics_Storage: allowsAnalytics() ? 'granted' : 'denied',
@@ -54,6 +55,38 @@ export function meldClarity(gebeurtenis: string) {
   if (typeof window !== 'undefined') window.clarity?.('event', gebeurtenis);
 }
 
+/* 14 nov 2026 (Mohammed: "fixen dat we bij ab bouw groep website alle klikken krijgen in clarity"): Clarity start vanuit
+   index.html, vóór de pagina in beeld staat (daar staat dezelfde lijst, met consentv2 en de advertentietags). Deze lijst is
+   de bron voor scripts/check-clarity-start.cjs, die de twee vergelijkt. Elke pagina zonder eigen project gaat naar het
+   home-project; /bedankt en /bedankt/<dienst> ook. Niet in de lijst: adressen met een telefoonnummer in het pad (/status,
+   /beoordeling) en de pagina's uit de klant-sms'en (/afspraak, /dakinspectie, /review). */
+export const CLARITY_PAD: Record<string, string> = {
+  '/': CLARITY_PROJECT.home,
+  '/over': CLARITY_PROJECT.home,
+  '/diensten': CLARITY_PROJECT.home,
+  '/werkwijze': CLARITY_PROJECT.home,
+  '/contact': CLARITY_PROJECT.home,
+  '/construct': CLARITY_PROJECT.home,
+  '/ecologisch': CLARITY_PROJECT.home,
+  '/interieur': CLARITY_PROJECT.home,
+  '/dakwerken': CLARITY_PROJECT.home,
+  '/bad': CLARITY_PROJECT.home,
+  '/gevel': CLARITY_PROJECT.home,
+  '/privacy': CLARITY_PROJECT.home,
+  '/voorwaarden': CLARITY_PROJECT.home,
+  '/cookies': CLARITY_PROJECT.home,
+  '/lp/badkamerrenovatie': CLARITY_PROJECT.home,
+  '/badkamerrenovatie': CLARITY_PROJECT.home,
+  '/lp/dakwerken': CLARITY_PROJECT.dakwerken,
+  '/lp/dakwerken/asbest': CLARITY_PROJECT.dakwerken,
+  '/lp/totaalrenovatie': CLARITY_PROJECT.totaalrenovatie,
+  '/totaalrenovatie': CLARITY_PROJECT.totaalrenovatie,
+  '/lp/aannemer-renovatiewerken': CLARITY_PROJECT.totaalrenovatie,
+  '/lp/richtprijs-berekenen': CLARITY_PROJECT.totaalrenovatie,
+};
+
+/* Vangnet voor een bezoek waar index.html Clarity niet startte (bv. van een pagina buiten de lijst doorgeklikt naar een
+   advertentiepagina). Het toestemmingssignaal bij een nieuwe keuze gaat via main.tsx (stuurClarityToestemming), op elke pagina. */
 export function laadClarity(id: string) {
   if (typeof window === 'undefined' || window.clarity) return;
   // De officiële Clarity-code, als functie.
@@ -64,7 +97,6 @@ export function laadClarity(id: string) {
   t.src = 'https://www.clarity.ms/tag/' + id;
   const y = document.getElementsByTagName('script')[0];
   if (y?.parentNode) y.parentNode.insertBefore(t, y); else document.head.appendChild(t);
-  stuurToestemming();
+  stuurClarityToestemming();
   zetAdvertentie();
-  window.addEventListener('ab-bouw-consent-changed', stuurToestemming);
 }
