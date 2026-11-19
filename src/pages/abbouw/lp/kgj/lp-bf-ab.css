@@ -1695,3 +1695,68 @@ html.is-informulier .bf.bf-lp .bf-belzweef { opacity: 0 !important; visibility: 
   .bf.bf-lp .kgj-reken--badges .kgj-reken__trust li > span:not(.kgj-reken__trust-ic):not(.kgj-reken__trust-gic) { font-size: 14px; }
   .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__privacy, .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__groepnaam { font-size: 14px; }
 }
+
+/* ===== 19 nov 2026, smal scherm en terugweg naar het formulier (Mohammed: "ze maken het form af, maar scrollen dan om te lezen", "en dan raken ze
+   verdwaald", "ook is het hele scherm de spacing heel raar op telefoon", "opeens stapelt alles in hun gezicht"). Clarity: AB 19 nov 274x493 en BF 18 nov
+   226x412 (gsm met grote weergave of grote tekst). Gemeten vóór deze regels (live fa4e459, /lp/dakwerken/): de belknop in de kopbalk liep op 226 px
+   buiten het scherm, op het contactscherm stond de verzendknop onder de onderrand (226x412: tot 466 px, 274x493: tot 524 px), "Na uw aanvraag" was
+   970 px (274) en 1.449 px (226) lang met 78 px tekstbreedte (1-2 woorden per regel). Vanaf 340 px verandert hier niets. ===== */
+@media (max-width: 339.98px) {
+  html:has(.bf.bf-lp) { scroll-padding-top: 56px; }
+  .bf.bf-lp .bf-kop--lp .bf-nav { height: 56px; padding: 0 10px; }
+  .bf.bf-lp .bf-kop--lp .bf-nav__logo { min-height: 44px; }
+  .bf.bf-lp .bf-kop--lp .bf-nav__logo img { width: 70px; height: 20px; }
+  .bf.bf-lp .bf-kop--lp .bf-nav__logo--vak img { width: 84px; height: 17.6px; }
+  .bf.bf-lp .bf-kop--lp .bf-nav__acties { gap: 8px; }
+  .bf.bf-lp .bf-lpbel { height: 40px; padding: 0 11px; gap: 6px; font-size: 13.5px; }
+  .bf.bf-lp .bf-lpbel svg { width: 15px; height: 15px; }
+  .bf.bf-lp:has(> .bf-kop--topbalk) .bf-kop--topbalk .bf-nav { margin-top: 36px; }
+  .bf.bf-lp .bf-lphero__in { padding: 76px 10px 24px; gap: 16px; }
+  .bf.bf-lp:has(> .bf-kop--topbalk) .bf-lphero__in { padding-top: 112px; }
+  .bf.bf-lp .bf-lphero__kop { font-size: 30px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag { padding: 14px 12px 12px; }
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__titel { font-size: 18px; line-height: 1.25; }
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__terug { min-height: 44px; }
+  .bf.bf-lp .kgj-reken__contact .kgj-reken__knop { height: auto; min-height: 50px; padding: 6px 12px; font-size: 15.5px; line-height: 1.25; }
+  .bf.bf-lp .kgj-reken__nastap { margin-top: 12px; padding: 12px 12px 12px; }
+  .bf.bf-lp .kgj-reken__nakort li { min-height: 30px; padding-left: 40px; }
+  .bf.bf-lp .kgj-reken__nakort li + li { margin-top: 14px; }
+  .bf.bf-lp .kgj-reken__nakort li > b { padding-top: 4px; font-size: 15px; }
+  .bf.bf-lp .kgj-reken__nakort li > span { font-size: 14.5px; }
+  .bf.bf-lp .kgj-reken__nakort li::before { width: 30px; height: 30px; font-size: 15px; }
+  .bf.bf-lp .kgj-reken__nakort li:not(:last-child)::after { left: 14px; top: 34px; bottom: -12px; }
+  /* "Ik ben op zoek naar": twee kolommen waren te smal voor één woord met icoon ("Dakrenovatie"): de knoppen staken 51 px (226) en 27 px (274) buiten
+     het scherm, waardoor de gsm de pagina breder maakte dan het scherm (gemeten innerWidth 277 op 226 en 301 op 274). Dan schuift de vaste kopbalk
+     los van wat de bezoeker ziet en ligt hij over de kaart. Onder 340 px één kolom. */
+  .bf.bf-lp .bf-lpzoek__knoppen { grid-template-columns: minmax(0, 1fr); }
+  .bf.bf-lp .bf-lpzoek__knop:last-child:nth-child(odd) { grid-column: auto; }
+}
+@media (max-width: 259.98px) {
+  .bf.bf-lp .bf-kop--lp .bf-nav__logo--vak img { width: 76px; height: 16px; }
+  .bf.bf-lp .bf-kop--lp .bf-nav__logo img { width: 63px; height: 18px; }
+  .bf.bf-lp .bf-lpbel { padding: 0 10px; font-size: 13px; }
+}
+/* "Na uw aanvraag" ingeklapt (alleen onder 340 px, Aanvraag.tsx): één regel met een pijltje die openklapt. */
+.bf.bf-lp .kgj-reken__nastap--klap { padding-top: 0; padding-bottom: 0; }
+.bf.bf-lp .kgj-reken__nastap--klap > summary.kgj-reken__nastap-kop { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; margin: 0; list-style: none; cursor: pointer; font-size: 16px; }
+.bf.bf-lp .kgj-reken__nastap--klap > summary::-webkit-details-marker { display: none; }
+.bf.bf-lp .kgj-reken__nastap--klap > summary svg { flex: none; width: 20px; height: 20px; transition: transform .2s ease; }
+.bf.bf-lp .kgj-reken__nastap--klap[open] > summary svg { transform: rotate(180deg); }
+.bf.bf-lp .kgj-reken__nastap--klap[open] { padding-bottom: 12px; }
+.bf.bf-lp .kgj-reken__nastap--klap > .kgj-reken__nakort { margin-top: 4px; }
+.bf.bf-lp .kgj-reken__nastap--klap > summary:focus-visible { outline: 3px solid var(--merk-tekst); outline-offset: 2px; }
+
+/* Vaste knop "Aanvraag afronden" (Aanvraag.tsx): alleen op aanraakschermen (gsm en tablet), onderaan over de volle breedte (tablet: 420 px in het
+   midden). Staat hij er, dan wijkt de ronde belknop (html.is-afronden). Boven de belknop (z 40), onder de sluier (1000). */
+.bf.bf-lp .kgj-afronden { display: none; }
+@media (max-width: 1000px), (pointer: coarse) {
+  .bf.bf-lp .kgj-afronden { display: flex; align-items: center; justify-content: center; gap: 8px; position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 45; max-width: 420px; min-height: 52px; margin: 0 auto; padding: 8px 16px; border: 0; border-radius: 8px; background: var(--merk); color: var(--op-merk); box-shadow: 0 14px 30px -12px rgba(17, 17, 17, .55); font: inherit; font-size: 16.5px; font-weight: 700; line-height: 1.2; cursor: pointer;
+    opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(14px); transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s; }
+  .bf.bf-lp .kgj-afronden.is-aan { opacity: 1; visibility: visible; pointer-events: auto; transform: none; transition: opacity .2s ease, transform .2s ease, visibility 0s; }
+  .bf.bf-lp .kgj-afronden svg { flex: none; width: 18px; height: 18px; }
+  .bf.bf-lp .kgj-afronden:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+  html.is-afronden .bf.bf-lp .bf-belzweef { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+}
+@media (prefers-reduced-motion: reduce) { .bf.bf-lp .kgj-afronden, .bf.bf-lp .kgj-afronden.is-aan { transition: none; } }
+/* Hoeve-video: een tik op het beeld speelt of pauzeert ook (Realisatie.tsx). */
+.bf.bf-lp .bf-real__laag.is-aan:is(video) { cursor: pointer; }

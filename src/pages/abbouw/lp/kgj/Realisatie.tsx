@@ -27,31 +27,52 @@ export default function Realisatie({ r, knop }: { r: RealisatieInhoud; knop: Rea
 
   /* Podiumvideo: bron pas zetten als het podium bijna in beeld is; spelen als minstens 35% in beeld is en "Na de werken" gekozen is.
      De waarnemers lezen de stand van nu via een ref (geen verouderde waarden uit de eerste weergave). */
+  /* 19 nov 2026, Mohammed: "fix ook dat probleem dat je niet op play kan drukken vaak". Gemeten (Chrome touch en WebKit, 390x664, live fa4e459):
+     staat automatisch afspelen uit (iPhone in energiebesparing, Android met databesparing: play() zonder tik wordt geweigerd), dan toont de knop
+     "Video afspelen", raakt de tik de knop (elementFromPoint), maar speelt de video 0 van 10 keer. Oorzaak: de tik zette gepauzeerd op false,
+     dat al false was: geen nieuwe weergave, dus geen play(); en play() liep pas later in een effect, buiten de tik, waar Safari het weigert.
+     Nu: de tik roept play() of pause() zelf aan, meteen in de tik; het icoon volgt de echte stand van de video (play/pause-events), zodat de
+     tweede tik altijd pauzeert. Een tik op het beeld zelf doet hetzelfde als de knop. */
   const stand = useRef({ toon, gepauzeerd });
   stand.current = { toon, gepauzeerd };
+  const laadBron = (v: HTMLVideoElement) => { if (!v.getAttribute('src')) { v.setAttribute('src', r.na.video); v.load(); } };
   const bijwerk = () => {
     const v = video.current;
     if (!v) return;
     const s = stand.current;
     const moet = zicht.current && s.toon === 'na' && !s.gepauzeerd && !stil.current && !!v.getAttribute('src');
-    if (moet) { v.play().then(() => setSpeelt(true)).catch(() => setSpeelt(false)); } else { v.pause(); setSpeelt(false); }
+    if (moet) { if (v.paused) v.play().catch(() => { /* automatisch afspelen geweigerd: de knop blijft "Video afspelen" */ }); } else if (!v.paused) v.pause();
+  };
+  const wissel = () => {
+    const v = video.current;
+    if (!v) return;
+    if (!v.paused) { setGepauzeerd(true); v.pause(); return; }
+    stil.current = false;
+    stand.current = { ...stand.current, gepauzeerd: false };
+    setGepauzeerd(false);
+    laadBron(v);
+    v.play().catch(() => setSpeelt(false));
   };
   useEffect(() => {
     stil.current = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
     if (stil.current) setGepauzeerd(true);
     const el = podium.current;
     const v = video.current;
-    if (!el || !v || !('IntersectionObserver' in window)) return;
+    if (!el || !v) return;
+    const aan = () => setSpeelt(true), uit = () => setSpeelt(false);
+    v.addEventListener('play', aan); v.addEventListener('playing', aan); v.addEventListener('pause', uit);
+    setSpeelt(!v.paused);
+    if (!('IntersectionObserver' in window)) return () => { v.removeEventListener('play', aan); v.removeEventListener('playing', aan); v.removeEventListener('pause', uit); };
     const laad = new IntersectionObserver(([x]) => {
-      if (x.isIntersecting && !v.getAttribute('src')) { v.setAttribute('src', r.na.video); v.load(); bijwerk(); }
+      if (x.isIntersecting && !v.getAttribute('src')) { laadBron(v); bijwerk(); }
     }, { rootMargin: '400px 0px' });
     const kijk = new IntersectionObserver(([x]) => { zicht.current = x.isIntersecting; bijwerk(); }, { threshold: 0.35 });
     laad.observe(el); kijk.observe(el);
-    return () => { laad.disconnect(); kijk.disconnect(); };
+    return () => { laad.disconnect(); kijk.disconnect(); v.removeEventListener('play', aan); v.removeEventListener('playing', aan); v.removeEventListener('pause', uit); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { bijwerk(); }, [toon, gepauzeerd]);
+  useEffect(() => { bijwerk(); }, [toon]);
 
   return (
     /* 8 nov 2026, Mohammed: "bij onze realisaties haal de titel weg. Want het is maar één realisatie, dus dat hoeft geen titel": geen sectiekop
@@ -69,14 +90,14 @@ export default function Realisatie({ r, knop }: { r: RealisatieInhoud; knop: Rea
             </div>
             <div className="bf-real__podium" ref={podium}>
               <video ref={video} className={`bf-real__laag${toon === 'na' ? ' is-aan' : ''}`} poster={r.na.poster} muted loop playsInline preload="none"
-                aria-label={r.na.alt} aria-hidden={toon !== 'na'} tabIndex={-1} />
+                aria-label={r.na.alt} aria-hidden={toon !== 'na'} tabIndex={-1} onClick={() => { if (toon === 'na') wissel(); }} />
               <div className={`bf-real__laag bf-real__laag--foto${toon === 'tijdens' ? ' is-aan' : ''}`} aria-hidden={toon !== 'tijdens'}>
                 <img src={r.tijdens.src} alt={r.tijdens.alt} loading="lazy" decoding="async" />
               </div>
               <span className="bf-real__label" aria-hidden="true">{toon === 'na' ? r.na.label : r.tijdens.label}</span>
               {toon === 'na' && (
                 <button type="button" className="bf-real__pauze" aria-label={speelt ? 'Video pauzeren' : 'Video afspelen'}
-                  onClick={() => { if (speelt) setGepauzeerd(true); else { stil.current = false; setGepauzeerd(false); } }}>
+                  onClick={wissel}>
                   {speelt ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
                 </button>
               )}

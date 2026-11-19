@@ -370,7 +370,8 @@ export const DAKWERKEN: KgjInhoud = {
   /* 22 okt 2026, Mohammed: "Lekt uw dak pas aan naar, in nood?", "en die ding geen haast haal dat weg", "doe gewoon, of". */
   /* 2 nov 2026: link volgt het aanbod (bfbouw.be 31 okt: "Of vraag uw gratis offerte aan"). */
   /* 5 nov 2026, zoals bfbouw.be ("gratis" alleen in de kaarttitel en de verzendknop): "Of vraag uw offerte aan". */
-  belBlok: { kop: 'In nood?', knop: 'Bel direct', link: 'Of vraag uw offerte aan' },
+  /* 19 nov 2026, Mohammed: "oke doe maar eruit": het belblok "In nood?" onder de hero is weg (ook op /asbest, die deze inhoud overneemt). De belknop in
+     de kopbalk blijft. Was: belBlok: { kop: 'In nood?', knop: 'Bel direct', link: 'Of vraag uw offerte aan' } (git show fa4e459). */
   aanvraag: {
     /* 2 nov 2026 (omvormen zoals bfbouw.be 31 okt, Mohammed daar: "ik wil gewoon standaard offerte aanvraag vragen, dan aanvragen,
        en dan op thankyou page pas de offer van dakinspectie"; "mensen hebben niet graag die gratis dakinspectie als woord"):
@@ -470,12 +471,9 @@ export const DAKWERKEN: KgjInhoud = {
       { titel: 'We nemen binnen 24 uur contact op', tekst: 'We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.' },
       { titel: 'Gratis plaatsbezoek met onze dakexpert', tekst: 'Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.' },
       { titel: 'Je ontvangt je offerte in je mailbox', tekst: 'Vrijblijvend: je beslist zelf, zonder enige verplichting.' },
-      /* 18 nov 2026, Mohammed: "Implementeer ook bij die stappen zo. Wij begeleiden u bij eventuele premies. Zoals de Kijzer", "en dan 5",
-         "je geniet zorgeloos van ...", "zoals kijzer dat had" (Kijzer, laatste stap "Na-service": genieten + "helpen je graag bij het aanvragen van premies").
-         Bron premiebegeleiding AB: "volledige premiebegeleiding" in zijn werkwijzestap Oplevering. */
-      /* 18 nov 2026, Mohammed: "dit is niet zoals het voorbeeld van kijzer", "ga nog eens goed kijken" -> zoals Kijzer "Hoe werkt het?": premies na de oplevering bij stap 4, stap 5 alleen de genietzin */
-      { titel: 'Na je akkoord starten de werken', tekst: 'Na de oplevering begeleiden we je bij eventuele premies.' },
-      { titel: 'Je geniet zorgeloos van je nieuwe dak', tekst: '' },
+      /* 19 nov 2026, Mohammed: "dat blok minder lang maken, met alleen de belangrijkste zaken, 3 stappen" (Clarity 274x493 en 226x412: het blok
+         van 5 stappen was 970 en 1.449 px lang). Stap 4 "Na je akkoord starten de werken" en 5 "Je geniet zorgeloos van je nieuwe dak" (18 nov,
+         Kijzer) zijn weg; git show fa4e459. */
     ],
     naarKnop: 'Offerte aanvragen',
     /* De vinkjes en de trustrij van de rekenaarkaart die hier stond (13 okt). Alleen "Gratis & vrijblijvende richtprijs"
@@ -764,7 +762,8 @@ export const DAKWERKEN: KgjInhoud = {
   realisatie: HOEVE,
   /* 8 nov 2026, Mohammed (localhost): "Tijdens de werken MAG ERuit, eronder en die slider ook": de voor/na-schuif ('voorna') onder de realisatie is weg.
      De gegevens blijven staan (type), de pagina toont ze niet. */
-  volgorde: ['zekerheden', 'diensten', 'realisatie', 'uitleg', 'werkwijze', 'voordelen', 'faq'],
+  /* 19 nov 2026, Mohammed: "bij ab direct onder de form de realisatie van die hoeve": de realisatie staat eerst, direct onder de hero met het formulier. */
+  volgorde: ['realisatie', 'zekerheden', 'diensten', 'uitleg', 'werkwijze', 'voordelen', 'faq'],
 
   /* 2 nov 2026, Mohammed: "op dakwerken eruit of doe simpelweg hoe lang duurt dakwerk gemiddeld en nog 2 nuttige vragen",
      "geen onnutige ai slop", "redeneer gewoon". Eerste versie afgekeurd ("nee ai slop copy", "let op de copy dat ik leverde",

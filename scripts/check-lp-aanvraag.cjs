@@ -48,7 +48,8 @@
  *      vinkjes letterlijk; "5,0 op Google" in de hero. Sinds 2 nov 2026 (Mohammed: "door al die tekst en iconen eronder weet je
  *      niet goed dat je moet klikken", "deel aub op zoals bf") de indeling van bfbouw.be: elk vinkje hetzelfde kleine vinkje
  *      (lucide-check, max 22 px), de cijfers zonder kader of vlak; alleen de keuzes zien eruit als een knop;
- *  10. belblok (alleen /lp/dakwerken, 22 okt 2026): kop "In nood?" (eerst "Lekt uw dak?"), knop "Bel direct <nummer>" met dezelfde tel:-href als
+ *  10. belblok: WEG sinds 19 nov 2026 (Mohammed: "oke doe maar eruit"); op geen enkele pagina een .bf-lpbelblok (positieve controle 6: een
+ *      geplant blok op /lp/dakwerken moet falen). Tot 19 nov (22 okt 2026, alleen /lp/dakwerken): kop "In nood?" (eerst "Lekt uw dak?"), knop "Bel direct <nummer>" met dezelfde tel:-href als
  *      de belknop in de kop, link "Of vraag uw gratis dakinspectie aan" naar #rekenaar; staat buiten de hero, na de
  *      hero, binnen de eerste 1500 px op de gsm, zonder schaduw en kaart; geen "24/7", "meteen", "binnen", tijden ("nood" mag sinds 22 okt: zijn kop);
  *      op de gsm gestapeld met een knop van minstens 48 px en volle breedte; Clarity-events dak-bel-blok en
@@ -125,9 +126,9 @@ const DAK = {
   /* 18 nov 2026 (v2, Mohammed: het einde van het formulier "gewoon zo"): het contactblok heeft de kop "Contact" (geen band "Bijna klaar!") */
   ckop: 'Contact', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 4, // 18 nov 2026: werk, dak, isoleren + contact
   /* 18 nov 2026, dictaat Mohammed (woordelijk): de korte regels direct onder de verzendknop op de dakpagina's */
-  nakort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek met onze dakexpert', 'Je ontvangt je offerte in je mailbox', 'Na je akkoord starten de werken', 'Je geniet zorgeloos van je nieuwe dak'], // 18 nov 2026: vijf stappen (Kijzer, "en dan 5")
+  nakort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek met onze dakexpert', 'Je ontvangt je offerte in je mailbox'], // 19 nov 2026: drie stappen (Mohammed: "3 stappen"; was vijf, Kijzer 18 nov)
   /* 18 nov 2026, dictaat ("doe dat zoals kijzer, zo hoe dat wordt uitgelegd"): één uitlegzin per stap */
-  uitleg: ['We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.', 'Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.', 'Vrijblijvend: je beslist zelf, zonder enige verplichting.', 'Na de oplevering begeleiden we je bij eventuele premies.'], // stap 5 = één zin zoals Kijzer
+  uitleg: ['We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.', 'Onze dakexpert bekijkt je dak ter plaatse en bespreekt met jou de mogelijkheden.', 'Vrijblijvend: je beslist zelf, zonder enige verplichting.'], // 19 nov 2026: drie stappen (stap 4 en 5 weg)
   tegels: ['5,0', '10 jaar garantie', '15 jaar ervaring'],
   /* 5 nov 2026, bfbouw.be: "Na uw aanvraag" (twee stappen) vervangt de regel onder de knop */
   /* 7 nov 2026 (bfbouw.be "oke doe maar die 3 stappen"): contact binnen 24 uur, gratis plaatsbezoek, offerte */
@@ -142,8 +143,8 @@ const RENO = (pad) => ({
   vraag1: 'Wat voor woning wilt u renoveren?', keuzes1: ['Appartement', 'Rijwoning', 'Halfopen bebouwing', 'Open bebouwing'],
   pad1: ['Rijwoning', 'Gedeeltelijke renovatie', ['Keuken', 'Badkamer'], '€ 25.000 tot € 75.000'], vraag2: 'Wat wilt u renoveren?', // 18 nov 2026: geen startvraag; // 18 nov 2026 (v2): de staal-vraag "bereikbaar" weg, 6 stappen
   ckop: 'Contact', knop: 'Gratis offerte aanvragen', naarKnop: 'Offerte aanvragen', stappen: 5, // 18 nov 2026: woning, omvang, onderdelen, budget + contact
-  nakort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek met onze expert', 'Je ontvangt je offerte in je mailbox', 'Na je akkoord starten de werken', 'Je geniet zorgeloos van je vernieuwde woning'], // 18 nov 2026: vijf stappen (Kijzer)
-  uitleg: ['We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.', 'Onze expert bekijkt je woning ter plaatse en bespreekt met jou de mogelijkheden.', 'Vrijblijvend: je beslist zelf, zonder enige verplichting.', 'Na de oplevering begeleiden we je bij eventuele premies.'], // stap 5 = één zin zoals Kijzer
+  nakort: ['We nemen binnen 24 uur contact op', 'Gratis plaatsbezoek met onze expert', 'Je ontvangt je offerte in je mailbox'], // 19 nov 2026: drie stappen (was vijf, Kijzer 18 nov)
+  uitleg: ['We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.', 'Onze expert bekijkt je woning ter plaatse en bespreekt met jou de mogelijkheden.', 'Vrijblijvend: je beslist zelf, zonder enige verplichting.'], // 19 nov 2026: drie stappen (stap 4 en 5 weg)
   /* 22 okt 2026: "6 vakdisciplines ... weg, bij die form", "dat is een rare trust badge" */
   tegels: ['5,0', '16 jaar ervaring'],
   volgt: ['Wij nemen binnen 24 uur contact op', 'Gratis plaatsbezoek', 'Uw offerte'], // 7 nov 2026 (bfbouw.be)
@@ -380,7 +381,9 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     return uit;
   }, pg, HERO);
 
-  /* 10. Belblok op /lp/dakwerken. */
+  /* 10. Geen belblok (19 nov 2026, Mohammed: "oke doe maar eruit"). */
+  const geenBelblok = (p) => p.evaluate(() => { const n = document.querySelectorAll('.bf-lpbelblok').length; return n ? [`belblok "In nood?" staat ${n} keer op de pagina (weg sinds 19 nov 2026)`] : []; });
+  /* 10 (tot 19 nov 2026). Belblok op /lp/dakwerken. */
   const belblokFouten = (p, gsm) => p.evaluate((gsm) => {
     const blokken = document.querySelectorAll('.bf-lpbelblok');
     if (blokken.length !== 1) return [`belblok staat ${blokken.length} keer op de pagina (verwacht 1)`];
@@ -746,14 +749,19 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     {
       const { p, ctx } = await open('/lp/richtprijs-berekenen');
       const pc1 = await rekenaarSporen(p);
-      const pc6 = await belblokFouten(p, true);
       const pc7 = await ondenFouten(p);
       await ctx.close();
       if (pc1.length < 2) { console.log(`ONGELDIGE METING: de rekenaarpagina /lp/richtprijs-berekenen gaf ${pc1.length} rekenaarsporen (${pc1.join('; ')})`); process.exit(2); }
       console.log(`positieve controle 1: /lp/richtprijs-berekenen heeft ${pc1.length} rekenaarsporen (${pc1.slice(0, 2).join('; ')})`);
-      if (!pc6.length) { console.log('ONGELDIGE METING: een pagina zonder belblok (/lp/richtprijs-berekenen) werd door de belblok-toets goedgekeurd'); process.exit(2); }
-      console.log(`positieve controle 6: /lp/richtprijs-berekenen heeft geen belblok (${pc6[0]})`);
       if (!pc7.length) { console.log('ONGELDIGE METING: de rekenaarpagina met keuzelijsten onderaan werd door de onderaan-toets goedgekeurd'); process.exit(2); }
+      {
+        const pq = await open('/lp/dakwerken');
+        await pq.p.evaluate(() => { const b = document.createElement('section'); b.className = 'bf-lpbelblok'; document.querySelector('main').prepend(b); });
+        const pc6 = await geenBelblok(pq.p);
+        await pq.ctx.close();
+        if (!pc6.length) { console.log('ONGELDIGE METING: een geplant belblok op /lp/dakwerken werd door de toets goedgekeurd'); process.exit(2); }
+        console.log(`positieve controle 6: geplant belblok gevangen (${pc6[0]})`);
+      }
       console.log(`positieve controle 7: /lp/richtprijs-berekenen houdt het formulier met keuzelijsten onderaan (${pc7[0]})`);
     }
     {
@@ -900,9 +908,8 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
           for (const f of await badgesFouten(p, pg)) fouten.push(`${pg.pad} @${maat}: badges: ${f}`);
           for (const f of await knoppenFouten(p, pg)) fouten.push(`${pg.pad} @${maat}: knoppen: ${f}`);
           const sf = await scrollFout(p); if (sf) fouten.push(`${pg.pad} @${maat}: ${sf}`);
-          if (pg.soort === 'dak') {
-            for (const f of await belblokFouten(p, gsm)) fouten.push(`${pg.pad} @${maat}: belblok: ${f}`);
-          } else if (await p.$('.bf-lpbelblok')) fouten.push(`${pg.pad} @${maat}: belblok staat op een renovatiepagina (alleen /lp/dakwerken)`);
+          /* 19 nov 2026 (Mohammed: "oke doe maar eruit"): geen belblok "In nood?" meer, op geen enkele pagina */
+          for (const f of await geenBelblok(p)) fouten.push(`${pg.pad} @${maat}: ${f}`);
           /* het belblok-gedrag (hash, Clarity) loopt als laatste in een eigen pagina, zodat de kaartflow niet verstoord wordt */
           await kaartFlow(p, ctx, pg, HERO, 'bovenaan', maat);
           /* na alle stappen (meer dan 2,5 s na het laden): nog steeds geen free-slots-verzoek en geen "Eerstvolgend"-tekst */
@@ -913,7 +920,6 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
           const { p, ctx, slots } = await open(pg.pad, { gsm });
           await wacht(2500);
           for (const f of await vrijFouten(p, slots)) fouten.push(`${pg.pad} @${maat}: vrij moment: ${f}`);
-          if (pg.soort === 'dak') for (const f of await belblokGedrag(p)) fouten.push(`${pg.pad} @${maat}: belblok: ${f}`);
           await ctx.close();
         }
         /* kaart onderaan (dak en renovatie, 22 okt 2026) */
@@ -984,6 +990,6 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
   if (metingen < verwacht) { console.log(`ONGELDIGE METING: ${metingen} metingen (verwacht ${verwacht})`); process.exit(2); }
   console.log(`check-lp-aanvraag: dak en 2 renovatiepagina's (kaart bovenaan en onderaan) x 2 maten + message match (${basis}), ${leads} leadverzoeken`);
   if (fouten.length) { fouten.forEach((f) => console.log('  FOUT: ' + f)); process.exit(1); }
-  console.log('  kop zoals afgesproken, geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag (bovenaan en onderaan), contactstap naam, telefoonnummer en e-mailadres (verplicht) zonder disclaimer of regel onder de knop, geen tijdregel, geen tweede route, nergens "gratis dakinspectie/plaatsbezoek", naam verplicht, lege gsm, lege of foute e-mail, badges met eigen iconen, geen vrij moment en geen agenda-verzoek, belblok op dak, geen horizontale scroll, één stand voor de kaart bovenaan en onderaan, contactscherm en elke stap volledig in beeld op 390x637, geen vaste offerteknop onderaan, geen sprong onderaan zonder scroll anchoring');
+  console.log('  kop zoals afgesproken, geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag (bovenaan en onderaan), contactstap naam, telefoonnummer en e-mailadres (verplicht) zonder disclaimer of regel onder de knop, geen tijdregel, geen tweede route, nergens "gratis dakinspectie/plaatsbezoek", naam verplicht, lege gsm, lege of foute e-mail, badges met eigen iconen, geen vrij moment en geen agenda-verzoek, geen belblok, geen horizontale scroll, één stand voor de kaart bovenaan en onderaan, contactscherm en elke stap volledig in beeld op 390x637, geen vaste offerteknop onderaan, geen sprong onderaan zonder scroll anchoring');
   process.exit(0);
 })().catch((e) => { console.log('ONGELDIGE METING: ' + e.message); process.exit(2); });

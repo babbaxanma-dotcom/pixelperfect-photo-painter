@@ -1,7 +1,7 @@
 {/* 26 okt 2026, Mohammed: privacyregel onder de trustsignalen. 18 nov 2026 (v2): onder de kaart, direct na het contactblok. */}import { Fragment, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Award, BadgePercent, CalendarCheck, Check, ChevronLeft, ClipboardCheck, Clock, Hammer, Mail, Phone, Plus, SearchCheck, ShieldCheck, User, UserCheck } from 'lucide-react';
+import { ArrowRight, Award, BadgePercent, CalendarCheck, Check, ChevronDown, ChevronLeft, ClipboardCheck, Clock, Hammer, Mail, Phone, Plus, SearchCheck, ShieldCheck, User, UserCheck } from 'lucide-react';
 import { Icoon } from './Iconen';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
@@ -138,6 +138,23 @@ function veegTik(e: React.MouseEvent, soortDruk: string): boolean {
   return !!a && (a.max > TIK_PX || a.sindsVeeg < NA_VEEG_MS);
 }
 
+/* ---------- Smal scherm (19 nov 2026) ----------
+   Clarity: AB 19 nov 09:10 (Android, 274x493) en BF 18 nov 16:17 (226x412), een gsm met grote weergave of grote tekst: drie vragen in 12 s, het
+   contactscherm, dan 20 s naar beneden tot de bodem en weg. Mohammed: "ze maken het form af, maar scrollen dan om te lezen", "en dan raken ze
+   verdwaald". Onder 340 px: "Na uw aanvraag" ingeklapt (één regel), de kopbalk kleiner en de kaart met minder binnenmarge (lp-bf-ab.css, blok 19 nov). */
+const SMAL = '(max-width: 339.98px)';
+function useSmal() {
+  const [smal, setSmal] = useState(false);
+  useEffect(() => {
+    const m = window.matchMedia(SMAL);
+    const zet = () => setSmal(m.matches);
+    zet();
+    m.addEventListener?.('change', zet);
+    return () => m.removeEventListener?.('change', zet);
+  }, []);
+  return smal;
+}
+
 export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   inhoud: KgjInhoud;
   /** hero = de kaart bovenaan (form_start-label met :hero, Clarity aanvraag-*); onder = dezelfde kaart in het slotblok
@@ -270,6 +287,13 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
       naar = kopTop < balkH + 4 ? kaartTop - boven : Math.min(tekort, kopTop - boven);
       if (kopTop < balkH + 4 && tekort - naar > 0) naar = kopTop - boven;
     }
+    /* 19 nov 2026 (smal scherm, 226x412 en 274x493, gemeten): lag de kaarttitel boven de balk (kopWeg) en paste de stap, dan schoof de pagina de
+       titel terug onder de balk en viel de verzendknop eronder (226x412: knop tot 445 px). Valt na de berekening hierboven de knop nog onder het
+       scherm, dan net zoveel minder terug dat hij in beeld staat, met "Stap x" en Terug onder de balk; past ook dat niet (de afvinkvraag op
+       226x412), dan "Stap x" en Terug direct onder de balk (zoals vóór 18 nov): Terug ligt nooit onder de balk. Waar de stap al paste (390x664,
+       360x740), verandert niets. */
+    const nodig = onderkant - (window.innerHeight - 12);
+    if (nodig > naar) naar = nodig <= kopTop - boven ? nodig : Math.max(naar, kopTop - boven);
     eigenScroll(); // 7 nov 2026: onze scroll zet de focusstand niet uit
     window.scrollTo({ top: window.scrollY + naar, behavior: gedrag });
   };
@@ -780,9 +804,64 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
   useEffect(() => { setWortel(kaart.current?.closest<HTMLElement>('.bf.bf-lp') ?? null); }, []);
   const sluier = <div className={`kgj-reken__sluier${focus ? ' is-aan' : ''}`} aria-hidden="true" onClick={focusUit} />;
 
+  /* ---------- Terugweg naar het formulier (19 nov 2026) ----------
+     Mohammed: "ze maken het form af, maar scrollen dan om te lezen", "en dan raken ze verdwaald", "iets technisch dat je makkelijk terug kan
+     invullen". Staat de bezoeker voorbij vraag 1 (een latere vraag, de laadstap, het contactblok of de offertestappen) en is geen enkele
+     aanvraagkaart nog in beeld, dan staat onderaan een vaste knop "Aanvraag afronden". Een tik brengt hem naar de kaart waarin hij bezig was
+     (actief: bovenaan of onderaan), op dezelfde plek als na een stap (inBeeld): antwoorden en getypte gegevens staan er nog (gedeelde stand).
+     Zodra een kaart weer in beeld is, verdwijnt de knop. Eén knop per pagina (de kaart bovenaan beheert hem). Hij hangt in de wortel (.bf.bf-lp,
+     portal): een vast element binnen een sectie met overflow tekent Safari verkeerd (reference_ios_vast_scherm_afgeknipt). Zolang hij staat,
+     wijkt de ronde belknop rechtsonder (html.is-afronden), zoals de belknoppen tijdens het formulier wijken (is-informulier, 18 nov). */
+  const smal = useSmal();
+  const [afronden, setAfronden] = useState(false);
+  const verderDanStart = levend.aangetikt && (levend.stap > 0 || !!levend.offerte) && !levend.vraagToestemming;
+  useEffect(() => {
+    if (onder) return;
+    let raf = 0;
+    const kijk = () => {
+      raf = 0;
+      if (!verderDanStart) { setAfronden(false); return; }
+      const kop = document.querySelector<HTMLElement>('.kgj-kop'), kcs = kop && getComputedStyle(kop);
+      const kb = kop && kcs && kcs.position === 'fixed' && kcs.visibility !== 'hidden' ? Math.max(0, kop.getBoundingClientRect().bottom) : 0;
+      const zicht = [...document.querySelectorAll<HTMLElement>('.kgj-reken--aanvraag')].some((k) => {
+        const r = k.getBoundingClientRect();
+        return r.height > 0 && r.bottom > kb + 24 && r.top < window.innerHeight - 24;
+      });
+      setAfronden(!zicht);
+    };
+    const plan = () => { if (!raf) raf = requestAnimationFrame(kijk); };
+    plan();
+    window.addEventListener('scroll', plan, { passive: true });
+    window.addEventListener('resize', plan);
+    return () => { window.removeEventListener('scroll', plan); window.removeEventListener('resize', plan); if (raf) cancelAnimationFrame(raf); };
+  }, [onder, verderDanStart]);
+  useEffect(() => {
+    if (onder) return;
+    document.documentElement.classList.toggle('is-afronden', afronden);
+  }, [onder, afronden]);
+  useEffect(() => () => { if (!onder) document.documentElement.classList.remove('is-afronden'); }, [onder]);
+  /* Elke kaart luistert: de knop zegt welke kaart (actief) de bezoeker terugkrijgt. */
+  useEffect(() => {
+    const naar = (e: Event) => { if ((e as CustomEvent).detail === plek) inBeeld(); };
+    window.addEventListener('ab-afronden', naar);
+    return () => window.removeEventListener('ab-afronden', naar);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [plek]);
+  const terugNaarKaart = () => {
+    meldClarity('aanvraag-afronden');
+    const doel = actief.current === 'onder' && document.querySelector('.kgj-reken--onder') ? 'onder' : 'hero';
+    window.dispatchEvent(new CustomEvent('ab-afronden', { detail: doel }));
+  };
+  const afrondKnop = (
+    <button type="button" className={`kgj-afronden${afronden ? ' is-aan' : ''}`} aria-hidden={!afronden} tabIndex={afronden ? 0 : -1} onClick={terugNaarKaart}>
+      Aanvraag afronden<ArrowRight aria-hidden="true" />
+    </button>
+  );
+
   return (
     <Fragment>
     {wortel && createPortal(sluier, wortel)}
+    {wortel && !onder && createPortal(afrondKnop, wortel)}
     <div ref={kaart} onClickCapture={focusKlik} className={`kgj-reken kgj-reken--aanvraag${onder ? ' kgj-reken--onder' : ''}${a.badges ? ' kgj-reken--badges' : ''}${stand.aangetikt && stap > 0 ? ' is-bezig' : ''}${klaar ? ' is-contact' : ''}${laden ? ' is-laden' : ''}${focus ? ' is-focus' : ''}`}>
       {/* 18 nov 2026 (v2, Mohammed: "gewoon de algemene stijl robuuster minder speels"): kaartkop zonder icoonvierkant. */}
       <div className="kgj-reken__hoofd">
@@ -966,14 +1045,23 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
                 direct onder de knop een licht grijs stappenblok "Na uw aanvraag": per stap een cirkel met alleen een rand in de merkkleur en het
                 cijfer, de tekst rechts, een stippellijn tussen de cirkels (CSS). Tekst = zijn dictaat (inhoud: naKort). Op de gsm mag het blok onder
                 het scherm doorlopen; kop, velden en knop staan bij het openen in beeld. */}
-            {a.naKort && a.naKort.length > 0 && (
+            {/* 19 nov 2026, Mohammed: "dat blok minder lang maken, met alleen de belangrijkste zaken, 3 stappen": drie stappen (inhoud). Onder 340 px
+                breed één regel die openklapt (details), zodat de verzendknop onderaan het formulier staat; vanaf 340 px open zoals voorheen. */}
+            {a.naKort && a.naKort.length > 0 && (smal ? (
+              <details className="kgj-reken__nastap kgj-reken__nastap--klap">
+                <summary className="kgj-reken__nastap-kop">{a.volgtKop ?? 'Na uw aanvraag'}<ChevronDown aria-hidden="true" /></summary>
+                <ol className="kgj-reken__nakort">
+                  {a.naKort.map((r) => <li key={r.titel}><b>{r.titel}</b>{r.tekst && <span>{r.tekst}</span>}</li>)}
+                </ol>
+              </details>
+            ) : (
               <div className="kgj-reken__nastap">
                 <p className="kgj-reken__nastap-kop">{a.volgtKop ?? 'Na uw aanvraag'}</p>
                 <ol className="kgj-reken__nakort">
                   {a.naKort.map((r) => <li key={r.titel}><b>{r.titel}</b>{r.tekst && <span>{r.tekst}</span>}</li>)}
                 </ol>
               </div>
-            )}
+            ))}
           </form>
         </div>
       )}

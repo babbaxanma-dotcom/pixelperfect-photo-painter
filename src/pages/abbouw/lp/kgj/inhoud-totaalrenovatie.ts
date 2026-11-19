@@ -567,9 +567,7 @@ export const TOTAALRENOVATIE: KgjInhoud = {
       { titel: 'We nemen binnen 24 uur contact op', tekst: 'We overlopen je aanvraag en spreken een plaatsbezoek af op een moment dat jou past.' },
       { titel: 'Gratis plaatsbezoek met onze expert', tekst: 'Onze expert bekijkt je woning ter plaatse en bespreekt met jou de mogelijkheden.' },
       { titel: 'Je ontvangt je offerte in je mailbox', tekst: 'Vrijblijvend: je beslist zelf, zonder enige verplichting.' },
-      /* 18 nov 2026, Mohammed: "dit is niet zoals het voorbeeld van kijzer", "ga nog eens goed kijken" -> zoals Kijzer "Hoe werkt het?": premies na de oplevering bij stap 4, stap 5 alleen de genietzin */
-      { titel: 'Na je akkoord starten de werken', tekst: 'Na de oplevering begeleiden we je bij eventuele premies.' },
-      { titel: 'Je geniet zorgeloos van je vernieuwde woning', tekst: '' },
+      /* 19 nov 2026, Mohammed: "dat blok minder lang maken, met alleen de belangrijkste zaken, 3 stappen": stap 4 en 5 (18 nov, Kijzer) zijn weg; git show fa4e459. */
     ],
     naarKnop: 'Offerte aanvragen',
     /* Vinkjes en trustrij: dezelfde teksten en cijfers als op de rekenaarkaart die hier stond (13 okt, dictaat 4 okt). Alleen de
@@ -646,7 +644,8 @@ export const TOTAALRENOVATIE: KgjInhoud = {
   /* 7 nov 2026, zoals bfbouw.be 7 nov (Mohammed daar: "verplaats recente daken naar sectie 4", "Na Onze diensten"): het uitgevoerde werk na de diensten. */
   /* 8 nov 2026: de realisatie van de hoeve (realisatie-hoeve.ts) direct na de diensten, vóór het fotospoor "Uitgevoerd werk". */
   realisatie: HOEVE,
-  volgorde: ['zekerheden', 'diensten', 'realisatie', 'uitgevoerd', 'waarom', 'werkwijze', 'faq'],
+  /* 19 nov 2026, Mohammed: "bij ab direct onder de form de realisatie van die hoeve": de realisatie staat eerst, direct onder de hero met het formulier. */
+  volgorde: ['realisatie', 'zekerheden', 'diensten', 'uitgevoerd', 'waarom', 'werkwijze', 'faq'],
   /* 7 nov 2026, zoals bfbouw.be (Mohammed daar: "Waar kunnen we jou mee helpen? ipv onze diensten"); was "Onze expertises". */
   diensten: { ...TOTAALRENOVATIE_REKENAAR.diensten, kop: 'Waar kunnen we u mee helpen?' },
 };
