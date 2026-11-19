@@ -1,6 +1,7 @@
 {/* 26 okt 2026, Mohammed: privacyregel onder de trustsignalen. 18 nov 2026 (v2): onder de kaart, direct na het contactblok. */}import { Fragment, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Award, BadgePercent, CalendarCheck, Check, ClipboardCheck, Clock, Hammer, Mail, Phone, Plus, SearchCheck, ShieldCheck, User, UserCheck } from 'lucide-react';
+import { ArrowRight, Award, BadgePercent, CalendarCheck, Check, ChevronLeft, ClipboardCheck, Clock, Hammer, Mail, Phone, Plus, SearchCheck, ShieldCheck, User, UserCheck } from 'lucide-react';
 import { Icoon } from './Iconen';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { trackFormStart } from '@/lib/tracking';
@@ -460,7 +461,10 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     return () => { window.removeEventListener('ab-focus', ander); window.removeEventListener('ab-focus-start', start); window.removeEventListener('pageshow', terug); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plek]);
-  /* De ouder (hero of slotblok) komt boven de kopbalk, html.is-rkfocus zolang een kaart de stand heeft; de ouder pas na het vervagen (0,2 s) terug. */
+  /* De ouder (hero of slotblok) krijgt is-rkfocus zolang de kaart de stand heeft, en pas na het vervagen (0,2 s) weer af; html.is-rkfocus zolang een
+     kaart de stand heeft. 19 nov 2026 (Mohammed: "de terugknop in het form onderaan bij ab is kapot en wit", "je ziet de knop niet", "op sommige
+     momenten werkt die niet"): de ouder tilt niet meer zichzelf boven de kopbalk (z-index 1000), alleen de kaart gaat boven de sluier (lp-bf-ab.css,
+     blok 19 nov), ook tijdens het wegvagen: zo ligt de kaart nooit een moment onder de wazige sluier. */
   useEffect(() => {
     const el = kaart.current;
     const ouder = el?.closest<HTMLElement>('.bf-lphero__in, .bf-lpinsp__in');
@@ -765,10 +769,20 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
     );
   };
 
+  /* 7 nov 2026: sluier van de focusstand (zoals bfbouw.be rk__sluier); een tik erop zet de stand uit.
+     19 nov 2026: de sluier staat niet meer vlak vóór de kaart, maar direct in de wortel van de pagina (.bf.bf-lp, via een portal). Gemeten in de
+     Safari-motor (WebKit), onderste kaart op 390x664: de vaste sluier binnen het slotblok (section met overflow:hidden, ouder met z-index 1000)
+     werd in de verkeerde laag getekend: vinkjes en belknop van het slotblok lagen scherp bovenop de kopbalk en de sluier; Chrome toonde dat niet.
+     Een vast vlak binnen een voorouder met overflow:hidden tekent Safari anders (zelfde soort fout als bfbouw.be 8 nov, 3f905c9). In de wortel
+     heeft de sluier geen voorouder met overflow, transform of stapelcontext; de kaart gaat erboven met z-index (lp-bf-ab.css, blok 19 nov).
+     Vóór het eerste beeld na het laden (en in de voorgerenderde HTML) bestaat de sluier niet: de stand is dan altijd uit. */
+  const [wortel, setWortel] = useState<HTMLElement | null>(null);
+  useEffect(() => { setWortel(kaart.current?.closest<HTMLElement>('.bf.bf-lp') ?? null); }, []);
+  const sluier = <div className={`kgj-reken__sluier${focus ? ' is-aan' : ''}`} aria-hidden="true" onClick={focusUit} />;
+
   return (
     <Fragment>
-    {/* 7 nov 2026: sluier van de focusstand (vlak vóór de kaart, zoals bfbouw.be rk__sluier); een tik erop zet de stand uit. */}
-    <div className={`kgj-reken__sluier${focus ? ' is-aan' : ''}`} aria-hidden="true" onClick={focusUit} />
+    {wortel && createPortal(sluier, wortel)}
     <div ref={kaart} onClickCapture={focusKlik} className={`kgj-reken kgj-reken--aanvraag${onder ? ' kgj-reken--onder' : ''}${a.badges ? ' kgj-reken--badges' : ''}${stand.aangetikt && stap > 0 ? ' is-bezig' : ''}${klaar ? ' is-contact' : ''}${laden ? ' is-laden' : ''}${focus ? ' is-focus' : ''}`}>
       {/* 18 nov 2026 (v2, Mohammed: "gewoon de algemene stijl robuuster minder speels"): kaartkop zonder icoonvierkant. */}
       <div className="kgj-reken__hoofd">
@@ -797,7 +811,10 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
           {stap > 0 && !laden && (
             <button type="button" className="kgj-reken__terug" onClick={() => { gebruik(); setOFout([]); zet((s) => (s.offerte
               ? ((s.offerteStap ?? 0) > 0 ? { ...s, aangetikt: true, fout: null, offerteStap: (s.offerteStap ?? 0) - 1 } : { ...s, aangetikt: true, fout: null, offerte: false, stap: 0 })
-              : { ...s, aangetikt: true, fout: null, stap: Math.max(0, Math.min(s.stap, VRAGEN.length) - 1) })); }}>‹ Terug</button>
+              : { ...s, aangetikt: true, fout: null, stap: Math.max(0, Math.min(s.stap, VRAGEN.length) - 1) })); }}>
+              {/* 19 nov 2026, Mohammed: "je ziet de knop niet": pijltje + "Terug", even groot en vet als "Stap x van 3", tikvlak 44 px (CSS). */}
+              <ChevronLeft aria-hidden="true" />Terug
+            </button>
           )}
           {/* 18 nov 2026 (v2): geen sluitknop meer (geen volle scherm, geen venster). */}
         </div>

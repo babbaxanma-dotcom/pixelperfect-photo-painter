@@ -275,7 +275,11 @@ async function focusFlow(br, basis, pad, css = null) {
       const kl = (cs.backgroundColor.match(/[\d.]+/g) || []).map(Number);
       const r = k.getBoundingClientRect();
       const zicht = Math.min(r.bottom, innerHeight) - Math.max(r.top, 0);
-      return { s: true, k: true, bf, kleur: cs.backgroundColor, wit: kl.length >= 3 && kl[0] > 240 && kl[1] > 240 && kl[2] > 240 && (kl[3] ?? 1) > 0.5, dekking: cs.opacity,
+      /* 19 nov 2026 (Mohammed: "de terugknop in het form onderaan bij ab is kapot en wit"): de sluier hangt in de wortel van de pagina, niet in een
+         sectie met overflow (Safari tekende hem daar in de verkeerde laag), en de kaart ligt erboven (de terugknop of het midden van de kaart is wat een tik raakt). */
+      let ov = null; for (let e = s.parentElement; e && !e.classList.contains('bf-lp'); e = e.parentElement) { const c = getComputedStyle(e); if (c.overflow !== 'visible' || c.transform !== 'none' || c.filter !== 'none') { ov = e.className; break; } }
+      const t = k.querySelector('.kgj-reken__terug') || k.querySelector('.kgj-reken__vraag'); const tr = t.getBoundingClientRect(); const raak = document.elementFromPoint(tr.left + tr.width / 2, tr.top + tr.height / 2);
+      return { s: true, k: true, ov, inWortel: s.parentElement === document.querySelector('.bf.bf-lp'), raakKaart: !!raak && k.contains(raak), bf, kleur: cs.backgroundColor, wit: kl.length >= 3 && kl[0] > 240 && kl[1] > 240 && kl[2] > 240 && (kl[3] ?? 1) > 0.5, dekking: cs.opacity,
         top: Math.round(r.top), zicht: Math.round(zicht), nodig: Math.round(0.5 * Math.min(r.height, innerHeight)), vh: innerHeight };
     });
     const uit = [];
@@ -283,6 +287,8 @@ async function focusFlow(br, basis, pad, css = null) {
     if (!/blur\(/.test(m.bf)) uit.push(`9. de sluier is niet wazig (backdrop-filter "${m.bf || 'none'}") na een tik (${hoe})`);
     if (m.wit) uit.push(`9. de sluier is wit (${m.kleur}) na een tik (${hoe})`);
     if (m.dekking !== '1') uit.push(`9. dekking van de sluier ${m.dekking} (verwacht 1: anders vervaagt ook de vervaging)`);
+    if (!m.inWortel || m.ov) uit.push(`9. de sluier hangt niet in de wortel van de pagina (voorouder met overflow/transform/filter: ${m.ov})`);
+    if (!m.raakKaart) uit.push('9. een tik op de terugknop of de vraag raakt de kaart niet (iets ligt erover)');
     if (m.zicht < m.nodig) uit.push(`9. de kaart staat niet in beeld (${m.zicht} px in beeld, nodig ${m.nodig}; top ${m.top} van ${m.vh})`);
     return uit;
   } finally { await ctx.close(); }

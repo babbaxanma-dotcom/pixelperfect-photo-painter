@@ -320,7 +320,7 @@ async function kaartKopFouten(w, h, schuif = false) {
     const { p, ctx } = await open({ w, h, voorLaden: () => { delete window.__abLaadMs; delete window.__abVolUit; } });
     try {
       if (sel !== HERO) { await p.evaluate((s) => window.scrollTo({ top: document.querySelector(s).getBoundingClientRect().top + scrollY - 200, behavior: 'instant' }), sel); await wacht(600); }
-      const meet = () => p.evaluate((s) => { const k = document.querySelector(s); return { stap: (k.querySelector('.kgj-reken__kop')?.textContent || '').replace(/\s*‹.*$/, ''), kop: Math.round(document.querySelector('.kgj-kop').getBoundingClientRect().bottom), kaart: Math.round(k.getBoundingClientRect().top), titel: Math.round(k.querySelector('.kgj-reken__hoofd').getBoundingClientRect().top) }; }, sel);
+      const meet = () => p.evaluate((s) => { const k = document.querySelector(s); return { stap: (k.querySelector('.kgj-reken__kop')?.textContent || '').replace(/\s*(‹\s*)?Terug.*$/, ''), kop: Math.round(document.querySelector('.kgj-kop').getBoundingClientRect().bottom), kaart: Math.round(k.getBoundingClientRect().top), titel: Math.round(k.querySelector('.kgj-reken__hoofd').getBoundingClientRect().top) }; }, sel);
       const rij = [];
       for (const l of NAAR_CONTACT) {
         const ok = await p.evaluate((s, l) => { const b = [...document.querySelectorAll(s + ' .kgj-reken__keuze')].find((x) => (x.querySelector('strong')?.textContent || '').trim() === l); b?.click(); return !!b; }, sel, l);
@@ -377,7 +377,7 @@ async function padNa(pad, werk, dak) {
       rij.push(s); await kies(s.keuzes[0]); await wacht(400);
     }
     await p.waitForSelector(HERO + ' form.kgj-reken__contact', { timeout: 5000 }).catch(() => {});
-    const stap = await p.evaluate((s) => (document.querySelector(s + ' .kgj-reken__kop')?.textContent || '').replace(/\s*‹.*$/, ''), HERO);
+    const stap = await p.evaluate((s) => (document.querySelector(s + ' .kgj-reken__kop')?.textContent || '').replace(/\s*(‹\s*)?Terug.*$/, ''), HERO);
     await zetVeld(p, 'naam', 'Test Kaart'); await zetVeld(p, 'telefoon', '0470 12 34 56'); await zetVeld(p, 'email', 'test@kaart.be');
     await verstuur(p);
     await p.waitForFunction(() => location.pathname.startsWith('/bedankt'), { timeout: 10000 }).catch(() => {});

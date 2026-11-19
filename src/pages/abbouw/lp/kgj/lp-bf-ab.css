@@ -1175,8 +1175,9 @@ html:has(.bf.bf-lp .bf-kop--topbalk) { scroll-padding-top: min(132px, 9.1667vw);
 .bf.bf-lp .kgj-reken__hulp--tel { text-align: right; }
 .bf.bf-lp .kgj-reken__rij:has(> .kgj-reken__hulp) { row-gap: 0; }
 
-/* Computer: de Google-score staat al in de hero (BF 31 okt "trust badges dubbel"), dus niet nog eens in de kaart. */
-@media (min-width: 1001px) { .bf.bf-lp .kgj-reken__trust .kgj-reken__trust-g { display: none; } }
+/* Computer: de Google-score stond in de hero (BF 31 okt "trust badges dubbel") en daarom niet in de kaart. Sinds 8 nov ("5 op google onder de
+   subkop bij ab eruit aub") staat hij niet meer in de hero: 19 nov 2026 staat hij op elk scherm in de kaart, zoals op de gsm (er stonden op
+   tablet en computer maar 2 van de 3 cijfers). */
 /* Gsm, contactstap met E-mailadres (2 nov 2026): Naam en Telefoonnummer naast elkaar, E-mailadres eronder over de volle breedte (zoals
    bfbouw.be: e-mail fveld--breed). Drie velden onder elkaar duwden de regel onder de verzendknop 55 px onder een iPhone-scherm (390x637). */
 @media (max-width: 1000px) {
@@ -1464,8 +1465,12 @@ body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { flex: 1; padding: 8px 1
 /* Focusstand (bfbouw.be rk__sluier, --rk-sluier-*): gsm wazig (sinds 9 nov, was wit), pc #111113 (dekking .6). De ouder (hero of slotblok) komt boven de kopbalk. */
 .bf.bf-lp .kgj-reken__sluier { position: fixed; top: -25vh; right: 0; bottom: -25vh; left: 0; z-index: 1; background: #111113; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .2s ease, visibility 0s linear .2s; }
 .bf.bf-lp .kgj-reken__sluier.is-aan { opacity: .6; visibility: visible; pointer-events: auto; transition: opacity .2s ease, visibility 0s; }
-.bf.bf-lp .bf-lphero__in.is-rkfocus, .bf.bf-lp .bf-lpinsp__in.is-rkfocus { position: relative; z-index: 1000; }
-.bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-focus { position: relative; z-index: 2; box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 40px 100px -24px rgba(0, 0, 0, .7); }
+/* 19 nov 2026: de sluier staat in de wortel (portal, Aanvraag.tsx) op z-index 1000; de ouder zet zijn stapelcontext af (z-index auto) zodat de kaart
+   (z-index 1001) boven de sluier en de kopbalk komt, ook tijdens het wegvagen (de ouder houdt is-rkfocus 0,22 s langer dan de kaart is-focus). */
+.bf.bf-lp .kgj-reken__sluier { z-index: 1000; }
+.bf.bf-lp .bf-lphero__in.is-rkfocus, .bf.bf-lp .bf-lpinsp__in.is-rkfocus { z-index: auto; }
+.bf.bf-lp .bf-lphero__in.is-rkfocus .kgj-reken.kgj-reken--aanvraag, .bf.bf-lp .bf-lpinsp__in.is-rkfocus .kgj-reken.kgj-reken--aanvraag { position: relative; z-index: 1001; }
+.bf.bf-lp .kgj-reken.kgj-reken--aanvraag.is-focus { position: relative; z-index: 1001; box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 40px 100px -24px rgba(0, 0, 0, .7); }
 @media (max-width: 1000px) {
   /* 9 nov 2026, Mohammed (abgroep, gsm): "als je klikt op dakrenovatie bij wat houd het in ... dan is het bij abgroep zo vak met volledig wit
      er rond", "ipv die nieuwe stijl dat we deden": zoals bfbouw.be 8 nov ("doe gewoon dat het form op dezelfde plek blijft maar dat de rest
@@ -1538,8 +1543,13 @@ body:has(div.bf.bf-lp) #ab-bouw-cookie-banner .abc-btn { flex: 1; padding: 8px 1
 .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__balk i { border-radius: 2px; background: var(--merk); }
 .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__balk i::after { content: none; }
 .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__balk.is-beloning { animation: none; }
-/* "Terug" als gewone tekstlink */
-.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__terug { padding: 0; border: 0; background: none; color: var(--ink-2); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+/* "Terug": 19 nov 2026 (Mohammed: "je ziet de knop niet", "op sommige momenten werkt die niet"): geen onderstreept miniwoordje meer (43 px breed,
+   rechts in de hoek) maar pijltje + "Terug" in de maat, het gewicht en de kleur van "Stap x van 3" (14 px, 700, #3d3d3d; 10,9:1 op wit), een
+   tikvlak van minstens 44 x 44 px dat links verder reikt dan de tekst, en een lichtgrijs vlak bij aanraken. De tekst blijft rechts uitgelijnd. */
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__terug { display: inline-flex; align-items: center; justify-content: flex-end; gap: 2px; min-width: 88px; min-height: 44px; margin: 0 -8px 0 0; padding: 0 8px 0 10px; border: 0; border-radius: 8px; background: none; color: #3d3d3d; font-size: 14px; font-weight: 700; line-height: 1; text-decoration: none; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; transition: background-color .12s ease; }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__terug svg { width: 18px; height: 18px; flex: none; stroke-width: 2.4; }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__terug:hover, .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__terug:active { background: #f1f1f3; color: var(--ink-2); }
+.bf.bf-lp .kgj-reken--aanvraag .kgj-reken__terug:focus-visible { outline: 2px solid var(--merk-tekst); outline-offset: 0; }
 /* antwoorden: wit, 1 px lichtgrijze rand, 8 px afronding; gekozen = rand en lichte vlakte in de merkkleur; geen schaal bij een tik */
 .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze, .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__vink { border-radius: 8px; background: #fff; box-shadow: inset 0 0 0 1px #d4d4d8; transition: box-shadow .12s ease, background-color .12s ease; }
 .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__keuze:hover, .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__vink:hover { box-shadow: inset 0 0 0 1px #9b9ba1; }
@@ -1602,6 +1612,8 @@ html.is-informulier .bf.bf-lp .bf-belzweef { opacity: 0 !important; visibility: 
   .bf.bf-lp .bf-pstap__pijl { display: none; }
   .bf.bf-lp .bf-lpmidknop, .bf.bf-lp .bf-lpcta { display: flex; justify-content: center; align-items: center; text-align: center; }
   .bf.bf-lp .bf-lpcta__knop, .bf.bf-lp .bf-lpbelblok__knop, .bf.bf-lp .bf-lpmidknop .bf-proces__knop { width: auto; align-self: center; padding: 0 32px; }
+  /* 19 nov 2026: "In nood?" staat links (kop en link eronder); de belknop staat daar nu ook links, niet gecentreerd ertussen. */
+  .bf.bf-lp .bf-lpbelblok__knop { align-self: flex-start; }
   .bf.bf-lp .bf-waarden--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .bf.bf-lp .bf-vragen__lijst { max-width: 680px; margin-left: auto; margin-right: auto; }
 }
@@ -1641,3 +1653,45 @@ html.is-informulier .bf.bf-lp .bf-belzweef { opacity: 0 !important; visibility: 
 /* klein scherm met open toetsenbord (zichtbaar <= 420 px): de berichtlink wijkt zolang in een veld getypt wordt, zodat veld en verzendknop samen in beeld staan */
 @media (max-height: 420px) { .bf.bf-lp .kgj-reken__form:focus-within .kgj-reken__bericht:not([open]) { display: none; } }
 @media (prefers-reduced-motion: reduce) { .bf.bf-lp .kgj-reken__analyse-spin { animation: none; } .bf.bf-lp .kgj-reken__analyse-vink { transition: none; } .bf.bf-lp .kgj-reken__lijnen > i, .bf.bf-lp .kgj-reken__lijnen > i > b { transition: none; } }
+
+/* ===== 19 nov 2026, Mohammed: "op tablet is het visueel echt lelijk de websites", "op elke apparaat moet het perfect zijn". Gsm (<= 640 px) blijft
+   zoals hij is. Gemeten vóór deze regels (live, dakwerken):
+   - iPad Pro staand 1024x1366: slotblok 1247 px hoog voor 420 px inhoud (412 px lege foto boven en onder de kaart); kaarttekst 10-11 px;
+   - 1001-1279 px (iPad liggend 1024x768 en 1180x820): de computeropmaak verkleind tot 71-82 % (--u), keuzes in de kaart 11-13 px;
+   - 641-1000 px (iPad staand): één linkse kolom van 620 px met rechts een lege fotostrook; "garantie" en "ervaring" 11,5 px;
+   - tablet en computer: in de cijferrij onder de kaart ontbrak de Google-score (zie hierboven, blok "Computer").
+   Zelfde site, zelfde stijl: alleen schikking en maten. ===== */
+
+/* Staande tablet (768-1000 px): hero en slotblok in twee kolommen zoals op de computer (tekst links, kaart rechts in de gsm-maat), in plaats van
+   een uitgerekte gsm-kolom met een lege fotostrook ernaast. 641-767 px houdt de ene kolom. */
+@media (min-width: 768px) and (max-width: 1000px) {
+  .bf.bf-lp .bf-lphero--aanvraag .bf-lphero__in { grid-template-columns: minmax(0, 1fr) minmax(0, 384px); column-gap: 32px; row-gap: 0; align-items: center; padding-left: 16px; padding-right: 16px; padding-bottom: 48px; }
+  .bf.bf-lp .bf-lphero--aanvraag .bf-lphero__tekst { display: block; grid-column: 1; grid-row: 1; }
+  .bf.bf-lp .bf-lphero--aanvraag .bf-lphero__in > .bf-lphero__reken { grid-column: 2; grid-row: 1; max-width: none; }
+  .bf.bf-lp .bf-lphero--aanvraag .bf-lphero__kop, .bf.bf-lp .bf-lphero--aanvraag .bf-lphero__sub { max-width: none; }
+  .bf.bf-lp .bf-lphero--aanvraag .bf-lphero__sub { margin-top: 18px; }
+  .bf.bf-lp .bf-lpinsp__in { grid-template-columns: minmax(0, 1fr) minmax(0, 384px); column-gap: 32px; align-items: center; padding: 64px 16px; }
+  .bf.bf-lp .bf-lpinsp__tekst, .bf.bf-lp .bf-lpinsp__kaartvak { max-width: none; }
+}
+
+/* Computer en liggende tablet (>= 1001 px): de opmaak schaalt tot 1200u + 2 x 48 px het scherm vult (was 1440u), zodat 1024-1295 px minder
+   verkleint (1024: 77 % in plaats van 71 %; 1180: 90 % in plaats van 82 %; vanaf 1296 px ongewijzigd 100 %). De kop en de hero waren 1440u breed:
+   op volle breedte met dezelfde binnenmaat (1264u), anders liepen ze buiten het scherm. */
+@media (min-width: 1001px) {
+  .bf.bf-lp { --u: min(1px, max(calc(100cqw / 1440), calc((100cqw - 96px) / 1200))); }
+  .bf.bf-lp .bf-kop--lp .bf-nav, .bf.bf-lp .bf-lphero__in { width: 100%; padding-left: max(24px, calc((100% - 1264 * var(--u)) / 2)); padding-right: max(24px, calc((100% - 1264 * var(--u)) / 2)); }
+  /* De aanvraagkaarten op ware grootte (zoals op 1440 px), de kolom minstens 400 px breed: geen tekst kleiner dan 14 px, geen tikvlak onder 44 px. */
+  .bf.bf-lp .kgj-reken.kgj-reken--aanvraag { --u: 1px; }
+  .bf.bf-lp .bf-lphero--aanvraag .bf-lphero__in { grid-template-columns: minmax(0, 1fr) max(400px, calc(460 * var(--u))); }
+  .bf.bf-lp .bf-lpinsp__in { grid-template-columns: minmax(0, 1fr) max(420px, calc(540 * var(--u))); }
+}
+/* Staand scherm vanaf 1001 px (iPad Pro 12,9" staand): het slotblok zo hoog als zijn inhoud, geen scherm vol lege foto (de hero deed dat al). */
+@media (min-width: 1001px) and (orientation: portrait) {
+  .bf.bf-lp .bf-lpinsp { min-height: 0; }
+}
+
+/* Tekst in de aanvraagkaart minstens 14 px vanaf 641 px (de gsm houdt zijn goedgekeurde maten). */
+@media (min-width: 641px) {
+  .bf.bf-lp .kgj-reken--badges .kgj-reken__trust li > span:not(.kgj-reken__trust-ic):not(.kgj-reken__trust-gic) { font-size: 14px; }
+  .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__privacy, .bf.bf-lp .kgj-reken--aanvraag .kgj-reken__groepnaam { font-size: 14px; }
+}
