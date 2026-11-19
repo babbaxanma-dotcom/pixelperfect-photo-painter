@@ -190,11 +190,21 @@ export function bannerWachtOpScroll(): () => void {
   };
 }
 
+/* 19 nov 2026, Mohammed (Clarity): "ik zie heel vaak dat mensen afgeschrikt geraken van de cookie-melding", "kijk zelf maar".
+   Op de advertentiepagina's (/lp/... en /totaalrenovatie, dezelfde LP) staat geen cookiemelding meer. Zonder keuze blijft alles op
+   "geweigerd" (Consent Mode-standaard in index.html; live gemeten 19 nov: 0 cookies zonder keuze). De vraag voor de advertentiemeting
+   komt na het versturen (Toestemming.tsx). De rest van de site houdt de melding. */
+export function bannerOpPagina(pad: string): boolean {
+  const p = pad.replace(/\/+$/, '');
+  return !(p.startsWith('/lp/') || p === '/lp' || p === '/totaalrenovatie');
+}
+
 export function installConsentBanner() {
   if (typeof document === 'undefined' || installed) return;
   installed = true;
 
   if (hasDecided()) return;
+  if (!bannerOpPagina(window.location.pathname)) return;
 
   const styleEl = document.createElement('style');
   styleEl.id = 'ab-bouw-cookie-banner-style';
