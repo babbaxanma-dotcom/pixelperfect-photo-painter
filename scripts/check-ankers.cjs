@@ -122,6 +122,18 @@ const LOKAAS = {
     let n = 0;
     Element.prototype.scrollIntoView = function () { if (n++) return; orig.call(this, { block: 'start' }); };
   },
+  /* verschuif (23 nov 2026, /lp/dakwerken in de BF-opbouw, LpBfC): 2 s na het laden schuift er 150 px inhoud boven het doel in de pagina,
+     zonder scroll anchoring (html overflow-anchor none) en zonder dat de pagina nog corrigeert. Een meting die dat niet ziet, is ongeldig.
+     Het lokaas 'oud' (de tweede sprong tegenhouden) vangt op LpBfC niets meer: de letters laden lokaal vóór de eerste sprong klaar is. */
+  verschuif: () => {
+    const zet = () => setTimeout(() => {
+      document.documentElement.style.overflowAnchor = 'none';
+      const d = document.createElement('div'); d.style.height = '150px';
+      const s = document.querySelector('#top') || document.querySelector('#root > div') || document.body.firstElementChild;
+      s.parentNode.insertBefore(d, s);
+    }, 2000);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', zet); else zet();
+  },
   /* kop112 = ankerruimte van de oude vaste gsm-kop (topbalk 40 + logorij 72) terwijl alleen de topbalk vast staat */
   kop112: () => {
     const zet = () => { const s = document.createElement('style'); s.textContent = 'html{scroll-padding-top:112px!important}'; document.head.appendChild(s); };
@@ -190,7 +202,10 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
           return {
             er: true, doel: kaart ? 'de klikkaart onderaan' : 'de sectie',
             top: Math.round(top), kop: kop == null ? null : Math.round(kop), verwacht: verwacht == null ? null : Math.round(verwacht),
-            bfLp: !!document.querySelector('.bf-lp'), font: document.fonts.check('700 38px "Plus Jakarta Sans"'),
+            bfLp: !!document.querySelector('.bf-lp'),
+            /* 23 nov 2026: /lp/dakwerken staat in de opbouw van bfbouw.be (LpBfC, .abc) met de letters van die site, Urbanist (koppen) en Inter */
+            font: document.querySelector('.abc') ? document.fonts.check('500 46px "Urbanist"') && document.fonts.check('400 16px "Inter"') : document.fonts.check('700 38px "Plus Jakarta Sans"'),
+            letter: document.querySelector('.abc') ? 'Urbanist en Inter' : 'Plus Jakarta Sans',
             venster: !!document.querySelector('[role="dialog"].kgj-venster .kgj-reken--venster'),
           };
         }, anker);
@@ -218,7 +233,7 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
     };
     /* Een LP in de BF-stijl zonder geladen Plus Jakarta Sans meet geen lettersprong: vals groen, dus ongeldig. */
     const geldig = (pad, anker, maat, m) => {
-      if (m.er && m.bfLp && !m.font) stop(2, `FOUT: Plus Jakarta Sans niet geladen op ${pad}#${anker} (${maat.width}px) — de meting is ongeldig`);
+      if (m.er && m.bfLp && !m.font) stop(2, `FOUT: ${m.letter} niet geladen op ${pad}#${anker} (${maat.width}px) — de meting is ongeldig`);
       return m;
     };
 
@@ -230,7 +245,9 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
     /* 23 okt 2026: op #werkwijze in plaats van #contact. #contact landt op de gsm sinds vandaag op de klikkaart onderaan, en daar was
        de lettersprong met het lokaas niet elke keer meetbaar (eigen meting: 111 px de ene keer, 0 px de andere); #werkwijze heeft
        dezelfde sprong (12 okt: 187 px) en dezelfde sprongcode. */
-    const pc3 = oordeel('/lp/dakwerken', 'werkwijze', gsm, geldig('/lp/dakwerken', 'werkwijze', gsm, await meetAnker('/lp/dakwerken', 'werkwijze', gsm, 'oud')));
+    /* 23 nov 2026: /lp/dakwerken staat op LpBfC; daar vangt 'oud' niets meer (zie LOKAAS.verschuif). Zelfde eigenschap van de meting: een
+       anker dat na de sprong te laag staat, moet een fout zijn. */
+    const pc3 = oordeel('/lp/dakwerken', 'werkwijze', gsm, geldig('/lp/dakwerken', 'werkwijze', gsm, await meetAnker('/lp/dakwerken', 'werkwijze', gsm, 'verschuif')));
     if (!pc1 || !pc2 || !pc3) stop(2, `FOUT: positieve controle ziet de geplante fout niet (niet springen: ${pc1 || 'niet gezien'}; geen id: ${pc2 || 'niet gezien'}; zachte sprong zonder correctie op 390: ${pc3 || 'niet gezien'}) — de meting is ongeldig`);
     /* Positieve controle venster: op /lp/totaalrenovatie staat de rekenaar in de hero; een meting met een open venster
        (lokaas: venster op true gezet) moet een fout zijn. */

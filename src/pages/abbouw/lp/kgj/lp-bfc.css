@@ -1,0 +1,546 @@
+/* /lp/dakwerken in de vorm van bfbouw.be/lp/dakwerken (23 nov 2026, LpBfC.tsx). Lettertypes, hoekige kaders en opbouw zoals BF;
+   kleuren van AB (marineblauw #0a1628, goud #d98c03). Alles onder .abc. */
+@font-face { font-family: 'Urbanist'; src: url('./fonts/urbanist.woff2') format('woff2'); font-weight: 400 700; font-display: swap; }
+@font-face { font-family: 'Inter'; src: url('./fonts/inter.woff2') format('woff2'); font-weight: 400 700; font-display: swap; }
+
+.abc { --abc-donker: #0a1628; --abc-goud: #d98c03; --abc-goud-tekst: #8a5902; --abc-tint: #f7f8fa; --abc-lijn: #dde1e6; --abc-tekst: #4b535c;
+  --abc-kop: 'Urbanist', 'Inter', system-ui, sans-serif; --abc-font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: var(--abc-font); color: var(--abc-donker); background: #fff; }
+.abc.abc.abc *, .abc.abc.abc *::before, .abc.abc.abc *::after { border-radius: 0; }
+.abc.abc.abc :is(.abc-zweef, .abc-zweef::after, .abc-gebied__namen circle) { border-radius: 50%; }
+.abc .abc-raam { width: 100%; max-width: 1232px; margin: 0 auto; padding: 0 32px; box-sizing: border-box; }
+.abc .abc-h2 { margin: 0; font-family: var(--abc-kop); font-size: 46px; line-height: 1.1; font-weight: 500; letter-spacing: -0.03em; color: var(--abc-donker); }
+.abc .abc-h2--midden { text-align: center; }
+.abc .abc-accent { color: var(--abc-goud); }
+.abc .abc-sr { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.abc [id] { scroll-margin-top: 88px; }
+
+/* knoppen */
+.abc .abc-knop { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 54px; padding: 0 26px; background: var(--abc-goud); color: var(--abc-donker); border: 0; font-family: var(--abc-font); font-size: 16.5px; font-weight: 600; text-decoration: none; cursor: pointer; transition: background-color .2s ease; }
+.abc .abc-knop:hover { background: #c27c02; }
+.abc .abc-knop svg { width: 18px; height: 18px; flex: none; }
+.abc .abc-knop--rand { background: transparent; color: #fff; border: 1.5px solid rgba(255, 255, 255, .6); }
+.abc .abc-knop--rand:hover { background: #fff; color: var(--abc-donker); }
+
+/* kopbalk */
+.abc .abc-kop { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: transparent; transition: background-color .25s ease, box-shadow .25s ease; }
+.abc .abc-kop.is-gescrold { background: #fff; box-shadow: 0 1px 0 rgba(10, 22, 40, .1); }
+.abc .abc-kop__in { display: flex; align-items: center; gap: 28px; max-width: 1376px; height: 88px; margin: 0 auto; padding: 0 32px; box-sizing: border-box; }
+.abc .abc-logo { position: relative; display: block; flex: none; }
+.abc .abc-logo img { display: block; width: auto; height: 42px; transition: opacity .25s ease; }
+.abc .abc-logo__ink { position: absolute; left: 0; top: 0; opacity: 0; }
+.abc .abc-kop.is-gescrold .abc-logo__wit { opacity: 0; }
+.abc .abc-kop.is-gescrold .abc-logo__ink { opacity: 1; }
+.abc .abc-menu { display: flex; gap: 28px; margin-left: 20px; }
+.abc .abc-menu a { position: relative; padding: 12px 0; font-size: 16px; font-weight: 500; color: #fff; text-decoration: none; white-space: nowrap; transition: color .25s ease; }
+.abc .abc-menu a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 6px; height: 2px; background: var(--abc-goud); transform: scaleX(0); transform-origin: left; transition: transform .2s ease; }
+.abc .abc-menu a:hover::after { transform: scaleX(1); }
+.abc .abc-kop.is-gescrold .abc-menu a { color: var(--abc-donker); }
+.abc .abc-kop__acties { display: flex; align-items: center; gap: 24px; margin-left: auto; }
+.abc .abc-kop__tel { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-size: 16px; font-weight: 600; color: #fff; text-decoration: none; white-space: nowrap; }
+.abc .abc-kop__tel svg { width: 18px; height: 18px; color: var(--abc-goud); }
+.abc .abc-kop.is-gescrold .abc-kop__tel { color: var(--abc-donker); }
+.abc .abc-kop__offerte { min-height: 50px; padding: 0 24px; font-size: 16px; }
+.abc .abc-kop__bel, .abc .abc-burger { display: none; }
+
+/* hero */
+.abc .abc-hero { position: relative; display: flex; align-items: center; min-height: min(100vh, 1200px); overflow: hidden; background: var(--abc-donker); color: #fff; }
+.abc .abc-hero__foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 60%; }
+.abc .abc-hero__laag { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10, 22, 40, .92) 0%, rgba(10, 22, 40, .78) 34%, rgba(10, 22, 40, .3) 64%, rgba(10, 22, 40, .08) 100%), linear-gradient(180deg, rgba(10, 22, 40, .7) 0%, rgba(10, 22, 40, 0) 26%); }
+.abc .abc-hero__in { position: relative; z-index: 1; width: 100%; max-width: 1376px; margin: 0 auto; padding: 120px 32px 96px; box-sizing: border-box; }
+.abc .abc-hero__regio { display: inline-flex; align-items: center; gap: 12px; margin: 0; padding: 6px 14px 6px 6px; border: 1px solid rgba(255, 255, 255, .45); background: rgba(10, 22, 40, .35); font-size: 16px; font-weight: 600; }
+.abc .abc-hero__pin { display: grid; place-items: center; width: 30px; height: 30px; background: var(--abc-goud); color: var(--abc-donker); }
+.abc .abc-hero__pin svg { width: 17px; height: 17px; }
+.abc .abc-hero__kop { margin: 26px 0 0; max-width: 760px; font-family: var(--abc-kop); font-size: clamp(44px, 4.6vw, 68px); line-height: 1.04; font-weight: 500; letter-spacing: -0.03em; }
+.abc .abc-hero__kop > span { display: block; }
+.abc .abc-hero__sub { margin: 24px 0 0; max-width: 600px; font-size: 19px; line-height: 1.55; color: rgba(255, 255, 255, .9); }
+.abc .abc-hero__knoppen { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+.abc .abc-hero__knoppen .abc-knop { min-height: 58px; padding: 0 28px; font-size: 17px; }
+
+/* waarom voor ons kiezen */
+.abc .abc-kiezen { padding: 96px 0; background: #fff; }
+.abc .abc-kiezen__in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 80px; align-items: center; }
+.abc .abc-kiezen__foto { position: relative; margin: 0; align-self: stretch; min-height: 520px; overflow: hidden; }
+.abc .abc-kiezen__foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.abc .abc-kiezen__lijst { list-style: none; margin: 30px 0 0; padding: 0; display: grid; gap: 12px; }
+.abc .abc-kiezen__lijst li { display: grid; grid-template-columns: 52px minmax(0, 1fr); column-gap: 18px; align-items: start; padding: 20px 22px; background: var(--abc-tint); border: 1px solid var(--abc-lijn); }
+.abc .abc-kiezen__ic { display: grid; place-items: center; width: 52px; height: 52px; background: var(--abc-goud); color: var(--abc-donker); }
+.abc .abc-kiezen__ic svg { width: 24px; height: 24px; }
+.abc .abc-kiezen__lijst h3 { margin: 1px 0 0; font-family: var(--abc-kop); font-size: 21px; line-height: 1.25; font-weight: 600; letter-spacing: -0.01em; }
+.abc .abc-kiezen__lijst p { margin: 5px 0 0; font-size: 16.5px; line-height: 1.5; color: var(--abc-tekst); }
+
+/* diensten: donkere fotoband met de kop, witte tegelrij eroverheen */
+.abc .abc-diensten { padding-bottom: 96px; background: #fff; }
+.abc .abc-diensten__band { position: relative; overflow: hidden; padding: 84px 0 150px; background: var(--abc-donker); }
+.abc .abc-diensten__band > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.abc .abc-diensten__band::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 22, 40, .9), rgba(10, 22, 40, .82)); }
+.abc .abc-diensten__kop { position: relative; z-index: 1; }
+.abc .abc-diensten__kop .abc-h2 { color: #fff; }
+.abc .abc-diensten__kop p { margin: 12px 0 0; font-size: 17px; color: rgba(255, 255, 255, .85); }
+.abc .abc-diensten__rij { position: relative; z-index: 2; list-style: none; margin: -96px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: #fff; border: 1px solid var(--abc-lijn); box-shadow: 0 28px 60px -34px rgba(10, 22, 40, .45); }
+.abc .abc-diensten__rij--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.abc .abc-diensten__rij--5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.abc .abc-dienst { display: flex; flex-direction: column; border-left: 1px solid var(--abc-lijn); }
+.abc .abc-dienst:first-child { border-left: 0; }
+.abc .abc-dienst__foto { margin: 0; aspect-ratio: 4 / 3; overflow: hidden; }
+.abc .abc-dienst__foto img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.abc .abc-dienst__lijf { padding: 24px 22px 28px; }
+.abc .abc-dienst__ic { display: block; width: 26px; height: 26px; color: var(--abc-goud-tekst); }
+.abc .abc-dienst__ic svg { width: 26px; height: 26px; }
+.abc .abc-dienst h3 { margin: 14px 0 0; font-family: var(--abc-kop); font-size: 21px; line-height: 1.2; font-weight: 600; letter-spacing: -0.01em; }
+.abc .abc-dienst p { margin: 10px 0 0; font-size: 15px; line-height: 1.6; color: var(--abc-tekst); }
+
+/* realisatie: de bestaande sectie, met de koppen in de BF-letter */
+.abc .abc-real :is(h2, h3) { font-family: var(--abc-kop); letter-spacing: -0.02em; }
+
+/* wat heeft uw dak nodig */
+.abc .abc-uitleg { padding: 96px 0; background: #fff; border-top: 1px solid var(--abc-lijn); }
+.abc .abc-uitleg__in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 84px; align-items: center; }
+.abc .abc-uitleg__tekst p { margin: 20px 0 0; max-width: 560px; font-size: 17px; line-height: 1.7; color: var(--abc-tekst); }
+.abc .abc-uitleg__tekst .abc-knop { margin-top: 30px; }
+.abc .abc-uitleg__foto { margin: 0; aspect-ratio: 4 / 3; overflow: hidden; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 46px), calc(100% - 46px) 100%, 0 100%); }
+.abc .abc-uitleg__foto img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* zo werken wij */
+.abc .abc-proces { padding: 92px 0; background: var(--abc-tint); border-top: 1px solid var(--abc-lijn); border-bottom: 1px solid var(--abc-lijn); }
+.abc .abc-proces__stappen { list-style: none; margin: 40px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+.abc .abc-proces__stappen--5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.abc .abc-proces__stappen li { position: relative; }
+.abc .abc-proces__stappen li::before { content: ""; position: absolute; left: 68px; right: -12px; top: 27px; height: 1px; background: var(--abc-goud); opacity: .7; }
+.abc .abc-proces__stappen li:last-child::before { display: none; }
+.abc .abc-proces__nr { display: grid; place-items: center; width: 54px; height: 54px; background: #fff; border: 1.5px solid var(--abc-goud); font-family: var(--abc-kop); font-size: 22px; font-weight: 600; color: var(--abc-donker); }
+.abc .abc-proces__stappen li:last-child .abc-proces__nr { background: var(--abc-goud); }
+.abc .abc-proces__stappen p { margin: 22px 0 0; max-width: 280px; font-size: 16px; line-height: 1.65; color: var(--abc-tekst); }
+.abc .abc-proces__stappen b { color: var(--abc-donker); }
+.abc .abc-proces__onder { margin: 38px 0 0; }
+
+/* voordelen */
+.abc .abc-voordelen { padding: 96px 0; background: #fff; }
+.abc .abc-voordelen__rij { list-style: none; margin: 40px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.abc .abc-voordelen__rij li { position: relative; padding: 30px 28px 32px; border: 1px solid var(--abc-lijn); }
+.abc .abc-voordelen__nr { position: absolute; right: 22px; top: 14px; font-family: var(--abc-kop); font-size: 52px; font-weight: 700; color: #e9ecef; }
+.abc .abc-voordelen__ic { display: grid; place-items: center; width: 52px; height: 52px; background: var(--abc-goud); color: var(--abc-donker); }
+.abc .abc-voordelen__ic svg { width: 26px; height: 26px; }
+.abc .abc-voordelen__rij h3 { margin: 22px 0 0; font-family: var(--abc-kop); font-size: 21px; line-height: 1.25; font-weight: 600; }
+.abc .abc-voordelen__rij p { margin: 10px 0 0; font-size: 16px; line-height: 1.6; color: var(--abc-tekst); }
+
+/* werkgebied */
+.abc .abc-gebied { padding: 96px 0; background: var(--abc-tint); border-top: 1px solid var(--abc-lijn); }
+.abc .abc-gebied__in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: center; }
+.abc .abc-gebied__sub { margin: 18px 0 0; font-size: 17px; line-height: 1.65; color: var(--abc-tekst); }
+.abc .abc-gebied__adres { display: flex; align-items: center; gap: 16px; margin-top: 26px; padding: 18px 20px; background: #fff; border: 1px solid var(--abc-lijn); border-left: 5px solid var(--abc-goud); }
+.abc .abc-gebied__pin { display: grid; place-items: center; flex: none; width: 46px; height: 46px; background: var(--abc-goud); color: var(--abc-donker); }
+.abc .abc-gebied__pin svg { width: 22px; height: 22px; }
+.abc .abc-gebied__adres b { display: block; font-size: 17px; }
+/* 23 nov 2026 (keuring beeld-AB-01): alleen de adresregel; ".abc-gebied__adres span" gold ook voor het speldvakje (display block, grijs), zodat de speld
+   tegen de bovenrand van het vakje stond en grijs op goud was */
+.abc .abc-gebied__adres div > span { display: block; margin-top: 3px; font-size: 16px; color: var(--abc-tekst); }
+.abc .abc-gebied__chips { list-style: none; margin: 22px 0 28px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.abc .abc-gebied__chips li { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: #fff; border: 1px solid var(--abc-lijn); font-size: 15px; font-weight: 600; }
+.abc .abc-gebied__chips li::before { content: ""; width: 7px; height: 7px; background: var(--abc-goud); }
+.abc .abc-gebied__kaart { margin: 0; padding: 8px; background: #fff; border: 1px solid var(--abc-lijn); }
+.abc .abc-gebied__kaart svg { display: block; width: 100%; height: auto; background: #f1f3f6; }
+.abc .abc-gebied__vlakken path { fill: #fbe7c4; stroke: #dca757; stroke-width: 1.2; stroke-linejoin: round; }
+.abc .abc-gebied__vlakken path.is-thuis { fill: var(--abc-goud); stroke: #a86c02; }
+.abc .abc-gebied__namen circle { fill: var(--abc-donker); }
+.abc .abc-gebied__namen text { font-family: var(--abc-font); font-size: 15px; font-weight: 600; fill: var(--abc-donker); paint-order: stroke; stroke: #fff; stroke-width: 3.5px; stroke-linejoin: round; }
+.abc .abc-gebied__namen .is-thuis text { font-size: 18px; font-weight: 700; }
+.abc .abc-gebied__kaart figcaption { margin-top: 6px; font-size: 12px; text-align: right; color: var(--abc-tekst); }
+
+/* zekerhedenband */
+.abc .abc-zeker { overflow: hidden; background: var(--abc-donker); color: #fff; }
+.abc .abc-zeker__baan { display: flex; width: max-content; animation: abc-loop 38s linear infinite; }
+.abc .abc-zeker:hover .abc-zeker__baan { animation-play-state: paused; }
+.abc .abc-zeker ul { display: flex; list-style: none; margin: 0; padding: 0; }
+.abc .abc-zeker li { display: flex; align-items: center; gap: 12px; padding: 22px 34px; white-space: nowrap; font-family: var(--abc-kop); font-size: 19px; }
+.abc .abc-zeker li::after { content: ""; width: 7px; height: 7px; margin-left: 22px; background: var(--abc-goud); }
+.abc .abc-zeker__ic { display: grid; place-items: center; width: 38px; height: 38px; background: var(--abc-goud); color: var(--abc-donker); }
+.abc .abc-zeker__ic svg { width: 20px; height: 20px; }
+@keyframes abc-loop { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .abc .abc-zeker__baan { animation: none; } }
+
+/* veelgestelde vragen */
+.abc .abc-faq { padding: 96px 0; background: #fff; }
+.abc .abc-faq__in { max-width: 932px; }
+.abc .abc-faq__lijst { margin-top: 36px; border-top: 1px solid var(--abc-lijn); }
+.abc .abc-faq__lijst details { border-bottom: 1px solid var(--abc-lijn); }
+.abc .abc-faq__lijst summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 76px; padding: 14px 2px; cursor: pointer; list-style: none; font-size: 18px; font-weight: 600; }
+.abc .abc-faq__lijst summary::-webkit-details-marker { display: none; }
+.abc .abc-faq__plus { position: relative; flex: none; width: 30px; height: 30px; border: 1px solid var(--abc-lijn); }
+.abc .abc-faq__plus::before, .abc .abc-faq__plus::after { content: ""; position: absolute; left: 8px; right: 8px; top: 14px; height: 1.5px; background: var(--abc-goud-tekst); }
+.abc .abc-faq__plus::after { transform: rotate(90deg); transition: transform .2s ease; }
+.abc details[open] .abc-faq__plus::after { transform: rotate(0deg); }
+.abc .abc-faq__lijst details > p { margin: 0; padding: 0 60px 24px 2px; font-size: 16.5px; line-height: 1.7; color: var(--abc-tekst); }
+.abc .abc-faq__lijst a { color: var(--abc-donker); font-weight: 600; text-decoration: underline; text-decoration-color: var(--abc-goud); text-underline-offset: 4px; }
+
+/* offerteblok: de bestaande bf-lpinsp, met de kop in de BF-letter */
+.abc .abc-offerte h2 { font-family: var(--abc-kop); font-weight: 500; letter-spacing: -0.03em; }
+
+/* contactblok */
+.abc .abc-contact { padding: 92px 0; background: #fff; }
+.abc .abc-contact__in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 84px; align-items: start; }
+.abc .abc-contact__snel { display: flex; align-items: flex-start; gap: 16px; margin-top: 26px; }
+.abc .abc-contact__snelic { display: grid; place-items: center; flex: none; width: 46px; height: 46px; background: var(--abc-goud); color: var(--abc-donker); }
+.abc .abc-contact__snelic svg { width: 22px; height: 22px; }
+.abc .abc-contact__snel b { display: block; font-family: var(--abc-kop); font-size: 21px; font-weight: 600; }
+.abc .abc-contact__snel p { margin: 4px 0 0; max-width: 340px; font-size: 15.5px; line-height: 1.55; color: var(--abc-tekst); }
+.abc .abc-contact__gegevens { margin: 34px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, max-content)); gap: 26px 56px; }
+.abc .abc-contact__gegevens div { margin: 0; }
+.abc .abc-contact__bel { grid-column: 1 / -1; }
+.abc .abc-contact__gegevens dt { font-size: 14px; font-weight: 600; color: var(--abc-tekst); }
+.abc .abc-contact__gegevens dd { margin: 6px 0 0; font-size: 18px; font-weight: 600; }
+.abc .abc-contact__gegevens a { color: inherit; text-decoration: none; }
+.abc .abc-contact__bel dd { font-family: var(--abc-kop); font-size: 46px; line-height: 1.05; font-weight: 500; letter-spacing: -0.02em; }
+.abc .abc-contact__vak { padding: 34px 36px 38px; background: var(--abc-tint); border: 1px solid var(--abc-lijn); border-top: 4px solid var(--abc-goud); }
+.abc .abc-bericht h3, .abc .abc-contact__klaar h3 { margin: 0 0 20px; font-family: var(--abc-kop); font-size: 27px; font-weight: 500; letter-spacing: -0.02em; }
+.abc .abc-contact__klaar p { margin: 0; font-size: 16.5px; color: var(--abc-tekst); }
+.abc .abc-bericht__rij { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+.abc .abc-veld { margin: 0 0 14px; }
+.abc .abc-veld label { display: block; margin-bottom: 6px; font-size: 14.5px; font-weight: 600; }
+.abc .abc-ster { margin-left: 2px; color: #b3261e; }
+.abc .abc-veld input, .abc .abc-veld textarea { display: block; width: 100%; min-height: 50px; padding: 12px 14px; box-sizing: border-box; background: #fff; border: 1.5px solid #c9cfd6; font: inherit; font-size: 16px; color: var(--abc-donker); }
+.abc .abc-veld textarea { min-height: 128px; resize: vertical; }
+.abc .abc-veld :is(input, textarea):focus { outline: 2px solid var(--abc-donker); outline-offset: 1px; }
+.abc .abc-veld [aria-invalid="true"] { border-color: #b3261e; }
+.abc .abc-veld__fout, .abc .abc-bericht__melding { margin: 6px 0 0; font-size: 14px; color: #b3261e; }
+.abc .abc-bericht .abc-knop { margin-top: 6px; }
+
+/* zwevende berichtknop (gsm) */
+.abc .abc-zweef { display: none; }
+
+/* voet */
+.abc .abc-voet { background: var(--abc-donker); color: rgba(255, 255, 255, .82); border-top: 5px solid var(--abc-goud); }
+.abc .abc-voet__raster { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1.2fr; gap: 56px; padding-top: 64px; padding-bottom: 52px; }
+.abc .abc-voet__merk img { display: block; width: auto; height: 40px; }
+.abc .abc-voet__merk p { margin: 18px 0 0; font-size: 15px; line-height: 1.6; }
+.abc .abc-voet__kolom h2 { margin: 0 0 18px; padding-bottom: 12px; border-bottom: 2px solid var(--abc-goud); font-family: var(--abc-kop); font-size: 20px; font-weight: 600; color: #fff; }
+.abc .abc-voet__kolom ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 15.5px; }
+.abc .abc-voet a { color: inherit; text-decoration: none; }
+.abc .abc-voet a:hover { color: #fff; }
+.abc .abc-voet__contact li { display: flex; align-items: center; gap: 12px; }
+.abc .abc-voet__ic { display: grid; place-items: center; flex: none; width: 36px; height: 36px; background: rgba(255, 255, 255, .08); color: var(--abc-goud); }
+.abc .abc-voet__ic svg { width: 18px; height: 18px; }
+.abc .abc-voet__onder { display: flex; justify-content: space-between; gap: 20px; padding-top: 22px; padding-bottom: 26px; border-top: 1px solid rgba(255, 255, 255, .12); font-size: 14px; }
+.abc .abc-voet__onder p { margin: 0; }
+.abc .abc-voet__onder div { display: flex; gap: 18px; }
+.abc .abc-voet__onder a { text-decoration: underline; text-underline-offset: 4px; }
+
+.abc .abc-gsmmenu[hidden] { display: none; }
+
+/* ── pc smaller dan 1300 px: menu dichter bij elkaar ── */
+@media (min-width: 1001px) and (max-width: 1300px) {
+  .abc .abc-menu { gap: 22px; margin-left: 8px; }
+  .abc .abc-kop__acties { gap: 18px; }
+  .abc .abc-kop__in { gap: 20px; }
+}
+
+/* ── gsm en tablet ── */
+@media (max-width: 1000px) {
+  .abc .abc-raam { padding: 0 16px; }
+  .abc .abc-h2 { font-size: 31px; line-height: 1.14; }
+  .abc [id] { scroll-margin-top: 76px; }
+  .abc .abc-kop, .abc .abc-kop.is-gescrold { background: #fff; box-shadow: 0 1px 0 rgba(10, 22, 40, .1); }
+  .abc .abc-kop__in { height: 72px; padding: 0 16px; gap: 10px; }
+  .abc .abc-logo img { height: 30px; }
+  .abc .abc-logo__wit { opacity: 0; }
+  .abc .abc-logo__ink { opacity: 1; }
+  .abc .abc-menu, .abc .abc-kop__tel, .abc .abc-kop__offerte { display: none; }
+  .abc .abc-kop__acties { gap: 8px; }
+  .abc .abc-kop__bel { display: inline-flex; min-height: 48px; padding: 0 16px; font-size: 16px; }
+  .abc .abc-burger { display: grid; place-items: center; align-content: center; gap: 6px; width: 48px; height: 48px; padding: 0; background: var(--abc-tint); border: 1px solid var(--abc-lijn); cursor: pointer; }
+  .abc .abc-burger span { display: block; width: 20px; height: 2px; background: var(--abc-donker); transition: transform .2s ease; }
+  .abc .abc-burger[aria-expanded="true"] span:first-child { transform: translateY(4px) rotate(45deg); }
+  .abc .abc-burger[aria-expanded="true"] span:last-child { transform: translateY(-4px) rotate(-45deg); }
+  .abc .abc-gsmmenu { position: fixed; inset: 72px 0 0; z-index: 49; display: flex; flex-direction: column; justify-content: space-between; padding: 12px 16px 24px; background: #fff; overflow-y: auto; }
+  .abc .abc-gsmmenu nav a { display: flex; align-items: center; justify-content: space-between; min-height: 58px; border-bottom: 1px solid var(--abc-lijn); font-family: var(--abc-kop); font-size: 22px; font-weight: 600; color: var(--abc-donker); text-decoration: none; }
+  .abc .abc-gsmmenu nav a svg { width: 20px; height: 20px; color: var(--abc-goud-tekst); }
+  .abc .abc-gsmmenu__acties { display: grid; gap: 10px; margin-top: 24px; }
+  .abc .abc-gsmmenu__acties .abc-knop--rand { color: var(--abc-donker); border-color: var(--abc-lijn); }
+
+  .abc .abc-hero { display: block; min-height: 0; }
+  .abc .abc-hero__foto { top: 72px; height: 250px; }
+  .abc .abc-hero__laag { top: 72px; background: linear-gradient(180deg, rgba(10, 22, 40, .12) 0, rgba(10, 22, 40, .25) 150px, var(--abc-donker) 250px); }
+  .abc .abc-hero__in { padding: 298px 16px 32px; }
+  .abc .abc-hero__regio { font-size: 14.5px; }
+  .abc .abc-hero__kop { margin-top: 18px; font-size: 36px; }
+  .abc .abc-hero__sub { margin-top: 16px; font-size: 17px; }
+  .abc .abc-hero__knoppen { flex-direction: column; align-items: stretch; gap: 10px; margin-top: 24px; }
+  .abc .abc-hero__knoppen .abc-knop { min-height: 54px; font-size: 16.5px; }
+
+  .abc .abc-kiezen { padding: 44px 0 48px; }
+  .abc .abc-kiezen__in { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .abc .abc-kiezen__tekst { display: contents; }
+  .abc .abc-kiezen__tekst > h2 { order: 1; }
+  .abc .abc-kiezen__foto { order: 2; min-height: 0; height: 250px; margin: 20px -16px 0; }
+  .abc .abc-kiezen__lijst { order: 3; position: relative; z-index: 1; margin: -92px 8px 0; gap: 10px; }
+  .abc .abc-kiezen__lijst li { grid-template-columns: 44px minmax(0, 1fr); column-gap: 14px; padding: 16px; background: #fff; box-shadow: 0 12px 30px -20px rgba(10, 22, 40, .5); }
+  .abc .abc-kiezen__ic { width: 44px; height: 44px; }
+  .abc .abc-kiezen__lijst h3 { font-size: 18.5px; }
+  .abc .abc-kiezen__lijst p { font-size: 15.5px; margin-top: 4px; }
+
+  .abc .abc-diensten { padding-bottom: 48px; }
+  .abc .abc-diensten__band { padding: 44px 0 96px; }
+  .abc .abc-diensten__rij, .abc .abc-diensten__rij--3, .abc .abc-diensten__rij--5 { margin-top: -64px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .abc .abc-dienst { border-left: 0; border-top: 1px solid var(--abc-lijn); }
+  .abc .abc-dienst:nth-child(even) { border-left: 1px solid var(--abc-lijn); }
+  .abc .abc-dienst:nth-child(-n+2) { border-top: 0; }
+  .abc .abc-dienst__lijf { padding: 14px 14px 18px; }
+  .abc .abc-dienst h3 { margin-top: 8px; font-size: 17.5px; }
+  .abc .abc-dienst p { margin-top: 6px; font-size: 14.5px; line-height: 1.5; }
+
+  .abc .abc-uitleg { padding: 48px 0; }
+  .abc .abc-uitleg__in { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .abc .abc-uitleg__tekst p { margin-top: 14px; font-size: 16.5px; }
+  .abc .abc-uitleg__tekst .abc-knop { width: 100%; margin-top: 22px; }
+
+  .abc .abc-proces { padding: 48px 0; }
+  .abc .abc-proces__stappen, .abc .abc-proces__stappen--5 { margin-top: 24px; grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .abc .abc-proces__stappen li { display: grid; grid-template-columns: 46px minmax(0, 1fr); column-gap: 16px; align-items: start; padding-bottom: 22px; }
+  .abc .abc-proces__stappen li::before { left: 23px; right: auto; top: 46px; bottom: 0; width: 1px; height: auto; }
+  .abc .abc-proces__nr { width: 46px; height: 46px; font-size: 20px; }
+  .abc .abc-proces__stappen p { margin: 0; padding-top: 11px; max-width: none; }
+  .abc .abc-proces__onder { margin-top: 10px; }
+  .abc .abc-proces__onder .abc-knop { width: 100%; }
+
+  .abc .abc-voordelen { padding: 48px 0; }
+  .abc .abc-voordelen__rij { grid-template-columns: minmax(0, 1fr); gap: 12px; margin-top: 24px; }
+  .abc .abc-voordelen__rij li { padding: 22px 18px; }
+
+  .abc .abc-gebied { padding: 48px 0; }
+  .abc .abc-gebied__in { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .abc .abc-gebied__chips { margin: 18px 0 22px; gap: 6px; }
+  .abc .abc-gebied__chips li { padding: 7px 10px; font-size: 14.5px; }
+  .abc .abc-gebied__tekst .abc-knop { width: 100%; }
+
+  .abc .abc-zeker li { padding: 16px 22px; font-size: 16.5px; }
+  .abc .abc-zeker li::after { margin-left: 14px; }
+
+  .abc .abc-faq { padding: 48px 0; }
+  .abc .abc-faq__lijst { margin-top: 22px; }
+  .abc .abc-faq__lijst summary { min-height: 64px; font-size: 17px; }
+  .abc .abc-faq__lijst details > p { padding-right: 8px; }
+
+  .abc .abc-contact { padding: 48px 0; }
+  .abc .abc-contact__in { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .abc .abc-contact__gegevens { margin-top: 22px; grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .abc .abc-contact__bel dd { font-size: 36px; }
+  .abc .abc-contact__vak { padding: 24px 16px 26px; }
+  .abc .abc-bericht__rij { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .abc .abc-bericht .abc-knop { width: 100%; }
+
+  .abc .abc-zweef { position: fixed; right: 16px; bottom: 16px; z-index: 40; display: grid; place-items: center; width: 58px; height: 58px; background: var(--abc-goud); color: var(--abc-donker); box-shadow: 0 10px 24px -8px rgba(10, 22, 40, .5); opacity: 0; visibility: hidden; transform: translateY(12px); transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s; }
+  .abc .abc-zweef.is-zichtbaar { opacity: 1; visibility: visible; transform: none; transition: opacity .2s ease, transform .2s ease, visibility 0s; }
+  .abc .abc-zweef svg { width: 24px; height: 24px; }
+  .abc .abc-zweef::after { content: ""; position: absolute; top: 2px; right: 2px; width: 14px; height: 14px; background: #22c55e; box-shadow: 0 0 0 2.5px #fff; }
+
+  .abc .abc-voet__raster { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px 20px; padding-top: 40px; padding-bottom: 32px; }
+  .abc .abc-voet__merk, .abc .abc-voet__contact { grid-column: 1 / -1; }
+  .abc .abc-voet__onder { flex-direction: column; gap: 10px; padding-bottom: 96px; }
+}
+
+/* Komen we ook bij u langs? (23 nov 2026) */
+.abc .abc-knop--donker { background: var(--abc-donker); color: #fff; }
+.abc .abc-knop--donker:hover { background: #1b2a42; }
+.abc .abc-knop--lijn { background: #fff; color: var(--abc-donker); border: 1.5px solid var(--abc-donker); }
+.abc .abc-knop--lijn:hover { background: var(--abc-donker); color: #fff; }
+.abc .abc-check { margin-top: 24px; padding: 22px 22px 20px; background: #fff; border: 1px solid var(--abc-lijn); border-top: 4px solid var(--abc-donker); }
+.abc .abc-check__kop { margin: 0 0 12px; font-family: var(--abc-kop); font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+.abc .abc-check__rij { display: flex; gap: 10px; }
+.abc .abc-check__rij input { flex: 1; min-width: 0; min-height: 54px; padding: 0 16px; border: 1.5px solid #c9cfd6; font: inherit; font-size: 17px; letter-spacing: .04em; color: var(--abc-donker); background: #fff; }
+.abc .abc-check__rij input:focus { outline: 2px solid var(--abc-donker); outline-offset: 1px; }
+.abc .abc-check__fout { margin: 10px 0 0; font-size: 14.5px; color: #b3261e; }
+.abc .abc-check__ja { margin-top: 14px; padding: 16px 16px 18px; background: #ecfdf3; border: 1px solid #a6e3bd; border-left: 5px solid #16a34a; }
+.abc .abc-check__ja > p { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 18px; font-weight: 700; color: #14532d; }
+.abc .abc-check__vink { display: grid; place-items: center; flex: none; width: 30px; height: 30px; background: #16a34a; color: #fff; }
+.abc.abc.abc .abc-check__vink { border-radius: 50%; }
+.abc .abc-check__vink svg { width: 18px; height: 18px; }
+.abc .abc-check__knoppen { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.abc .abc-check__knoppen .abc-knop { min-height: 50px; padding: 0 20px; font-size: 16px; }
+@media (max-width: 1000px) {
+  .abc .abc-check { padding: 18px 16px; }
+  .abc .abc-check__kop { font-size: 20px; }
+  .abc .abc-check__knoppen { flex-direction: column; }
+  .abc .abc-check__knoppen .abc-knop { width: 100%; }
+}
+
+/* breedtes zoals BF (23 nov 2026, Mohammed: "de nav bar ziet er niet uit zoals die van bfb"): kopbalk en hero 1264 px inhoud, secties 1200 px */
+.abc .abc-kop__in, .abc .abc-hero__in, .abc .abc-sub__in { max-width: 1328px; }
+.abc .abc-raam { max-width: 1264px; }
+.abc .abc-kop__in { height: 92px; }
+.abc .abc-logo img { height: 44px; }
+
+/* menu: Diensten met uitklapmenu, zoals BF */
+.abc .abc-menu { align-items: center; }
+.abc .abc-menu__groep { position: relative; }
+.abc .abc-menu__groep > a { display: inline-flex; align-items: center; gap: 6px; }
+.abc .abc-menu__pijl { width: 12px; height: 12px; }
+.abc .abc-menu__sub { position: absolute; top: 100%; left: -18px; min-width: 230px; padding: 8px 0; display: grid; background: #fff; border: 1px solid var(--abc-lijn); box-shadow: 0 18px 40px -22px rgba(10, 22, 40, .35); opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s; }
+.abc .abc-menu__groep:hover .abc-menu__sub, .abc .abc-menu__groep:focus-within .abc-menu__sub { opacity: 1; visibility: visible; transform: none; transition: opacity .18s ease, transform .18s ease, visibility 0s; }
+.abc .abc-menu .abc-menu__sub a { padding: 11px 18px; color: var(--abc-donker); white-space: nowrap; }
+.abc .abc-menu .abc-menu__sub a::after { display: none; }
+.abc .abc-menu .abc-menu__sub a:hover { background: var(--abc-tint); color: var(--abc-goud-tekst); }
+
+/* hero-subkop: vette eerste zin zoals BF */
+.abc .abc-hero__sub b { display: block; margin-bottom: 8px; font-weight: 700; color: #fff; }
+.abc .abc-uitleg__tekst b { color: var(--abc-donker); font-weight: 700; }
+
+/* tips en uitleg: kaarten zoals BF (foto, datum in een huisje, categorie, titel, knop) */
+.abc .abc-blog { padding: 96px 0; background: #fff; }
+.abc .abc-blog__rij { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 36px; }
+.abc .abc-post { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--abc-lijn); }
+.abc .abc-post__beeld { display: block; width: 100%; height: 210px; object-fit: cover; }
+.abc .abc-post__datum { position: absolute; right: 22px; top: 140px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; width: 108px; height: 72px; padding-bottom: 10px; box-sizing: border-box; background: #fff; clip-path: polygon(50% 0, 100% 34%, 100% 100%, 0 100%, 0 34%); }
+.abc .abc-post__datum b { font-size: 17px; line-height: 21px; }
+.abc .abc-post__datum span { font-size: 12px; color: #6b6b6b; }
+.abc .abc-post__cat { margin: 0; padding: 18px 22px 12px; border-bottom: 1px solid #efefef; font-size: 13.5px; font-weight: 700; color: var(--abc-goud-tekst); }
+.abc .abc-post__titel { flex: 1; margin: 0; padding: 14px 22px 0; font-family: var(--abc-kop); font-size: 21px; line-height: 1.3; font-weight: 600; }
+.abc .abc-post__voet { padding: 18px 22px 24px; }
+.abc .abc-post__knop { min-height: 46px; padding: 0 20px; font-size: 15px; }
+.abc .abc-post__knop::after { content: ""; position: absolute; inset: 0; }
+
+/* artikelpagina */
+.abc .abc-sub { background: var(--abc-donker); color: #fff; padding-top: 92px; }
+.abc .abc-sub__in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); gap: 56px; align-items: center; margin: 0 auto; padding: 56px 32px 64px; box-sizing: border-box; }
+.abc .abc-sub__terug { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px 0 12px; border: 1px solid rgba(255, 255, 255, .45); color: #fff; font-size: 15px; font-weight: 600; text-decoration: none; }
+.abc .abc-sub__terug svg { width: 18px; height: 18px; }
+.abc .abc-sub h1 { margin: 22px 0 0; font-family: var(--abc-kop); font-size: 48px; line-height: 1.08; font-weight: 500; letter-spacing: -0.03em; }
+.abc .abc-sub__meta { margin: 12px 0 0; font-size: 15px; color: rgba(255, 255, 255, .7); }
+.abc .abc-sub__intro { margin: 16px 0 0; max-width: 560px; font-size: 18px; line-height: 1.6; color: rgba(255, 255, 255, .9); }
+.abc .abc-sub__foto { margin: 0; aspect-ratio: 4 / 3; overflow: hidden; border-bottom: 5px solid var(--abc-goud); }
+.abc .abc-sub__foto img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.abc .abc-artikel { padding: 64px 0 80px; background: #fff; }
+.abc .abc-lees { max-width: 824px; font-size: 18px; line-height: 1.7; color: var(--abc-tekst); }
+.abc .abc-lees h2 { margin: 40px 0 12px; font-family: var(--abc-kop); font-size: 30px; line-height: 1.2; font-weight: 600; color: var(--abc-donker); }
+.abc .abc-lees h2:first-child { margin-top: 0; }
+.abc .abc-lees h3 { margin: 26px 0 8px; font-family: var(--abc-kop); font-size: 22px; font-weight: 600; color: var(--abc-donker); }
+.abc .abc-lees p { margin: 0; }
+.abc .abc-lees p + p, .abc .abc-lees ul + p { margin-top: 16px; }
+.abc .abc-lees ul { margin: 12px 0 0; padding-left: 22px; list-style: disc; }
+.abc .abc-lees li + li { margin-top: 6px; }
+.abc .abc-lees a { color: var(--abc-goud-tekst); text-decoration: underline; text-underline-offset: 3px; }
+.abc .abc-lees .bron { margin-top: 28px; font-size: 14px; color: #6b6b6b; }
+
+@media (max-width: 1000px) {
+  .abc .abc-kop__in { height: 72px; }
+  .abc .abc-logo img { height: 30px; }
+  .abc .abc-blog { padding: 48px 0; }
+  .abc .abc-blog__rij { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; margin: 22px -16px 0; padding: 4px 16px 18px; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .abc .abc-blog__rij::-webkit-scrollbar { display: none; }
+  .abc .abc-post { flex: 0 0 calc(100% - 12px); scroll-snap-align: start; }
+  .abc .abc-post__titel { font-size: 20px; }
+  .abc .abc-sub { padding-top: 72px; }
+  .abc .abc-sub__in { grid-template-columns: minmax(0, 1fr); gap: 28px; padding: 28px 16px 36px; }
+  .abc .abc-sub h1 { font-size: 32px; }
+  .abc .abc-sub__intro { font-size: 17px; }
+  .abc .abc-artikel { padding: 36px 0 48px; }
+  .abc .abc-lees { font-size: 17px; }
+  .abc .abc-lees h2 { margin-top: 30px; font-size: 25px; }
+  .abc .abc-lees h3 { font-size: 20px; }
+}
+/* knoppen nooit over twee regels; menu iets dichter, zodat alles zoals bij BF op één lijn past */
+.abc .abc-knop { white-space: nowrap; }
+@media (min-width: 1001px) { .abc .abc-menu { gap: 24px; margin-left: 12px; } .abc .abc-kop__acties { gap: 20px; } .abc .abc-kop__in { gap: 20px; } .abc .abc-menu__pijl { color: currentColor; } }
+@media (min-width: 1001px) and (max-width: 1300px) { .abc .abc-menu { gap: 18px; } .abc .abc-logo img { height: 36px; } }
+/* herofoto: de nok van het antraciet dak (vierkant beeld) rechts in beeld, de tekst links op de donkere laag */
+.abc .abc-hero__foto { object-position: 70% 45%; }
+@media (max-width: 1000px) { .abc .abc-hero__foto { object-position: 50% 40%; } }
+
+/* ── formulier zoals BF (23 nov 2026, Mohammed: "de form is technisch en visueel bij ab anders dan bf, fix dat ook") ───────────────────────────
+   Gemeten verschillen: AB had afgeronde hoeken (kaart 10 px, tegels 8 px), Inter voor de stapregel en de vraag, donkere iconen, ronde vinkjes en een
+   Google-logo met sterren in de onderste rij. BF: hoekig, Urbanist voor kop, stap en vraag, iconen in de accentkleur, vierkante vinkjes, "5,0 op Google". */
+.abc.abc.abc.abc :is(.kgj-reken, .kgj-reken *, .bf-lpinsp__stappen span, .bf-lpinsp__bel) { border-radius: 0 !important; }
+.abc.abc.abc.abc :is(.kgj-reken__lijnen > *, .kgj-reken__lijnen > * > *) { border-radius: 0 !important; }
+.abc.abc.abc.abc :is([class*="kgj-reken__laad-spin"], [class*="kgj-reken__analyse"], [class*="spin"]) { border-radius: 50% !important; }
+.abc .kgj-reken { border-color: var(--abc-donker); box-shadow: 0 30px 60px -30px rgba(10, 22, 40, .55); }
+.abc .kgj-reken__titel { font-family: var(--abc-kop); font-size: 21px; font-weight: 600; letter-spacing: -0.01em; }
+.abc :is(.kgj-reken__kop, .kgj-reken__vraag) { font-family: var(--abc-kop); }
+.abc .kgj-reken__kop { font-size: 14px; }
+.abc .kgj-reken__keuze { border-color: var(--abc-lijn); font-family: var(--abc-font); }
+.abc .kgj-reken__keuze:hover { border-color: var(--abc-donker); }
+.abc .kgj-reken__keuze svg { color: var(--abc-goud-tekst); }
+.abc .kgj-reken__trust-gic, .abc .kgj-reken__trust-st, .abc .kgj-reken__trust-ic { display: none; }
+.abc .kgj-reken__trust-g > span:last-child::after { content: " op Google"; display: block; font-size: 14px; font-weight: 400; color: var(--abc-tekst); }
+.abc .kgj-reken__trust-g > span:last-child b { font-size: 16px; }
+.abc .bf-lpinsp__stappen span { background: var(--abc-goud); }
+.abc .bf-lpinsp h2 { font-family: var(--abc-kop); font-weight: 500; }
+.abc.abc.abc .kgj-reken :is(.kgj-reken__trust-gic, .kgj-reken__trust-st, .kgj-reken__trust-ic) { display: none !important; }
+/* gsm: de knop Controleer neemt niet de volle breedte (de regel voor knoppen in het werkgebied gold ook voor hem); het veld krijgt de ruimte */
+.abc .abc-gebied__tekst .abc-check__rij .abc-knop { width: auto; flex: none; padding: 0 20px; }
+.abc .abc-check__rij input { flex: 1 1 auto; width: 100%; }
+
+/* 23 nov 2026, Mohammed: "de voordelen van een dakrenovatie swipent": tot 1000 px een veegbare rij met stipjes, zoals bfbouw.be */
+@media (max-width: 1000px) {
+  .abc .abc-voordelen__rij { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; margin: 24px -16px 0; padding: 4px 16px 14px; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .abc .abc-voordelen__rij::-webkit-scrollbar { display: none; }
+  .abc .abc-voordelen__rij li { flex: 0 0 min(82vw, 380px); scroll-snap-align: start; background: #fff; }
+  .abc .abc-veeghint { display: flex; justify-content: center; gap: 6px; margin-top: 4px; }
+  .abc .abc-veeghint span { width: 7px; height: 7px; border-radius: 50%; background: #d6d6d6; transition: background-color .2s, width .2s; }
+  .abc .abc-veeghint span.is-actief { width: 20px; border-radius: 4px; background: var(--abc-goud); }
+}
+@media (min-width: 1001px) { .abc .abc-veeghint { display: none; } }
+
+/* ── KEURING 23 NOV 2026 (drie keurders; referentie voor de vorm: bfbouw.be/lp/dakwerken, gemeten op dezelfde maten). Elke regel noemt de bevinding. ── */
+
+/* beeld-AB-08: het groene online-teken op de zwevende knop rond (een pseudo-element telt niet binnen :is() op r.10, dus bleef het vierkant) */
+.abc.abc.abc .abc-zweef::after { border-radius: 50%; }
+
+/* beeld-AB-07: kop "Offerte aanvragen" van het offerteblok in gewicht 500 zoals elke andere kop (lp-bf.css zette 700 met een zwaardere selector) */
+.abc.bf.bf-lp .bf-lpinsp__tekst h2 { font-weight: 500; }
+
+/* beeld-AB-06: veelgestelde vragen 932 px breed (868 px tekst, BF 860 px); ".abc .abc-raam { max-width: 1264px }" stond later en won */
+.abc .abc-raam.abc-faq__in { max-width: 932px; }
+
+/* beeld-AB-02: adres in het contactblok met dezelfde regelhoogte als de andere tekst; postcode en gemeente blijven samen */
+.abc .abc-nw { white-space: nowrap; }
+.abc .abc-contact__gegevens dd { line-height: 1.5; }
+
+/* beeld-AB-03: voetadres op twee regels (straat, postcode + gemeente) en de regelhoogte van de andere voetregels (BF 22,4 px) */
+.abc .abc-voet__kolom ul { line-height: 1.45; }
+@media (min-width: 1001px) {
+  .abc .abc-voet__raster { grid-template-columns: 1.2fr 0.95fr 0.95fr 1.4fr; }
+  .abc .abc-voet__straat { white-space: nowrap; }
+}
+
+/* beeld-ALLE-03: de lijn boven "© ..." even breed als de inhoud (de rand stond op het kader met zijpadding); op gsm en tablet weer 22 px boven de tekst
+   (".abc .abc-raam { padding: 0 16px }" zette de padding-top van .abc-voet__onder op 0) */
+.abc .abc-voet__onder { position: relative; border-top: 0; }
+.abc .abc-voet__onder::before { content: ""; position: absolute; top: 0; left: 32px; right: 32px; height: 1px; background: rgba(255, 255, 255, .12); }
+@media (max-width: 1000px) {
+  .abc .abc-raam.abc-voet__onder { padding-top: 22px; }
+  .abc .abc-voet__onder::before { left: 16px; right: 16px; }
+}
+
+/* techniek-INZ-04 (zelfde regel op AB): bronvermelding onder de kaart op de lettervloer van 14 px (was 12 px) */
+.abc .abc-gebied__kaart figcaption { font-size: 14px; }
+
+/* beeld-ALLE-05: "Waarom voor ons kiezen" zoals BF: de foto loopt tot de linkerrand van het scherm (tot 120 px buiten de inhoud, zoals BF met zijn
+   kader van 1440 px) */
+@media (min-width: 1001px) {
+  .abc .abc-kiezen__foto { margin-left: calc(-1 * min(120px, max(32px, (100vw - 1200px) / 2))); }
+}
+
+/* beeld-AB-09: de labels van de vertrouwensrij in de offertekaart op gsm allemaal 14 px, zoals BF ("op Google" was 14 px, "garantie" en "ervaring"
+   11,5 px) */
+@media (max-width: 1000px) {
+  .abc.bf.bf-lp .kgj-reken--badges .kgj-reken__trust li > span:not(.kgj-reken__trust-ic):not(.kgj-reken__trust-gic) { font-size: 14px; }
+}
+
+/* beeld-ALLE-01, beeld-AB-10: kop op gsm zoals BF: h1 31 px (twee regels; was 36 px over drie regels), plaatsregel op één regel, tekst over de onderkant
+   van de foto. Zo staat de knop "Offerte aanvragen" op 390x664 in het eerste scherm (was 678-732 px). */
+@media (max-width: 1000px) {
+  .abc .abc-hero__laag { background: linear-gradient(180deg, rgba(10, 22, 40, .1) 0, rgba(10, 22, 40, .22) 80px, rgba(10, 22, 40, .8) 160px, var(--abc-donker) 230px); }
+  .abc .abc-hero__in { padding-top: 220px; }
+  .abc .abc-hero__regio { gap: 8px; padding: 4px 10px 4px 4px; font-size: 14.5px; text-wrap: balance; }
+  .abc .abc-hero__pin { width: 26px; height: 26px; }
+  .abc .abc-hero__pin svg { width: 15px; height: 15px; }
+  .abc .abc-hero__kop { margin-top: 16px; font-size: 31px; line-height: 1.08; }
+  .abc .abc-hero__sub { margin-top: 12px; font-size: 16.5px; line-height: 1.5; }
+  .abc .abc-hero__sub b { margin-bottom: 6px; }
+  .abc .abc-hero__knoppen { margin-top: 20px; }
+}
+@media (max-width: 379.98px) { .abc .abc-hero__kop { font-size: 28px; } }
+@media (max-width: 339.98px) { .abc .abc-hero__kop { font-size: 24px; } }
+/* beeld-ALLE-04: tablet (701-1000 px) zoals BF: de kopinhoud in een kolom van 560 px in het midden, knoppen even breed */
+@media (min-width: 701px) and (max-width: 1000px) {
+  .abc .abc-hero__in { padding-left: max(16px, calc((100% - 560px) / 2)); padding-right: max(16px, calc((100% - 560px) / 2)); }
+}

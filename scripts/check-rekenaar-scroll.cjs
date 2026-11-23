@@ -110,6 +110,10 @@ const SCHERMEN = [[390, 844], [375, 667]];
     {
       const p = await nieuwePagina(390, 844, 'dakwerken');
       for (const l of PADEN.dakwerken) { await p.evaluate((label) => { const b = [...document.querySelectorAll('.kgj-reken button')].find((x) => x.textContent.trim().startsWith(label)); b?.click(); }, l); await wacht(1100); }
+      /* 23 nov 2026: op /lp/dakwerken (LpBfC) staat alleen de kaart onderaan, met de laadstap van 1,2 s na het laatste antwoord. 1,1 s na de
+         laatste tik was het contactblok er nog niet. Wachten tot het er is (hoogstens 6 s), dan meten zoals de bezoeker het ziet. */
+      await p.waitForFunction(() => !!document.querySelector('.kgj-reken .kgj-reken__contact'), { timeout: 6000 }).catch(() => {});
+      await wacht(500);
       const goed = await meetKop(p);
       await p.evaluate(() => { document.querySelector('.kgj-reken').style.setProperty('top', '2000px', 'important'); /* geen transform: de openingsanimatie (fill both) overschrijft die */ });
       await wacht(200);

@@ -53,6 +53,15 @@ const AFGEKEURD_BF = `
 .bf-lpinsp__beeld { display: none !important; }
 .bf-lpinsp__laag { display: none !important; }
 .bf-lpinsp__tekst h2 { color: #121417 !important; }`;
+/* 23 nov 2026: hetzelfde afgekeurde ontwerp in de opbouw van bfbouw.be (LpBfC.tsx, /lp/dakwerken, Mohammed: "in dezelfde stijl zoals bf"). */
+const AFGEKEURD_ABC = `
+.abc .abc-hero__in { background: #fff !important; }
+.abc .abc-hero h1, .abc .abc-hero h1 span { color: #121417 !important; }
+.abc .abc-hero__laag { display: none !important; }
+.bf-lpinsp { background: #f6f6f6 !important; }
+.bf-lpinsp__beeld { display: none !important; }
+.bf-lpinsp__laag { display: none !important; }
+.bf-lpinsp__tekst h2 { color: #121417 !important; }`;
 
 const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
 
@@ -60,6 +69,43 @@ const stop = (code, bericht) => { console.error(bericht); process.exit(code); };
 async function meet(p, hoogte) {
   return p.evaluate((WIT, hoogte) => {
     const fout = [];
+    /* 23 nov 2026: de opbouw van bfbouw.be (LpBfC.tsx, .abc). Zelfde drie regels. Op de pc vult de foto de hero; op gsm en tablet
+       (<= 1000 px) staat de foto als band bovenaan en de tekst op het donkere vlak eronder, zoals bfbouw.be (goedgekeurd 22 nov). */
+    if (document.querySelector('.abc-hero')) {
+      const zicht = (e) => !!e && getComputedStyle(e).display !== 'none' && getComputedStyle(e).visibility !== 'hidden';
+      const hero = document.querySelector('.abc-hero');
+      const hr = hero.getBoundingClientRect();
+      const foto = hero.querySelector('.abc-hero__foto');
+      const fr = foto && foto.getBoundingClientRect();
+      const smal = innerWidth <= 1000;
+      if (!fr || !zicht(foto) || !foto.naturalWidth) fout.push('hero: geen foto');
+      else if (!smal && (fr.height < hr.height * 0.95 || fr.width < hr.width * 0.95)) fout.push(`hero: de foto vult de hero niet (${Math.round(fr.width)}x${Math.round(fr.height)} van ${Math.round(hr.width)}x${Math.round(hr.height)})`);
+      else if (smal && (fr.width < hr.width * 0.95 || fr.height < 200)) fout.push(`hero: de fotoband is te klein (${Math.round(fr.width)}x${Math.round(fr.height)} van ${Math.round(hr.width)} breed)`);
+      const laag = hero.querySelector('.abc-hero__laag');
+      if (!zicht(laag) || getComputedStyle(laag).backgroundImage === 'none') fout.push('hero: geen donkere laag over de foto');
+      const h1 = hero.querySelector('h1');
+      const eerste = h1 && h1.querySelector('span');
+      if (!h1 || getComputedStyle(eerste || h1).color !== WIT) fout.push(`hero: kop is niet wit (${h1 && getComputedStyle(eerste || h1).color})`);
+      for (const el of hero.querySelectorAll('.abc-hero__in, .abc-hero__in > *')) {
+        if ((el.querySelector('h1') || el.matches('h1')) && getComputedStyle(el).backgroundColor !== 'rgba(0, 0, 0, 0)') fout.push(`hero: het tekstvlak heeft een eigen achtergrond (${getComputedStyle(el).backgroundColor})`);
+      }
+      const knop = hero.querySelector('.abc-hero__knoppen .abc-knop');
+      if (!knop) fout.push('hero: geen offerteknop');
+      else {
+        const b = Math.round(knop.getBoundingClientRect().bottom + window.scrollY);
+        if (b > hoogte) fout.push(`hero: knop onder het eerste scherm (${b}px van ${hoogte}px)`);
+      }
+      const cta = document.querySelector('#contact.bf-lpinsp');
+      if (!cta) fout.push('slotblok: geen #contact.bf-lpinsp');
+      else {
+        if (!zicht(cta.querySelector('.bf-lpinsp__beeld'))) fout.push('slotblok: geen foto');
+        const cl = cta.querySelector('.bf-lpinsp__laag');
+        if (!zicht(cl) || getComputedStyle(cl).backgroundImage === 'none') fout.push('slotblok: geen donkere laag');
+        const h2 = cta.querySelector('.bf-lpinsp__tekst h2');
+        if (!h2 || getComputedStyle(h2).color !== WIT) fout.push(`slotblok: kop is niet wit (${h2 && getComputedStyle(h2).color})`);
+      }
+      return fout;
+    }
     if (document.querySelector('.bf-lphero')) {
       /* BF-vorm (LpBf.tsx) */
       const zicht = (e) => !!e && getComputedStyle(e).display !== 'none' && getComputedStyle(e).visibility !== 'hidden';
@@ -164,14 +210,14 @@ async function meet(p, hoogte) {
     const vormen = {};
     for (const pad of PAGINAS) {
       const p = await open(pad, 1440, 900);
-      const vorm = await p.evaluate(() => (document.querySelector('.bf-lphero') ? 'bf' : document.querySelector('.kgj-hero') ? 'kgj' : 'onbekend'));
+      const vorm = await p.evaluate(() => (document.querySelector('.abc-hero') ? 'abc' : document.querySelector('.bf-lphero') ? 'bf' : document.querySelector('.kgj-hero') ? 'kgj' : 'onbekend'));
       await p.close();
-      if (vorm === 'onbekend') stop(2, `FOUT: ${pad} heeft geen .kgj-hero en geen .bf-lphero — de meting is ongeldig`);
+      if (vorm === 'onbekend') stop(2, `FOUT: ${pad} heeft geen .abc-hero, .kgj-hero of .bf-lphero — de meting is ongeldig`);
       if (!vormen[vorm]) vormen[vorm] = pad;
     }
     let gevonden = [];
     for (const [vorm, pad] of Object.entries(vormen)) {
-      const pc = await open(pad, 1440, 900, vorm === 'bf' ? AFGEKEURD_BF : AFGEKEURD);
+      const pc = await open(pad, 1440, 900, vorm === 'abc' ? AFGEKEURD_ABC : vorm === 'bf' ? AFGEKEURD_BF : AFGEKEURD);
       const g = await meet(pc, 900);
       await pc.close();
       if (g.length < 4) stop(2, `FOUT: positieve controle (${vorm}, ${pad}) vond ${g.length} van de ingespoten fouten — de meting is ongeldig:\n  ${g.join('\n  ')}`);

@@ -656,10 +656,12 @@ export const DAKWERKEN: KgjInhoud = {
      Iconen zoals bfbouw.be (vernieuwd dak, isolatie, water): uit de eigen set. */
   voordelen: {
     kop: 'De voordelen van een dakrenovatie',
+    /* 23 nov 2026, Mohammed (BF en AB): "voorkom dure vocht en gevolgschade als eerste en dan minder warmte v als tweede en een dak dat weer tientallen jaren meegaat als 3de,
+       met het woord tientallen eruit en ander woord, tientallen voelt weinig" */
     lijst: [
-      { icoon: 'dienst-renovatie', kleur: 'oranje', titel: 'Een dak dat weer tientallen jaren meegaat', tekst: 'Wij zorgen voor een strakke afwerking met pannen, leien of roofing die passen bij uw woning. Uw huis ziet er direct weer verzorgd uit en is klaar voor de toekomst.' },
-      { icoon: 'dienst-isolatie', kleur: 'blauw', titel: 'Minder warmteverlies, lagere stookkosten', tekst: 'Een nieuw dak met goede isolatie houdt de warmte binnen in de winter en buiten in de zomer. Dat merkt u direct aan het comfort in huis én op uw energiefactuur.' },
       { icoon: 'voordeel-schade', kleur: 'groen', titel: 'Voorkom dure vocht- en gevolgschade', tekst: 'Een verschoven pan of een scheur in de roofing laat ongemerkt regenwater binnen. Door op tijd te renoveren, voorkomt u houtrot in uw dakconstructie en vochtplekken binnen.' },
+      { icoon: 'dienst-isolatie', kleur: 'blauw', titel: 'Minder warmteverlies, lagere stookkosten', tekst: 'Een nieuw dak met goede isolatie houdt de warmte binnen in de winter en buiten in de zomer. Dat merkt u direct aan het comfort in huis én op uw energiefactuur.' },
+      { icoon: 'dienst-renovatie', kleur: 'oranje', titel: 'Een dak dat weer een leven lang meegaat', tekst: 'Wij zorgen voor een strakke afwerking met pannen, leien of roofing die passen bij uw woning. Uw huis ziet er direct weer verzorgd uit en is klaar voor de toekomst.' },
     ],
   },
 
@@ -783,19 +785,18 @@ export const DAKWERKEN: KgjInhoud = {
     kop: 'Veelgestelde vragen',
     eersteOpen: false, // 8 nov 2026, Mohammed (AB localhost): "veelgestelde vragen eerste vraag niet automatisch open aub" (zoals bfbouw.be die dag)
     lijst: [
+      /* 23 nov 2026, Mohammed (voor BF en AB): "doe de vragen welke garantie weg, moet mijn volledige dak vernieuwd worden weg, en dan kan een dakrenovatie ook
+         in de winter als vraag erbij", "volgorde moet zijn kan een dakrenovatie ook in de winter eerst dan hoe lang dan kost dan premie", "bij ab zelfde",
+         "je mag woordelijk aanpassen om mooier te maken". Zelfde vragen en antwoorden als bfbouw.be; de zin over het afdekken staat nu bij de wintervraag. */
+      { v: 'Kan een dakrenovatie ook in de winter?',
+        a: 'Ja, een dak renoveren kan het hele jaar door. Pannen en leien leggen we ook bij koud weer, en een plat dak op een droge dag, zodat de dakbedekking goed hecht. Bij vorst, sneeuw of storm is het dak te glad en te gevaarlijk: dan werken we niet op het dak en schuift de planning op. Ligt het dak aan het einde van de werkdag nog open, dan dekken we het waterdicht af, zodat uw woning ook bij regen droog blijft. Heeft uw dak een lek of liggen er pannen los, wacht dan niet tot de lente: vocht en vorst maken de schade alleen groter.' },
+      { v: 'Hoe lang duurt een dakrenovatie?',
+        a: 'Een plat dak ligt er meestal in één tot twee werkdagen. Een hellend dak van een gewone gezinswoning vernieuwen en isoleren duurt doorgaans één tot twee weken. U blijft intussen gewoon thuis wonen.' },
       { v: 'Wat kost een dakrenovatie?',
-        a: 'De prijs hangt af van het type dak (plat of hellend), de oppervlakte, de staat van het dak en of er isolatie bij komt. Gemiddeld kost een dakrenovatie in België € 50 tot € 200 per m², exclusief btw. Vervangt u alleen de dakbedekking, dan rekent u voor een hellend dak op € 30 tot € 120 per m² en voor een plat dak op € 40 tot € 100. Met nieuwe isolatie erbij wordt dat € 80 tot € 170 voor een hellend en € 70 tot € 150 voor een plat dak, en moet ook het dakhout vernieuwd worden, dan zit u tussen € 150 en € 350 per m². Is uw woning ouder dan tien jaar, dan betaalt u 6% btw in plaats van 21%. Wilt u een prijs op maat voor uw dak?',
+        a: 'Gemiddeld kost een dakrenovatie in België € 50 tot € 200 per m², exclusief btw. Vervangt u alleen de dakbedekking, dan rekent u voor een hellend dak op € 30 tot € 120 per m² en voor een plat dak op € 40 tot € 100. Met nieuwe isolatie erbij wordt dat € 80 tot € 170 voor een hellend en € 70 tot € 150 voor een plat dak, en moet ook het dakhout vernieuwd worden, dan zit u tussen € 150 en € 350 per m². De prijs voor uw dak hangt af van de oppervlakte en de staat ervan. Is uw woning ouder dan tien jaar, dan betaalt u 6% btw in plaats van 21%. Wilt u een prijs op maat voor uw dak?',
         link: 'Vraag dan een gratis offerte aan.' },
       { v: 'Kan ik een premie krijgen voor mijn dak?',
-        a: 'Dat hangt af van uw inkomen. Valt u in inkomenscategorie 3 of 4, dan krijgt u via Mijn VerbouwPremie 35% (categorie 3) of 50% (categorie 4) van de factuur zonder btw terug voor de isolatie en renovatie van uw dak, tot maximaal € 4.025 of € 5.750. Voor categorie 1 en 2 is er sinds 1 maart 2026 geen dakpremie meer. De premie geldt alleen als een aannemer het werk uitvoert. Bij ons krijgt u volledige premiebegeleiding.' },
-      { v: 'Hoe lang duurt een dakrenovatie?',
-        a: 'Dat hangt vooral af van het soort dak en de grootte ervan. Een plat dak ligt er meestal in één tot twee werkdagen, een hellend dak van een gewone gezinswoning vernieuwen en isoleren duurt doorgaans één tot twee weken. U blijft intussen gewoon thuis wonen. Ligt het dak aan het einde van de werkdag nog open, dan dekken we het waterdicht af, zodat uw woning ook bij een regenbui \'s nachts droog blijft.' },
-      /* 7 nov 2026, zoals bfbouw.be (vragen van Dakwerken Smet en Dakinvest). Garantie: 10 jaar (AB, dictaat 13 okt) + de wet (tienjarige
-         aansprakelijkheid van de aannemer); "Ook na de werken blijven we bereikbaar" = het vaste aanspreekpunt (4 okt). */
-      { v: 'Welke garantie geldt er op dakwerken?',
-        a: 'U krijgt 10 jaar garantie. Voor structurele werken geldt daarnaast de wettelijke tienjarige aansprakelijkheid van de aannemer. Ook na de werken blijven we bereikbaar.' },
-      { v: 'Moet mijn volledige dak altijd vernieuwd worden?',
-        a: 'Niet altijd. Tijdens het plaatsbezoek bekijken we wat technisch nodig is en wat niet. Is het hout onder de pannen nog goed, dan vervangen we alleen wat versleten is. Is een groot deel versleten, dan raden we aan om het dak in één keer te vernieuwen.' },
+        a: 'Dat hangt af van uw inkomen. Valt u in inkomenscategorie 3 of 4, dan krijgt u via Mijn VerbouwPremie een deel van de factuur zonder btw terug voor de isolatie en renovatie van uw dak: 35% in categorie 3 (maximaal € 4.025) of 50% in categorie 4 (maximaal € 5.750). Voor categorie 1 en 2 is er sinds 1 maart 2026 geen dakpremie meer. De premie geldt alleen als een aannemer het werk uitvoert. Bij ons krijgt u volledige premiebegeleiding.' },
     ],
   },
 

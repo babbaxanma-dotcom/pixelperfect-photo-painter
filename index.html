@@ -50,16 +50,13 @@
       // Enhanced Conversions: gtag hasht email/phone client-side; Google matched
       // dat tegen ingelogde Google accounts → ~30-50% meer geattribueerde conversies.
       gtag('config', 'AW-18162707660', { allow_enhanced_conversions: true });
-      gtag('config', 'G-VSPZVRD0LW', { anonymize_ip: true, send_page_view: false });
-      gtag('config', 'G-4421GRKGF8', { anonymize_ip: true, send_page_view: false });
+      // 23 nov 2026 (opdracht Mohammed "fix alle conversietracking overal", meting Ads-chat meting/ab/rapport.md): GA4 van Norvo, property abgroep.be
+      // (stream 16394422217). De twee GA4's van het bureau (G-VSPZVRD0LW, G-4421GRKGF8) zijn weg; page_view, form_start, generate_lead en
+      // phone_call_click stuurt src/lib/tracking.ts naar deze ene ID.
+      gtag('config', 'G-NWBSQ6W0BZ', { anonymize_ip: true, send_page_view: false });
     </script>
-    <!-- Google Tag Manager (25 okt 2026, container van de externe PPC-beheerder; na de Consent Mode-standaard hierboven) -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-W9CB4ZHK');</script>
-    <!-- End Google Tag Manager -->
+    <!-- 23 nov 2026: Google Tag Manager GTM-W9CB4ZHK (container van het bureau, 25 okt) is weg. Hij bevatte 2 conversietags die in de app nooit
+         vuurden, een oproeptag en een vierde Clarity-project (z99nm1qd3z). De Ads-conversies komen uit src/lib/tracking.ts (formulier hmUY, belklik OpJl). -->
     <!-- Microsoft Clarity: start hier, vóór de pagina in beeld staat (14 nov 2026, Mohammed: "fixen dat we bij ab bouw groep
          website alle klikken krijgen in clarity"). Tot 14 nov startte Clarity pas in een React-effect, ná het laden van de app:
          gemeten op de live dakpagina (gsm, trage 4G) stond de pagina na 3,0 s in beeld en vertrok het Clarity-verzoek na 6,3 s;
@@ -133,10 +130,6 @@
   </head>
 
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W9CB4ZHK"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

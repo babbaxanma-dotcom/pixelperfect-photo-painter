@@ -153,6 +153,12 @@ function paginaToets(modus) {
   const LP_DIA = '.bf-lphero__slides > img.bf-lphero__beeld, .kgj-hero__foto > .kgj-dia > img';
   const LP_SLOT = '#contact img.bf-lpinsp__beeld, #contact .kgj-cta__foto > img';
   const LP_DIENST = '#diensten img.bf-dkaart__beeld'; // 8 nov 2026: de foto's van de dienstvakjes (keuze Mohammed "Stock in alle 4")
+  /* 23 nov 2026: /lp/dakwerken in de opbouw van bfbouw.be (LpBfC.tsx, .abc; Mohammed: "in dezelfde stijl zoals bf"). Daar is geen diashow meer:
+     stock mag alleen tussendoor (zijn regel van 4 nov: "enkel stockfotos voor tussendoor", "niet als realisaties"): in de dienstvakjes, als
+     achtergrond van de dienstenband, bij de tips (kaart en artikelfoto) en als slotblokfoto. Nooit in de hero, Waarom voor ons kiezen,
+     de realisatie, de uitleg of de werkwijze; elke stockfoto hoogstens één keer op de pagina. */
+  const ABC = !!document.querySelector('.abc');
+  const ABC_MAG = '#diensten .abc-dienst__foto img, .abc-diensten__band img, #blog img.abc-post__beeld, .abc-sub__foto img, #contact img.bf-lpinsp__beeld';
   const ALT = /\bAB\b|\b(ons|onze|wij|we|door)\b/i;
   const fout = [];
   const beelden = [...document.querySelectorAll('img')].filter((i) => STOCK.test(i.getAttribute('src') || '') || STOCK.test(i.getAttribute('srcset') || ''));
@@ -164,7 +170,9 @@ function paginaToets(modus) {
     const blok = i.closest('section');
     const waar = blok ? (blok.id ? '#' + blok.id : '.' + String(blok.className).split(' ')[0]) : '(geen sectie)';
     if (!magStock) fout.push(`b: ${naam} op een route zonder stockfoto's (${waar})`);
-    if (lp) {
+    if (lp && ABC) {
+      if (!i.matches(ABC_MAG)) fout.push(`a: ${naam} buiten de dienstvakjes, de dienstenband, de tips en de slotblokfoto (${waar})`);
+    } else if (lp) {
       const dia = i.matches(LP_DIA) ? diaLijst.indexOf(i) + 1 : 0;
       const slot = i.matches(LP_SLOT);
       if (!dia && !slot && !i.matches(LP_DIENST)) fout.push(`a: ${naam} buiten de hero-dia's, de slotblokfoto en de dienstvakjes (${waar})`);
@@ -179,7 +187,9 @@ function paginaToets(modus) {
     if (ALT.test(i.alt || '')) fout.push(`c: ${naam} alt "${i.alt}"`);
     gezien[naam] = (gezien[naam] || 0) + 1;
   }
-  if (lp) {
+  if (lp && ABC) {
+    for (const [n, k] of Object.entries(gezien)) if (k > 1) fout.push(`d: ${n} ${k} keer op de pagina`);
+  } else if (lp) {
     /* precies één herhaling mag: een dia vanaf dia 2 opnieuw als slotblokfoto */
     for (const [n, k] of Object.entries(gezien)) {
       if (k < 2) continue;
@@ -289,6 +299,26 @@ function paginaToets(modus) {
         /* positieve controle LP: (a) in #waarom, (c) slechte alt, (d) dubbele dia en dia 1 als slotblokfoto */
         const ctl = await p.evaluate((tf) => {
           const toets = new Function('return (' + tf + ')')();
+          /* 23 nov 2026, opbouw van bfbouw.be (.abc): (a) een stockfoto in #waarom, (c) een slechte alt, (d) een stockfoto twee keer bij de tips */
+          if (document.querySelector('.abc')) {
+            const bron = document.querySelector('.abc-diensten__band img, #diensten .abc-dienst__foto img');
+            const tipRij = document.querySelector('#blog .abc-blog__rij');
+            const waarom = document.querySelector('#waarom');
+            const tipStock = [...document.querySelectorAll('#blog img.abc-post__beeld')].find((i) => /\/stock-/.test(i.getAttribute('src') || ''));
+            if (!bron || !/\/stock-/.test(bron.getAttribute('src') || '') || !tipRij || !waarom || !tipStock) return { ok: false, reden: `abc: stockbron ${!!bron}, tipsrij ${!!tipRij}, #waarom ${!!waarom}, stockfoto bij de tips ${!!tipStock}` };
+            const r = { ok: true };
+            const a = bron.cloneNode(); a.className = ''; a.alt = 'neutraal'; waarom.appendChild(a);
+            r.a = toets('lp').fout.some((f) => f.startsWith('a: ') && f.includes('#waarom'));
+            a.remove();
+            const c = tipStock.cloneNode(); c.alt = 'Dak gelegd door AB Bouw Groep'; tipStock.parentElement.appendChild(c);
+            r.c = toets('lp').fout.some((f) => f.startsWith('c: '));
+            c.remove();
+            const d = tipStock.cloneNode(); d.alt = 'neutraal'; tipStock.parentElement.appendChild(d);
+            r.dHero = toets('lp').fout.some((f) => f.startsWith('d: ') && f.includes('2 keer op de pagina'));
+            d.remove();
+            r.dSlot = true; /* geen diashow in deze vorm: de regel "dia 1 als slotblokfoto" bestaat hier niet; (d) is hierboven getoetst */
+            return r;
+          }
           const dias = [...document.querySelectorAll('.bf-lphero__slides > img.bf-lphero__beeld, .kgj-hero__foto > .kgj-dia > img')];
           const slot = document.querySelector('#contact img.bf-lpinsp__beeld, #contact .kgj-cta__foto > img');
           /* 7 nov 2026: op /lp/dakwerken staat 'Wat heeft uw dak nodig?' (#uitleg, eigen foto) op de plek van #waarom; de controle plant in het blok dat er is */

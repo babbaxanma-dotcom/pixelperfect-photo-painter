@@ -16,8 +16,11 @@ const GADS_ID = (import.meta.env.VITE_GADS_ID as string) || 'AW-18162707660';
 const GADS_LABEL_FORM = (import.meta.env.VITE_GADS_CONVERSION_LABEL_FORM as string) || 'hmUYCOLzvbMcEMzZ09RD';
 const GADS_LABEL_CALL = (import.meta.env.VITE_GADS_CONVERSION_LABEL_CALL as string) || 'OpJlCKGwvrMcEMzZ09RD';
 const GADS_LABEL_NEWS = (import.meta.env.VITE_GADS_CONVERSION_LABEL_NEWS as string) || '';
-const GA4_ID = (import.meta.env.VITE_GA4_ID as string) || 'G-VSPZVRD0LW';
-const GA4_ID_LP = (import.meta.env.VITE_GA4_ID_LP as string) || 'G-4421GRKGF8';
+/* 23 nov 2026 (opdracht Mohammed "fix alle conversietracking overal", meting Ads-chat): GA4 van Norvo (property abgroep.be, G-NWBSQ6W0BZ) voor
+   de hele site en de LP's. Vast in de code: een oude VITE_GA4_ID in .env of in de hosting mag de GA4's van het bureau (G-VSPZVRD0LW,
+   G-4421GRKGF8) niet terugzetten. De Ads-conversies (GADS_ID, labels hmUY en OpJl) blijven zoals ze zijn. */
+const GA4_ID = 'G-NWBSQ6W0BZ';
+const GA4_ID_LP = 'G-NWBSQ6W0BZ';
 
 // LP-paden: /lp/*, /lokaal/*, /bedankt → naar GA4_LP property
 function isLpPath(path: string): boolean {

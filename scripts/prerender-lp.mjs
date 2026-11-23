@@ -21,7 +21,8 @@ import { pathToFileURL } from 'node:url';
 const ROOT = process.cwd();
 const DIST = path.join(ROOT, 'dist');
 const ROUTES = {
-  '/lp/dakwerken': 'src/pages/abbouw/lp/kgj/LpBf.tsx',
+  /* 23 nov 2026: /lp/dakwerken draait op LpBfC (BF-opbouw); de CSS van LpBfC (lp-bfc.css) moet blokkerend in de head, anders flitst de pagina zonder opmaak */
+  '/lp/dakwerken': 'src/pages/abbouw/lp/kgj/LpBfC.tsx',
   '/lp/dakwerken/asbest': 'src/pages/abbouw/lp/kgj/LpBfAsbest.tsx',
   '/lp/totaalrenovatie': 'src/pages/abbouw/lp/kgj/LpTotaalrenovatie.tsx',
   '/lp/aannemer-renovatiewerken': 'src/pages/abbouw/lp/kgj/LpRenovatiewerken.tsx',
@@ -69,7 +70,17 @@ for (const [route, bron] of Object.entries(ROUTES)) {
       `requestAnimationFrame(function(){setTimeout(laad,0)});setTimeout(laad,3000)})()</script>`;
     // 11 nov 2026, Mohammed: 'nog alleen in die logo bij tabbladen': de dakpagina's krijgen het teken van AB Dakwerken als tabbladicoon
     const dakIconen = (h) => { const uit = h.replace('<link rel="icon" type="image/x-icon" href="/favicon.ico" />', '').replace('href="/favicon-16.png"', 'href="/favicon-dak-16.png"').replace('href="/favicon-32.png"', 'href="/favicon-dak-32.png"').replace('href="/apple-touch-icon.png"', 'href="/apple-touch-dak.png"'); if (!uit.includes('/favicon-dak-32.png') || uit.includes('/favicon.ico')) throw new Error('tabbladicoon van de dakpagina niet gezet: ' + route); return uit; };
-    const pagina = (route.startsWith('/lp/dakwerken') ? dakIconen(sjabloon) : sjabloon)
+    /* 23 nov 2026, Mohammed: "doe op ab paginas logo en naam van ab bouw groep gewoon ipv ab dakwerken". Ook het tabbladicoon is weer dat van AB Bouw Groep; dakIconen blijft staan voor een terugkeer. */
+    /* 23 nov 2026: de voorgerenderde dakpagina droeg de titel en beschrijving van de homepagina ("AB Bouw Group — Renovatie en verbouwing in Vlaanderen",
+       met "Group"); Google en de advertentiecontrole lezen die eerst. Nu de titel en beschrijving van de pagina zelf (LpBfC.tsx BFC.titel, inhoud.ts DAKWERKEN.omschrijving). */
+    const KOP = { '/lp/dakwerken': { titel: 'Dakwerken in Willebroek en omstreken | AB Bouw Groep', beschrijving: 'Dakrenovatie, nieuw dak of dakisolatie. Vraag uw gratis offerte aan bij AB Bouw Groep, werken aan 6% btw.' } }[route];
+    const metKop = (h) => !KOP ? h : h
+      .replace(/<title>[^<]*<\/title>/, `<title>${KOP.titel}</title>`)
+      .replace(/(<meta name="description" content=")[^"]*(")/, `$1${KOP.beschrijving}$2`)
+      .replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${KOP.titel}$2`)
+      .replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${KOP.beschrijving}$2`)
+      .replace(/(<meta name="twitter:title" content=")[^"]*(")/, `$1${KOP.titel}$2`);
+    const pagina = metKop(false && route.startsWith('/lp/dakwerken') ? dakIconen(sjabloon) : sjabloon)
       .replace(hoofd[0], '')
       .replace(/<link rel="modulepreload" crossorigin href="\/assets\/[^"]+\.js">/g, '')
       .replace('</head>', `${extraCss}</head>`)

@@ -278,7 +278,9 @@ function GoogleBadge({ klasse }: { klasse: string }) {
 }
 
 export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
-  const vakLogo = inhoud.divisie === 'ab_dakwerken'; // dakwerken en de asbestpagina
+  /* 23 nov 2026, Mohammed: "doe op ab paginas logo en naam van ab bouw groep gewoon ipv ab dakwerken". Was: inhoud.divisie === 'ab_dakwerken'
+     (vaklogo AB Dakwerken op dakwerken en asbest, 11 nov). */
+  const vakLogo = false;
   const vat = useRef<HTMLDivElement>(null);
   const [dia, setDia] = useState(0);
   const [balk, setBalk] = useState(false);
