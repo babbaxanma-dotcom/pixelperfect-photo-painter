@@ -78,8 +78,17 @@ const BFC = {
      Belgische postcode groen geven, met de juiste gemeente. */
   gebied: {
     kop: 'Actief in Willebroek en omstreken',
-    sub: 'Vanuit Willebroek komen wij bij u langs in heel Oost-Vlaanderen en Vlaams-Brabant.',
+    sub: 'Vanuit Willebroek komen wij bij u langs in de gemeenten rond Willebroek en in heel Oost-Vlaanderen en Vlaams-Brabant.',
     thuis: 'Willebroek',
+    /* 23 nov 2026 (uitvoeringsplan 24 nov, stap 1 AB): de gemeenten rond Willebroek bij naam in de lijst en op de kaart, omdat de advertenties op
+       "dakwerken <gemeente>" lopen en de zoeker zijn gemeente op de pagina moet zien. Bewust geen "heel provincie Antwerpen" (gebied van Bega Fortuna).
+       Op de grote kaart zijn deze gemeenten te klein voor een naam (4,4 px per km): ze staan daar als vlak, en met naam op de detailkaart eronder
+       (zelfde vlakken, uitsnede rond Willebroek; richting = waar de naam naast het punt staat: b boven, o onder, l links, r rechts). */
+    rond: { naam: 'Rond Willebroek', steden: ['Mechelen', 'Boom', 'Puurs', 'Bornem', 'Rumst', 'Duffel', 'Niel', 'Schelle', 'Hemiksem', 'Aartselaar', 'Sint-Katelijne-Waver'] },
+    detail: {
+      x: 260, y: 98, b: 150, h: 96,
+      richting: { Willebroek: 'o', Hemiksem: 'l', Schelle: 'l', Niel: 'l', Aartselaar: 'r', Boom: 'b', Rumst: 'r', Duffel: 'b', 'Sint-Katelijne-Waver': 'o', Mechelen: 'o', Puurs: 'o', Bornem: 'b' } as Record<string, 'b' | 'o' | 'l' | 'r'>,
+    },
     provincies: [
       { naam: 'Oost-Vlaanderen', steden: ['Gent', 'Aalst', 'Sint-Niklaas', 'Dendermonde', 'Lokeren', 'Ninove', 'Oudenaarde', 'Geraardsbergen'] },
       { naam: 'Vlaams-Brabant', steden: ['Leuven', 'Vilvoorde', 'Halle', 'Dilbeek', 'Grimbergen', 'Asse', 'Tienen', 'Aarschot'] },
@@ -312,6 +321,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
   const band = V?.beelden?.band ?? inhoud.hero.dias[2] ?? inhoud.hero.dias[0];
   const G = BFC.gebied;
   const K = REGIOKAART_AB;
+  const detailZ = K.W / G.detail.b; // vergroting van de detailkaart rond Willebroek
 
   /* Diensten: de dienst van de subpagina eerst (VARIANTEN_AB). Foto per dienst: Dakrenovatie = het stilstaande beeld van de hoeve (dictaat 23 nov). */
   const dienstenLijst = V ? [...inhoud.diensten.lijst].sort((a, b) => Number(b.id === V.dienst) - Number(a.id === V.dienst)) : inhoud.diensten.lijst;
@@ -581,6 +591,10 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
               <h2 className="abc-h2" id="abc-gebied-kop">{G.kop}</h2>
               <p className="abc-gebied__sub">{G.sub}</p>
               <div className="abc-gebied__adres"><span className="abc-gebied__pin"><IcPin /></span><div><b>AB Bouw Groep</b><span>{CONTACT.address.full}</span></div></div>
+              <div className="abc-gebied__provincie">
+                <p className="abc-gebied__provnaam">{G.rond.naam}</p>
+                <ul className="abc-gebied__chips">{G.rond.steden.map((g) => <li key={g}>{g}</li>)}</ul>
+              </div>
               {G.provincies.map((p) => (
                 <div className="abc-gebied__provincie" key={p.naam}>
                   <p className="abc-gebied__provnaam">Heel {p.naam}</p>
@@ -591,11 +605,22 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
               <RegioCheck />
             </div>
             <figure className="abc-gebied__kaart">
-              <svg viewBox={`0 0 ${K.W} ${K.H}`} role="img" aria-label={`Kaart van het werkgebied: ${G.thuis}, ${G.provincies.map((p) => p.naam).join(' en ')}`}>
-                <g className="abc-gebied__vlakken">{K.vlakken.map((v) => <path key={v.naam} className={v.naam === G.thuis ? 'is-thuis' : undefined} d={v.d} fillRule="evenodd" />)}</g>
+              <svg viewBox={`0 0 ${K.W} ${K.H}`} role="img" aria-label={`Kaart van het werkgebied: ${G.thuis}, de gemeenten rond ${G.thuis}, ${G.provincies.map((p) => p.naam).join(' en ')}`}>
+                <g className="abc-gebied__vlakken">{K.vlakken.map((v) => <path key={v.naam} className={v.naam === G.thuis ? 'is-thuis' : G.rond.steden.includes(v.naam) ? 'is-buur' : undefined} d={v.d} fillRule="evenodd" />)}</g>
                 <g className="abc-gebied__namen">{K.labels.filter((l) => G.opKaart.includes(l.naam)).map((l) => (
                   <g key={l.naam} className={l.naam === G.thuis ? 'is-thuis' : undefined}><circle cx={l.x} cy={l.y} r={l.naam === G.thuis ? 5 : 3.4} /><text x={l.x} y={l.y - 10} textAnchor="middle">{l.naam}</text></g>
                 ))}</g>
+              </svg>
+              <p className="abc-gebied__kaartkop">{G.rond.naam}</p>
+              <svg viewBox={`0 0 ${K.W} ${Math.round(G.detail.h * detailZ)}`} role="img" aria-label={`Detailkaart rond ${G.thuis}: ${G.rond.steden.join(', ')}`}>
+                <g className="abc-gebied__vlakken" transform={`scale(${detailZ}) translate(${-G.detail.x} ${-G.detail.y})`}>
+                  {K.vlakken.map((v) => <path key={v.naam} className={v.naam === G.thuis ? 'is-thuis' : G.rond.steden.includes(v.naam) ? 'is-buur' : undefined} d={v.d} fillRule="evenodd" vectorEffect="non-scaling-stroke" />)}
+                </g>
+                <g className="abc-gebied__namen">{K.labels.filter((l) => l.naam === G.thuis || G.rond.steden.includes(l.naam)).map((l) => {
+                  const x = +((l.x - G.detail.x) * detailZ).toFixed(1), y = +((l.y - G.detail.y) * detailZ).toFixed(1), thuis = l.naam === G.thuis, r = G.detail.richting[l.naam] ?? 'b';
+                  const t = r === 'b' ? { x, y: y - 10, a: 'middle' as const } : r === 'o' ? { x, y: y + (thuis ? 24 : 21), a: 'middle' as const } : r === 'r' ? { x: x + 9, y: y + 5, a: 'start' as const } : { x: x - 9, y: y + 5, a: 'end' as const };
+                  return <g key={l.naam} className={thuis ? 'is-thuis' : undefined}><circle cx={x} cy={y} r={thuis ? 5 : 3.4} /><text x={t.x} y={t.y} textAnchor={t.a}>{l.naam}</text></g>;
+                })}</g>
               </svg>
               <figcaption>{K.bron}</figcaption>
             </figure>

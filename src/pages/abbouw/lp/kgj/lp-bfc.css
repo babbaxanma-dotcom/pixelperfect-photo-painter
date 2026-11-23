@@ -141,7 +141,10 @@
 .abc .abc-gebied__kaart { margin: 0; padding: 8px; background: #fff; border: 1px solid var(--abc-lijn); }
 .abc .abc-gebied__kaart svg { display: block; width: 100%; height: auto; background: #f1f3f6; }
 .abc .abc-gebied__vlakken path { fill: #fbe7c4; stroke: #dca757; stroke-width: 1.2; stroke-linejoin: round; }
+/* 23 nov 2026: de gemeenten rond Willebroek (iets vollere tint dan de provincies) en de kop van de detailkaart. Volgorde: buur vóór thuis. */
+.abc .abc-gebied__vlakken path.is-buur { fill: #f7d59a; }
 .abc .abc-gebied__vlakken path.is-thuis { fill: var(--abc-goud); stroke: #a86c02; }
+.abc .abc-gebied__kaartkop { margin: 12px 0 8px; font-family: var(--abc-kop); font-size: 17px; font-weight: 600; color: var(--abc-donker); }
 .abc .abc-gebied__namen circle { fill: var(--abc-donker); }
 .abc .abc-gebied__namen text { font-family: var(--abc-font); font-size: 15px; font-weight: 600; fill: var(--abc-donker); paint-order: stroke; stroke: #fff; stroke-width: 3.5px; stroke-linejoin: round; }
 .abc .abc-gebied__namen .is-thuis text { font-size: 18px; font-weight: 700; }
