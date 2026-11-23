@@ -155,8 +155,11 @@ function useSmal() {
   return smal;
 }
 
-export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
+export default function Aanvraag({ inhoud, voor, boven, plek = 'hero', kaartkop }: {
   inhoud: KgjInhoud;
+  /** Eigen kop van deze ene kaart (23 nov 2026, kaart in de hero van /lp/dakwerken: "Gratis offerte in 2 minuten" met een regel eronder); de andere
+      kaart op de pagina houdt de kop uit inhoud.aanvraag. Alleen tekst: vragen, verzending en meting zijn die van de kaart zonder eigen kop. */
+  kaartkop?: { titel: string; regel?: string };
   /** hero = de kaart bovenaan (form_start-label met :hero, Clarity aanvraag-*); onder = dezelfde kaart in het slotblok
       (#contact, 22 okt 2026: "onderaan bij plaatsbezoek de form zo dat je makkelijk kan klikken"): form_start-label = de
       bron_lead zelf, zoals het formulier van Inspectie.tsx dat daar had, en eigen Clarity-events (aanvraag-onder-*). */
@@ -491,7 +494,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
      blok 19 nov), ook tijdens het wegvagen: zo ligt de kaart nooit een moment onder de wazige sluier. */
   useEffect(() => {
     const el = kaart.current;
-    const ouder = el?.closest<HTMLElement>('.bf-lphero__in, .bf-lpinsp__in');
+    const ouder = el?.closest<HTMLElement>('.bf-lphero__in, .bf-lpinsp__in, .abc-hero__in');
     document.documentElement.classList.toggle('is-rkfocus', !!document.querySelector('.kgj-reken.is-focus'));
     if (!ouder) return;
     if (focus) { ouder.classList.add('is-rkfocus'); return; }
@@ -866,9 +869,10 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero' }: {
       {/* 18 nov 2026 (v2, Mohammed: "gewoon de algemene stijl robuuster minder speels"): kaartkop zonder icoonvierkant. */}
       <div className="kgj-reken__hoofd">
         <div>
-          <p className="kgj-reken__titel">{a.titel}</p>
+          <p className="kgj-reken__titel">{kaartkop?.titel ?? a.titel}</p>
+          {kaartkop?.regel && <p className="kgj-reken__regel">{kaartkop.regel}</p>}
           {/* 2 nov 2026: zonder tijdregel als tijd leeg is (bfbouw.be 31 okt: kaartkop "Gratis offerte aanvragen" alleen). */}
-          {a.tijd && <p className="kgj-reken__tijd"><Clock aria-hidden="true" />{a.tijd}</p>}
+          {!kaartkop && a.tijd && <p className="kgj-reken__tijd"><Clock aria-hidden="true" />{a.tijd}</p>}
         </div>
       </div>
       {boven}

@@ -641,3 +641,24 @@ html.is-afronden .abc .abc-zweef { opacity: 0 !important; visibility: hidden !im
 .abc .abc-gebied__provnaam { margin: 0 0 10px; font-family: var(--abc-kop); font-size: 18px; font-weight: 600; color: var(--abc-donker); }
 .abc .abc-gebied__provincie .abc-gebied__chips { margin: 0; }
 .abc .abc-gebied__provincie:last-of-type { margin-bottom: 28px; }
+
+/* ===== Aanvraagkaart in de hero van /lp/dakwerken (23 nov 2026) =====
+   Mohammed: "Stap 1 van het bestaande formulier komt als kaart in de hero, in de opbouw die AB al heeft op /lp/dakwerken/asbest. Op mobiel staat de
+   kaart direct onder de kop en de zin." Computer: tekst links, kaart rechts (de kaart beslaat alle rijen; de laatste rij rekt, zodat regio, kop, zin en
+   knop bij elkaar blijven als de kaart hoger is dan de tekst). Gsm en tablet: gewone volgorde (regio, kop, zin, kaart, knop). */
+.abc .abc-hero__in--kaart { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 470px); grid-template-rows: auto auto auto 1fr; column-gap: 72px; align-items: start; }
+.abc .abc-hero__in--kaart > * { grid-column: 1; }
+/* de plaatsregel blijft zo breed als zijn tekst (in een raster zou hij de hele kolom vullen) */
+.abc .abc-hero__in--kaart > .abc-hero__regio { justify-self: start; }
+.abc .abc-hero__in--kaart > .abc-hero__kaart { grid-column: 2; grid-row: 1 / -1; align-self: center; min-width: 0; }
+.abc .kgj-reken__regel { margin: 6px 0 0; font-family: var(--abc-font); font-size: 15.5px; line-height: 1.45; font-weight: 400; color: var(--abc-tekst); }
+/* Focusstand: de kaart komt boven de sluier (z-index 1000, in de wortel); daarvoor mag het binnenvak van de hero geen eigen stapellaag zijn
+   (zoals .bf-lphero__in en .bf-lpinsp__in in lp-bf-ab.css, blok 19 nov; Aanvraag.tsx zet is-rkfocus ook op .abc-hero__in). */
+.abc .abc-hero__in.is-rkfocus { z-index: auto; }
+.abc .abc-hero__in.is-rkfocus .kgj-reken.kgj-reken--aanvraag { position: relative; z-index: 1001; }
+@media (min-width: 1001px) and (max-width: 1300px) { .abc .abc-hero__in--kaart { grid-template-columns: minmax(0, 1fr) minmax(0, 430px); column-gap: 40px; } .abc .abc-hero__in--kaart .abc-hero__kop { font-size: clamp(40px, 4vw, 54px); } }
+@media (max-width: 1000px) {
+  .abc .abc-hero__in--kaart { display: block; }
+  .abc .abc-hero__kaart { margin-top: 20px; }
+  .abc .abc-hero__in--kaart .abc-hero__knoppen { margin-top: 14px; }
+}

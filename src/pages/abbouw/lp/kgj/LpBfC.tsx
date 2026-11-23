@@ -52,6 +52,11 @@ const BFC = {
   kop2: 'Kies voor vakmanschap.',
   /* 23 nov 2026 (keuring tekst-AB-03): bij AB staat er één realisatie zonder datum (de hoeve); "Bekijk recente daken" (bfbouw.be, drie daken) beloofde meer */
   knop2: { href: '#realisaties', tekst: 'Bekijk ons werk' },
+  /* 23 nov 2026, Mohammed (19:38): "FORMULIER IN DE HERO ... Stap 1 van het bestaande formulier komt als kaart in de hero, in de opbouw die AB al heeft
+     op /lp/dakwerken/asbest. Op mobiel staat de kaart direct onder de kop en de zin." Titel en regel woordelijk zijn dictaat. Alleen op /lp/dakwerken
+     zelf; de knop "Offerte aanvragen" in de hero vervalt daar, het formulier onderaan blijft. De twee kaarten delen één stand (AanvraagStaat): zelfde
+     vragen, zelfde verzending, zelfde meting. */
+  heroKaart: { titel: 'Gratis offerte in 2 minuten', regel: 'Beantwoord een paar korte vragen. Wij nemen binnen 24 uur contact op.' },
   /* Subkop woordelijk bfbouw.be (vette eerste zin + zin over ervaring en werk); AB-feit: "meer dan 15 jaar ervaring" (DAKWERKEN.waarom, zijn woord), BF: 25 jaar. */
   subVet: 'Zoekt u een dakwerker in de buurt die kwaliteit levert en afspraken nakomt? Die hebt u gevonden.',
   sub: 'Met meer dan 15 jaar ervaring, oog voor detail en kwaliteitsvolle materialen zorgen wij voor een perfect afgewerkt dak.',
@@ -324,6 +329,8 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
   const band = V?.beelden?.band ?? inhoud.hero.dias[2] ?? inhoud.hero.dias[0];
   const slot = V?.beelden?.slot ?? (inhoud === DAKWERKEN ? { src: slotFoto, alt: 'Hellend pannendak in het avondlicht' } : inhoud.cta.foto);
   const G = BFC.gebied;
+  /* Aanvraagkaart in de hero: alleen de hoofdpagina /lp/dakwerken (geen subpagina, artikel of dienstpagina). */
+  const heroKaart = !V && !tip && !dienst && inhoud === DAKWERKEN && !!inhoud.aanvraag;
   const K = REGIOKAART_AB;
   const detailZ = K.W / G.detail.b; // vergroting van de detailkaart rond Willebroek
 
@@ -483,15 +490,17 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
         <section className="abc-hero" id="top">
           <img className="abc-hero__foto" src={hero.src} alt={hero.alt} loading="eager" decoding="async" {...{ fetchpriority: 'high' }} />
           <div className="abc-hero__laag" aria-hidden="true" />
-          <div className="abc-hero__in">
+          <div className={`abc-hero__in${heroKaart ? ' abc-hero__in--kaart' : ''}`}>
             <p className="abc-hero__regio"><span className="abc-hero__pin"><IcPin /></span>{V?.regio ?? BFC.regio}</p>
             <h1 className="abc-hero__kop">
               <span>{eigenKop ? metAccent(eigenKop) : V?.kop ?? BFC.kop}</span>{' '}
               <span className="abc-accent">{BFC.kop2}</span>
             </h1>
             <p className="abc-hero__sub"><b>{V?.subVet ?? BFC.subVet}</b> {BFC.sub}</p>
+            {/* Computer: de kaart rechts naast kop en zin. Gsm: direct onder de zin, vóór de knop "Bekijk ons werk". */}
+            {heroKaart && <div className="abc-hero__kaart"><Aanvraag inhoud={inhoud} voor={voor} kaartkop={BFC.heroKaart} /></div>}
             <div className="abc-hero__knoppen">
-              {offerteKnop()}
+              {!heroKaart && offerteKnop()}
               <a className="abc-knop abc-knop--rand" href={BFC.knop2.href}>{BFC.knop2.tekst}</a>
             </div>
           </div>
@@ -689,7 +698,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
       </main>
 
       <a className={`abc-zweef${zweef ? ' is-zichtbaar' : ''}`} href="#gegevens" aria-label="Stuur ons een bericht" tabIndex={zweef ? 0 : -1} aria-hidden={!zweef}><IcBericht /></a>
-      <AfrondKnop />
+      {!heroKaart && <AfrondKnop />}
 
       <footer className="abc-voet kgj-voet">
         <div className="abc-raam abc-voet__raster">

@@ -269,16 +269,39 @@ const kopVan = (pg) => (ABC[pg.pad] ? pg.kopAbc : pg.kop);
      keuzes van de kaart onderaan volledig in beeld, onder de vaste kopbalk. */
   const eersteSchermAbc = async (p, pg) => {
     const uit = [];
-    const knop = await p.evaluate((naarKnop) => {
+    /* 23 nov 2026 (avond, Mohammed: "Stap 1 van het bestaande formulier komt als kaart in de hero ... Op mobiel staat de kaart direct onder de kop en de
+       zin", "De knop Offerte aanvragen in de hero vervalt"): heeft de hero een aanvraagkaart (.abc-hero__kaart), dan: de kaart draagt zijn titel en regel,
+       vraag 1 en haar keuzes; ze begint in het eerste scherm; de hero heeft geen knop naar #contact meer. De kaart onderaan bereikt de bezoeker dan met de
+       eerste knop "Offerte aanvragen" verderop; die tik wordt gemeten zoals de heroknop (vraag 1 en keuzes van de kaart onderaan in beeld). */
+    const hk = await p.evaluate(() => {
+      const k = document.querySelector('.abc-hero__kaart .kgj-reken--aanvraag'); if (!k) return null;
+      const r = k.getBoundingClientRect();
+      return { titel: k.querySelector('.kgj-reken__titel')?.textContent.trim(), regel: k.querySelector('.kgj-reken__regel')?.textContent.trim() || '',
+        vraag: k.querySelector('.kgj-reken__stap .kgj-reken__vraag')?.textContent.trim(), keuzes: [...k.querySelectorAll('.kgj-reken__stap .kgj-reken__keuze')].map((x) => x.querySelector('strong')?.textContent.trim()),
+        top: Math.round(r.top), H: innerHeight, heroKnop: [...document.querySelectorAll('.abc-hero a[href="#contact"]')].filter((x) => x.getClientRects().length).length };
+    });
+    if (hk) {
+      if (hk.titel !== 'Gratis offerte in 2 minuten') uit.push(`de kaart in de hero heet "${hk.titel}" in plaats van "Gratis offerte in 2 minuten"`);
+      if (hk.regel !== 'Beantwoord een paar korte vragen. Wij nemen binnen 24 uur contact op.') uit.push(`de regel onder de titel van de herokaart is "${hk.regel}"`);
+      if (hk.vraag !== pg.vraag1) uit.push(`herokaart: eerste vraag "${hk.vraag}" in plaats van "${pg.vraag1}"`);
+      if (hk.keuzes.join('|') !== pg.keuzes1.join('|')) uit.push(`herokaart: keuzes ${hk.keuzes.join(' / ')} in plaats van ${pg.keuzes1.join(' / ')}`);
+      if (hk.top >= hk.H) uit.push(`de kaart in de hero begint buiten het eerste scherm (bovenkant ${hk.top} van ${hk.H})`);
+      if (hk.heroKnop) uit.push('de hero heeft naast de kaart nog een knop naar #contact');
+    }
+    const knop = await p.evaluate(async (naarKnop, metKaart) => {
       const H = innerHeight;
+      let a = [...document.querySelectorAll('.abc-hero a[href="#contact"]')].find((x) => x.getClientRects().length);
+      if (!a && metKaart) {
+        a = [...document.querySelectorAll('main a[href="#contact"]')].find((x) => !x.closest('.abc-hero') && x.getClientRects().length);
+        if (a) { a.scrollIntoView({ block: 'center', behavior: 'instant' }); await new Promise((r) => setTimeout(r, 300)); }
+      }
       const kop = document.querySelector('.kgj-kop'), kb = kop ? kop.getBoundingClientRect().bottom : 0;
-      const a = [...document.querySelectorAll('.abc-hero a[href="#contact"]')].find((x) => x.getClientRects().length);
       if (!a) return null;
       const r = a.getBoundingClientRect(), cs = getComputedStyle(a);
       return { tekst: a.textContent.replace(/\s+/g, ' ').trim(), top: Math.round(r.top), bottom: Math.round(r.bottom), H, kb: Math.round(kb), x: r.left + r.width / 2, y: r.top + r.height / 2,
         zicht: cs.visibility !== 'hidden' && cs.display !== 'none' && Number(cs.opacity) > 0.5, naarKnop };
-    }, pg.naarKnop);
-    if (!knop) return ['geen knop naar #contact in de hero'];
+    }, pg.naarKnop, !!hk);
+    if (!knop) return [...uit, 'geen knop naar #contact in de hero'];
     if (knop.tekst !== pg.naarKnop) uit.push(`de heroknop zegt "${knop.tekst}" in plaats van "${pg.naarKnop}"`);
     if (!knop.zicht || knop.top < knop.kb || knop.bottom > knop.H) { uit.push(`de knop "${knop.tekst}" staat niet volledig in het eerste scherm (${knop.top}-${knop.bottom} px, kopbalk tot ${knop.kb}, scherm ${knop.H})`); return uit; }
     await p.touchscreen.tap(knop.x, knop.y);

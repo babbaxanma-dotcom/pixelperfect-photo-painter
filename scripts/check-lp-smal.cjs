@@ -110,9 +110,12 @@ async function tikOp(p, handle) {
    knop, daarna wachten tot de pagina stilstaat. Op de oude vormen (kaart in de hero) gebeurt er niets. */
 async function naarKaart(p) {
   if (!(await p.evaluate(() => !!document.querySelector('.abc')))) return;
-  const knop = await p.evaluateHandle(() => [...document.querySelectorAll('.abc-hero a[href="#contact"]')].find((a) => a.getClientRects().length) || null);
+  /* 23 nov 2026 (avond): /lp/dakwerken heeft de aanvraagkaart in de hero (.abc-hero__kaart) en daar geen knop "Offerte aanvragen" meer. De kaart
+     onderaan (die deze controle meet) bereikt de bezoeker daar met de eerste knop "Offerte aanvragen" verderop in de pagina. */
+  const knop = await p.evaluateHandle(() => [...document.querySelectorAll('.abc-hero a[href="#contact"]')].find((a) => a.getClientRects().length)
+    || (document.querySelector('.abc-hero__kaart') ? [...document.querySelectorAll('main a[href="#contact"]')].find((a) => !a.closest('.abc-hero') && a.getClientRects().length) : null) || null);
   const e = knop.asElement();
-  if (!e) throw new Error('geen knop "Offerte aanvragen" in de hero');
+  if (!e) throw new Error('geen knop "Offerte aanvragen" in de hero of verderop in de pagina');
   await tikOp(p, e);
   let vorige = -1;
   for (let i = 0; i < 30; i++) { const y = await p.evaluate(() => Math.round(window.scrollY)); if (y === vorige) break; vorige = y; await wacht(150); }
