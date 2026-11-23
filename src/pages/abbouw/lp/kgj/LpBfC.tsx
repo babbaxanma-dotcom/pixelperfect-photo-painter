@@ -26,6 +26,7 @@ import logoWit from '@/assets/bf/logo-wit-440.webp';
 /* 23 nov 2026, Mohammed: "bij ab foto in de hero doe die foto dat we hadden van dat anthraciet zwart dak, ingezoomt, die was mooi": de nok van een
    antraciet pannendak (vroegere herodia heroNok, tot 13 okt 2026 op deze pagina). */
 import heroNok from '@/assets/dak/hero-antraciet-nok.jpg';
+import { VARIANT_BEELDEN, type VariantBeelden } from './beelden-varianten';
 /* 23 nov 2026, Mohammed (foto's uit zijn Downloads, WhatsApp 9.29 en 9.32): "deze foto bij ab onder de hero", "zonder die blikjes redbull in beeld";
    "heb nog 1 in downloads deze kan je ook opzich implementeren als realisatie". De eerste is onderaan bijgesneden (1179x505: de blikjes en de kledij
    linksonder zijn weg, niets vergroot); de tweede staat volledig, als tweede realisatie onder de hoeve. */
@@ -103,7 +104,10 @@ const BFC = {
    en dakisolatie (AB-groep Dakisolatie gaf de enige 2 aanvragen van november, plan 22 nov). Zelfde pagina: eigen kop, plaatsregel, titel en
    beschrijving; de dienst van de pagina staat eerst bij de diensten; plat dak vult "Om welk soort dak gaat het?" vooraf in, zoals bfbouw.be.
    Dezelfde titels en beschrijvingen staan in scripts/prerender-lp.mjs (KOP), voor de voorgerenderde HTML. */
-type VariantInfo = { kop: string; regio: string; titel: string; beschrijving: string; dienst: string; subVet: string; voor?: { sleutel: string; label: string } };
+/* beelden (23 nov 2026, Mohammed: "bij plat dak moet je goede fotos op het internet zoeken van platte daken", "ik zie geen enkel plat dak foto"): een subpagina
+   kan eigen foto's krijgen voor de hero, de dienstenband en een dienstvak (per id); de foto's en hun bron: beelden-varianten.ts. */
+type VariantInfo = { kop: string; regio: string; titel: string; beschrijving: string; dienst: string; subVet: string; voor?: { sleutel: string; label: string };
+  beelden?: VariantBeelden };
 export const VARIANTEN_AB = {
   dakrenovatie: { kop: 'Uw dak renoveren?', regio: 'Dakrenovatie in Willebroek en omstreken', titel: 'Dakrenovatie in Willebroek en omstreken | AB Bouw Groep',
     beschrijving: 'Dakrenovatie met nieuwe pannen of leien, onderdak en isolatie. Vraag uw gratis offerte aan bij AB Bouw Groep, werken aan 6% btw.', dienst: 'renovatie',
@@ -112,8 +116,11 @@ export const VARIANTEN_AB = {
     beschrijving: 'Een volledig nieuw dak: structuur, isolatie, onderdak en dakbedekking. Vraag uw gratis offerte aan bij AB Bouw Groep.', dienst: 'nieuw-dak',
     subVet: 'Zoekt u voor uw nieuw dak een dakwerker die kwaliteit levert en afspraken nakomt? Die hebt u gevonden.', voor: { sleutel: 'Werk', label: 'Nieuw dak' } },
   'plat-dak': { kop: 'Uw plat dak vernieuwen?', regio: 'Platte daken in Willebroek en omstreken', titel: 'Plat dak vernieuwen, herstellen of isoleren | AB Bouw Groep',
-    beschrijving: 'Uw plat dak vernieuwen, herstellen of isoleren in EPDM, roofing of bitumen. Vraag uw gratis offerte aan bij AB Bouw Groep.', dienst: 'renovatie', voor: { sleutel: 'Dak', label: 'Plat dak' },
-    subVet: 'Zoekt u voor uw plat dak een dakwerker die kwaliteit levert en afspraken nakomt? Die hebt u gevonden.' },
+    beschrijving: 'Uw plat dak vernieuwen, herstellen of isoleren in EPDM, roofing of bitumen. Vraag uw gratis offerte aan bij AB Bouw Groep.', dienst: 'nieuw-dak', voor: { sleutel: 'Dak', label: 'Plat dak' },
+    subVet: 'Zoekt u voor uw plat dak een dakwerker die kwaliteit levert en afspraken nakomt? Die hebt u gevonden.',
+    /* 23 nov 2026 (foto's van een plat dak, zie beelden-varianten.ts): eerste dienstkaart = Nieuw dak, de enige kaart die het plat dak noemt
+       ("of als plat dak in EPDM, roofing of bitumen"); de kaart Dakrenovatie spreekt over pannen en leien. */
+    beelden: VARIANT_BEELDEN['plat-dak'] },
   dakisolatie: { kop: 'Uw dak isoleren?', regio: 'Dakisolatie in Willebroek en omstreken', titel: 'Dakisolatie in Willebroek en omstreken | AB Bouw Groep',
     beschrijving: 'Uw dak isoleren langs buiten, langs binnen of op een plat dak, met de attesten voor uw premie. Vraag uw gratis offerte aan bij AB Bouw Groep.', dienst: 'isolatie',
     subVet: 'Zoekt u voor uw dakisolatie een dakwerker die kwaliteit levert en afspraken nakomt? Die hebt u gevonden.', voor: { sleutel: 'Werk', label: 'Isolatie' } },
@@ -301,14 +308,14 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
 
   const naarKnop = inhoud.aanvraag?.naarKnop ?? inhoud.inspectie.knop;
   const offerteKnop = (klasse = '') => <a className={`abc-knop ${klasse}`} href="#contact">{naarKnop}<IcPijl /></a>;
-  const hero = inhoud === DAKWERKEN ? { src: heroNok, alt: 'Nok van een nieuw antraciet pannendak met zinken goot, onder een lichtbewolkte lucht' } : inhoud.hero.dias[0];
-  const band = inhoud.hero.dias[2] ?? inhoud.hero.dias[0];
+  const hero = V?.beelden?.hero ?? (inhoud === DAKWERKEN ? { src: heroNok, alt: 'Nok van een nieuw antraciet pannendak met zinken goot, onder een lichtbewolkte lucht' } : inhoud.hero.dias[0]);
+  const band = V?.beelden?.band ?? inhoud.hero.dias[2] ?? inhoud.hero.dias[0];
   const G = BFC.gebied;
   const K = REGIOKAART_AB;
 
   /* Diensten: de dienst van de subpagina eerst (VARIANTEN_AB). Foto per dienst: Dakrenovatie = het stilstaande beeld van de hoeve (dictaat 23 nov). */
   const dienstenLijst = V ? [...inhoud.diensten.lijst].sort((a, b) => Number(b.id === V.dienst) - Number(a.id === V.dienst)) : inhoud.diensten.lijst;
-  const dienstFoto = (d: KgjInhoud['diensten']['lijst'][number]) => (d.id === 'renovatie' && inhoud.realisatie ? { src: inhoud.realisatie.na.poster, alt: inhoud.realisatie.na.alt } : d.foto);
+  const dienstFoto = (d: KgjInhoud['diensten']['lijst'][number]) => (V?.beelden?.dienst?.[d.id] ?? (d.id === 'renovatie' && inhoud.realisatie ? { src: inhoud.realisatie.na.poster, alt: inhoud.realisatie.na.alt } : d.foto));
   /* "Lees meer" naar de eigen dienstpagina, zoals bfbouw.be (knop onder de tekst van elke dienst). */
   const leesMeer = (id: string, naam: string) => (DIENST_INFO_AB[id]
     ? <Link className="abc-dienst__meer" to={DIENST_PAD + DIENST_INFO_AB[id].slug} state={{ terug: sub ? terugNaar : pathname }} aria-label={`Lees meer over ${naam.toLowerCase()}`}>Lees meer<IcPijl /></Link> : null);

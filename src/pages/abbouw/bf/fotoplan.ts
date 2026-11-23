@@ -31,6 +31,18 @@
  *    Unsplash-licentie ("Free to use under the Unsplash License", gelezen 8 nov) · uitsnede 2400x1800 vanaf (0, 1250) uit 2400x3200:
  *    oranje pannendak met gemetselde trapgevel. 8 nov, Mohammed: "Doe een nieuwe foto voor dakherstelling, gewoon een normale" (de vorige,
  *    Pexels 33843410, natuurleien met zinken goot).
+ * SUBPAGINA /lp/dakwerken/plat-dak (23 nov 2026, Mohammed: "bij plat dak moet je goede fotos op het internet zoeken van platte daken", "ik zie
+ * geen enkel plat dak foto"). Gebruik: lp/kgj/beelden-varianten.ts (hero, dienstenband, dienstkaart Nieuw dak). Gezocht op Unsplash, Pexels en
+ * Pixabay (25 kandidaten bekeken; geen enkele gratis foto toont een afgewerkt dakvlak op een woning). Geen gezicht, merk of tekst in beeld.
+ *  - stock-platdak-woning      · https://unsplash.com/photos/a-large-brick-house-with-a-green-lawn-in-front-of-it-J_pSdNTqncI · Bohdan Stocek ·
+ *    Unsplash-licentie (gratis commercieel gebruik, geen naamsvermelding verplicht; geen Unsplash+) · uitsnede 6625x3312 vanaf (0, 0) uit
+ *    6625x4419 (2:1, het gazon onderaan weg), webp 1600x800: woning in rode baksteen met platte daken en een donkere dakrand.
+ *  - stock-platdak-luchtfoto   · https://unsplash.com/photos/aerial-photography-of-brown-houses-cCLR327OPDE · Douwe Meulenbeld · Unsplash-licentie
+ *    (idem) · uitsnede 4048x2530 vanaf (0, 251) uit 4048x3032, webp 1600x1000: luchtfoto van een rij woningen met platte daken (achtergrond
+ *    van de dienstenband, onder de donkere laag).
+ *  - stock-dienst-platdak      · https://pixabay.com/photos/workers-flame-fire-construction-6057012/ · Photorama · Pixabay Content License (gratis
+ *    commercieel gebruik, geen naamsvermelding verplicht; geen AI-label) · uitsnede 1707x1280 vanaf (106, 0) uit 1920x1280, webp 900x675:
+ *    dakwerker in fluojas en helm brandt bitumen roofing vast rond een afvoerbuis (gezicht niet zichtbaar).
  *  Eerste ronde (8 nov, afgekeurd: niet Belgisch genoeg): Pexels 29114658, 31771165, 6124239 (roze glaswol), 17490213 (bemoste bevertjes).
  * NIET MEER GEBRUIKT (13 okt 2026, keuring): stock-schouw-herstel (1V_WuotjRfI, een dakwerker bij de schouw) stond in
  * het traject recht boven stap 1 "We klimmen op het dak" en liet een bezoeker die man lezen als een dakwerker van AB;

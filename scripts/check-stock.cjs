@@ -57,14 +57,20 @@ const TOEGESTANE_ROUTE = '/dakwerken';
 /* 13 okt 2026: de dak-LP, alleen hero-dia's en slotblokfoto (zie kop). */
 const LP_ROUTE = '/lp/dakwerken';
 const LP_INHOUD = path.join(WORTEL, 'src', 'pages', 'abbouw', 'lp', 'kgj', 'inhoud.ts');
+/* 23 nov 2026: de subpagina's van /lp/dakwerken (LpBfC-varianten) worden ook gerenderd en volgen de LP-regels. Eén uitzondering, op zijn vraag
+   ("bij plat dak moet je goede fotos op het internet zoeken van platte daken", "ik zie geen enkel plat dak foto"): op /lp/dakwerken/plat-dak mag de
+   hero precies de stockfoto stock-platdak-woning dragen. Nergens anders, en geen andere stockfoto in een hero. Positieve controles in de lus. */
+const LP_VARIANTEN = ['/lp/dakwerken/dakrenovatie', '/lp/dakwerken/nieuw-dak', '/lp/dakwerken/plat-dak', '/lp/dakwerken/dakisolatie'];
+const HERO_STOCK_MAG = { '/lp/dakwerken/plat-dak': 'stock-platdak-woning' };
 const ROUTES = ['/', '/over', '/diensten', '/werkwijze', '/contact',
   '/dakwerken', '/gevel', '/bad', '/interieur', '/construct', '/ecologisch',
   '/privacy', '/voorwaarden', '/cookies', '/totaalrenovatie', '/badkamerrenovatie',
   '/lp/badkamerrenovatie', '/lp/dakwerken', '/lp/totaalrenovatie', '/lp/richtprijs-berekenen', '/lp/aannemer-renovatiewerken',
-  '/bedankt/dakwerken'];
+  '/bedankt/dakwerken', ...LP_VARIANTEN];
 /* /afspraak en /dakinspectie worden NIET geopend: daar staat de GHL-kalender (een meting raakt die nooit aan). Ze, en
    elke andere pagina, vallen onder de bronscan hieronder: "stock-" mag in src/ alleen in fotoplan.ts en beelden.ts staan. */
-const BRON_TOEGESTAAN = new Set([FOTOPLAN, path.join(WORTEL, 'src', 'pages', 'abbouw', 'bf', 'beelden.ts')].map((p) => path.normalize(p)));
+/* 23 nov 2026: beelden-varianten.ts importeert de stockfoto's van de subpagina's (de plaatsing toetst de gerenderde controle hieronder) */
+const BRON_TOEGESTAAN = new Set([FOTOPLAN, path.join(WORTEL, 'src', 'pages', 'abbouw', 'bf', 'beelden.ts'), path.join(WORTEL, 'src', 'pages', 'abbouw', 'lp', 'kgj', 'beelden-varianten.ts')].map((p) => path.normalize(p)));
 
 /* ---------- (b) bron: geen "stock-" buiten fotoplan.ts en beelden.ts ---------- */
 function bronScan(map, fout = []) {
@@ -141,7 +147,7 @@ function bronToets(tekst) {
 
 /* ---------- (a) (c) (d) gerenderd: draait in de pagina ---------- */
 /* modus: true = /dakwerken (regels ongewijzigd), 'lp' = /lp/dakwerken (alleen hero-dia's en slotblokfoto), false = elders */
-function paginaToets(modus) {
+function paginaToets(modus, heroMag) {
   const magStock = !!modus;
   const lp = modus === 'lp';
   /* BF-variant stock-<naam>-<breedte>.webp, of een LP-import /src/assets/dak-stock/stock-<naam>.jpg (dev-server) */
@@ -171,7 +177,8 @@ function paginaToets(modus) {
     const waar = blok ? (blok.id ? '#' + blok.id : '.' + String(blok.className).split(' ')[0]) : '(geen sectie)';
     if (!magStock) fout.push(`b: ${naam} op een route zonder stockfoto's (${waar})`);
     if (lp && ABC) {
-      if (!i.matches(ABC_MAG)) fout.push(`a: ${naam} buiten de dienstvakjes, de dienstenband, de tips en de slotblokfoto (${waar})`);
+      const heroUitzondering = !!heroMag && naam === heroMag && i.matches('img.abc-hero__foto');
+      if (!i.matches(ABC_MAG) && !heroUitzondering) fout.push(`a: ${naam} buiten de dienstvakjes, de dienstenband, de tips en de slotblokfoto (${waar})`);
     } else if (lp) {
       const dia = i.matches(LP_DIA) ? diaLijst.indexOf(i) + 1 : 0;
       const slot = i.matches(LP_SLOT);
@@ -291,7 +298,27 @@ function paginaToets(modus) {
     for (const pad of ROUTES) {
       const p = await open(pad);
       const mag = pad === TOEGESTANE_ROUTE;
-      const m = await p.evaluate(paginaToets, mag ? true : pad === LP_ROUTE ? 'lp' : false);
+      const lpModus = pad === LP_ROUTE || LP_VARIANTEN.includes(pad);
+      const m = await p.evaluate(paginaToets, mag ? true : lpModus ? 'lp' : false, HERO_STOCK_MAG[pad] || null);
+      if (LP_VARIANTEN.includes(pad)) console.log(`  ${pad}: ${m.aantal} stockbeelden (${m.namen.join(', ')})`);
+      if (HERO_STOCK_MAG[pad]) {
+        /* positieve controles van de uitzondering: (1) de hero wordt als stock herkend en zonder uitzondering afgekeurd; (2) dezelfde foto in
+           #waarom wordt ook mét uitzondering afgekeurd; (3) de drie platdakfoto's staan op de pagina */
+        const ctl = await p.evaluate((tf, heroMag) => {
+          const toets = new Function('return (' + tf + ')')();
+          const hero = document.querySelector('img.abc-hero__foto');
+          const waarom = document.querySelector('#waarom');
+          if (!hero || !waarom) return { ok: false, reden: `hero ${!!hero}, #waarom ${!!waarom}` };
+          const r = { ok: true };
+          r.zonder = toets('lp', null).fout.some((f) => f.startsWith('a: ' + heroMag + ' '));
+          const a = hero.cloneNode(); a.className = ''; a.alt = 'neutraal'; waarom.appendChild(a);
+          r.waarom = toets('lp', heroMag).fout.some((f) => f.startsWith('a: ' + heroMag + ' ') && f.includes('#waarom'));
+          a.remove();
+          return r;
+        }, paginaToets.toString(), HERO_STOCK_MAG[pad]);
+        const drie = ['stock-platdak-woning', 'stock-platdak-luchtfoto', 'stock-dienst-platdak'].every((n) => m.namen.includes(n));
+        if (!ctl.ok || !ctl.zonder || !ctl.waarom || !drie) { await p.close(); stop(2, `ONGELDIGE METING: positieve controle van de hero-uitzondering op ${pad} faalt ${JSON.stringify({ ...ctl, drie })}`); }
+      }
       m.fout.forEach((f) => mis.push(`${pad}: ${f}`));
       if (pad === LP_ROUTE) {
         stockOpLp = m.aantal;
