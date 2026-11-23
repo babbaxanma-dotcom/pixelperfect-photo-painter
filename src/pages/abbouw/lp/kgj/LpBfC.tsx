@@ -17,7 +17,7 @@ import Realisatie from './Realisatie';
 import { Icoon } from './Iconen';
 import { DAKWERKEN, type KgjInhoud, type Zekerheid } from './inhoud';
 import { REGIOKAART_AB } from './regiokaart-ab';
-import { BadgeEuro, CalendarCheck, Clock, FileCheck, Medal, MessageSquare, ShieldCheck, UserCheck } from 'lucide-react';
+import { BadgeEuro, CalendarCheck, Check, Clock, FileCheck, Medal, MessageSquare, ShieldCheck, UserCheck } from 'lucide-react';
 import { CLARITY_PROJECT, laadClarity, meldClarity } from '@/lib/clarity';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { mailGeldig, mailKaal, telGeldig } from './contact-controle';
@@ -26,6 +26,11 @@ import logoWit from '@/assets/bf/logo-wit-440.webp';
 /* 23 nov 2026, Mohammed: "bij ab foto in de hero doe die foto dat we hadden van dat anthraciet zwart dak, ingezoomt, die was mooi": de nok van een
    antraciet pannendak (vroegere herodia heroNok, tot 13 okt 2026 op deze pagina). */
 import heroNok from '@/assets/dak/hero-antraciet-nok.jpg';
+/* 23 nov 2026, Mohammed (foto's uit zijn Downloads, WhatsApp 9.29 en 9.32): "deze foto bij ab onder de hero", "zonder die blikjes redbull in beeld";
+   "heb nog 1 in downloads deze kan je ook opzich implementeren als realisatie". De eerste is onderaan bijgesneden (1179x505: de blikjes en de kledij
+   linksonder zijn weg, niets vergroot); de tweede staat volledig, als tweede realisatie onder de hoeve. */
+import werfDakwerkers from '@/assets/dak/waarom-werf-ab.webp';
+import dakkapelAanbouw from '@/assets/realisaties/dakkapel/dakkapel-aanbouw.webp';
 /* 23 nov 2026, Mohammed: "bij offerte aanvragen sectie ook een mooiere foto op de achtergrond, we hebben nog mooie fotos die we voor ab gebruikten". */
 import slotFoto from '@/assets/dak/hellend-pannen.jpg';
 import logoInk from '@/assets/bf/logo-ink-440.webp';
@@ -66,15 +71,19 @@ const BFC = {
     { icoon: <MessageSquare aria-hidden="true" />, titel: 'Vlotte en duidelijke communicatie', tekst: 'U krijgt snel antwoord en weet altijd waar u aan toe bent.' },
     { icoon: <ShieldCheck aria-hidden="true" />, titel: '10 jaar garantie op al onze dakwerken', tekst: 'Wij staan achter ons werk, ook jaren na de oplevering.' },
   ],
-  /* Werkgebied: de 28 gemeenten in de zoekwoorden van de AB-groep "Dakwerken in de buurt" (Google Ads, teruggelezen 22 nov 2026).
-     23 nov 2026 (keuring tekst-T15; Mohammed: "met de juiste naam erbij dan uiteraard"): Puurs en Kruibeke zijn deelgemeenten (fusies 2019 en 2025); de
-     chips dragen de naam van de gemeente, dezelfde als de postcodecheck eronder geeft (2870 = Puurs-Sint-Amands, 9150 = Beveren-Kruibeke-Zwijndrecht). */
+  /* Werkgebied. 23 nov 2026, Mohammed: "en bij de locaties bij bardh, je hoeft niet alles op te sommen, doe gewoon heel oost vlaanderen", "en vlaams
+     brabant", "en dan de grootste [steden] opgesomd". Was: de 28 gemeenten van de AB-advertentiegroep "Dakwerken in de buurt". Nu per provincie de grootste
+     steden; kaart = beide provincies en Willebroek (regiokaart-ab.ts, scripts/maak-regiokaart-provincies.mjs). De postcodecheck eronder blijft elke
+     Belgische postcode groen geven, met de juiste gemeente. */
   gebied: {
     kop: 'Actief in Willebroek en omstreken',
-    sub: 'Vanuit Willebroek komen wij bij u langs in de gemeenten errond.',
+    sub: 'Vanuit Willebroek komen wij bij u langs in heel Oost-Vlaanderen en Vlaams-Brabant.',
     thuis: 'Willebroek',
-    gemeenten: ['Willebroek', 'Boom', 'Puurs-Sint-Amands', 'Rumst', 'Niel', 'Kapelle-op-den-Bos', 'Mechelen', 'Schelle', 'Aartselaar', 'Londerzeel', 'Bornem', 'Hemiksem', 'Beveren-Kruibeke-Zwijndrecht', 'Meise', 'Zemst', 'Duffel', 'Sint-Katelijne-Waver', 'Buggenhout', 'Grimbergen', 'Temse', 'Hamme', 'Merchtem', 'Aalst', 'Asse', 'Dendermonde', 'Affligem', 'Herent', 'Lebbeke'],
-    opKaart: ['Willebroek', 'Mechelen', 'Aalst', 'Dendermonde', 'Boom', 'Asse', 'Bornem', 'Temse', 'Grimbergen', 'Herent', 'Londerzeel'],
+    provincies: [
+      { naam: 'Oost-Vlaanderen', steden: ['Gent', 'Aalst', 'Sint-Niklaas', 'Dendermonde', 'Lokeren', 'Ninove', 'Oudenaarde', 'Geraardsbergen'] },
+      { naam: 'Vlaams-Brabant', steden: ['Leuven', 'Vilvoorde', 'Halle', 'Dilbeek', 'Grimbergen', 'Asse', 'Tienen', 'Aarschot'] },
+    ],
+    opKaart: ['Willebroek', 'Gent', 'Sint-Niklaas', 'Dendermonde', 'Aalst', 'Oudenaarde', 'Ninove', 'Leuven', 'Halle', 'Tienen', 'Aarschot'],
   },
   /* "Zo werken wij": woordelijk bfbouw.be (bouw/lp-dak.cjs proces2, 22 nov 2026). 23 nov 2026, Mohammed: "Zo werken wij exact zoals bf graag,
      woordelijk exact ook". Eén verschil: de garantie van AB is 10 jaar (DAKWERKEN.waarom, faq), niet de 15 jaar van BF. **...** = vet. */
@@ -469,7 +478,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
 
         <section className="abc-kiezen" id="waarom" aria-labelledby="abc-kiezen-kop">
           <div className="abc-raam abc-kiezen__in">
-            <figure className="abc-kiezen__foto"><img src={inhoud.waarom.duo[1].src} alt={inhoud.waarom.duo[1].alt} loading="lazy" decoding="async" /></figure>
+            <figure className="abc-kiezen__foto"><img src={werfDakwerkers} alt="Twee dakwerkers op een dak waar de oude pannen af zijn; de panlatten liggen bloot" loading="lazy" decoding="async" /></figure>
             <div className="abc-kiezen__tekst">
               <h2 className="abc-h2" id="abc-kiezen-kop">Waarom voor ons kiezen</h2>
               <ul className="abc-kiezen__lijst">
@@ -510,6 +519,28 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
         {inhoud.realisatie && (
           <div className="abc-real">
             <Realisatie r={inhoud.realisatie} knop={offerteKnop('bf-real__cta')} />
+            {/* Tweede realisatie (23 nov 2026, zie de import van dakkapelAanbouw): zelfde opmaak als de hoeve, één foto. Alleen wat op de foto te zien is,
+                geen plaats, duur of prijs (daar is geen bron voor). */}
+            <section className="bf-sblok bf-lprealisatie abc-real2" id="realisatie-dakkapel" aria-labelledby="realisatie-dakkapel-kop">
+              <div className="bf-sraam">
+                <div className="bf-real">
+                  <div className="bf-real__beeld">
+                    <div className="bf-real__podium">
+                      <img src={dakkapelAanbouw} alt="Achtergevel tijdens de werken: een dakkapel en een aanbouw met verticale houten bekleding, grote zwarte schuiframen en twee vakmannen op het dak" loading="lazy" decoding="async" />
+                      <span className="bf-real__label" aria-hidden="true">Tijdens de werken</span>
+                    </div>
+                  </div>
+                  <div className="bf-real__info">
+                    <h2 className="bf-real__project" id="realisatie-dakkapel-kop">Dakkapel en aanbouw met houten gevelbekleding</h2>
+                    <p className="bf-real__werkenkop">Uitgevoerde werken</p>
+                    <ul className="bf-real__werken">
+                      {['Dakkapel met twee ramen en houten bekleding', 'Aanbouw met houten gevelbekleding', 'Grote schuiframen in zwarte profielen'].map((w) => <li key={w}><span className="bf-real__vink" aria-hidden="true"><Check /></span>{w}</li>)}
+                    </ul>
+                    <div className="bf-real__knop">{offerteKnop('bf-real__cta')}</div>
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
         )}
 
@@ -543,13 +574,18 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
               <h2 className="abc-h2" id="abc-gebied-kop">{G.kop}</h2>
               <p className="abc-gebied__sub">{G.sub}</p>
               <div className="abc-gebied__adres"><span className="abc-gebied__pin"><IcPin /></span><div><b>AB Bouw Groep</b><span>{CONTACT.address.full}</span></div></div>
-              <ul className="abc-gebied__chips">{G.gemeenten.map((g) => <li key={g}>{g}</li>)}</ul>
+              {G.provincies.map((p) => (
+                <div className="abc-gebied__provincie" key={p.naam}>
+                  <p className="abc-gebied__provnaam">Heel {p.naam}</p>
+                  <ul className="abc-gebied__chips">{p.steden.map((g) => <li key={g}>{g}</li>)}</ul>
+                </div>
+              ))}
               {/* 23 nov 2026, Mohammed: "Komen we ook bij u langs? moet trouwens op de plek offerte aanvragen, niet boven" */}
               <RegioCheck />
             </div>
             <figure className="abc-gebied__kaart">
-              <svg viewBox={`0 0 ${K.W} ${K.H}`} role="img" aria-label={`Kaart van het werkgebied: ${G.thuis} en de gemeenten errond`}>
-                <g className="abc-gebied__vlakken">{K.vlakken.map((v) => <path key={v.naam} className={v.naam === G.thuis ? 'is-thuis' : undefined} d={v.d} />)}</g>
+              <svg viewBox={`0 0 ${K.W} ${K.H}`} role="img" aria-label={`Kaart van het werkgebied: ${G.thuis}, ${G.provincies.map((p) => p.naam).join(' en ')}`}>
+                <g className="abc-gebied__vlakken">{K.vlakken.map((v) => <path key={v.naam} className={v.naam === G.thuis ? 'is-thuis' : undefined} d={v.d} fillRule="evenodd" />)}</g>
                 <g className="abc-gebied__namen">{K.labels.filter((l) => G.opKaart.includes(l.naam)).map((l) => (
                   <g key={l.naam} className={l.naam === G.thuis ? 'is-thuis' : undefined}><circle cx={l.x} cy={l.y} r={l.naam === G.thuis ? 5 : 3.4} /><text x={l.x} y={l.y - 10} textAnchor="middle">{l.naam}</text></g>
                 ))}</g>
