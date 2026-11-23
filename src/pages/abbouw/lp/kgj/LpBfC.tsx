@@ -91,9 +91,12 @@ const BFC = {
     },
     provincies: [
       { naam: 'Oost-Vlaanderen', steden: ['Gent', 'Aalst', 'Sint-Niklaas', 'Dendermonde', 'Lokeren', 'Ninove', 'Oudenaarde', 'Geraardsbergen'] },
-      { naam: 'Vlaams-Brabant', steden: ['Leuven', 'Vilvoorde', 'Halle', 'Dilbeek', 'Grimbergen', 'Asse', 'Tienen', 'Aarschot'] },
+      /* 23 nov 2026 (uitvoeringsplan 24 nov, AB stap 2: zoekwoorden voor Grimbergen en Zemst): Zemst erbij; Grimbergen stond er al. Beide met naam op de kaart. */
+      { naam: 'Vlaams-Brabant', steden: ['Leuven', 'Vilvoorde', 'Halle', 'Dilbeek', 'Grimbergen', 'Zemst', 'Asse', 'Tienen', 'Aarschot'] },
     ],
-    opKaart: ['Willebroek', 'Gent', 'Sint-Niklaas', 'Dendermonde', 'Aalst', 'Oudenaarde', 'Ninove', 'Leuven', 'Halle', 'Tienen', 'Aarschot'],
+    opKaart: ['Willebroek', 'Gent', 'Sint-Niklaas', 'Dendermonde', 'Aalst', 'Oudenaarde', 'Ninove', 'Leuven', 'Halle', 'Tienen', 'Aarschot', 'Grimbergen', 'Zemst'],
+    /* waar de naam naast het punt staat op de grote kaart als "boven" niet past (r rechts, o onder) */
+    kaartRichting: { Zemst: 'r', Grimbergen: 'o' } as Record<string, 'b' | 'o' | 'l' | 'r'>,
   },
   /* "Zo werken wij": woordelijk bfbouw.be (bouw/lp-dak.cjs proces2, 22 nov 2026). 23 nov 2026, Mohammed: "Zo werken wij exact zoals bf graag,
      woordelijk exact ook". Eén verschil: de garantie van AB is 10 jaar (DAKWERKEN.waarom, faq), niet de 15 jaar van BF. **...** = vet. */
@@ -608,7 +611,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
               <svg viewBox={`0 0 ${K.W} ${K.H}`} role="img" aria-label={`Kaart van het werkgebied: ${G.thuis}, de gemeenten rond ${G.thuis}, ${G.provincies.map((p) => p.naam).join(' en ')}`}>
                 <g className="abc-gebied__vlakken">{K.vlakken.map((v) => <path key={v.naam} className={v.naam === G.thuis ? 'is-thuis' : G.rond.steden.includes(v.naam) ? 'is-buur' : undefined} d={v.d} fillRule="evenodd" />)}</g>
                 <g className="abc-gebied__namen">{K.labels.filter((l) => G.opKaart.includes(l.naam)).map((l) => (
-                  <g key={l.naam} className={l.naam === G.thuis ? 'is-thuis' : undefined}><circle cx={l.x} cy={l.y} r={l.naam === G.thuis ? 5 : 3.4} /><text x={l.x} y={l.y - 10} textAnchor="middle">{l.naam}</text></g>
+                  <g key={l.naam} className={l.naam === G.thuis ? 'is-thuis' : undefined}><circle cx={l.x} cy={l.y} r={l.naam === G.thuis ? 5 : 3.4} />{G.kaartRichting[l.naam] === 'r' ? <text x={l.x + 9} y={l.y + 5} textAnchor="start">{l.naam}</text> : <text x={l.x} y={G.kaartRichting[l.naam] === 'o' ? l.y + 21 : l.y - 10} textAnchor="middle">{l.naam}</text>}</g>
                 ))}</g>
               </svg>
               <p className="abc-gebied__kaartkop">{G.rond.naam}</p>

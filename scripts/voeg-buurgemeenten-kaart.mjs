@@ -18,6 +18,8 @@ const BASIS = [['Oost-Vlaanderen', 53135], ['Vlaams-Brabant', 58004], ['Willebro
 /* naam op de pagina, OSM-relatie van de gemeente (Puurs = gemeente Puurs-Sint-Amands) */
 const BUREN = [['Mechelen', 412864], ['Boom', 58860], ['Puurs', 391117], ['Bornem', 391113], ['Rumst', 58824], ['Duffel', 964195], ['Niel', 58333],
   ['Schelle', 58364], ['Hemiksem', 58376], ['Aartselaar', 58545], ['Sint-Katelijne-Waver', 414402]];
+/* Alleen een punt met naam (de gemeente ligt in een provincie die al als vlak op de kaart staat): naam, lengte, breedte van de dorpskern (OpenStreetMap). */
+const PUNTEN = [['Zemst', 4.4611, 50.9836]];
 
 async function grens(id) {
   const f = CACHE ? `${CACHE}/rel-${id}.json` : '';
@@ -35,7 +37,6 @@ const bron = fs.readFileSync(DOEL, 'utf8');
 const begin = bron.indexOf('= {"W"');
 if (begin < 0) throw new Error('vorm van ' + DOEL + ' niet herkend');
 const kaart = JSON.parse(bron.slice(begin + 2).trim().replace(/;$/, ''));
-if (kaart.vlakken.some((v) => BUREN.some(([n]) => n === v.naam))) throw new Error('de gemeenten staan al op de kaart');
 
 const basis = [];
 for (const [naam, id] of BASIS) basis.push({ naam, pol: polygonen(await grens(id)) });
@@ -80,6 +81,7 @@ function midden(p) {
 const r1 = (n) => +n.toFixed(1);
 const vlakken = [], labels = [];
 for (const [naam, id] of BUREN) {
+  if (kaart.vlakken.some((v) => v.naam === naam)) { console.log(`${naam}: staat al op de kaart`); continue; }
   const pol = polygonen(await grens(id));
   if (!pol.length) throw new Error('geen vlak voor ' + naam);
   const ringen = pol.flatMap((pp) => pp).map((ring) => ring.map(([lo, la]) => xy(lo, la)));
@@ -92,8 +94,12 @@ for (const [naam, id] of BUREN) {
 }
 /* Willebroek blijft het laatste vlak: het thuisvlak ligt boven de buren */
 const thuis = kaart.vlakken.findIndex((v) => v.naam === 'Willebroek');
-kaart.vlakken.splice(thuis, 0, ...vlakken);
+if (vlakken.length) kaart.vlakken.splice(thuis, 0, ...vlakken);
 kaart.labels.push(...labels);
+for (const [naam, lo, la] of PUNTEN) {
+  if (kaart.labels.some((l) => l.naam === naam)) { console.log(`${naam}: punt staat al op de kaart`); continue; }
+  const [x, y] = xy(lo, la); kaart.labels.push({ naam, x: r1(x), y: r1(y) }); console.log(`${naam}: punt ${r1(x)} ${r1(y)}`);
+}
 const kop = `/* Werkgebiedkaart /lp/dakwerken (23 nov 2026): de provincies Oost-Vlaanderen en Vlaams-Brabant en Willebroek (adres van AB), grenzen en stadsligging uit
    OpenStreetMap (Nominatim), gemaakt met scripts/maak-regiokaart-provincies.mjs. Mohammed: "doe gewoon heel oost vlaanderen", "en vlaams brabant".
    Aanvulling 23 nov 2026 (uitvoeringsplan 24 nov): de ${BUREN.length} gemeenten rond Willebroek met hun eigen gemeentegrens, toegevoegd met
