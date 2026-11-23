@@ -17,6 +17,7 @@ import Realisatie from './Realisatie';
 import { Icoon } from './Iconen';
 import { DAKWERKEN, type KgjInhoud, type Zekerheid } from './inhoud';
 import { REGIOKAART_AB } from './regiokaart-ab';
+import { kleiner } from './beelden-klein';
 import { BadgeEuro, CalendarCheck, Check, Clock, FileCheck, Medal, MessageSquare, ShieldCheck, UserCheck } from 'lucide-react';
 import { CLARITY_PROJECT, laadClarity, meldClarity } from '@/lib/clarity';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
@@ -472,7 +473,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
                 <ul className="abc-diensten__rij abc-diensten__rij--3">
                   {inhoud.diensten.lijst.filter((d) => d.id !== dienst.id).map((d) => (
                     <li className="abc-dienst" key={d.id}>
-                      {(() => { const ft = dienstFoto(d); return ft && <figure className="abc-dienst__foto"><img src={ft.src} alt={ft.alt} loading="lazy" decoding="async" /></figure>; })()}
+                      {(() => { const ft = dienstFoto(d); return ft && <figure className="abc-dienst__foto"><img {...kleiner(ft.src, '(max-width: 1000px) 46vw, 320px')} alt={ft.alt} loading="lazy" decoding="async" /></figure>; })()}
                       <div className="abc-dienst__lijf">
                         <span className="abc-dienst__ic" aria-hidden="true"><Icoon naam={d.icoon} /></span>
                         <h3>{d.naam}</h3>
@@ -488,7 +489,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
         )}
         {!tip && !dienst && (<>
         <section className="abc-hero" id="top">
-          <img className="abc-hero__foto" src={hero.src} alt={hero.alt} loading="eager" decoding="async" {...{ fetchpriority: 'high' }} />
+          <img className="abc-hero__foto" {...kleiner(hero.src, '100vw')} alt={hero.alt} loading="eager" decoding="async" {...{ fetchpriority: 'high' }} />
           <div className="abc-hero__laag" aria-hidden="true" />
           <div className={`abc-hero__in${heroKaart ? ' abc-hero__in--kaart' : ''}`}>
             <p className="abc-hero__regio"><span className="abc-hero__pin"><IcPin /></span>{V?.regio ?? BFC.regio}</p>
@@ -508,7 +509,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
 
         <section className="abc-kiezen" id="waarom" aria-labelledby="abc-kiezen-kop">
           <div className="abc-raam abc-kiezen__in">
-            <figure className="abc-kiezen__foto"><img src={werfDakwerkers} alt="Twee dakwerkers op een dak waar de oude pannen af zijn; de panlatten liggen bloot" loading="lazy" decoding="async" /></figure>
+            <figure className="abc-kiezen__foto"><img {...kleiner(werfDakwerkers, '(max-width: 1000px) 100vw, 640px')} alt="Twee dakwerkers op een dak waar de oude pannen af zijn; de panlatten liggen bloot" loading="lazy" decoding="async" /></figure>
             <div className="abc-kiezen__tekst">
               <h2 className="abc-h2" id="abc-kiezen-kop">Waarom voor ons kiezen</h2>
               <ul className="abc-kiezen__lijst">
@@ -522,7 +523,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
 
         <section className="abc-diensten" id="diensten" aria-labelledby="abc-diensten-kop">
           <div className="abc-diensten__band">
-            <img src={band.src} alt="" loading="lazy" decoding="async" />
+            <img {...kleiner(band.src, '100vw')} alt="" loading="lazy" decoding="async" />
             <div className="abc-raam abc-diensten__kop"><h2 className="abc-h2" id="abc-diensten-kop">{inhoud.diensten.kop}</h2>{inhoud.diensten.onder && <p>{inhoud.diensten.onder}</p>}</div>
           </div>
           <div className="abc-raam">
@@ -532,7 +533,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
                   {/* 23 nov 2026, Mohammed: "gebruik de stilstaande na foto van de hoeve bij dakwerken diensten bij ab bij dakrenovatie": het stilstaande
                       beeld van de drone na de werken (realisatie-hoeve.ts, na.poster) op het vak Dakrenovatie. */}
                   {(() => { const ft = dienstFoto(d);
-                    return ft && <figure className="abc-dienst__foto"><img src={ft.src} alt={ft.alt} loading="lazy" decoding="async" /></figure>; })()}
+                    return ft && <figure className="abc-dienst__foto"><img {...kleiner(ft.src, '(max-width: 1000px) 46vw, 320px')} alt={ft.alt} loading="lazy" decoding="async" /></figure>; })()}
                   <div className="abc-dienst__lijf">
                     <span className="abc-dienst__ic" aria-hidden="true"><Icoon naam={d.icoon} /></span>
                     <h3>{d.naam}</h3>
@@ -556,7 +557,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
                 <div className="bf-real">
                   <div className="bf-real__beeld">
                     <div className="bf-real__podium">
-                      <img src={dakkapelAanbouw} alt="Achtergevel tijdens de werken: een dakkapel en een aanbouw met verticale houten bekleding, grote zwarte schuiframen en twee vakmannen op het dak" loading="lazy" decoding="async" />
+                      <img {...kleiner(dakkapelAanbouw, '(max-width: 1000px) 92vw, 720px')} alt="Achtergevel tijdens de werken: een dakkapel en een aanbouw met verticale houten bekleding, grote zwarte schuiframen en twee vakmannen op het dak" loading="lazy" decoding="async" />
                       <span className="bf-real__label" aria-hidden="true">Tijdens de werken</span>
                     </div>
                   </div>
@@ -663,7 +664,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
             <div className="abc-blog__rij">
               {TIPS_AB.filter((t) => !tip || t.slug !== tip.slug).slice(0, 3).map((t) => (
                 <article className="abc-post" key={t.slug}>
-                  <img className="abc-post__beeld" src={tipFoto(t, inhoud).src} alt={tipFoto(t, inhoud).alt} loading="lazy" decoding="async" />
+                  <img className="abc-post__beeld" {...kleiner(tipFoto(t, inhoud).src, '(max-width: 1000px) 86vw, 410px')} alt={tipFoto(t, inhoud).alt} loading="lazy" decoding="async" />
                   <div className="abc-post__datum"><b>{t.datumKort}</b><span>{t.jaar}</span></div>
                   <p className="abc-post__cat">{t.categorie}</p>
                   <h3 className="abc-post__titel">{t.titel}</h3>
@@ -677,7 +678,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
         {/* Offerteblok: de bestaande vorm (bf-lpinsp) en de bestaande aanvraagkaart. #contact = de sitelink "Gratis offerte"; #rekenaar = de oude
             sitelinks "Bereken uw dakprijs". */}
         <section className="bf-lpinsp abc-offerte" id="contact" aria-labelledby="contact-kop">
-          <img className="bf-lpinsp__beeld" src={slot.src} alt={slot.alt} loading="lazy" decoding="async" />
+          <img className="bf-lpinsp__beeld" {...kleiner(slot.src, '100vw')} alt={slot.alt} loading="lazy" decoding="async" />
           <div className="bf-lpinsp__laag" aria-hidden="true" />
           <div className="bf-lpinsp__in">
             <div className="bf-lpinsp__tekst">

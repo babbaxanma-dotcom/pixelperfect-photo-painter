@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Check, Pause, Play } from 'lucide-react';
 import type { Realisatie as RealisatieInhoud } from './inhoud';
+import { kleiner } from './beelden-klein';
 
 /**
  * Realisatie in de kijker (8 nov 2026, Mohammed: "je ziet een video, before after, tijdens de werken snapje, dan heb je zo een wow gevoel,
@@ -92,7 +93,7 @@ export default function Realisatie({ r, knop }: { r: RealisatieInhoud; knop: Rea
               <video ref={video} className={`bf-real__laag${toon === 'na' ? ' is-aan' : ''}`} poster={r.na.poster} muted loop playsInline preload="none"
                 aria-label={r.na.alt} aria-hidden={toon !== 'na'} tabIndex={-1} onClick={() => { if (toon === 'na') wissel(); }} />
               <div className={`bf-real__laag bf-real__laag--foto${toon === 'tijdens' ? ' is-aan' : ''}`} aria-hidden={toon !== 'tijdens'}>
-                <img src={r.tijdens.src} alt={r.tijdens.alt} loading="lazy" decoding="async" />
+                <img {...kleiner(r.tijdens.src, '(max-width: 1000px) 92vw, 720px')} alt={r.tijdens.alt} loading="lazy" decoding="async" />
               </div>
               <span className="bf-real__label" aria-hidden="true">{toon === 'na' ? r.na.label : r.tijdens.label}</span>
               {toon === 'na' && (
