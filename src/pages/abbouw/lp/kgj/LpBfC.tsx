@@ -7,7 +7,7 @@
    Teksten: uit inhoud.ts (DAKWERKEN) of uit bfbouw.be (vorm); de AB-feiten staan in BFC hieronder met hun bron. Geen reviews (spec §1, §12).
    Terugval: in App.tsx de route /lp/dakwerken weer naar LpBf. */
 import { useEffect, useRef, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { TIPS_AB, type TipAb } from './tips-ab';
 import { DIENST_INFO_AB, DIENST_PAD } from './diensten-ab';
 import { CONTACT } from '@/data/contact';
@@ -44,7 +44,8 @@ const BFC = {
      (71 zoekwoorden rond dakwerken, dakwerker, dakdekker) landt op deze pagina. */
   kop: 'Dakwerker nodig?',
   kop2: 'Kies voor vakmanschap.',
-  knop2: { href: '#realisaties', tekst: 'Bekijk recente daken' },
+  /* 23 nov 2026 (keuring tekst-AB-03): bij AB staat er één realisatie zonder datum (de hoeve); "Bekijk recente daken" (bfbouw.be, drie daken) beloofde meer */
+  knop2: { href: '#realisaties', tekst: 'Bekijk ons werk' },
   /* Subkop woordelijk bfbouw.be (vette eerste zin + zin over ervaring en werk); AB-feit: "meer dan 15 jaar ervaring" (DAKWERKEN.waarom, zijn woord), BF: 25 jaar. */
   subVet: 'Zoekt u een dakwerker in de buurt die kwaliteit levert en afspraken nakomt? Die hebt u gevonden.',
   sub: 'Met meer dan 15 jaar ervaring, oog voor detail en kwaliteitsvolle materialen zorgen wij voor een perfect afgewerkt dak.',
@@ -58,8 +59,11 @@ const BFC = {
   ],
   /* Vier punten zoals BF "Waarom voor ons kiezen"; titels = AB-zekerheden, zinnen uit DAKWERKEN.waarom (tekst en redenen) en de werkwijze. */
   kiezen: [
-    { icoon: <Medal aria-hidden="true" />, titel: 'Meer dan 15 jaar ervaring', tekst: 'Met meer dan 15 jaar ervaring in dakwerken staan we garant voor een eindresultaat van topkwaliteit.' },
-    { icoon: <ShieldCheck aria-hidden="true" />, titel: '10 jaar garantie', tekst: 'Tien jaar garantie op dakrenovatie. We zijn volledig verzekerd en VCA-gecertificeerd.' },
+    /* 23 nov 2026 (keuring tekst-AB-04): de teksten herhaalden hun titel en de subkop ("15 jaar ervaring" 4 keer, "10 jaar garantie" 5 keer bovenaan);
+       nu in de vorm van bfbouw.be ("Ervaren vakmannen die elk dak met zorg en oog voor detail afwerken.", "Wij staan achter ons werk, ook jaren na de
+       oplevering."), met de AB-feiten uit DAKWERKEN.waarom (volledig verzekerd, VCA-gecertificeerd). */
+    { icoon: <Medal aria-hidden="true" />, titel: 'Meer dan 15 jaar ervaring', tekst: 'Ervaren vakmannen die elk dak met zorg en oog voor detail afwerken.' },
+    { icoon: <ShieldCheck aria-hidden="true" />, titel: '10 jaar garantie', tekst: 'Wij staan achter ons werk, ook jaren na de oplevering. We zijn volledig verzekerd en VCA-gecertificeerd.' },
     { icoon: <UserCheck aria-hidden="true" />, titel: 'Eén vast aanspreekpunt', tekst: 'Ook na de oplevering kunt u bij uw vaste aanspreekpunt terecht.' },
     { icoon: <FileCheck aria-hidden="true" />, titel: 'Volledige premiebegeleiding', tekst: 'Wij regelen de aanvraag van uw Mijn VerbouwPremie.' },
   ],
@@ -91,16 +95,20 @@ const BFC = {
    en dakisolatie (AB-groep Dakisolatie gaf de enige 2 aanvragen van november, plan 22 nov). Zelfde pagina: eigen kop, plaatsregel, titel en
    beschrijving; de dienst van de pagina staat eerst bij de diensten; plat dak vult "Om welk soort dak gaat het?" vooraf in, zoals bfbouw.be.
    Dezelfde titels en beschrijvingen staan in scripts/prerender-lp.mjs (KOP), voor de voorgerenderde HTML. */
-type VariantInfo = { kop: string; regio: string; titel: string; beschrijving: string; dienst: string; voor?: { sleutel: string; label: string } };
+type VariantInfo = { kop: string; regio: string; titel: string; beschrijving: string; dienst: string; subVet: string; voor?: { sleutel: string; label: string } };
 export const VARIANTEN_AB = {
   dakrenovatie: { kop: 'Uw dak renoveren?', regio: 'Dakrenovatie in Willebroek en omstreken', titel: 'Dakrenovatie in Willebroek en omstreken | AB Bouw Groep',
-    beschrijving: 'Dakrenovatie met nieuwe pannen of leien, onderdak en isolatie. Vraag uw gratis offerte aan bij AB Bouw Groep, werken aan 6% btw.', dienst: 'renovatie' },
+    beschrijving: 'Dakrenovatie met nieuwe pannen of leien, onderdak en isolatie. Vraag uw gratis offerte aan bij AB Bouw Groep, werken aan 6% btw.', dienst: 'renovatie',
+    subVet: 'Zoekt u voor uw dakrenovatie een dakwerker die kwaliteit levert en afspraken nakomt? Die hebt u gevonden.', voor: { sleutel: 'Werk', label: 'Dakrenovatie' } },
   'nieuw-dak': { kop: 'Een nieuw dak nodig?', regio: 'Nieuw dak in Willebroek en omstreken', titel: 'Nieuw dak laten plaatsen | AB Bouw Groep',
-    beschrijving: 'Een volledig nieuw dak: structuur, isolatie, onderdak en dakbedekking. Vraag uw gratis offerte aan bij AB Bouw Groep.', dienst: 'nieuw-dak' },
+    beschrijving: 'Een volledig nieuw dak: structuur, isolatie, onderdak en dakbedekking. Vraag uw gratis offerte aan bij AB Bouw Groep.', dienst: 'nieuw-dak',
+    subVet: 'Zoekt u voor uw nieuw dak een dakwerker die kwaliteit levert en afspraken nakomt? Die hebt u gevonden.', voor: { sleutel: 'Werk', label: 'Nieuw dak' } },
   'plat-dak': { kop: 'Uw plat dak vernieuwen?', regio: 'Platte daken in Willebroek en omstreken', titel: 'Plat dak vernieuwen, herstellen of isoleren | AB Bouw Groep',
-    beschrijving: 'Uw plat dak vernieuwen, herstellen of isoleren in EPDM, roofing of bitumen. Vraag uw gratis offerte aan bij AB Bouw Groep.', dienst: 'renovatie', voor: { sleutel: 'Dak', label: 'Plat dak' } },
+    beschrijving: 'Uw plat dak vernieuwen, herstellen of isoleren in EPDM, roofing of bitumen. Vraag uw gratis offerte aan bij AB Bouw Groep.', dienst: 'renovatie', voor: { sleutel: 'Dak', label: 'Plat dak' },
+    subVet: 'Zoekt u voor uw plat dak een dakwerker die kwaliteit levert en afspraken nakomt? Die hebt u gevonden.' },
   dakisolatie: { kop: 'Uw dak isoleren?', regio: 'Dakisolatie in Willebroek en omstreken', titel: 'Dakisolatie in Willebroek en omstreken | AB Bouw Groep',
-    beschrijving: 'Uw dak isoleren langs buiten, langs binnen of op een plat dak, met de attesten voor uw premie. Vraag uw gratis offerte aan bij AB Bouw Groep.', dienst: 'isolatie' },
+    beschrijving: 'Uw dak isoleren langs buiten, langs binnen of op een plat dak, met de attesten voor uw premie. Vraag uw gratis offerte aan bij AB Bouw Groep.', dienst: 'isolatie',
+    subVet: 'Zoekt u voor uw dakisolatie een dakwerker die kwaliteit levert en afspraken nakomt? Die hebt u gevonden.', voor: { sleutel: 'Werk', label: 'Isolatie' } },
 } satisfies Record<string, VariantInfo>;
 export type VariantAb = keyof typeof VARIANTEN_AB;
 
@@ -136,6 +144,10 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
      Dienstpagina (/lp/dakwerken/diensten/:dienst, 23 nov 2026, zie diensten-ab.ts): kop met foto, wanneer, wat de werken omvatten, wat de prijs bepaalt,
      werkwijze, vragen, de andere diensten, offerteblok. */
   const { slug, dienst: dienstSlug } = useParams();
+  /* 23 nov 2026 (keuring F1, F2): pathname = de effecten hieronder draaien ook na een wissel binnen LpBfC (Lees meer, Terug); state.terug = de pagina
+     waar de bezoeker op "Lees meer" tikte (bv. /lp/dakwerken/plat-dak), zodat "Terug" daar weer uitkomt. */
+  const { pathname, state } = useLocation();
+  const terugNaar = (typeof state === 'object' && state && typeof (state as { terug?: unknown }).terug === 'string' ? (state as { terug: string }).terug : '/lp/dakwerken');
   const tip = slug ? TIPS_AB.find((t) => t.slug === slug) : undefined;
   const dienst = dienstSlug ? inhoud.diensten.lijst.find((d) => DIENST_INFO_AB[d.id]?.slug === dienstSlug) : undefined;
   const info = dienst ? DIENST_INFO_AB[dienst.id] : undefined;
@@ -202,7 +214,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
   useEffect(() => {
     const wortel = vat.current;
     if (!wortel || !('IntersectionObserver' in window)) return;
-    const doelen = [...wortel.querySelectorAll('.abc-hero, #realisaties, .abc-check, #contact, #gegevens, .abc-voet')];
+    const doelen = [...wortel.querySelectorAll('.abc-hero, .abc-sub, #realisaties, .abc-check, #contact, #gegevens, .abc-voet')];
     const zicht = new Set<Element>();
     const io = new IntersectionObserver((rijen) => {
       rijen.forEach((r) => (r.isIntersecting ? zicht.add(r.target) : zicht.delete(r.target)));
@@ -210,7 +222,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
     }, { threshold: 0 });
     doelen.forEach((d) => io.observe(d));
     return () => io.disconnect();
-  }, []);
+  }, [pathname]);
 
   /* Menu op gsm: Escape sluit, de pagina erachter scrolt niet. */
   useEffect(() => {
@@ -247,7 +259,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
       });
     }, 120);
     return () => { window.clearTimeout(t); los(); zelf = true; };
-  }, []);
+  }, [pathname]);
 
   /* Gsm en tablet (tot 1000 px): een tik op een link naar #contact (hero, menu, realisatie, uitleg, werkwijze, vragen, postcodecheck) brengt de
      aanvraagkaart zelf in beeld, zoals LpBf naarFormulier (23 okt 2026, Clarity /lp/totaalrenovatie 01:52: de sprong naar de kop van het slotblok liet de
@@ -291,7 +303,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
   const dienstFoto = (d: KgjInhoud['diensten']['lijst'][number]) => (d.id === 'renovatie' && inhoud.realisatie ? { src: inhoud.realisatie.na.poster, alt: inhoud.realisatie.na.alt } : d.foto);
   /* "Lees meer" naar de eigen dienstpagina, zoals bfbouw.be (knop onder de tekst van elke dienst). */
   const leesMeer = (id: string, naam: string) => (DIENST_INFO_AB[id]
-    ? <Link className="abc-dienst__meer" to={DIENST_PAD + DIENST_INFO_AB[id].slug} aria-label={`Lees meer over ${naam.toLowerCase()}`}>Lees meer<IcPijl /></Link> : null);
+    ? <Link className="abc-dienst__meer" to={DIENST_PAD + DIENST_INFO_AB[id].slug} state={{ terug: sub ? terugNaar : pathname }} aria-label={`Lees meer over ${naam.toLowerCase()}`}>Lees meer<IcPijl /></Link> : null);
   const werkwijze = (
     <section className="abc-proces" id="werkwijze" aria-labelledby="abc-proces-kop">
       <div className="abc-raam">
@@ -361,7 +373,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
             <section className="abc-sub" aria-labelledby="abc-sub-kop">
               <div className="abc-sub__in">
                 <div className="abc-sub__tekst">
-                  <Link className="abc-sub__terug" to="/lp/dakwerken#blog"><svg {...lijn}><path d="m14.5 6-6 6 6 6" /></svg>Terug naar tips en uitleg</Link>
+                  <Link className="abc-sub__terug" to={`${terugNaar}#blog`}><svg {...lijn}><path d="m14.5 6-6 6 6 6" /></svg>Terug naar tips en uitleg</Link>
                   <h1 id="abc-sub-kop">{tip.titel}</h1>
                   <p className="abc-sub__meta">{tip.categorie} · {tip.datumVol}</p>
                   <p className="abc-sub__intro">{tip.inleiding}</p>
@@ -381,7 +393,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
             <section className="abc-sub" aria-labelledby="abc-sub-kop">
               <div className="abc-sub__in">
                 <div className="abc-sub__tekst">
-                  <Link className="abc-sub__terug" to="/lp/dakwerken#diensten"><svg {...lijn}><path d="m14.5 6-6 6 6 6" /></svg>Terug naar alle diensten</Link>
+                  <Link className="abc-sub__terug" to={`${terugNaar}#diensten`}><svg {...lijn}><path d="m14.5 6-6 6 6 6" /></svg>Terug naar alle diensten</Link>
                   <h1 id="abc-sub-kop">{dienst.naam}</h1>
                   <p className="abc-sub__intro">{dienst.meer?.[0] ?? dienst.tekst}</p>
                   <div className="abc-hero__knoppen">{offerteKnop()}<a className="abc-knop abc-knop--rand" href={CONTACT.phone.href}><IcTel />Bel {CONTACT.phone.display}</a></div>
@@ -448,7 +460,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
               <span>{eigenKop ? metAccent(eigenKop) : V?.kop ?? BFC.kop}</span>{' '}
               <span className="abc-accent">{BFC.kop2}</span>
             </h1>
-            <p className="abc-hero__sub"><b>{BFC.subVet}</b> {BFC.sub}</p>
+            <p className="abc-hero__sub"><b>{V?.subVet ?? BFC.subVet}</b> {BFC.sub}</p>
             <div className="abc-hero__knoppen">
               {offerteKnop()}
               <a className="abc-knop abc-knop--rand" href={BFC.knop2.href}>{BFC.knop2.tekst}</a>
@@ -575,7 +587,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
                   <div className="abc-post__datum"><b>{t.datumKort}</b><span>{t.jaar}</span></div>
                   <p className="abc-post__cat">{t.categorie}</p>
                   <h3 className="abc-post__titel">{t.titel}</h3>
-                  <div className="abc-post__voet"><Link className="abc-knop abc-post__knop" to={TIP_PAD + t.slug} aria-label={`Lees meer: ${t.titel}`}>Lees meer</Link></div>
+                  <div className="abc-post__voet"><Link className="abc-knop abc-post__knop" to={TIP_PAD + t.slug} state={{ terug: sub ? terugNaar : pathname }} aria-label={`Lees meer: ${t.titel}`}>Lees meer</Link></div>
                 </article>
               ))}
             </div>
@@ -612,10 +624,10 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
         <div className="abc-raam abc-voet__raster">
           <div className="abc-voet__merk">
             <img src={logoWit} width={440} height={125} alt="Logo van AB Bouw Groep" loading="lazy" decoding="async" />
-            <p>{BFC.regio}, door AB Bouw Groep uit Willebroek.</p>
+            <p>{V?.regio ?? BFC.regio}, door AB Bouw Groep.</p>
           </div>
           <div className="abc-voet__kolom"><h2>Diensten</h2><ul>{inhoud.diensten.lijst.map((d) => <li key={d.id}>{DIENST_INFO_AB[d.id] ? <Link to={DIENST_PAD + DIENST_INFO_AB[d.id].slug}>{d.naam}</Link> : <a href={`${basis}#${d.id}`}>{d.naam}</a>}</li>)}</ul></div>
-          <div className="abc-voet__kolom"><h2>Navigatie</h2><ul>{BFC.menu.map(([href, tekst]) => <li key={href}><a href={href}>{tekst}</a></li>)}<li><a href="#contact">{naarKnop}</a></li></ul></div>
+          <div className="abc-voet__kolom"><h2>Navigatie</h2><ul>{BFC.menu.map(([href, tekst]) => <li key={href}><a href={href === '#gegevens' ? href : `${basis}${href}`}>{tekst}</a></li>)}<li><a href="#contact">{naarKnop}</a></li></ul></div>
           <div className="abc-voet__kolom abc-voet__contact"><h2>Contact</h2><ul>
             <li><span className="abc-voet__ic"><IcTel /></span><a href={CONTACT.phone.href}>{CONTACT.phone.display}</a></li>
             <li><span className="abc-voet__ic"><IcMail /></span><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></li>
@@ -625,7 +637,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
           </ul></div>
         </div>
         <div className="abc-raam abc-voet__onder">
-          <p>© {new Date().getFullYear()} AB Bouw Groep · BTW {CONTACT.btw.display} · {CONTACT.address.full}</p>
+          <p>© <span suppressHydrationWarning>{new Date().getFullYear()}</span> AB Bouw Groep · BTW {CONTACT.btw.display} · {CONTACT.address.full}</p>
           <div><a href="/privacy">Privacy</a><a href="/cookies">Cookies</a><a href="/voorwaarden">Voorwaarden</a></div>
         </div>
       </footer>

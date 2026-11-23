@@ -85,7 +85,13 @@ for (const [route, bron] of Object.entries(ROUTES)) {
       '/lp/dakwerken/nieuw-dak': { titel: 'Nieuw dak laten plaatsen | AB Bouw Groep', beschrijving: 'Een volledig nieuw dak: structuur, isolatie, onderdak en dakbedekking. Vraag uw gratis offerte aan bij AB Bouw Groep.' },
       '/lp/dakwerken/plat-dak': { titel: 'Plat dak vernieuwen, herstellen of isoleren | AB Bouw Groep', beschrijving: 'Uw plat dak vernieuwen, herstellen of isoleren in EPDM, roofing of bitumen. Vraag uw gratis offerte aan bij AB Bouw Groep.' },
       '/lp/dakwerken/dakisolatie': { titel: 'Dakisolatie in Willebroek en omstreken | AB Bouw Groep', beschrijving: 'Uw dak isoleren langs buiten, langs binnen of op een plat dak, met de attesten voor uw premie. Vraag uw gratis offerte aan bij AB Bouw Groep.' },
+      /* 23 nov 2026 (keuring F4): ook de andere voorgerenderde LP's droegen de titel van de homepagina ("AB Bouw Group ..."); dezelfde titel en
+         beschrijving als hun inhoud (inhoud.ts DAKWERKEN_ASBEST, inhoud-totaalrenovatie.ts TOTAALRENOVATIE, inhoud-renovatiewerken.ts), die de app na het laden zet */
+      '/lp/dakwerken/asbest': { titel: 'De specialist voor uw asbestdak | AB Bouw Groep', beschrijving: 'Uw asbestdak vervangen door een nieuw dak. Vraag uw gratis offerte aan bij AB Bouw Groep, werken aan 6% btw.' },
+      '/lp/totaalrenovatie': { titel: 'Dé specialist voor uw renovatie | AB Bouw Groep', beschrijving: 'Bereken in 2 minuten de prijs van uw renovatie. Gratis plaatsbezoek en offerte, werken aan 6% btw.' },
+      '/lp/aannemer-renovatiewerken': { titel: 'Aannemer voor renovatiewerken | AB Bouw Groep', beschrijving: 'De betrouwbare aannemer voor al uw renovatiewerken. Gratis plaatsbezoek en offerte, werken aan 6% btw.' },
     }[route];
+    if (!KOP) throw new Error('geen titel en beschrijving (KOP) voor ' + route);
     const metKop = (h) => !KOP ? h : h
       .replace(/<title>[^<]*<\/title>/, `<title>${KOP.titel}</title>`)
       .replace(/(<meta name="description" content=")[^"]*(")/, `$1${KOP.beschrijving}$2`)

@@ -39,7 +39,11 @@ const PAGINAS = ['/', '/bedankt/dakwerken', '/bedankt/totaalrenovatie', '/lp/dak
   '/lp/richtprijs-berekenen', '/lp/aannemer-renovatiewerken',
   /* 13 okt 2026: de rest van de funnel. Na de rekenaar staat op /bedankt het vergrendelde bedrag (alleen nullen, de
      richtprijs komt van Bardh); stap 2 is de agendapagina (BedanktBf.tsx, AfspraakBf.tsx). */
-  '/bedankt/dakwerken?van=rekenaar', '/bedankt/totaalrenovatie?van=rekenaar', '/afspraak', '/dakinspectie'];
+  '/bedankt/dakwerken?van=rekenaar', '/bedankt/totaalrenovatie?van=rekenaar', '/afspraak', '/dakinspectie',
+  /* 23 nov 2026 (keuring tekst-AB-05): de dak-LP's in de opbouw van bfbouw.be: subpagina's per advertentiegroep, dienstpagina's, tips en asbest. */
+  '/lp/dakwerken/dakrenovatie', '/lp/dakwerken/nieuw-dak', '/lp/dakwerken/plat-dak', '/lp/dakwerken/dakisolatie', '/lp/dakwerken/asbest',
+  '/lp/dakwerken/diensten/dakrenovatie', '/lp/dakwerken/diensten/nieuw-dak', '/lp/dakwerken/diensten/dakisolatie', '/lp/dakwerken/diensten/dakherstelling',
+  '/lp/dakwerken/tips/pannen-leien-of-epdm', '/lp/dakwerken/tips/wat-kost-een-dakrenovatie', '/lp/dakwerken/tips/premie-voor-uw-dak-in-2026'];
 
 /* Funnelpagina's: daar mag geen enkel echt bedrag staan (regel 'echt bedrag' hieronder). */
 const FUNNEL = /^\/(bedankt|afspraak|dakinspectie)\b/;
@@ -57,6 +61,9 @@ const VERBODEN = [
   /* 22 okt 2026, tweede keer dezelfde correctie: op /lp/dakwerken stond nog "Binnen enkele werkdagen doen we de inspectie";
      Mohammed: "weg". Op de twee advertentiepagina's (en de varianten) geen enkele termijn in werkdagen meer. */
   { naam: 'termijn in werkdagen (Mohammed 22 okt: "weg")', alleen: /^\/lp\/(dakwerken|totaalrenovatie|aannemer-renovatiewerken)\b/, re: /werkdag/i },
+  /* 23 nov 2026 (keuring tekst-AB-05): de opbouw en de teksten komen van bfbouw.be; hun feiten (15 jaar garantie, 25 jaar ervaring) horen niet op AB
+     (AB: 10 jaar garantie, meer dan 15 jaar ervaring). */
+  { naam: 'feit van Bega Fortuna op een AB-pagina (15 jaar garantie, 25 jaar ervaring)', re: /15 jaar garantie|\b25\s*(jaar|j)\b[^.]{0,20}ervaring/i },
   /* Namen van reviews die niet op het Google-profiel van AB staan (uit de oude site). */
   { naam: 'review met naam zonder bron', re: /Nathalie Aerts|Inge Vermeiren|Dirk Maes|Hilde Goossens|Geert Verbeke|Saïda El Khatib|Yusuf Demir|Jasmien De Backer|Dimitri Maes|Hicham Bouali|Greet Vermeiren|Ahmed Karimi|Tine Maes/ },
   /* Een euroteken met een bedrag waarin een cijfer 1-9 staat ("€ 12.500", "€ 00.000 – 18.000"). Het vergrendelde
@@ -103,6 +110,8 @@ const TOEGESTAAN = []; // { re, bron } — alleen met een bron die Mohammed of B
     await p.waitForFunction(() => document.body && document.body.innerText.trim().length >= 200, { timeout: 20000 }).catch(() => {});
     await wacht(900);
     if (lokaas) await p.evaluate(...[].concat(lokaas));
+    /* 23 nov 2026 (keuring tekst-AB-05): de veelgestelde vragen staan dicht (<details>) en innerText leest dichte antwoorden niet: alles open */
+    await p.evaluate(() => document.querySelectorAll('details').forEach((d) => { d.open = true; }));
     /* Ook wat pas bij het scrollen verschijnt. */
     const h = await p.evaluate(() => document.documentElement.scrollHeight);
     for (let y = 0; y < h; y += 700) { await p.evaluate((yy) => window.scrollTo(0, yy), y); await wacht(60); }
@@ -131,6 +140,10 @@ const TOEGESTAAN = []; // { re, bron } — alleen met een bron die Mohammed of B
     const proef = vind(await lees('/lp/dakwerken', () => { const d = document.createElement('p'); d.textContent = 'Gemiddeld 4,9 van 5 · 120+ realisaties'; document.querySelector('main, #root')?.appendChild(d); }), '/lp/dakwerken').map(([v, m]) => `${v.naam} ("${m[0]}")`);
     if (proef.length < 2) { console.log(`ONGELDIGE METING: positieve controle vond ${proef.length} van de 2 geplante claims (${proef.join('; ')})`); process.exit(2); }
     console.log(`positieve controle: ${proef.join('; ')}`);
+    /* 23 nov 2026: een termijn in werkdagen in een DICHTE vraag en een BF-feit moeten gevonden worden (de vragen werden voorheen niet gelezen) */
+    const proefDicht = vind(await lees('/lp/dakwerken', () => { const d = document.createElement('details'); d.innerHTML = '<summary>Wanneer?</summary><p>Wij komen binnen twee werkdagen langs. U krijgt 15 jaar garantie.</p>'; document.querySelector('main, #root')?.appendChild(d); }), '/lp/dakwerken').map(([v]) => v.naam);
+    if (!proefDicht.some((n) => /werkdagen/.test(n)) || !proefDicht.some((n) => /Bega Fortuna/.test(n))) { console.log(`ONGELDIGE METING: positieve controle in een dichte vraag vond ${proefDicht.join('; ') || 'niets'}`); process.exit(2); }
+    console.log(`positieve controle dichte vraag: ${proefDicht.join('; ')}`);
     /* Positieve controle bedrag: een echt bedrag op de bedankpagina na de rekenaar moet gevonden worden; het
        vergrendelde nullen-bedrag in dezelfde opbouw niet (anders faalt de guard op de pagina zoals ze hoort). */
     const RP = '/bedankt/dakwerken?van=rekenaar';

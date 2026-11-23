@@ -35,7 +35,8 @@ export const DIENST_INFO_AB: Record<string, DienstInfo> = {
   herstelling: {
     slug: 'dakherstelling',
     wanneerKop: 'Wanneer laat u uw dak herstellen?',
-    wanneer: ['U ziet een vochtplek op het plafond of rond de schouw.', 'Er ligt een pan of lei los, verschoven of gebroken.', 'Na een storm zijn de nok, de dakrand of de goot beschadigd.', 'Het zink rond de schouw of het dakraam laat los.'],
+    /* 23 nov 2026 (keuring tekst-AB-10): de inleiding noemt al de vochtplek en de verschoven pan; hier andere tekens */
+    wanneer: ['Bij regen druppelt er water op zolder.', 'Er liggen stukken pan of mortel in de goot.', 'Na een storm zijn de nok, de dakrand of de goot beschadigd.', 'Het zink rond de schouw of het dakraam laat los.'],
     aanpakKop: 'Zo verloopt een herstelling',
     aanpak: ['Het lek opsporen, op het dak en op zolder', 'De oorzaak herstellen: de pannen of leien, het zinkwerk of de roofing op die plek', 'Aangetast hout onder de pannen vervangen', 'Alles opnieuw waterdicht afwerken'], // de inleiding (meer) zegt al dat we eerst zoeken waar het water binnenkomt
     prijs: ['De plek en de omvang van de schade.', 'De bereikbaarheid van het dak: met een ladder, een hoogwerker of een steiger.', 'Het materiaal dat vervangen wordt.'],
