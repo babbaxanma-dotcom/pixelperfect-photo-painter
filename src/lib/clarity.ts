@@ -79,6 +79,11 @@ export const CLARITY_PAD: Record<string, string> = {
   '/badkamerrenovatie': CLARITY_PROJECT.home,
   '/lp/dakwerken': CLARITY_PROJECT.dakwerken,
   '/lp/dakwerken/asbest': CLARITY_PROJECT.dakwerken,
+  /* 23 nov 2026: de subpagina's per advertentiegroep (LpBfC VARIANTEN_AB), zelfde project als /lp/dakwerken */
+  '/lp/dakwerken/dakrenovatie': CLARITY_PROJECT.dakwerken,
+  '/lp/dakwerken/nieuw-dak': CLARITY_PROJECT.dakwerken,
+  '/lp/dakwerken/plat-dak': CLARITY_PROJECT.dakwerken,
+  '/lp/dakwerken/dakisolatie': CLARITY_PROJECT.dakwerken,
   '/lp/totaalrenovatie': CLARITY_PROJECT.totaalrenovatie,
   '/totaalrenovatie': CLARITY_PROJECT.totaalrenovatie,
   '/lp/aannemer-renovatiewerken': CLARITY_PROJECT.totaalrenovatie,

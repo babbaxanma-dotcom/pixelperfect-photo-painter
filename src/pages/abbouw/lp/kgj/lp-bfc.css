@@ -589,4 +589,38 @@ html.is-afronden .abc .abc-zweef { opacity: 0 !important; visibility: hidden !im
   .abc .abc-diensten__rij, .abc .abc-diensten__rij--3, .abc .abc-diensten__rij--5 { grid-template-columns: minmax(0, 1fr); }
   .abc .abc-dienst:nth-child(even) { border-left: 0; }
   .abc .abc-dienst:nth-child(2) { border-top: 1px solid var(--abc-lijn); }
+
+/* 23 nov 2026, Mohammed: "bij de diensten die lees meer", "zelfde zoals bega", "zodat het multi page wordt": een knop "Lees meer" onder elke dienst
+   (zoals bfbouw.be .lpd__knop: omlijnd, vult bij aanwijzen) en de dienstpagina's /lp/dakwerken/diensten/<dienst> (diensten-ab.ts). */
+.abc .abc-dienst__lijf { flex: 1; display: flex; flex-direction: column; }
+.abc .abc-dienst__lijf > p { margin-bottom: 20px; }
+.abc .abc-dienst__meer { align-self: flex-start; margin-top: auto; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 18px; border: 1.5px solid var(--abc-donker); color: var(--abc-donker); font-size: 15px; font-weight: 600; text-decoration: none; transition: background-color .2s, color .2s; }
+.abc .abc-dienst__meer svg { width: 16px; height: 16px; }
+.abc .abc-dienst__meer:hover { background: var(--abc-donker); color: #fff; }
+.abc .abc-dinfo { padding: 88px 0; background: #fff; }
+.abc .abc-dinfo--tint { background: var(--abc-tint); }
+.abc .abc-dinfo__in { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; }
+.abc .abc-dinfo__blok > p { margin: 16px 0 0; font-size: 17px; line-height: 1.65; color: var(--abc-tekst); }
+.abc .abc-dinfo__vinken, .abc .abc-dinfo__stappen { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 14px; }
+.abc .abc-dinfo__vinken li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 14px; align-items: start; font-size: 17px; line-height: 1.55; color: var(--abc-donker); }
+.abc .abc-dinfo__vinken li > span { display: grid; place-items: center; width: 28px; height: 28px; background: var(--abc-goud); color: var(--abc-donker); }
+.abc .abc-dinfo__vinken svg { width: 16px; height: 16px; }
+.abc .abc-dinfo__stappen li { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: center; font-size: 17px; line-height: 1.5; color: var(--abc-donker); }
+.abc .abc-dinfo__nr { display: grid; place-items: center; width: 36px; height: 36px; border: 1.5px solid var(--abc-donker); font-family: var(--abc-kop); font-size: 16px; font-weight: 600; }
+.abc .abc-dinfo__kader { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 56px; align-items: center; padding: 44px 48px; background: #fff; border: 1px solid var(--abc-lijn); border-top: 3px solid var(--abc-goud); }
+.abc .abc-dinfo__actie { padding-left: 48px; border-left: 1px solid var(--abc-lijn); }
+.abc .abc-dinfo__vast { margin: 0 0 22px; font-family: var(--abc-kop); font-size: 24px; line-height: 1.3; font-weight: 600; color: var(--abc-donker); }
+.abc .abc-dandere { padding: 88px 0; background: #fff; }
+.abc .abc-dandere .abc-diensten__rij { margin-top: 36px; box-shadow: none; }
+@media (max-width: 1000px) {
+  .abc .abc-dinfo, .abc .abc-dandere { padding: 48px 0; }
+  .abc .abc-dinfo__in { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .abc .abc-dinfo__kader { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 28px 20px; }
+  .abc .abc-dinfo__actie { padding: 22px 0 0; border-left: 0; border-top: 1px solid var(--abc-lijn); }
+  .abc .abc-dinfo__vast { font-size: 19px; margin-bottom: 18px; }
+  .abc .abc-dinfo__actie .abc-knop { width: 100%; }
+  .abc .abc-dinfo__vinken li, .abc .abc-dinfo__stappen li, .abc .abc-dinfo__blok > p { font-size: 16px; }
+  .abc .abc-dandere .abc-diensten__rij { margin-top: 24px; }
+  .abc .abc-dienst__lijf > p { margin-bottom: 14px; }
+  .abc .abc-dienst__meer { min-height: 40px; padding: 0 12px; gap: 8px; font-size: 14px; }
 }

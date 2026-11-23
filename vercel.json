@@ -5,6 +5,10 @@
   "outputDirectory": "dist",
   "rewrites": [
     { "source": "/lp/dakwerken", "missing": [{ "type": "query", "key": "utm_term" }, { "type": "query", "key": "dak" }, { "type": "query", "key": "dienst" }], "destination": "/lp/dakwerken/index.html" },
+    { "source": "/lp/dakwerken/dakrenovatie", "missing": [{ "type": "query", "key": "utm_term" }, { "type": "query", "key": "dak" }, { "type": "query", "key": "dienst" }], "destination": "/lp/dakwerken/dakrenovatie/index.html" },
+    { "source": "/lp/dakwerken/nieuw-dak", "missing": [{ "type": "query", "key": "utm_term" }, { "type": "query", "key": "dak" }, { "type": "query", "key": "dienst" }], "destination": "/lp/dakwerken/nieuw-dak/index.html" },
+    { "source": "/lp/dakwerken/plat-dak", "missing": [{ "type": "query", "key": "utm_term" }, { "type": "query", "key": "dak" }, { "type": "query", "key": "dienst" }], "destination": "/lp/dakwerken/plat-dak/index.html" },
+    { "source": "/lp/dakwerken/dakisolatie", "missing": [{ "type": "query", "key": "utm_term" }, { "type": "query", "key": "dak" }, { "type": "query", "key": "dienst" }], "destination": "/lp/dakwerken/dakisolatie/index.html" },
     { "source": "/lp/dakwerken/asbest", "missing": [{ "type": "query", "key": "utm_term" }, { "type": "query", "key": "dak" }, { "type": "query", "key": "dienst" }], "destination": "/lp/dakwerken/asbest/index.html" },
     { "source": "/lp/totaalrenovatie", "missing": [{ "type": "query", "key": "utm_term" }, { "type": "query", "key": "dak" }, { "type": "query", "key": "dienst" }], "destination": "/lp/totaalrenovatie/index.html" },
     { "source": "/lp/aannemer-renovatiewerken", "missing": [{ "type": "query", "key": "utm_term" }, { "type": "query", "key": "dak" }, { "type": "query", "key": "dienst" }], "destination": "/lp/aannemer-renovatiewerken/index.html" },

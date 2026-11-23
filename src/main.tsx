@@ -19,7 +19,9 @@ function bootTracking() {
   installCallTracking();
   syncConsentToGtag();
 
-  trackPageView(window.location.pathname);
+  /* 23 nov 2026 (meting, met de Ads-chat): de Google-tag stuurt bij het laden zelf een page_view naar G-NWBSQ6W0BZ (gemeten, ondanks
+     send_page_view: false). Een eigen page_view hier gaf er twee per bezoek; GA4 telde elke landing dubbel. Alleen bij een routewissel (hieronder) stuurt
+     de app zelf een page_view; de automatische paginawissels van GA4 staan uit (stream abgroep.be, door de Ads-chat op 23 nov). */
 
   let lastPath = window.location.pathname;
   const checkPath = () => {
