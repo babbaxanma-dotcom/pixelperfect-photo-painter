@@ -125,6 +125,13 @@ export const AppInhoud = () => (
               omgezet naar de nieuwe bestemming, dan kunnen deze regels weg. */}
           <Route path="/lp/dakwerken" element={<LpBfC />} />
           <Route path="/lp/dakwerken/tips/:slug" element={<LpBfC />} />
+          {/* 23 nov 2026, Mohammed: "en maak ook de sublp voor isolatie he", "bij ab"; "bij de diensten die lees meer", "zelfde zoals bega": subpagina's per
+              advertentiegroep (LpBfC VARIANTEN_AB) en een pagina per dienst (diensten-ab.ts), zoals bfbouw.be. */}
+          <Route path="/lp/dakwerken/dakrenovatie" element={<LpBfC variant="dakrenovatie" />} />
+          <Route path="/lp/dakwerken/nieuw-dak" element={<LpBfC variant="nieuw-dak" />} />
+          <Route path="/lp/dakwerken/plat-dak" element={<LpBfC variant="plat-dak" />} />
+          <Route path="/lp/dakwerken/dakisolatie" element={<LpBfC variant="dakisolatie" />} />
+          <Route path="/lp/dakwerken/diensten/:dienst" element={<LpBfC />} />
           {/* 2 nov 2026, Mohammed: "die aparte sublp voor asbest" (zoals bfbouw.be /lp/dakwerken/asbest/) */}
           <Route path="/lp/dakwerken/asbest" element={<LpBfAsbest />} />
           <Route path="/lp/gevel" element={<Navigate to="/gevel" replace />} />

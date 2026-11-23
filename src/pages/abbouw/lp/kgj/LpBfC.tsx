@@ -9,6 +9,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { TIPS_AB, type TipAb } from './tips-ab';
+import { DIENST_INFO_AB, DIENST_PAD } from './diensten-ab';
 import { CONTACT } from '@/data/contact';
 import Aanvraag from './Aanvraag';
 import { AanvraagStaat, beginStand } from './AanvraagStaat';
@@ -85,6 +86,24 @@ const BFC = {
   snel: 'Wij laten u niet wachten. Vlot en duidelijk antwoorden is bij ons de regel.',
 };
 
+/* 23 nov 2026, Mohammed: "en maak ook de sublp voor isolatie he", "want deze gebruiken ook isolatie", "bij ab". Subpagina's per advertentiegroep zoals
+   bfbouw.be (bouw/lp-dak.cjs VARIANTEN, live 22 nov: /dakrenovatie/, /nieuw-dak/, /plat-dak/, kop "Uw dak renoveren? Kies voor vakmanschap." enz.)
+   en dakisolatie (AB-groep Dakisolatie gaf de enige 2 aanvragen van november, plan 22 nov). Zelfde pagina: eigen kop, plaatsregel, titel en
+   beschrijving; de dienst van de pagina staat eerst bij de diensten; plat dak vult "Om welk soort dak gaat het?" vooraf in, zoals bfbouw.be.
+   Dezelfde titels en beschrijvingen staan in scripts/prerender-lp.mjs (KOP), voor de voorgerenderde HTML. */
+type VariantInfo = { kop: string; regio: string; titel: string; beschrijving: string; dienst: string; voor?: { sleutel: string; label: string } };
+export const VARIANTEN_AB = {
+  dakrenovatie: { kop: 'Uw dak renoveren?', regio: 'Dakrenovatie in Willebroek en omstreken', titel: 'Dakrenovatie in Willebroek en omstreken | AB Bouw Groep',
+    beschrijving: 'Dakrenovatie met nieuwe pannen of leien, onderdak en isolatie. Vraag uw gratis offerte aan bij AB Bouw Groep, werken aan 6% btw.', dienst: 'renovatie' },
+  'nieuw-dak': { kop: 'Een nieuw dak nodig?', regio: 'Nieuw dak in Willebroek en omstreken', titel: 'Nieuw dak laten plaatsen | AB Bouw Groep',
+    beschrijving: 'Een volledig nieuw dak: structuur, isolatie, onderdak en dakbedekking. Vraag uw gratis offerte aan bij AB Bouw Groep.', dienst: 'nieuw-dak' },
+  'plat-dak': { kop: 'Uw plat dak vernieuwen?', regio: 'Platte daken in Willebroek en omstreken', titel: 'Plat dak vernieuwen, herstellen of isoleren | AB Bouw Groep',
+    beschrijving: 'Uw plat dak vernieuwen, herstellen of isoleren in EPDM, roofing of bitumen. Vraag uw gratis offerte aan bij AB Bouw Groep.', dienst: 'renovatie', voor: { sleutel: 'Dak', label: 'Plat dak' } },
+  dakisolatie: { kop: 'Uw dak isoleren?', regio: 'Dakisolatie in Willebroek en omstreken', titel: 'Dakisolatie in Willebroek en omstreken | AB Bouw Groep',
+    beschrijving: 'Uw dak isoleren langs buiten, langs binnen of op een plat dak, met de attesten voor uw premie. Vraag uw gratis offerte aan bij AB Bouw Groep.', dienst: 'isolatie' },
+} satisfies Record<string, VariantInfo>;
+export type VariantAb = keyof typeof VARIANTEN_AB;
+
 const ZEKER_ICOON: Record<Zekerheid['icoon'], JSX.Element> = {
   prijs: <BadgeEuro aria-hidden="true" />, aanspreek: <UserCheck aria-hidden="true" />,
   schild: <ShieldCheck aria-hidden="true" />, kalender: <CalendarCheck aria-hidden="true" />,
@@ -112,11 +131,17 @@ const TIP_PAD = '/lp/dakwerken/tips/';
 /* [woord] = in de accentkleur (zelfde schrijfwijze als de koppen in inhoud.ts). */
 const metAccent = (t: string) => t.split(/(\[[^\]]+\])/g).map((d, i) => (d.startsWith('[') ? <span className="abc-accent" key={i}>{d.slice(1, -1)}</span> : d));
 
-export default function LpBfC({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
-  /* Artikelpagina binnen de landingspagina (/lp/dakwerken/tips/:slug), zoals bfbouw.be: zelfde kopbalk, eigen kop met foto, het artikel, offerteblok. */
-  const { slug } = useParams();
+export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInhoud; variant?: VariantAb }) {
+  /* Artikelpagina binnen de landingspagina (/lp/dakwerken/tips/:slug), zoals bfbouw.be: zelfde kopbalk, eigen kop met foto, het artikel, offerteblok.
+     Dienstpagina (/lp/dakwerken/diensten/:dienst, 23 nov 2026, zie diensten-ab.ts): kop met foto, wanneer, wat de werken omvatten, wat de prijs bepaalt,
+     werkwijze, vragen, de andere diensten, offerteblok. */
+  const { slug, dienst: dienstSlug } = useParams();
   const tip = slug ? TIPS_AB.find((t) => t.slug === slug) : undefined;
-  const basis = tip ? '/lp/dakwerken' : '';
+  const dienst = dienstSlug ? inhoud.diensten.lijst.find((d) => DIENST_INFO_AB[d.id]?.slug === dienstSlug) : undefined;
+  const info = dienst ? DIENST_INFO_AB[dienst.id] : undefined;
+  const V: VariantInfo | undefined = variant ? VARIANTEN_AB[variant] : undefined;
+  const sub = !!(tip || dienst);
+  const basis = sub ? '/lp/dakwerken' : '';
   const [gescrold, setGescrold] = useState(false);
   const [menu, setMenu] = useState(false);
   const [zweef, setZweef] = useState(false);
@@ -149,14 +174,14 @@ export default function LpBfC({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
     const voor = [...dak, ...term].find((b) => b.voor)?.voor;
     return kop || voor ? { kop, voor } : undefined;
   });
-  const voor = match?.voor ?? inhoud.voorAf;
+  const voor = match?.voor ?? V?.voor ?? inhoud.voorAf;
 
   useEffect(() => {
-    document.title = tip ? `${tip.titel} | AB Bouw Groep` : inhoud === DAKWERKEN ? BFC.titel : inhoud.titel;
+    document.title = dienst ? `${dienst.naam} | AB Bouw Groep` : tip ? `${tip.titel} | AB Bouw Groep` : V ? V.titel : inhoud === DAKWERKEN ? BFC.titel : inhoud.titel;
     const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute('content', tip ? tip.beschrijving : inhoud.omschrijving);
-    if (tip) window.scrollTo(0, 0);
-  }, [inhoud, tip]);
+    if (meta) meta.setAttribute('content', dienst ? (dienst.meer?.[0] ?? dienst.tekst) : tip ? tip.beschrijving : V ? V.beschrijving : inhoud.omschrijving);
+    if (tip || dienst) window.scrollTo(0, 0);
+  }, [inhoud, tip, dienst, V]);
 
   /* Kopbalk: doorzichtig over de foto bovenaan (pc), wit na 24 px scrollen. */
   useEffect(() => {
@@ -226,20 +251,52 @@ export default function LpBfC({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
   const G = BFC.gebied;
   const K = REGIOKAART_AB;
 
+  /* Diensten: de dienst van de subpagina eerst (VARIANTEN_AB). Foto per dienst: Dakrenovatie = het stilstaande beeld van de hoeve (dictaat 23 nov). */
+  const dienstenLijst = V ? [...inhoud.diensten.lijst].sort((a, b) => Number(b.id === V.dienst) - Number(a.id === V.dienst)) : inhoud.diensten.lijst;
+  const dienstFoto = (d: KgjInhoud['diensten']['lijst'][number]) => (d.id === 'renovatie' && inhoud.realisatie ? { src: inhoud.realisatie.na.poster, alt: inhoud.realisatie.na.alt } : d.foto);
+  /* "Lees meer" naar de eigen dienstpagina, zoals bfbouw.be (knop onder de tekst van elke dienst). */
+  const leesMeer = (id: string, naam: string) => (DIENST_INFO_AB[id]
+    ? <Link className="abc-dienst__meer" to={DIENST_PAD + DIENST_INFO_AB[id].slug} aria-label={`Lees meer over ${naam.toLowerCase()}`}>Lees meer<IcPijl /></Link> : null);
+  const werkwijze = (
+    <section className="abc-proces" id="werkwijze" aria-labelledby="abc-proces-kop">
+      <div className="abc-raam">
+        <h2 className="abc-h2" id="abc-proces-kop">Zo werken wij</h2>
+        <ol className={`abc-proces__stappen abc-proces__stappen--${BFC.stappen.length}`}>
+          {BFC.stappen.map((s, i) => (
+            <li key={s}><span className="abc-proces__nr" aria-hidden="true">{i + 1}</span><p><span className="abc-sr">Stap {i + 1}: </span>{s.split(/\*\*(.+?)\*\*/g).map((d, j) => (j % 2 ? <b key={j}>{d}</b> : d))}</p></li>
+          ))}
+        </ol>
+        <p className="abc-proces__onder">{offerteKnop()}</p>
+      </div>
+    </section>
+  );
+  const vragen = inhoud.faq && inhoud.faq.lijst.length > 0 ? (
+    <section className="abc-faq" id="faq" aria-labelledby="abc-faq-kop">
+      <div className="abc-raam abc-faq__in">
+        <h2 className="abc-h2 abc-h2--midden" id="abc-faq-kop">{inhoud.faq.kop}</h2>
+        <div className="abc-faq__lijst">
+          {inhoud.faq.lijst.map((f) => (
+            <details key={f.v}><summary><span>{f.v}</span><span className="abc-faq__plus" aria-hidden="true" /></summary><p>{f.a}{f.link && <>{' '}<a href="#contact">{f.link}</a></>}</p></details>
+          ))}
+        </div>
+      </div>
+    </section>
+  ) : null;
+
   /* inhoud erbij: anders zet AanvraagStaat de bewaarde antwoorden niet terug na herladen of de terugknop (check-lp-contact punt 6, 23 nov 2026) */
   return (
     <AanvraagStaat begin={() => beginStand(inhoud, voor)} inhoud={inhoud}>
     <div className={`bf bf-lp abc${menu ? ' abc--menu' : ''}`} ref={vat}>
       <header className={`abc-kop kgj-kop${gescrold ? ' is-gescrold' : ''}`} id="kop">
         <div className="abc-kop__in">
-          <a className="abc-logo" href={tip ? '/lp/dakwerken' : '#top'} aria-label="AB Bouw Groep">
+          <a className="abc-logo" href={sub ? '/lp/dakwerken' : '#top'} aria-label="AB Bouw Groep">
             <img className="abc-logo__wit" src={logoWit} width={440} height={125} alt="Logo van AB Bouw Groep" decoding="async" />
             <img className="abc-logo__ink" src={logoInk} width={440} height={125} alt="" decoding="async" />
           </a>
           <nav className="abc-menu" aria-label="Menu">
             <div className="abc-menu__groep">
               <a href={`${basis}#diensten`}>Diensten<svg className="abc-menu__pijl" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m3 4.5 3 3 3-3" /></svg></a>
-              <div className="abc-menu__sub">{inhoud.diensten.lijst.map((d) => <a key={d.id} href={`${basis}#${d.id}`}>{d.naam}</a>)}</div>
+              <div className="abc-menu__sub">{inhoud.diensten.lijst.map((d) => (DIENST_INFO_AB[d.id] ? <Link key={d.id} to={DIENST_PAD + DIENST_INFO_AB[d.id].slug}>{d.naam}</Link> : <a key={d.id} href={`${basis}#${d.id}`}>{d.naam}</a>))}</div>
             </div>
             {BFC.menu.map(([href, tekst]) => <a key={href} href={href === '#gegevens' ? href : `${basis}${href}`}>{tekst}</a>)}
           </nav>
@@ -284,14 +341,76 @@ export default function LpBfC({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             </section>
           </>
         )}
-        {!tip && (<>
+        {dienst && info && (
+          <>
+            <section className="abc-sub" aria-labelledby="abc-sub-kop">
+              <div className="abc-sub__in">
+                <div className="abc-sub__tekst">
+                  <Link className="abc-sub__terug" to="/lp/dakwerken#diensten"><svg {...lijn}><path d="m14.5 6-6 6 6 6" /></svg>Terug naar alle diensten</Link>
+                  <h1 id="abc-sub-kop">{dienst.naam}</h1>
+                  <p className="abc-sub__intro">{dienst.meer?.[0] ?? dienst.tekst}</p>
+                  <div className="abc-hero__knoppen">{offerteKnop()}<a className="abc-knop abc-knop--rand" href={CONTACT.phone.href}><IcTel />Bel {CONTACT.phone.display}</a></div>
+                </div>
+                {(() => { const ft = dienstFoto(dienst); return ft && <figure className="abc-sub__foto"><img src={ft.src} alt={ft.alt} decoding="async" /></figure>; })()}
+              </div>
+            </section>
+            <section className="abc-dinfo" aria-labelledby="abc-dinfo-wanneer">
+              <div className="abc-raam abc-dinfo__in">
+                <div className="abc-dinfo__blok">
+                  <h2 className="abc-h2" id="abc-dinfo-wanneer">{info.wanneerKop}</h2>
+                  <ul className="abc-dinfo__vinken">{info.wanneer.map((t) => <li key={t}><span aria-hidden="true"><IcVink /></span>{t}</li>)}</ul>
+                </div>
+                <div className="abc-dinfo__blok">
+                  <h2 className="abc-h2">{info.aanpakKop}</h2>
+                  {(dienst.meer ?? []).slice(1).map((t) => <p key={t}>{t}</p>)}
+                  <ol className="abc-dinfo__stappen">{info.aanpak.map((t, i) => <li key={t}><span className="abc-dinfo__nr" aria-hidden="true">{i + 1}</span>{t}</li>)}</ol>
+                </div>
+              </div>
+            </section>
+            <section className="abc-dinfo abc-dinfo--tint" aria-labelledby="abc-dinfo-prijs">
+              <div className="abc-raam">
+                <div className="abc-dinfo__kader">
+                  <div>
+                    <h2 className="abc-h2" id="abc-dinfo-prijs">Wat bepaalt de prijs?</h2>
+                    <ul className="abc-dinfo__vinken">{info.prijs.map((t) => <li key={t}><span aria-hidden="true"><IcVink /></span>{t}</li>)}</ul>
+                  </div>
+                  <div className="abc-dinfo__actie">
+                    <p className="abc-dinfo__vast">U ontvangt een vrijblijvende offerte met een vaste prijs.</p>
+                    {offerteKnop()}
+                  </div>
+                </div>
+              </div>
+            </section>
+            {werkwijze}
+            {vragen}
+            <section className="abc-dandere" aria-labelledby="abc-dandere-kop">
+              <div className="abc-raam">
+                <h2 className="abc-h2" id="abc-dandere-kop">Onze andere diensten</h2>
+                <ul className="abc-diensten__rij abc-diensten__rij--3">
+                  {inhoud.diensten.lijst.filter((d) => d.id !== dienst.id).map((d) => (
+                    <li className="abc-dienst" key={d.id}>
+                      {(() => { const ft = dienstFoto(d); return ft && <figure className="abc-dienst__foto"><img src={ft.src} alt={ft.alt} loading="lazy" decoding="async" /></figure>; })()}
+                      <div className="abc-dienst__lijf">
+                        <span className="abc-dienst__ic" aria-hidden="true"><Icoon naam={d.icoon} /></span>
+                        <h3>{d.naam}</h3>
+                        <p>{d.tekst}</p>
+                        {leesMeer(d.id, d.naam)}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+          </>
+        )}
+        {!tip && !dienst && (<>
         <section className="abc-hero" id="top">
           <img className="abc-hero__foto" src={hero.src} alt={hero.alt} loading="eager" decoding="async" {...{ fetchpriority: 'high' }} />
           <div className="abc-hero__laag" aria-hidden="true" />
           <div className="abc-hero__in">
-            <p className="abc-hero__regio"><span className="abc-hero__pin"><IcPin /></span>{BFC.regio}</p>
+            <p className="abc-hero__regio"><span className="abc-hero__pin"><IcPin /></span>{V?.regio ?? BFC.regio}</p>
             <h1 className="abc-hero__kop">
-              <span>{match?.kop ? metAccent(match.kop) : BFC.kop}</span>
+              <span>{match?.kop ? metAccent(match.kop) : V?.kop ?? BFC.kop}</span>{' '}
               <span className="abc-accent">{BFC.kop2}</span>
             </h1>
             <p className="abc-hero__sub"><b>{BFC.subVet}</b> {BFC.sub}</p>
@@ -323,16 +442,17 @@ export default function LpBfC({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           </div>
           <div className="abc-raam">
             <ul className={`abc-diensten__rij abc-diensten__rij--${inhoud.diensten.lijst.length}`}>
-              {inhoud.diensten.lijst.map((d) => (
+              {dienstenLijst.map((d) => (
                 <li className="abc-dienst" id={d.id} key={d.id}>
                   {/* 23 nov 2026, Mohammed: "gebruik de stilstaande na foto van de hoeve bij dakwerken diensten bij ab bij dakrenovatie": het stilstaande
                       beeld van de drone na de werken (realisatie-hoeve.ts, na.poster) op het vak Dakrenovatie. */}
-                  {(() => { const ft = d.id === 'renovatie' && inhoud.realisatie ? { src: inhoud.realisatie.na.poster, alt: inhoud.realisatie.na.alt } : d.foto;
+                  {(() => { const ft = dienstFoto(d);
                     return ft && <figure className="abc-dienst__foto"><img src={ft.src} alt={ft.alt} loading="lazy" decoding="async" /></figure>; })()}
                   <div className="abc-dienst__lijf">
                     <span className="abc-dienst__ic" aria-hidden="true"><Icoon naam={d.icoon} /></span>
                     <h3>{d.naam}</h3>
                     <p>{d.tekst}</p>
+                    {leesMeer(d.id, d.naam)}
                   </div>
                 </li>
               ))}
@@ -360,17 +480,7 @@ export default function LpBfC({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           </section>
         )}
 
-        <section className="abc-proces" id="werkwijze" aria-labelledby="abc-proces-kop">
-          <div className="abc-raam">
-            <h2 className="abc-h2" id="abc-proces-kop">Zo werken wij</h2>
-            <ol className={`abc-proces__stappen abc-proces__stappen--${BFC.stappen.length}`}>
-              {BFC.stappen.map((s, i) => (
-                <li key={s}><span className="abc-proces__nr" aria-hidden="true">{i + 1}</span><p><span className="abc-sr">Stap {i + 1}: </span>{s.split(/\*\*(.+?)\*\*/g).map((d, j) => (j % 2 ? <b key={j}>{d}</b> : d))}</p></li>
-              ))}
-            </ol>
-            <p className="abc-proces__onder">{offerteKnop()}</p>
-          </div>
-        </section>
+        {werkwijze}
 
         {inhoud.voordelen && (
           <section className="abc-voordelen" aria-labelledby="abc-voordelen-kop">
@@ -415,18 +525,7 @@ export default function LpBfC({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           </section>
         )}
 
-        {inhoud.faq && inhoud.faq.lijst.length > 0 && (
-          <section className="abc-faq" id="faq" aria-labelledby="abc-faq-kop">
-            <div className="abc-raam abc-faq__in">
-              <h2 className="abc-h2 abc-h2--midden" id="abc-faq-kop">{inhoud.faq.kop}</h2>
-              <div className="abc-faq__lijst">
-                {inhoud.faq.lijst.map((f) => (
-                  <details key={f.v}><summary><span>{f.v}</span><span className="abc-faq__plus" aria-hidden="true" /></summary><p>{f.a}{f.link && <>{' '}<a href="#contact">{f.link}</a></>}</p></details>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
+        {vragen}
 
         </>)}
 
@@ -479,7 +578,7 @@ export default function LpBfC({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
             <img src={logoWit} width={440} height={125} alt="Logo van AB Bouw Groep" loading="lazy" decoding="async" />
             <p>{BFC.regio}, door AB Bouw Groep uit Willebroek.</p>
           </div>
-          <div className="abc-voet__kolom"><h2>Diensten</h2><ul>{inhoud.diensten.lijst.map((d) => <li key={d.id}><a href={`#${d.id}`}>{d.naam}</a></li>)}</ul></div>
+          <div className="abc-voet__kolom"><h2>Diensten</h2><ul>{inhoud.diensten.lijst.map((d) => <li key={d.id}>{DIENST_INFO_AB[d.id] ? <Link to={DIENST_PAD + DIENST_INFO_AB[d.id].slug}>{d.naam}</Link> : <a href={`${basis}#${d.id}`}>{d.naam}</a>}</li>)}</ul></div>
           <div className="abc-voet__kolom"><h2>Navigatie</h2><ul>{BFC.menu.map(([href, tekst]) => <li key={href}><a href={href}>{tekst}</a></li>)}<li><a href="#contact">{naarKnop}</a></li></ul></div>
           <div className="abc-voet__kolom abc-voet__contact"><h2>Contact</h2><ul>
             <li><span className="abc-voet__ic"><IcTel /></span><a href={CONTACT.phone.href}>{CONTACT.phone.display}</a></li>
