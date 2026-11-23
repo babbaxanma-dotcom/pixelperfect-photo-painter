@@ -77,6 +77,22 @@
  * Wat er bij een volledige aanvraag naar GHL en Web3Forms gaat (bron_lead, aanvullende_info, Toestemming, /bedankt),
  * toetst check-lp-payload veld voor veld.
  *
+ * 23 nov 2026: /lp/dakwerken staat in de opbouw van bfbouw.be (LpBfC.tsx, herkend aan .abc; Mohammed: "in dezelfde stijl zoals bf"): hero zonder
+ * formulier met twee knoppen ("Offerte aanvragen" naar #contact, "Bekijk recente daken"), de enige aanvraagkaart onderaan (#contact > #rekenaar, plek
+ * onder). HERO en ONDER wijzen daar naar dezelfde kaart. Voor die vorm:
+ *   2. eerste gsm-scherm: de knop "Offerte aanvragen" in de hero staat volledig in het eerste scherm (goedgekeurd op bfbouw.be); na één echte tik erop
+ *      staan vraag 1 en al haar keuzes van de kaart volledig in beeld, onder de vaste kopbalk;
+ *   6. de kop is "Dakwerker nodig? Kies voor vakmanschap." (LpBfC BFC.kop + kop2, zoals bfbouw.be 22 nov), gelezen zoals hij er staat (twee regels);
+ *   9. badges: de vertrouwensrij en de vinkjes in de kaart onderaan (geen .bf-lp--badges op de pagina: die klasse hoort bij de kaart in de hero);
+ *      geen Google-badge in de hero;
+ *  13. één stand wordt: na een antwoord, naar boven scrollen en een tik op een link naar #contact staat de kaart op dezelfde stap met "Stap x van y"
+ *      direct onder de vaste balk en alle keuzes in beeld; een antwoord daar zet de volgende stap (zelfde regel als 23 okt, nu voor de enige kaart);
+ *  14, 16. alleen de kaart onderaan (een kaart bovenaan bestaat niet);
+ *  18. de klikbare zin in een antwoord van de vragen (.abc-faq details a) telt niet als knop, zoals bf-vraag__link.
+ * De kaartflow (punt 3, 4, 7, 9, 11) loopt één keer per maat, op de kaart onderaan. Positieve controles voor die vorm: de heroknop 900 px lager
+ * (punt 2), keuzes 500 px lager na de tik (punt 2), een Google-badge in de hero (punt 9), de link naar #contact met de gewone sprong in plaats van
+ * naar de kaart (punt 13) en keuzes onderaan 500 px lager (punt 13). /lp/totaalrenovatie en /lp/aannemer-renovatiewerken ongewijzigd.
+ *
  * Positieve controles (zonder: exit 2): /lp/richtprijs-berekenen (de rekenaarpagina) moet op punt 1 falen en op punt 7 en 10;
  * een kaart die 900 px lager staat (geplante CSS) moet op punt 2 falen; een tik die niets doet (geplante pointer-events: none
  * op de keuzes) moet op punt 3 falen; een weggehaalde disclaimer en een disclaimer zonder vet deel moeten de disclaimertoets
@@ -117,6 +133,9 @@ const DAK = {
   /* 5 nov 2026, zoals bfbouw.be 4 nov: vraag 1 "Om welk soort dak gaat het?", Dakrenovatie en Nieuw dak apart */
   /* 7 nov 2026, zoals bfbouw.be 7 nov ("en doe al deze changes ook bij ab pagina"): vraag 1 "Ik ben op zoek naar:" met Gratis dakinspectie, vraag 2 het soort dak */
   pad: '/lp/dakwerken', soort: 'dak', kop: 'Uw dak laten vernieuwen, renoveren of isoleren?', woord: 'gratis offerte', vraag1: 'Ik ben op zoek naar:', keuzes1: ['Dakrenovatie', 'Nieuw dak', 'Herstelling', 'Isolatie', 'Gratis dakinspectie'],
+  /* 23 nov 2026: de kop in de opbouw van bfbouw.be (LpBfC.tsx BFC.kop + BFC.kop2, zoals bfbouw.be sinds 22 nov: "Dakwerker nodig? Kies voor
+     vakmanschap."; de AB-advertentiegroep "Dakwerken in de buurt" landt op deze pagina) */
+  kopAbc: 'Dakwerker nodig? Kies voor vakmanschap.',
   /* 18 nov 2026 (formulier v2, Mohammed: "die vraag van oppervlakte en asbest eruit"; de staal-vraag "bereikbaar" weg): werk, dak, isoleren,
      start + het contactblok = 5 stappen (was 8 op het staal) */
   pad1: ['Dakrenovatie', 'Hellend dak', 'Nee'], vraag2: 'Om welk soort dak gaat het?', // 18 nov 2026: "wanneer wilt u starten eruit"
@@ -151,6 +170,10 @@ const RENO = (pad) => ({
   vinkjes: ['Vrijblijvende offerte', 'Vaste prijs vooraf', 'Eén vast aanspreekpunt', 'Vakmanschap tot in de details'], // 22 okt 2026: geen budgetgarantie meer; 2 nov: offerte; 5 nov: zonder "gratis"
 });
 const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiewerken')];
+/* 23 nov 2026: de vorm per pad (true = opbouw van bfbouw.be, LpBfC.tsx, .abc: alleen de kaart onderaan); bepaald bij de start */
+const ABC = {};
+const kaarten = (pg) => (ABC[pg.pad] ? [[ONDER, 'onderaan']] : [[HERO, 'bovenaan'], [ONDER, 'onderaan']]);
+const kopVan = (pg) => (ABC[pg.pad] ? pg.kopAbc : pg.kop);
 
 (async () => {
   let srv = null;
@@ -241,6 +264,44 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     if (buiten.length) uit.push(`${buiten.length} keuze(s) buiten het eerste scherm (laatste onderkant ${Math.round(keuzes.at(-1).getBoundingClientRect().bottom)} van ${H})`);
     return uit;
   }, pg, HERO);
+
+  /* 2 voor de vorm .abc (23 nov 2026): de knop "Offerte aanvragen" in de hero volledig in het eerste scherm, dan één echte tik erop: vraag 1 en al haar
+     keuzes van de kaart onderaan volledig in beeld, onder de vaste kopbalk. */
+  const eersteSchermAbc = async (p, pg) => {
+    const uit = [];
+    const knop = await p.evaluate((naarKnop) => {
+      const H = innerHeight;
+      const kop = document.querySelector('.kgj-kop'), kb = kop ? kop.getBoundingClientRect().bottom : 0;
+      const a = [...document.querySelectorAll('.abc-hero a[href="#contact"]')].find((x) => x.getClientRects().length);
+      if (!a) return null;
+      const r = a.getBoundingClientRect(), cs = getComputedStyle(a);
+      return { tekst: a.textContent.replace(/\s+/g, ' ').trim(), top: Math.round(r.top), bottom: Math.round(r.bottom), H, kb: Math.round(kb), x: r.left + r.width / 2, y: r.top + r.height / 2,
+        zicht: cs.visibility !== 'hidden' && cs.display !== 'none' && Number(cs.opacity) > 0.5, naarKnop };
+    }, pg.naarKnop);
+    if (!knop) return ['geen knop naar #contact in de hero'];
+    if (knop.tekst !== pg.naarKnop) uit.push(`de heroknop zegt "${knop.tekst}" in plaats van "${pg.naarKnop}"`);
+    if (!knop.zicht || knop.top < knop.kb || knop.bottom > knop.H) { uit.push(`de knop "${knop.tekst}" staat niet volledig in het eerste scherm (${knop.top}-${knop.bottom} px, kopbalk tot ${knop.kb}, scherm ${knop.H})`); return uit; }
+    await p.touchscreen.tap(knop.x, knop.y);
+    let vorige = -1;
+    for (let i = 0; i < 30; i++) { const y = await p.evaluate(() => Math.round(scrollY)); if (y === vorige) break; vorige = y; await wacht(150); }
+    await wacht(300);
+    const k = await p.evaluate((ONDER) => {
+      const kaart = document.querySelector(ONDER); if (!kaart) return null;
+      const kb = document.querySelector('.kgj-kop').getBoundingClientRect().bottom, H = innerHeight;
+      const vraag = kaart.querySelector('.kgj-reken__stap .kgj-reken__vraag'), vr = vraag?.getBoundingClientRect();
+      const keuzes = [...kaart.querySelectorAll('.kgj-reken__stap .kgj-reken__keuze')].map((x) => ({ label: x.querySelector('strong')?.textContent.trim(), top: x.getBoundingClientRect().top, bottom: x.getBoundingClientRect().bottom }));
+      return { kb: Math.round(kb), H, vraag: vraag?.textContent.trim(), vtop: Math.round(vr?.top ?? -1), vbottom: Math.round(vr?.bottom ?? 9999), keuzes };
+    }, ONDER);
+    if (!k) return [...uit, `na de tik op "${knop.tekst}": geen aanvraagkaart onderaan`];
+    if (k.vraag !== pg.vraag1) uit.push(`na de tik op "${knop.tekst}": eerste vraag "${k.vraag}" in plaats van "${pg.vraag1}"`);
+    else if (k.vtop < k.kb - 1 || k.vbottom > k.H) uit.push(`na de tik op "${knop.tekst}": eerste vraag buiten beeld (${k.vtop}-${k.vbottom} px, kopbalk tot ${k.kb}, scherm ${k.H})`);
+    if (k.keuzes.map((x) => x.label).join('|') !== pg.keuzes1.join('|')) uit.push(`na de tik: keuzes ${k.keuzes.map((x) => x.label).join(' / ')} in plaats van ${pg.keuzes1.join(' / ')}`);
+    const buiten = k.keuzes.filter((x) => x.top < k.kb - 1 || x.bottom > k.H);
+    if (buiten.length) uit.push(`na de tik op "${knop.tekst}": ${buiten.length} keuze(s) buiten beeld (laatste onderkant ${Math.round(Math.max(...k.keuzes.map((x) => x.bottom)))} van ${k.H})`);
+    return uit;
+  };
+  /* 6: de kop zoals hij er staat. Vorm .abc: twee regels (twee blokken in de h1), gelezen met een spatie ertussen. */
+  const leesKop = (p) => p.evaluate(() => { const h = document.querySelector('h1'); if (!h) return undefined; return (document.querySelector('.abc') ? h.innerText : h.textContent).trim().replace(/\s+/g, ' '); });
 
   const stand = (p, root = HERO) => p.evaluate((root) => {
     const k = document.querySelector(root);
@@ -354,8 +415,10 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     const uit = [];
     const k = document.querySelector(HERO);
     const norm = (e) => e.textContent.replace(/\s+/g, ' ').trim();
-    const heeft = !!document.querySelector('.kgj-reken--badges') && !!document.querySelector('.bf-lp--badges');
-    if (!heeft) return ['badges ontbreken (.kgj-reken--badges / .bf-lp--badges)'];
+    /* 23 nov 2026, vorm .abc (LpBfC): alleen de kaart onderaan; .bf-lp--badges hoort bij de oude pagina met de kaart in de hero (LpBf.tsx) */
+    const abc = !!document.querySelector('.abc');
+    const heeft = !!k?.classList.contains('kgj-reken--badges') && (abc || !!document.querySelector('.bf-lp--badges'));
+    if (!heeft) return [abc ? 'badges ontbreken (.kgj-reken--badges op de kaart)' : 'badges ontbreken (.kgj-reken--badges / .bf-lp--badges)'];
     const tegels = [...k.querySelectorAll('.kgj-reken__trust li')];
     if (tegels.map(norm).join('|') !== pg.tegels.join('|')) uit.push(`vertrouwensrij "${tegels.map(norm).join(' | ')}" in plaats van "${pg.tegels.join(' | ')}"`);
     /* 18 nov 2026 (Mohammed: "gewoon de algemene stijl robuuster minder speels"): de cijferrij is gewone tekst. Was (22 okt): elk cijfer met
@@ -376,7 +439,9 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     if (kader.length) uit.push(`${kader.length} cijfer(s) in de vertrouwensrij staan in een kader of vlak (bfbouw.be: zonder kader)`);
     /* 8 nov 2026, Mohammed: "5 op google onder de subkop bij ab eruit aub": de Google-badge onder de subkop hoort WEG (was: verplicht) */
     /* in de markup van de hero, zichtbaar of niet (op de gsm verbergt de css .bf-lphero__google; een badge die er staat telt toch) */
-    const g = document.querySelector('.bf-lphero .bf-lphero__google');
+    /* 23 nov 2026, vorm .abc: de hero is .abc-hero; daar telt ook elk blad-element met "op Google" in de tekst als Google-badge */
+    const g = document.querySelector('.bf-lphero .bf-lphero__google, .abc-hero .bf-lphero__google')
+      || [...document.querySelectorAll('.abc-hero *')].find((e) => !e.children.length && /op google/i.test(e.textContent));
     if (g) uit.push('Google-badge onder de subkop staat er nog (' + norm(g).slice(0, 40) + ')');
     return uit;
   }, pg, HERO);
@@ -471,17 +536,23 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
 
   /* 13. Eén stand voor de kaart bovenaan en onderaan (zie de kop van dit script). linkEerst = positieve controle: de link naar
      #contact vóór de tik bovenaan, dan hoort de kaart onderaan op stap 1 te staan en moet de toets dat als fout zien. */
-  const eenStandFouten = async (pg, { css = null, linkEerst = false } = {}) => {
-    const { p, ctx } = await open(pg.pad, { gsm: true, hoogte: 637, css });
+  /* 23 nov 2026, vorm .abc (één kaart, onderaan): eerst een antwoord in die kaart, dan de link (de heroknop "Offerte aanvragen", boven op de pagina):
+     de kaart moet op dezelfde stap terug in beeld komen met "Stap x van y" direct onder de balk. gewoneSprong = positieve controle: de klik op de link
+     bereikt de pagina niet (stopPropagation in de vangfase), dus de browser doet de gewone ankersprong naar de kop van het offerteblok. */
+  const eenStandFouten = async (pg, { css = null, linkEerst = false, gewoneSprong = false } = {}) => {
+    const abc = !!ABC[pg.pad];
+    const voorLaden = gewoneSprong ? () => document.addEventListener('click', (e) => { if (e.target?.closest?.('a[href="#contact"]')) e.stopPropagation(); }, true) : null;
+    const { p, ctx } = await open(pg.pad, { gsm: true, hoogte: 637, css, voorLaden });
     const uit = [];
     if (!linkEerst) {
-      if (!(await tik(p, pg.pad1[0], HERO))) { await ctx.close(); return [`keuze "${pg.pad1[0]}" bovenaan niet gevonden`]; }
+      if (!(await tik(p, pg.pad1[0], HERO))) { await ctx.close(); return [`keuze "${pg.pad1[0]}" ${abc ? 'in de kaart' : 'bovenaan'} niet gevonden`]; }
       const s0 = await stand(p, HERO);
-      if (s0.tel !== 'Stap 2') uit.push(`bovenaan na één tik: ${s0.tel}`);
+      if (s0.tel !== 'Stap 2') uit.push(`${abc ? 'in de kaart' : 'bovenaan'} na één tik: ${s0.tel}`);
     }
-    /* zoals een bezoeker: de eerste zichtbare link naar #contact buiten de kop (renovatie: onder de werkwijze, dak: in het waarom-blok) */
+    /* zoals een bezoeker: de eerste zichtbare link naar #contact buiten de kop (renovatie: onder de werkwijze, dak: in het waarom-blok; vorm .abc: de
+       heroknop, de kopbalk is daar .abc-kop) */
     const link = await p.evaluate(() => {
-      const a = [...document.querySelectorAll('a[href="#contact"]')].find((x) => x.getClientRects().length && !x.closest('.bf-kop'));
+      const a = [...document.querySelectorAll('a[href="#contact"]')].find((x) => x.getClientRects().length && !x.closest('.bf-kop, .abc-kop'));
       if (!a) return null;
       a.scrollIntoView({ block: 'center', behavior: 'instant' });
       const r = a.getBoundingClientRect();
@@ -503,6 +574,13 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     if (m.kop < m.balk || m.kop > m.balk + 60) uit.push(`"Stap x van y" van de kaart onderaan op ${m.kop} px (verwacht direct onder de vaste balk, ${m.balk} px)`);
     if (m.onder > m.vh) uit.push(`keuzes van de kaart onderaan tot ${m.onder} px (scherm ${m.vh})`);
     if (!(await tik(p, pg.pad1[1], ONDER))) uit.push(`keuze "${pg.pad1[1]}" onderaan niet gevonden`);
+    if (abc) {
+      /* vorm .abc: geen kaart bovenaan; het antwoord onderaan zet de kaart een stap verder */
+      const s2 = await stand(p, ONDER);
+      if (s2.tel !== 'Stap 3') uit.push(`na een antwoord onderaan staat de kaart op ${s2.tel} (verwacht Stap 3)`);
+      await ctx.close();
+      return uit;
+    }
     /* de kaart bovenaan is bevroren zolang ze buiten beeld is (toets 17); terug in beeld toont ze de stap van nu */
     await p.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
     await wacht(700);
@@ -627,8 +705,9 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     if (plant) await p.evaluate((t) => { const a = [...document.querySelectorAll('a[href="#contact"]')].find((x) => x.getClientRects().length && !x.closest('.bf-lpbelblok')); if (a) a.textContent = t; }, plant);
     /* 5 nov 2026: de klikbare zin in de veelgestelde vragen ("Vraag dan een gratis offerte aan.", bfbouw.be lpfaq__link) is een
        tekstlink in een antwoord, geen knop; ze telt niet mee. */
+    /* 23 nov 2026, vorm .abc: de klikbare zin in een antwoord van de vragen heeft daar geen klasse (.abc-faq details a); zelfde uitzondering */
     const teksten = await p.evaluate(() => [...document.querySelectorAll('a[href="#contact"]')]
-      .filter((x) => x.getClientRects().length && !x.closest('.bf-lpbelblok') && !x.classList.contains('bf-vraag__link'))
+      .filter((x) => x.getClientRects().length && !x.closest('.bf-lpbelblok') && !x.classList.contains('bf-vraag__link') && !x.closest('.abc-faq details'))
       .map((x) => x.textContent.replace(/\s+/g, ' ').trim()));
     if (!teksten.length) return ['geen zichtbare knop naar het formulier'];
     /* 5 nov 2026 (bfbouw.be 91ab7ba, Mohammed daar: "andere gewoon offerte aanvragen"): de knoppen naar het formulier zeggen allemaal
@@ -745,6 +824,9 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
   };
 
   try {
+    /* 23 nov 2026: de vorm van elke pagina (.abc = opbouw van bfbouw.be, LpBfC.tsx: alleen de kaart onderaan) */
+    for (const pg of PAGINAS) { const { p, ctx } = await open(pg.pad); ABC[pg.pad] = await p.evaluate(() => !!document.querySelector('.abc')); await ctx.close(); }
+    console.log(`vorm: ${PAGINAS.map((pg) => `${pg.pad} ${ABC[pg.pad] ? 'opbouw van bfbouw.be (alleen de kaart onderaan)' : 'kaart bovenaan en onderaan'}`).join('; ')}`);
     /* ---------- positieve controles ---------- */
     {
       const { p, ctx } = await open('/lp/richtprijs-berekenen');
@@ -765,15 +847,25 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       console.log(`positieve controle 7: /lp/richtprijs-berekenen houdt het formulier met keuzelijsten onderaan (${pc7[0]})`);
     }
     {
-      const { p, ctx } = await open('/lp/dakwerken', { css: '.kgj-reken--aanvraag{margin-top:900px!important}' });
-      const pc2 = await eersteScherm(p, DAK);
+      /* 23 nov 2026: de plant draagt de oude vorm (de kaart in de hero 900 px lager) en de vorm .abc (de heroknop "Offerte aanvragen" 900 px lager) */
+      const { p, ctx } = await open('/lp/dakwerken', { css: '.kgj-reken--aanvraag{margin-top:900px!important}.abc .abc-hero__knoppen{margin-top:900px!important}' });
+      const pc2 = ABC[DAK.pad] ? await eersteSchermAbc(p, DAK) : await eersteScherm(p, DAK);
       await ctx.close();
-      if (!pc2.length) { console.log('ONGELDIGE METING: een kaart 900 px lager werd in het eerste scherm gezien'); process.exit(2); }
-      console.log(`positieve controle 2: kaart 900 px lager gezien (${pc2[0]})`);
+      if (!pc2.length) { console.log(`ONGELDIGE METING: een ${ABC[DAK.pad] ? 'heroknop' : 'kaart'} 900 px lager werd in het eerste scherm gezien`); process.exit(2); }
+      console.log(`positieve controle 2: ${ABC[DAK.pad] ? 'heroknop' : 'kaart'} 900 px lager gezien (${pc2[0]})`);
+    }
+    if (ABC[DAK.pad]) {
+      /* 23 nov 2026, vorm .abc: de keuzes van vraag 1 500 px lager in de kaart; na de tik op de heroknop moeten ze buiten beeld gezien worden */
+      const { p, ctx } = await open('/lp/dakwerken', { css: '#contact .kgj-reken--aanvraag .kgj-reken__keuzes{margin-top:500px!important}' });
+      const pc2b = await eersteSchermAbc(p, DAK);
+      await ctx.close();
+      if (!pc2b.some((x) => x.includes('buiten beeld'))) { console.log(`ONGELDIGE METING: keuzes 500 px lager werden na de tik op de heroknop niet buiten beeld gezien (${pc2b.join(' | ') || 'niets'})`); process.exit(2); }
+      console.log(`positieve controle 2b: keuzes 500 px lager na de tik op de heroknop gezien (${pc2b.find((x) => x.includes('buiten beeld'))})`);
     }
     {
       /* 11 (2 nov 2026): een knop die 1 px breder is dan het gsm-scherm (zoals de waarom-knop die dag) moet als fout gezien worden */
-      const { p, ctx } = await open('/lp/dakwerken', { gsm: true, css: '.bf-lpcta__knop{white-space:nowrap!important;min-width:391px!important;max-width:none!important}' /* 8 nov 2026: elke knop naar het formulier (de waarom-knop staat niet meer op /lp/dakwerken) */ });
+      /* 23 nov 2026: ook de knoppen naar het formulier van de vorm .abc (a.abc-knop naar #contact) */
+      const { p, ctx } = await open('/lp/dakwerken', { gsm: true, css: '.bf-lpcta__knop, .abc a.abc-knop[href="#contact"]{white-space:nowrap!important;min-width:391px!important;max-width:none!important}' /* 8 nov 2026: elke knop naar het formulier (de waarom-knop staat niet meer op /lp/dakwerken) */ });
       const pc11 = await scrollFout(p);
       await ctx.close();
       if (!pc11) { console.log('ONGELDIGE METING: een knop van 391 px op een gsm van 390 werd door de scrolltoets niet gezien'); process.exit(2); }
@@ -790,7 +882,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
       const pc4 = kopFouten('Laat uw dak gratis inspecteren', 'Laat uw dak gratis inspecteren');
       const pc5 = kopFouten('Plan een gratis plaatsbezoek voor uw renovatie', 'Plan een gratis plaatsbezoek voor uw renovatie');
       if (!pc4.length || !pc5.length) { console.log('ONGELDIGE METING: de afgekeurde koppen van 19 okt werden niet als werkwijze-kop gezien'); process.exit(2); }
-      if (kopFouten(DAK.kop, DAK.kop).length || kopFouten(RENO('').kop, RENO('').kop).length) { console.log('ONGELDIGE METING: de afgesproken koppen vallen zelf onder de werkwijze-regel'); process.exit(2); }
+      if (kopFouten(DAK.kop, DAK.kop).length || kopFouten(DAK.kopAbc, DAK.kopAbc).length || kopFouten(RENO('').kop, RENO('').kop).length) { console.log('ONGELDIGE METING: de afgesproken koppen vallen zelf onder de werkwijze-regel'); process.exit(2); }
       console.log(`positieve controle 4: de koppen van 19 okt geweigerd (${pc4[0]})`);
     }
     {
@@ -814,7 +906,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
         const s = document.querySelector(root + ' .kgj-reken__vertrouwen li svg'); s?.classList.replace([...s.classList].find((c) => /^lucide-(?!icon$)/.test(c)), 'lucide-award');
         const t = document.querySelector(root + ' .kgj-reken__trust li:last-child'); if (t) { t.style.background = '#faf6ec'; t.style.boxShadow = 'inset 0 0 0 1px #eadfc2'; }
         const ic = document.querySelector(root + ' .kgj-reken__trust .kgj-reken__trust-ic'); if (ic) ic.style.setProperty('display', 'grid', 'important'); // 18 nov 2026: geplante icoontegel
-        const g = document.createElement('a'); g.className = 'bf-lphero__google'; g.textContent = '5,0 op Google'; (document.querySelector('.bf-lphero__tekst') || document.querySelector('main')).append(g); // 8 nov 2026: geplante badge onder de subkop
+        const g = document.createElement('a'); g.className = 'bf-lphero__google'; g.textContent = '5,0 op Google'; (document.querySelector('.bf-lphero__tekst') || document.querySelector('.abc-hero__in') || document.querySelector('main')).append(g); // 8 nov 2026: geplante badge onder de subkop; 23 nov 2026: vorm .abc in .abc-hero__in
       }, HERO);
       const pc10 = await badgesFouten(p, DAK);
       await ctx.close();
@@ -859,7 +951,14 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
         ['13b: de link naar #contact vóór de tik bovenaan', await eenStandFouten(RENO1, { linkEerst: true }), 'staat de kaart onderaan op Stap 1'],
         ['13c: keuzes onderaan 500 px lager', await eenStandFouten(RENO1, { css: '#contact .kgj-reken--aanvraag .kgj-reken__keuzes{margin-top:500px!important}' }), 'keuzes van de kaart onderaan tot'],
         /* 18 nov 2026 (v2): de kop "Contact" in plaats van de band; de pop-up van 5-17 nov (de kaart vast over het scherm) moet rood geven */
-        ['14: 420 px marge onder de kop "Contact"', await contactInBeeldFouten(DAK, HERO, '.kgj-reken--aanvraag .kgj-reken__ckop{margin-bottom:420px!important}'), 'valt onder het scherm'],
+        /* 23 nov 2026, vorm .abc op /lp/dakwerken: dezelfde bewering voor de enige kaart, onderaan. De link naar #contact moet de kaart op haar stap
+           brengen ("Stap x van y" direct onder de balk): een klik die de pagina niet bereikt (gewone ankersprong naar de kop van het offerteblok) moet rood
+           geven, net als keuzes 500 px lager. */
+        ...(ABC[DAK.pad] ? [
+          ['13d: de link naar #contact doet de gewone ankersprong (vorm .abc)', await eenStandFouten(DAK, { gewoneSprong: true }), '"Stap x van y" van de kaart onderaan op'],
+          ['13e: keuzes onderaan 500 px lager (vorm .abc)', await eenStandFouten(DAK, { css: '#contact .kgj-reken--aanvraag .kgj-reken__keuzes{margin-top:500px!important}' }), 'keuzes van de kaart onderaan tot'],
+        ] : []),
+        ['14: 420 px marge onder de kop "Contact"', await contactInBeeldFouten(DAK, ABC[DAK.pad] ? ONDER : HERO, '.kgj-reken--aanvraag .kgj-reken__ckop{margin-bottom:420px!important}'), 'valt onder het scherm'],
         ['14b: de kaart bovenaan als pop-up (vast over het scherm)', await contactInBeeldFouten(DAK, HERO, '#rekenaar .kgj-reken--aanvraag.is-contact{position:fixed!important;inset:0!important;z-index:1000!important}'), 'pop-up'],
         ['14c: de kaart onderaan als pop-up (vast over het scherm)', await contactInBeeldFouten(DAK, ONDER, '#contact .kgj-reken--aanvraag.is-contact{position:fixed!important;inset:0!important;z-index:1000!important}'), 'pop-up'],
         ['16: keuzes 500 px lager', await alleStappenFouten(RENO1, HERO, '.kgj-reken--aanvraag .kgj-reken__keuzes{margin-top:500px!important}'), 'laatste knop tot'],
@@ -896,22 +995,24 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     for (const pg of PAGINAS) {
       for (const gsm of [true, false]) {
         const maat = gsm ? '390x844' : '1265x800';
-        /* kaart bovenaan */
+        /* kaart bovenaan (23 nov 2026, vorm .abc: de toetsen van de pagina; geen kaart bovenaan, de kaartflow loopt hieronder op de kaart onderaan) */
         {
           const { p, ctx, slots } = await open(pg.pad, { gsm });
           if (!(await p.$(HERO))) { fouten.push(`${pg.pad} @${maat}: geen aanvraagkaart (${HERO})`); await ctx.close(); continue; }
           for (const f of await rekenaarSporen(p)) fouten.push(`${pg.pad} @${maat}: rekenaar-ingang: ${f}`);
-          const h1 = await p.evaluate(() => document.querySelector('h1')?.textContent.trim().replace(/\s+/g, ' '));
-          for (const f of kopFouten(h1, pg.kop)) fouten.push(`${pg.pad} @${maat}: ${f}`);
-          if (gsm) for (const f of await eersteScherm(p, pg)) fouten.push(`${pg.pad} @${maat}: eerste scherm: ${f}`);
+          const h1 = await leesKop(p);
+          for (const f of kopFouten(h1, kopVan(pg))) fouten.push(`${pg.pad} @${maat}: ${f}`);
           for (const f of await ondenFouten(p)) fouten.push(`${pg.pad} @${maat}: onderaan: ${f}`);
           for (const f of await badgesFouten(p, pg)) fouten.push(`${pg.pad} @${maat}: badges: ${f}`);
           for (const f of await knoppenFouten(p, pg)) fouten.push(`${pg.pad} @${maat}: knoppen: ${f}`);
           const sf = await scrollFout(p); if (sf) fouten.push(`${pg.pad} @${maat}: ${sf}`);
           /* 19 nov 2026 (Mohammed: "oke doe maar eruit"): geen belblok "In nood?" meer, op geen enkele pagina */
           for (const f of await geenBelblok(p)) fouten.push(`${pg.pad} @${maat}: ${f}`);
+          /* eerste gsm-scherm als laatste van de paginatoetsen: op de vorm .abc tikt het de heroknop (de pagina scrolt dan naar de kaart) */
+          if (gsm) for (const f of ABC[pg.pad] ? await eersteSchermAbc(p, pg) : await eersteScherm(p, pg)) fouten.push(`${pg.pad} @${maat}: eerste scherm: ${f}`);
           /* het belblok-gedrag (hash, Clarity) loopt als laatste in een eigen pagina, zodat de kaartflow niet verstoord wordt */
-          await kaartFlow(p, ctx, pg, HERO, 'bovenaan', maat);
+          if (ABC[pg.pad]) await ctx.close();
+          else await kaartFlow(p, ctx, pg, HERO, 'bovenaan', maat);
           /* na alle stappen (meer dan 2,5 s na het laden): nog steeds geen free-slots-verzoek en geen "Eerstvolgend"-tekst */
           const vf = slots.length;
           if (vf) fouten.push(`${pg.pad} @${maat}: ${vf} free-slots-verzoek(en) naar de GHL-agenda`);
@@ -933,7 +1034,7 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     for (const pg of PAGINAS) {
       for (const f of await eenStandFouten(pg)) fouten.push(`${pg.pad} @390x637: één stand: ${f}`);
       metingen++;
-      for (const [root, naam] of [[HERO, 'bovenaan'], [ONDER, 'onderaan']]) {
+      for (const [root, naam] of kaarten(pg)) { // 23 nov 2026: vorm .abc alleen onderaan
         for (const f of await contactInBeeldFouten(pg, root)) fouten.push(`${pg.pad} @390x637 ${naam}: contactscherm: ${f}`);
         for (const f of await alleStappenFouten(pg, root)) fouten.push(`${pg.pad} @390x637 ${naam}: stap niet in beeld: ${f}`);
         metingen += 2;
@@ -959,9 +1060,10 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
     /* 5. message match (dak) */
     {
       const { p, ctx } = await open('/lp/dakwerken?utm_term=plat%20dak%20renoveren');
-      const m = await p.evaluate(() => ({ h1: document.querySelector('h1')?.textContent.trim().replace(/\s+/g, ' ') }));
+      const m = { h1: await leesKop(p) };
       const s = await stand(p);
-      for (const f of kopFouten(m.h1, DAK.kop)) fouten.push(`message match: ${f}`);
+      /* 2 nov 2026: de variant plat (en hellend, isolatie, renovatie, nieuw) houdt de gewone kop van de pagina; 23 nov 2026: op de vorm .abc is dat kopAbc */
+      for (const f of kopFouten(m.h1, kopVan(DAK))) fouten.push(`message match: ${f}`);
       /* 7 nov 2026 (zoals bfbouw.be data-voor): het soort dak is nu vraag 2; de zoekterm beantwoordt het en die vraag valt weg in de kaart. */
       if (s.vraag !== DAK.vraag1 || s.tel !== 'Stap 1' || s.terug) fouten.push(`message match: kaart ${JSON.stringify(s)} (verwacht vraag 1, Stap 1, geen Terug)`);
       if (!(await tik(p, 'Dakrenovatie', HERO))) fouten.push('message match: keuze Dakrenovatie niet gevonden');
@@ -986,10 +1088,12 @@ const PAGINAS = [DAK, RENO('/lp/totaalrenovatie'), RENO('/lp/aannemer-renovatiew
   }
   /* 3 paginas x 2 maten x 2 kaarten (bovenaan en onderaan, sinds 22 okt ook op dak); plus message match */
   /* + per pagina (23 okt 2026): één stand, contactscherm en elke stap bovenaan en onderaan, vaste knop, geen sprong onderaan */
-  const verwacht = 3 * 2 * 2 + 1 + 3 * 7;
+  /* 23 nov 2026: per pagina het aantal kaarten (vorm .abc: 1, alleen onderaan); was vast 3 * 2 * 2 + 1 + 3 * 7 = 34 */
+  const verwacht = PAGINAS.reduce((n, pg) => n + 2 * kaarten(pg).length + 3 + 2 * kaarten(pg).length, 0) + 1;
+  if (PAGINAS.some((pg) => ABC[pg.pad] === undefined)) { console.log('ONGELDIGE METING: de vorm van een pagina is niet bepaald'); process.exit(2); }
   if (metingen < verwacht) { console.log(`ONGELDIGE METING: ${metingen} metingen (verwacht ${verwacht})`); process.exit(2); }
-  console.log(`check-lp-aanvraag: dak en 2 renovatiepagina's (kaart bovenaan en onderaan) x 2 maten + message match (${basis}), ${leads} leadverzoeken`);
+  console.log(`check-lp-aanvraag: ${PAGINAS.map((pg) => `${pg.pad} (${kaarten(pg).map(([, n]) => 'kaart ' + n).join(' en ')})`).join(', ')} x 2 maten + message match, ${metingen} metingen (${basis}), ${leads} leadverzoeken`);
   if (fouten.length) { fouten.forEach((f) => console.log('  FOUT: ' + f)); process.exit(1); }
-  console.log('  kop zoals afgesproken, geen rekenaar-ingang, kaart in het eerste gsm-scherm, één tik = volgende vraag (bovenaan en onderaan), contactstap naam, telefoonnummer en e-mailadres (verplicht) zonder disclaimer of regel onder de knop, geen tijdregel, geen tweede route, nergens "gratis dakinspectie/plaatsbezoek", naam verplicht, lege gsm, lege of foute e-mail, badges met eigen iconen, geen vrij moment en geen agenda-verzoek, geen belblok, geen horizontale scroll, één stand voor de kaart bovenaan en onderaan, contactscherm en elke stap volledig in beeld op 390x637, geen vaste offerteknop onderaan, geen sprong onderaan zonder scroll anchoring');
+  console.log('  kop zoals afgesproken, geen rekenaar-ingang, kaart in het eerste gsm-scherm (vorm .abc: de knop "Offerte aanvragen" in het eerste scherm en na één tik vraag 1 met alle keuzes in beeld), één tik = volgende vraag (bovenaan en onderaan), contactstap naam, telefoonnummer en e-mailadres (verplicht) zonder disclaimer of regel onder de knop, geen tijdregel, geen tweede route, nergens "gratis dakinspectie/plaatsbezoek", naam verplicht, lege gsm, lege of foute e-mail, badges met eigen iconen, geen vrij moment en geen agenda-verzoek, geen belblok, geen horizontale scroll, één stand voor de kaart bovenaan en onderaan, contactscherm en elke stap volledig in beeld op 390x637, geen vaste offerteknop onderaan, geen sprong onderaan zonder scroll anchoring');
   process.exit(0);
 })().catch((e) => { console.log('ONGELDIGE METING: ' + e.message); process.exit(2); });

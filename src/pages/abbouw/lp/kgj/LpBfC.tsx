@@ -10,8 +10,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { TIPS_AB, type TipAb } from './tips-ab';
 import { CONTACT } from '@/data/contact';
-import Aanvraag from './Aanvraag';
-import { AanvraagStaat, beginStand } from './AanvraagStaat';
+import Aanvraag, { eigenScroll } from './Aanvraag';
+import { AanvraagStaat, beginStand, useGedeeldeAanvraag } from './AanvraagStaat';
 import Realisatie from './Realisatie';
 import { Icoon } from './Iconen';
 import { DAKWERKEN, type KgjInhoud, type Zekerheid } from './inhoud';
@@ -150,6 +150,11 @@ export default function LpBfC({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
     return kop || voor ? { kop, voor } : undefined;
   });
   const voor = match?.voor ?? inhoud.voorAf;
+  /* Eigen kop alleen als de zoekterm er echt een heeft (inhoud.ts boodschap, 2 nov 2026: "die varianten houden de gewone kop"; alleen herstel en
+     stormschade krijgen een eigen kop, Mohammed 26 okt). De varianten plat, hellend, isolatie, renovatie en nieuw dragen de oude gewone kop van
+     /lp/dakwerken (inhoud.hero.kop); op deze pagina is de gewone kop BFC.kop. 23 nov 2026, check-lp-aanvraag (message match): met
+     ?utm_term=plat dak renoveren stond hier "Uw dak laten vernieuwen, renoveren of isoleren? Kies voor vakmanschap." in plaats van de gewone kop. */
+  const eigenKop = match?.kop && match.kop !== inhoud.hero.kop ? match.kop : undefined;
 
   useEffect(() => {
     document.title = tip ? `${tip.titel} | AB Bouw Groep` : inhoud === DAKWERKEN ? BFC.titel : inhoud.titel;
@@ -217,6 +222,36 @@ export default function LpBfC({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       });
     }, 120);
     return () => { window.clearTimeout(t); los(); zelf = true; };
+  }, []);
+
+  /* Gsm en tablet (tot 1000 px): een tik op een link naar #contact (hero, menu, realisatie, uitleg, werkwijze, vragen, postcodecheck) brengt de
+     aanvraagkaart zelf in beeld, zoals LpBf naarFormulier (23 okt 2026, Clarity /lp/totaalrenovatie 01:52: de sprong naar de kop van het slotblok liet de
+     kaart onder het scherm staan; de bezoeker zocht en vertrok). Gemeten op deze pagina 23 nov 2026 (gewone sprong): op 390x637 stond na één antwoord
+     "Stap 2 van 3" 375 px onder de kopbalk en vielen de keuzes onder het scherm (tot 721 px); op 390x664 vielen de keuzes van vraag 1 onder het scherm.
+     Begonnen: "Stap x van y" direct onder de balk. Anders de kaart in het midden van het deel onder de balk als ze past, of haar bovenrand 8 px onder
+     de balk. Op de computer de gewone sprong: daar staat de kaart naast de kop van het offerteblok. */
+  useEffect(() => {
+    const wortel = vat.current;
+    if (!wortel) return;
+    const klik = (e: MouseEvent) => {
+      const link = (e.target as HTMLElement | null)?.closest?.('a[href="#contact"]');
+      if (!link || !window.matchMedia('(max-width: 1000px)').matches) return;
+      const vorm = document.querySelector<HTMLElement>('#contact .kgj-reken--onder');
+      if (!vorm) return;
+      e.preventDefault();
+      const kopH = Math.max(0, document.querySelector('.kgj-kop')?.getBoundingClientRect().bottom ?? 0);
+      const rij = vorm.classList.contains('is-bezig') ? vorm.querySelector<HTMLElement>('.kgj-reken__kop') : null;
+      /* toetsenbord: de volgende Tab begint in de kaart, zoals na een gewone ankersprong */
+      const vraag = vorm.querySelector<HTMLElement>('.kgj-reken__stap .kgj-reken__vraag');
+      if (vraag) { vraag.setAttribute('tabindex', '-1'); vraag.focus({ preventScroll: true }); }
+      const gedrag: ScrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+      eigenScroll(); // onze scroll zet de focusstand van de kaart niet uit (Aanvraag.tsx)
+      if (rij) { window.scrollTo({ top: rij.getBoundingClientRect().top + window.scrollY - kopH - 8, behavior: gedrag }); return; }
+      const vrij = window.innerHeight - kopH - vorm.offsetHeight;
+      window.scrollTo({ top: vorm.getBoundingClientRect().top + window.scrollY - (vrij >= 16 ? kopH + vrij / 2 : kopH + 8), behavior: gedrag });
+    };
+    wortel.addEventListener('click', klik);
+    return () => wortel.removeEventListener('click', klik);
   }, []);
 
   const naarKnop = inhoud.aanvraag?.naarKnop ?? inhoud.inspectie.knop;
@@ -291,7 +326,7 @@ export default function LpBfC({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
           <div className="abc-hero__in">
             <p className="abc-hero__regio"><span className="abc-hero__pin"><IcPin /></span>{BFC.regio}</p>
             <h1 className="abc-hero__kop">
-              <span>{match?.kop ? metAccent(match.kop) : BFC.kop}</span>
+              <span>{eigenKop ? metAccent(eigenKop) : BFC.kop}</span>
               <span className="abc-accent">{BFC.kop2}</span>
             </h1>
             <p className="abc-hero__sub"><b>{BFC.subVet}</b> {BFC.sub}</p>
@@ -472,6 +507,7 @@ export default function LpBfC({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
       </main>
 
       <a className={`abc-zweef${zweef ? ' is-zichtbaar' : ''}`} href="#gegevens" aria-label="Stuur ons een bericht" tabIndex={zweef ? 0 : -1} aria-hidden={!zweef}><IcBericht /></a>
+      <AfrondKnop />
 
       <footer className="abc-voet kgj-voet">
         <div className="abc-raam abc-voet__raster">
@@ -526,6 +562,50 @@ function VoordelenRij({ lijst }: { lijst: NonNullable<KgjInhoud['voordelen']>['l
       </ul>
       <div className="abc-veeghint" aria-hidden="true">{lijst.map((v, i) => <span key={v.titel} className={i === actief ? 'is-actief' : undefined} />)}</div>
     </>
+  );
+}
+
+/* "Aanvraag afronden" (19 nov 2026, Mohammed: "ze maken het form af, maar scrollen dan om te lezen", "en dan raken ze verdwaald", "iets technisch dat je
+   makkelijk terug kan invullen"; op bfbouw.be maakt site.js de knop voor elke aanvraagkaart, ook als er alleen een kaart onderaan staat). In Aanvraag.tsx
+   beheert alleen de kaart bovenaan deze knop; deze pagina heeft alleen de kaart onderaan, dus stond hier geen knop (23 nov 2026, check-lp-smal punt 4:
+   "de knop bestaat niet").
+   Zelfde regel, opmaak (.kgj-afronden, lp-bf-ab.css) en Clarity-gebeurtenis als daar: staat de bezoeker voorbij vraag 1 (een latere vraag, het
+   contactblok of de offertestappen) en is de kaart niet in beeld, dan onderaan een vaste knop; een tik geeft het event ab-afronden voor de kaart
+   onderaan, die dan doet wat ze na een stap doet (Aanvraag.tsx inBeeld). Zolang de knop staat: html.is-afronden (de zwevende berichtknop wijkt,
+   lp-bfc.css). De knop hangt direct in de wortel (.bf.bf-lp): geen voorouder met overflow, transform of filter (Safari, zoals de sluier). */
+function AfrondKnop() {
+  const levend = useGedeeldeAanvraag()?.stand;
+  const verderDanStart = !!levend && levend.aangetikt && (levend.stap > 0 || !!levend.offerte) && !levend.vraagToestemming;
+  const [aan, setAan] = useState(false);
+  useEffect(() => {
+    let raf = 0;
+    const kijk = () => {
+      raf = 0;
+      if (!verderDanStart) { setAan(false); return; }
+      const kop = document.querySelector<HTMLElement>('.kgj-kop'), kcs = kop && getComputedStyle(kop);
+      const kb = kop && kcs && kcs.position === 'fixed' && kcs.visibility !== 'hidden' ? Math.max(0, kop.getBoundingClientRect().bottom) : 0;
+      const zicht = [...document.querySelectorAll<HTMLElement>('.kgj-reken--aanvraag')].some((k) => {
+        const r = k.getBoundingClientRect();
+        return r.height > 0 && r.bottom > kb + 24 && r.top < window.innerHeight - 24;
+      });
+      setAan(!zicht);
+    };
+    const plan = () => { if (!raf) raf = requestAnimationFrame(kijk); };
+    plan();
+    window.addEventListener('scroll', plan, { passive: true });
+    window.addEventListener('resize', plan);
+    return () => { window.removeEventListener('scroll', plan); window.removeEventListener('resize', plan); if (raf) cancelAnimationFrame(raf); };
+  }, [verderDanStart]);
+  useEffect(() => { document.documentElement.classList.toggle('is-afronden', aan); }, [aan]);
+  useEffect(() => () => { document.documentElement.classList.remove('is-afronden'); }, []);
+  const terug = () => {
+    meldClarity('aanvraag-afronden');
+    window.dispatchEvent(new CustomEvent('ab-afronden', { detail: 'onder' }));
+  };
+  return (
+    <button type="button" className={`kgj-afronden${aan ? ' is-aan' : ''}`} aria-hidden={!aan} tabIndex={aan ? 0 : -1} onClick={terug}>
+      Aanvraag afronden<IcPijl />
+    </button>
   );
 }
 

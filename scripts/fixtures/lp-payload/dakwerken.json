@@ -1,14 +1,15 @@
 {
   "pad": "/lp/dakwerken",
-  "bron": "Gemeten 12 okt 2026 op de HUIDIGE LpKgj.tsx (LP-code byte-gelijk aan origin/main 9727a84 = live), meting scratchpad werk/lpkaart/uit-flows.json (meet.mjs), manifest kaart/lp-*.md §c. Vluchtige velden (user_agent, submitted_at, referrer) weggelaten. 19 okt 2026: /lp/dakwerken, /lp/totaalrenovatie en /lp/aannemer-renovatiewerken hebben geen rekenaar meer (opdracht Mohammed: \"rekenaar weg ... dakinspectie en gratis plaatsbezoek form bovenaan\"): de rekenaarflows zijn vervangen door de aanvraagkaart bovenaan (Aanvraag.tsx, zelfde bron_lead als het formulier onderaan). De rekenaar staat alleen nog op /lp/richtprijs-berekenen (richtprijs-berekenen.json ongewijzigd).",
+  "bron": "Gemeten 12 okt 2026 op de HUIDIGE LpKgj.tsx (LP-code byte-gelijk aan origin/main 9727a84 = live), meting scratchpad werk/lpkaart/uit-flows.json (meet.mjs), manifest kaart/lp-*.md §c. Vluchtige velden (user_agent, submitted_at, referrer) weggelaten. 19 okt 2026: /lp/dakwerken, /lp/totaalrenovatie en /lp/aannemer-renovatiewerken hebben geen rekenaar meer (opdracht Mohammed: \"rekenaar weg ... dakinspectie en gratis plaatsbezoek form bovenaan\"): de rekenaarflows zijn vervangen door de aanvraagkaart bovenaan (Aanvraag.tsx, zelfde bron_lead als het formulier onderaan). De rekenaar staat alleen nog op /lp/richtprijs-berekenen (richtprijs-berekenen.json ongewijzigd). 23 nov 2026: /lp/dakwerken in de opbouw van bfbouw.be (LpBfC.tsx), alleen de kaart onderaan: de twee flows van de kaart bovenaan lopen in de kaart onderaan (zie meting23nov).",
   "clarity": "yxp88pzo3i",
   "flows": [
     {
-      "naam": "aanvraag-hero",
+      "naam": "aanvraag-onder-utm",
+      "meting23nov": "23 nov 2026: /lp/dakwerken staat in de opbouw van bfbouw.be (LpBfC.tsx): hero zonder formulier, alleen de aanvraagkaart onderaan (#contact > #rekenaar, plek onder). Deze flow (tot vandaag 'aanvraag-hero', de kaart bovenaan met wortel #rekenaar) loopt nu in die kaart: payload GHL + Web3Forms ongewijzigd (gemeten 23 nov op 390 en 1265: veld voor veld gelijk aan deze referentie); het GA4 form_start-label is dat van de kaart onderaan, lp:dakwerken:offerte (zonder :hero; Aanvraag.tsx meldStart).",
       "soort": "aanvraag",
       "query": "?utm_source=google&utm_medium=cpc&utm_campaign=dakrenovatie&utm_term=dak%20vernieuwen&dienst=nieuw-dak&gclid=TEST-KAART",
       "marketing": false,
-      "wortel": "#rekenaar .kgj-reken--aanvraag",
+      "wortel": "#contact .kgj-reken--aanvraag",
       "antwoorden": [
         "Dakrenovatie",
         "Hellend dak",
@@ -19,7 +20,7 @@
         "telefoon": "0400 00 00 00",
         "email": "test@kaart.be"
       },
-      "formStart": "lp:dakwerken:offerte:hero",
+      "formStart": "lp:dakwerken:offerte",
       "toestemming": true,
       "bedankt": "/bedankt/dakwerken",
       "fouten": {
@@ -76,11 +77,12 @@
       "metingStartWeg": "18 nov 2026, Mohammed: \"wanneer wilt u starten eruit\" -> geen startvraag meer in de aanvraagkaart"
     },
     {
-      "naam": "aanvraag-match-plat",
+      "naam": "aanvraag-onder-match-plat",
+      "meting23nov": "23 nov 2026: zie aanvraag-onder-utm (LpBfC.tsx, alleen de kaart onderaan; tot vandaag 'aanvraag-match-plat' in de kaart bovenaan). De message match (utm_term plat) beantwoordt in die kaart het soort dak vooraf (Dak: Plat dak, vraag 2 valt weg); payload ongewijzigd, form_start-label lp:dakwerken:offerte.",
       "soort": "aanvraag",
       "query": "?utm_term=plat%20dak%20renoveren",
       "marketing": true,
-      "wortel": "#rekenaar .kgj-reken--aanvraag",
+      "wortel": "#contact .kgj-reken--aanvraag",
       "antwoorden": [
         "Herstelling",
         "Weet ik nog niet"
@@ -90,7 +92,7 @@
         "telefoon": "0400 00 00 02",
         "email": "test@kaart.be"
       },
-      "formStart": "lp:dakwerken:offerte:hero",
+      "formStart": "lp:dakwerken:offerte",
       "toestemming": false,
       "bedankt": "/bedankt/dakwerken",
       "fouten": {

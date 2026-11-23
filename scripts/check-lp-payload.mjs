@@ -20,6 +20,10 @@
  * Dezelfde dag ook /lp/dakwerken ("EN TIS ENKEL lp dakwerken en lp totaalrenovatie"): vijf klikvragen (dak, werk, isolatie,
  * asbest, start), alleen Naam* en Gsm*, en onderaan de klikkaart (flows aanvraag-onder en aanvraag-onder-marketing).
  *
+ * 23 nov 2026: /lp/dakwerken staat in de opbouw van bfbouw.be (LpBfC.tsx): hero zonder formulier, alleen de kaart onderaan. De twee flows van de kaart
+ * bovenaan (aanvraag-hero, aanvraag-match-plat) heten nu aanvraag-onder-utm en aanvraag-onder-match-plat en lopen in de kaart onderaan (dakwerken.json,
+ * meting23nov): payload ongewijzigd, form_start-label lp:dakwerken:offerte. De dubbelklik springt 'instant' naar de knop en eist een raakbare knop.
+ *
  * Per LP en per flow (rekenaar in de hero, rekenaar in het venster, aanvraagkaart, het slotformulier) doet deze toets wat een
  * bezoeker doet, onderschept elk verzoek naar services.leadconnectorhq.com en api.web3forms.com (nul echte leads)
  * en vergelijkt veld voor veld met de vaste referentie in scripts/fixtures/lp-payload/<lp>.json (gemeten op de
@@ -259,12 +263,27 @@ async function doeFlow(browser, basis, lp, f, breedte, lokaas = false) {
     }
 
     /* dubbelklik: precies één lead */
-    await p.$eval(`${form} button[type=submit]`, (b) => b.scrollIntoView({ block: 'center' }));
+    /* 23 nov 2026: in een volledige verify vertrokken op /lp/dakwerken (LpBfC, kaart onderaan) @1265 in de positieve controle 0 verzoeken. Niet
+       gereproduceerd: dezelfde flow los (ook met een koude dev-server) gaf telkens 2 GHL + 1 Web3Forms zoals de plant bedoelt, en de kaart zelf verstuurt
+       op 1265 (1 + 1, de knop is het element op zijn middelpunt). De enige plek in deze flow waar een klik verloren kan gaan, is de zachte scroll (html
+       scroll-behavior: smooth, hier 526 px gemeten) vlak voor de muisklik: stilScroll kan twee gelijke standen lezen vóór die scroll begint. Daarom is de
+       sprong naar de knop nu 'instant', kijkt de toets vóór de klik of de knop zelf op zijn middelpunt ligt (anders: een fout van de pagina, met de naam van
+       wat erover ligt) en meldt hij bij 0 verzoeken de melding die de bezoeker ziet. */
+    await p.$eval(`${form} button[type=submit]`, (b) => b.scrollIntoView({ block: 'center', behavior: 'instant' }));
     await stilScroll(p);
+    const raak = await p.$eval(`${form} button[type=submit]`, (b) => {
+      const r = b.getBoundingClientRect(), t = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      return t === b || b.contains(t) ? null : (t ? `${t.tagName.toLowerCase()}.${String(t.className).trim().split(/\s+/).join('.')}` : 'niets (buiten beeld)');
+    });
+    if (raak) fouten.push(`de verzendknop is niet raakbaar: op zijn middelpunt ligt ${raak}`);
     const knop = await p.$(`${form} button[type=submit]`);
     await knop.click({ count: 2, delay: 20 });
     await wacht(2000);
-    if (log.ghl.length !== 1 || log.w3f.length !== 1) fouten.push(`aantal verzoeken na dubbelklik: ${log.ghl.length} GHL en ${log.w3f.length} Web3Forms (verwacht 1 en 1)`);
+    if (log.ghl.length !== 1 || log.w3f.length !== 1) {
+      /* bij 0 verzoeken: wat de bezoeker ziet (een melding onder een veld of onder de knop), zodat het rapport zegt waarom */
+      const melding = log.ghl.length || log.w3f.length ? null : await p.evaluate((w) => { const m = document.querySelector(w + ' .kgj-reken__veldfout') || document.querySelector(w + ' .kgj-reken__fout'); return m ? m.textContent.trim() : null; }, wortel).catch(() => null);
+      fouten.push(`aantal verzoeken na dubbelklik: ${log.ghl.length} GHL en ${log.w3f.length} Web3Forms (verwacht 1 en 1)${melding ? ` (melding: "${melding}")` : ''}`);
+    }
     for (const d of vergelijk(f.ghl, log.ghl[0])) fouten.push('GHL ' + d);
     for (const d of vergelijk(f.web3forms, log.w3f[0])) fouten.push('Web3Forms ' + d);
 

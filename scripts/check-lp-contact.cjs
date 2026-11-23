@@ -21,15 +21,19 @@
  *      verlaat de pagina (er is geen eigen geschiedenisregel meer); wie terugkomt, staat op het contactblok met zijn antwoorden;
  *   7. 1265x585 en 1440x800: het contactblok staat in de kaart in de pagina (geen venster), kop, velden en verzendknop zichtbaar zonder
  *      zelf te scrollen; "gratis" 1x; geen horizontale scroll;
- *   8. veelgestelde vragen (dakpagina's), ongewijzigd;
+ *   8. veelgestelde vragen (dakpagina's): de vier vragen van 23 nov 2026 (dictaat Mohammed), alle dicht, de link naar de kaart onderaan; plaats:
+ *      onder de voordelen (oude vorm) of tussen de zekerhedenband en de tips (/lp/dakwerken in de opbouw van bfbouw.be, LpBfC.tsx, .abc);
  *   9. focusstand op de gsm (9 nov 2026): na een tik op "Ik ben op zoek naar" of vraag 1 een wazige sluier, de kaart scherp in beeld.
  * De robuustheid van het formulier (nummers, e-mail, Enter, nieuwe pogingen, time-out, bewaren, toetsenbord) toetst check-lp-formulier.cjs.
+ * 23 nov 2026: op /lp/dakwerken (LpBfC.tsx) is er alleen de kaart onderaan; HERO ('#rekenaar .kgj-reken--aanvraag') wijst daar naar die kaart
+ * (#contact > #rekenaar). Punt 6 telt de laadstap van de kaart die gemeten wordt (aanvraag-laden bovenaan, aanvraag-onder-laden onderaan).
  * Niets gaat naar buiten: GHL en Web3Forms krijgen een leeg antwoord en worden geteld, Clarity en Google-tags een leeg script,
  * tel: en mailto: worden afgebroken.
  *
  * Positieve controles (zonder: exit 2), op /lp/dakwerken @390: laadstap op 0 ms moet punt 1 laten falen; de kaart vast over het scherm
  * (geplante CSS) punt 2 (pop-up); een geplant woord "gratis" in het blok punt 3; een verzendknop 700 px lager punt 2 (niet in beeld);
- * een geplante pushState bij het contactblok punt 2 (geschiedenis); een open eerste vraag punt 8; een witte sluier punt 9.
+ * een geplante pushState bij het contactblok punt 2 (geschiedenis); een open eerste vraag punt 8; de vragen een blok later punt 8 (plaats, op
+ * /lp/dakwerken en /lp/dakwerken/asbest, 23 nov 2026); een witte sluier punt 9.
  *
  * Draaien:  node scripts/check-lp-contact.cjs                         (start zelf een vite dev-server)
  *           LP_BASIS=http://127.0.0.1:8080 node scripts/check-lp-contact.cjs
@@ -217,7 +221,9 @@ async function terugFlow(br, basis, pad) {
       vind().click(); setTimeout(() => { const b = vind(); if (b) b.click(); }, 40);
     }, HERO, laatste);
     await wacht(300);
-    const n = await p.evaluate(() => window.__ev.filter((e) => e[1] === 'aanvraag-laden').length);
+    /* 23 nov 2026: de Clarity-gebeurtenis heet naar de kaart die de bezoeker gebruikt (Aanvraag.tsx clarityNaam): aanvraag-laden in de kaart bovenaan,
+       aanvraag-onder-laden in de kaart onderaan. Op /lp/dakwerken (LpBfC) is er alleen de kaart onderaan; HERO wijst daar naar die kaart. */
+    const n = await p.evaluate((w) => { const naam = document.querySelector(w).classList.contains('kgj-reken--onder') ? 'aanvraag-onder-laden' : 'aanvraag-laden'; return window.__ev.filter((e) => e[1] === naam).length; }, HERO);
     if (n !== 1) uit.push(`6. dubbele tik gaf ${n} laadstappen (verwacht 1)`);
     /* de terugknop van de browser: de pagina gaat weg (zoals op elke site); wie terugkomt, staat op het contactblok */
     await p.goBack({ timeout: 8000 }).catch(() => {});
@@ -296,26 +302,38 @@ async function focusFlow(br, basis, pad, css = null) {
 
 /* Punt 8 (dakpagina's, bfbouw.be 5638c50/8343954): "Veelgestelde vragen" direct onder "De voordelen van een dakrenovatie", de vijf
    vragen in die volgorde, alle dicht, de klikbare zin "Vraag dan een gratis offerte aan." brengt de kaart onderaan in beeld. */
-const FAQ = ['Wat kost een dakrenovatie?', 'Kan ik een premie krijgen voor mijn dak?', 'Hoe lang duurt een dakrenovatie?', 'Welke garantie geldt er op dakwerken?', 'Moet mijn volledige dak altijd vernieuwd worden?'];
+/* 23 nov 2026, dictaat Mohammed (inhoud.ts faq, voor BF en AB): "doe de vragen welke garantie weg, moet mijn volledige dak vernieuwd worden weg, en dan
+   kan een dakrenovatie ook in de winter als vraag erbij", "volgorde moet zijn kan een dakrenovatie ook in de winter eerst dan hoe lang dan kost dan premie",
+   "bij ab zelfde". Vier vragen op /lp/dakwerken en /lp/dakwerken/asbest (zelfde inhoud). Was: kost, premie, duur, garantie, volledig dak. */
+const FAQ = ['Kan een dakrenovatie ook in de winter?', 'Hoe lang duurt een dakrenovatie?', 'Wat kost een dakrenovatie?', 'Kan ik een premie krijgen voor mijn dak?'];
+/* 23 nov 2026: /lp/dakwerken staat in de opbouw van bfbouw.be (LpBfC.tsx, .abc). Daar staan de vragen zoals op bfbouw.be na de zekerhedenband
+   (voordelen > werkgebied > zekerheden > vragen > tips), en de klikbare zin is een gewone link in het antwoord (zonder de klasse bf-vraag__link). */
+const FAQ_LINK = 'a.bf-vraag__link, .abc-faq details a[href="#contact"]';
 async function faqFlow(br, basis, pad, w, h, plant = null) {
   const uit = [];
   const { ctx, p } = await open(br, basis, w, h, pad);
   try {
-    if (plant) await p.evaluate(() => { const d = document.querySelector('#faq details'); if (d) d.open = true; });
-    const f = await p.evaluate(() => {
+    if (plant === 'open') await p.evaluate(() => { const d = document.querySelector('#faq details'); if (d) d.open = true; });
+    /* 23 nov 2026, positieve controle plaats: de vragen een blok later (na de tips, of na het werkgebied op de oude vorm) */
+    if (plant === 'plaats') await p.evaluate(() => { const s = document.querySelector('#faq'), na = s?.nextElementSibling; if (na) na.after(s); });
+    const f = await p.evaluate((FAQ_LINK) => {
       const s = document.querySelector('#faq');
-      const vorige = s?.previousElementSibling;
-      return { er: !!s, vorige: vorige?.id || null, vorigeKop: vorige?.querySelector('h2')?.textContent.trim() || null,
+      const vorige = s?.previousElementSibling, volgende = s?.nextElementSibling;
+      const a = s?.querySelector(FAQ_LINK);
+      return { er: !!s, abc: !!document.querySelector('.abc'), vorige: vorige?.id || null, vorigeKop: vorige?.querySelector('h2')?.textContent.trim() || null,
+        vorigeZeker: !!vorige?.matches('section.abc-zeker'), volgende: volgende?.id || null,
         vragen: s ? [...s.querySelectorAll('details summary')].map((x) => x.textContent.trim()) : [], open: s ? [...s.querySelectorAll('details')].map((d) => d.open) : [],
-        link: s?.querySelector('a.bf-vraag__link')?.getAttribute('href') || null, linkTekst: s?.querySelector('a.bf-vraag__link')?.textContent.trim() || null };
-    });
+        link: a?.getAttribute('href') || null, linkTekst: a?.textContent.trim() || null };
+    }, FAQ_LINK);
     if (!f.er) { uit.push('8. geen veelgestelde vragen'); return uit; }
-    if (f.vorige !== 'voordelen' || f.vorigeKop !== 'De voordelen van een dakrenovatie') uit.push(`8. de vragen staan na "${f.vorigeKop}" (#${f.vorige}) in plaats van direct onder "De voordelen van een dakrenovatie"`);
+    if (f.abc) {
+      if (!f.vorigeZeker || f.volgende !== 'blog') uit.push(`8. de vragen staan na "${f.vorigeKop}" (#${f.vorige}) en voor #${f.volgende} in plaats van tussen de zekerhedenband en de tips (#blog), zoals bfbouw.be`);
+    } else if (f.vorige !== 'voordelen' || f.vorigeKop !== 'De voordelen van een dakrenovatie') uit.push(`8. de vragen staan na "${f.vorigeKop}" (#${f.vorige}) in plaats van direct onder "De voordelen van een dakrenovatie"`);
     if (f.vragen.join('|') !== FAQ.join('|')) uit.push(`8. vragen "${f.vragen.join(' | ')}"`);
-    if (f.open.join('|') !== 'false|false|false|false|false') uit.push(`8. open/dicht ${f.open.join(', ')} (verwacht alle vragen dicht)`);
+    if (f.open.join('|') !== FAQ.map(() => 'false').join('|')) uit.push(`8. open/dicht ${f.open.join(', ')} (verwacht alle vragen dicht)`);
     if (f.link !== '#contact' || f.linkTekst !== 'Vraag dan een gratis offerte aan.') uit.push(`8. link "${f.linkTekst}" naar ${f.link}`);
     if (f.link) {
-      await p.evaluate(() => { document.querySelector('#faq details').open = true; document.querySelector('#faq a.bf-vraag__link').click(); });
+      await p.evaluate((FAQ_LINK) => { const a = document.querySelector('#faq').querySelector(FAQ_LINK); a.closest('details').open = true; a.click(); }, FAQ_LINK);
       await wacht(1400);
       const z = await p.evaluate(() => { const k = document.querySelector('#contact .kgj-reken--aanvraag'); const r = k?.getBoundingClientRect(); return r ? { top: Math.round(r.top), vh: innerHeight } : null; });
       if (!z || z.top < 0 || z.top > z.vh - 120) uit.push(`8. na de link staat de kaart onderaan niet in beeld (${JSON.stringify(z)})`);
@@ -376,6 +394,12 @@ async function faqFlow(br, basis, pad, w, h, plant = null) {
       const r = await faqFlow(br, basis, '/lp/dakwerken', 390, 664, 'open');
       if (!r.some((x) => /^8\. open\/dicht/.test(x))) { console.log(`ONGELDIGE METING: positieve controle "eerste vraag open" niet gevangen (${r.join(' | ') || 'geen fout'})`); code = 2; }
       else console.log('positieve controle: eerste vraag open: gevangen');
+    }
+    /* 23 nov 2026: de plaats van de vragen (vorm .abc op /lp/dakwerken, oude vorm op /lp/dakwerken/asbest): een blok later moet rood geven */
+    for (const pad of ['/lp/dakwerken', '/lp/dakwerken/asbest']) {
+      const r = await faqFlow(br, basis, pad, 390, 664, 'plaats');
+      if (!r.some((x) => /^8\. de vragen staan na/.test(x))) { console.log(`ONGELDIGE METING: positieve controle "vragen een blok later" op ${pad} niet gevangen (${r.join(' | ') || 'geen fout'})`); code = 2; }
+      else console.log(`positieve controle: vragen een blok later op ${pad}: gevangen (${r.find((x) => /^8\. de vragen staan na/.test(x))})`);
     }
     /* 8 nov 2026: een return hier sloeg process.exit(2) over (exit 0 bij een ongeldige meting). Een throw komt in de catch. */
     if (code === 2) throw new Error('positieve controle niet gevangen (zie hierboven)');

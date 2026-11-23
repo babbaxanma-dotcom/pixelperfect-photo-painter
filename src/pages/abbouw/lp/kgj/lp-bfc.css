@@ -544,3 +544,49 @@
 @media (min-width: 701px) and (max-width: 1000px) {
   .abc .abc-hero__in { padding-left: max(16px, calc((100% - 560px) / 2)); padding-right: max(16px, calc((100% - 560px) / 2)); }
 }
+
+/* "Aanvraag afronden" (LpBfC.tsx AfrondKnop): zolang de knop staat, wijkt de zwevende berichtknop rechtsonder (zoals de ronde belknop op de andere LP's,
+   lp-bf-ab.css blok 19 nov, en de berichtknop op bfbouw.be: html.is-afronden .belzweef). */
+html.is-afronden .abc .abc-zweef { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+
+/* ── Smal scherm (< 340 px), 23 nov 2026. Clarity: AB 19 nov 274x493 en BF 18 nov 226x412 (gsm met grote weergave of grote tekst); de andere LP's hebben
+   hiervoor het blok van 19 nov in lp-bf-ab.css. Gemeten op deze pagina vóór deze regels (check-lp-smal): op 274 px stak de menuknop 46 px buiten het
+   scherm (logo 106 + "Bel direct" 133 + menuknop 48 px op 242 px); op 226 px legde de gsm de pagina 251 px breed: "Volledige premiebegeleiding" in
+   Waarom voor ons kiezen (tot 251 px), "Dakrenovatie" en "Dakherstelling" in de dienstvakjes (tot 237 px), de knop "Offerte aanvragen" bij de realisatie
+   (225 px op 194 px ruimte), het adres in het werkgebied (tot 235 px) en de voetlink Voorwaarden (tot 243 px). Kopbalk 56 px hoog zoals op de andere
+   LP's onder 340 px (het contactblok van de kaart moet met de verzendknop in een scherm van 412 px passen). Vanaf 340 px verandert hier niets. ── */
+@media (max-width: 339.98px) {
+  .abc [id] { scroll-margin-top: 60px; }
+  .abc .abc-kop__in { height: 56px; padding: 0 10px; gap: 8px; }
+  .abc .abc-logo img { height: 22px; }
+  .abc .abc-kop__acties { gap: 6px; }
+  .abc .abc-kop__bel { min-height: 40px; padding: 0 11px; gap: 6px; font-size: 13.5px; }
+  .abc .abc-kop__bel svg { width: 15px; height: 15px; }
+  .abc .abc-burger { width: 40px; height: 40px; }
+  .abc .abc-gsmmenu { inset: 56px 0 0; }
+  .abc .abc-hero__foto, .abc .abc-hero__laag { top: 56px; }
+  .abc .abc-hero__in { padding-top: 204px; }
+  .abc .abc-sub { padding-top: 56px; }
+  /* knoppen: "Offerte aanvragen" met pijl op één regel in 194 px (regel r.441: knoppen nooit over twee regels) */
+  .abc .abc-knop, .abc .abc-hero__knoppen .abc-knop, .abc .abc-check__knoppen .abc-knop { padding-left: 12px; padding-right: 12px; gap: 8px; font-size: 15.5px; }
+  .abc .bf-real__knop .abc-knop { width: 100%; }
+  /* Waarom voor ons kiezen: icoon boven de tekst, zodat de kop de volle breedte van het vak heeft */
+  .abc .abc-kiezen__lijst li { grid-template-columns: minmax(0, 1fr); row-gap: 10px; }
+  .abc .abc-kiezen__lijst h3 { font-size: 17px; overflow-wrap: break-word; }
+  /* werkgebied: speld boven het adres */
+  .abc .abc-gebied__adres { flex-direction: column; align-items: flex-start; gap: 10px; padding: 14px 12px; }
+  /* voet: Privacy, Cookies en Voorwaarden lopen door op een tweede regel als ze niet naast elkaar passen */
+  .abc .abc-voet__onder div { flex-wrap: wrap; row-gap: 6px; }
+}
+@media (max-width: 259.98px) {
+  .abc .abc-kop__in { gap: 6px; }
+  .abc .abc-logo img { height: 18px; }
+  .abc .abc-kop__acties { gap: 4px; }
+  .abc .abc-kop__bel { padding: 0 8px; gap: 5px; font-size: 13px; }
+  .abc .abc-kop__bel svg { width: 14px; height: 14px; }
+  .abc .abc-burger { width: 36px; }
+  /* diensten: één vak per rij (twee vakken van 97 px waren te smal voor "Dakherstelling") */
+  .abc .abc-diensten__rij, .abc .abc-diensten__rij--3, .abc .abc-diensten__rij--5 { grid-template-columns: minmax(0, 1fr); }
+  .abc .abc-dienst:nth-child(even) { border-left: 0; }
+  .abc .abc-dienst:nth-child(2) { border-top: 1px solid var(--abc-lijn); }
+}

@@ -27,6 +27,17 @@
  * Positieve controles (zonder: exit 2), op /lp/dakwerken: twee vaste kolommen van 140 px voor "Ik ben op zoek naar" (punt 1); een kopbalk van 160
  * px (punt 2); "Aanvraag afronden" verborgen (punt 4); de afspeelknop niet raakbaar (punt 6). Tegen de live versie van fa4e459 (LP_BASIS=
  * https://abgroep.be) faalt deze toets op punt 1, 3, 4, 5 en 6.
+ *
+ * 23 nov 2026: /lp/dakwerken staat in de opbouw van bfbouw.be (LpBfC.tsx, .abc): hero zonder formulier, de enige aanvraagkaart onderaan in #contact.
+ * Voor die vorm (herkend aan .abc) begint elke flow zoals een bezoeker daar begint: een tik op "Offerte aanvragen" in de hero, dan de kaart. Punt 1
+ * toetst de kopbalk van die vorm (logo, "Bel direct" en de menuknop volledig in beeld); punt 4 de zwevende berichtknop (.abc-zweef) in plaats van de
+ * ronde belknop; punt 5 de volgorde van de secties zoals bfbouw.be (hero, waarom, diensten, realisaties, uitleg, werkwijze, voordelen, regio,
+ * zekerheden, vragen, tips, offerteblok, contact) in plaats van "de hoeve direct onder de hero met het formulier" (de hero heeft geen formulier meer).
+ * De positieve controles planten hun fout in de vorm die er staat: twee vaste kolommen van 140 px voor de twee heroknoppen, een kopbalk van 160 px
+ * (.abc-kop__in); "Aanvraag afronden" en de afspeelknop hebben dezelfde klassen. De oude vormen (/lp/totaalrenovatie, /lp/dakwerken/asbest) ongewijzigd.
+ * Een tik zoals een vinger: de keuze springt (instant) naar het midden van het scherm en wordt dan getikt. Met de zachte scroll van de pagina (html
+ * scroll-behavior: smooth) en de kaart 7.000 px lager was de tik een race tegen die scroll (gemeten 23 nov op 274x493: na de tik op "Dakrenovatie"
+ * stond de kaart nog op vraag 1, daarna "keuze Hellend dak niet gevonden" en "Node is either not clickable or not an Element").
  * Niets gaat naar buiten: Clarity, Google-tags, GHL, Web3Forms en /api/ krijgen een leeg antwoord; er wordt nooit verstuurd.
  *
  * Draaien:  node scripts/check-lp-smal.cjs                       (start zelf een vite dev-server)
@@ -47,6 +58,10 @@ const PADEN = {
   '/lp/dakwerken/asbest': ['Nieuw dak', 'Plat dak', 'Huidig dak vervangen'],
 };
 const SMAL = [[226, 412], [274, 493]];
+/* 23 nov 2026: de blokken van /lp/dakwerken in de opbouw van bfbouw.be (LpBfC.tsx), in volgorde: [naam, selector van het kind van main] */
+const ABC_VOLGORDE = [['hero', '.abc-hero'], ['waarom', '#waarom'], ['diensten', '#diensten'], ['realisaties', '.abc-real'], ['uitleg', '.abc-uitleg'],
+  ['werkwijze', '#werkwijze'], ['voordelen', '.abc-voordelen'], ['regio', '#regio'], ['zekerheden', '.abc-zeker'], ['vragen', '#faq'], ['tips', '#blog'],
+  ['offerteblok', '#contact'], ['contact', '#gegevens']];
 const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* play() telt alleen binnen een echte tik (touchend, click of pointerup van de vinger), zoals een iPhone in energiebesparing of Android met
@@ -84,11 +99,24 @@ async function open(pad, w, h, { css = null, autoplayUit = false } = {}) {
   await wacht(500);
   return { ctx, p };
 }
-/* Een tik zoals een vinger: het element in het midden van het scherm, dan touchscreen.tap op zijn midden. */
+/* Een tik zoals een vinger: het element in het midden van het scherm, dan touchscreen.tap op zijn midden. 23 nov 2026: de sprong naar het midden is
+   'instant' (zie de kop van dit script); daarna 250 ms rust, zoals voorheen. */
 async function tikOp(p, handle) {
-  await handle.evaluate((e) => e.scrollIntoView({ block: 'center' }));
+  await handle.evaluate((e) => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
   await wacht(250);
   await handle.tap();
+}
+/* 23 nov 2026, vorm .abc (LpBfC): de kaart staat alleen onderaan; een bezoeker komt er met de knop "Offerte aanvragen" in de hero. Een echte tik op die
+   knop, daarna wachten tot de pagina stilstaat. Op de oude vormen (kaart in de hero) gebeurt er niets. */
+async function naarKaart(p) {
+  if (!(await p.evaluate(() => !!document.querySelector('.abc')))) return;
+  const knop = await p.evaluateHandle(() => [...document.querySelectorAll('.abc-hero a[href="#contact"]')].find((a) => a.getClientRects().length) || null);
+  const e = knop.asElement();
+  if (!e) throw new Error('geen knop "Offerte aanvragen" in de hero');
+  await tikOp(p, e);
+  let vorige = -1;
+  for (let i = 0; i < 30; i++) { const y = await p.evaluate(() => Math.round(window.scrollY)); if (y === vorige) break; vorige = y; await wacht(150); }
+  await wacht(300);
 }
 async function antwoord(p, label) {
   const h = await p.evaluateHandle((s, l) => [...document.querySelectorAll(s + ' .kgj-reken__keuze, ' + s + ' .kgj-reken__vink')].find((x) => (x.querySelector('strong')?.textContent || x.textContent || '').trim() === l) || null, HERO, label);
@@ -111,7 +139,8 @@ const breedte = (p, w) => p.evaluate((w) => {
   if (document.documentElement.scrollWidth > document.documentElement.clientWidth + 1) uit.push(`horizontale scroll (${document.documentElement.scrollWidth} px op ${document.documentElement.clientWidth})`);
   const vv = window.visualViewport;
   if (vv && Math.abs(vv.width - innerWidth) > 1) uit.push(`zichtbaar deel ${Math.round(vv.width)} px op een pagina van ${innerWidth} px breed (de gsm legt de pagina breder dan het scherm)`);
-  for (const e of document.querySelectorAll('.kgj-kop .bf-nav > *, .kgj-kop .bf-lpbel')) { const r = e.getBoundingClientRect(); if (r.width && (r.right > (vv ? vv.width : innerWidth) + 0.5 || r.left < -0.5)) uit.push(`kopbalk: ${e.className} loopt buiten het scherm (${Math.round(r.left)}-${Math.round(r.right)})`); }
+  /* 23 nov 2026, vorm .abc: de kopbalk is .abc-kop__in met het logo en .abc-kop__acties ("Bel direct" en de menuknop) */
+  for (const e of document.querySelectorAll('.kgj-kop .bf-nav > *, .kgj-kop .bf-lpbel, .abc-kop .abc-kop__in > *, .abc-kop .abc-kop__acties > *')) { const r = e.getBoundingClientRect(); if (r.width && (r.right > (vv ? vv.width : innerWidth) + 0.5 || r.left < -0.5)) uit.push(`kopbalk: ${e.className} loopt buiten het scherm (${Math.round(r.left)}-${Math.round(r.right)})`); }
   return uit;
 }, w);
 /* Punt 2: elk zichtbaar veld, elke knop en summary van de kaart in beeld: het midden is van het element zelf (niet van de kopbalk of iets anders). */
@@ -165,7 +194,7 @@ async function terugweg(p, { naam }) {
     const r = b.getBoundingClientRect(), cs = getComputedStyle(b);
     const t = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
     const kop = document.querySelector('.kgj-kop').getBoundingClientRect();
-    const bel = document.querySelector('.bf-belzweef');
+    const bel = document.querySelector('.bf-belzweef, .abc-zweef'); // 23 nov 2026: vorm .abc heeft een zwevende berichtknop rechtsonder
     const vv = window.visualViewport, vh = vv ? vv.height : innerHeight;
     let ouderFout = null;
     for (let e = b.parentElement; e && e !== document.body; e = e.parentElement) { const c = getComputedStyle(e); if (/(hidden|clip|auto|scroll)/.test(c.overflow + c.overflowX + c.overflowY) || c.transform !== 'none' || c.filter !== 'none') { ouderFout = e.className || e.tagName; break; } }
@@ -178,7 +207,7 @@ async function terugweg(p, { naam }) {
     if (knop.tekst !== 'Aanvraag afronden') uit.push(`knoptekst "${knop.tekst}"`);
     if (!knop.raak) uit.push('de knop "Aanvraag afronden" is niet raakbaar (iets anders ligt erover)');
     if (knop.top < knop.kopOnder || knop.bottom > knop.vh + 0.5) uit.push(`de knop staat niet onderaan in beeld (${Math.round(knop.top)}-${Math.round(knop.bottom)})`);
-    if (knop.bel === 'visible') uit.push('de ronde belknop staat tegelijk met de knop in beeld');
+    if (knop.bel === 'visible') uit.push('de ronde knop rechtsonder (belknop, of de berichtknop op de vorm .abc) staat tegelijk met de knop in beeld');
     if (knop.ouderFout) uit.push(`de knop hangt in ${knop.ouderFout} (overflow, transform of filter): Safari tekent een vast element daar verkeerd`);
   }
   if (!knop.aan || !knop.zicht) return uit;
@@ -209,6 +238,7 @@ async function smalFlow(pad, w, h, plant = {}) {
   const { ctx, p } = await open(pad, w, h, plant);
   try {
     for (const f of await breedte(p, w)) uit.push(`${tag} 1. ${f}`);
+    await naarKaart(p);
     const st = PADEN[pad];
     for (const s of st) {
       if (Array.isArray(s)) { for (const v of s) await antwoord(p, v); await verder(p); } else await antwoord(p, s);
@@ -221,6 +251,7 @@ async function smalFlow(pad, w, h, plant = {}) {
   const t2 = await open(pad, w, h, plant);
   try {
     const s = PADEN[pad][0];
+    await naarKaart(t2.p);
     await antwoord(t2.p, s);
     for (const f of await terugweg(t2.p, { naam: null })) uit.push(`${tag} 4. vraag 2: ${f}`);
   } catch (e) { uit.push(`${tag} het formulier loopt vast: ${e.message}`); } finally { await t2.ctx.close(); }
@@ -232,16 +263,29 @@ async function breedFlow(pad, plant = {}) {
   const tag = `${pad} @390x664`;
   const { ctx, p } = await open(pad, 390, 664, { ...plant, autoplayUit: true });
   try {
-    const v = await p.evaluate((s) => {
-      const hero = document.querySelector('.bf-lphero');
-      const volgende = hero && hero.nextElementSibling;
+    const v = await p.evaluate((s, ABC_VOLGORDE) => {
       const fouten = [];
-      if (!volgende || volgende.id !== 'realisaties') fouten.push(`direct onder de hero staat "${volgende ? (volgende.id || volgende.className) : 'niets'}" in plaats van de realisatie van de hoeve (#realisaties)`);
+      if (document.querySelector('.abc')) {
+        /* 23 nov 2026, vorm .abc (LpBfC): de volgorde van bfbouw.be; de hoeve staat in de realisatie (4e blok), de kaart in het offerteblok */
+        const main = document.querySelector('main');
+        const naam = (e) => (ABC_VOLGORDE.find(([, sel]) => e.matches(sel)) || [`?${e.id || String(e.className).split(' ')[0]}`])[0];
+        const rij = main ? [...main.children].map(naam) : [];
+        const verwacht = ABC_VOLGORDE.map(([n]) => n);
+        if (rij.join(' > ') !== verwacht.join(' > ')) fouten.push(`volgorde van de secties "${rij.join(' > ')}" in plaats van "${verwacht.join(' > ')}"`);
+        if (!document.querySelector('main ~ footer.abc-voet')) fouten.push('geen voet (footer.abc-voet) na de inhoud');
+        if (!document.querySelector('.abc-real #realisaties')) fouten.push('geen realisatie van de hoeve (#realisaties) in het realisatieblok');
+        if (!document.querySelector('#regio .abc-check')) fouten.push('geen postcodecheck in het werkgebied (#regio .abc-check)');
+        if (!document.querySelector(s) || !document.querySelector('#contact ' + s.replace(/^#rekenaar\s+/, ''))) fouten.push('de aanvraagkaart staat niet in het offerteblok (#contact)');
+      } else {
+        const hero = document.querySelector('.bf-lphero');
+        const volgende = hero && hero.nextElementSibling;
+        if (!volgende || volgende.id !== 'realisaties') fouten.push(`direct onder de hero staat "${volgende ? (volgende.id || volgende.className) : 'niets'}" in plaats van de realisatie van de hoeve (#realisaties)`);
+      }
       if (document.querySelector('.bf-lpbelblok')) fouten.push('het belblok "In nood?" staat nog op de pagina');
-      void s;
       return fouten;
-    }, HERO);
+    }, HERO, ABC_VOLGORDE);
     for (const f of v) uit.push(`${tag} 5. ${f}`);
+    await naarKaart(p);
     /* "Na uw aanvraag" open met 3 stappen */
     for (const s of PADEN[pad]) { if (Array.isArray(s)) { for (const x of s) await antwoord(p, x); await verder(p); } else await antwoord(p, s); }
     const na = await p.evaluate((s) => { const n = document.querySelector(s + ' .kgj-reken__nastap'); return n ? { tag: n.tagName, li: n.querySelectorAll('.kgj-reken__nakort li').length, zicht: n.querySelector('.kgj-reken__nakort').getClientRects().length > 0 } : null; }, HERO);
@@ -296,8 +340,12 @@ async function breedFlow(pad, plant = {}) {
   try {
     { const { ctx } = await open('/lp/dakwerken', 390, 664); await ctx.close(); } // opwarmen (eerste bundel)
     if (!process.env.LP_BASIS || process.env.LP_PC === '1') {
-      pc('"Ik ben op zoek naar" in twee vaste kolommen van 140 px', await smalFlow('/lp/dakwerken', 226, 412, { css: '.bf.bf-lp .bf-lpzoek__knoppen{grid-template-columns:repeat(2,140px)!important}' }), ' 1. ');
-      pc('kopbalk van 160 px', await smalFlow('/lp/dakwerken', 274, 493, { css: '.bf.bf-lp .bf-kop--lp .bf-nav{height:160px!important}' }), 'kopbalk'); // punt 2 (veld onder de kopbalk) of punt 3 (verzendknop onder het scherm, kopbalk tot 160)
+      /* 23 nov 2026: elke plant draagt de selector van de oude vorm en van de vorm .abc (LpBfC); alleen die van de vorm die er staat, doet iets.
+         Op .abc bestaan de knoppen "Ik ben op zoek naar" niet: de rij van de postcodecheck (veld + knop Controleer, buiten de hero) in twee vaste kolommen
+         van 140 px. Niet de heroknoppen: de hero knipt wat uitsteekt (overflow hidden), dus daar wordt de pagina niet breder (gemeten: geen fout). De
+         kopbalk is .abc-kop__in. */
+      pc('"Ik ben op zoek naar" (vorm .abc: de rij van de postcodecheck) in twee vaste kolommen van 140 px', await smalFlow('/lp/dakwerken', 226, 412, { css: '.bf.bf-lp .bf-lpzoek__knoppen{grid-template-columns:repeat(2,140px)!important}.abc .abc-check__rij{display:grid!important;grid-template-columns:repeat(2,140px)!important}' }), ' 1. ');
+      pc('kopbalk van 160 px', await smalFlow('/lp/dakwerken', 274, 493, { css: '.bf.bf-lp .bf-kop--lp .bf-nav{height:160px!important}.abc .abc-kop .abc-kop__in{height:160px!important}' }), 'kopbalk'); // punt 2 (veld onder de kopbalk) of punt 3 (verzendknop onder het scherm, kopbalk tot 160)
       pc('"Aanvraag afronden" verborgen', await smalFlow('/lp/dakwerken', 274, 493, { css: '.bf.bf-lp .kgj-afronden{display:none!important}' }), 'verschijnt de knop "Aanvraag afronden" niet');
       pc('afspeelknop niet raakbaar', await breedFlow('/lp/dakwerken', { css: '.bf.bf-lp .bf-real__podium::after{content:"";position:absolute;inset:0;z-index:5}' }), '6. ');
       if (code === 2) throw new Error('positieve controle niet gevangen (zie hierboven)');
@@ -317,6 +365,6 @@ async function breedFlow(pad, plant = {}) {
   if (metingen !== 9) { console.log(`ONGELDIGE METING: ${metingen} metingen (verwacht 9)`); process.exit(2); }
   console.log(`check-lp-smal: 3 pagina's op 226x412, 274x493 en 390x664 (${basis})`);
   if (fouten.length) { for (const f of fouten) console.log('  FOUT: ' + f); process.exit(1); }
-  console.log('  AF: pagina niet breder dan het scherm, kopbalk past, geen veld of knop onder de kopbalk na elk antwoord, verzendknop in beeld, "Na uw aanvraag" ingeklapt onder 340 px en open met 3 stappen op 390, "Aanvraag afronden" na wegscrollen en terug naar de kaart met de antwoorden en de naam, hoeve direct onder het formulier, geen belblok, play speelt en pauzeert bij elke tik');
+  console.log('  AF: pagina niet breder dan het scherm, kopbalk past, geen veld of knop onder de kopbalk na elk antwoord, verzendknop in beeld, "Na uw aanvraag" ingeklapt onder 340 px en open met 3 stappen op 390, "Aanvraag afronden" na wegscrollen en terug naar de kaart met de antwoorden en de naam, hoeve direct onder het formulier (vorm .abc: blokken in de volgorde van bfbouw.be), geen belblok, play speelt en pauzeert bij elke tik');
   process.exit(0);
 })();

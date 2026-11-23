@@ -26,6 +26,16 @@
  * Positieve controles 18 nov: kopknop verborgen (G), ronde knop zichtbaar (G), kaart 30 px onder de kopbalk (H), "Beide" met icoon of op halve
  * breedte (I), het pad na Plat dak wijkt af van Hellend dak (I).
  *
+ * 23 nov 2026: /lp/dakwerken staat in de opbouw van bfbouw.be (LpBfC.tsx, herkend aan .abc): hero zonder formulier, de enige aanvraagkaart onderaan
+ * (#contact > #rekenaar). HERO ('#rekenaar .kgj-reken--aanvraag') wijst daar naar die kaart; A-F en I meten dus de kaart onderaan. Voor die vorm:
+ *   A-F beginnen zoals een bezoeker bij de kaart (de kaart onder de kopbalk, zoals na "Offerte aanvragen"); zonder dat tikte de toets een kaart
+ *     7.000 px onder het scherm aan en mat F terwijl de zachte scroll van de kaart nog liep (gemeten 23 nov op 390x664: knop 795-849, 250 ms later
+ *     609-663, daarna stil op 598-652, in beeld);
+ *   G meet de belknop in de kopbalk van die vorm (.abc-kop: "Bel direct" op gsm, het nummer op de computer) en als ronde knop de zwevende
+ *     berichtknop rechtsonder (.abc-zweef); de bezoeker staat eerst bij de kaart (zoals na "Offerte aanvragen");
+ *   H meet alleen de kaart onderaan (een kaart bovenaan bestaat niet), zoals een bezoeker die naar de kaart scrolde; ook de positieve controle.
+ * De geplante fouten van G dragen de selectors van beide vormen. /lp/dakwerken/asbest (I) heeft de oude vorm en blijft zoals hij was.
+ *
  * Draaien:  node scripts/check-lp-formulier.cjs            (start zelf een vite dev-server)
  *           LP_BASIS=http://localhost:8080 node scripts/check-lp-formulier.cjs
  * Exit 0 = alles AF, 1 = afwijking, 2 = ongeldige meting.
@@ -38,6 +48,9 @@ const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const POORT = 4437;
 const PAD = '/lp/dakwerken';
 const HERO = '#rekenaar .kgj-reken--aanvraag';
+const ONDER = '.bf-lpinsp__kaartvak .kgj-reken--aanvraag';
+/* 23 nov 2026: de vorm van PAD (true = de opbouw van bfbouw.be, LpBfC.tsx); bepaald bij het opwarmen */
+let ABC = null;
 const NAAR_CONTACT = ['Dakrenovatie', 'Hellend dak', 'Nee']; // 18 nov 2026: geen startvraag
 const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
 const MELD = { telFout: 'Dat telefoonnummer lijkt niet volledig. Controleer het even.', telLeeg: 'Vul uw telefoonnummer in. Wij bellen u om een moment af te spreken.', mailLeeg: 'Vul uw e-mailadres in. Daar sturen wij uw offerte naartoe.' };
@@ -82,6 +95,9 @@ async function open({ w = 390, h = 664, antwoord = null, voorLaden = null, pad =
   return { p, ctx, log };
 }
 async function naarContact(p) {
+  /* 23 nov 2026, vorm .abc: de enige kaart staat onderaan; de bezoeker staat er eerst bij (zoals na "Offerte aanvragen"). Zonder dat tikte de toets een
+     kaart 7.000 px onder het scherm aan en liep de zachte scroll van de kaart nog bij het meten (F: verzendknop tot 745 px op 390x664). */
+  if (ABC) { await p.evaluate((s) => window.scrollTo({ top: document.querySelector(s).getBoundingClientRect().top + scrollY - document.querySelector('.kgj-kop').getBoundingClientRect().bottom - 8, behavior: 'instant' }), ONDER); await wacht(300); }
   for (const l of NAAR_CONTACT) {
     const ok = await p.evaluate((w, l) => { const b = [...document.querySelectorAll(w + ' .kgj-reken__keuze')].find((x) => (x.querySelector('strong')?.textContent || '').trim() === l); b?.click(); return !!b; }, HERO, l);
     if (!ok) throw new Error(`keuze "${l}" niet gevonden`);
@@ -274,12 +290,19 @@ async function belFouten(w, h, css = null) {
   const { p, ctx } = await open({ w, h });
   try {
     if (css) await p.addStyleTag({ content: css });
+    /* 23 nov 2026, vorm .abc (LpBfC): de belknop in de kopbalk is "Bel direct" (gsm en tablet) of het nummer (computer), elk een tel:-link in .abc-kop;
+       de ronde knop rechtsonder is de zwevende berichtknop .abc-zweef */
     const bel = () => p.evaluate(() => {
       const zicht = (e) => !!e && e.getClientRects().length > 0 && getComputedStyle(e).visibility !== 'hidden' && Number(getComputedStyle(e).opacity) > 0.1;
-      const kop = document.querySelector('.bf-kop a.bf-lpbel[href^="tel:"]'), zweef = document.querySelector('.bf-belzweef');
+      const abc = !!document.querySelector('.abc');
+      const kop = abc ? document.querySelector(innerWidth <= 1000 ? '.abc-kop a.abc-kop__bel[href^="tel:"]' : '.abc-kop a.abc-kop__tel[href^="tel:"]') : document.querySelector('.bf-kop a.bf-lpbel[href^="tel:"]');
+      const zweef = document.querySelector(abc ? '.abc-zweef' : '.bf-belzweef');
       const balk = document.querySelector('.kgj-kop')?.getBoundingClientRect();
       return { kop: zicht(kop), zweef: zicht(zweef), balkH: Math.round(balk?.height ?? -1), formulier: document.documentElement.classList.contains('is-informulier') };
     });
+    /* vorm .abc: de enige kaart staat onderaan; de bezoeker staat er eerst bij (zoals na "Offerte aanvragen"), anders begint de toets met een tik op een
+       kaart buiten beeld */
+    if (ABC) await p.evaluate((s) => window.scrollTo({ top: document.querySelector(s).getBoundingClientRect().top + scrollY - document.querySelector('.kgj-kop').getBoundingClientRect().bottom - 8, behavior: 'instant' }), ONDER);
     await wacht(400);
     const b0 = await bel();
     if (!b0.kop) uit.push(`G ${w}x${h}. vóór het eerste antwoord is de belknop in de kopbalk niet zichtbaar`);
@@ -295,7 +318,10 @@ async function belFouten(w, h, css = null) {
     await wacht(700);
     const b2 = await bel();
     if (!b2.kop) uit.push(`G ${w}x${h}. met de kaart volledig uit beeld is de belknop niet terug (${JSON.stringify(b2)})`);
-    await p.evaluate(() => scrollTo(0, 0)); await wacht(400);
+    /* terug naar de kaart: bovenaan de pagina (oude vorm, kaart in de hero) of terug bij de kaart onderaan (vorm .abc) */
+    if (ABC) await p.evaluate((s) => window.scrollTo({ top: document.querySelector(s).getBoundingClientRect().top + scrollY - document.querySelector('.kgj-kop').getBoundingClientRect().bottom - 8, behavior: 'instant' }), ONDER);
+    else await p.evaluate(() => scrollTo(0, 0));
+    await wacht(400);
     for (const l of NAAR_CONTACT.slice(1)) { await p.evaluate((w, l) => { const b = [...document.querySelectorAll(w + ' .kgj-reken__keuze')].find((x) => (x.querySelector('strong')?.textContent || '').trim() === l); b?.click(); }, HERO, l); await wacht(300); }
     await p.waitForSelector(HERO + ' form.kgj-reken__contact', { timeout: 5000 }).catch(() => {});
     await wacht(900);
@@ -319,7 +345,9 @@ async function belFouten(w, h, css = null) {
 async function kaartKopFouten(w, h, schuif = false) {
   const uit = [];
   /* elke kaart in een eigen pagina: de twee kaarten delen hun stap (na de kaart bovenaan staat ook die onderaan op het contactblok) */
-  for (const sel of schuif ? [HERO] : [HERO, '.bf-lpinsp__kaartvak .kgj-reken--aanvraag']) {
+  /* 23 nov 2026, vorm .abc (LpBfC): alleen de kaart onderaan bestaat; die wordt gemeten zoals hieronder voor de kaart onderaan (eerst tot 200 px boven de
+     kaart gescrold), ook voor de positieve controle */
+  for (const sel of ABC ? [ONDER] : schuif ? [HERO] : [HERO, ONDER]) {
     const { p, ctx } = await open({ w, h, voorLaden: () => { delete window.__abLaadMs; delete window.__abVolUit; } });
     try {
       if (sel !== HERO) { await p.evaluate((s) => window.scrollTo({ top: document.querySelector(s).getBoundingClientRect().top + scrollY - 200, behavior: 'instant' }), sel); await wacht(600); }
@@ -333,7 +361,7 @@ async function kaartKopFouten(w, h, schuif = false) {
       await wacht(1600); rij.push({ na: 'contactblok', ...(await meet()) });
       if (schuif) { await p.evaluate((s) => window.scrollBy({ top: document.querySelector(s).getBoundingClientRect().top - document.querySelector('.kgj-kop').getBoundingClientRect().bottom + 30, behavior: 'instant' }), sel); await wacht(300); rij.push({ na: 'geschoven', ...(await meet()) }); }
       const slecht = rij.filter((m) => m.kaart < m.kop || m.titel < m.kop);
-      if (slecht.length) uit.push(`H ${w}x${h} ${sel === HERO ? 'kaart bovenaan' : 'kaart onderaan'}. de kaart of haar titel ligt onder de kopbalk: ${JSON.stringify(slecht)}`);
+      if (slecht.length) uit.push(`H ${w}x${h} ${sel === HERO ? 'kaart bovenaan' : ABC ? 'kaart onderaan (de enige kaart)' : 'kaart onderaan'}. de kaart of haar titel ligt onder de kopbalk: ${JSON.stringify(slecht)}`);
       if (rij[rij.length - (schuif ? 2 : 1)].stap !== '') uit.push(`H ${w}x${h}. het contactblok (geen eigen stap: lege teller; 18 nov 2026) werd niet bereikt: ${JSON.stringify(rij)}`);
     } finally { await ctx.close(); }
   }
@@ -416,7 +444,8 @@ async function beidePadFouten() {
     else console.log(`positieve controle: ${naam}: gevangen (${f.find((x) => x.includes(stuk))})`);
   };
   try {
-    { const { ctx } = await open(); await ctx.close(); } // opwarmen
+    { const { p, ctx } = await open(); ABC = await p.evaluate(() => !!document.querySelector('.abc')); await ctx.close(); } // opwarmen; 23 nov 2026: de vorm van PAD
+    console.log(`vorm van ${PAD}: ${ABC ? 'opbouw van bfbouw.be (LpBfC, .abc): alleen de kaart onderaan' : 'kaart bovenaan en onderaan'}`);
     /* positieve controles */
     pc('"0470 12 34" als goed verwacht', await nummersFouten([['0470 12 34', true]]), 'geweigerd');
     pc('Enter geblokkeerd op het naamveld', await enterFouten(true), 'Enter in "Uw naam"');
@@ -425,8 +454,9 @@ async function beidePadFouten() {
     pc('verzendknop 400 px lager', await gsmFouten(390, 664, { css: '.kgj-reken__contact .kgj-reken__knop{margin-top:400px!important}' }), 'verzendknop niet in beeld');
     pc('scroll bij het sluiten van het toetsenbord', await gsmFouten(390, 664, { sprong: true }), 'sprong');
     /* 18 nov 2026: de kopknop blijft tijdens het formulier; de regel van vóór de fix (kopknop weg) moet rood geven, net als een zichtbare ronde knop */
-    pc('belknop in de kopbalk verborgen tijdens het formulier', await belFouten(390, 664, 'html.is-informulier body .bf.bf-lp .bf-kop a.bf-lpbel[href^="tel:"]{opacity:0!important;visibility:hidden!important}'), 'in de kopbalk niet zichtbaar');
-    pc('ronde belknop geforceerd zichtbaar tijdens het formulier', await belFouten(390, 664, 'html.is-informulier body .bf.bf-lp .bf-belzweef{opacity:1!important;visibility:visible!important}'), 'ronde belknop');
+    /* 23 nov 2026: elke plant draagt de selectors van de oude vorm en van de vorm .abc (LpBfC: tel:-links in .abc-kop, zwevende knop .abc-zweef) */
+    pc('belknop in de kopbalk verborgen tijdens het formulier', await belFouten(390, 664, 'html.is-informulier body .bf.bf-lp .bf-kop a.bf-lpbel[href^="tel:"], html.is-informulier body .bf.bf-lp .abc-kop a[href^="tel:"]{opacity:0!important;visibility:hidden!important}'), 'in de kopbalk niet zichtbaar');
+    pc('ronde belknop (vorm .abc: zwevende berichtknop) geforceerd zichtbaar tijdens het formulier', await belFouten(390, 664, 'html.is-informulier body .bf.bf-lp .bf-belzweef, html.is-informulier body .bf.bf-lp .abc-zweef{opacity:1!important;visibility:visible!important}'), 'ronde belknop');
     pc('kaart 30 px onder de kopbalk geschoven', await kaartKopFouten(1265, 585, true), 'ligt onder de kopbalk');
     pc('"Beide" met een icoon', await beideVormFouten(390, 664, PAD, 'icoon'), 'niet als volle-breedte rij');
     pc('"Beide" op halve breedte', await beideVormFouten(390, 664, PAD, 'half'), 'niet als volle-breedte rij');
