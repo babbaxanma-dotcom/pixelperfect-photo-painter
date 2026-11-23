@@ -17,7 +17,7 @@ import Realisatie from './Realisatie';
 import { Icoon } from './Iconen';
 import { DAKWERKEN, type KgjInhoud, type Zekerheid } from './inhoud';
 import { REGIOKAART_AB } from './regiokaart-ab';
-import { BadgeEuro, CalendarCheck, Clock, FileCheck, Medal, ShieldCheck, UserCheck } from 'lucide-react';
+import { BadgeEuro, CalendarCheck, Clock, FileCheck, Medal, MessageSquare, ShieldCheck, UserCheck } from 'lucide-react';
 import { CLARITY_PROJECT, laadClarity, meldClarity } from '@/lib/clarity';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
 import { mailGeldig, mailKaal, telGeldig } from './contact-controle';
@@ -59,13 +59,12 @@ const BFC = {
   ],
   /* Vier punten zoals BF "Waarom voor ons kiezen"; titels = AB-zekerheden, zinnen uit DAKWERKEN.waarom (tekst en redenen) en de werkwijze. */
   kiezen: [
-    /* 23 nov 2026 (keuring tekst-AB-04): de teksten herhaalden hun titel en de subkop ("15 jaar ervaring" 4 keer, "10 jaar garantie" 5 keer bovenaan);
-       nu in de vorm van bfbouw.be ("Ervaren vakmannen die elk dak met zorg en oog voor detail afwerken.", "Wij staan achter ons werk, ook jaren na de
-       oplevering."), met de AB-feiten uit DAKWERKEN.waarom (volledig verzekerd, VCA-gecertificeerd). */
+    /* 23 nov 2026, Mohammed: "voor ab bij waarom ons doe zelfde punten als bega ab aub". Woordelijk bfbouw.be (bouw/lp-dak.cjs kiezen, 22 nov), met de
+       AB-feiten: meer dan 15 jaar ervaring (BF: 25) en 10 jaar garantie (BF: 15). */
     { icoon: <Medal aria-hidden="true" />, titel: 'Meer dan 15 jaar ervaring', tekst: 'Ervaren vakmannen die elk dak met zorg en oog voor detail afwerken.' },
-    { icoon: <ShieldCheck aria-hidden="true" />, titel: '10 jaar garantie', tekst: 'Wij staan achter ons werk, ook jaren na de oplevering. We zijn volledig verzekerd en VCA-gecertificeerd.' },
-    { icoon: <UserCheck aria-hidden="true" />, titel: 'Eén vast aanspreekpunt', tekst: 'Ook na de oplevering kunt u bij uw vaste aanspreekpunt terecht.' },
-    { icoon: <FileCheck aria-hidden="true" />, titel: 'Volledige premiebegeleiding', tekst: 'Wij regelen de aanvraag van uw Mijn VerbouwPremie.' },
+    { icoon: <UserCheck aria-hidden="true" />, titel: 'Uw ervaring als klant staat voorop', tekst: 'Wij nemen u het werk uit handen, zodat u met een gerust hart aan uw dak begint.' },
+    { icoon: <MessageSquare aria-hidden="true" />, titel: 'Vlotte en duidelijke communicatie', tekst: 'U krijgt snel antwoord en weet altijd waar u aan toe bent.' },
+    { icoon: <ShieldCheck aria-hidden="true" />, titel: '10 jaar garantie op al onze dakwerken', tekst: 'Wij staan achter ons werk, ook jaren na de oplevering.' },
   ],
   /* Werkgebied: de 28 gemeenten in de zoekwoorden van de AB-groep "Dakwerken in de buurt" (Google Ads, teruggelezen 22 nov 2026).
      23 nov 2026 (keuring tekst-T15; Mohammed: "met de juiste naam erbij dan uiteraard"): Puurs en Kruibeke zijn deelgemeenten (fusies 2019 en 2025); de
