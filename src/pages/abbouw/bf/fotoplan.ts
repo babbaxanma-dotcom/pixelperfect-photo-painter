@@ -32,17 +32,26 @@
  *    oranje pannendak met gemetselde trapgevel. 8 nov, Mohammed: "Doe een nieuwe foto voor dakherstelling, gewoon een normale" (de vorige,
  *    Pexels 33843410, natuurleien met zinken goot).
  * SUBPAGINA /lp/dakwerken/plat-dak (23 nov 2026, Mohammed: "bij plat dak moet je goede fotos op het internet zoeken van platte daken", "ik zie
- * geen enkel plat dak foto"). Gebruik: lp/kgj/beelden-varianten.ts (hero, dienstenband, dienstkaart Nieuw dak). Gezocht op Unsplash, Pexels en
- * Pixabay (25 kandidaten bekeken; geen enkele gratis foto toont een afgewerkt dakvlak op een woning). Geen gezicht, merk of tekst in beeld.
- *  - stock-platdak-woning      · https://unsplash.com/photos/a-large-brick-house-with-a-green-lawn-in-front-of-it-J_pSdNTqncI · Bohdan Stocek ·
- *    Unsplash-licentie (gratis commercieel gebruik, geen naamsvermelding verplicht; geen Unsplash+) · uitsnede 6625x3312 vanaf (0, 0) uit
- *    6625x4419 (2:1, het gazon onderaan weg), webp 1600x800: woning in rode baksteen met platte daken en een donkere dakrand.
+ * geen enkel plat dak foto"; daarna: "je moet nog meer fotos vinden van platte daken afgewerkt en isolatie, goede fotos, dat passen bij belgie,
+ * mooi, aub zoek nog goed verder"). Gebruik: lp/kgj/beelden-varianten.ts (hero, dienstenband, dienstkaart Nieuw dak, offerteblok).
+ * Twee zoekrondes op gratis bronnen (Unsplash, Pexels, Pixabay, Openverse, Wikimedia Commons, Flickr) vonden geen afgewerkt plat dakvlak op een
+ * Belgisch ogende woning. Hero, dienstkaart en offerteblok zijn daarom GEGENEREERDE beelden uit de eigen AB-fotobank (src/assets/dak, gemaakt voor
+ * de AB-site in juni 2026, ook gebruikt op /lp/platdak en in de calculator). Geen werk van AB: alleen sfeerbeeld, nooit realisatie.
+ * Geen gezicht, merk of tekst in beeld.
+ *  - stock-gen-platdak-lichtstraat · bron src/assets/dak/lp-platdak-3.jpg (1200x896, laatste wijziging commit aac348a) · webp 1200x896, volledig
+ *    beeld: plat dak in zwart EPDM met een lichtstraat, een opstaande rand in baksteen met aluminium muurkap en een afvoer, daarachter buurdaken.
+ *  - stock-gen-platdak-drone       · bron src/assets/dak/lp-real-epdm-1.jpg (1200x896, commit baecf91) · webp 900x672: woning in donkere baksteen
+ *    met een plat dak in zwart EPDM en een aluminium dakrand, van bovenaf, tussen woningen met pannendaken.
+ *  - stock-gen-platdak-dakrand     · bron src/assets/dak/lp-plat-dak.jpg (1200x675, commit f0316bc) · webp 1200x675: hoek van een plat dak in
+ *    zwart EPDM met een aluminium dakrand en een roestvrije afvoer, daarachter een rij woningen (achtergrond van het offerteblok).
  *  - stock-platdak-luchtfoto   · https://unsplash.com/photos/aerial-photography-of-brown-houses-cCLR327OPDE · Douwe Meulenbeld · Unsplash-licentie
- *    (idem) · uitsnede 4048x2530 vanaf (0, 251) uit 4048x3032, webp 1600x1000: luchtfoto van een rij woningen met platte daken (achtergrond
- *    van de dienstenband, onder de donkere laag).
- *  - stock-dienst-platdak      · https://pixabay.com/photos/workers-flame-fire-construction-6057012/ · Photorama · Pixabay Content License (gratis
- *    commercieel gebruik, geen naamsvermelding verplicht; geen AI-label) · uitsnede 1707x1280 vanaf (106, 0) uit 1920x1280, webp 900x675:
- *    dakwerker in fluojas en helm brandt bitumen roofing vast rond een afvoerbuis (gezicht niet zichtbaar).
+ *    (gratis commercieel gebruik, geen naamsvermelding verplicht; geen Unsplash+) · uitsnede 4048x2530 vanaf (0, 251) uit 4048x3032, webp
+ *    1600x1000: luchtfoto van een rij woningen met platte daken (achtergrond van de dienstenband, onder de donkere laag).
+ *  Vervangen in deze ronde: stock-platdak-woning (Unsplash J_pSdNTqncI, Bohdan Stocek: woning met platte daken, het dakvlak niet zichtbaar) en
+ *  stock-dienst-platdak (Pixabay 6057012, Photorama: dakwerker brandt roofing vast, een werffoto en geen afgewerkt dak).
+ *  Niet gebruikt na ronde 2: Flickr AVL Woningbouw 37304747975 en 37133239952 (Public Domain Mark; Vlaamse nieuwbouw, dakvlak niet zichtbaar);
+ *  Flickr 50100645252 (Tim Reckmann, CC BY 2.0: naamsvermelding verplicht op elke pagina, werkfase); de isolatiereeks lp-isol-2/-gyproc/-gestuct
+ *  uit de AB-fotobank (commit 4e7daf9: "gespiegeld ivm copyright").
  *  Eerste ronde (8 nov, afgekeurd: niet Belgisch genoeg): Pexels 29114658, 31771165, 6124239 (roze glaswol), 17490213 (bemoste bevertjes).
  * NIET MEER GEBRUIKT (13 okt 2026, keuring): stock-schouw-herstel (1V_WuotjRfI, een dakwerker bij de schouw) stond in
  * het traject recht boven stap 1 "We klimmen op het dak" en liet een bezoeker die man lezen als een dakwerker van AB;

@@ -117,7 +117,7 @@ const BFC = {
    beschrijving; de dienst van de pagina staat eerst bij de diensten; plat dak vult "Om welk soort dak gaat het?" vooraf in, zoals bfbouw.be.
    Dezelfde titels en beschrijvingen staan in scripts/prerender-lp.mjs (KOP), voor de voorgerenderde HTML. */
 /* beelden (23 nov 2026, Mohammed: "bij plat dak moet je goede fotos op het internet zoeken van platte daken", "ik zie geen enkel plat dak foto"): een subpagina
-   kan eigen foto's krijgen voor de hero, de dienstenband en een dienstvak (per id); de foto's en hun bron: beelden-varianten.ts. */
+   kan eigen foto's krijgen voor de hero, de dienstenband, een dienstvak (per id) en het offerteblok (slot); de foto's en hun bron: beelden-varianten.ts. */
 type VariantInfo = { kop: string; regio: string; titel: string; beschrijving: string; dienst: string; subVet: string; voor?: { sleutel: string; label: string };
   beelden?: VariantBeelden };
 export const VARIANTEN_AB = {
@@ -322,6 +322,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
   const offerteKnop = (klasse = '') => <a className={`abc-knop ${klasse}`} href="#contact">{naarKnop}<IcPijl /></a>;
   const hero = V?.beelden?.hero ?? (inhoud === DAKWERKEN ? { src: heroNok, alt: 'Nok van een nieuw antraciet pannendak met zinken goot, onder een lichtbewolkte lucht' } : inhoud.hero.dias[0]);
   const band = V?.beelden?.band ?? inhoud.hero.dias[2] ?? inhoud.hero.dias[0];
+  const slot = V?.beelden?.slot ?? (inhoud === DAKWERKEN ? { src: slotFoto, alt: 'Hellend pannendak in het avondlicht' } : inhoud.cta.foto);
   const G = BFC.gebied;
   const K = REGIOKAART_AB;
   const detailZ = K.W / G.detail.b; // vergroting van de detailkaart rond Willebroek
@@ -667,7 +668,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
         {/* Offerteblok: de bestaande vorm (bf-lpinsp) en de bestaande aanvraagkaart. #contact = de sitelink "Gratis offerte"; #rekenaar = de oude
             sitelinks "Bereken uw dakprijs". */}
         <section className="bf-lpinsp abc-offerte" id="contact" aria-labelledby="contact-kop">
-          <img className="bf-lpinsp__beeld" src={inhoud === DAKWERKEN ? slotFoto : inhoud.cta.foto.src} alt={inhoud === DAKWERKEN ? 'Hellend pannendak in het avondlicht' : inhoud.cta.foto.alt} loading="lazy" decoding="async" />
+          <img className="bf-lpinsp__beeld" src={slot.src} alt={slot.alt} loading="lazy" decoding="async" />
           <div className="bf-lpinsp__laag" aria-hidden="true" />
           <div className="bf-lpinsp__in">
             <div className="bf-lpinsp__tekst">

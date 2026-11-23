@@ -59,9 +59,13 @@ const LP_ROUTE = '/lp/dakwerken';
 const LP_INHOUD = path.join(WORTEL, 'src', 'pages', 'abbouw', 'lp', 'kgj', 'inhoud.ts');
 /* 23 nov 2026: de subpagina's van /lp/dakwerken (LpBfC-varianten) worden ook gerenderd en volgen de LP-regels. Eén uitzondering, op zijn vraag
    ("bij plat dak moet je goede fotos op het internet zoeken van platte daken", "ik zie geen enkel plat dak foto"): op /lp/dakwerken/plat-dak mag de
-   hero precies de stockfoto stock-platdak-woning dragen. Nergens anders, en geen andere stockfoto in een hero. Positieve controles in de lus. */
+   hero precies het stockbeeld stock-gen-platdak-lichtstraat dragen (sinds zijn vraag "je moet nog meer fotos vinden van platte daken afgewerkt":
+   een gegenereerd beeld uit de AB-fotobank, zie beelden-varianten.ts). Nergens anders, en geen ander stockbeeld in een hero. Positieve controles
+   in de lus. */
 const LP_VARIANTEN = ['/lp/dakwerken/dakrenovatie', '/lp/dakwerken/nieuw-dak', '/lp/dakwerken/plat-dak', '/lp/dakwerken/dakisolatie'];
-const HERO_STOCK_MAG = { '/lp/dakwerken/plat-dak': 'stock-platdak-woning' };
+const HERO_STOCK_MAG = { '/lp/dakwerken/plat-dak': 'stock-gen-platdak-lichtstraat' };
+/* de beelden die op elke subpagina met een uitzondering moeten staan (positieve controle: de toets ziet ze echt) */
+const VARIANT_NAMEN = { '/lp/dakwerken/plat-dak': ['stock-gen-platdak-lichtstraat', 'stock-platdak-luchtfoto', 'stock-gen-platdak-drone', 'stock-gen-platdak-dakrand'] };
 const ROUTES = ['/', '/over', '/diensten', '/werkwijze', '/contact',
   '/dakwerken', '/gevel', '/bad', '/interieur', '/construct', '/ecologisch',
   '/privacy', '/voorwaarden', '/cookies', '/totaalrenovatie', '/badkamerrenovatie',
@@ -316,7 +320,7 @@ function paginaToets(modus, heroMag) {
           a.remove();
           return r;
         }, paginaToets.toString(), HERO_STOCK_MAG[pad]);
-        const drie = ['stock-platdak-woning', 'stock-platdak-luchtfoto', 'stock-dienst-platdak'].every((n) => m.namen.includes(n));
+        const drie = VARIANT_NAMEN[pad].every((n) => m.namen.includes(n));
         if (!ctl.ok || !ctl.zonder || !ctl.waarom || !drie) { await p.close(); stop(2, `ONGELDIGE METING: positieve controle van de hero-uitzondering op ${pad} faalt ${JSON.stringify({ ...ctl, drie })}`); }
       }
       m.fout.forEach((f) => mis.push(`${pad}: ${f}`));
