@@ -589,6 +589,7 @@ html.is-afronden .abc .abc-zweef { opacity: 0 !important; visibility: hidden !im
   .abc .abc-diensten__rij, .abc .abc-diensten__rij--3, .abc .abc-diensten__rij--5 { grid-template-columns: minmax(0, 1fr); }
   .abc .abc-dienst:nth-child(even) { border-left: 0; }
   .abc .abc-dienst:nth-child(2) { border-top: 1px solid var(--abc-lijn); }
+}
 
 /* 23 nov 2026, Mohammed: "bij de diensten die lees meer", "zelfde zoals bega", "zodat het multi page wordt": een knop "Lees meer" onder elke dienst
    (zoals bfbouw.be .lpd__knop: omlijnd, vult bij aanwijzen) en de dienstpagina's /lp/dakwerken/diensten/<dienst> (diensten-ab.ts). */
