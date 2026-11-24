@@ -73,8 +73,10 @@ const ROUTES = ['/', '/over', '/diensten', '/werkwijze', '/contact',
   '/bedankt/dakwerken', ...LP_VARIANTEN];
 /* /afspraak en /dakinspectie worden NIET geopend: daar staat de GHL-kalender (een meting raakt die nooit aan). Ze, en
    elke andere pagina, vallen onder de bronscan hieronder: "stock-" mag in src/ alleen in fotoplan.ts en beelden.ts staan. */
-/* 23 nov 2026: beelden-varianten.ts importeert de stockfoto's van de subpagina's (de plaatsing toetst de gerenderde controle hieronder) */
-const BRON_TOEGESTAAN = new Set([FOTOPLAN, path.join(WORTEL, 'src', 'pages', 'abbouw', 'bf', 'beelden.ts'), path.join(WORTEL, 'src', 'pages', 'abbouw', 'lp', 'kgj', 'beelden-varianten.ts')].map((p) => path.normalize(p)));
+/* 23 nov 2026: beelden-varianten.ts importeert de stockfoto's van de subpagina's (de plaatsing toetst de gerenderde controle hieronder)
+   24 nov 2026: beelden-klein.ts (commit 7f9e294) importeert van dezelfde stockfoto's de kleinere bestanden voor srcset; het kiest geen plaats, het geeft
+   alleen een kleiner bestand voor een beeld dat al ergens staat (de plaatsing toetst ook hier de gerenderde controle). */
+const BRON_TOEGESTAAN = new Set([FOTOPLAN, path.join(WORTEL, 'src', 'pages', 'abbouw', 'bf', 'beelden.ts'), path.join(WORTEL, 'src', 'pages', 'abbouw', 'lp', 'kgj', 'beelden-varianten.ts'), path.join(WORTEL, 'src', 'pages', 'abbouw', 'lp', 'kgj', 'beelden-klein.ts')].map((p) => path.normalize(p)));
 
 /* ---------- (b) bron: geen "stock-" buiten fotoplan.ts en beelden.ts ---------- */
 function bronScan(map, fout = []) {
