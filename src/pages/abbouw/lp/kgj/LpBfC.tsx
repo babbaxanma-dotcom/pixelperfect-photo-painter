@@ -605,16 +605,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
               <h2 className="abc-h2" id="abc-gebied-kop">{G.kop}</h2>
               <p className="abc-gebied__sub">{G.sub}</p>
               <div className="abc-gebied__adres"><span className="abc-gebied__pin"><IcPin /></span><div><b>AB Bouw Groep</b><span>{CONTACT.address.full}</span></div></div>
-              <div className="abc-gebied__provincie">
-                <p className="abc-gebied__provnaam">{G.rond.naam}</p>
-                <ul className="abc-gebied__chips">{G.rond.steden.map((g) => <li key={g}>{g}</li>)}</ul>
-              </div>
-              {G.provincies.map((p) => (
-                <div className="abc-gebied__provincie" key={p.naam}>
-                  <p className="abc-gebied__provnaam">Heel {p.naam}</p>
-                  <ul className="abc-gebied__chips">{p.steden.map((g) => <li key={g}>{g}</li>)}</ul>
-                </div>
-              ))}
+              <GebiedLijsten groepen={[{ kop: G.rond.naam, steden: G.rond.steden }, ...G.provincies.map((p) => ({ kop: `Heel ${p.naam}`, steden: p.steden }))]} />
               {/* 23 nov 2026, Mohammed: "Komen we ook bij u langs? moet trouwens op de plek offerte aanvragen, niet boven" */}
               <RegioCheck />
             </div>
@@ -884,6 +875,42 @@ function ContactBlok({ inhoud }: { inhoud: KgjInhoud }) {
         </div>
       </div>
     </section>
+  );
+}
+
+/* Gemeenten in het werkgebied als knoppen (24 nov 2026). Mohammed (werkgebied op de landingspagina's van Bega, AB en INzicht): "De gemeenten in het blok
+   'Actief in ...' zien eruit als knoppen, maar een tik doet niets." Een tik op een gemeente toont direct onder die lijst één regel "Ja, wij komen in
+   [gemeente]." in het groene vak van de postcodecontrole, met dezelfde twee knoppen (zijn aanvulling: "de knop offerte EN neem contact met ons op", "of neem
+   contact met ons op snapje"). Lijst, kaart en postcodecontrole blijven zoals ze zijn, het formulier is niet gewijzigd, niets wordt verstuurd of gemeten.
+   Er staat telkens één vak: onder de lijst van de laatst gekozen gemeente; valt het onder de rand van het scherm, dan schuift het in beeld. */
+function GebiedLijsten({ groepen }: { groepen: { kop: string; steden: readonly string[] }[] }) {
+  const [gekozen, setGekozen] = useState<{ groep: number; naam: string } | null>(null);
+  const vak = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!gekozen || !vak.current) return;
+    const rustig = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    vak.current.scrollIntoView({ block: 'nearest', behavior: rustig ? 'auto' : 'smooth' });
+  }, [gekozen]);
+  return (
+    <>
+      {groepen.map((g, i) => (
+        <div className="abc-gebied__provincie" key={g.kop}>
+          <p className="abc-gebied__provnaam">{g.kop}</p>
+          <ul className="abc-gebied__chips">{g.steden.map((s) => {
+            const aan = gekozen?.groep === i && gekozen.naam === s;
+            return <li key={s} className={aan ? 'is-gekozen' : undefined}><button type="button" className="abc-gebied__gem" aria-pressed={aan} aria-controls={`abc-gebied-uit-${i}`} onClick={() => setGekozen({ groep: i, naam: s })}>{s}</button></li>;
+          })}</ul>
+          <div id={`abc-gebied-uit-${i}`} role="status" aria-live="polite">
+            {gekozen?.groep === i && (
+              <div className="abc-check__ja abc-gebied__ja" ref={vak}>
+                <p><span className="abc-check__vink"><IcVink /></span>Ja, wij komen in {gekozen.naam}.</p>
+                <div className="abc-check__knoppen"><a className="abc-knop" href="#contact">Offerte aanvragen<IcPijl /></a><a className="abc-knop abc-knop--lijn" href="#gegevens">Neem contact met ons op</a></div>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </>
   );
 }
 

@@ -365,6 +365,18 @@
   .abc .abc-check__knoppen { flex-direction: column; }
   .abc .abc-check__knoppen .abc-knop { width: 100%; }
 }
+/* Gemeenten in het werkgebied als knoppen (24 nov 2026, LpBfC GebiedLijsten; Mohammed: "zien eruit als knoppen, maar een tik doet niets"). De knop ligt over het
+   hele vakje; het vakje zelf blijft zoals het was (rand, vulling, blokje). De gekozen gemeente krijgt een donkere rand; het groene vak eronder is .abc-check__ja.
+   scroll-margin: het vak schuift in beeld onder de kopbalk en boven de zwevende knop op de gsm. */
+.abc .abc-gebied__chips li { position: relative; }
+.abc .abc-gebied__gem { margin: 0; padding: 0; border: 0; border-radius: 0; background: none; font: inherit; line-height: inherit; letter-spacing: inherit; color: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.abc .abc-gebied__gem::after { content: ""; position: absolute; inset: -1px; }
+.abc .abc-gebied__gem:focus { outline: none; }
+.abc .abc-gebied__gem:focus-visible::after { outline: 2px solid var(--abc-donker); outline-offset: 2px; }
+.abc .abc-gebied__chips li.is-gekozen { border-color: var(--abc-donker); box-shadow: inset 0 0 0 1px var(--abc-donker); }
+@media (hover: hover) { .abc .abc-gebied__chips li:hover { border-color: var(--abc-donker); } }
+.abc .abc-gebied__ja { scroll-margin: 104px 0 24px; }
+@media (max-width: 1000px) { .abc .abc-gebied__ja { scroll-margin: 88px 0 92px; } }
 
 /* breedtes zoals BF (23 nov 2026, Mohammed: "de nav bar ziet er niet uit zoals die van bfb"): kopbalk en hero 1264 px inhoud, secties 1200 px */
 .abc .abc-kop__in, .abc .abc-hero__in, .abc .abc-sub__in { max-width: 1328px; }
