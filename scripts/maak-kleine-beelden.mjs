@@ -39,3 +39,17 @@ for (const [bron, breedtes] of BEELDEN) {
   console.log(`${bron} (${md.width}x${md.height}, ${kb} KB) -> ${uit.join(', ')}`);
 }
 console.log(`som originelen ${voor} KB, som kleinste varianten ${na} KB, verschil ${voor - na} KB`);
+
+/* 24 nov 2026 (laadtijd gsm, PageSpeed: LCP 7,6 s, grootste element = de herofoto): op schermen tot 1.000 px staat de herofoto in een vak van
+   100vw x 250 px (lp-bfc.css: object-fit cover, object-position 50% 40%). Van de vierkante foto (1200 x 1200) is daar hoogstens 250/320 = 78 % van de
+   hoogte te zien. De gsm-variant is daarom vooraf bijgesneden tot 80 % van de hoogte, verdeeld rond het ankerpunt van 40 % (8 % boven en 12 % onder
+   eraf): met dezelfde object-position toont de browser dan exact dezelfde uitsnede bij elke breedte vanaf 313 px. Kwaliteit 66 (naast 74 op 2x
+   vergroting niet te onderscheiden). 728 px = 412 px x 1,75 (de gsm van PageSpeed), 828 px = 414 px x 2, 1080 px = 360 px x 3, 1200 px = 390 px x 3 (bronbreedte). */
+{
+  const bron = path.join(A, 'dak/hero-antraciet-nok.jpg');
+  for (const br of [728, 828, 1080, 1200]) {
+    const doel = path.join(A, `dak/hero-antraciet-nok-gsm-${br}.webp`);
+    await sharp(bron).extract({ left: 0, top: 96, width: 1200, height: 960 }).resize({ width: br, withoutEnlargement: true }).webp({ quality: 66, effort: 6 }).toFile(doel);
+    console.log(`herofoto gsm ${br} px: ${Math.round(fs.statSync(doel).size / 1024)} KB`);
+  }
+}

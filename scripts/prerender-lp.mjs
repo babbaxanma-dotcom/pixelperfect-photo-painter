@@ -98,11 +98,64 @@ for (const [route, bron] of Object.entries(ROUTES)) {
       .replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${KOP.titel}$2`)
       .replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${KOP.beschrijving}$2`)
       .replace(/(<meta name="twitter:title" content=")[^"]*(")/, `$1${KOP.titel}$2`);
-    const pagina = metKop(false && route.startsWith('/lp/dakwerken') ? dakIconen(sjabloon) : sjabloon)
+    const pagina0 = metKop(false && route.startsWith('/lp/dakwerken') ? dakIconen(sjabloon) : sjabloon)
       .replace(hoofd[0], '')
       .replace(/<link rel="modulepreload" crossorigin href="\/assets\/[^"]+\.js">/g, '')
       .replace('</head>', `${extraCss}</head>`)
       .replace('<div id="root"></div>', `<div id="root" data-voorgerenderd="1">${html}</div>${laadNaBeeld}`);
+    /* 24 nov 2026 (laadtijd gsm, opdracht Mohammed; PageSpeed 15:21: FCP 3,7 s, LCP 7,6 s, grootste element = de herofoto). Gemeten oorzaken
+       (Lighthouse op de live pagina): vóór het eerste beeld startten gtag (170 kB, daarna nog 189 kB voor GA4) en het stijlblad van Google Fonts
+       (4 families die deze pagina niet toont: alle tekst staat in Inter en Urbanist, 0 lettertypebestanden van Google opgehaald, ook niet na het
+       doorlopen van het formulier), en de browser maakte de hele pagina van 11.800 px op vóór hij iets tekende, waardoor ook 7 beelden van verder
+       op de pagina al vertrokken. Alleen voor de dakpagina's in de BF-opbouw (LpBfC):
+       1. gtag start 0,8 s nadat de herofoto geladen en getekend is, of bij de eerste aanraking of toets, of
+          uiterlijk na 2,5 s. De functie gtag() en de wachtrij dataLayer staan ongewijzigd in de head: elke aanroep (config, page_view, conversie bij
+          verzenden, belklik) blijft in de wachtrij tot het script er is. Het stijlblad van Google Fonts laadt zoals voorheen (meteen, niet-blokkerend).
+       2. Zolang <html> de klasse cv draagt, maakt de browser een blok onder het eerste scherm pas op als het in de buurt van het beeld komt
+          (content-visibility). Het script onderaan geeft na het laden blok na blok vrij (één per beeldverversing) en bij de eerste aanraking,
+          toets, klik, ankersprong of scroll alles in één keer, vóór de pagina erop reageert; het aangeraakte element blijft daarbij op zijn plaats.
+          Niet bij een adres met # (de ankers van de Ads-sitelinks) en niet in een browser zonder content-visibility. Daarna is de opmaak die van
+          vroeger. Zelfde aanpak als bfbouw.be (commits f5c4e4f en bda5c0f). */
+    const snel = bron.endsWith('/LpBfC.tsx');
+    const GTAG = '<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18162707660"></script>';
+    if (snel && sjabloon.split(GTAG).length !== 2) throw new Error('gtag-script niet precies één keer gevonden in dist/index.html');
+    const laterStart = !snel ? '' : `<script>(function(w,d){var g=0;function laad(){if(g)return;g=1;var s=d.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=AW-18162707660';d.head.appendChild(s)}` +
+      `function na(){var im=d.querySelector('.abc-hero__foto');function t(){requestAnimationFrame(function(){setTimeout(laad,800)})}if(!im||im.complete)t();else{im.addEventListener('load',t,{once:true});im.addEventListener('error',t,{once:true})}}` +
+      `if(d.readyState==='loading')d.addEventListener('DOMContentLoaded',na);else na();['pointerdown','touchstart','keydown'].forEach(function(n){w.addEventListener(n,laad,{capture:true,passive:true,once:true})});setTimeout(laad,2500)})(window,document)</script>`;
+    const cvKop = !snel ? '' : `<script>(function(h){try{if(!location.hash&&'contentVisibility' in h.style)h.className+=' cv'}catch(e){}})(document.documentElement)</script>` +
+      `<style>html.cv .abc main>*:not(:first-child):not([data-cvk]),html.cv .abc>footer:not([data-cvk]){content-visibility:auto;contain-intrinsic-size:auto 700px}</style>`;
+    const cvVrij = !snel ? '' : `<script>(function(){var h=document.documentElement;if(!h.classList.contains('cv'))return;var rij=[].slice.call(document.querySelectorAll('.abc main>*:not(:first-child),.abc>footer')),soorten=['pointerdown','touchstart','mousedown','keydown','click','focusin'],klaar=false;` +
+      `function anker(e){var t=e&&e.target&&e.target.nodeType===1&&e.target!==h&&e.target!==document.body?e.target:null;if(!t&&window.scrollY>0)t=document.elementFromPoint(window.innerWidth/2,window.innerHeight/2);return t&&t!==h&&t!==document.body?t:null}` +
+      `function houd(t,voor){if(!t)return;var s=t.getBoundingClientRect().top-voor;if(Math.abs(s)>1)window.scrollBy({top:s,left:0,behavior:'instant'})}` +
+      `function alles(e){if(klaar)return;klaar=true;var t=anker(e),v=t?t.getBoundingClientRect().top:0;h.classList.remove('cv');houd(t,v);soorten.forEach(function(s){document.removeEventListener(s,alles,true)});window.removeEventListener('hashchange',alles);window.removeEventListener('scroll',alles);window.removeEventListener('beforeprint',alles)}` +
+      `function volgende(){if(klaar)return;var s=rij.shift();if(!s){alles();return}var t=anker(null),v=t?t.getBoundingClientRect().top:0;s.setAttribute('data-cvk','');houd(t,v);requestAnimationFrame(function(){setTimeout(plan,0)})}` +
+      `function plan(){if('requestIdleCallback' in window)window.requestIdleCallback(volgende,{timeout:400});else setTimeout(volgende,60)}` +
+      `soorten.forEach(function(s){document.addEventListener(s,alles,true)});window.addEventListener('hashchange',alles);window.addEventListener('beforeprint',alles);window.addEventListener('scroll',alles,{passive:true});` +
+      `function start(){setTimeout(plan,250)}if(document.readyState==='complete')start();else window.addEventListener('load',start)})()</script>`;
+    /* 3. De bundel start pas als de herofoto binnen is (daarna zoals voorheen: na het eerstvolgende beeld), niet meer vlak na het eerste beeld.
+          Op trage 4G stond het eerste beeld er soms na 2,4 s en de herofoto pas na 3,2 s; de scriptbestanden deelden intussen dezelfde lijn.
+          Lokaal gaf deze stap geen meetbaar verschil (mediaan 3.228 ms zonder, 3.292 ms met). Het vangnet van 3 s blijft: later dan vroeger
+          start de bundel alleen zolang de herofoto nog onderweg is. */
+    const STAART = 'requestAnimationFrame(function(){setTimeout(laad,0)});setTimeout(laad,3000)})()</script>';
+    const laadNaBeeldSnel = laadNaBeeld.replace(STAART, () => `function na(){requestAnimationFrame(function(){setTimeout(laad,0)})}var im=d.querySelector('.abc-hero__foto');` +
+      `if(!im||im.complete)na();else{im.addEventListener('load',na,{once:true});im.addEventListener('error',na,{once:true})}setTimeout(laad,3000)})()</script>`);
+    if (snel && laadNaBeeldSnel === laadNaBeeld) throw new Error('staart van laadNaBeeld niet gevonden');
+    /* 4. De twee lettertypes van het eerste scherm (Urbanist, Inter; eigen bestanden, samen 76 kB) worden voorgeladen. Zonder dit stond het eerste
+          beeld er nu vroeger dan de letters en zag de bezoeker 1,7 s lang het vervanglettertype, met een verschuiving erna (CLS 0,0014; op main
+          0,0011). Gemeten met voorladen (om en om, 5 runs): letters binnen 450 ms vóór het eerste beeld, CLS 0, LCP 3.692 ms tegen 3.580 ms zonder. */
+    const letters = [];
+    if (snel) for (const c of css) for (const m of fs.readFileSync(path.join(DIST, c), 'utf8').matchAll(/@font-face\{font-family:["']?(Urbanist|Inter)["']?;src:url\((\/assets\/[^)]+\.woff2)\)/g)) if (!letters.includes(m[2])) letters.push(m[2]);
+    if (snel && letters.length !== 2) throw new Error('verwacht 2 lettertypebestanden (Urbanist, Inter) in de CSS van ' + route + ', gevonden ' + letters.length);
+    const lettersVoor = letters.map((u) => `<link rel="preload" as="font" type="font/woff2" crossorigin href="${u}">`).join('');
+    const EERSTE_CSS = '<link rel="stylesheet" crossorigin href="/assets/';
+    if (snel && !pagina0.includes(EERSTE_CSS)) throw new Error('eerste stijlblad niet gevonden in ' + route);
+    const pagina = !snel ? pagina0 : pagina0
+      .replace(GTAG, () => laterStart)
+      .replace(EERSTE_CSS, () => lettersVoor + EERSTE_CSS)
+      .replace('</head>', () => `${cvKop}</head>`)
+      .replace(laadNaBeeld, () => laadNaBeeldSnel + cvVrij);
+    if (snel && (pagina.includes(GTAG) || !pagina.includes("h.className+=' cv'") || !pagina.includes("setAttribute('data-cvk'") || pagina.split('googletagmanager.com/gtag/js?id=AW-18162707660').length !== 2 || !/<link rel="preload" as="style" href="https:\/\/fonts/.test(pagina) || !pagina.includes('<noscript><link rel="stylesheet" href="https://fonts.googleapis.com')))
+      throw new Error('laadtijd-aanpassing niet volledig toegepast op ' + route);
     // 14 nov 2026: Clarity start vanuit de head (index.html), vóór de voorgerenderde pagina; zonder die start geen pagina publiceren
     const clarityOp = pagina.indexOf('https://www.clarity.ms/tag/');
     if (clarityOp < 0 || clarityOp > pagina.indexOf('<div id="root"') || !pagina.includes(`'${route}':`)) throw new Error('Clarity-start ontbreekt vóór #root of kent dit adres niet: ' + route);

@@ -17,7 +17,7 @@ import Realisatie from './Realisatie';
 import { Icoon } from './Iconen';
 import { DAKWERKEN, type KgjInhoud, type Zekerheid } from './inhoud';
 import { REGIOKAART_AB } from './regiokaart-ab';
-import { kleiner } from './beelden-klein';
+import { kleiner, gsmBron } from './beelden-klein';
 import { BadgeEuro, CalendarCheck, Check, Clock, FileCheck, Medal, MessageSquare, ShieldCheck, UserCheck } from 'lucide-react';
 import { CLARITY_PROJECT, laadClarity, meldClarity } from '@/lib/clarity';
 import { leadFoutmelding, submitLead } from '@/lib/leads';
@@ -489,7 +489,11 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
         )}
         {!tip && !dienst && (<>
         <section className="abc-hero" id="top">
-          <img className="abc-hero__foto" {...kleiner(hero.src, '100vw')} alt={hero.alt} loading="eager" decoding="async" {...{ fetchpriority: 'high' }} />
+          {/* 24 nov 2026 (laadtijd gsm): tot 1.000 px breed de vooraf bijgesneden, lichtere herofoto (beelden-klein.ts gsmBron); zelfde uitsnede in beeld. display: contents = <picture> maakt zelf geen vak, de opmaak blijft die van de losse <img> */}
+          <picture style={{ display: 'contents' }}>
+            {gsmBron(hero.src) && <source media="(max-width: 1000px)" type="image/webp" srcSet={gsmBron(hero.src)} sizes="100vw" />}
+            <img className="abc-hero__foto" {...kleiner(hero.src, '100vw')} alt={hero.alt} loading="eager" decoding="async" {...{ fetchpriority: 'high' }} />
+          </picture>
           <div className="abc-hero__laag" aria-hidden="true" />
           <div className={`abc-hero__in${heroKaart ? ' abc-hero__in--kaart' : ''}`}>
             <p className="abc-hero__regio"><span className="abc-hero__pin"><IcPin /></span>{V?.regio ?? BFC.regio}</p>

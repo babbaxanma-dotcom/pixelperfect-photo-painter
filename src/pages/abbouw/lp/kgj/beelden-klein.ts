@@ -6,6 +6,10 @@
 import heroNok from '@/assets/dak/hero-antraciet-nok.jpg';
 import heroNok800 from '@/assets/dak/hero-antraciet-nok-800.webp';
 import heroNok1200 from '@/assets/dak/hero-antraciet-nok-1200.webp';
+import heroNokGsm728 from '@/assets/dak/hero-antraciet-nok-gsm-728.webp';
+import heroNokGsm828 from '@/assets/dak/hero-antraciet-nok-gsm-828.webp';
+import heroNokGsm1080 from '@/assets/dak/hero-antraciet-nok-gsm-1080.webp';
+import heroNokGsm1200 from '@/assets/dak/hero-antraciet-nok-gsm-1200.webp';
 import slot from '@/assets/dak/hellend-pannen.jpg';
 import slot800 from '@/assets/dak/hellend-pannen-800.webp';
 import slot1200 from '@/assets/dak/hellend-pannen-1200.webp';
@@ -51,4 +55,13 @@ export function kleiner(src: string, sizes: string): { src: string; srcSet?: str
   const v = VARIANTEN[src];
   if (!v) return { src };
   return { src: v[v.length - 1][0], srcSet: v.map(([f, b]) => `${f} ${b}w`).join(', '), sizes };
+}
+
+/* 24 nov 2026 (laadtijd gsm): op schermen tot 1.000 px staat de herofoto in een vak van 100vw x 250 px en is hoogstens 78 % van haar hoogte te zien.
+   Voor die schermen is er een vooraf bijgesneden bestand (scripts/maak-kleine-beelden.mjs: 80 % van de hoogte rond het ankerpunt van 40 %), dat met
+   dezelfde object-position exact dezelfde uitsnede toont. `gsmBron(src)` geeft de srcSet voor <source media="(max-width: 1000px)">, of niets. */
+const GSM: Record<string, [string, number][]> = { [heroNok]: [[heroNokGsm728, 728], [heroNokGsm828, 828], [heroNokGsm1080, 1080], [heroNokGsm1200, 1200]] };
+export function gsmBron(src: string): string | undefined {
+  const v = GSM[src];
+  return v ? v.map(([b, w]) => `${b} ${w}w`).join(', ') : undefined;
 }
