@@ -566,7 +566,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
                     <p className="bf-real__werkenkop">Uitgevoerde werken</p>
                     <ul className="bf-real__werken">
                       {/* 24 nov 2026, Mohammed: "grote schuifraam in zwarte profielen wat is dat", "fix die uitleg bij beide, redeneer goed": wat er aan het dak gebeurde, alleen wat de foto toont (dakkapel in het pannendak, aanbouw met plat dak, beide bekleed met houten latten); de ramen horen niet op de dakpagina */}
-                      {['Dakkapel geplaatst in het pannendak', 'Aanbouw met plat dak gebouwd', 'Dakkapel en aanbouw bekleed met houten latten'].map((w) => <li key={w}><span className="bf-real__vink" aria-hidden="true"><Check /></span>{w}</li>)}
+                      {['Dakkapel geplaatst in het pannendak', 'Aanbouw met plat dak gebouwd', 'Dakkapel en aanbouw bekleed met houten gevelbekleding'].map((w) => <li key={w}><span className="bf-real__vink" aria-hidden="true"><Check /></span>{w}</li>)}
                     </ul>
                     <div className="bf-real__knop">{offerteKnop('bf-real__cta')}</div>
                   </div>
