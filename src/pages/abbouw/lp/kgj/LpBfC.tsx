@@ -558,14 +558,15 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
                   <div className="bf-real__beeld">
                     <div className="bf-real__podium">
                       <img {...kleiner(dakkapelAanbouw, '(max-width: 1000px) 92vw, 720px')} alt="Achtergevel tijdens de werken: een dakkapel en een aanbouw met verticale houten bekleding, grote zwarte schuiframen en twee vakmannen op het dak" loading="lazy" decoding="async" />
-                      <span className="bf-real__label" aria-hidden="true">Tijdens de werken</span>
+                      {/* 24 nov 2026, Mohammed: "die tijdens de werken bij de tweede realisatie kan eruit": geen label meer op de foto */}
                     </div>
                   </div>
                   <div className="bf-real__info">
                     <h2 className="bf-real__project" id="realisatie-dakkapel-kop">Dakkapel en aanbouw met houten gevelbekleding</h2>
                     <p className="bf-real__werkenkop">Uitgevoerde werken</p>
                     <ul className="bf-real__werken">
-                      {['Dakkapel met twee ramen en houten bekleding', 'Aanbouw met houten gevelbekleding', 'Grote schuiframen in zwarte profielen'].map((w) => <li key={w}><span className="bf-real__vink" aria-hidden="true"><Check /></span>{w}</li>)}
+                      {/* 24 nov 2026, Mohammed: "grote schuifraam in zwarte profielen wat is dat", "fix die uitleg bij beide, redeneer goed": wat er aan het dak gebeurde, alleen wat de foto toont (dakkapel in het pannendak, aanbouw met plat dak, beide bekleed met houten latten); de ramen horen niet op de dakpagina */}
+                      {['Dakkapel geplaatst in het pannendak', 'Aanbouw met plat dak gebouwd', 'Dakkapel en aanbouw bekleed met houten latten'].map((w) => <li key={w}><span className="bf-real__vink" aria-hidden="true"><Check /></span>{w}</li>)}
                     </ul>
                     <div className="bf-real__knop">{offerteKnop('bf-real__cta')}</div>
                   </div>

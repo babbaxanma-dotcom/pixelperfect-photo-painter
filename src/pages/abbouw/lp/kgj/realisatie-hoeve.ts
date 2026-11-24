@@ -31,3 +31,9 @@ export const HOEVE: Realisatie = {
   na: { label: 'Na de werken', video: droneNa, poster: droneNaPoster, alt: 'Dronebeeld van de hoeve na de werken: een nieuw rood pannendak met drie dakvensters' },
   tijdens: { label: 'Tijdens de werken', src: dakOpen169, alt: 'Dronebeeld van de hoeve tijdens de werken: het dak ligt open tot op de balken, met een minigraver op het erf' },
 };
+
+/* 24 nov 2026, Mohammed (AB /lp/dakwerken): de uitleg bij de realisaties is "slop", "fix die uitleg bij beide, redeneer goed". Op de dakpagina
+   telt wat er met het DAK gebeurde, in woorden van de klant, en alleen wat de beelden tonen: het dak lag open tot op de balken (foto tijdens de
+   werken), daarna een nieuw rood pannendak met drie dakvensters (video na de werken). De binnenkant, de staalstructuur en de ramen horen bij de
+   verbouwing en niet bij het dak: die blijven op /lp/totaalrenovatie (HOEVE hierboven, ongewijzigd). */
+export const HOEVE_DAK: Realisatie = { ...HOEVE, werken: ['Oud dak afgebroken tot op de balken', 'Nieuw dak gelegd met rode pannen', 'Drie dakvensters geplaatst'] };

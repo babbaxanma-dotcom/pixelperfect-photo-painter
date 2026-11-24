@@ -48,7 +48,7 @@ import keuzeHellend from '@/assets/dak/keuze-hellend.jpg';
 import keuzePlat from '@/assets/dak/keuze-plat.jpg';
 
 import type { IcoonNaam } from './Iconen';
-import { HOEVE } from './realisatie-hoeve';
+import { HOEVE_DAK } from './realisatie-hoeve';
 /** 18 nov 2026: antwoord van de keuze "Beide" bij "Om welk soort dak gaat het?" (aanvraagkaart); volgt het pad van Hellend dak. */
 const BEIDE = 'Beide (hellend en plat)';
 
@@ -761,7 +761,7 @@ export const DAKWERKEN: KgjInhoud = {
      en een betere sectie"). */
   /* 8 nov 2026, Mohammed: "ik wil graag op de pagina zo een realisatie sectie maken met die realisatie" (de hoeve, realisatie-hoeve.ts): direct na de
      diensten, waar bfbouw.be zijn recente daken toont; de voor/na van het dak volgt erna. */
-  realisatie: HOEVE,
+  realisatie: HOEVE_DAK, // 24 nov 2026: uitgevoerde werken over het dak (realisatie-hoeve.ts HOEVE_DAK); /lp/totaalrenovatie houdt HOEVE
   /* 8 nov 2026, Mohammed (localhost): "Tijdens de werken MAG ERuit, eronder en die slider ook": de voor/na-schuif ('voorna') onder de realisatie is weg.
      De gegevens blijven staan (type), de pagina toont ze niet. */
   /* 19 nov 2026, Mohammed: "bij ab direct onder de form de realisatie van die hoeve": de realisatie staat eerst, direct onder de hero met het formulier. */

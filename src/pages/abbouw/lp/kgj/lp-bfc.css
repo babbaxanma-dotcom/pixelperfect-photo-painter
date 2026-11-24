@@ -674,3 +674,19 @@ html.is-afronden .abc .abc-zweef { opacity: 0 !important; visibility: hidden !im
   .abc .abc-hero__kaart { margin-top: 20px; }
   .abc .abc-hero__in--kaart .abc-hero__knoppen { margin-top: 14px; }
 }
+
+/* 24 nov 2026, Mohammed ("Hero op een groot scherm", vanaf 1024 px; "bij ab ook form compacter he precies zoals de prompt het zei"): compactere kaart
+   in de hero. Titel, de regel eronder, de voortgangsbalk, de vraag en alle keuzes van stap 1 blijven volledig zichtbaar; minder witruimte, lagere
+   keuzeknoppen, de twee regels met een vinkje uit de kaart. Geen review onder de kaart: er is geen gekozen echte Google-review van AB (gemeld).
+   Gsm en tablet ongewijzigd. */
+@media (min-width: 1024px) {
+  .abc.abc .abc-hero__kaart .kgj-reken { padding: 18px 22px 16px; }
+  .abc.abc .abc-hero__kaart .kgj-reken__regel { margin-top: 3px; }
+  .abc.abc .abc-hero__kaart .kgj-reken__weg { margin-top: 12px; }
+  .abc.abc .abc-hero__kaart .kgj-reken__kop { margin-top: 6px; min-height: 24px; }
+  .abc.abc .abc-hero__kaart .kgj-reken__vraag { margin-top: 2px; }
+  .abc.abc .abc-hero__kaart .kgj-reken__keuzes { margin-top: 10px; gap: 8px; }
+  .abc.abc .abc-hero__kaart .kgj-reken__keuze { min-height: 44px; padding: 6px 12px 6px 8px; gap: 10px; }
+  .abc.abc .abc-hero__kaart .kgj-reken__vertrouwen { display: none; }
+  .abc.abc .abc-hero__kaart .kgj-reken__trust { margin-top: 12px; padding-top: 10px; }
+}
