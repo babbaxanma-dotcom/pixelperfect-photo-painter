@@ -67,6 +67,13 @@ const POORT = 4433;
 const FIXTURES = path.join(HIER, 'fixtures', 'lp-payload');
 const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
 const VLUCHTIG = new Set(['user_agent', 'submitted_at', 'referrer']);
+/* 24 nov 2026 (Mohammed: "zet voor alle 3 de klanten nu web 3 voor tarik azarkan getnorvo be mail, gohighlevel ligt eruit"): elke aanvraag gaat
+   als mail naar twee Web3Forms-sleutels: die van de referentie (met "to") en die van tarik.azarkan@getnorvo.be (zelfde velden, zonder "to").
+   Per sleutel precies één verzoek; een dubbele verzending blijft dus een fout. */
+const W3_TARIK = '287b3728-9325-409b-91f8-b2582fb83017';
+const w3Verwacht = (ref) => [ref, Object.fromEntries(Object.entries(ref).filter(([k]) => k !== 'to').map(([k, v]) => [k, k === 'access_key' ? W3_TARIK : v]))];
+const w3Telt = (lijst, ref) => lijst.length === 2 && w3Verwacht(ref).every((v) => lijst.filter((b) => b && b.access_key === v.access_key).length === 1);
+const w3Vergelijk = (ref, lijst) => w3Verwacht(ref).flatMap((v) => vergelijk(v, lijst.find((b) => b && b.access_key === v.access_key)).map((d) => `(${v.access_key.slice(0, 8)}) ${d}`));
 
 /* 18 nov 2026: ook /lp/dakwerken/asbest ("Asbest: Ja" moet in de aanvraag blijven nu de asbestvraag weg is) */
 const ALLE = ['dakwerken', 'dakwerken-asbest', 'richtprijs-berekenen', 'totaalrenovatie', 'aannemer-renovatiewerken'];
@@ -210,9 +217,9 @@ async function doeFlow(browser, basis, lp, f, breedte, lokaas = false) {
         await wacht(1500);
         await p.evaluate(() => { document.dispatchEvent(new Event('visibilitychange')); window.dispatchEvent(new Event('pagehide')); });
         await wacht(1200);
-        if (log.ghl.length !== 1 || log.w3f.length !== 1) fouten.push(`weg op de telefoonstap: ${log.ghl.length} GHL en ${log.w3f.length} Web3Forms (verwacht 1 en 1)`);
+        if (log.ghl.length !== 1 || !w3Telt(log.w3f, f.web3forms)) fouten.push(`weg op de telefoonstap: ${log.ghl.length} GHL en ${log.w3f.length} Web3Forms (verwacht 1 GHL en per sleutel 1 Web3Forms)`);
         for (const d of vergelijk(f.ghl, log.ghl[0])) fouten.push('GHL ' + d);
-        for (const d of vergelijk(f.web3forms, log.w3f[0])) fouten.push('Web3Forms ' + d);
+        for (const d of w3Vergelijk(f.web3forms, log.w3f)) fouten.push('Web3Forms ' + d);
         if (log.extern.length) fouten.push(`verzoek naar buiten tegengehouden: ${log.extern.join(', ')}`);
         if (log.fouten.length) fouten.push(`paginafout: ${log.fouten.join(' | ')}`);
         return { fouten, log };
@@ -279,13 +286,13 @@ async function doeFlow(browser, basis, lp, f, breedte, lokaas = false) {
     const knop = await p.$(`${form} button[type=submit]`);
     await knop.click({ count: 2, delay: 20 });
     await wacht(2000);
-    if (log.ghl.length !== 1 || log.w3f.length !== 1) {
+    if (log.ghl.length !== 1 || !w3Telt(log.w3f, f.web3forms)) {
       /* bij 0 verzoeken: wat de bezoeker ziet (een melding onder een veld of onder de knop), zodat het rapport zegt waarom */
       const melding = log.ghl.length || log.w3f.length ? null : await p.evaluate((w) => { const m = document.querySelector(w + ' .kgj-reken__veldfout') || document.querySelector(w + ' .kgj-reken__fout'); return m ? m.textContent.trim() : null; }, wortel).catch(() => null);
-      fouten.push(`aantal verzoeken na dubbelklik: ${log.ghl.length} GHL en ${log.w3f.length} Web3Forms (verwacht 1 en 1)${melding ? ` (melding: "${melding}")` : ''}`);
+      fouten.push(`aantal verzoeken na dubbelklik: ${log.ghl.length} GHL en ${log.w3f.length} Web3Forms (verwacht 1 GHL en per sleutel 1 Web3Forms)${melding ? ` (melding: "${melding}")` : ''}`);
     }
     for (const d of vergelijk(f.ghl, log.ghl[0])) fouten.push('GHL ' + d);
-    for (const d of vergelijk(f.web3forms, log.w3f[0])) fouten.push('Web3Forms ' + d);
+    for (const d of w3Vergelijk(f.web3forms, log.w3f)) fouten.push('Web3Forms ' + d);
 
     /* form_start */
     const starts = await p.evaluate(() => [...new Set((window.dataLayer || []).map((a) => { try { const x = Array.from(a); return x[0] === 'event' && x[1] === 'form_start' ? x[2]?.method : null; } catch { return null; } }).filter(Boolean))]);

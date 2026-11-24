@@ -16,6 +16,10 @@ import { getUtmParams, fireConversion, type UtmParams } from './tracking';
 // (LEAD_EMAIL_TO override is optioneel).
 const WEB3FORMS_ACCESS_KEY = 'b01e4fea-3e73-418b-b65a-acfb1d3ee43c'; // Mohammeds Web3Forms access key (de werkende, bevestigd dat leads landen)
 const LEAD_EMAIL_TO = ''; // optioneel: forceer ontvanger; leeg = Web3Forms-registratie-mail
+/* 24 nov 2026, Mohammed: "zet voor alle 3 de klanten nu web 3 voor tarik azarkan getnorvo be mail, gohighlevel ligt eruit". Elke aanvraag gaat
+   nu ook als mail naar tarik.azarkan@getnorvo.be: de Web3Forms-sleutel van dat adres (dezelfde als inzichtbouw.be en bfbouw.be), parallel met
+   GHL en met de sleutel hierboven. Geslaagd zodra één transport aankomt. */
+const WEB3FORMS_ACCESS_KEY_TARIK = '287b3728-9325-409b-91f8-b2582fb83017';
 
 export type Divisie =
   | 'ab_construct'
@@ -275,16 +279,18 @@ export async function submitLead(p: LeadPayload): Promise<SubmitResult> {
     );
   }
 
-  if (w3key) {
+  /* 24 nov 2026: een mail per sleutel (Mohammeds sleutel + die van tarik.azarkan@getnorvo.be); de ontvanger-override geldt alleen voor de eerste. */
+  const w3keys = [...new Set([w3key, WEB3FORMS_ACCESS_KEY_TARIK].filter((k): k is string => !!k))];
+  for (const key of w3keys) {
     tasks.push(
       postJSON('https://api.web3forms.com/submit', {
-        access_key: w3key,
+        access_key: key,
         subject: `Nieuwe AB Bouw lead (${p.source}), ${body.name || body.email}`,
         from_name: 'AB Bouw website',
-        ...(w3to ? { to: w3to } : {}),
+        ...(w3to && key === w3key ? { to: w3to } : {}),
         ...body,
       })
-        .then((res) => { w3Ok = res.ok; if (!res.ok) { nietVeilig(res.status); console.warn('[lead] Web3Forms niet-ok status:', res.status); } })
+        .then((res) => { if (res.ok) w3Ok = true; else { nietVeilig(res.status); console.warn('[lead] Web3Forms niet-ok status:', res.status); } })
         .catch((err) => { nietVeilig(undefined, err); console.warn('[lead] Web3Forms submit failed:', err); })
     );
   }

@@ -144,7 +144,8 @@ async function payloadFouten() {
     await verstuur(p);
     await p.waitForFunction(() => location.pathname.startsWith('/bedankt'), { timeout: 10000 }).catch(() => {});
     const g = log.ghl[0] || {};
-    if (log.ghl.length !== 1 || log.w3.length !== 1) uit.push(`B. ${log.ghl.length} GHL- en ${log.w3.length} Web3Forms-verzoeken (verwacht 1 en 1)`);
+    /* 24 nov 2026: elke aanvraag gaat als mail naar twee Web3Forms-sleutels (Mohammed + tarik.azarkan@getnorvo.be, leads.ts) */
+    if (log.ghl.length !== 1 || log.w3.length !== 2) uit.push(`B. ${log.ghl.length} GHL- en ${log.w3.length} Web3Forms-verzoeken (verwacht 1 en 2)`);
     if (g.email !== 'test@kaart.be') uit.push(`B. e-mail in de aanvraag "${g.email}" (verwacht "test@kaart.be": de punt achteraan weg)`);
     if (g.phone !== '0470 12 34 56') uit.push(`B. telefoon in de aanvraag ${JSON.stringify(g.phone)} (verwacht "0470 12 34 56")`);
     if (g.firstName !== 'Test' || g.lastName !== 'Kaart') uit.push(`B. naam in de aanvraag ${g.firstName} / ${g.lastName} (verwacht Test / Kaart)`);
@@ -194,7 +195,7 @@ async function storingFouten(antwoord, verwacht, wachtMs = null) {
       return { pad: location.pathname, fout: f?.textContent.trim() || null, onder: fr ? Math.round(fr.top - br_.bottom) : null, knop: !b.disabled, tekst: b.textContent.trim(),
         velden: ['naam', 'telefoon', 'email'].map((n) => k.querySelector(`input[name=${n}]`)?.value) };
     }, HERO);
-    if (log.ghl.length !== verwacht || log.w3.length !== verwacht) uit.push(`D(${antwoord}). ${log.ghl.length} GHL- en ${log.w3.length} Web3Forms-pogingen (verwacht ${verwacht} en ${verwacht})`);
+    if (log.ghl.length !== verwacht || log.w3.length !== 2 * verwacht) uit.push(`D(${antwoord}). ${log.ghl.length} GHL- en ${log.w3.length} Web3Forms-pogingen (verwacht ${verwacht} en ${2 * verwacht}: twee sleutels per poging)`);
     if (!r.fout || !/^Versturen lukte niet\. Bel gerust 0\d/.test(r.fout)) uit.push(`D(${antwoord}). melding "${r.fout}" (verwacht "Versturen lukte niet. Bel gerust ...")`);
     if (r.onder === null || r.onder < 0 || r.onder > 24) uit.push(`D(${antwoord}). de melding staat niet direct onder de verzendknop (${r.onder} px eronder)`);
     if (!r.knop || r.tekst === 'Bezig…') uit.push(`D(${antwoord}). de knop werkt niet weer (${r.tekst})`);

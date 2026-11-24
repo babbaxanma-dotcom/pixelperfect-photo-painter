@@ -199,7 +199,8 @@ async function gsmFlow(br, basis, pad, plant = {}, alleenTot = null) {
     const d = await p.evaluate(() => ({ pad: location.pathname, kop: document.querySelector('.bf-dank__volgt h2')?.textContent, stappen: document.querySelectorAll('.bf-dank__stappen--volgt li').length,
       html: document.documentElement.classList.contains('is-formvol'), opslag: sessionStorage.getItem('ab_aanvraag'), contact: sessionStorage.getItem('ab_contact') }));
     if (!d.pad.startsWith('/bedankt/')) uit.push(`5. geen bedankpagina (${d.pad})`);
-    if (tel.ghl !== 1 || tel.w3 !== 1) uit.push(`5. ${tel.ghl} GHL- en ${tel.w3} Web3Forms-verzoeken (verwacht 1 en 1)`);
+    /* 24 nov 2026: elke aanvraag gaat als mail naar twee Web3Forms-sleutels (Mohammed + tarik.azarkan@getnorvo.be, leads.ts) */
+    if (tel.ghl !== 1 || tel.w3 !== 2) uit.push(`5. ${tel.ghl} GHL- en ${tel.w3} Web3Forms-verzoeken (verwacht 1 en 2)`);
     if (tel.conv !== 1) uit.push(`5. ${tel.conv} conversies (verwacht 1)`);
     if (d.kop !== 'Wat nu volgt' || d.stappen !== 3) uit.push(`5. bedankpagina: "${d.kop}" met ${d.stappen} stappen (verwacht "Wat nu volgt" met 3, 7 nov 2026)`);
     if (d.html || d.opslag !== null || d.contact !== null) uit.push(`5. na versturen: is-formvol ${d.html}, bewaarde antwoorden ${d.opslag}, bewaarde contactgegevens ${d.contact}`);

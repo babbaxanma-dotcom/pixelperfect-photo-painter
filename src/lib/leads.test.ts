@@ -60,8 +60,29 @@ describe('submitLead, transport', () => {
     const urls = urlsOf(f);
     expect(urls).toContain(GHL_URL);
     expect(urls.some((u) => u.startsWith(WEB3_URL))).toBe(true);
-    expect(f).toHaveBeenCalledTimes(2);
+    expect(f).toHaveBeenCalledTimes(3); // GHL + Web3Forms (Mohammed) + Web3Forms (tarik.azarkan@getnorvo.be, 24 nov 2026)
     expect(res.ok).toBe(true);
+    expect(fireConversion).toHaveBeenCalledTimes(1);
+  });
+
+  it('stuurt elke lead ook als mail naar tarik.azarkan@getnorvo.be (24 nov 2026), met dezelfde velden', async () => {
+    const f = fetchMock();
+    vi.stubGlobal('fetch', f);
+    await submitLead({ ...base });
+    const w3 = f.mock.calls.filter((c) => String(c[0]) === WEB3_URL).map((c) => JSON.parse(String(c[1]?.body)));
+    expect(w3.map((b) => b.access_key).sort()).toEqual(['287b3728-9325-409b-91f8-b2582fb83017', 'b01e4fea-3e73-418b-b65a-acfb1d3ee43c']);
+    expect(w3[0].phone).toBe(w3[1].phone);
+    expect(w3[0].email).toBe('jan@example.com');
+  });
+
+  it('GHL ligt eruit en alleen de mail naar Tarik komt aan: de lead is toch bezorgd', async () => {
+    vi.stubGlobal('fetch', vi.fn(async (u: string, init?: RequestInit) => {
+      if (String(u) === WEB3_URL && String(init?.body).includes('287b3728-9325-409b-91f8-b2582fb83017')) return { ok: true, status: 200 } as unknown as Response;
+      return { ok: false, status: 503 } as unknown as Response;
+    }));
+    const res = await submitLead({ ...base });
+    expect(res.ok).toBe(true);
+    expect(res.via).toBe('web3forms');
     expect(fireConversion).toHaveBeenCalledTimes(1);
   });
 
@@ -156,7 +177,7 @@ describe('voornaam en achternaam naar GHL ("Dag {{contact.first_name}},")', () =
     expect(body.lastName).toBeUndefined();
     expect(body.name).toBeUndefined();
     expect(res.ok).toBe(true);
-    expect(f).toHaveBeenCalledTimes(2);
+    expect(f).toHaveBeenCalledTimes(3); // GHL + 2x Web3Forms (24 nov 2026)
   });
 
   it('firstName en lastName apart meegegeven blijven ongewijzigd (voornaam met hoofdletter)', async () => {
