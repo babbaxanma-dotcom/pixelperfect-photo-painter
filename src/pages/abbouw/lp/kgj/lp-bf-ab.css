@@ -1826,3 +1826,5 @@ html.is-informulier .bf.bf-lp .bf-belzweef { opacity: 0 !important; visibility: 
   .bf.bf-lp--dakwerken .bf-kop--lp .bf-nav { height: 56px; }
   .bf.bf-lp--dakwerken .bf-lphero__in { padding-top: 80px; }
 }
+/* een sprong naar een anker (sitelinks #contact, #waarom, #werkwijze, ...) landt direct onder de kopbalk van 56 px op de gsm (check:ankers), zoals onder 340 px */
+@media (max-width: 768px) { html:has(.bf.bf-lp.abc), html:has(.bf.bf-lp--dakwerken) { scroll-padding-top: 56px; } }

@@ -80,9 +80,9 @@ async function meet(p, hoogte) {
       const smal = innerWidth <= 1000;
       if (!fr || !zicht(foto) || !foto.naturalWidth) fout.push('hero: geen foto');
       else if (!smal && (fr.height < hr.height * 0.95 || fr.width < hr.width * 0.95)) fout.push(`hero: de foto vult de hero niet (${Math.round(fr.width)}x${Math.round(fr.height)} van ${Math.round(hr.width)}x${Math.round(hr.height)})`);
-      /* 25 nov 2026, Mohammed (DE KAART, STAP 1, GSM tot 768 px): "De foto blijft bovenaan met de H1 erover, maar wordt 150 tot 170 px hoog" (hero met de
+      /* 25 nov 2026, Mohammed (DE KAART, STAP 1, GSM tot 768 px): "De foto blijft bovenaan met de H1 erover" (eerst 150-170 px; 14:20 zijn correctie "dat ze nog de foto kunnen zien en tekst kunnen lezen": 230 px) (hero met de
          aanvraagkaart); elders op gsm en tablet blijft de band minstens 200 px. */
-      else if (smal && innerWidth <= 768 && hero.querySelector('.abc-hero__in--kaart')) { if (fr.width < hr.width * 0.95 || fr.height < 150 || fr.height > 170) fout.push(`hero: de fotoband is ${Math.round(fr.width)}x${Math.round(fr.height)} (150-170 px hoog, zijn opgave 25 nov)`); }
+      else if (smal && innerWidth <= 768 && hero.querySelector('.abc-hero__in--kaart')) { if (fr.width < hr.width * 0.95 || fr.height < 220 || fr.height > 240) fout.push(`hero: de fotoband is ${Math.round(fr.width)}x${Math.round(fr.height)} (220-240 px hoog, zijn correctie 25 nov 14:20)`); }
       else if (smal && (fr.width < hr.width * 0.95 || fr.height < 200)) fout.push(`hero: de fotoband is te klein (${Math.round(fr.width)}x${Math.round(fr.height)} van ${Math.round(hr.width)} breed)`);
       const laag = hero.querySelector('.abc-hero__laag');
       if (!zicht(laag) || getComputedStyle(laag).backgroundImage === 'none') fout.push('hero: geen donkere laag over de foto');
