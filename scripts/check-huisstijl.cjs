@@ -99,6 +99,12 @@ async function meet(p, hoogte) {
       if (kaartKeuzes) {
         const onder = Math.round(Math.max(0, ...kaartKeuzes.map((k) => k.getBoundingClientRect().bottom + window.scrollY)));
         if (kaartKeuzes.length !== 5 || onder > 640) fout.push(`hero: ${kaartKeuzes.length} keuzes in de kaart, de laatste eindigt op ${onder}px (5 keuzes binnen 640 px)`);
+        /* 25 nov 2026 (15:00), Mohammed: "heb je die spacing gefixt? doe dat nu" (tweede keer over de spacing van de gsm-hero): vaste afstanden per groep,
+           plaatsregel-kop 12, kop-zin 14, zin-kaart 24, kaart-cijfers 12, cijfers-knop 24 px (elk ±1). Vóór de fix: de plaatsregel bovenaan de foto, 30/16/12/14. */
+        const R = (s) => { const e = hero.querySelector(s); return e && zicht(e) ? e.getBoundingClientRect() : null; };
+        const reg = R('.abc-hero__regio'), kop = R('.abc-hero__kop'), sub = R('.abc-hero__sub'), krt = R('.abc-hero__kaart .kgj-reken'), cij = R('.abc-hero__kaart .kgj-reken__cijfers-onder'), kn = R('.abc-hero__knoppen');
+        const gaten = reg && kop && sub && krt && cij && kn ? [kop.top - reg.bottom, sub.top - kop.bottom, krt.top - sub.bottom, cij.top - krt.bottom, kn.top - cij.bottom].map(Math.round) : null;
+        if (!gaten || ![12, 14, 24, 12, 24].every((x, i) => Math.abs(gaten[i] - x) <= 1)) fout.push(`hero: afstanden plaatsregel-kop, kop-zin, zin-kaart, kaart-cijfers, cijfers-knop = ${JSON.stringify(gaten)} (12, 14, 24, 12, 24 px; zijn correctie 25 nov 15:00)`);
       }
       else if (!knop) fout.push('hero: geen offerteknop');
       else {
@@ -231,6 +237,14 @@ async function meet(p, hoogte) {
       const g = await meet(pc, 900);
       await pc.close();
       if (g.length < 4) stop(2, `FOUT: positieve controle (${vorm}, ${pad}) vond ${g.length} van de ingespoten fouten — de meting is ongeldig:\n  ${g.join('\n  ')}`);
+      gevonden = gevonden.concat(g);
+    }
+    /* positieve controle (25 nov 2026, 15:00): de oude afstand (zin 30 px onder de kop) in de gsm-hero met kaart moet gevonden worden */
+    {
+      const pc = await open('/lp/dakwerken', 390, 844, '.abc .abc-hero__in--kaart > .abc-hero__sub { margin-top: 30px !important; }');
+      const g = (await meet(pc, 844)).filter((f) => f.includes('afstanden'));
+      await pc.close();
+      if (!g.length) stop(2, 'FOUT: positieve controle (gsm-hero met kaart, zin 30 px onder de kop) niet gevonden — de meting is ongeldig');
       gevonden = gevonden.concat(g);
     }
 

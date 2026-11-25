@@ -639,11 +639,12 @@ const kopVan = (pg) => (ABC[pg.pad] ? pg.kopAbc : pg.kop);
      geen sluitknop, geen donkere achtergrond) en het contactblok in de pagina: de kop "Contact" onder de vaste kopbalk, naam, telefoon,
      e-mail en de verzendknop binnen het scherm. De voorouder-toets van 9 nov (Safari knipt een VASTE kaart af) is daarmee vervangen door
      de eis dat de kaart nooit vast staat. */
-  const contactInBeeldFouten = async (pg, root, css = null) => {
+  const contactInBeeldFouten = async (pg, root, css = null, voorMeting = null) => {
     const { p, ctx } = await open(pg.pad, { gsm: true, hoogte: 637, css, voorLaden: () => { window.__abVolUit = false; } });
     if (root === ONDER) { await p.evaluate((r) => document.querySelector(r).scrollIntoView({ block: 'start', behavior: 'instant' }), root); await wacht(300); }
     for (const l of pg.pad1) if (!(await tik(p, l, root))) { await ctx.close(); return [`keuze "${l}" niet gevonden`]; }
     await wacht(900);
+    if (voorMeting) await voorMeting(p);
     const m = await p.evaluate((root) => {
       const k = document.querySelector(root);
       const r = (q) => k.querySelector(q)?.getBoundingClientRect();
@@ -654,11 +655,15 @@ const kopVan = (pg) => (ABC[pg.pad] ? pg.kopAbc : pg.kop);
         dialoog: !!document.querySelector('[role="dialog"][aria-modal="true"]'), sluit: !!k.querySelector('.kgj-reken__sluit'), achter: !!document.querySelector('.kgj-reken__achter'),
         balk: Math.round(balk), ckop: Math.round(r('.kgj-reken__ckop')?.top ?? -1),
         naam: Math.round(r('input[name=naam]')?.bottom ?? 9999), gsm: Math.round(r('input[name=telefoon]')?.bottom ?? 9999), mail: Math.round(r('input[name=email]')?.bottom ?? 9999),
-        knop: Math.round(r('.kgj-reken__knop')?.bottom ?? 9999), vh: innerHeight };
+        knop: Math.round(r('.kgj-reken__knop')?.bottom ?? 9999), vh: innerHeight, kaartTop: Math.round(k.getBoundingClientRect().top) };
     }, root);
     await ctx.close();
     if (m.tel !== `Stap ${pg.stappen}`) return [`niet op het contactblok (${m.tel})`];
     const uit = [];
+    /* 25 nov 2026, Mohammed (gsm): "bij stap 3 in de form, dat je in het form zit, niet aan de bovenkant van de pagina, zegmaar in diepte". Past de
+       verzendknop met de kaart 8 px onder de kopbalk, dan staat de kaart daar (Aanvraag.tsx inBeeld); anders gelden de oude regels (smal scherm). */
+    const knopBijDiep = m.knop - (m.kaartTop - (m.balk + 8));
+    if (knopBijDiep <= m.vh - 12 && Math.abs(m.kaartTop - (m.balk + 8)) > 2) uit.push(`niet in het formulier: de kaart begint op ${m.kaartTop} px, verwacht ${m.balk + 8} px (8 px onder de kopbalk)`);
     if (m.vast || m.formvol || m.dialoog || m.sluit || m.achter) uit.push(`pop-up: het contactblok staat over de pagina (${JSON.stringify({ vast: m.vast, formvol: m.formvol, dialoog: m.dialoog, sluit: m.sluit, achter: m.achter })})`);
     if (m.ckop < m.balk - 1) uit.push(`de kop "Contact" ligt onder de vaste kopbalk (${m.ckop} px, balk tot ${m.balk} px)`);
     for (const [naam, onder] of [['het naamveld', m.naam], ['het telefoonveld', m.gsm], ['het e-mailveld', m.mail], ['de verzendknop', m.knop]]) {
@@ -1012,6 +1017,8 @@ const kopVan = (pg) => (ABC[pg.pad] ? pg.kopAbc : pg.kop);
         ['14: 420 px marge onder de kop "Contact"', await contactInBeeldFouten(DAK, ABC[DAK.pad] ? ONDER : HERO, '.kgj-reken--aanvraag .kgj-reken__ckop{margin-bottom:420px!important}'), 'valt onder het scherm'],
         ['14b: de kaart bovenaan als pop-up (vast over het scherm)', await contactInBeeldFouten(DAK, HERO, '#rekenaar .kgj-reken--aanvraag.is-contact{position:fixed!important;inset:0!important;z-index:1000!important}'), 'pop-up'],
         ['14c: de kaart onderaan als pop-up (vast over het scherm)', await contactInBeeldFouten(DAK, ONDER, '#contact .kgj-reken--aanvraag.is-contact{position:fixed!important;inset:0!important;z-index:1000!important}'), 'pop-up'],
+        /* 25 nov 2026: de pagina 150 px hoger dan het formulier (zoals vóór de fix: kop, foto en zin nog in beeld) moet rood geven */
+        ['14d: contactscherm 150 px te hoog (niet in het formulier)', await contactInBeeldFouten(DAK, ABC[DAK.pad] ? ONDER : HERO, null, async (p) => { await p.evaluate(() => window.scrollBy({ top: -150, behavior: 'instant' })); await wacht(300); }), 'niet in het formulier'],
         ['16: keuzes 500 px lager', await alleStappenFouten(RENO1, HERO, '.kgj-reken--aanvraag .kgj-reken__keuzes{margin-top:500px!important}'), 'laatste knop tot'],
         ['17: kaart bovenaan niet bevroren (alles altijd in beeld)', [await sprongFout(RENO1, { zonderBevriezen: true })].filter(Boolean), 'sprong'],
         ['18: een knop naar het formulier met de oude tekst', await (async () => { const { p, ctx } = await open(RENO1.pad, { gsm: false }); const f = await knoppenFouten(p, RENO1, 'Plan uw gratis plaatsbezoek'); await ctx.close(); return f; })(), 'Plan uw gratis plaatsbezoek'],

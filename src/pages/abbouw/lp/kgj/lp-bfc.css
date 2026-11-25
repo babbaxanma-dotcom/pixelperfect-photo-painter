@@ -714,13 +714,18 @@ html.is-afronden .abc .abc-zweef { opacity: 0 !important; visibility: hidden !im
      donkerder onder de kop; de kaart in de hero compacter (keuzes 44 px), de vijf keuzes blijven binnen de eerste 640 px. */
   .abc .abc-hero:has(.abc-hero__in--kaart) .abc-hero__foto { height: 230px; }
   .abc .abc-hero:has(.abc-hero__in--kaart) .abc-hero__laag { background: linear-gradient(180deg, rgba(10, 22, 40, .22) 0, rgba(10, 22, 40, .04) 60px, rgba(10, 22, 40, .3) 110px, rgba(10, 22, 40, .82) 170px, var(--abc-donker) 230px); }
-  .abc .abc-hero__in.abc-hero__in--kaart { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 202px; padding-top: 70px; }
+  /* 25 nov 2026 (15:00), Mohammed: "heb je die spacing gefixt? doe dat nu" (zoals bfbouw.be). Gemeten 390x664: de plaatsregel stond los bovenaan de foto,
+     de zin 30 px onder de kop maar de kaart maar 16 px onder de zin, de cijfers 14 px boven de knop. Nu vaste afstanden per groep: plaatsregel 12 px boven de
+     kop, samen onderaan in de foto (het dak erboven blijft vrij); zin 14 px onder de kop; kaart 24 px onder de zin; cijfers 12 px onder de kaart; knop 24 px
+     onder de cijfers. De kop begint altijd op dezelfde hoogte (rij 1 = 134 px). */
+  .abc .abc-hero__in.abc-hero__in--kaart { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 134px; padding-top: 70px; }
   .abc .abc-hero__in--kaart > * { grid-column: 1; }
-  .abc .abc-hero__in--kaart > .abc-hero__regio { grid-row: 1; align-self: start; justify-self: start; }
-  .abc .abc-hero__in--kaart > .abc-hero__kop { grid-row: 1; align-self: end; margin-top: 0; text-shadow: 0 1px 14px rgba(10, 22, 40, .6); }
-  .abc .abc-hero__in--kaart > .abc-hero__sub { margin-top: 30px; }
+  .abc .abc-hero__in--kaart > .abc-hero__regio { grid-row: 1; align-self: end; justify-self: start; margin: 0 0 12px; }
+  .abc .abc-hero__in--kaart > .abc-hero__kop { grid-row: 2; align-self: start; margin-top: 0; text-shadow: 0 1px 14px rgba(10, 22, 40, .6); }
+  .abc .abc-hero__in--kaart > .abc-hero__sub { grid-row: 3; margin-top: 14px; }
   .abc .abc-hero__in--kaart .abc-hero__sub b { display: none; }
-  .abc .abc-hero__in--kaart > .abc-hero__kaart { grid-column: 1; grid-row: auto; align-self: stretch; margin-top: 16px; }
+  .abc .abc-hero__in--kaart > .abc-hero__kaart { grid-column: 1; grid-row: 4; align-self: stretch; margin-top: 24px; }
+  .abc .abc-hero__in--kaart > .abc-hero__knoppen { grid-row: 5; margin-top: 24px; }
   .abc.abc .abc-hero__kaart .kgj-reken.kgj-reken--v4 { padding: 12px 14px 12px; }
   .abc.abc .abc-hero__kaart .kgj-reken.kgj-reken--v4 .kgj-reken__stap > .kgj-reken__vraag { padding-top: 10px; font-size: 20px; }
   .abc.abc .abc-hero__kaart .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__keuzes { margin-top: 8px; }

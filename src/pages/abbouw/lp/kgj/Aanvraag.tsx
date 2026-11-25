@@ -285,6 +285,17 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero', kaartkop,
     const doelen = [...el.querySelectorAll<HTMLElement>('.kgj-reken__stap :is(.kgj-reken__keuze, .kgj-reken__vink, .kgj-reken__verder, .kgj-reken__knop, .kgj-reken__knopzeker, .kgj-reken__gerust)')];
     /* een offertestap focust zijn kop (geen veld: op de gsm zou het toetsenbord openspringen) */
     const onderkant = doelen.length ? Math.max(...doelen.map((d) => d.getBoundingClientRect().bottom)) : kopTop;
+    /* 25 nov 2026, Mohammed (gsm, zoals bfbouw.be): "bij stap 3 in de form, dat je in het form zit, niet aan de bovenkant van de pagina, zegmaar in
+       diepte". Gemeten op /lp/dakwerken: op het contactscherm schoof de pagina 0 px (390x844) en 108 px (390x664); foto, kop en zin bleven in beeld.
+       Tot 1000 px breed staat de kaart op het contactscherm nu met haar bovenrand 8 px onder de kopbalk (het vaste punt van de vragen), zolang de
+       verzendknop dan in beeld blijft; anders gelden de regels hieronder (smal scherm). */
+    if (klaar && !laden && window.matchMedia('(max-width: 1000px)').matches) {
+      const diep = kaartTop - boven;
+      if (onderkant - diep <= window.innerHeight - 12) {
+        if (Math.abs(diep) > 2) { eigenScroll(); window.scrollTo({ top: window.scrollY + diep, behavior: gedrag }); }
+        return;
+      }
+    }
     const tekort = onderkant - (window.innerHeight - 12);
     const kopWeg = kaartTop < balkH; // de kaart (titel) ligt (deels) onder de kopbalk of boven het scherm
     if (!kopWeg && tekort <= 0) return;
