@@ -723,7 +723,10 @@ html.is-afronden .abc .abc-zweef { opacity: 0 !important; visibility: hidden !im
   .abc .abc-hero__in--kaart > .abc-hero__regio { grid-row: 1; align-self: end; justify-self: start; margin: 0 0 12px; }
   .abc .abc-hero__in--kaart > .abc-hero__kop { grid-row: 2; align-self: start; margin-top: 0; text-shadow: 0 1px 14px rgba(10, 22, 40, .6); }
   .abc .abc-hero__in--kaart > .abc-hero__sub { grid-row: 3; margin-top: 14px; }
-  .abc .abc-hero__in--kaart .abc-hero__sub b { display: none; }
+  /* 25 nov 2026 (avond), Mohammed, deel B "Dakwerkpagina's, alleen op gsm: tekst terug en kaart iets lager" (zoals bfbouw.be): "Toon op gsm dezelfde intro als
+     op de computer, dus de volledige tekst die daar nu staat"; de kaart schuift mee naar onder (tussen 450 en 480 px), 24 px ruimte erboven; de kaart zelf
+     verandert niet. */
+  .abc .abc-hero__in--kaart .abc-hero__sub b { display: block; }
   .abc .abc-hero__in--kaart > .abc-hero__kaart { grid-column: 1; grid-row: 4; align-self: stretch; margin-top: 24px; }
   .abc .abc-hero__in--kaart > .abc-hero__knoppen { grid-row: 5; margin-top: 24px; }
   .abc.abc .abc-hero__kaart .kgj-reken.kgj-reken--v4 { padding: 12px 14px 12px; }

@@ -97,8 +97,18 @@ async function meet(p, hoogte) {
          binnen de eerste 640 px van de pagina" (in de plaats van de knop in het eerste scherm; de knop eronder is "Bekijk ons werk"). */
       const kaartKeuzes = innerWidth <= 768 && hero.querySelector('.abc-hero__in--kaart') ? [...hero.querySelectorAll('.abc-hero__kaart .kgj-reken__stap .kgj-reken__keuze')] : null;
       if (kaartKeuzes) {
-        const onder = Math.round(Math.max(0, ...kaartKeuzes.map((k) => k.getBoundingClientRect().bottom + window.scrollY)));
-        if (kaartKeuzes.length !== 5 || onder > 640) fout.push(`hero: ${kaartKeuzes.length} keuzes in de kaart, de laatste eindigt op ${onder}px (5 keuzes binnen 640 px)`);
+        /* 25 nov 2026 (avond), Mohammed, deel B "Dakwerkpagina's, alleen op gsm: tekst terug en kaart iets lager" (vervangt "5 keuzes binnen 640 px" van
+           vanochtend): op gsm dezelfde intro als op de computer (de vette zin zichtbaar), de kaart begint tussen 450 en 480 px (meetpunt 393 x 695; hier getoetst
+           op elke breedte van 375 tot 414 px), de titel van de kaart en de eerste vier keuzes zichtbaar zonder scrollen; "Liever bellen?" mag onder de vouw. */
+        const sb = hero.querySelector('.abc-hero__sub b');
+        if (!sb || getComputedStyle(sb).display === 'none') fout.push('hero: de vette zin van de intro is verborgen (deel B 25 nov: op gsm dezelfde intro als op de computer)');
+        const kaartEl = hero.querySelector('.abc-hero__kaart .kgj-reken');
+        const kTop = kaartEl ? Math.round(kaartEl.getBoundingClientRect().top + window.scrollY) : -1;
+        const titelEl = hero.querySelector('.abc-hero__kaart .kgj-reken__stap:not([hidden]) .kgj-reken__vraag, .abc-hero__kaart .kgj-reken__stap:not([hidden]) legend');
+        const titelOnder = titelEl ? Math.round(titelEl.getBoundingClientRect().bottom + window.scrollY) : 99999;
+        const vier = kaartKeuzes.slice(0, 4).map((k) => Math.round(k.getBoundingClientRect().bottom + window.scrollY));
+        if (kaartKeuzes.length !== 5 || titelOnder > window.innerHeight || vier.length !== 4 || vier.some((y) => y > window.innerHeight)) fout.push(`hero: titel van de kaart (${titelOnder}px) of de eerste vier keuzes (${vier.join('/')}px) onder het eerste scherm van ${window.innerHeight}px (deel B 25 nov)`);
+        if (innerWidth >= 375 && innerWidth <= 414 && (kTop < 450 || kTop > 480)) fout.push(`hero: de kaart begint op ${kTop}px (deel B 25 nov: tussen 450 en 480 px)`);
         /* 25 nov 2026 (15:00), Mohammed: "heb je die spacing gefixt? doe dat nu" (tweede keer over de spacing van de gsm-hero): vaste afstanden per groep,
            plaatsregel-kop 12, kop-zin 14, zin-kaart 24, kaart-cijfers 12, cijfers-knop 24 px (elk ±1). Vóór de fix: de plaatsregel bovenaan de foto, 30/16/12/14. */
         const R = (s) => { const e = hero.querySelector(s); return e && zicht(e) ? e.getBoundingClientRect() : null; };
@@ -245,6 +255,14 @@ async function meet(p, hoogte) {
       const g = (await meet(pc, 844)).filter((f) => f.includes('afstanden'));
       await pc.close();
       if (!g.length) stop(2, 'FOUT: positieve controle (gsm-hero met kaart, zin 30 px onder de kop) niet gevonden — de meting is ongeldig');
+      gevonden = gevonden.concat(g);
+    }
+    /* positieve controle deel B (25 nov 2026, avond): de vette zin verborgen (stand van vanochtend) en de kaart 60 px lager moeten gevonden worden */
+    {
+      const pc = await open('/lp/dakwerken', 390, 844, '.abc .abc-hero__in--kaart .abc-hero__sub b { display: none !important; } .abc .abc-hero__in--kaart > .abc-hero__kaart { margin-top: 84px !important; }');
+      const g = (await meet(pc, 844)).filter((f) => f.includes('vette zin') || f.includes('tussen 450 en 480'));
+      await pc.close();
+      if (g.length < 2) stop(2, `FOUT: positieve controle deel B (vette zin verborgen, kaart 60 px lager) vond ${g.length} van 2 — de meting is ongeldig`);
       gevonden = gevonden.concat(g);
     }
 
