@@ -705,13 +705,18 @@ html.is-afronden .abc .abc-zweef { opacity: 0 !important; visibility: hidden !im
   .abc .abc-hero__foto, .abc .abc-hero__laag { top: 56px; }
   .abc .abc-hero__in { padding-top: 204px; }
   .abc .abc-sub { padding-top: 56px; }
-  .abc .abc-hero:has(.abc-hero__in--kaart) .abc-hero__foto { height: 160px; }
-  .abc .abc-hero:has(.abc-hero__in--kaart) .abc-hero__laag { background: linear-gradient(180deg, rgba(10, 22, 40, .12) 0, rgba(10, 22, 40, .42) 56px, rgba(10, 22, 40, .86) 124px, var(--abc-donker) 160px); }
-  .abc .abc-hero__in.abc-hero__in--kaart { padding-top: 84px; }
-  .abc .abc-hero__in--kaart .abc-hero__kop { margin-top: 12px; }
-  .abc .abc-hero__in--kaart .abc-hero__sub { margin-top: 14px; }
+  /* 25 nov 2026 (14:00), Mohammed op zijn gsm: "je ziet de foto in de hero niet meer", "de spacing is heel slecht" (zoals bfbouw.be): band 170 px, de
+     plaatsregel bovenaan en de kop onderaan in de foto (één rastervak, het dak ertussen zichtbaar), donker alleen onder de kop; daarna 16 px tot de zin en
+     tot de kaart. De pc-regels van het raster (kaart in kolom 2) gelden hier niet. */
+  .abc .abc-hero:has(.abc-hero__in--kaart) .abc-hero__foto { height: 170px; }
+  .abc .abc-hero:has(.abc-hero__in--kaart) .abc-hero__laag { background: linear-gradient(180deg, rgba(10, 22, 40, .2) 0, rgba(10, 22, 40, .04) 54px, rgba(10, 22, 40, .5) 105px, rgba(10, 22, 40, .9) 150px, var(--abc-donker) 170px); }
+  .abc .abc-hero__in.abc-hero__in--kaart { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 146px; padding-top: 68px; }
+  .abc .abc-hero__in--kaart > * { grid-column: 1; }
+  .abc .abc-hero__in--kaart > .abc-hero__regio { grid-row: 1; align-self: start; justify-self: start; }
+  .abc .abc-hero__in--kaart > .abc-hero__kop { grid-row: 1; align-self: end; margin-top: 0; text-shadow: 0 1px 14px rgba(10, 22, 40, .55); }
+  .abc .abc-hero__in--kaart > .abc-hero__sub { margin-top: 28px; }
   .abc .abc-hero__in--kaart .abc-hero__sub b { display: none; }
-  .abc .abc-hero__in--kaart .abc-hero__kaart { margin-top: 14px; }
+  .abc .abc-hero__in--kaart > .abc-hero__kaart { grid-column: 1; grid-row: auto; align-self: stretch; margin-top: 16px; }
   .abc.abc .abc-hero__kaart .kgj-reken.kgj-reken--v4 { padding: 14px 16px 14px; }
 }
 /* de cijfers onder de kaart op de gsm (25 nov 2026): zoals de rij in de kaart van deze pagina (zonder iconen en sterren, "op Google" onder 5,0), licht op het donkere vlak */

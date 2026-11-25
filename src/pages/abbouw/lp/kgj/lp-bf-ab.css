@@ -1800,6 +1800,11 @@ html.is-informulier .bf.bf-lp .bf-belzweef { opacity: 0 !important; visibility: 
   .bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__tekst strong { font-size: 15px; }
   .bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__liever { margin-top: 10px; }
 }
+@media (max-width: 379.98px) {
+  /* 360 px (veel Android-toestellen): "Liever bellen? ... · Stuur een bericht" op één regel, zodat de kaart in stap 1 binnen 300 px blijft (gemeten 311 px) */
+  .bf.bf-lp .kgj-reken.kgj-reken--v4, .abc.abc .abc-hero__kaart .kgj-reken.kgj-reken--v4 { padding-left: 14px; padding-right: 14px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__liever { font-size: 12.5px; }
+}
 @media (max-width: 339.98px) {
   .bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__keuzes--raster { grid-template-columns: minmax(0, 1fr); }
   .bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__liever a { white-space: normal; }
