@@ -690,3 +690,33 @@ html.is-afronden .abc .abc-zweef { opacity: 0 !important; visibility: hidden !im
   .abc.abc .abc-hero__kaart .kgj-reken__vertrouwen { display: none; }
   .abc.abc .abc-hero__kaart .kgj-reken__trust { margin-top: 12px; padding-top: 10px; }
 }
+
+/* ── 25 nov 2026, Mohammed: "DE KAART, STAP 1", deel GSM (tot 768 px breed). Kop van de site 56 px (hoogstens 60). Op /lp/dakwerken (kaart in de hero):
+   de foto 160 px hoog met de plaatsregel en de H1 erover, onder de H1 alleen de zin "Met meer dan 15 jaar ervaring ..." (de vette zin "Zoekt u een
+   dakwerker in de buurt ...? Die hebt u gevonden." blijft op de computer staan), de kaart meteen onder die zin (stap 1 hoogstens 300 px), alle keuzes binnen
+   de eerste 640 px, de cijfers meteen onder de kaart (Aanvraag cijfersOnder, lp-bf-ab.css). ── */
+@media (max-width: 768px) {
+  .abc [id] { scroll-margin-top: 64px; }
+  .abc .abc-kop__in { height: 56px; }
+  .abc .abc-logo img { height: 26px; }
+  .abc .abc-kop__bel { min-height: 44px; }
+  .abc .abc-burger { width: 44px; height: 44px; }
+  .abc .abc-gsmmenu { inset: 56px 0 0; }
+  .abc .abc-hero__foto, .abc .abc-hero__laag { top: 56px; }
+  .abc .abc-hero__in { padding-top: 204px; }
+  .abc .abc-sub { padding-top: 56px; }
+  .abc .abc-hero:has(.abc-hero__in--kaart) .abc-hero__foto { height: 160px; }
+  .abc .abc-hero:has(.abc-hero__in--kaart) .abc-hero__laag { background: linear-gradient(180deg, rgba(10, 22, 40, .12) 0, rgba(10, 22, 40, .42) 56px, rgba(10, 22, 40, .86) 124px, var(--abc-donker) 160px); }
+  .abc .abc-hero__in.abc-hero__in--kaart { padding-top: 84px; }
+  .abc .abc-hero__in--kaart .abc-hero__kop { margin-top: 12px; }
+  .abc .abc-hero__in--kaart .abc-hero__sub { margin-top: 14px; }
+  .abc .abc-hero__in--kaart .abc-hero__sub b { display: none; }
+  .abc .abc-hero__in--kaart .abc-hero__kaart { margin-top: 14px; }
+  .abc.abc .abc-hero__kaart .kgj-reken.kgj-reken--v4 { padding: 14px 16px 14px; }
+}
+/* de cijfers onder de kaart op de gsm (25 nov 2026): zoals de rij in de kaart van deze pagina (zonder iconen en sterren, "op Google" onder 5,0), licht op het donkere vlak */
+@media (max-width: 768px) {
+  .abc .kgj-reken__cijfers-onder :is(.kgj-reken__trust-gic, .kgj-reken__trust-st, .kgj-reken__trust-ic) { display: none; }
+  .abc .kgj-reken__cijfers-onder .kgj-reken__trust-g > span:last-child::after { font-size: 12.5px; color: rgba(255, 255, 255, .78); }
+  .abc .kgj-reken__cijfers-onder .kgj-reken__trust-g > span:last-child b { font-size: 15px; }
+}

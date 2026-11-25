@@ -132,7 +132,8 @@ const DAK = {
      zes vragen (oppervlakte en start zoals bfbouw.be) + contactstap = 7 stappen */
   /* 5 nov 2026, zoals bfbouw.be 4 nov: vraag 1 "Om welk soort dak gaat het?", Dakrenovatie en Nieuw dak apart */
   /* 7 nov 2026, zoals bfbouw.be 7 nov ("en doe al deze changes ook bij ab pagina"): vraag 1 "Ik ben op zoek naar:" met Gratis dakinspectie, vraag 2 het soort dak */
-  pad: '/lp/dakwerken', soort: 'dak', kop: 'Uw dak laten vernieuwen, renoveren of isoleren?', woord: 'gratis offerte', vraag1: 'Ik ben op zoek naar:', keuzes1: ['Dakrenovatie', 'Nieuw dak', 'Herstelling', 'Isolatie', 'Gratis dakinspectie'],
+  /* 25 nov 2026, Mohammed (DE KAART, STAP 1): "Waarmee kunnen wij u helpen? Deze vraag vervangt 'Ik ben op zoek naar:'" */
+  pad: '/lp/dakwerken', soort: 'dak', kop: 'Uw dak laten vernieuwen, renoveren of isoleren?', woord: 'gratis offerte', vraag1: 'Waarmee kunnen wij u helpen?', keuzes1: ['Dakrenovatie', 'Nieuw dak', 'Herstelling', 'Isolatie', 'Gratis dakinspectie'],
   /* 23 nov 2026: de kop in de opbouw van bfbouw.be (LpBfC.tsx BFC.kop + BFC.kop2, zoals bfbouw.be sinds 22 nov: "Dakwerker nodig? Kies voor
      vakmanschap."; de AB-advertentiegroep "Dakwerken in de buurt" landt op deze pagina) */
   kopAbc: 'Dakwerker nodig? Kies voor vakmanschap.',
@@ -273,16 +274,35 @@ const kopVan = (pg) => (ABC[pg.pad] ? pg.kopAbc : pg.kop);
        zin", "De knop Offerte aanvragen in de hero vervalt"): heeft de hero een aanvraagkaart (.abc-hero__kaart), dan: de kaart draagt zijn titel en regel,
        vraag 1 en haar keuzes; ze begint in het eerste scherm; de hero heeft geen knop naar #contact meer. De kaart onderaan bereikt de bezoeker dan met de
        eerste knop "Offerte aanvragen" verderop; die tik wordt gemeten zoals de heroknop (vraag 1 en keuzes van de kaart onderaan in beeld). */
+    /* 25 nov 2026, Mohammed (DE KAART, STAP 1): geen kaarttitel en geen regel eronder meer ("Gratis offerte in 2 minuten" verdwijnt overal op de pagina);
+       regel 1 klein: "Offerte aanvragen" links, "Stap 1 van 3" rechts (12 tot 13 px), een dunne voortgangslijn eronder; de vraag als titel; elke keuze van
+       vraag 1 hoogstens 48 px op de gsm, icoon 18 px, 8 px tussenruimte; onder de keuzes "Liever bellen? [nummer] · Stuur een bericht" met een tel:-link en
+       een anker naar het berichtformulier dat op de pagina bestaat. */
     const hk = await p.evaluate(() => {
       const k = document.querySelector('.abc-hero__kaart .kgj-reken--aanvraag'); if (!k) return null;
       const r = k.getBoundingClientRect();
-      return { titel: k.querySelector('.kgj-reken__titel')?.textContent.trim(), regel: k.querySelector('.kgj-reken__regel')?.textContent.trim() || '',
-        vraag: k.querySelector('.kgj-reken__stap .kgj-reken__vraag')?.textContent.trim(), keuzes: [...k.querySelectorAll('.kgj-reken__stap .kgj-reken__keuze')].map((x) => x.querySelector('strong')?.textContent.trim()),
+      const px = (e) => (e ? parseFloat(getComputedStyle(e).fontSize) : 0);
+      const label = k.querySelector('.kgj-reken__label'), tel = k.querySelector('.kgj-reken__kop--v4 .kgj-reken__tel'), lijn = k.querySelector('.kgj-reken__lijnen > i');
+      const keuzes = [...k.querySelectorAll('.kgj-reken__stap .kgj-reken__keuze')];
+      const liever = k.querySelector('.kgj-reken__liever'), lA = liever ? [...liever.querySelectorAll('a')] : [];
+      const ber = lA.find((a) => a.getAttribute('href')?.startsWith('#'));
+      return { titel: k.querySelector('.kgj-reken__titel')?.textContent.trim() || '', regel: k.querySelector('.kgj-reken__regel')?.textContent.trim() || '',
+        label: label?.textContent.trim() || '', labelPx: px(label), tel: tel?.textContent.trim() || '', telPx: px(tel), lijnH: lijn ? lijn.getBoundingClientRect().height : 0,
+        vraag: k.querySelector('.kgj-reken__stap .kgj-reken__vraag')?.textContent.trim(), keuzes: keuzes.map((x) => x.querySelector('strong')?.textContent.trim()),
+        hoogste: Math.max(0, ...keuzes.map((x) => x.getBoundingClientRect().height)), iconen: [...k.querySelectorAll('.kgj-reken__stap .kgj-reken__icoon svg')].map((s) => Math.round(s.getBoundingClientRect().width)),
+        liever: liever?.textContent.replace(/\s+/g, ' ').trim() || '', telLink: lA.some((a) => /^tel:/.test(a.getAttribute('href') || '')), bericht: ber ? !!document.querySelector(ber.getAttribute('href')) : null,
+        tweeMin: /in 2 minuten/i.test(document.body.innerText),
         top: Math.round(r.top), H: innerHeight, heroKnop: [...document.querySelectorAll('.abc-hero a[href="#contact"]')].filter((x) => x.getClientRects().length).length };
     });
     if (hk) {
-      if (hk.titel !== 'Gratis offerte in 2 minuten') uit.push(`de kaart in de hero heet "${hk.titel}" in plaats van "Gratis offerte in 2 minuten"`);
-      if (hk.regel !== 'Beantwoord een paar korte vragen. Wij nemen binnen 24 uur contact op.') uit.push(`de regel onder de titel van de herokaart is "${hk.regel}"`);
+      if (hk.titel || hk.regel) uit.push(`de kaart in de hero heeft nog een titel of regel ("${hk.titel}" / "${hk.regel}")`);
+      if (hk.tweeMin) uit.push('"in 2 minuten" staat nog op de pagina');
+      if (hk.label !== 'Offerte aanvragen' || hk.labelPx < 12 || hk.labelPx > 13) uit.push(`regel 1 links "${hk.label}" (${hk.labelPx} px) in plaats van "Offerte aanvragen" (12-13 px)`);
+      if (hk.tel !== 'Stap 1 van 3' || hk.telPx < 12 || hk.telPx > 13) uit.push(`regel 1 rechts "${hk.tel}" (${hk.telPx} px) in plaats van "Stap 1 van 3" (12-13 px)`);
+      if (!(hk.lijnH > 0 && hk.lijnH <= 4)) uit.push(`de voortgangslijn is ${hk.lijnH} px hoog (dun: hoogstens 4)`);
+      if (hk.hoogste > 48) uit.push(`een keuze van vraag 1 is ${hk.hoogste} px hoog (hoogstens 48 op de gsm)`);
+      if (hk.iconen.some((x) => x !== 18)) uit.push(`iconen van vraag 1: ${hk.iconen.join(', ')} px (18)`);
+      if (!/^Liever bellen\? 0[\d ]+ · Stuur een bericht$/.test(hk.liever) || !hk.telLink || hk.bericht !== true) uit.push(`regel onder de keuzes: "${hk.liever}", tel:-link ${hk.telLink}, berichtformulier gevonden ${hk.bericht}`);
       if (hk.vraag !== pg.vraag1) uit.push(`herokaart: eerste vraag "${hk.vraag}" in plaats van "${pg.vraag1}"`);
       if (hk.keuzes.join('|') !== pg.keuzes1.join('|')) uit.push(`herokaart: keuzes ${hk.keuzes.join(' / ')} in plaats van ${pg.keuzes1.join(' / ')}`);
       if (hk.top >= hk.H) uit.push(`de kaart in de hero begint buiten het eerste scherm (bovenkant ${hk.top} van ${hk.H})`);
@@ -878,12 +898,20 @@ const kopVan = (pg) => (ABC[pg.pad] ? pg.kopAbc : pg.kop);
       console.log(`positieve controle 2: ${ABC[DAK.pad] ? 'heroknop' : 'kaart'} 900 px lager gezien (${pc2[0]})`);
     }
     if (ABC[DAK.pad]) {
-      /* 23 nov 2026, vorm .abc: de keuzes van vraag 1 500 px lager in de kaart; na de tik op de heroknop moeten ze buiten beeld gezien worden */
-      const { p, ctx } = await open('/lp/dakwerken', { css: '#contact .kgj-reken--aanvraag .kgj-reken__keuzes{margin-top:500px!important}' });
+      /* 23 nov 2026, vorm .abc: de keuzes van vraag 1 lager in de kaart; na de tik op de heroknop moeten ze buiten beeld gezien worden.
+         25 nov 2026: 700 px (was 500): de kaart v4 is zonder kaartkop en met keuzes van 48 px zo kort dat de keuzes 500 px lager nog in 844 px pasten
+         (gemeten: onderkant laatste keuze 814 px); de toets zelf is ongewijzigd. */
+      const { p, ctx } = await open('/lp/dakwerken', { css: '#contact .kgj-reken--aanvraag .kgj-reken__keuzes{margin-top:700px!important}' });
       const pc2b = await eersteSchermAbc(p, DAK);
       await ctx.close();
-      if (!pc2b.some((x) => x.includes('buiten beeld'))) { console.log(`ONGELDIGE METING: keuzes 500 px lager werden na de tik op de heroknop niet buiten beeld gezien (${pc2b.join(' | ') || 'niets'})`); process.exit(2); }
-      console.log(`positieve controle 2b: keuzes 500 px lager na de tik op de heroknop gezien (${pc2b.find((x) => x.includes('buiten beeld'))})`);
+      if (!pc2b.some((x) => x.includes('buiten beeld'))) { console.log(`ONGELDIGE METING: keuzes 700 px lager werden na de tik op de heroknop niet buiten beeld gezien (${pc2b.join(' | ') || 'niets'})`); process.exit(2); }
+      console.log(`positieve controle 2b: keuzes 700 px lager na de tik op de heroknop gezien (${pc2b.find((x) => x.includes('buiten beeld'))})`);
+      /* 25 nov 2026 (kaart v4): geplante keuzes van 60 px en een regel 1 van 16 px moeten gezien worden */
+      const v = await open('/lp/dakwerken', { css: '.abc-hero__kaart .kgj-reken__stap--eerste .kgj-reken__keuze{height:60px!important}.abc-hero__kaart .kgj-reken__label{font-size:16px!important}' });
+      const pc2c = await eersteSchermAbc(v.p, DAK);
+      await v.ctx.close();
+      if (!pc2c.some((x) => x.includes('hoogstens 48')) || !pc2c.some((x) => x.includes('regel 1 links'))) { console.log(`ONGELDIGE METING: keuzes van 60 px en regel 1 van 16 px niet gezien (${pc2c.join(' | ') || 'niets'})`); process.exit(2); }
+      console.log(`positieve controle 2c: kaart v4 met keuzes van 60 px en regel 1 van 16 px gezien (${pc2c.filter((x) => /hoogstens 48|regel 1 links/.test(x)).join('; ')})`);
     }
     {
       /* 11 (2 nov 2026): een knop die 1 px breder is dan het gsm-scherm (zoals de waarom-knop die dag) moet als fout gezien worden */

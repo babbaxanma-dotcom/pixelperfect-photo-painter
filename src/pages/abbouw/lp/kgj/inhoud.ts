@@ -149,6 +149,10 @@ export type KgjInhoud = {
       pagina meer aan, Mohammed: "haal weg ... die volgende moment"; de vlag en VrijMoment in LpBf bestaan nog). */
   aanvraag?: { titel: string; tijd: string; vragen: Vraag[]; contactKop: string; vertrouwen?: string[];
     trustrij?: { b: string; s: string; icoon?: 'kalender' | 'gereedschap' | 'schild' }[]; vrijMoment?: boolean;
+    /** 25 nov 2026 (Mohammed, "DE KAART, STAP 1", bfbouw.be en abgroep.be): de dakkaart zonder kaartkop; regel 1 klein "Offerte aanvragen" en "Stap 1 van 3"
+        met een dunne lijn eronder, de vraag als titel, keuzes van de eerste vraag 48 px (gsm) / 52 px (computer), "Liever bellen? ..." onder de keuzes
+        (Aanvraag.tsx, lp-bf-ab.css blok 25 nov). titel en tijd worden dan niet getoond. */
+    v4?: boolean;
     /** Welke velden de contactstap heeft naast Naam* en Gsm* (22 okt 2026, renovatiepagina's: "verwijder email form,
         verwijder postcode form"; dezelfde dag ook /lp/dakwerken). Zonder deze instelling staan beide aan.
         email 'verplicht' (2 nov 2026, offerte zoals bfbouw.be 31 okt: "doe ook een vakje emailadres bij de offerte aanvraag
@@ -378,6 +382,9 @@ export const DAKWERKEN: KgjInhoud = {
        kaartkop woordelijk zoals bfbouw.be, zonder de tijdregel eronder. De dakinspectie staat op de bedankpagina (BedanktBf). */
     titel: 'Gratis offerte aanvragen',
     tijd: '',
+    /* 25 nov 2026, Mohammed (DE KAART, STAP 1, beide sites): kaart v4, zie het type hierboven. Geldt voor elke kaart met deze inhoud: /lp/dakwerken (boven
+       en onder), de dakvarianten, de dienst- en tippagina's en /lp/dakwerken/asbest (DAKWERKEN_ASBEST neemt deze aanvraag over). */
+    v4: true,
     /* De vragen en antwoorden van de opdracht, woordelijk. Vraag 1 met de foto's van de eerste rekenaarvraag; de sleutel
        Dak is die van de message match (boodschap.voor). De sleutels staan zo in aanvullende_info ("Dak: ... · Werk: ..."). */
     vragen: [
@@ -392,7 +399,9 @@ export const DAKWERKEN: KgjInhoud = {
          aan uw dak gebeuren? bovenaan ook naar ik ben op zoek naar:", "doe ook ipv eerste vraag hellend of plat dak, doe dat als twee[de] vraag"), en
          "Weet ik nog niet" wordt "Gratis dakinspectie" ("vervang die door gratis dakinspectie"). AB-bron voor de gratis dakinspectie: de bedankpagina
          biedt ze sinds 31 okt aan ("Plan uw gratis dakinspectie"). Zo sluiten de knoppen "Ik ben op zoek naar" in "Wat heeft uw dak nodig?" aan. */
-      { sleutel: 'Werk', vraag: 'Ik ben op zoek naar:', raster: true, keuzes: [
+      /* 25 nov 2026, Mohammed (DE KAART, STAP 1, woordelijk): "Regel 2, groot, de titel van de kaart: Waarmee kunnen wij u helpen? Deze vraag vervangt 'Ik ben op
+         zoek naar:'." De knoppen "Ik ben op zoek naar:" buiten de kaart (zoek.kop) blijven. */
+      { sleutel: 'Werk', vraag: 'Waarmee kunnen wij u helpen?', raster: true, keuzes: [
         { label: 'Dakrenovatie', icoon: 'dak-renovatie' }, { label: 'Nieuw dak', icoon: 'dienst-nieuw' },
         { label: 'Herstelling', icoon: 'herstel' }, { label: 'Isolatie', icoon: 'isolatie' },
         { label: 'Gratis dakinspectie', icoon: 'inspectie' },

@@ -56,8 +56,8 @@ const BFC = {
   /* 23 nov 2026, Mohammed (19:38): "FORMULIER IN DE HERO ... Stap 1 van het bestaande formulier komt als kaart in de hero, in de opbouw die AB al heeft
      op /lp/dakwerken/asbest. Op mobiel staat de kaart direct onder de kop en de zin." Titel en regel woordelijk zijn dictaat. Alleen op /lp/dakwerken
      zelf; de knop "Offerte aanvragen" in de hero vervalt daar, het formulier onderaan blijft. De twee kaarten delen één stand (AanvraagStaat): zelfde
-     vragen, zelfde verzending, zelfde meting. */
-  heroKaart: { titel: 'Gratis offerte in 2 minuten', regel: 'Beantwoord een paar korte vragen. Wij nemen binnen 24 uur contact op.' },
+     vragen, zelfde verzending, zelfde meting. 25 nov 2026, Mohammed (DE KAART, STAP 1): de titel van 23 nov en de regel eronder zijn weg ("verdwijnt
+     overal", "gaat uit de kaart"); de kaart is v4 (inhoud.aanvraag.v4, Aanvraag.tsx). */
   /* Subkop woordelijk bfbouw.be (vette eerste zin + zin over ervaring en werk); AB-feit: "meer dan 15 jaar ervaring" (DAKWERKEN.waarom, zijn woord), BF: 25 jaar. */
   subVet: 'Zoekt u een dakwerker in de buurt die kwaliteit levert en afspraken nakomt? Die hebt u gevonden.',
   sub: 'Met meer dan 15 jaar ervaring, oog voor detail en kwaliteitsvolle materialen zorgen wij voor een perfect afgewerkt dak.',
@@ -503,7 +503,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
             </h1>
             <p className="abc-hero__sub"><b>{V?.subVet ?? BFC.subVet}</b> {BFC.sub}</p>
             {/* Computer: de kaart rechts naast kop en zin. Gsm: direct onder de zin, vóór de knop "Bekijk ons werk". */}
-            {heroKaart && <div className="abc-hero__kaart"><Aanvraag inhoud={inhoud} voor={voor} kaartkop={BFC.heroKaart} /></div>}
+            {heroKaart && <div className="abc-hero__kaart"><Aanvraag inhoud={inhoud} voor={voor} bericht="#bericht" cijfersOnder /></div>}
             <div className="abc-hero__knoppen">
               {!heroKaart && offerteKnop()}
               <a className="abc-knop abc-knop--rand" href={BFC.knop2.href}>{BFC.knop2.tekst}</a>
@@ -686,7 +686,7 @@ export default function LpBfC({ inhoud = DAKWERKEN, variant }: { inhoud?: KgjInh
               <a className="bf-lpinsp__bel" href={CONTACT.phone.href}><IcTel />Bel {CONTACT.phone.display}</a>
             </div>
             <div className="bf-lpinsp__kaartvak" id="rekenaar">
-              <Aanvraag inhoud={inhoud} voor={voor} plek="onder" />
+              <Aanvraag inhoud={inhoud} voor={voor} plek="onder" bericht="#bericht" />
             </div>
           </div>
         </section>
@@ -864,7 +864,8 @@ function ContactBlok({ inhoud }: { inhoud: KgjInhoud }) {
           {klaar ? (
             <div className="abc-contact__klaar" role="status"><h3>Bedankt, uw bericht is verstuurd.</h3><p>Wij nemen binnen 24 uur contact op.</p></div>
           ) : (
-            <form className="abc-bericht" onSubmit={verstuur} noValidate>
+            <form className="abc-bericht" id="bericht" onSubmit={verstuur} noValidate>
+              {/* id: doel van "Stuur een bericht" in de aanvraagkaart (25 nov 2026, DE KAART, STAP 1) */}
               <h3>Stuur ons een bericht</h3>
               <div className="abc-bericht__rij">{veld('naam', 'Naam', 'text', 'name', true)}{veld('telefoon', 'Telefoon', 'tel', 'tel', true)}</div>
               {veld('email', 'E-mail', 'email', 'email', false)}

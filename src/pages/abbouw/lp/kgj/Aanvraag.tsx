@@ -155,8 +155,13 @@ function useSmal() {
   return smal;
 }
 
-export default function Aanvraag({ inhoud, voor, boven, plek = 'hero', kaartkop }: {
+export default function Aanvraag({ inhoud, voor, boven, plek = 'hero', kaartkop, bericht, cijfersOnder }: {
   inhoud: KgjInhoud;
+  /** 25 nov 2026 (kaart v4, inhoud.aanvraag.v4): anker van het berichtformulier in het contactblok onderaan ("Stuur een bericht" in de regel onder de keuzes
+      van de eerste vraag). Zonder anker (pagina zonder berichtformulier) staat alleen "Liever bellen? [nummer]" in die regel. */
+  bericht?: string;
+  /** 25 nov 2026 (kaart v4, gsm tot 768 px): de cijfers (Google 5,0, garantie, ervaring) staan onder de kaart in plaats van erin (de kaart bovenaan). */
+  cijfersOnder?: boolean;
   /** Eigen kop van deze ene kaart (23 nov 2026, kaart in de hero van /lp/dakwerken: "Gratis offerte in 2 minuten" met een regel eronder); de andere
       kaart op de pagina houdt de kop uit inhoud.aanvraag. Alleen tekst: vragen, verzending en meting zijn die van de kaart zonder eigen kop. */
   kaartkop?: { titel: string; regel?: string };
@@ -544,6 +549,8 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero', kaartkop 
   /* Tik in de kaart (vangfase): de eerste tik op een knop start de stand; na de stapwissel van die tik weer aan als de kaart nog bij een vraag staat
      (Terug of Wijzigen vanaf het contactscherm). Na het laatste antwoord opent het volle scherm en blijft de sluier uit. */
   const focusKlik = (e: React.MouseEvent) => {
+    /* 25 nov 2026: "Liever bellen? ... · Stuur een bericht" leidt weg uit de kaart: geen focusstand */
+    if ((e.target as HTMLElement).closest?.('.kgj-reken__liever')) return;
     const knop = (e.target as HTMLElement).closest?.('button, a, input, select, textarea, label');
     if (!focusGestart.current && !knop) return;
     if (bijVraag.current) { focusGestart.current = true; focusAan(); }
@@ -762,6 +769,19 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero', kaartkop 
   /* Laadstap regel 2: de eigen antwoorden ("Dakrenovatie · Hellend dak"); een kaal "Weet ik niet" telt niet. */
   const KAAL = /^(ja|nee|weet ik (nog )?niet)$/i;
   const laadRegel = a.laden ? (a.laden.sleutels.map((k) => antwoorden[k]).filter((x) => x && !KAAL.test(x)).join(' · ') || a.laden.leeg) : '';
+  /* 25 nov 2026 (kaart v4, inhoud.aanvraag.v4): zelfde teller en Terug, in de kopregel van v4 of in die van vóór v4. */
+  const v4 = !!a.v4;
+  /* Uitgesproken door een schermlezer alleen in de kaart die de bezoeker gebruikt (de andere kaart verandert mee).
+     7 nov 2026, zoals bfbouw.be (Mohammed daar: "DOE ipv stap 1 VAN 7 gewoon stap 1"). */
+  const teller = <span className="kgj-reken__tel" data-intern={`Stap ${nu}`} aria-live={actiefHier ? 'polite' : 'off'}>{klaar ? '' : `Stap ${nu} van ${totaal - 1}`}</span>;
+  const terugKnop = stap > 0 && !laden && (
+    <button type="button" className="kgj-reken__terug" onClick={() => { gebruik(); setOFout([]); zet((s) => (s.offerte
+      ? ((s.offerteStap ?? 0) > 0 ? { ...s, aangetikt: true, fout: null, offerteStap: (s.offerteStap ?? 0) - 1 } : { ...s, aangetikt: true, fout: null, offerte: false, stap: 0 })
+      : { ...s, aangetikt: true, fout: null, stap: Math.max(0, Math.min(s.stap, VRAGEN.length) - 1) })); }}>
+      {/* 19 nov 2026, Mohammed: "je ziet de knop niet": pijltje + "Terug", even groot en vet als "Stap x van 3", tikvlak 44 px (CSS). */}
+      <ChevronLeft aria-hidden="true" />Terug
+    </button>
+  );
   /* Trust badges onderaan de kaart bij de klikvragen. 18 nov 2026 (v2, Mohammed: het contactblok "gewoon zo", niets anders): niet bij het
      contactblok. */
   const trustRij = a.trustrij && (
@@ -865,17 +885,27 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero', kaartkop 
     <Fragment>
     {wortel && createPortal(sluier, wortel)}
     {wortel && !onder && createPortal(afrondKnop, wortel)}
-    <div ref={kaart} onClickCapture={focusKlik} className={`kgj-reken kgj-reken--aanvraag${onder ? ' kgj-reken--onder' : ''}${a.badges ? ' kgj-reken--badges' : ''}${stand.aangetikt && stap > 0 ? ' is-bezig' : ''}${klaar ? ' is-contact' : ''}${laden ? ' is-laden' : ''}${focus ? ' is-focus' : ''}`}>
+    <div ref={kaart} onClickCapture={focusKlik} className={`kgj-reken kgj-reken--aanvraag${v4 ? ' kgj-reken--v4' : ''}${v4 && cijfersOnder ? ' kgj-reken--cijfersonder' : ''}${onder ? ' kgj-reken--onder' : ''}${a.badges ? ' kgj-reken--badges' : ''}${stand.aangetikt && stap > 0 ? ' is-bezig' : ''}${klaar ? ' is-contact' : ''}${laden ? ' is-laden' : ''}${focus ? ' is-focus' : ''}`}>
       {/* 18 nov 2026 (v2, Mohammed: "gewoon de algemene stijl robuuster minder speels"): kaartkop zonder icoonvierkant. */}
-      <div className="kgj-reken__hoofd">
-        <div>
-          <p className="kgj-reken__titel">{kaartkop?.titel ?? a.titel}</p>
-          {kaartkop?.regel && <p className="kgj-reken__regel">{kaartkop.regel}</p>}
-          {/* 2 nov 2026: zonder tijdregel als tijd leeg is (bfbouw.be 31 okt: kaartkop "Gratis offerte aanvragen" alleen). */}
-          {!kaartkop && a.tijd && <p className="kgj-reken__tijd"><Clock aria-hidden="true" />{a.tijd}</p>}
+      {/* 25 nov 2026, Mohammed (DE KAART, STAP 1): op de dakkaart (v4) geen kaartkop meer: regel 1 klein "Offerte aanvragen" links en "Stap 1 van 3" rechts,
+          met een dunne voortgangslijn eronder, daarna de vraag als titel. Terug (vanaf de tweede vraag) staat op de plaats van "Offerte aanvragen". */}
+      {!v4 && (
+        <div className="kgj-reken__hoofd">
+          <div>
+            <p className="kgj-reken__titel">{kaartkop?.titel ?? a.titel}</p>
+            {kaartkop?.regel && <p className="kgj-reken__regel">{kaartkop.regel}</p>}
+            {/* 2 nov 2026: zonder tijdregel als tijd leeg is (bfbouw.be 31 okt: kaartkop "Gratis offerte aanvragen" alleen). */}
+            {!kaartkop && a.tijd && <p className="kgj-reken__tijd"><Clock aria-hidden="true" />{a.tijd}</p>}
+          </div>
         </div>
-      </div>
-      {boven}
+      )}
+      {!v4 && boven}
+      {v4 && !vraagToestemming && (
+        <div className="kgj-reken__kop kgj-reken__kop--v4">
+          {terugKnop || <span className="kgj-reken__label">Offerte aanvragen</span>}
+          {teller}
+        </div>
+      )}
       <div className="kgj-reken__weg" aria-hidden="true">
         {/* 7 nov 2026, zoals bfbouw.be (Mohammed daar: "maak de balk vanaf de start 40 procent gevuld"): 40 % bij stap 1, 100 % op het contactscherm. */}
         {/* 18 nov 2026, Mohammed: Solvari-widget ("3 balken bovenaan, en dan heb je gegevens analyseren, dan komt er een groene vink en dan contact"), Cralux ("stap .. van 3, in totaal 3 stappen"), "ook visueel zo met die 3 lijnen, die groen zijn": drie groene lijnen; lijn 1 = de klikvragen (start 40 %, vol pas na het laatste antwoord), lijn 2 = analyse, lijn 3 = contact. */}
@@ -885,20 +915,12 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero', kaartkop 
           {Array.from({ length: Math.max(1, totaal - 1) }, (_, k) => <i key={k} className={klaar || k < nu ? 'is-groen' : undefined} />)}
         </div>
       </div>
+      {v4 && boven}
       {/* Na een verstuurde aanvraag geen Terug meer: terug naar een vraag zou doen alsof er nog niets verstuurd is. */}
-      {!vraagToestemming && (
+      {!v4 && !vraagToestemming && (
         <div className="kgj-reken__kop">
-          {/* Uitgesproken door een schermlezer alleen in de kaart die de bezoeker gebruikt (de andere kaart verandert mee). */}
-          {/* 7 nov 2026, zoals bfbouw.be (Mohammed daar: "DOE ipv stap 1 VAN 7 gewoon stap 1"). */}
-          <span className="kgj-reken__tel" data-intern={`Stap ${nu}`} aria-live={actiefHier ? 'polite' : 'off'}>{klaar ? '' : `Stap ${nu} van ${totaal - 1}`}</span>
-          {stap > 0 && !laden && (
-            <button type="button" className="kgj-reken__terug" onClick={() => { gebruik(); setOFout([]); zet((s) => (s.offerte
-              ? ((s.offerteStap ?? 0) > 0 ? { ...s, aangetikt: true, fout: null, offerteStap: (s.offerteStap ?? 0) - 1 } : { ...s, aangetikt: true, fout: null, offerte: false, stap: 0 })
-              : { ...s, aangetikt: true, fout: null, stap: Math.max(0, Math.min(s.stap, VRAGEN.length) - 1) })); }}>
-              {/* 19 nov 2026, Mohammed: "je ziet de knop niet": pijltje + "Terug", even groot en vet als "Stap x van 3", tikvlak 44 px (CSS). */}
-              <ChevronLeft aria-hidden="true" />Terug
-            </button>
-          )}
+          {teller}
+          {terugKnop}
           {/* 18 nov 2026 (v2): geen sluitknop meer (geen volle scherm, geen venster). */}
         </div>
       )}
@@ -988,7 +1010,7 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero', kaartkop 
           </div>
         );
       })() : !klaar ? (
-        <div className="kgj-reken__stap" key={stap}>
+        <div className={`kgj-reken__stap${stap === 0 ? ' kgj-reken__stap--eerste' : ''}`} key={stap}>
           <p className="kgj-reken__vraag">{vraag.vraag}</p>
           <div className={`kgj-reken__keuzes${vraag.keuzes.length % 2 === 1 ? ' kgj-reken__keuzes--oneven' : ''}${vraag.raster ? ' kgj-reken__keuzes--raster' : ''}${vraag.lijst ? ' kgj-reken__keuzes--lijst' : ''}`}>
             {vraag.keuzes.map((k) => (
@@ -1015,6 +1037,12 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero', kaartkop 
               <span>{a.offerte.vraag}</span>{' '}
               <button type="button" onClick={naarOfferte}>{a.offerte.knop}<ArrowRight aria-hidden="true" /></button>
             </p>
+          )}
+          {/* 25 nov 2026, Mohammed (DE KAART, STAP 1): "Onder de keuzes één regel, klein: Liever bellen? [nummer uit de kop van de site] · Stuur een bericht.
+              Het nummer is een tel:-link. 'Stuur een bericht' springt naar het berichtformulier in het contactblok onderaan. Bestaat dat formulier niet op
+              de pagina, laat dan 'Stuur een bericht' weg en meld het. Deze regel staat alleen in stap 1." */}
+          {v4 && stap === 0 && (
+            <p className="kgj-reken__liever">Liever bellen? <a href={CONTACT.phone.href}>{CONTACT.phone.display}</a>{bericht && <><span aria-hidden="true"> · </span><a href={bericht}>Stuur een bericht</a></>}</p>
           )}
         </div>
       ) : (
@@ -1084,6 +1112,9 @@ export default function Aanvraag({ inhoud, voor, boven, plek = 'hero', kaartkop 
       {/* 26 okt 2026, Mohammed: privacyregel onder de trustsignalen, zodat die op de laatste stap meteen onder de knop in beeld staan. */}
       {klaar && !laden && <p className="kgj-reken__privacy kgj-reken__privacy--na">Wij gebruiken uw gegevens alleen voor deze aanvraag. <a href="/privacy">Privacybeleid</a></p>}
     </div>
+    {/* 25 nov 2026 (gsm tot 768 px, zijn opgave): "De cijfers (5,0 op Google, garantie, ervaring) staan meteen onder de kaart"; de kaart zelf is in stap 1
+        hoogstens 300 px. Op de computer blijven ze in de kaart (lp-bf-ab.css, blok 25 nov). */}
+    {v4 && cijfersOnder && !klaar && trustRij && <div className="kgj-reken__cijfers-onder">{trustRij}</div>}
     </Fragment>
   );
 }

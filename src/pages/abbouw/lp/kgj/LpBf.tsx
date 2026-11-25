@@ -933,7 +933,9 @@ export default function LpBf({ inhoud = DAKWERKEN }: { inhoud?: KgjInhoud }) {
                  die hier stond. Het anker blijft #rekenaar: de sitelinks "Bereken uw dakprijs" en "Bereken uw renovatieprijs"
                  (ads/dakwerken en ads/totaalrenovatie) wijzen er nog naar; zo landen ze op de kaart in plaats van op niets. */
               <div id="rekenaar" className="bf-lphero__reken bf-lphero__aanvraag">
-                <Aanvraag inhoud={inhoud} voor={(match?.voor ?? inhoud.voorAf)} boven={inhoud.aanvraag?.vrijMoment ? <VrijMoment ruimte /> : undefined} />
+                {/* 25 nov 2026: cijfersOnder geldt alleen voor de dakkaart (v4, /lp/dakwerken/asbest); deze pagina's hebben geen berichtformulier, dus de regel
+                    onder de keuzes is "Liever bellen? [nummer]" zonder "Stuur een bericht" (zijn opgave: "laat dan 'Stuur een bericht' weg en meld het") */}
+                <Aanvraag inhoud={inhoud} voor={(match?.voor ?? inhoud.voorAf)} boven={inhoud.aanvraag?.vrijMoment ? <VrijMoment ruimte /> : undefined} cijfersOnder />
                 {/* Telefoon: de vinkjes onder de kaart (zoals bij de rekenaar); op de computer staan ze in de kaart. Met badges
                     (renovatiepagina's, 22 okt 2026) heeft elk punt een herkenbaar icoon in plaats van een vinkje. */}
                 {vertrouwen.length > 0 && (

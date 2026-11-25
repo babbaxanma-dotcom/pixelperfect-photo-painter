@@ -1760,3 +1760,64 @@ html.is-informulier .bf.bf-lp .bf-belzweef { opacity: 0 !important; visibility: 
 @media (prefers-reduced-motion: reduce) { .bf.bf-lp .kgj-afronden, .bf.bf-lp .kgj-afronden.is-aan { transition: none; } }
 /* Hoeve-video: een tik op het beeld speelt of pauzeert ook (Realisatie.tsx). */
 .bf.bf-lp .bf-real__laag.is-aan:is(video) { cursor: pointer; }
+
+/* ── 25 nov 2026, Mohammed: "DE KAART, STAP 1 (beide sites, alle pagina's met deze kaart)" ─────────────────────────────────────────────────────────────
+   De dakkaart (inhoud.aanvraag.v4, Aanvraag.tsx): geen kaartkop. Regel 1, klein (13 px): links "Offerte aanvragen", rechts "Stap 1 van 3", met een dunne
+   voortgangslijn eronder. Regel 2, groot: de vraag ("Waarmee kunnen wij u helpen?"). De keuzes van de eerste vraag: twee kolommen, de vijfde over de volle
+   breedte, hoogstens 48 px hoog op gsm en 52 px op computer, icoon 18 px, 8 px tussenruimte. Daaronder één kleine regel "Liever bellen? [nummer] · Stuur een
+   bericht" (alleen bij de eerste vraag). De vragen erna, het contactscherm en de cijfers wijzigen niet. Terug staat vanaf de tweede vraag op de plaats van
+   "Offerte aanvragen" (zoals bfbouw.be, site.css blok 25 nov). */
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__kop--v4 { display: flex; align-items: center; justify-content: flex-start; gap: 8px; height: 18px; min-height: 0; margin: 0; padding: 0; }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__label, .bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__kop--v4 .kgj-reken__tel { font-size: 13px; line-height: 18px; font-weight: 600; letter-spacing: 0; color: var(--tekst-2); white-space: nowrap; }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__kop--v4 .kgj-reken__tel { margin-left: auto; }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__kop--v4 .kgj-reken__terug { justify-content: flex-start; min-width: 0; min-height: 44px; margin: -13px 0 -13px -10px; padding: 0 10px; font-size: 14px; font-weight: 700; color: #3d3d3d; }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__weg { display: block; margin: 6px 0 0; }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__lijnen { gap: 4px; }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__lijnen > i { height: 3px; }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap > .kgj-reken__vraag { margin: 0; padding-top: 14px; font-size: 22px; line-height: 1.25; font-weight: 700; letter-spacing: -0.01em; color: var(--ink-2); }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__keuzes { margin-top: 12px; gap: 8px; }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__keuzes--raster { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__keuze,
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__keuzes--raster .kgj-reken__keuze--icoon,
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__keuzes--raster .kgj-reken__keuze--icoon:last-child:nth-child(odd) { flex-direction: row; justify-content: flex-start; align-items: center; text-align: left; gap: 10px; height: 52px; min-height: 0; padding: 0 12px 0 14px; }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__keuzes--raster .kgj-reken__tekst { text-align: left; }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__tekst strong { font-size: 15.5px; line-height: 1.2; }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__icoon,
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__keuze--icoon.is-aan .kgj-reken__icoon,
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__keuze--icoon:hover .kgj-reken__icoon { flex: none; width: 18px; height: 18px; }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__icoon svg { width: 18px; height: 18px; }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__liever { margin: 12px 0 0; font-size: 13px; line-height: 18px; color: var(--tekst-2); }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__liever a { display: inline-block; padding: 9px 0; margin: -9px 0; font-weight: 600; color: var(--ink); text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; white-space: nowrap; }
+.bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__liever a:hover { color: var(--merk-tekst); }
+/* de cijfers onder de kaart (Aanvraag cijfersOnder, de kaart bovenaan): alleen op de gsm tot 768 px; daar staan ze niet meer in de kaart */
+.bf.bf-lp .kgj-reken__cijfers-onder { display: none; }
+@media (max-width: 1000px) {
+  .bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap > .kgj-reken__vraag { padding-top: 12px; font-size: 21px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__keuzes { margin-top: 10px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__keuze,
+  .bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__keuzes--raster .kgj-reken__keuze--icoon,
+  .bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__keuzes--raster .kgj-reken__keuze--icoon:last-child:nth-child(odd) { gap: 8px; height: 48px; padding: 0 8px 0 12px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__tekst strong { font-size: 15px; }
+  .bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__liever { margin-top: 10px; }
+}
+@media (max-width: 339.98px) {
+  .bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__stap--eerste .kgj-reken__keuzes--raster { grid-template-columns: minmax(0, 1fr); }
+  .bf.bf-lp .kgj-reken.kgj-reken--v4 .kgj-reken__liever a { white-space: normal; }
+}
+@media (max-width: 768px) {
+  .bf.bf-lp .kgj-reken.kgj-reken--cijfersonder .kgj-reken__trust { display: none; }
+  .bf.bf-lp .kgj-reken.kgj-reken--cijfersonder + .kgj-reken__cijfers-onder { display: block; margin-top: 12px; }
+  .bf.bf-lp .kgj-reken__cijfers-onder .kgj-reken__trust { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); grid-template-columns: none; gap: 6px; margin: 0; padding: 0; border: 0; list-style: none; }
+  .bf.bf-lp .kgj-reken__cijfers-onder .kgj-reken__trust li { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 3px; text-align: center; color: #fff; border-left: 0; }
+  .bf.bf-lp .kgj-reken__cijfers-onder .kgj-reken__trust b { font-size: 15px; color: #fff; }
+  .bf.bf-lp .kgj-reken__cijfers-onder .kgj-reken__trust li > span:last-child { font-size: 12.5px; color: rgba(255, 255, 255, .78); }
+  .bf.bf-lp .kgj-reken__cijfers-onder .kgj-reken__trust-ic { color: var(--merk); }
+  /* /lp/dakwerken/asbest (LpBf): de kaart staat in een flexkolom met order 2 en de vinkjes met order 3; de cijfers horen direct na de kaart */
+  .bf.bf-lp .bf-lphero__reken > .kgj-reken__cijfers-onder { order: 2; margin-top: 0; }
+}
+/* /lp/dakwerken/asbest (LpBf met de dakkaart): kop van de site 56 px op de gsm (hoogstens 60, zijn opgave), de hero schuift even veel mee omhoog
+   (onder 340 px stond dat al zo, blok 19 nov) */
+@media (min-width: 340px) and (max-width: 768px) {
+  .bf.bf-lp--dakwerken .bf-kop--lp .bf-nav { height: 56px; }
+  .bf.bf-lp--dakwerken .bf-lphero__in { padding-top: 80px; }
+}
