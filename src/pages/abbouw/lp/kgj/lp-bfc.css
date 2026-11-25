@@ -695,11 +695,14 @@ html.is-afronden .abc .abc-zweef { opacity: 0 !important; visibility: hidden !im
    de foto 160 px hoog met de plaatsregel en de H1 erover, onder de H1 alleen de zin "Met meer dan 15 jaar ervaring ..." (de vette zin "Zoekt u een
    dakwerker in de buurt ...? Die hebt u gevonden." blijft op de computer staan), de kaart meteen onder die zin (stap 1 hoogstens 300 px), alle keuzes binnen
    de eerste 640 px, de cijfers meteen onder de kaart (Aanvraag cijfersOnder, lp-bf-ab.css). ── */
-@media (max-width: 768px) {
+/* de kopbalk van 340 tot 768 px; onder 340 px blijft het blok "Smal scherm" hierboven (kleiner logo, knop en menuknop) gelden (check:smal 226 en 274 px) */
+@media (min-width: 340px) and (max-width: 768px) {
   .abc .abc-kop__in { height: 56px; }
   .abc .abc-logo img { height: 26px; }
   .abc .abc-kop__bel { min-height: 44px; }
   .abc .abc-burger { width: 44px; height: 44px; }
+}
+@media (max-width: 768px) {
   .abc .abc-gsmmenu { inset: 56px 0 0; }
   .abc .abc-hero__foto, .abc .abc-hero__laag { top: 56px; }
   .abc .abc-hero__in { padding-top: 204px; }
