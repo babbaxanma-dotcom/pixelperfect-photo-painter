@@ -352,7 +352,7 @@ async function kaartKopFouten(w, h, schuif = false) {
     const { p, ctx } = await open({ w, h, voorLaden: () => { delete window.__abLaadMs; delete window.__abVolUit; } });
     try {
       if (sel !== HERO) { await p.evaluate((s) => window.scrollTo({ top: document.querySelector(s).getBoundingClientRect().top + scrollY - 200, behavior: 'instant' }), sel); await wacht(600); }
-      const meet = () => p.evaluate((s) => { const k = document.querySelector(s); return { stap: (k.querySelector('.kgj-reken__kop')?.textContent || '').replace(/\s*(‹\s*)?Terug.*$/, ''), kop: Math.round(document.querySelector('.kgj-kop').getBoundingClientRect().bottom), kaart: Math.round(k.getBoundingClientRect().top), titel: Math.round(k.querySelector('.kgj-reken__hoofd').getBoundingClientRect().top) }; }, sel);
+      const meet = () => p.evaluate((s) => { const k = document.querySelector(s); return { stap: (k.querySelector('.kgj-reken__kop')?.textContent || '').replace(/\s*(‹\s*)?Terug.*$/, ''), kop: Math.round(document.querySelector('.kgj-kop').getBoundingClientRect().bottom), kaart: Math.round(k.getBoundingClientRect().top), titel: Math.round((k.querySelector('.kgj-reken__hoofd') || k.querySelector('.kgj-reken__kop--v4') || k).getBoundingClientRect().top) }; }, sel); // 25 nov 2026: de dakkaart v4 heeft geen kaartkop meer; dan telt de kopregel (Offerte aanvragen / Terug en Stap x van 3)
       const rij = [];
       for (const l of NAAR_CONTACT) {
         const ok = await p.evaluate((s, l) => { const b = [...document.querySelectorAll(s + ' .kgj-reken__keuze')].find((x) => (x.querySelector('strong')?.textContent || '').trim() === l); b?.click(); return !!b; }, sel, l);
@@ -388,8 +388,10 @@ async function beideVormFouten(w, h, pad = PAD, plant = null) {
       const cs = getComputedStyle(b), st = getComputedStyle(b.querySelector('strong')), rs = r(b.parentElement);
       return { b: true, vraag: k.querySelector('.kgj-reken__stap .kgj-reken__vraag')?.textContent, labels: knoppen.map((x) => (x.querySelector('strong')?.textContent || '').trim()), waarde: b.getAttribute('data-waarde'), icoon: b.querySelectorAll('svg, img, .kgj-reken__icoon').length,
         laatste: knoppen[knoppen.length - 1] === b, breed: Math.round(r(b).width), rasterB: Math.round(rs.width), onderTegels: tg.length === 2 && tg.every((x) => r(b).top >= r(x).bottom), h: Math.round(r(b).height), radius: cs.borderTopLeftRadius, rand: cs.boxShadow, fs: st.fontSize, fw: st.fontWeight, kleur: st.color }; }, HERO);
-    const ok = v.b && v.vraag === 'Om welk soort dak gaat het?' && v.labels.join('|') === 'Hellend dak|Plat dak|Beide / combinatie' && v.waarde === BEIDE && v.icoon === 0 && v.laatste && Math.abs(v.breed - v.rasterB) <= 1 && v.onderTegels && Math.abs(v.h - ref.h) <= 1 && v.h >= 44
-      && v.radius === ref.radius && v.rand === ref.rand && v.fs === ref.fs && v.fw === ref.fw && v.kleur === ref.kleur;
+    /* 25 nov 2026 (kaart v4, Mohammed: "De keuzes zelf en wat erna komt wijzigen niet"; de keuzes van vraag 1 zijn nu 48 px op gsm en 52 px op pc): rand,
+       afronding, gewicht en kleur blijven die van "Gratis dakinspectie"; hoogte en lettergrootte zijn die van "Beide" vóór 25 nov (gsm 56 px, pc 62 px, 16 px) */
+    const ok = v.b && v.vraag === 'Om welk soort dak gaat het?' && v.labels.join('|') === 'Hellend dak|Plat dak|Beide / combinatie' && v.waarde === BEIDE && v.icoon === 0 && v.laatste && Math.abs(v.breed - v.rasterB) <= 1 && v.onderTegels && Math.abs(v.h - (w <= 1000 ? 56 : 62)) <= 1 && v.h >= 44
+      && v.radius === ref.radius && v.rand === ref.rand && v.fs === '16px' && v.fw === ref.fw && v.kleur === ref.kleur;
     if (!ok) uit.push(`I ${w}x${h} ${pad}. "Beide" niet als volle-breedte rij zonder icoon in de stijl van "Gratis dakinspectie": ${JSON.stringify({ v, ref })}`);
     return uit;
   } finally { await ctx.close(); }
